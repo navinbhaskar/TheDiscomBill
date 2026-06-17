@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://thediscompbill.com/sitemap.xml
