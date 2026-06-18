@@ -90,7 +90,7 @@ export function renderBill(params) {
           extraCharges, facAmount, facRate, facMode,
           tariffPeriodLabel, tariffEstimated, tariffRates,
           currentGross, subsidyAmount, subsidyLabel, currentNet,
-          arrears, arrearLpsc, lpscRate, currentLpscMonths, currentLpsc,
+          arrears, arrearLpsc, lpscRate, currentLpscMonths, currentLpsc, lpscApplicable,
           payments, totalPayments,
           adjustments, totalAdjustments,
           totalPayable } = result;
@@ -241,14 +241,16 @@ export function renderBill(params) {
     <div class="acc-note acc-muted">Telescopic slabs — each rate applies only to units within that band.${result.billingPeriodDays ? ` Slab limits prorated for the ${result.billingPeriodDays}-day period.` : ''}</div>`;
 
   const lpscBody = `
-    <div class="acc-meta">Rate: <strong>${lpscRate || 0}% per month</strong>, charged on the current net bill.</div>
+    <div class="acc-meta">Rate: <strong>${lpscRate || 0}% per month</strong>, charged on the current net bill.${lpscApplicable === false ? ' <span class="tariff-est-tag">(LPSC not applicable)</span>' : ''}</div>
     <div class="acc-note">Formula: <code>LPSC = Net × ${lpscRate || 0}% × months overdue</code></div>
     ${currentLpsc > 0
       ? `<table class="acc-table">
            <tr><td>Net bill</td><td class="num">${formatINR(currentNet)}</td></tr>
            <tr><td>× ${lpscRate}% × ${currentLpscMonths} month${currentLpscMonths !== 1 ? 's' : ''}</td><td class="num"><strong>${formatINR(currentLpsc)}</strong></td></tr>
          </table>`
-      : `<div class="acc-note acc-muted">No LPSC on this bill — not marked overdue (0 months late).</div>`}
+      : (lpscApplicable === false
+          ? `<div class="acc-note acc-muted">LPSC not applicable for this consumer/period — no late-payment surcharge added.</div>`
+          : `<div class="acc-note acc-muted">No LPSC on this bill — not marked overdue (0 months late).</div>`)}
     ${arrearLpsc > 0 ? `<div class="acc-note">Previous arrear LPSC carried over: <strong>${formatINR(arrearLpsc)}</strong>.</div>` : ''}
     <div class="acc-note acc-muted">LPSC accrues for each month a bill remains unpaid past its due date.</div>`;
 

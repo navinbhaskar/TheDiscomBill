@@ -37,10 +37,11 @@ export function buildShareUrl() {
     td:      document.getElementById('toDate').value,
     prev:    document.getElementById('prevReading').value,
     curr:    document.getElementById('currReading').value,
-    units:   document.getElementById('unitsInput').value,
+    // Advanced rows aren't serialized; share the computed total so the link still reproduces the bill
+    units:   getMeterMode() === 'advanced' ? (getEffectiveUnits() ?? '') : document.getElementById('unitsInput').value,
     load:    document.getElementById('connectedLoad').value,
     bd:      document.getElementById('billedDemand')?.value || '',
-    tod:     document.getElementById('todEnabled')?.checked ? '1' : '',
+    mmode:   getMeterMode(),
     todp:    document.getElementById('todPeak')?.value    || '',
     todn:    document.getElementById('todNormal')?.value  || '',
     todop:   document.getElementById('todOffPeak')?.value || '',
@@ -50,6 +51,7 @@ export function buildShareUrl() {
     arrlpsc: document.getElementById('arrearLpsc').value,
     lpsc:    document.getElementById('lpscRate').value,
     curmo:   document.getElementById('currentLpscMonths').value,
+    lpscon:  document.getElementById('lpscApplicable')?.checked ? '1' : '0',
   });
   return location.origin + location.pathname + '?' + p.toString();
 }
@@ -187,6 +189,7 @@ export function populateSupplyTypes(discomId, categoryId) {
   const types = getSupplyTypes(discomId, categoryId);
   if (!discomId || !categoryId || types.length === 0) {
     group.style.display = 'none';
+    hideLifelineNotice();
     return;
   }
 
@@ -200,6 +203,8 @@ export function populateSupplyTypes(discomId, categoryId) {
   desc.textContent = types[0].description || '';
   group.style.display = 'block';
   prefillFac(discomId, categoryId, types[0].id);
+  applyLifelineDefaultLoad(discomId, categoryId, types[0].id);
+  checkLifelineLimits();
 }
 
 // Billing date drives historical tariff resolution: prefer To Date, else billing month/year
@@ -335,8 +340,17 @@ export function populateMonthYear() {
 
 // ─── Units Display ────────────────────────────────────────────────────────────
 
+// Reading mode: 'simple' | 'advanced' | 'tod' (selected by the radio group)
+export function getMeterMode() {
+  const r = document.querySelector('input[name="meterMode"]:checked');
+  return r ? r.value : 'simple';
+}
+
+let advancedSubMode = 'single';   // 'single' | 'replacement'
+
+// ── TOD ──
 export function getTodUnits() {
-  if (!document.getElementById('todEnabled')?.checked) return null;
+  if (getMeterMode() !== 'tod') return null;
   const peak    = +document.getElementById('todPeak').value    || 0;
   const normal  = +document.getElementById('todNormal').value  || 0;
   const offPeak = +document.getElementById('todOffPeak').value || 0;
@@ -344,42 +358,157 @@ export function getTodUnits() {
 }
 
 export function updateTodDisplay() {
-  const enabled = document.getElementById('todEnabled')?.checked;
-  const group   = document.getElementById('todGroup');
-  if (group) group.style.display = enabled ? 'block' : 'none';
-  if (enabled) {
-    const peak    = +document.getElementById('todPeak').value    || 0;
-    const normal  = +document.getElementById('todNormal').value  || 0;
-    const offPeak = +document.getElementById('todOffPeak').value || 0;
-    const total   = peak + normal + offPeak;
-    const display = document.getElementById('todTotalDisplay');
-    if (total > 0) {
-      document.getElementById('todTotalUnitsDisplay').textContent  = total.toLocaleString('en-IN');
-      document.getElementById('todPeakDisplay').textContent        = peak.toLocaleString('en-IN');
-      document.getElementById('todNormalDisplay').textContent      = normal.toLocaleString('en-IN');
-      document.getElementById('todOffPeakDisplay').textContent     = offPeak.toLocaleString('en-IN');
-      display.style.display = 'block';
-    } else {
-      display.style.display = 'none';
-    }
+  if (getMeterMode() !== 'tod') { updateCalcButton(); return; }
+  const peak    = +document.getElementById('todPeak').value    || 0;
+  const normal  = +document.getElementById('todNormal').value  || 0;
+  const offPeak = +document.getElementById('todOffPeak').value || 0;
+  const total   = peak + normal + offPeak;
+  const display = document.getElementById('todTotalDisplay');
+  if (total > 0) {
+    document.getElementById('todTotalUnitsDisplay').textContent = total.toLocaleString('en-IN');
+    document.getElementById('todPeakDisplay').textContent       = peak.toLocaleString('en-IN');
+    document.getElementById('todNormalDisplay').textContent     = normal.toLocaleString('en-IN');
+    document.getElementById('todOffPeakDisplay').textContent    = offPeak.toLocaleString('en-IN');
+    display.style.display = 'block';
+  } else {
+    display.style.display = 'none';
   }
   updateCalcButton();
 }
 
+// ── Advanced meter read (Single Meter / Meter Replacement) ──
+// Each row: Units = (Current − Previous) × MF. Total = sum over rows. The earliest
+// previous date → latest current date define the billing period (written to From/To).
+export function getAdvancedMeterData() {
+  let totalUnits = 0, minPrev = null, maxCurr = null, maxMD = 0;
+  document.querySelectorAll('#advancedRows .meter-row').forEach(r => {
+    const prev = parseFloat(r.querySelector('.m-prevread').value);
+    const curr = parseFloat(r.querySelector('.m-currread').value);
+    const mfRaw = parseFloat(r.querySelector('.m-mf').value);
+    const mf = (isNaN(mfRaw) || mfRaw <= 0) ? 1 : mfRaw;
+    if (!isNaN(prev) && !isNaN(curr) && curr >= prev) totalUnits += (curr - prev) * mf;
+    const pd = r.querySelector('.m-prevdate').value;
+    const cd = r.querySelector('.m-currdate').value;
+    if (pd && (!minPrev || pd < minPrev)) minPrev = pd;
+    if (cd && (!maxCurr || cd > maxCurr)) maxCurr = cd;
+    const md = parseFloat(r.querySelector('.m-md').value);
+    if (!isNaN(md) && md > maxMD) maxMD = md;   // billed demand = peak MD across meters
+  });
+  return { totalUnits: Math.round(totalUnits * 100) / 100, minPrev, maxCurr, maxMD };
+}
+
+export function addMeterRow(label = '') {
+  const c = document.getElementById('advancedRows');
+  const row = document.createElement('div');
+  row.className = 'meter-row';
+  row.innerHTML = `
+    <div class="meter-row-top">
+      <input type="text" class="m-label" value="${label}" placeholder="Meter no. / label">
+      <button type="button" class="btn-remove-row m-remove" title="Remove">×</button>
+    </div>
+    <div class="meter-fields">
+      <label class="mf-field"><span>Prev Date</span><input type="date" class="m-prevdate"></label>
+      <label class="mf-field"><span>Prev Read</span><input type="number" class="m-prevread" placeholder="0" min="0" step="0.01"></label>
+      <label class="mf-field"><span>Curr Date</span><input type="date" class="m-currdate"></label>
+      <label class="mf-field"><span>Curr Read</span><input type="number" class="m-currread" placeholder="0" min="0" step="0.01"></label>
+      <label class="mf-field"><span>MF</span><input type="number" class="m-mf" value="1" min="0.01" step="0.01" title="Multiplying Factor"></label>
+      <label class="mf-field"><span>MD (kW)</span><input type="number" class="m-md" placeholder="0" min="0" step="0.01" title="Maximum demand recorded"></label>
+      <div class="mf-field mf-units"><span>Units</span><span class="m-units">0</span></div>
+    </div>`;
+  row.querySelectorAll('input').forEach(i => {
+    i.addEventListener('input',  updateAdvancedMeter);
+    i.addEventListener('change', updateAdvancedMeter);
+  });
+  row.querySelector('.m-remove').addEventListener('click', () => { row.remove(); updateAdvancedMeter(); });
+  c.appendChild(row);
+}
+
+export function setAdvancedSubMode(sub) {
+  advancedSubMode = sub;
+  document.querySelectorAll('.adv-subtab').forEach(b => b.classList.toggle('active', b.dataset.submode === sub));
+  const hint = document.getElementById('advHint');
+  document.getElementById('advancedRows').innerHTML = '';
+  if (sub === 'replacement') {
+    hint.textContent = 'Meter replaced mid-cycle: enter the OLD meter (previous → final read) and the NEW meter (initial → current read). Units from both are summed.';
+    addMeterRow('Old meter');
+    addMeterRow('New meter');
+  } else {
+    hint.textContent = 'Units = (Current − Previous) × MF. Add more meters with “+”; their units are summed.';
+    addMeterRow('Meter 1');
+  }
+  updateAdvancedMeter();
+}
+
+export function updateAdvancedMeter() {
+  document.querySelectorAll('#advancedRows .meter-row').forEach(r => {
+    const prev = parseFloat(r.querySelector('.m-prevread').value);
+    const curr = parseFloat(r.querySelector('.m-currread').value);
+    const mfRaw = parseFloat(r.querySelector('.m-mf').value);
+    const mf = (isNaN(mfRaw) || mfRaw <= 0) ? 1 : mfRaw;
+    const u = (!isNaN(prev) && !isNaN(curr) && curr >= prev) ? (curr - prev) * mf : 0;
+    r.querySelector('.m-units').textContent = (Math.round(u * 100) / 100).toLocaleString('en-IN');
+  });
+  const data = getAdvancedMeterData();
+  const days = (data.minPrev && data.maxCurr)
+    ? Math.round((new Date(data.maxCurr) - new Date(data.minPrev)) / 86400000) : 0;
+  document.getElementById('advTotalUnits').textContent  = data.totalUnits.toLocaleString('en-IN');
+  document.getElementById('advTotalMonths').textContent = (days > 0 ? days / 30 : 0).toFixed(2);
+  document.getElementById('advancedTotalDisplay').style.display = data.totalUnits > 0 ? 'block' : 'none';
+
+  // Drive the billing period through the existing From/To wiring (FPPA/tariff/period all reuse it),
+  // and the billed demand from the peak MD column (feeds demand charge + excess-demand penalty).
+  if (getMeterMode() === 'advanced') {
+    const from = document.getElementById('fromDate'), to = document.getElementById('toDate');
+    from.value = data.minPrev || '';
+    to.value   = data.maxCurr || '';
+    from.dispatchEvent(new Event('change'));
+    to.dispatchEvent(new Event('change'));
+    const bd = document.getElementById('billedDemand');
+    if (bd) bd.value = data.maxMD > 0 ? data.maxMD : '';
+  }
+  updateCalcButton();
+}
+
+export function setMeterMode(mode) {
+  const panels = { simple: 'meterSimple', advanced: 'meterAdvanced', tod: 'meterTod' };
+  Object.entries(panels).forEach(([m, id]) => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = (m === mode) ? 'block' : 'none';
+  });
+  // From/To date inputs are user-set in Simple/TOD, and auto-filled (hidden) in Advanced
+  document.getElementById('meterDatesRow').style.display = (mode === 'advanced') ? 'none' : 'block';
+
+  if (mode === 'advanced') {
+    if (!document.querySelector('#advancedRows .meter-row')) setAdvancedSubMode(advancedSubMode);
+    else updateAdvancedMeter();
+  } else if (mode === 'tod') {
+    updateTodDisplay();
+  }
+  // MD column owns billed demand in Advanced mode → toggle the standalone field accordingly
+  updateBilledDemandVisibility(
+    document.getElementById('discomSelect').value,
+    document.getElementById('categorySelect').value,
+    document.getElementById('supplyTypeSelect').value
+  );
+  updateUnitsDisplay();
+  updateCalcButton();
+  checkLifelineLimits();
+}
+
 export function getEffectiveUnits() {
-  // TOD mode: total is sum of the three time zones
-  if (document.getElementById('todEnabled')?.checked) {
-    const peak    = +document.getElementById('todPeak').value    || 0;
-    const normal  = +document.getElementById('todNormal').value  || 0;
-    const offPeak = +document.getElementById('todOffPeak').value || 0;
-    const total   = peak + normal + offPeak;
+  const mode = getMeterMode();
+  if (mode === 'tod') {
+    const t = getTodUnits();
+    const total = (t.peak || 0) + (t.normal || 0) + (t.offPeak || 0);
     return total > 0 ? total : null;
   }
-
+  if (mode === 'advanced') {
+    const u = getAdvancedMeterData().totalUnits;
+    return u > 0 ? u : null;
+  }
   const prev   = document.getElementById('prevReading').value.trim();
   const curr   = document.getElementById('currReading').value.trim();
   const direct = document.getElementById('unitsInput').value.trim();
-
   if (prev !== '' && curr !== '' && !isNaN(+prev) && !isNaN(+curr)) {
     return Math.max(0, +curr - +prev);
   }
@@ -388,8 +517,9 @@ export function getEffectiveUnits() {
 }
 
 export function updateUnitsDisplay() {
+  const disp = document.getElementById('unitsDisplay');
+  if (getMeterMode() !== 'simple') { disp.style.display = 'none'; return; }
   const units = getEffectiveUnits();
-  const disp  = document.getElementById('unitsDisplay');
   const num   = document.getElementById('unitsConsumedDisplay');
   if (units !== null &&
       document.getElementById('prevReading').value !== '' &&
@@ -447,11 +577,105 @@ export function updateBillingPeriod() {
 export function updateBilledDemandVisibility(discomId, categoryId, supplyTypeId) {
   const tariff = getEffectiveTariff(discomId, categoryId, supplyTypeId);
   const group  = document.getElementById('billedDemandGroup');
-  if (group) group.style.display = (tariff && tariff.excessDemandRate) ? 'block' : 'none';
+  // In Advanced mode the MD column supplies billed demand, so hide the standalone field.
+  const show = !!(tariff && tariff.excessDemandRate) && getMeterMode() !== 'advanced';
+  if (group) group.style.display = show ? 'block' : 'none';
+}
+
+// ─── Lifeline supply types (UP) ────────────────────────────────────────────────
+// UP "Life Line" supply types are capped at ≤ 1 kW sanctioned load and ≤ 100 units/month.
+// Beyond either cap the consumer falls to the paired non-lifeline tariff. Ids are UP-specific
+// (ST-10A→ST-10B urban, ST-17→ST-17B rural); the guard below only fires when the selected
+// category actually contains BOTH the lifeline type and its counterpart.
+const LIFELINE_MAP = { '10A': '10B', '17': '17B' };
+const LIFELINE_MAX_LOAD_KW = 1;
+const LIFELINE_MAX_UNITS_PER_MONTH = 100;
+
+// Returns the non-lifeline counterpart id if the given supply type is a lifeline type whose
+// counterpart also exists in the same category; otherwise null.
+function lifelineCounterpart(discomId, categoryId, supplyTypeId) {
+  const target = LIFELINE_MAP[supplyTypeId];
+  if (!target) return null;
+  const types = getSupplyTypes(discomId, categoryId);
+  const hasSelf   = types.some(t => t.id === supplyTypeId);
+  const hasTarget = types.some(t => t.id === target);
+  return (hasSelf && hasTarget) ? target : null;
+}
+
+// Lifeline unit cap, prorated for multi-month periods (floored at one month so short cycles
+// never lose the benefit) — mirrors how the engine prorates energy-slab limits.
+function lifelineUnitCap() {
+  const days = getBillingPeriodDays();
+  const months = days ? Math.max(1, days / 30) : 1;
+  return LIFELINE_MAX_UNITS_PER_MONTH * months;
+}
+
+function showLifelineNotice(msg) {
+  const el = document.getElementById('lifelineNotice');
+  if (!el) return;
+  el.textContent = '⚠ ' + msg;
+  el.style.display = 'block';
+}
+function hideLifelineNotice() {
+  const el = document.getElementById('lifelineNotice');
+  if (el) { el.style.display = 'none'; el.textContent = ''; }
+}
+
+// Re-run everything that depends on the selected supply type (description, FPPA prefill,
+// billed-demand visibility, tariff hint, calc button). Used by the change handler and by the
+// lifeline auto-switch so it doesn't need to dispatch a synthetic 'change' event.
+export function refreshSupplyTypeDependent() {
+  const discomId     = document.getElementById('discomSelect').value;
+  const categoryId   = document.getElementById('categorySelect').value;
+  const supplyTypeId = document.getElementById('supplyTypeSelect').value;
+  const types = getSupplyTypes(discomId, categoryId);
+  const st    = types.find(s => s.id === supplyTypeId);
+  document.getElementById('supplyTypeDesc').textContent = st ? (st.description || '') : '';
+  prefillFac(discomId, categoryId, supplyTypeId);
+  updateBilledDemandVisibility(discomId, categoryId, supplyTypeId);
+  updateTariffPeriodHint();
+  updateCalcButton();
+}
+
+// When a lifeline supply type is selected, default the Sanctioned Load field to 1 kW.
+export function applyLifelineDefaultLoad(discomId, categoryId, supplyTypeId) {
+  if (lifelineCounterpart(discomId, categoryId, supplyTypeId)) {
+    document.getElementById('connectedLoad').value = LIFELINE_MAX_LOAD_KW;
+  }
+}
+
+// If the selected supply type is lifeline but load > 1 kW or units exceed the (period-scaled)
+// cap, switch to the non-lifeline counterpart and explain why. One-directional: never switches
+// back automatically (the user can re-select the lifeline type manually).
+export function checkLifelineLimits() {
+  const discomId     = document.getElementById('discomSelect').value;
+  const categoryId   = document.getElementById('categorySelect').value;
+  const supplyTypeId = document.getElementById('supplyTypeSelect').value;
+  const counterpart  = lifelineCounterpart(discomId, categoryId, supplyTypeId);
+  if (!counterpart) { hideLifelineNotice(); return; }
+
+  const load  = +document.getElementById('connectedLoad').value || 0;
+  const units = getEffectiveUnits() || 0;
+  const cap   = lifelineUnitCap();
+  const loadOver  = load > LIFELINE_MAX_LOAD_KW;
+  const unitsOver = units > cap;
+
+  if (!loadOver && !unitsOver) { hideLifelineNotice(); return; }
+
+  document.getElementById('supplyTypeSelect').value = counterpart;
+  refreshSupplyTypeDependent();
+
+  const reasons = [];
+  if (loadOver)  reasons.push(`sanctioned load ${load} kW exceeds the 1 kW lifeline limit`);
+  if (unitsOver) reasons.push(`consumption ${Math.round(units)} units exceeds the ${Math.round(cap)}-unit lifeline cap${cap > LIFELINE_MAX_UNITS_PER_MONTH ? ' for this billing period' : ''}`);
+  const msg = `Switched to the non-lifeline tariff — ${reasons.join(' and ')}.`;
+  showLifelineNotice(msg);
+  showToast(msg);
 }
 
 export function doCalculate() {
   if (!canCalculate()) return;
+  checkLifelineLimits();   // safety net for programmatic flows (e.g. shared-link load)
 
   const discomId          = document.getElementById('discomSelect').value;
   const categoryId        = document.getElementById('categorySelect').value;
@@ -466,6 +690,7 @@ export function doCalculate() {
   const arrearLpsc        = +document.getElementById('arrearLpsc').value  || 0;
   const lpscRate          = +document.getElementById('lpscRate').value    || 0;
   const currentLpscMonths = +document.getElementById('currentLpscMonths').value || 0;
+  const lpscApplicable    = document.getElementById('lpscApplicable')?.checked !== false;
 
   const delhiSubsidy = isDelhiDiscom(discomId) &&
     document.getElementById('delhiSubsidyCheck') &&
@@ -478,7 +703,7 @@ export function doCalculate() {
   const result = calculateBill({
     discomId, categoryId, supplyTypeId, units, connectedLoadKw: load,
     billedDemandKw, billingPeriodDays, billingDate,
-    facRate, facMode, arrears, arrearLpsc, lpscRate, currentLpscMonths,
+    facRate, facMode, arrears, arrearLpsc, lpscRate, currentLpscMonths, lpscApplicable,
     payments: getPayments(), adjustments: getAdjustments(),
     delhiSubsidy, todUnits
   });
@@ -543,9 +768,15 @@ export function loadFromUrl() {
         }
         if (p.get('month')) document.getElementById('billingMonth').value = p.get('month');
         if (p.get('year'))  document.getElementById('billingYear').value  = p.get('year');
-        if (p.get('tod') === '1') {
-          document.getElementById('todEnabled').checked = true;
-          updateTodDisplay();
+        // Restore reading mode. Advanced rows aren't serialized — those links carry the
+        // computed total in `units` and load as Simple, which reproduces the same bill.
+        if (p.get('mmode') === 'tod') {
+          const r = document.querySelector('input[name="meterMode"][value="tod"]');
+          if (r) { r.checked = true; setMeterMode('tod'); }
+        }
+        if (p.get('lpscon') === '0') {
+          const c = document.getElementById('lpscApplicable');
+          if (c) { c.checked = false; c.dispatchEvent(new Event('change')); }
         }
         if (p.get('facm') && document.getElementById('facMode')) {
           document.getElementById('facMode').value = p.get('facm');

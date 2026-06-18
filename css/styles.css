@@ -120,6 +120,7 @@
   /* Typography */
   --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Space Grotesk', 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  --font-brand:   'Sora', var(--font-display);   /* logo wordmark + hero banner */
 
   /* ── Legacy aliases — keeps existing CSS references working ── */
   --blue:       var(--p-blue-700);
@@ -163,6 +164,11 @@ body {
 .bill-placeholder h3 {
   font-family: var(--font-display);
   font-feature-settings: "ss01";
+}
+
+/* Brand typeface (Sora) — logo lockup + hero banner heading only */
+.logo-text, .logo-tagline, .hero h1 {
+  font-family: var(--font-brand);
 }
 
 a { color: var(--brand); text-decoration: none; }
@@ -522,6 +528,67 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   transition: background var(--t-fast);
 }
 .btn-remove-row:hover { background: var(--p-red-100); }
+
+/* ─── Meter-read mode selector (Simple / Advanced / TOD) ─────────────────────── */
+.meter-mode {
+  display: flex; gap: 4px; padding: 4px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+}
+.meter-mode-opt {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 8px 10px; border-radius: var(--radius-sm);
+  font-size: 13.5px; font-weight: 600; color: var(--text-secondary);
+  cursor: pointer; transition: var(--t-fast); user-select: none;
+}
+.meter-mode-opt input { position: absolute; opacity: 0; pointer-events: none; }
+.meter-mode-opt:hover { color: var(--text-primary); }
+.meter-mode-opt:has(input:checked) {
+  background: var(--surface-card); color: var(--text-brand);
+  box-shadow: var(--shadow-xs);
+}
+
+/* Advanced sub-tabs */
+.adv-subtabs { display: flex; gap: 6px; margin-bottom: 10px; }
+.adv-subtab {
+  padding: 7px 14px; border-radius: var(--radius-full);
+  border: 1px solid var(--border-strong); background: var(--surface-card);
+  font-size: 13px; font-weight: 600; color: var(--text-secondary);
+  cursor: pointer; font-family: inherit; transition: var(--t-fast);
+}
+.adv-subtab:hover { border-color: var(--brand-border); color: var(--text-primary); }
+.adv-subtab.active { background: var(--brand); color: var(--text-inverse); border-color: var(--brand); }
+
+/* Advanced meter card — fields wrap into a 2-column grid (no horizontal scroll) */
+.meter-row {
+  background: var(--surface-page);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.meter-row-top { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.meter-row-top .m-label { flex: 1; margin: 0; }
+.meter-row-top .btn-remove-row { width: 28px; height: 28px; font-size: 15px; }
+.meter-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.mf-field { display: flex; flex-direction: column; gap: 3px; }
+.mf-field > span { font-size: 11px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.03em; }
+.mf-field input { width: 100%; margin: 0; box-sizing: border-box; }
+.mf-units { align-items: stretch; grid-column: 1 / -1; }
+.mf-units .m-units {
+  display: flex; align-items: center; justify-content: flex-end;
+  font-weight: 700; font-variant-numeric: tabular-nums; color: var(--text-brand-dark);
+  background: var(--brand-faint); border: 1px solid var(--brand-border);
+  border-radius: var(--radius-sm); padding: 7px 10px; min-height: 19px;
+}
+
+/* LPSC Applicable toggle */
+.lpsc-applicable-label { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 14px; cursor: pointer; }
+.lpsc-applicable-label input { margin-top: 2px; flex-shrink: 0; }
+.fields-disabled { opacity: 0.5; }
+.fields-disabled input { cursor: not-allowed; }
 
 /* ─── Calculate Button ───────────────────────────────────────────────────────── */
 .btn-calculate {
@@ -894,6 +961,20 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
 }
 .hint-verified  { color: var(--ok-text); font-weight: 600; }
 .hint-estimated { font-weight: 600; }
+
+/* Lifeline → non-lifeline auto-switch notice */
+.lifeline-notice {
+  display: block;
+  margin-top: 6px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  background: var(--warn-bg);
+  border: 1px solid var(--p-amber-200);
+  color: var(--warn-text);
+}
 
 /* FPPA value + mode selector on one row */
 .fac-input-row {

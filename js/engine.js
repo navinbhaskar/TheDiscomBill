@@ -65,7 +65,7 @@ export function calculateEnergySlabs(slabs, units, billingMonths = 1) {
 export function calculateBill({ discomId, categoryId, supplyTypeId, units, connectedLoadKw,
                                 billedDemandKw, billingPeriodDays, billingDate,
                                 facRate, facMode, arrears, arrearLpsc, lpscRate, currentLpscMonths,
-                                payments, adjustments, delhiSubsidy, todUnits }) {
+                                lpscApplicable, payments, adjustments, delhiSubsidy, todUnits }) {
   const discom = findDiscom(discomId);
   if (!discom) return null;
 
@@ -160,7 +160,10 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
 
   const safeArrears = arrears    || 0;
   const safeArrLpsc = arrearLpsc || 0;
-  const currentLpsc = +(currentNet * (lpscRate || 0) / 100 * (currentLpscMonths || 0)).toFixed(2);
+  // LPSC on the current bill — only when the consumer/period has LPSC applicable
+  const currentLpsc = (lpscApplicable === false)
+    ? 0
+    : +(currentNet * (lpscRate || 0) / 100 * (currentLpscMonths || 0)).toFixed(2);
 
   const totalPayments    = (payments    || []).reduce((s, p) => s + (p.amount || 0), 0);
   const totalAdjustments = (adjustments || []).reduce((s, a) => s + (a.amount || 0), 0);
@@ -215,6 +218,7 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
     arrearLpsc: safeArrLpsc,
     lpscRate: lpscRate || 0,
     currentLpscMonths: currentLpscMonths || 0,
+    lpscApplicable: lpscApplicable !== false,
     currentLpsc,
     payments: payments || [],
     totalPayments: +totalPayments.toFixed(2),

@@ -9,8 +9,9 @@ import {
   onFppaAutoToggle, markFppaManual,
   canCalculate, doCalculate, isDelhiDiscom,
   shareBill, loadFromUrl,
+  refreshSupplyTypeDependent, applyLifelineDefaultLoad, checkLifelineLimits,
+  getMeterMode, setMeterMode, setAdvancedSubMode, addMeterRow, updateAdvancedMeter,
 } from './ui.js';
-import { getSupplyTypes } from './tariffs/registry.js';
 import { initDatePickers } from './datepicker.js';
 
 // Expose shareBill to global scope (called from onclick in rendered bill HTML)
@@ -51,30 +52,34 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   supplyTypeEl.addEventListener('change', () => {
-    const types = getSupplyTypes(discomEl.value, categoryEl.value);
-    const st    = types.find(s => s.id === supplyTypeEl.value);
-    document.getElementById('supplyTypeDesc').textContent = st ? (st.description || '') : '';
-    prefillFac(discomEl.value, categoryEl.value, supplyTypeEl.value);
-    updateBilledDemandVisibility(discomEl.value, categoryEl.value, supplyTypeEl.value);
-    updateTariffPeriodHint();
-    updateCalcButton();
+    applyLifelineDefaultLoad(discomEl.value, categoryEl.value, supplyTypeEl.value);
+    refreshSupplyTypeDependent();
+    checkLifelineLimits();
   });
 
   ['prevReading', 'currReading', 'unitsInput'].forEach(id => {
     document.getElementById(id).addEventListener('input', () => {
       updateUnitsDisplay();
       updateCalcButton();
+      checkLifelineLimits();   // consumption may exceed the lifeline cap
     });
   });
 
-  document.getElementById('fromDate').addEventListener('change', updateBillingPeriod);
+  document.getElementById('fromDate').addEventListener('change', () => {
+    updateBillingPeriod();
+    checkLifelineLimits();     // period length changes the prorated unit cap
+  });
   document.getElementById('toDate').addEventListener('change', () => {
     updateBillingPeriod();
     // To Date can drive the tariff period — refresh hint and re-prefill period FPPA
     prefillFac(discomEl.value, categoryEl.value, supplyTypeEl.value);
     updateTariffPeriodHint();
+    checkLifelineLimits();
   });
-  document.getElementById('connectedLoad').addEventListener('input', updateCalcButton);
+  document.getElementById('connectedLoad').addEventListener('input', () => {
+    updateCalcButton();
+    checkLifelineLimits();     // load > 1 kW drops a lifeline consumer to non-lifeline
+  });
 
   // Billing month/year change → re-resolve which historical tariff period applies
   ['billingMonth', 'billingYear'].forEach(id => {
@@ -93,12 +98,31 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.getElementById('facRate').addEventListener('input', markFppaManual);
 
-  document.getElementById('todEnabled').addEventListener('change', updateTodDisplay);
+  // Reading-mode selector (Simple / Advanced / TOD) + Advanced sub-tabs + add-row
+  document.querySelectorAll('input[name="meterMode"]').forEach(r => {
+    r.addEventListener('change', () => setMeterMode(getMeterMode()));
+  });
+  document.querySelectorAll('.adv-subtab').forEach(b => {
+    b.addEventListener('click', () => setAdvancedSubMode(b.dataset.submode));
+  });
+  document.getElementById('addMeterRowBtn').addEventListener('click', () => { addMeterRow(''); updateAdvancedMeter(); });
+
   ['todPeak', 'todNormal', 'todOffPeak'].forEach(id => {
-    document.getElementById(id).addEventListener('input', updateTodDisplay);
+    document.getElementById(id).addEventListener('input', () => { updateTodDisplay(); checkLifelineLimits(); });
   });
   document.getElementById('arrears').addEventListener('input', updateArrearTotal);
   document.getElementById('arrearLpsc').addEventListener('input', updateArrearTotal);
+
+  // LPSC Applicable toggle — disable the rate/months inputs when LPSC doesn't apply
+  const lpscChk = document.getElementById('lpscApplicable');
+  const toggleLpscFields = () => {
+    const on = lpscChk.checked;
+    document.getElementById('lpscRate').disabled = !on;
+    document.getElementById('currentLpscMonths').disabled = !on;
+    document.getElementById('lpscFields').classList.toggle('fields-disabled', !on);
+  };
+  lpscChk.addEventListener('change', toggleLpscFields);
+  toggleLpscFields();
 
   document.getElementById('addPaymentBtn').addEventListener('click', addPaymentRow);
   document.getElementById('addAdjustmentBtn').addEventListener('click', addAdjustmentRow);
