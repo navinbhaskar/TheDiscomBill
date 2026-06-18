@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Tariff Editor – TheDiscomBill</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/editor.css">
+</head>
+<body class="editor-body">
+
+<header class="ed-header">
+  <div class="ed-header-inner">
+    <a href="/" class="ed-logo">
+      <span class="ed-logo-icon" aria-hidden="true">🛠️</span>
+      <div>
+        <span class="ed-logo-text">Tariff Editor</span>
+        <span class="ed-logo-sub">TheDiscomBill · maintenance tool</span>
+      </div>
+    </a>
+    <nav class="ed-nav">
+      <a href="/">← Back to calculator</a>
+    </nav>
+  </div>
+</header>
+
+<div class="ed-tabs" role="tablist">
+  <button class="ed-tab active" data-edtab="tariff" role="tab" type="button">Tariff Builder</button>
+  <button class="ed-tab" data-edtab="fppa" role="tab" type="button">FPPA Builder</button>
+</div>
+
+<!-- ── Tariff Builder ──────────────────────────────────────────────────────── -->
+<section class="ed-panel active" id="edpanel-tariff">
+  <div class="ed-toolbar">
+    <div class="ed-toolbar-group">
+      <label for="loadStateSelect">Load existing state</label>
+      <select id="loadStateSelect"><option value="">— Select a state to edit —</option></select>
+    </div>
+    <button class="ed-btn ed-btn-ghost" id="newStateBtn" type="button">➕ New state</button>
+    <div class="ed-toolbar-spacer"></div>
+    <div class="ed-toolbar-group ed-preview-control">
+      <label>Live preview</label>
+      <div class="ed-preview-inputs">
+        <input type="number" id="prevUnits" value="250" min="0" step="1" title="Units" aria-label="Preview units">
+        <span>units</span>
+        <input type="number" id="prevLoad" value="2" min="0.1" step="0.1" title="Load (kW)" aria-label="Preview load kW">
+        <span>kW</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ed-layout">
+    <div class="ed-form-col" id="tariffForm">
+      <div class="ed-empty">Select a state to edit, or start a new one.</div>
+    </div>
+
+    <aside class="ed-output-col">
+      <div class="ed-output-sticky">
+        <div class="ed-validation" id="tariffValidation"></div>
+        <div class="ed-output-head">
+          <span>Generated <code id="genFilename">file.js</code></span>
+          <div class="ed-output-actions">
+            <button class="ed-btn ed-btn-sm" id="copyTariffBtn" type="button">Copy</button>
+            <button class="ed-btn ed-btn-sm ed-btn-primary" id="downloadTariffBtn" type="button">Download</button>
+          </div>
+        </div>
+        <pre class="ed-output" id="tariffOutput"><code></code></pre>
+        <p class="ed-output-hint">Save this as <code>js/tariffs/&lt;state&gt;.js</code>. For a brand-new state, also add an import line in <code>js/tariffs/registry.js</code> (see the note below the code).</p>
+        <div class="ed-registry-note" id="registryNote" style="display:none"></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ── FPPA Builder ────────────────────────────────────────────────────────── -->
+<section class="ed-panel" id="edpanel-fppa">
+  <div class="ed-fppa-intro">
+    Add or edit verified fuel-surcharge windows. Entries are matched by billing date, newest first.
+    DISCOM-specific entries take priority over state-wide ones. The whole <code>js/tariffs/fppa.js</code>
+    is regenerated for you — no manual ordering needed.
+  </div>
+
+  <div class="ed-layout">
+    <div class="ed-form-col">
+      <div class="ed-fppa-section">
+        <div class="ed-section-head">
+          <h2>DISCOM-specific FPPA</h2>
+          <div class="ed-add-group">
+            <select id="addDiscomFppa"><option value="">— Add a DISCOM —</option></select>
+          </div>
+        </div>
+        <div id="fppaDiscomGroups"></div>
+      </div>
+
+      <div class="ed-fppa-section">
+        <div class="ed-section-head">
+          <h2>State-wide FPPA</h2>
+          <div class="ed-add-group">
+            <select id="addStateFppa"><option value="">— Add a state —</option></select>
+          </div>
+        </div>
+        <div id="fppaStateGroups"></div>
+      </div>
+    </div>
+
+    <aside class="ed-output-col">
+      <div class="ed-output-sticky">
+        <div class="ed-validation" id="fppaValidation"></div>
+        <div class="ed-output-head">
+          <span>Generated <code>fppa.js</code></span>
+          <div class="ed-output-actions">
+            <button class="ed-btn ed-btn-sm" id="copyFppaBtn" type="button">Copy</button>
+            <button class="ed-btn ed-btn-sm ed-btn-primary" id="downloadFppaBtn" type="button">Download</button>
+          </div>
+        </div>
+        <pre class="ed-output" id="fppaOutput"><code></code></pre>
+        <p class="ed-output-hint">Replace <code>js/tariffs/fppa.js</code> with this. No refresh/build step needed.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<div id="edToast" class="ed-toast"></div>
+
+<script type="module" src="js/editor.js"></script>
+</body>
+</html>
