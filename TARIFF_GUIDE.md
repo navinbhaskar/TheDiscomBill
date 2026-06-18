@@ -162,7 +162,47 @@ additionalCharges: [
 ## Tips
 
 - Use `Infinity` (not `999999`) for the last energy slab.
-- `fac` (Fuel Adjustment Charge) is pre-filled automatically from tariff data; the user can override it.
 - `lpscRate` on the DISCOM object pre-fills the LPSC rate field (default 1.5% if absent).
 - Verify rates against the official SERC tariff order PDF before publishing.
 - Update `tariffYear` whenever you change rates so the bill clearly shows which year's tariff was used.
+
+---
+
+## FPPA / fuel surcharge (separate file)
+
+The Fuel & Power Purchase Adjustment (FPPA / FPPCA / PPAC) is **not** taken from the per-state
+tariff files — it is notified per billing *period*, so it lives in **`js/tariffs/fppa.js`** as
+dated windows:
+
+```js
+// state-wide (applies to every DISCOM in the state):
+"Uttar Pradesh": [
+  { from: "2026-06-01", to: "2026-06-30", mode: "percent", rate: 10.00, label: "Jun 2026 FPPAS" },
+  // …newest first; specific dated windows BEFORE any open-ended (no `to`) entry
+]
+// DISCOM-specific overrides go in FPPA_BY_DISCOM, keyed by discom id (take priority).
+```
+
+- `mode`: `"percent"` (% of fixed + energy + excess) or `"per_unit"` (₹/unit × units).
+- The calculator auto-fills the matching window by billing date; a **multi-month** bill applies
+  each month's own rate (averaged over the period).
+- The legacy `fac` field on a tariff object is **not** used for auto-fill — leave FPPA to `fppa.js`.
+
+---
+
+## Advanced / optional fields
+
+- `supplyTypes: [ … ]` on a category — sub-divide into urban/rural/lifeline variants (each with its
+  own `fixedCharge`/`energySlabs`/`additionalCharges`); see Uttar Pradesh for examples.
+- `excessDemandRate: <₹/kW>` on a tariff — enables the excess-demand penalty and makes the category
+  "demand-billed" (its fixed charge bills on the recorded Maximum Demand instead of sanctioned load).
+- `currentRatesFrom: "YYYY-MM-DD"` at the state level + `rateHistory: [ … ]` on a tariff — for
+  date-versioned historical rates (bills dated before the current set resolve to the older rates).
+
+---
+
+## Easiest way: the in-browser editor
+
+Open **`/editor.html`**, load a state (or start a new one), edit the rates/slabs/FPPA in a form
+(it validates and previews using the real engine), then **Download** the generated
+`js/tariffs/<state>.js` and the regenerated `fppa.js`. No hand-editing required.
