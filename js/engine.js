@@ -80,20 +80,25 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
   const currentLabel     = discom.tariffYear ? `FY ${discom.tariffYear}` : 'Current rates';
   const eff              = resolveDatedTariff(tariff, billingDate, currentRatesFrom, currentLabel);
 
-  // Use billed demand for fixed charge calculation (commercial); falls back to connected load
+  // Maximum demand (billed demand) recorded this period; falls back to connected load.
   const effectiveDemand = billedDemandKw || connectedLoadKw;
+  // Demand-billed categories (those with an excess-demand rate, i.e. commercial/HT) charge the
+  // fixed/demand component on the recorded MD; others (e.g. domestic) bill on the sanctioned
+  // load regardless of MD. This keeps an entered MD from wrongly lowering a domestic fixed charge.
+  const isDemandBilled = !!eff.excessDemandRate;
+  const demandForFixed = isDemandBilled ? effectiveDemand : connectedLoadKw;
 
   const billingMonths = billingPeriodDays ? billingPeriodDays / 30 : 1;
   // Fixed/demand charge is a per-MONTH charge → multiply by the whole months in the period.
   // Whole-month rounding matches real UPPCL bills (a ~33-day cycle bills 1 month, not 1.1).
   const fixedChargeMonths = Math.max(1, Math.round(billingMonths));
-  const fixedPerMonth     = resolveFixedCharge(eff.fixedCharge, effectiveDemand);
+  const fixedPerMonth     = resolveFixedCharge(eff.fixedCharge, demandForFixed);
   const fixedCharge       = +(fixedPerMonth * fixedChargeMonths).toFixed(2);
 
   const slabBreakdown = calculateEnergySlabs(eff.energySlabs, units, billingMonths);
   const totalEnergy   = slabBreakdown.reduce((s, r) => s + r.amount, 0);
 
-  // Excess demand penalty: charged when billed demand exceeds sanctioned load
+  // Excess demand penalty: charged when billed demand (MD) exceeds sanctioned load
   const excessDemand        = Math.max(0, effectiveDemand - connectedLoadKw);
   const excessDemandRate    = eff.excessDemandRate || 0;
   const excessDemandPenalty = (excessDemand > 0 && excessDemandRate)

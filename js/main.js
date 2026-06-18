@@ -67,6 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('fromDate').addEventListener('change', () => {
     updateBillingPeriod();
+    // From Date changes the month span → re-resolve the per-month FPPA average + tariff period
+    prefillFac(discomEl.value, categoryEl.value, supplyTypeEl.value);
+    updateTariffPeriodHint();
     checkLifelineLimits();     // period length changes the prorated unit cap
   });
   document.getElementById('toDate').addEventListener('change', () => {

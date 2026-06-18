@@ -7,7 +7,7 @@ import {
 } from './tariffs/registry.js';
 import { resolveFppaForDiscom } from './tariffs/fppa.js';
 import { calculateBill } from './engine.js';
-import { renderBill } from './renderer.js';
+import { renderBill, renderRevisionBill } from './renderer.js';
 
 // ─── Toast ────────────────────────────────────────────────────────────────────
 
@@ -235,6 +235,21 @@ function setFppaSource(text, cls) {
   srcEl.style.display = 'block';
 }
 
+// Calendar months (15th of each) spanned by a from→to ISO date range (capped for safety).
+function fppaMonthDates(fromISO, toISO) {
+  const f = new Date(fromISO), t = new Date(toISO);
+  if (isNaN(f) || isNaN(t) || t < f) return [];
+  const out = [];
+  let y = f.getFullYear(), m = f.getMonth();
+  for (let i = 0; i < 600 && (y < t.getFullYear() || (y === t.getFullYear() && m <= t.getMonth())); i++) {
+    out.push(new Date(y, m, 15));
+    if (++m > 11) { m = 0; y++; }
+  }
+  return out;
+}
+
+const MON_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
 export function prefillFac(discomId, categoryId, supplyTypeId) {
   const rateEl = document.getElementById('facRate');
   const modeEl = document.getElementById('facMode');
@@ -243,7 +258,29 @@ export function prefillFac(discomId, categoryId, supplyTypeId) {
   // Manual mode: never overwrite the user's entered value
   if (autoEl && !autoEl.checked) { updateFacUnitLabel(); return; }
 
-  // 1) Government-verified notified FPPA for this billing cycle takes priority
+  // Multi-month bills: FPPA is notified PER MONTH, so apply each month's own rate rather than
+  // one rate throughout. Per-month consumption isn't known, so we average the monthly rates
+  // (equivalent to applying each month's rate to an even share of the period's charges).
+  const fromV = document.getElementById('fromDate')?.value;
+  const toV   = document.getElementById('toDate')?.value || getBillingDate();
+  const months = (fromV && toV) ? fppaMonthDates(fromV, toV) : [];
+  if (months.length > 1) {
+    const entries = months.map(d => resolveFppaForDiscom(discomId, d));
+    const mode = entries.some(e => e && e.mode === 'percent') ? 'percent' : 'per_unit';
+    const rates = entries.map(e => (e ? e.rate : 0));   // months with no notice → 0 that month
+    const avg = Math.round((rates.reduce((a, b) => a + b, 0) / rates.length) * 100) / 100;
+    rateEl.value = avg;
+    if (modeEl) modeEl.value = mode;
+    const unit = mode === 'percent' ? '%' : '';
+    const note = months.length <= 6
+      ? `✓ Avg of ${months.length} months — ${months.map((d, i) => `${MON_ABBR[d.getMonth()]} ${String(d.getFullYear()).slice(2)} ${rates[i]}${unit}`).join(', ')} = ${avg}${unit}`
+      : `✓ Avg of ${months.length} monthly FPPA rates = ${avg}${unit} (auto)`;
+    setFppaSource(note, 'verified');
+    updateFacUnitLabel();
+    return;
+  }
+
+  // Single-month: government-verified notified FPPA for this billing cycle takes priority
   const verified = resolveFppaForDiscom(discomId, getBillingDate());
   if (verified) {
     rateEl.value = verified.rate;
@@ -253,9 +290,7 @@ export function prefillFac(discomId, categoryId, supplyTypeId) {
     return;
   }
 
-  // 2) No verified value on record for this period → default to 0 (editable).
-  // FPPA is notified per billing cycle; many periods genuinely had none, so we don't
-  // assume the static tariff default. Enter it manually if your bill shows one.
+  // No verified value on record for this period → default to 0 (editable).
   rateEl.value = 0;
   if (modeEl) modeEl.value = 'per_unit';
   setFppaSource('No verified FPPA on record for this period — defaulted to 0 (enter manually if your bill shows one).', '');
@@ -574,12 +609,11 @@ export function updateBillingPeriod() {
   updateCalcButton();
 }
 
-export function updateBilledDemandVisibility(discomId, categoryId, supplyTypeId) {
-  const tariff = getEffectiveTariff(discomId, categoryId, supplyTypeId);
-  const group  = document.getElementById('billedDemandGroup');
-  // In Advanced mode the MD column supplies billed demand, so hide the standalone field.
-  const show = !!(tariff && tariff.excessDemandRate) && getMeterMode() !== 'advanced';
-  if (group) group.style.display = show ? 'block' : 'none';
+export function updateBilledDemandVisibility() {
+  const group = document.getElementById('billedDemandGroup');
+  // Maximum Demand is shown on the main page in Simple/TOD modes; in Advanced the MD column
+  // supplies it, so the standalone field is hidden there.
+  if (group) group.style.display = (getMeterMode() === 'advanced') ? 'none' : 'block';
 }
 
 // ─── Lifeline supply types (UP) ────────────────────────────────────────────────
@@ -673,6 +707,82 @@ export function checkLifelineLimits() {
   showToast(msg);
 }
 
+// ─── Multi-month bill revision (month-by-month, compounding LPSC) ───────────────
+const round2 = n => Math.round(n * 100) / 100;
+
+// Builds the month-by-month ledger: total units split evenly across the months; each month's
+// bill computed at that month's own FPPA/tariff; LPSC compounded on the running balance
+// (charged on the prior balance, so a month's bill first attracts LPSC the next month);
+// dated payments applied in their month; undated payments + adjustments applied at the end.
+export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalUnits,
+    connectedLoadKw, billedDemandKw, fromISO, toISO, fppaAuto, manualFacRate, manualFacMode,
+    lpscRate, previousArrear, arrearLpsc, payments, adjustments, delhiSubsidy }) {
+  const months = fppaMonthDates(fromISO, toISO);
+  const N = months.length || 1;
+  const unitsPerMonth = totalUnits / N;
+
+  const payByMonth = {};
+  let undatedPay = 0;
+  (payments || []).forEach(p => {
+    if (p.date) { const k = p.date.slice(0, 7); payByMonth[k] = (payByMonth[k] || 0) + p.amount; }
+    else undatedPay += p.amount;
+  });
+
+  let balance = (previousArrear || 0) + (arrearLpsc || 0);
+  const startArrear = balance;
+  const rows = [];
+  let totalCharges = 0, totalLpsc = 0, totalPay = 0;
+  let discom = null, category = null, supplyTypeName = null;
+
+  months.forEach(d => {
+    const ym = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+    const carriedIn = balance;
+    const lpsc = carriedIn > 0 ? round2(carriedIn * (lpscRate || 0) / 100) : 0;
+    balance += lpsc;
+
+    let facRate, facMode;
+    if (fppaAuto) {
+      const f = resolveFppaForDiscom(discomId, d);
+      facRate = f ? f.rate : 0;
+      facMode = (f && f.mode === 'percent') ? 'percent' : 'per_unit';
+    } else { facRate = manualFacRate; facMode = manualFacMode; }
+
+    const mb = calculateBill({
+      discomId, categoryId, supplyTypeId, units: unitsPerMonth,
+      connectedLoadKw, billedDemandKw, billingPeriodDays: 30, billingDate: ym + '-15',
+      facRate, facMode, arrears: 0, arrearLpsc: 0, lpscRate: 0, currentLpscMonths: 0,
+      lpscApplicable: false, payments: [], adjustments: [], delhiSubsidy, todUnits: null,
+    });
+    const charges = mb ? mb.currentNet : 0;
+    if (mb && !discom) { discom = mb.discom; category = mb.category; supplyTypeName = mb.supplyTypeName; }
+    balance += charges;
+
+    const pay = payByMonth[ym] || 0;
+    balance -= pay;
+
+    rows.push({
+      label: `${MON_ABBR[d.getMonth()]} ${d.getFullYear()}`,
+      units: round2(unitsPerMonth), fppaRate: facRate, fppaMode: facMode,
+      lpsc, charges, payment: pay, balance: round2(balance),
+    });
+    totalCharges += charges; totalLpsc += lpsc; totalPay += pay;
+  });
+
+  const totalAdj = (adjustments || []).reduce((s, a) => s + (a.amount || 0), 0);
+  balance -= undatedPay;
+  balance += totalAdj;
+  totalPay += undatedPay;
+
+  return {
+    rows, monthsCount: N, totalUnits, unitsPerMonth: round2(unitsPerMonth),
+    startArrear: round2(startArrear), lpscRate: lpscRate || 0,
+    totalCharges: round2(totalCharges), totalLpsc: round2(totalLpsc),
+    totalPay: round2(totalPay), totalAdj: round2(totalAdj),
+    totalPayable: Math.round(balance),
+    discom, category, supplyTypeName, connectedLoadKw, billedDemandKw,
+  };
+}
+
 export function doCalculate() {
   if (!canCalculate()) return;
   checkLifelineLimits();   // safety net for programmatic flows (e.g. shared-link load)
@@ -699,6 +809,33 @@ export function doCalculate() {
   const billingPeriodDays = getBillingPeriodDays();
   const billingDate       = getBillingDate();
   const todUnits          = getTodUnits();
+
+  // Multi-month bill revision: when LPSC applies over a period spanning ≥2 months, bill each
+  // month separately and compound LPSC on the running balance.
+  const fromISO = document.getElementById('fromDate').value;
+  const toISO   = document.getElementById('toDate').value;
+  const revMonths = (fromISO && toISO) ? fppaMonthDates(fromISO, toISO) : [];
+  if (lpscApplicable && revMonths.length >= 2 && units != null) {
+    const ledger = buildRevisionLedger({
+      discomId, categoryId, supplyTypeId, totalUnits: units,
+      connectedLoadKw: load, billedDemandKw, fromISO, toISO,
+      fppaAuto: document.getElementById('fppaAuto')?.checked !== false,
+      manualFacRate: facRate, manualFacMode: facMode,
+      lpscRate, previousArrear: arrears, arrearLpsc,
+      payments: getPayments(), adjustments: getAdjustments(), delhiSubsidy,
+    });
+    const panel = document.getElementById('billPanel');
+    panel.innerHTML = renderRevisionBill({
+      ledger,
+      consumerName: document.getElementById('consumerName').value.trim(),
+      accountNo:    document.getElementById('accountNo').value.trim(),
+      address:      document.getElementById('address').value.trim(),
+      meterNo:      document.getElementById('meterNo').value.trim(),
+      fromDate: fromISO, toDate: toISO,
+    });
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
 
   const result = calculateBill({
     discomId, categoryId, supplyTypeId, units, connectedLoadKw: load,

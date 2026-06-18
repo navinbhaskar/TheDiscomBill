@@ -356,7 +356,7 @@ export function renderBill(params) {
         </thead>
         <tbody>
           <tr class="fixed-row">
-            <td>Demand / Fixed Charge${billedDemandKw !== connectedLoadKw ? ` (${billedDemandKw.toFixed(2)} kW)` : ''}${fixedChargeMonths > 1 ? ` <span class="fixed-months">(${formatINR(fixedPerMonth)}/mo × ${fixedChargeMonths} months)</span>` : ''}</td>
+            <td>Demand / Fixed Charge${(excessDemandRate && billedDemandKw !== connectedLoadKw) ? ` (MD ${billedDemandKw.toFixed(2)} kW)` : ''}${fixedChargeMonths > 1 ? ` <span class="fixed-months">(${formatINR(fixedPerMonth)}/mo × ${fixedChargeMonths} months)</span>` : ''}</td>
             <td></td><td></td>
             <td class="num amt">${formatINR(fixedCharge)}</td>
           </tr>
@@ -401,4 +401,138 @@ export function renderBill(params) {
     </div>
   </div>
   ${billExtras}`;
+}
+
+// ─── Multi-month bill revision (month-by-month, compounding LPSC) ───────────────
+export function renderRevisionBill(params) {
+  const { ledger, consumerName, accountNo, address, meterNo, fromDate, toDate } = params;
+  const { rows, monthsCount, totalUnits, unitsPerMonth, startArrear, lpscRate,
+          totalCharges, totalLpsc, totalPay, totalAdj, totalPayable,
+          discom, category, supplyTypeName, connectedLoadKw, billedDemandKw } = ledger;
+
+  const fmtDate = iso => { const d = new Date(iso); return isNaN(d) ? iso : d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }); };
+  const billDate = new Date();
+  const dueDate  = new Date(billDate); dueDate.setDate(dueDate.getDate() + 15);
+  const categoryLabel = supplyTypeName ? `${category.name} › ${supplyTypeName}` : (category ? category.name : '');
+  const fmtPlain = d => d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+
+  const startRow = startArrear > 0
+    ? `<tr class="rev-start-row"><td>Opening arrear (carried in)</td><td></td><td></td><td></td><td></td><td class="num amt">${formatINR(startArrear)}</td></tr>`
+    : '';
+
+  const monthRows = rows.map(r => `
+    <tr>
+      <td>${r.label}${r.fppaRate ? ` <span class="rev-fppa">FPPA ${r.fppaMode === 'percent' ? r.fppaRate + '%' : '₹' + r.fppaRate}</span>` : ''}</td>
+      <td class="num">${r.units.toLocaleString('en-IN')}</td>
+      <td class="num">${r.lpsc > 0 ? '+ ' + formatINR(r.lpsc) : '—'}</td>
+      <td class="num">${r.charges ? formatINR(r.charges) : '—'}</td>
+      <td class="num">${r.payment > 0 ? '− ' + formatINR(r.payment) : '—'}</td>
+      <td class="num amt">${formatINR(r.balance)}</td>
+    </tr>`).join('');
+
+  const adjRow = totalAdj !== 0
+    ? `<tr class="adjustment-bill-row"><td colspan="5">Adjustments</td><td class="num amt">${totalAdj >= 0 ? formatINR(totalAdj) : '− ' + formatINR(-totalAdj)}</td></tr>`
+    : '';
+
+  return `
+  <div class="bill-actions no-print">
+    <button class="btn-print" onclick="window.print()">🖨️ Print Bill</button>
+    <button class="btn-share" onclick="window.__shareBill && window.__shareBill()">🔗 Share</button>
+  </div>
+
+  <div class="bill-wrap">
+    <div class="bill-header">
+      <div class="bill-header-left">
+        <div class="bill-discom-icon">⚡</div>
+        <div>
+          <div class="bill-discom-name">${discom.name}</div>
+          <div class="bill-discom-full">${discom.fullName}</div>
+          <div class="bill-discom-area">${discom.area}</div>
+        </div>
+      </div>
+      <div class="bill-header-right">
+        <div class="bill-title-box">
+          <div class="bill-title-main">BILL REVISION</div>
+          <div class="bill-title-sub">Month-by-Month Estimate</div>
+          <div class="bill-tariff-year">Tariff Year: ${discom.tariffYear || '2024-25'}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bill-details-row">
+      <div class="bill-details-box">
+        <div class="bill-section-title">Consumer Details</div>
+        <table class="bill-info-table">
+          <tr><td>Name</td><td>: <strong>${consumerName || '—'}</strong></td></tr>
+          <tr><td>Account No.</td><td>: ${accountNo || '—'}</td></tr>
+          <tr><td>Address</td><td>: ${address || '—'}</td></tr>
+          <tr><td>Category</td><td>: ${categoryLabel}</td></tr>
+          <tr><td>Conn. Load</td><td>: ${connectedLoadKw} kW${billedDemandKw ? ` · MD ${billedDemandKw} kW` : ''}</td></tr>
+        </table>
+      </div>
+      <div class="bill-details-box">
+        <div class="bill-section-title">Revision Details</div>
+        <table class="bill-info-table">
+          <tr><td>Period</td><td>: <strong>${fmtDate(fromDate)} – ${fmtDate(toDate)}</strong></td></tr>
+          <tr><td>Months</td><td>: ${monthsCount}</td></tr>
+          <tr><td>Total Units</td><td>: ${totalUnits.toLocaleString('en-IN')} (~${unitsPerMonth}/mo)</td></tr>
+          <tr><td>Meter No.</td><td>: ${meterNo || '—'}</td></tr>
+          <tr><td>Bill Date</td><td>: ${fmtPlain(billDate)}</td></tr>
+          <tr><td>Due Date</td><td>: ${fmtPlain(dueDate)}</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="bill-charges-section">
+      <div class="bill-section-title">Month-by-Month Ledger (LPSC @ ${lpscRate}%/month, compounded)</div>
+      <table class="bill-charges-table rev-table">
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th class="num">Units</th>
+            <th class="num">LPSC</th>
+            <th class="num">Charges</th>
+            <th class="num">Payment</th>
+            <th class="num">Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${startRow}
+          ${monthRows}
+        </tbody>
+        <tfoot>
+          <tr class="subtotal-row">
+            <td><strong>Totals</strong></td>
+            <td></td>
+            <td class="num"><strong>${formatINR(totalLpsc)}</strong></td>
+            <td class="num"><strong>${formatINR(totalCharges)}</strong></td>
+            <td class="num"><strong>${totalPay > 0 ? '− ' + formatINR(totalPay) : '—'}</strong></td>
+            <td></td>
+          </tr>
+          ${adjRow}
+          <tr class="total-payable-row">
+            <td colspan="5"><strong>TOTAL AMOUNT PAYABLE</strong></td>
+            <td class="num total-amt"><strong>₹ ${Math.max(0, totalPayable).toLocaleString('en-IN')}</strong></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="bill-words">
+      Amount in Words: <em>${numberToWords(Math.max(0, totalPayable))}</em>
+    </div>
+
+    <div class="bill-category-note">
+      ℹ️ ${monthsCount}-month revision: ${totalUnits.toLocaleString('en-IN')} units split evenly (~${unitsPerMonth}/month).
+      Each month is billed at its own FPPA / tariff for that month. Late Payment Surcharge is charged at
+      <strong>${lpscRate}% per month on the running balance</strong> (so each month's bill first attracts LPSC the
+      following month) and compounds. Payments are applied on their dates.
+    </div>
+
+    <div class="bill-disclaimer">
+      <strong>⚠ PROVISIONAL — BILL REVISION</strong> – Estimated month-by-month bill for reference only.
+      Consumption is assumed uniform across the period; actual monthly readings and surcharges from ${discom.name} may differ.
+      ${discom.website ? `<br>Official website: <a href="${discom.website}" target="_blank" rel="noopener">${discom.website}</a>` : ''}
+    </div>
+  </div>`;
 }
