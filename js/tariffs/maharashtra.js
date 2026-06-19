@@ -5,6 +5,8 @@
 
 export default {
   state: "Maharashtra",
+  // MERC: demand exceeding contract demand is billed at 150% of the normal demand-charge rate.
+  excessDemand: { multiplier: 1.5, tolerancePct: 0 },
   discoms: [
     {
       id: "msedcl",

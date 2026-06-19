@@ -5,6 +5,9 @@
 
 export default {
   state: "Tamil Nadu",
+  // TNERC/TANGEDCO: for every kW of recorded demand over the sanctioned demand, 1% of the
+  // total energy charges is levied as the excess-demand charge.
+  excessDemand: { pctEnergyPerKw: 1, tolerancePct: 0 },
   discoms: [
     {
       id: "tangedco",

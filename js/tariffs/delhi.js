@@ -5,6 +5,8 @@
 
 export default {
   state: "Delhi",
+  // DERC: a 30% surcharge on the fixed charge corresponding to the excess load (kW/kVA) for that billing cycle.
+  excessDemand: { multiplier: 0.30, tolerancePct: 0 },
   discoms: [
     {
       id: "brpl",

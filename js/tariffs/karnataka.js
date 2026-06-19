@@ -5,6 +5,8 @@
 
 export default {
   state: "Karnataka",
+  // KERC/BESCOM: demand exceeding the sanctioned demand is billed at 1.5× the normal demand-charge rate.
+  excessDemand: { multiplier: 1.5, tolerancePct: 0 },
   discoms: [
     {
       id: "bescom",

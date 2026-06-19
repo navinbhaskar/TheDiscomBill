@@ -5,6 +5,8 @@
 
 export default {
   state: "Gujarat",
+  // GERC: demand exceeding contract demand attracts a flat penal demand charge (~₹360/kVA, FY2025-26) on the excess.
+  excessDemand: { rate: 360, tolerancePct: 0 },
   discoms: [
     {
       id: "ugvcl",

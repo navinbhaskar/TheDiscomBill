@@ -194,8 +194,18 @@ dated windows:
 
 - `supplyTypes: [ … ]` on a category — sub-divide into urban/rural/lifeline variants (each with its
   own `fixedCharge`/`energySlabs`/`additionalCharges`); see Uttar Pradesh for examples.
-- `excessDemandRate: <₹/kW>` on a tariff — enables the excess-demand penalty and makes the category
-  "demand-billed" (its fixed charge bills on the recorded Maximum Demand instead of sanctioned load).
+- `excessDemandRate: <₹/kW>` on a tariff — explicit flat penalty on demand over the sanctioned
+  load; also flags the category "demand-billed" (its fixed charge bills on the recorded Maximum
+  Demand instead of sanctioned load).
+- `excessDemand: { … }` — the richer excess-demand-penalty model, settable **at the state level**
+  (applies to every category) or on a tariff. Shapes:
+  - `{ multiplier: 1.5 }` → penalty = 1.5 × the per-kW demand rate, on the excess kW (most states).
+  - `{ rate: 360 }` → a flat ₹/kW on the excess (e.g. Gujarat).
+  - `{ pctEnergyPerKw: 1 }` → 1% of the energy charges per excess kW (e.g. Tamil Nadu).
+  - add `tolerancePct: 10` to penalise only demand above 110% of the sanctioned load.
+  - If nothing is defined anywhere, the engine default is `{ multiplier: 2 }` (the common 2×-the-
+    demand-rate rule). Known states (MH 1.5×, GJ flat, KA 1.5×, TN %-of-energy, DL 30%-of-fixed)
+    override this at the state level; the rest fall back to the 2× default.
 - `currentRatesFrom: "YYYY-MM-DD"` at the state level + `rateHistory: [ … ]` on a tariff — for
   date-versioned historical rates (bills dated before the current set resolve to the older rates).
 

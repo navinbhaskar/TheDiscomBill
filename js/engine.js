@@ -9,6 +9,12 @@ import {
   fyStart,
 } from './tariffs/registry.js';
 
+// Default excess (exceeding) demand penalty when a tariff/state defines none: the most common
+// Indian SERC rule — the demand above the sanctioned/contract load is charged at 2× the normal
+// per-kW demand rate, with no tolerance band. States with a known rule override this (state-level
+// `excessDemand`), and a category may override with its own `excessDemand` or flat `excessDemandRate`.
+export const DEFAULT_EXCESS_DEMAND = { multiplier: 2, tolerancePct: 0 };
+
 export function resolveFixedCharge(fixedCharge, connectedLoadKw) {
   if (typeof fixedCharge === 'number') return fixedCharge;
   if (!fixedCharge) return 0;
@@ -82,10 +88,11 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
 
   // Maximum demand (billed demand) recorded this period; falls back to connected load.
   const effectiveDemand = billedDemandKw || connectedLoadKw;
-  // Demand-billed categories (those with an excess-demand rate, i.e. commercial/HT) charge the
-  // fixed/demand component on the recorded MD; others (e.g. domestic) bill on the sanctioned
-  // load regardless of MD. This keeps an entered MD from wrongly lowering a domestic fixed charge.
-  const isDemandBilled = !!eff.excessDemandRate;
+  // Demand-billed categories (an explicit excess-demand rate/config, i.e. commercial/HT) charge the
+  // fixed/demand component on the recorded MD; others (e.g. domestic) bill on the sanctioned load
+  // regardless of MD. This keeps an entered MD from wrongly lowering a domestic fixed charge.
+  // (A state-level/global default penalty does NOT flag a category as MD-billed.)
+  const isDemandBilled = !!eff.excessDemandRate || !!eff.excessDemand;
   const demandForFixed = isDemandBilled ? effectiveDemand : connectedLoadKw;
 
   const billingMonths = billingPeriodDays ? billingPeriodDays / 30 : 1;
@@ -98,12 +105,38 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
   const slabBreakdown = calculateEnergySlabs(eff.energySlabs, units, billingMonths);
   const totalEnergy   = slabBreakdown.reduce((s, r) => s + r.amount, 0);
 
-  // Excess demand penalty: charged when billed demand (MD) exceeds sanctioned load
-  const excessDemand        = Math.max(0, effectiveDemand - connectedLoadKw);
-  const excessDemandRate    = eff.excessDemandRate || 0;
-  const excessDemandPenalty = (excessDemand > 0 && excessDemandRate)
-    ? +(excessDemand * excessDemandRate).toFixed(2)
+  // ── Excess (exceeding) demand penalty ──────────────────────────────────────
+  // Charged when recorded MD exceeds the sanctioned load (beyond any tolerance band).
+  // Rate resolution, first match wins:
+  //   1. eff.excessDemandRate — explicit ₹/kW on the excess (also flags the category MD-billed)
+  //   2. eff.excessDemand → stateMeta.excessDemand → DEFAULT_EXCESS_DEMAND, each being
+  //      { rate? } (flat ₹/kW) or { multiplier? } (× the per-kW demand rate), with { tolerancePct? }.
+  // Per-kW demand rate to multiply: for per_kw fixed charges this is exactly the rate; for
+  // tiered/flat charges it's the fixed charge expressed per sanctioned kW (so a multiplier still
+  // applies, and e.g. Delhi's "30% of the fixed charge for the excess load" comes out correct).
+  const perKwDemandRate = connectedLoadKw > 0
+    ? resolveFixedCharge(eff.fixedCharge, connectedLoadKw) / connectedLoadKw
     : 0;
+  const exCfg = eff.excessDemand || (stateMeta && stateMeta.excessDemand) || DEFAULT_EXCESS_DEMAND;
+  const excessTolerancePct = (eff.excessDemandRate != null) ? 0 : (exCfg.tolerancePct || 0);
+  let excessDemandRate = 0, excessDemandMultiplier = null, excessPctEnergyPerKw = null;
+  if (eff.excessDemandRate) {
+    excessDemandRate = eff.excessDemandRate;
+  } else if (exCfg.rate) {
+    excessDemandRate = exCfg.rate;
+  } else if (exCfg.multiplier && perKwDemandRate > 0) {
+    excessDemandRate = +(exCfg.multiplier * perKwDemandRate).toFixed(2);
+    excessDemandMultiplier = exCfg.multiplier;
+  } else if (exCfg.pctEnergyPerKw) {
+    excessPctEnergyPerKw = exCfg.pctEnergyPerKw;   // e.g. TN: 1% of energy charges per excess kW
+  }
+  const excessThreshold = connectedLoadKw * (1 + excessTolerancePct / 100);
+  const excessDemand    = Math.max(0, +(effectiveDemand - excessThreshold).toFixed(2));
+  let excessDemandPenalty = 0;
+  if (excessDemand > 0) {
+    if (excessPctEnergyPerKw) excessDemandPenalty = +(excessDemand * excessPctEnergyPerKw / 100 * totalEnergy).toFixed(2);
+    else if (excessDemandRate)  excessDemandPenalty = +(excessDemand * excessDemandRate).toFixed(2);
+  }
 
   // TOD surcharge/rebate: 20% surcharge on peak units, 20% rebate on off-peak units
   // Computed proportionally from the slab-based energy amount
@@ -196,6 +229,9 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
     excessDemand: +excessDemand.toFixed(2),
     excessDemandPenalty,
     excessDemandRate,
+    excessDemandMultiplier,
+    excessDemandPctEnergyPerKw: excessPctEnergyPerKw,
+    excessDemandTolerancePct: excessTolerancePct,
     todUnits: todUnits || null,
     todPeakSurcharge,
     todOffPeakRebate,
