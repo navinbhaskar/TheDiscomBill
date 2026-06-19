@@ -86,6 +86,7 @@ export function renderBill(params) {
           units, connectedLoadKw, billedDemandKw,
           fixedCharge, fixedChargeMonths, fixedPerMonth, slabBreakdown, totalEnergy,
           excessDemand, excessDemandPenalty, excessDemandRate,
+          excessDemandMultiplier, excessDemandPctEnergyPerKw, excessDemandTolerancePct,
           todUnits, todPeakSurcharge, todOffPeakRebate,
           extraCharges, facAmount, facRate, facMode,
           tariffPeriodLabel, tariffEstimated, tariffRates,
@@ -129,9 +130,13 @@ export function renderBill(params) {
       <td class="num amt">${formatINR(c.amount)}</td>
     </tr>`).join('');
 
+  const excessBasis = excessDemandPctEnergyPerKw
+    ? `${excessDemandPctEnergyPerKw}% of energy/kW`
+    : `₹ ${excessDemandRate}/kW${excessDemandMultiplier ? ` (${excessDemandMultiplier}× demand rate)` : ''}`;
+  const excessTolNote = excessDemandTolerancePct ? `, above ${excessDemandTolerancePct}% of load` : '';
   const excessDemandRow = excessDemandPenalty > 0 ? `
     <tr class="excess-demand-row">
-      <td class="indent">Excess Demand Penalty (${excessDemand.toFixed(2)} kW excess × ₹ ${excessDemandRate}/kW)</td>
+      <td class="indent">Excess Demand Penalty (${excessDemand.toFixed(2)} kW × ${excessBasis}${excessTolNote})</td>
       <td></td><td></td>
       <td class="num amt">${formatINR(excessDemandPenalty)}</td>
     </tr>` : '';
@@ -407,7 +412,9 @@ export function renderBill(params) {
 export function renderRevisionBill(params) {
   const { ledger, consumerName, accountNo, address, meterNo, fromDate, toDate } = params;
   const { rows, monthsCount, totalUnits, unitsPerMonth, startArrear, lpscRate,
-          totalCharges, totalLpsc, totalPay, totalAdj, totalPayable,
+          totalEnergy, totalDemand, totalED, totalExcess, totalFppa, totalSubsidy, energySlabs,
+          fixedPerMonth, edRate,
+          arrear, previousLpsc, totalCharges, totalLpsc, totalPay, totalAdj, totalPayable,
           discom, category, supplyTypeName, connectedLoadKw, billedDemandKw } = ledger;
 
   const fmtDate = iso => { const d = new Date(iso); return isNaN(d) ? iso : d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }); };
@@ -415,24 +422,109 @@ export function renderRevisionBill(params) {
   const dueDate  = new Date(billDate); dueDate.setDate(dueDate.getDate() + 15);
   const categoryLabel = supplyTypeName ? `${category.name} › ${supplyTypeName}` : (category ? category.name : '');
   const fmtPlain = d => d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+  const signed = n => n < 0 ? '− ' + formatINR(-n) : formatINR(n);
+  const line = (label, amount, cls = '') => `<tr class="${cls}"><td>${label}</td><td class="num amt">${signed(amount)}</td></tr>`;
 
+  // ── Aggregated summary (totals over all months) ──
+  const arrLpscRows = [
+    arrear > 0      ? line('Arrear Amount', arrear) : '',
+    previousLpsc > 0 ? line('Previous LPSC', previousLpsc) : '',
+    totalLpsc > 0    ? line('Current LPSC (compounded)', totalLpsc) : '',
+    totalPay > 0     ? `<tr class="payment-bill-row"><td>Payments Received</td><td class="num amt">− ${formatINR(totalPay)}</td></tr>` : '',
+    totalAdj !== 0   ? line('Adjustments', totalAdj, 'adjustment-bill-row') : '',
+  ].filter(Boolean).join('');
+  const arrSection = arrLpscRows
+    ? `<tr class="section-header-row"><td colspan="2">Arrears &amp; Late Payment Charges</td></tr>${arrLpscRows}`
+    : '';
+
+  const slabRows = (energySlabs || []).map(s =>
+    `<tr><td class="indent">Energy @ ₹ ${s.rate.toFixed(2)}/unit — ${s.units.toLocaleString('en-IN')} units</td><td class="num amt">${formatINR(s.amount)}</td></tr>`
+  ).join('');
+
+  const summaryTable = `
+    <table class="bill-charges-table">
+      <thead><tr><th>Description</th><th class="num">Amount (₹)</th></tr></thead>
+      <tbody>
+        ${slabRows}
+        <tr class="subtotal-row"><td><strong>Energy Charges</strong></td><td class="num amt"><strong>${formatINR(totalEnergy)}</strong></td></tr>
+        ${line(`Fixed Charge${monthsCount > 1 ? ` (${formatINR(fixedPerMonth)}/mo × ${monthsCount} months)` : ''}`, totalDemand)}
+        ${totalExcess > 0 ? line('Excess Demand Penalty', totalExcess) : ''}
+        ${line('FPPA Surcharge', totalFppa)}
+        ${totalED ? line(`Electricity Duty${edRate ? ` @ ${edRate}%` : ''}`, totalED) : ''}
+        ${totalSubsidy > 0 ? `<tr class="subsidy-row"><td>Subsidy</td><td class="num amt">− ${formatINR(totalSubsidy)}</td></tr>` : ''}
+      </tbody>
+      <tfoot>
+        <tr class="net-row"><td><strong>Net Current Bill</strong></td><td class="num net-amt"><strong>${formatINR(totalCharges)}</strong></td></tr>
+        ${arrSection}
+        <tr class="total-payable-row"><td><strong>TOTAL AMOUNT PAYABLE</strong></td><td class="num total-amt"><strong>₹ ${Math.max(0, totalPayable).toLocaleString('en-IN')}</strong></td></tr>
+      </tfoot>
+    </table>`;
+
+  // ── Expandable: month-by-month ledger ──
+  const showExcess = totalExcess > 0;   // only show the Excess column when a penalty applies
+  const cell = (v, cls = 'num') => `<td class="${cls}">${v}</td>`;
+  const headCols = ['Month', 'Units', 'Energy', 'Fixed', ...(showExcess ? ['Excess'] : []), 'FPPA', 'ED', 'LPSC', 'Payment', 'Balance'];
+  const thead = `<tr>${headCols.map((h, i) => `<th class="${i === 0 ? '' : 'num'}">${h}</th>`).join('')}</tr>`;
+  const emptyMid = headCols.length - 2;   // cells between Month and Balance
   const startRow = startArrear > 0
-    ? `<tr class="rev-start-row"><td>Opening arrear (carried in)</td><td></td><td></td><td></td><td></td><td class="num amt">${formatINR(startArrear)}</td></tr>`
+    ? `<tr class="rev-start-row"><td>Opening arrear (carried in)</td>${'<td></td>'.repeat(emptyMid)}<td class="num amt">${formatINR(startArrear)}</td></tr>`
     : '';
+  const monthRows = rows.map(r => `<tr>${[
+    `<td>${r.label}</td>`,
+    cell(r.units.toLocaleString('en-IN')),
+    cell(r.energy ? formatINR(r.energy) : '—'),
+    cell(r.fixed ? formatINR(r.fixed) : '—'),
+    ...(showExcess ? [cell(r.excess ? formatINR(r.excess) : '—')] : []),
+    cell(r.fppaAmount ? signed(r.fppaAmount) : '—'),
+    cell(r.ed ? formatINR(r.ed) : '—'),
+    cell(r.lpsc > 0 ? '+ ' + formatINR(r.lpsc) : '—'),
+    cell(r.payment > 0 ? '− ' + formatINR(r.payment) : '—'),
+    cell(formatINR(r.balance), 'num amt'),
+  ].join('')}</tr>`).join('');
+  const footCells = [
+    `<td><strong>Totals</strong></td>`,
+    `<td></td>`,
+    `<td class="num"><strong>${formatINR(totalEnergy)}</strong></td>`,
+    `<td class="num"><strong>${formatINR(totalDemand)}</strong></td>`,
+    ...(showExcess ? [`<td class="num"><strong>${formatINR(totalExcess)}</strong></td>`] : []),
+    `<td class="num"><strong>${signed(totalFppa)}</strong></td>`,
+    `<td class="num"><strong>${formatINR(totalED)}</strong></td>`,
+    `<td class="num"><strong>${formatINR(totalLpsc)}</strong></td>`,
+    `<td class="num"><strong>${totalPay > 0 ? '− ' + formatINR(totalPay) : '—'}</strong></td>`,
+    `<td class="num amt"><strong>${formatINR(Math.max(0, totalPayable))}</strong></td>`,
+  ].join('');
+  const ledgerBody = `
+    <div class="acc-note">Per-month charges itemised: <strong>Energy</strong>, <strong>Fixed</strong> (demand)${showExcess ? ', <strong>Excess</strong> (demand penalty)' : ''}, <strong>FPPA</strong> and <strong>ED</strong> (Electricity Duty). LPSC compounds on the running balance.</div>
+    <div class="rev-table-scroll">
+      <table class="bill-charges-table rev-table">
+        <thead>${thead}</thead>
+        <tbody>${startRow}${monthRows}</tbody>
+        <tfoot><tr class="subtotal-row">${footCells}</tr></tfoot>
+      </table>
+    </div>`;
 
-  const monthRows = rows.map(r => `
+  // ── Expandable: month-by-month FPPA ──
+  const fppaRows = rows.map(r => `
     <tr>
-      <td>${r.label}${r.fppaRate ? ` <span class="rev-fppa">FPPA ${r.fppaMode === 'percent' ? r.fppaRate + '%' : '₹' + r.fppaRate}</span>` : ''}</td>
-      <td class="num">${r.units.toLocaleString('en-IN')}</td>
-      <td class="num">${r.lpsc > 0 ? '+ ' + formatINR(r.lpsc) : '—'}</td>
-      <td class="num">${r.charges ? formatINR(r.charges) : '—'}</td>
-      <td class="num">${r.payment > 0 ? '− ' + formatINR(r.payment) : '—'}</td>
-      <td class="num amt">${formatINR(r.balance)}</td>
+      <td>${r.label}</td>
+      <td class="num">${r.fppaMode === 'percent' ? r.fppaRate + '%' : '₹' + r.fppaRate + '/u'}</td>
+      <td class="num">${r.fppaMode === 'percent' ? formatINR(r.fppaBase) : r.units.toLocaleString('en-IN') + ' u'}</td>
+      <td class="num amt">${signed(r.fppaAmount)}</td>
     </tr>`).join('');
+  const fppaBody = `
+    <div class="acc-note">Each month uses its own notified FPPA rate, applied to that month's ${rows[0] && rows[0].fppaMode === 'percent' ? 'fixed + energy + excess charges (base)' : 'units'}.</div>
+    <table class="acc-table fppa-month-table">
+      <thead><tr><th>Month</th><th class="num">Rate</th><th class="num">${rows[0] && rows[0].fppaMode === 'percent' ? 'Base' : 'Units'}</th><th class="num">FPPA</th></tr></thead>
+      <tbody>${fppaRows}</tbody>
+      <tfoot><tr class="subtotal-row"><td colspan="3"><strong>Total FPPA</strong></td><td class="num amt"><strong>${signed(totalFppa)}</strong></td></tr></tfoot>
+    </table>`;
 
-  const adjRow = totalAdj !== 0
-    ? `<tr class="adjustment-bill-row"><td colspan="5">Adjustments</td><td class="num amt">${totalAdj >= 0 ? formatINR(totalAdj) : '− ' + formatINR(-totalAdj)}</td></tr>`
-    : '';
+  const expandables = `
+    <div class="bill-extras no-print">
+      <div class="bill-extras-title">Details (click + to expand)</div>
+      ${accordionItem('Month-by-Month Ledger', `${monthsCount} months · LPSC @ ${lpscRate}%/mo compounded on the running balance`, ledgerBody)}
+      ${accordionItem('Month-by-Month FPPA', 'Each month&rsquo;s fuel-surcharge rate and amount', fppaBody)}
+    </div>`;
 
   return `
   <div class="bill-actions no-print">
@@ -453,7 +545,7 @@ export function renderRevisionBill(params) {
       <div class="bill-header-right">
         <div class="bill-title-box">
           <div class="bill-title-main">BILL REVISION</div>
-          <div class="bill-title-sub">Month-by-Month Estimate</div>
+          <div class="bill-title-sub">Multi-Month Estimate</div>
           <div class="bill-tariff-year">Tariff Year: ${discom.tariffYear || '2024-25'}</div>
         </div>
       </div>
@@ -484,53 +576,25 @@ export function renderRevisionBill(params) {
     </div>
 
     <div class="bill-charges-section">
-      <div class="bill-section-title">Month-by-Month Ledger (LPSC @ ${lpscRate}%/month, compounded)</div>
-      <table class="bill-charges-table rev-table">
-        <thead>
-          <tr>
-            <th>Month</th>
-            <th class="num">Units</th>
-            <th class="num">LPSC</th>
-            <th class="num">Charges</th>
-            <th class="num">Payment</th>
-            <th class="num">Balance</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${startRow}
-          ${monthRows}
-        </tbody>
-        <tfoot>
-          <tr class="subtotal-row">
-            <td><strong>Totals</strong></td>
-            <td></td>
-            <td class="num"><strong>${formatINR(totalLpsc)}</strong></td>
-            <td class="num"><strong>${formatINR(totalCharges)}</strong></td>
-            <td class="num"><strong>${totalPay > 0 ? '− ' + formatINR(totalPay) : '—'}</strong></td>
-            <td></td>
-          </tr>
-          ${adjRow}
-          <tr class="total-payable-row">
-            <td colspan="5"><strong>TOTAL AMOUNT PAYABLE</strong></td>
-            <td class="num total-amt"><strong>₹ ${Math.max(0, totalPayable).toLocaleString('en-IN')}</strong></td>
-          </tr>
-        </tfoot>
-      </table>
+      <div class="bill-section-title">Bill Summary</div>
+      ${summaryTable}
     </div>
 
     <div class="bill-words">
       Amount in Words: <em>${numberToWords(Math.max(0, totalPayable))}</em>
     </div>
 
+    ${expandables}
+
     <div class="bill-category-note">
       ℹ️ ${monthsCount}-month revision: ${totalUnits.toLocaleString('en-IN')} units split evenly (~${unitsPerMonth}/month).
-      Each month is billed at its own FPPA / tariff for that month. Late Payment Surcharge is charged at
-      <strong>${lpscRate}% per month on the running balance</strong> (so each month's bill first attracts LPSC the
-      following month) and compounds. Payments are applied on their dates.
+      Each month is billed at its own FPPA / tariff. LPSC @ <strong>${lpscRate}%/month compounds on the running balance</strong>
+      (so each month's bill first attracts LPSC the following month). Payments are applied on their dates.
+      Expand the panels above for the month-by-month ledger and FPPA breakdown.
     </div>
 
     <div class="bill-disclaimer">
-      <strong>⚠ PROVISIONAL — BILL REVISION</strong> – Estimated month-by-month bill for reference only.
+      <strong>⚠ PROVISIONAL — BILL REVISION</strong> – Estimated multi-month bill for reference only.
       Consumption is assumed uniform across the period; actual monthly readings and surcharges from ${discom.name} may differ.
       ${discom.website ? `<br>Official website: <a href="${discom.website}" target="_blank" rel="noopener">${discom.website}</a>` : ''}
     </div>

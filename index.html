@@ -246,6 +246,13 @@
             </div>
           </div>
 
+          <!-- Maximum Demand — right after the units area; drives demand charge / excess-demand penalty -->
+          <div class="form-group" id="billedDemandGroup" style="display:none">
+            <label for="billedDemand">Maximum Demand (MD) (kW)</label>
+            <input type="number" id="billedDemand" placeholder="e.g., 4.33" min="0.1" step="0.01">
+            <small>Peak demand recorded by the meter this period. For demand-billed (commercial) categories it drives the demand charge and the excess-demand penalty when it exceeds the sanctioned load. Leave blank to bill on sanctioned load.</small>
+          </div>
+
           <div class="form-row">
             <div class="form-group">
               <label for="connectedLoad">Sanctioned Load (kW)</label>
@@ -268,12 +275,6 @@
               <small id="fppaSource" class="fppa-source" style="display:none"></small>
               <small>Fuel &amp; Power Purchase Adjustment. ₹/unit = (actual − base power cost) × units, or % of supply+demand charges (UP MYT 2025). Uncheck above (or type a value) to enter manually. Can be negative (credit).</small>
             </div>
-          </div>
-
-          <div class="form-group" id="billedDemandGroup" style="display:none">
-            <label for="billedDemand">Maximum Demand (MD) (kW)</label>
-            <input type="number" id="billedDemand" placeholder="e.g., 4.33" min="0.1" step="0.01">
-            <small>Peak demand recorded by the meter this period. For demand-billed (commercial) categories it drives the demand charge and the excess-demand penalty when it exceeds the sanctioned load. Leave blank to bill on sanctioned load.</small>
           </div>
 
           <div class="form-group" id="lpscApplicableGroup">

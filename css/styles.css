@@ -587,6 +587,9 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 /* Bill-revision ledger */
 .rev-fppa { font-size: 10px; font-weight: 600; color: var(--text-tertiary); white-space: nowrap; }
 .rev-start-row td { color: var(--text-secondary); font-style: italic; }
+.rev-table-scroll { overflow-x: auto; }
+.rev-table { min-width: 720px; }
+.rev-table th, .rev-table td { white-space: nowrap; }
 
 /* LPSC Applicable toggle */
 .lpsc-applicable-label { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 14px; cursor: pointer; }
@@ -849,20 +852,63 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
 }
 
 /* ─── Print ──────────────────────────────────────────────────────────────────── */
+/* The bill prints in pure black & white: colour is dropped, hierarchy is carried by
+   black borders, bold text, and light-grey emphasis bands that render cleanly on a
+   monochrome laser printer. */
 @media print {
+  @page { margin: 12mm; }
+
   .no-print, .site-header, .hero, .form-panel, .about-section, footer,
   .calculator-section > .calculator-grid > .form-panel { display: none !important; }
 
-  body { background: white; font-size: 12px; }
-
+  html, body { background: #fff !important; font-size: 12px; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .calculator-section { margin: 0; padding: 0; max-width: none; }
   .calculator-grid { display: block; }
-  .bill-panel { box-shadow: none; border-radius: 0; width: 100%; max-width: none; border: none; }
-  .bill-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .bill-charges-table tfoot .net-row td,
-  .bill-charges-table tfoot .total-payable-row td,
-  .bill-charges-table th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .bill-wrap { page-break-inside: avoid; }
+  .bill-panel { box-shadow: none; border-radius: 0; width: 100%; max-width: none; border: none; padding: 0; }
+
+  /* Force everything in the bill to black-on-white, no shadows/gradients */
+  .bill-wrap, .bill-wrap * {
+    color: #000 !important;
+    background: #fff !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .bill-wrap { page-break-inside: avoid; border: 1.5px solid #000; }
+  .bill-wrap a { color: #000 !important; text-decoration: underline; }
+
+  /* Header — white with a heavy rule instead of the blue gradient */
+  .bill-header { border-bottom: 2px solid #000; padding: 14px 16px; }
+  .bill-discom-name { font-weight: 800; }
+  .bill-title-main { border: 1.5px solid #000 !important; }
+
+  /* Section titles + detail/reading boxes framed in black */
+  .bill-section-title { color: #000 !important; border-bottom: 1px solid #000; }
+  .bill-details-box { border: 1px solid #000 !important; padding: 10px 12px; }
+  .bill-details-row { gap: 10px; }
+
+  /* Tables: black gridlines carry the structure once colour is gone */
+  .bill-charges-table th,
+  .bill-reading-table th { background: #e6e6e6 !important; font-weight: 700; border: 1px solid #000; }
+  .bill-charges-table td,
+  .bill-reading-table td,
+  .bill-reading-table th { border: 1px solid #777; }
+
+  /* Emphasis rows → light/medium grey bands (no colour) */
+  .bill-charges-table .fixed-row td,
+  .bill-charges-table .subtotal-row td,
+  .bill-charges-table tfoot .gross-row td { background: #f0f0f0 !important; font-weight: 700; }
+  .bill-charges-table .section-header-row td { background: #e0e0e0 !important; font-weight: 700; border-top: 1px solid #000; border-bottom: 1px solid #000; }
+  .bill-charges-table tfoot .net-row td { background: #dcdcdc !important; font-weight: 800; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; }
+  .bill-charges-table tfoot .total-payable-row td { background: #cccccc !important; font-weight: 800; border-top: 2px solid #000; border-bottom: 3px double #000; }
+
+  /* Words / notes / disclaimer / estimated banner → bordered white blocks */
+  .bill-words,
+  .bill-category-note,
+  .bill-disclaimer { border: 1px solid #000 !important; }
+  .bill-disclaimer { border-top: 1.5px solid #000 !important; }
+  .bill-estimated-banner { border: 1.5px solid #000 !important; border-left: 4px solid #000 !important; }
 }
 
 /* ─── TOD (Time-of-Day) Billing ──────────────────────────────────────────────── */

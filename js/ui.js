@@ -732,6 +732,10 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
   const startArrear = balance;
   const rows = [];
   let totalCharges = 0, totalLpsc = 0, totalPay = 0;
+  // component totals for the aggregated summary
+  let totalEnergy = 0, totalDemand = 0, totalED = 0, totalExcess = 0, totalFppa = 0, totalSubsidy = 0;
+  const slabAgg = {};   // aggregated energy slabs keyed by rate → { rate, units, amount }
+  let fixedPerMonth = 0, edRate = 0;
   let discom = null, category = null, supplyTypeName = null;
 
   months.forEach(d => {
@@ -753,8 +757,26 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
       facRate, facMode, arrears: 0, arrearLpsc: 0, lpscRate: 0, currentLpscMonths: 0,
       lpscApplicable: false, payments: [], adjustments: [], delhiSubsidy, todUnits: null,
     });
-    const charges = mb ? mb.currentNet : 0;
-    if (mb && !discom) { discom = mb.discom; category = mb.category; supplyTypeName = mb.supplyTypeName; }
+    const energy  = mb ? mb.totalEnergy : 0;
+    const demand  = mb ? mb.fixedCharge : 0;
+    const excess  = mb ? mb.excessDemandPenalty : 0;
+    const fppaAmt = mb ? mb.facAmount : 0;
+    const ed      = mb ? (mb.extraCharges || []).reduce((s, c) => s + c.amount, 0) : 0;
+    const subsidy = mb ? mb.subsidyAmount : 0;
+    // Month's net = sum of the itemised components, so the ledger columns reconcile exactly
+    const charges = Math.max(0, round2(energy + demand + excess + fppaAmt + ed - subsidy));
+    const fppaBase = round2(demand + energy + excess);   // matches the engine's percent FPPA base
+    if (mb) (mb.slabBreakdown || []).forEach(s => {
+      const k = s.rate;
+      if (!slabAgg[k]) slabAgg[k] = { rate: s.rate, units: 0, amount: 0 };
+      slabAgg[k].units += s.units; slabAgg[k].amount += s.amount;
+    });
+    if (mb && !discom) {
+      discom = mb.discom; category = mb.category; supplyTypeName = mb.supplyTypeName;
+      fixedPerMonth = mb.fixedPerMonth;
+      const edc = (mb.extraCharges || []).find(c => c.type === 'percent_total' || c.type === 'percent_energy');
+      if (edc) edRate = edc.rate;
+    }
     balance += charges;
 
     const pay = payByMonth[ym] || 0;
@@ -763,9 +785,14 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
     rows.push({
       label: `${MON_ABBR[d.getMonth()]} ${d.getFullYear()}`,
       units: round2(unitsPerMonth), fppaRate: facRate, fppaMode: facMode,
+      fppaBase, fppaAmount: round2(fppaAmt),
+      energy: round2(energy), fixed: round2(demand),
+      excess: round2(excess), ed: round2(ed),
       lpsc, charges, payment: pay, balance: round2(balance),
     });
     totalCharges += charges; totalLpsc += lpsc; totalPay += pay;
+    totalEnergy += energy; totalDemand += demand; totalED += ed;
+    totalExcess += excess; totalFppa += fppaAmt; totalSubsidy += subsidy;
   });
 
   const totalAdj = (adjustments || []).reduce((s, a) => s + (a.amount || 0), 0);
@@ -776,6 +803,12 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
   return {
     rows, monthsCount: N, totalUnits, unitsPerMonth: round2(unitsPerMonth),
     startArrear: round2(startArrear), lpscRate: lpscRate || 0,
+    arrear: round2(previousArrear || 0), previousLpsc: round2(arrearLpsc || 0),
+    totalEnergy: round2(totalEnergy), totalDemand: round2(totalDemand), totalED: round2(totalED),
+    totalExcess: round2(totalExcess), totalFppa: round2(totalFppa), totalSubsidy: round2(totalSubsidy),
+    energySlabs: Object.values(slabAgg).sort((a, b) => a.rate - b.rate)
+      .map(s => ({ rate: s.rate, units: round2(s.units), amount: round2(s.amount) })),
+    fixedPerMonth: round2(fixedPerMonth), edRate,
     totalCharges: round2(totalCharges), totalLpsc: round2(totalLpsc),
     totalPay: round2(totalPay), totalAdj: round2(totalAdj),
     totalPayable: Math.round(balance),
