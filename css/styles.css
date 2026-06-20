@@ -515,7 +515,8 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .dyn-row input[type="date"],
 .dyn-row input[type="text"],
 .dyn-row input[type="number"] { flex: 1; margin: 0; }
-.dyn-row input[type="date"] { flex: 1.4; }
+.dyn-row .date-field-wrap { flex: 1.4; }
+.dyn-row .date-field-wrap input { flex: 1; }
 .dyn-row .dyn-name { flex: 2; }
 .btn-remove-row {
   flex-shrink: 0;
@@ -856,7 +857,7 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
    black borders, bold text, and light-grey emphasis bands that render cleanly on a
    monochrome laser printer. */
 @media print {
-  @page { margin: 12mm; }
+  @page { margin: 9mm; }
 
   .no-print, .site-header, .hero, .form-panel, .about-section, footer,
   .calculator-section > .calculator-grid > .form-panel { display: none !important; }
@@ -888,20 +889,20 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
   .bill-details-box { border: 1px solid #000 !important; padding: 10px 12px; }
   .bill-details-row { gap: 10px; }
 
-  /* Tables: black gridlines carry the structure once colour is gone */
-  .bill-charges-table th,
-  .bill-reading-table th { background: #e6e6e6 !important; font-weight: 700; border: 1px solid #000; }
+  /* Tables: light hairline grid; hierarchy comes from bold text + black rules, not grey fills */
   .bill-charges-table td,
   .bill-reading-table td,
-  .bill-reading-table th { border: 1px solid #777; }
+  .bill-reading-table th { border: 1px solid #c9c9c9; }
+  .bill-charges-table th,
+  .bill-reading-table th { font-weight: 700; border-bottom: 1.5px solid #000; }
 
-  /* Emphasis rows → light/medium grey bands (no colour) */
+  /* Emphasis rows — white background (from the reset above), distinguished by weight + rules */
   .bill-charges-table .fixed-row td,
   .bill-charges-table .subtotal-row td,
-  .bill-charges-table tfoot .gross-row td { background: #f0f0f0 !important; font-weight: 700; }
-  .bill-charges-table .section-header-row td { background: #e0e0e0 !important; font-weight: 700; border-top: 1px solid #000; border-bottom: 1px solid #000; }
-  .bill-charges-table tfoot .net-row td { background: #dcdcdc !important; font-weight: 800; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; }
-  .bill-charges-table tfoot .total-payable-row td { background: #cccccc !important; font-weight: 800; border-top: 2px solid #000; border-bottom: 3px double #000; }
+  .bill-charges-table tfoot .gross-row td { font-weight: 700; }
+  .bill-charges-table .section-header-row td { font-weight: 700; letter-spacing: .04em; border-top: 1.5px solid #000; border-bottom: 1px solid #000; }
+  .bill-charges-table tfoot .net-row td { font-weight: 800; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; }
+  .bill-charges-table tfoot .total-payable-row td { font-weight: 800; border-top: 2.5px solid #000; border-bottom: 3px double #000; }
 
   /* Words / notes / disclaimer / estimated banner → bordered white blocks */
   .bill-words,
@@ -909,6 +910,30 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
   .bill-disclaimer { border: 1px solid #000 !important; }
   .bill-disclaimer { border-top: 1.5px solid #000 !important; }
   .bill-estimated-banner { border: 1.5px solid #000 !important; border-left: 4px solid #000 !important; }
+
+  /* ── Compact: tighten spacing/fonts so a typical bill fits on a single sheet ── */
+  html, body { font-size: 10.5px; }
+  .bill-wrap { line-height: 1.3; }
+  .bill-header { padding: 8px 12px; }
+  .bill-discom-name { font-size: 16px; }
+  .bill-discom-full, .bill-discom-area, .bill-title-sub, .bill-tariff-year { font-size: 9px; margin-top: 1px; }
+  .bill-title-main { font-size: 12px; padding: 2px 8px; margin-bottom: 3px; }
+  .bill-details-row { padding: 8px 12px; gap: 8px; }
+  .bill-details-box { padding: 6px 9px; }
+  .bill-section-title { font-size: 9.5px; margin-bottom: 4px; padding-bottom: 3px; }
+  .bill-info-table td { padding: 1px 0; font-size: 10px; }
+  .bill-charges-section { padding: 8px 12px; }
+  .bill-charges-table { font-size: 10.5px; margin-top: 4px; }
+  .bill-charges-table td, .bill-charges-table th,
+  .bill-reading-table td, .bill-reading-table th { padding: 3px 8px; }
+  .bill-charges-table tfoot .gross-row td,
+  .bill-charges-table tfoot .net-row td,
+  .bill-charges-table tfoot .total-payable-row td { padding: 5px 8px; }
+  .net-amt { font-size: 13px !important; }
+  .total-amt { font-size: 17px !important; }
+  .bill-words { padding: 6px 12px; font-size: 10px; }
+  .bill-category-note { padding: 6px 12px; font-size: 9px; line-height: 1.35; }
+  .bill-disclaimer { padding: 6px 12px; font-size: 8.5px; line-height: 1.35; }
 }
 
 /* ─── TOD (Time-of-Day) Billing ──────────────────────────────────────────────── */
@@ -1100,7 +1125,14 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
 }
 @keyframes dpIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 .dp-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-.dp-title { font-family: var(--font-display); font-weight: 600; font-size: 14px; color: var(--text-primary); }
+.dp-title { flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px; }
+.dp-title-static { font-family: var(--font-display); font-weight: 600; font-size: 14px; color: var(--text-primary); }
+.dp-pick {
+  font-family: var(--font-display); font-weight: 600; font-size: 14px; color: var(--text-primary);
+  background: none; border: none; cursor: pointer; padding: 3px 8px; border-radius: var(--radius-sm);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.dp-pick:hover { background: var(--brand-faint); color: var(--brand); }
 .dp-nav {
   width: 28px; height: 28px; flex-shrink: 0;
   border: 1px solid var(--border-default); background: var(--surface-card);
@@ -1135,6 +1167,17 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
   transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
 }
 .dp-today-btn:hover, .dp-clear-btn:hover { background: var(--brand-faint); color: var(--brand); border-color: var(--brand-border); }
+
+/* Month grid + scrollable year list (header month/year pickers) */
+.dp-months { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.dp-month, .dp-year {
+  padding: 10px 0; font-family: inherit; font-size: 13px; font-weight: 500; color: var(--text-primary);
+  border: 1px solid var(--border-default); background: var(--surface-card); border-radius: var(--radius-sm);
+  cursor: pointer; transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+.dp-month:hover, .dp-year:hover { background: var(--brand-faint); color: var(--brand); border-color: var(--brand-border); }
+.dp-month.dp-selected, .dp-year.dp-selected { background: var(--brand); color: #fff; border-color: var(--brand); }
+.dp-years { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; max-height: 210px; overflow-y: auto; padding: 2px; }
 
 /* ─── Rate / Surcharge Detail Accordions ─────────────────────────────────────── */
 .bill-extras { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
