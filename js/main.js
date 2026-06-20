@@ -11,6 +11,7 @@ import {
   shareBill, loadFromUrl,
   refreshSupplyTypeDependent, applyLifelineDefaultLoad, checkLifelineLimits,
   getMeterMode, setMeterMode, setAdvancedSubMode, addMeterRow, updateAdvancedMeter,
+  syncBillingMonthYear,
 } from './ui.js';
 import { initDatePickers } from './datepicker.js';
 
@@ -91,6 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
       updateTariffPeriodHint();
     });
   });
+  // The visible month-year picker drives the hidden billingMonth/billingYear inputs
+  document.getElementById('billingMonthYear').addEventListener('change', syncBillingMonthYear);
 
   document.getElementById('facMode').addEventListener('change', () => {
     updateFacUnitLabel();

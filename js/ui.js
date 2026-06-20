@@ -8,6 +8,12 @@ import {
 import { resolveFppaForDiscom } from './tariffs/fppa.js';
 import { calculateBill } from './engine.js';
 import { renderBill, renderRevisionBill } from './renderer.js';
+import { attachDatePicker } from './datepicker.js';
+
+// Calendar icon markup reused by dynamically-created date fields
+const CAL_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>`;
+const dateFieldHtml = (cls, placeholder) =>
+  `<div class="date-field-wrap"><input type="text" class="date-field ${cls}" data-datepicker readonly placeholder="${placeholder}"><button type="button" class="date-field-btn" aria-label="Open calendar" tabindex="-1">${CAL_SVG}</button></div>`;
 
 // ─── Toast ────────────────────────────────────────────────────────────────────
 
@@ -30,7 +36,7 @@ export function buildShareUrl() {
     name:    document.getElementById('consumerName').value,
     acc:     document.getElementById('accountNo').value,
     addr:    document.getElementById('address').value,
-    meter:   document.getElementById('meterNo').value,
+    meter:   getMeterNo(),
     month:   document.getElementById('billingMonth').value,
     year:    document.getElementById('billingYear').value,
     fd:      document.getElementById('fromDate').value,
@@ -107,13 +113,13 @@ export function addPaymentRow() {
   const row = document.createElement('div');
   row.className = 'dyn-row';
   row.innerHTML = `
-    <input type="date" class="dyn-date" placeholder="Payment Date">
+    ${dateFieldHtml('dyn-date', 'Payment Date')}
     <input type="number" class="dyn-amount" placeholder="Amount (₹)" value="0" min="0" step="0.01">
     <button class="btn-remove-row" type="button" title="Remove">×</button>`;
   row.querySelector('.dyn-amount').addEventListener('input', updatePaymentTotal);
   row.querySelector('.btn-remove-row').addEventListener('click', () => { row.remove(); updatePaymentTotal(); });
   container.appendChild(row);
-  row.querySelector('.dyn-date').focus();
+  attachDatePicker(row.querySelector('.dyn-date'));
 }
 
 export function addAdjustmentRow() {
@@ -349,28 +355,34 @@ export function prefillLpsc(discomId) {
 
 // ─── Month / Year ─────────────────────────────────────────────────────────────
 
-export function populateMonthYear() {
-  const MONTHS = ['January','February','March','April','May','June',
-                  'July','August','September','October','November','December'];
-  const mSel = document.getElementById('billingMonth');
-  MONTHS.forEach((m, i) => {
-    const opt = document.createElement('option');
-    opt.value = String(i + 1).padStart(2, '0');
-    opt.textContent = m;
-    mSel.appendChild(opt);
-  });
-  const now = new Date();
-  mSel.value = String(now.getMonth() + 1).padStart(2, '0');
+const FULL_MONTHS = ['January','February','March','April','May','June',
+                     'July','August','September','October','November','December'];
 
-  const ySel = document.getElementById('billingYear');
-  const cy = now.getFullYear();
-  // Range back to 2004 so historical (year-versioned) bills can be calculated
-  for (let y = cy + 1; y >= 2004; y--) {
-    const opt = document.createElement('option');
-    opt.value = y; opt.textContent = y;
-    ySel.appendChild(opt);
-  }
-  ySel.value = cy;
+// Bill Month & Year is a month-year-only calendar field (#billingMonthYear, shows "Month YYYY")
+// backed by hidden #billingMonth ('MM') and #billingYear ('YYYY') that the rest of the app reads.
+export function setBillingMonthYear(mm, yyyy) {
+  const m = String(mm).padStart(2, '0');
+  document.getElementById('billingMonth').value = m;
+  document.getElementById('billingYear').value  = String(yyyy);
+  const my = document.getElementById('billingMonthYear');
+  if (my) { my.dataset.m = m; my.dataset.y = String(yyyy); my.value = `${FULL_MONTHS[mm - 1]} ${yyyy}`; }
+}
+
+// Sync the visible #billingMonthYear field's change → hidden inputs, and fire billingMonth's
+// change so the existing FPPA / tariff-period listeners run.
+export function syncBillingMonthYear() {
+  const my = document.getElementById('billingMonthYear');
+  if (!my || !my.dataset.m || !my.dataset.y) return;
+  const mEl = document.getElementById('billingMonth');
+  const yEl = document.getElementById('billingYear');
+  mEl.value = my.dataset.m;
+  yEl.value = my.dataset.y;
+  mEl.dispatchEvent(new Event('change'));
+}
+
+export function populateMonthYear() {
+  const now = new Date();
+  setBillingMonthYear(now.getMonth() + 1, now.getFullYear());
 }
 
 // ─── Units Display ────────────────────────────────────────────────────────────
@@ -379,6 +391,18 @@ export function populateMonthYear() {
 export function getMeterMode() {
   const r = document.querySelector('input[name="meterMode"]:checked');
   return r ? r.value : 'simple';
+}
+
+// Meter number depends on the reading mode: Simple/TOD each have their own field; Advanced
+// derives it from the per-meter labels in the table (joined).
+export function getMeterNo() {
+  const mode = getMeterMode();
+  if (mode === 'advanced') {
+    return Array.from(document.querySelectorAll('#advancedRows .m-label'))
+      .map(i => i.value.trim()).filter(Boolean).join(', ');
+  }
+  const el = document.getElementById(mode === 'tod' ? 'meterNoTod' : 'meterNoSimple');
+  return el ? el.value.trim() : '';
 }
 
 let advancedSubMode = 'single';   // 'single' | 'replacement'
@@ -442,9 +466,9 @@ export function addMeterRow(label = '') {
       <button type="button" class="btn-remove-row m-remove" title="Remove">×</button>
     </div>
     <div class="meter-fields">
-      <label class="mf-field"><span>Prev Date</span><input type="date" class="m-prevdate"></label>
+      <div class="mf-field"><span>Prev Date</span>${dateFieldHtml('m-prevdate', 'Date')}</div>
       <label class="mf-field"><span>Prev Read</span><input type="number" class="m-prevread" placeholder="0" min="0" step="0.01"></label>
-      <label class="mf-field"><span>Curr Date</span><input type="date" class="m-currdate"></label>
+      <div class="mf-field"><span>Curr Date</span>${dateFieldHtml('m-currdate', 'Date')}</div>
       <label class="mf-field"><span>Curr Read</span><input type="number" class="m-currread" placeholder="0" min="0" step="0.01"></label>
       <label class="mf-field"><span>MF</span><input type="number" class="m-mf" value="1" min="0.01" step="0.01" title="Multiplying Factor"></label>
       <label class="mf-field"><span>MD (kW)</span><input type="number" class="m-md" placeholder="0" min="0" step="0.01" title="Maximum demand recorded"></label>
@@ -456,6 +480,8 @@ export function addMeterRow(label = '') {
   });
   row.querySelector('.m-remove').addEventListener('click', () => { row.remove(); updateAdvancedMeter(); });
   c.appendChild(row);
+  attachDatePicker(row.querySelector('.m-prevdate'));
+  attachDatePicker(row.querySelector('.m-currdate'));
 }
 
 export function setAdvancedSubMode(sub) {
@@ -863,7 +889,7 @@ export function doCalculate() {
       consumerName: document.getElementById('consumerName').value.trim(),
       accountNo:    document.getElementById('accountNo').value.trim(),
       address:      document.getElementById('address').value.trim(),
-      meterNo:      document.getElementById('meterNo').value.trim(),
+      meterNo:      getMeterNo(),
       fromDate: fromISO, toDate: toISO,
     });
     panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -886,7 +912,7 @@ export function doCalculate() {
     consumerName: document.getElementById('consumerName').value.trim(),
     accountNo:    document.getElementById('accountNo').value.trim(),
     address:      document.getElementById('address').value.trim(),
-    meterNo:      document.getElementById('meterNo').value.trim(),
+    meterNo:      getMeterNo(),
     billingMonth: document.getElementById('billingMonth').value,
     billingYear:  document.getElementById('billingYear').value,
     prevReading:  document.getElementById('prevReading').value,
@@ -926,7 +952,7 @@ export function loadFromUrl() {
 
         const fields = {
           consumerName: 'name', accountNo: 'acc', address: 'addr',
-          meterNo: 'meter', prevReading: 'prev', currReading: 'curr',
+          prevReading: 'prev', currReading: 'curr',
           fromDate: 'fd', toDate: 'td',
           unitsInput: 'units', connectedLoad: 'load', billedDemand: 'bd',
           todPeak: 'todp', todNormal: 'todn', todOffPeak: 'todop',
@@ -934,10 +960,18 @@ export function loadFromUrl() {
           lpscRate: 'lpsc', currentLpscMonths: 'curmo'
         };
         for (const [id, key] of Object.entries(fields)) {
-          if (p.get(key)) document.getElementById(id).value = p.get(key);
+          const el = document.getElementById(id);
+          if (el && p.get(key)) el.value = p.get(key);
         }
-        if (p.get('month')) document.getElementById('billingMonth').value = p.get('month');
-        if (p.get('year'))  document.getElementById('billingYear').value  = p.get('year');
+        // Meter number now lives in the Simple/TOD panels (Advanced derives it from labels)
+        if (p.get('meter')) {
+          ['meterNoSimple', 'meterNoTod'].forEach(id => { const e = document.getElementById(id); if (e) e.value = p.get('meter'); });
+        }
+        if (p.get('month') || p.get('year')) {
+          const mm = +(p.get('month') || document.getElementById('billingMonth').value);
+          const yy = +(p.get('year')  || document.getElementById('billingYear').value);
+          setBillingMonthYear(mm, yy);   // updates hidden inputs + visible field
+        }
         // Restore reading mode. Advanced rows aren't serialized — those links carry the
         // computed total in `units` and load as Simple, which reproduces the same bill.
         if (p.get('mmode') === 'tod') {
