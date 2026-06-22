@@ -8,20 +8,47 @@ import {
   updateTodDisplay, updateFacUnitLabel, updateTariffPeriodHint,
   onFppaAutoToggle, markFppaManual,
   canCalculate, doCalculate, isDelhiDiscom,
-  shareBill, loadFromUrl,
+  shareBill, loadFromUrl, loadSample, initHistory, compareDiscoms,
   refreshSupplyTypeDependent, applyLifelineDefaultLoad, checkLifelineLimits,
   getMeterMode, setMeterMode, setAdvancedSubMode, addMeterRow, updateAdvancedMeter,
-  syncBillingMonthYear,
+  syncBillingMonthYear, applyDefaultBillingBasis,
 } from './ui.js';
 import { initDatePickers } from './datepicker.js';
+import { initI18n } from './i18n.js';
 
-// Expose shareBill to global scope (called from onclick in rendered bill HTML)
+// Expose helpers called from onclick in the rendered bill HTML
 window.__shareBill = shareBill;
+window.__savePdf = () => window.print();   // the print dialog's "Save as PDF" destination
+
+// Register the service worker for offline support (no-op on unsupported / insecure contexts).
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   populateStates();
   populateMonthYear();
   initTabs();
+  initI18n();   // apply saved/default language + wire the EN/हिंदी switcher
+
+  // Theme toggle — data-theme is pre-set by the inline <head> script; here we sync the button
+  // and let the user flip + persist their choice.
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('themeToggle');
+  if (themeBtn) {
+    const syncThemeBtn = () => {
+      const dark = root.dataset.theme === 'dark';
+      themeBtn.textContent = dark ? '☀' : '☾';
+      themeBtn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+      themeBtn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    };
+    themeBtn.addEventListener('click', () => {
+      root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+      syncThemeBtn();
+    });
+    syncThemeBtn();
+  }
 
   const stateEl      = document.getElementById('stateSelect');
   const discomEl     = document.getElementById('discomSelect');
@@ -47,9 +74,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   categoryEl.addEventListener('change', () => {
     populateSupplyTypes(discomEl.value, categoryEl.value);
+    applyDefaultBillingBasis();   // kVA tariff → kVA-MD; everything else → kWh
     updateBilledDemandVisibility(discomEl.value, categoryEl.value, supplyTypeEl.value);
     updateTariffPeriodHint();
     updateCalcButton();
+  });
+
+  // Billing Basis selector (kWh / kVA-MD / kVAh) → refresh demand labels + MD/PF visibility
+  document.getElementById('billingBasis').addEventListener('change', () => {
+    updateBilledDemandVisibility(discomEl.value, categoryEl.value, supplyTypeEl.value);
   });
 
   supplyTypeEl.addEventListener('change', () => {
@@ -58,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     checkLifelineLimits();
   });
 
-  ['prevReading', 'currReading', 'unitsInput'].forEach(id => {
+  ['prevReading', 'currReading', 'unitsInput', 'meterMF'].forEach(id => {
     document.getElementById(id).addEventListener('input', () => {
       updateUnitsDisplay();
       updateCalcButton();
@@ -84,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCalcButton();
     checkLifelineLimits();     // load > 1 kW drops a lifeline consumer to non-lifeline
   });
+  document.getElementById('billedDemand').addEventListener('input', checkLifelineLimits); // MD > 1 kW also disqualifies (UP)
 
   // Billing month/year change → re-resolve which historical tariff period applies
   ['billingMonth', 'billingYear'].forEach(id => {
@@ -134,6 +168,15 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('addAdjustmentBtn').addEventListener('click', addAdjustmentRow);
 
   document.getElementById('calculateBtn').addEventListener('click', doCalculate);
+  document.getElementById('sampleBtn').addEventListener('click', loadSample);
+  document.getElementById('compareBtn').addEventListener('click', compareDiscoms);
+  initHistory();   // render + wire the Recent-bills panel
+
+  // Net metering — reveal the export/credit fields when enabled
+  const netChk = document.getElementById('netMeteringChk');
+  netChk.addEventListener('change', () => {
+    document.getElementById('netMeteringFields').style.display = netChk.checked ? 'block' : 'none';
+  });
 
   // Custom calendar for the From / To billing-period fields
   initDatePickers();

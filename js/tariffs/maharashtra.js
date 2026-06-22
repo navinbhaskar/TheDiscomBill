@@ -178,6 +178,17 @@ export default {
               rate: 16
             }
           ]
+        },
+        {
+          id: "ht_industrial",
+          name: "HT-I Industrial (HT · kVA)",
+          demandUnit: "kVA",
+          fixedCharge: { type: "per_kva", rate: 472 },
+          // Billing demand = higher of recorded MD or 75% of contract demand (common HT rule).
+          billingDemandFloorPct: 75,
+          energySlabs: [ { limit: Infinity, rate: 6.73 } ],
+          additionalCharges: [ { name: "Electricity Duty (ED)", type: "percent_energy", rate: 9.3 } ],
+          notes: "HT-I industrial supply, kVA based — demand charge ₹472/kVA/month on the recorded MD (floored at 75% of contract demand), energy ₹6.73 per kVAh (apparent units = kWh ÷ power factor, so a poor PF raises the bill directly). Demand above contract demand is charged at 150% (state rule). Representative FY2024-25 MSEDCL HT rates; verify with the official tariff order."
         }
       ]
     },

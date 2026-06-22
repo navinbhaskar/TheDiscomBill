@@ -9,6 +9,11 @@ export default {
   // historical entry (see each supply type's rateHistory) or are flagged ESTIMATED.
   // UP's 2025-26 order continues the 2024-25 (Oct 2024) rates with no hike.
   currentRatesFrom: "2024-10-01",
+  // These LMV-1/LMV-2 rates are the UPERC FY2025-26 schedule and have been checked to the paisa
+  // against real MVVNL bills, so the bill shows a "Verified rates" confidence badge.
+  verified: true,
+  ratesAsOf: "FY 2025-26 (UPERC)",
+  sourceUrl: "https://www.uperc.org",
   discoms: [
     {
       id: "dvvnl",

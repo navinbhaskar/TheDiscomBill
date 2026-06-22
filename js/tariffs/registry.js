@@ -139,7 +139,11 @@ const DEFAULT_CURRENT_FROM = '2024-04-01';
 // rateHistory entries: { from: 'YYYY-MM-DD', label, estimated?, fixedCharge?, energySlabs?,
 //   additionalCharges?, excessDemandRate?, fac? } — omitted fields fall back to current.
 export function resolveDatedTariff(tariff, billingDate, currentRatesFrom, currentLabel) {
+  // Spread the whole tariff so non-rate config (demandUnit, excessDemand, excessDemandRate,
+  // billingDemandFloorPct, …) carries through to the engine; only the date-versioned RATE fields
+  // below are swapped per historical period.
   const currentSet = {
+    ...tariff,
     fixedCharge:       tariff.fixedCharge,
     energySlabs:       tariff.energySlabs,
     additionalCharges: tariff.additionalCharges,
@@ -170,6 +174,7 @@ export function resolveDatedTariff(tariff, billingDate, currentRatesFrom, curren
       estimated: !!h.estimated,
       effectiveFrom: h.from,
       set: {
+        ...tariff,
         fixedCharge:       h.fixedCharge       !== undefined ? h.fixedCharge       : tariff.fixedCharge,
         energySlabs:       h.energySlabs       !== undefined ? h.energySlabs       : tariff.energySlabs,
         additionalCharges: h.additionalCharges !== undefined ? h.additionalCharges : tariff.additionalCharges,

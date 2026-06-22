@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="TheDiscomBill">
+  <rect width="512" height="512" rx="104" fill="#1d4ed8"/>
+  <path d="M298 96 156 300c-7 10 0 24 13 24h66l-20 92c-3 14 15 22 24 11l141-204c7-10 0-24-13-24h-66l20-92c3-14-15-22-24-11Z"
+        fill="#ffffff" stroke="#ffffff" stroke-width="6" stroke-linejoin="round"/>
+</svg>

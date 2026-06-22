@@ -23,14 +23,18 @@ function parseISO(s) {
 }
 
 let popup = null;
-function close() {
+function close(restoreFocus) {
   if (!popup) return;
+  const anchor = popup._anchor;
   popup.remove();
   popup = null;
   document.removeEventListener('mousedown', onDocDown, true);
   document.removeEventListener('keydown', onKey, true);
   window.removeEventListener('scroll', onScroll, true);
-  window.removeEventListener('resize', close);
+  window.removeEventListener('resize', onResize);
+  // Return focus to the field only when closing via keyboard / selection, not on an outside click
+  // (which would steal focus from wherever the user clicked).
+  if (restoreFocus && anchor && anchor.focus) anchor.focus();
 }
 function position(pop, inp) {
   const r = inp.getBoundingClientRect();
@@ -61,7 +65,62 @@ function onDocDown(e) {
   if (popup.contains(e.target)) return;          // clicks within the calendar
   close();
 }
-function onKey(e) { if (e.key === 'Escape') close(); }
+function onKey(e) { if (e.key === 'Escape') { e.preventDefault(); close(true); } }
+function onResize() { close(false); }
+
+// Build an ISO date from parts, returning null if it isn't a real calendar date.
+function mkISO(y, mo, d) {
+  const dt = new Date(y, mo - 1, d);
+  if (isNaN(dt) || dt.getFullYear() !== y || dt.getMonth() !== mo - 1 || dt.getDate() !== d) return null;
+  return `${y}-${pad(mo)}-${pad(d)}`;
+}
+// Parse a typed day value flexibly: ISO (YYYY-MM-DD) or D-M-YYYY / D/M/YYYY → ISO, else null.
+function flexParseISO(s) {
+  s = String(s || '').trim();
+  let m;
+  if ((m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/)))            return mkISO(+m[1], +m[2], +m[3]);
+  if ((m = s.match(/^(\d{1,2})[/\-.](\d{1,2})[/\-.](\d{4})$/)))  return mkISO(+m[3], +m[2], +m[1]);
+  return null;
+}
+// The latest selectable date for billing-capped fields: the last day of the chosen billing month.
+function billingCapISO() {
+  const ye = document.getElementById('billingYear');
+  const me = document.getElementById('billingMonth');
+  const y = ye && +ye.value, m = me && +me.value;
+  if (!y || !m) return null;
+  return `${y}-${pad(m)}-${pad(new Date(y, m, 0).getDate())}`;
+}
+// Cap applies only to fields tagged data-cap-bill (the reading / billing-period dates).
+function capFor(inp) { return inp.hasAttribute('data-cap-bill') ? billingCapISO() : null; }
+
+// ─── Display vs machine value ──────────────────────────────────────────────────
+// Day fields SHOW DD-MM-YYYY (inp.value) but carry the canonical ISO in inp.dataset.iso, so all
+// calculation code keeps reading clean ISO via fieldISO() regardless of the display format.
+export function displayDate(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+  return m ? `${m[3]}-${m[2]}-${m[1]}` : '';
+}
+export function fieldISO(inp) {
+  if (!inp) return '';
+  if (inp.dataset && inp.dataset.iso) return inp.dataset.iso;
+  return flexParseISO(inp.value) || '';     // fallback: parse whatever the user typed
+}
+export function setFieldDate(inp, iso) {
+  if (!inp) return;
+  if (iso) { inp.dataset.iso = iso; inp.value = displayDate(iso); }
+  else { delete inp.dataset.iso; inp.value = ''; }
+}
+
+// Normalise a typed value → store ISO in dataset.iso + show DD-MM-YYYY, clamped to the billing cap.
+function normalizeTyped(inp) {
+  const raw = inp.value.trim();
+  if (raw === '') { setFieldDate(inp, ''); return; }
+  let v = flexParseISO(raw);
+  if (!v) { setFieldDate(inp, ''); return; }
+  const cap = capFor(inp);
+  if (cap && v > cap) v = cap;
+  setFieldDate(inp, v);
+}
 
 // Wire one input (idempotent) — used for both static and dynamically-added fields.
 export function attachDatePicker(inp) {
@@ -69,12 +128,24 @@ export function attachDatePicker(inp) {
   inp._dpWired = true;
   const wrap = inp.closest('.date-field-wrap');
   const openFn = (e) => { e.preventDefault(); open(inp); };
-  inp.addEventListener('mousedown', openFn);
-  inp.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); open(inp); }
-  });
   const btn = wrap && wrap.querySelector('.date-field-btn');
   if (btn) btn.addEventListener('mousedown', openFn);
+
+  if (inp.hasAttribute('data-my')) {
+    // Month-year fields: pick-only (the markup keeps them readonly).
+    inp.addEventListener('mousedown', openFn);
+    inp.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') { e.preventDefault(); open(inp); }
+    });
+  } else {
+    // Day fields: typeable. The calendar button (or ArrowDown) opens the picker; Enter commits the
+    // typed value; the capture-phase 'change' normalises it to ISO before other listeners read it.
+    inp.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); open(inp); }
+      else if (e.key === 'Enter') { e.preventDefault(); normalizeTyped(inp); inp.dispatchEvent(new Event('change', { bubbles: true })); }
+    });
+    inp.addEventListener('change', () => normalizeTyped(inp), true);
+  }
 }
 
 export function initDatePickers() {
@@ -87,8 +158,19 @@ function viewFor(inp, myOnly) {
     if (y && m) return new Date(y, m - 1, 1);
     const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), 1);
   }
-  const d = parseISO(inp.value) || new Date();
-  return new Date(d.getFullYear(), d.getMonth(), 1);
+  const parsed = parseISO(fieldISO(inp));
+  const d = parsed || new Date();
+  let view = new Date(d.getFullYear(), d.getMonth(), 1);
+  // For a capped field with no value, don't open on a fully-disabled future month — start at the
+  // cap's month (e.g. billing = Jan 2026 → open the calendar on January, not today's month).
+  if (!parsed) {
+    const cap = parseISO(capFor(inp));
+    if (cap) {
+      const capMonth = new Date(cap.getFullYear(), cap.getMonth(), 1);
+      if (view > capMonth) view = capMonth;
+    }
+  }
+  return view;
 }
 
 function open(inp) {
@@ -98,10 +180,14 @@ function open(inp) {
   const myOnly = inp.hasAttribute('data-my');   // month-year-only field (no day grid)
   let view = viewFor(inp, myOnly);
   let mode = myOnly ? 'months' : 'days';
+  let pendingFocusISO = null;   // day to focus after an arrow-key month change
+  let firstDraw = true;         // focus the active day once, when the calendar first opens
 
   const pop = document.createElement('div');
   pop.className = 'dp-popup';
   pop._anchor = inp;
+  pop.setAttribute('role', 'dialog');
+  pop.setAttribute('aria-label', myOnly ? 'Choose month and year' : 'Choose date');
 
   const draw = () => {
     if (mode === 'months')      pop.innerHTML = monthsHtml(view, inp, myOnly);
@@ -112,6 +198,16 @@ function open(inp) {
     // fully on-screen (otherwise e.g. the year list could open below the fold).
     if (pop.isConnected) position(pop, inp);
     if (mode === 'years') scrollYearIntoView(view.getFullYear());
+    // Keyboard focus follows arrow-key navigation across a month boundary (popup already in DOM).
+    if (mode === 'days' && pendingFocusISO && pop.isConnected) {
+      const sel = pop.querySelector(`.dp-day[data-iso="${pendingFocusISO}"]`);
+      if (sel) {
+        pop.querySelectorAll('.dp-day').forEach(d => { d.tabIndex = -1; });
+        sel.tabIndex = 0;
+        sel.focus();
+      }
+      pendingFocusISO = null;
+    }
   };
 
   const goMonths = () => { mode = 'months'; draw(); };
@@ -128,6 +224,24 @@ function open(inp) {
         c.addEventListener('mousedown', e => { e.preventDefault(); commit(inp, c.dataset.iso); }));
       md('.dp-today-btn', () => commit(inp, iso(new Date())));
       md('.dp-clear-btn', () => commit(inp, ''));
+      // Arrow-key navigation across the day grid (crossing month boundaries re-renders).
+      const grid = pop.querySelector('.dp-days');
+      if (grid) grid.addEventListener('keydown', e => {
+        const cur = document.activeElement;
+        if (!cur || !cur.dataset || !cur.dataset.iso) return;
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); commit(inp, cur.dataset.iso); return; }
+        const delta = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 }[e.key];
+        if (delta == null) return;
+        e.preventDefault();
+        const d = parseISO(cur.dataset.iso); d.setDate(d.getDate() + delta);
+        const targetISO = iso(d);
+        if (d.getMonth() !== view.getMonth() || d.getFullYear() !== view.getFullYear()) {
+          view = new Date(d.getFullYear(), d.getMonth(), 1); pendingFocusISO = targetISO; draw();
+        } else {
+          const btn = pop.querySelector(`.dp-day[data-iso="${targetISO}"]`);
+          if (btn) { grid.querySelectorAll('.dp-day').forEach(x => { x.tabIndex = -1; }); btn.tabIndex = 0; btn.focus(); }
+        }
+      });
     } else if (mode === 'months') {
       md('.dp-prev', () => { view = new Date(view.getFullYear() - 1, view.getMonth(), 1); draw(); });
       md('.dp-next', () => { view = new Date(view.getFullYear() + 1, view.getMonth(), 1); draw(); });
@@ -156,11 +270,17 @@ function open(inp) {
   popup = pop;
   position(pop, inp);
   if (mode === 'years') scrollYearIntoView(view.getFullYear());
+  // Move keyboard focus into the calendar so arrow keys work immediately (post-append).
+  if (firstDraw && mode === 'days') {
+    const active = pop.querySelector('.dp-day[tabindex="0"]') || pop.querySelector('.dp-day:not(.dp-empty)');
+    if (active) active.focus();
+  }
+  firstDraw = false;
   setTimeout(() => {
     document.addEventListener('mousedown', onDocDown, true);
     document.addEventListener('keydown', onKey, true);
     window.addEventListener('scroll', onScroll, true);
-    window.addEventListener('resize', close);
+    window.addEventListener('resize', onResize);
   }, 0);
 }
 
@@ -171,11 +291,12 @@ function scrollYearIntoView(y) {
   if (box && el) box.scrollTop = el.offsetTop - box.clientHeight / 2 + el.clientHeight / 2;
 }
 
-// Day field commit (ISO value)
+// Day field commit (ISO value → stored in dataset.iso, shown as DD-MM-YYYY)
 function commit(inp, value) {
-  inp.value = value;
+  if (value) { const cap = capFor(inp); if (cap && value > cap) value = cap; }
+  setFieldDate(inp, value);
   inp.dispatchEvent(new Event('change', { bubbles: true }));
-  close();
+  close(true);
 }
 // Month-year field commit ("Month YYYY" display + dataset.y / dataset.m machine value)
 function commitYM(inp, y, m) {
@@ -183,32 +304,45 @@ function commitYM(inp, y, m) {
   inp.dataset.m = pad(m + 1);
   inp.value = `${MONTHS[m]} ${y}`;
   inp.dispatchEvent(new Event('change', { bubbles: true }));
-  close();
+  close(true);
 }
 
 function daysHtml(view, inp) {
   const y = view.getFullYear(), m = view.getMonth();
   const startDow = new Date(y, m, 1).getDay();
   const days = new Date(y, m + 1, 0).getDate();
-  const selISO = inp.value;
+  const selISO = fieldISO(inp);
   const todayISO = iso(new Date());
 
   // Range highlight only applies to the billing-period fields
   const isPeriod = inp.id === 'fromDate' || inp.id === 'toDate';
-  const fromISO = isPeriod ? (document.getElementById('fromDate')?.value || '') : '';
-  const toISO   = isPeriod ? (document.getElementById('toDate')?.value || '') : '';
+  const fromISO = isPeriod ? fieldISO(document.getElementById('fromDate')) : '';
+  const toISO   = isPeriod ? fieldISO(document.getElementById('toDate'))   : '';
+
+  // The single keyboard-focusable ("active") day: the selected day, else today, else the 1st —
+  // but only if it falls in the month on view; gives the grid a roving tabindex.
+  const monthPrefix = `${y}-${pad(m + 1)}`;
+  const activeISO = (selISO && selISO.startsWith(monthPrefix)) ? selISO
+                  : todayISO.startsWith(monthPrefix) ? todayISO
+                  : `${monthPrefix}-01`;
+
+  // Hard cap: billing-capped fields can't pick a date after the selected billing month.
+  const capISO = capFor(inp);
 
   let cells = '';
-  for (let i = 0; i < startDow; i++) cells += '<span class="dp-day dp-empty"></span>';
+  for (let i = 0; i < startDow; i++) cells += '<span class="dp-day dp-empty" aria-hidden="true"></span>';
   for (let d = 1; d <= days; d++) {
     const cur = `${y}-${pad(m + 1)}-${pad(d)}`;
+    const disabled = capISO && cur > capISO;
     const cls = ['dp-day'];
     if (cur === selISO) cls.push('dp-selected');
     else if (cur === todayISO) cls.push('dp-today');
     if (fromISO && toISO && cur > fromISO && cur < toISO) cls.push('dp-inrange');
     if ((inp.id === 'toDate' && fromISO && cur < fromISO) ||
         (inp.id === 'fromDate' && toISO && cur > toISO)) cls.push('dp-disabledish');
-    cells += `<button type="button" class="${cls.join(' ')}" data-iso="${cur}">${d}</button>`;
+    cells += `<button type="button" class="${cls.join(' ')}" data-iso="${cur}" role="gridcell"${disabled ? ' disabled aria-disabled="true"' : ''}`
+      + ` tabindex="${(cur === activeISO && !disabled) ? 0 : -1}" aria-selected="${cur === selISO ? 'true' : 'false'}"`
+      + ` aria-label="${d} ${MONTHS[m]} ${y}">${d}</button>`;
   }
 
   return `
@@ -220,8 +354,8 @@ function daysHtml(view, inp) {
       </span>
       <button type="button" class="dp-nav dp-next" aria-label="Next month">›</button>
     </div>
-    <div class="dp-grid dp-dow">${DOW.map(d => `<span>${d}</span>`).join('')}</div>
-    <div class="dp-grid dp-days">${cells}</div>
+    <div class="dp-grid dp-dow" aria-hidden="true">${DOW.map(d => `<span>${d}</span>`).join('')}</div>
+    <div class="dp-grid dp-days" role="grid" aria-label="${MONTHS[m]} ${y}">${cells}</div>
     <div class="dp-foot">
       <button type="button" class="dp-today-btn">Today</button>
       <button type="button" class="dp-clear-btn">Clear</button>

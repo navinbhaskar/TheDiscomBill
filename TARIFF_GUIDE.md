@@ -211,6 +211,49 @@ dated windows:
 
 ---
 
+## kVA / demand billing (HT and large-LT consumers)
+
+For consumers billed on **apparent power (kVA)** rather than active power (kW):
+
+- `demandUnit: "kVA"` on a tariff — labels the demand fields (Contract Demand / Maximum Demand)
+  and the demand charge in kVA, and flags the category **demand-billed** (the fixed/demand charge
+  bills on the recorded MD, and the power-factor / billing-demand rules below apply). The arithmetic
+  is identical to kW — only the unit differs. Pair with `fixedCharge: { type: "per_kva", rate: … }`.
+
+- `billingDemandFloorPct: <pct>` on a tariff (or at the state level) — **billing-demand floor**:
+  the demand charge is levied on the **higher of** the recorded MD or this percentage of the
+  contract demand. 75 is the common HT figure. Defaults to **75% for kVA tariffs** and **0 (no
+  floor)** for kW tariffs, so it never disturbs sanctioned-load (kW) bills. Set explicitly to
+  override (e.g. `billingDemandFloorPct: 90`) or to `0` to disable.
+
+### Billing basis (kWh / kVA based)
+
+The main page has a **Billing Basis** selector with two options, so kVA billing works on *any*
+DISCOM — not just tariffs that ship with `demandUnit: "kVA"`:
+
+- **Active energy (kWh)** — standard: energy on kWh, demand in kW.
+- **kVA based** — demand billed in **kVA** (with the billing-demand floor below) and energy on
+  **apparent units, kVAh = kWh ÷ PF** (a Power Factor is required). A poor PF raises the bill
+  directly, so there is **no separate PF penalty**. This is the model used by Maharashtra, Gujarat,
+  Karnataka, Tamil Nadu, AP, Telangana, MP and Delhi.
+
+The selector auto-defaults to **kVA based** for tariffs marked `demandUnit: "kVA"` and to **kWh**
+otherwise; the user can override per bill. When the kVA basis is applied to a tariff whose rates are
+expressed per kW / per kWh, those rates are reused as-is for the kVA demand / kVAh energy (an
+approximation — verify against the DISCOM's actual kVA/kVAh schedule).
+
+- `billingDemandFloorPct: <pct>` (above) sets the kVA demand floor. There is **no separate
+  power-factor penalty** field: under kVA-based billing the meter is read in kVAh, so a poor power
+  factor already raises the apparent-energy charge directly.
+
+> **Editor note:** the in-browser `editor.html` form doesn't yet provide dedicated inputs for the
+> advanced fields (`demandUnit`, `excessDemand`, `excessDemandRate`, `billingDemandFloorPct`,
+> `rateHistory`, state-level `excessDemand`), but it now **preserves them verbatim** on a load →
+> download round-trip, so re-saving a state file no longer drops them. `per_kva` fixed charges are
+> fully supported in the form. Edit the not-yet-exposed fields by hand in `js/tariffs/<state>.js`.
+
+---
+
 ## Easiest way: the in-browser editor
 
 Open **`/editor.html`**, load a state (or start a new one), edit the rates/slabs/FPPA in a form

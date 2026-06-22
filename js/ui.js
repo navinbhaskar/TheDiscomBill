@@ -7,22 +7,74 @@ import {
 } from './tariffs/registry.js';
 import { resolveFppaForDiscom } from './tariffs/fppa.js';
 import { calculateBill } from './engine.js';
-import { renderBill, renderRevisionBill } from './renderer.js';
-import { attachDatePicker } from './datepicker.js';
+import { renderBill, renderRevisionBill, renderComparison } from './renderer.js';
+import { attachDatePicker, fieldISO, setFieldDate } from './datepicker.js';
 
 // Calendar icon markup reused by dynamically-created date fields
 const CAL_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>`;
-const dateFieldHtml = (cls, placeholder) =>
-  `<div class="date-field-wrap"><input type="text" class="date-field ${cls}" data-datepicker readonly placeholder="${placeholder}"><button type="button" class="date-field-btn" aria-label="Open calendar" tabindex="-1">${CAL_SVG}</button></div>`;
+const dateFieldHtml = (cls, placeholder, extra = '') =>
+  `<div class="date-field-wrap"><input type="text" class="date-field ${cls}" data-datepicker ${extra} placeholder="${placeholder}"><button type="button" class="date-field-btn" aria-label="Open calendar" tabindex="-1">${CAL_SVG}</button></div>`;
 
 // ─── Toast ────────────────────────────────────────────────────────────────────
 
+let _toastTimer = null;
 export function showToast(msg) {
   let t = document.getElementById('toast');
-  if (!t) { t = document.createElement('div'); t.id = 'toast'; document.body.appendChild(t); }
+  if (!t) {
+    t = document.createElement('div'); t.id = 'toast';
+    t.setAttribute('role', 'status');           // announced by screen readers
+    t.setAttribute('aria-live', 'polite');
+    document.body.appendChild(t);
+  }
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 3000);
+  if (_toastTimer) clearTimeout(_toastTimer);   // restart the clock on each message
+  _toastTimer = setTimeout(() => { t.classList.remove('show'); _toastTimer = null; }, 3500);
+}
+
+// ─── Saved-bill history (localStorage) ─────────────────────────────────────────
+const HISTORY_KEY = 'discombill.history';
+const HISTORY_MAX = 8;
+const escHtml = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+function readHistory() { try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; } catch { return []; } }
+function writeHistory(list) { try { localStorage.setItem(HISTORY_KEY, JSON.stringify(list.slice(0, HISTORY_MAX))); } catch {} }
+
+// Record a calculated bill so the user can reload it later. `params` is the share-link query string.
+export function saveBillToHistory({ label, amount, params }) {
+  if (!params) return;
+  const list = readHistory().filter(e => e.params !== params);   // de-dupe identical inputs
+  list.unshift({ label, amount, params, ts: Date.now() });
+  writeHistory(list);
+  renderHistory();
+}
+
+export function renderHistory() {
+  const box = document.getElementById('historyPanel');
+  if (!box) return;
+  const list = readHistory();
+  if (!list.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
+  box.style.display = 'block';
+  box.innerHTML =
+    `<div class="history-head"><span>Recent bills</span>` +
+    `<button type="button" id="historyClear" class="history-clear">Clear</button></div>` +
+    list.map((e, i) => `<button type="button" class="history-item" data-i="${i}">` +
+      `<span class="history-label">${escHtml(e.label)}</span>` +
+      `<span class="history-amt">₹ ${escHtml(e.amount)}</span></button>`).join('');
+}
+
+// Wire the Recent-bills panel (delegated). Loading an entry re-opens it via the share-link params.
+export function initHistory() {
+  const box = document.getElementById('historyPanel');
+  if (!box) return;
+  box.addEventListener('click', e => {
+    if (e.target.closest('#historyClear')) { writeHistory([]); renderHistory(); return; }
+    const item = e.target.closest('.history-item');
+    if (!item) return;
+    const entry = readHistory()[+item.dataset.i];
+    if (entry) location.search = '?' + entry.params;   // reload; loadFromUrl auto-calculates
+  });
+  renderHistory();
 }
 
 // ─── Share ────────────────────────────────────────────────────────────────────
@@ -39,14 +91,18 @@ export function buildShareUrl() {
     meter:   getMeterNo(),
     month:   document.getElementById('billingMonth').value,
     year:    document.getElementById('billingYear').value,
-    fd:      document.getElementById('fromDate').value,
-    td:      document.getElementById('toDate').value,
+    fd:      fieldISO(document.getElementById('fromDate')),
+    td:      fieldISO(document.getElementById('toDate')),
     prev:    document.getElementById('prevReading').value,
     curr:    document.getElementById('currReading').value,
     // Advanced rows aren't serialized; share the computed total so the link still reproduces the bill
     units:   getMeterMode() === 'advanced' ? (getEffectiveUnits() ?? '') : document.getElementById('unitsInput').value,
     load:    document.getElementById('connectedLoad').value,
     bd:      document.getElementById('billedDemand')?.value || '',
+    basis:   getBillingBasis(),
+    nm:      document.getElementById('netMeteringChk')?.checked ? '1' : '',
+    exp:     document.getElementById('exportUnits')?.value || '',
+    cr:      document.getElementById('openingCredit')?.value || '',
     mmode:   getMeterMode(),
     todp:    document.getElementById('todPeak')?.value    || '',
     todn:    document.getElementById('todNormal')?.value  || '',
@@ -113,7 +169,7 @@ export function addPaymentRow() {
   const row = document.createElement('div');
   row.className = 'dyn-row';
   row.innerHTML = `
-    ${dateFieldHtml('dyn-date', 'Payment Date')}
+    ${dateFieldHtml('dyn-date', 'DD-MM-YYYY')}
     <input type="number" class="dyn-amount" placeholder="Amount (₹)" value="0" min="0" step="0.01">
     <button class="btn-remove-row" type="button" title="Remove">×</button>`;
   row.querySelector('.dyn-amount').addEventListener('input', updatePaymentTotal);
@@ -138,7 +194,7 @@ export function addAdjustmentRow() {
 
 export function getPayments() {
   return Array.from(document.querySelectorAll('#paymentRows .dyn-row')).map(r => ({
-    date:   r.querySelector('.dyn-date')   ? r.querySelector('.dyn-date').value   : '',
+    date:   fieldISO(r.querySelector('.dyn-date')),
     amount: +r.querySelector('.dyn-amount').value || 0
   })).filter(p => p.amount > 0);
 }
@@ -215,7 +271,7 @@ export function populateSupplyTypes(discomId, categoryId) {
 
 // Billing date drives historical tariff resolution: prefer To Date, else billing month/year
 export function getBillingDate() {
-  const toVal = document.getElementById('toDate')?.value;
+  const toVal = fieldISO(document.getElementById('toDate'));
   if (toVal) return toVal;
   const y = document.getElementById('billingYear')?.value;
   const m = document.getElementById('billingMonth')?.value;
@@ -267,8 +323,8 @@ export function prefillFac(discomId, categoryId, supplyTypeId) {
   // Multi-month bills: FPPA is notified PER MONTH, so apply each month's own rate rather than
   // one rate throughout. Per-month consumption isn't known, so we average the monthly rates
   // (equivalent to applying each month's rate to an even share of the period's charges).
-  const fromV = document.getElementById('fromDate')?.value;
-  const toV   = document.getElementById('toDate')?.value || getBillingDate();
+  const fromV = fieldISO(document.getElementById('fromDate'));
+  const toV   = fieldISO(document.getElementById('toDate')) || getBillingDate();
   const months = (fromV && toV) ? fppaMonthDates(fromV, toV) : [];
   if (months.length > 1) {
     const entries = months.map(d => resolveFppaForDiscom(discomId, d));
@@ -326,7 +382,8 @@ export function updateFacUnitLabel() {
   const modeEl = document.getElementById('facMode');
   const lblEl  = document.getElementById('facRateLabel');
   if (!modeEl || !lblEl) return;
-  lblEl.textContent = modeEl.value === 'percent'
+  const t = lblEl.querySelector('.lbl-text') || lblEl;
+  t.textContent = modeEl.value === 'percent'
     ? 'FPPA / FAC Surcharge (% of charges)'
     : 'FPPA / FAC Surcharge (₹/unit)';
 }
@@ -405,7 +462,9 @@ export function getMeterNo() {
   return el ? el.value.trim() : '';
 }
 
-let advancedSubMode = 'single';   // 'single' | 'replacement'
+// Advanced mode is now dedicated to meter replacement (single-meter input lives in Simple, which
+// gained a Multiplying Factor field — so the two no longer duplicate each other).
+let advancedSubMode = 'replacement';
 
 // ── TOD ──
 export function getTodUnits() {
@@ -446,8 +505,8 @@ export function getAdvancedMeterData() {
     const mfRaw = parseFloat(r.querySelector('.m-mf').value);
     const mf = (isNaN(mfRaw) || mfRaw <= 0) ? 1 : mfRaw;
     if (!isNaN(prev) && !isNaN(curr) && curr >= prev) totalUnits += (curr - prev) * mf;
-    const pd = r.querySelector('.m-prevdate').value;
-    const cd = r.querySelector('.m-currdate').value;
+    const pd = fieldISO(r.querySelector('.m-prevdate'));
+    const cd = fieldISO(r.querySelector('.m-currdate'));
     if (pd && (!minPrev || pd < minPrev)) minPrev = pd;
     if (cd && (!maxCurr || cd > maxCurr)) maxCurr = cd;
     const md = parseFloat(r.querySelector('.m-md').value);
@@ -466,12 +525,12 @@ export function addMeterRow(label = '') {
       <button type="button" class="btn-remove-row m-remove" title="Remove">×</button>
     </div>
     <div class="meter-fields">
-      <div class="mf-field"><span>Prev Date</span>${dateFieldHtml('m-prevdate', 'Date')}</div>
-      <label class="mf-field"><span>Prev Read</span><input type="number" class="m-prevread" placeholder="0" min="0" step="0.01"></label>
-      <div class="mf-field"><span>Curr Date</span>${dateFieldHtml('m-currdate', 'Date')}</div>
-      <label class="mf-field"><span>Curr Read</span><input type="number" class="m-currread" placeholder="0" min="0" step="0.01"></label>
+      <div class="mf-field"><span>Prev Date</span>${dateFieldHtml('m-prevdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
+      <label class="mf-field"><span class="m-prevread-label">Prev Read</span><input type="number" class="m-prevread" placeholder="0" min="0" step="0.01"></label>
+      <div class="mf-field"><span>Curr Date</span>${dateFieldHtml('m-currdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
+      <label class="mf-field"><span class="m-currread-label">Curr Read</span><input type="number" class="m-currread" placeholder="0" min="0" step="0.01"></label>
       <label class="mf-field"><span>MF</span><input type="number" class="m-mf" value="1" min="0.01" step="0.01" title="Multiplying Factor"></label>
-      <label class="mf-field"><span>MD (kW)</span><input type="number" class="m-md" placeholder="0" min="0" step="0.01" title="Maximum demand recorded"></label>
+      <label class="mf-field"><span class="m-md-label">MD (kW)</span><input type="number" class="m-md" placeholder="0" min="0" step="0.01" title="Maximum demand recorded"></label>
       <div class="mf-field mf-units"><span>Units</span><span class="m-units">0</span></div>
     </div>`;
   row.querySelectorAll('input').forEach(i => {
@@ -482,6 +541,8 @@ export function addMeterRow(label = '') {
   c.appendChild(row);
   attachDatePicker(row.querySelector('.m-prevdate'));
   attachDatePicker(row.querySelector('.m-currdate'));
+  updateDemandUnitLabels();      // reflect kVA vs kW on the new row's MD column
+  updateReadingUnitLabels();     // reflect kWh vs kVAh on the new row's Prev/Curr Read labels
 }
 
 export function setAdvancedSubMode(sub) {
@@ -520,8 +581,8 @@ export function updateAdvancedMeter() {
   // and the billed demand from the peak MD column (feeds demand charge + excess-demand penalty).
   if (getMeterMode() === 'advanced') {
     const from = document.getElementById('fromDate'), to = document.getElementById('toDate');
-    from.value = data.minPrev || '';
-    to.value   = data.maxCurr || '';
+    setFieldDate(from, data.minPrev || '');
+    setFieldDate(to,   data.maxCurr || '');
     from.dispatchEvent(new Event('change'));
     to.dispatchEvent(new Event('change'));
     const bd = document.getElementById('billedDemand');
@@ -570,10 +631,12 @@ export function getEffectiveUnits() {
   const prev   = document.getElementById('prevReading').value.trim();
   const curr   = document.getElementById('currReading').value.trim();
   const direct = document.getElementById('unitsInput').value.trim();
+  const mfRaw  = parseFloat(document.getElementById('meterMF')?.value);
+  const mf     = (isNaN(mfRaw) || mfRaw <= 0) ? 1 : mfRaw;   // Multiplying Factor (CT/PT ratio)
   if (prev !== '' && curr !== '' && !isNaN(+prev) && !isNaN(+curr)) {
-    return Math.max(0, +curr - +prev);
+    return Math.max(0, (+curr - +prev) * mf);   // MF applies to the metered difference
   }
-  if (direct !== '' && !isNaN(+direct)) return Math.max(0, +direct);
+  if (direct !== '' && !isNaN(+direct)) return Math.max(0, +direct);   // direct entry = final units
   return null;
 }
 
@@ -618,8 +681,8 @@ export function isDelhiDiscom(discomId) {
 // ─── Calculate ────────────────────────────────────────────────────────────────
 
 export function getBillingPeriodDays() {
-  const fromVal = document.getElementById('fromDate').value;
-  const toVal   = document.getElementById('toDate').value;
+  const fromVal = fieldISO(document.getElementById('fromDate'));
+  const toVal   = fieldISO(document.getElementById('toDate'));
   if (!fromVal || !toVal) return null;
   const days = Math.round((new Date(toVal) - new Date(fromVal)) / (1000 * 60 * 60 * 24));
   return days > 0 ? days : null;
@@ -636,30 +699,100 @@ export function updateBillingPeriod() {
 }
 
 export function updateBilledDemandVisibility() {
+  const hasCat = !!document.getElementById('categorySelect').value;
+
+  // Billing Basis selector — shown once a category is picked, so kVA billing is discoverable anywhere.
+  const bGroup = document.getElementById('billingBasisGroup');
+  if (bGroup) bGroup.style.display = hasCat ? 'block' : 'none';
+
   const group = document.getElementById('billedDemandGroup');
   // Maximum Demand is shown on the main page in Simple/TOD modes; in Advanced the MD column
   // supplies it, so the standalone field is hidden there.
   if (group) group.style.display = (getMeterMode() === 'advanced') ? 'none' : 'block';
+  updateDemandUnitLabels();
+  updateReadingUnitLabels();
+}
+
+// Reading & units labels follow the billing basis: kWh for active billing, kVAh when kVA-based
+// (the meter is read in apparent energy, so readings/units are entered directly in kVAh).
+export function updateReadingUnitLabels() {
+  const eu = getBillingBasis() === 'kvah' ? 'kVAh' : 'kWh';
+  const setLbl = (sel, txt) => { const el = document.querySelector(sel); if (el) el.textContent = txt; };
+  setLbl('label[for="prevReading"]', `Previous Reading (${eu})`);
+  setLbl('label[for="currReading"]', `Current Reading (${eu})`);
+  setLbl('label[for="unitsInput"]',  `Or Enter Units Consumed Directly (${eu})`);
+  // TOD labels carry a badge span — update only the leading text node so the badge survives
+  [['todPeak', 'Peak'], ['todNormal', 'Normal'], ['todOffPeak', 'Off-Peak']].forEach(([id, name]) => {
+    const lbl = document.querySelector(`label[for="${id}"]`);
+    if (lbl && lbl.firstChild && lbl.firstChild.nodeType === Node.TEXT_NODE)
+      lbl.firstChild.nodeValue = `${name} Units (${eu}) `;
+  });
+  // Plain "units" words in the running totals, and the advanced per-meter read labels
+  document.querySelectorAll('.reading-unit').forEach(s => { s.textContent = (eu === 'kVAh') ? 'kVAh' : 'units'; });
+  document.querySelectorAll('#advancedRows .m-prevread-label').forEach(s => { s.textContent = `Prev Read (${eu})`; });
+  document.querySelectorAll('#advancedRows .m-currread-label').forEach(s => { s.textContent = `Curr Read (${eu})`; });
+}
+
+export function getBillingBasis() {
+  const sel = document.getElementById('billingBasis');
+  return sel ? sel.value : 'kwh';
+}
+
+// The natural basis for the selected tariff: kVA tariffs default to kVA-based (kVAh), else kWh.
+function defaultBillingBasis() {
+  const t = getEffectiveTariff(
+    document.getElementById('discomSelect').value,
+    document.getElementById('categorySelect').value,
+    document.getElementById('supplyTypeSelect').value || null);
+  return (t && (t.demandUnit === 'kVA' || t.demandUnit === 'kva')) ? 'kvah' : 'kwh';
+}
+
+// Reset the Billing Basis selector to the tariff's natural default (called on category change).
+export function applyDefaultBillingBasis() {
+  const sel = document.getElementById('billingBasis');
+  if (sel) sel.value = defaultBillingBasis();
+}
+
+// Demand is labelled/charged in kVA for the kVA-based (kVAh) basis; in kW for the active (kWh) basis.
+export function getDemandUnit() {
+  return (getBillingBasis() === 'kvah') ? 'kVA' : 'kW';
+}
+
+export function updateDemandUnitLabels() {
+  const kva = getDemandUnit() === 'kVA';
+  // Write into the .lbl-text span (if present) so the glossary ⓘ icon in the label survives.
+  const setText = (lbl, txt) => { if (lbl) (lbl.querySelector('.lbl-text') || lbl).textContent = txt; };
+  setText(document.querySelector('label[for="connectedLoad"]'), kva ? 'Contract Demand (kVA)' : 'Sanctioned Load (kW)');
+  setText(document.querySelector('label[for="billedDemand"]'), kva ? 'Maximum Demand (kVA)' : 'Maximum Demand (MD) (kW)');
+  // Advanced meter-table MD column header(s)
+  document.querySelectorAll('#advancedRows .m-md-label').forEach(s => { s.textContent = kva ? 'MD (kVA)' : 'MD (kW)'; });
 }
 
 // ─── Lifeline supply types (UP) ────────────────────────────────────────────────
-// UP "Life Line" supply types are capped at ≤ 1 kW sanctioned load and ≤ 100 units/month.
-// Beyond either cap the consumer falls to the paired non-lifeline tariff. Ids are UP-specific
-// (ST-10A→ST-10B urban, ST-17→ST-17B rural); the guard below only fires when the selected
-// category actually contains BOTH the lifeline type and its counterpart.
-const LIFELINE_MAP = { '10A': '10B', '17': '17B' };
+// UP "Life Line" supply types qualify at ≤ 1 kW sanctioned load AND ≤ 100 units/month. The
+// calculator decides lifeline-vs-non-lifeline AUTOMATICALLY from the entered load + consumption
+// (both directions): a qualifying consumer is promoted to the lifeline tariff, and one that exceeds
+// either limit is dropped to the paired non-lifeline tariff. Ids are UP-specific (ST-10A↔ST-10B
+// urban, ST-17↔ST-17B rural); the logic only fires when the category contains BOTH members of a pair.
+const LIFELINE_MAP = { '10A': '10B', '17': '17B' };               // lifeline → non-lifeline
+const LIFELINE_REVERSE = Object.fromEntries(Object.entries(LIFELINE_MAP).map(([a, b]) => [b, a])); // non-lifeline → lifeline
 const LIFELINE_MAX_LOAD_KW = 1;
 const LIFELINE_MAX_UNITS_PER_MONTH = 100;
 
-// Returns the non-lifeline counterpart id if the given supply type is a lifeline type whose
-// counterpart also exists in the same category; otherwise null.
+// Both members of the pair must exist in the category for an auto-switch to be valid.
+function lifelinePairExists(discomId, categoryId, lifeId, nonLifeId) {
+  const types = getSupplyTypes(discomId, categoryId);
+  return types.some(t => t.id === lifeId) && types.some(t => t.id === nonLifeId);
+}
+// Non-lifeline counterpart id if the given supply type is a lifeline type (whose pair exists), else null.
 function lifelineCounterpart(discomId, categoryId, supplyTypeId) {
   const target = LIFELINE_MAP[supplyTypeId];
-  if (!target) return null;
-  const types = getSupplyTypes(discomId, categoryId);
-  const hasSelf   = types.some(t => t.id === supplyTypeId);
-  const hasTarget = types.some(t => t.id === target);
-  return (hasSelf && hasTarget) ? target : null;
+  return (target && lifelinePairExists(discomId, categoryId, supplyTypeId, target)) ? target : null;
+}
+// Lifeline partner id if the given supply type is a non-lifeline type (whose pair exists), else null.
+function lifelinePartner(discomId, categoryId, supplyTypeId) {
+  const target = LIFELINE_REVERSE[supplyTypeId];
+  return (target && lifelinePairExists(discomId, categoryId, target, supplyTypeId)) ? target : null;
 }
 
 // Lifeline unit cap, prorated for multi-month periods (floored at one month so short cycles
@@ -704,33 +837,60 @@ export function applyLifelineDefaultLoad(discomId, categoryId, supplyTypeId) {
   }
 }
 
-// If the selected supply type is lifeline but load > 1 kW or units exceed the (period-scaled)
-// cap, switch to the non-lifeline counterpart and explain why. One-directional: never switches
-// back automatically (the user can re-select the lifeline type manually).
+// Decide lifeline vs non-lifeline automatically from the current load + consumption, switching the
+// supply type in EITHER direction:
+//   • a lifeline tariff that exceeds 1 kW or the (period-scaled) 100-unit cap → drops to non-lifeline
+//   • a non-lifeline tariff that qualifies (≤ 1 kW AND known consumption ≤ cap) → promoted to lifeline
+// Promotion needs consumption to be entered (we can't judge eligibility without it).
+let _lifelineBusy = false;
 export function checkLifelineLimits() {
+  if (_lifelineBusy) return;   // guard: never re-enter while an auto-switch is in progress
   const discomId     = document.getElementById('discomSelect').value;
   const categoryId   = document.getElementById('categorySelect').value;
   const supplyTypeId = document.getElementById('supplyTypeSelect').value;
-  const counterpart  = lifelineCounterpart(discomId, categoryId, supplyTypeId);
-  if (!counterpart) { hideLifelineNotice(); return; }
 
   const load  = +document.getElementById('connectedLoad').value || 0;
-  const units = getEffectiveUnits() || 0;
+  const md    = +document.getElementById('billedDemand')?.value || 0;   // recorded Maximum Demand (kW)
+  const units = getEffectiveUnits();                 // null when not yet entered
   const cap   = lifelineUnitCap();
-  const loadOver  = load > LIFELINE_MAX_LOAD_KW;
-  const unitsOver = units > cap;
 
-  if (!loadOver && !unitsOver) { hideLifelineNotice(); return; }
+  const switchTo = (id, msg) => {
+    _lifelineBusy = true;
+    try {
+      document.getElementById('supplyTypeSelect').value = id;
+      refreshSupplyTypeDependent();
+      showLifelineNotice(msg);
+      showToast(msg);
+    } finally { _lifelineBusy = false; }
+  };
 
-  document.getElementById('supplyTypeSelect').value = counterpart;
-  refreshSupplyTypeDependent();
+  // Currently a lifeline tariff → drop to non-lifeline if it no longer qualifies.
+  const counterpart = lifelineCounterpart(discomId, categoryId, supplyTypeId);
+  if (counterpart) {
+    const loadOver  = load > LIFELINE_MAX_LOAD_KW;
+    const mdOver    = md > LIFELINE_MAX_LOAD_KW;     // UP: recorded MD above 1 kW also disqualifies
+    const unitsOver = units != null && units > cap;
+    if (loadOver || mdOver || unitsOver) {
+      const reasons = [];
+      if (loadOver)  reasons.push(`sanctioned load ${load} kW exceeds the 1 kW lifeline limit`);
+      if (mdOver)    reasons.push(`recorded maximum demand ${md} kW exceeds the 1 kW lifeline limit`);
+      if (unitsOver) reasons.push(`consumption ${Math.round(units)} units exceeds the ${Math.round(cap)}-unit lifeline cap${cap > LIFELINE_MAX_UNITS_PER_MONTH ? ' for this billing period' : ''}`);
+      switchTo(counterpart, `Auto-switched to the non-lifeline tariff — ${reasons.join(' and ')}.`);
+    } else { hideLifelineNotice(); }
+    return;
+  }
 
-  const reasons = [];
-  if (loadOver)  reasons.push(`sanctioned load ${load} kW exceeds the 1 kW lifeline limit`);
-  if (unitsOver) reasons.push(`consumption ${Math.round(units)} units exceeds the ${Math.round(cap)}-unit lifeline cap${cap > LIFELINE_MAX_UNITS_PER_MONTH ? ' for this billing period' : ''}`);
-  const msg = `Switched to the non-lifeline tariff — ${reasons.join(' and ')}.`;
-  showLifelineNotice(msg);
-  showToast(msg);
+  // Currently a non-lifeline tariff → promote to lifeline if it now qualifies.
+  const partner = lifelinePartner(discomId, categoryId, supplyTypeId);
+  if (partner) {
+    const qualifies = load <= LIFELINE_MAX_LOAD_KW && md <= LIFELINE_MAX_LOAD_KW && units != null && units <= cap;
+    if (qualifies) {
+      switchTo(partner, `Auto-switched to the Life Line tariff — load ≤ 1 kW, MD ≤ 1 kW and ${Math.round(units)} units is within the ${Math.round(cap)}-unit lifeline cap.`);
+    } else { hideLifelineNotice(); }
+    return;
+  }
+
+  hideLifelineNotice();
 }
 
 // ─── Multi-month bill revision (month-by-month, compounding LPSC) ───────────────
@@ -741,11 +901,16 @@ const round2 = n => Math.round(n * 100) / 100;
 // (charged on the prior balance, so a month's bill first attracts LPSC the next month);
 // dated payments applied in their month; undated payments + adjustments applied at the end.
 export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalUnits,
-    connectedLoadKw, billedDemandKw, fromISO, toISO, fppaAuto, manualFacRate, manualFacMode,
-    lpscRate, previousArrear, arrearLpsc, payments, adjustments, delhiSubsidy }) {
+    connectedLoadKw, billedDemandKw, billingBasis, fromISO, toISO, fppaAuto, manualFacRate, manualFacMode,
+    lpscRate, previousArrear, arrearLpsc, payments, adjustments, delhiSubsidy,
+    netMetering, exportUnits, openingCreditUnits }) {
   const months = fppaMonthDates(fromISO, toISO);
   const N = months.length || 1;
   const unitsPerMonth = totalUnits / N;
+  // Net metering across the period: split exported units evenly per month and carry the banked
+  // credit forward month to month (so a surplus month offsets a later month's import).
+  const exportPerMonth = netMetering ? (exportUnits || 0) / N : 0;
+  let runningCredit    = netMetering ? (openingCreditUnits || 0) : 0;
 
   const payByMonth = {};
   let undatedPay = 0;
@@ -760,8 +925,10 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
   let totalCharges = 0, totalLpsc = 0, totalPay = 0;
   // component totals for the aggregated summary
   let totalEnergy = 0, totalDemand = 0, totalED = 0, totalExcess = 0, totalFppa = 0, totalSubsidy = 0;
+  let totalNet = 0;   // net (billed) units summed over the months — used for the net-metering summary
   const slabAgg = {};   // aggregated energy slabs keyed by rate → { rate, units, amount }
-  let fixedPerMonth = 0, edRate = 0;
+  let fixedPerMonth = 0, edRate = 0, demandUnit = 'kW';
+  let tariffVerified = false, tariffAsOf = null;
   let discom = null, category = null, supplyTypeName = null;
 
   months.forEach(d => {
@@ -779,10 +946,12 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
 
     const mb = calculateBill({
       discomId, categoryId, supplyTypeId, units: unitsPerMonth,
-      connectedLoadKw, billedDemandKw, billingPeriodDays: 30, billingDate: ym + '-15',
+      connectedLoadKw, billedDemandKw, billingBasis, billingPeriodDays: 30, billingDate: ym + '-15',
       facRate, facMode, arrears: 0, arrearLpsc: 0, lpscRate: 0, currentLpscMonths: 0,
       lpscApplicable: false, payments: [], adjustments: [], delhiSubsidy, todUnits: null,
+      netMetering, exportUnits: exportPerMonth, openingCreditUnits: runningCredit,
     });
+    if (netMetering && mb) runningCredit = mb.closingCredit;   // carry surplus to the next month
     const energy  = mb ? mb.totalEnergy : 0;
     const demand  = mb ? mb.fixedCharge : 0;
     const excess  = mb ? mb.excessDemandPenalty : 0;
@@ -799,7 +968,8 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
     });
     if (mb && !discom) {
       discom = mb.discom; category = mb.category; supplyTypeName = mb.supplyTypeName;
-      fixedPerMonth = mb.fixedPerMonth;
+      fixedPerMonth = mb.fixedPerMonth; demandUnit = mb.demandUnit || 'kW';
+      tariffVerified = mb.tariffVerified; tariffAsOf = mb.tariffAsOf;
       const edc = (mb.extraCharges || []).find(c => c.type === 'percent_total' || c.type === 'percent_energy');
       if (edc) edRate = edc.rate;
     }
@@ -810,7 +980,7 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
 
     rows.push({
       label: `${MON_ABBR[d.getMonth()]} ${d.getFullYear()}`,
-      units: round2(unitsPerMonth), fppaRate: facRate, fppaMode: facMode,
+      units: round2(mb ? mb.netUnits : unitsPerMonth), fppaRate: facRate, fppaMode: facMode,
       fppaBase, fppaAmount: round2(fppaAmt),
       energy: round2(energy), fixed: round2(demand),
       excess: round2(excess), ed: round2(ed),
@@ -819,6 +989,7 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
     totalCharges += charges; totalLpsc += lpsc; totalPay += pay;
     totalEnergy += energy; totalDemand += demand; totalED += ed;
     totalExcess += excess; totalFppa += fppaAmt; totalSubsidy += subsidy;
+    totalNet += mb ? mb.netUnits : 0;
   });
 
   const totalAdj = (adjustments || []).reduce((s, a) => s + (a.amount || 0), 0);
@@ -834,12 +1005,89 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
     totalExcess: round2(totalExcess), totalFppa: round2(totalFppa), totalSubsidy: round2(totalSubsidy),
     energySlabs: Object.values(slabAgg).sort((a, b) => a.rate - b.rate)
       .map(s => ({ rate: s.rate, units: round2(s.units), amount: round2(s.amount) })),
-    fixedPerMonth: round2(fixedPerMonth), edRate,
+    fixedPerMonth: round2(fixedPerMonth), edRate, demandUnit, tariffVerified, tariffAsOf,
     totalCharges: round2(totalCharges), totalLpsc: round2(totalLpsc),
     totalPay: round2(totalPay), totalAdj: round2(totalAdj),
     totalPayable: Math.round(balance),
+    // Net-metering summary (only meaningful when netMetering is on)
+    netMetering: !!netMetering,
+    totalImport: round2(totalUnits),
+    totalExport: round2(netMetering ? (exportUnits || 0) : 0),
+    totalNet: round2(totalNet),
+    finalCredit: round2(netMetering ? runningCredit : 0),
     discom, category, supplyTypeName, connectedLoadKw, billedDemandKw,
   };
+}
+
+// Fill a known, verified example (UP DVVNL domestic, 350 units / 3 kW) and calculate it — gives a
+// first-time visitor an instant result without hunting through every field. Cascades through the
+// dependent dropdowns the same way a shared link does.
+export function loadSample() {
+  const stateEl = document.getElementById('stateSelect');
+  stateEl.value = 'Uttar Pradesh';
+  stateEl.dispatchEvent(new Event('change'));
+  setTimeout(() => {
+    const d = document.getElementById('discomSelect');
+    d.value = 'dvvnl'; d.dispatchEvent(new Event('change'));
+    setTimeout(() => {
+      const c = document.getElementById('categorySelect');
+      c.value = 'domestic'; c.dispatchEvent(new Event('change'));
+      setTimeout(() => {
+        const st = document.getElementById('supplyTypeSelect');
+        if ([...st.options].some(o => o.value === '10B')) { st.value = '10B'; st.dispatchEvent(new Event('change')); }
+        document.getElementById('consumerName').value = 'Sample Consumer';
+        document.getElementById('connectedLoad').value = 3;
+        const u = document.getElementById('unitsInput'); u.value = 350; u.dispatchEvent(new Event('input'));
+        updateUnitsDisplay(); updateCalcButton();
+        doCalculate();
+      }, 60);
+    }, 60);
+  }, 60);
+}
+
+// Compare the current usage (units / load / period / basis) across every DISCOM in the selected
+// state that offers the same category, ranked by net bill — answers "which utility is cheapest for
+// me?". Uses the clean net bill (no arrears / LPSC, which are consumer-specific).
+export function compareDiscoms() {
+  const state        = document.getElementById('stateSelect').value;
+  const categoryId   = document.getElementById('categorySelect').value;
+  const supplyTypeId = document.getElementById('supplyTypeSelect').value || null;
+  const curDiscom    = document.getElementById('discomSelect').value;
+  const units        = getEffectiveUnits();
+  if (!state || !categoryId) { showToast('Pick a state and category first.'); return; }
+  if (units == null)         { showToast('Enter consumption (units) first.'); return; }
+
+  const load = +document.getElementById('connectedLoad').value;
+  const bdVal = +document.getElementById('billedDemand')?.value || 0;
+  const common = {
+    units, connectedLoadKw: load, billedDemandKw: bdVal > 0 ? bdVal : undefined,
+    billingBasis: getBillingBasis(),
+    billingPeriodDays: getBillingPeriodDays(), billingDate: getBillingDate(),
+    facRate: +document.getElementById('facRate').value || 0,
+    facMode: document.getElementById('facMode')?.value || 'per_unit',
+    todUnits: getTodUnits(), lpscApplicable: false, delhiSubsidy: false,
+    netMetering: document.getElementById('netMeteringChk')?.checked || false,
+    exportUnits: +document.getElementById('exportUnits')?.value || 0,
+    openingCreditUnits: +document.getElementById('openingCredit')?.value || 0,
+  };
+
+  const rows = [];
+  getDiscoms(state).forEach(d => {
+    if (!getCategories(d.id).some(c => c.id === categoryId)) return;   // category not offered here
+    // The selected supply type may not exist in this DISCOM's category — fall back to no supply type.
+    const r = calculateBill({ discomId: d.id, categoryId, supplyTypeId, ...common })
+           || calculateBill({ discomId: d.id, categoryId, supplyTypeId: null, ...common });
+    if (!r) return;
+    rows.push({ name: d.name, current: d.id === curDiscom, energy: r.totalEnergy,
+      fixed: r.fixedCharge, fppa: r.facAmount, total: r.currentNet, supplyTypeName: r.supplyTypeName });
+  });
+  if (rows.length < 1) { showToast('No comparable DISCOMs for this category.'); return; }
+  rows.sort((a, b) => a.total - b.total);
+
+  const catName = (getCategories(curDiscom).find(c => c.id === categoryId) || {}).name || categoryId;
+  const panel = document.getElementById('billPanel');
+  panel.innerHTML = renderComparison({ state, categoryName: catName, units, rows });
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 export function doCalculate() {
@@ -853,6 +1101,7 @@ export function doCalculate() {
   const load              = +document.getElementById('connectedLoad').value;
   const bdVal             = +document.getElementById('billedDemand')?.value || 0;
   const billedDemandKw    = bdVal > 0 ? bdVal : undefined;
+  const billingBasis      = getBillingBasis();
   const facRate           = +document.getElementById('facRate').value     || 0;
   const facMode           = document.getElementById('facMode')?.value || 'per_unit';
   const arrears           = +document.getElementById('arrears').value     || 0;
@@ -868,20 +1117,24 @@ export function doCalculate() {
   const billingPeriodDays = getBillingPeriodDays();
   const billingDate       = getBillingDate();
   const todUnits          = getTodUnits();
+  const netMetering       = document.getElementById('netMeteringChk')?.checked || false;
+  const exportUnits       = +document.getElementById('exportUnits')?.value || 0;
+  const openingCreditUnits = +document.getElementById('openingCredit')?.value || 0;
 
   // Multi-month bill revision: when LPSC applies over a period spanning ≥2 months, bill each
   // month separately and compound LPSC on the running balance.
-  const fromISO = document.getElementById('fromDate').value;
-  const toISO   = document.getElementById('toDate').value;
+  const fromISO = fieldISO(document.getElementById('fromDate'));
+  const toISO   = fieldISO(document.getElementById('toDate'));
   const revMonths = (fromISO && toISO) ? fppaMonthDates(fromISO, toISO) : [];
   if (lpscApplicable && revMonths.length >= 2 && units != null) {
     const ledger = buildRevisionLedger({
       discomId, categoryId, supplyTypeId, totalUnits: units,
-      connectedLoadKw: load, billedDemandKw, fromISO, toISO,
+      connectedLoadKw: load, billedDemandKw, billingBasis, fromISO, toISO,
       fppaAuto: document.getElementById('fppaAuto')?.checked !== false,
       manualFacRate: facRate, manualFacMode: facMode,
       lpscRate, previousArrear: arrears, arrearLpsc,
       payments: getPayments(), adjustments: getAdjustments(), delhiSubsidy,
+      netMetering, exportUnits, openingCreditUnits,
     });
     const panel = document.getElementById('billPanel');
     panel.innerHTML = renderRevisionBill({
@@ -893,15 +1146,20 @@ export function doCalculate() {
       fromDate: fromISO, toDate: toISO,
     });
     panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    saveBillToHistory({
+      label: `${ledger.discom.name} · ${ledger.category.name} · ${ledger.monthsCount} mo · ${ledger.totalUnits} u`,
+      amount: Math.max(0, ledger.totalPayable).toLocaleString('en-IN'),
+      params: new URL(buildShareUrl()).search.slice(1),
+    });
     return;
   }
 
   const result = calculateBill({
     discomId, categoryId, supplyTypeId, units, connectedLoadKw: load,
-    billedDemandKw, billingPeriodDays, billingDate,
+    billedDemandKw, billingBasis, billingPeriodDays, billingDate,
     facRate, facMode, arrears, arrearLpsc, lpscRate, currentLpscMonths, lpscApplicable,
     payments: getPayments(), adjustments: getAdjustments(),
-    delhiSubsidy, todUnits
+    delhiSubsidy, todUnits, netMetering, exportUnits, openingCreditUnits
   });
   if (!result) return;
 
@@ -917,14 +1175,19 @@ export function doCalculate() {
     billingYear:  document.getElementById('billingYear').value,
     prevReading:  document.getElementById('prevReading').value,
     currReading:  document.getElementById('currReading').value,
-    fromDate:     document.getElementById('fromDate').value,
-    toDate:       document.getElementById('toDate').value,
+    fromDate:     fieldISO(document.getElementById('fromDate')),
+    toDate:       fieldISO(document.getElementById('toDate')),
     fppaSource:   verifiedFppa ? `${verifiedFppa.label} — ${verifiedFppa.source}` : null,
   });
 
   const panel = document.getElementById('billPanel');
   panel.innerHTML = html;
   panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  saveBillToHistory({
+    label: `${result.discom.name} · ${result.category.name}${result.supplyTypeName ? ' · ' + result.supplyTypeName : ''} · ${result.units} u`,
+    amount: Math.max(0, result.totalPayable).toLocaleString('en-IN'),
+    params: new URL(buildShareUrl()).search.slice(1),
+  });
 }
 
 // ─── Load from URL Params ─────────────────────────────────────────────────────
@@ -953,8 +1216,8 @@ export function loadFromUrl() {
         const fields = {
           consumerName: 'name', accountNo: 'acc', address: 'addr',
           prevReading: 'prev', currReading: 'curr',
-          fromDate: 'fd', toDate: 'td',
           unitsInput: 'units', connectedLoad: 'load', billedDemand: 'bd',
+          exportUnits: 'exp', openingCredit: 'cr',
           todPeak: 'todp', todNormal: 'todn', todOffPeak: 'todop',
           facRate: 'fac', arrears: 'arr', arrearLpsc: 'arrlpsc',
           lpscRate: 'lpsc', currentLpscMonths: 'curmo'
@@ -963,9 +1226,22 @@ export function loadFromUrl() {
           const el = document.getElementById(id);
           if (el && p.get(key)) el.value = p.get(key);
         }
+        // Date fields carry ISO in the URL → store ISO + show DD-MM-YYYY via the datepicker helper.
+        if (p.get('fd')) setFieldDate(document.getElementById('fromDate'), p.get('fd'));
+        if (p.get('td')) setFieldDate(document.getElementById('toDate'), p.get('td'));
         // Meter number now lives in the Simple/TOD panels (Advanced derives it from labels)
         if (p.get('meter')) {
           ['meterNoSimple', 'meterNoTod'].forEach(id => { const e = document.getElementById(id); if (e) e.value = p.get('meter'); });
+        }
+        // Net metering — toggle reveals export/credit fields (already set via the fields map above)
+        if (p.get('nm') === '1') {
+          const c = document.getElementById('netMeteringChk');
+          if (c) { c.checked = true; c.dispatchEvent(new Event('change')); }
+        }
+        // Billing basis — overrides the category-driven default; refresh labels/visibility
+        if (p.get('basis')) {
+          const b = document.getElementById('billingBasis');
+          if (b) { b.value = p.get('basis'); b.dispatchEvent(new Event('change')); }
         }
         if (p.get('month') || p.get('year')) {
           const mm = +(p.get('month') || document.getElementById('billingMonth').value);

@@ -81,11 +81,26 @@ const blankSupply   = () => ({ id: '', name: '', description: '', ...blankTariff
 const blankDiscom   = () => ({ id: '', name: '', fullName: '', area: '', tariffYear: '2024-25', website: '', lpscRate: '1.5', categories: [blankCategory()] });
 const blankModel    = () => ({ state: '', currentRatesFrom: '', discoms: [blankDiscom()] });
 
+// Keys the editor manages explicitly at each level; ANY other key on the live object is preserved
+// verbatim through a round-trip via `_extra` (so advanced fields the form doesn't expose —
+// demandUnit, excessDemand, excessDemandRate, billingDemandFloorPct, rateHistory, state-level
+// excessDemand, … — are not silently dropped when you re-download a state file).
+const TARIFF_KEYS   = ['fixedCharge', 'energySlabs', 'additionalCharges'];
+const SUPPLY_KEYS   = ['id', 'name', 'description', ...TARIFF_KEYS];
+const CATEGORY_KEYS = ['id', 'name', 'notes', 'supplyTypes', ...TARIFF_KEYS];
+const DISCOM_KEYS   = ['id', 'name', 'fullName', 'area', 'tariffYear', 'website', 'lpscRate', 'categories'];
+const MODEL_KEYS    = ['state', 'currentRatesFrom', 'discoms'];
+const extras = (obj, known) => {
+  const o = {};
+  Object.keys(obj || {}).forEach(k => { if (!known.includes(k)) o[k] = obj[k]; });
+  return o;
+};
+
 // ── Normalize a live tariff object → editor model ──
 function normFixed(fc) {
   if (fc == null) return { kind: 'flat', rate: '', slabs: [] };
   if (typeof fc === 'number') return { kind: 'flat', rate: fc, slabs: [] };
-  if (fc.type === 'per_kw') return { kind: 'per_kw', rate: fc.rate, slabs: [] };
+  if (fc.type === 'per_kw' || fc.type === 'per_kva') return { kind: fc.type, rate: fc.rate, slabs: [] };
   if (fc.type === 'tiered') return {
     kind: 'tiered', rate: '',
     slabs: (fc.slabs || []).map(s => ({
@@ -105,10 +120,11 @@ function normCategory(c) {
     return {
       ...base, mode: 'supply',
       fixedCharge: { kind: 'flat', rate: '', slabs: [] }, energySlabs: [], additionalCharges: [],
-      supplyTypes: c.supplyTypes.map(st => ({ id: st.id || '', name: st.name || '', description: st.description || '', ...normTariff(st) })),
+      supplyTypes: c.supplyTypes.map(st => ({ id: st.id || '', name: st.name || '', description: st.description || '', ...normTariff(st), _extra: extras(st, SUPPLY_KEYS) })),
+      _extra: extras(c, CATEGORY_KEYS),
     };
   }
-  return { ...base, mode: 'direct', ...normTariff(c), supplyTypes: [] };
+  return { ...base, mode: 'direct', ...normTariff(c), supplyTypes: [], _extra: extras(c, CATEGORY_KEYS) };
 }
 function normModel(mod) {
   return {
@@ -118,7 +134,9 @@ function normModel(mod) {
       tariffYear: d.tariffYear || '', website: d.website || '',
       lpscRate: d.lpscRate == null ? '' : d.lpscRate,
       categories: (d.categories || []).map(normCategory),
+      _extra: extras(d, DISCOM_KEYS),
     })),
+    _extra: extras(mod, MODEL_KEYS),
   };
 }
 
@@ -145,7 +163,7 @@ function setFixedKind(t, kind) {
 
 // ── Build editor model → clean export object (live shape) ──
 function buildFixed(fc) {
-  if (fc.kind === 'per_kw') return { type: 'per_kw', rate: num(fc.rate) };
+  if (fc.kind === 'per_kw' || fc.kind === 'per_kva') return { type: fc.kind, rate: num(fc.rate) };
   if (fc.kind === 'tiered') return {
     type: 'tiered',
     slabs: fc.slabs.map(s => {
@@ -171,25 +189,26 @@ function buildCategory(c) {
     o.supplyTypes = c.supplyTypes.map(st => {
       const s = { id: st.id.trim(), name: st.name.trim() };
       if (st.description && st.description.trim()) s.description = st.description.trim();
-      return Object.assign(s, buildTariff(st));
+      Object.assign(s, buildTariff(st));
+      return Object.assign(s, st._extra || {});   // preserve advanced supply-type fields
     });
   } else {
     Object.assign(o, buildTariff(c));
   }
-  return o;
+  return Object.assign(o, c._extra || {});         // preserve advanced category fields (demandUnit, …)
 }
 function buildDiscom(d) {
   const o = { id: d.id.trim(), name: d.name.trim(), fullName: d.fullName.trim(), area: d.area.trim(), tariffYear: d.tariffYear.trim() };
   if (d.website && d.website.trim()) o.website = d.website.trim();
   if (d.lpscRate !== '' && d.lpscRate != null) o.lpscRate = num(d.lpscRate);
   o.categories = d.categories.map(buildCategory);
-  return o;
+  return Object.assign(o, d._extra || {});
 }
 function buildExport(model) {
   const o = { state: model.state.trim() };
   if (model.currentRatesFrom && model.currentRatesFrom.trim()) o.currentRatesFrom = model.currentRatesFrom.trim();
   o.discoms = model.discoms.map(buildDiscom);
-  return o;
+  return Object.assign(o, model._extra || {});      // preserve state-level excessDemand / billingDemandFloorPct
 }
 function serializeStateFile(model) {
   const exp = buildExport(model);
@@ -303,6 +322,7 @@ function renderFixed(targetPath, fc) {
   let rows = '';
   if (fc.kind === 'flat') rows = field('Amount (₹/month)', `${targetPath}.fixedCharge.rate`, fc.rate, 'number', 'step="0.01"');
   else if (fc.kind === 'per_kw') rows = field('Rate (₹/kW/month)', `${targetPath}.fixedCharge.rate`, fc.rate, 'number', 'step="0.01"');
+  else if (fc.kind === 'per_kva') rows = field('Rate (₹/kVA/month)', `${targetPath}.fixedCharge.rate`, fc.rate, 'number', 'step="0.01"');
   else if (fc.kind === 'tiered') {
     const tp = `${targetPath}.fixedCharge.slabs`;
     rows = `<div class="ed-row ed-rowhdr ed-row-tier"><span>Up to load (kW)</span><span></span><span>Rate (₹)</span><span>Label (optional)</span><span></span></div>`
@@ -317,7 +337,7 @@ function renderFixed(targetPath, fc) {
   }
   return `<div class="ed-subhead">Fixed / Demand Charge</div>
     <div class="ed-field"><label>Type</label>
-      <select data-kind="${targetPath}">${opt('flat', 'Flat ₹/month')}${opt('per_kw', 'Per kW of load')}${opt('tiered', 'Tiered by load')}</select>
+      <select data-kind="${targetPath}">${opt('flat', 'Flat ₹/month')}${opt('per_kw', 'Per kW of load')}${opt('per_kva', 'Per kVA of demand')}${opt('tiered', 'Tiered by load')}</select>
     </div>${rows}`;
 }
 function renderSlabs(targetPath, slabs) {

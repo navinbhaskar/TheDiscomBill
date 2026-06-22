@@ -54,7 +54,7 @@
   --p-purple-100: #f3e8ff;
   --p-purple-700: #7e22ce;
 
-  /* ── Semantic tokens ── */
+  /* ── Semantic tokens ── (dark-mode overrides live in the [data-theme="dark"] block below) */
 
   /* Surfaces */
   --surface-page:   var(--p-slate-50);
@@ -143,6 +143,105 @@
   --white:      var(--p-slate-0);
 }
 
+/* ─── Dark theme ─────────────────────────────────────────────────────────────────
+   Applied when <html data-theme="dark"> (set by an inline no-FOUC script + the header
+   toggle, defaulting to the OS preference). Only semantic/legacy tokens are re-pointed,
+   so every component follows automatically. The rendered bill is kept paper-light below
+   so it still reads like a document; @media print already forces white. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-page:   #0b1220;
+  --surface-card:   #131c2e;
+  --surface-sunken: #0f1828;
+  --surface-overlay: rgba(255,255,255,.05);
+
+  --brand-faint:   #14233c;
+  --brand-subtle:  #1b335c;
+  --brand-border:  #284a7d;
+
+  --text-primary:   #e6edf6;
+  --text-secondary: #9fb0c5;
+  --text-tertiary:  #6b7c93;
+  --text-brand:     #7fb2ff;
+  --text-brand-dark:#a9ccff;
+
+  --border-subtle:  #1d2a3e;
+  --border-default: #2b3a52;
+  --border-strong:  #3b4d68;
+
+  --ok-bg: #10311e; --ok-text: #5fd089; --ok-border: #1c5234;
+  --warn-bg: #3a2e10; --warn-text: #f1b54a;
+  --err-bg: #3a1618; --err-text: #f3868a;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,.5);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.5), 0 1px 2px rgba(0,0,0,.4);
+  --shadow-md: 0 4px 8px rgba(0,0,0,.55), 0 2px 4px rgba(0,0,0,.4);
+  --shadow-lg: 0 12px 28px rgba(0,0,0,.6), 0 4px 10px rgba(0,0,0,.45);
+  --shadow-xl: 0 24px 48px rgba(0,0,0,.65), 0 8px 16px rgba(0,0,0,.5);
+
+  --gray-50:  #0f1828; --gray-100: #131c2e; --gray-200: #1d2a3e;
+  --gray-300: #2b3a52; --gray-400: #6b7c93; --gray-600: #9fb0c5;
+  --gray-700: #b8c5d6; --gray-800: #d2dbe8; --gray-900: #e6edf6;
+  --white: #131c2e;
+  --blue-pale: #14233c;
+}
+/* Keep the printed bill paper-light even in dark mode (reset tokens within the bill only) */
+:root[data-theme="dark"] .bill-wrap {
+  --surface-page: #ffffff; --surface-card: #ffffff; --surface-sunken: #f1f5f9;
+  --surface-overlay: rgba(15,23,42,.04);
+  --text-primary: #0f172a; --text-secondary: #475569; --text-tertiary: #94a3b8;
+  --border-subtle: #f1f5f9; --border-default: #e2e8f0; --border-strong: #cbd5e1;
+  --ok-bg: #f0fdf4; --ok-text: #15803d; --warn-bg: #fffbeb; --warn-text: #b45309;
+  /* brand tints used by table sub-total / faint fills — must be light so text stays readable */
+  --brand-faint: #eff6ff; --brand-subtle: #dbeafe; --brand-border: #bfdbfe;
+  --gray-50: #f8fafc; --gray-100: #f1f5f9; --gray-200: #e2e8f0; --gray-300: #cbd5e1;
+  --gray-900: #1e293b; --white: #ffffff; --blue-pale: #eff6ff;
+  background: #fff; color: #0f172a; border-radius: var(--radius-lg);
+}
+
+/* Glossary tooltip — a small focusable "ⓘ" that reveals a definition on hover/focus (CSS-only) */
+.gloss {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 15px; height: 15px; margin-left: 4px; vertical-align: middle;
+  border-radius: var(--radius-full); border: 1px solid var(--brand-border);
+  color: var(--text-brand); background: var(--brand-faint);
+  font-size: 10px; font-weight: 700; font-style: normal; cursor: help; position: relative;
+  font-family: var(--font-body); line-height: 1;
+}
+.gloss::after {
+  content: attr(data-tip);
+  position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  width: max-content; max-width: 260px; padding: 8px 10px; z-index: 60;
+  background: var(--p-slate-900); color: #fff; border-radius: var(--radius-sm);
+  font-size: 11.5px; font-weight: 500; line-height: 1.4; text-align: left;
+  box-shadow: var(--shadow-lg); white-space: normal;
+  visibility: hidden; opacity: 0; transition: opacity var(--t-fast);
+  pointer-events: none;
+}
+.gloss:hover::after, .gloss:focus-visible::after, .gloss:focus::after { visibility: visible; opacity: 1; }
+.gloss:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+@media print { .gloss { display: none; } }
+
+/* Header controls (language + theme) — a matched ghost-pill pair on the dark header, identical size */
+.lang-select, .theme-toggle {
+  box-sizing: border-box; width: 56px; height: 34px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.08);
+  color: var(--text-inverse); font-family: inherit; font-size: 14px; cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+.lang-select {
+  margin-left: 8px; padding: 0 4px; font-weight: 600;
+  text-align: center; text-align-last: center;          /* centre "EN" / "हिंदी" like the icon */
+  -webkit-appearance: none; -moz-appearance: none; appearance: none;   /* drop the native arrow */
+}
+.lang-select option { color: #0f172a; background: #fff; }   /* readable native dropdown list */
+.theme-toggle {
+  margin-left: 6px; display: inline-flex; align-items: center; justify-content: center;
+}
+.lang-select:hover, .theme-toggle:hover { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.32); }
+.lang-select:focus-visible, .theme-toggle:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
 /* ─── Reset & Base ───────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -213,7 +312,7 @@ a:hover { text-decoration: underline; }
 .logo-icon-wrap svg { width: 21px; height: 21px; filter: drop-shadow(0 1px 1px rgba(8,20,48,.35)); }
 .logo-text { display: block; font-size: 19px; font-weight: 600; letter-spacing: -0.5px; line-height: 1.05; }
 .logo-tagline { display: block; font-size: 11px; color: var(--p-slate-400); letter-spacing: 0.3px; font-weight: 400; margin-top: 1px; }
-.header-nav { display: flex; gap: 4px; }
+.header-nav { display: flex; align-items: center; gap: 4px; }
 .header-nav a {
   color: var(--p-slate-300); font-size: 14px; font-weight: 500;
   padding: 6px 14px; border-radius: var(--radius-full);
@@ -589,8 +688,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .rev-fppa { font-size: 10px; font-weight: 600; color: var(--text-tertiary); white-space: nowrap; }
 .rev-start-row td { color: var(--text-secondary); font-style: italic; }
 .rev-table-scroll { overflow-x: auto; }
-.rev-table { min-width: 720px; }
-.rev-table th, .rev-table td { white-space: nowrap; }
+.rev-table { width: 100%; }
+.rev-table--wide { min-width: 720px; }   /* the multi-column ledger; the 4-col FPPA table fits without it */
+/* Compact, shared sizing for both month-by-month tables */
+.rev-table th, .rev-table td { white-space: nowrap; padding: 5px 9px; font-size: 12px; }
 
 /* LPSC Applicable toggle */
 .lpsc-applicable-label { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 14px; cursor: pointer; }
@@ -621,6 +722,43 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   background: var(--border-strong); color: var(--text-tertiary);
   cursor: not-allowed; box-shadow: none;
 }
+.btn-sample {
+  width: 100%; margin-top: 8px; padding: 10px;
+  background: transparent; color: var(--text-brand);
+  border: 1px dashed var(--brand-border); border-radius: var(--radius-md);
+  font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+.btn-sample:hover { background: var(--brand-faint); border-color: var(--brand); }
+.btn-sample:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+.btn-secondary-row { display: flex; gap: 8px; }
+.btn-secondary-row .btn-sample { margin-top: 8px; }
+
+/* DISCOM comparison table */
+.cmp-table .cmp-current td { background: var(--brand-faint); font-weight: 600; }
+.cmp-you { color: var(--text-brand); font-size: 11px; font-weight: 700; }
+.cmp-sub { color: var(--text-secondary); font-size: 11px; }
+.cmp-best { color: var(--ok-text); font-weight: 700; }
+
+/* Recent-bills history panel */
+.history-panel { margin-top: 14px; border-top: 1px solid var(--border-default); padding-top: 10px; }
+.history-head { display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;
+  letter-spacing: .04em; margin-bottom: 6px; }
+.history-clear { background: none; border: none; color: var(--text-brand); font-size: 12px;
+  font-weight: 600; cursor: pointer; padding: 2px 4px; }
+.history-clear:hover { text-decoration: underline; }
+.history-item { display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  width: 100%; text-align: left; padding: 8px 10px; margin-bottom: 4px;
+  background: var(--surface-sunken); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm); cursor: pointer; font-family: inherit;
+  transition: background var(--t-fast), border-color var(--t-fast); }
+.history-item:hover { background: var(--brand-faint); border-color: var(--brand-border); }
+.history-item:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+.history-label { font-size: 12.5px; color: var(--text-primary); overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.history-amt { font-size: 12.5px; font-weight: 700; color: var(--text-brand); white-space: nowrap; }
 
 /* ─── Bill Panel ─────────────────────────────────────────────────────────────── */
 .bill-panel {
@@ -684,6 +822,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 .bill-title-sub { font-size: 11px; color: var(--p-blue-200); }
 .bill-tariff-year { font-size: 11px; color: var(--p-blue-300); margin-top: 2px; }
+.conf-badge { display: inline-block; margin-top: 6px; padding: 2px 8px; border-radius: 999px;
+  font-size: 10px; font-weight: 700; letter-spacing: .02em; border: 1px solid transparent; }
+.conf-verified { background: var(--ok-bg, #e7f6ec); color: var(--ok-text, #1a7f37); border-color: currentColor; }
+.conf-estimate { background: var(--warn-bg, #fff4e0); color: var(--warn-text, #9a6700); border-color: currentColor; }
 
 .bill-section-title {
   font-size: 11px; font-weight: 700; color: var(--brand);
@@ -723,6 +865,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .bill-charges-table th {
   background: var(--brand); color: var(--text-inverse);
   padding: 9px 12px; font-weight: 600; font-size: 12px; letter-spacing: 0.3px;
+  text-align: left;   /* text headers align with their (left) cells; .num headers go right below */
 }
 .bill-charges-table td { padding: 7px 12px; border-bottom: 1px solid var(--border-subtle); }
 .bill-charges-table .num { text-align: right; }
@@ -1100,11 +1243,12 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
 
 /* ─── Custom Date Field + Calendar ───────────────────────────────────────────── */
 .date-field-wrap { position: relative; }
-.date-field { padding-right: 40px !important; cursor: pointer; font-variant-numeric: tabular-nums; }
+/* Compact, typeable date field (you can type a date or use the calendar button) */
+.date-field { padding: 7px 32px 7px 11px !important; font-size: 13px; cursor: text; font-variant-numeric: tabular-nums; }
 .date-field::placeholder { color: var(--text-tertiary); }
 .date-field-btn {
   position: absolute; top: 1px; right: 1px; bottom: 1px;
-  width: 38px;
+  width: 30px;
   display: flex; align-items: center; justify-content: center;
   background: none; border: none; cursor: pointer;
   color: var(--brand);
@@ -1158,6 +1302,8 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
 .dp-inrange { background: var(--brand-subtle); border-radius: 0; }
 .dp-selected, .dp-selected:hover { background: var(--brand); color: #fff; font-weight: 700; }
 .dp-disabledish { color: var(--text-tertiary); opacity: .45; }
+.dp-day:disabled { color: var(--text-tertiary); opacity: .3; cursor: not-allowed; background: none; }
+.dp-day:disabled:hover { background: none; color: var(--text-tertiary); }
 .dp-foot { display: flex; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-subtle); }
 .dp-today-btn, .dp-clear-btn {
   flex: 1; padding: 6px; font-family: inherit;
@@ -1180,16 +1326,18 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
 .dp-years { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; max-height: 210px; overflow-y: auto; padding: 2px; }
 
 /* ─── Rate / Surcharge Detail Accordions ─────────────────────────────────────── */
-.bill-extras { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+/* Inset the whole "Details" block by 20px so it lines up with the rest of the bill body
+   (the bill-wrap itself has no padding) instead of sitting flush against the panel edge. */
+.bill-extras { margin-top: 16px; padding: 0 20px 4px; display: flex; flex-direction: column; gap: 10px; }
 .bill-extras-title {
   font-size: 11px; font-weight: 700; color: var(--text-tertiary);
   text-transform: uppercase; letter-spacing: 1px;
-  padding-left: 2px; margin-bottom: 2px;
+  margin-bottom: 2px;
 }
 .accordion-item {
   background: var(--surface-card);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
+  border-radius: 0;          /* square corners */
   overflow: hidden;
   transition: border-color var(--t-fast), box-shadow var(--t-fast);
 }
@@ -1272,7 +1420,8 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
   .bill-details-box:first-child { border-right: none; border-bottom: 1px solid var(--border-default); }
   .bill-reading-table th, .bill-reading-table td { font-size: 12px; padding: 6px 8px; }
   .bill-charges-table td, .bill-charges-table th { font-size: 12px; padding: 6px 8px; }
-  .header-nav { display: none; }
+  .header-nav a { display: none; }   /* hide text links on mobile, keep language + theme controls */
+  .header-nav { gap: 0; }
   .hero h1 { letter-spacing: -0.5px; }
   .form-panel { border-radius: var(--radius-lg); padding: 20px; }
   .bill-panel { border-radius: var(--radius-lg); }

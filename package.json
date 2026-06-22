@@ -1,0 +1,16 @@
+{
+  "name": "thediscombill",
+  "version": "1.0.0",
+  "description": "Free browser-based electricity bill calculator for all Indian DISCOMs.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node tests/engine.test.mjs",
+    "serve": "npx http-server . -p 3456"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/navinbhaskar/TheDiscomBill"
+  }
+}

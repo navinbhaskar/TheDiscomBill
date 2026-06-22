@@ -4,6 +4,12 @@ export function formatINR(n) {
   return '₹ ' + Math.abs(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
+// Display an ISO date (YYYY-MM-DD) as DD-MM-YYYY for the bill; pass through anything else.
+export function displayDate(iso) {
+  const m = String(iso || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return m ? `${m[3]}-${m[2]}-${m[1]}` : String(iso || '');
+}
+
 export function numberToWords(amount) {
   const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven',
     'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen',
@@ -37,16 +43,25 @@ export function numberToWords(amount) {
   return words + ' Only';
 }
 
+// Data-confidence badge shown on the bill: distinguishes rates checked against an official tariff
+// order ("verified") from representative estimates the user should double-check.
+function confidenceBadge(verified, asOf) {
+  return verified
+    ? `<div class="conf-badge conf-verified" title="Rates checked against the official tariff order">✓ Verified rates${asOf ? ` · ${asOf}` : ''}</div>`
+    : `<div class="conf-badge conf-estimate" title="Representative rates — confirm against the DISCOM's official tariff order">≈ Representative rates</div>`;
+}
+
 // ─── Tariff / charge breakdown panel helpers ───────────────────────────────────
 
-function fixedChargeDesc(config, demandKw) {
+function fixedChargeDesc(config, demandKw, unit = 'kW') {
   if (config == null) return '—';
   if (typeof config === 'number') return `₹ ${config.toFixed(2)} per month (fixed)`;
   if (config.type === 'flat')   return `₹ ${config.rate.toFixed(2)} per month (fixed)`;
-  if (config.type === 'per_kw') return `₹ ${config.rate}/kW/month × ${demandKw} kW`;
+  if (config.type === 'per_kw' || config.type === 'per_kva')
+    return `₹ ${config.rate}/${unit}/month × ${demandKw} ${unit}`;
   if (config.type === 'tiered') {
     return config.slabs.map(s => {
-      const band = s.label || (s.maxLoad === Infinity ? 'above top slab' : `up to ${s.maxLoad} kW`);
+      const band = s.label || (s.maxLoad === Infinity ? 'above top slab' : `up to ${s.maxLoad} ${unit}`);
       return `${band}: ₹ ${s.rate}`;
     }).join(' · ');
   }
@@ -63,17 +78,19 @@ function slabScheduleRows(slabs) {
   }).join('');
 }
 
+let _accId = 0;
 function accordionItem(title, subtitle, bodyHtml) {
+  const id = `acc-${++_accId}`;
   return `
   <div class="accordion-item">
-    <button type="button" class="accordion-header" aria-expanded="false">
+    <button type="button" class="accordion-header" aria-expanded="false" aria-controls="${id}" id="${id}-h">
       <span class="accordion-titles">
         <span class="accordion-title">${title}</span>
         <span class="accordion-sub">${subtitle}</span>
       </span>
       <span class="accordion-icon" aria-hidden="true"></span>
     </button>
-    <div class="accordion-body"><div class="accordion-body-inner">${bodyHtml}</div></div>
+    <div class="accordion-body" id="${id}" role="region" aria-labelledby="${id}-h"><div class="accordion-body-inner">${bodyHtml}</div></div>
   </div>`;
 }
 
@@ -83,19 +100,22 @@ export function renderBill(params) {
           fromDate, toDate, fppaSource } = params;
 
   const { discom, category, supplyTypeName,
-          units, connectedLoadKw, billedDemandKw,
+          units, billingBasis, energyUnit,
+          netMetering, importUnits, exportUnits, openingCreditUnits, netUnits, closingCredit,
+          connectedLoadKw, billedDemandKw, billingDemand, isDemandBilled, demandFloorPct, demandFloorApplied, demandUnit,
           fixedCharge, fixedChargeMonths, fixedPerMonth, slabBreakdown, totalEnergy,
           excessDemand, excessDemandPenalty, excessDemandRate,
           excessDemandMultiplier, excessDemandPctEnergyPerKw, excessDemandTolerancePct,
           todUnits, todPeakSurcharge, todOffPeakRebate,
           extraCharges, facAmount, facRate, facMode,
-          tariffPeriodLabel, tariffEstimated, tariffRates,
+          tariffPeriodLabel, tariffEstimated, tariffVerified, tariffAsOf, tariffSourceUrl, tariffRates,
           currentGross, subsidyAmount, subsidyLabel, currentNet,
           arrears, arrearLpsc, lpscRate, currentLpscMonths, currentLpsc, lpscApplicable,
           payments, totalPayments,
           adjustments, totalAdjustments,
           totalPayable } = result;
 
+  const dU = demandUnit || 'kW';   // 'kW' or 'kVA' for demand labels
   const billDate = new Date();
   const dueDate  = new Date(billDate); dueDate.setDate(dueDate.getDate() + 15);
   const fmtDate  = d => d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -114,9 +134,10 @@ export function renderBill(params) {
     ? `${category.name} › ${supplyTypeName}`
     : category.name;
 
+  const eUnit = energyUnit || 'kWh';
   const slabRows = slabBreakdown.map(s => `
     <tr>
-      <td class="indent">Energy Charges: ${s.label}</td>
+      <td class="indent">Energy Charges: ${eUnit === 'kVAh' ? s.label.replace(/\bunits\b/g, 'kVAh') : s.label}</td>
       <td class="num">${s.units}</td>
       <td class="num">₹ ${s.rate.toFixed(2)}</td>
       <td class="num amt">${formatINR(s.amount)}</td>
@@ -131,12 +152,12 @@ export function renderBill(params) {
     </tr>`).join('');
 
   const excessBasis = excessDemandPctEnergyPerKw
-    ? `${excessDemandPctEnergyPerKw}% of energy/kW`
-    : `₹ ${excessDemandRate}/kW${excessDemandMultiplier ? ` (${excessDemandMultiplier}× demand rate)` : ''}`;
+    ? `${excessDemandPctEnergyPerKw}% of energy/${dU}`
+    : `₹ ${excessDemandRate}/${dU}${excessDemandMultiplier ? ` (${excessDemandMultiplier}× demand rate)` : ''}`;
   const excessTolNote = excessDemandTolerancePct ? `, above ${excessDemandTolerancePct}% of load` : '';
   const excessDemandRow = excessDemandPenalty > 0 ? `
     <tr class="excess-demand-row">
-      <td class="indent">Excess Demand Penalty (${excessDemand.toFixed(2)} kW × ${excessBasis}${excessTolNote})</td>
+      <td class="indent">Excess Demand Penalty (${excessDemand.toFixed(2)} ${dU} × ${excessBasis}${excessTolNote})</td>
       <td></td><td></td>
       <td class="num amt">${formatINR(excessDemandPenalty)}</td>
     </tr>` : '';
@@ -177,18 +198,16 @@ export function renderBill(params) {
       <td class="num amt">− ${formatINR(subsidyAmount)}</td>
     </tr>` : '';
 
-  const hasArrears  = arrears > 0 || arrearLpsc > 0 || currentLpsc > 0;
   const hasPayments = totalPayments > 0;
-  const hasAdj      = adjustments.some(a => a.amount !== 0);
-  const showTotal   = hasArrears || hasPayments || hasAdj;
+  const adjItems    = adjustments.filter(a => a.amount !== 0);
 
-  const arrearsSection = hasArrears ? `
+  // Previous Arrear is always shown (₹0.00 when none); the LPSC lines stay conditional.
+  const arrearsSection = `
     <tr class="section-header-row"><td colspan="4">Arrears &amp; Late Payment Charges</td></tr>
-    ${arrears > 0 ? `
     <tr class="arrears-row">
       <td>Previous Arrear</td><td></td><td></td>
       <td class="num amt">${formatINR(arrears)}</td>
-    </tr>` : ''}
+    </tr>
     ${arrearLpsc > 0 ? `
     <tr class="lpsc-row">
       <td>Prev. Arrear LPSC</td><td></td><td></td>
@@ -198,29 +217,34 @@ export function renderBill(params) {
     <tr class="lpsc-row">
       <td>LPSC on Current Bill (${lpscRate}% × ${currentLpscMonths} month${currentLpscMonths !== 1 ? 's' : ''})</td><td></td><td></td>
       <td class="num amt">${formatINR(currentLpsc)}</td>
-    </tr>` : ''}` : '';
+    </tr>` : ''}`;
 
   const paymentsSection = hasPayments ? `
     <tr class="section-header-row"><td colspan="4">Payments Received</td></tr>
     ${payments.filter(p => p.amount > 0).map(p => `
     <tr class="payment-bill-row">
-      <td>Payment${p.date ? ' (' + p.date + ')' : ''}</td><td></td><td></td>
+      <td>Payment${p.date ? ' (' + displayDate(p.date) + ')' : ''}</td><td></td><td></td>
       <td class="num amt">− ${formatINR(p.amount)}</td>
     </tr>`).join('')}` : '';
 
-  const adjSection = hasAdj ? `
-    <tr class="section-header-row"><td colspan="4">Adjustments</td></tr>
-    ${adjustments.filter(a => a.amount !== 0).map(a => `
+  // Adjustments (miscellaneous charges) are always shown — itemised when present, else a zero row.
+  const adjSection = `
+    <tr class="section-header-row"><td colspan="4">Adjustments (Miscellaneous Charges)</td></tr>
+    ${adjItems.length ? adjItems.map(a => `
     <tr class="adjustment-bill-row">
       <td>${a.name || 'Adjustment'}</td><td></td><td></td>
       <td class="num amt">${a.amount >= 0 ? formatINR(a.amount) : '− ' + formatINR(-a.amount)}</td>
-    </tr>`).join('')}` : '';
+    </tr>`).join('') : `
+    <tr class="adjustment-bill-row">
+      <td>No adjustments</td><td></td><td></td>
+      <td class="num amt">${formatINR(0)}</td>
+    </tr>`}`;
 
-  const totalRow = showTotal ? `
+  const totalRow = `
     <tr class="total-payable-row">
       <td colspan="3"><strong>TOTAL AMOUNT PAYABLE</strong></td>
       <td class="num total-amt"><strong>₹ ${Math.max(0, totalPayable).toLocaleString('en-IN')}</strong></td>
-    </tr>` : '';
+    </tr>`;
 
   const estimatedBanner = tariffEstimated ? `
     <div class="bill-estimated-banner">
@@ -237,12 +261,16 @@ export function renderBill(params) {
     <div class="acc-meta">Tariff period: <strong>${tariffPeriodLabel || 'Current'}</strong>
       ${tariffEstimated ? '<span class="tariff-est-tag">(estimated)</span>' : '<span class="hint-verified">✓ verified</span>'}</div>
     <table class="acc-table">
-      <tr><td>Demand / Fixed Charge</td><td class="num">${fixedChargeDesc(tariffRates && tariffRates.fixedCharge, billedDemandKw)}${fixedChargeMonths > 1 ? ` × ${fixedChargeMonths} months` : ''} = <strong>${formatINR(fixedCharge)}</strong></td></tr>
+      <tr><td>Demand / Fixed Charge</td><td class="num">${fixedChargeDesc(tariffRates && tariffRates.fixedCharge, billingDemand != null ? billingDemand : billedDemandKw, dU)}${fixedChargeMonths > 1 ? ` × ${fixedChargeMonths} months` : ''} = <strong>${formatINR(fixedCharge)}</strong></td></tr>
     </table>
     <div class="acc-subhead">Energy charge slabs (telescopic)</div>
     <table class="acc-table">${slabScheduleRows(tariffRates && tariffRates.energySlabs)}</table>
     ${edCharge ? `<div class="acc-note">Electricity Duty: <strong>${edCharge.rate}%</strong> ${edCharge.type === 'percent_total' ? 'of fixed + energy + FPPA charges' : 'of energy charges'}.</div>` : ''}
-    ${tariffRates && tariffRates.excessDemandRate ? `<div class="acc-note">Excess demand penalty: <strong>₹ ${tariffRates.excessDemandRate}/kW</strong> on demand above sanctioned load.</div>` : ''}
+    ${tariffRates && tariffRates.excessDemandRate ? `<div class="acc-note">Excess demand penalty: <strong>₹ ${tariffRates.excessDemandRate}/${dU}</strong> on demand above sanctioned load.</div>` : ''}
+    ${billingBasis === 'kvah'
+      ? `<div class="acc-note">Billing basis: <strong>kVA based (kVAh)</strong> — demand charged in kVA and energy on apparent units (kVAh), read directly from the kVAh meter; a poor power factor already shows up as more kVAh, so there is no separate PF penalty.</div>`
+      : ''}
+    ${demandFloorApplied ? `<div class="acc-note">Billing demand floored at <strong>${demandFloorPct}% of contract demand</strong> (${billingDemand.toFixed(2)} ${dU}), as the recorded MD (${billedDemandKw.toFixed(2)} ${dU}) was lower.</div>` : ''}
     <div class="acc-note acc-muted">Telescopic slabs — each rate applies only to units within that band.${result.billingPeriodDays ? ` Slab limits prorated for the ${result.billingPeriodDays}-day period.` : ''}</div>`;
 
   const lpscBody = `
@@ -279,6 +307,7 @@ export function renderBill(params) {
   return `
   <div class="bill-actions no-print">
     <button class="btn-print" onclick="window.print()">🖨️ Print Bill</button>
+    <button class="btn-print" onclick="window.__savePdf && window.__savePdf()">⬇️ Save as PDF</button>
     <button class="btn-share" onclick="window.__shareBill && window.__shareBill()">🔗 Share</button>
   </div>
 
@@ -298,6 +327,7 @@ export function renderBill(params) {
           <div class="bill-title-main">PROVISIONAL BILL</div>
           <div class="bill-title-sub">Electricity Bill Estimate</div>
           <div class="bill-tariff-year">Tariff Year: ${discom.tariffYear || '2024-25'}</div>
+          ${confidenceBadge(tariffVerified, tariffAsOf)}
         </div>
       </div>
     </div>
@@ -310,7 +340,7 @@ export function renderBill(params) {
           <tr><td>Account No.</td><td>: ${accountNo || '—'}</td></tr>
           <tr><td>Address</td><td>: ${address || '—'}</td></tr>
           <tr><td>Category</td><td>: ${categoryLabel}</td></tr>
-          <tr><td>Conn. Load</td><td>: ${connectedLoadKw} kW</td></tr>
+          <tr><td>${dU === 'kVA' ? 'Contract Demand' : 'Conn. Load'}</td><td>: ${connectedLoadKw} ${dU}</td></tr>
         </table>
       </div>
       <div class="bill-details-box">
@@ -341,11 +371,24 @@ export function renderBill(params) {
           <tr>
             <td>${prevReading !== '' && prevReading !== null ? Number(prevReading).toLocaleString('en-IN') + ' kWh' : '—'}</td>
             <td>${currReading !== '' && currReading !== null ? Number(currReading).toLocaleString('en-IN') + ' kWh' : '—'}</td>
-            <td><strong>${units.toLocaleString('en-IN')} units</strong>${todUnits ? `<br><span class="tod-reading-detail">Peak ${todUnits.peak} · Normal ${todUnits.normal} · Off-Peak ${todUnits.offPeak}</span>` : ''}</td>
+            <td><strong>${(netMetering ? netUnits : units).toLocaleString('en-IN')} ${netMetering ? 'net units' : 'units'}</strong>${todUnits ? `<br><span class="tod-reading-detail">Peak ${todUnits.peak} · Normal ${todUnits.normal} · Off-Peak ${todUnits.offPeak}</span>` : ''}</td>
             <td>${billingPeriodText}</td>
           </tr>
         </tbody>
       </table>
+      ${netMetering ? `
+      <table class="bill-reading-table net-meter-table">
+        <thead><tr><th>Imported</th><th>Exported</th><th>Opening credit</th><th>Net billed</th><th>Credit carried fwd</th></tr></thead>
+        <tbody><tr>
+          <td>${importUnits.toLocaleString('en-IN')} kWh</td>
+          <td>${exportUnits.toLocaleString('en-IN')} kWh</td>
+          <td>${openingCreditUnits.toLocaleString('en-IN')} kWh</td>
+          <td><strong>${netUnits.toLocaleString('en-IN')} kWh</strong></td>
+          <td>${closingCredit > 0 ? closingCredit.toLocaleString('en-IN') + ' kWh' : '—'}</td>
+        </tr></tbody>
+      </table>
+      <div class="acc-note acc-muted">Net metering: energy billed on net import = imported − (exported + opening credit). ${closingCredit > 0 ? `Surplus of <strong>${closingCredit.toLocaleString('en-IN')} kWh</strong> is banked and carried to the next bill.` : ''} Fixed/demand charges still apply.</div>
+      ` : ''}
     </div>
 
     <div class="bill-charges-section">
@@ -361,14 +404,16 @@ export function renderBill(params) {
         </thead>
         <tbody>
           <tr class="fixed-row">
-            <td>Demand / Fixed Charge${(excessDemandRate && billedDemandKw !== connectedLoadKw) ? ` (MD ${billedDemandKw.toFixed(2)} kW)` : ''}${fixedChargeMonths > 1 ? ` <span class="fixed-months">(${formatINR(fixedPerMonth)}/mo × ${fixedChargeMonths} months)</span>` : ''}</td>
+            <td>Demand / Fixed Charge${demandFloorApplied
+              ? ` (billed on ${billingDemand.toFixed(2)} ${dU} — ${demandFloorPct}% of contract demand; MD was ${billedDemandKw.toFixed(2)} ${dU})`
+              : (isDemandBilled && billedDemandKw !== connectedLoadKw) ? ` (MD ${billedDemandKw.toFixed(2)} ${dU})` : ''}${fixedChargeMonths > 1 ? ` <span class="fixed-months">(${formatINR(fixedPerMonth)}/mo × ${fixedChargeMonths} months)</span>` : ''}</td>
             <td></td><td></td>
             <td class="num amt">${formatINR(fixedCharge)}</td>
           </tr>
           ${excessDemandRow}
           ${slabRows}
           <tr class="subtotal-row">
-            <td colspan="3"><strong>Sub-Total (Energy Charges)</strong></td>
+            <td colspan="3"><strong>Sub-Total (Energy Charges${billingBasis === 'kvah' ? ' — kVAh' : ''})</strong></td>
             <td class="num amt"><strong>${formatINR(totalEnergy)}</strong></td>
           </tr>
           ${todRows}
@@ -408,14 +453,57 @@ export function renderBill(params) {
   ${billExtras}`;
 }
 
+// ─── DISCOM comparison (same usage priced across a state's DISCOMs) ─────────────
+export function renderComparison({ state, categoryName, units, rows }) {
+  const cheapest = rows.length ? rows[0].total : 0;
+  return `<div class="bill-wrap comparison-wrap">
+    <div class="bill-section-title">DISCOM Comparison — ${state}</div>
+    <div class="acc-note">Same usage (<strong>${units.toLocaleString('en-IN')} units</strong> · ${categoryName}) priced across every DISCOM in ${state} that offers this category. Figures are the <strong>net current bill</strong> (excludes arrears / LPSC).</div>
+    <div class="rev-table-scroll">
+      <table class="bill-charges-table cmp-table">
+        <thead><tr><th>DISCOM</th><th class="num">Energy</th><th class="num">Fixed</th><th class="num">FPPA</th><th class="num">Net Bill</th><th class="num">vs best</th></tr></thead>
+        <tbody>
+          ${rows.map(r => `<tr class="${r.current ? 'cmp-current' : ''}">
+            <td>${r.name}${r.current ? ' <span class="cmp-you">(selected)</span>' : ''}${r.supplyTypeName ? `<br><span class="cmp-sub">${r.supplyTypeName}</span>` : ''}</td>
+            <td class="num">${formatINR(r.energy)}</td>
+            <td class="num">${formatINR(r.fixed)}</td>
+            <td class="num">${r.fppa ? formatINR(r.fppa) : '—'}</td>
+            <td class="num amt"><strong>₹ ${r.total.toLocaleString('en-IN')}</strong></td>
+            <td class="num">${r.total === cheapest ? '<span class="cmp-best">cheapest</span>' : '+ ₹ ' + (r.total - cheapest).toLocaleString('en-IN')}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+    <div class="bill-disclaimer">⚠ Indicative comparison using each DISCOM's modelled tariff for identical inputs. FPPA and taxes vary by period — verify against official tariffs before switching decisions.</div>
+  </div>`;
+}
+
 // ─── Multi-month bill revision (month-by-month, compounding LPSC) ───────────────
 export function renderRevisionBill(params) {
   const { ledger, consumerName, accountNo, address, meterNo, fromDate, toDate } = params;
   const { rows, monthsCount, totalUnits, unitsPerMonth, startArrear, lpscRate,
           totalEnergy, totalDemand, totalED, totalExcess, totalFppa, totalSubsidy, energySlabs,
-          fixedPerMonth, edRate,
+          fixedPerMonth, edRate, tariffVerified, tariffAsOf,
           arrear, previousLpsc, totalCharges, totalLpsc, totalPay, totalAdj, totalPayable,
-          discom, category, supplyTypeName, connectedLoadKw, billedDemandKw } = ledger;
+          netMetering, totalImport, totalExport, totalNet, finalCredit,
+          discom, category, supplyTypeName, connectedLoadKw, billedDemandKw, demandUnit } = ledger;
+  const dU = demandUnit || 'kW';
+
+  // Net-metering summary (rooftop solar) — shown above the bill summary when net metering is on.
+  const netMeterBlock = netMetering ? `
+    <div class="bill-reading-row">
+      <div class="bill-section-title">Net Metering (Rooftop Solar)</div>
+      <table class="bill-reading-table net-meter-table">
+        <thead><tr><th>Imported</th><th>Exported</th><th>Net Billed</th><th>Credit Carried Fwd</th></tr></thead>
+        <tbody><tr>
+          <td>${totalImport.toLocaleString('en-IN')} kWh</td>
+          <td>${totalExport.toLocaleString('en-IN')} kWh</td>
+          <td><strong>${totalNet.toLocaleString('en-IN')} kWh</strong></td>
+          <td>${finalCredit > 0 ? finalCredit.toLocaleString('en-IN') + ' kWh' : '—'}</td>
+        </tr></tbody>
+      </table>
+      <div class="acc-note acc-muted">Energy billed on net import = imported − exported${finalCredit > 0 ? `; surplus of ${finalCredit.toLocaleString('en-IN')} kWh banked for the next bill` : ''}.</div>
+    </div>` : '';
 
   const fmtDate = iso => { const d = new Date(iso); return isNaN(d) ? iso : d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }); };
   const billDate = new Date();
@@ -426,16 +514,15 @@ export function renderRevisionBill(params) {
   const line = (label, amount, cls = '') => `<tr class="${cls}"><td>${label}</td><td class="num amt">${signed(amount)}</td></tr>`;
 
   // ── Aggregated summary (totals over all months) ──
+  // Previous Arrear and Adjustments are always shown (₹0.00 when none); LPSC/payment lines stay conditional.
   const arrLpscRows = [
-    arrear > 0      ? line('Arrear Amount', arrear) : '',
+    line('Previous Arrear', arrear),
     previousLpsc > 0 ? line('Previous LPSC', previousLpsc) : '',
     totalLpsc > 0    ? line('Current LPSC (compounded)', totalLpsc) : '',
     totalPay > 0     ? `<tr class="payment-bill-row"><td>Payments Received</td><td class="num amt">− ${formatINR(totalPay)}</td></tr>` : '',
-    totalAdj !== 0   ? line('Adjustments', totalAdj, 'adjustment-bill-row') : '',
+    line('Adjustments (Miscellaneous Charges)', totalAdj, 'adjustment-bill-row'),
   ].filter(Boolean).join('');
-  const arrSection = arrLpscRows
-    ? `<tr class="section-header-row"><td colspan="2">Arrears &amp; Late Payment Charges</td></tr>${arrLpscRows}`
-    : '';
+  const arrSection = `<tr class="section-header-row"><td colspan="2">Arrears &amp; Late Payment Charges</td></tr>${arrLpscRows}`;
 
   const slabRows = (energySlabs || []).map(s =>
     `<tr><td class="indent">Energy @ ₹ ${s.rate.toFixed(2)}/unit — ${s.units.toLocaleString('en-IN')} units</td><td class="num amt">${formatINR(s.amount)}</td></tr>`
@@ -496,28 +583,31 @@ export function renderRevisionBill(params) {
   const ledgerBody = `
     <div class="acc-note">Per-month charges itemised: <strong>Energy</strong>, <strong>Fixed</strong> (demand)${showExcess ? ', <strong>Excess</strong> (demand penalty)' : ''}, <strong>FPPA</strong> and <strong>ED</strong> (Electricity Duty). LPSC compounds on the running balance.</div>
     <div class="rev-table-scroll">
-      <table class="bill-charges-table rev-table">
+      <table class="bill-charges-table rev-table rev-table--wide">
         <thead>${thead}</thead>
         <tbody>${startRow}${monthRows}</tbody>
         <tfoot><tr class="subtotal-row">${footCells}</tr></tfoot>
       </table>
     </div>`;
 
-  // ── Expandable: month-by-month FPPA ──
+  // ── Expandable: month-by-month FPPA (same compact table style as the ledger) ──
+  const fppaIsPercent = !!(rows[0] && rows[0].fppaMode === 'percent');
   const fppaRows = rows.map(r => `
     <tr>
       <td>${r.label}</td>
-      <td class="num">${r.fppaMode === 'percent' ? r.fppaRate + '%' : '₹' + r.fppaRate + '/u'}</td>
-      <td class="num">${r.fppaMode === 'percent' ? formatINR(r.fppaBase) : r.units.toLocaleString('en-IN') + ' u'}</td>
+      <td class="num">${r.fppaMode === 'percent' ? r.fppaRate + '%' : '₹' + r.fppaRate + '/unit'}</td>
+      <td class="num">${r.fppaMode === 'percent' ? formatINR(r.fppaBase) : r.units.toLocaleString('en-IN')}</td>
       <td class="num amt">${signed(r.fppaAmount)}</td>
     </tr>`).join('');
   const fppaBody = `
-    <div class="acc-note">Each month uses its own notified FPPA rate, applied to that month's ${rows[0] && rows[0].fppaMode === 'percent' ? 'fixed + energy + excess charges (base)' : 'units'}.</div>
-    <table class="acc-table fppa-month-table">
-      <thead><tr><th>Month</th><th class="num">Rate</th><th class="num">${rows[0] && rows[0].fppaMode === 'percent' ? 'Base' : 'Units'}</th><th class="num">FPPA</th></tr></thead>
-      <tbody>${fppaRows}</tbody>
-      <tfoot><tr class="subtotal-row"><td colspan="3"><strong>Total FPPA</strong></td><td class="num amt"><strong>${signed(totalFppa)}</strong></td></tr></tfoot>
-    </table>`;
+    <div class="acc-note">Each month uses its own notified FPPA rate, applied to that month's ${fppaIsPercent ? 'fixed + energy + excess charges (base)' : 'units'}.</div>
+    <div class="rev-table-scroll">
+      <table class="bill-charges-table rev-table">
+        <thead><tr><th>Month</th><th class="num">Rate</th><th class="num">${fppaIsPercent ? 'Base (₹)' : 'Units'}</th><th class="num">FPPA (₹)</th></tr></thead>
+        <tbody>${fppaRows}</tbody>
+        <tfoot><tr class="subtotal-row"><td colspan="3"><strong>Total FPPA</strong></td><td class="num amt"><strong>${signed(totalFppa)}</strong></td></tr></tfoot>
+      </table>
+    </div>`;
 
   const expandables = `
     <div class="bill-extras no-print">
@@ -529,6 +619,7 @@ export function renderRevisionBill(params) {
   return `
   <div class="bill-actions no-print">
     <button class="btn-print" onclick="window.print()">🖨️ Print Bill</button>
+    <button class="btn-print" onclick="window.__savePdf && window.__savePdf()">⬇️ Save as PDF</button>
     <button class="btn-share" onclick="window.__shareBill && window.__shareBill()">🔗 Share</button>
   </div>
 
@@ -547,6 +638,7 @@ export function renderRevisionBill(params) {
           <div class="bill-title-main">BILL REVISION</div>
           <div class="bill-title-sub">Multi-Month Estimate</div>
           <div class="bill-tariff-year">Tariff Year: ${discom.tariffYear || '2024-25'}</div>
+          ${confidenceBadge(tariffVerified, tariffAsOf)}
         </div>
       </div>
     </div>
@@ -559,7 +651,7 @@ export function renderRevisionBill(params) {
           <tr><td>Account No.</td><td>: ${accountNo || '—'}</td></tr>
           <tr><td>Address</td><td>: ${address || '—'}</td></tr>
           <tr><td>Category</td><td>: ${categoryLabel}</td></tr>
-          <tr><td>Conn. Load</td><td>: ${connectedLoadKw} kW${billedDemandKw ? ` · MD ${billedDemandKw} kW` : ''}</td></tr>
+          <tr><td>${dU === 'kVA' ? 'Contract Demand' : 'Conn. Load'}</td><td>: ${connectedLoadKw} ${dU}${billedDemandKw ? ` · MD ${billedDemandKw} ${dU}` : ''}</td></tr>
         </table>
       </div>
       <div class="bill-details-box">
@@ -575,6 +667,8 @@ export function renderRevisionBill(params) {
       </div>
     </div>
 
+    ${netMeterBlock}
+
     <div class="bill-charges-section">
       <div class="bill-section-title">Bill Summary</div>
       ${summaryTable}
@@ -587,7 +681,9 @@ export function renderRevisionBill(params) {
     ${expandables}
 
     <div class="bill-category-note">
-      ℹ️ ${monthsCount}-month revision: ${totalUnits.toLocaleString('en-IN')} units split evenly (~${unitsPerMonth}/month).
+      ℹ️ ${monthsCount}-month revision. <strong>Assumption:</strong> the ${totalUnits.toLocaleString('en-IN')} total units are
+      split <strong>evenly</strong> (~${unitsPerMonth}/month) across the period — if actual monthly consumption varied, the
+      slab placement and FPPA per month (and hence the total) will differ; enter each month separately for an exact figure.
       Each month is billed at its own FPPA / tariff. LPSC @ <strong>${lpscRate}%/month compounds on the running balance</strong>
       (so each month's bill first attracts LPSC the following month). Payments are applied on their dates.
       Expand the panels above for the month-by-month ledger and FPPA breakdown.

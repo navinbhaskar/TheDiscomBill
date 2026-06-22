@@ -1,0 +1,60 @@
+name: Tariff correction / submission
+description: Report a wrong rate or submit tariff data for a DISCOM
+title: "[Tariff] <State> · <DISCOM> · <Category>"
+labels: ["tariff"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for improving the data! Please cite the **official SERC / DISCOM tariff order** —
+        corrections without a verifiable source can't be merged.
+  - type: input
+    id: state
+    attributes:
+      label: State / UT
+      placeholder: e.g. Uttar Pradesh
+    validations:
+      required: true
+  - type: input
+    id: discom
+    attributes:
+      label: DISCOM
+      placeholder: e.g. MVVNL
+    validations:
+      required: true
+  - type: input
+    id: category
+    attributes:
+      label: Category / supply type
+      placeholder: e.g. LMV-1 Domestic · ST-10B
+    validations:
+      required: true
+  - type: textarea
+    id: whats-wrong
+    attributes:
+      label: What's wrong (or missing)?
+      description: Which field — energy slab, fixed charge, FPPA, ED, excess-demand, kVA, …
+      placeholder: "e.g. The 101–300 unit slab shows ₹6.58 but the FY2025-26 order says ₹6.00."
+    validations:
+      required: true
+  - type: textarea
+    id: correct-values
+    attributes:
+      label: Correct value(s)
+      placeholder: "e.g. energySlabs: 100 @ 3.35, 300 @ 6.00, 500 @ 9.60, ∞ @ 10.57"
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source (official tariff-order URL)
+      placeholder: https://www.uperc.org/...
+    validations:
+      required: true
+  - type: input
+    id: as-of
+    attributes:
+      label: Effective from / as-of
+      placeholder: e.g. FY 2025-26 (effective 2024-10-01)
+    validations:
+      required: false

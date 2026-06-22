@@ -1,4 +1,14 @@
 // js/engine.js — Pure bill calculation engine (no DOM dependencies)
+//
+// ── Rounding policy ──────────────────────────────────────────────────────────
+// Every individual charge is rounded to 2 decimal places (paise) as it is computed — energy per
+// slab, fixed/demand charge, excess-demand penalty, FPPA, each additional charge — using the
+// `+(x).toFixed(2)` idiom (or the local `round2`). Components are then summed, so the printed line
+// items always add up to the sub-totals exactly. Only the FINAL consumer-facing figures — the
+// current net bill and the total payable — are rounded to the nearest whole rupee (`Math.round`),
+// matching how DISCOM bills present a round-rupee amount. Intermediate sums are NOT whole-rupee
+// rounded, so no rounding error accumulates across line items. (Regression-tested in
+// tests/engine.test.mjs.)
 
 import {
   findDiscom,
@@ -15,11 +25,18 @@ import {
 // `excessDemand`), and a category may override with its own `excessDemand` or flat `excessDemandRate`.
 export const DEFAULT_EXCESS_DEMAND = { multiplier: 2, tolerancePct: 0 };
 
+// Default billing-demand floor for kVA tariffs: the demand charge is levied on the higher of the
+// recorded Maximum Demand or this percentage of the contract demand. 75% is the common HT figure;
+// a tariff/state may override via `billingDemandFloorPct`. Non-kVA (kW) tariffs get no floor.
+export const DEFAULT_DEMAND_FLOOR_PCT = 75;
+
 export function resolveFixedCharge(fixedCharge, connectedLoadKw) {
   if (typeof fixedCharge === 'number') return fixedCharge;
   if (!fixedCharge) return 0;
   if (fixedCharge.type === 'flat') return fixedCharge.rate;
-  if (fixedCharge.type === 'per_kw') return fixedCharge.rate * connectedLoadKw;
+  // per_kw and per_kva are computed identically (rate × demand); the demand's unit is carried
+  // by the tariff's `demandUnit` and only affects labelling, not the arithmetic.
+  if (fixedCharge.type === 'per_kw' || fixedCharge.type === 'per_kva') return fixedCharge.rate * connectedLoadKw;
   if (fixedCharge.type === 'tiered') {
     for (const slab of fixedCharge.slabs) {
       if (connectedLoadKw <= slab.maxLoad) return slab.rate;
@@ -69,9 +86,10 @@ export function calculateEnergySlabs(slabs, units, billingMonths = 1) {
 }
 
 export function calculateBill({ discomId, categoryId, supplyTypeId, units, connectedLoadKw,
-                                billedDemandKw, billingPeriodDays, billingDate,
+                                billedDemandKw, billingBasis, billingPeriodDays, billingDate,
                                 facRate, facMode, arrears, arrearLpsc, lpscRate, currentLpscMonths,
-                                lpscApplicable, payments, adjustments, delhiSubsidy, todUnits }) {
+                                lpscApplicable, payments, adjustments, delhiSubsidy, todUnits,
+                                netMetering, exportUnits, openingCreditUnits }) {
   const discom = findDiscom(discomId);
   if (!discom) return null;
 
@@ -86,14 +104,41 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
   const currentLabel     = discom.tariffYear ? `FY ${discom.tariffYear}` : 'Current rates';
   const eff              = resolveDatedTariff(tariff, billingDate, currentRatesFrom, currentLabel);
 
+  // Billing basis — what the energy and demand are measured in:
+  //   'kwh'   active energy (kWh) + demand in kW (standard LT billing)
+  //   'kvah'  "kVA based": apparent energy (kVAh = kWh ÷ PF) + kVA demand. A poor PF raises the
+  //           kVAh energy directly, so the PF cost is baked in (no separate PF penalty).
+  // An explicit `billingBasis` (from the UI selector) overrides the tariff; otherwise a kVA tariff
+  // defaults to 'kvah' and everything else to 'kwh' (so existing kWh bills are unchanged). A legacy
+  // 'kva_md' value (old share links) maps to the tariff default.
+  const tariffIsKva = (eff.demandUnit === 'kVA' || eff.demandUnit === 'kva');
+  const basis = (billingBasis === 'kvah' || billingBasis === 'kwh')
+    ? billingBasis
+    : (tariffIsKva ? 'kvah' : 'kwh');
+  const demandIsKva = (basis === 'kvah');
+
   // Maximum demand (billed demand) recorded this period; falls back to connected load.
+  // For kVA bases the "demand" figures (load, MD, charge rate) are all in kVA — the arithmetic is
+  // identical, only the displayed unit differs (see demandUnit).
+  const demandUnit = demandIsKva ? 'kVA' : 'kW';
   const effectiveDemand = billedDemandKw || connectedLoadKw;
-  // Demand-billed categories (an explicit excess-demand rate/config, i.e. commercial/HT) charge the
-  // fixed/demand component on the recorded MD; others (e.g. domestic) bill on the sanctioned load
-  // regardless of MD. This keeps an entered MD from wrongly lowering a domestic fixed charge.
+  // Demand-billed categories (a kVA basis, or an explicit excess-demand rate/config, i.e. commercial/HT)
+  // charge the fixed/demand component on the recorded MD; others (e.g. domestic) bill on the
+  // sanctioned load regardless of MD, so an entered MD can't wrongly lower a domestic fixed charge.
   // (A state-level/global default penalty does NOT flag a category as MD-billed.)
-  const isDemandBilled = !!eff.excessDemandRate || !!eff.excessDemand;
-  const demandForFixed = isDemandBilled ? effectiveDemand : connectedLoadKw;
+  const isDemandBilled = demandIsKva || !!eff.excessDemandRate || !!eff.excessDemand;
+
+  // Billing-demand floor (HT / kVA rule): the demand the charge is levied on is the HIGHER of the
+  // recorded MD and a percentage of the contract demand (so a consumer can't avoid demand charges by
+  // drawing little in a slack month). The floor % is configurable (eff → state), defaulting to 75%
+  // for kVA tariffs and 0 (no floor) otherwise — so it never disturbs sanctioned-load (kW) bills.
+  const demandFloorPct = (eff.billingDemandFloorPct != null) ? eff.billingDemandFloorPct
+                       : (stateMeta && stateMeta.billingDemandFloorPct != null) ? stateMeta.billingDemandFloorPct
+                       : (demandUnit === 'kVA' ? DEFAULT_DEMAND_FLOOR_PCT : 0);
+  const demandFloor   = +(connectedLoadKw * demandFloorPct / 100).toFixed(2);
+  const billingDemand = isDemandBilled ? Math.max(effectiveDemand, demandFloor) : effectiveDemand;
+  const demandFloorApplied = isDemandBilled && demandFloor > effectiveDemand && demandFloorPct > 0;
+  const demandForFixed = isDemandBilled ? billingDemand : connectedLoadKw;
 
   const billingMonths = billingPeriodDays ? billingPeriodDays / 30 : 1;
   // Fixed/demand charge is a per-MONTH charge → multiply by the whole months in the period.
@@ -102,7 +147,20 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
   const fixedPerMonth     = resolveFixedCharge(eff.fixedCharge, demandForFixed);
   const fixedCharge       = +(fixedPerMonth * fixedChargeMonths).toFixed(2);
 
-  const slabBreakdown = calculateEnergySlabs(eff.energySlabs, units, billingMonths);
+  // Under kVA-based billing the meter is read in kVAh (apparent energy), so the units entered are
+  // already apparent and billed directly — no PF conversion. Only the displayed unit differs; a poor
+  // power factor shows up as more kVAh on the meter, which is why kVAh regimes drop the PF penalty.
+  const energyUnit = basis === 'kvah' ? 'kVAh' : 'kWh';
+
+  // Net metering (rooftop solar): energy is billed on NET import = metered import − (units exported
+  // this period + credit banked from earlier). Any surplus banks as a unit credit carried forward
+  // (monthly netting; no cash payout modelled). Fixed/demand charges are unaffected.
+  const importUnits   = units;
+  const availCredit   = netMetering ? Math.max(0, (exportUnits || 0)) + Math.max(0, (openingCreditUnits || 0)) : 0;
+  const netUnits      = netMetering ? Math.max(0, +(importUnits - availCredit).toFixed(2)) : units;
+  const closingCredit = netMetering ? Math.max(0, +(availCredit - importUnits).toFixed(2)) : 0;
+
+  const slabBreakdown = calculateEnergySlabs(eff.energySlabs, netUnits, billingMonths);
   const totalEnergy   = slabBreakdown.reduce((s, r) => s + r.amount, 0);
 
   // ── Excess (exceeding) demand penalty ──────────────────────────────────────
@@ -159,7 +217,7 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
   const facBase   = fixedCharge + totalEnergy + excessDemandPenalty + todNet;
   const facAmount = facMode === 'percent'
     ? +(facBase * (facRate || 0) / 100).toFixed(2)
-    : +(units * (facRate || 0)).toFixed(2);
+    : +(netUnits * (facRate || 0)).toFixed(2);
 
   const extraCharges = [];
   let totalExtra = 0;
@@ -171,7 +229,7 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
       // Base includes excess demand, TOD net, and FPPA/FAC (per UPPCL tariff order)
       amount = +((fixedCharge + totalEnergy + excessDemandPenalty + todNet + facAmount) * charge.rate / 100).toFixed(2);
     } else if (charge.type === 'per_unit') {
-      amount = +(units * charge.rate).toFixed(2);
+      amount = +(netUnits * charge.rate).toFixed(2);
     } else if (charge.type === 'flat') {
       amount = charge.rate;
     }
@@ -184,11 +242,11 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
   // Delhi GNCTD subsidy
   let subsidyAmount = 0;
   let subsidyLabel  = '';
-  if (delhiSubsidy && units > 0) {
-    if (units <= 200) {
+  if (delhiSubsidy && netUnits > 0) {
+    if (netUnits <= 200) {
       subsidyAmount = currentGross;
       subsidyLabel  = 'GNCTD Subsidy (100% — ≤200 units)';
-    } else if (units <= 400) {
+    } else if (netUnits <= 400) {
       subsidyAmount = Math.min(200 * 3.00, totalEnergy) * 0.5;
       subsidyLabel  = 'GNCTD Subsidy (50% rebate on first 200 units)';
     }
@@ -218,8 +276,22 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
     supplyTypeName: (cat && cat.supplyTypes && cat.supplyTypes.length > 0 && supplyTypeId)
       ? tariff.name : null,
     units,
+    billingBasis: basis,
+    energyUnit,
+    netMetering: !!netMetering,
+    importUnits,
+    exportUnits: netMetering ? Math.max(0, exportUnits || 0) : 0,
+    openingCreditUnits: netMetering ? Math.max(0, openingCreditUnits || 0) : 0,
+    netUnits,
+    closingCredit,
     connectedLoadKw,
     billedDemandKw: effectiveDemand,
+    billingDemand,
+    isDemandBilled,
+    demandFloorPct,
+    demandFloor,
+    demandFloorApplied,
+    demandUnit,
     billingPeriodDays: billingPeriodDays || null,
     fixedCharge: +fixedCharge.toFixed(2),
     fixedChargeMonths,
@@ -243,6 +315,13 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
     tariffPeriodLabel: eff.periodLabel,
     tariffEstimated: !!eff.estimated,
     tariffEffectiveFrom: eff.effectiveFrom || null,
+    // Data-confidence metadata: whether these rates were checked against an official tariff order
+    // (vs. a representative estimate). Tariff-level wins, else DISCOM-level, else state-level.
+    tariffVerified:  (eff.verified != null) ? !!eff.verified
+                   : (discom.verified != null) ? !!discom.verified
+                   : !!(stateMeta && stateMeta.verified),
+    tariffAsOf:      eff.asOf || discom.ratesAsOf || (stateMeta && stateMeta.ratesAsOf) || null,
+    tariffSourceUrl: eff.sourceUrl || discom.sourceUrl || discom.website || (stateMeta && stateMeta.sourceUrl) || null,
     billingDate: billingDate || null,
     // Resolved rate schedule behind this bill (for the Tariff Details panel)
     tariffRates: {

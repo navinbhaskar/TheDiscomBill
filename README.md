@@ -1,5 +1,7 @@
 # ⚡ TheDiscomBill
 
+![tests](https://github.com/navinbhaskar/TheDiscomBill/actions/workflows/test.yml/badge.svg)
+
 **A free, browser-based electricity bill calculator for every DISCOM in India.**
 
 Pick your state → DISCOM → consumer category, enter your meter readings, and get an instant
@@ -26,6 +28,13 @@ adjustments. No sign-up, no backend — it runs entirely in the browser.
   - **TOD** — Time-of-Day billing (peak +20% / off-peak −20%).
 - **Maximum Demand (MD)** — drives the demand charge and the excess-demand penalty for
   demand-billed (commercial/HT) categories; domestic categories always bill on sanctioned load.
+- **Billing Basis selector (kWh / kVA based)** — a main-page control that works on any DISCOM:
+  - **Active energy (kWh)** — standard: energy on kWh, demand in kW.
+  - **kVA based** — demand billed in **kVA** (with a configurable **billing-demand floor** — the
+    higher of recorded MD or, by default, 75% of contract demand) and energy on **apparent units
+    kVAh = kWh ÷ Power Factor**, so a poor PF raises the bill directly (no separate PF penalty). This
+    is the model used by MH, GJ, KA, TN, AP, TG, MP, Delhi.
+  - Auto-defaults to kVA based for `demandUnit: "kVA"` tariffs and kWh otherwise; override per bill.
 - **FPPA / FPPCA fuel surcharge** — auto-filled from verified, period-dated government notices
   (`js/tariffs/fppa.js`). Because FPPA is notified monthly, a multi-month bill applies **each
   month's own rate** (averaged over the period).
@@ -60,6 +69,26 @@ python -m http.server 3456      # then open http://localhost:3456
 
 No build step, no `npm install`, no dependencies — the only thing the dev server needs is to serve
 the files. (`.claude/launch.json` defines the `http-server` config used during development.)
+
+### Tests
+
+The calculation engine has a dependency-free regression suite (run by CI on every push/PR):
+
+```bash
+npm test        # node tests/engine.test.mjs
+```
+
+It pins the slab, fixed-charge, kVA/kVAh, billing-demand-floor, excess-demand, FPPA and
+net-metering logic, so a tariff edit or refactor can't silently change results.
+
+---
+
+## Contributing
+
+The most valuable contributions are **accurate tariff data** (with a cited official order) and bug
+fixes. See **[CONTRIBUTING.md](CONTRIBUTING.md)**, or open an issue with the **Tariff correction**
+template. Verified rates show a "✓ Verified rates" badge on the bill; everything else shows
+"≈ Representative rates".
 
 ---
 
