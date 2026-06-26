@@ -5,6 +5,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "build": "node build.js",
     "test": "node tests/engine.test.mjs",
     "serve": "npx http-server . -p 3456"
   },
