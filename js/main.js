@@ -10,15 +10,51 @@ import {
   canCalculate, doCalculate, isDelhiDiscom,
   shareBill, loadFromUrl, loadSample, initHistory, compareDiscoms,
   refreshSupplyTypeDependent, applyLifelineDefaultLoad, checkLifelineLimits,
-  getMeterMode, setMeterMode, setAdvancedSubMode, addMeterRow, updateAdvancedMeter,
-  syncBillingMonthYear, applyDefaultBillingBasis,
+  getMeterMode, setMeterMode, addMeterRow, updateAdvancedMeter,
+  syncBillingMonthYear, applyDefaultBillingBasis, showToast,
 } from './ui.js';
 import { initDatePickers } from './datepicker.js';
 import { initI18n } from './i18n.js';
 
 // Expose helpers called from onclick in the rendered bill HTML
 window.__shareBill = shareBill;
-window.__savePdf = () => window.print();   // the print dialog's "Save as PDF" destination
+
+// "Save as PDF" — generate and download a PDF of the bill directly (no print dialog). The HTML→PDF
+// library is vendored locally and loaded lazily on first use; if it fails (e.g. offline before it's
+// cached) we fall back to the browser's print dialog.
+let _pdfLib = null;
+function loadPdfLib() {
+  if (window.html2pdf) return Promise.resolve();
+  if (_pdfLib) return _pdfLib;
+  _pdfLib = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'js/vendor/html2pdf.bundle.min.js';
+    s.onload = resolve; s.onerror = reject;
+    document.head.appendChild(s);
+  });
+  return _pdfLib;
+}
+window.__savePdf = async () => {
+  const el = document.querySelector('#billPanel .bill-wrap');
+  if (!el) { window.print(); return; }
+  try {
+    showToast('Preparing PDF…');
+    await loadPdfLib();
+    const name = ((document.getElementById('consumerName')?.value.trim() || 'electricity') + '-bill')
+      .replace(/[^\w-]+/g, '_') + '.pdf';
+    await window.html2pdf().set({
+      margin: 6,
+      filename: name,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, backgroundColor: '#ffffff', useCORS: true,
+        ignoreElements: (n) => n.classList && n.classList.contains('no-print') },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['css', 'legacy'] },
+    }).from(el).save();
+  } catch (e) {
+    window.print();   // library unavailable (e.g. offline) → fall back to the print dialog
+  }
+};
 
 // Register the service worker for offline support (no-op on unsupported / insecure contexts).
 if ('serviceWorker' in navigator) {
@@ -91,13 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
     checkLifelineLimits();
   });
 
-  ['prevReading', 'currReading', 'unitsInput', 'meterMF'].forEach(id => {
-    document.getElementById(id).addEventListener('input', () => {
-      updateUnitsDisplay();
-      updateCalcButton();
-      checkLifelineLimits();   // consumption may exceed the lifeline cap
-    });
-  });
 
   document.getElementById('fromDate').addEventListener('change', () => {
     updateBillingPeriod();
@@ -138,14 +167,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.getElementById('facRate').addEventListener('input', markFppaManual);
 
-  // Reading-mode selector (Simple / Advanced / TOD) + Advanced sub-tabs + add-row
+  // Reading-mode selector (Meter Reading / TOD) + add-meter
   document.querySelectorAll('input[name="meterMode"]').forEach(r => {
     r.addEventListener('change', () => setMeterMode(getMeterMode()));
   });
-  document.querySelectorAll('.adv-subtab').forEach(b => {
-    b.addEventListener('click', () => setAdvancedSubMode(b.dataset.submode));
-  });
   document.getElementById('addMeterRowBtn').addEventListener('click', () => { addMeterRow(''); updateAdvancedMeter(); });
+  setMeterMode(getMeterMode());   // initialise the default Meter Reading mode (creates the first meter row)
 
   ['todPeak', 'todNormal', 'todOffPeak'].forEach(id => {
     document.getElementById(id).addEventListener('input', () => { updateTodDisplay(); checkLifelineLimits(); });
@@ -190,11 +217,9 @@ document.addEventListener('DOMContentLoaded', () => {
     header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
 
-  document.getElementById('currReading').addEventListener('keydown', e => {
-    if (e.key === 'Enter') doCalculate();
-  });
-  document.getElementById('unitsInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') doCalculate();
+  // Enter in any meter-row field (reading / MF / MD / units) calculates the bill.
+  document.getElementById('advancedRows').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.target.matches('input')) { e.preventDefault(); doCalculate(); }
   });
 
   loadFromUrl();

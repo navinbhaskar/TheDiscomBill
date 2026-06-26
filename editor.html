@@ -14,6 +14,7 @@
 </head>
 <body class="editor-body">
 
+<a class="skip-link" href="#edpanel-tariff">Skip to editor</a>
 <header class="ed-header">
   <div class="ed-header-inner">
     <a href="/" class="ed-logo">
@@ -30,21 +31,22 @@
 </header>
 
 <div class="ed-tabs" role="tablist">
-  <button class="ed-tab active" data-edtab="tariff" role="tab" type="button">Tariff Builder</button>
-  <button class="ed-tab" data-edtab="fppa" role="tab" type="button">FPPA Builder</button>
+  <button class="ed-tab active" data-edtab="tariff" role="tab" aria-selected="true" aria-controls="edpanel-tariff" id="edt-tariff" type="button">Tariff Builder</button>
+  <button class="ed-tab" data-edtab="fppa" role="tab" aria-selected="false" aria-controls="edpanel-fppa" id="edt-fppa" type="button">FPPA Builder</button>
 </div>
 
 <!-- ── Tariff Builder ──────────────────────────────────────────────────────── -->
-<section class="ed-panel active" id="edpanel-tariff">
+<section class="ed-panel active" id="edpanel-tariff" role="tabpanel" aria-labelledby="edt-tariff">
   <div class="ed-toolbar">
     <div class="ed-toolbar-group">
       <label for="loadStateSelect">Load existing state</label>
       <select id="loadStateSelect"><option value="">— Select a state to edit —</option></select>
     </div>
     <button class="ed-btn ed-btn-ghost" id="newStateBtn" type="button">➕ New state</button>
+    <button type="button" id="undoBtn" class="ed-btn ed-btn-ghost" disabled title="Undo (Ctrl+Z)">↩ Undo</button>
     <div class="ed-toolbar-spacer"></div>
     <div class="ed-toolbar-group ed-preview-control">
-      <label>Live preview</label>
+      <label for="prevUnits">Live preview</label>
       <div class="ed-preview-inputs">
         <input type="number" id="prevUnits" value="250" min="0" step="1" title="Units" aria-label="Preview units">
         <span>units</span>
@@ -78,7 +80,7 @@
 </section>
 
 <!-- ── FPPA Builder ────────────────────────────────────────────────────────── -->
-<section class="ed-panel" id="edpanel-fppa">
+<section class="ed-panel" id="edpanel-fppa" role="tabpanel" aria-labelledby="edt-fppa">
   <div class="ed-fppa-intro">
     Add or edit verified fuel-surcharge windows. Entries are matched by billing date, newest first.
     DISCOM-specific entries take priority over state-wide ones. The whole <code>js/tariffs/fppa.js</code>

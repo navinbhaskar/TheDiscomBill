@@ -1,18 +1,40 @@
-// sw.js — service worker for offline support.
-// Strategy: NETWORK-FIRST for same-origin GETs. While online the user always gets the freshest
-// code/data (no stale-asset traps), and every successful response is cached so the app still works
-// fully offline afterwards. Cross-origin requests (e.g. Google Fonts) bypass the worker.
+// sw.js — Service Worker (network-first, cache fallback)
+// Update this version string when deploying new code to bust the cache.
+const CACHE = 'discombill-20260625';
 
-const CACHE = 'discombill-v1';
 const CORE = [
-  './', './index.html', './css/styles.css', './js/main.js',
-  './manifest.webmanifest', './icon.svg',
+  './', './index.html',
+  // Styles
+  './css/styles.css',
+  // Application JS
+  './js/main.js', './js/ui.js', './js/engine.js', './js/renderer.js',
+  './js/datepicker.js', './js/i18n.js', './js/utils.js',
+  // Tariff registry + FPPA
+  './js/tariffs/registry.js', './js/tariffs/fppa.js',
+  // Per-state tariff data
+  './js/tariffs/andhra-pradesh.js', './js/tariffs/arunachal-pradesh.js',
+  './js/tariffs/assam.js', './js/tariffs/bihar.js', './js/tariffs/chandigarh.js',
+  './js/tariffs/chhattisgarh.js', './js/tariffs/dadra-and-nagar-haveli-and-daman-and-diu.js',
+  './js/tariffs/delhi.js', './js/tariffs/goa.js', './js/tariffs/gujarat.js',
+  './js/tariffs/haryana.js', './js/tariffs/himachal-pradesh.js',
+  './js/tariffs/jammu-and-kashmir.js', './js/tariffs/jharkhand.js',
+  './js/tariffs/karnataka.js', './js/tariffs/kerala.js', './js/tariffs/ladakh.js',
+  './js/tariffs/madhya-pradesh.js', './js/tariffs/maharashtra.js',
+  './js/tariffs/manipur.js', './js/tariffs/meghalaya.js', './js/tariffs/mizoram.js',
+  './js/tariffs/nagaland.js', './js/tariffs/odisha.js', './js/tariffs/puducherry.js',
+  './js/tariffs/punjab.js', './js/tariffs/rajasthan.js', './js/tariffs/sikkim.js',
+  './js/tariffs/tamil-nadu.js', './js/tariffs/telangana.js', './js/tariffs/tripura.js',
+  './js/tariffs/uttar-pradesh.js', './js/tariffs/uttarakhand.js',
+  './js/tariffs/west-bengal.js',
+  // Assets
+  './manifest.webmanifest', './icon.svg', './icon-maskable.svg',
 ];
 
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE)
-      .then(c => c.addAll(CORE).catch(() => {}))   // best-effort precache of the shell
+      .then(c => c.addAll(CORE))
+      .catch(() => {})     // best-effort precache; fetch handler fills gaps
       .then(() => self.skipWaiting())
   );
 });
@@ -26,19 +48,18 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  const req = e.request;
-  if (req.method !== 'GET') return;
-  if (new URL(req.url).origin !== self.location.origin) return;   // let the network handle CDN assets
+  if (e.request.method !== 'GET') return;
+  if (new URL(e.request.url).origin !== location.origin) return;
 
   e.respondWith(
-    fetch(req)
+    fetch(e.request)
       .then(res => {
-        if (res && res.status === 200) {
-          const copy = res.clone();
-          caches.open(CACHE).then(c => c.put(req, copy));
+        if (res.status === 200) {
+          const clone = res.clone();
+          caches.open(CACHE).then(c => c.put(e.request, clone));
         }
         return res;
       })
-      .catch(() => caches.match(req).then(hit => hit || caches.match('./index.html')))
+      .catch(() => caches.match(e.request).then(r => r || caches.match('./index.html')))
   );
 });

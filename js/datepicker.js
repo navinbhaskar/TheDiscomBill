@@ -2,7 +2,9 @@
 // Day fields keep their value in ISO 'YYYY-MM-DD'; month-year-only fields (data-my) display
 // "Month YYYY" and carry the machine value in dataset.y / dataset.m. The calendar header's
 // month and year are clickable, each opening its own list (months grid / scrollable years).
-// Self-contained, no dependencies.
+
+import { displayDate } from './utils.js';
+export { displayDate };
 
 const MONTHS = ['January','February','March','April','May','June',
                 'July','August','September','October','November','December'];
@@ -96,10 +98,7 @@ function capFor(inp) { return inp.hasAttribute('data-cap-bill') ? billingCapISO(
 // ─── Display vs machine value ──────────────────────────────────────────────────
 // Day fields SHOW DD-MM-YYYY (inp.value) but carry the canonical ISO in inp.dataset.iso, so all
 // calculation code keeps reading clean ISO via fieldISO() regardless of the display format.
-export function displayDate(iso) {
-  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
-  return m ? `${m[3]}-${m[2]}-${m[1]}` : '';
-}
+// displayDate is now imported from utils.js and re-exported above.
 export function fieldISO(inp) {
   if (!inp) return '';
   if (inp.dataset && inp.dataset.iso) return inp.dataset.iso;

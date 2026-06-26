@@ -67,8 +67,10 @@ python -m http.server 3456      # then open http://localhost:3456
 #  …or use the VS Code "Live Server" extension.
 ```
 
-No build step, no `npm install`, no dependencies — the only thing the dev server needs is to serve
-the files. (`.claude/launch.json` defines the `http-server` config used during development.)
+No build step and no `npm install` — the dev server just serves the files. The only runtime
+dependency is a vendored copy of **html2pdf** (`js/vendor/`, loaded lazily for the "Save as PDF"
+download); everything else is hand-written vanilla JS. (`.claude/launch.json` defines the
+`http-server` config used during development.)
 
 ### Tests
 

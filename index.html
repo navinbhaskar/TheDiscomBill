@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<a class="skip-link" href="#calculator">Skip to calculator</a>
 
 <!-- ── Header ───────────────────────────────────────────────────────────────── -->
 <header class="site-header">
@@ -145,19 +146,18 @@
       <!-- ── Tabbed billing inputs ──────────────────────────────────────────────── -->
       <div class="bill-tabs-container">
 
-        <div class="bill-tabs">
-          <button class="bill-tab active" data-tab="meterread" type="button">Meter Read</button>
-          <button class="bill-tab" data-tab="arrear" type="button">Arrear</button>
-          <button class="bill-tab" data-tab="payment" type="button">Payment</button>
-          <button class="bill-tab" data-tab="adjustment" type="button">Adjustment</button>
+        <div class="bill-tabs" role="tablist">
+          <button class="bill-tab active" data-tab="meterread" type="button" role="tab" aria-selected="true" aria-controls="tab-meterread" id="bt-meterread">Meter Read</button>
+          <button class="bill-tab" data-tab="arrear" type="button" role="tab" aria-selected="false" aria-controls="tab-arrear" id="bt-arrear">Arrear</button>
+          <button class="bill-tab" data-tab="payment" type="button" role="tab" aria-selected="false" aria-controls="tab-payment" id="bt-payment">Payment</button>
+          <button class="bill-tab" data-tab="adjustment" type="button" role="tab" aria-selected="false" aria-controls="tab-adjustment" id="bt-adjustment">Adjustment</button>
         </div>
 
         <!-- ── Meter Read ── -->
-        <div class="bill-tab-panel active" id="tab-meterread">
-          <!-- Reading mode: Simple (single meter) / Meter Replacement / TOD -->
-          <div class="meter-mode" role="tablist" aria-label="Meter reading mode">
-            <label class="meter-mode-opt"><input type="radio" name="meterMode" value="simple" checked><span>Simple</span></label>
-            <label class="meter-mode-opt"><input type="radio" name="meterMode" value="advanced"><span>Meter Replacement</span></label>
+        <div class="bill-tab-panel active" id="tab-meterread" role="tabpanel" aria-labelledby="bt-meterread">
+          <!-- Reading mode: one unified Meter Reading section (add 1+ meters) / TOD -->
+          <div class="meter-mode" role="radiogroup" aria-label="Meter reading mode">
+            <label class="meter-mode-opt"><input type="radio" name="meterMode" value="advanced" checked><span>Meter Reading</span></label>
             <label class="meter-mode-opt"><input type="radio" name="meterMode" value="tod"><span>TOD</span></label>
           </div>
 
@@ -202,39 +202,8 @@
             &mdash; <strong id="billingPeriodMonthsDisplay">0.00</strong> months
           </div>
 
-          <!-- ── Simple ── -->
-          <div class="meter-mode-panel" id="meterSimple">
-            <div class="form-group">
-              <label for="meterNoSimple">Meter Number</label>
-              <input type="text" id="meterNoSimple" placeholder="Optional">
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="prevReading">Previous Reading (kWh)</label>
-                <input type="number" id="prevReading" placeholder="e.g., 4800" min="0" step="1">
-              </div>
-              <div class="form-group">
-                <label for="currReading">Current Reading (kWh)</label>
-                <input type="number" id="currReading" placeholder="e.g., 5050" min="0" step="1">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="meterMF">Multiplying Factor (MF)<span class="gloss" tabindex="0" role="img" aria-label="Multiplying Factor: the meter constant / CT-PT ratio. Consumed units = (current − previous reading) × MF. Use 1 for ordinary direct meters." data-tip="Multiplying Factor (MF): meter constant / CT-PT ratio. Units = (current − previous) × MF. Leave at 1 for ordinary direct-reading meters.">ⓘ</span></label>
-              <input type="number" id="meterMF" value="1" min="0.01" step="0.01">
-              <small>Applied to the meter-reading difference. Leave at <strong>1</strong> for a direct-reading meter.</small>
-            </div>
-            <div class="units-display" id="unitsDisplay" style="display:none">
-              Units Consumed: <strong id="unitsConsumedDisplay">0</strong> <span class="reading-unit">units</span> (from meter readings)
-            </div>
-            <div class="form-group">
-              <label for="unitsInput">Or Enter Units Consumed Directly</label>
-              <input type="number" id="unitsInput" placeholder="e.g., 250" min="0" step="1">
-              <small>Leave blank if using meter readings above. Direct entry takes precedence when readings are blank.</small>
-            </div>
-          </div>
-
-          <!-- ── Meter Replacement (old + new meter) ── -->
-          <div class="meter-mode-panel" id="meterAdvanced" style="display:none">
+          <!-- ── Meter Reading — one or more meters (single, replacement, or multiple) ── -->
+          <div class="meter-mode-panel" id="meterAdvanced">
             <p class="tab-hint" id="advHint"></p>
             <div id="advancedRows"></div>
             <button class="btn-add-row" id="addMeterRowBtn" type="button">+ Add meter</button>
@@ -355,7 +324,7 @@
         </div><!-- /#tab-meterread -->
 
         <!-- ── Arrear ── -->
-        <div class="bill-tab-panel" id="tab-arrear">
+        <div class="bill-tab-panel" id="tab-arrear" role="tabpanel" aria-labelledby="bt-arrear">
           <p class="tab-hint">Enter amounts exactly as shown on your previous bill. LPSC on previous arrear is a direct amount, not computed.</p>
 
           <div class="form-row">
@@ -389,7 +358,7 @@
         </div><!-- /#tab-arrear -->
 
         <!-- ── Payment ── -->
-        <div class="bill-tab-panel" id="tab-payment">
+        <div class="bill-tab-panel" id="tab-payment" role="tabpanel" aria-labelledby="bt-payment">
           <p class="tab-hint">Payments already made during this billing period — these reduce the total amount due.</p>
           <div id="paymentRows"></div>
           <div class="tab-total">Total Payment: <strong id="paymentTotalDisplay">₹ 0.00</strong></div>
@@ -397,7 +366,7 @@
         </div><!-- /#tab-payment -->
 
         <!-- ── Adjustment ── -->
-        <div class="bill-tab-panel" id="tab-adjustment">
+        <div class="bill-tab-panel" id="tab-adjustment" role="tabpanel" aria-labelledby="bt-adjustment">
           <p class="tab-hint">Any miscellaneous credits or charges — e.g., meter cost, security deposit refund, or rebate. Use negative values for credits.</p>
           <div id="adjustmentRows"></div>
           <div class="tab-total">Total Adjustment: <strong id="adjustmentTotalDisplay">₹ 0.00</strong></div>

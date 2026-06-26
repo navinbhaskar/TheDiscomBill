@@ -77,10 +77,21 @@ export const STATE_META = {};
   _west_bengal
 ].forEach(m => { TARIFF_DB[m.state] = m.discoms; STATE_META[m.state] = m; });
 
+/** @returns {string[]} Sorted list of all state/UT names. */
 export function getStates() { return Object.keys(TARIFF_DB).sort(); }
 
+/**
+ * Get all DISCOMs in a state.
+ * @param {string} state - State name.
+ * @returns {Array<{id:string, name:string, fullName:string, area:string}>}
+ */
 export function getDiscoms(state) { return TARIFF_DB[state] || []; }
 
+/**
+ * Find a DISCOM object by its unique id across all states.
+ * @param {string} discomId - DISCOM identifier.
+ * @returns {Object|null} The DISCOM object, or null.
+ */
 export function findDiscom(discomId) {
   for (const state of Object.values(TARIFF_DB)) {
     const d = state.find(x => x.id === discomId);
@@ -89,21 +100,32 @@ export function findDiscom(discomId) {
   return null;
 }
 
+/** @returns {Array} Categories for the given DISCOM. */
 export function getCategories(discomId) {
   const discom = findDiscom(discomId);
   return discom ? discom.categories : [];
 }
 
+/** @returns {Object|null} A single category object. */
 export function getCategory(discomId, categoryId) {
   const cats = getCategories(discomId);
   return cats.find(c => c.id === categoryId) || null;
 }
 
+/** @returns {Array} Supply types within a category (may be empty). */
 export function getSupplyTypes(discomId, categoryId) {
   const cat = getCategory(discomId, categoryId);
   return (cat && cat.supplyTypes) ? cat.supplyTypes : [];
 }
 
+/**
+ * Resolve the effective tariff object for a DISCOM + category + optional supply type.
+ * If supply types exist, merges the selected supply type onto the category.
+ * @param {string} discomId
+ * @param {string} categoryId
+ * @param {string} [supplyTypeId]
+ * @returns {Object|null}
+ */
 export function getEffectiveTariff(discomId, categoryId, supplyTypeId) {
   const cat = getCategory(discomId, categoryId);
   if (!cat) return null;
@@ -118,6 +140,11 @@ export function getEffectiveTariff(discomId, categoryId, supplyTypeId) {
 
 // ─── Historical (date-versioned) tariff resolution ──────────────────────────────
 
+/**
+ * Reverse lookup: find the state metadata object that contains the given DISCOM.
+ * @param {string} discomId
+ * @returns {Object|null}
+ */
 export function findStateMetaByDiscom(discomId) {
   for (const [stateName, discoms] of Object.entries(TARIFF_DB)) {
     if (discoms.find(x => x.id === discomId)) return STATE_META[stateName] || null;
@@ -125,7 +152,11 @@ export function findStateMetaByDiscom(discomId) {
   return null;
 }
 
-// Indian financial year start from a "YYYY-YY" label, e.g. "2025-26" → "2025-04-01"
+/**
+ * Parse an Indian financial year label (e.g. '2025-26') into the FY start date.
+ * @param {string} tariffYear - e.g. '2025-26'
+ * @returns {string|null} ISO date like '2025-04-01', or null.
+ */
 export function fyStart(tariffYear) {
   if (!tariffYear) return null;
   const m = String(tariffYear).match(/^(\d{4})/);
@@ -134,10 +165,15 @@ export function fyStart(tariffYear) {
 
 const DEFAULT_CURRENT_FROM = '2024-04-01';
 
-// Given a tariff (current fields + optional rateHistory[]) and a billing date,
-// return the rate set effective at that date plus { periodLabel, estimated }.
-// rateHistory entries: { from: 'YYYY-MM-DD', label, estimated?, fixedCharge?, energySlabs?,
-//   additionalCharges?, excessDemandRate?, fac? } — omitted fields fall back to current.
+/**
+ * Resolve a tariff to the rate set effective at a given billing date.
+ * Supports rateHistory[] for historical billing; falls back to current rates.
+ * @param {Object} tariff - Tariff object with optional rateHistory array.
+ * @param {string|Date} billingDate - Billing date (ISO string or Date).
+ * @param {string} [currentRatesFrom] - When current rates took effect.
+ * @param {string} [currentLabel] - Label for the current rate period.
+ * @returns {Object} Tariff with periodLabel, estimated flag, and effectiveFrom.
+ */
 export function resolveDatedTariff(tariff, billingDate, currentRatesFrom, currentLabel) {
   // Spread the whole tariff so non-rate config (demandUnit, excessDemand, excessDemandRate,
   // billingDemandFloorPct, …) carries through to the engine; only the date-versioned RATE fields

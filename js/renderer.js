@@ -1,15 +1,22 @@
 // js/renderer.js — Bill HTML renderer (pure string output, no DOM dependencies)
 
+import { displayDate } from './utils.js';
+export { displayDate };
+
+/**
+ * Format a number as Indian Rupees with 2 decimal places.
+ * @param {number} n - The amount to format.
+ * @returns {string} Formatted string like '₹ 1,23,456.78'.
+ */
 export function formatINR(n) {
   return '₹ ' + Math.abs(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-// Display an ISO date (YYYY-MM-DD) as DD-MM-YYYY for the bill; pass through anything else.
-export function displayDate(iso) {
-  const m = String(iso || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  return m ? `${m[3]}-${m[2]}-${m[1]}` : String(iso || '');
-}
-
+/**
+ * Convert a number to Indian-English words (Crore, Lakh, Thousand) with 'Rupees ... and ... Paise Only'.
+ * @param {number} amount - The rupee amount to convert.
+ * @returns {string} The amount in words.
+ */
 export function numberToWords(amount) {
   const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven',
     'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen',
@@ -79,6 +86,8 @@ function slabScheduleRows(slabs) {
 }
 
 let _accId = 0;
+/** Reset the accordion ID counter. Called at the start of each render pass. */
+export function resetAccordionIds() { _accId = 0; }
 function accordionItem(title, subtitle, bodyHtml) {
   const id = `acc-${++_accId}`;
   return `
@@ -94,7 +103,13 @@ function accordionItem(title, subtitle, bodyHtml) {
   </div>`;
 }
 
+/**
+ * Render a single-month provisional bill as an HTML string.
+ * @param {Object} params - Consumer details, billing period, and the engine result.
+ * @returns {string} Complete bill HTML.
+ */
 export function renderBill(params) {
+  _accId = 0;
   const { result, consumerName, accountNo, address, meterNo,
           billingMonth, billingYear, prevReading, currReading,
           fromDate, toDate, fppaSource } = params;
@@ -188,7 +203,7 @@ export function renderBill(params) {
   const facRow = facAmount !== 0 ? `
     <tr class="fac-row">
       <td>${facLabel}</td>
-      <td class="num">${facMode === 'percent' ? '' : units}</td><td></td>
+      <td class="num">${facMode === 'percent' ? '' : netUnits}</td><td></td>
       <td class="num amt">${facAmount < 0 ? '− ' + formatINR(-facAmount) : formatINR(facAmount)}</td>
     </tr>` : '';
 
@@ -479,7 +494,14 @@ export function renderComparison({ state, categoryName, units, rows }) {
 }
 
 // ─── Multi-month bill revision (month-by-month, compounding LPSC) ───────────────
+/**
+ * Render a multi-month bill revision with a month-by-month ledger, compounding LPSC,
+ * FPPA breakdown, and net metering summary.
+ * @param {Object} params - Consumer details and the revision ledger from buildRevisionLedger.
+ * @returns {string} Complete revision bill HTML.
+ */
 export function renderRevisionBill(params) {
+  _accId = 0;
   const { ledger, consumerName, accountNo, address, meterNo, fromDate, toDate } = params;
   const { rows, monthsCount, totalUnits, unitsPerMonth, startArrear, lpscRate,
           totalEnergy, totalDemand, totalED, totalExcess, totalFppa, totalSubsidy, energySlabs,

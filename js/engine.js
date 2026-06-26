@@ -18,6 +18,7 @@ import {
   resolveDatedTariff,
   fyStart,
 } from './tariffs/registry.js';
+import { round2 } from './utils.js';
 
 // Default excess (exceeding) demand penalty when a tariff/state defines none: the most common
 // Indian SERC rule — the demand above the sanctioned/contract load is charged at 2× the normal
@@ -30,6 +31,13 @@ export const DEFAULT_EXCESS_DEMAND = { multiplier: 2, tolerancePct: 0 };
 // a tariff/state may override via `billingDemandFloorPct`. Non-kVA (kW) tariffs get no floor.
 export const DEFAULT_DEMAND_FLOOR_PCT = 75;
 
+/**
+ * Resolve a polymorphic fixed/demand charge config into a rupee amount.
+ * Handles plain numbers, flat, per_kw, per_kva, and tiered schemas.
+ * @param {number|{type:string, rate?:number, slabs?:Array}} fixedCharge - The fixed charge config from the tariff.
+ * @param {number} connectedLoadKw - Connected load or billing demand in kW/kVA.
+ * @returns {number} The resolved fixed charge in rupees.
+ */
 export function resolveFixedCharge(fixedCharge, connectedLoadKw) {
   if (typeof fixedCharge === 'number') return fixedCharge;
   if (!fixedCharge) return 0;
@@ -46,8 +54,15 @@ export function resolveFixedCharge(fixedCharge, connectedLoadKw) {
   return 0;
 }
 
+/**
+ * Walk telescopic energy slabs and compute a per-slab breakdown.
+ * Slab limits are prorated for multi-month billing periods.
+ * @param {Array<{limit:number, rate:number, label?:string}>} slabs - Energy slab schedule from the tariff.
+ * @param {number} units - Total consumption units to allocate across slabs.
+ * @param {number} [billingMonths=1] - Number of billing months (scales slab limits).
+ * @returns {Array<{label:string, units:number, rate:number, amount:number}>} Per-slab breakdown.
+ */
 export function calculateEnergySlabs(slabs, units, billingMonths = 1) {
-  const round2 = n => Math.round(n * 100) / 100;
   const fmtU   = n => n.toLocaleString('en-IN', { maximumFractionDigits: 2 });
 
   // Scale slab limits proportionally for multi-month billing periods (rounded to 2 dp)
@@ -85,16 +100,48 @@ export function calculateEnergySlabs(slabs, units, billingMonths = 1) {
   return breakdown;
 }
 
+/**
+ * Calculate a complete electricity bill for the given inputs.
+ * This is the main entry point of the engine — it resolves the tariff,
+ * computes every line item (fixed, energy, excess demand, TOD, FPPA,
+ * additional charges, subsidy, net metering, LPSC, arrears, payments),
+ * and returns a detailed result object.
+ * @param {Object} params
+ * @param {string} params.discomId - DISCOM identifier (e.g. 'dvvnl').
+ * @param {string} params.categoryId - Category identifier (e.g. 'domestic').
+ * @param {string} [params.supplyTypeId] - Supply type identifier (e.g. '10B').
+ * @param {number} params.units - Total consumption units (kWh or kVAh).
+ * @param {number} params.connectedLoadKw - Sanctioned/connected load in kW or kVA.
+ * @param {number} [params.billedDemandKw] - Recorded maximum demand (for demand-billed categories).
+ * @param {string} [params.billingBasis] - 'kwh' or 'kvah'; auto-detected from tariff if omitted.
+ * @param {number} [params.billingPeriodDays=30] - Billing period length in days.
+ * @param {string} [params.billingDate] - ISO date for historical tariff resolution.
+ * @param {number} [params.facRate] - FPPA/fuel surcharge rate.
+ * @param {string} [params.facMode] - 'percent' or 'per_unit'.
+ * @param {number} [params.arrears] - Previous arrear amount.
+ * @param {number} [params.arrearLpsc] - LPSC on arrears.
+ * @param {number} [params.lpscRate] - Late Payment Surcharge rate (%).
+ * @param {number} [params.currentLpscMonths] - Months to apply current LPSC.
+ * @param {boolean} [params.lpscApplicable] - Whether LPSC is applicable.
+ * @param {Array} [params.payments] - Array of payment objects.
+ * @param {Array} [params.adjustments] - Array of adjustment objects.
+ * @param {boolean} [params.delhiSubsidy] - Whether Delhi GNCTD subsidy applies.
+ * @param {Object} [params.todUnits] - TOD unit breakdown { peak, normal, offPeak }.
+ * @param {boolean} [params.netMetering] - Whether net metering is active.
+ * @param {number} [params.exportUnits] - Solar export units.
+ * @param {number} [params.openingCreditUnits] - Opening credit from previous period.
+ * @returns {Object} Complete bill result with all line items, or an error object { error, message }.
+ */
 export function calculateBill({ discomId, categoryId, supplyTypeId, units, connectedLoadKw,
                                 billedDemandKw, billingBasis, billingPeriodDays, billingDate,
                                 facRate, facMode, arrears, arrearLpsc, lpscRate, currentLpscMonths,
                                 lpscApplicable, payments, adjustments, delhiSubsidy, todUnits,
                                 netMetering, exportUnits, openingCreditUnits }) {
   const discom = findDiscom(discomId);
-  if (!discom) return null;
+  if (!discom) return { error: true, message: `Unknown DISCOM: "${discomId}"` };
 
   const tariff = getEffectiveTariff(discomId, categoryId, supplyTypeId);
-  if (!tariff) return null;
+  if (!tariff) return { error: true, message: `No tariff found for DISCOM "${discomId}", category "${categoryId}", supply type "${supplyTypeId || '(none)'}"` };
 
   const cat = getCategory(discomId, categoryId);
 

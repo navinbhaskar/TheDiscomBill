@@ -9,6 +9,7 @@ import { resolveFppaForDiscom } from './tariffs/fppa.js';
 import { calculateBill } from './engine.js';
 import { renderBill, renderRevisionBill, renderComparison } from './renderer.js';
 import { attachDatePicker, fieldISO, setFieldDate } from './datepicker.js';
+import { round2, escHtml } from './utils.js';
 
 // Calendar icon markup reused by dynamically-created date fields
 const CAL_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>`;
@@ -35,7 +36,7 @@ export function showToast(msg) {
 // ─── Saved-bill history (localStorage) ─────────────────────────────────────────
 const HISTORY_KEY = 'discombill.history';
 const HISTORY_MAX = 8;
-const escHtml = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// escHtml is now imported from utils.js
 
 function readHistory() { try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; } catch { return []; } }
 function writeHistory(list) { try { localStorage.setItem(HISTORY_KEY, JSON.stringify(list.slice(0, HISTORY_MAX))); } catch {} }
@@ -93,10 +94,8 @@ export function buildShareUrl() {
     year:    document.getElementById('billingYear').value,
     fd:      fieldISO(document.getElementById('fromDate')),
     td:      fieldISO(document.getElementById('toDate')),
-    prev:    document.getElementById('prevReading').value,
-    curr:    document.getElementById('currReading').value,
-    // Advanced rows aren't serialized; share the computed total so the link still reproduces the bill
-    units:   getMeterMode() === 'advanced' ? (getEffectiveUnits() ?? '') : document.getElementById('unitsInput').value,
+    // Per-meter rows aren't serialized; share the computed total so the link still reproduces the bill
+    units:   getEffectiveUnits() ?? '',
     load:    document.getElementById('connectedLoad').value,
     bd:      document.getElementById('billedDemand')?.value || '',
     basis:   getBillingBasis(),
@@ -132,9 +131,10 @@ export function shareBill() {
 export function initTabs() {
   document.querySelectorAll('.bill-tab').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.bill-tab').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.bill-tab').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
       document.querySelectorAll('.bill-tab-panel').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
       document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
     });
   });
@@ -447,24 +447,20 @@ export function populateMonthYear() {
 // Reading mode: 'simple' | 'advanced' | 'tod' (selected by the radio group)
 export function getMeterMode() {
   const r = document.querySelector('input[name="meterMode"]:checked');
-  return r ? r.value : 'simple';
+  return r ? r.value : 'advanced';
 }
 
-// Meter number depends on the reading mode: Simple/TOD each have their own field; Advanced
-// derives it from the per-meter labels in the table (joined).
+// Meter number: TOD has its own field; the unified Meter Reading mode derives it from the
+// per-meter labels in the table (joined).
 export function getMeterNo() {
-  const mode = getMeterMode();
-  if (mode === 'advanced') {
-    return Array.from(document.querySelectorAll('#advancedRows .m-label'))
-      .map(i => i.value.trim()).filter(Boolean).join(', ');
+  if (getMeterMode() === 'tod') {
+    const el = document.getElementById('meterNoTod');
+    return el ? el.value.trim() : '';
   }
-  const el = document.getElementById(mode === 'tod' ? 'meterNoTod' : 'meterNoSimple');
-  return el ? el.value.trim() : '';
+  return Array.from(document.querySelectorAll('#advancedRows .m-label'))
+    .map(i => i.value.trim()).filter(Boolean).join(', ');
 }
 
-// Advanced mode is now dedicated to meter replacement (single-meter input lives in Simple, which
-// gained a Multiplying Factor field — so the two no longer duplicate each other).
-let advancedSubMode = 'replacement';
 
 // ── TOD ──
 export function getTodUnits() {
@@ -504,7 +500,9 @@ export function getAdvancedMeterData() {
     const curr = parseFloat(r.querySelector('.m-currread').value);
     const mfRaw = parseFloat(r.querySelector('.m-mf').value);
     const mf = (isNaN(mfRaw) || mfRaw <= 0) ? 1 : mfRaw;
+    // Units = (Curr − Prev) × MF when readings are entered, else the directly-typed Units field.
     if (!isNaN(prev) && !isNaN(curr) && curr >= prev) totalUnits += (curr - prev) * mf;
+    else totalUnits += parseFloat(r.querySelector('.m-units').value) || 0;
     const pd = fieldISO(r.querySelector('.m-prevdate'));
     const cd = fieldISO(r.querySelector('.m-currdate'));
     if (pd && (!minPrev || pd < minPrev)) minPrev = pd;
@@ -521,7 +519,7 @@ export function addMeterRow(label = '') {
   row.className = 'meter-row';
   row.innerHTML = `
     <div class="meter-row-top">
-      <input type="text" class="m-label" value="${label}" placeholder="Meter no. / label">
+      <input type="text" class="m-label" value="${label}" placeholder="Enter your meter number (optional)">
       <button type="button" class="btn-remove-row m-remove" title="Remove">×</button>
     </div>
     <div class="meter-fields">
@@ -531,7 +529,7 @@ export function addMeterRow(label = '') {
       <label class="mf-field"><span class="m-currread-label">Curr Read</span><input type="number" class="m-currread" placeholder="0" min="0" step="0.01"></label>
       <label class="mf-field"><span>MF</span><input type="number" class="m-mf" value="1" min="0.01" step="0.01" title="Multiplying Factor"></label>
       <label class="mf-field"><span class="m-md-label">MD (kW)</span><input type="number" class="m-md" placeholder="0" min="0" step="0.01" title="Maximum demand recorded"></label>
-      <div class="mf-field mf-units"><span>Units</span><span class="m-units">0</span></div>
+      <label class="mf-field mf-units"><span>Units</span><input type="number" class="m-units" placeholder="Or Enter Units Consumed Directly (kWh)" min="0" step="0.01" title="Auto = (Current − Previous) × MF; or type units directly"></label>
     </div>`;
   row.querySelectorAll('input').forEach(i => {
     i.addEventListener('input',  updateAdvancedMeter);
@@ -545,66 +543,57 @@ export function addMeterRow(label = '') {
   updateReadingUnitLabels();     // reflect kWh vs kVAh on the new row's Prev/Curr Read labels
 }
 
-export function setAdvancedSubMode(sub) {
-  advancedSubMode = sub;
-  document.querySelectorAll('.adv-subtab').forEach(b => b.classList.toggle('active', b.dataset.submode === sub));
+// Initialise the unified meter table with a single default row (the user adds more with "+").
+export function setAdvancedSubMode() {
   const hint = document.getElementById('advHint');
-  document.getElementById('advancedRows').innerHTML = '';
-  if (sub === 'replacement') {
-    hint.textContent = 'Meter replaced mid-cycle: enter the OLD meter (previous → final read) and the NEW meter (initial → current read). Units from both are summed.';
-    addMeterRow('Old meter');
-    addMeterRow('New meter');
-  } else {
-    hint.textContent = 'Units = (Current − Previous) × MF. Add more meters with “+”; their units are summed.';
-    addMeterRow('Meter 1');
-  }
+  if (hint) hint.textContent = 'Enter each meter’s previous → current reading (Units = (Current − Previous) × MF). Use “+ Add meter” for a mid-cycle replacement (old + new meter) or for multiple meters — their units are summed.';
+  if (!document.querySelector('#advancedRows .meter-row')) addMeterRow();
   updateAdvancedMeter();
 }
 
 export function updateAdvancedMeter() {
+  // Auto-fill each row's Units from its readings; rows without both readings keep their typed Units.
   document.querySelectorAll('#advancedRows .meter-row').forEach(r => {
     const prev = parseFloat(r.querySelector('.m-prevread').value);
     const curr = parseFloat(r.querySelector('.m-currread').value);
     const mfRaw = parseFloat(r.querySelector('.m-mf').value);
     const mf = (isNaN(mfRaw) || mfRaw <= 0) ? 1 : mfRaw;
-    const u = (!isNaN(prev) && !isNaN(curr) && curr >= prev) ? (curr - prev) * mf : 0;
-    r.querySelector('.m-units').textContent = (Math.round(u * 100) / 100).toLocaleString('en-IN');
+    if (!isNaN(prev) && !isNaN(curr) && curr >= prev) {
+      r.querySelector('.m-units').value = Math.round((curr - prev) * mf * 100) / 100;
+    }
   });
   const data = getAdvancedMeterData();
-  const days = (data.minPrev && data.maxCurr)
-    ? Math.round((new Date(data.maxCurr) - new Date(data.minPrev)) / 86400000) : 0;
-  document.getElementById('advTotalUnits').textContent  = data.totalUnits.toLocaleString('en-IN');
-  document.getElementById('advTotalMonths').textContent = (days > 0 ? days / 30 : 0).toFixed(2);
-  document.getElementById('advancedTotalDisplay').style.display = data.totalUnits > 0 ? 'block' : 'none';
-
-  // Drive the billing period through the existing From/To wiring (FPPA/tariff/period all reuse it),
-  // and the billed demand from the peak MD column (feeds demand charge + excess-demand penalty).
-  if (getMeterMode() === 'advanced') {
+  // Auto-fill the billing period From/To from the per-meter dates when present (the standalone
+  // From/To row is hidden in this mode); billed demand from the peak MD column.
+  if (getMeterMode() !== 'tod') {
     const from = document.getElementById('fromDate'), to = document.getElementById('toDate');
-    setFieldDate(from, data.minPrev || '');
-    setFieldDate(to,   data.maxCurr || '');
-    from.dispatchEvent(new Event('change'));
-    to.dispatchEvent(new Event('change'));
+    if (data.minPrev) { setFieldDate(from, data.minPrev); from.dispatchEvent(new Event('change')); }
+    if (data.maxCurr) { setFieldDate(to, data.maxCurr); to.dispatchEvent(new Event('change')); }
     const bd = document.getElementById('billedDemand');
-    if (bd) bd.value = data.maxMD > 0 ? data.maxMD : '';
+    if (bd && data.maxMD > 0) bd.value = data.maxMD;   // don't clear a manually-entered MD
   }
+  const periodDays = getBillingPeriodDays();
+  document.getElementById('advTotalUnits').textContent  = data.totalUnits.toLocaleString('en-IN');
+  document.getElementById('advTotalMonths').textContent = (periodDays ? periodDays / 30 : 0).toFixed(2);
+  document.getElementById('advancedTotalDisplay').style.display = data.totalUnits > 0 ? 'block' : 'none';
   updateCalcButton();
 }
 
 export function setMeterMode(mode) {
-  const panels = { simple: 'meterSimple', advanced: 'meterAdvanced', tod: 'meterTod' };
+  const panels = { advanced: 'meterAdvanced', tod: 'meterTod' };
   Object.entries(panels).forEach(([m, id]) => {
     const el = document.getElementById(id);
     if (el) el.style.display = (m === mode) ? 'block' : 'none';
   });
-  // From/To date inputs are user-set in Simple/TOD, and auto-filled (hidden) in Advanced
-  document.getElementById('meterDatesRow').style.display = (mode === 'advanced') ? 'none' : 'block';
+  // The billing period comes from the per-meter Prev/Curr dates in Meter Reading mode, so the
+  // standalone From/To row is only shown for TOD (which has no meter rows).
+  document.getElementById('meterDatesRow').style.display = (mode === 'tod') ? 'block' : 'none';
 
-  if (mode === 'advanced') {
-    if (!document.querySelector('#advancedRows .meter-row')) setAdvancedSubMode(advancedSubMode);
-    else updateAdvancedMeter();
-  } else if (mode === 'tod') {
+  if (mode === 'tod') {
     updateTodDisplay();
+  } else {
+    if (!document.querySelector('#advancedRows .meter-row')) setAdvancedSubMode();
+    else updateAdvancedMeter();
   }
   // MD column owns billed demand in Advanced mode → toggle the standalone field accordingly
   updateBilledDemandVisibility(
@@ -618,41 +607,20 @@ export function setMeterMode(mode) {
 }
 
 export function getEffectiveUnits() {
-  const mode = getMeterMode();
-  if (mode === 'tod') {
+  if (getMeterMode() === 'tod') {
     const t = getTodUnits();
     const total = (t.peak || 0) + (t.normal || 0) + (t.offPeak || 0);
     return total > 0 ? total : null;
   }
-  if (mode === 'advanced') {
-    const u = getAdvancedMeterData().totalUnits;
-    return u > 0 ? u : null;
-  }
-  const prev   = document.getElementById('prevReading').value.trim();
-  const curr   = document.getElementById('currReading').value.trim();
-  const direct = document.getElementById('unitsInput').value.trim();
-  const mfRaw  = parseFloat(document.getElementById('meterMF')?.value);
-  const mf     = (isNaN(mfRaw) || mfRaw <= 0) ? 1 : mfRaw;   // Multiplying Factor (CT/PT ratio)
-  if (prev !== '' && curr !== '' && !isNaN(+prev) && !isNaN(+curr)) {
-    return Math.max(0, (+curr - +prev) * mf);   // MF applies to the metered difference
-  }
-  if (direct !== '' && !isNaN(+direct)) return Math.max(0, +direct);   // direct entry = final units
-  return null;
+  // Unified Meter Reading: summed per-meter Units (each computed from readings or typed directly).
+  const meterTotal = getAdvancedMeterData().totalUnits;
+  return meterTotal > 0 ? meterTotal : null;
 }
 
+// The unified meter total (including the direct-units fallback) is rendered by updateAdvancedMeter;
+// this thin wrapper keeps existing callers working.
 export function updateUnitsDisplay() {
-  const disp = document.getElementById('unitsDisplay');
-  if (getMeterMode() !== 'simple') { disp.style.display = 'none'; return; }
-  const units = getEffectiveUnits();
-  const num   = document.getElementById('unitsConsumedDisplay');
-  if (units !== null &&
-      document.getElementById('prevReading').value !== '' &&
-      document.getElementById('currReading').value !== '') {
-    disp.style.display = 'block';
-    num.textContent = units.toLocaleString('en-IN');
-  } else {
-    disp.style.display = 'none';
-  }
+  if (getMeterMode() !== 'tod') updateAdvancedMeter();
 }
 
 // ─── Calculate Button ─────────────────────────────────────────────────────────
@@ -717,10 +685,8 @@ export function updateBilledDemandVisibility() {
 // (the meter is read in apparent energy, so readings/units are entered directly in kVAh).
 export function updateReadingUnitLabels() {
   const eu = getBillingBasis() === 'kvah' ? 'kVAh' : 'kWh';
-  const setLbl = (sel, txt) => { const el = document.querySelector(sel); if (el) el.textContent = txt; };
-  setLbl('label[for="prevReading"]', `Previous Reading (${eu})`);
-  setLbl('label[for="currReading"]', `Current Reading (${eu})`);
-  setLbl('label[for="unitsInput"]',  `Or Enter Units Consumed Directly (${eu})`);
+  // Per-meter Units field doubles as the direct-entry box — keep its placeholder's unit in sync.
+  document.querySelectorAll('#advancedRows .m-units').forEach(i => { i.placeholder = `Or Enter Units Consumed Directly (${eu})`; });
   // TOD labels carry a badge span — update only the leading text node so the badge survives
   [['todPeak', 'Peak'], ['todNormal', 'Normal'], ['todOffPeak', 'Off-Peak']].forEach(([id, name]) => {
     const lbl = document.querySelector(`label[for="${id}"]`);
@@ -894,7 +860,7 @@ export function checkLifelineLimits() {
 }
 
 // ─── Multi-month bill revision (month-by-month, compounding LPSC) ───────────────
-const round2 = n => Math.round(n * 100) / 100;
+// round2 is now imported from utils.js
 
 // Builds the month-by-month ledger: total units split evenly across the months; each month's
 // bill computed at that month's own FPPA/tariff; LPSC compounded on the running balance
@@ -1019,30 +985,51 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
   };
 }
 
+/** Wait for a <select> to contain an option with the given value, select it, and dispatch 'change'. */
+function awaitOption(selectId, value, timeout = 2000) {
+  return new Promise((resolve, reject) => {
+    const el = document.getElementById(selectId);
+    const check = () => {
+      if ([...el.options].some(o => o.value === value)) {
+        el.value = value;
+        el.dispatchEvent(new Event('change'));
+        resolve(el);
+        return true;
+      }
+      return false;
+    };
+    if (check()) return;
+    const obs = new MutationObserver(() => { if (check()) { obs.disconnect(); clearTimeout(tid); } });
+    obs.observe(el, { childList: true });
+    const tid = setTimeout(() => { obs.disconnect(); reject(new Error(`Timeout: ${selectId}=${value}`)); }, timeout);
+  });
+}
+
 // Fill a known, verified example (UP DVVNL domestic, 350 units / 3 kW) and calculate it — gives a
 // first-time visitor an instant result without hunting through every field. Cascades through the
 // dependent dropdowns the same way a shared link does.
-export function loadSample() {
+export async function loadSample() {
   const stateEl = document.getElementById('stateSelect');
   stateEl.value = 'Uttar Pradesh';
   stateEl.dispatchEvent(new Event('change'));
-  setTimeout(() => {
-    const d = document.getElementById('discomSelect');
-    d.value = 'dvvnl'; d.dispatchEvent(new Event('change'));
-    setTimeout(() => {
-      const c = document.getElementById('categorySelect');
-      c.value = 'domestic'; c.dispatchEvent(new Event('change'));
-      setTimeout(() => {
-        const st = document.getElementById('supplyTypeSelect');
-        if ([...st.options].some(o => o.value === '10B')) { st.value = '10B'; st.dispatchEvent(new Event('change')); }
-        document.getElementById('consumerName').value = 'Sample Consumer';
-        document.getElementById('connectedLoad').value = 3;
-        const u = document.getElementById('unitsInput'); u.value = 350; u.dispatchEvent(new Event('input'));
-        updateUnitsDisplay(); updateCalcButton();
-        doCalculate();
-      }, 60);
-    }, 60);
-  }, 60);
+  try {
+    await awaitOption('discomSelect', 'dvvnl');
+    await awaitOption('categorySelect', 'domestic');
+    const st = document.getElementById('supplyTypeSelect');
+    if ([...st.options].some(o => o.value === '10B')) { st.value = '10B'; st.dispatchEvent(new Event('change')); }
+    document.getElementById('consumerName').value = 'Sample Consumer';
+    document.getElementById('connectedLoad').value = 3;
+    // Reset to a clean single meter row and type 350 units directly into its Units field;
+    // clear any leftover derived period so the sample bills as a single current-month bill.
+    setFieldDate(document.getElementById('fromDate'), '');
+    setFieldDate(document.getElementById('toDate'), '');
+    document.getElementById('advancedRows').innerHTML = '';
+    addMeterRow();
+    const u = document.querySelector('#advancedRows .meter-row .m-units');
+    if (u) { u.value = 350; u.dispatchEvent(new Event('input')); }
+    updateCalcButton();
+    doCalculate();
+  } catch (e) { console.warn('loadSample:', e.message); }
 }
 
 // Compare the current usage (units / load / period / basis) across every DISCOM in the selected
@@ -1161,9 +1148,13 @@ export function doCalculate() {
     payments: getPayments(), adjustments: getAdjustments(),
     delhiSubsidy, todUnits, netMetering, exportUnits, openingCreditUnits
   });
-  if (!result) return;
+  if (!result || result.error) { showToast(result?.message || 'Calculation failed.'); return; }
 
   const verifiedFppa = resolveFppaForDiscom(discomId, billingDate);
+
+  // Show the meter readings on the bill only for a single meter; multi-meter bills show the total.
+  const meterRows = document.querySelectorAll('#advancedRows .meter-row');
+  const oneMeter  = (getMeterMode() !== 'tod' && meterRows.length === 1) ? meterRows[0] : null;
 
   const html = renderBill({
     result,
@@ -1173,8 +1164,8 @@ export function doCalculate() {
     meterNo:      getMeterNo(),
     billingMonth: document.getElementById('billingMonth').value,
     billingYear:  document.getElementById('billingYear').value,
-    prevReading:  document.getElementById('prevReading').value,
-    currReading:  document.getElementById('currReading').value,
+    prevReading:  oneMeter ? oneMeter.querySelector('.m-prevread').value : '',
+    currReading:  oneMeter ? oneMeter.querySelector('.m-currread').value : '',
     fromDate:     fieldISO(document.getElementById('fromDate')),
     toDate:       fieldISO(document.getElementById('toDate')),
     fppaSource:   verifiedFppa ? `${verifiedFppa.label} — ${verifiedFppa.source}` : null,
@@ -1192,7 +1183,7 @@ export function doCalculate() {
 
 // ─── Load from URL Params ─────────────────────────────────────────────────────
 
-export function loadFromUrl() {
+export async function loadFromUrl() {
   const p = new URLSearchParams(location.search);
   if (!p.get('state')) return;
 
@@ -1200,75 +1191,70 @@ export function loadFromUrl() {
   stateEl.value = p.get('state');
   stateEl.dispatchEvent(new Event('change'));
 
-  setTimeout(() => {
-    const discomEl = document.getElementById('discomSelect');
-    discomEl.value = p.get('discom') || '';
-    discomEl.dispatchEvent(new Event('change'));
+  try {
+    if (p.get('discom')) await awaitOption('discomSelect', p.get('discom'));
+    if (p.get('cat'))    await awaitOption('categorySelect', p.get('cat'));
 
-    setTimeout(() => {
-      const catEl = document.getElementById('categorySelect');
-      catEl.value = p.get('cat') || '';
-      catEl.dispatchEvent(new Event('change'));
+    if (p.get('st')) document.getElementById('supplyTypeSelect').value = p.get('st');
 
-      setTimeout(() => {
-        if (p.get('st')) document.getElementById('supplyTypeSelect').value = p.get('st');
+    const fields = {
+      consumerName: 'name', accountNo: 'acc', address: 'addr',
+      connectedLoad: 'load', billedDemand: 'bd',
+      exportUnits: 'exp', openingCredit: 'cr',
+      todPeak: 'todp', todNormal: 'todn', todOffPeak: 'todop',
+      facRate: 'fac', arrears: 'arr', arrearLpsc: 'arrlpsc',
+      lpscRate: 'lpsc', currentLpscMonths: 'curmo'
+    };
+    for (const [id, key] of Object.entries(fields)) {
+      const el = document.getElementById(id);
+      if (el && p.get(key)) el.value = p.get(key);
+    }
+    // Per-meter rows aren't serialized — restore the shared total into the first meter's Units.
+    if (p.get('units')) {
+      const u = document.querySelector('#advancedRows .meter-row .m-units');
+      if (u) { u.value = p.get('units'); u.dispatchEvent(new Event('input')); }
+    }
+    // Date fields carry ISO in the URL → store ISO + show DD-MM-YYYY via the datepicker helper.
+    if (p.get('fd')) setFieldDate(document.getElementById('fromDate'), p.get('fd'));
+    if (p.get('td')) setFieldDate(document.getElementById('toDate'), p.get('td'));
+    // Meter number → TOD has its own field; otherwise it's the per-meter labels (not restored here).
+    if (p.get('meter')) {
+      const e = document.getElementById('meterNoTod'); if (e) e.value = p.get('meter');
+    }
+    // Net metering — toggle reveals export/credit fields (already set via the fields map above)
+    if (p.get('nm') === '1') {
+      const c = document.getElementById('netMeteringChk');
+      if (c) { c.checked = true; c.dispatchEvent(new Event('change')); }
+    }
+    // Billing basis — overrides the category-driven default; refresh labels/visibility
+    if (p.get('basis')) {
+      const b = document.getElementById('billingBasis');
+      if (b) { b.value = p.get('basis'); b.dispatchEvent(new Event('change')); }
+    }
+    if (p.get('month') || p.get('year')) {
+      const mm = +(p.get('month') || document.getElementById('billingMonth').value);
+      const yy = +(p.get('year')  || document.getElementById('billingYear').value);
+      setBillingMonthYear(mm, yy);   // updates hidden inputs + visible field
+    }
+    // Restore reading mode. Advanced rows aren't serialized — those links carry the
+    // computed total in `units` and load as Simple, which reproduces the same bill.
+    if (p.get('mmode') === 'tod') {
+      const r = document.querySelector('input[name="meterMode"][value="tod"]');
+      if (r) { r.checked = true; setMeterMode('tod'); }
+    }
+    if (p.get('lpscon') === '0') {
+      const c = document.getElementById('lpscApplicable');
+      if (c) { c.checked = false; c.dispatchEvent(new Event('change')); }
+    }
+    if (p.get('facm') && document.getElementById('facMode')) {
+      document.getElementById('facMode').value = p.get('facm');
+      updateFacUnitLabel();
+    }
 
-        const fields = {
-          consumerName: 'name', accountNo: 'acc', address: 'addr',
-          prevReading: 'prev', currReading: 'curr',
-          unitsInput: 'units', connectedLoad: 'load', billedDemand: 'bd',
-          exportUnits: 'exp', openingCredit: 'cr',
-          todPeak: 'todp', todNormal: 'todn', todOffPeak: 'todop',
-          facRate: 'fac', arrears: 'arr', arrearLpsc: 'arrlpsc',
-          lpscRate: 'lpsc', currentLpscMonths: 'curmo'
-        };
-        for (const [id, key] of Object.entries(fields)) {
-          const el = document.getElementById(id);
-          if (el && p.get(key)) el.value = p.get(key);
-        }
-        // Date fields carry ISO in the URL → store ISO + show DD-MM-YYYY via the datepicker helper.
-        if (p.get('fd')) setFieldDate(document.getElementById('fromDate'), p.get('fd'));
-        if (p.get('td')) setFieldDate(document.getElementById('toDate'), p.get('td'));
-        // Meter number now lives in the Simple/TOD panels (Advanced derives it from labels)
-        if (p.get('meter')) {
-          ['meterNoSimple', 'meterNoTod'].forEach(id => { const e = document.getElementById(id); if (e) e.value = p.get('meter'); });
-        }
-        // Net metering — toggle reveals export/credit fields (already set via the fields map above)
-        if (p.get('nm') === '1') {
-          const c = document.getElementById('netMeteringChk');
-          if (c) { c.checked = true; c.dispatchEvent(new Event('change')); }
-        }
-        // Billing basis — overrides the category-driven default; refresh labels/visibility
-        if (p.get('basis')) {
-          const b = document.getElementById('billingBasis');
-          if (b) { b.value = p.get('basis'); b.dispatchEvent(new Event('change')); }
-        }
-        if (p.get('month') || p.get('year')) {
-          const mm = +(p.get('month') || document.getElementById('billingMonth').value);
-          const yy = +(p.get('year')  || document.getElementById('billingYear').value);
-          setBillingMonthYear(mm, yy);   // updates hidden inputs + visible field
-        }
-        // Restore reading mode. Advanced rows aren't serialized — those links carry the
-        // computed total in `units` and load as Simple, which reproduces the same bill.
-        if (p.get('mmode') === 'tod') {
-          const r = document.querySelector('input[name="meterMode"][value="tod"]');
-          if (r) { r.checked = true; setMeterMode('tod'); }
-        }
-        if (p.get('lpscon') === '0') {
-          const c = document.getElementById('lpscApplicable');
-          if (c) { c.checked = false; c.dispatchEvent(new Event('change')); }
-        }
-        if (p.get('facm') && document.getElementById('facMode')) {
-          document.getElementById('facMode').value = p.get('facm');
-          updateFacUnitLabel();
-        }
-
-        updateArrearTotal();
-        updateUnitsDisplay();
-        updateTariffPeriodHint();
-        updateCalcButton();
-        if (canCalculate()) doCalculate();
-      }, 50);
-    }, 50);
-  }, 50);
+    updateArrearTotal();
+    updateUnitsDisplay();
+    updateTariffPeriodHint();
+    updateCalcButton();
+    if (canCalculate()) doCalculate();
+  } catch (e) { console.warn('loadFromUrl:', e.message); }
 }

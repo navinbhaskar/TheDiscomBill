@@ -4,13 +4,12 @@
 import { getStates, getDiscoms, STATE_META } from './tariffs/registry.js';
 import { FPPA_BY_DISCOM, FPPA_BY_STATE } from './tariffs/fppa.js';
 import { calculateEnergySlabs, resolveFixedCharge } from './engine.js';
+import { round2, escHtml as esc } from './utils.js';
 
 // ─── Small helpers ──────────────────────────────────────────────────────────
 const $ = id => document.getElementById(id);
-const esc = s => String(s == null ? '' : s)
-  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+// esc and round2 are now imported from utils.js
 const num = v => { const n = parseFloat(v); return isNaN(n) ? 0 : n; };
-const round2 = n => Math.round(n * 100) / 100;
 const slug = s => String(s).trim().toLowerCase()
   .replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
@@ -67,6 +66,30 @@ function emitVal(v, ind = '') {
 
 let tariff = null;            // working model (editor-shaped, see norm* below)
 let existingSlugs = new Set(); // state slugs already in the registry
+
+// ─── Undo stack ───────────────────────────────────────────────────────────────
+const UNDO_MAX = 20;
+let _undoStack = [];
+
+function saveSnapshot() {
+  if (!tariff) return;
+  _undoStack.push(JSON.stringify(tariff));
+  if (_undoStack.length > UNDO_MAX) _undoStack.shift();
+  updateUndoBtn();
+}
+
+function undo() {
+  if (!_undoStack.length) return;
+  tariff = JSON.parse(_undoStack.pop());
+  renderTariff();
+  updateUndoBtn();
+  toast('Undone');
+}
+
+function updateUndoBtn() {
+  const btn = $('undoBtn');
+  if (btn) btn.disabled = !_undoStack.length;
+}
 
 // ── Blank factories ──
 const blankSlab    = () => ({ limit: '', inf: false, rate: '' });
@@ -494,17 +517,17 @@ function wireTariff() {
     const arr = getPath(tariff, path);
     switch (act) {
       case 'addDiscom':  arr.push(blankDiscom()); break;
-      case 'delDiscom':  arr.splice(idx, 1); break;
+      case 'delDiscom':  saveSnapshot(); arr.splice(idx, 1); break;
       case 'addCategory': arr.push(blankCategory()); break;
-      case 'delCategory': arr.splice(idx, 1); break;
+      case 'delCategory': saveSnapshot(); arr.splice(idx, 1); break;
       case 'addSupply':  arr.push(blankSupply()); break;
-      case 'delSupply':  arr.splice(idx, 1); break;
+      case 'delSupply':  saveSnapshot(); arr.splice(idx, 1); break;
       case 'addSlab':    arr.push(blankSlab()); break;
-      case 'delSlab':    arr.splice(idx, 1); break;
+      case 'delSlab':    saveSnapshot(); arr.splice(idx, 1); break;
       case 'addCharge':  arr.push(blankCharge()); break;
-      case 'delCharge':  arr.splice(idx, 1); break;
+      case 'delCharge':  saveSnapshot(); arr.splice(idx, 1); break;
       case 'addTier':    arr.push({ maxLoad: '', inf: false, rate: '', label: '' }); break;
-      case 'delTier':    arr.splice(idx, 1); break;
+      case 'delTier':    saveSnapshot(); arr.splice(idx, 1); break;
     }
     renderTariff();
   });
@@ -731,11 +754,12 @@ function wireFppa() {
 //  INIT
 // ════════════════════════════════════════════════════════════════════════════
 function init() {
-  // Tabs
+  // Tabs (with aria-selected)
   document.querySelectorAll('.ed-tab').forEach(btn => btn.addEventListener('click', () => {
-    document.querySelectorAll('.ed-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.ed-tab').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
     document.querySelectorAll('.ed-panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
     $('edpanel-' + btn.dataset.edtab).classList.add('active');
   }));
 
@@ -760,5 +784,11 @@ function init() {
   wireFppa();
   renderTariff();
   renderFppa();
+
+  // Undo button + Ctrl+Z
+  $('undoBtn')?.addEventListener('click', undo);
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) { e.preventDefault(); undo(); }
+  });
 }
 document.addEventListener('DOMContentLoaded', init);

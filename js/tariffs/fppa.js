@@ -65,7 +65,13 @@ function pick(list, billingDate) {
   return null;
 }
 
-// Returns the verified FPPA entry for a DISCOM at a billing date, or null if none on record.
+/**
+ * Resolve the verified FPPA/FPPAS/PPAC entry for a DISCOM at a given billing date.
+ * Checks DISCOM-specific entries first, then falls back to state-wide entries.
+ * @param {string} discomId - DISCOM identifier.
+ * @param {string|Date} billingDate - Billing date (ISO string or Date). Uses today if omitted.
+ * @returns {{from:string, to?:string, mode:string, rate:number, label:string, source:string}|null}
+ */
 export function resolveFppaForDiscom(discomId, billingDate) {
   const byDiscom = pick(FPPA_BY_DISCOM[discomId], billingDate);
   if (byDiscom) return byDiscom;

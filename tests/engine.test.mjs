@@ -151,5 +151,76 @@ group('net metering', () => {
   check('fixed charge still applies', surplus.fixedCharge > 0, true);
 });
 
+// ── Error objects (Issue #14): engine returns { error, message } not null ──────
+group('error objects', () => {
+  const bad1 = calculateBill({ discomId: 'nonexistent_discom', categoryId: 'domestic',
+    units: 100, connectedLoadKw: 1 });
+  check('unknown discom → error', bad1.error, true);
+  check('error has message', typeof bad1.message, 'string');
+  check('message mentions discom', bad1.message.includes('nonexistent_discom'), true);
+
+  const bad2 = calculateBill({ discomId: 'adani_mumbai', categoryId: 'nonexistent_cat',
+    units: 100, connectedLoadKw: 1, billingDate: DATE });
+  check('unknown category → error', bad2.error, true);
+  check('category error message', bad2.message.includes('nonexistent_cat'), true);
+});
+
+// ── LPSC (Late Payment Surcharge) ────────────────────────────────────────────
+group('LPSC calculation', () => {
+  const r = calculateBill({ discomId: 'adani_mumbai', categoryId: 'domestic',
+    units: 350, connectedLoadKw: 5, billingPeriodDays: 30, billingDate: DATE,
+    facRate: 0, facMode: 'per_unit', lpscApplicable: true,
+    arrears: 5000, arrearLpsc: 100, lpscRate: 1.5, currentLpscMonths: 2 });
+  check('arrears preserved', r.arrears, 5000);
+  check('arrear LPSC preserved', r.arrearLpsc, 100);
+  check('LPSC rate stored', r.lpscRate, 1.5);
+  // currentLpsc = currentNet × lpscRate / 100 × months  = ~2892 × 0.015 × 2 = ~86.76
+  check('current LPSC > 0', r.currentLpsc > 0, true);
+  check('totalPayable includes arrears', r.totalPayable > r.currentNet, true);
+});
+
+// ── Multi-month slab scaling ─────────────────────────────────────────────────
+group('multi-month slab scaling', () => {
+  const slabs = [
+    { limit: 100, rate: 3.00 },
+    { limit: 300, rate: 6.00 },
+    { limit: Infinity, rate: 9.00 }
+  ];
+  const b3 = calculateEnergySlabs(slabs, 500, 3);
+  // 3-month: limits become 300, 900, ∞. 500 units → 300 @ 3 + 200 @ 6
+  check('3-month slab1 units', b3[0].units, 300);
+  check('3-month slab1 amount', b3[0].amount, 900);    // 300 × 3
+  check('3-month slab2 units', b3[1].units, 200);
+  check('3-month slab2 amount', b3[1].amount, 1200);   // 200 × 6
+  check('3-month total', b3.reduce((s, r) => s + r.amount, 0), 2100);
+});
+
+// ── Shared utils module ──────────────────────────────────────────────────────
+import { round2, escHtml, displayDate } from '../js/utils.js';
+group('shared utils', () => {
+  check('round2(1.456)', round2(1.456), 1.46);
+  check('round2(2.345)', round2(2.345), 2.35);
+  check('round2(0)', round2(0), 0);
+  check('escHtml <>&"', escHtml('<b>"A&B"</b>'), '&lt;b&gt;&quot;A&amp;B&quot;&lt;/b&gt;');
+  check('escHtml null', escHtml(null), '');
+  check('displayDate ISO', displayDate('2025-06-15'), '15-06-2025');
+  check('displayDate empty', displayDate(''), '');
+  check('displayDate null', displayDate(null), '');
+});
+
+// ── UP DVVNL domestic bill (popular test case) ───────────────────────────────
+group('UP DVVNL domestic bill', () => {
+  const r = calculateBill({ discomId: 'dvvnl', categoryId: 'domestic', supplyTypeId: '10B',
+    units: 350, connectedLoadKw: 3, billingPeriodDays: 30, billingDate: DATE,
+    facRate: 0, facMode: 'per_unit', lpscApplicable: false });
+  check('result not error', r.error, undefined);
+  check('discom id', r.discom.id, 'dvvnl');
+  check('category id', r.category.id, 'domestic');
+  check('units', r.units, 350);
+  check('fixed > 0', r.fixedCharge > 0, true);
+  check('energy > 0', r.totalEnergy > 0, true);
+  check('net > 0', r.currentNet > 0, true);
+});
+
 console.log(`\n${failed === 0 ? '✓ ALL PASSED' : '✗ FAILURES'} — ${passed} passed, ${failed} failed\n`);
 process.exit(failed === 0 ? 0 : 1);

@@ -14,5 +14,7 @@ jobs:
         with:
           node-version: '20'
       # No dependencies to install — the suite is plain Node ESM.
+      - name: Syntax-check all JS files
+        run: find js/ -name '*.js' -exec node --check {} +
       - name: Run engine regression tests
         run: npm test
