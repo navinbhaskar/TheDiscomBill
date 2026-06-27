@@ -321,8 +321,7 @@ export function renderBill(params) {
 
   return `
   <div class="bill-actions no-print">
-    <button class="btn-print" onclick="window.print()">🖨️ Print Bill</button>
-    <button class="btn-print" onclick="window.__savePdf && window.__savePdf()">⬇️ Save as PDF</button>
+    <button class="btn-print" onclick="window.print()">🖨️ Print / Save PDF</button>
     <button class="btn-share" onclick="window.__shareBill && window.__shareBill()">🔗 Share</button>
   </div>
 
@@ -640,8 +639,7 @@ export function renderRevisionBill(params) {
 
   return `
   <div class="bill-actions no-print">
-    <button class="btn-print" onclick="window.print()">🖨️ Print Bill</button>
-    <button class="btn-print" onclick="window.__savePdf && window.__savePdf()">⬇️ Save as PDF</button>
+    <button class="btn-print" onclick="window.print()">🖨️ Print / Save PDF</button>
     <button class="btn-share" onclick="window.__shareBill && window.__shareBill()">🔗 Share</button>
   </div>
 

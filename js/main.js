@@ -19,28 +19,6 @@ import { initI18n } from './i18n.js';
 // Expose helpers called from onclick in the rendered bill HTML
 window.__shareBill = shareBill;
 
-// "Save as PDF" — generate and download a PDF of the bill directly (no print dialog). The HTML→PDF
-// library is vendored locally and loaded lazily on first use; if it fails (e.g. offline before it's
-// cached) we fall back to the browser's print dialog.
-let _pdfLib = null;
-function loadPdfLib() {
-  if (window.html2pdf) return Promise.resolve();
-  if (_pdfLib) return _pdfLib;
-  _pdfLib = new Promise((resolve, reject) => {
-    const s = document.createElement('script');
-    s.src = 'js/vendor/html2pdf.bundle.min.js';
-    s.onload = resolve; s.onerror = reject;
-    document.head.appendChild(s);
-  });
-  return _pdfLib;
-}
-window.__savePdf = () => {
-  // To achieve the perfect vector-quality native print layout the user requested,
-  // we leverage the browser's native print dialog which has a "Save as PDF" destination.
-  showToast('Select "Save as PDF" in the printer destination dropdown for a perfect quality document.');
-  setTimeout(() => window.print(), 500);
-}
-
 // Register the service worker for offline support (no-op on unsupported / insecure contexts).
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
