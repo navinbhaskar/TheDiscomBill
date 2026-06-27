@@ -632,8 +632,6 @@ export function updateAdvancedMeter() {
     if (!isOverride) {
       r.querySelector('.m-units').value = calcUnits || '';
     }
-      r.querySelector('.m-units').value = calcUnits || '';
-    }
   });
   const data = getAdvancedMeterData();
   // Auto-fill the billing period From/To from the per-meter dates when present (the standalone
