@@ -48,9 +48,13 @@ window.__savePdf = async () => {
       filename: name,
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 2, backgroundColor: '#ffffff', useCORS: true,
+        onclone: (doc) => {
+          const w = doc.querySelector('.bill-wrap');
+          if (w) w.classList.add('pdf-export');
+        },
         ignoreElements: (n) => n.classList && n.classList.contains('no-print') },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak: { mode: ['css', 'legacy'] },
+      pagebreak: { mode: 'css' },
     }).from(el).save();
   } catch (e) {
     alert("Could not generate PDF: " + (e.message || e));
