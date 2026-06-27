@@ -930,22 +930,18 @@ function lifelineUnitCap() {
   return LIFELINE_MAX_UNITS_PER_MONTH * months;
 }
 
-let _lifelineNoticeTimer = null;
 function showLifelineNotice(msg) {
   const el = document.getElementById('lifelineNotice');
   const textEl = document.getElementById('lifelineNoticeText');
   if (!el || !textEl) return;
   textEl.textContent = msg;
   el.style.display = 'flex';
-  if (_lifelineNoticeTimer) clearTimeout(_lifelineNoticeTimer);
-  _lifelineNoticeTimer = setTimeout(() => { hideLifelineNotice(); }, 8000);
 }
 function hideLifelineNotice() {
   const el = document.getElementById('lifelineNotice');
   const textEl = document.getElementById('lifelineNoticeText');
   if (el) { el.style.display = 'none'; }
   if (textEl) { textEl.textContent = ''; }
-  if (_lifelineNoticeTimer) clearTimeout(_lifelineNoticeTimer);
 }
 
 // Re-run everything that depends on the selected supply type (description, FPPA prefill,
