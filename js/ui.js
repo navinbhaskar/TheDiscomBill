@@ -516,6 +516,19 @@ export function getAdvancedMeterData() {
 
 export function addMeterRow(label = '') {
   const c = document.getElementById('advancedRows');
+  
+  let newPrevDateIso = null;
+  const existingRows = c.querySelectorAll('.meter-row');
+  if (existingRows.length > 0) {
+    const lastRow = existingRows[existingRows.length - 1];
+    const lastCurrDate = fieldISO(lastRow.querySelector('.m-currdate'));
+    if (lastCurrDate) {
+      const d = new Date(lastCurrDate);
+      d.setDate(d.getDate() + 1);
+      newPrevDateIso = d.toISOString().split('T')[0];
+    }
+  }
+
   const row = document.createElement('div');
   row.className = 'meter-row';
   row.innerHTML = `
@@ -574,6 +587,13 @@ export function addMeterRow(label = '') {
   c.appendChild(row);
   attachDatePicker(row.querySelector('.m-prevdate'));
   attachDatePicker(row.querySelector('.m-currdate'));
+  
+  if (newPrevDateIso) {
+    const prevDateInput = row.querySelector('.m-prevdate');
+    setFieldDate(prevDateInput, newPrevDateIso);
+    prevDateInput.dispatchEvent(new Event('change'));
+  }
+
   updateDemandUnitLabels();      // reflect kVA vs kW on the new row's MD column
   updateReadingUnitLabels();     // reflect kWh vs kVAh on the new row's Prev/Curr Read labels
 }
