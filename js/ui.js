@@ -545,6 +545,10 @@ export function addMeterRow(label = '') {
     }
   }
 
+  const isFirstMeter = existingRows.length === 0;
+  const prevDateLabel = isFirstMeter ? 'Prev Date' : 'Start Date';
+  const currDateLabel = isFirstMeter ? 'Curr Date' : 'End Date';
+
   const row = document.createElement('div');
   row.className = 'meter-row';
   
@@ -555,8 +559,8 @@ export function addMeterRow(label = '') {
       <button type="button" class="btn-remove-row m-remove" title="Remove">×</button>
     </div>
     <div class="meter-fields-v2">
-      <div class="mf-field"><span>Prev Date</span>${dateFieldHtml('m-prevdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
-      <div class="mf-field"><span>Curr Date</span>${dateFieldHtml('m-currdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
+      <div class="mf-field"><span>${prevDateLabel}</span>${dateFieldHtml('m-prevdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
+      <div class="mf-field"><span>${currDateLabel}</span>${dateFieldHtml('m-currdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
       
       <div class="mf-field"><span>Prev Read</span><input type="number" class="m-prevread" placeholder="0" min="0" step="0.01"></div>
       <div class="mf-field"><span>Curr Read</span><input type="number" class="m-currread" placeholder="0" min="0" step="0.01"></div>
