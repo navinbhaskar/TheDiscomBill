@@ -1282,9 +1282,9 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
   display: flex;
   gap: 8px;
 }
-.fac-input-row input { flex: 1 1 auto; min-width: 0; }
+.fac-input-row input { flex: 0.8; min-width: 0; }
 .fac-input-row select {
-  flex: 1.2;
+  flex: 1.6;
   min-width: 0;
 }
 .fppa-auto-label {
