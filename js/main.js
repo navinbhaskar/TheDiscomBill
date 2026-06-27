@@ -42,7 +42,8 @@ window.__savePdf = async () => {
     await loadPdfLib();
     const name = ((document.getElementById('consumerName')?.value.trim() || 'electricity') + '-bill')
       .replace(/[^\w-]+/g, '_') + '.pdf';
-    await window.html2pdf().set({
+    const html2pdfFn = typeof window.html2pdf === 'function' ? window.html2pdf : window.html2pdf.default;
+    await html2pdfFn().set({
       margin: 6,
       filename: name,
       image: { type: 'jpeg', quality: 0.98 },
@@ -52,7 +53,8 @@ window.__savePdf = async () => {
       pagebreak: { mode: ['css', 'legacy'] },
     }).from(el).save();
   } catch (e) {
-    window.print();   // library unavailable (e.g. offline) → fall back to the print dialog
+    alert("Could not generate PDF: " + (e.message || e));
+    console.error(e);
   }
 };
 
