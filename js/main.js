@@ -34,33 +34,12 @@ function loadPdfLib() {
   });
   return _pdfLib;
 }
-window.__savePdf = async () => {
-  const el = document.querySelector('#billPanel .bill-wrap');
-  if (!el) { window.print(); return; }
-  try {
-    showToast('Preparing PDF…');
-    await loadPdfLib();
-    const name = ((document.getElementById('consumerName')?.value.trim() || 'electricity') + '-bill')
-      .replace(/[^\w-]+/g, '_') + '.pdf';
-    const html2pdfFn = typeof window.html2pdf === 'function' ? window.html2pdf : window.html2pdf.default;
-    await html2pdfFn().set({
-      margin: 6,
-      filename: name,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, backgroundColor: '#ffffff', useCORS: true, windowWidth: 800,
-        onclone: (doc) => {
-          const w = doc.querySelector('.bill-wrap');
-          if (w) w.classList.add('pdf-export');
-        },
-        ignoreElements: (n) => n.classList && n.classList.contains('no-print') },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak: { mode: 'css' },
-    }).from(el).save();
-  } catch (e) {
-    alert("Could not generate PDF: " + (e.message || e));
-    console.error(e);
-  }
-};
+window.__savePdf = () => {
+  // To achieve the perfect vector-quality native print layout the user requested,
+  // we leverage the browser's native print dialog which has a "Save as PDF" destination.
+  showToast('Select "Save as PDF" in the printer destination dropdown for a perfect quality document.');
+  setTimeout(() => window.print(), 500);
+}
 
 // Register the service worker for offline support (no-op on unsupported / insecure contexts).
 if ('serviceWorker' in navigator) {
