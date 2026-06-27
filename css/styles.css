@@ -456,7 +456,13 @@ a:hover { text-decoration: underline; }
 .form-row {
   display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
 }
-@media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+.form-row-uneven {
+  grid-template-columns: 1fr 1.8fr;
+}
+@media (max-width: 480px) { 
+  .form-row { grid-template-columns: 1fr; } 
+  .form-row-uneven { grid-template-columns: 1fr; }
+}
 
 select,
 input[type="text"],
