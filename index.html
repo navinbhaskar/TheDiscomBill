@@ -76,42 +76,43 @@
         <span data-i18n="calc.title">Bill Calculator</span>
       </h2>
 
-      <!-- Step 1: State -->
-      <div class="form-group">
-        <label for="stateSelect" data-i18n="label.state">State / Union Territory</label>
-        <select id="stateSelect">
-          <option value="">— Select State / UT —</option>
-        </select>
+      <div class="form-row">
+        <!-- Step 1: State -->
+        <div class="form-group">
+          <label for="stateSelect" data-i18n="label.state">State / Union Territory</label>
+          <select id="stateSelect">
+            <option value="">— Select State / UT —</option>
+          </select>
+        </div>
+
+        <!-- Step 2: DISCOM -->
+        <div class="form-group">
+          <label for="discomSelect" data-i18n="label.discom">Electricity Utility (DISCOM)</label>
+          <select id="discomSelect" disabled>
+            <option value="">— Select State First —</option>
+          </select>
+        </div>
       </div>
 
-      <!-- Step 2: DISCOM -->
-      <div class="form-group">
-        <label for="discomSelect" data-i18n="label.discom">Electricity Utility (DISCOM)</label>
-        <select id="discomSelect" disabled>
-          <option value="">— Select State First —</option>
-        </select>
-      </div>
+      <div class="form-row">
+        <!-- Step 3: Category -->
+        <div class="form-group">
+          <label for="categorySelect" data-i18n="label.category">Consumer Category</label>
+          <select id="categorySelect" disabled>
+            <option value="">— Select DISCOM First —</option>
+          </select>
+        </div>
 
-      <!-- Step 3: Category -->
-      <div class="form-group">
-        <label for="categorySelect" data-i18n="label.category">Consumer Category</label>
-        <select id="categorySelect" disabled>
-          <option value="">— Select DISCOM First —</option>
-        </select>
+        <!-- Step 4: Supply Type (shown only when applicable) -->
+        <div class="form-group" id="supplyTypeGroup" style="display:none">
+          <label for="supplyTypeSelect">Supply Type / Area</label>
+          <select id="supplyTypeSelect">
+            <option value="">— Select Supply Type —</option>
+          </select>
+          <small id="supplyTypeDesc"></small>
+          <div class="lifeline-notice" id="lifelineNotice" role="status" aria-live="polite" style="display:none"></div>
+        </div>
       </div>
-
-      <!-- Step 4: Supply Type (shown only when applicable) -->
-      <div class="form-group" id="supplyTypeGroup" style="display:none">
-        <label for="supplyTypeSelect">Supply Type / Area</label>
-        <select id="supplyTypeSelect">
-          <option value="">— Select Supply Type —</option>
-        </select>
-        <small id="supplyTypeDesc"></small>
-        <div class="lifeline-notice" id="lifelineNotice" role="status" aria-live="polite" style="display:none"></div>
-      </div>
-
-      <hr>
-      <h3>Consumer Details</h3>
 
       <div class="form-row">
         <div class="form-group">
