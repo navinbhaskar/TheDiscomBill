@@ -933,15 +933,18 @@ function lifelineUnitCap() {
 let _lifelineNoticeTimer = null;
 function showLifelineNotice(msg) {
   const el = document.getElementById('lifelineNotice');
-  if (!el) return;
-  el.textContent = '⚠ ' + msg;
-  el.style.display = 'block';
+  const textEl = document.getElementById('lifelineNoticeText');
+  if (!el || !textEl) return;
+  textEl.textContent = msg;
+  el.style.display = 'flex';
   if (_lifelineNoticeTimer) clearTimeout(_lifelineNoticeTimer);
-  _lifelineNoticeTimer = setTimeout(() => { hideLifelineNotice(); }, 6000);
+  _lifelineNoticeTimer = setTimeout(() => { hideLifelineNotice(); }, 8000);
 }
 function hideLifelineNotice() {
   const el = document.getElementById('lifelineNotice');
-  if (el) { el.style.display = 'none'; el.textContent = ''; }
+  const textEl = document.getElementById('lifelineNoticeText');
+  if (el) { el.style.display = 'none'; }
+  if (textEl) { textEl.textContent = ''; }
   if (_lifelineNoticeTimer) clearTimeout(_lifelineNoticeTimer);
 }
 
@@ -991,7 +994,6 @@ export function checkLifelineLimits() {
       document.getElementById('supplyTypeSelect').value = id;
       refreshSupplyTypeDependent();
       showLifelineNotice(msg);
-      showToast(msg);
     } finally { _lifelineBusy = false; }
   };
 

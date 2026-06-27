@@ -1297,17 +1297,20 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
 
 /* Lifeline → non-lifeline auto-switch notice */
 .lifeline-notice {
-  display: block;
-  margin-top: 6px;
-  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--p-green-50);
+  border: 1px solid var(--p-green-100);
+  color: var(--p-green-700);
+  padding: 10px 14px;
   border-radius: var(--radius-sm);
-  font-size: 12.5px;
+  margin-top: 6px;
+  font-size: 13px;
   font-weight: 500;
-  line-height: 1.4;
-  background: var(--warn-bg);
-  border: 1px solid var(--p-amber-200);
-  color: var(--warn-text);
 }
+.lifeline-notice .fwb-icon { font-size: 10px; line-height: 1; }
+.lifeline-notice .fwb-text { flex: 1; }
 
 /* FPPA value + mode selector on one row */
 .fac-input-row {
