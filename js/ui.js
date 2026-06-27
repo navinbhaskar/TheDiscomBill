@@ -443,6 +443,7 @@ export function syncBillingMonthYear() {
   mEl.value = my.dataset.m;
   yEl.value = my.dataset.y;
   mEl.dispatchEvent(new Event('change'));
+  updateCalcButton();
 }
 
 export function populateMonthYear() {
@@ -598,6 +599,18 @@ export function addMeterRow(label = '') {
 
   row.querySelector('.m-remove').addEventListener('click', () => { row.remove(); updateAdvancedMeter(); });
   c.appendChild(row);
+
+  // Apply "Current Meter" / "Old Meter" labels when multiple meters exist
+  const allRows = c.querySelectorAll('.meter-row');
+  if (allRows.length > 1) {
+    // As requested: 1st meter -> Current Meter, 2nd meter -> Old Meter
+    const firstLabel = allRows[0].querySelector('.m-label');
+    if (!firstLabel.value) firstLabel.value = 'Current Meter';
+    
+    const secondLabel = allRows[1].querySelector('.m-label');
+    if (!secondLabel.value) secondLabel.value = 'Old Meter';
+  }
+
   attachDatePicker(row.querySelector('.m-prevdate'));
   attachDatePicker(row.querySelector('.m-currdate'));
   
@@ -713,8 +726,66 @@ export function canCalculate() {
   return !!(discom && cat && units !== null && units >= 0 && load > 0);
 }
 
+export function validateForm() {
+  const banner = document.getElementById('dateWarningBanner');
+  const textEl = document.getElementById('dateWarningText');
+  let errorMsg = null;
+
+  const mode = getMeterMode();
+  let latestCurrDate = null;
+
+  if (mode === 'advanced') {
+    const rows = document.querySelectorAll('#advancedRows .meter-row');
+    for (const r of rows) {
+      const prev = fieldISO(r.querySelector('.m-prevdate'));
+      const curr = fieldISO(r.querySelector('.m-currdate'));
+      if (prev && curr && new Date(prev) > new Date(curr)) {
+        errorMsg = "Start Date cannot be after End Date.";
+        break;
+      }
+      if (curr && (!latestCurrDate || new Date(curr) > new Date(latestCurrDate))) {
+        latestCurrDate = curr;
+      }
+    }
+  } else {
+    const fromVal = fieldISO(document.getElementById('fromDate'));
+    const toVal   = fieldISO(document.getElementById('toDate'));
+    if (fromVal && toVal && new Date(fromVal) > new Date(toVal)) {
+      errorMsg = "Start Date cannot be after End Date.";
+    }
+    latestCurrDate = toVal;
+  }
+
+  if (!errorMsg && latestCurrDate) {
+    const billYear = document.getElementById('billingYear').value;
+    const billMonth = document.getElementById('billingMonth').value; // 1 to 12
+    if (billYear && billMonth) {
+      const bYear = parseInt(billYear, 10);
+      const bMonth = parseInt(billMonth, 10);
+      const cDate = new Date(latestCurrDate);
+      const cYear = cDate.getFullYear();
+      const cMonth = cDate.getMonth() + 1;
+
+      // Check if Billing Month is earlier than Current Reading Date
+      if (bYear < cYear || (bYear === cYear && bMonth < cMonth)) {
+        errorMsg = "Billing Month cannot be earlier than the current reading date.";
+      }
+    }
+  }
+
+  if (errorMsg) {
+    if (textEl) textEl.textContent = errorMsg;
+    if (banner) banner.style.display = 'flex';
+    return false;
+  } else {
+    if (banner) banner.style.display = 'none';
+    return true;
+  }
+}
+
 export function updateCalcButton() {
-  document.getElementById('calculateBtn').disabled = !canCalculate();
+  const isValid = validateForm();
+  document.getElementById('calculateBtn').disabled = !canCalculate() || !isValid;
 }
 
 export function isDelhiDiscom(discomId) {
@@ -734,7 +805,11 @@ export function getBillingPeriodDays() {
 export function updateBillingPeriod() {
   const days    = getBillingPeriodDays();
   const display = document.getElementById('billingPeriodDisplay');
-  if (!days) { display.style.display = 'none'; return; }
+  if (!days) {
+    display.style.display = 'none';
+    updateCalcButton(); // Still update to run validation
+    return;
+  }
   document.getElementById('billingPeriodDaysDisplay').textContent   = days;
   document.getElementById('billingPeriodMonthsDisplay').textContent = (days / 30).toFixed(2);
   display.style.display = 'block';

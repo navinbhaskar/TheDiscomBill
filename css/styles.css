@@ -634,6 +634,23 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 .tab-total strong { color: var(--brand); font-size: 15px; }
 
+/* Warning banner for form validation */
+.form-warning-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: var(--p-red-50);
+  border: 1px solid var(--p-red-100);
+  color: var(--p-red-700);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.form-warning-banner .fwb-icon { font-size: 10px; line-height: 1; }
+.form-warning-banner .fwb-text { flex: 1; }
+
 .btn-add-row {
   display: inline-flex; align-items: center; gap: 4px;
   padding: 5px 10px;
