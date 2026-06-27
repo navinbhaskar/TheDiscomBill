@@ -1072,8 +1072,8 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
 .pdf-export .bill-charges-section { padding: 8px 12px; }
 .pdf-export .bill-charges-table { font-size: 10.5px; margin-top: 4px; }
 .pdf-export .bill-charges-table td, .pdf-export .bill-charges-table th, .pdf-export .bill-reading-table td, .pdf-export .bill-reading-table th { padding: 3px 8px; }
-.pdf-export .net-amt { font-size: 13px !important; }
-.pdf-export .total-amt { font-size: 17px !important; }
+.pdf-export .net-amt { font-size: 13px !important; font-weight: 800 !important; }
+.pdf-export .total-amt { font-size: 17px !important; font-weight: 800 !important; }
 .pdf-export .bill-words { padding: 6px 12px; font-size: 10px; }
 .pdf-export .bill-category-note { padding: 6px 12px; font-size: 9px; line-height: 1.35; }
 .pdf-export .bill-disclaimer { padding: 6px 12px; font-size: 8.5px; line-height: 1.35; }
