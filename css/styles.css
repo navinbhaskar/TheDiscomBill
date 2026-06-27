@@ -699,19 +699,19 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .meter-row-top .btn-remove-row { width: 26px; height: 26px; font-size: 15px; }
 /* The first meter can't be removed (there must always be at least one). */
 #advancedRows .meter-row:first-child .m-remove { display: none; }
-.meter-fields-v2 { display: flex; flex-direction: column; gap: 6px; }
-.mf-row { display: flex; gap: 6px; align-items: flex-end; }
-.mf-date-row > *, .mf-units-row > *, .mf-bottom-row > * { flex: 1; }
-.mf-calc-row { align-items: flex-end; background: var(--p-blue-50); padding: 6px 8px; border-radius: var(--radius-sm); border: 1px solid var(--p-blue-100); }
-.mf-math-sign { font-size: 14px; font-weight: bold; color: var(--text-tertiary); padding: 0 4px; padding-bottom: 6px; }
-.mf-total-display .m-calc-display { font-size: 15px; font-weight: 700; color: var(--text-brand-dark); padding-bottom: 4px; min-width: 60px; }
-.mf-override-row { margin-top: -2px; }
-.mf-override-label { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; cursor: pointer; color: var(--text-secondary); }
-.mf-override-label input { width: 13px; height: 13px; cursor: pointer; margin: 0; }
+.meter-fields-v2 { 
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  gap: 8px 10px; 
+}
 .mf-field { display: flex; flex-direction: column; gap: 2px; }
 .mf-field > span { font-size: 10px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.03em; }
 .mf-field input { width: 100%; margin: 0; box-sizing: border-box; padding: 6px 8px; font-size: 13px; height: 30px; }
-.mf-inline { flex: 1; }
+.mf-field input[readonly] { background: var(--surface-sunken); cursor: not-allowed; opacity: 0.8; }
+.mf-override-label { grid-column: 1 / -1; display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; cursor: pointer; color: var(--text-secondary); margin-top: 4px; margin-bottom: 2px; }
+.mf-override-label input { width: 13px; height: 13px; cursor: pointer; margin: 0; }
+.mf-units { grid-column: 1 / -1; }
+.m-units-label { color: var(--brand) !important; }
 
 
 /* Bill-revision ledger */

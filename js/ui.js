@@ -548,34 +548,24 @@ export function addMeterRow(label = '') {
   const row = document.createElement('div');
   row.className = 'meter-row';
   
-  // Layout V2: Uses flexbox rows (mf-row) for a more intuitive, line-by-line reading layout
+  // Layout V3: Pure 2-column grid so all inputs are precisely the same width.
   row.innerHTML = `
     <div class="meter-row-top">
       <input type="text" class="m-label" value="${label}" placeholder="Enter your meter number (optional)">
       <button type="button" class="btn-remove-row m-remove" title="Remove">×</button>
     </div>
     <div class="meter-fields-v2">
-      <div class="mf-row mf-date-row">
-        <div class="mf-field"><span>Prev Date</span>${dateFieldHtml('m-prevdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
-        <div class="mf-field"><span>Curr Date</span>${dateFieldHtml('m-currdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
-      </div>
-      <div class="mf-row mf-calc-row">
-        <label class="mf-field mf-inline"><span class="m-currread-label">Curr Read</span><input type="number" class="m-currread" placeholder="0" min="0" step="0.01"></label>
-        <span class="mf-math-sign">−</span>
-        <label class="mf-field mf-inline"><span class="m-prevread-label">Prev Read</span><input type="number" class="m-prevread" placeholder="0" min="0" step="0.01"></label>
-        <span class="mf-math-sign">=</span>
-        <div class="mf-field mf-inline mf-total-display"><span>Calculated</span><div class="m-calc-display">0</div></div>
-      </div>
-      <div class="mf-row mf-override-row">
-        <label class="mf-override-label"><input type="checkbox" class="m-override-chk"> Or Enter Units Consumed Directly (kWh or kVAH)</label>
-      </div>
-      <div class="mf-row mf-units-row" style="display:none;">
-        <label class="mf-field mf-units"><span>Total Units</span><input type="number" class="m-units" placeholder="Total Consumed Units" min="0" step="0.01"></label>
-      </div>
-      <div class="mf-row mf-bottom-row">
-        <label class="mf-field"><span>MF</span><input type="number" class="m-mf" value="1" min="0.01" step="0.01" title="Multiplying Factor"></label>
-        <label class="mf-field"><span class="m-md-label">MD (kW)</span><input type="number" class="m-md" placeholder="0" min="0" step="0.01" title="Maximum demand recorded"></label>
-      </div>
+      <div class="mf-field"><span>Prev Date</span>${dateFieldHtml('m-prevdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
+      <div class="mf-field"><span>Curr Date</span>${dateFieldHtml('m-currdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
+      
+      <div class="mf-field"><span>Prev Read</span><input type="number" class="m-prevread" placeholder="0" min="0" step="0.01"></div>
+      <div class="mf-field"><span>Curr Read</span><input type="number" class="m-currread" placeholder="0" min="0" step="0.01"></div>
+      
+      <div class="mf-field"><span>MF</span><input type="number" class="m-mf" value="1" min="0.01" step="0.01" title="Multiplying Factor"></div>
+      <div class="mf-field"><span class="m-md-label">MD (kW)</span><input type="number" class="m-md" placeholder="0" min="0" step="0.01" title="Maximum demand recorded"></div>
+      
+      <label class="mf-override-label"><input type="checkbox" class="m-override-chk"> Or Enter Units Consumed Directly (kWh or kVAH)</label>
+      <div class="mf-field mf-units"><span class="m-units-label">Total Units (Calculated)</span><input type="number" class="m-units" placeholder="Total Units" min="0" step="0.01" readonly></div>
     </div>`;
     
   row.querySelectorAll('input').forEach(i => {
@@ -583,23 +573,21 @@ export function addMeterRow(label = '') {
     i.addEventListener('change', updateAdvancedMeter);
   });
   
-  // Checkbox Override Logic: If checked, disables the raw reading inputs 
-  // and allows manual entry of total units.
+  // Checkbox Override Logic
   const chk = row.querySelector('.m-override-chk');
-  const unitsRow = row.querySelector('.mf-units-row');
-  const calcRow = row.querySelector('.mf-calc-row');
+  const unitsInput = row.querySelector('.m-units');
+  const unitsLabel = row.querySelector('.m-units-label');
   chk.addEventListener('change', () => {
     if (chk.checked) {
-      unitsRow.style.display = 'flex';
-      calcRow.style.opacity = '0.4';
       row.querySelector('.m-currread').disabled = true;
       row.querySelector('.m-prevread').disabled = true;
+      unitsInput.readOnly = false;
+      unitsLabel.textContent = 'Total Units (Manual Override)';
     } else {
-      unitsRow.style.display = 'none';
-      calcRow.style.opacity = '1';
       row.querySelector('.m-currread').disabled = false;
       row.querySelector('.m-prevread').disabled = false;
-      row.querySelector('.m-units').value = row.querySelector('.m-calc-display').textContent || '';
+      unitsInput.readOnly = true;
+      unitsLabel.textContent = 'Total Units (Calculated)';
     }
     updateAdvancedMeter();
   });
@@ -640,9 +628,10 @@ export function updateAdvancedMeter() {
     if (!isNaN(prev) && !isNaN(curr) && curr >= prev) {
       calcUnits = Math.round((curr - prev) * mf * 100) / 100;
     }
-    r.querySelector('.m-calc-display').textContent = calcUnits || 0;
 
     if (!isOverride) {
+      r.querySelector('.m-units').value = calcUnits || '';
+    }
       r.querySelector('.m-units').value = calcUnits || '';
     }
   });
