@@ -570,7 +570,7 @@ export function addMeterRow(label = '') {
       <div class="mf-field"><span class="m-md-label">MD (kW)</span><input type="number" class="m-md" placeholder="0" min="0" step="0.01" title="Maximum demand recorded"></div>
       
       <label class="mf-override-label"><input type="checkbox" class="m-override-chk"> Or Enter Units Consumed Directly (kWh or kVAH)</label>
-      <div class="mf-field mf-units"><span class="m-units-label">Total Units (Calculated)</span><input type="number" class="m-units" placeholder="Total Units" min="0" step="0.01" readonly></div>
+      <div class="mf-field mf-units"><span class="m-units-label">Total Units (Calculated)</span><input type="number" class="m-units" placeholder="Total Consumed Units" min="0" step="0.01" readonly></div>
     </div>`;
     
   row.querySelectorAll('input').forEach(i => {
@@ -847,7 +847,7 @@ export function updateBilledDemandVisibility() {
 export function updateReadingUnitLabels() {
   const eu = getBillingBasis() === 'kvah' ? 'kVAh' : 'kWh';
   // Per-meter Units field doubles as the direct-entry box — keep its placeholder's unit in sync.
-  document.querySelectorAll('#advancedRows .m-units').forEach(i => { i.placeholder = `Or Enter Units Consumed Directly (${eu})`; });
+  document.querySelectorAll('#advancedRows .m-units').forEach(i => { i.placeholder = `Total Consumed Units`; });
   // TOD labels carry a badge span — update only the leading text node so the badge survives
   [['todPeak', 'Peak'], ['todNormal', 'Normal'], ['todOffPeak', 'Off-Peak']].forEach(([id, name]) => {
     const lbl = document.querySelector(`label[for="${id}"]`);
@@ -1009,7 +1009,7 @@ export function checkLifelineLimits() {
       if (mdOver)    reasons.push(`recorded maximum demand ${md} kW exceeds the 1 kW lifeline limit`);
       if (unitsOver) reasons.push(`consumption ${Math.round(units)} units exceeds the ${Math.round(cap)}-unit lifeline cap${cap > LIFELINE_MAX_UNITS_PER_MONTH ? ' for this billing period' : ''}`);
       switchTo(counterpart, `Auto-switched to the non-lifeline tariff — ${reasons.join(' and ')}.`);
-    } else { hideLifelineNotice(); }
+    }
     return;
   }
 
@@ -1019,7 +1019,7 @@ export function checkLifelineLimits() {
     const qualifies = load <= LIFELINE_MAX_LOAD_KW && md <= LIFELINE_MAX_LOAD_KW && units != null && units <= cap;
     if (qualifies) {
       switchTo(partner, `Auto-switched to the Life Line tariff — load ≤ 1 kW, MD ≤ 1 kW and ${Math.round(units)} units is within the ${Math.round(cap)}-unit lifeline cap.`);
-    } else { hideLifelineNotice(); }
+    }
     return;
   }
 
