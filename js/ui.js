@@ -530,18 +530,18 @@ export function getAdvancedMeterData() {
 export function addMeterRow(label = '') {
   const c = document.getElementById('advancedRows');
   
-  // Smart Date Logic: Find the most recently added meter row.
-  // If it has a valid 'Current Date', pre-fill this new meter's 'Previous Date'
-  // to be exactly one day after that Current Date.
-  let newPrevDateIso = null;
+  // Smart Date Logic: Find the most recently added meter row (which is visually 'above' this new one).
+  // If it has a valid 'Previous Date', pre-fill this new meter's 'Current Date'
+  // to be exactly one day before that Previous Date.
+  let newCurrDateIso = null;
   const existingRows = c.querySelectorAll('.meter-row');
   if (existingRows.length > 0) {
     const lastRow = existingRows[existingRows.length - 1];
-    const lastCurrDate = fieldISO(lastRow.querySelector('.m-currdate'));
-    if (lastCurrDate) {
-      const d = new Date(lastCurrDate);
-      d.setDate(d.getDate() + 1);
-      newPrevDateIso = d.toISOString().split('T')[0];
+    const lastPrevDate = fieldISO(lastRow.querySelector('.m-prevdate'));
+    if (lastPrevDate) {
+      const d = new Date(lastPrevDate);
+      d.setDate(d.getDate() - 1);
+      newCurrDateIso = d.toISOString().split('T')[0];
     }
   }
 
@@ -609,10 +609,10 @@ export function addMeterRow(label = '') {
   attachDatePicker(row.querySelector('.m-prevdate'));
   attachDatePicker(row.querySelector('.m-currdate'));
   
-  if (newPrevDateIso) {
-    const prevDateInput = row.querySelector('.m-prevdate');
-    setFieldDate(prevDateInput, newPrevDateIso);
-    prevDateInput.dispatchEvent(new Event('change'));
+  if (newCurrDateIso) {
+    const currDateInput = row.querySelector('.m-currdate');
+    setFieldDate(currDateInput, newCurrDateIso);
+    currDateInput.dispatchEvent(new Event('change'));
   }
 
   updateDemandUnitLabels();      // reflect kVA vs kW on the new row's MD column
