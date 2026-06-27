@@ -1022,6 +1022,19 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
   }
 }
 
+/* ─── PDF Export (html2pdf) ──────────────────────────────────────────────────── */
+/* Tightens spacing before generating the PDF canvas so it fits nicely on a page. */
+.pdf-export { line-height: 1.3; }
+.pdf-export .bill-header { padding: 12px 16px; }
+.pdf-export .bill-discom-name { font-size: 16px; }
+.pdf-export .bill-discom-icon { font-size: 28px; margin-top: -2px; }
+.pdf-export .bill-details-row { padding: 8px 12px; gap: 8px; }
+.pdf-export .bill-details-box { padding: 6px 9px; }
+.pdf-export .bill-charges-section { padding: 8px 12px; }
+.pdf-export .bill-section-title { margin-bottom: 4px; padding-bottom: 3px; }
+.pdf-export .bill-charges-table td, .pdf-export .bill-charges-table th,
+.pdf-export .bill-reading-table td, .pdf-export .bill-reading-table th { padding: 4px 8px; }
+
 /* ─── Print ──────────────────────────────────────────────────────────────────── */
 /* The bill prints in pure black & white: colour is dropped, hierarchy is carried by
    black borders, bold text, and light-grey emphasis bands that render cleanly on a

@@ -114,7 +114,8 @@ export function buildShareUrl() {
     curmo:   document.getElementById('currentLpscMonths').value,
     lpscon:  document.getElementById('lpscApplicable')?.checked ? '1' : '0',
   });
-  return location.origin + location.pathname + '?' + p.toString();
+  const encoded = btoa(p.toString());
+  return location.origin + location.pathname + '?q=' + encoded;
 }
 
 export function shareBill() {
@@ -1184,7 +1185,15 @@ export function doCalculate() {
 // ─── Load from URL Params ─────────────────────────────────────────────────────
 
 export async function loadFromUrl() {
-  const p = new URLSearchParams(location.search);
+  let p = new URLSearchParams(location.search);
+  if (p.has('q')) {
+    try {
+      p = new URLSearchParams(atob(p.get('q')));
+    } catch (e) {
+      console.error('Failed to decode share link');
+      return;
+    }
+  }
   if (!p.get('state')) return;
 
   const stateEl = document.getElementById('stateSelect');
