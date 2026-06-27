@@ -523,19 +523,53 @@ export function addMeterRow(label = '') {
       <input type="text" class="m-label" value="${label}" placeholder="Enter your meter number (optional)">
       <button type="button" class="btn-remove-row m-remove" title="Remove">×</button>
     </div>
-    <div class="meter-fields">
-      <div class="mf-field"><span>Prev Date</span>${dateFieldHtml('m-prevdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
-      <label class="mf-field"><span class="m-prevread-label">Prev Read</span><input type="number" class="m-prevread" placeholder="0" min="0" step="0.01"></label>
-      <div class="mf-field"><span>Curr Date</span>${dateFieldHtml('m-currdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
-      <label class="mf-field"><span class="m-currread-label">Curr Read</span><input type="number" class="m-currread" placeholder="0" min="0" step="0.01"></label>
-      <label class="mf-field"><span>MF</span><input type="number" class="m-mf" value="1" min="0.01" step="0.01" title="Multiplying Factor"></label>
-      <label class="mf-field"><span class="m-md-label">MD (kW)</span><input type="number" class="m-md" placeholder="0" min="0" step="0.01" title="Maximum demand recorded"></label>
-      <label class="mf-field mf-units"><span>Units</span><input type="number" class="m-units" placeholder="Or Enter Units Consumed Directly (kWh)" min="0" step="0.01" title="Auto = (Current − Previous) × MF; or type units directly"></label>
+    <div class="meter-fields-v2">
+      <div class="mf-row mf-date-row">
+        <div class="mf-field"><span>Prev Date</span>${dateFieldHtml('m-prevdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
+        <div class="mf-field"><span>Curr Date</span>${dateFieldHtml('m-currdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
+      </div>
+      <div class="mf-row mf-calc-row">
+        <label class="mf-field mf-inline"><span class="m-currread-label">Curr Read</span><input type="number" class="m-currread" placeholder="0" min="0" step="0.01"></label>
+        <span class="mf-math-sign">−</span>
+        <label class="mf-field mf-inline"><span class="m-prevread-label">Prev Read</span><input type="number" class="m-prevread" placeholder="0" min="0" step="0.01"></label>
+        <span class="mf-math-sign">=</span>
+        <div class="mf-field mf-inline mf-total-display"><span>Calculated</span><div class="m-calc-display">0</div></div>
+      </div>
+      <div class="mf-row mf-override-row">
+        <label class="mf-override-label"><input type="checkbox" class="m-override-chk"> Or Enter Units Consumed Directly (kWh or kVAH)</label>
+      </div>
+      <div class="mf-row mf-units-row" style="display:none;">
+        <label class="mf-field mf-units"><span>Total Units</span><input type="number" class="m-units" placeholder="Total Consumed Units" min="0" step="0.01"></label>
+      </div>
+      <div class="mf-row mf-bottom-row">
+        <label class="mf-field"><span>MF</span><input type="number" class="m-mf" value="1" min="0.01" step="0.01" title="Multiplying Factor"></label>
+        <label class="mf-field"><span class="m-md-label">MD (kW)</span><input type="number" class="m-md" placeholder="0" min="0" step="0.01" title="Maximum demand recorded"></label>
+      </div>
     </div>`;
   row.querySelectorAll('input').forEach(i => {
     i.addEventListener('input',  updateAdvancedMeter);
     i.addEventListener('change', updateAdvancedMeter);
   });
+  
+  const chk = row.querySelector('.m-override-chk');
+  const unitsRow = row.querySelector('.mf-units-row');
+  const calcRow = row.querySelector('.mf-calc-row');
+  chk.addEventListener('change', () => {
+    if (chk.checked) {
+      unitsRow.style.display = 'flex';
+      calcRow.style.opacity = '0.4';
+      row.querySelector('.m-currread').disabled = true;
+      row.querySelector('.m-prevread').disabled = true;
+    } else {
+      unitsRow.style.display = 'none';
+      calcRow.style.opacity = '1';
+      row.querySelector('.m-currread').disabled = false;
+      row.querySelector('.m-prevread').disabled = false;
+      row.querySelector('.m-units').value = row.querySelector('.m-calc-display').textContent || '';
+    }
+    updateAdvancedMeter();
+  });
+
   row.querySelector('.m-remove').addEventListener('click', () => { row.remove(); updateAdvancedMeter(); });
   c.appendChild(row);
   attachDatePicker(row.querySelector('.m-prevdate'));
@@ -559,8 +593,16 @@ export function updateAdvancedMeter() {
     const curr = parseFloat(r.querySelector('.m-currread').value);
     const mfRaw = parseFloat(r.querySelector('.m-mf').value);
     const mf = (isNaN(mfRaw) || mfRaw <= 0) ? 1 : mfRaw;
+    const isOverride = r.querySelector('.m-override-chk').checked;
+
+    let calcUnits = 0;
     if (!isNaN(prev) && !isNaN(curr) && curr >= prev) {
-      r.querySelector('.m-units').value = Math.round((curr - prev) * mf * 100) / 100;
+      calcUnits = Math.round((curr - prev) * mf * 100) / 100;
+    }
+    r.querySelector('.m-calc-display').textContent = calcUnits || 0;
+
+    if (!isOverride) {
+      r.querySelector('.m-units').value = calcUnits || '';
     }
   });
   const data = getAdvancedMeterData();
