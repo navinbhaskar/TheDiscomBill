@@ -457,10 +457,15 @@ a:hover { text-decoration: underline; }
   display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
 }
 .form-row-uneven {
-  grid-template-columns: 1.35fr 1.65fr;
+  grid-template-columns: 1fr 1.7fr;
 }
-.form-row-uneven label {
-  white-space: nowrap;
+@media (min-width: 481px) {
+  .form-row-uneven .form-group > label {
+    height: 42px;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 4px;
+  }
 }
 @media (max-width: 480px) { 
   .form-row { grid-template-columns: 1fr; } 
