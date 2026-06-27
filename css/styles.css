@@ -1023,17 +1023,40 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
 }
 
 /* ─── PDF Export (html2pdf) ──────────────────────────────────────────────────── */
-/* Tightens spacing before generating the PDF canvas so it fits nicely on a page. */
-.pdf-export { line-height: 1.3; }
-.pdf-export .bill-header { padding: 12px 16px; }
-.pdf-export .bill-discom-name { font-size: 16px; }
-.pdf-export .bill-discom-icon { font-size: 28px; margin-top: -2px; }
+/* Replicates the @media print styling exactly so the downloaded PDF matches the printed PDF. */
+.pdf-export, .pdf-export * {
+  color: #000 !important;
+  background: #fff !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+.pdf-export { page-break-inside: avoid; border: 1.5px solid #000; line-height: 1.3; font-size: 10.5px; }
+.pdf-export a { color: #000 !important; text-decoration: underline; }
+.pdf-export .bill-header { border-bottom: 2px solid #000; padding: 8px 12px; }
+.pdf-export .bill-discom-name { font-weight: 800; font-size: 16px; }
+.pdf-export .bill-title-main { border: 1.5px solid #000 !important; font-size: 12px; padding: 2px 8px; margin-bottom: 3px; }
+.pdf-export .bill-section-title { color: #000 !important; border-bottom: 1px solid #000; font-size: 9.5px; margin-bottom: 4px; padding-bottom: 3px; }
+.pdf-export .bill-details-box { border: 1px solid #000 !important; padding: 6px 9px; }
 .pdf-export .bill-details-row { padding: 8px 12px; gap: 8px; }
-.pdf-export .bill-details-box { padding: 6px 9px; }
+.pdf-export .bill-charges-table td, .pdf-export .bill-reading-table td, .pdf-export .bill-reading-table th { border: 1px solid #c9c9c9; padding: 3px 8px; }
+.pdf-export .bill-charges-table th, .pdf-export .bill-reading-table th { font-weight: 700; border-bottom: 1.5px solid #000; padding: 3px 8px; }
+.pdf-export .bill-charges-table .fixed-row td, .pdf-export .bill-charges-table .subtotal-row td, .pdf-export .bill-charges-table tfoot .gross-row td { font-weight: 700; }
+.pdf-export .bill-charges-table .section-header-row td { font-weight: 700; letter-spacing: .04em; border-top: 1.5px solid #000; border-bottom: 1px solid #000; }
+.pdf-export .bill-charges-table tfoot .net-row td { font-weight: 800; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; padding: 5px 8px; }
+.pdf-export .bill-charges-table tfoot .total-payable-row td { font-weight: 800; border-top: 2.5px solid #000; border-bottom: 3px double #000; padding: 5px 8px; }
+.pdf-export .bill-words, .pdf-export .bill-category-note, .pdf-export .bill-disclaimer { border: 1px solid #000 !important; }
+.pdf-export .bill-disclaimer { border-top: 1.5px solid #000 !important; padding: 6px 12px; font-size: 8.5px; line-height: 1.35; }
+.pdf-export .bill-estimated-banner { border: 1.5px solid #000 !important; border-left: 4px solid #000 !important; }
+.pdf-export .bill-discom-full, .pdf-export .bill-discom-area, .pdf-export .bill-title-sub, .pdf-export .bill-tariff-year { font-size: 9px; margin-top: 1px; }
+.pdf-export .bill-info-table td { padding: 1px 0; font-size: 10px; }
 .pdf-export .bill-charges-section { padding: 8px 12px; }
-.pdf-export .bill-section-title { margin-bottom: 4px; padding-bottom: 3px; }
-.pdf-export .bill-charges-table td, .pdf-export .bill-charges-table th,
-.pdf-export .bill-reading-table td, .pdf-export .bill-reading-table th { padding: 4px 8px; }
+.pdf-export .bill-charges-table { font-size: 10.5px; margin-top: 4px; }
+.pdf-export .bill-charges-table tfoot .gross-row td { padding: 5px 8px; }
+.pdf-export .net-amt { font-size: 13px !important; }
+.pdf-export .total-amt { font-size: 17px !important; }
+.pdf-export .bill-words { padding: 6px 12px; font-size: 10px; }
+.pdf-export .bill-category-note { padding: 6px 12px; font-size: 9px; line-height: 1.35; }
 
 /* ─── Print ──────────────────────────────────────────────────────────────────── */
 /* The bill prints in pure black & white: colour is dropped, hierarchy is carried by
