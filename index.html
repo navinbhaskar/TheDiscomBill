@@ -110,6 +110,10 @@
             <option value="">— Select Supply Type —</option>
           </select>
           <small id="supplyTypeDesc"></small>
+          <div class="lifeline-notice" id="lifelineNotice" role="status" aria-live="polite" style="display:none">
+            <span class="fwb-icon">✅</span>
+            <span class="fwb-text" id="lifelineNoticeText"></span>
+          </div>
         </div>
       </div>
 
@@ -377,19 +381,10 @@
 
       </div><!-- /.bill-tabs-container -->
 
-      <!-- Dynamic Date Warning Banner -->
       <div id="dateWarningBanner" class="form-warning-banner" style="display:none">
         <span class="fwb-icon">🔴</span>
         <span class="fwb-text" id="dateWarningText">Dates don't match. Please check them.</span>
       </div>
-
-      <!-- Lifeline Auto-Switch Notice -->
-      <div class="lifeline-notice" id="lifelineNotice" role="status" aria-live="polite" style="display:none">
-        <span class="fwb-icon">✅</span>
-        <span class="fwb-text" id="lifelineNoticeText"></span>
-      </div>
-
-      <div class="form-actions">
 
       <button id="calculateBtn" class="btn-calculate" data-i18n="btn.calculate" disabled>
         ⚡ Calculate Provisional Bill
