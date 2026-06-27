@@ -657,7 +657,7 @@ export function renderRevisionBill(params) {
       </div>
       <div class="bill-header-right">
         <div class="bill-title-box">
-          <div class="bill-title-main">BILL REVISION</div>
+          <div class="bill-title-main">Provisional Bill/Bill Revision</div>
           <div class="bill-title-sub">Multi-Month Estimate</div>
           <div class="bill-tariff-year">Tariff Year: ${discom.tariffYear || '2024-25'}</div>
           ${confidenceBadge(tariffVerified, tariffAsOf)}
@@ -712,7 +712,7 @@ export function renderRevisionBill(params) {
     </div>
 
     <div class="bill-disclaimer">
-      <strong>⚠ PROVISIONAL — BILL REVISION</strong> – Estimated multi-month bill for reference only.
+      <strong>⚠ Provisional Bill / Bill Revision</strong> – Estimated multi-month bill for reference only.
       Consumption is assumed uniform across the period; actual monthly readings and surcharges from ${discom.name} may differ.
       ${discom.website ? `<br>Official website: <a href="${discom.website}" target="_blank" rel="noopener">${discom.website}</a>` : ''}
     </div>
