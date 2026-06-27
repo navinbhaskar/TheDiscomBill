@@ -1056,7 +1056,8 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
 .pdf-export .bill-title-main { border: 1.5px solid #000 !important; font-size: 12px; padding: 2px 8px; margin-bottom: 3px; }
 .pdf-export .bill-section-title { color: #000 !important; border-bottom: 1px solid #000; font-size: 9.5px; margin-bottom: 4px; padding-bottom: 3px; }
 .pdf-export .bill-details-box { border: 1px solid #000 !important; padding: 6px 9px; }
-.pdf-export .bill-details-row { padding: 8px 12px; gap: 8px; }
+.pdf-export .bill-details-row { padding: 8px 12px; gap: 8px; display: grid !important; grid-template-columns: 1fr 1fr !important; }
+.pdf-export .bill-header { display: flex !important; flex-direction: row !important; }
 .pdf-export .bill-charges-table td, .pdf-export .bill-reading-table td, .pdf-export .bill-reading-table th { border: 1px solid #c9c9c9; padding: 3px 8px; }
 .pdf-export .bill-charges-table th, .pdf-export .bill-reading-table th { font-weight: 700; border-bottom: 1.5px solid #000; padding: 3px 8px; }
 .pdf-export .bill-charges-table .fixed-row td, .pdf-export .bill-charges-table .subtotal-row td, .pdf-export .bill-charges-table tfoot .gross-row td { font-weight: 700; }

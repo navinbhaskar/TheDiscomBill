@@ -47,7 +47,7 @@ window.__savePdf = async () => {
       margin: 6,
       filename: name,
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2, backgroundColor: '#ffffff', useCORS: true,
+      html2canvas: { scale: 2, backgroundColor: '#ffffff', useCORS: true, windowWidth: 800,
         onclone: (doc) => {
           const w = doc.querySelector('.bill-wrap');
           if (w) w.classList.add('pdf-export');
