@@ -602,13 +602,24 @@ export function addMeterRow(label = '') {
 
   // Apply "Current Meter" / "Old Meter" labels when multiple meters exist
   const allRows = c.querySelectorAll('.meter-row');
+  
+  // Clear existing badges
+  allRows.forEach(r => {
+    const existing = r.querySelector('.meter-role-badge');
+    if (existing) existing.remove();
+  });
+
   if (allRows.length > 1) {
     // As requested: 1st meter -> Current Meter, 2nd meter -> Old Meter
-    const firstLabel = allRows[0].querySelector('.m-label');
-    if (!firstLabel.value) firstLabel.value = 'Current Meter';
+    const badge1 = document.createElement('div');
+    badge1.className = 'meter-role-badge';
+    badge1.textContent = 'Current Meter';
+    allRows[0].insertBefore(badge1, allRows[0].firstChild);
     
-    const secondLabel = allRows[1].querySelector('.m-label');
-    if (!secondLabel.value) secondLabel.value = 'Old Meter';
+    const badge2 = document.createElement('div');
+    badge2.className = 'meter-role-badge';
+    badge2.textContent = 'Old Meter';
+    allRows[1].insertBefore(badge2, allRows[1].firstChild);
   }
 
   attachDatePicker(row.querySelector('.m-prevdate'));
