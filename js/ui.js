@@ -80,6 +80,11 @@ export function initHistory() {
 
 // ─── Share ────────────────────────────────────────────────────────────────────
 
+/**
+ * Serializes the current calculator form state into a URL for sharing.
+ * The parameters are obfuscated using Base64 encoding to keep the URL clean.
+ * @returns {string} The full shareable URL
+ */
 export function buildShareUrl() {
   const p = new URLSearchParams({
     state:   document.getElementById('stateSelect').value,
@@ -114,6 +119,8 @@ export function buildShareUrl() {
     curmo:   document.getElementById('currentLpscMonths').value,
     lpscon:  document.getElementById('lpscApplicable')?.checked ? '1' : '0',
   });
+  
+  // Base64 encode the query string to hide the raw parameters from the user
   const encoded = btoa(p.toString());
   return location.origin + location.pathname + '?q=' + encoded;
 }
@@ -514,9 +521,18 @@ export function getAdvancedMeterData() {
   return { totalUnits: Math.round(totalUnits * 100) / 100, minPrev, maxCurr, maxMD };
 }
 
+/**
+ * Adds a new meter reading row to the advanced meter form.
+ * Handles the logic for the "Override Units" checkbox and automatically
+ * pre-fills the new row's "Previous Date" based on the previous row's "Current Date".
+ * @param {string} label The placeholder label for the meter (e.g. "Meter 1")
+ */
 export function addMeterRow(label = '') {
   const c = document.getElementById('advancedRows');
   
+  // Smart Date Logic: Find the most recently added meter row.
+  // If it has a valid 'Current Date', pre-fill this new meter's 'Previous Date'
+  // to be exactly one day after that Current Date.
   let newPrevDateIso = null;
   const existingRows = c.querySelectorAll('.meter-row');
   if (existingRows.length > 0) {
@@ -531,6 +547,8 @@ export function addMeterRow(label = '') {
 
   const row = document.createElement('div');
   row.className = 'meter-row';
+  
+  // Layout V2: Uses flexbox rows (mf-row) for a more intuitive, line-by-line reading layout
   row.innerHTML = `
     <div class="meter-row-top">
       <input type="text" class="m-label" value="${label}" placeholder="Enter your meter number (optional)">
@@ -559,11 +577,14 @@ export function addMeterRow(label = '') {
         <label class="mf-field"><span class="m-md-label">MD (kW)</span><input type="number" class="m-md" placeholder="0" min="0" step="0.01" title="Maximum demand recorded"></label>
       </div>
     </div>`;
+    
   row.querySelectorAll('input').forEach(i => {
     i.addEventListener('input',  updateAdvancedMeter);
     i.addEventListener('change', updateAdvancedMeter);
   });
   
+  // Checkbox Override Logic: If checked, disables the raw reading inputs 
+  // and allows manual entry of total units.
   const chk = row.querySelector('.m-override-chk');
   const unitsRow = row.querySelector('.mf-units-row');
   const calcRow = row.querySelector('.mf-calc-row');
@@ -1246,8 +1267,15 @@ export function doCalculate() {
 
 // ─── Load from URL Params ─────────────────────────────────────────────────────
 
+/**
+ * Loads calculator state from URL parameters.
+ * First checks for an obfuscated 'q' parameter (Base64 encoded string).
+ * Falls back to standard URL parameters for backward compatibility.
+ */
 export async function loadFromUrl() {
   let p = new URLSearchParams(location.search);
+  
+  // If the 'q' param exists, decode it first.
   if (p.has('q')) {
     try {
       p = new URLSearchParams(atob(p.get('q')));
@@ -1256,6 +1284,7 @@ export async function loadFromUrl() {
       return;
     }
   }
+  
   if (!p.get('state')) return;
 
   const stateEl = document.getElementById('stateSelect');
