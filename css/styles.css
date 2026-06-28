@@ -272,6 +272,37 @@
 
 html { scroll-behavior: smooth; }
 
+/* ─── Lenis smooth (momentum) scrolling ──────────────────────────────────────── */
+/* Active only when the JS attaches (.lenis classes on <html>); otherwise the page  */
+/* falls back to the native smooth scroll above. Reduced-motion users never get it.  */
+html.lenis, html.lenis body { height: auto; }
+html.lenis { scroll-behavior: auto !important; }   /* whenever Lenis is attached, it owns the easing — disable native smooth so they don't fight */
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
+/* ─── Scroll reveal (fade + rise as elements enter the viewport) ──────────────── */
+/* Scoped to html.js (set by the inline <head> script) so content stays fully       */
+/* visible when JavaScript is off. Reduced-motion users get the content, no motion.  */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s cubic-bezier(.16, 1, .3, 1), transform .7s cubic-bezier(.16, 1, .3, 1);
+  will-change: opacity, transform;
+}
+html.js .reveal.is-visible { opacity: 1; transform: none; }
+
+/* Staggered groups — hero lines and the stat cards cascade in */
+html.js .hero .reveal:nth-child(2)            { transition-delay: .09s; }
+html.js .hero .reveal:nth-child(3)            { transition-delay: .18s; }
+html.js .stats-row .stat-card:nth-child(2)    { transition-delay: .10s; }
+html.js .stats-row .stat-card:nth-child(3)    { transition-delay: .20s; }
+html.js .stats-row .stat-card:nth-child(4)    { transition-delay: .30s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
 body {
   font-family: var(--font-body);
   background: var(--surface-page);
@@ -350,8 +381,11 @@ a:hover { text-decoration: underline; }
   background: linear-gradient(160deg, var(--p-blue-950) 0%, var(--p-blue-900) 40%, var(--p-blue-800) 100%);
   color: var(--text-inverse);
   text-align: center;
-  padding: 56px 24px 80px;
-  position: relative;
+  padding: 80px 24px;
+  /* Sticky so the hero stays pinned while the page-body curtain slides up over it. */
+  position: sticky; top: 0; z-index: 0;
+  min-height: 72vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
   overflow: hidden;
 }
 .hero::before {
@@ -363,12 +397,15 @@ a:hover { text-decoration: underline; }
   background-size: cover, 32px 32px;
   pointer-events: none;
 }
-.hero::after {
-  content: '';
-  position: absolute; bottom: -1px; left: 0; right: 0; height: 40px;
+/* ── Curtain panel ── slides up over the pinned hero with rounded top corners ── */
+.page-body {
+  position: relative;
+  z-index: 1;                                  /* above the sticky hero (z-index 0) */
   background: var(--surface-page);
-  clip-path: ellipse(60% 100% at 50% 100%);
-  pointer-events: none;
+  border-radius: 16px 16px 0 0;
+  margin-top: -16px;                           /* overlap the hero's bottom edge */
+  min-height: 100vh;                           /* always tall enough to fully cover the hero */
+  box-shadow: 0 -24px 60px rgba(15, 23, 42, .22);
 }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 6px;
@@ -398,14 +435,14 @@ a:hover { text-decoration: underline; }
 
 /* ─── Calculator Section ──────────────────────────────────────────────────────── */
 .calculator-section {
-  max-width: 1280px; margin: -36px auto 48px;
+  max-width: 1280px; margin: 36px auto 48px;
   padding: 0 20px;
   position: relative; z-index: 1;
 }
 .calculator-grid {
   display: grid;
   grid-template-columns: 460px 1fr;
-  gap: 24px;
+  gap: 12px;
   align-items: start;
 }
 @media (max-width: 940px) {
@@ -877,128 +914,150 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .btn-share { background: transparent; color: var(--text-secondary); border: 1px solid transparent; }
 .btn-share:hover { background: var(--surface-sunken); color: var(--text-primary); }
 
-/* ─── Bill (rendered) ────────────────────────────────────────────────────────── */
+/* ─── Bill (rendered) — light, blue-accent palette (in sync with the site) ───── */
+/* Color rule: ONE hue — the brand blue — used as the single accent. The body of  */
+/* the bill stays light (white + soft blue-50 / slate-50 tints); deep blue is      */
+/* reserved for the header and the final total rows. No greens, ambers, purples,   */
+/* oranges, or pinks. Tokens keep it correct in dark mode (bill stays paper-light). */
+
 .bill-wrap { padding: 0; }
 
 .bill-header {
-  background: linear-gradient(135deg, var(--p-blue-950) 0%, var(--p-blue-800) 100%);
-  color: var(--text-inverse);
-  padding: 24px 24px 20px;
+  background: linear-gradient(135deg, var(--p-blue-700) 0%, var(--p-blue-500) 100%);
+  color: #fff;
+  padding: 18px 24px 16px;
   display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
 }
 .bill-header-left { display: flex; gap: 14px; align-items: flex-start; }
 .bill-discom-icon { font-size: 36px; line-height: 1; margin-top: 2px; }
 .bill-discom-name { font-size: 20px; font-weight: 800; line-height: 1.2; letter-spacing: -0.3px; }
-.bill-discom-full { font-size: 12px; color: var(--p-blue-200); margin-top: 3px; line-height: 1.4; max-width: 300px; }
-.bill-discom-area { font-size: 11px; color: var(--p-blue-300); margin-top: 4px; }
+.bill-discom-full { font-size: 12px; color: rgba(255,255,255,.78); margin-top: 3px; line-height: 1.4; max-width: 300px; }
+.bill-discom-area { font-size: 11px; color: rgba(255,255,255,.62); margin-top: 4px; }
 .bill-header-right { text-align: right; flex-shrink: 0; }
 .bill-title-main {
-  font-size: 12px; font-weight: 800; letter-spacing: 0.5px;
-  border: 1.5px solid rgba(255,255,255,.4); padding: 4px 12px; border-radius: var(--radius-sm);
+  font-size: 12px; font-weight: 800; letter-spacing: 1px;
+  border: 1.5px solid rgba(255,255,255,.45); padding: 4px 12px; border-radius: var(--radius-sm);
   display: inline-block; margin-bottom: 6px;
 }
-.bill-title-sub { font-size: 11px; color: var(--p-blue-200); }
-.bill-tariff-year { font-size: 11px; color: var(--p-blue-300); margin-top: 2px; }
-.conf-badge { display: inline-block; margin-top: 6px; padding: 2px 8px; border-radius: 999px;
-  font-size: 10px; font-weight: 700; letter-spacing: .02em; border: 1px solid transparent; }
-.conf-verified { background: var(--ok-bg, #e7f6ec); color: var(--ok-text, #1a7f37); border-color: currentColor; }
-.conf-estimate { background: var(--warn-bg, #fff4e0); color: var(--warn-text, #9a6700); border-color: currentColor; }
+.bill-title-sub { font-size: 11px; color: rgba(255,255,255,.78); }
+.bill-tariff-year { font-size: 11px; color: rgba(255,255,255,.62); margin-top: 2px; }
 
+/* Confidence badge — soft translucent pill on the blue header, text only */
+.conf-badge {
+  display: inline-block; margin-top: 6px; padding: 2px 10px; border-radius: 999px;
+  font-size: 10px; font-weight: 700; letter-spacing: .04em;
+  border: 1px solid rgba(255,255,255,.45); color: #fff;
+  background: rgba(255,255,255,.12);
+}
+.conf-verified { border-color: rgba(255,255,255,.55); }
+.conf-estimate { border-color: rgba(255,255,255,.35); color: rgba(255,255,255,.85); }
+
+/* Section titles — brand-blue text + soft blue underline */
 .bill-section-title {
-  font-size: 11px; font-weight: 700; color: var(--brand);
-  text-transform: uppercase; letter-spacing: 1px;
+  font-size: 10.5px; font-weight: 700; color: var(--brand);
+  text-transform: uppercase; letter-spacing: 1.2px;
   margin-bottom: 8px; padding-bottom: 6px;
-  border-bottom: 1px solid var(--brand-border);
+  border-bottom: 2px solid var(--brand-border);
 }
 
 .bill-details-row {
   display: grid; grid-template-columns: 1fr 1fr; gap: 0;
   border-bottom: 1px solid var(--border-default);
 }
-.bill-details-box { padding: 16px 20px; }
+.bill-details-box { padding: 11px 20px; }
 .bill-details-box:first-child { border-right: 1px solid var(--border-default); }
 
 .bill-info-table { width: 100%; font-size: 13px; border-collapse: collapse; }
-.bill-info-table td { padding: 3px 0; vertical-align: top; }
+.bill-info-table td { padding: 2px 0; vertical-align: top; }
 .bill-info-table td:first-child { color: var(--text-secondary); width: 90px; white-space: nowrap; }
 .bill-info-table td:last-child { padding-left: 4px; font-weight: 500; }
 
-.bill-reading-row { padding: 16px 20px; border-bottom: 1px solid var(--border-default); }
+.bill-reading-row { padding: 11px 20px; border-bottom: 1px solid var(--border-default); }
 
 .bill-reading-table {
-  width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px;
+  width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 6px;
 }
 .bill-reading-table th {
-  background: var(--brand); color: var(--text-inverse);
-  padding: 8px 12px; font-weight: 600; text-align: center; font-size: 12px;
+  background: var(--brand); color: #fff;
+  padding: 8px 12px; font-weight: 600; text-align: center; font-size: 12px; letter-spacing: 0.3px;
 }
-.bill-reading-table td { padding: 8px 12px; text-align: center; background: var(--brand-faint); font-weight: 600; }
+.bill-reading-table td { padding: 8px 12px; text-align: center; background: var(--brand-faint); font-weight: 600; border: 1px solid var(--brand-border); }
 
-.bill-charges-section { padding: 16px 20px; border-bottom: 1px solid var(--border-default); }
+.bill-charges-section { padding: 11px 20px; border-bottom: 1px solid var(--border-default); }
 
 .bill-charges-table {
-  width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px;
+  width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 6px;
 }
 .bill-charges-table th {
-  background: var(--brand); color: var(--text-inverse);
-  padding: 9px 12px; font-weight: 600; font-size: 12px; letter-spacing: 0.3px;
-  text-align: left;   /* text headers align with their (left) cells; .num headers go right below */
+  background: transparent; color: var(--brand-dark);
+  padding: 7px 12px; font-weight: 700; font-size: 11.5px; letter-spacing: 0.4px;
+  text-align: left; border-bottom: 2px solid var(--brand);
 }
-.bill-charges-table td { padding: 7px 12px; border-bottom: 1px solid var(--border-subtle); }
+.bill-charges-table td { padding: 5px 12px; border-bottom: 1px solid var(--border-subtle); }
 .bill-charges-table .num { text-align: right; }
 .bill-charges-table .amt { font-variant-numeric: tabular-nums; font-weight: 500; }
 .bill-charges-table .indent { padding-left: 24px; }
 .bill-charges-table .fixed-months { font-size: 11px; color: var(--text-secondary); font-weight: 400; }
 
+/* Detail rows — uniform light slate tint; distinguished by their label, not by hue */
 .bill-charges-table .fixed-row td { background: var(--surface-sunken); }
-.bill-charges-table .subtotal-row td { background: var(--brand-faint); font-weight: 600; border-top: 1px solid var(--brand-border); }
-.bill-charges-table .subsidy-row td { background: var(--p-green-50); color: var(--p-green-700); font-weight: 600; }
-.bill-charges-table .fac-row td { background: var(--p-amber-50); color: var(--p-amber-700); }
-.bill-charges-table .payment-bill-row td { background: var(--p-green-50); color: var(--p-green-700); }
-.bill-charges-table .adjustment-bill-row td { background: var(--p-purple-50); color: var(--p-purple-700); }
-.bill-charges-table .section-header-row td {
-  background: var(--p-slate-800); color: var(--text-inverse);
-  font-size: 11px; font-weight: 700; letter-spacing: 0.8px;
-  text-transform: uppercase; padding: 8px 12px;
+.bill-charges-table .subsidy-row td { background: var(--surface-sunken); font-weight: 600; }
+.bill-charges-table .fac-row td { background: var(--surface-sunken); }
+.bill-charges-table .payment-bill-row td { background: var(--surface-sunken); }
+.bill-charges-table .adjustment-bill-row td { background: var(--surface-sunken); }
+.bill-charges-table .arrears-row td { background: var(--surface-sunken); }
+.bill-charges-table .lpsc-row td { background: var(--surface-sunken); }
+
+/* Sub-total — soft blue tint to read as a roll-up */
+.bill-charges-table .subtotal-row td {
+  background: var(--brand-faint); font-weight: 600;
+  border-top: 1px solid var(--brand-border); border-bottom: 1px solid var(--brand-border);
 }
-.bill-charges-table .arrears-row td { background: var(--p-orange-50); color: var(--p-orange-700); }
-.bill-charges-table .lpsc-row td { background: var(--p-pink-50); color: var(--p-pink-800); }
+/* Section dividers (Arrears / Adjustments) — light blue bar, dark-blue label */
+.bill-charges-table .section-header-row td {
+  background: var(--brand-faint); color: var(--brand-dark);
+  font-size: 10.5px; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; padding: 6px 12px;
+  border-top: 1px solid var(--brand-border); border-bottom: 1px solid var(--brand-border);
+}
 
 .bill-charges-table tfoot .gross-row td {
-  background: var(--surface-sunken); border-top: 2px solid var(--border-default);
-  font-size: 14px; padding: 10px 12px; font-weight: 600;
+  background: var(--surface-sunken); border-top: 2px solid var(--border-strong);
+  font-size: 14px; padding: 7px 12px; font-weight: 600;
 }
 .bill-charges-table tfoot .net-row td {
-  background: var(--brand); color: var(--text-inverse);
-  font-size: 14px; padding: 11px 12px; font-weight: 700;
+  background: var(--brand); color: #fff;
+  font-size: 14px; padding: 8px 12px; font-weight: 700;
 }
 .net-amt { font-size: 17px !important; font-weight: 800 !important; }
 .bill-charges-table tfoot .total-payable-row td {
-  background: var(--p-blue-950); color: var(--text-inverse);
-  font-size: 15px; padding: 14px 12px; border-top: 2px solid rgba(255,255,255,.12);
+  background: var(--brand-dark); color: #fff;
+  font-size: 15px; padding: 9px 12px; border-top: 1px solid rgba(255,255,255,.12);
   font-weight: 700;
 }
 .total-amt { font-size: 22px !important; font-weight: 800 !important; }
 
+/* Amount-in-words — soft blue inset */
 .bill-words {
-  padding: 12px 20px; background: var(--p-amber-50);
-  border-bottom: 1px solid var(--p-amber-200);
-  font-size: 13px; color: var(--p-slate-700);
+  padding: 9px 20px; background: var(--brand-faint);
+  border-bottom: 1px solid var(--brand-border);
+  font-size: 13px; color: var(--text-secondary);
 }
-.bill-words em { font-style: normal; font-weight: 700; color: var(--text-primary); }
+.bill-words em { font-style: normal; font-weight: 700; color: var(--brand-dark); }
 
+/* Category note — neutral light inset */
 .bill-category-note {
-  padding: 10px 20px; background: var(--p-green-50); border-bottom: 1px solid var(--p-green-100);
-  font-size: 12px; color: var(--p-green-700);
+  padding: 8px 20px; background: var(--surface-sunken); border-bottom: 1px solid var(--border-default);
+  font-size: 12px; color: var(--text-secondary);
 }
 
 .bill-disclaimer {
-  padding: 16px 20px; background: var(--surface-sunken);
+  padding: 11px 20px; background: var(--surface-sunken);
   font-size: 11px; color: var(--text-secondary); line-height: 1.7;
   border-top: 1px solid var(--border-default);
 }
-.bill-disclaimer strong { color: var(--p-amber-600, #d97706); }
-.bill-disclaimer a { color: var(--brand); }
+.bill-disclaimer strong { color: var(--brand-dark); }
+.bill-disclaimer a { color: var(--brand); text-decoration: underline; }
 
 /* ─── About Section ──────────────────────────────────────────────────────────── */
 .about-section {

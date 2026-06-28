@@ -15,6 +15,56 @@ import {
 } from './ui.js';
 import { initDatePickers } from './datepicker.js';
 import { initI18n } from './i18n.js';
+import Lenis from './vendor/lenis.mjs';
+
+// ── Smooth momentum scrolling (Lenis) ─────────────────────────────────────────
+// Gives the whole page an eased, weighted "glide" instead of the browser's default
+// jump. Disabled for users who prefer reduced motion (they keep native scrolling).
+function initSmoothScroll() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const lenis = new Lenis({
+    duration: 1.1,
+    easing: t => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),   // easeOutExpo — quick start, soft landing
+    smoothWheel: true,
+    // Leave touch devices on native scrolling (smoother + better battery/accessibility).
+  });
+  function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+
+  // Route in-page anchor links (#calculator, #about, skip-link) through Lenis so they
+  // glide to the target instead of jumping.
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const id = a.getAttribute('href');
+    if (id.length < 2) return;                 // ignore bare "#"
+    const target = document.querySelector(id);
+    if (!target) return;
+    e.preventDefault();
+    lenis.scrollTo(target, { offset: -70 });   // clear the sticky header
+  });
+
+  window.__lenis = lenis;
+}
+
+// ── Scroll reveal ─────────────────────────────────────────────────────────────
+// Fade + rise elements (marked `.reveal`) as they scroll into view. Each reveals
+// once, then is unobserved. Falls back to showing everything if IntersectionObserver
+// is unavailable or the user prefers reduced motion.
+function initScrollReveal() {
+  const els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    els.forEach(el => el.classList.add('is-visible'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(el => io.observe(el));
+}
 
 // Expose helpers called from onclick in the rendered bill HTML
 window.__shareBill = shareBill;
@@ -25,6 +75,8 @@ if ('serviceWorker' in navigator) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  initSmoothScroll();   // Lenis momentum scrolling (skipped under prefers-reduced-motion)
+  initScrollReveal();   // fade + rise elements as they enter the viewport
   populateStates();
   populateMonthYear();
   initTabs();

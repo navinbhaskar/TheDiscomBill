@@ -1,0 +1,18 @@
+# Claude Code — files to exclude from context (never read/search these)
+
+# Build output — duplicate of source, no analysis value
+dist/
+
+# Runtime dependency installed during testing — not part of the app
+node_modules/
+
+# Vendored minified bundle — binary-equivalent, reading it burns tokens
+js/vendor/
+
+# Leftover scratch files from pdf-testing sessions
+test_pdf*.cjs
+test_pdf_*.cjs
+
+# Large binary icons
+icon-192.png
+icon-512.png

@@ -503,15 +503,23 @@ export function updateTodDisplay() {
 // Each row: Units = (Current − Previous) × MF. Total = sum over rows. The earliest
 // previous date → latest current date define the billing period (written to From/To).
 export function getAdvancedMeterData() {
-  let totalUnits = 0, minPrev = null, maxCurr = null, maxMD = 0;
+  let totalUnits = 0, minPrev = null, maxCurr = null, maxMD = 0, hasInput = false;
   document.querySelectorAll('#advancedRows .meter-row').forEach(r => {
     const prev = parseFloat(r.querySelector('.m-prevread').value);
     const curr = parseFloat(r.querySelector('.m-currread').value);
     const mfRaw = parseFloat(r.querySelector('.m-mf').value);
     const mf = (isNaN(mfRaw) || mfRaw <= 0) ? 1 : mfRaw;
+    const unitsRaw = r.querySelector('.m-units').value;
     // Units = (Curr − Prev) × MF when readings are entered, else the directly-typed Units field.
-    if (!isNaN(prev) && !isNaN(curr) && curr >= prev) totalUnits += (curr - prev) * mf;
-    else totalUnits += parseFloat(r.querySelector('.m-units').value) || 0;
+    // Zero consumption (Curr === Prev) and a directly-typed 0 are BOTH valid input — a consumer
+    // with no usage still gets a bill (fixed/demand charges), so hasInput must flag these too.
+    if (!isNaN(prev) && !isNaN(curr) && curr >= prev) {
+      totalUnits += (curr - prev) * mf;
+      hasInput = true;
+    } else if (unitsRaw !== '' && !isNaN(parseFloat(unitsRaw))) {
+      totalUnits += parseFloat(unitsRaw);
+      hasInput = true;
+    }
     const pd = fieldISO(r.querySelector('.m-prevdate'));
     const cd = fieldISO(r.querySelector('.m-currdate'));
     if (pd && (!minPrev || pd < minPrev)) minPrev = pd;
@@ -519,7 +527,7 @@ export function getAdvancedMeterData() {
     const md = parseFloat(r.querySelector('.m-md').value);
     if (!isNaN(md) && md > maxMD) maxMD = md;   // billed demand = peak MD across meters
   });
-  return { totalUnits: Math.round(totalUnits * 100) / 100, minPrev, maxCurr, maxMD };
+  return { totalUnits: Math.round(totalUnits * 100) / 100, minPrev, maxCurr, maxMD, hasInput };
 }
 
 /**
@@ -652,13 +660,15 @@ export function updateAdvancedMeter() {
     const mf = (isNaN(mfRaw) || mfRaw <= 0) ? 1 : mfRaw;
     const isOverride = r.querySelector('.m-override-chk').checked;
 
-    let calcUnits = 0;
+    let calcUnits = null;
     if (!isNaN(prev) && !isNaN(curr) && curr >= prev) {
       calcUnits = Math.round((curr - prev) * mf * 100) / 100;
     }
 
     if (!isOverride) {
-      r.querySelector('.m-units').value = calcUnits || '';
+      // Show the computed units — including 0 for zero consumption — and only blank when there
+      // are no valid readings yet (calcUnits === null).
+      r.querySelector('.m-units').value = (calcUnits !== null) ? calcUnits : '';
     }
   });
   const data = getAdvancedMeterData();
@@ -674,7 +684,7 @@ export function updateAdvancedMeter() {
   const periodDays = getBillingPeriodDays();
   document.getElementById('advTotalUnits').textContent  = data.totalUnits.toLocaleString('en-IN');
   document.getElementById('advTotalMonths').textContent = (periodDays ? periodDays / 30 : 0).toFixed(2);
-  document.getElementById('advancedTotalDisplay').style.display = data.totalUnits > 0 ? 'block' : 'none';
+  document.getElementById('advancedTotalDisplay').style.display = data.hasInput ? 'block' : 'none';
   updateCalcButton();
 }
 
@@ -712,8 +722,10 @@ export function getEffectiveUnits() {
     return total > 0 ? total : null;
   }
   // Unified Meter Reading: summed per-meter Units (each computed from readings or typed directly).
-  const meterTotal = getAdvancedMeterData().totalUnits;
-  return meterTotal > 0 ? meterTotal : null;
+  // Return the total whenever a row has real input — including a valid 0 (zero consumption) — and
+  // only null when nothing has been entered yet.
+  const data = getAdvancedMeterData();
+  return data.hasInput ? data.totalUnits : null;
 }
 
 // The unified meter total (including the direct-units fallback) is rendered by updateAdvancedMeter;
@@ -1188,8 +1200,11 @@ export async function loadSample() {
     setFieldDate(document.getElementById('toDate'), '');
     document.getElementById('advancedRows').innerHTML = '';
     addMeterRow();
-    const u = document.querySelector('#advancedRows .meter-row .m-units');
-    if (u) { u.value = 350; u.dispatchEvent(new Event('input')); }
+    const row = document.querySelector('#advancedRows .meter-row');
+    const chk = row?.querySelector('.m-override-chk');
+    const u   = row?.querySelector('.m-units');
+    if (chk && !chk.checked) { chk.checked = true; chk.dispatchEvent(new Event('change')); }
+    if (u) { u.removeAttribute('readonly'); u.value = 350; u.dispatchEvent(new Event('input')); }
     updateCalcButton();
     doCalculate();
   } catch (e) { console.warn('loadSample:', e.message); }
@@ -1389,9 +1404,14 @@ export async function loadFromUrl() {
       if (el && p.get(key)) el.value = p.get(key);
     }
     // Per-meter rows aren't serialized — restore the shared total into the first meter's Units.
+    // Check the row's "enter units directly" override first, otherwise updateAdvancedMeter() (run
+    // below via updateUnitsDisplay) clears the field because the row has no Prev/Curr readings.
     if (p.get('units')) {
-      const u = document.querySelector('#advancedRows .meter-row .m-units');
-      if (u) { u.value = p.get('units'); u.dispatchEvent(new Event('input')); }
+      const row = document.querySelector('#advancedRows .meter-row');
+      const chk = row?.querySelector('.m-override-chk');
+      const u   = row?.querySelector('.m-units');
+      if (chk && !chk.checked) { chk.checked = true; chk.dispatchEvent(new Event('change')); }
+      if (u) { u.removeAttribute('readonly'); u.value = p.get('units'); u.dispatchEvent(new Event('input')); }
     }
     // Date fields carry ISO in the URL → store ISO + show DD-MM-YYYY via the datepicker helper.
     if (p.get('fd')) setFieldDate(document.getElementById('fromDate'), p.get('fd'));
