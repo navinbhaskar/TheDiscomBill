@@ -566,7 +566,10 @@ export function addMeterRow(label = '') {
   // Layout V3: Pure 2-column grid so all inputs are precisely the same width.
   row.innerHTML = `
     <div class="meter-row-top">
-      <input type="text" class="m-label" value="${label}" placeholder="${_t('Meter Number (Optional)', 'मीटर संख्या (वैकल्पिक)')}" data-i18n-ph="ph.meterLabel">
+      <div class="mf-field m-label-field">
+        <span data-i18n="label.meterNo">${_t('Meter Number', 'मीटर संख्या')}</span>
+        <input type="text" class="m-label" value="${label}" placeholder="${_t('Optional', 'वैकल्पिक')}" data-i18n-ph="ph.meterNo">
+      </div>
       <button type="button" class="btn-remove-row m-remove" title="Remove">×</button>
     </div>
     <div class="meter-fields-v2">
