@@ -84,9 +84,11 @@ if ('serviceWorker' in navigator) {
 document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();   // Lenis momentum scrolling (skipped under prefers-reduced-motion)
   initScrollReveal();   // fade + rise elements as they enter the viewport
-  populateStates();
-  populateMonthYear();
-  initTabs();
+  if (document.getElementById('stateSelect')) {
+    populateStates();
+    populateMonthYear();
+    initTabs();
+  }
   initI18n();   // apply saved/default language + wire the EN/हिंदी switcher
   initComparisonTable(); // Render the dynamic tariff comparison table
 
@@ -114,147 +116,132 @@ document.addEventListener('DOMContentLoaded', () => {
   const categoryEl   = document.getElementById('categorySelect');
   const supplyTypeEl = document.getElementById('supplyTypeSelect');
 
-  stateEl.addEventListener('change', () => {
-    populateDiscoms(stateEl.value);
-    populateCategories('');
-    populateSupplyTypes('', '');
-    updateCalcButton();
-    document.getElementById('delhiSubsidyGroup').style.display = 'none';
-  });
+  if (stateEl) {
+    stateEl.addEventListener('change', () => {
+      populateDiscoms(stateEl.value);
+      populateCategories('');
+      populateSupplyTypes('', '');
+      updateCalcButton();
+      document.getElementById('delhiSubsidyGroup').style.display = 'none';
+    });
 
-  discomEl.addEventListener('change', () => {
-    populateCategories(discomEl.value);
-    populateSupplyTypes('', '');
-    updateCalcButton();
-    const showDelhi = isDelhiDiscom(discomEl.value);
-    document.getElementById('delhiSubsidyGroup').style.display = showDelhi ? 'flex' : 'none';
-    prefillLpsc(discomEl.value);
-  });
+    discomEl.addEventListener('change', () => {
+      populateCategories(discomEl.value);
+      populateSupplyTypes('', '');
+      updateCalcButton();
+      const showDelhi = isDelhiDiscom(discomEl.value);
+      document.getElementById('delhiSubsidyGroup').style.display = showDelhi ? 'flex' : 'none';
+      prefillLpsc(discomEl.value);
+    });
 
-  categoryEl.addEventListener('change', () => {
-    populateSupplyTypes(discomEl.value, categoryEl.value);
-    applyDefaultBillingBasis();   // kVA tariff → kVA-MD; everything else → kWh
-    updateBilledDemandVisibility(discomEl.value, categoryEl.value, supplyTypeEl.value);
-    updateTariffPeriodHint();
-    updateCalcButton();
-  });
+    categoryEl.addEventListener('change', () => {
+      populateSupplyTypes(discomEl.value, categoryEl.value);
+      applyDefaultBillingBasis();
+      updateBilledDemandVisibility(discomEl.value, categoryEl.value, supplyTypeEl.value);
+      updateTariffPeriodHint();
+      updateCalcButton();
+    });
 
-  // Billing Basis selector (kWh / kVA-MD / kVAh) → refresh demand labels + MD/PF visibility
-  document.getElementById('billingBasis').addEventListener('change', () => {
-    updateBilledDemandVisibility(discomEl.value, categoryEl.value, supplyTypeEl.value);
-  });
+    document.getElementById('billingBasis').addEventListener('change', () => {
+      updateBilledDemandVisibility(discomEl.value, categoryEl.value, supplyTypeEl.value);
+    });
 
-  supplyTypeEl.addEventListener('change', () => {
-    applyLifelineDefaultLoad(discomEl.value, categoryEl.value, supplyTypeEl.value);
-    refreshSupplyTypeDependent();
-    checkLifelineLimits();
-  });
+    supplyTypeEl.addEventListener('change', () => {
+      applyLifelineDefaultLoad(discomEl.value, categoryEl.value, supplyTypeEl.value);
+      refreshSupplyTypeDependent();
+      checkLifelineLimits();
+    });
 
-
-  document.getElementById('fromDate').addEventListener('change', () => {
-    updateBillingPeriod();
-    // From Date changes the month span → re-resolve the per-month FPPA average + tariff period
-    prefillFac(discomEl.value, categoryEl.value, supplyTypeEl.value);
-    updateTariffPeriodHint();
-    checkLifelineLimits();     // period length changes the prorated unit cap
-  });
-  document.getElementById('toDate').addEventListener('change', () => {
-    updateBillingPeriod();
-    // To Date can drive the tariff period — refresh hint and re-prefill period FPPA
-    prefillFac(discomEl.value, categoryEl.value, supplyTypeEl.value);
-    updateTariffPeriodHint();
-    checkLifelineLimits();
-  });
-  document.getElementById('connectedLoad').addEventListener('input', () => {
-    updateCalcButton();
-    checkLifelineLimits();     // load > 1 kW drops a lifeline consumer to non-lifeline
-  });
-  document.getElementById('billedDemand').addEventListener('input', checkLifelineLimits); // MD > 1 kW also disqualifies (UP)
-
-  // Billing month/year change → re-resolve which historical tariff period applies
-  ['billingMonth', 'billingYear'].forEach(id => {
-    document.getElementById(id).addEventListener('change', () => {
+    document.getElementById('fromDate').addEventListener('change', () => {
+      updateBillingPeriod();
       prefillFac(discomEl.value, categoryEl.value, supplyTypeEl.value);
       updateTariffPeriodHint();
+      checkLifelineLimits();
     });
-  });
-  // The visible month-year picker drives the hidden billingMonth/billingYear inputs
-  document.getElementById('billingMonthYear').addEventListener('change', syncBillingMonthYear);
+    document.getElementById('toDate').addEventListener('change', () => {
+      updateBillingPeriod();
+      prefillFac(discomEl.value, categoryEl.value, supplyTypeEl.value);
+      updateTariffPeriodHint();
+      checkLifelineLimits();
+    });
+    document.getElementById('connectedLoad').addEventListener('input', () => {
+      updateCalcButton();
+      checkLifelineLimits();
+    });
+    document.getElementById('billedDemand').addEventListener('input', checkLifelineLimits);
 
-  document.getElementById('facMode').addEventListener('change', () => {
-    updateFacUnitLabel();
-    markFppaManual();   // changing mode by hand = manual override
-  });
-  document.getElementById('fppaAuto').addEventListener('change', () => {
-    onFppaAutoToggle(discomEl.value, categoryEl.value, supplyTypeEl.value);
-  });
-  document.getElementById('facRate').addEventListener('input', markFppaManual);
+    ['billingMonth', 'billingYear'].forEach(id => {
+      document.getElementById(id).addEventListener('change', () => {
+        prefillFac(discomEl.value, categoryEl.value, supplyTypeEl.value);
+        updateTariffPeriodHint();
+      });
+    });
+    document.getElementById('billingMonthYear').addEventListener('change', syncBillingMonthYear);
 
-  // Reading-mode selector (Meter Reading / TOD) + add-meter
-  document.querySelectorAll('input[name="meterMode"]').forEach(r => {
-    r.addEventListener('change', () => setMeterMode(getMeterMode()));
-  });
-  document.getElementById('addMeterRowBtn').addEventListener('click', () => { addMeterRow(''); updateAdvancedMeter(); });
-  setMeterMode(getMeterMode());   // initialise the default Meter Reading mode (creates the first meter row)
+    document.getElementById('facMode').addEventListener('change', () => {
+      updateFacUnitLabel();
+      markFppaManual();
+    });
+    document.getElementById('fppaAuto').addEventListener('change', () => {
+      onFppaAutoToggle(discomEl.value, categoryEl.value, supplyTypeEl.value);
+    });
+    document.getElementById('facRate').addEventListener('input', markFppaManual);
 
-  ['todPeak', 'todNormal', 'todOffPeak'].forEach(id => {
-    document.getElementById(id).addEventListener('input', () => { updateTodDisplay(); checkLifelineLimits(); });
-  });
-  document.getElementById('arrears').addEventListener('input', updateArrearTotal);
-  document.getElementById('arrearLpsc').addEventListener('input', updateArrearTotal);
+    document.querySelectorAll('input[name="meterMode"]').forEach(r => {
+      r.addEventListener('change', () => setMeterMode(getMeterMode()));
+    });
+    document.getElementById('addMeterRowBtn').addEventListener('click', () => { addMeterRow(''); updateAdvancedMeter(); });
+    setMeterMode(getMeterMode());
 
-  // LPSC Applicable toggle — disable the rate/months inputs when LPSC doesn't apply
-  const lpscChk = document.getElementById('lpscApplicable');
-  const toggleLpscFields = () => {
-    const on = lpscChk.checked;
-    document.getElementById('lpscRate').disabled = !on;
-    document.getElementById('currentLpscMonths').disabled = !on;
-    document.getElementById('lpscFields').classList.toggle('fields-disabled', !on);
-  };
-  lpscChk.addEventListener('change', toggleLpscFields);
-  toggleLpscFields();
+    ['todPeak', 'todNormal', 'todOffPeak'].forEach(id => {
+      document.getElementById(id).addEventListener('input', () => { updateTodDisplay(); checkLifelineLimits(); });
+    });
+    document.getElementById('arrears').addEventListener('input', updateArrearTotal);
+    document.getElementById('arrearLpsc').addEventListener('input', updateArrearTotal);
 
-  // Delhi GNCTD subsidy toggle takes effect on the next "Calculate Provisional Bill" click —
-  // we deliberately don't re-run the bill live here, so the preview only updates on demand.
+    const lpscChk = document.getElementById('lpscApplicable');
+    const toggleLpscFields = () => {
+      const on = lpscChk.checked;
+      document.getElementById('lpscRate').disabled = !on;
+      document.getElementById('currentLpscMonths').disabled = !on;
+      document.getElementById('lpscFields').classList.toggle('fields-disabled', !on);
+    };
+    lpscChk.addEventListener('change', toggleLpscFields);
+    toggleLpscFields();
 
-  document.getElementById('addPaymentBtn').addEventListener('click', addPaymentRow);
-  document.getElementById('addAdjustmentBtn').addEventListener('click', addAdjustmentRow);
+    document.getElementById('addPaymentBtn').addEventListener('click', addPaymentRow);
+    document.getElementById('addAdjustmentBtn').addEventListener('click', addAdjustmentRow);
 
-  // While the "missing required fields" warning is showing, clear each field's red as it's filled
-  // (delegated so it covers every input/select in the form, including meter rows and TOD).
-  const formPanel = document.querySelector('.form-panel');
-  if (formPanel) {
-    formPanel.addEventListener('input', refreshRequiredValidation);
-    formPanel.addEventListener('change', refreshRequiredValidation);
+    const formPanel = document.querySelector('.form-panel');
+    if (formPanel) {
+      formPanel.addEventListener('input', refreshRequiredValidation);
+      formPanel.addEventListener('change', refreshRequiredValidation);
+    }
+
+    document.getElementById('calculateBtn').addEventListener('click', doCalculate);
+    document.getElementById('sampleBtn').addEventListener('click', loadSample);
+    document.getElementById('compareBtn').addEventListener('click', compareDiscoms);
+    initHistory();
+
+    const netChk = document.getElementById('netMeteringChk');
+    netChk.addEventListener('change', () => {
+      document.getElementById('netMeteringFields').style.display = netChk.checked ? 'block' : 'none';
+    });
+
+    initDatePickers();
+
+    document.getElementById('billPanel').addEventListener('click', (e) => {
+      const header = e.target.closest('.accordion-header');
+      if (!header) return;
+      const item = header.parentElement;
+      const isOpen = item.classList.toggle('open');
+      header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+
+    document.getElementById('advancedRows').addEventListener('keydown', e => {
+      if (e.key === 'Enter' && e.target.matches('input')) { e.preventDefault(); doCalculate(); }
+    });
+
+    loadFromUrl();
   }
-
-  document.getElementById('calculateBtn').addEventListener('click', doCalculate);
-  document.getElementById('sampleBtn').addEventListener('click', loadSample);
-  document.getElementById('compareBtn').addEventListener('click', compareDiscoms);
-  initHistory();   // render + wire the Recent-bills panel
-
-  // Net metering — reveal the export/credit fields when enabled
-  const netChk = document.getElementById('netMeteringChk');
-  netChk.addEventListener('change', () => {
-    document.getElementById('netMeteringFields').style.display = netChk.checked ? 'block' : 'none';
-  });
-
-  // Custom calendar for the From / To billing-period fields
-  initDatePickers();
-
-  // Expandable rate/surcharge panels in the rendered bill (delegated — survives re-render)
-  document.getElementById('billPanel').addEventListener('click', (e) => {
-    const header = e.target.closest('.accordion-header');
-    if (!header) return;
-    const item = header.parentElement;
-    const isOpen = item.classList.toggle('open');
-    header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-  });
-
-  // Enter in any meter-row field (reading / MF / MD / units) calculates the bill.
-  document.getElementById('advancedRows').addEventListener('keydown', e => {
-    if (e.key === 'Enter' && e.target.matches('input')) { e.preventDefault(); doCalculate(); }
-  });
-
-  loadFromUrl();
 });
