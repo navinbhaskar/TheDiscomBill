@@ -1448,6 +1448,45 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   .tariff-cards { grid-template-columns: 1fr; }
 }
 
+/* ─── Bill Check page (/bill-check/) ─────────────────────────────────────────── */
+.billcheck-section { background: var(--surface-sunken); padding: 32px 24px 56px; border-top: 1px solid var(--border-default); }
+.container-narrow { max-width: 620px; margin: 0 auto; }
+.billcheck-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px; text-align: center; }
+.billcheck-intro { color: var(--text-secondary); margin: 0 auto 24px; line-height: 1.6; text-align: center; }
+
+.billcheck-controls { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 18px; }
+.billcheck-control { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 200px; }
+.billcheck-control label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; color: var(--text-tertiary); }
+.billcheck-control select { height: 42px; padding: 0 12px; font-size: 14px; border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--surface-card); color: var(--text-primary); cursor: pointer; }
+.billcheck-control select:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-faint); }
+
+.billcheck-card { background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-sm); }
+.billcheck-discom { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; }
+.billcheck-icon { font-size: 24px; line-height: 1; flex-shrink: 0; }
+.billcheck-name { font-size: 16px; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+.billcheck-area { font-size: 12.5px; color: var(--text-tertiary); margin-top: 3px; line-height: 1.5; }
+
+.billcheck-cta {
+  display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center;
+  padding: 15px 18px; border-radius: var(--radius-md); background: var(--brand); color: #fff;
+  font-size: 15px; font-weight: 600; text-decoration: none; line-height: 1.35;
+  box-shadow: 0 2px 10px rgba(37,99,235,.30); transition: background var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast);
+}
+.billcheck-cta:hover { background: var(--brand-hover); transform: translateY(-1px); box-shadow: 0 5px 16px rgba(37,99,235,.40); text-decoration: none; }
+.billcheck-cta-arrow { font-size: 18px; font-weight: 700; }
+.billcheck-host { text-align: center; font-size: 12px; color: var(--text-tertiary); margin-top: 8px; }
+.billcheck-host strong { color: var(--text-secondary); font-weight: 600; }
+
+.billcheck-todo { list-style: none; margin: 18px 0 0; padding: 16px 0 0; border-top: 1px solid var(--border-subtle); display: grid; grid-template-columns: 1fr 1fr; gap: 9px 16px; }
+.billcheck-todo li { position: relative; padding-left: 22px; font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+.billcheck-todo li::before { content: '✓'; position: absolute; left: 0; top: 0; color: var(--success, #15803d); font-weight: 700; }
+.billcheck-safety { font-size: 12px; color: var(--text-tertiary); line-height: 1.55; margin: 16px 0 0; padding: 11px 13px; background: var(--surface-sunken); border-radius: var(--radius-md); border: 1px solid var(--border-subtle); }
+
+@media (max-width: 480px) {
+  .billcheck-control { min-width: 100%; }
+  .billcheck-todo { grid-template-columns: 1fr; }
+}
+
 /* ─── About Section ──────────────────────────────────────────────────────────── */
 .about-section {
   background: var(--surface-card);

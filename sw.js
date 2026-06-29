@@ -1,6 +1,6 @@
 // sw.js — Service Worker (network-first, cache fallback)
 // Update this version string when deploying new code to bust the cache.
-const CACHE = 'discombill-20260629-47';
+const CACHE = 'discombill-20260629-48';
 
 const CORE = [
   './', './index.html', './compare/', './compare/index.html',
@@ -14,7 +14,7 @@ const CORE = [
   // Application JS
   './js/utils.js', './js/tariffs.js', './js/engine.js', './js/i18n.js',
   './js/ui.js', './js/datepicker.js', './js/renderer.js', './js/main.js', './js/compare.js',
-  './js/estimators.js', './js/tariff-explorer.js',
+  './js/estimators.js', './js/tariff-explorer.js', './js/bill-check.js',
   // Tariff registry + FPPA
   './js/tariffs/registry.js', './js/tariffs/fppa.js',
   // Per-state tariff data

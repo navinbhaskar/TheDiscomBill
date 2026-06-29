@@ -1,15 +1,119 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Coming Soon - TheDiscomBill</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../icon.svg">
+  <!-- Set the colour theme before first paint (no flash): stored choice, else light. -->
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+  <title>Check Your Electricity Bill – TheDiscomBill</title>
+  <meta name="description" content="Select your state and DISCOM to jump straight to its official electricity bill-payment portal — view, download and pay your bill on the authentic source.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body style="display:flex; justify-content:center; align-items:center; height:100vh; background:var(--surface-default); color:var(--text-primary); text-align:center; font-family:Inter, sans-serif;">
-  <div>
-    <h1>Construction in Progress 🚧</h1>
-    <p>This page (bill-check) is being built. Check back soon!</p>
-    <a href="/" style="color:var(--brand); text-decoration:none; margin-top:20px; display:inline-block;">← Back to Calculator</a>
+<body>
+
+<!-- ── Header ───────────────────────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline" data-i18n="tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <div class="nav-dropdown" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          Quick Links
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu" id="quickLinksMenu" role="menu">
+          <a href="/compare/" class="nav-dropdown-item" role="menuitem">⚖ Major DISCOM Tariff Comparison</a>
+          <a href="/estimators/" class="nav-dropdown-item" role="menuitem">📊 Consumption Estimators</a>
+          <a href="/tariffs/" class="nav-dropdown-item" role="menuitem">📋 Electricity Tariff Page</a>
+          <a href="/bill-check/" class="nav-dropdown-item" role="menuitem">🔍 Bill Check</a>
+          <a href="/new-connection/" class="nav-dropdown-item" role="menuitem">🔌 New Connection Charges &amp; Process</a>
+          <a href="/complaint/" class="nav-dropdown-item" role="menuitem">📢 Register Electricity Complaint</a>
+        </div>
+      </div>
+      <a href="/#about" data-i18n="nav.about">About</a>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme">☾</button>
+    </nav>
   </div>
+</header>
+
+<div class="page-body">
+  <section class="billcheck-section">
+    <div class="container container-narrow">
+      <h2 class="reveal">Check Your Electricity Bill</h2>
+      <p class="billcheck-intro reveal">Select your state and electricity provider — we'll take you straight to its <strong>official bill-payment portal</strong>, where you can view, download and pay your bill on the authentic source.</p>
+
+      <!-- Selector bar -->
+      <div class="billcheck-controls reveal">
+        <div class="billcheck-control">
+          <label for="billCheckState">State / UT</label>
+          <select id="billCheckState"></select>
+        </div>
+        <div class="billcheck-control">
+          <label for="billCheckDiscom">Your DISCOM</label>
+          <select id="billCheckDiscom"></select>
+        </div>
+      </div>
+
+      <!-- Result card with the official-portal CTA -->
+      <div class="reveal" id="billCheckResult"></div>
+
+      <p class="comparison-note reveal">
+        TheDiscomBill is an independent tool and is not affiliated with any DISCOM. We link only to
+        official provider websites. For an estimate of your charges before paying, use the
+        <a href="/#calculator">bill calculator</a>.
+      </p>
+    </div>
+  </section>
+</div>
+
+<!-- ── Footer ────────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <p>&copy; 2026 TheDiscomBill. All rights reserved.
+    &nbsp;|&nbsp; <a href="/#about">Disclaimer</a></p>
+  </div>
+</footer>
+
+<!-- main.js wires the shared header (theme, language, Quick Links); bill-check.js runs the page. -->
+<script type="module" src="../js/main.js"></script>
+<script type="module" src="../js/bill-check.js"></script>
+
 </body>
 </html>
