@@ -47,7 +47,7 @@
     </a>
     <nav class="header-nav">
       <a href="#calculator" data-i18n="nav.calculator">Calculator</a>
-      <a href="#comparison" data-i18n="nav.compare">Compare</a>
+      <a href="/compare/" data-i18n="nav.compare">Compare</a>
       <a href="#about" data-i18n="nav.about">About</a>
       <div class="lang-switch" id="langSwitch">
         <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
@@ -464,36 +464,6 @@
 
   </div><!-- /.calculator-grid -->
 </section><!-- /#calculator -->
-
-<!-- ── Comparison Table ──────────────────────────────────────────────────────── -->
-<section id="comparison" class="comparison-section">
-  <div class="container">
-    <h2 class="reveal">Tariff Comparison (Major DISCOMs)</h2>
-    <p class="reveal">See how major electricity providers stack up against each other for a typical month. Calculated dynamically based on current FY 2025-26 tariffs.</p>
-    
-    <div class="comparison-tabs reveal">
-      <button class="comp-tab active" data-target="domestic">Domestic</button>
-      <button class="comp-tab" data-target="commercial">Commercial</button>
-    </div>
-
-    <div class="comparison-table-wrapper reveal">
-      <table class="comparison-table">
-        <thead>
-          <tr>
-            <th>DISCOM / State</th>
-            <th class="num">200 Units</th>
-            <th class="num">400 Units</th>
-            <th class="num">600 Units</th>
-            <th class="num">1000 Units</th>
-          </tr>
-        </thead>
-        <tbody id="compTableBody">
-          <tr><td colspan="5" class="comp-loading">Calculating tariffs...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
 
 <!-- ── About ─────────────────────────────────────────────────────────────────── -->
 <section id="about" class="about-section">
