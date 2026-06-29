@@ -101,7 +101,7 @@ const STRINGS = {
     // Net metering
     'small.netMetering': 'The units consumed above are your <strong>import</strong> from the grid. Net billed = import − exported − opening credit; any surplus is banked and carried forward (across months in a multi-month revision too).',
     // LPSC
-    'small.lpscApplicable': 'Rate &amp; months-late are set in the Arrear tab. Uncheck if late-payment surcharge does not apply for this consumer / period.',
+    'small.lpscApplicable': 'Rate & months-late are set in the Arrear tab. Uncheck if late-payment surcharge does not apply for this consumer / period.',
     'small.arrearLpsc': 'LPSC amount on the previous arrear, as shown on your last bill.',
     'small.lpscRate': 'Late Payment Surcharge per SERC order. Typically 1.5%.',
     'small.lpscMonths': 'Months late in paying the current bill (LPSC applied on current net).',
