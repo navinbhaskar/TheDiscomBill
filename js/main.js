@@ -111,6 +111,23 @@ document.addEventListener('DOMContentLoaded', () => {
     syncThemeBtn();
   }
 
+  // Quick Links dropdown
+  const qlDrop = document.getElementById('quickLinksDropdown');
+  const qlTrigger = document.getElementById('quickLinksTrigger');
+  if (qlDrop && qlTrigger) {
+    qlTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = qlDrop.classList.toggle('open');
+      qlTrigger.setAttribute('aria-expanded', isOpen);
+    });
+    document.addEventListener('click', (e) => {
+      if (!qlDrop.contains(e.target)) {
+        qlDrop.classList.remove('open');
+        qlTrigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
   const stateEl      = document.getElementById('stateSelect');
   const discomEl     = document.getElementById('discomSelect');
   const categoryEl   = document.getElementById('categorySelect');
