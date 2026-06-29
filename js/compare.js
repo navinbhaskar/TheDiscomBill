@@ -1,6 +1,6 @@
 import { ALL_DISCOMS } from './tariffs.js';
 import { calculateBill } from './engine.js';
-import { formatCurrency } from './utils.js';
+import { formatINR } from './renderer.js';
 
 // The list of major DISCOMs to feature in the comparison table
 const MAJOR_DISCOMS = [
@@ -52,7 +52,7 @@ function generateComparisonRows(categoryTarget) {
           isDelhiSubsidyOptIn: true // Assume opted-in for Delhi
         });
         
-        html += `<td class="num">${formatCurrency(bill.netBillAmt)}</td>`;
+        html += `<td class="num">${formatINR(bill.netBillAmt)}</td>`;
       } catch (err) {
         console.error(`Compare error for ${major.id} at ${units}u:`, err);
         html += `<td class="num text-tertiary">—</td>`;
