@@ -1,4 +1,7 @@
-import { ALL_DISCOMS } from './tariffs.js';
+import { TARIFF_DB } from './tariffs/registry.js';
+
+// Flatten all state DISCOM arrays into a single lookup list
+const ALL_DISCOMS = Object.values(TARIFF_DB).flat();
 import { calculateBill } from './engine.js';
 import { formatINR } from './renderer.js';
 

@@ -266,10 +266,10 @@
 .nav-dropdown { position: relative; margin-left: 8px; display: inline-block; }
 .nav-dropdown-trigger {
   display: inline-flex; align-items: center; justify-content: center; gap: 5px;
-  padding: 0 10px; font-weight: 600; cursor: pointer; color: var(--text-primary);
-  background: transparent; border: none; font-size: inherit; font-family: inherit;
+  padding: 0 10px; font-weight: 600; cursor: pointer; color: var(--p-slate-300);
+  background: transparent; border: none; font-size: 14px; font-family: inherit;
 }
-.nav-dropdown-trigger:hover { color: var(--brand); }
+.nav-dropdown-trigger:hover { background: rgba(255,255,255,.08); color: #fff; border-radius: var(--radius-full); }
 .nav-caret { width: 10px; height: 10px; flex-shrink: 0; opacity: .8; transition: transform var(--t-fast); }
 .nav-dropdown.open .nav-caret { transform: rotate(180deg); }
 
@@ -740,11 +740,11 @@ select:disabled, input:disabled {
 .checkbox-label {
   display: flex; align-items: center; justify-content: flex-start; gap: 8px;
   font-size: 13px; font-weight: 500; cursor: pointer;
-  padding: 6px 0; text-align: left;
+  margin: 4px 0; text-align: left; line-height: 1.4;
 }
 .checkbox-label input[type="checkbox"] {
-  width: 16px; height: 16px; cursor: pointer; margin: 0; flex-shrink: 0;
-  accent-color: var(--brand);
+  width: 16px; height: 16px; cursor: pointer; flex-shrink: 0;
+  margin: 0; padding: 0; position: relative; top: 1px; accent-color: var(--brand);
 }
 
 hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; }
