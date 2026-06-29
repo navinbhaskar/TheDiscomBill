@@ -103,6 +103,14 @@
 <!-- Curtain panel: slides up over the pinned hero with rounded top corners as you scroll. -->
 <div class="page-body">
 
+<!-- Quick Links -->
+<div class="quick-links reveal">
+  <div class="ql-container">
+    <a href="#calculator" class="ql-btn"><span class="ql-icon">⚡</span> Bill Calculator</a>
+    <a href="#comparison" class="ql-btn"><span class="ql-icon">📊</span> Compare DISCOMs</a>
+    <a href="#about" class="ql-btn"><span class="ql-icon">📖</span> About</a>
+  </div>
+</div>
 <!-- ── Calculator ───────────────────────────────────────────────────────────── -->
 <section id="calculator" class="calculator-section">
   <div class="calculator-grid">
@@ -463,6 +471,36 @@
 
   </div><!-- /.calculator-grid -->
 </section><!-- /#calculator -->
+
+<!-- ── Comparison Table ──────────────────────────────────────────────────────── -->
+<section id="comparison" class="comparison-section">
+  <div class="container">
+    <h2 class="reveal">Tariff Comparison (Major DISCOMs)</h2>
+    <p class="reveal">See how major electricity providers stack up against each other for a typical month. Calculated dynamically based on current FY 2025-26 tariffs.</p>
+    
+    <div class="comparison-tabs reveal">
+      <button class="comp-tab active" data-target="domestic">Domestic</button>
+      <button class="comp-tab" data-target="commercial">Commercial</button>
+    </div>
+
+    <div class="comparison-table-wrapper reveal">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>DISCOM / State</th>
+            <th class="num">200 Units</th>
+            <th class="num">400 Units</th>
+            <th class="num">600 Units</th>
+            <th class="num">1000 Units</th>
+          </tr>
+        </thead>
+        <tbody id="compTableBody">
+          <tr><td colspan="5" class="comp-loading">Calculating tariffs...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
 
 <!-- ── About ─────────────────────────────────────────────────────────────────── -->
 <section id="about" class="about-section">

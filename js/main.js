@@ -15,7 +15,10 @@ import {
 } from './ui.js';
 import { initDatePickers } from './datepicker.js';
 import { initI18n } from './i18n.js';
+import { initComparisonTable } from './compare.js';
 import Lenis from './vendor/lenis.mjs';
+
+// Expose helpers called from onclick in the rendered bill HTML
 
 // ── Smooth momentum scrolling (Lenis) ─────────────────────────────────────────
 // Gives the whole page an eased, weighted "glide" instead of the browser's default
@@ -85,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
   populateMonthYear();
   initTabs();
   initI18n();   // apply saved/default language + wire the EN/हिंदी switcher
+  initComparisonTable(); // Render the dynamic tariff comparison table
 
   // Theme toggle — data-theme is pre-set by the inline <head> script; here we sync the button
   // and let the user flip + persist their choice.
