@@ -8,7 +8,7 @@ import {
   updateTodDisplay, updateFacUnitLabel, updateTariffPeriodHint,
   onFppaAutoToggle, markFppaManual,
   doCalculate, isDelhiDiscom,
-  shareBill, loadFromUrl, loadSample, initHistory, compareDiscoms,
+  shareBill, loadFromUrl, loadSample, initHistory,
   refreshSupplyTypeDependent, applyLifelineDefaultLoad, checkLifelineLimits,
   getMeterMode, setMeterMode, addMeterRow, updateAdvancedMeter,
   syncBillingMonthYear, applyDefaultBillingBasis, showToast, refreshRequiredValidation,
@@ -237,7 +237,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('calculateBtn').addEventListener('click', doCalculate);
     document.getElementById('sampleBtn').addEventListener('click', loadSample);
-    document.getElementById('compareBtn').addEventListener('click', compareDiscoms);
     initHistory();
 
     const netChk = document.getElementById('netMeteringChk');
