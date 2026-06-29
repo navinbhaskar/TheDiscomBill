@@ -737,14 +737,21 @@ select:disabled, input:disabled {
 #delhiSubsidyGroup {
   flex-direction: column; justify-content: flex-end;
 }
-.checkbox-label {
+/* Scoped under .form-group so it beats `.form-group label { display:block }`
+   (equal specificity, later in source) — otherwise the label stays display:block,
+   align-items is inert, and the checkbox sits on the text baseline (floats high). */
+.form-group .checkbox-label, .checkbox-label {
+  /* align-items:center vertically middles the checkbox with the label text.
+     A tight line-height (1.25) keeps the text's line-box close to its glyphs so
+     the visual centre matches the box centre — otherwise wide leading makes the
+     checkbox look like it floats above the text. */
   display: flex; align-items: center; justify-content: flex-start; gap: 8px;
   font-size: 13px; font-weight: 500; cursor: pointer;
-  margin: 4px 0; text-align: left; line-height: 1.4;
+  margin: 6px 0; text-align: left; line-height: 1.25;
 }
 .checkbox-label input[type="checkbox"] {
   width: 16px; height: 16px; cursor: pointer; flex-shrink: 0;
-  margin: 0; padding: 0; position: relative; top: 1px; accent-color: var(--brand);
+  margin: 0; padding: 0; accent-color: var(--brand);
 }
 
 hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; }
@@ -1623,6 +1630,7 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
   width: 15px; height: 15px;
   accent-color: var(--brand);
   cursor: pointer;
+  margin: 0;                 /* reset the base .checkbox-label nudge; this label is centred */
   flex-shrink: 0;            /* keep the box square; let the text wrap instead of overflowing */
 }
 .fppa-auto-label span { min-width: 0; }   /* allow the label to wrap within its column */
