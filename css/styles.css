@@ -711,12 +711,12 @@ select:disabled, input:disabled {
   flex-direction: column; justify-content: flex-end;
 }
 .checkbox-label {
-  display: flex; align-items: center; justify-content: flex-start; gap: 8px;
+  display: flex; align-items: flex-start; justify-content: flex-start; gap: 8px;
   font-size: 13px; font-weight: 500; cursor: pointer;
   padding: 6px 0; text-align: left;
 }
 .checkbox-label input[type="checkbox"] {
-  width: 16px; height: 16px; cursor: pointer; margin: 0; flex-shrink: 0;
+  width: 16px; height: 16px; cursor: pointer; margin: 0; margin-top: 2px; flex-shrink: 0;
   accent-color: var(--brand);
 }
 
@@ -1333,7 +1333,7 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
     text-shadow: none !important;
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
-  .bill-wrap { page-break-inside: avoid; border: 1.5px solid #000; width: 100%; max-width: none; margin: 0; padding: 0; box-sizing: border-box; }
+  .bill-wrap { page-break-inside: avoid; border: 1.5px solid #000; width: 100%; max-width: none; margin: 12px 0 0 0; padding: 0; box-sizing: border-box; }
   .bill-wrap a { color: #000 !important; text-decoration: underline; }
 
   /* Header — white with a heavy rule instead of the blue gradient */
