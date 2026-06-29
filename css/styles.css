@@ -1826,7 +1826,7 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
   .bill-details-box:first-child { border-right: none; border-bottom: 1px solid var(--border-default); }
   .bill-reading-table th, .bill-reading-table td { font-size: 12px; padding: 6px 8px; }
   .bill-charges-table td, .bill-charges-table th { font-size: 12px; padding: 6px 8px; }
-  .header-nav a { display: none; }   /* hide text links on mobile, keep language + theme controls */
+  .header-nav > a { display: none; }   /* hide text links on mobile, keep language + theme controls */
   .header-nav { gap: 0; }
   .hero h1 { letter-spacing: -0.5px; }
   .form-panel { border-radius: var(--radius-lg); padding: 20px; }
