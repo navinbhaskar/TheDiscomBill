@@ -10,6 +10,7 @@ const STRINGS = {
     // Header / nav
     'tagline': 'Electricity Bill Calculator · All India',
     'nav.calculator': 'Calculator',
+    'nav.compare': 'Compare',
     'nav.about': 'About',
     // Hero
     'hero.badge': 'Free · All DISCOMs · No Login Required',
@@ -143,6 +144,7 @@ const STRINGS = {
     // Header / nav
     'tagline': 'बिजली बिल कैलकुलेटर · पूरे भारत के लिए',
     'nav.calculator': 'कैलकुलेटर',
+    'nav.compare': 'तुलना',
     'nav.about': 'परिचय',
     // Hero
     'hero.badge': 'निःशुल्क · सभी डिस्कॉम · बिना लॉगिन',
