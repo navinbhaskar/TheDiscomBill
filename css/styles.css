@@ -559,7 +559,7 @@ a:hover { text-decoration: underline; }
 .calculator-grid {
   display: grid;
   grid-template-columns: 460px 1fr;
-  gap: 12px;
+  gap: 8px;
   align-items: start;
 }
 @media (max-width: 940px) {
@@ -572,7 +572,7 @@ a:hover { text-decoration: underline; }
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--border-subtle);
-  padding: 20px;
+  padding: 20px 12px;
 }
 .form-panel h2 {
   font-size: 18px; font-weight: 600; color: var(--text-primary);
@@ -616,7 +616,7 @@ a:hover { text-decoration: underline; }
   display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
 }
 .form-row-uneven {
-  grid-template-columns: 1fr 1.7fr;
+  grid-template-columns: 1fr 1.55fr;
 }
 /* Keep the two uneven-row labels (Sanctioned Load / FPPA surcharge) on a single line so the
    fields beneath them line up. nowrap is safe at every width: below 481px the row stacks to
@@ -634,7 +634,7 @@ select,
 input[type="text"],
 input[type="number"],
 input[type="date"] {
-  width: 100%; padding: 8px 11px;
+  width: 100%; height: 32px; padding: 0 11px;
   border: 1.5px solid var(--border-default);
   border-radius: var(--radius);
   font-size: 13px; font-family: inherit;
@@ -711,12 +711,12 @@ select:disabled, input:disabled {
   flex-direction: column; justify-content: flex-end;
 }
 .checkbox-label {
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: center; justify-content: flex-start; gap: 8px;
   font-size: 13px; font-weight: 500; cursor: pointer;
-  padding: 6px 0;
+  padding: 6px 0; text-align: left;
 }
 .checkbox-label input[type="checkbox"] {
-  width: 16px; height: 16px; cursor: pointer;
+  width: 16px; height: 16px; cursor: pointer; margin: 0; flex-shrink: 0;
   accent-color: var(--brand);
 }
 
@@ -831,6 +831,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   font-family: inherit;
 }
 .btn-add-row:hover { background: var(--brand-faint); border-color: var(--brand); }
+#addMeterRowBtn { margin-top: -2px; margin-bottom: 10px; }
 
 .dyn-row {
   display: flex; gap: 8px; align-items: center;
@@ -895,7 +896,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   padding: 8px 10px;
   margin-bottom: 8px;
 }
-.meter-row-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.meter-row-top { display: flex; align-items: flex-end; gap: 8px; margin-bottom: 6px; }
 
 .meter-role-badge {
   display: inline-block;
@@ -910,7 +911,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   letter-spacing: 0.05em;
 }
 
-.meter-row-top .m-label { flex: 0 1 220px; min-width: 120px; margin: 0; padding: 6px 8px; font-size: 13px; height: 30px; }
+.m-label-field { flex: 0 1 220px; min-width: 120px; }
 .meter-row-top .btn-remove-row { width: 26px; height: 26px; font-size: 15px; }
 /* The first meter can't be removed (there must always be at least one). */
 #advancedRows .meter-row:first-child .m-remove { display: none; }
@@ -921,11 +922,13 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 .mf-field { display: flex; flex-direction: column; gap: 2px; }
 .mf-field > span { font-size: 10px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.03em; }
-.mf-field input { width: 100%; margin: 0; box-sizing: border-box; padding: 6px 8px; font-size: 13px; height: 30px; }
+.mf-field input { width: 100%; margin: 0; box-sizing: border-box; padding: 0 8px; font-size: 13px; height: 32px; }
 .mf-field input[readonly] { background: var(--surface-sunken); cursor: not-allowed; opacity: 0.8; }
 .mf-override-label { grid-column: 1 / -1; display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; cursor: pointer; color: var(--text-secondary); margin-top: 4px; margin-bottom: 2px; }
 .mf-override-label input { width: 13px; height: 13px; cursor: pointer; margin: 0; }
-/* .mf-units removed full-width span */
+.mf-units { grid-column: 1 / -1; }
+.mf-units > span { white-space: nowrap; }
+.mf-units input { max-width: calc(50% - 5px); }   /* half-row input; label above stays one line */
 .m-units-label { color: var(--brand) !important; }
 
 
@@ -939,8 +942,8 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .rev-table th, .rev-table td { white-space: nowrap; padding: 5px 9px; font-size: 12px; }
 
 /* LPSC Applicable toggle */
-.lpsc-applicable-label { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 14px; cursor: pointer; }
-.lpsc-applicable-label input { margin-top: 2px; flex-shrink: 0; }
+.lpsc-applicable-label { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; cursor: pointer; }
+.lpsc-applicable-label input { flex-shrink: 0; }
 .fields-disabled { opacity: 0.5; }
 .fields-disabled input { cursor: not-allowed; }
 
@@ -1045,10 +1048,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   transition: all var(--t-fast);
   display: inline-flex; align-items: center; gap: 6px;
 }
-.btn-print { background: var(--surface-card); color: var(--text-primary); border: 1px solid var(--border-default); box-shadow: var(--shadow-sm); }
-.btn-print:hover { background: var(--surface-hover); border-color: var(--text-tertiary); transform: translateY(-1px); box-shadow: var(--shadow-md); }
-.btn-share { background: transparent; color: var(--text-secondary); border: 1px solid transparent; }
-.btn-share:hover { background: var(--surface-sunken); color: var(--text-primary); }
+.btn-print { background: var(--brand); color: var(--text-inverse); border: 1px solid var(--brand); box-shadow: 0 2px 8px rgba(37,99,235,.28); }
+.btn-print:hover { background: var(--brand-hover); border-color: var(--brand-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,99,235,.36); }
+.btn-share { background: var(--brand-faint); color: var(--brand); border: 1.5px solid var(--brand); }
+.btn-share:hover { background: var(--brand-subtle); color: var(--brand-hover); border-color: var(--brand-hover); transform: translateY(-1px); }
 
 /* ─── Bill (rendered) — light, blue-accent palette (in sync with the site) ───── */
 /* Color rule: ONE hue — the brand blue — used as the single accent. The body of  */
@@ -1524,6 +1527,7 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
   gap: 7px;
   margin-top: 8px;
   font-size: 13px;
+  line-height: 1.35;
   font-weight: 500;
   color: var(--text-primary);
   cursor: pointer;
@@ -1532,7 +1536,9 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
   width: 15px; height: 15px;
   accent-color: var(--brand);
   cursor: pointer;
+  flex-shrink: 0;            /* keep the box square; let the text wrap instead of overflowing */
 }
+.fppa-auto-label span { min-width: 0; }   /* allow the label to wrap within its column */
 .fppa-source {
   display: block;
   margin-top: 6px !important;
@@ -1557,7 +1563,7 @@ footer a:hover { color: var(--p-slate-200); text-decoration: none; }
 /* ─── Custom Date Field + Calendar ───────────────────────────────────────────── */
 .date-field-wrap { position: relative; }
 /* Compact, typeable date field (you can type a date or use the calendar button) */
-.date-field { padding: 7px 32px 7px 11px !important; font-size: 13px; cursor: text; font-variant-numeric: tabular-nums; }
+.date-field { padding: 0 32px 0 11px !important; font-size: 13px; cursor: text; font-variant-numeric: tabular-nums; }
 .date-field::placeholder { color: var(--text-tertiary); }
 .date-field-btn {
   position: absolute; top: 1px; right: 1px; bottom: 1px;
