@@ -247,25 +247,61 @@
 .gloss:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
 @media print { .gloss { display: none; } }
 
-/* Header controls (language + theme) — a matched ghost-pill pair on the dark header, identical size */
-.lang-select, .theme-toggle {
-  box-sizing: border-box; width: 56px; height: 34px;
+/* Header controls (language + theme) — a matched ghost-pill pair on the dark header */
+.lang-trigger, .theme-toggle {
+  box-sizing: border-box; height: 34px;
   border-radius: var(--radius-full);
   border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.08);
   color: var(--text-inverse); font-family: inherit; font-size: 14px; cursor: pointer;
   transition: background var(--t-fast), border-color var(--t-fast);
 }
-.lang-select {
-  margin-left: 8px; padding: 0 4px; font-weight: 600;
-  text-align: center; text-align-last: center;          /* centre "EN" / "हिंदी" like the icon */
-  -webkit-appearance: none; -moz-appearance: none; appearance: none;   /* drop the native arrow */
-}
-.lang-select option { color: #0f172a; background: #fff; }   /* readable native dropdown list */
 .theme-toggle {
+  width: 56px;
   margin-left: 6px; display: inline-flex; align-items: center; justify-content: center;
 }
-.lang-select:hover, .theme-toggle:hover { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.32); }
-.lang-select:focus-visible, .theme-toggle:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.lang-trigger:hover, .theme-toggle:hover { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.32); }
+.lang-trigger:focus-visible, .theme-toggle:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* Custom language dropdown — a styled menu replacing the native <select> popup */
+.lang-switch { position: relative; margin-left: 8px; display: inline-block; }
+.lang-trigger {
+  display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+  min-width: 56px; padding: 0 10px; font-weight: 600;
+}
+.lang-caret { width: 10px; height: 10px; flex-shrink: 0; opacity: .8; transition: transform var(--t-fast); }
+.lang-trigger[aria-expanded="true"] .lang-caret { transform: rotate(180deg); }
+
+.lang-menu {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 70;
+  min-width: 168px; list-style: none; margin: 0; padding: 6px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  opacity: 0; transform: translateY(-6px) scale(.98); transform-origin: top right;
+  pointer-events: none; transition: opacity var(--t-fast), transform var(--t-fast);
+}
+.lang-switch.open .lang-menu { opacity: 1; transform: none; pointer-events: auto; }
+
+.lang-opt {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 8px 10px; border-radius: var(--radius-md); cursor: pointer;
+  color: var(--text-primary); font-size: 13.5px; font-weight: 500;
+  transition: background var(--t-fast);
+}
+.lang-opt:hover, .lang-opt.is-active { background: var(--brand-faint); }
+.lang-opt[aria-selected="true"] { color: var(--brand); font-weight: 700; }
+.lang-opt-name { display: flex; align-items: center; gap: 7px; }
+.lang-opt[aria-selected="true"] .lang-opt-name::before {
+  content: "✓"; color: var(--brand); font-size: 12px; font-weight: 700;
+}
+.lang-opt:not([aria-selected="true"]) .lang-opt-name { padding-left: 19px; }   /* align with checked rows */
+.lang-opt-code {
+  font-size: 11px; font-weight: 700; letter-spacing: .03em;
+  color: var(--text-tertiary); background: var(--surface-sunken);
+  padding: 2px 6px; border-radius: var(--radius-sm);
+}
+.lang-opt[aria-selected="true"] .lang-opt-code { color: var(--brand); background: var(--brand-subtle); }
 
 /* ─── Reset & Base ───────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -293,8 +329,12 @@ html.js .reveal {
 html.js .reveal.is-visible { opacity: 1; transform: none; }
 
 /* Staggered groups — hero lines and the stat cards cascade in */
-html.js .hero .reveal:nth-child(2)            { transition-delay: .09s; }
-html.js .hero .reveal:nth-child(3)            { transition-delay: .18s; }
+html.js .hero .reveal:nth-child(2)            { transition-delay: .07s; }
+html.js .hero .reveal:nth-child(3)            { transition-delay: .14s; }
+html.js .hero .reveal:nth-child(4)            { transition-delay: .21s; }
+html.js .hero .reveal:nth-child(5)            { transition-delay: .28s; }
+html.js .hero .reveal:nth-child(6)            { transition-delay: .35s; }
+html.js .hero .reveal:nth-child(7)            { transition-delay: .42s; }
 html.js .stats-row .stat-card:nth-child(2)    { transition-delay: .10s; }
 html.js .stats-row .stat-card:nth-child(3)    { transition-delay: .20s; }
 html.js .stats-row .stat-card:nth-child(4)    { transition-delay: .30s; }
@@ -433,11 +473,88 @@ a:hover { text-decoration: underline; }
 }
 .hero p { font-size: 16px; color: var(--p-blue-200); max-width: 520px; margin: 0 auto; line-height: 1.6; }
 
+/* Hero CTA — primary action, scrolls to the form */
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin: 26px auto 0;
+  background: #fff; color: var(--brand-dark);
+  font-size: 15px; font-weight: 700;
+  padding: 12px 26px; border-radius: var(--radius-full);
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(8, 20, 48, .22);
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
+}
+.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(8, 20, 48, .30); }
+.hero-cta span { transition: transform var(--t-fast); }
+.hero-cta:hover span { transform: translateY(3px); }
+
+/* Hero stat trio — coverage at a glance */
+.hero-stats { display: flex; justify-content: center; margin: 30px auto 0; }
+.hero-stat { display: flex; flex-direction: column; align-items: center; padding: 0 28px; }
+.hero-stat + .hero-stat { border-left: 1px solid rgba(255,255,255,.18); }
+.hero-stat-num {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 800; color: #fff; line-height: 1; letter-spacing: -0.5px;
+}
+.hero-stat-label {
+  font-size: 11px; color: var(--p-blue-200); margin-top: 7px;
+  text-transform: uppercase; letter-spacing: 0.7px; font-weight: 500;
+}
+
+/* Hero feature pills — what the calculator handles */
+.hero-features {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+  margin: 28px auto 0; max-width: 720px;
+}
+.hero-feature {
+  font-size: 13px; font-weight: 500; color: #fff;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.16);
+  padding: 7px 14px; border-radius: var(--radius-full);
+  display: inline-flex; align-items: center; gap: 8px;
+  backdrop-filter: blur(4px);
+}
+.hero-feature::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--brand-accent); flex-shrink: 0;
+}
+
+/* Hero DISCOM coverage strip */
+.hero-discoms { margin: 36px auto 0; max-width: 800px; }
+.hero-discoms-label {
+  font-size: 11.5px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1.2px; color: var(--p-blue-300); margin-bottom: 14px;
+}
+.hero-discoms-list {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 9px;
+}
+.hero-discoms-list span {
+  font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,.82);
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.13);
+  padding: 5px 11px; border-radius: 7px; letter-spacing: 0.2px;
+  transition: background var(--t-fast), border-color var(--t-fast);
+}
+.hero-discoms-list span:hover {
+  background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.28);
+}
+.hero-trust {
+  margin-top: 18px; font-size: 11.5px; color: var(--p-blue-300); letter-spacing: 0.3px;
+}
+@media (max-width: 600px) {
+  .hero-feature { font-size: 12px; padding: 6px 11px; }
+  .hero-discoms-list span { font-size: 11.5px; padding: 4px 9px; }
+  .hero-cta { font-size: 14px; padding: 11px 22px; }
+  .hero-stat { padding: 0 16px; }
+  .hero-stat-num { font-size: 22px; }
+}
+
 /* ─── Calculator Section ──────────────────────────────────────────────────────── */
 .calculator-section {
   max-width: 1280px; margin: 36px auto 48px;
   padding: 0 20px;
   position: relative; z-index: 1;
+  scroll-margin-top: 76px;   /* anchor jumps from the hero CTA clear the sticky header */
 }
 .calculator-grid {
   display: grid;
@@ -490,22 +607,26 @@ a:hover { text-decoration: underline; }
 }
 .form-group small { display: block; font-size: 11px; color: var(--text-secondary); margin-top: 3px; line-height: 1.45; }
 
+/* Billing Basis — shorter width, secondary feel (rarely changed once set) */
+#billingBasisGroup { margin-bottom: 8px; }
+#billingBasisGroup label { font-size: 11px; margin-bottom: 2px; color: var(--text-secondary); font-weight: 500; }
+#billingBasis { width: auto; max-width: 260px; }
+
 .form-row {
   display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
 }
 .form-row-uneven {
   grid-template-columns: 1fr 1.7fr;
 }
-@media (min-width: 481px) {
-  .form-row-uneven .form-group > label {
-    height: 42px;
-    display: flex;
-    align-items: flex-end;
-    margin-bottom: 4px;
-  }
-}
-@media (max-width: 480px) { 
-  .form-row { grid-template-columns: 1fr; } 
+/* Keep the two uneven-row labels (Sanctioned Load / FPPA surcharge) on a single line so the
+   fields beneath them line up. nowrap is safe at every width: below 481px the row stacks to
+   full width, and above it the FPPA column (1.7fr) is wide enough for the longest "% of
+   charges" variant. min-width:0 lets the grid columns shrink instead of forcing a scrollbar. */
+.form-row-uneven .form-group { min-width: 0; }
+.form-row-uneven .form-group > label { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+.form-row-uneven .form-group > label .lbl-text { white-space: nowrap; }
+@media (max-width: 480px) {
+  .form-row { grid-template-columns: 1fr; }
   .form-row-uneven { grid-template-columns: 1fr; }
 }
 
@@ -619,13 +740,16 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   margin-top: 22px;
   border: 1.5px solid var(--border-default);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  /* visible (not hidden) so glossary tooltips can pop outside the panel without being clipped;
+     the tab bar rounds its own top corners below to keep the rounded look. */
+  overflow: visible;
   background: var(--surface-card);
 }
 .bill-tabs {
   display: flex;
   background: var(--surface-sunken);
   border-bottom: 1.5px solid var(--border-default);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;   /* match the container's rounded top */
   gap: 4px;
   padding: 6px;
 }
@@ -687,6 +811,14 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 .form-warning-banner .fwb-icon { font-size: 10px; line-height: 1; }
 .form-warning-banner .fwb-text { flex: 1; }
+
+/* Missing required field — red box, flagged on Calculate, cleared as the user fills it */
+.input-error,
+.input-error:focus {
+  border-color: var(--p-red-600, #dc2626) !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, .15) !important;
+  outline: none;
+}
 
 .btn-add-row {
   display: inline-flex; align-items: center; gap: 4px;
@@ -778,7 +910,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   letter-spacing: 0.05em;
 }
 
-.meter-row-top .m-label { flex: 1; margin: 0; padding: 6px 8px; font-size: 13px; height: 30px; }
+.meter-row-top .m-label { flex: 0 1 220px; min-width: 120px; margin: 0; padding: 6px 8px; font-size: 13px; height: 30px; }
 .meter-row-top .btn-remove-row { width: 26px; height: 26px; font-size: 15px; }
 /* The first meter can't be removed (there must always be at least one). */
 #advancedRows .meter-row:first-child .m-remove { display: none; }
@@ -847,6 +979,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 
 .btn-secondary-row { display: flex; gap: 8px; }
 .btn-secondary-row .btn-sample { margin-top: 8px; }
+
+/* DISCOM comparison — inset the content so the heading/intro don't hit the panel edges
+   (the base .bill-wrap has padding:0; the doubled class outranks it so this wins). */
+.bill-wrap.comparison-wrap { padding: 20px; }
 
 /* DISCOM comparison table */
 .cmp-table .cmp-current td { background: var(--brand-faint); font-weight: 600; }

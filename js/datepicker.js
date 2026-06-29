@@ -121,6 +121,62 @@ function normalizeTyped(inp) {
   setFieldDate(inp, v);
 }
 
+// ─── Type-ahead date mask ───────────────────────────────────────────────────────
+// Auto-formats a typed value toward DD-MM-YYYY, inserting "-" as each segment completes.
+// "Smart" rule: a leading digit that can't begin a two-digit value closes its segment at
+// once (day 4-9, month 2-9); an ambiguous leading digit (day 0-3, month 0-1) waits for the
+// second digit. Keystrokes that would form an impossible day (32+) or month (13+) are dropped.
+//   `forward` = true on insert (a freshly-completed segment shows its trailing "-"),
+//               false on delete (so the user can backspace through the auto "-").
+function validDayPair(a, b)   { const v = +(a + b); return v >= 1 && v <= 31; }
+function validMonthPair(a, b) { const v = +(a + b); return v >= 1 && v <= 12; }
+
+function maskTypedDate(value, forward) {
+  const ds = value.replace(/\D/g, '').slice(0, 8);   // DDMMYYYY → at most 8 digits
+  const n = ds.length;
+  let res = '', i = 0;
+  const sep = () => res += (i < n || forward) ? '-' : '';   // internal always; trailing only forward
+
+  // ── DAY (01-31) ──
+  if (i < n) {
+    const a = ds[i];
+    if (a >= '4') { res += a; i++; sep(); }            // 4-9 → single-digit day, closed
+    else if (i + 1 < n) {                              // 0-3 with a second digit available
+      const b = ds[i + 1];
+      if (validDayPair(a, b)) { res += a + b; i += 2; sep(); }
+      else return res + a;                             // block invalid 2nd digit, keep waiting
+    } else return res + a;                             // single 0-3 so far → wait for 2nd
+  }
+
+  // ── MONTH (01-12) ──
+  if (i < n) {
+    const a = ds[i];
+    if (a >= '2') { res += a; i++; sep(); }            // 2-9 → single-digit month, closed
+    else if (i + 1 < n) {                              // 0-1 with a second digit available
+      const b = ds[i + 1];
+      if (validMonthPair(a, b)) { res += a + b; i += 2; sep(); }
+      else return res + a;                             // block invalid 2nd digit
+    } else return res + a;                             // single 0-1 so far → wait
+  }
+
+  // ── YEAR (up to 4 digits; range clamped later on commit) ──
+  if (i < n) res += ds.slice(i, i + 4);
+  return res;
+}
+
+// Reformat the field as the user types; caret goes to the end (these fields are short and
+// typed left-to-right). Skipped when the value is already in canonical form.
+function onDateMaskInput(e) {
+  const el = e.target;
+  const forward = !(e.inputType && e.inputType.startsWith('delete'));
+  const formatted = maskTypedDate(el.value, forward);
+  if (formatted !== el.value) {
+    el.value = formatted;
+    const pos = formatted.length;
+    try { el.setSelectionRange(pos, pos); } catch (err) {}
+  }
+}
+
 // Wire one input (idempotent) — used for both static and dynamically-added fields.
 export function attachDatePicker(inp) {
   if (!inp || inp._dpWired) return;
@@ -139,6 +195,7 @@ export function attachDatePicker(inp) {
   } else {
     // Day fields: typeable. The calendar button (or ArrowDown) opens the picker; Enter commits the
     // typed value; the capture-phase 'change' normalises it to ISO before other listeners read it.
+    inp.addEventListener('input', onDateMaskInput);   // auto-insert "-" / block bad digits as typed
     inp.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowDown') { e.preventDefault(); open(inp); }
       else if (e.key === 'Enter') { e.preventDefault(); normalizeTyped(inp); inp.dispatchEvent(new Event('change', { bubbles: true })); }

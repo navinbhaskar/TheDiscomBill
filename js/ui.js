@@ -555,8 +555,10 @@ export function addMeterRow(label = '') {
   }
 
   const isFirstMeter = existingRows.length === 0;
-  const prevDateLabel = isFirstMeter ? 'Prev Date' : 'Start Date';
-  const currDateLabel = isFirstMeter ? 'Curr Date' : 'End Date';
+  const _hl = (() => { try { return localStorage.getItem('lang') || 'en'; } catch(e) { return 'en'; } })();
+  const _t  = (en, hi) => _hl === 'hi' ? hi : en;
+  const prevDateLabel = isFirstMeter ? _t('Prev Date', 'पिछली तिथि') : _t('Start Date', 'आरंभ तिथि');
+  const currDateLabel = isFirstMeter ? _t('Curr Date', 'वर्तमान तिथि') : _t('End Date', 'अंतिम तिथि');
 
   const row = document.createElement('div');
   row.className = 'meter-row';
@@ -564,21 +566,21 @@ export function addMeterRow(label = '') {
   // Layout V3: Pure 2-column grid so all inputs are precisely the same width.
   row.innerHTML = `
     <div class="meter-row-top">
-      <input type="text" class="m-label" value="${label}" placeholder="Enter your meter number (optional)">
+      <input type="text" class="m-label" value="${label}" placeholder="${_t('Meter Number (Optional)', 'मीटर संख्या (वैकल्पिक)')}" data-i18n-ph="ph.meterLabel">
       <button type="button" class="btn-remove-row m-remove" title="Remove">×</button>
     </div>
     <div class="meter-fields-v2">
       <div class="mf-field"><span>${prevDateLabel}</span>${dateFieldHtml('m-prevdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
       <div class="mf-field"><span>${currDateLabel}</span>${dateFieldHtml('m-currdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
       
-      <div class="mf-field"><span>Prev Read</span><input type="number" class="m-prevread" placeholder="0" min="0" step="0.01"></div>
-      <div class="mf-field"><span>Curr Read</span><input type="number" class="m-currread" placeholder="0" min="0" step="0.01"></div>
+      <div class="mf-field"><span class="m-prevread-label">Prev Read</span><input type="number" class="m-prevread" placeholder="0" min="0" step="0.01"></div>
+      <div class="mf-field"><span class="m-currread-label">Curr Read</span><input type="number" class="m-currread" placeholder="0" min="0" step="0.01"></div>
       
       <div class="mf-field"><span>MF</span><input type="number" class="m-mf" value="1" min="0.01" step="0.01" title="Multiplying Factor"></div>
       <div class="mf-field"><span class="m-md-label">MD (kW)</span><input type="number" class="m-md" placeholder="0" min="0" step="0.01" title="Maximum demand recorded"></div>
       
-      <label class="mf-override-label"><input type="checkbox" class="m-override-chk"> Or Enter Units Consumed Directly (kWh or kVAH)</label>
-      <div class="mf-field mf-units"><span class="m-units-label">Total Units (Calculated)</span><input type="number" class="m-units" placeholder="Total Consumed Units" min="0" step="0.01" readonly></div>
+      <label class="mf-override-label"><input type="checkbox" class="m-override-chk"> ${_t('Or Enter Units Consumed Directly (kWh or kVAH)', 'सीधे खपत यूनिट दर्ज करें (kWh या kVAH)')}</label>
+      <div class="mf-field mf-units"><span class="m-units-label">${_t('Total Units (Calculated)', 'कुल यूनिट (गणना)')}</span><input type="number" class="m-units" placeholder="${_t('Total Consumed Units', 'कुल खपत यूनिट')}" data-i18n-ph="ph.totalUnits" min="0" step="0.01" readonly></div>
     </div>`;
     
   row.querySelectorAll('input').forEach(i => {
@@ -595,12 +597,12 @@ export function addMeterRow(label = '') {
       row.querySelector('.m-currread').disabled = true;
       row.querySelector('.m-prevread').disabled = true;
       unitsInput.readOnly = false;
-      unitsLabel.textContent = 'Total Units (Manual Override)';
+      unitsLabel.textContent = _t('Total Units (Manual Override)', 'कुल यूनिट (मैन्युअल)');
     } else {
       row.querySelector('.m-currread').disabled = false;
       row.querySelector('.m-prevread').disabled = false;
       unitsInput.readOnly = true;
-      unitsLabel.textContent = 'Total Units (Calculated)';
+      unitsLabel.textContent = _t('Total Units (Calculated)', 'कुल यूनिट (गणना)');
     }
     updateAdvancedMeter();
   });
@@ -621,12 +623,12 @@ export function addMeterRow(label = '') {
     // As requested: 1st meter -> Current Meter, 2nd meter -> Old Meter
     const badge1 = document.createElement('div');
     badge1.className = 'meter-role-badge';
-    badge1.textContent = 'Current Meter';
+    badge1.textContent = _t('Current Meter', 'वर्तमान मीटर');
     allRows[0].insertBefore(badge1, allRows[0].firstChild);
-    
+
     const badge2 = document.createElement('div');
     badge2.className = 'meter-role-badge';
-    badge2.textContent = 'Old Meter';
+    badge2.textContent = _t('Old Meter', 'पुराना मीटर');
     allRows[1].insertBefore(badge2, allRows[1].firstChild);
   }
 
@@ -643,10 +645,8 @@ export function addMeterRow(label = '') {
   updateReadingUnitLabels();     // reflect kWh vs kVAh on the new row's Prev/Curr Read labels
 }
 
-// Initialise the unified meter table with a single default row (the user adds more with "+").
+// Initialise the unified meter table with a single default row (the user adds more with “+”).
 export function setAdvancedSubMode() {
-  const hint = document.getElementById('advHint');
-  if (hint) hint.textContent = 'Enter each meter’s previous → current reading (Units = (Current − Previous) × MF). Use “+ Add meter” for a mid-cycle replacement (old + new meter) or for multiple meters — their units are summed.';
   if (!document.querySelector('#advancedRows .meter-row')) addMeterRow();
   updateAdvancedMeter();
 }
@@ -806,9 +806,88 @@ export function validateForm() {
   }
 }
 
+// ── Required-field validation ──────────────────────────────────────────────────
+// The Calculate button is always clickable. On click we flag any missing required field
+// (red box + warning banner) instead of silently disabling; the flags clear live as fields fill.
+let _reqWarnActive = false;
+
+function getMissingRequiredFields() {
+  const missing = [];
+  const sEl = document.getElementById('stateSelect');
+  const dEl = document.getElementById('discomSelect');
+  const cEl = document.getElementById('categorySelect');
+  const stGroup = document.getElementById('supplyTypeGroup');
+  const stEl = document.getElementById('supplyTypeSelect');
+  const loadEl = document.getElementById('connectedLoad');
+  if (!sEl.value) missing.push({ els: [sEl], label: 'State / Union Territory' });
+  if (!dEl.value) missing.push({ els: [dEl], label: 'Electricity Utility (DISCOM)' });
+  if (!cEl.value) missing.push({ els: [cEl], label: 'Consumer Category' });
+  if (stGroup && stGroup.style.display !== 'none' && !stEl.value)
+    missing.push({ els: [stEl], label: 'Supply Type' });
+  if (!(parseFloat(loadEl.value) > 0)) missing.push({ els: [loadEl], label: 'Connected Load' });
+  if (getEffectiveUnits() === null) {
+    if (getMeterMode() === 'tod') {
+      const t = document.getElementById('todPeak');
+      if (t) missing.push({ els: [t], label: 'Consumption (TOD units)' });
+    } else {
+      const row = document.querySelector('#advancedRows .meter-row');
+      // If "enter units directly" is ticked, flag the Units box; otherwise flag the readings.
+      if (row?.querySelector('.m-override-chk')?.checked) {
+        const u = row.querySelector('.m-units');
+        if (u) missing.push({ els: [u], label: 'Units consumed' });
+      } else {
+        const prev = row?.querySelector('.m-prevread');
+        const curr = row?.querySelector('.m-currread');
+        const empties = [prev, curr].filter(el => el && !el.value.trim());
+        const els = empties.length ? empties : [prev, curr].filter(Boolean);
+        if (els.length) missing.push({ els, label: 'Previous & Current Reading' });
+      }
+    }
+  }
+  return missing;
+}
+
+function setReqBannerText(missing) {
+  const t = document.getElementById('requiredWarningText');
+  if (t) t.textContent =
+    `Please fill the required ${missing.length > 1 ? 'fields' : 'field'}: ${missing.map(m => m.label).join(', ')}.`;
+}
+
+function showRequiredWarning(missing) {
+  _reqWarnActive = true;
+  document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+  missing.forEach(m => m.els.forEach(el => el && el.classList.add('input-error')));
+  setReqBannerText(missing);
+  const banner = document.getElementById('requiredWarningBanner');
+  if (banner) { banner.style.display = 'flex'; banner.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+  const first = missing[0]?.els?.[0];
+  if (first?.focus) first.focus();
+}
+
+function clearRequiredWarning() {
+  _reqWarnActive = false;
+  document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+  const banner = document.getElementById('requiredWarningBanner');
+  if (banner) banner.style.display = 'none';
+}
+
+// Once the warning is showing, drop the red from each field as it's filled and hide the
+// banner when nothing is missing. No-op until the user has actually triggered the warning.
+export function refreshRequiredValidation() {
+  if (!_reqWarnActive) return;
+  const missing = getMissingRequiredFields();
+  const stillMissing = new Set();
+  missing.forEach(m => m.els.forEach(el => stillMissing.add(el)));
+  document.querySelectorAll('.input-error').forEach(el => { if (!stillMissing.has(el)) el.classList.remove('input-error'); });
+  missing.forEach(m => m.els.forEach(el => el && el.classList.add('input-error')));
+  if (!missing.length) clearRequiredWarning();
+  else setReqBannerText(missing);
+}
+
 export function updateCalcButton() {
-  const isValid = validateForm();
-  document.getElementById('calculateBtn').disabled = !canCalculate() || !isValid;
+  validateForm();   // keep the date-order banner live (it no longer gates the button)
+  document.getElementById('calculateBtn').disabled = false;   // always clickable now
+  refreshRequiredValidation();
 }
 
 export function isDelhiDiscom(discomId) {
@@ -1256,7 +1335,11 @@ export function compareDiscoms() {
 }
 
 export function doCalculate() {
-  if (!canCalculate()) return;
+  // Validate on submit: flag any missing required field (red box + banner) instead of disabling.
+  const missing = getMissingRequiredFields();
+  if (missing.length) { showRequiredWarning(missing); return; }
+  clearRequiredWarning();
+  if (!validateForm()) return;   // date-order error → its own banner is shown by validateForm
   checkLifelineLimits();   // safety net for programmatic flows (e.g. shared-link load)
 
   const discomId          = document.getElementById('discomSelect').value;
@@ -1312,7 +1395,7 @@ export function doCalculate() {
     });
     panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     saveBillToHistory({
-      label: `${ledger.discom.name} · ${ledger.category.name} · ${ledger.monthsCount} mo · ${ledger.totalUnits} u`,
+      label: `${ledger.discom.name} · ${ledger.category.name} · ${ledger.monthsCount} mo · ${ledger.totalUnits} Units`,
       amount: Math.max(0, ledger.totalPayable).toLocaleString('en-IN'),
       params: new URL(buildShareUrl()).search.slice(1),
     });
@@ -1353,7 +1436,7 @@ export function doCalculate() {
   panel.innerHTML = html;
   panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
   saveBillToHistory({
-    label: `${result.discom.name} · ${result.category.name}${result.supplyTypeName ? ' · ' + result.supplyTypeName : ''} · ${result.units} u`,
+    label: `${result.discom.name} · ${result.category.name}${result.supplyTypeName ? ' · ' + result.supplyTypeName : ''} · ${result.units} Units`,
     amount: Math.max(0, result.totalPayable).toLocaleString('en-IN'),
     params: new URL(buildShareUrl()).search.slice(1),
   });

@@ -7,11 +7,11 @@ import {
   updateArrearTotal, updateUnitsDisplay, updateCalcButton, updateBillingPeriod,
   updateTodDisplay, updateFacUnitLabel, updateTariffPeriodHint,
   onFppaAutoToggle, markFppaManual,
-  canCalculate, doCalculate, isDelhiDiscom,
+  doCalculate, isDelhiDiscom,
   shareBill, loadFromUrl, loadSample, initHistory, compareDiscoms,
   refreshSupplyTypeDependent, applyLifelineDefaultLoad, checkLifelineLimits,
   getMeterMode, setMeterMode, addMeterRow, updateAdvancedMeter,
-  syncBillingMonthYear, applyDefaultBillingBasis, showToast,
+  syncBillingMonthYear, applyDefaultBillingBasis, showToast, refreshRequiredValidation,
 } from './ui.js';
 import { initDatePickers } from './datepicker.js';
 import { initI18n } from './i18n.js';
@@ -65,6 +65,10 @@ function initScrollReveal() {
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   els.forEach(el => io.observe(el));
 }
+
+// Start every load at the top so the hero's reveal-on-load animation plays (the browser would
+// otherwise restore the previous scroll position on reload/back-navigation).
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
 // Expose helpers called from onclick in the rendered bill HTML
 window.__shareBill = shareBill;
@@ -206,8 +210,19 @@ document.addEventListener('DOMContentLoaded', () => {
   lpscChk.addEventListener('change', toggleLpscFields);
   toggleLpscFields();
 
+  // Delhi GNCTD subsidy toggle takes effect on the next "Calculate Provisional Bill" click —
+  // we deliberately don't re-run the bill live here, so the preview only updates on demand.
+
   document.getElementById('addPaymentBtn').addEventListener('click', addPaymentRow);
   document.getElementById('addAdjustmentBtn').addEventListener('click', addAdjustmentRow);
+
+  // While the "missing required fields" warning is showing, clear each field's red as it's filled
+  // (delegated so it covers every input/select in the form, including meter rows and TOD).
+  const formPanel = document.querySelector('.form-panel');
+  if (formPanel) {
+    formPanel.addEventListener('input', refreshRequiredValidation);
+    formPanel.addEventListener('change', refreshRequiredValidation);
+  }
 
   document.getElementById('calculateBtn').addEventListener('click', doCalculate);
   document.getElementById('sampleBtn').addEventListener('click', loadSample);

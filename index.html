@@ -42,16 +42,22 @@
       </span>
       <div>
         <span class="logo-text">TheDiscomBill</span>
-        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+        <span class="logo-tagline" data-i18n="tagline">Electricity Bill Calculator · All India</span>
       </div>
     </a>
     <nav class="header-nav">
       <a href="#calculator" data-i18n="nav.calculator">Calculator</a>
       <a href="#about" data-i18n="nav.about">About</a>
-      <select id="langSelect" class="lang-select" aria-label="Language / भाषा">
-        <option value="en">EN</option>
-        <option value="hi">हिंदी</option>
-      </select>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
       <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme">☾</button>
     </nav>
   </div>
@@ -62,6 +68,36 @@
   <div class="hero-badge reveal" data-i18n="hero.badge">Free &middot; All DISCOMs &middot; No Login Required</div>
   <h1 class="reveal" data-i18n="hero.title">Electricity Bill Calculator for Every DISCOM in India</h1>
   <p class="reveal" data-i18n="hero.sub">Get an instant provisional bill with slab-wise breakdown for any state electricity utility.</p>
+
+  <!-- Primary call to action (smooth-scrolls to the form via the Lenis anchor handler) -->
+  <a href="#calculator" class="hero-cta reveal"><span data-i18n="hero.cta">Calculate my bill</span> <span aria-hidden="true">↓</span></a>
+
+  <!-- Coverage at a glance -->
+  <div class="hero-stats reveal">
+    <div class="hero-stat"><span class="hero-stat-num">35+</span><span class="hero-stat-label" data-i18n="hero.stat.states">States &amp; UTs</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">70+</span><span class="hero-stat-label" data-i18n="hero.stat.discoms">DISCOMs</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">150+</span><span class="hero-stat-label" data-i18n="hero.stat.categories">Categories</span></div>
+  </div>
+
+  <!-- What the calculator handles -->
+  <div class="hero-features reveal">
+    <span class="hero-feature" data-i18n="hero.feat.slab">Slab-wise energy charges</span>
+    <span class="hero-feature" data-i18n="hero.feat.fppa">Fixed &amp; fuel surcharge (FPPA)</span>
+    <span class="hero-feature" data-i18n="hero.feat.solar">Solar net metering</span>
+    <span class="hero-feature" data-i18n="hero.feat.tod">Time-of-Day &amp; kVAh billing</span>
+  </div>
+
+  <!-- Coverage strip: representative major distribution companies -->
+  <div class="hero-discoms reveal">
+    <p class="hero-discoms-label" data-i18n="hero.discoms.label">Tariffs for 70+ DISCOMs across 35 states &amp; UTs — including</p>
+    <div class="hero-discoms-list">
+      <span>UPPCL</span><span>BESCOM</span><span>MSEDCL</span><span>TANGEDCO</span>
+      <span>PSPCL</span><span>TSSPDCL</span><span>APSPDCL</span><span>BSES Rajdhani</span>
+      <span>Tata Power-DDL</span><span>Adani Electricity</span><span>CESC</span><span>Torrent Power</span>
+      <span>KSEB</span><span>WBSEDCL</span><span>JVVNL</span><span>MPPKVVCL</span>
+    </div>
+    <p class="hero-trust" data-i18n="hero.trust">Built on publicly available tariff orders · Updated for FY 2025-26</p>
+  </div>
 </section>
 
 <!-- Curtain panel: slides up over the pinned hero with rounded top corners as you scroll. -->
@@ -87,7 +123,7 @@
         <div class="form-group">
           <label for="stateSelect" data-i18n="label.state">State / Union Territory</label>
           <select id="stateSelect">
-            <option value="">— Select State / UT —</option>
+            <option value="" data-i18n="opt.selectState">— Select State / UT —</option>
           </select>
         </div>
 
@@ -95,7 +131,7 @@
         <div class="form-group">
           <label for="discomSelect" data-i18n="label.discom">Electricity Utility (DISCOM)</label>
           <select id="discomSelect" disabled>
-            <option value="">— Select State First —</option>
+            <option value="" data-i18n="opt.selectStateFirst">— Select State First —</option>
           </select>
         </div>
       </div>
@@ -105,13 +141,13 @@
         <div class="form-group">
           <label for="categorySelect" data-i18n="label.category">Consumer Category</label>
           <select id="categorySelect" disabled>
-            <option value="">— Select DISCOM First —</option>
+            <option value="" data-i18n="opt.selectDiscomFirst">— Select DISCOM First —</option>
           </select>
         </div>
 
         <!-- Step 4: Supply Type (shown only when applicable) -->
         <div class="form-group" id="supplyTypeGroup" style="display:none">
-          <label for="supplyTypeSelect">Supply Type / Area</label>
+          <label for="supplyTypeSelect" data-i18n="label.supplyType">Supply Type / Area</label>
           <select id="supplyTypeSelect">
             <option value="">— Select Supply Type —</option>
           </select>
@@ -121,23 +157,23 @@
 
       <div class="form-row">
         <div class="form-group">
-          <label for="consumerName">Consumer Name</label>
-          <input type="text" id="consumerName" placeholder="e.g., Rajesh Kumar">
+          <label for="consumerName" data-i18n="label.consumerName">Consumer Name</label>
+          <input type="text" id="consumerName" placeholder="e.g., Rajesh Kumar" data-i18n-ph="ph.consumerName">
         </div>
         <div class="form-group">
-          <label for="accountNo">Account / Consumer No.</label>
-          <input type="text" id="accountNo" placeholder="Optional">
+          <label for="accountNo" data-i18n="label.accountNo">Account / Consumer No.</label>
+          <input type="text" id="accountNo" placeholder="Optional" data-i18n-ph="ph.accountNo">
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label for="address">Address</label>
-          <input type="text" id="address" placeholder="e.g., 12 Main Road, New Delhi">
+          <label for="address" data-i18n="label.address">Address</label>
+          <input type="text" id="address" placeholder="e.g., 12 Main Road, New Delhi" data-i18n-ph="ph.address">
         </div>
 
         <div class="form-group">
-          <label for="billingMonthYear">Billing Month &amp; Year</label>
+          <label for="billingMonthYear" data-i18n="label.billingMonth">Billing Month &amp; Year</label>
           <div class="date-field-wrap">
             <input type="text" id="billingMonthYear" class="date-field" data-datepicker data-my readonly placeholder="Select month">
             <button type="button" class="date-field-btn" aria-label="Open month picker" tabindex="-1">
@@ -155,76 +191,76 @@
       <div class="bill-tabs-container">
 
         <div class="bill-tabs" role="tablist">
-          <button class="bill-tab active" data-tab="meterread" type="button" role="tab" aria-selected="true" aria-controls="tab-meterread" id="bt-meterread">Meter Read</button>
-          <button class="bill-tab" data-tab="arrear" type="button" role="tab" aria-selected="false" aria-controls="tab-arrear" id="bt-arrear">Arrear</button>
-          <button class="bill-tab" data-tab="payment" type="button" role="tab" aria-selected="false" aria-controls="tab-payment" id="bt-payment">Payment</button>
-          <button class="bill-tab" data-tab="adjustment" type="button" role="tab" aria-selected="false" aria-controls="tab-adjustment" id="bt-adjustment">Adjustment</button>
+          <button class="bill-tab active" data-tab="meterread" type="button" role="tab" aria-selected="true" aria-controls="tab-meterread" id="bt-meterread" data-i18n="tab.meterread">Meter Read</button>
+          <button class="bill-tab" data-tab="arrear" type="button" role="tab" aria-selected="false" aria-controls="tab-arrear" id="bt-arrear" data-i18n="tab.arrear">Arrear</button>
+          <button class="bill-tab" data-tab="payment" type="button" role="tab" aria-selected="false" aria-controls="tab-payment" id="bt-payment" data-i18n="tab.payment">Payment</button>
+          <button class="bill-tab" data-tab="adjustment" type="button" role="tab" aria-selected="false" aria-controls="tab-adjustment" id="bt-adjustment" data-i18n="tab.adjustment">Adjustment</button>
         </div>
 
         <!-- ── Meter Read ── -->
         <div class="bill-tab-panel active" id="tab-meterread" role="tabpanel" aria-labelledby="bt-meterread">
           <!-- Reading mode: one unified Meter Reading section (add 1+ meters) / TOD -->
           <div class="meter-mode" role="radiogroup" aria-label="Meter reading mode">
-            <label class="meter-mode-opt"><input type="radio" name="meterMode" value="advanced" checked><span>Meter Reading</span></label>
-            <label class="meter-mode-opt"><input type="radio" name="meterMode" value="tod"><span>TOD</span></label>
+            <label class="meter-mode-opt"><input type="radio" name="meterMode" value="advanced" checked><span data-i18n="mode.meterReading">Meter Reading</span></label>
+            <label class="meter-mode-opt"><input type="radio" name="meterMode" value="tod"><span data-i18n="mode.tod">TOD</span></label>
           </div>
 
           <!-- Billing Basis — pick first; it sets the reading & demand units (kWh/kW vs kVAh/kVA) -->
           <div class="form-group" id="billingBasisGroup" style="display:none">
-            <label for="billingBasis">Billing Basis (energy &amp; demand)<span class="gloss" tabindex="0" role="img" aria-label="kVAh: apparent-energy units, equal to kWh divided by power factor. kVA-based billing meters energy in kVAh and demand in kVA." data-tip="kVAh — apparent energy = kWh ÷ power factor. kVA-based billing meters energy in kVAh and demand in kVA, so a poor power factor raises the bill directly.">ⓘ</span></label>
+            <label for="billingBasis"><span data-i18n="label.billingBasis">Billing Basis (energy &amp; demand)</span><span class="gloss" tabindex="0" role="img" aria-label="kVAh: apparent-energy units, equal to kWh divided by power factor. kVA-based billing meters energy in kVAh and demand in kVA." data-tip="kVAh — apparent energy = kWh ÷ power factor. kVA-based billing meters energy in kVAh and demand in kVA, so a poor power factor raises the bill directly.">ⓘ</span></label>
             <select id="billingBasis">
               <option value="kwh">Active energy (kWh) — demand in kW</option>
               <option value="kvah">kVA based — kVAh units + kVA demand</option>
             </select>
-            <small><strong>kWh</strong>: meter read in kWh, demand in kW. <strong>kVA based</strong>: meter read in kVAh (apparent energy) and demand billed in kVA — a low power factor already shows up as more kVAh, so there is no separate PF penalty. Auto-set for kVA (HT/large-LT) tariffs — override as needed.</small>
+            <small data-i18n-html="small.billingBasis"><strong>kWh</strong>: meter read in kWh, demand in kW. <strong>kVA based</strong>: meter read in kVAh (apparent energy) and demand billed in kVA — a low power factor already shows up as more kVAh, so there is no separate PF penalty. Auto-set for kVA (HT/large-LT) tariffs — override as needed.</small>
           </div>
 
           <!-- Billing period dates (Simple & TOD; auto-filled from the meter table in Advanced) -->
           <div id="meterDatesRow">
             <div class="form-row">
               <div class="form-group">
-                <label for="fromDate">From Date</label>
+                <label for="fromDate" data-i18n="label.fromDate">From Date</label>
                 <div class="date-field-wrap">
                   <input type="text" id="fromDate" class="date-field" data-datepicker data-cap-bill placeholder="DD-MM-YYYY">
                   <button type="button" class="date-field-btn" aria-label="Open calendar" tabindex="-1">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>
                   </button>
                 </div>
-                <small>Billing period start date</small>
+                <small data-i18n="small.fromDate">Billing period start date</small>
               </div>
               <div class="form-group">
-                <label for="toDate">To Date</label>
+                <label for="toDate" data-i18n="label.toDate">To Date</label>
                 <div class="date-field-wrap">
                   <input type="text" id="toDate" class="date-field" data-datepicker data-cap-bill placeholder="DD-MM-YYYY">
                   <button type="button" class="date-field-btn" aria-label="Open calendar" tabindex="-1">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>
                   </button>
                 </div>
-                <small>Billing period end date</small>
+                <small data-i18n="small.toDate">Billing period end date</small>
               </div>
             </div>
           </div>
 
           <div class="units-display" id="billingPeriodDisplay" style="display:none">
-            Billing period: <strong id="billingPeriodDaysDisplay">0</strong> days
-            &mdash; <strong id="billingPeriodMonthsDisplay">0.00</strong> months
+            <span data-i18n="lbl.billingPeriod">Billing period:</span> <strong id="billingPeriodDaysDisplay">0</strong> <span data-i18n="lbl.days">days</span>
+            &mdash; <strong id="billingPeriodMonthsDisplay">0.00</strong> <span data-i18n="lbl.months">months</span>
           </div>
 
           <!-- ── Meter Reading — one or more meters (single, replacement, or multiple) ── -->
           <div class="meter-mode-panel" id="meterAdvanced">
-            <p class="tab-hint" id="advHint"></p>
+            <p class="tab-hint" id="advHint" data-i18n="hint.advanced"></p>
             <div id="advancedRows"></div>
-            <button class="btn-add-row" id="addMeterRowBtn" type="button">+ Add meter</button>
+            <button class="btn-add-row" id="addMeterRowBtn" type="button" data-i18n="btn.addMeter">+ Add meter</button>
             <div class="units-display" id="advancedTotalDisplay" style="display:none">
-              Total: <strong id="advTotalUnits">0</strong> <span class="reading-unit">units</span> &mdash; period <strong id="advTotalMonths">0.00</strong> months
+              <span data-i18n="lbl.total">Total:</span> <strong id="advTotalUnits">0</strong> <span class="reading-unit">units</span> &mdash; <span data-i18n="lbl.period">period</span> <strong id="advTotalMonths">0.00</strong> <span data-i18n="lbl.months">months</span>
             </div>
           </div>
 
           <!-- ── TOD ── -->
           <div class="meter-mode-panel" id="meterTod" style="display:none">
             <div class="form-group">
-              <label for="meterNoTod">Meter Number</label>
-              <input type="text" id="meterNoTod" placeholder="Optional">
+              <label for="meterNoTod" data-i18n="label.meterNo">Meter Number</label>
+              <input type="text" id="meterNoTod" placeholder="Optional" data-i18n-ph="ph.meterNo">
             </div>
             <div class="tod-header">
               <span class="tod-badge tod-badge-peak">Peak</span>
@@ -238,39 +274,39 @@
             </div>
             <div class="form-row tod-inputs">
               <div class="form-group">
-                <label for="todPeak">Peak Units <span class="tod-badge tod-badge-peak tod-badge-sm">+20%</span></label>
+                <label for="todPeak" data-i18n-html="label.todPeak">Peak Units <span class="tod-badge tod-badge-peak tod-badge-sm">+20%</span></label>
                 <input type="number" id="todPeak" placeholder="0" min="0" step="1">
-                <small>6AM–10AM &amp; 6PM–10PM</small>
+                <small data-i18n="small.todPeak">6AM–10AM &amp; 6PM–10PM</small>
               </div>
               <div class="form-group">
-                <label for="todNormal">Normal Units</label>
+                <label for="todNormal" data-i18n="label.todNormal">Normal Units</label>
                 <input type="number" id="todNormal" placeholder="0" min="0" step="1">
-                <small>10AM–6PM (base rate)</small>
+                <small data-i18n="small.todNormal">10AM–6PM (base rate)</small>
               </div>
               <div class="form-group">
-                <label for="todOffPeak">Off-Peak Units <span class="tod-badge tod-badge-offpeak tod-badge-sm">−20%</span></label>
+                <label for="todOffPeak" data-i18n-html="label.todOffPeak">Off-Peak Units <span class="tod-badge tod-badge-offpeak tod-badge-sm">−20%</span></label>
                 <input type="number" id="todOffPeak" placeholder="0" min="0" step="1">
-                <small>10PM–6AM</small>
+                <small data-i18n="small.todOffPeak">10PM–6AM</small>
               </div>
             </div>
             <div class="units-display" id="todTotalDisplay" style="display:none">
-              TOD Total: <strong id="todTotalUnitsDisplay">0</strong> <span class="reading-unit">units</span>
-              &nbsp;(Peak <strong id="todPeakDisplay">0</strong> + Normal <strong id="todNormalDisplay">0</strong> + Off-Peak <strong id="todOffPeakDisplay">0</strong>)
+              <span data-i18n="lbl.todTotal">TOD Total:</span> <strong id="todTotalUnitsDisplay">0</strong> <span class="reading-unit">units</span>
+              &nbsp;(<span data-i18n="lbl.peak">Peak</span> <strong id="todPeakDisplay">0</strong> + <span data-i18n="lbl.normal">Normal</span> <strong id="todNormalDisplay">0</strong> + <span data-i18n="lbl.offPeak">Off-Peak</span> <strong id="todOffPeakDisplay">0</strong>)
             </div>
           </div>
 
           <!-- Maximum Demand — right after the units area; drives demand charge / excess-demand penalty -->
           <div class="form-group" id="billedDemandGroup" style="display:none">
-            <label for="billedDemand"><span class="lbl-text">Maximum Demand (MD) (kW)</span><span class="gloss" tabindex="0" role="img" aria-label="Maximum Demand: the highest power draw recorded in the period; for commercial / HT (kVA) supplies it drives the demand charge and any excess-demand penalty." data-tip="MD — Maximum Demand: the highest power draw recorded this period. For commercial / HT (kVA) supplies it drives the demand charge and the excess-demand penalty.">ⓘ</span></label>
+            <label for="billedDemand"><span class="lbl-text" data-i18n="label.billedDemand">Maximum Demand (MD) (kW)</span><span class="gloss" tabindex="0" role="img" aria-label="Maximum Demand: the highest power draw recorded in the period; for commercial / HT (kVA) supplies it drives the demand charge and any excess-demand penalty." data-tip="MD — Maximum Demand: the highest power draw recorded this period. For commercial / HT (kVA) supplies it drives the demand charge and the excess-demand penalty.">ⓘ</span></label>
             <input type="number" id="billedDemand" placeholder="e.g., 4.33" min="0.1" step="0.01">
-            <small>Peak demand recorded by the meter this period. For demand-billed (commercial) categories it drives the demand charge and the excess-demand penalty when it exceeds the sanctioned load. Leave blank to bill on sanctioned load.</small>
+            <small data-i18n="small.billedDemand">Peak demand recorded by the meter this period. For demand-billed (commercial) categories it drives the demand charge and the excess-demand penalty when it exceeds the sanctioned load. Leave blank to bill on sanctioned load.</small>
           </div>
 
           <div class="form-row form-row-uneven">
             <div class="form-group">
-              <label for="connectedLoad"><span class="lbl-text">Sanctioned Load (kW)</span><span class="gloss" tabindex="0" role="img" aria-label="Sanctioned / contract demand: the load you have contracted with the utility; fixed / demand charges and the excess-demand check are based on it." data-tip="Sanctioned Load / Contract Demand: the load you've contracted with the utility. Fixed / demand charges and the excess-demand check are based on it.">ⓘ</span></label>
+              <label for="connectedLoad"><span class="lbl-text" data-i18n="label.sanctioned">Sanctioned Load (kW)</span><span class="gloss" tabindex="0" role="img" aria-label="Sanctioned / contract demand: the load you have contracted with the utility; fixed / demand charges and the excess-demand check are based on it." data-tip="Sanctioned Load / Contract Demand: the load you've contracted with the utility. Fixed / demand charges and the excess-demand check are based on it.">ⓘ</span></label>
               <input type="number" id="connectedLoad" placeholder="e.g., 2" min="0.1" step="0.1" value="2">
-              <small>Contracted / sanctioned load. Used for fixed charge and excess demand check.</small>
+              <small data-i18n="small.sanctioned">Contracted / sanctioned load. Used for fixed charge and excess demand check.</small>
             </div>
             <div class="form-group">
               <label for="facRate" id="facRateLabel"><span class="lbl-text">FPPA / FAC Surcharge (₹/unit)</span><span class="gloss" tabindex="0" role="img" aria-label="FPPA: Fuel and Power Purchase Adjustment — a periodic surcharge passing the utility's varying fuel and power-purchase cost on to consumers." data-tip="FPPA — Fuel &amp; Power Purchase Adjustment: a periodic surcharge passing the utility's varying fuel / power-purchase cost on to consumers.">ⓘ</span></label>
@@ -283,10 +319,10 @@
               </div>
               <label class="checkbox-label fppa-auto-label">
                 <input type="checkbox" id="fppaAuto" checked>
-                Auto-fill from verified government data
+                <span data-i18n="chk.fppaAuto">Auto-fill from verified government data</span>
               </label>
               <small id="fppaSource" class="fppa-source" style="display:none"></small>
-              <small>Fuel &amp; Power Purchase Adjustment. ₹/unit = (actual − base power cost) × units, or % of supply+demand charges (UP MYT 2025). Uncheck above (or type a value) to enter manually. Can be negative (credit).</small>
+              <small data-i18n="small.fppa">Fuel &amp; Power Purchase Adjustment. ₹/unit = (actual − base power cost) × units, or % of supply+demand charges (UP MYT 2025). Uncheck above (or type a value) to enter manually. Can be negative (credit).</small>
             </div>
           </div>
 
@@ -294,91 +330,91 @@
           <div class="form-group" id="netMeteringGroup">
             <label class="checkbox-label">
               <input type="checkbox" id="netMeteringChk">
-              <span><strong>Rooftop solar / net metering</strong> — bill on net import</span>
+              <span data-i18n-html="chk.netMetering"><strong>Rooftop solar / net metering</strong> — bill on net import</span>
               <span class="gloss" tabindex="0" role="img" aria-label="Net metering: energy is billed on net import = imported units minus exported units minus any banked credit; surplus is banked for next month." data-tip="Net metering: energy billed on net import = imported − exported − banked credit. Surplus export is banked as a unit credit for next month. Fixed/demand charges still apply.">ⓘ</span>
             </label>
             <div id="netMeteringFields" style="display:none">
               <div class="form-row">
                 <div class="form-group">
-                  <label for="exportUnits">Exported Units (kWh)</label>
+                  <label for="exportUnits" data-i18n="label.exportUnits">Exported Units (kWh)</label>
                   <input type="number" id="exportUnits" placeholder="e.g., 120" min="0" step="1">
                 </div>
                 <div class="form-group">
-                  <label for="openingCredit">Opening Banked Credit (kWh)</label>
+                  <label for="openingCredit" data-i18n="label.openingCredit">Opening Banked Credit (kWh)</label>
                   <input type="number" id="openingCredit" placeholder="e.g., 0" min="0" step="1">
                 </div>
               </div>
-              <small>The units consumed above are your <strong>import</strong> from the grid. Net billed = import − exported − opening credit; any surplus is banked and carried forward (across months in a multi-month revision too).</small>
+              <small data-i18n-html="small.netMetering">The units consumed above are your <strong>import</strong> from the grid. Net billed = import − exported − opening credit; any surplus is banked and carried forward (across months in a multi-month revision too).</small>
             </div>
           </div>
 
           <div class="form-group" id="lpscApplicableGroup">
             <label class="checkbox-label lpsc-applicable-label">
               <input type="checkbox" id="lpscApplicable" checked>
-              <span><strong>LPSC Applicable</strong> — apply late-payment surcharge on the current bill</span>
+              <span data-i18n-html="chk.lpsc"><strong>LPSC Applicable</strong> — apply late-payment surcharge on the current bill</span>
               <span class="gloss" tabindex="0" role="img" aria-label="LPSC: Late Payment Surcharge — a percentage added for each month a bill remains unpaid." data-tip="LPSC — Late Payment Surcharge: a percentage added for each month a bill stays unpaid (it compounds on the running balance in a multi-month revision).">ⓘ</span>
             </label>
-            <small>Rate &amp; months-late are set in the Arrear tab. Uncheck if late-payment surcharge does not apply for this consumer / period.</small>
+            <small data-i18n="small.lpscApplicable">Rate &amp; months-late are set in the Arrear tab. Uncheck if late-payment surcharge does not apply for this consumer / period.</small>
           </div>
 
           <div class="form-group" id="delhiSubsidyGroup" style="display:none">
-            <label>Delhi GNCTD Subsidy</label>
+            <label data-i18n="label.delhiSubsidy">Delhi GNCTD Subsidy</label>
             <label class="checkbox-label">
               <input type="checkbox" id="delhiSubsidyCheck" checked>
-              Apply government subsidy
+              <span data-i18n="chk.applySubsidy">Apply government subsidy</span>
             </label>
-            <small>≤200 units: zero bill. 201–400 units: 50% rebate.</small>
+            <small data-i18n="small.subsidy">≤200 units: zero bill. 201–400 units: 50% rebate.</small>
           </div>
         </div><!-- /#tab-meterread -->
 
         <!-- ── Arrear ── -->
         <div class="bill-tab-panel" id="tab-arrear" role="tabpanel" aria-labelledby="bt-arrear">
-          <p class="tab-hint">Enter amounts exactly as shown on your previous bill. LPSC on previous arrear is a direct amount, not computed.</p>
+          <p class="tab-hint" data-i18n="hint.arrear">Enter amounts exactly as shown on your previous bill. LPSC on previous arrear is a direct amount, not computed.</p>
 
           <div class="form-row">
             <div class="form-group">
-              <label for="arrears">Previous Arrear (₹)</label>
+              <label for="arrears" data-i18n="label.prevArrear">Previous Arrear (₹)</label>
               <input type="number" id="arrears" placeholder="0" min="0" step="0.01" value="0">
             </div>
             <div class="form-group">
-              <label for="arrearLpsc">Prev. Arrear LPSC (₹)</label>
+              <label for="arrearLpsc" data-i18n="label.prevArrearLpsc">Prev. Arrear LPSC (₹)</label>
               <input type="number" id="arrearLpsc" placeholder="0" min="0" step="0.01" value="0">
-              <small>LPSC amount on the previous arrear, as shown on your last bill.</small>
+              <small data-i18n="small.arrearLpsc">LPSC amount on the previous arrear, as shown on your last bill.</small>
             </div>
           </div>
-          <div class="tab-total">Total Arrear: <strong id="arrearTotalDisplay">₹ 0.00</strong></div>
+          <div class="tab-total"><span data-i18n="total.arrear">Total Arrear:</span> <strong id="arrearTotalDisplay">₹ 0.00</strong></div>
 
           <hr>
-          <p class="tab-hint">LPSC is enabled by the “LPSC Applicable” toggle on the Meter Read tab. These fields set the rate and how many months the current bill is overdue.</p>
+          <p class="tab-hint" data-i18n="hint.lpsc">LPSC is enabled by the “LPSC Applicable” toggle on the Meter Read tab. These fields set the rate and how many months the current bill is overdue.</p>
 
           <div class="form-row" id="lpscFields">
             <div class="form-group">
-              <label for="lpscRate">Current Bill LPSC Rate (% / month)</label>
+              <label for="lpscRate" data-i18n="label.lpscRate">Current Bill LPSC Rate (% / month)</label>
               <input type="number" id="lpscRate" placeholder="1.5" min="0" step="0.1" value="1.5">
-              <small>Late Payment Surcharge per SERC order. Typically 1.5%.</small>
+              <small data-i18n="small.lpscRate">Late Payment Surcharge per SERC order. Typically 1.5%.</small>
             </div>
             <div class="form-group">
-              <label for="currentLpscMonths">Current Bill Months Late</label>
+              <label for="currentLpscMonths" data-i18n="label.lpscMonths">Current Bill Months Late</label>
               <input type="number" id="currentLpscMonths" placeholder="0" min="0" step="1" value="0">
-              <small>Months late in paying the current bill (LPSC applied on current net).</small>
+              <small data-i18n="small.lpscMonths">Months late in paying the current bill (LPSC applied on current net).</small>
             </div>
           </div>
         </div><!-- /#tab-arrear -->
 
         <!-- ── Payment ── -->
         <div class="bill-tab-panel" id="tab-payment" role="tabpanel" aria-labelledby="bt-payment">
-          <p class="tab-hint">Payments already made during this billing period — these reduce the total amount due.</p>
+          <p class="tab-hint" data-i18n="hint.payment">Payments already made during this billing period — these reduce the total amount due.</p>
           <div id="paymentRows"></div>
-          <div class="tab-total">Total Payment: <strong id="paymentTotalDisplay">₹ 0.00</strong></div>
-          <button class="btn-add-row" id="addPaymentBtn" type="button">+ Add Payment</button>
+          <div class="tab-total"><span data-i18n="total.payment">Total Payment:</span> <strong id="paymentTotalDisplay">₹ 0.00</strong></div>
+          <button class="btn-add-row" id="addPaymentBtn" type="button" data-i18n="btn.addPayment">+ Add Payment</button>
         </div><!-- /#tab-payment -->
 
         <!-- ── Adjustment ── -->
         <div class="bill-tab-panel" id="tab-adjustment" role="tabpanel" aria-labelledby="bt-adjustment">
-          <p class="tab-hint">Any miscellaneous credits or charges — e.g., meter cost, security deposit refund, or rebate. Use negative values for credits.</p>
+          <p class="tab-hint" data-i18n="hint.adjustment">Any miscellaneous credits or charges — e.g., meter cost, security deposit refund, or rebate. Use negative values for credits.</p>
           <div id="adjustmentRows"></div>
-          <div class="tab-total">Total Adjustment: <strong id="adjustmentTotalDisplay">₹ 0.00</strong></div>
-          <button class="btn-add-row" id="addAdjustmentBtn" type="button">+ Add Adjustment</button>
+          <div class="tab-total"><span data-i18n="total.adjustment">Total Adjustment:</span> <strong id="adjustmentTotalDisplay">₹ 0.00</strong></div>
+          <button class="btn-add-row" id="addAdjustmentBtn" type="button" data-i18n="btn.addAdjustment">+ Add Adjustment</button>
         </div><!-- /#tab-adjustment -->
 
       </div><!-- /.bill-tabs-container -->
@@ -394,7 +430,12 @@
         <span class="fwb-text" id="dateWarningText">Dates don't match. Please check them.</span>
       </div>
 
-      <button id="calculateBtn" class="btn-calculate" data-i18n="btn.calculate" disabled>
+      <div id="requiredWarningBanner" class="form-warning-banner" style="display:none" role="alert" aria-live="assertive">
+        <span class="fwb-icon">🔴</span>
+        <span class="fwb-text" id="requiredWarningText"></span>
+      </div>
+
+      <button id="calculateBtn" class="btn-calculate" data-i18n="btn.calculate">
         ⚡ Calculate Provisional Bill
       </button>
       <div class="btn-secondary-row">
@@ -415,8 +456,8 @@
             <line x1="9" y1="16" x2="13" y2="16"/>
           </svg>
         </div>
-        <h3>Your provisional bill will appear here</h3>
-        <p>Select your DISCOM, fill in the details, and click<br><strong>Calculate Provisional Bill</strong></p>
+        <h3 data-i18n="placeholder.title">Your provisional bill will appear here</h3>
+        <p data-i18n-html="placeholder.sub">Select your DISCOM, fill in the details, and click<br><strong>Calculate Provisional Bill</strong></p>
       </div>
     </div>
 
@@ -427,7 +468,7 @@
 <section id="about" class="about-section">
   <div class="container">
     <h2 class="reveal" data-i18n="about.title">About TheDiscomBill</h2>
-    <p class="reveal">
+    <p class="reveal" data-i18n-html="about.p1">
       TheDiscomBill is a free, browser-based electricity bill calculator that covers
       <strong>all Distribution Companies (DISCOMs) across India</strong> — from BESCOM in Karnataka
       to MSEDCL in Maharashtra, PSPCL in Punjab, TANGEDCO in Tamil Nadu, and dozens more.
@@ -438,36 +479,36 @@
     <div class="stats-row">
       <div class="stat-card reveal">
         <div class="stat-number">35+</div>
-        <div class="stat-label">States & UTs covered</div>
+        <div class="stat-label" data-i18n="about.stat.states">States & UTs covered</div>
       </div>
       <div class="stat-card reveal">
         <div class="stat-number">70+</div>
-        <div class="stat-label">DISCOMs supported</div>
+        <div class="stat-label" data-i18n="about.stat.discoms">DISCOMs supported</div>
       </div>
       <div class="stat-card reveal">
         <div class="stat-number">150+</div>
-        <div class="stat-label">Consumer categories</div>
+        <div class="stat-label" data-i18n="about.stat.categories">Consumer categories</div>
       </div>
       <div class="stat-card reveal">
         <div class="stat-number">Free</div>
-        <div class="stat-label">No sign-up needed</div>
+        <div class="stat-label" data-i18n="about.stat.free">No sign-up needed</div>
       </div>
     </div>
 
-    <h2 class="reveal" style="margin-top:28px">How It Works</h2>
-    <p class="reveal">
+    <h2 class="reveal" style="margin-top:28px" data-i18n="about.howTitle">How It Works</h2>
+    <p class="reveal" data-i18n-html="about.p2">
       The calculator uses the latest publicly available tariff orders from each DISCOM.
       It computes charges using the <strong>telescopic (cumulative) slab method</strong>:
       the rate for each slab applies only to the units consumed within that slab,
       not to the entire consumption. Fixed / demand charges are applied separately
       based on your connected (sanctioned) load.
     </p>
-    <p class="reveal">
+    <p class="reveal" data-i18n-html="about.p3">
       Electricity Duty, fuel adjustment charges, and other state levies are applied
       as specified in each DISCOM's tariff schedule.
     </p>
 
-    <div class="disclaimer reveal">
+    <div class="disclaimer reveal" data-i18n-html="about.disclaimer">
       <strong>⚠ Disclaimer:</strong> This is a <strong>provisional bill calculator</strong> for reference and educational
       purposes only. The tariff rates used here are approximate, based on publicly available
       tariff orders, and may not reflect the latest revisions or local surcharges. Actual
@@ -480,8 +521,8 @@
 
 <!-- ── Footer ───────────────────────────────────────────────────────────────── -->
 <footer>
-  <p>&copy; 2024 TheDiscomBill &nbsp;·&nbsp; Free Electricity Bill Calculator for India</p>
-  <p>
+  <p data-i18n-html="footer.l1">&copy; 2024 TheDiscomBill &nbsp;·&nbsp; Free Electricity Bill Calculator for India</p>
+  <p data-i18n-html="footer.l2">
     Tariff data is approximate and based on publicly available information (2024-25).
     Not affiliated with any DISCOM, SERC, or government body.
     &nbsp;|&nbsp; <a href="#about">Disclaimer</a>
