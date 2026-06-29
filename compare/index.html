@@ -74,12 +74,14 @@
   </div>
 </header>
 
-<div class="page-body" style="padding-top: 76px;">
+<div class="page-body">
+  <!-- The sticky header already reserves its height in normal flow, so no extra
+       padding-top is needed here — the section's own top padding handles spacing. -->
   <!-- ── Comparison Table ──────────────────────────────────────────────────────── -->
   <section id="comparison" class="comparison-section" style="min-height: calc(100vh - 150px);">
     <div class="container">
       <h2 class="reveal">Tariff Comparison (Major DISCOMs)</h2>
-      <p class="reveal">See how major electricity providers stack up against each other for a typical month. Calculated dynamically based on current FY 2025-26 tariffs.</p>
+      <p class="reveal">See how major electricity providers stack up against each other for a typical month at a <strong>1&nbsp;kW sanctioned load</strong>. Calculated dynamically based on current FY 2025-26 tariffs.</p>
       
       <div class="comparison-tabs reveal">
         <button class="comp-tab active" data-target="domestic">Domestic</button>
@@ -98,10 +100,20 @@
             </tr>
           </thead>
           <tbody id="compTableBody">
-            <tr><td colspan="5" class="comp-loading">Calculating tariffs...</td></tr>
+            <tr><td colspan="5" class="comp-loading">Calculating tariffs…</td></tr>
           </tbody>
         </table>
       </div>
+
+      <p class="comparison-note reveal">
+        Figures are the estimated <strong>total monthly bill</strong> (energy + fixed/demand
+        charges + FPPA, where applicable) for a single-phase connection on the standard urban
+        tariff, computed with the same engine as the calculator. A fixed <strong>1&nbsp;kW
+        sanctioned load</strong> is assumed across all tiers; subsidies, net-metering and
+        late-payment surcharge are excluded. The <span class="comp-best" style="padding:1px 6px;border-radius:5px">green</span>
+        cell marks the cheapest DISCOM at each consumption level. Always verify against your
+        actual bill — tariffs vary by sub-category, slab and city.
+      </p>
     </div>
   </section>
 </div>
