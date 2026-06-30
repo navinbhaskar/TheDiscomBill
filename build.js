@@ -8,7 +8,7 @@ const assets = [
   'css', 'js',
   // Route pages (each is its own folder with an index.html) — must be copied or
   // the Quick Links destinations 404 in production.
-  'compare', 'estimators', 'tariffs', 'bill-check', 'new-connection', 'complaint',
+  'compare', 'estimators', 'solar', 'tariffs', 'bill-check', 'new-connection', 'complaint',
   'index.html', 'editor.html',
   'sw.js', 'manifest.webmanifest',
   'icon.svg', 'icon-maskable.svg',
