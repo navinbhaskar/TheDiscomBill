@@ -73,7 +73,13 @@ export function initHistory() {
     const item = e.target.closest('.history-item');
     if (!item) return;
     const entry = readHistory()[+item.dataset.i];
-    if (entry) location.search = '?' + entry.params;   // reload; loadFromUrl auto-calculates
+    if (entry) {
+      // Re-open the saved bill in place: apply its inputs and recalculate without
+      // touching the URL or reloading the page.
+      loadFromUrl(entry.params).then(() => {
+        document.getElementById('billPanel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
   });
   renderHistory();
 }
@@ -1452,9 +1458,11 @@ export function doCalculate() {
  * First checks for an obfuscated 'q' parameter (Base64 encoded string).
  * Falls back to standard URL parameters for backward compatibility.
  */
-export async function loadFromUrl() {
-  let p = new URLSearchParams(location.search);
-  
+export async function loadFromUrl(paramsSource) {
+  // Accept an explicit query string (e.g. a saved Recent bill) so a bill can be re-opened
+  // in place WITHOUT changing the URL or reloading. Falls back to the address bar (share links).
+  let p = new URLSearchParams(paramsSource != null ? paramsSource : location.search);
+
   // If the 'q' param exists, decode it first.
   if (p.has('q')) {
     try {

@@ -1,4 +1,4 @@
-// estimators.js — Appliance-based monthly consumption estimator for /estimators/.
+// estimators.js — Appliance-based monthly usage estimator for /usage/ (the "Usage Estimator").
 // Self-contained: no engine import. The user adds appliances (wattage × quantity × hours/day),
 // and we compute monthly kWh and an approximate cost, with a visual "where your units go"
 // breakdown. State persists in localStorage so it survives reloads.
@@ -9,7 +9,7 @@ const STORE_KEY = 'tdb_estimator_v1';
 // Typical Indian-household appliance presets. `w` = running wattage, `hrs` = a sensible default
 // daily run-time. For the fridge/AC, `hrs` is the *effective* compressor run-time (they cycle).
 const CATALOG = [
-  { id: 'fan',       name: 'Ceiling Fan',            icon: '🌀', w: 75,   hrs: 12 },
+  { id: 'fan',       name: 'Ceiling Fan',            icon: '🪭', w: 75,   hrs: 12 },
   { id: 'led',       name: 'LED Bulb',               icon: '💡', w: 9,    hrs: 6  },
   { id: 'tube',      name: 'Tube Light',             icon: '🔆', w: 20,   hrs: 6  },
   { id: 'tv',        name: 'LED TV',                 icon: '📺', w: 90,   hrs: 5  },
@@ -34,7 +34,7 @@ const byId = (id) => CATALOG.find(c => c.id === id);
 
 // A sensible starter set shown on first visit so the page isn't empty.
 const DEFAULT_ROWS = [
-  { catId: 'fan',    name: 'Ceiling Fan', icon: '🌀', w: 75,  qty: 3, hrs: 12 },
+  { catId: 'fan',    name: 'Ceiling Fan', icon: '🪭', w: 75,  qty: 3, hrs: 12 },
   { catId: 'led',    name: 'LED Bulb',    icon: '💡', w: 9,   qty: 6, hrs: 6  },
   { catId: 'tv',     name: 'LED TV',      icon: '📺', w: 90,  qty: 1, hrs: 5  },
   { catId: 'fridge', name: 'Refrigerator', icon: '❄️', w: 150, qty: 1, hrs: 8 },

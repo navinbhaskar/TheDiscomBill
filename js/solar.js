@@ -114,8 +114,8 @@ function init() {
     pull.textContent = `Use my estimate (${est} units)`;
   } else {
     pull.classList.add('is-disabled');
-    pull.title = 'Build an estimate on the Consumption Estimators page first';
-    pull.addEventListener('click', () => { location.href = '/estimators/'; });
+    pull.title = 'Build an estimate on the Usage Estimator page first';
+    pull.addEventListener('click', () => { location.href = '/usage/'; });
   }
 
   render();

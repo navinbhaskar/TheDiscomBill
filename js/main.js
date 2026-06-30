@@ -149,6 +149,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const showDelhi = isDelhiDiscom(discomEl.value);
       document.getElementById('delhiSubsidyGroup').style.display = showDelhi ? 'flex' : 'none';
       prefillLpsc(discomEl.value);
+      // Reflect the chosen DISCOM (and its state) in the URL without reloading, so the
+      // selection can be bookmarked / shared. Other existing query params are preserved.
+      const params = new URLSearchParams(location.search);
+      if (discomEl.value) {
+        params.set('state', stateEl.value);
+        params.set('discom', discomEl.value);
+      } else {
+        params.delete('discom');
+      }
+      const qs = params.toString();
+      history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
     });
 
     categoryEl.addEventListener('change', () => {

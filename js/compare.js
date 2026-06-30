@@ -5,15 +5,29 @@
 import { TARIFF_DB } from './tariffs/registry.js';
 import { calculateBill } from './engine.js';
 
-// Featured DISCOMs (one representative per major state). UP's five DISCOMs share the same
-// UPERC schedule, so MVVNL stands in for the state (its rates are bill-verified).
+// Featured DISCOMs — one representative per major state, ordered roughly North → South.
+// (UP's five DISCOMs share the UPERC schedule, so MVVNL stands in; its rates are bill-verified.)
 const MAJOR_DISCOMS = [
-  { id: 'mvvnl',    name: 'Uttar Pradesh (MVVNL)' },
-  { id: 'bescom',   name: 'Karnataka (BESCOM)' },
-  { id: 'msedcl',   name: 'Maharashtra (MSEDCL)' },
-  { id: 'tangedco', name: 'Tamil Nadu (TANGEDCO)' },
-  { id: 'tpddl',    name: 'Delhi (Tata Power-DDL)' },
-  { id: 'kseb',     name: 'Kerala (KSEB)' }
+  { id: 'mvvnl',    state: 'Uttar Pradesh',  discom: 'MVVNL' },
+  { id: 'tpddl',    state: 'Delhi',          discom: 'Tata Power-DDL' },
+  { id: 'pspcl',    state: 'Punjab',         discom: 'PSPCL' },
+  { id: 'dhbvn',    state: 'Haryana',        discom: 'DHBVN' },
+  { id: 'jvvnl',    state: 'Rajasthan',      discom: 'JVVNL' },
+  { id: 'upcl',     state: 'Uttarakhand',    discom: 'UPCL' },
+  { id: 'ugvcl',    state: 'Gujarat',        discom: 'UGVCL' },
+  { id: 'msedcl',   state: 'Maharashtra',    discom: 'MSEDCL' },
+  { id: 'mppkvvcl', state: 'Madhya Pradesh', discom: 'MPPKVVCL' },
+  { id: 'cspdcl',   state: 'Chhattisgarh',   discom: 'CSPDCL' },
+  { id: 'nbpdcl',   state: 'Bihar',          discom: 'NBPDCL' },
+  { id: 'jbvnl',    state: 'Jharkhand',      discom: 'JBVNL' },
+  { id: 'wbsedcl',  state: 'West Bengal',    discom: 'WBSEDCL' },
+  { id: 'tpnodl',   state: 'Odisha',         discom: 'TPNODL' },
+  { id: 'apdcl',    state: 'Assam',          discom: 'APDCL' },
+  { id: 'tsspdcl',  state: 'Telangana',      discom: 'TSSPDCL' },
+  { id: 'apspdcl',  state: 'Andhra Pradesh', discom: 'APSPDCL' },
+  { id: 'bescom',   state: 'Karnataka',      discom: 'BESCOM' },
+  { id: 'tangedco', state: 'Tamil Nadu',     discom: 'TANGEDCO' },
+  { id: 'kseb',     state: 'Kerala',         discom: 'KSEB' },
 ];
 
 // Flatten all state DISCOM arrays into a single lookup list.
@@ -56,7 +70,7 @@ function billFor(discomId, categoryTarget, units) {
 function generateComparisonRows(categoryTarget) {
   // First pass: compute every amount so we can find the lowest per consumption tier.
   const rows = MAJOR_DISCOMS
-    .map(d => ({ name: d.name, amounts: UNIT_TIERS.map(u => billFor(d.id, categoryTarget, u)) }))
+    .map(d => ({ state: d.state, discom: d.discom, amounts: UNIT_TIERS.map(u => billFor(d.id, categoryTarget, u)) }))
     .filter(r => r.amounts.some(a => a !== null)); // drop DISCOMs with no data for this category
 
   const columnMin = UNIT_TIERS.map((_, col) => {
@@ -64,14 +78,18 @@ function generateComparisonRows(categoryTarget) {
     return vals.length ? Math.min(...vals) : null;
   });
 
-  // Second pass: render. The cheapest cell in each column gets a "best" badge.
+  // Second pass: render. The cheapest cell in each column gets a green "lowest" highlight.
   return rows.map(r => {
     const cells = r.amounts.map((amt, col) => {
-      if (amt === null) return `<td class="num text-tertiary">—</td>`;
+      if (amt === null) return `<td class="num comp-na">—</td>`;
       const isBest = columnMin[col] !== null && amt === columnMin[col];
-      return `<td class="num${isBest ? ' comp-best' : ''}">${fmt(amt)}</td>`;
+      const tick = isBest ? '<span class="comp-tick" title="Lowest at this usage">✓</span>' : '';
+      return `<td class="num${isBest ? ' comp-best' : ''}">${tick}${fmt(amt)}</td>`;
     }).join('');
-    return `<tr><td><strong>${r.name}</strong></td>${cells}</tr>`;
+    return `<tr>
+      <td class="comp-name"><span class="comp-state">${r.state}</span><span class="comp-code">${r.discom}</span></td>
+      ${cells}
+    </tr>`;
   }).join('');
 }
 
