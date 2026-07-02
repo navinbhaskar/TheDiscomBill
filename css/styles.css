@@ -1288,6 +1288,19 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .bill-disclaimer strong { color: var(--brand-dark); }
 .bill-disclaimer a { color: var(--brand); text-decoration: underline; }
 
+/* Internal link from the provisional bill to the full per-DISCOM tariff page
+   (helps users find the static landing page, and passes link equity to it). */
+.bill-fullpage-link {
+  padding: 12px 20px;
+  border-top: 1px solid var(--border-default);
+  background: var(--surface-card);
+}
+.bill-fullpage-link a {
+  color: var(--brand); font-weight: 600; font-size: 13px;
+  text-decoration: none;
+}
+.bill-fullpage-link a:hover { text-decoration: underline; }
+
 /* ─── Quick Links ────────────────────────────────────────────────────────────── */
 .quick-links {
   background: var(--surface-card);

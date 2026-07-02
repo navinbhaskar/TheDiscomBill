@@ -458,6 +458,18 @@ export function renderBill(params) {
 
     ${category.notes ? `<div class="bill-category-note">ℹ️ ${category.notes}</div>` : ''}
 
+    ${(() => {
+      const stateVal = document.getElementById('stateSelect')?.value;
+      if (!stateVal || !discom.id) return '';
+      // Slug must match generate-seo.js so this points at the real static landing page.
+      const slug = String(stateVal).toLowerCase().trim()
+        .replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+      const url = `/tariffs/${slug}/${discom.id}/`;
+      return `<div class="bill-fullpage-link">
+        <a href="${url}">See the full ${discom.name} tariff page — slabs, fixed charges &amp; FAQs →</a>
+      </div>`;
+    })()}
+
     <div class="bill-disclaimer">
       <strong>⚠ PROVISIONAL BILL</strong> – This is an estimated bill for reference only.
       Actual charges from ${discom.name} may differ. Tariff data is approximate (${discom.tariffYear || '2024-25'}).
