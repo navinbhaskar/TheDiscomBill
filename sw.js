@@ -1,6 +1,6 @@
 // sw.js — Service Worker (network-first, cache fallback)
 // Update this version string when deploying new code to bust the cache.
-const CACHE = 'discombill-20260629-55';
+const CACHE = 'discombill-20260630-56';
 
 const CORE = [
   './', './index.html', './compare/', './compare/index.html',
@@ -17,6 +17,9 @@ const CORE = [
   './js/ui.js', './js/datepicker.js', './js/renderer.js', './js/main.js', './js/compare.js',
   './js/estimators.js', './js/tariff-explorer.js', './js/bill-check.js',
   './js/portal-page.js', './js/new-connection.js', './js/complaint.js', './js/solar.js',
+  // Vendored libraries — lenis.mjs is a STATIC import of main.js, so if it is missing from
+  // the cache offline the whole entry point fails to parse (and the state list never loads).
+  './js/vendor/lenis.mjs', './js/vendor/html2pdf.bundle.min.js',
   // Tariff registry + FPPA
   './js/tariffs/registry.js', './js/tariffs/fppa.js',
   // Per-state tariff data
@@ -68,6 +71,13 @@ self.addEventListener('fetch', e => {
         }
         return res;
       })
-      .catch(() => caches.match(e.request).then(r => r || caches.match('./index.html')))
+      .catch(() => caches.match(e.request).then(r => {
+        if (r) return r;
+        // Only fall back to the app shell for navigations. Never hand HTML back for a
+        // missing script/style/module request — that would make the browser try to parse
+        // index.html as JS and abort the module (e.g. the state list failing to load).
+        if (e.request.mode === 'navigate') return caches.match('./index.html');
+        return Response.error();
+      }))
   );
 });

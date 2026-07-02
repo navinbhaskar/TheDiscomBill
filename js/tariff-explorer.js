@@ -7,6 +7,10 @@ import { TARIFF_DB, STATE_META, getStates, getDiscoms } from './tariffs/registry
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const rupee = (n) => '₹' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+// Must match the slug used by generate-seo.js so the reflected URL points at the real static page.
+const slugify = (s) => String(s).toLowerCase().trim()
+  .replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+const discomPageUrl = (state, discomId) => `/tariffs/${slugify(state)}/${discomId}/`;
 
 // ── Renderers for the pieces of a tariff ─────────────────────────────────────
 function slabRange(prev, limit) {
@@ -111,6 +115,7 @@ function renderDiscom(state, discomId) {
   if (discom.tariffYear || meta.ratesAsOf) badges.push(`<span class="tariff-badge">FY ${esc(discom.tariffYear || meta.ratesAsOf)}</span>`);
   const src = discom.website || meta.sourceUrl;
 
+  const pageUrl = discomPageUrl(state, discom.id);
   $('tariffDiscomMeta').innerHTML = `
     <div class="tariff-discom-headrow">
       <div>
@@ -119,10 +124,18 @@ function renderDiscom(state, discomId) {
       </div>
       <div class="tariff-badges">${badges.join('')}</div>
     </div>
-    ${src ? `<a class="tariff-source" href="${esc(src)}" target="_blank" rel="noopener">Official source ↗</a>` : ''}`;
+    <div class="tariff-meta-links">
+      <a class="tariff-pagelink" href="${esc(pageUrl)}">Open full ${esc(discom.name)} page ↗</a>
+      ${src ? `<a class="tariff-source" href="${esc(src)}" target="_blank" rel="noopener">Official source ↗</a>` : ''}
+    </div>`;
 
   $('tariffCards').innerHTML = (discom.categories || []).map(categoryCardHtml).join('')
     || '<p class="tx-muted">No categories listed.</p>';
+
+  // Reflect the selection in the address bar using the canonical per-DISCOM URL. A real static
+  // page exists at this path (built by generate-seo.js), so the URL is shareable and reloads
+  // straight to the full page. replaceState avoids spamming the back button as dropdowns change.
+  try { history.replaceState(null, '', pageUrl); } catch (e) {}
 }
 
 function populateDiscoms(state, preselectId) {

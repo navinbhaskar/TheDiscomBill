@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://thediscompbill.com/sitemap.xml
+Sitemap: https://www.thediscombill.com/sitemap.xml

@@ -23,10 +23,48 @@
   <title>TheDiscomBill – Electricity Bill Calculator for All Indian DISCOMs</title>
   <meta name="description" content="Calculate your provisional electricity bill for any DISCOM in India. Supports all states and union territories. Free, instant, no sign-up required.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="canonical" href="https://www.thediscombill.com/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="TheDiscomBill – Electricity Bill Calculator for All Indian DISCOMs">
+  <meta property="og:description" content="Calculate your provisional electricity bill for any DISCOM in India. All states & UTs, slab-wise breakdown, FPPA, solar net metering. Free, instant, no sign-up.">
+  <meta property="og:url" content="https://www.thediscombill.com/">
+  <meta property="og:image" content="https://www.thediscombill.com/icon-512.png">
+  <meta property="og:locale" content="en_IN">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="TheDiscomBill – Electricity Bill Calculator for All Indian DISCOMs">
+  <meta name="twitter:description" content="Free electricity bill calculator for every Indian DISCOM — slab-wise breakdown, FPPA, solar net metering. No sign-up.">
+  <meta name="twitter:image" content="https://www.thediscombill.com/icon-512.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://www.thediscombill.com/#website",
+        "url": "https://www.thediscombill.com/",
+        "name": "TheDiscomBill",
+        "description": "Free electricity bill calculator for all Indian DISCOMs.",
+        "inLanguage": "en-IN"
+      },
+      {
+        "@type": "WebApplication",
+        "name": "TheDiscomBill Electricity Bill Calculator",
+        "url": "https://www.thediscombill.com/",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any (web browser)",
+        "browserRequirements": "Requires JavaScript",
+        "description": "Calculate a provisional electricity bill for any DISCOM in India with a slab-wise breakdown, fixed/demand charges, FPPA and solar net metering.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 <a class="skip-link" href="#calculator">Skip to calculator</a>
@@ -80,6 +118,24 @@
 
 <!-- ── Hero ─────────────────────────────────────────────────────────────────── -->
 <section class="hero">
+  <!-- Decorative drifting electricity icons (purely visual, hidden from a11y tree) -->
+  <div class="hero-floaters" aria-hidden="true">
+    <!-- lightning bolt -->
+    <svg class="hero-floater" style="--fx:8%;  --fy:18%; --fd:0s;   --fdur:17s; --fsize:38px; --frot:-14deg;" viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" fill="currentColor"/></svg>
+    <!-- light bulb -->
+    <svg class="hero-floater" style="--fx:82%; --fy:24%; --fd:-3s;  --fdur:21s; --fsize:34px; --frot:10deg;"  viewBox="0 0 24 24"><path d="M9 18h6m-5 3h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2v.3h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <!-- plug -->
+    <svg class="hero-floater" style="--fx:22%; --fy:68%; --fd:-6s;  --fdur:24s; --fsize:30px; --frot:-8deg;"  viewBox="0 0 24 24"><path d="M9 2v6m6-6v6M6 8h12v3a6 6 0 0 1-12 0V8Zm6 9v5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <!-- battery -->
+    <svg class="hero-floater" style="--fx:70%; --fy:72%; --fd:-9s;  --fdur:19s; --fsize:32px; --frot:6deg;"   viewBox="0 0 24 24"><path d="M4 8h13v8H4zM17 11h2v2h-2zM11 9l-2 4h3l-2 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <!-- power tower -->
+    <svg class="hero-floater" style="--fx:46%; --fy:12%; --fd:-12s; --fdur:26s; --fsize:30px; --frot:0deg;"   viewBox="0 0 24 24"><path d="M12 2v20M7 22l5-12 5 12M5 7h14M6 11h12M9 4h6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <!-- spark -->
+    <svg class="hero-floater" style="--fx:90%; --fy:54%; --fd:-4s;  --fdur:15s; --fsize:24px; --frot:0deg;"   viewBox="0 0 24 24"><path d="M12 2v6m0 8v6M2 12h6m8 0h6M5 5l4 4m6 6 4 4M19 5l-4 4m-6 6-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <!-- meter -->
+    <svg class="hero-floater" style="--fx:34%; --fy:40%; --fd:-15s; --fdur:23s; --fsize:28px; --frot:-6deg;"  viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 12l4-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+  </div>
+
   <div class="hero-badge reveal" data-i18n="hero.badge">Free &middot; All DISCOMs &middot; No Login Required</div>
   <h1 class="reveal" data-i18n="hero.title">Electricity Bill Calculator for Every DISCOM in India</h1>
   <p class="reveal" data-i18n="hero.sub">Get an instant provisional bill with slab-wise breakdown for any state electricity utility.</p>
@@ -530,6 +586,52 @@
       website for accurate and official billing information. TheDiscomBill is not affiliated
       with any electricity utility or government body.
     </div>
+  </div>
+</section>
+
+<!-- ── Browse by state (internal links for SEO + discovery) ─────────────────────
+     Crawlable links to every state landing page; each state page in turn links to its
+     DISCOM pages. The full list lives in the directory hub at /tariffs/states/. -->
+<section id="states" class="states-section">
+  <div class="container">
+    <h2 class="reveal">Electricity Bill Calculator by State</h2>
+    <p class="reveal">Open a dedicated calculator and tariff page for your state, or browse the <a href="/tariffs/states/">full directory of all DISCOMs</a>.</p>
+    <nav class="states-grid reveal" aria-label="Electricity tariffs by state">
+      <a href="/tariffs/andhra-pradesh/">Andhra Pradesh</a>
+      <a href="/tariffs/arunachal-pradesh/">Arunachal Pradesh</a>
+      <a href="/tariffs/assam/">Assam</a>
+      <a href="/tariffs/bihar/">Bihar</a>
+      <a href="/tariffs/chandigarh/">Chandigarh</a>
+      <a href="/tariffs/chhattisgarh/">Chhattisgarh</a>
+      <a href="/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/">Dadra &amp; Nagar Haveli and Daman &amp; Diu</a>
+      <a href="/tariffs/delhi/">Delhi</a>
+      <a href="/tariffs/goa/">Goa</a>
+      <a href="/tariffs/gujarat/">Gujarat</a>
+      <a href="/tariffs/haryana/">Haryana</a>
+      <a href="/tariffs/himachal-pradesh/">Himachal Pradesh</a>
+      <a href="/tariffs/jammu-and-kashmir/">Jammu &amp; Kashmir</a>
+      <a href="/tariffs/jharkhand/">Jharkhand</a>
+      <a href="/tariffs/karnataka/">Karnataka</a>
+      <a href="/tariffs/kerala/">Kerala</a>
+      <a href="/tariffs/ladakh/">Ladakh</a>
+      <a href="/tariffs/madhya-pradesh/">Madhya Pradesh</a>
+      <a href="/tariffs/maharashtra/">Maharashtra</a>
+      <a href="/tariffs/manipur/">Manipur</a>
+      <a href="/tariffs/meghalaya/">Meghalaya</a>
+      <a href="/tariffs/mizoram/">Mizoram</a>
+      <a href="/tariffs/nagaland/">Nagaland</a>
+      <a href="/tariffs/odisha/">Odisha</a>
+      <a href="/tariffs/puducherry/">Puducherry</a>
+      <a href="/tariffs/punjab/">Punjab</a>
+      <a href="/tariffs/rajasthan/">Rajasthan</a>
+      <a href="/tariffs/sikkim/">Sikkim</a>
+      <a href="/tariffs/tamil-nadu/">Tamil Nadu</a>
+      <a href="/tariffs/telangana/">Telangana</a>
+      <a href="/tariffs/tripura/">Tripura</a>
+      <a href="/tariffs/uttar-pradesh/">Uttar Pradesh</a>
+      <a href="/tariffs/uttarakhand/">Uttarakhand</a>
+      <a href="/tariffs/west-bengal/">West Bengal</a>
+    </nav>
   </div>
 </section>
 
