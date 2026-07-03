@@ -13,7 +13,7 @@ const STRINGS = {
     'nav.compare': 'Compare',
     'nav.about': 'About',
     // Hero
-    'hero.badge': 'Free · All DISCOMs · No Login Required',
+    'hero.badge': 'Free · All DISCOMs · Instant Estimate',
     'hero.title': 'Electricity Bill Calculator for Every DISCOM in India',
     'hero.sub': 'Get an instant provisional bill with slab-wise breakdown for any state electricity utility.',
     'hero.cta': 'Calculate my bill',
@@ -147,7 +147,7 @@ const STRINGS = {
     'nav.compare': 'तुलना',
     'nav.about': 'परिचय',
     // Hero
-    'hero.badge': 'निःशुल्क · सभी डिस्कॉम · बिना लॉगिन',
+    'hero.badge': 'निःशुल्क · सभी डिस्कॉम · तुरंत अनुमान',
     'hero.title': 'भारत के हर डिस्कॉम के लिए बिजली बिल कैलकुलेटर',
     'hero.sub': 'किसी भी राज्य की बिजली कंपनी के लिए स्लैब-वार विवरण के साथ तुरंत अनुमानित बिल पाएं।',
     'hero.cta': 'मेरा बिल जानें',

@@ -53,10 +53,11 @@ function renderResult(state, discomId) {
     </div>`;
 }
 
-function populateDiscoms(state) {
+function populateDiscoms(state, preselectDiscom) {
   const sel = $('billCheckDiscom');
   const discoms = getDiscoms(state);
   sel.innerHTML = discoms.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join('');
+  if (preselectDiscom && discoms.some(d => d.id === preselectDiscom)) sel.value = preselectDiscom;
   renderResult(state, sel.value);
 }
 
@@ -66,9 +67,14 @@ function init() {
 
   const states = getStates();
   stateSel.innerHTML = states.map(s => `<option value="${esc(s)}">${esc(s)}</option>`).join('');
-  const def = states.includes('Uttar Pradesh') ? 'Uttar Pradesh' : states[0];
+
+  // Deep-link support: /bill-check/?state=Uttar%20Pradesh&discom=mvvnl preselects the DISCOM.
+  const params = new URLSearchParams(location.search);
+  const wantState = params.get('state');
+  const def = (wantState && states.includes(wantState)) ? wantState
+            : states.includes('Uttar Pradesh') ? 'Uttar Pradesh' : states[0];
   stateSel.value = def;
-  populateDiscoms(def);
+  populateDiscoms(def, params.get('discom'));
 
   stateSel.addEventListener('change', () => populateDiscoms(stateSel.value));
   $('billCheckDiscom').addEventListener('change', () => renderResult(stateSel.value, $('billCheckDiscom').value));

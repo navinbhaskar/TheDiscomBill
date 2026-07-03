@@ -42,14 +42,20 @@ export function initPortalPage({ stateId, discomId, resultId, renderResult, defa
       const discom = discoms.find(d => d.id === discomSel.value) || discoms[0];
       renderResult(box, stateSel.value, discom);
     };
-    const populate = () => {
+    const populate = (preselectDiscom) => {
       const discoms = getDiscoms(stateSel.value);
       discomSel.innerHTML = discoms.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join('');
+      if (preselectDiscom && discoms.some(d => d.id === preselectDiscom)) discomSel.value = preselectDiscom;
       draw();
     };
 
-    stateSel.value = states.includes(defaultState) ? defaultState : states[0];
-    populate();
+    // Deep-link support: /new-connection/?state=Uttar%20Pradesh&discom=mvvnl preselects the DISCOM.
+    const params = new URLSearchParams(location.search);
+    const wantState = params.get('state');
+    const wantDiscom = params.get('discom');
+    stateSel.value = (wantState && states.includes(wantState)) ? wantState
+                   : states.includes(defaultState) ? defaultState : states[0];
+    populate(wantDiscom);
     stateSel.addEventListener('change', populate);
     discomSel.addEventListener('change', draw);
   };

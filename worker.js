@@ -13,6 +13,16 @@ class ApiError extends Error {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    // Force HTTPS: 301-redirect any plain-HTTP request to its https:// equivalent, preserving the
+    // host, path and query. Cloudflare terminates TLS at the edge, so the original client scheme is
+    // reported via the `x-forwarded-proto` header (url.protocol may already read "https" internally).
+    const proto = request.headers.get('x-forwarded-proto') || url.protocol.replace(':', '');
+    if (proto === 'http') {
+      url.protocol = 'https:';
+      return Response.redirect(url.toString(), 301);
+    }
+
     if (url.pathname.startsWith('/api/')) {
       try {
         return await handleApi(request, env, url);

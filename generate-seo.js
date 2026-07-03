@@ -315,6 +315,13 @@ function indicativeBillsHtml(state, discom) {
 function hashStr(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
 function variant(seed, arr) { return arr[hashStr(seed) % arr.length]; }
 
+// Keep <title> within Google's ~60-char truncation width: use the preferred title if it fits,
+// otherwise step through progressively shorter fallbacks (last one wins even if still long).
+function fitTitle(preferred, fallbacks, max = 60) {
+  for (const t of [preferred, ...fallbacks]) if (t.length <= max) return t;
+  return fallbacks[fallbacks.length - 1];
+}
+
 // Split an `area` string like "South UP (Agra, Mathura, Aligarh)" into a region label + city list.
 function parseArea(area) {
   if (!area) return { region: '', cities: [] };
@@ -380,6 +387,27 @@ function keyFactsHtml(state, discom, fy) {
     </section>`;
 }
 
+// Per-DISCOM "quick links" into the service pages (bill-check / new-connection / complaint),
+// deep-linked with ?state=&discom= so the target page opens pre-selected on this DISCOM. These
+// are internal links to existing pages (not new thin per-DISCOM pages) — they improve crawl depth
+// and topical clustering without duplicate-content risk.
+function discomServiceLinksHtml(state, discom) {
+  const qs = `?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}`;
+  const links = [
+    ['/bill-check/', `Check &amp; pay ${esc(discom.name)} bill`, 'View your latest bill and pay on the official portal'],
+    ['/new-connection/', `New ${esc(discom.name)} connection`, 'Charges, documents and the step-by-step apply process'],
+    ['/complaint/', `Register a ${esc(discom.name)} complaint`, 'Log a no-power, billing or meter complaint with the DISCOM'],
+  ];
+  return `
+    <section class="seo-section">
+      <h2>${esc(discom.name)} quick links</h2>
+      <div class="seo-link-grid">
+        ${links.map(([path, title, sub]) =>
+          `<a class="seo-link-card" href="${path}${qs}"><strong>${title}</strong><span>${sub}</span></a>`).join('')}
+      </div>
+    </section>`;
+}
+
 // ── page builders ─────────────────────────────────────────────────────────────
 function discomPage(state, discom) {
   const stateSlug = slugify(state);
@@ -395,10 +423,17 @@ function discomPage(state, discom) {
   // Deterministic phrasing variation (keyed off the DISCOM) so titles/intros aren't a single
   // repeated template across 65 pages — each one is differently worded but factually identical.
   const seed = discom.id + state;
-  const title = variant(seed, [
-    `${discom.name} Electricity Bill Calculator & Tariff ${fy} — ${state} | TheDiscomBill`,
-    `${discom.name} Bill Calculator ${fy}${region ? ` (${region})` : ''} — ${state} Tariff | TheDiscomBill`,
-    `${discom.name} (${long}) Electricity Tariff & Bill Estimate ${fy} | TheDiscomBill`,
+  // Titles stay ≤ ~60 chars (Google's truncation width). Keyword-first, no brand suffix —
+  // Google shows the site name separately in results, so the suffix only ate title width.
+  // Long DISCOM names step down to progressively shorter templates via fitTitle().
+  const title = fitTitle(variant(seed, [
+    `${discom.name} Electricity Bill Calculator & Tariff ${fy}`,
+    `${discom.name} Bill Calculator ${fy} — ${state} Tariff`,
+    `${discom.name} Tariff ${fy} — Electricity Bill Calculator`,
+  ]), [
+    `${discom.name} Bill Calculator & Tariff ${fy}`,
+    `${discom.name} Tariff ${fy} & Bill Calculator`,
+    `${discom.name} Tariff ${fy}`,
   ]);
   const description = variant(seed + 'd', [
     `Calculate your ${discom.name} (${long}) electricity bill for ${fy}${cityPhrase ? ` in ${cityPhrase}` : ''}. Slab-wise rates, fixed charges, FPPA & duties.${dr ? ` Domestic from ${rupee(dr.min)}/unit.` : ''} Free, no sign-up.`,
@@ -473,6 +508,8 @@ function discomPage(state, discom) {
     ${src ? `<p><a class="tariff-source" href="${attr(src)}" target="_blank" rel="noopener">Official ${esc(discom.name)} source ↗</a></p>` : ''}
     <p class="seo-cta-row"><a class="seo-cta" href="/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator">Open the ${esc(discom.name)} bill calculator →</a></p>
 
+    ${discomServiceLinksHtml(state, discom)}
+
     ${keyFactsHtml(state, discom, fy)}
     ${areaServedHtml(discom)}
     ${indicativeBillsHtml(state, discom)}
@@ -518,10 +555,14 @@ function statePage(state) {
   const drs = discoms.map(domesticRates).filter(Boolean);
   const stateMin = drs.length ? Math.min(...drs.map(x => x.min)) : null;
 
-  const title = variant(seed, [
-    `${state} Electricity Bill Calculator & DISCOM Tariffs ${fy} | TheDiscomBill`,
-    `${state} Electricity Tariff ${fy} — Bill Calculator for ${names} | TheDiscomBill`,
-    `Electricity Bill Calculator for ${state} (${fy}) — All ${discoms.length} DISCOM${discoms.length > 1 ? 's' : ''} | TheDiscomBill`,
+  // ≤ ~60 chars, keyword-first, no brand suffix (see the note above the DISCOM-page title).
+  const title = fitTitle(variant(seed, [
+    `${state} Electricity Bill Calculator ${fy}`,
+    `${state} Electricity Tariff ${fy} — Bill Calculator`,
+    `${state} DISCOM Tariffs & Bill Calculator ${fy}`,
+  ]), [
+    `${state} Electricity Tariff ${fy}`,
+    `${state} Tariff ${fy}`,
   ]);
   const description = variant(seed + 'd', [
     `Free ${state} electricity bill calculator. ${discoms.length} DISCOM${discoms.length > 1 ? 's' : ''} (${names}) with slab-wise rates, fixed charges and FPPA for ${fy}.${stateMin != null ? ` Domestic from ${rupee(stateMin)}/unit.` : ''}`,
@@ -586,7 +627,7 @@ function statePage(state) {
 
 function directoryPage(states) {
   const url = '/tariffs/states/';
-  const title = 'All Indian Electricity DISCOMs & Tariffs — State Directory | TheDiscomBill';
+  const title = 'All Indian Electricity DISCOMs & Tariffs by State';
   const description = 'Browse electricity tariffs and bill calculators for every Indian state and union territory. 70+ DISCOMs, slab-wise rates, fixed charges and FPPA — all in one directory.';
 
   let totalDiscoms = 0;

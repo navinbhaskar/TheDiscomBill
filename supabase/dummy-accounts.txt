@@ -1,0 +1,47 @@
+TheDiscomBill — Dummy Test Accounts
+=====================================
+These are NOT yet created — this is just a credential sheet. See "How to
+create these accounts" at the bottom to actually sign them up.
+
+Shared password for all dummy accounts: Demo@12345
+
+── Consumer accounts (role: user) ──────────────────────────────────────
+1. Rahul Sharma   — rahul.sharma.demo@thediscombill.com
+2. Priya Verma    — priya.verma.demo@thediscombill.com
+3. Amit Singh     — amit.singh.demo@thediscombill.com
+4. Sneha Iyer     — sneha.iyer.demo@thediscombill.com
+5. Vikram Patel   — vikram.patel.demo@thediscombill.com
+
+── Expert accounts (role: expert — needs manual promotion, see below) ──
+6. Anjali Rao     — anjali.rao.expert@thediscombill.com
+7. Manoj Kumar    — manoj.kumar.expert@thediscombill.com
+8. Deepa Nair     — deepa.nair.expert@thediscombill.com
+
+── How to create these accounts ─────────────────────────────────────────
+1. Go to https://www.thediscombill.com/login/ (or your local preview) and
+   use "Create account" for each row above — full name, email, and the
+   shared password. This calls Supabase auth.signUp() and creates a
+   `profiles` row automatically (role defaults to 'user').
+
+   If "Confirm email" is enabled in your Supabase project (Authentication
+   → Providers → Email), each account also needs its confirmation link
+   clicked before it can sign in. For testing, you may want to turn that
+   setting OFF temporarily.
+
+2. Promote the 3 expert accounts by running this in Supabase → SQL Editor
+   AFTER they've signed up (their profiles row must already exist):
+
+   update public.profiles
+   set role = 'expert'
+   where id in (
+     select id from auth.users where email in (
+       'anjali.rao.expert@thediscombill.com',
+       'manoj.kumar.expert@thediscombill.com',
+       'deepa.nair.expert@thediscombill.com'
+     )
+   );
+
+Note: I did not create these accounts against your live Supabase project —
+creating real signups/database rows in production without you asking for
+that specifically felt like the wrong call, so this file is just the
+credential list for you (or me, if you say go ahead) to use.

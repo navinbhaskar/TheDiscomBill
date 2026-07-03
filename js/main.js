@@ -39,7 +39,7 @@ function initLoginButton() {
     a.className = 'login-btn';
     a.href = '/login/?next=' + encodeURIComponent(location.pathname);
     a.innerHTML = '<span>Login</span>';
-    nav.insertBefore(a, themeBtn);
+    themeBtn.after(a);   // sits to the right of the theme toggle
     return;
   }
 
@@ -76,7 +76,7 @@ function initLoginButton() {
       ${isExpert ? `<a href="/expert/" class="nav-dropdown-item" role="menuitem">${icExpert} Expert Console</a>` : ''}
       <button type="button" id="accountLogout" class="nav-dropdown-item account-logout" role="menuitem">${icLogout} Logout</button>
     </div>`;
-  nav.insertBefore(wrap, themeBtn);
+  themeBtn.after(wrap);   // sits to the right of the theme toggle
 
   const trigger = wrap.querySelector('#headerLoginBtn');
   trigger.addEventListener('click', (e) => {
