@@ -1,7 +1,13 @@
 {
   "name": "thediscombill",
+  "main": "worker.js",
   "compatibility_date": "2024-06-26",
   "assets": {
-    "directory": "dist"
+    "directory": "dist",
+    "binding": "ASSETS",
+    // Run worker.js on every request (not just non-asset paths) so the HTTP→HTTPS
+    // redirect and any /api/* routes always execute; the worker then falls through
+    // to env.ASSETS.fetch() to serve the static site.
+    "run_worker_first": true
   }
 }

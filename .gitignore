@@ -13,3 +13,6 @@ Thumbs.db
 *.log
 .vscode/
 .idea/
+
+# Cloudflare Wrangler local state
+.wrangler/
