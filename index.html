@@ -45,22 +45,83 @@
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "Organization",
+        "@id": "https://www.thediscombill.com/#org",
+        "name": "TheDiscomBill",
+        "url": "https://www.thediscombill.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.thediscombill.com/icon-512.png",
+          "width": 512, "height": 512
+        },
+        "description": "Independent, free electricity bill tools for Indian consumers: a provisional bill calculator covering 70+ DISCOMs, tariff references, solar savings estimates and expert bill review. Not affiliated with any DISCOM, SERC or government body.",
+        "knowsAbout": ["electricity tariffs in India", "DISCOM billing", "telescopic slab calculation", "FPPA fuel surcharge", "solar net metering", "Time-of-Day billing"]
+      },
+      {
         "@type": "WebSite",
         "@id": "https://www.thediscombill.com/#website",
         "url": "https://www.thediscombill.com/",
         "name": "TheDiscomBill",
+        "publisher": { "@id": "https://www.thediscombill.com/#org" },
         "description": "Free electricity bill calculator for all Indian DISCOMs.",
         "inLanguage": "en-IN"
       },
       {
         "@type": "WebApplication",
+        "@id": "https://www.thediscombill.com/#app",
         "name": "TheDiscomBill Electricity Bill Calculator",
         "url": "https://www.thediscombill.com/",
+        "isPartOf": { "@id": "https://www.thediscombill.com/#website" },
+        "publisher": { "@id": "https://www.thediscombill.com/#org" },
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Any (web browser)",
         "browserRequirements": "Requires JavaScript",
         "description": "Calculate a provisional electricity bill for any DISCOM in India with a slab-wise breakdown, fixed/demand charges, FPPA and solar net metering.",
+        "featureList": [
+          "Slab-wise (telescopic) energy charge breakdown",
+          "Fixed and demand charges by sanctioned load",
+          "FPPA fuel surcharge and electricity duty",
+          "Solar net metering credits",
+          "Time-of-Day and kVAh billing",
+          "Covers 70+ DISCOMs across 35 states and union territories"
+        ],
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://www.thediscombill.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does TheDiscomBill calculate my electricity bill?",
+            "acceptedAnswer": { "@type": "Answer", "text": "It applies your DISCOM's published tariff using the telescopic (cumulative) slab method: each slab rate applies only to units consumed within that slab. Fixed or demand charges are added based on your sanctioned load, then fuel surcharge (FPPA), electricity duty and other state levies as specified in the tariff schedule." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is the calculated bill an official bill?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. It is a provisional estimate for reference, based on publicly available tariff orders. Your actual bill may differ due to recent tariff revisions, local surcharges or arrears. Always rely on your DISCOM's official bill for payment." }
+          },
+          {
+            "@type": "Question",
+            "name": "Which DISCOMs and states are supported?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Over 70 DISCOMs across all 35 Indian states and union territories, including UPPCL (MVVNL, PVVNL, DVVNL, PuVVNL, KESCO), BESCOM, MSEDCL, TANGEDCO, PSPCL, Tata Power-DDL, BSES, Adani Electricity, CESC, KSEB, WBSEDCL and more, with 150+ consumer categories." }
+          },
+          {
+            "@type": "Question",
+            "name": "What is FPPA on an electricity bill?",
+            "acceptedAnswer": { "@type": "Answer", "text": "FPPA (Fuel and Power Purchase Adjustment) is a surcharge DISCOMs levy to recover changes in fuel and power-purchase costs. Depending on the state it is charged either as a per-unit rate or as a percentage of energy charges; TheDiscomBill applies whichever method your DISCOM's tariff order specifies." }
+          },
+          {
+            "@type": "Question",
+            "name": "Does it handle solar net metering and Time-of-Day billing?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. The calculator supports solar net metering credits (exported units offset imported units) as well as Time-of-Day (ToD) tariffs and kVAh billing where a DISCOM uses them." }
+          },
+          {
+            "@type": "Question",
+            "name": "Is TheDiscomBill free to use?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes — the calculator, tariff pages, comparison and solar tools are free with no sign-up. An optional free account unlocks the expert Bill Review service, where you can upload a bill and chat with a reviewer." }
+          }
+        ]
       }
     ]
   }
@@ -591,6 +652,50 @@
       website for accurate and official billing information. TheDiscomBill is not affiliated
       with any electricity utility or government body.
     </div>
+
+    <!-- FAQ — visible answers backing the FAQPage JSON-LD in <head> (kept in sync manually) -->
+    <section class="seo-section" id="faq" aria-labelledby="faqTitle">
+      <h2 id="faqTitle" class="reveal">Frequently asked questions</h2>
+      <details class="seo-faq-item">
+        <summary>How does TheDiscomBill calculate my electricity bill?</summary>
+        <div class="seo-faq-a">It applies your DISCOM's published tariff using the telescopic (cumulative) slab method:
+          each slab rate applies only to units consumed within that slab. Fixed or demand charges are added
+          based on your sanctioned load, then fuel surcharge (FPPA), electricity duty and other state levies
+          as specified in the tariff schedule.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>Is the calculated bill an official bill?</summary>
+        <div class="seo-faq-a">No. It is a provisional estimate for reference, based on publicly available tariff
+          orders. Your actual bill may differ due to recent tariff revisions, local surcharges or arrears.
+          Always rely on your DISCOM's official bill for payment.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>Which DISCOMs and states are supported?</summary>
+        <div class="seo-faq-a">Over 70 DISCOMs across all 35 Indian states and union territories, including
+          UPPCL (MVVNL, PVVNL, DVVNL, PuVVNL, KESCO), BESCOM, MSEDCL, TANGEDCO, PSPCL, Tata Power-DDL, BSES,
+          Adani Electricity, CESC, KSEB, WBSEDCL and more, with 150+ consumer categories. See the full
+          <a href="/tariffs/states/">state &amp; DISCOM directory</a>.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>What is FPPA on an electricity bill?</summary>
+        <div class="seo-faq-a">FPPA (Fuel and Power Purchase Adjustment) is a surcharge DISCOMs levy to recover
+          changes in fuel and power-purchase costs. Depending on the state it is charged either as a per-unit
+          rate or as a percentage of energy charges; TheDiscomBill applies whichever method your DISCOM's
+          tariff order specifies.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>Does it handle solar net metering and Time-of-Day billing?</summary>
+        <div class="seo-faq-a">Yes. The calculator supports solar net metering credits (exported units offset
+          imported units) as well as Time-of-Day (ToD) tariffs and kVAh billing where a DISCOM uses them.
+          There is also a dedicated <a href="/solar/">rooftop solar savings estimator</a>.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>Is TheDiscomBill free to use?</summary>
+        <div class="seo-faq-a">Yes — the calculator, tariff pages, comparison and solar tools are free with no
+          sign-up. An optional free account unlocks the <a href="/bill-review/">expert Bill Review service</a>,
+          where you can upload a bill and chat with a reviewer.</div>
+      </details>
+    </section>
   </div>
 </section>
 

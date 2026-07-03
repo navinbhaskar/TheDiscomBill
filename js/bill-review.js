@@ -42,7 +42,7 @@ async function init() {
   myProfile = data;
   // Keep the header dropdown's Expert Console link in sync (see main.js).
   try {
-    if (myProfile?.role === 'expert') localStorage.setItem('discombill.role', 'expert');
+    if (myProfile?.role === 'expert' || myProfile?.role === 'admin') localStorage.setItem('discombill.role', myProfile.role);
     else localStorage.removeItem('discombill.role');
   } catch (e) {}
   renderAccountBar();

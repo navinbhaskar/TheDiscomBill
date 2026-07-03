@@ -47,7 +47,43 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
   const configured = isConfigured();
   const sb = configured ? await getSupabase() : null;
 
+  const notConnected = '⚙️ Backend not connected yet — complete the Supabase setup above to enable accounts.';
+
+  // Name captured during a phone sign-in, saved to user_metadata right after the
+  // session lands (phone OTP has no signup step of its own, unlike email).
+  let pendingName = '';
+
+  // Google OAuth is a full-page redirect; on return, onAuthStateChange picks up
+  // the session. Requires the Google provider enabled in Supabase → Auth →
+  // Providers. redirectTo brings the user back to the page they started on.
+  async function signInWithGoogle(msg) {
+    if (!sb) { msg.textContent = notConnected; return; }
+    msg.textContent = '';
+    const { error } = await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: location.href }
+    });
+    if (error) msg.textContent = error.message || 'Could not start Google sign-in.';
+  }
+
+  // Google button + "or" divider, shown above the email form on the sign-in and
+  // create-account tabs.
+  function socialBlockHtml() {
+    return `
+      <button type="button" class="br-social" data-provider="google">
+        <svg class="br-social-icon" viewBox="0 0 18 18" aria-hidden="true" width="18" height="18">
+          <path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/>
+          <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.02-3.7H.96v2.33A9 9 0 0 0 9 18z"/>
+          <path fill="#FBBC05" d="M3.98 10.72a5.4 5.4 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.02-2.33z"/>
+          <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.47.9 11.43 0 9 0A9 9 0 0 0 .96 4.95l3.02 2.33C4.68 5.16 6.66 3.58 9 3.58z"/>
+        </svg>
+        Continue with Google
+      </button>
+      <div class="br-or"><span>or</span></div>`;
+  }
+
   function renderForm(mode) {
+    if (mode === 'phone') { renderPhoneForm(); return; }
     const isUp = mode === 'signup';
     mount.innerHTML = `
       ${configured ? '' : `
@@ -59,6 +95,7 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
           <button type="button" class="br-tab ${isUp ? '' : 'active'}" data-mode="signin" role="tab">Sign in</button>
           <button type="button" class="br-tab ${isUp ? 'active' : ''}" data-mode="signup" role="tab">Create account</button>
         </div>
+        ${socialBlockHtml()}
         <form class="br-auth-form" novalidate>
           ${isUp ? `
           <div class="svc-control"><label for="brName">Full name</label>
@@ -71,16 +108,18 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
           <p class="br-auth-msg" role="alert"></p>
           ${isUp && signupHint ? `<p class="br-auth-hint">${signupHint}</p>` : ''}
         </form>
+        <button type="button" class="br-auth-alt" data-mode="phone">📱 Use phone number instead</button>
       </div>`;
 
-    mount.querySelectorAll('.br-tab').forEach(t =>
+    mount.querySelectorAll('.br-tab, .br-auth-alt').forEach(t =>
       t.addEventListener('click', () => renderForm(t.dataset.mode)));
 
     const form = mount.querySelector('.br-auth-form');
     const msg = mount.querySelector('.br-auth-msg');
+    mount.querySelector('.br-social').addEventListener('click', () => signInWithGoogle(msg));
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (!sb) { msg.textContent = '⚙️ Backend not connected yet — complete the Supabase setup above to enable accounts.'; return; }
+      if (!sb) { msg.textContent = notConnected; return; }
       const email = mount.querySelector('#brEmail').value.trim();
       const password = mount.querySelector('#brPass').value;
       if (!email || password.length < 6) { msg.textContent = 'Enter a valid email and a password of 6+ characters.'; return; }
@@ -110,11 +149,94 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
     });
   }
 
+  // Phone / SMS OTP: a two-step flow — send a one-time code to the number, then
+  // verify it. Requires an SMS provider configured in Supabase → Auth →
+  // Providers → Phone.
+  function renderPhoneForm() {
+    mount.innerHTML = `
+      ${configured ? '' : `
+      <div class="br-banner">⚙️ <strong>Preview mode</strong> — the backend isn't connected yet, so
+        sign-in is disabled. One-time setup: run <code>supabase/schema.sql</code> on a free Supabase
+        project and paste its keys into <code>js/supabase-config.js</code>.</div>`}
+      <div class="br-card br-auth">
+        <div class="br-tabs" role="tablist">
+          <button type="button" class="br-tab active" role="tab">Sign in with phone</button>
+          <button type="button" class="br-tab br-back" data-mode="signin">← Email</button>
+        </div>
+        ${socialBlockHtml()}
+        <form class="br-auth-form br-phone-form" novalidate>
+          <div class="svc-control"><label for="brPhoneName">Full name <span class="br-label-note">first time only</span></label>
+            <input id="brPhoneName" type="text" autocomplete="name" placeholder="Your name"></div>
+          <div class="svc-control"><label for="brPhone">Phone number</label>
+            <input id="brPhone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+91 98765 43210" required></div>
+          <div class="svc-control br-otp-row" hidden><label for="brOtp">Verification code</label>
+            <input id="brOtp" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code" maxlength="6"></div>
+          <button type="submit" class="btn-primary br-auth-submit">Send code</button>
+          <p class="br-auth-msg" role="alert"></p>
+          <p class="br-auth-hint">Standard SMS rates may apply. Enter your number with country code (e.g. +91 for India).</p>
+        </form>
+      </div>`;
+
+    mount.querySelectorAll('.br-tab[data-mode]').forEach(t =>
+      t.addEventListener('click', () => renderForm(t.dataset.mode)));
+
+    const form = mount.querySelector('.br-phone-form');
+    const msg = mount.querySelector('.br-auth-msg');
+    const otpRow = mount.querySelector('.br-otp-row');
+    const btn = form.querySelector('.br-auth-submit');
+    mount.querySelector('.br-social').addEventListener('click', () => signInWithGoogle(msg));
+
+    let codeSent = false;
+    const normPhone = () => mount.querySelector('#brPhone').value.replace(/[\s()-]/g, '');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!sb) { msg.textContent = notConnected; return; }
+      const phone = normPhone();
+      if (!/^\+\d{8,15}$/.test(phone)) { msg.textContent = 'Enter your number in international format, e.g. +919876543210.'; return; }
+      btn.disabled = true; msg.textContent = '';
+      try {
+        if (!codeSent) {
+          const { error } = await sb.auth.signInWithOtp({ phone });
+          if (error) throw error;
+          codeSent = true;
+          otpRow.hidden = false;
+          mount.querySelector('#brPhone').readOnly = true;
+          btn.textContent = 'Verify & sign in';
+          msg.textContent = `✅ Code sent to ${phone}. Enter it below.`;
+          mount.querySelector('#brOtp').focus();
+        } else {
+          const token = mount.querySelector('#brOtp').value.trim();
+          if (!/^\d{4,8}$/.test(token)) { msg.textContent = 'Enter the numeric code from the SMS.'; return; }
+          pendingName = mount.querySelector('#brPhoneName').value.trim();
+          const { error } = await sb.auth.verifyOtp({ phone, token, type: 'sms' });
+          if (error) { pendingName = ''; throw error; }
+          // onAuthStateChange takes it from here (saving the name first).
+        }
+      } catch (err) {
+        msg.textContent = err?.message || 'Something went wrong. Please try again.';
+      } finally {
+        btn.disabled = false;
+      }
+    });
+  }
+
   if (!sb) { renderForm('signin'); return null; }
 
   sb.auth.onAuthStateChange((_event, session) => {
-    if (session) onSignedIn(sb, session);
-    else { renderForm('signin'); onSignedOut?.(); }
+    if (!session) { renderForm('signin'); onSignedOut?.(); return; }
+    const name = pendingName; pendingName = '';
+    if (name && !session.user?.user_metadata?.full_name) {
+      // First phone sign-in with a name given: persist it before onSignedIn
+      // (which may navigate away). setTimeout gets us out of the auth callback —
+      // supabase-js deadlocks if you call it from inside onAuthStateChange.
+      setTimeout(async () => {
+        try { await sb.auth.updateUser({ data: { full_name: name } }); } catch (e) { /* name is a nicety — never block sign-in on it */ }
+        onSignedIn(sb, session);
+      }, 0);
+    } else {
+      onSignedIn(sb, session);
+    }
   });
 
   const { data: { session } } = await sb.auth.getSession();
@@ -141,6 +263,8 @@ export function startChat({ sb, complaint, meId, names, mount, canSend }) {
       <div class="br-chat-log" aria-live="polite"></div>
       ${canSend ? `
       <form class="br-chat-form">
+        <input type="file" class="br-chat-file" hidden accept="image/png,image/jpeg,image/webp,application/pdf">
+        <button type="button" class="br-chat-attach" title="Attach a document — PNG, JPG, WebP or PDF, max 10 MB" aria-label="Attach a document">📎</button>
         <input type="text" class="br-chat-input" placeholder="Type a message…" maxlength="2000" autocomplete="off">
         <button type="submit" class="btn-primary br-chat-send">Send</button>
       </form>` : `<p class="br-chat-locked">💬 Chat opens once an expert accepts this complaint.</p>`}
@@ -157,14 +281,22 @@ export function startChat({ sb, complaint, meId, names, mount, canSend }) {
     const el = document.createElement('div');
     el.className = 'br-msg' + (mine ? ' br-msg-mine' : '');
     el.innerHTML = `<div class="br-msg-meta">${esc(who)} · ${esc(fmtWhen(m.created_at))}</div>
-                    <div class="br-msg-body">${esc(m.body)}</div>`;
+                    ${m.body ? `<div class="br-msg-body">${esc(m.body)}</div>` : ''}
+                    ${m.file_path ? `<a class="br-file br-msg-file" target="_blank" rel="noopener">📄 ${esc(m.file_name || 'attachment')}${m.file_size ? ` <span class="tx-muted">(${fmtSize(m.file_size)})</span>` : ''}</a>` : ''}`;
+    // Attachments are served from private Storage, so the href is a short-lived
+    // signed URL fetched after render.
+    if (m.file_path) {
+      const a = el.querySelector('.br-msg-file');
+      sb.storage.from('complaint-docs').createSignedUrl(m.file_path, 3600)
+        .then(({ data }) => { if (data?.signedUrl) a.href = data.signedUrl; });
+    }
     log.appendChild(el);
     log.scrollTop = log.scrollHeight;
   }
 
   (async () => {
     const { data, error } = await sb.from('messages')
-      .select('id, sender_id, body, created_at')
+      .select('id, sender_id, body, created_at, file_path, file_name, file_size')
       .eq('complaint_id', complaint.id)
       .order('id', { ascending: true });
     if (error) { log.innerHTML = `<p class="br-chat-locked">Could not load messages: ${esc(error.message)}</p>`; return; }
@@ -191,6 +323,35 @@ export function startChat({ sb, complaint, meId, names, mount, canSend }) {
     const { error } = await sb.from('messages')
       .insert({ complaint_id: complaint.id, sender_id: meId, body });
     if (error) { input.value = body; alert('Message failed to send: ' + error.message); }
+  });
+
+  // 📎 Attachments: picking a file uploads it into the sender's own Storage
+  // folder (same "upload own docs" policy as the original complaint documents)
+  // and sends it as a message; requires supabase/chat-attachments.sql.
+  const fileInput = mount.querySelector('.br-chat-file');
+  const attachBtn = mount.querySelector('.br-chat-attach');
+  attachBtn?.addEventListener('click', () => fileInput.click());
+  fileInput?.addEventListener('change', async () => {
+    const file = fileInput.files[0];
+    fileInput.value = '';
+    if (!file) return;
+    if (file.size > 10485760) { alert('Attachment too large — the limit is 10 MB.'); return; }
+    attachBtn.disabled = true; attachBtn.textContent = '⏳';
+    try {
+      const safe = file.name.replace(/[^\w.\- ]+/g, '').replace(/\s+/g, '-').slice(0, 100) || 'document';
+      const path = `${meId}/${complaint.id}/chat-${Date.now()}-${safe}`;
+      const { error: upErr } = await sb.storage.from('complaint-docs').upload(path, file);
+      if (upErr) throw upErr;
+      const { error } = await sb.from('messages').insert({
+        complaint_id: complaint.id, sender_id: meId, body: '',
+        file_path: path, file_name: file.name, file_size: file.size
+      });
+      if (error) throw error;
+    } catch (err) {
+      alert('Attachment failed to send: ' + (err?.message || err));
+    } finally {
+      attachBtn.disabled = false; attachBtn.textContent = '📎';
+    }
   });
 
   return () => sb.removeChannel(channel);

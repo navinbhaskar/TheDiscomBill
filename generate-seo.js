@@ -88,7 +88,21 @@ const FOOTER = `
 
 // ── page layout ───────────────────────────────────────────────────────────────
 function layout({ title, description, canonical, jsonld = [], body }) {
-  const ld = jsonld.filter(Boolean)
+  // Every generated page carries a WebPage node with freshness + publisher links —
+  // GEO signal for AI crawlers (entity graph anchored to the #org / #website ids
+  // declared on the homepage).
+  const webPage = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    url: canonical,
+    name: title,
+    description,
+    isPartOf: { '@id': `${SITE}/#website` },
+    publisher: { '@id': `${SITE}/#org` },
+    inLanguage: 'en-IN',
+    dateModified: TODAY
+  };
+  const ld = [webPage, ...jsonld].filter(Boolean)
     .map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n  ');
   return `<!DOCTYPE html>
 <html lang="en">
@@ -697,11 +711,60 @@ ${body}
 `;
 }
 
+// Explicitly welcome AI / LLM crawlers (GEO): the wildcard already allows them,
+// but naming them makes the policy unambiguous and survives future wildcard
+// tightening. llms.txt gives LLMs a curated map of the site.
+const AI_CRAWLERS = [
+  'GPTBot', 'OAI-SearchBot', 'ChatGPT-User',          // OpenAI
+  'ClaudeBot', 'Claude-User', 'Claude-SearchBot',     // Anthropic
+  'PerplexityBot', 'Perplexity-User',                 // Perplexity
+  'Google-Extended',                                  // Gemini training
+  'Applebot', 'Applebot-Extended',                    // Apple Intelligence
+  'Amazonbot', 'meta-externalagent', 'cohere-ai', 'DuckAssistBot'
+];
 const ROBOTS = `User-agent: *
 Allow: /
 
+${AI_CRAWLERS.map(ua => `User-agent: ${ua}\nAllow: /`).join('\n\n')}
+
 Sitemap: ${SITE}/sitemap.xml
 `;
+
+// ── llms.txt (https://llmstxt.org) — a curated, markdown site map for LLMs ────
+function buildLlmsTxt(states) {
+  const stateLinks = states.map(s =>
+    `- [${s} electricity tariffs](${SITE}/tariffs/${slugify(s)}/): DISCOMs, slab rates, fixed charges and indicative bills for ${s}`
+  ).join('\n');
+  return `# TheDiscomBill
+
+> Free, browser-based electricity bill calculator for India. Covers 70+ distribution companies (DISCOMs) across all 35 states and union territories with slab-wise (telescopic) energy charges, fixed/demand charges, FPPA fuel surcharge, electricity duty, solar net metering and Time-of-Day billing. Independent — not affiliated with any DISCOM, SERC or government body. Estimates are provisional; official bills come from the DISCOM.
+
+Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025-26) and the calculation engine applies each DISCOM's published methodology: telescopic slabs, sanctioned-load-based fixed charges, then surcharges and duty.
+
+## Tools
+
+- [Bill Calculator](${SITE}/): instant provisional electricity bill for any Indian DISCOM with a full slab-wise breakdown
+- [Tariff Comparison](${SITE}/compare/): major DISCOMs compared at 200/400/600/1000 units for domestic and commercial
+- [Usage Estimator](${SITE}/usage/): estimate monthly kWh from household appliances
+- [Rooftop Solar Savings](${SITE}/solar/): system sizing, payback and net-metering savings
+- [Bill Check](${SITE}/bill-check/): direct links to every DISCOM's official view/pay-bill portal
+- [Bill Review by Experts](${SITE}/bill-review/): upload a bill and have a human expert review it (free account)
+- [New Connection](${SITE}/new-connection/): charges, documents and process per DISCOM
+- [Complaint](${SITE}/complaint/): DISCOM complaint portals and the 1912 national helpline
+
+## Tariff reference
+
+- [All states & DISCOMs directory](${SITE}/tariffs/states/): index of every state and DISCOM landing page
+
+${stateLinks}
+
+## Notes
+
+- All amounts are in Indian Rupees (INR). "Units" are kWh.
+- FPPA (Fuel and Power Purchase Adjustment) is applied per-unit or as a percentage of energy charges, whichever the state's tariff order specifies.
+- Slab calculations are telescopic: each rate applies only to units within its slab.
+`;
+}
 
 // ── run ───────────────────────────────────────────────────────────────────────
 export function generateSeo() {
@@ -723,8 +786,9 @@ export function generateSeo() {
 
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), buildSitemap(states), 'utf8');
   fs.writeFileSync(path.join(ROOT, 'robots.txt'), ROBOTS, 'utf8');
+  fs.writeFileSync(path.join(ROOT, 'llms.txt'), buildLlmsTxt(states), 'utf8');
 
-  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt`);
+  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt`);
   return { pages, states: states.length };
 }
 

@@ -50,17 +50,34 @@
 </header>
 
 <div class="page-body">
-  <section class="svc-section">
-    <div class="container container-mid">
-      <h2 class="reveal">Sign in to TheDiscomBill</h2>
-      <p class="svc-intro reveal">One free account for everything — get your bill reviewed by an expert,
-      upload documents and chat about your case.</p>
+  <section class="login-section">
+    <div class="login-shell reveal">
 
-      <div id="loginMain" class="reveal"><p class="tx-muted">Loading…</p></div>
+      <!-- Brand panel: why an account is worth having (decorative on small screens) -->
+      <aside class="login-brand">
+        <div class="login-brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2>One free account for everything electricity</h2>
+        <ul class="login-brand-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Get your bill reviewed by a human expert</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Upload documents &amp; chat about your case</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Save calculated bills to revisit anytime</li>
+        </ul>
+        <p class="login-brand-note">Free forever · No spam, ever</p>
+      </aside>
 
-      <p class="comparison-note reveal">
-        We only use your email to sign you in and notify you about your cases. No spam, ever.
-      </p>
+      <!-- Auth panel: the shared sign-in card renders into #loginMain -->
+      <div class="login-panel">
+        <h1 class="login-title">Sign in to TheDiscomBill</h1>
+        <div id="loginMain"><p class="tx-muted">Loading…</p></div>
+        <p class="login-fineprint">
+          We only use your email or number to sign you in and notify you about your cases.
+        </p>
+      </div>
+
     </div>
   </section>
 </div>

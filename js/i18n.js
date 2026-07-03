@@ -137,7 +137,7 @@ const STRINGS = {
     'about.p3': "Electricity Duty, fuel adjustment charges, and other state levies are applied as specified in each DISCOM's tariff schedule.",
     'about.disclaimer': '<strong>⚠ Disclaimer:</strong> This is a <strong>provisional bill calculator</strong> for reference and educational purposes only. The tariff rates used here are approximate, based on publicly available tariff orders, and may not reflect the latest revisions or local surcharges. Actual bills from your DISCOM may differ. Always contact your DISCOM or visit their official website for accurate and official billing information. TheDiscomBill is not affiliated with any electricity utility or government body.',
     // Footer
-    'footer.l1': '&copy; 2024 TheDiscomBill &nbsp;·&nbsp; Free Electricity Bill Calculator for India',
+    'footer.l1': '&copy; 2026 TheDiscomBill &nbsp;·&nbsp; Free Electricity Bill Calculator for India',
     'footer.l2': 'Tariff data is approximate and based on publicly available information (2024-25). Not affiliated with any DISCOM, SERC, or government body. &nbsp;|&nbsp; <a href="#about">Disclaimer</a>',
   },
   hi: {
@@ -271,7 +271,7 @@ const STRINGS = {
     'about.p3': 'बिजली शुल्क (इलेक्ट्रिसिटी ड्यूटी), ईंधन समायोजन शुल्क और अन्य राज्य लेवी प्रत्येक डिस्कॉम के टैरिफ शेड्यूल के अनुसार लगाए जाते हैं।',
     'about.disclaimer': '<strong>⚠ अस्वीकरण:</strong> यह केवल संदर्भ और शैक्षिक उद्देश्यों हेतु एक <strong>अनुमानित बिल कैलकुलेटर</strong> है। यहाँ उपयोग की गई टैरिफ दरें अनुमानित हैं, सार्वजनिक टैरिफ आदेशों पर आधारित हैं, और नवीनतम संशोधनों या स्थानीय अधिभारों को नहीं दर्शा सकतीं। आपके डिस्कॉम का वास्तविक बिल भिन्न हो सकता है। सटीक और आधिकारिक बिलिंग जानकारी के लिए हमेशा अपने डिस्कॉम से संपर्क करें या उनकी आधिकारिक वेबसाइट देखें। TheDiscomBill किसी भी बिजली कंपनी या सरकारी संस्था से संबद्ध नहीं है।',
     // Footer
-    'footer.l1': '&copy; 2024 TheDiscomBill &nbsp;·&nbsp; भारत के लिए निःशुल्क बिजली बिल कैलकुलेटर',
+    'footer.l1': '&copy; 2026 TheDiscomBill &nbsp;·&nbsp; भारत के लिए निःशुल्क बिजली बिल कैलकुलेटर',
     'footer.l2': 'टैरिफ डेटा अनुमानित है और सार्वजनिक रूप से उपलब्ध जानकारी (2024-25) पर आधारित है। किसी भी डिस्कॉम, SERC या सरकारी संस्था से संबद्ध नहीं। &nbsp;|&nbsp; <a href="#about">अस्वीकरण</a>',
   },
 };

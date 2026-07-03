@@ -44,7 +44,7 @@ async function init() {
   // Cache the role so the header account dropdown (main.js) can show/hide the
   // Expert Console link on every page without a DB round-trip.
   try {
-    if (myProfile?.role === 'expert') localStorage.setItem('discombill.role', 'expert');
+    if (myProfile?.role === 'expert' || myProfile?.role === 'admin') localStorage.setItem('discombill.role', myProfile.role);
     else localStorage.removeItem('discombill.role');
   } catch (e) {}
   accountEl.innerHTML = accountBarHtml(myProfile?.full_name, me.email,
