@@ -2475,6 +2475,11 @@ button.br-item:hover { border-color: var(--brand); background: var(--brand-faint
   background: var(--surface-sunken); border: 1px solid var(--border-default); border-radius: var(--radius-full);
   padding: 6px 12px; text-decoration: none; transition: border-color var(--t-fast); }
 a.br-file:hover { border-color: var(--brand); text-decoration: none; }
+.br-file-remove { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px;
+  margin-left: 2px; padding: 0; border: none; border-radius: var(--radius-full); background: transparent;
+  color: var(--text-tertiary); font-size: 11px; line-height: 1; cursor: pointer; transition: background var(--t-fast), color var(--t-fast); }
+.br-file-remove:hover { background: #fee2e2; color: #b91c1c; }
+.br-file-count { font-size: 12px; align-self: center; padding: 0 2px; }
 
 /* Chat */
 .br-chat { border: 1px solid var(--border-default); border-radius: var(--radius-md); overflow: hidden; }
@@ -2514,3 +2519,38 @@ a.br-file:hover { border-color: var(--brand); text-decoration: none; }
   transition: background var(--t-fast), transform var(--t-fast); }
 .login-btn:hover { background: color-mix(in srgb, var(--brand) 85%, #000); text-decoration: none; transform: translateY(-1px); }
 @media (max-width: 700px) { .login-btn { padding: 0 11px; font-size: 12px; height: 32px; } }
+
+/* Signed-in account dropdown (reuses the Quick Links .nav-dropdown mechanics) */
+.account-dropdown .login-btn { border: none; cursor: pointer; font-family: inherit; }
+.account-btn { padding: 0 12px 0 5px; gap: 7px; }
+.account-avatar { display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 26px; height: 26px; border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, .22); border: 1px solid rgba(255, 255, 255, .35);
+  color: #fff; font-size: 12px; font-weight: 700; line-height: 1; }
+.account-dropdown.open .nav-caret { transform: rotate(180deg); }
+.account-menu { right: 0; left: auto; min-width: 240px; transform: translateY(-6px) scale(.98); }
+.nav-dropdown.open .account-menu { transform: scale(1); }
+.account-menu-head { display: flex; align-items: center; gap: 10px; padding: 8px 12px 10px;
+  border-bottom: 1px solid var(--border-default); margin-bottom: 6px; }
+.account-avatar-lg { width: 34px; height: 34px; font-size: 14.5px;
+  background: var(--brand); border: none; }
+.account-menu-id { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.account-menu-head strong { font-size: 13.5px; color: var(--text-primary); }
+.account-menu-head span { font-size: 12px; color: var(--text-tertiary); word-break: break-all; }
+.account-item-icon { flex: none; opacity: .75; }
+.account-menu .nav-dropdown-item { display: flex; align-items: center; gap: 9px; }
+.account-menu-note { font-size: 10.5px; color: var(--text-tertiary); margin-left: auto; padding-left: 8px; }
+button.nav-dropdown-item { width: 100%; background: none; border: none; font-family: inherit; font-size: inherit;
+  text-align: left; cursor: pointer; }
+.account-logout { color: #b91c1c; }
+.account-logout:hover { background: #fee2e2; color: #b91c1c; }
+[data-theme="dark"] .account-logout:hover { background: rgba(239, 68, 68, .15); }
+
+/* My Bills page (/my-bills/) */
+.mb-amt { font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mb-actions { display: inline-flex; gap: 6px; flex-shrink: 0; }
+a.mb-open { display: inline-flex; align-items: center; text-decoration: none; }
+a.mb-open:hover { border-color: var(--brand); color: var(--brand); text-decoration: none; }
+.mb-delete:hover { border-color: #b91c1c; color: #b91c1c; background: #fee2e2; }
+a.mb-cta { display: inline-flex; align-items: center; text-decoration: none; }
+@media (max-width: 560px) { .mb-bill { flex-wrap: wrap; } .mb-actions { margin-left: auto; } }

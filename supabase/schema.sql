@@ -94,6 +94,28 @@ create table if not exists public.messages (
 
 create index if not exists messages_thread_idx on public.messages (complaint_id, id);
 
+-- ── Saved bills (calculator results synced per account) ─────────────────────
+-- `params` is the share-link query string that reproduces the bill in the
+-- calculator; label/amount are what the list page displays.
+create table if not exists public.bills (
+  id         uuid primary key default gen_random_uuid(),
+  user_id    uuid not null references public.profiles(id) on delete cascade,
+  label      text not null,
+  amount     text not null,
+  params     text not null,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists bills_user_idx on public.bills (user_id, created_at desc);
+
+alter table public.bills enable row level security;
+
+drop policy if exists "own bills" on public.bills;
+create policy "own bills" on public.bills
+  for all to authenticated
+  using (user_id = auth.uid())
+  with check (user_id = auth.uid());
+
 -- ── Row Level Security ───────────────────────────────────────────────────────
 alter table public.profiles        enable row level security;
 alter table public.complaints      enable row level security;

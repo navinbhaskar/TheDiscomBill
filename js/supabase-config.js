@@ -28,6 +28,21 @@ export function hasStoredSession() {
   } catch (e) { return false; }
 }
 
+// Identity for header UI, read straight from the stored session token (it's a
+// JSON blob holding the user object) — again no SDK download needed. Returns
+// { email, name } or null.
+export function getStoredUser() {
+  if (!isConfigured()) return null;
+  try {
+    const ref = new URL(SUPABASE_URL).hostname.split('.')[0];
+    const raw = localStorage.getItem(`sb-${ref}-auth-token`);
+    if (!raw) return null;
+    const user = JSON.parse(raw)?.user;
+    if (!user?.email) return null;
+    return { email: user.email, name: user.user_metadata?.full_name || '' };
+  } catch (e) { return null; }
+}
+
 // The supabase-js client is loaded from a CDN only when actually needed, so the
 // rest of the site keeps working offline and pays no cost for this feature.
 let _client = null;

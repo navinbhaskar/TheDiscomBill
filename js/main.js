@@ -16,30 +16,91 @@ import {
 import { initDatePickers } from './datepicker.js';
 import { initI18n } from './i18n.js';
 import { initComparisonTable } from './compare.js';
-import { isConfigured, hasStoredSession } from './supabase-config.js';
+import { isConfigured, getStoredUser, getSupabase } from './supabase-config.js';
 import Lenis from './vendor/lenis.mjs';
 
 // ── Header account button ─────────────────────────────────────────────────────
 // Injected on every page (all pages load main.js) so the header never needs
-// hand-editing: "Login" when signed out, "My Account" once a session exists.
+// hand-editing. Signed out: a plain "Login" button (one action, no dropdown).
+// Signed in: an account dropdown — profile identity, My Complaints, My Bills,
+// Expert Console (experts only, via a role flag cached by /expert/), Logout.
 function initLoginButton() {
   const nav = document.querySelector('.header-nav');
   const themeBtn = document.getElementById('themeToggle');
   if (!nav || !themeBtn || !isConfigured()) return;
   if (location.pathname.startsWith('/login')) return;   // pointless on the login page itself
 
-  const signedIn = hasStoredSession();
-  const a = document.createElement('a');
-  a.id = 'headerLoginBtn';
-  a.className = 'login-btn';
-  if (signedIn) {
-    a.href = '/bill-review/';
-    a.innerHTML = '👤 <span>My Account</span>';
-  } else {
-    a.href = '/login/?next=' + encodeURIComponent(location.pathname === '/login/' ? '/bill-review/' : location.pathname);
+  const escText = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const user = getStoredUser();
+
+  if (!user) {
+    const a = document.createElement('a');
+    a.id = 'headerLoginBtn';
+    a.className = 'login-btn';
+    a.href = '/login/?next=' + encodeURIComponent(location.pathname);
     a.innerHTML = '<span>Login</span>';
+    nav.insertBefore(a, themeBtn);
+    return;
   }
-  nav.insertBefore(a, themeBtn);
+
+  const firstName = (user.name || user.email).split(/[@\s]/)[0];
+  const initial = (firstName[0] || '?').toUpperCase();
+  let isExpert = false;
+  try { isExpert = localStorage.getItem('discombill.role') === 'expert'; } catch (e) {}
+
+  // 14px stroke icons for the dropdown items (Lucide outlines, stroke = currentColor)
+  const icon = (paths) => `<svg class="account-item-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
+  const icComplaints = icon('<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v4"/><path d="M12 14h.01"/>');
+  const icBills = icon('<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/>');
+  const icExpert = icon('<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>');
+  const icLogout = icon('<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/>');
+
+  const wrap = document.createElement('div');
+  wrap.className = 'nav-dropdown account-dropdown';
+  wrap.innerHTML = `
+    <button type="button" class="login-btn account-btn" id="headerLoginBtn" aria-haspopup="true" aria-expanded="false">
+      <span class="account-avatar" aria-hidden="true">${escText(initial)}</span>
+      <span>${escText(firstName)}</span>
+      <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="nav-dropdown-menu account-menu" role="menu">
+      <div class="account-menu-head">
+        <span class="account-avatar account-avatar-lg" aria-hidden="true">${escText(initial)}</span>
+        <div class="account-menu-id">
+          <strong>${escText(user.name || 'My Account')}</strong>
+          <span>${escText(user.email)}</span>
+        </div>
+      </div>
+      <a href="/bill-review/" class="nav-dropdown-item" role="menuitem">${icComplaints} My Complaints</a>
+      <a href="/my-bills/" class="nav-dropdown-item" role="menuitem">${icBills} My Bills</a>
+      ${isExpert ? `<a href="/expert/" class="nav-dropdown-item" role="menuitem">${icExpert} Expert Console</a>` : ''}
+      <button type="button" id="accountLogout" class="nav-dropdown-item account-logout" role="menuitem">${icLogout} Logout</button>
+    </div>`;
+  nav.insertBefore(wrap, themeBtn);
+
+  const trigger = wrap.querySelector('#headerLoginBtn');
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = wrap.classList.toggle('open');
+    trigger.setAttribute('aria-expanded', isOpen);
+  });
+  document.addEventListener('click', (e) => {
+    if (!wrap.contains(e.target)) {
+      wrap.classList.remove('open');
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  wrap.querySelector('#accountLogout').addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    btn.disabled = true; btn.textContent = 'Signing out…';
+    try {
+      const sb = await getSupabase();
+      await sb.auth.signOut();
+    } catch (err) { /* token may already be stale — still clear local state */ }
+    try { localStorage.removeItem('discombill.role'); } catch (err) {}
+    location.href = '/';
+  });
 }
 
 // Expose helpers called from onclick in the rendered bill HTML

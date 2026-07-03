@@ -10,6 +10,7 @@ import { calculateBill } from './engine.js';
 import { renderBill, renderRevisionBill, renderComparison } from './renderer.js';
 import { attachDatePicker, fieldISO, setFieldDate } from './datepicker.js';
 import { round2, escHtml } from './utils.js';
+import { isConfigured, hasStoredSession, getSupabase } from './supabase-config.js';
 
 // Calendar icon markup reused by dynamically-created date fields
 const CAL_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>`;
@@ -48,6 +49,22 @@ export function saveBillToHistory({ label, amount, params }) {
   list.unshift({ label, amount, params, ts: Date.now() });
   writeHistory(list);
   renderHistory();
+  syncBillToCloud({ label, amount, params });   // best-effort, signed-in users only
+}
+
+// Mirror the bill to the user's Supabase account (listed on /my-bills/). Fire
+// and forget: any failure just means the bill only lives in local history.
+// The SDK is only downloaded for signed-in users, and only on first calculate.
+async function syncBillToCloud({ label, amount, params }) {
+  if (!isConfigured() || !hasStoredSession()) return;
+  try {
+    const sb = await getSupabase();
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return;
+    // Same de-dupe rule as local history: identical inputs replace the old row.
+    await sb.from('bills').delete().eq('user_id', session.user.id).eq('params', params);
+    await sb.from('bills').insert({ user_id: session.user.id, label, amount, params });
+  } catch (e) { /* offline / stale token — local history still has the bill */ }
 }
 
 export function renderHistory() {

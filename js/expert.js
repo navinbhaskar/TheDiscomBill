@@ -41,6 +41,12 @@ async function init() {
   me = session.user;
   const { data } = await sb.from('profiles').select('*').eq('id', me.id).single();
   myProfile = data;
+  // Cache the role so the header account dropdown (main.js) can show/hide the
+  // Expert Console link on every page without a DB round-trip.
+  try {
+    if (myProfile?.role === 'expert') localStorage.setItem('discombill.role', 'expert');
+    else localStorage.removeItem('discombill.role');
+  } catch (e) {}
   accountEl.innerHTML = accountBarHtml(myProfile?.full_name, me.email,
     myProfile?.role === 'expert' ? 'EXPERT' : '');
   $('brSignOut').addEventListener('click', () => sb.auth.signOut());

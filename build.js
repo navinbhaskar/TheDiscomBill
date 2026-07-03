@@ -15,7 +15,7 @@ const assets = [
   // Route pages (each is its own folder with an index.html) — must be copied or
   // the Quick Links destinations 404 in production. tariffs/ also contains the
   // generated per-state and per-DISCOM landing pages (copied recursively).
-  'compare', 'usage', 'solar', 'tariffs', 'bill-check', 'bill-review', 'expert', 'login', 'new-connection', 'complaint',
+  'compare', 'usage', 'solar', 'tariffs', 'bill-check', 'bill-review', 'expert', 'login', 'my-bills', 'new-connection', 'complaint',
   'index.html', 'editor.html',
   'sw.js', 'manifest.webmanifest',
   'icon.svg', 'icon-maskable.svg',

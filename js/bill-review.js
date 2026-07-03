@@ -40,6 +40,11 @@ async function init() {
   me = session.user;
   const { data } = await sb.from('profiles').select('*').eq('id', me.id).single();
   myProfile = data;
+  // Keep the header dropdown's Expert Console link in sync (see main.js).
+  try {
+    if (myProfile?.role === 'expert') localStorage.setItem('discombill.role', 'expert');
+    else localStorage.removeItem('discombill.role');
+  } catch (e) {}
   renderAccountBar();
   showDashboard();
 
@@ -119,7 +124,7 @@ function renderComplaintForm(mount, { demo = false } = {}) {
           <textarea id="brDesc" rows="5" maxlength="5000" placeholder="Tell us everything relevant — meter readings, past bills, what the DISCOM said…"></textarea>
         </div>
         <div class="svc-control">
-          <label for="brFiles">Documents (bill copy, meter photo… — PDF/JPG/PNG, max 10&nbsp;MB each)</label>
+          <label for="brFiles">Documents (bill copy, meter photo… — PDF/JPG/PNG, up to 10 files, max 10&nbsp;MB each)</label>
           <input id="brFiles" type="file" multiple accept=".pdf,image/png,image/jpeg,image/webp">
           <div id="brFilePreview" class="br-files"></div>
         </div>
@@ -136,9 +141,34 @@ function renderComplaintForm(mount, { demo = false } = {}) {
   fillDiscoms();
   stateSel.addEventListener('change', fillDiscoms);
 
+  // Accumulate files across multiple picks (the file input's own selection is
+  // replaced each time it's opened, so we keep our own running list) — capped
+  // at MAX_FILES with per-file size checks, each removable individually.
+  const MAX_FILES = 10;
+  const MAX_SIZE = 10 * 1024 * 1024;
+  let picked = [];
+
+  function renderFilePreview() {
+    $('brFilePreview').innerHTML = picked.map((f, i) => `
+      <span class="br-file br-file-pick">📄 ${esc(f.name)} <span class="tx-muted">(${fmtSize(f.size)})</span>
+        <button type="button" class="br-file-remove" data-i="${i}" aria-label="Remove ${esc(f.name)}">✕</button>
+      </span>`).join('')
+      + (picked.length ? `<span class="br-file-count tx-muted">${picked.length} / ${MAX_FILES} files</span>` : '');
+    $('brFilePreview').querySelectorAll('.br-file-remove').forEach(btn =>
+      btn.addEventListener('click', () => { picked.splice(Number(btn.dataset.i), 1); renderFilePreview(); }));
+  }
+
   $('brFiles').addEventListener('change', () => {
-    $('brFilePreview').innerHTML = [...$('brFiles').files]
-      .map(f => `<span class="br-file">📄 ${esc(f.name)} <span class="tx-muted">(${fmtSize(f.size)})</span></span>`).join('');
+    const msg = $('brFormMsg');
+    msg.textContent = '';
+    for (const f of $('brFiles').files) {
+      if (picked.length >= MAX_FILES) { msg.textContent = `You can attach up to ${MAX_FILES} files.`; break; }
+      if (f.size > MAX_SIZE) { msg.textContent = `"${f.name}" is over 10 MB and was skipped — please compress it.`; continue; }
+      if (picked.some(p => p.name === f.name && p.size === f.size)) continue; // already added
+      picked.push(f);
+    }
+    $('brFiles').value = ''; // allow re-picking the same file later, and lets picked[] be the single source of truth
+    renderFilePreview();
   });
 
   if (demo) {
@@ -148,7 +178,7 @@ function renderComplaintForm(mount, { demo = false } = {}) {
     });
   } else {
     $('brBack').addEventListener('click', showDashboard);
-    $('brForm').addEventListener('submit', submitComplaint);
+    $('brForm').addEventListener('submit', (e) => submitComplaint(e, picked));
   }
 }
 
@@ -157,12 +187,12 @@ function showNewComplaintForm() {
   renderComplaintForm(mainEl);
 }
 
-async function submitComplaint(e) {
+async function submitComplaint(e, files) {
   e.preventDefault();
   const msg = $('brFormMsg'), btn = $('brSubmit');
   const subject = $('brSubject').value.trim();
-  const files = [...$('brFiles').files];
   if (!subject) { msg.textContent = 'Please describe the problem in one line.'; return; }
+  if (files.length > 10) { msg.textContent = 'You can attach up to 10 files.'; return; }
   const tooBig = files.find(f => f.size > 10 * 1024 * 1024);
   if (tooBig) { msg.textContent = `"${tooBig.name}" is over 10 MB — please compress it.`; return; }
 
