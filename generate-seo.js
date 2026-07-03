@@ -68,6 +68,7 @@ const HEADER = `
           <a href="/tariffs/" class="nav-dropdown-item" role="menuitem">Electricity Tariff Page</a>
           <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem">All States &amp; DISCOMs Directory</a>
           <a href="/bill-check/" class="nav-dropdown-item" role="menuitem">Bill Check</a>
+          <a href="/bill-review/" class="nav-dropdown-item" role="menuitem">Bill Review by Experts</a>
           <a href="/new-connection/" class="nav-dropdown-item" role="menuitem">New Connection Charges &amp; Process</a>
           <a href="/complaint/" class="nav-dropdown-item" role="menuitem">Register Electricity Complaint</a>
         </div>
@@ -628,6 +629,7 @@ const STATIC_ROUTES = [
   { loc: '/tariffs/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/tariffs/states/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/bill-check/', priority: '0.6', changefreq: 'monthly' },
+  { loc: '/bill-review/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/new-connection/', priority: '0.6', changefreq: 'monthly' },
   { loc: '/complaint/', priority: '0.6', changefreq: 'monthly' },
 ];

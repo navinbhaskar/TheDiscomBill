@@ -16,7 +16,31 @@ import {
 import { initDatePickers } from './datepicker.js';
 import { initI18n } from './i18n.js';
 import { initComparisonTable } from './compare.js';
+import { isConfigured, hasStoredSession } from './supabase-config.js';
 import Lenis from './vendor/lenis.mjs';
+
+// ── Header account button ─────────────────────────────────────────────────────
+// Injected on every page (all pages load main.js) so the header never needs
+// hand-editing: "Login" when signed out, "My Account" once a session exists.
+function initLoginButton() {
+  const nav = document.querySelector('.header-nav');
+  const themeBtn = document.getElementById('themeToggle');
+  if (!nav || !themeBtn || !isConfigured()) return;
+  if (location.pathname.startsWith('/login')) return;   // pointless on the login page itself
+
+  const signedIn = hasStoredSession();
+  const a = document.createElement('a');
+  a.id = 'headerLoginBtn';
+  a.className = 'login-btn';
+  if (signedIn) {
+    a.href = '/bill-review/';
+    a.innerHTML = '👤 <span>My Account</span>';
+  } else {
+    a.href = '/login/?next=' + encodeURIComponent(location.pathname === '/login/' ? '/bill-review/' : location.pathname);
+    a.innerHTML = '<span>Login</span>';
+  }
+  nav.insertBefore(a, themeBtn);
+}
 
 // Expose helpers called from onclick in the rendered bill HTML
 
@@ -91,6 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   initI18n();   // apply saved/default language + wire the EN/हिंदी switcher
   initComparisonTable(); // Render the dynamic tariff comparison table
+  initLoginButton();     // top-right Login / My Account button
 
   // Theme toggle — data-theme is pre-set by the inline <head> script; here we sync the button
   // and let the user flip + persist their choice.
