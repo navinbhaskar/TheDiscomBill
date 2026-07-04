@@ -1651,7 +1651,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   box-shadow: var(--shadow-sm);
 }
 .comparison-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 660px; }
-.comparison-table th, .comparison-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-subtle); transition: background var(--t-fast); }
+.comparison-table th, .comparison-table td { padding: 8px 16px; text-align: left; border-bottom: 1px solid var(--border-subtle); transition: background var(--t-fast); }
 .comparison-table thead th {
   position: sticky; top: 0; z-index: 2;
   background: var(--surface-sunken); color: var(--text-secondary);
@@ -1660,7 +1660,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 .comparison-table th.num, .comparison-table td.num { text-align: right; }
 /* Data cells: normal weight (no bold) — legibility comes from tabular figures + spacing. */
-.comparison-table td { font-size: 15px; color: var(--text-primary); font-weight: 400; font-variant-numeric: tabular-nums; }
+.comparison-table td { font-size: 14px; color: var(--text-primary); font-weight: 400; font-variant-numeric: tabular-nums; }
 .comparison-table tbody tr:last-child td { border-bottom: none; }
 
 /* Sticky first column (the DISCOM name) so it stays visible on horizontal scroll. */
@@ -1690,9 +1690,9 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 
 /* DISCOM cell — state name over the DISCOM code. */
-.comp-name { line-height: 1.25; }
-.comp-state { display: block; font-size: 14px; font-weight: 600; color: var(--text-primary); }
-.comp-code { display: block; font-size: 11.5px; font-weight: 400; color: var(--text-tertiary); margin-top: 1px; }
+.comp-name { line-height: 1.2; }
+.comp-state { display: block; font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.comp-code { display: block; font-size: 11px; font-weight: 400; color: var(--text-tertiary); margin-top: 0; }
 .comp-na { color: var(--text-tertiary); font-weight: 400; }
 
 .comp-loading { text-align: center !important; color: var(--text-tertiary); font-style: italic; padding: 30px !important; }
