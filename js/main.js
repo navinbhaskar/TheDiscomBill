@@ -26,7 +26,7 @@ import Lenis from './vendor/lenis.mjs';
 // button. The visitor keeps their page state (e.g. a half-filled calculator);
 // the shared auth card + Supabase SDK are lazy-loaded only when it opens.
 // /login/ remains the fallback for no-JS, new-tab clicks and ?next= deep links.
-async function openAuthModal(triggerEl) {
+async function openAuthModal(triggerEl, opts = {}) {
   if (document.querySelector('.auth-modal-overlay')) return;
 
   const overlay = document.createElement('div');
@@ -81,12 +81,33 @@ async function openAuthModal(triggerEl) {
     onSignedIn: () => {
       if (closed) return;
       close();
-      // Swap Login → account dropdown without a navigation. The session lands
-      // in localStorage just before this fires; reload as a belt-and-braces
+      // A gated CTA (e.g. "Get my bill reviewed by an expert") asked us to land the
+      // visitor on a specific page once they're in — go straight there.
+      if (opts.redirectTo) { location.assign(opts.redirectTo); return; }
+      // Otherwise swap Login → account dropdown without a navigation. The session
+      // lands in localStorage just before this fires; reload as a belt-and-braces
       // fallback if it hasn't (so the header never lies about auth state).
       initLoginButton();
       if (!document.querySelector('.account-dropdown')) location.reload();
     }
+  });
+}
+
+// Gated CTAs → auth modal (not the full /login/ page). The Bill Review portal
+// requires an account and would otherwise bounce a logged-out visitor to /login/.
+// Intercept clicks on any link into it: signed-out visitors get the in-page modal
+// and are redirected to the portal once they finish; signed-in visitors, new-tab
+// clicks and the portal's own pages navigate normally.
+function initGatedLinks() {
+  if (!isConfigured()) return;
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href="/bill-review/"], a[href^="/bill-review/?"]');
+    if (!a) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;  // let new-tab through
+    if (location.pathname.startsWith('/bill-review')) return;            // already in the portal
+    if (getStoredUser()) return;                                         // signed in → navigate normally
+    e.preventDefault();
+    openAuthModal(a, { redirectTo: '/bill-review/' });
   });
 }
 
@@ -262,6 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initI18n();   // apply saved/default language + wire the EN/हिंदी switcher
   initComparisonTable(); // Render the dynamic tariff comparison table
   initLoginButton();     // top-right Login / My Account button
+  initGatedLinks();      // Bill Review CTAs open the auth modal, then redirect in
 
   // Theme toggle — data-theme is pre-set by the inline <head> script; here we sync the button
   // and let the user flip + persist their choice.

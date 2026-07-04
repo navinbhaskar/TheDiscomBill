@@ -278,7 +278,22 @@ const STRINGS = {
 
 const LANG_CODE = { en: 'EN', hi: 'हिं' };
 
+// Devanagari webfont (Noto Sans Devanagari) is loaded on demand — only when Hindi is
+// activated — so English visitors never download it. Injected once; the CSS stack already
+// lists 'Noto Sans Devanagari' after the Latin faces, so Hindi glyphs pick it up per-glyph.
+let devanagariRequested = false;
+function ensureDevanagariFont() {
+  if (devanagariRequested) return;
+  devanagariRequested = true;
+  const href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap';
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = href;
+  document.head.appendChild(link);
+}
+
 export function applyLang(lang) {
+  if (lang === 'hi') ensureDevanagariFont();
   const dict = STRINGS[lang] || STRINGS.en;
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const v = dict[el.dataset.i18n];

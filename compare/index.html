@@ -100,7 +100,52 @@
     <div class="container">
       <h2 class="reveal">Tariff Comparison (Major DISCOMs)</h2>
       <p class="reveal">See how major electricity providers stack up against each other for a typical month at a <strong>1&nbsp;kW sanctioned load</strong>. Calculated dynamically based on current FY 2025-26 tariffs.</p>
-      
+
+      <!-- ── Custom head-to-head: pick any two DISCOMs + your own units ──────────── -->
+      <section class="custom-compare reveal" aria-labelledby="ccHeading">
+        <div class="cc-head">
+          <h3 id="ccHeading">Compare any two DISCOMs</h3>
+          <p>Not just the majors — pick any two providers and enter your own monthly usage for a like-for-like bill estimate, with a full breakdown.</p>
+        </div>
+        <form class="cc-form" id="ccForm">
+          <div class="cc-pickers">
+            <div class="cc-picker">
+              <label for="ccDiscomA">DISCOM A</label>
+              <select id="ccDiscomA" class="cc-select"></select>
+            </div>
+            <div class="cc-vs" aria-hidden="true">vs</div>
+            <div class="cc-picker">
+              <label for="ccDiscomB">DISCOM B</label>
+              <select id="ccDiscomB" class="cc-select"></select>
+            </div>
+          </div>
+          <div class="cc-inputs">
+            <div class="cc-field">
+              <label for="ccUnits">Monthly units (kWh)</label>
+              <input type="number" id="ccUnits" min="0" step="10" value="300" inputmode="numeric">
+            </div>
+            <div class="cc-field">
+              <label for="ccLoad">Load (kW)</label>
+              <input type="number" id="ccLoad" min="0.5" step="0.5" value="2">
+            </div>
+            <div class="cc-field">
+              <label for="ccCategory">Category</label>
+              <select id="ccCategory" class="cc-select">
+                <option value="domestic">Domestic</option>
+                <option value="commercial">Commercial</option>
+              </select>
+            </div>
+            <button type="submit" class="cc-btn" id="ccCompareBtn">Compare</button>
+          </div>
+          <label class="cc-check">
+            <input type="checkbox" id="ccSubsidy" checked>
+            <span>Include government subsidy (eligible domestic connections)</span>
+          </label>
+        </form>
+        <p class="cc-note">Subsidy is applied to eligible <strong>domestic</strong> connections. Currently modelled: <strong>Delhi</strong> (GNCTD — first 200 units free, 50% rebate to 400). Other states' subsidies (e.g. Punjab, Karnataka) may reduce your actual bill further.</p>
+        <div class="cc-result" id="ccResult" aria-live="polite"></div>
+      </section>
+
       <div class="comparison-tabs reveal">
         <button class="comp-tab active" data-target="domestic">Domestic</button>
         <button class="comp-tab" data-target="commercial">Commercial</button>
