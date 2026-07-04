@@ -21,6 +21,7 @@ import { fileURLToPath } from 'url';
 import { TARIFF_DB, STATE_META, getStates, getDiscoms } from './js/tariffs/registry.js';
 import { calculateBill } from './js/engine.js';
 import { GUIDES } from './guides-content.js';
+import { GLOSSARY } from './glossary-content.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
@@ -69,6 +70,7 @@ const HEADER = `
           <a href="/tariffs/" class="nav-dropdown-item" role="menuitem">Electricity Tariff Page</a>
           <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem">All States &amp; DISCOMs Directory</a>
           <a href="/guides/" class="nav-dropdown-item" role="menuitem">Electricity Bill Guides</a>
+          <a href="/glossary/" class="nav-dropdown-item" role="menuitem">Electricity Bill Glossary</a>
           <a href="/bill-check/" class="nav-dropdown-item" role="menuitem">Bill Check</a>
           <a href="/bill-review/" class="nav-dropdown-item" role="menuitem">Bill Review by Experts</a>
           <a href="/new-connection/" class="nav-dropdown-item" role="menuitem">New Connection Charges &amp; Process</a>
@@ -84,7 +86,7 @@ const HEADER = `
 const FOOTER = `
 <footer>
   <div class="container">
-    <p>&copy; 2026 TheDiscomBill. All rights reserved. &nbsp;|&nbsp; <a href="/#about">Disclaimer</a> &nbsp;|&nbsp; <a href="/tariffs/states/">All States &amp; DISCOMs</a></p>
+    <p>&copy; 2026 TheDiscomBill. All rights reserved. &nbsp;|&nbsp; <a href="/#about">Disclaimer</a> &nbsp;|&nbsp; <a href="/tariffs/states/">All States &amp; DISCOMs</a> &nbsp;|&nbsp; <a href="/glossary/">Bill Glossary</a></p>
   </div>
 </footer>`;
 
@@ -433,6 +435,26 @@ function discomServiceLinksHtml(state, discom) {
     </section>`;
 }
 
+// Contextual glossary links from each DISCOM page. Real anchor text into /glossary/#<term>
+// (stronger topical signal than nav/footer boilerplate) that also genuinely helps a reader
+// decode the charge lines they just saw in the tariff schedule above.
+function glossaryLinksHtml(discom) {
+  const terms = [
+    ['fppa', 'FPPA (fuel surcharge)'],
+    ['fixed-charge', 'fixed charges'],
+    ['telescopic-slabs', 'telescopic slabs'],
+    ['sanctioned-load', 'sanctioned load'],
+    ['electricity-duty', 'electricity duty'],
+  ];
+  return `
+    <section class="seo-section">
+      <h2>Understand your ${esc(discom.name)} bill</h2>
+      <p>New to these charge lines? Our <a href="/glossary/">electricity bill glossary</a> explains
+      the terms on a ${esc(discom.name)} bill in plain language — including
+      ${terms.map(([slug, label]) => `<a href="/glossary/#${slug}">${label}</a>`).join(', ')}.</p>
+    </section>`;
+}
+
 // ── page builders ─────────────────────────────────────────────────────────────
 function discomPage(state, discom) {
   const stateSlug = slugify(state);
@@ -545,6 +567,7 @@ function discomPage(state, discom) {
       <div class="tariff-cards">${cards}</div>
     </section>
 
+    ${glossaryLinksHtml(discom)}
     ${siblingHtml}
     ${faqHtml(faqs)}
     <p class="seo-disclaimer">Figures are provisional estimates built on publicly available ${esc(state)} tariff orders. Always verify against your official ${esc(discom.name)} bill — rates vary by sub-category, slab and city.</p>
@@ -770,6 +793,91 @@ function guidesIndexPage() {
   });
 }
 
+// ── glossary (/glossary/) — DefinedTerm content in glossary-content.js ─────────
+// A single definitional page. DefinedTermSet + DefinedTerm JSON-LD is exactly the entity
+// shape LLMs and search engines cite, and every DISCOM/state page links in with real anchor
+// text (nav, footer + a contextual block), making this a topical hub.
+function definedTermSetJsonLd(url) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTermSet',
+    '@id': `${SITE}${url}#termset`,
+    name: 'Electricity Bill Glossary',
+    description: 'Definitions of Indian electricity billing and tariff terms — FPPA, electricity duty, kVAh, telescopic slabs, sanctioned load and more.',
+    url: SITE + url,
+    inLanguage: 'en-IN',
+    publisher: { '@id': `${SITE}/#org` },
+    hasDefinedTerm: GLOSSARY.map(t => {
+      const alt = [t.abbr, ...(t.aka || [])].filter(Boolean);
+      return {
+        '@type': 'DefinedTerm',
+        '@id': `${SITE}${url}#${t.slug}`,
+        name: t.term,
+        ...(alt.length ? { alternateName: alt } : {}),
+        description: t.short,
+        inDefinedTermSet: `${SITE}${url}#termset`,
+        url: `${SITE}${url}#${t.slug}`,
+      };
+    }),
+  };
+}
+
+function glossaryPage() {
+  const url = '/glossary/';
+  const title = 'Electricity Bill Glossary — Indian Tariff Terms Explained';
+  const description = 'Plain-language definitions of Indian electricity bill and tariff terms: FPPA, electricity duty, MMC, kVAh, multiplying factor, sanctioned load, telescopic slabs, LPSC and more.';
+
+  // Alphabetical jump index (chips) → anchors below.
+  const index = [...GLOSSARY].sort((a, b) => a.term.localeCompare(b.term))
+    .map(t => `<a class="glossary-chip" href="#${t.slug}">${esc(t.term.replace(/\s*\(.*?\)\s*/g, '').trim())}</a>`).join('');
+
+  const terms = GLOSSARY.map(t => {
+    const alt = [t.abbr, ...(t.aka || [])].filter(Boolean).filter(x => x.toLowerCase() !== t.term.toLowerCase());
+    const also = alt.length ? `<p class="glossary-aka">Also called: ${alt.map(esc).join(', ')}</p>` : '';
+    return `
+      <section class="seo-section glossary-term" id="${t.slug}">
+        <h2>${esc(t.term)}</h2>
+        <p class="glossary-def">${esc(t.short)}</p>
+        ${also}
+        ${t.body}
+        <p class="glossary-top"><a href="#glossary-index">↑ Back to all terms</a></p>
+      </section>`;
+  }).join('');
+
+  const body = `
+  <section class="seo-page container">
+    ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Glossary', url: null }])}
+    <h1>Electricity Bill Glossary</h1>
+    <p class="seo-lead">Every charge line and code on an Indian electricity bill, defined in plain
+    language. These are the terms behind our <a href="/#calculator">bill calculator</a> and
+    <a href="/tariffs/states/">tariff pages</a> — from <a href="#fppa">FPPA</a> and
+    <a href="#electricity-duty">electricity duty</a> to <a href="#telescopic-slabs">telescopic
+    slabs</a> and <a href="#kvah">kVAh</a>.</p>
+    <nav class="glossary-index" id="glossary-index" aria-label="Glossary terms">${index}</nav>
+    ${terms}
+    <section class="seo-section">
+      <h2>Put these terms to work</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/#calculator"><strong>Bill Calculator</strong><span>Apply these charges to your own units and load for an itemised estimate</span></a>
+        <a class="seo-link-card" href="/guides/"><strong>Bill Guides</strong><span>Longer walkthroughs: reading your bill, why bills rise, Time-of-Day billing</span></a>
+        <a class="seo-link-card" href="/tariffs/states/"><strong>Tariffs by State</strong><span>The live slab rates, fixed charges and FPPA for every DISCOM</span></a>
+      </div>
+    </section>
+    <p class="seo-disclaimer">General definitions based on common Indian tariff practice; the exact
+    treatment of any charge varies by state, DISCOM and consumer category. Verify against your
+    DISCOM's tariff order or your printed bill.</p>
+  </section>`;
+
+  return layout({
+    title, description, canonical: SITE + url,
+    jsonld: [
+      definedTermSetJsonLd(url),
+      breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Glossary', url }]),
+    ],
+    body,
+  });
+}
+
 // ── sitemap + robots ──────────────────────────────────────────────────────────
 const STATIC_ROUTES = [
   { loc: '/', priority: '1.0', changefreq: 'weekly' },
@@ -790,6 +898,7 @@ function buildSitemap(states) {
   for (const g of GUIDES) {
     urls.push({ loc: `/guides/${g.slug}/`, priority: '0.7', changefreq: 'monthly' });
   }
+  urls.push({ loc: '/glossary/', priority: '0.7', changefreq: 'monthly' });
   for (const state of states) {
     const stateSlug = slugify(state);
     urls.push({ loc: `/tariffs/${stateSlug}/`, priority: '0.7', changefreq: 'monthly' });
@@ -855,6 +964,10 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 
 ${GUIDES.map(g => `- [${g.title}](${SITE}/guides/${g.slug}/): ${g.description.split('.')[0]}`).join('\n')}
 
+## Reference
+
+- [Electricity Bill Glossary](${SITE}/glossary/): definitions of billing terms — ${GLOSSARY.map(t => t.abbr || t.term.replace(/\s*\(.*?\)\s*/g, '').trim()).join(', ')}
+
 ## Tariff reference
 
 - [All states & DISCOMs directory](${SITE}/tariffs/states/): index of every state and DISCOM landing page
@@ -883,6 +996,9 @@ export function generateSeo() {
     writePage(`guides/${guide.slug}`, guidePage(guide));
     pages++;
   }
+
+  writePage('glossary', glossaryPage());
+  pages++;
 
   for (const state of states) {
     const stateSlug = slugify(state);

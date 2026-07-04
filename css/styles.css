@@ -1170,20 +1170,64 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   overflow: hidden;
 }
 .bill-placeholder {
+  position: relative;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 64px 40px; text-align: center; color: var(--text-secondary);
-  min-height: 320px;
+  min-height: 480px;
+  overflow: hidden;
 }
-.placeholder-icon {
-  width: 72px; height: 72px;
-  background: var(--surface-sunken);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 20px;
-}
-.placeholder-icon svg { width: 36px; height: 36px; color: var(--text-tertiary); }
 .bill-placeholder h3 { font-size: 17px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
 .bill-placeholder p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+/* Ghost bill skeleton — a faint preview of the real bill layout */
+.bill-skeleton {
+  position: absolute; inset: 0;
+  opacity: 0.45;
+  pointer-events: none; user-select: none;
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 96%);
+  mask-image: linear-gradient(180deg, #000 55%, transparent 96%);
+}
+.sk-bar {
+  display: block; height: 12px; border-radius: 4px;
+  background: color-mix(in srgb, var(--text-tertiary) 26%, transparent);
+}
+.sk-bar.sk-thin { height: 9px; }
+.sk-w14{width:14%}.sk-w15{width:15%}.sk-w17{width:17%}.sk-w18{width:18%}
+.sk-w20{width:20%}.sk-w22{width:22%}.sk-w30{width:30%}.sk-w35{width:35%}
+.sk-w38{width:38%}.sk-w40{width:40%}.sk-w45{width:45%}.sk-w50{width:50%}
+.sk-w52{width:52%}.sk-w55{width:55%}.sk-w60{width:60%}.sk-w65{width:65%}
+.sk-w70{width:70%}
+.sk-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: 20px 24px;
+  background: color-mix(in srgb, var(--text-brand) 14%, transparent);
+}
+.sk-head .sk-bar { background: color-mix(in srgb, var(--text-brand) 30%, transparent); }
+.sk-head-left { flex: 1; display: flex; flex-direction: column; gap: 8px; max-width: 45%; }
+.sk-body { padding: 20px 24px; display: flex; flex-direction: column; gap: 18px; }
+.sk-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; }
+.sk-meta > div { display: flex; flex-direction: column; gap: 6px; }
+.sk-table, .sk-charges { display: flex; flex-direction: column; gap: 10px; }
+.sk-table { border: 1px solid var(--border-subtle); border-radius: 8px; padding: 12px 14px; }
+.sk-row { display: flex; align-items: center; gap: 14px; }
+.sk-row > .sk-bar:last-child { margin-left: auto; }
+.sk-row-head .sk-bar { background: color-mix(in srgb, var(--text-tertiary) 36%, transparent); }
+.sk-charges .sk-row { padding: 0 14px; }
+.sk-total {
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: 14px; border-radius: 8px;
+  background: color-mix(in srgb, var(--text-brand) 10%, transparent);
+}
+.sk-total .sk-bar { height: 15px; background: color-mix(in srgb, var(--text-brand) 28%, transparent); }
+
+/* Message floats above the ghost */
+.bill-placeholder-msg {
+  position: relative; z-index: 1;
+  padding: 20px 28px; border-radius: var(--radius-lg, 14px);
+  background: color-mix(in srgb, var(--surface-card) 78%, transparent);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
+}
 
 /* Bill actions bar */
 .bill-actions {
@@ -1731,6 +1775,36 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 /* Guides (/guides/) */
 .guide-meta { font-size: 12.5px; color: var(--text-tertiary); margin: -6px 0 16px; }
 .guide-more { border-top: 1px solid var(--border-subtle); padding-top: 26px; }
+
+/* Glossary (/glossary/) */
+.glossary-index {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 4px 0 32px; padding: 16px;
+  background: var(--surface-sunken); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg); scroll-margin-top: 76px;
+}
+.glossary-chip {
+  font-size: 13px; font-weight: 600; color: var(--text-brand); text-decoration: none;
+  padding: 6px 12px; border-radius: var(--radius-full);
+  background: var(--surface-card); border: 1px solid var(--border-default);
+  transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-fast);
+}
+.glossary-chip:hover { border-color: var(--brand); background: var(--brand-faint); transform: translateY(-1px); text-decoration: none; }
+.glossary-term { scroll-margin-top: 76px; border-top: 1px solid var(--border-subtle); padding-top: 24px; }
+.glossary-def {
+  font-size: 16px; font-weight: 600; color: var(--text-primary) !important;
+  line-height: 1.55 !important; border-left: 3px solid var(--brand);
+  padding-left: 14px; margin: 0 0 14px !important;
+}
+.glossary-aka { font-size: 12.5px; color: var(--text-tertiary) !important; margin: -6px 0 14px !important; }
+.glossary-term code {
+  font-family: ui-monospace, 'Consolas', 'Courier New', monospace;
+  font-size: 0.92em; background: var(--surface-sunken);
+  padding: 1px 5px; border-radius: 4px; color: var(--text-primary);
+}
+.glossary-top { margin: 6px 0 0 !important; }
+.glossary-top a { font-size: 12.5px; color: var(--text-tertiary); text-decoration: none; }
+.glossary-top a:hover { color: var(--brand); }
 
 /* Breadcrumbs */
 .seo-breadcrumbs ol { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin: 0; padding: 0; font-size: 12.5px; }
