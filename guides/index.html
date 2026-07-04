@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icon.svg">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+  <title>Electricity Bill Guides — Understand &amp; Reduce Your Bill</title>
+  <meta name="description" content="Plain-language guides to Indian electricity billing: how to read your bill, why bills suddenly increase, Time-of-Day billing, FPPA and more.">
+  <link rel="canonical" href="https://www.thediscombill.com/guides/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="Electricity Bill Guides — Understand &amp; Reduce Your Bill">
+  <meta property="og:description" content="Plain-language guides to Indian electricity billing: how to read your bill, why bills suddenly increase, Time-of-Day billing, FPPA and more.">
+  <meta property="og:url" content="https://www.thediscombill.com/guides/">
+  <meta property="og:image" content="https://www.thediscombill.com/icon-512.png">
+  <meta property="og:locale" content="en_IN">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Electricity Bill Guides — Understand &amp; Reduce Your Bill">
+  <meta name="twitter:description" content="Plain-language guides to Indian electricity billing: how to read your bill, why bills suddenly increase, Time-of-Day billing, FPPA and more.">
+  <meta name="twitter:image" content="https://www.thediscombill.com/icon-512.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://www.thediscombill.com/guides/","name":"Electricity Bill Guides — Understand & Reduce Your Bill","description":"Plain-language guides to Indian electricity billing: how to read your bill, why bills suddenly increase, Time-of-Day billing, FPPA and more.","isPartOf":{"@id":"https://www.thediscombill.com/#website"},"publisher":{"@id":"https://www.thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-07-03"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://www.thediscombill.com/guides/"}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator">Calculator</a>
+      <div class="nav-dropdown" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          Quick Links
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu" id="quickLinksMenu" role="menu">
+          <a href="/compare/" class="nav-dropdown-item" role="menuitem">Major DISCOM Tariff Comparison</a>
+          <a href="/usage/" class="nav-dropdown-item" role="menuitem">Usage Estimator</a>
+          <a href="/solar/" class="nav-dropdown-item" role="menuitem">Rooftop Solar Savings</a>
+          <a href="/tariffs/" class="nav-dropdown-item" role="menuitem">Electricity Tariff Page</a>
+          <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem">All States &amp; DISCOMs Directory</a>
+          <a href="/guides/" class="nav-dropdown-item" role="menuitem">Electricity Bill Guides</a>
+          <a href="/bill-check/" class="nav-dropdown-item" role="menuitem">Bill Check</a>
+          <a href="/bill-review/" class="nav-dropdown-item" role="menuitem">Bill Review by Experts</a>
+          <a href="/new-connection/" class="nav-dropdown-item" role="menuitem">New Connection Charges &amp; Process</a>
+          <a href="/complaint/" class="nav-dropdown-item" role="menuitem">Register Electricity Complaint</a>
+        </div>
+      </div>
+      <a href="/#about">About</a>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body">
+
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">Guides</span></li></ol></nav>
+    <h1>Electricity Bill Guides</h1>
+    <p class="seo-lead">Short, practical explainers on Indian electricity billing — written to answer
+    the exact questions people ask, and linked to the live tariff data behind our
+    <a href="/#calculator">bill calculator</a>.</p>
+    <div class="seo-link-grid guides-grid">
+    <a class="seo-link-card" href="/guides/how-to-read-uppcl-bill/">
+      <strong>How to Read Your UPPCL Electricity Bill</strong>
+      <span>A line-by-line walkthrough of a UPPCL (MVVNL, PVVNL, DVVNL, PuVVNL, KESCO) electricity bill: account fields, meter readings, energy charges, fixed charges, FPPA, electricity duty and arrears — and how to verify the total yourself.</span>
+      <small>6 min read</small>
+    </a>
+    <a class="seo-link-card" href="/guides/why-did-my-electricity-bill-increase/">
+      <strong>Why Did My Electricity Bill Suddenly Increase?</strong>
+      <span>The 8 most common reasons an Indian electricity bill jumps — slab escalation, catch-up after estimated readings, FPPA revisions, seasonal AC load, arrears with LPSC, meter faults, excess-load penalties — and exactly how to check each one.</span>
+      <small>7 min read</small>
+    </a>
+    <a class="seo-link-card" href="/guides/tod-billing-explained/">
+      <strong>Time-of-Day (ToD) Electricity Billing Explained</strong>
+      <span>What Time-of-Day (ToD) electricity billing is, who it applies to in India, how peak and off-peak rates work with smart meters, what kVAh billing means, and practical ways to cut your bill by shifting load.</span>
+      <small>5 min read</small>
+    </a></div>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 TheDiscomBill. All rights reserved. &nbsp;|&nbsp; <a href="/#about">Disclaimer</a> &nbsp;|&nbsp; <a href="/tariffs/states/">All States &amp; DISCOMs</a></p>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

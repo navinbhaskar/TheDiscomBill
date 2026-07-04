@@ -20,6 +20,7 @@ import { fileURLToPath } from 'url';
 
 import { TARIFF_DB, STATE_META, getStates, getDiscoms } from './js/tariffs/registry.js';
 import { calculateBill } from './js/engine.js';
+import { GUIDES } from './guides-content.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
@@ -67,6 +68,7 @@ const HEADER = `
           <a href="/solar/" class="nav-dropdown-item" role="menuitem">Rooftop Solar Savings</a>
           <a href="/tariffs/" class="nav-dropdown-item" role="menuitem">Electricity Tariff Page</a>
           <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem">All States &amp; DISCOMs Directory</a>
+          <a href="/guides/" class="nav-dropdown-item" role="menuitem">Electricity Bill Guides</a>
           <a href="/bill-check/" class="nav-dropdown-item" role="menuitem">Bill Check</a>
           <a href="/bill-review/" class="nav-dropdown-item" role="menuitem">Bill Review by Experts</a>
           <a href="/new-connection/" class="nav-dropdown-item" role="menuitem">New Connection Charges &amp; Process</a>
@@ -74,7 +76,7 @@ const HEADER = `
         </div>
       </div>
       <a href="/#about">About</a>
-      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme">☾</button>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
     </nav>
   </div>
 </header>`;
@@ -675,6 +677,90 @@ function directoryPage(states) {
   });
 }
 
+// ── guides (/guides/) — evergreen explainers, content in guides-content.js ────
+function articleJsonLd(guide, url) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: guide.title,
+    description: guide.description,
+    mainEntityOfPage: SITE + url,
+    datePublished: guide.published || TODAY,
+    dateModified: TODAY,
+    inLanguage: 'en-IN',
+    author: { '@id': `${SITE}/#org` },
+    publisher: { '@id': `${SITE}/#org` },
+  };
+}
+
+function guidePage(guide) {
+  const url = `/guides/${guide.slug}/`;
+  const trail = [
+    { name: 'Home', url: '/' },
+    { name: 'Guides', url: '/guides/' },
+    { name: guide.title, url: null },
+  ];
+  const body = `
+  <section class="seo-page container">
+    ${breadcrumbs(trail)}
+    <h1>${esc(guide.title)}</h1>
+    <p class="guide-meta">${guide.minutes} min read · Updated ${new Date(TODAY).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+    <p class="seo-lead">${guide.intro}</p>
+    ${guide.sections}
+    ${faqHtml(guide.faqs)}
+    <section class="seo-section guide-more">
+      <h2>More guides</h2>
+      <div class="seo-link-grid">${GUIDES.filter(g => g.slug !== guide.slug).map(g => `
+        <a class="seo-link-card" href="/guides/${g.slug}/">
+          <strong>${esc(g.title)}</strong>
+          <small>${g.minutes} min read</small>
+        </a>`).join('')}
+      </div>
+    </section>
+    <p class="seo-disclaimer">General guidance based on publicly available tariff orders and
+    regulations; specifics vary by state, DISCOM and consumer category. Verify against your DISCOM's
+    official schedule or your printed bill.</p>
+  </section>`;
+
+  return layout({
+    title: guide.metaTitle || guide.title,
+    description: guide.description,
+    canonical: SITE + url,
+    jsonld: [
+      articleJsonLd(guide, url),
+      breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Guides', url: '/guides/' }, { name: guide.title }]),
+      faqJsonLd(guide.faqs),
+    ],
+    body,
+  });
+}
+
+function guidesIndexPage() {
+  const url = '/guides/';
+  const title = 'Electricity Bill Guides — Understand & Reduce Your Bill';
+  const description = 'Plain-language guides to Indian electricity billing: how to read your bill, why bills suddenly increase, Time-of-Day billing, FPPA and more.';
+  const cards = GUIDES.map(g => `
+    <a class="seo-link-card" href="/guides/${g.slug}/">
+      <strong>${esc(g.title)}</strong>
+      <span>${esc(g.description.split('.')[0])}.</span>
+      <small>${g.minutes} min read</small>
+    </a>`).join('');
+  const body = `
+  <section class="seo-page container">
+    ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Guides', url: null }])}
+    <h1>Electricity Bill Guides</h1>
+    <p class="seo-lead">Short, practical explainers on Indian electricity billing — written to answer
+    the exact questions people ask, and linked to the live tariff data behind our
+    <a href="/#calculator">bill calculator</a>.</p>
+    <div class="seo-link-grid guides-grid">${cards}</div>
+  </section>`;
+  return layout({
+    title, description, canonical: SITE + url,
+    jsonld: [breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Guides', url }])],
+    body,
+  });
+}
+
 // ── sitemap + robots ──────────────────────────────────────────────────────────
 const STATIC_ROUTES = [
   { loc: '/', priority: '1.0', changefreq: 'weekly' },
@@ -691,6 +777,10 @@ const STATIC_ROUTES = [
 
 function buildSitemap(states) {
   const urls = [...STATIC_ROUTES.map(r => ({ ...r }))];
+  urls.push({ loc: '/guides/', priority: '0.8', changefreq: 'monthly' });
+  for (const g of GUIDES) {
+    urls.push({ loc: `/guides/${g.slug}/`, priority: '0.7', changefreq: 'monthly' });
+  }
   for (const state of states) {
     const stateSlug = slugify(state);
     urls.push({ loc: `/tariffs/${stateSlug}/`, priority: '0.7', changefreq: 'monthly' });
@@ -752,6 +842,10 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [New Connection](${SITE}/new-connection/): charges, documents and process per DISCOM
 - [Complaint](${SITE}/complaint/): DISCOM complaint portals and the 1912 national helpline
 
+## Guides
+
+${GUIDES.map(g => `- [${g.title}](${SITE}/guides/${g.slug}/): ${g.description.split('.')[0]}`).join('\n')}
+
 ## Tariff reference
 
 - [All states & DISCOMs directory](${SITE}/tariffs/states/): index of every state and DISCOM landing page
@@ -773,6 +867,13 @@ export function generateSeo() {
 
   writePage('tariffs/states', directoryPage(states));
   pages++;
+
+  writePage('guides', guidesIndexPage());
+  pages++;
+  for (const guide of GUIDES) {
+    writePage(`guides/${guide.slug}`, guidePage(guide));
+    pages++;
+  }
 
   for (const state of states) {
     const stateSlug = slugify(state);

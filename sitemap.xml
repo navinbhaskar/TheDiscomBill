@@ -61,6 +61,30 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://www.thediscombill.com/guides/</loc>
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.thediscombill.com/guides/how-to-read-uppcl-bill/</loc>
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.thediscombill.com/guides/why-did-my-electricity-bill-increase/</loc>
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.thediscombill.com/guides/tod-billing-explained/</loc>
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.thediscombill.com/tariffs/andhra-pradesh/</loc>
     <lastmod>2026-07-03</lastmod>
     <changefreq>monthly</changefreq>

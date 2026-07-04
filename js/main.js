@@ -21,6 +21,70 @@ import Lenis from './vendor/lenis.mjs';
 
 // ── Header account button ─────────────────────────────────────────────────────
 // Injected on every page (all pages load main.js) so the header never needs
+// ── Auth modal ────────────────────────────────────────────────────────────────
+// Compact sign-in dialog over a blurred backdrop, opened by the header Login
+// button. The visitor keeps their page state (e.g. a half-filled calculator);
+// the shared auth card + Supabase SDK are lazy-loaded only when it opens.
+// /login/ remains the fallback for no-JS, new-tab clicks and ?next= deep links.
+async function openAuthModal(triggerEl) {
+  if (document.querySelector('.auth-modal-overlay')) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'auth-modal-overlay';
+  overlay.innerHTML = `
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+      <button type="button" class="auth-modal-close" aria-label="Close sign-in dialog">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <h2 class="auth-modal-title" id="authModalTitle">Sign in to TheDiscomBill</h2>
+      <div class="auth-modal-body"><p class="tx-muted">Loading…</p></div>
+    </div>`;
+  document.body.appendChild(overlay);
+  document.body.style.overflow = 'hidden';
+  const dialog = overlay.querySelector('.auth-modal');
+
+  let closed = false;
+  const close = () => {
+    if (closed) return;
+    closed = true;
+    document.removeEventListener('keydown', onKey);
+    overlay.remove();
+    document.body.style.overflow = '';
+    triggerEl?.isConnected && triggerEl.focus();
+  };
+  const onKey = (e) => {
+    if (e.key === 'Escape') { close(); return; }
+    if (e.key !== 'Tab') return;
+    // Keep Tab cycling inside the dialog while it is open.
+    const f = [...dialog.querySelectorAll('button, [href], input, select, textarea')]
+      .filter(el => !el.disabled && el.offsetParent !== null);
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  };
+  document.addEventListener('keydown', onKey);
+  overlay.addEventListener('mousedown', (e) => { if (e.target === overlay) close(); });
+  overlay.querySelector('.auth-modal-close').addEventListener('click', close);
+  overlay.querySelector('.auth-modal-close').focus();
+
+  const { initAuth } = await import('./support-common.js');
+  if (closed) return;                       // user closed it before the SDK arrived
+  await initAuth({
+    mount: overlay.querySelector('.auth-modal-body'),
+    signupHint: 'We only use your email to sign you in and notify you about your cases. No spam, ever.',
+    onSignedIn: () => {
+      if (closed) return;
+      close();
+      // Swap Login → account dropdown without a navigation. The session lands
+      // in localStorage just before this fires; reload as a belt-and-braces
+      // fallback if it hasn't (so the header never lies about auth state).
+      initLoginButton();
+      if (!document.querySelector('.account-dropdown')) location.reload();
+    }
+  });
+}
+
 // hand-editing. Signed out: a plain "Login" button (one action, no dropdown).
 // Signed in: an account dropdown — profile identity, My Complaints, My Bills,
 // Expert Console (experts only, via a role flag cached by /expert/), Logout.
@@ -30,6 +94,10 @@ function initLoginButton() {
   if (!nav || !themeBtn || !isConfigured()) return;
   if (location.pathname.startsWith('/login')) return;   // pointless on the login page itself
 
+  // Re-runnable: after an in-modal sign-in we refresh the button in place.
+  const existing = document.getElementById('headerLoginBtn');
+  if (existing) (existing.closest('.account-dropdown') || existing).remove();
+
   const escText = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const user = getStoredUser();
 
@@ -37,8 +105,15 @@ function initLoginButton() {
     const a = document.createElement('a');
     a.id = 'headerLoginBtn';
     a.className = 'login-btn';
+    // Real href for no-JS, middle-click and bookmarks; a normal click opens
+    // the in-page auth modal instead so the visitor keeps their page state.
     a.href = '/login/?next=' + encodeURIComponent(location.pathname);
     a.innerHTML = '<span>Login</span>';
+    a.addEventListener('click', (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey) return;  // let "open in new tab" through
+      e.preventDefault();
+      openAuthModal(a);
+    });
     themeBtn.after(a);   // sits to the right of the theme toggle
     return;
   }
@@ -189,7 +264,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (themeBtn) {
     const syncThemeBtn = () => {
       const dark = root.dataset.theme === 'dark';
-      themeBtn.textContent = dark ? '☀' : '☾';
+      // .is-dark drives the CSS sun/moon crossfade (class toggles re-style
+      // reliably everywhere; attribute-selector invalidation proved flaky here).
+      themeBtn.classList.toggle('is-dark', dark);
       themeBtn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
       themeBtn.setAttribute('aria-pressed', dark ? 'true' : 'false');
     };

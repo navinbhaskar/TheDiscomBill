@@ -15,6 +15,12 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [New Connection](https://www.thediscombill.com/new-connection/): charges, documents and process per DISCOM
 - [Complaint](https://www.thediscombill.com/complaint/): DISCOM complaint portals and the 1912 national helpline
 
+## Guides
+
+- [How to Read Your UPPCL Electricity Bill](https://www.thediscombill.com/guides/how-to-read-uppcl-bill/): A line-by-line walkthrough of a UPPCL (MVVNL, PVVNL, DVVNL, PuVVNL, KESCO) electricity bill: account fields, meter readings, energy charges, fixed charges, FPPA, electricity duty and arrears — and how to verify the total yourself
+- [Why Did My Electricity Bill Suddenly Increase?](https://www.thediscombill.com/guides/why-did-my-electricity-bill-increase/): The 8 most common reasons an Indian electricity bill jumps — slab escalation, catch-up after estimated readings, FPPA revisions, seasonal AC load, arrears with LPSC, meter faults, excess-load penalties — and exactly how to check each one
+- [Time-of-Day (ToD) Electricity Billing Explained](https://www.thediscombill.com/guides/tod-billing-explained/): What Time-of-Day (ToD) electricity billing is, who it applies to in India, how peak and off-peak rates work with smart meters, what kVAh billing means, and practical ways to cut your bill by shifting load
+
 ## Tariff reference
 
 - [All states & DISCOMs directory](https://www.thediscombill.com/tariffs/states/): index of every state and DISCOM landing page

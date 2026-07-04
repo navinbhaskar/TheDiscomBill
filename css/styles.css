@@ -263,6 +263,24 @@
 .lang-trigger:hover, .theme-toggle:hover { background: rgba(255,255,255,.16); border-color: rgba(255,255,255,.32); }
 .lang-trigger:focus-visible, .theme-toggle:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
+/* Animated sun/moon: both icons live in one SVG and crossfade with a small
+   rotation so the switch reads as a celestial swap, not a jump. State comes from
+   the button's aria-pressed (synced by main.js: pressed = dark) rather than
+   :root[data-theme] — Chrome fails to re-match root-attribute descendant
+   selectors on these SVG children when the theme flips live. */
+.theme-toggle-icon { width: 18px; height: 18px; overflow: visible; }
+.theme-toggle-icon .tt-sun, .theme-toggle-icon .tt-moon {
+  transform-origin: 12px 12px;
+  transition: transform var(--t-slow), opacity var(--t-slow);
+}
+.theme-toggle .tt-sun  { opacity: 0; transform: rotate(-90deg) scale(.4); }
+.theme-toggle .tt-moon { opacity: 1; transform: none; }
+.theme-toggle.is-dark .tt-sun  { opacity: 1; transform: none; }
+.theme-toggle.is-dark .tt-moon { opacity: 0; transform: rotate(90deg) scale(.4); }
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-icon .tt-sun, .theme-toggle-icon .tt-moon { transition: none; }
+}
+
 /* Generic Navigation Dropdown (used for Quick Links) */
 .nav-dropdown { position: relative; display: inline-block; }
 /* Match the .header-nav <a> links exactly (padding, weight, radius, transition)
@@ -1611,6 +1629,13 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .seo-section { margin-top: 34px; }
 .seo-section > h2 { font-size: 20px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.3px; margin: 0 0 14px; }
 .seo-section p { color: var(--text-secondary); line-height: 1.65; margin: 0 0 14px; max-width: 760px; }
+.seo-section ul, .seo-section ol { color: var(--text-secondary); line-height: 1.65; margin: 0 0 14px; padding-left: 24px; max-width: 760px; }
+.seo-section li { margin-bottom: 10px; }
+.seo-section li:last-child { margin-bottom: 0; }
+
+/* Guides (/guides/) */
+.guide-meta { font-size: 12.5px; color: var(--text-tertiary); margin: -6px 0 16px; }
+.guide-more { border-top: 1px solid var(--border-subtle); padding-top: 26px; }
 
 /* Breadcrumbs */
 .seo-breadcrumbs ol { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin: 0; padding: 0; font-size: 12.5px; }
@@ -1638,7 +1663,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-md);
   padding: 14px 16px; text-decoration: none; transition: border-color var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast);
 }
-.seo-link-card:hover { border-color: var(--brand); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.seo-link-card:hover { border-color: var(--brand); transform: translateY(-2px); box-shadow: var(--shadow-sm); text-decoration: none; }
 .seo-link-card strong { font-size: 14.5px; color: var(--text-primary); }
 .seo-link-card span { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
 .seo-link-card small { font-size: 11px; color: var(--text-tertiary); line-height: 1.45; margin-top: 2px; }
@@ -1787,7 +1812,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .svc-steps li span { font-size: 12px; color: var(--text-tertiary); line-height: 1.5; }
 .svc-docs { list-style: none; margin: 0; padding: 0; }
 .svc-docs li { position: relative; padding-left: 20px; font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 8px; }
-.svc-docs li::before { content: '📄'; position: absolute; left: 0; top: 0; font-size: 11px; }
+.svc-docs li::before {
+  content: ''; position: absolute; left: 0; top: 3px; width: 13px; height: 13px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpath d='M14 2v6h6'/%3E%3C/svg%3E") no-repeat center / contain;
+}
 .svc-charge-note { font-size: 12px; color: var(--text-tertiary); line-height: 1.55; margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--border-subtle); }
 
 /* Complaint: types grid, helpline banner, escalation note */
@@ -2415,12 +2443,15 @@ footer a:hover { color: #fff; text-decoration: none; }
   .bill-charges-table td, .bill-charges-table th { font-size: 12px; padding: 6px 8px; }
   /* Compact, non-overflowing header on phones */
   .site-header { padding: 0 12px; }
-  .header-nav > a { display: none; }       /* hide Calculator/About text links on mobile */
+  .header-nav > a:not(.login-btn) { display: none; }  /* hide Calculator/About text links on mobile — but never Login */
   .header-nav { gap: 6px; flex-shrink: 0; }
   .logo { gap: 8px; min-width: 0; }
   .logo > div { min-width: 0; }
   .logo-tagline { display: none; }         /* free up width + height on mobile */
   .logo-text { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  /* Very small screens: the bolt tile carries the brand — an ellipsised
+     wordmark ("Th…") reads worse than none at all. */
+  @media (max-width: 430px) { .logo-text { display: none; } }
   .logo-icon-wrap { width: 34px; height: 34px; border-radius: 10px; }
   .logo-icon-wrap svg { width: 19px; height: 19px; }
   .nav-dropdown-trigger { padding: 6px 8px; font-size: 13px; gap: 4px; }
@@ -2534,6 +2565,65 @@ footer a:hover { color: #fff; text-decoration: none; }
   .login-panel { padding: 24px 20px; }
 }
 
+/* ── Auth modal — compact sign-in dialog over a blurred page ─────────────── */
+.auth-modal-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  background: rgba(11, 18, 32, .55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: authOverlayIn var(--t-base) both;
+}
+.auth-modal {
+  position: relative;
+  width: 100%; max-width: 420px;
+  max-height: min(640px, calc(100vh - 48px));
+  overflow-y: auto;
+  background: var(--surface-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  padding: 24px 26px 22px;
+  animation: authModalIn var(--t-slow) cubic-bezier(.2, .9, .3, 1.1) both;
+}
+.auth-modal-title {
+  font-family: var(--font-display);
+  font-size: 19px; font-weight: 600; letter-spacing: -0.4px;
+  color: var(--text-primary);
+  margin: 0 32px 16px 0;                     /* keep clear of the close button */
+}
+.auth-modal-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  background: none; border: none; border-radius: var(--radius-full);
+  color: var(--text-tertiary); cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.auth-modal-close:hover { background: var(--surface-sunken); color: var(--text-primary); }
+.auth-modal-close:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.auth-modal-close svg { width: 16px; height: 16px; }
+/* The shared auth card renders inside the dialog — strip its own chrome */
+.auth-modal .br-card.br-auth { border: none; box-shadow: none; padding: 0; max-width: none; background: none; }
+@keyframes authOverlayIn { from { opacity: 0; } }
+@keyframes authModalIn   { from { opacity: 0; transform: translateY(14px) scale(.97); } }
+/* Small screens: bottom sheet instead of a floating card */
+@media (max-width: 560px) {
+  .auth-modal-overlay { padding: 0; align-items: flex-end; }
+  .auth-modal {
+    max-width: none; max-height: 86vh;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    border-bottom: none;
+    padding: 22px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+    animation-name: authSheetIn;
+  }
+  @keyframes authSheetIn { from { opacity: 0; transform: translateY(40px); } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .auth-modal-overlay, .auth-modal { animation: none; }
+}
+
 /* Auth card */
 .br-auth { max-width: 460px; margin: 0 auto; }
 .br-tabs { display: flex; gap: 6px; border-bottom: 1px solid var(--border-default); margin-bottom: 16px; flex-wrap: wrap; }
@@ -2569,6 +2659,17 @@ footer a:hover { color: #fff; text-decoration: none; }
 .br-auth-hint { font-size: 12px; color: var(--text-tertiary); margin: 0; }
 .br-label-note { text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--text-tertiary); margin-left: 4px; }
 .br-label-note::before { content: '· '; }
+
+/* Inline functional icons (ICONS in support-common.js) */
+.br-ic { width: 15px; height: 15px; flex: none; vertical-align: -2px; }
+.br-setup h3 .br-ic, .br-banner .br-ic { color: var(--text-secondary); margin-right: 2px; }
+.br-auth-alt .br-ic { vertical-align: -2.5px; margin-right: 3px; }
+.br-account-who .br-ic { vertical-align: -2.5px; margin-right: 2px; color: var(--text-secondary); }
+.br-file .br-ic { color: var(--text-tertiary); margin-right: 2px; }
+.br-chat-attach .br-ic { width: 16px; height: 16px; vertical-align: middle; }
+.br-spin { animation: brSpin .8s linear infinite; }
+@keyframes brSpin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .br-spin { animation-duration: 2s; } }
 #brForm { display: flex; flex-direction: column; gap: 14px; }
 #brForm .svc-controls { margin-bottom: 0; }
 

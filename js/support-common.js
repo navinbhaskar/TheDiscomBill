@@ -6,6 +6,18 @@ import { getSupabase, isConfigured } from './supabase-config.js';
 
 export const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
+// ── Inline SVG icons (Lucide outlines) — functional icons are SVG, never emoji ──
+const svgIc = (paths, cls = 'br-ic') =>
+  `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
+export const ICONS = {
+  file: svgIc('<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>'),
+  clip: svgIc('<path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/>'),
+  user: svgIc('<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>'),
+  phone: svgIc('<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>'),
+  gear: svgIc('<circle cx="12" cy="12" r="3"/><path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>'),
+  spinner: svgIc('<circle cx="12" cy="12" r="9" opacity=".25"/><path d="M21 12a9 9 0 0 0-9-9"/>', 'br-ic br-spin'),
+};
+
 export const fmtWhen = (iso) => {
   const d = new Date(iso);
   return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
@@ -27,7 +39,7 @@ export const statusChip = (status) =>
 export function renderSetupNotice(mount) {
   mount.innerHTML = `
     <div class="br-card br-setup">
-      <h3>⚙️ Backend not connected yet</h3>
+      <h3>${ICONS.gear} Backend not connected yet</h3>
       <p>The Bill Review service needs its Supabase backend configured before
       logins and uploads work. One-time setup:</p>
       <ol>
@@ -47,7 +59,7 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
   const configured = isConfigured();
   const sb = configured ? await getSupabase() : null;
 
-  const notConnected = '⚙️ Backend not connected yet — complete the Supabase setup above to enable accounts.';
+  const notConnected = 'Backend not connected yet — complete the Supabase setup above to enable accounts.';
 
   // Name captured during a phone sign-in, saved to user_metadata right after the
   // session lands (phone OTP has no signup step of its own, unlike email).
@@ -87,7 +99,7 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
     const isUp = mode === 'signup';
     mount.innerHTML = `
       ${configured ? '' : `
-      <div class="br-banner">⚙️ <strong>Preview mode</strong> — the backend isn't connected yet, so
+      <div class="br-banner">${ICONS.gear} <strong>Preview mode</strong> — the backend isn't connected yet, so
         sign-in and uploads are disabled. One-time setup: run <code>supabase/schema.sql</code> on a free
         Supabase project and paste its keys into <code>js/supabase-config.js</code>.</div>`}
       <div class="br-card br-auth">
@@ -108,7 +120,7 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
           <p class="br-auth-msg" role="alert"></p>
           ${isUp && signupHint ? `<p class="br-auth-hint">${signupHint}</p>` : ''}
         </form>
-        <button type="button" class="br-auth-alt" data-mode="phone">📱 Use phone number instead</button>
+        <button type="button" class="br-auth-alt" data-mode="phone">${ICONS.phone} Use phone number instead</button>
       </div>`;
 
     mount.querySelectorAll('.br-tab, .br-auth-alt').forEach(t =>
@@ -155,7 +167,7 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
   function renderPhoneForm() {
     mount.innerHTML = `
       ${configured ? '' : `
-      <div class="br-banner">⚙️ <strong>Preview mode</strong> — the backend isn't connected yet, so
+      <div class="br-banner">${ICONS.gear} <strong>Preview mode</strong> — the backend isn't connected yet, so
         sign-in is disabled. One-time setup: run <code>supabase/schema.sql</code> on a free Supabase
         project and paste its keys into <code>js/supabase-config.js</code>.</div>`}
       <div class="br-card br-auth">
@@ -249,7 +261,7 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
 export function accountBarHtml(name, email, roleLabel = '') {
   return `
     <div class="br-account">
-      <span class="br-account-who">👤 ${esc(name || email)}${roleLabel ? ` <span class="br-role">${esc(roleLabel)}</span>` : ''}</span>
+      <span class="br-account-who">${ICONS.user} ${esc(name || email)}${roleLabel ? ` <span class="br-role">${esc(roleLabel)}</span>` : ''}</span>
       <button type="button" class="br-signout" id="brSignOut">Sign out</button>
     </div>`;
 }
@@ -264,7 +276,7 @@ export function startChat({ sb, complaint, meId, names, mount, canSend }) {
       ${canSend ? `
       <form class="br-chat-form">
         <input type="file" class="br-chat-file" hidden accept="image/png,image/jpeg,image/webp,application/pdf">
-        <button type="button" class="br-chat-attach" title="Attach a document — PNG, JPG, WebP or PDF, max 10 MB" aria-label="Attach a document">📎</button>
+        <button type="button" class="br-chat-attach" title="Attach a document — PNG, JPG, WebP or PDF, max 10 MB" aria-label="Attach a document">${ICONS.clip}</button>
         <input type="text" class="br-chat-input" placeholder="Type a message…" maxlength="2000" autocomplete="off">
         <button type="submit" class="btn-primary br-chat-send">Send</button>
       </form>` : `<p class="br-chat-locked">💬 Chat opens once an expert accepts this complaint.</p>`}
@@ -282,7 +294,7 @@ export function startChat({ sb, complaint, meId, names, mount, canSend }) {
     el.className = 'br-msg' + (mine ? ' br-msg-mine' : '');
     el.innerHTML = `<div class="br-msg-meta">${esc(who)} · ${esc(fmtWhen(m.created_at))}</div>
                     ${m.body ? `<div class="br-msg-body">${esc(m.body)}</div>` : ''}
-                    ${m.file_path ? `<a class="br-file br-msg-file" target="_blank" rel="noopener">📄 ${esc(m.file_name || 'attachment')}${m.file_size ? ` <span class="tx-muted">(${fmtSize(m.file_size)})</span>` : ''}</a>` : ''}`;
+                    ${m.file_path ? `<a class="br-file br-msg-file" target="_blank" rel="noopener">${ICONS.file} ${esc(m.file_name || 'attachment')}${m.file_size ? ` <span class="tx-muted">(${fmtSize(m.file_size)})</span>` : ''}</a>` : ''}`;
     // Attachments are served from private Storage, so the href is a short-lived
     // signed URL fetched after render.
     if (m.file_path) {
@@ -336,7 +348,7 @@ export function startChat({ sb, complaint, meId, names, mount, canSend }) {
     fileInput.value = '';
     if (!file) return;
     if (file.size > 10485760) { alert('Attachment too large — the limit is 10 MB.'); return; }
-    attachBtn.disabled = true; attachBtn.textContent = '⏳';
+    attachBtn.disabled = true; attachBtn.innerHTML = ICONS.spinner;
     try {
       const safe = file.name.replace(/[^\w.\- ]+/g, '').replace(/\s+/g, '-').slice(0, 100) || 'document';
       const path = `${meId}/${complaint.id}/chat-${Date.now()}-${safe}`;
@@ -350,7 +362,7 @@ export function startChat({ sb, complaint, meId, names, mount, canSend }) {
     } catch (err) {
       alert('Attachment failed to send: ' + (err?.message || err));
     } finally {
-      attachBtn.disabled = false; attachBtn.textContent = '📎';
+      attachBtn.disabled = false; attachBtn.innerHTML = ICONS.clip;
     }
   });
 
@@ -363,7 +375,7 @@ export async function fileListHtml(sb, files) {
   const items = await Promise.all(files.map(async f => {
     const { data } = await sb.storage.from('complaint-docs').createSignedUrl(f.path, 3600);
     const href = data?.signedUrl;
-    const label = `📄 ${esc(f.name)} <span class="tx-muted">(${fmtSize(f.size)})</span>`;
+    const label = `${ICONS.file} ${esc(f.name)} <span class="tx-muted">(${fmtSize(f.size)})</span>`;
     return href
       ? `<a class="br-file" href="${esc(href)}" target="_blank" rel="noopener">${label}</a>`
       : `<span class="br-file">${label}</span>`;

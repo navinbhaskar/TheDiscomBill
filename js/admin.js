@@ -5,7 +5,7 @@
 // just a UI, it holds no privileged keys.
 
 import { isConfigured, getSupabase } from './supabase-config.js';
-import { initAuth, accountBarHtml, esc, fmtWhen } from './support-common.js';
+import { initAuth, accountBarHtml, esc, fmtWhen, ICONS } from './support-common.js';
 
 const LOGIN_URL = '/login/?next=' + encodeURIComponent('/admin/');
 
@@ -64,7 +64,7 @@ async function render() {
   if (error) {
     mainEl.innerHTML = `
       <div class="br-card br-setup">
-        <h3>⚙️ Admin backend not installed</h3>
+        <h3>${ICONS.gear} Admin backend not installed</h3>
         <p>Could not list accounts: <code>${esc(error.message)}</code></p>
         <p>Run <code>supabase/admin.sql</code> in the Supabase SQL Editor (after
         <code>schema.sql</code>), then reload.</p>

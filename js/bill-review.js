@@ -5,7 +5,7 @@
 import { getStates, getDiscoms } from './tariffs/registry.js';
 import { isConfigured, getSupabase } from './supabase-config.js';
 import { initAuth, accountBarHtml, startChat, fileListHtml,
-         esc, fmtWhen, fmtSize, statusChip } from './support-common.js';
+         esc, fmtWhen, fmtSize, statusChip, ICONS } from './support-common.js';
 
 const LOGIN_URL = '/login/?next=' + encodeURIComponent('/bill-review/');
 
@@ -150,7 +150,7 @@ function renderComplaintForm(mount, { demo = false } = {}) {
 
   function renderFilePreview() {
     $('brFilePreview').innerHTML = picked.map((f, i) => `
-      <span class="br-file br-file-pick">📄 ${esc(f.name)} <span class="tx-muted">(${fmtSize(f.size)})</span>
+      <span class="br-file br-file-pick">${ICONS.file} ${esc(f.name)} <span class="tx-muted">(${fmtSize(f.size)})</span>
         <button type="button" class="br-file-remove" data-i="${i}" aria-label="Remove ${esc(f.name)}">✕</button>
       </span>`).join('')
       + (picked.length ? `<span class="br-file-count tx-muted">${picked.length} / ${MAX_FILES} files</span>` : '');
@@ -174,7 +174,7 @@ function renderComplaintForm(mount, { demo = false } = {}) {
   if (demo) {
     $('brForm').addEventListener('submit', (e) => {
       e.preventDefault();
-      $('brFormMsg').textContent = '⚙️ This is a preview — sign-in and submissions unlock once the Supabase backend is connected (see the banner above).';
+      $('brFormMsg').textContent = 'This is a preview — sign-in and submissions unlock once the Supabase backend is connected (see the banner above).';
     });
   } else {
     $('brBack').addEventListener('click', showDashboard);
