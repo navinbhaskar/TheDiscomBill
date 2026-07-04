@@ -43,8 +43,10 @@ const LOAD_KW = 1;
 const fmt = (n) => '₹' + Math.round(n).toLocaleString('en-IN');
 
 // Compute the monthly payable for one DISCOM at one consumption level. Returns null on error
-// or when the DISCOM has no matching category (so the cell renders as "—").
-function billFor(discomId, categoryTarget, units) {
+// or when the DISCOM has no matching category (so the cell renders as "—"). `state` gates the
+// government subsidy: the engine models the Delhi GNCTD domestic subsidy (first 200 units free,
+// 50% rebate to 400), which is Delhi- and domestic-only — so a non-Delhi bill is never zeroed.
+function billFor(discomId, categoryTarget, units, state) {
   const discom = ALL_DISCOMS.find(d => d.id === discomId);
   if (!discom) return null;
   const cat = discom.categories.find(c => c.id === categoryTarget);
@@ -57,7 +59,7 @@ function billFor(discomId, categoryTarget, units) {
       fppaOverride: null,        // let the engine apply default / auto FPPA
       isNetMetering: false,
       lpscApplicable: false,
-      isDelhiSubsidyOptIn: true  // assume opted-in where a state subsidy applies
+      delhiSubsidy: state === 'Delhi' && categoryTarget === 'domestic',
     });
     return bill.totalPayable;
   } catch (err) {
@@ -70,7 +72,7 @@ function billFor(discomId, categoryTarget, units) {
 function generateComparisonRows(categoryTarget) {
   // First pass: compute every amount so we can find the lowest per consumption tier.
   const rows = MAJOR_DISCOMS
-    .map(d => ({ state: d.state, discom: d.discom, amounts: UNIT_TIERS.map(u => billFor(d.id, categoryTarget, u)) }))
+    .map(d => ({ state: d.state, discom: d.discom, amounts: UNIT_TIERS.map(u => billFor(d.id, categoryTarget, u, d.state)) }))
     .filter(r => r.amounts.some(a => a !== null)); // drop DISCOMs with no data for this category
 
   const columnMin = UNIT_TIERS.map((_, col) => {
