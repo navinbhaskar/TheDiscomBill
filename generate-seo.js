@@ -142,7 +142,9 @@ function layout({ title, description, canonical, jsonld = [], body }) {
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Fonts load async (non-render-blocking); display=swap shows fallback text immediately -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
   <link rel="stylesheet" href="/css/styles.css">
   ${ld}
 </head>
@@ -393,6 +395,13 @@ function keyFactsHtml(state, discom, fy) {
   if (region) rows.push(['Service region', esc(region)]);
   if (cities.length) rows.push(['Districts / cities served', esc(cities.length) + '+ — ' + esc(cities.slice(0, 6).join(', ')) + (cities.length > 6 ? '…' : '')]);
   rows.push(['Tariff year', esc(fy)]);
+  // Freshness: states verified against real bills get an explicit badge; the rest
+  // state honestly which published order the rates come from. (Never fabricate a
+  // "verified" claim — only STATE_META.verified set from an actual bill check.)
+  const meta = STATE_META[state] || {};
+  rows.push(['Rates status', meta.verified
+    ? `✅ Verified against real bills — ${esc(meta.ratesAsOf || fy)}`
+    : `Based on the ${esc(fy)} tariff order (latest published data we have verified)`]);
   if (dr) rows.push(['Domestic energy rate', `${rupee(dr.min)} – ${rupee(dr.max)} per unit`]);
   if (discom.lpscRate != null) rows.push(['Late payment surcharge (LPSC)', `${discom.lpscRate}% per month`]);
   if (discom.website) rows.push(['Official website', `<a href="${attr(discom.website)}" target="_blank" rel="noopener">${esc(String(discom.website).replace(/^https?:\/\//, ''))} ↗</a>`]);

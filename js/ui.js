@@ -104,20 +104,23 @@ export function initHistory() {
 // ─── Share ────────────────────────────────────────────────────────────────────
 
 /**
- * Serializes the current calculator form state into a URL for sharing.
- * The parameters are obfuscated using Base64 encoding to keep the URL clean.
- * @returns {string} The full shareable URL
+ * Serializes the current calculator form state into a clean, human-readable URL
+ * (?state=…&discom=…&cat=…&units=…). Legible links get forwarded and trusted on
+ * WhatsApp, are bookmarkable, and give search/AI engines deep-linkable results —
+ * the old Base64 `?q=` form is still DECODED by loadFromUrl for old links, just
+ * no longer produced.
+ *
+ * Personal fields (name, account no, address, meter no) are EXCLUDED unless
+ * `includePersonal` — they aren't needed to reproduce the amount, and shared
+ * links shouldn't leak someone's account details when forwarded. Saved-bills
+ * history passes includePersonal:true so your own records stay complete.
  */
-export function buildShareUrl() {
-  const p = new URLSearchParams({
+export function buildShareUrl({ includePersonal = false } = {}) {
+  const params = {
     state:   document.getElementById('stateSelect').value,
     discom:  document.getElementById('discomSelect').value,
     cat:     document.getElementById('categorySelect').value,
     st:      document.getElementById('supplyTypeSelect').value,
-    name:    document.getElementById('consumerName').value,
-    acc:     document.getElementById('accountNo').value,
-    addr:    document.getElementById('address').value,
-    meter:   getMeterNo(),
     month:   document.getElementById('billingMonth').value,
     year:    document.getElementById('billingYear').value,
     fd:      fieldISO(document.getElementById('fromDate')),
@@ -130,7 +133,7 @@ export function buildShareUrl() {
     nm:      document.getElementById('netMeteringChk')?.checked ? '1' : '',
     exp:     document.getElementById('exportUnits')?.value || '',
     cr:      document.getElementById('openingCredit')?.value || '',
-    mmode:   getMeterMode(),
+    mmode:   getMeterMode() === 'tod' ? 'tod' : '',
     todp:    document.getElementById('todPeak')?.value    || '',
     todn:    document.getElementById('todNormal')?.value  || '',
     todop:   document.getElementById('todOffPeak')?.value || '',
@@ -140,12 +143,25 @@ export function buildShareUrl() {
     arrlpsc: document.getElementById('arrearLpsc').value,
     lpsc:    document.getElementById('lpscRate').value,
     curmo:   document.getElementById('currentLpscMonths').value,
-    lpscon:  document.getElementById('lpscApplicable')?.checked ? '1' : '0',
-  });
-  
-  // Base64 encode the query string to hide the raw parameters from the user
-  const encoded = btoa(p.toString());
-  return location.origin + location.pathname + '?q=' + encoded;
+    // Only meaningful when unchecked (loadFromUrl acts on '0' alone)
+    lpscon:  document.getElementById('lpscApplicable')?.checked ? '' : '0',
+  };
+  if (includePersonal) {
+    params.name  = document.getElementById('consumerName').value;
+    params.acc   = document.getElementById('accountNo').value;
+    params.addr  = document.getElementById('address').value;
+    params.meter = getMeterNo();
+  }
+  // Zero is the default for these — skip so URLs stay short.
+  const zeroDefault = new Set(['bd', 'exp', 'cr', 'todp', 'todn', 'todop', 'fac', 'arr', 'arrlpsc', 'curmo']);
+  const p = new URLSearchParams();
+  for (const [k, v] of Object.entries(params)) {
+    const s = String(v ?? '').trim();
+    if (s === '') continue;
+    if (zeroDefault.has(k) && +s === 0) continue;
+    p.set(k, s);
+  }
+  return location.origin + location.pathname + '?' + p.toString() + '#calculator';
 }
 
 export function shareBill() {
@@ -155,6 +171,22 @@ export function shareBill() {
   } else {
     prompt('Copy this link:', url);
   }
+}
+
+// WhatsApp share — the dominant sharing channel for this audience. Opens wa.me
+// with a message carrying the computed total + the reproducible link (the
+// recipient's page auto-calculates from the URL params).
+export function shareBillWhatsApp() {
+  const url = buildShareUrl();
+  const total = document.querySelector('#billPanel .total-amt')?.textContent.replace(/\s+/g, ' ').trim();
+  const discomSel = document.getElementById('discomSelect');
+  // Option labels read "MVVNL — Madhyanchal Vidyut Vitaran Nigam Ltd." — keep just the short name
+  const discomName = (discomSel?.options[discomSel.selectedIndex]?.textContent.trim() || 'my DISCOM').split(/\s+—\s+/)[0];
+  const units = getEffectiveUnits();
+  const msg = total
+    ? `My provisional ${discomName} electricity bill for ${units} units comes to ${total}. Full slab-wise breakdown here:\n${url}`
+    : `Check this provisional ${discomName} electricity bill breakdown:\n${url}`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank', 'noopener');
 }
 
 // ─── Tabs ─────────────────────────────────────────────────────────────────────
@@ -1423,8 +1455,10 @@ export function doCalculate() {
     saveBillToHistory({
       label: `${ledger.discom.name} · ${ledger.category.name} · ${ledger.monthsCount} mo · ${ledger.totalUnits} Units`,
       amount: Math.max(0, ledger.totalPayable).toLocaleString('en-IN'),
-      params: new URL(buildShareUrl()).search.slice(1),
+      params: new URL(buildShareUrl({ includePersonal: true })).search.slice(1),
     });
+    // Keep the address bar shareable: it always reflects the bill on screen.
+    try { history.replaceState(null, '', buildShareUrl()); } catch (e) {}
     return;
   }
 
@@ -1464,8 +1498,10 @@ export function doCalculate() {
   saveBillToHistory({
     label: `${result.discom.name} · ${result.category.name}${result.supplyTypeName ? ' · ' + result.supplyTypeName : ''} · ${result.units} Units`,
     amount: Math.max(0, result.totalPayable).toLocaleString('en-IN'),
-    params: new URL(buildShareUrl()).search.slice(1),
+    params: new URL(buildShareUrl({ includePersonal: true })).search.slice(1),
   });
+  // Keep the address bar shareable: it always reflects the bill on screen.
+  try { history.replaceState(null, '', buildShareUrl()); } catch (e) {}
 }
 
 // ─── Load from URL Params ─────────────────────────────────────────────────────

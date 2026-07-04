@@ -34,9 +34,11 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Fonts load async (non-render-blocking); display=swap shows fallback text immediately -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
   <link rel="stylesheet" href="/css/styles.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://www.thediscombill.com/tariffs/states/","name":"All Indian Electricity DISCOMs & Tariffs by State","description":"Browse electricity tariffs and bill calculators for every Indian state and union territory. 70+ DISCOMs, slab-wise rates, fixed charges and FPPA — all in one directory.","isPartOf":{"@id":"https://www.thediscombill.com/#website"},"publisher":{"@id":"https://www.thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-07-03"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://www.thediscombill.com/tariffs/states/","name":"All Indian Electricity DISCOMs & Tariffs by State","description":"Browse electricity tariffs and bill calculators for every Indian state and union territory. 70+ DISCOMs, slab-wise rates, fixed charges and FPPA — all in one directory.","isPartOf":{"@id":"https://www.thediscombill.com/#website"},"publisher":{"@id":"https://www.thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-07-04"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Tariffs Directory","item":"https://www.thediscombill.com/tariffs/states/"}]}</script>
 </head>
 <body>

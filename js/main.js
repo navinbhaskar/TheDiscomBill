@@ -8,7 +8,7 @@ import {
   updateTodDisplay, updateFacUnitLabel, updateTariffPeriodHint,
   onFppaAutoToggle, markFppaManual,
   doCalculate, isDelhiDiscom,
-  shareBill, loadFromUrl, loadSample, initHistory,
+  shareBill, shareBillWhatsApp, loadFromUrl, loadSample, initHistory,
   refreshSupplyTypeDependent, applyLifelineDefaultLoad, checkLifelineLimits,
   getMeterMode, setMeterMode, addMeterRow, updateAdvancedMeter,
   syncBillingMonthYear, applyDefaultBillingBasis, showToast, refreshRequiredValidation,
@@ -31,8 +31,11 @@ async function openAuthModal(triggerEl) {
 
   const overlay = document.createElement('div');
   overlay.className = 'auth-modal-overlay';
+  // data-lenis-prevent: Lenis intercepts wheel events page-wide, which would leave
+  // the dialog's own overflow scroll dead — this attribute restores native scrolling
+  // inside it. Lenis itself is also paused below while the dialog is open.
   overlay.innerHTML = `
-    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+    <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle" data-lenis-prevent>
       <button type="button" class="auth-modal-close" aria-label="Close sign-in dialog">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
       </button>
@@ -41,6 +44,7 @@ async function openAuthModal(triggerEl) {
     </div>`;
   document.body.appendChild(overlay);
   document.body.style.overflow = 'hidden';
+  window.__lenis?.stop();
   const dialog = overlay.querySelector('.auth-modal');
 
   let closed = false;
@@ -50,6 +54,7 @@ async function openAuthModal(triggerEl) {
     document.removeEventListener('keydown', onKey);
     overlay.remove();
     document.body.style.overflow = '';
+    window.__lenis?.start();
     triggerEl?.isConnected && triggerEl.focus();
   };
   const onKey = (e) => {
@@ -239,6 +244,7 @@ if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
 // Expose helpers called from onclick in the rendered bill HTML
 window.__shareBill = shareBill;
+window.__shareBillWa = shareBillWhatsApp;
 
 // Register the service worker for offline support (no-op on unsupported / insecure contexts).
 if ('serviceWorker' in navigator) {

@@ -1200,6 +1200,11 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .btn-print:hover { background: var(--brand-hover); border-color: var(--brand-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,99,235,.36); }
 .btn-share { background: var(--brand-faint); color: var(--brand); border: 1.5px solid var(--brand); }
 .btn-share:hover { background: var(--brand-subtle); color: var(--brand-hover); border-color: var(--brand-hover); transform: translateY(-1px); }
+/* WhatsApp share — brand-green variant (#25D366 is WhatsApp's own color, both themes) */
+.btn-whatsapp { background: var(--ok-bg); color: #1da851; border-color: #25d366; }
+.btn-whatsapp:hover { background: #25d366; color: #fff; border-color: #25d366; }
+.btn-whatsapp .br-ic { width: 16px; height: 16px; }
+@media (max-width: 560px) { .bill-actions { flex-wrap: wrap; justify-content: center; } }
 
 /* ─── Bill (rendered) — light, blue-accent palette (in sync with the site) ───── */
 /* Color rule: ONE hue — the brand blue — used as the single accent. The body of  */
@@ -1208,6 +1213,80 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 /* oranges, or pinks. Tokens keep it correct in dark mode (bill stays paper-light). */
 
 .bill-wrap { padding: 0; }
+
+/* ── Continuous-stationery treatment — the bill reads like a real Indian DISCOM
+   bill printed on dot-matrix tractor-feed paper: sprocket-hole margins with
+   perforation lines down each side, torn perforated top/bottom edges, a rubber
+   "PROVISIONAL" ink stamp across the charges, monospaced meter numerals and a
+   barcode by the counterfoil. Scoped away from the comparison table view. ── */
+.bill-wrap:not(.comparison-wrap) {
+  position: relative;
+  padding: 0 26px;
+  background: var(--surface-card);
+}
+/* Sprocket-hole strips (tractor-feed margins) with dashed perforation rules */
+.bill-wrap:not(.comparison-wrap)::before,
+.bill-wrap:not(.comparison-wrap)::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 26px;
+  background-image: radial-gradient(circle at 50% 12px, rgba(15,23,42,.16) 0 3px, rgba(15,23,42,.05) 3.5px, transparent 4.5px);
+  background-size: 26px 26px; background-repeat: repeat-y;
+  pointer-events: none;
+}
+.bill-wrap:not(.comparison-wrap)::before { left: 0;  border-right: 1px dashed var(--border-strong); }
+.bill-wrap:not(.comparison-wrap)::after  { right: 0; border-left: 1px dashed var(--border-strong); }
+/* Torn perforation edges, top and bottom */
+.bill-perf {
+  height: 12px; margin: 0 -26px;
+  background-image: radial-gradient(circle at 12px 50%, rgba(15,23,42,.14) 0 2.5px, transparent 3px);
+  background-size: 24px 12px; background-repeat: repeat-x;
+}
+.bill-perf-top    { border-bottom: 1px dashed var(--border-default); }
+.bill-perf-bottom { border-top: 1px dashed var(--border-default); }
+/* Rubber ink stamp — real text (so it prints), stamp-pad blue, slightly rotated */
+.bill-stamp {
+  position: absolute; left: 50%; top: 46%; z-index: 5;
+  transform: translate(-50%, -50%) rotate(-11deg);
+  border: 3px double #3b5bd0; border-radius: 8px;
+  padding: 8px 22px 10px;
+  text-align: center; color: #3b5bd0;
+  opacity: .16; mix-blend-mode: multiply;
+  pointer-events: none; user-select: none; white-space: nowrap;
+}
+.bill-stamp span {
+  display: block; font-family: var(--font-display);
+  font-size: clamp(26px, 6vw, 40px); font-weight: 700; line-height: 1.05;
+  letter-spacing: .18em; text-transform: uppercase;
+}
+.bill-stamp small {
+  display: block; font-size: 10px; font-weight: 700;
+  letter-spacing: .22em; text-transform: uppercase; margin-top: 3px;
+}
+/* Dot-matrix numerals — meter readings and money columns in a system mono stack */
+.bill-reading-table td,
+.bill-charges-table .amt, .bill-charges-table .num,
+.total-amt, .net-amt {
+  font-family: ui-monospace, 'Consolas', 'Courier New', monospace;
+}
+/* Counterfoil barcode (decorative; three stripe frequencies ≈ barcode texture) */
+.bill-barcode { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; padding: 4px 20px 12px; }
+.bill-barcode-bars {
+  width: 190px; height: 30px;
+  background:
+    repeating-linear-gradient(90deg, var(--p-slate-800) 0 2px, transparent 2px 5px),
+    repeating-linear-gradient(90deg, var(--p-slate-800) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(90deg, var(--p-slate-800) 0 3px, transparent 3px 13px);
+}
+.bill-barcode-label {
+  font-family: ui-monospace, 'Consolas', 'Courier New', monospace;
+  font-size: 10px; letter-spacing: .28em; color: var(--text-secondary);
+}
+/* Small screens: reclaim the sprocket margins, shrink the stamp */
+@media (max-width: 600px) {
+  .bill-wrap:not(.comparison-wrap) { padding: 0; }
+  .bill-wrap:not(.comparison-wrap)::before,
+  .bill-wrap:not(.comparison-wrap)::after { display: none; }
+  .bill-perf { margin: 0; }
+}
 
 .bill-header {
   background: linear-gradient(135deg, var(--p-blue-700) 0%, var(--p-blue-500) 100%);
@@ -1446,10 +1525,24 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 .comparison-table thead th:first-child { z-index: 3; background: var(--surface-sunken); }
 
-/* Zebra striping on the numeric cells only (keeps the sticky name column solid). */
-.comparison-table tbody tr:nth-child(even) td.num { background: color-mix(in srgb, var(--surface-sunken) 55%, transparent); }
+/* Zebra striping — full rows, using a SOLID mix so the sticky first column stays
+   opaque during horizontal scroll. Hover rules come after so they win the tie. */
+.comparison-table tbody tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-sunken) 60%, var(--surface-card)); }
 .comparison-table tbody tr:hover td { background: var(--surface-hover); }
 .comparison-table tbody tr:hover td:first-child { background: var(--surface-hover); }
+
+/* Wide screens: the table fits without horizontal scroll, so drop the wrapper's
+   scroll-container behaviour — that frees the sticky thead to pin to the viewport
+   (below the 60px site header) while you scroll a long table. Narrow screens keep
+   overflow-x scrolling (sticky header inert there — horizontal panning wins). */
+@media (min-width: 720px) {
+  .comparison-table-wrapper { overflow-x: visible; }
+  .comparison-table { min-width: 0; }
+  .comparison-table thead th { top: 60px; }
+  /* overflow:visible no longer clips the corners — round the thead itself */
+  .comparison-table thead th:first-child { border-top-left-radius: var(--radius-lg); }
+  .comparison-table thead th:last-child { border-top-right-radius: var(--radius-lg); }
+}
 
 /* DISCOM cell — state name over the DISCOM code. */
 .comp-name { line-height: 1.25; }
@@ -1600,8 +1693,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .tariff-field-value { font-size: 14px; color: var(--text-primary); }
 
 .tariff-slab-table { width: 100%; border-collapse: collapse; }
-.tariff-slab-table td { padding: 5px 0; font-size: 13px; color: var(--text-primary); border-bottom: 1px dashed var(--border-subtle); }
+.tariff-slab-table td { padding: 5px 8px; font-size: 13px; color: var(--text-primary); border-bottom: 1px dashed var(--border-subtle); }
 .tariff-slab-table tr:last-child td { border-bottom: none; }
+/* Zebra on long slab lists — solid mix so it reads in dark mode too */
+.tariff-slab-table tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-sunken) 60%, var(--surface-card)); }
 .tariff-slab-table td.num { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 .tariff-addl { list-style: none; margin: 0; padding: 0; }
@@ -2033,6 +2128,11 @@ footer a:hover { color: #fff; text-decoration: none; }
   }
   .bill-wrap { page-break-inside: avoid; border: 1.5px solid #000; width: 100%; max-width: none; margin: 12px 0 0 0; padding: 0; box-sizing: border-box; }
   .bill-wrap a { color: #000 !important; text-decoration: underline; }
+  /* Screen-only stationery dressing: sprocket strips/perf edges off (padding is 0
+     on paper, they'd overlap content). The PROVISIONAL ink stamp stays — it's real
+     text and SHOULD appear on printed/PDF copies. */
+  .bill-wrap::before, .bill-wrap::after, .bill-perf, .bill-barcode { display: none !important; }
+  .bill-stamp { opacity: .18; }
 
   /* Header — white with a heavy rule instead of the blue gradient */
   .bill-header { border-bottom: 2px solid #000; padding: 14px 16px; }
@@ -2606,6 +2706,20 @@ footer a:hover { color: #fff; text-decoration: none; }
 .auth-modal-close svg { width: 16px; height: 16px; }
 /* The shared auth card renders inside the dialog — strip its own chrome */
 .auth-modal .br-card.br-auth { border: none; box-shadow: none; padding: 0; max-width: none; background: none; }
+/* Compact vertical rhythm so even the Create-account tab (name + email + password
+   + hint) fits without an inner scrollbar on ordinary laptop viewports. */
+.auth-modal .br-tabs { margin-bottom: 12px; }
+.auth-modal .br-tab { padding: 6px 10px; }
+.auth-modal .br-social { padding: 8px 12px; }
+.auth-modal .br-or { margin: 11px 0; }
+.auth-modal .br-auth-form { gap: 9px; }
+.auth-modal .svc-control { gap: 3px; }
+.auth-modal .svc-control input { padding: 8px 12px; }
+.auth-modal .btn-primary { height: 38px; }
+.auth-modal .br-auth-msg { min-height: 0; }
+.auth-modal .br-auth-msg:empty { display: none; }
+.auth-modal .br-auth-hint { line-height: 1.45; }
+.auth-modal .br-auth-alt { margin-top: 8px; padding: 6px; }
 @keyframes authOverlayIn { from { opacity: 0; } }
 @keyframes authModalIn   { from { opacity: 0; transform: translateY(14px) scale(.97); } }
 /* Small screens: bottom sheet instead of a floating card */

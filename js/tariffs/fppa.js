@@ -15,17 +15,23 @@ import { findStateMetaByDiscom } from './registry.js';
 export const FPPA_BY_DISCOM = {
   // Delhi — PPAC (Power Purchase Adjustment Cost): % of fixed + energy charges, per-DISCOM.
   // DERC allowed a higher summer differential 9 May – 8 Aug 2025 (May 9–Jun 30 figures below).
+  // DERC switched to MONTHLY PPAC revisions from Jun 2026 and sanctioned sharply higher
+  // rates (BRPL 17.94 / BYPL 17.43 / TPDDL 16.00). Kept open-ended as the current standing
+  // rate until the next notice; revisit monthly.
   brpl: [
+    { from: "2026-06-01", mode: "percent", rate: 17.94, label: "BRPL PPAC (from Jun 2026, monthly revisions)", source: "DERC PPAC approval, Jun 2026 (ETV Bharat / DERC)" },
     { from: "2025-05-09", to: "2025-06-30", mode: "percent", rate: 13.54, label: "BRPL summer PPAC (9 May – 30 Jun 2025)", source: "DERC differential PPAC order, May 2025" },
-    { from: "2025-07-01", mode: "percent", rate: 7.25, label: "BRPL PPAC (from Jul 2025)", source: "DERC-approved BRPL PPAC 7.25%" },
+    { from: "2025-07-01", to: "2026-05-31", mode: "percent", rate: 7.25, label: "BRPL PPAC (Jul 2025 – May 2026)", source: "DERC-approved BRPL PPAC 7.25%" },
   ],
   bypl: [
+    { from: "2026-06-01", mode: "percent", rate: 17.43, label: "BYPL PPAC (from Jun 2026, monthly revisions)", source: "DERC PPAC approval, Jun 2026 (ETV Bharat / DERC)" },
     { from: "2025-05-09", to: "2025-06-30", mode: "percent", rate: 13.33, label: "BYPL summer PPAC (9 May – 30 Jun 2025)", source: "DERC differential PPAC order, May 2025" },
-    { from: "2025-07-01", mode: "percent", rate: 8.11, label: "BYPL PPAC (from Jul 2025)", source: "DERC-approved BYPL PPAC 8.11%" },
+    { from: "2025-07-01", to: "2026-05-31", mode: "percent", rate: 8.11, label: "BYPL PPAC (Jul 2025 – May 2026)", source: "DERC-approved BYPL PPAC 8.11%" },
   ],
   tpddl: [
+    { from: "2026-06-01", mode: "percent", rate: 16.00, label: "TPDDL PPAC (from Jun 2026, monthly revisions)", source: "DERC PPAC approval, Jun 2026 (ETV Bharat / DERC)" },
     { from: "2025-05-09", to: "2025-06-30", mode: "percent", rate: 19.22, label: "TPDDL summer PPAC (9 May – 30 Jun 2025)", source: "DERC differential PPAC order, May 2025" },
-    { from: "2025-07-01", mode: "percent", rate: 10.47, label: "TPDDL PPAC (from Jul 2025)", source: "DERC-approved TPDDL PPAC 10.47%" },
+    { from: "2025-07-01", to: "2026-05-31", mode: "percent", rate: 10.47, label: "TPDDL PPAC (Jul 2025 – May 2026)", source: "DERC-approved TPDDL PPAC 10.47%" },
   ],
 };
 
@@ -35,6 +41,7 @@ export const FPPA_BY_STATE = {
   // Verified monthly notices; negative = consumer credit; capped at 10%/cycle (excess carried
   // forward). Source: bijlibabu.com/tariff/fppas/list. FPPAS is nil (0) before Apr 2025.
   "Uttar Pradesh": [
+    { from: "2026-07-01", to: "2026-07-31", mode: "percent", rate: -4.43, label: "Jul 2026 FPPAS (credit)" },
     { from: "2026-06-01", to: "2026-06-30", mode: "percent", rate: 10.00, label: "Jun 2026 FPPAS (10% cap)" },
     { from: "2026-05-01", to: "2026-05-31", mode: "percent", rate: -1.52, label: "May 2026 FPPAS (credit)" },
     { from: "2026-04-01", to: "2026-04-30", mode: "percent", rate: 1.24,  label: "Apr 2026 FPPAS" },
