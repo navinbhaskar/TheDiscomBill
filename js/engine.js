@@ -125,7 +125,9 @@ export function calculateEnergySlabs(slabs, units, billingMonths = 1) {
  * @param {boolean} [params.lpscApplicable] - Whether LPSC is applicable.
  * @param {Array} [params.payments] - Array of payment objects.
  * @param {Array} [params.adjustments] - Array of adjustment objects.
- * @param {boolean} [params.delhiSubsidy] - Whether Delhi GNCTD subsidy applies.
+ * @param {boolean} [params.delhiSubsidy] - Whether Delhi GNCTD subsidy applies (legacy flag; share links).
+ * @param {Object} [params.subsidy] - Domestic subsidy scheme to apply, from DOMESTIC_SUBSIDY
+ *   (e.g. { type:'free-units', units:300, label } or { type:'delhi-gnctd', label }). Overrides delhiSubsidy.
  * @param {Object} [params.todUnits] - TOD unit breakdown { peak, normal, offPeak }.
  * @param {boolean} [params.netMetering] - Whether net metering is active.
  * @param {number} [params.exportUnits] - Solar export units.
@@ -135,7 +137,7 @@ export function calculateEnergySlabs(slabs, units, billingMonths = 1) {
 export function calculateBill({ discomId, categoryId, supplyTypeId, units, connectedLoadKw,
                                 billedDemandKw, billingBasis, billingPeriodDays, billingDate,
                                 facRate, facMode, arrears, arrearLpsc, lpscRate, currentLpscMonths,
-                                lpscApplicable, payments, adjustments, delhiSubsidy, todUnits,
+                                lpscApplicable, payments, adjustments, delhiSubsidy, subsidy, todUnits,
                                 netMetering, exportUnits, openingCreditUnits }) {
   const discom = findDiscom(discomId);
   if (!discom) return { error: true, message: `Unknown DISCOM: "${discomId}"` };
@@ -286,16 +288,30 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
 
   const currentGross = +(fixedCharge + totalEnergy + excessDemandPenalty + todNet + facAmount + totalExtra).toFixed(2);
 
-  // Delhi GNCTD subsidy
+  // Domestic subsidy. A resolved `subsidy` scheme (from DOMESTIC_SUBSIDY) takes precedence; the
+  // legacy `delhiSubsidy` boolean (old share links) maps to the Delhi GNCTD scheme.
+  const subsidyScheme = subsidy || (delhiSubsidy ? { type: 'delhi-gnctd' } : null);
   let subsidyAmount = 0;
   let subsidyLabel  = '';
-  if (delhiSubsidy && netUnits > 0) {
-    if (netUnits <= 200) {
-      subsidyAmount = currentGross;
-      subsidyLabel  = 'GNCTD Subsidy (100% — ≤200 units)';
-    } else if (netUnits <= 400) {
-      subsidyAmount = Math.min(200 * 3.00, totalEnergy) * 0.5;
-      subsidyLabel  = 'GNCTD Subsidy (50% rebate on first 200 units)';
+  if (subsidyScheme && netUnits > 0) {
+    if (subsidyScheme.type === 'free-units') {
+      // First N units/month free — waive the telescopic energy charge on those units only (fixed,
+      // FPPA and duty still apply). N scales with the whole months in the billing period.
+      const freeUnits = Math.max(0, (subsidyScheme.units || 0) * fixedChargeMonths);
+      const subsidisedUnits = Math.min(freeUnits, netUnits);
+      const freeEnergy = calculateEnergySlabs(eff.energySlabs, subsidisedUnits, billingMonths)
+        .reduce((s, r) => s + r.amount, 0);
+      subsidyAmount = Math.min(freeEnergy, totalEnergy);
+      subsidyLabel  = subsidyScheme.label || 'Domestic subsidy (free units)';
+    } else {
+      // Delhi GNCTD rebate schedule (tier-specific bill labels regardless of the form label).
+      if (netUnits <= 200) {
+        subsidyAmount = currentGross;
+        subsidyLabel  = 'GNCTD Subsidy (100% — ≤200 units)';
+      } else if (netUnits <= 400) {
+        subsidyAmount = Math.min(200 * 3.00, totalEnergy) * 0.5;
+        subsidyLabel  = 'GNCTD Subsidy (50% rebate on first 200 units)';
+      }
     }
   }
 

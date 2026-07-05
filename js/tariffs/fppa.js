@@ -39,7 +39,7 @@ export const FPPA_BY_DISCOM = {
 export const FPPA_BY_STATE = {
   // UPPCL monthly FPPAS — % of (fixed + energy) charges, per UPERC MYT Reg. 2025 (cl.16(4)).
   // Verified monthly notices; negative = consumer credit; capped at 10%/cycle (excess carried
-  // forward). Source: bijlibabu.com/tariff/fppas/list. FPPAS is nil (0) before Apr 2025.
+  // forward). Source: UPPCL monthly FPPAS notices (UPERC MYT Reg. 2025). FPPAS is nil (0) before Apr 2025.
   "Uttar Pradesh": [
     { from: "2026-07-01", to: "2026-07-31", mode: "percent", rate: -4.43, label: "Jul 2026 FPPAS (credit)" },
     { from: "2026-06-01", to: "2026-06-30", mode: "percent", rate: 10.00, label: "Jun 2026 FPPAS (10% cap)" },
@@ -57,7 +57,7 @@ export const FPPA_BY_STATE = {
     { from: "2025-06-01", to: "2025-06-30", mode: "percent", rate: 4.27,  label: "Jun 2025 FPPAS" },
     { from: "2025-05-01", to: "2025-05-31", mode: "percent", rate: -2.00, label: "May 2025 FPPAS (credit)" },
     { from: "2025-04-01", to: "2025-04-30", mode: "percent", rate: 1.24,  label: "Apr 2025 FPPAS" },
-  ].map(e => ({ ...e, source: "UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025) — bijlibabu.com/tariff/fppas/list" })),
+  ].map(e => ({ ...e, source: "UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)" })),
 };
 
 function pick(list, billingDate) {

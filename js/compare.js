@@ -3,6 +3,7 @@
 // each featured DISCOM's Domestic / Commercial tariff and shows the monthly payable amount.
 
 import { TARIFF_DB } from './tariffs/registry.js';
+import { DOMESTIC_SUBSIDY } from './tariffs/subsidy.js';
 import { calculateBill } from './engine.js';
 
 // Featured DISCOMs — one representative per major state, ordered roughly North → South.
@@ -43,9 +44,9 @@ const LOAD_KW = 1;
 const fmt = (n) => '₹' + Math.round(n).toLocaleString('en-IN');
 
 // Compute the monthly payable for one DISCOM at one consumption level. Returns null on error
-// or when the DISCOM has no matching category (so the cell renders as "—"). `state` gates the
-// government subsidy: the engine models the Delhi GNCTD domestic subsidy (first 200 units free,
-// 50% rebate to 400), which is Delhi- and domestic-only — so a non-Delhi bill is never zeroed.
+// or when the DISCOM has no matching category (so the cell renders as "—"). `state` selects the
+// government subsidy: the engine applies that state's modelled domestic subsidy (DOMESTIC_SUBSIDY),
+// which is domestic-only — so a non-subsidy state's bill is never reduced.
 function billFor(discomId, categoryTarget, units, state) {
   const discom = ALL_DISCOMS.find(d => d.id === discomId);
   if (!discom) return null;
@@ -59,7 +60,7 @@ function billFor(discomId, categoryTarget, units, state) {
       fppaOverride: null,        // let the engine apply default / auto FPPA
       isNetMetering: false,
       lpscApplicable: false,
-      delhiSubsidy: state === 'Delhi' && categoryTarget === 'domestic',
+      subsidy: categoryTarget === 'domestic' ? (DOMESTIC_SUBSIDY[state] || null) : null,
     });
     return bill.totalPayable;
   } catch (err) {
@@ -129,10 +130,9 @@ const DISCOM_OPTIONS = Object.keys(TARIFF_DB).sort()
 
 // Full bill object for one DISCOM (not just the total), so we can show the breakdown.
 // Returns { unsupported:true } when the DISCOM has no tariff for the chosen category,
-// or null on an engine error. `applySubsidy` turns on eligible government subsidy — the
-// engine models the Delhi GNCTD domestic subsidy (first 200 units free), which is
-// domestic-only AND Delhi-only. The engine's delhiSubsidy flag doesn't self-check the
-// state, so we gate it here to Delhi DISCOMs so a non-Delhi bill is never wrongly zeroed.
+// or null on an engine error. `applySubsidy` turns on the eligible government subsidy — the
+// engine applies the chosen state's modelled domestic subsidy (DOMESTIC_SUBSIDY), which is
+// domestic-only, so a non-subsidy state's bill is never wrongly reduced.
 function fullBillFor(discomId, categoryTarget, units, loadKw, applySubsidy, state) {
   const discom = ALL_DISCOMS.find(d => d.id === discomId);
   if (!discom) return null;
@@ -144,7 +144,7 @@ function fullBillFor(discomId, categoryTarget, units, loadKw, applySubsidy, stat
       discomId, categoryId: categoryTarget, supplyTypeId,
       units, connectedLoadKw: loadKw, billingMonths: 1,
       fppaOverride: null, isNetMetering: false, lpscApplicable: false,
-      delhiSubsidy: !!applySubsidy && categoryTarget === 'domestic' && state === 'Delhi',
+      subsidy: (applySubsidy && categoryTarget === 'domestic') ? (DOMESTIC_SUBSIDY[state] || null) : null,
     });
     return (bill && !bill.error) ? bill : null;
   } catch (err) {

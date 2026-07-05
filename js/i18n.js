@@ -24,6 +24,8 @@ const STRINGS = {
     'hero.feat.fppa': 'Fixed & fuel surcharge (FPPA)',
     'hero.feat.solar': 'Solar net metering',
     'hero.feat.tod': 'Time-of-Day & kVAh billing',
+    'hero.feat.demand': 'Excess demand penalty',
+    'hero.feat.duty': 'Electricity duty & state levies',
     'hero.discoms.label': 'Tariffs for 70+ DISCOMs across 35 states & UTs — including',
     'hero.trust': 'Built on publicly available tariff orders · Updated for FY 2025-26',
     // Calculator form
@@ -64,9 +66,8 @@ const STRINGS = {
     'label.exportUnits': 'Exported Units (kWh)',
     'label.openingCredit': 'Opening Banked Credit (kWh)',
     'chk.lpsc': '<strong>LPSC Applicable</strong> — apply late-payment surcharge on the current bill',
-    'label.delhiSubsidy': 'Delhi GNCTD Subsidy',
+    'label.subsidy': 'Government Domestic Subsidy',
     'chk.applySubsidy': 'Apply government subsidy',
-    'small.subsidy': '≤200 units: zero bill. 201–400 units: 50% rebate.',
     // Arrear / Payment / Adjustment
     'hint.arrear': 'Enter amounts exactly as shown on your previous bill. LPSC on previous arrear is a direct amount, not computed.',
     'label.prevArrear': 'Previous Arrear (₹)',
@@ -138,7 +139,7 @@ const STRINGS = {
     'about.disclaimer': '<strong>⚠ Disclaimer:</strong> This is a <strong>provisional bill calculator</strong> for reference and educational purposes only. The tariff rates used here are approximate, based on publicly available tariff orders, and may not reflect the latest revisions or local surcharges. Actual bills from your DISCOM may differ. Always contact your DISCOM or visit their official website for accurate and official billing information. TheDiscomBill is not affiliated with any electricity utility or government body.',
     // Footer
     'footer.l1': '&copy; 2026 TheDiscomBill &nbsp;·&nbsp; Free Electricity Bill Calculator for India',
-    'footer.l2': 'Tariff data is approximate and based on publicly available information (2024-25). Not affiliated with any DISCOM, SERC, or government body. &nbsp;|&nbsp; <a href="#about">Disclaimer</a>',
+    'footer.l2': 'Tariff data is approximate and based on publicly available information (2025-26). Not affiliated with any DISCOM, SERC, or government body. &nbsp;|&nbsp; <a href="#about">Disclaimer</a>',
   },
   hi: {
     // Header / nav
@@ -158,6 +159,8 @@ const STRINGS = {
     'hero.feat.fppa': 'फिक्स्ड व ईंधन अधिभार (FPPA)',
     'hero.feat.solar': 'सोलर नेट मीटरिंग',
     'hero.feat.tod': 'टाइम-ऑफ-डे व kVAh बिलिंग',
+    'hero.feat.demand': 'अतिरिक्त मांग जुर्माना',
+    'hero.feat.duty': 'बिजली शुल्क व राज्य उद्ग्रहण',
     'hero.discoms.label': '35+ राज्यों व केंद्रशासित प्रदेशों के 70+ डिस्कॉम के टैरिफ — जैसे',
     'hero.trust': 'सार्वजनिक टैरिफ आदेशों पर आधारित · वित्त वर्ष 2025-26 हेतु अद्यतन',
     // Calculator form
@@ -198,9 +201,8 @@ const STRINGS = {
     'label.exportUnits': 'निर्यातित यूनिट (kWh)',
     'label.openingCredit': 'प्रारंभिक संचित क्रेडिट (kWh)',
     'chk.lpsc': '<strong>LPSC लागू</strong> — वर्तमान बिल पर विलंब-भुगतान अधिभार लगाएँ',
-    'label.delhiSubsidy': 'दिल्ली GNCTD सब्सिडी',
+    'label.subsidy': 'सरकारी घरेलू सब्सिडी',
     'chk.applySubsidy': 'सरकारी सब्सिडी लागू करें',
-    'small.subsidy': '≤200 यूनिट: शून्य बिल। 201–400 यूनिट: 50% छूट।',
     // Arrear / Payment / Adjustment
     'hint.arrear': 'राशियाँ ठीक वैसे ही दर्ज करें जैसे आपके पिछले बिल में दिखाई गई हैं। पिछले बकाया पर LPSC एक सीधी राशि है, गणना की गई नहीं।',
     'label.prevArrear': 'पिछला बकाया (₹)',
@@ -272,7 +274,7 @@ const STRINGS = {
     'about.disclaimer': '<strong>⚠ अस्वीकरण:</strong> यह केवल संदर्भ और शैक्षिक उद्देश्यों हेतु एक <strong>अनुमानित बिल कैलकुलेटर</strong> है। यहाँ उपयोग की गई टैरिफ दरें अनुमानित हैं, सार्वजनिक टैरिफ आदेशों पर आधारित हैं, और नवीनतम संशोधनों या स्थानीय अधिभारों को नहीं दर्शा सकतीं। आपके डिस्कॉम का वास्तविक बिल भिन्न हो सकता है। सटीक और आधिकारिक बिलिंग जानकारी के लिए हमेशा अपने डिस्कॉम से संपर्क करें या उनकी आधिकारिक वेबसाइट देखें। TheDiscomBill किसी भी बिजली कंपनी या सरकारी संस्था से संबद्ध नहीं है।',
     // Footer
     'footer.l1': '&copy; 2026 TheDiscomBill &nbsp;·&nbsp; भारत के लिए निःशुल्क बिजली बिल कैलकुलेटर',
-    'footer.l2': 'टैरिफ डेटा अनुमानित है और सार्वजनिक रूप से उपलब्ध जानकारी (2024-25) पर आधारित है। किसी भी डिस्कॉम, SERC या सरकारी संस्था से संबद्ध नहीं। &nbsp;|&nbsp; <a href="#about">अस्वीकरण</a>',
+    'footer.l2': 'टैरिफ डेटा अनुमानित है और सार्वजनिक रूप से उपलब्ध जानकारी (2025-26) पर आधारित है। किसी भी डिस्कॉम, SERC या सरकारी संस्था से संबद्ध नहीं। &nbsp;|&nbsp; <a href="#about">अस्वीकरण</a>',
   },
 };
 

@@ -6,6 +6,7 @@ import {
   findStateMetaByDiscom, resolveDatedTariff, fyStart,
 } from './tariffs/registry.js';
 import { resolveFppaForDiscom } from './tariffs/fppa.js';
+import { DOMESTIC_SUBSIDY } from './tariffs/subsidy.js';
 import { calculateBill } from './engine.js';
 import { renderBill, renderRevisionBill, renderComparison } from './renderer.js';
 import { attachDatePicker, fieldISO, setFieldDate } from './datepicker.js';
@@ -952,6 +953,30 @@ export function isDelhiDiscom(discomId) {
   return ['brpl', 'bypl', 'tpddl', 'ndmc_delhi'].includes(discomId);
 }
 
+// Resolve the domestic subsidy scheme for a DISCOM + category, or null. Subsidies apply only to
+// the domestic category (id 'domestic') and only in states listed in DOMESTIC_SUBSIDY.
+export function getSubsidyScheme(discomId, categoryId) {
+  if (categoryId !== 'domestic') return null;
+  const meta = findStateMetaByDiscom(discomId);
+  const state = meta && meta.state;
+  return (state && DOMESTIC_SUBSIDY[state]) || null;
+}
+
+// Show/hide the subsidy opt-in based on the current DISCOM + category, and label it with the
+// specific scheme so the user sees exactly what would be applied. Called on state/discom/category
+// change from main.js.
+export function refreshSubsidyToggle() {
+  const group = document.getElementById('delhiSubsidyGroup');
+  if (!group) return;
+  const discomId   = document.getElementById('discomSelect')?.value;
+  const categoryId = document.getElementById('categorySelect')?.value;
+  const scheme = getSubsidyScheme(discomId, categoryId);
+  if (!scheme) { group.style.display = 'none'; return; }
+  group.style.display = 'flex';
+  const small = document.getElementById('subsidySmall');
+  if (small) small.textContent = scheme.label;
+}
+
 // ─── Calculate ────────────────────────────────────────────────────────────────
 
 export function getBillingPeriodDays() {
@@ -1180,7 +1205,7 @@ export function checkLifelineLimits() {
 // dated payments applied in their month; undated payments + adjustments applied at the end.
 export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalUnits,
     connectedLoadKw, billedDemandKw, billingBasis, fromISO, toISO, fppaAuto, manualFacRate, manualFacMode,
-    lpscRate, previousArrear, arrearLpsc, payments, adjustments, delhiSubsidy,
+    lpscRate, previousArrear, arrearLpsc, payments, adjustments, subsidyScheme,
     netMetering, exportUnits, openingCreditUnits }) {
   const months = fppaMonthDates(fromISO, toISO);
   const N = months.length || 1;
@@ -1226,7 +1251,7 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
       discomId, categoryId, supplyTypeId, units: unitsPerMonth,
       connectedLoadKw, billedDemandKw, billingBasis, billingPeriodDays: 30, billingDate: ym + '-15',
       facRate, facMode, arrears: 0, arrearLpsc: 0, lpscRate: 0, currentLpscMonths: 0,
-      lpscApplicable: false, payments: [], adjustments: [], delhiSubsidy, todUnits: null,
+      lpscApplicable: false, payments: [], adjustments: [], subsidy: subsidyScheme, todUnits: null,
       netMetering, exportUnits: exportPerMonth, openingCreditUnits: runningCredit,
     });
     if (netMetering && mb) runningCredit = mb.closingCredit;   // carry surplus to the next month
@@ -1416,9 +1441,9 @@ export function doCalculate() {
   const currentLpscMonths = +document.getElementById('currentLpscMonths').value || 0;
   const lpscApplicable    = document.getElementById('lpscApplicable')?.checked !== false;
 
-  const delhiSubsidy = isDelhiDiscom(discomId) &&
-    document.getElementById('delhiSubsidyCheck') &&
-    document.getElementById('delhiSubsidyCheck').checked;
+  const subsidy = (document.getElementById('delhiSubsidyCheck')?.checked)
+    ? getSubsidyScheme(discomId, categoryId)
+    : null;
 
   const billingPeriodDays = getBillingPeriodDays();
   const billingDate       = getBillingDate();
@@ -1439,7 +1464,7 @@ export function doCalculate() {
       fppaAuto: document.getElementById('fppaAuto')?.checked !== false,
       manualFacRate: facRate, manualFacMode: facMode,
       lpscRate, previousArrear: arrears, arrearLpsc,
-      payments: getPayments(), adjustments: getAdjustments(), delhiSubsidy,
+      payments: getPayments(), adjustments: getAdjustments(), subsidyScheme: subsidy,
       netMetering, exportUnits, openingCreditUnits,
     });
     const panel = document.getElementById('billPanel');
@@ -1467,7 +1492,7 @@ export function doCalculate() {
     billedDemandKw, billingBasis, billingPeriodDays, billingDate,
     facRate, facMode, arrears, arrearLpsc, lpscRate, currentLpscMonths, lpscApplicable,
     payments: getPayments(), adjustments: getAdjustments(),
-    delhiSubsidy, todUnits, netMetering, exportUnits, openingCreditUnits
+    subsidy, todUnits, netMetering, exportUnits, openingCreditUnits
   });
   if (!result || result.error) { showToast(result?.message || 'Calculation failed.'); return; }
 
