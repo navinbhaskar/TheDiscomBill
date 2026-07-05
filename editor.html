@@ -12,6 +12,9 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/editor.css">
+  <!-- Admin-only tool: hide the page until editor.js confirms an admin session (no content flash). -->
+  <script>document.documentElement.classList.add('ed-checking');</script>
+  <style>html.ed-checking body { visibility: hidden; }</style>
 </head>
 <body class="editor-body">
 

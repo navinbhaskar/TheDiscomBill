@@ -5,6 +5,7 @@ import { getStates, getDiscoms, STATE_META } from './tariffs/registry.js';
 import { FPPA_BY_DISCOM, FPPA_BY_STATE } from './tariffs/fppa.js';
 import { calculateEnergySlabs, resolveFixedCharge } from './engine.js';
 import { round2, escHtml as esc } from './utils.js';
+import { isConfigured, getSupabase } from './supabase-config.js';
 
 // ─── Small helpers ──────────────────────────────────────────────────────────
 const $ = id => document.getElementById(id);
@@ -791,4 +792,32 @@ function init() {
     if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) { e.preventDefault(); undo(); }
   });
 }
-document.addEventListener('DOMContentLoaded', init);
+// ── Admin gate ────────────────────────────────────────────────────────────────
+// This maintenance tool is admin-only. Confirm an admin session against Supabase
+// before building the editor; anyone else is redirected away (unauthenticated →
+// login, signed-in non-admin → home). The page stays hidden (html.ed-checking,
+// set in editor.html) until this passes, so the tool never flashes to non-admins.
+async function ensureAdmin() {
+  if (!isConfigured()) { location.replace('/'); return false; }
+  try {
+    const sb = await getSupabase();
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) {
+      location.replace('/login/?next=' + encodeURIComponent('/editor.html'));
+      return false;
+    }
+    const { data: profile } = await sb.from('profiles').select('role').eq('id', session.user.id).single();
+    if (profile?.role === 'admin') return true;
+  } catch (e) { /* fall through to redirect */ }
+  location.replace('/');
+  return false;
+}
+
+async function bootstrap() {
+  if (!(await ensureAdmin())) return;          // redirect already issued; keep page hidden
+  init();
+  document.documentElement.classList.remove('ed-checking');
+}
+
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootstrap);
+else bootstrap();

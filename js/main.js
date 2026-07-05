@@ -7,7 +7,7 @@ import {
   updateArrearTotal, updateUnitsDisplay, updateCalcButton, updateBillingPeriod,
   updateTodDisplay, updateFacUnitLabel, updateTariffPeriodHint,
   onFppaAutoToggle, markFppaManual,
-  doCalculate, isDelhiDiscom,
+  doCalculate, refreshSubsidyToggle,
   shareBill, shareBillWhatsApp, loadFromUrl, loadSample, initHistory,
   refreshSupplyTypeDependent, applyLifelineDefaultLoad, checkLifelineLimits,
   getMeterMode, setMeterMode, addMeterRow, updateAdvancedMeter,
@@ -157,6 +157,7 @@ function initLoginButton() {
   const icBills = icon('<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/>');
   const icExpert = icon('<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>');
   const icAdmin = icon('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>');
+  const icEditor = icon('<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>');
   const icLogout = icon('<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/>');
 
   const wrap = document.createElement('div');
@@ -179,6 +180,7 @@ function initLoginButton() {
       <a href="/my-bills/" class="nav-dropdown-item" role="menuitem">${icBills} My Bills</a>
       ${isExpert ? `<a href="/expert/" class="nav-dropdown-item" role="menuitem">${icExpert} Expert Console</a>` : ''}
       ${isAdmin ? `<a href="/admin/" class="nav-dropdown-item" role="menuitem">${icAdmin} Admin Console</a>` : ''}
+      ${isAdmin ? `<a href="/editor.html" class="nav-dropdown-item" role="menuitem">${icEditor} Tariff Editor</a>` : ''}
       <button type="button" id="accountLogout" class="nav-dropdown-item account-logout" role="menuitem">${icLogout} Logout</button>
     </div>`;
   themeBtn.after(wrap);   // sits to the right of the theme toggle
@@ -334,15 +336,14 @@ document.addEventListener('DOMContentLoaded', () => {
       populateCategories('');
       populateSupplyTypes('', '');
       updateCalcButton();
-      document.getElementById('delhiSubsidyGroup').style.display = 'none';
+      refreshSubsidyToggle();
     });
 
     discomEl.addEventListener('change', () => {
       populateCategories(discomEl.value);
       populateSupplyTypes('', '');
       updateCalcButton();
-      const showDelhi = isDelhiDiscom(discomEl.value);
-      document.getElementById('delhiSubsidyGroup').style.display = showDelhi ? 'flex' : 'none';
+      refreshSubsidyToggle();
       prefillLpsc(discomEl.value);
       // Reflect the chosen DISCOM (and its state) in the URL without reloading, so the
       // selection can be bookmarked / shared. Other existing query params are preserved.
@@ -363,6 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
       updateBilledDemandVisibility(discomEl.value, categoryEl.value, supplyTypeEl.value);
       updateTariffPeriodHint();
       updateCalcButton();
+      refreshSubsidyToggle();
     });
 
     document.getElementById('billingBasis').addEventListener('change', () => {
