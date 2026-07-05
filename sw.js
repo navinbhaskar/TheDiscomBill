@@ -1,19 +1,20 @@
 // sw.js — Service Worker (network-first, cache fallback)
 // Update this version string when deploying new code to bust the cache.
-const CACHE = 'discombill-20260704-72';
+const CACHE = 'discombill-20260705-77';
 
 const CORE = [
   './', './index.html', './compare/', './compare/index.html',
   './usage/', './usage/index.html',
   './solar/', './solar/index.html',
   './tariffs/', './tariffs/index.html',
-  './bill-check/', './bill-check/index.html',
+  './services/', './services/index.html',
   './bill-review/', './bill-review/index.html',
   './login/', './login/index.html',
   './my-bills/', './my-bills/index.html',
   './new-connection/', './new-connection/index.html',
   './complaint/', './complaint/index.html',
   './glossary/', './glossary/index.html',
+  './methodology/', './methodology/index.html',
   // Styles
   './css/styles.css',
   // Application JS
@@ -21,7 +22,7 @@ const CORE = [
   './js/utils.js', './js/engine.js', './js/i18n.js',
   './js/ui.js', './js/datepicker.js', './js/renderer.js', './js/main.js', './js/compare.js',
   './js/estimators.js', './js/tariff-explorer.js', './js/bill-check.js',
-  './js/portal-page.js', './js/new-connection.js', './js/complaint.js', './js/solar.js',
+  './js/portal-page.js', './js/new-connection.js', './js/complaint.js', './js/services.js', './js/solar.js',
   // Bill Review portal — bill-review.js statically imports these two, so they
   // must be cached together or the page fails to parse offline.
   './js/bill-review.js', './js/support-common.js', './js/supabase-config.js', './js/login.js', './js/my-bills.js',
@@ -29,7 +30,7 @@ const CORE = [
   // the cache offline the whole entry point fails to parse (and the state list never loads).
   './js/vendor/lenis.mjs', './js/vendor/html2pdf.bundle.min.js',
   // Tariff registry + FPPA
-  './js/tariffs/registry.js', './js/tariffs/fppa.js',
+  './js/tariffs/registry.js', './js/tariffs/fppa.js', './js/tariffs/subsidy.js',
   // Per-state tariff data
   './js/tariffs/andhra-pradesh.js', './js/tariffs/arunachal-pradesh.js',
   './js/tariffs/assam.js', './js/tariffs/bihar.js', './js/tariffs/chandigarh.js',

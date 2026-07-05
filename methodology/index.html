@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icon.svg">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+  <title>Methodology &amp; Accuracy — How TheDiscomBill Calculates Your Bill</title>
+  <meta name="description" content="How TheDiscomBill sources electricity tariffs from SERC and DISCOM tariff orders, encodes them into its billing engine, and verifies the output against real consumer bills — matched to the paisa. Our sources, method, scope and known limitations.">
+  <link rel="canonical" href="https://www.thediscombill.com/methodology/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="Methodology &amp; Accuracy — How TheDiscomBill Calculates Your Bill">
+  <meta property="og:description" content="How we source tariff orders, encode them into our billing engine, and verify the result against real bills — matched to the paisa. Sources, method, scope and known limitations.">
+  <meta property="og:url" content="https://www.thediscombill.com/methodology/">
+  <meta property="og:image" content="https://www.thediscombill.com/icon-512.png">
+  <meta property="og:locale" content="en_IN">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Methodology &amp; Accuracy — How TheDiscomBill Calculates Your Bill">
+  <meta name="twitter:description" content="How we source tariff orders, encode them, and verify against real bills — matched to the paisa.">
+  <meta name="twitter:image" content="https://www.thediscombill.com/icon-512.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fonts load async (non-render-blocking); display=swap shows fallback text immediately -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"AboutPage","url":"https://www.thediscombill.com/methodology/","name":"Methodology & Accuracy — How TheDiscomBill Calculates Your Bill","description":"How TheDiscomBill sources electricity tariffs from SERC and DISCOM tariff orders, encodes them into its billing engine, and verifies the output against real consumer bills — matched to the paisa.","isPartOf":{"@id":"https://www.thediscombill.com/#website"},"publisher":{"@id":"https://www.thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-07-04"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Methodology","item":"https://www.thediscombill.com/methodology/"}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator">Calculator</a>
+      <div class="nav-dropdown" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          Quick Links
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu" id="quickLinksMenu" role="menu">
+          <span class="nav-dropdown-label" role="presentation">Tools</span>
+          <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="20" x2="6" y2="14"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="10"/></svg>Compare DISCOM Tariffs</a>
+          <a href="/usage/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>Usage Estimator</a>
+          <a href="/solar/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>Rooftop Solar Savings</a>
+          <span class="nav-dropdown-label" role="presentation">Tariffs</span>
+          <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>Tariffs by State &amp; DISCOM</a>
+          <span class="nav-dropdown-label" role="presentation">Services</span>
+          <a href="/services/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg>DISCOM Services</a>
+          <a href="/bill-review/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4"/><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg>Bill Review by Experts</a>
+          <span class="nav-dropdown-label" role="presentation">Learn</span>
+          <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Electricity Bill Guides</a>
+          <a href="/glossary/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M12 7h5M12 11h5M7 7h.01M7 11h.01"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Electricity Bill Glossary</a>
+          <a href="/methodology/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 11l2 2 4-4"/></svg>Methodology &amp; Accuracy</a>
+        </div>
+      </div>
+      <a href="/#about">About</a>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body">
+
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">Methodology</span></li></ol></nav>
+    <h1>Methodology &amp; Accuracy</h1>
+    <p class="seo-lead">Every figure our <a href="/#calculator">calculator</a> shows traces back to a
+    published tariff order — and we check the result against real consumer bills. This page explains
+    where the numbers come from, how a tariff order becomes a calculation, how we verify it, and —
+    just as important — what we do <em>not</em> yet model.</p>
+
+    <section class="seo-section" id="sources">
+      <h2>1. Where the numbers come from</h2>
+      <p>There is no "typical" or invented rate anywhere in the tool. Every slab rate, fixed charge,
+      duty and surcharge is taken from a primary source:</p>
+      <ul>
+        <li><strong>SERC tariff orders</strong> — the annual (or multi-year) tariff order issued by
+        each State Electricity Regulatory Commission, which is the legal document that sets what a
+        DISCOM may charge.</li>
+        <li><strong>DISCOM tariff schedules &amp; FPPA circulars</strong> — the rate cards and the
+        monthly/quarterly fuel-surcharge (FPPA/FPPCA/FAC) notifications that DISCOMs publish under
+        those orders.</li>
+        <li><strong>Real consumer bills</strong> — actual printed bills, used both to confirm how the
+        order is applied in practice and to verify our output (see section 3).</li>
+      </ul>
+      <p>When a new order or FPPA circular is published, the corresponding rates in the tool are
+      updated to match it. The current tariff figures reflect the <strong>2025-26</strong> orders,
+      with the FPPA refreshed for July 2026.</p>
+    </section>
+
+    <section class="seo-section" id="engine">
+      <h2>2. How a tariff order becomes a calculation</h2>
+      <p>A tariff order is prose and tables; a bill is arithmetic applied in a specific order. Our
+      engine encodes that arithmetic exactly as the order specifies, rather than approximating it:</p>
+      <ul>
+        <li><strong>Telescopic slabs</strong> — each slab rate applies only to the units that fall
+        within its band, so a higher rate never applies to your whole consumption (see
+        <a href="/glossary/#telescopic-slabs">telescopic slabs</a>). Non-telescopic "slab-benefit-lost"
+        tariffs are modelled where a DISCOM uses them.</li>
+        <li><strong>Fixed / demand charges</strong> — billed per kW of sanctioned load, per kVA of
+        demand, or as a flat amount, following the category. For demand-billed categories the
+        <a href="/glossary/#maximum-demand">billed demand</a> and any excess-demand penalty over the
+        sanctioned/contract limit are computed.</li>
+        <li><strong>FPPA (fuel surcharge)</strong> — applied by whichever method the order specifies:
+        a flat <em>per-unit</em> paise amount, or a <em>percentage</em> of the supply and demand
+        charges (as under the UP MYT Regulations 2025). It can be a negative credit.</li>
+        <li><strong>Electricity duty and levies</strong> — the state duty is applied on the correct
+        base and in the correct sequence (it is charged on the energy/fuel component, not on itself),
+        because the ordering changes the final figure.</li>
+        <li><strong>kVAh billing</strong> — where a meter and tariff use apparent energy, energy is
+        metered in <a href="/glossary/#kvah">kVAh</a> and demand in kVA, so a poor
+        <a href="/glossary/#power-factor">power factor</a> raises the bill directly instead of through
+        a separate penalty.</li>
+        <li><strong>Time-of-Day, subsidies, net metering, LPSC and arrears</strong> — peak/off-peak
+        blocks, eligible government subsidy, rooftop-solar net import, and late-payment surcharge are
+        each applied where they apply.</li>
+      </ul>
+    </section>
+
+    <section class="seo-section" id="verification">
+      <h2>3. Verified against real bills — to the paisa</h2>
+      <p>The strongest test of a billing engine is not whether it looks right, but whether it
+      reproduces an actual bill line for line. It does. Our engine reproduces real
+      <strong>MVVNL (Madhyanchal Vidyut Vitran Nigam, a UPPCL DISCOM) bills to the paisa</strong> for
+      the categories we have tested against printed bills, including:</p>
+      <ul>
+        <li><strong>LMV-1 domestic</strong> and small-consumer bills — energy, fixed charge, fuel
+        surcharge and electricity duty all reconcile with the printed total.</li>
+        <li><strong>LMV-17 / LMV-20</strong> non-domestic and larger connections, including the
+        demand-based and percentage-FPPA arithmetic.</li>
+      </ul>
+      <p>When a real bill and our engine disagree, we treat it as a bug in our encoding of the tariff
+      order and fix the logic — not as an acceptable rounding difference.</p>
+    </section>
+
+    <section class="seo-section" id="scope">
+      <h2>4. What we model — and what we don't yet</h2>
+      <p>Being clear about the edges is part of being accurate. What the tool models well:</p>
+      <ul>
+        <li>Telescopic and non-telescopic energy slabs, fixed/demand charges, excess-demand penalty.</li>
+        <li>FPPA by both per-unit and percentage methods, electricity duty, and common state levies.</li>
+        <li>kVAh apparent-energy billing and power-factor effects.</li>
+        <li>Time-of-Day peak/off-peak billing and rooftop-solar net metering.</li>
+        <li>Eligible domestic government subsidies for the states that run them — Delhi (GNCTD),
+        Punjab, Karnataka (Gruha Jyoti), Telangana and Tamil Nadu — applied to the domestic category
+        when you opt in.</li>
+      </ul>
+      <p>What we do <strong>not</strong> yet fully model, and where a real bill may differ:</p>
+      <ul>
+        <li><strong>Some category-specific minimum charges</strong> — for example the LMV-2 minimum
+        monthly charge is a known gap we have not yet reproduced exactly.</li>
+        <li><strong>Subsidy fine print</strong> — we model each subsidy conservatively as free energy
+        on the eligible units (fixed charge, FPPA and duty still apply) and take Karnataka/Telangana's
+        cap as a flat 200 units rather than the exact avg-consumption formula. States without a listed
+        scheme have no subsidy applied, so a real bill there may be lower.</li>
+        <li><strong>Net metering and late-payment surcharge in the multi-DISCOM comparison table</strong>
+        — these are excluded there for a like-for-like comparison, though the main calculator supports
+        them.</li>
+      </ul>
+      <p>Every result is a <strong>provisional estimate</strong>. Tariffs vary by sub-category, slab,
+      city and sanction, so we always recommend verifying against your printed bill.</p>
+    </section>
+
+    <section class="seo-section" id="updates">
+      <h2>5. How often it's updated</h2>
+      <p>Rates are refreshed as new tariff orders and FPPA circulars are published — typically once a
+      year for the base tariff (following each SERC's order) and more often for the fuel surcharge,
+      which moves monthly or quarterly. Corrections raised through real bills are applied to the
+      underlying tariff data, so a fix
+      for one consumer improves the estimate for everyone on that tariff.</p>
+    </section>
+
+    <section class="seo-section" id="independence">
+      <h2>6. Independence</h2>
+      <p>TheDiscomBill is <strong>independent</strong> and not affiliated with any DISCOM, SERC or
+      government body. Our estimate is guidance, not a legal ruling or an official bill. For a formal
+      dispute, use your DISCOM's grievance forum; for a human read of a specific bill, our
+      <a href="/bill-review/">expert Bill Review</a> service can help.</p>
+    </section>
+
+    <section class="seo-section">
+      <h2>See it in action</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/#calculator"><strong>Bill Calculator</strong><span>Enter your own units and load for an itemised, slab-wise estimate</span></a>
+        <a class="seo-link-card" href="/tariffs/states/"><strong>Tariffs by State</strong><span>The exact slab rates, fixed charges and FPPA behind every estimate</span></a>
+        <a class="seo-link-card" href="/glossary/"><strong>Bill Glossary</strong><span>Plain-language definitions of every charge line and code</span></a>
+      </div>
+    </section>
+
+    <p class="seo-disclaimer">Figures are provisional estimates computed from published tariff orders
+    and verified against sample bills; the exact treatment of any charge varies by state, DISCOM and
+    consumer category. Always verify against your DISCOM's tariff order or your printed bill.</p>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 TheDiscomBill. All rights reserved. &nbsp;|&nbsp; <a href="/#about">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/">Methodology</a> &nbsp;|&nbsp; <a href="/tariffs/states/">All States &amp; DISCOMs</a> &nbsp;|&nbsp; <a href="/glossary/">Bill Glossary</a></p>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>
