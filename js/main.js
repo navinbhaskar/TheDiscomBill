@@ -140,6 +140,19 @@ function initLoginButton() {
       e.preventDefault();
       openAuthModal(a);
     });
+    // Warm the auth code + supabase-js bundle on first hint of intent (hover / focus / touch),
+    // so by the time the modal opens the form renders instantly and submit is ready — the SDK
+    // is the slow, first-time-only CDN download. Fires at most once; ignored if it fails.
+    let warmed = false;
+    const warm = () => {
+      if (warmed) return;
+      warmed = true;
+      import('./support-common.js').catch(() => {});
+      getSupabase().catch(() => {});
+    };
+    a.addEventListener('pointerenter', warm, { once: true });
+    a.addEventListener('focus', warm, { once: true });
+    a.addEventListener('touchstart', warm, { once: true, passive: true });
     themeBtn.after(a);   // sits to the right of the theme toggle
     return;
   }
@@ -208,6 +221,28 @@ function initLoginButton() {
     try { localStorage.removeItem('discombill.role'); } catch (err) {}
     location.href = '/';
   });
+
+  // The cached role (discombill.role) is only refreshed by pages that fetch the profile
+  // (/admin, /bill-review, /expert). Confirm it against Supabase here so the Admin Console /
+  // Tariff Editor / Expert Console items appear on ANY page right after login — not only once
+  // the admin has visited one of those pages. Re-renders the button if the role changed.
+  syncAccountRole(role);
+}
+
+async function syncAccountRole(currentRole) {
+  try {
+    const sb = await getSupabase();
+    if (!sb) return;
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) return;
+    const { data: profile } = await sb.from('profiles').select('role').eq('id', session.user.id).single();
+    const role = (profile && profile.role) || '';
+    try {
+      if (role === 'admin' || role === 'expert') localStorage.setItem('discombill.role', role);
+      else localStorage.removeItem('discombill.role');
+    } catch (e) {}
+    if (role !== currentRole) initLoginButton();   // re-render with the confirmed role (no loop: role now matches)
+  } catch (e) { /* offline or no session — keep the cached view */ }
 }
 
 // Expose helpers called from onclick in the rendered bill HTML

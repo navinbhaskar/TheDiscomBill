@@ -2,7 +2,7 @@
 // (/bill-review/ for consumers, /expert/ for the review team): auth card,
 // live chat widget, and small formatting helpers.
 
-import { getSupabase, isConfigured } from './supabase-config.js';
+import { getSupabase, isConfigured, hasStoredSession } from './supabase-config.js';
 
 export const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -57,9 +57,17 @@ export function renderSetupNotice(mount) {
 // frontend is visible) — submitting just explains what's missing.
 export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = '' }) {
   const configured = isConfigured();
-  const sb = configured ? await getSupabase() : null;
+  // `sb` is filled in once the supabase-js bundle finishes downloading. It's a `let` so the
+  // form's event handlers (defined below) pick up the client the moment it lands, even though
+  // we render the form before the download completes.
+  let sb = null;
 
   const notConnected = 'Backend not connected yet — complete the Supabase setup above to enable accounts.';
+
+  // Resolves once the SDK has loaded (or we know it never will). The submit handlers await
+  // this before touching `sb`, so a click that lands mid-download waits instead of failing.
+  let markReady;
+  const sbReady = new Promise(r => { markReady = r; });
 
   // Name captured during a phone sign-in, saved to user_metadata right after the
   // session lands (phone OTP has no signup step of its own, unlike email).
@@ -69,6 +77,7 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
   // the session. Requires the Google provider enabled in Supabase → Auth →
   // Providers. redirectTo brings the user back to the page they started on.
   async function signInWithGoogle(msg) {
+    if (!sb) await sbReady;
     if (!sb) { msg.textContent = notConnected; return; }
     msg.textContent = '';
     const { error } = await sb.auth.signInWithOAuth({
@@ -131,6 +140,7 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
     mount.querySelector('.br-social').addEventListener('click', () => signInWithGoogle(msg));
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (!sb) await sbReady;
       if (!sb) { msg.textContent = notConnected; return; }
       const email = mount.querySelector('#brEmail').value.trim();
       const password = mount.querySelector('#brPass').value;
@@ -203,6 +213,7 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (!sb) await sbReady;
       if (!sb) { msg.textContent = notConnected; return; }
       const phone = normPhone();
       if (!/^\+\d{8,15}$/.test(phone)) { msg.textContent = 'Enter your number in international format, e.g. +919876543210.'; return; }
@@ -233,7 +244,21 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
     });
   }
 
-  if (!sb) { renderForm('signin'); return null; }
+  // Paint the sign-in form right away for signed-out visitors, so the dialog is interactive
+  // instead of stuck on "Loading…" while the supabase-js bundle downloads from the CDN. When a
+  // stored session exists we skip this — the signed-in view below swaps straight in with no
+  // flash of the login form.
+  const likelySignedOut = !hasStoredSession();
+  if (likelySignedOut) renderForm('signin');
+
+  // Now pull the SDK (the slow, first-time-only CDN fetch). The form above is already usable.
+  sb = configured ? await getSupabase() : null;
+  markReady(sb);
+
+  if (!sb) {
+    if (!likelySignedOut) renderForm('signin');   // not configured — the form's submit explains why
+    return null;
+  }
 
   sb.auth.onAuthStateChange((_event, session) => {
     if (!session) { renderForm('signin'); onSignedOut?.(); return; }
@@ -253,7 +278,7 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
 
   const { data: { session } } = await sb.auth.getSession();
   if (session) onSignedIn(sb, session);
-  else renderForm('signin');
+  else if (!likelySignedOut) renderForm('signin');
   return sb;
 }
 
