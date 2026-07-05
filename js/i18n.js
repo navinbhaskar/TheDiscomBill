@@ -241,6 +241,8 @@ const STRINGS = {
     'gloss.crumb': 'Glossary',
     'gloss.h1': 'Electricity Bill Glossary',
     'gloss.lead': 'Every charge line and code on an Indian electricity bill, defined in plain language. These are the terms behind our <a href="/#calculator">bill calculator</a> and <a href="/tariffs/states/">tariff pages</a> — from <a href="#fppa">FPPA</a> and <a href="#electricity-duty">electricity duty</a> to <a href="#telescopic-slabs">telescopic slabs</a> and <a href="#kvah">kVAh</a>.',
+    'gloss.aka': 'Also called:',
+    'gloss.backToTop': '↑ Back to all terms',
     'gloss.work.h2': 'Put these terms to work',
     'gloss.card1': '<strong>Bill Calculator</strong><span>Apply these charges to your own units and load for an itemised estimate</span>',
     'gloss.card2': '<strong>Bill Guides</strong><span>Longer walkthroughs: reading your bill, why bills rise, Time-of-Day billing</span>',
@@ -485,6 +487,8 @@ const STRINGS = {
     'gloss.crumb': 'शब्दावली',
     'gloss.h1': 'बिजली बिल शब्दावली',
     'gloss.lead': 'भारतीय बिजली बिल की हर शुल्क पंक्ति व कोड, सरल भाषा में परिभाषित। ये वही शब्द हैं जो हमारे <a href="/#calculator">बिल कैलकुलेटर</a> व <a href="/tariffs/states/">टैरिफ पृष्ठों</a> के पीछे हैं — <a href="#fppa">FPPA</a> व <a href="#electricity-duty">बिजली शुल्क</a> से लेकर <a href="#telescopic-slabs">टेलिस्कोपिक स्लैब</a> व <a href="#kvah">kVAh</a> तक।',
+    'gloss.aka': 'इन नामों से भी:',
+    'gloss.backToTop': '↑ सभी शब्दों पर वापस',
     'gloss.work.h2': 'इन शब्दों को काम में लाएँ',
     'gloss.card1': '<strong>बिल कैलकुलेटर</strong><span>मदवार आकलन के लिए इन शुल्कों को अपनी यूनिट व भार पर लागू करें</span>',
     'gloss.card2': '<strong>बिल गाइड</strong><span>विस्तृत मार्गदर्शिका: अपना बिल पढ़ना, बिल क्यों बढ़ते हैं, टाइम-ऑफ-डे बिलिंग</span>',
@@ -514,7 +518,12 @@ function ensureDevanagariFont() {
 
 export function applyLang(lang) {
   if (lang === 'hi') ensureDevanagariFont();
-  const dict = STRINGS[lang] || STRINGS.en;
+  // The glossary page injects window.__i18nGlossary = { en:{…}, hi:{…} } with its per-term
+  // strings (kept in glossary-content.js, not duplicated here). Merge them in so the same
+  // data-i18n loops below translate the term headings, definitions and bodies too.
+  const base = STRINGS[lang] || STRINGS.en;
+  const extra = (typeof window !== 'undefined' && window.__i18nGlossary && window.__i18nGlossary[lang]) || null;
+  const dict = extra ? { ...base, ...extra } : base;
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const v = dict[el.dataset.i18n];
     if (v != null) el.textContent = v;

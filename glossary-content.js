@@ -12,6 +12,9 @@
 //   short  — one-sentence definition; used as the DefinedTerm.description and the lead line.
 //            Keep it self-contained — this is the sentence an LLM or snippet will lift.
 //   body   — trusted hand-authored HTML with the fuller explanation (no user input flows here).
+//   termHi / chipHi / shortHi / bodyHi — Hindi renderings used only for the runtime language
+//            switch on /glossary/ (injected as window.__i18nGlossary; see generate-seo.js).
+//            The English fields above remain the source of truth for schema + snippets.
 //
 // Never hard-code a specific tariff rate that drifts yearly — describe the structure and link
 // to /tariffs/ or the calculator, which ARE regenerated from live data.
@@ -29,6 +32,15 @@ export const GLOSSARY = [
       sanctioned load. High-tension (HT) and large consumers instead contract a
       <strong>contract demand</strong> in kVA and are billed on
       <a href="/glossary/#maximum-demand">maximum demand</a>.</p>`,
+    termHi: 'कनेक्टेड लोड (Connected Load)',
+    chipHi: 'कनेक्टेड लोड',
+    shortHi: 'आपके कनेक्शन से जुड़े सभी उपकरणों का कुल भार, kW में घोषित — वह आधार जिस पर आपूर्ति कनेक्शन स्वीकृत होता है।',
+    bodyHi: `<p>कनेक्टेड लोड आपके परिसर में बिजली खींच सकने वाली हर चीज़ की वाट क्षमता का योग है। कनेक्शन के लिए
+      आवेदन करते समय आप इसे घोषित करते हैं, और डिस्कॉम इसके विरुद्ध एक
+      <a href="/glossary/#sanctioned-load">स्वीकृत भार</a> स्वीकृत करता है। लो-टेंशन (LT) घरेलू व छोटे व्यावसायिक
+      उपभोक्ताओं के लिए फिक्स्ड शुल्क आम तौर पर प्रति kW स्वीकृत भार पर लगते हैं। हाई-टेंशन (HT) व बड़े उपभोक्ता
+      इसके बजाय kVA में <strong>अनुबंध मांग</strong> तय करते हैं और
+      <a href="/glossary/#maximum-demand">अधिकतम मांग</a> पर बिल किए जाते हैं।</p>`,
   },
   {
     term: 'Electricity Duty',
@@ -41,6 +53,14 @@ export const GLOSSARY = [
       it is a government levy, it is typically calculated on the energy charge (and sometimes the
       fuel surcharge) but not on itself. Some categories, such as agriculture or lifeline domestic
       slabs, are partly or fully exempt.</p>`,
+    termHi: 'बिजली शुल्क (Electricity Duty)',
+    chipHi: 'बिजली शुल्क',
+    shortHi: 'बिजली खपत पर राज्य सरकार द्वारा लगाया गया कर — आपके बिल के माध्यम से एकत्र किया जाता है पर डिस्कॉम को नहीं, राज्य कोष को दिया जाता है।',
+    bodyHi: `<p>बिजली शुल्क एक <strong>राज्य कर</strong> है, डिस्कॉम शुल्क नहीं। यह आपके बिल में या तो पैसे प्रति
+      यूनिट या ऊर्जा शुल्क के प्रतिशत के रूप में जोड़ा जाता है, और दर आपकी राज्य सरकार तय करती है — इसलिए यह
+      राज्य-दर-राज्य व उपभोक्ता श्रेणी के अनुसार भिन्न होता है। चूँकि यह एक सरकारी उद्ग्रहण है, यह आम तौर पर
+      ऊर्जा शुल्क (और कभी-कभी ईंधन अधिभार) पर गणना किया जाता है, स्वयं पर नहीं। कुछ श्रेणियाँ, जैसे कृषि या
+      लाइफलाइन घरेलू स्लैब, आंशिक या पूर्ण रूप से छूट प्राप्त हैं।</p>`,
   },
   {
     term: 'Fixed Charge (Demand Charge)',
@@ -53,6 +73,15 @@ export const GLOSSARY = [
       are a flat amount, a rate per kW of <a href="/glossary/#sanctioned-load">sanctioned load</a>, or
       (for larger consumers) a rate per kVA of <a href="/glossary/#maximum-demand">maximum demand</a>.
       For HT consumers this "demand charge" is often the single largest line on the bill.</p>`,
+    termHi: 'फिक्स्ड शुल्क (मांग शुल्क)',
+    chipHi: 'फिक्स्ड शुल्क',
+    shortHi: 'आपके स्वीकृत भार या मांग पर लगने वाला एक स्थायी मासिक शुल्क (प्रति kW / kVA, या एक निश्चित राशि), चाहे आप कितनी भी यूनिट खपत करें।',
+    bodyHi: `<p>फिक्स्ड शुल्क आपके लिए क्षमता उपलब्ध रखने की लागत की वसूली करता है — तार, ट्रांसफार्मर व आपके
+      कनेक्शन के लिए आरक्षित स्वीकृत <a href="/glossary/#connected-load">भार</a>। यह
+      <strong>शून्य-खपत माह में भी</strong> बिल किया जाता है। सामान्य संरचनाएँ हैं एक निश्चित राशि, प्रति kW
+      <a href="/glossary/#sanctioned-load">स्वीकृत भार</a> की दर, या (बड़े उपभोक्ताओं के लिए) प्रति kVA
+      <a href="/glossary/#maximum-demand">अधिकतम मांग</a> की दर। HT उपभोक्ताओं के लिए यह "मांग शुल्क" अक्सर
+      बिल की सबसे बड़ी पंक्ति होती है।</p>`,
   },
   {
     term: 'FPPA (Fuel & Power Purchase Adjustment)',
@@ -72,6 +101,20 @@ export const GLOSSARY = [
       <a href="/#calculator">calculator</a> applies each DISCOM's current FPPA automatically. The same
       concept is also called <strong>FPPCA</strong>, <strong>FAC</strong> or simply the fuel
       surcharge.</p>`,
+    termHi: 'FPPA (ईंधन व विद्युत क्रय समायोजन)',
+    chipHi: 'FPPA',
+    shortHi: 'एक आवधिक अधिभार जो उपयोगिता की बदलती ईंधन व विद्युत-क्रय लागत को उपभोक्ताओं तक पहुँचाता है, या तो प्रति यूनिट या ऊर्जा शुल्क के प्रतिशत के रूप में लगाया जाता है।',
+    bodyHi: `<p>डिस्कॉम बिजली उन कीमतों पर खरीदते हैं जो ईंधन लागत व बाज़ार दरों के साथ बदलती हैं। जब वास्तविक
+      लागत स्वीकृत टैरिफ में शामिल लागत से भिन्न होती है, तो नियामक डिस्कॉम को FPPA के माध्यम से अंतर वसूलने
+      (या वापस करने) की अनुमति देता है — एक अधिभार जो हर माह या तिमाही बदलता है। इसे राज्य के टैरिफ आदेश के
+      अनुसार दो में से किसी एक तरीके से लगाया जाता है:</p>
+      <ul>
+        <li><strong>प्रति यूनिट</strong> — हर खपत यूनिट पर जोड़ी गई एक निश्चित पैसा-प्रति-यूनिट राशि।</li>
+        <li><strong>प्रतिशत</strong> — आपके ऊर्जा (या ऊर्जा + फिक्स्ड) शुल्क का एक प्रतिशत।</li>
+      </ul>
+      <p>ऋणात्मक FPPA एक <em>क्रेडिट</em> है जो आपका बिल घटाता है। हमारा
+      <a href="/#calculator">कैलकुलेटर</a> प्रत्येक डिस्कॉम का वर्तमान FPPA स्वतः लागू करता है। इसी अवधारणा को
+      <strong>FPPCA</strong>, <strong>FAC</strong> या केवल ईंधन अधिभार भी कहा जाता है।</p>`,
   },
   {
     term: 'kVAh (Kilovolt-Ampere-Hour)',
@@ -85,6 +128,15 @@ export const GLOSSARY = [
       power factor is poor, replacing the separate power-factor penalty. Improving power factor (for
       example with capacitors) brings kVAh close to kWh and lowers the bill. Pick the kVAh basis in
       the calculator if your meter and tariff use apparent energy.</p>`,
+    termHi: 'kVAh (किलोवोल्ट-एम्पियर-घंटा)',
+    chipHi: 'kVAh',
+    shortHi: 'आभासी ऊर्जा की एक इकाई जो kWh को पावर फैक्टर से विभाजित करने के बराबर है; kVAh बिलिंग पर आप आभासी ऊर्जा के लिए भुगतान करते हैं, इसलिए कम पावर फैक्टर सीधे बिल बढ़ाता है।',
+    bodyHi: `<p>साधारण मीटर <strong>kWh</strong> (वास्तविक ऊर्जा) दर्ज करते हैं। कई व्यावसायिक व औद्योगिक कनेक्शन
+      इसके बजाय <strong>kVAh</strong> पर बिल किए जाते हैं — आभासी ऊर्जा, जो <code>kWh &divide; पावर फैक्टर</code>
+      है। चूँकि कम <a href="/glossary/#power-factor">पावर फैक्टर</a> kVAh को kWh से बड़ा बना देता है, kVAh बिलिंग
+      तब स्वतः अधिक शुल्क लेती है जब आपका पावर फैक्टर खराब हो, अलग पावर-फैक्टर जुर्माने की जगह। पावर फैक्टर सुधारना
+      (उदाहरण के लिए कैपेसिटर से) kVAh को kWh के करीब लाता है और बिल घटाता है। यदि आपका मीटर व टैरिफ आभासी ऊर्जा
+      का उपयोग करते हैं तो कैलकुलेटर में kVAh आधार चुनें।</p>`,
   },
   {
     term: 'LPSC (Late Payment Surcharge)',
@@ -97,6 +149,13 @@ export const GLOSSARY = [
       situation it compounds on the running balance, so a small overdue amount can grow noticeably.
       Paying by the due date avoids it entirely. Our calculator can add LPSC and
       <a href="/glossary/#fppa">arrears</a> to estimate a realistic total payable.</p>`,
+    termHi: 'LPSC (विलंब भुगतान अधिभार)',
+    chipHi: 'LPSC',
+    shortHi: 'बिल के नियत तिथि के बाद अवैतनिक रहने के प्रत्येक माह के लिए जोड़ा गया अधिभार, आम तौर पर बकाया राशि का एक निश्चित प्रतिशत।',
+    bodyHi: `<p>यदि आप नियत तिथि चूक जाते हैं, तो डिस्कॉम एक विलंब भुगतान अधिभार जोड़ता है — आम तौर पर अवैतनिक
+      राशि का एक प्रतिशत (अक्सर लगभग 1.25–2% प्रति माह)। बहु-माह बकाया स्थिति में यह चालू शेष पर चक्रवृद्धि होता
+      है, इसलिए एक छोटी बकाया राशि उल्लेखनीय रूप से बढ़ सकती है। नियत तिथि तक भुगतान करने से यह पूरी तरह टल जाता है।
+      हमारा कैलकुलेटर LPSC व <a href="/glossary/#fppa">बकाया</a> जोड़कर एक यथार्थवादी कुल देय अनुमान लगा सकता है।</p>`,
   },
   {
     term: 'Maximum Demand (Billed Demand)',
@@ -110,6 +169,15 @@ export const GLOSSARY = [
       <a href="/glossary/#fixed-charge">demand charge</a> is levied on it. Drawing more than your
       contracted demand can trigger an <strong>excess-demand penalty</strong> at a multiple of the
       normal rate.</p>`,
+    termHi: 'अधिकतम मांग (बिल की गई मांग)',
+    chipHi: 'अधिकतम मांग',
+    shortHi: 'बिलिंग अवधि के दौरान एक छोटे अंतराल पर खींचा गया उच्चतम औसत भार (kW या kVA में), जो बड़े कनेक्शनों पर मांग शुल्क का आधार होता है।',
+    bodyHi: `<p>मांग मीटर आपके कनेक्शन द्वारा खींचे गए शिखर भार को दर्ज करते हैं, जो एक चालू विंडो (आम तौर पर 15
+      या 30 मिनट) पर औसत होता है। माह में ऐसा उच्चतम मान आपकी अधिकतम मांग है।
+      <strong>बिल की गई मांग</strong> आम तौर पर आपकी दर्ज मांग और एक अनुबंधित न्यूनतम (अक्सर
+      <a href="/glossary/#connected-load">अनुबंध मांग</a> का एक प्रतिशत) में से अधिक होती है, और
+      <a href="/glossary/#fixed-charge">मांग शुल्क</a> उसी पर लगता है। अपनी अनुबंधित मांग से अधिक खींचने पर
+      सामान्य दर के गुणक पर <strong>अतिरिक्त-मांग जुर्माना</strong> लग सकता है।</p>`,
   },
   {
     term: 'MMC (Minimum Monthly Charge)',
@@ -123,6 +191,14 @@ export const GLOSSARY = [
       the bill is raised to the MMC. It is often expressed per kW of
       <a href="/glossary/#sanctioned-load">sanctioned load</a>, so a higher sanctioned load raises the
       floor. This is why a barely-used connection still generates a bill.</p>`,
+    termHi: 'MMC (न्यूनतम मासिक शुल्क)',
+    chipHi: 'MMC',
+    shortHi: 'आपके मासिक बिल पर एक न्यूनतम सीमा: यदि आपके गणना किए गए ऊर्जा व फिक्स्ड शुल्क इस राशि से कम हों, तो आपसे न्यूनतम शुल्क लिया जाता है।',
+    bodyHi: `<p>न्यूनतम मासिक शुल्क डिस्कॉम को प्रति कनेक्शन एक आधारभूत वसूली की गारंटी देता है। जब माह के लिए
+      आपका ऊर्जा शुल्क और <a href="/glossary/#fixed-charge">फिक्स्ड शुल्क</a> निर्दिष्ट न्यूनतम से कम जुड़ते हैं —
+      खाली परिसर या बहुत कम-उपयोग माह में आम — तो बिल MMC तक बढ़ा दिया जाता है। यह अक्सर प्रति kW
+      <a href="/glossary/#sanctioned-load">स्वीकृत भार</a> के रूप में व्यक्त होता है, इसलिए अधिक स्वीकृत भार सीमा
+      बढ़ा देता है। यही कारण है कि मुश्किल से उपयोग किया गया कनेक्शन भी बिल उत्पन्न करता है।</p>`,
   },
   {
     term: 'Multiplying Factor (MF)',
@@ -136,6 +212,15 @@ export const GLOSSARY = [
       direct-metered domestic connections <strong>MF = 1</strong>, so the subtraction alone is your
       usage. On CT-metered commercial or HT connections MF can be 1, and a wrong MF is a serious
       billing error worth checking on your bill.</p>`,
+    termHi: 'गुणक कारक (MF)',
+    chipHi: 'गुणक कारक',
+    shortHi: 'वह संख्या जिससे दो मीटर रीडिंग के कच्चे अंतर को गुणा करके वास्तविक खपत यूनिट प्राप्त की जाती है, वहाँ उपयोग होती है जहाँ करंट/वोल्टेज ट्रांसफार्मर मीटर को घटा देते हैं।',
+    bodyHi: `<p>करंट ट्रांसफार्मर (CT) या पोटेंशियल ट्रांसफार्मर (PT) के माध्यम से मीटर किए गए कनेक्शनों पर, मीटर
+      वास्तविक करंट या वोल्टेज का केवल एक घटा-हुआ अंश देखता है। गुणक कारक मीटर की कच्ची रीडिंग को वापस वास्तविक
+      खपत में बदल देता है: <code>यूनिट = (वर्तमान रीडिंग &minus; पिछली रीडिंग) &times; MF</code>। लगभग सभी
+      सीधे-मीटर किए गए घरेलू कनेक्शनों के लिए <strong>MF = 1</strong> होता है, इसलिए केवल घटाव ही आपकी खपत है।
+      CT-मीटर किए गए व्यावसायिक या HT कनेक्शनों पर MF 1 से भिन्न हो सकता है, और गलत MF एक गंभीर बिलिंग त्रुटि है
+      जिसे अपने बिल पर जाँचना उचित है।</p>`,
   },
   {
     term: 'Net Metering',
@@ -148,6 +233,15 @@ export const GLOSSARY = [
       the next month (usually settled annually). <a href="/glossary/#fixed-charge">Fixed and demand
       charges</a> still apply on your sanctioned load regardless of solar. Estimate your savings with
       the <a href="/solar/">rooftop solar calculator</a>.</p>`,
+    termHi: 'नेट मीटरिंग',
+    chipHi: 'नेट मीटरिंग',
+    shortHi: 'एक रूफटॉप-सोलर बिलिंग व्यवस्था जहाँ आपसे केवल नेट आयात पर शुल्क लिया जाता है — ग्रिड से आयातित यूनिट घटा उसे निर्यातित यूनिट — किसी भी अधिशेष को क्रेडिट के रूप में बैंक किया जाता है।',
+    bodyHi: `<p>नेट मीटरिंग के साथ, आपका सोलर सिस्टम अधिशेष उत्पादन को ग्रिड में वापस भेजता है और एक द्विदिश मीटर
+      दोनों दिशाओं को ट्रैक करता है। आप <code>नेट आयात = आयातित &minus; निर्यातित &minus; बैंक किया गया क्रेडिट</code>
+      पर ऊर्जा शुल्क देते हैं। यदि आप किसी माह में आयात से अधिक निर्यात करते हैं, तो अधिशेष अगले माह के लिए यूनिट
+      क्रेडिट के रूप में <strong>बैंक</strong> किया जाता है (आम तौर पर वार्षिक रूप से निपटाया जाता है)। सोलर की
+      परवाह किए बिना आपके स्वीकृत भार पर <a href="/glossary/#fixed-charge">फिक्स्ड व मांग शुल्क</a> फिर भी लागू
+      होते हैं। <a href="/solar/">रूफटॉप सोलर कैलकुलेटर</a> से अपनी बचत का अनुमान लगाएँ।</p>`,
   },
   {
     term: 'Power Factor',
@@ -161,6 +255,15 @@ export const GLOSSARY = [
       <strong>power-factor penalty/incentive</strong> or by billing on
       <a href="/glossary/#kvah">kVAh</a>, which rises automatically as PF falls. Capacitor banks are
       the usual fix.</p>`,
+    termHi: 'पावर फैक्टर',
+    chipHi: 'पावर फैक्टर',
+    shortHi: 'किसी भार द्वारा खींची गई वास्तविक शक्ति (kW) व आभासी शक्ति (kVA) का अनुपात; 1 से कम मान बर्बाद क्षमता दर्शाता है, और कम पावर फैक्टर जुर्माना या अधिक kVAh बिलिंग आकर्षित करता है।',
+    bodyHi: `<p>पावर फैक्टर मापता है कि आपका भार आपूर्ति की गई शक्ति को उपयोगी कार्य में कितनी प्रभावी ढंग से बदलता
+      है। पूर्णतः प्रतिरोधी भार (हीटर, तापदीप्त लैंप) का PF 1 के करीब होता है; मोटर, पंप व ट्रांसफार्मर इसे नीचे
+      खींचते हैं। कम पावर फैक्टर का अर्थ है कि डिस्कॉम को समान वास्तविक कार्य के लिए अधिक आभासी शक्ति (kVA)
+      आपूर्ति करनी पड़ती है, इसलिए टैरिफ इसे हतोत्साहित करते हैं — या तो
+      <strong>पावर-फैक्टर जुर्माना/प्रोत्साहन</strong> के माध्यम से या <a href="/glossary/#kvah">kVAh</a> पर बिल
+      करके, जो PF घटने के साथ स्वतः बढ़ता है। कैपेसिटर बैंक सामान्य समाधान हैं।</p>`,
   },
   {
     term: 'Sanctioned Load',
@@ -173,6 +276,15 @@ export const GLOSSARY = [
       charge</a> are calculated on. Regularly drawing more than your sanctioned load can attract an
       excess-demand penalty and, over time, a demand for load enhancement. It appears on your bill as
       "Sanctioned Load" or "Contract Demand" and is entered as the load in our calculator.</p>`,
+    termHi: 'स्वीकृत भार (Sanctioned Load)',
+    chipHi: 'स्वीकृत भार',
+    shortHi: 'अधिकतम भार, kW या kVA में, जिसकी आपूर्ति डिस्कॉम ने औपचारिक रूप से आपके कनेक्शन को अनुबंधित की है — फिक्स्ड शुल्क का आधार और वह सीमा जिसके नीचे आपको रहना चाहिए।',
+    bodyHi: `<p>जब आपका कनेक्शन स्वीकृत होता है, तो डिस्कॉम आपके घोषित
+      <a href="/glossary/#connected-load">कनेक्टेड लोड</a> के आधार पर एक भार स्वीकृत करता है। यह स्वीकृत आँकड़ा
+      वह है जिस पर <a href="/glossary/#fixed-charge">फिक्स्ड शुल्क</a> व <a href="/glossary/#mmc">न्यूनतम
+      शुल्क</a> गणना किए जाते हैं। नियमित रूप से अपने स्वीकृत भार से अधिक खींचना अतिरिक्त-मांग जुर्माना और, समय
+      के साथ, भार वृद्धि की माँग आकर्षित कर सकता है। यह आपके बिल पर "स्वीकृत भार" या "अनुबंध मांग" के रूप में
+      दिखता है और हमारे कैलकुलेटर में भार के रूप में दर्ज किया जाता है।</p>`,
   },
   {
     term: 'Telescopic Slabs',
@@ -186,6 +298,15 @@ export const GLOSSARY = [
       applies the higher rate to <em>every</em> unit, creating a cliff. Knowing which one your DISCOM
       uses explains why a bill can jump sharply near a slab boundary. Our
       <a href="/#calculator">calculator</a> applies each DISCOM's slabs exactly as published.</p>`,
+    termHi: 'टेलिस्कोपिक स्लैब',
+    chipHi: 'टेलिस्कोपिक स्लैब',
+    shortHi: 'एक स्लैब-दर संरचना जहाँ प्रत्येक प्रति-यूनिट दर केवल उन्हीं यूनिटों पर लागू होती है जो उसके अपने स्लैब बैंड में आती हैं, इसलिए उच्च दरें आपकी पूरी खपत पर कभी लागू नहीं होतीं।',
+    bodyHi: `<p>अधिकांश भारतीय घरेलू टैरिफ टेलिस्कोपिक हैं। यदि स्लैब 0–100, 101–300 व 300+ यूनिट हैं, तो 250 यूनिट
+      उपयोग करने वाला उपभोक्ता पहली 100 यूनिट पर पहले-स्लैब की दर और अगली 150 पर केवल दूसरे-स्लैब की दर देता है —
+      सभी 250 पर उच्च दर नहीं। यह <strong>गैर-टेलिस्कोपिक</strong> (या "स्लैब-लाभ-हानि") टैरिफ के विपरीत है, जहाँ
+      किसी सीमा को पार करने पर उच्च दर <em>हर</em> यूनिट पर लागू होती है, जिससे एक झटका बनता है। यह जानना कि आपका
+      डिस्कॉम कौन-सा उपयोग करता है, बताता है कि किसी स्लैब सीमा के पास बिल तेज़ी से क्यों बढ़ सकता है। हमारा
+      <a href="/#calculator">कैलकुलेटर</a> प्रत्येक डिस्कॉम के स्लैब ठीक वैसे ही लागू करता है जैसे प्रकाशित हैं।</p>`,
   },
   {
     term: 'Time-of-Day Tariff (ToD / ToU)',
@@ -200,5 +321,14 @@ export const GLOSSARY = [
       domestic consumers under national tariff reforms. Enter your peak / normal / off-peak units in
       the calculator, and see the <a href="/guides/tod-billing-explained/">Time-of-Day billing
       guide</a> for a full worked example.</p>`,
+    termHi: 'टाइम-ऑफ-डे टैरिफ (ToD / ToU)',
+    chipHi: 'टाइम-ऑफ-डे टैरिफ',
+    shortHi: 'एक टैरिफ जहाँ प्रति-यूनिट दर दिन के समय के अनुसार बदलती है — पीक घंटों में अधिक व ऑफ-पीक में कम — ताकि पीक मांग से उपयोग हटाने को प्रोत्साहित किया जा सके।',
+    bodyHi: `<p>टाइम-ऑफ-डे टैरिफ के तहत, दिन को ब्लॉकों में बाँटा जाता है — आम तौर पर <strong>पीक</strong> (आधार दर
+      पर अधिभार), <strong>सामान्य</strong>, व <strong>ऑफ-पीक</strong> (छूट)। आपका मीटर प्रत्येक ब्लॉक में यूनिट
+      अलग-अलग दर्ज करता है, और भारी भार ऑफ-पीक चलाने से बिल घटता है। ToD बड़े उपभोक्ताओं के लिए अनिवार्य होता जा
+      रहा है और राष्ट्रीय टैरिफ सुधारों के तहत घरेलू उपभोक्ताओं तक बढ़ाया जा रहा है। कैलकुलेटर में अपनी पीक /
+      सामान्य / ऑफ-पीक यूनिट दर्ज करें, और पूर्ण हल किए गए उदाहरण के लिए
+      <a href="/guides/tod-billing-explained/">टाइम-ऑफ-डे बिलिंग गाइड</a> देखें।</p>`,
   },
 ];

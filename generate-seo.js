@@ -842,24 +842,41 @@ function glossaryPage() {
   const title = 'Electricity Bill Glossary — Indian Tariff Terms Explained';
   const description = 'Plain-language definitions of Indian electricity bill and tariff terms: FPPA, electricity duty, MMC, kVAh, multiplying factor, sanctioned load, telescopic slabs, LPSC and more.';
 
+  const chipText = (t) => t.term.replace(/\s*\(.*?\)\s*/g, '').trim();
+
   // Alphabetical jump index (chips) → anchors below.
   const index = [...GLOSSARY].sort((a, b) => a.term.localeCompare(b.term))
-    .map(t => `<a class="glossary-chip" href="#${t.slug}">${esc(t.term.replace(/\s*\(.*?\)\s*/g, '').trim())}</a>`).join('');
+    .map(t => `<a class="glossary-chip" href="#${t.slug}" data-i18n="gl.${t.slug}.chip">${esc(chipText(t))}</a>`).join('');
 
   const terms = GLOSSARY.map(t => {
     const alt = [t.abbr, ...(t.aka || [])].filter(Boolean).filter(x => x.toLowerCase() !== t.term.toLowerCase());
-    const also = alt.length ? `<p class="glossary-aka">Also called: ${alt.map(esc).join(', ')}</p>` : '';
+    const also = alt.length ? `<p class="glossary-aka"><span data-i18n="gloss.aka">Also called:</span> ${alt.map(esc).join(', ')}</p>` : '';
     return `
       <section class="seo-section glossary-term" id="${t.slug}">
-        <h2>${esc(t.term)}</h2>
-        <p class="glossary-def">${esc(t.short)}</p>
+        <h2 data-i18n="gl.${t.slug}.term">${esc(t.term)}</h2>
+        <p class="glossary-def" data-i18n="gl.${t.slug}.short">${esc(t.short)}</p>
         ${also}
-        ${t.body}
-        <p class="glossary-top"><a href="#glossary-index">↑ Back to all terms</a></p>
+        <div class="glossary-body" data-i18n-html="gl.${t.slug}.body">${t.body}</div>
+        <p class="glossary-top"><a href="#glossary-index" data-i18n="gloss.backToTop">↑ Back to all terms</a></p>
       </section>`;
   }).join('');
 
-  const body = `
+  // Hindi term strings live in glossary-content.js (co-located with the English source), not in
+  // js/i18n.js. Ship them as a per-page dictionary the i18n layer merges on language switch.
+  const i18nGlossary = { en: {}, hi: {} };
+  GLOSSARY.forEach(t => {
+    i18nGlossary.en[`gl.${t.slug}.chip`] = chipText(t);
+    i18nGlossary.en[`gl.${t.slug}.term`] = t.term;
+    i18nGlossary.en[`gl.${t.slug}.short`] = t.short;
+    i18nGlossary.en[`gl.${t.slug}.body`] = t.body;
+    i18nGlossary.hi[`gl.${t.slug}.chip`] = t.chipHi || chipText(t);
+    i18nGlossary.hi[`gl.${t.slug}.term`] = t.termHi || t.term;
+    i18nGlossary.hi[`gl.${t.slug}.short`] = t.shortHi || t.short;
+    i18nGlossary.hi[`gl.${t.slug}.body`] = t.bodyHi || t.body;
+  });
+  const glossaryDict = `<script>window.__i18nGlossary=${JSON.stringify(i18nGlossary)};</script>`;
+
+  const body = `${glossaryDict}
   <section class="seo-page container">
     ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Glossary', url: null, i18n: 'gloss.crumb' }])}
     <h1 data-i18n="gloss.h1">Electricity Bill Glossary</h1>
