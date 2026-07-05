@@ -563,6 +563,29 @@ function glossaryLinksHtml(discom, hi = false) {
     </section>`;
 }
 
+// Related guides for a DISCOM page: guides tagged to this state first, then evergreen
+// explainers to fill up to three cards. Links point into /hi/ only when a Hindi
+// translation exists (untranslated guides link to the English page from both variants).
+function guideLinksHtml(state, discom, hi = false) {
+  const tagged = GUIDES.filter(g => (g.states || []).includes(state));
+  const evergreen = GUIDES.filter(g => !(g.states || []).length && !tagged.includes(g));
+  const picks = [...tagged, ...evergreen].slice(0, 3);
+  if (!picks.length) return '';
+  const cards = picks.map(g => {
+    const href = (hi && g.sectionsHi) ? `/hi/guides/${g.slug}/` : `/guides/${g.slug}/`;
+    const title = hi ? (g.titleHi || g.title) : g.title;
+    const mins = hi ? `${g.minutes} मिनट` : `${g.minutes} min read`;
+    return `<a class="seo-link-card" href="${href}"><strong>${esc(title)}</strong><small>${mins}</small></a>`;
+  }).join('');
+  const allHref = hi ? '/hi/guides/' : '/guides/';
+  return `
+    <section class="seo-section">
+      <h2>${hi ? `${esc(discom.name)} बिल से जुड़ी गाइड` : `Guides for ${esc(discom.name)} consumers`}</h2>
+      <div class="seo-link-grid">${cards}</div>
+      <p><a href="${allHref}">${hi ? 'सभी गाइड देखें →' : 'Browse all guides →'}</a></p>
+    </section>`;
+}
+
 // ── page builders ─────────────────────────────────────────────────────────────
 function discomPage(state, discom, lang = 'en') {
   const hi = lang === 'hi';
@@ -681,6 +704,7 @@ function discomPage(state, discom, lang = 'en') {
     </section>
 
     ${glossaryLinksHtml(discom)}
+    ${guideLinksHtml(state, discom)}
     ${siblingHtml}
     ${faqHtml(faqs)}
     <p class="seo-disclaimer">Figures are provisional estimates built on publicly available ${esc(state)} tariff orders. Always verify against your official ${esc(discom.name)} bill — rates vary by sub-category, slab and city.</p>
@@ -782,6 +806,7 @@ function discomPageHi({ state, discom, stateSlug, enUrl, url, meta, fy, long, re
     </section>
 
     ${glossaryLinksHtml(discom, true)}
+    ${guideLinksHtml(state, discom, true)}
     ${siblingHtml}
     ${faqHtml(faqs, true)}
     <p class="seo-disclaimer">आँकड़े सार्वजनिक रूप से उपलब्ध ${esc(stateHi)} टैरिफ आदेशों पर आधारित अनुमानित हैं। हमेशा अपने आधिकारिक ${esc(discom.name)} बिल से मिलान करें — दरें उप-श्रेणी, स्लैब और शहर के अनुसार बदलती हैं।</p>
@@ -1026,7 +1051,8 @@ function articleJsonLd(guide, url) {
 }
 
 function guidePage(guide, lang = 'en') {
-  const hi = lang === 'hi' && guide.sectionsHi;   // only emit a Hindi page when translated
+  const hasHi = !!guide.sectionsHi;               // untranslated guides have no /hi/ twin
+  const hi = lang === 'hi' && hasHi;              // only emit a Hindi page when translated
   const enUrl = `/guides/${guide.slug}/`;
   const url = hi ? hiUrl(enUrl) : enUrl;
   const title = hi ? guide.titleHi : guide.title;
@@ -1047,7 +1073,7 @@ function guidePage(guide, lang = 'en') {
   const body = `
   <section class="seo-page container">
     ${breadcrumbs(trail)}
-    ${langSwitchLink(enUrl, hi ? 'hi' : 'en')}
+    ${hasHi ? langSwitchLink(enUrl, hi ? 'hi' : 'en') : ''}
     <h1>${esc(title)}</h1>
     <p class="guide-meta">${hi ? `${guide.minutes} मिनट · अपडेट: ${updated}` : `${guide.minutes} min read · Updated ${updated}`}</p>
     <p class="seo-lead">${intro}</p>
@@ -1075,7 +1101,7 @@ function guidePage(guide, lang = 'en') {
     title: hi ? (guide.metaTitleHi || guide.titleHi) : (guide.metaTitle || guide.title),
     description: hi ? guide.descriptionHi : guide.description,
     canonical: SITE + url,
-    page: enUrl,
+    page: hasHi ? enUrl : null,   // no hreflang pair for untranslated guides
     lang: hi ? 'hi' : 'en',
     jsonld: [
       articleLd,

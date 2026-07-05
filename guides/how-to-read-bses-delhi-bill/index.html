@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icon.svg">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      
+    })();
+  </script>
+  <title>How to Read Your BSES Delhi Bill — Subsidy, PPAC &amp; Every Line</title>
+  <meta name="description" content="A line-by-line guide to Delhi electricity bills from BSES Rajdhani (BRPL), BSES Yamuna (BYPL) and Tata Power-DDL: LT-I slabs, tiered fixed charges, PPAC, 5% electricity duty, and exactly how the GNCTD subsidy makes bills zero.">
+  <link rel="canonical" href="https://www.thediscombill.com/guides/how-to-read-bses-delhi-bill/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="How to Read Your BSES Delhi Bill — Subsidy, PPAC &amp; Every Line">
+  <meta property="og:description" content="A line-by-line guide to Delhi electricity bills from BSES Rajdhani (BRPL), BSES Yamuna (BYPL) and Tata Power-DDL: LT-I slabs, tiered fixed charges, PPAC, 5% electricity duty, and exactly how the GNCTD subsidy makes bills zero.">
+  <meta property="og:url" content="https://www.thediscombill.com/guides/how-to-read-bses-delhi-bill/">
+  <meta property="og:image" content="https://www.thediscombill.com/icon-512.png">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:locale:alternate" content="hi_IN">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="How to Read Your BSES Delhi Bill — Subsidy, PPAC &amp; Every Line">
+  <meta name="twitter:description" content="A line-by-line guide to Delhi electricity bills from BSES Rajdhani (BRPL), BSES Yamuna (BYPL) and Tata Power-DDL: LT-I slabs, tiered fixed charges, PPAC, 5% electricity duty, and exactly how the GNCTD subsidy makes bills zero.">
+  <meta name="twitter:image" content="https://www.thediscombill.com/icon-512.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fonts load async (non-render-blocking); display=swap shows fallback text immediately -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://www.thediscombill.com/guides/how-to-read-bses-delhi-bill/","name":"How to Read Your BSES Delhi Bill — Subsidy, PPAC & Every Line","description":"A line-by-line guide to Delhi electricity bills from BSES Rajdhani (BRPL), BSES Yamuna (BYPL) and Tata Power-DDL: LT-I slabs, tiered fixed charges, PPAC, 5% electricity duty, and exactly how the GNCTD subsidy makes bills zero.","isPartOf":{"@id":"https://www.thediscombill.com/#website"},"publisher":{"@id":"https://www.thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-07-05"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Read Your BSES / Delhi Electricity Bill","description":"A line-by-line guide to Delhi electricity bills from BSES Rajdhani (BRPL), BSES Yamuna (BYPL) and Tata Power-DDL: LT-I slabs, tiered fixed charges, PPAC, 5% electricity duty, and exactly how the GNCTD subsidy makes bills zero.","mainEntityOfPage":"https://www.thediscombill.com/guides/how-to-read-bses-delhi-bill/","datePublished":"2026-07-05","dateModified":"2026-07-05","inLanguage":"en-IN","author":{"@id":"https://www.thediscombill.com/#org"},"publisher":{"@id":"https://www.thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://www.thediscombill.com/guides/"},{"@type":"ListItem","position":3,"name":"How to Read Your BSES / Delhi Electricity Bill"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why is my Delhi electricity bill zero?","acceptedAnswer":{"@type":"Answer","text":"Because of the GNCTD domestic subsidy: consumers using up to 200 units a month get a 100% subsidy, so the computed charges are fully reversed on the bill. Use 201+ units and the subsidy drops to a 50% rebate on the first 200 units; above 400 units there is no subsidy at all."}},{"@type":"Question","name":"What is PPAC on a BSES or Tata Power-DDL bill?","acceptedAnswer":{"@type":"Answer","text":"PPAC (Power Purchase Adjustment Cost) is Delhi’s fuel-cost surcharge — a DERC-approved percentage applied on energy plus fixed charges, separately approved for BRPL, BYPL and Tata Power-DDL and revised periodically. It is why bills change month to month at identical usage."}},{"@type":"Question","name":"Are BRPL, BYPL and Tata Power-DDL tariffs different?","acceptedAnswer":{"@type":"Answer","text":"The DERC tariff schedule (slabs, fixed charges, duty) is the same across Delhi’s private DISCOMs; what differs is the service area, the PPAC percentage in force and the billing portal. Your DISCOM is determined by where you live, not by choice."}},{"@type":"Question","name":"Why did one extra unit make my Delhi bill jump?","acceptedAnswer":{"@type":"Answer","text":"The subsidy has hard cut-offs at 200 and 400 units. At 201 units you lose the 100% subsidy (keeping only a 50% rebate on the first 200), and at 401 units you lose the subsidy entirely — so a single unit can add several hundred rupees. Shifting a few units of usage to the next month around the cut-off genuinely pays."}}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <div class="nav-dropdown" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">Quick Links</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu" id="quickLinksMenu" role="menu">
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tools">Tools</span>
+          <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="20" x2="6" y2="14"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="10"/></svg><span data-i18n="ql.compare">Compare DISCOM Tariffs</span></a>
+          <a href="/usage/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span data-i18n="ql.usage">Usage Estimator</span></a>
+          <a href="/solar/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span data-i18n="ql.solar">Rooftop Solar Savings</span></a>
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tariffs">Tariffs</span>
+          <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span data-i18n="ql.tariffsByState">Tariffs by State &amp; DISCOM</span></a>
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.services">Services</span>
+          <a href="/services/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg><span data-i18n="ql.discomServices">DISCOM Services</span></a>
+          <a href="/bill-review/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4"/><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg><span data-i18n="ql.billReview">Bill Review by Experts</span></a>
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.learn">Learn</span>
+          <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.guides">Electricity Bill Guides</span></a>
+          <a href="/glossary/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M12 7h5M12 11h5M7 7h.01M7 11h.01"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.glossary">Electricity Bill Glossary</span></a>
+          <a href="/methodology/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 11l2 2 4-4"/></svg><span data-i18n="ql.methodology">Methodology &amp; Accuracy</span></a>
+        </div>
+      </div>
+      <a href="/#about" data-i18n="nav.about">About</a>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body">
+
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><a href="/guides/">Guides</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">How to Read Your BSES / Delhi Electricity Bill</span></li></ol></nav>
+    
+    <h1>How to Read Your BSES / Delhi Electricity Bill</h1>
+    <p class="guide-meta">6 min read · Updated 5 July 2026</p>
+    <p class="seo-lead">Delhi bills look confusing for one big reason: two households with identical usage can
+      pay wildly different amounts because of the <strong>GNCTD subsidy</strong>. This guide decodes
+      a domestic (LT-I) bill from <strong>BRPL</strong> (BSES Rajdhani — South &amp; West Delhi),
+      <strong>BYPL</strong> (BSES Yamuna — East &amp; Central Delhi) or
+      <strong>Tata Power-DDL</strong> (North &amp; North-West Delhi), all of which bill on the same
+      DERC tariff schedule.</p>
+    
+      <section class="seo-section">
+        <h2>1. The subsidy — why so many Delhi bills are ₹0</h2>
+        <p>The Delhi government subsidy is applied on the bill itself:</p>
+        <ul>
+          <li><strong>Up to 200 units/month:</strong> 100% subsidy — the bill is zero (the charges
+          are printed, then reversed as a subsidy line).</li>
+          <li><strong>201–400 units:</strong> 50% rebate on the first 200 units' charges.</li>
+          <li><strong>Above 400 units:</strong> no subsidy — you pay the full tariff on everything.</li>
+        </ul>
+        <p>The subsidy is optional (consumers can opt out), and it explains the "cliff" at 201 and
+        401 units: one extra unit can add hundreds of rupees. Check both scenarios in the
+        <a href="/?state=Delhi#calculator">Delhi bill calculator</a>, which models the subsidy.</p>
+      </section>
+      <section class="seo-section">
+        <h2>2. Energy charge — the LT-I slabs</h2>
+        <p>Delhi domestic slabs step up at 200, 400 and 800 units, telescopically — each rate
+        applies only to the units inside its slab. The current per-unit rates for your DISCOM are on
+        our tariff pages: <a href="/tariffs/delhi/brpl/">BRPL</a>,
+        <a href="/tariffs/delhi/bypl/">BYPL</a>, <a href="/tariffs/delhi/tpddl/">Tata Power-DDL</a>.</p>
+      </section>
+      <section class="seo-section">
+        <h2>3. Fixed charge — tiered by sanctioned load</h2>
+        <p>Delhi's fixed charge is banded by sanctioned load (up to 2 kW / 2–5 kW / above 5 kW), so
+        the band you're in matters more than the exact kW. If your recorded demand is far below your
+        band, see our <a href="/guides/reduce-fixed-charges-sanctioned-load/">guide to right-sizing
+        sanctioned load</a>.</p>
+      </section>
+      <section class="seo-section">
+        <h2>4. PPAC — Delhi's fuel surcharge</h2>
+        <p>The <strong>Power Purchase Adjustment Cost</strong> is Delhi's version of FPPA: a
+        DERC-approved percentage applied on your energy + fixed charges, different for each DISCOM
+        and revised periodically (monthly since mid-2026). It is the line that moves your bill when
+        nothing else changed — our <a href="/guides/how-fppa-fuel-surcharge-is-calculated/">FPPA
+        guide</a> explains the mechanism.</p>
+      </section>
+      <section class="seo-section">
+        <h2>5. The remaining lines</h2>
+        <ul>
+          <li><strong>Electricity duty:</strong> 5% on the energy charges, per the Delhi schedule.</li>
+          <li><strong>Pension trust surcharge / other DERC-approved surcharges:</strong> small
+          percentage lines that DERC approves from time to time.</li>
+          <li><strong>Arrears &amp; LPSC:</strong> unpaid past amounts plus late-payment surcharge.</li>
+        </ul>
+        <p>To verify the total: enter your units and load in the
+        <a href="/?state=Delhi#calculator">calculator</a>, toggle the subsidy on, add the PPAC
+        percentage printed on your bill, and compare line by line. A mismatch beyond a few rupees
+        usually traces to the meter-status code (estimated reading) or arrears.</p>
+      </section>
+    <section class="seo-section"><h2>Frequently asked questions</h2>
+    <details class="seo-faq-item">
+      <summary>Why is my Delhi electricity bill zero?</summary>
+      <div class="seo-faq-a">Because of the GNCTD domestic subsidy: consumers using up to 200 units a month get a 100% subsidy, so the computed charges are fully reversed on the bill. Use 201+ units and the subsidy drops to a 50% rebate on the first 200 units; above 400 units there is no subsidy at all.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>What is PPAC on a BSES or Tata Power-DDL bill?</summary>
+      <div class="seo-faq-a">PPAC (Power Purchase Adjustment Cost) is Delhi’s fuel-cost surcharge — a DERC-approved percentage applied on energy plus fixed charges, separately approved for BRPL, BYPL and Tata Power-DDL and revised periodically. It is why bills change month to month at identical usage.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Are BRPL, BYPL and Tata Power-DDL tariffs different?</summary>
+      <div class="seo-faq-a">The DERC tariff schedule (slabs, fixed charges, duty) is the same across Delhi’s private DISCOMs; what differs is the service area, the PPAC percentage in force and the billing portal. Your DISCOM is determined by where you live, not by choice.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Why did one extra unit make my Delhi bill jump?</summary>
+      <div class="seo-faq-a">The subsidy has hard cut-offs at 200 and 400 units. At 201 units you lose the 100% subsidy (keeping only a 50% rebate on the first 200), and at 401 units you lose the subsidy entirely — so a single unit can add several hundred rupees. Shifting a few units of usage to the next month around the cut-off genuinely pays.</div>
+    </details></section>
+    <section class="seo-section guide-more">
+      <h2>More guides</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/guides/how-to-read-uppcl-bill/">
+          <strong>How to Read Your UPPCL Electricity Bill</strong>
+          <small>6 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/why-did-my-electricity-bill-increase/">
+          <strong>Why Did My Electricity Bill Suddenly Increase?</strong>
+          <small>7 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/tod-billing-explained/">
+          <strong>Time-of-Day (ToD) Electricity Billing Explained</strong>
+          <small>5 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/how-fppa-fuel-surcharge-is-calculated/">
+          <strong>How FPPA (Fuel Surcharge) Is Calculated on Your Electricity Bill</strong>
+          <small>6 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/reduce-fixed-charges-sanctioned-load/">
+          <strong>How to Reduce Fixed Charges by Right-Sizing Your Sanctioned Load</strong>
+          <small>5 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/electricity-duty-explained/">
+          <strong>Electricity Duty on Your Bill: What It Is and How States Differ</strong>
+          <small>4 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/how-to-read-msedcl-bill/">
+          <strong>How to Read Your MSEDCL (Mahavitaran) Electricity Bill</strong>
+          <small>6 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/how-to-read-bescom-bill/">
+          <strong>How to Read Your BESCOM Electricity Bill</strong>
+          <small>5 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/how-to-read-tneb-tangedco-bill/">
+          <strong>How to Read Your TNEB / TANGEDCO Electricity Bill</strong>
+          <small>5 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/solar-net-metering-savings/">
+          <strong>Solar Net Metering: How the Savings Actually Work</strong>
+          <small>6 min read</small>
+        </a>
+      </div>
+    </section>
+    <p class="seo-disclaimer">General guidance based on publicly available tariff orders and
+    regulations; specifics vary by state, DISCOM and consumer category. Verify against your DISCOM's
+    official schedule or your printed bill.</p>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a> &nbsp;|&nbsp; <a href="/glossary/" data-i18n="footer.glossary">Bill Glossary</a></p>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

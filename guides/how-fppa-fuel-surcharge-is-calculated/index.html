@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icon.svg">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      
+    })();
+  </script>
+  <title>FPPA / Fuel Surcharge on Electricity Bills — How It Is Calculated</title>
+  <meta name="description" content="What the FPPA / FPPCA / FPPAS / PPAC line on an Indian electricity bill is, the two ways DISCOMs calculate it (per-unit and percentage), why it changes every month, why it can be negative, and how to verify the amount yourself.">
+  <link rel="canonical" href="https://www.thediscombill.com/guides/how-fppa-fuel-surcharge-is-calculated/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="FPPA / Fuel Surcharge on Electricity Bills — How It Is Calculated">
+  <meta property="og:description" content="What the FPPA / FPPCA / FPPAS / PPAC line on an Indian electricity bill is, the two ways DISCOMs calculate it (per-unit and percentage), why it changes every month, why it can be negative, and how to verify the amount yourself.">
+  <meta property="og:url" content="https://www.thediscombill.com/guides/how-fppa-fuel-surcharge-is-calculated/">
+  <meta property="og:image" content="https://www.thediscombill.com/icon-512.png">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:locale:alternate" content="hi_IN">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="FPPA / Fuel Surcharge on Electricity Bills — How It Is Calculated">
+  <meta name="twitter:description" content="What the FPPA / FPPCA / FPPAS / PPAC line on an Indian electricity bill is, the two ways DISCOMs calculate it (per-unit and percentage), why it changes every month, why it can be negative, and how to verify the amount yourself.">
+  <meta name="twitter:image" content="https://www.thediscombill.com/icon-512.png">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fonts load async (non-render-blocking); display=swap shows fallback text immediately -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://www.thediscombill.com/guides/how-fppa-fuel-surcharge-is-calculated/","name":"FPPA / Fuel Surcharge on Electricity Bills — How It Is Calculated","description":"What the FPPA / FPPCA / FPPAS / PPAC line on an Indian electricity bill is, the two ways DISCOMs calculate it (per-unit and percentage), why it changes every month, why it can be negative, and how to verify the amount yourself.","isPartOf":{"@id":"https://www.thediscombill.com/#website"},"publisher":{"@id":"https://www.thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-07-05"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How FPPA (Fuel Surcharge) Is Calculated on Your Electricity Bill","description":"What the FPPA / FPPCA / FPPAS / PPAC line on an Indian electricity bill is, the two ways DISCOMs calculate it (per-unit and percentage), why it changes every month, why it can be negative, and how to verify the amount yourself.","mainEntityOfPage":"https://www.thediscombill.com/guides/how-fppa-fuel-surcharge-is-calculated/","datePublished":"2026-07-05","dateModified":"2026-07-05","inLanguage":"en-IN","author":{"@id":"https://www.thediscombill.com/#org"},"publisher":{"@id":"https://www.thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://www.thediscombill.com/guides/"},{"@type":"ListItem","position":3,"name":"How FPPA (Fuel Surcharge) Is Calculated on Your Electricity Bill"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is FPPA on an electricity bill?","acceptedAnswer":{"@type":"Answer","text":"FPPA (Fuel and Power Purchase Adjustment) is a surcharge that passes the difference between the DISCOM’s actual power-purchase cost and the cost assumed in the tariff order through to consumers. It appears as FPPA, FPPCA, FPPAS, FAC or PPAC depending on the state, and is revised monthly or quarterly."}},{"@type":"Question","name":"Can FPPA be negative?","acceptedAnswer":{"@type":"Answer","text":"Yes. When the DISCOM buys power cheaper than the tariff order assumed — or when an earlier over-recovery is trued up — the adjustment becomes a credit and reduces your bill for that month."}},{"@type":"Question","name":"Is FPPA charged before or after electricity duty?","acceptedAnswer":{"@type":"Answer","text":"Before. FPPA is added to the energy and fixed charges first, and electricity duty is then calculated as a percentage of that larger base — so a higher FPPA also slightly raises your duty."}},{"@type":"Question","name":"Why is my FPPA different from my neighbour’s in another state?","acceptedAnswer":{"@type":"Answer","text":"Each state regulator notifies its own mechanism (per-unit or percentage), its own rates and its own revision cycle, and in multi-DISCOM states the rate can differ by DISCOM too — Delhi’s PPAC, for example, is separately approved for BRPL, BYPL and Tata Power-DDL."}}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <div class="nav-dropdown" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">Quick Links</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu" id="quickLinksMenu" role="menu">
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tools">Tools</span>
+          <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="20" x2="6" y2="14"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="10"/></svg><span data-i18n="ql.compare">Compare DISCOM Tariffs</span></a>
+          <a href="/usage/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span data-i18n="ql.usage">Usage Estimator</span></a>
+          <a href="/solar/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span data-i18n="ql.solar">Rooftop Solar Savings</span></a>
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tariffs">Tariffs</span>
+          <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span data-i18n="ql.tariffsByState">Tariffs by State &amp; DISCOM</span></a>
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.services">Services</span>
+          <a href="/services/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg><span data-i18n="ql.discomServices">DISCOM Services</span></a>
+          <a href="/bill-review/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4"/><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg><span data-i18n="ql.billReview">Bill Review by Experts</span></a>
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.learn">Learn</span>
+          <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.guides">Electricity Bill Guides</span></a>
+          <a href="/glossary/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M12 7h5M12 11h5M7 7h.01M7 11h.01"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.glossary">Electricity Bill Glossary</span></a>
+          <a href="/methodology/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 11l2 2 4-4"/></svg><span data-i18n="ql.methodology">Methodology &amp; Accuracy</span></a>
+        </div>
+      </div>
+      <a href="/#about" data-i18n="nav.about">About</a>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body">
+
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><a href="/guides/">Guides</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">How FPPA (Fuel Surcharge) Is Calculated on Your Electricity Bill</span></li></ol></nav>
+    
+    <h1>How FPPA (Fuel Surcharge) Is Calculated on Your Electricity Bill</h1>
+    <p class="guide-meta">6 min read · Updated 5 July 2026</p>
+    <p class="seo-lead">FPPA — the Fuel and Power Purchase Adjustment, also printed as FPPCA, FPPAS, FAC or
+      (in Delhi) PPAC — recovers the difference between what your DISCOM <em>actually</em> paid for
+      power and what the tariff order <em>assumed</em> it would pay. It is the one line on your bill
+      that changes even when your consumption and the tariff don't, and it can be a charge
+      <em>or a credit</em>.</p>
+    
+      <section class="seo-section">
+        <h2>Why this line exists</h2>
+        <p>Your energy rate is fixed once a year in the tariff order, but the DISCOM's cost of buying
+        power moves every month with coal, gas and market prices. Regulators let DISCOMs pass that
+        difference through automatically — without waiting a year — via the fuel adjustment
+        surcharge. It is trued up annually, so over-recovery in one period comes back as a credit
+        later.</p>
+      </section>
+      <section class="seo-section">
+        <h2>Method 1 — per-unit (₹/unit)</h2>
+        <p>The traditional method prices the gap directly:</p>
+        <p><strong>FPPA per unit = APPC − BPPC</strong>, and your surcharge =
+        that rate × units consumed.</p>
+        <ul>
+          <li><strong>APPC</strong> — actual weighted-average power purchase cost per unit for the
+          month (actual cost ÷ actual units purchased from approved sources).</li>
+          <li><strong>BPPC</strong> — the base cost per unit approved in the tariff order for that
+          month.</li>
+        </ul>
+        <p>If the DISCOM bought power cheaper than approved, APPC &lt; BPPC and the line turns
+        negative — a rebate on every unit.</p>
+      </section>
+      <section class="seo-section">
+        <h2>Method 2 — percentage of the bill</h2>
+        <p>Several states now levy it as a percentage instead. Uttar Pradesh's framework (UPERC MYT
+        Regulations, 2025) is a clear example:</p>
+        <ul>
+          <li>The surcharge is a <strong>percentage of energy charge + fixed/demand charge</strong>,
+          uniform across consumer categories.</li>
+          <li>It runs with a <strong>3-month lag</strong>: this month's percentage recovers the cost
+          gap from three months ago.</li>
+          <li>It is <strong>capped per billing cycle</strong> (10% in UP); anything above the cap
+          carries forward — which is why a capped month is often followed by a credit month.</li>
+        </ul>
+        <p>Delhi's <strong>PPAC</strong> works the same way — a percentage on energy + fixed charges,
+        revised by DERC and different for each DISCOM (BRPL, BYPL, Tata Power-DDL).</p>
+      </section>
+      <section class="seo-section">
+        <h2>Where it sits in the bill maths</h2>
+        <p>Order matters: FPPA is added to your energy + fixed charges <em>before</em> electricity
+        duty is applied, so the duty percentage compounds on top of the surcharge. Our
+        <a href="/#calculator">bill calculator</a> applies exactly this ordering, and can auto-fill
+        the notified FPPA rate for supported states and billing months.</p>
+      </section>
+      <section class="seo-section">
+        <h2>How to verify the FPPA on your bill</h2>
+        <ol>
+          <li>Find the line — FPPA / FPPCA / FPPAS / FAC / PPAC, printed either as ₹/unit or %.</li>
+          <li>Check your DISCOM's notice board or website for the notified rate for your
+          <em>billing month</em> (not the payment month).</li>
+          <li>Recompute: units × rate (per-unit method) or rate% × (energy + fixed) (percentage
+          method).</li>
+          <li>Cross-check the whole bill in the <a href="/#calculator">calculator</a> — enter the
+          FPPA from your bill and compare totals line by line.</li>
+        </ol>
+      </section>
+    <section class="seo-section"><h2>Frequently asked questions</h2>
+    <details class="seo-faq-item">
+      <summary>What is FPPA on an electricity bill?</summary>
+      <div class="seo-faq-a">FPPA (Fuel and Power Purchase Adjustment) is a surcharge that passes the difference between the DISCOM’s actual power-purchase cost and the cost assumed in the tariff order through to consumers. It appears as FPPA, FPPCA, FPPAS, FAC or PPAC depending on the state, and is revised monthly or quarterly.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Can FPPA be negative?</summary>
+      <div class="seo-faq-a">Yes. When the DISCOM buys power cheaper than the tariff order assumed — or when an earlier over-recovery is trued up — the adjustment becomes a credit and reduces your bill for that month.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Is FPPA charged before or after electricity duty?</summary>
+      <div class="seo-faq-a">Before. FPPA is added to the energy and fixed charges first, and electricity duty is then calculated as a percentage of that larger base — so a higher FPPA also slightly raises your duty.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Why is my FPPA different from my neighbour’s in another state?</summary>
+      <div class="seo-faq-a">Each state regulator notifies its own mechanism (per-unit or percentage), its own rates and its own revision cycle, and in multi-DISCOM states the rate can differ by DISCOM too — Delhi’s PPAC, for example, is separately approved for BRPL, BYPL and Tata Power-DDL.</div>
+    </details></section>
+    <section class="seo-section guide-more">
+      <h2>More guides</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/guides/how-to-read-uppcl-bill/">
+          <strong>How to Read Your UPPCL Electricity Bill</strong>
+          <small>6 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/why-did-my-electricity-bill-increase/">
+          <strong>Why Did My Electricity Bill Suddenly Increase?</strong>
+          <small>7 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/tod-billing-explained/">
+          <strong>Time-of-Day (ToD) Electricity Billing Explained</strong>
+          <small>5 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/reduce-fixed-charges-sanctioned-load/">
+          <strong>How to Reduce Fixed Charges by Right-Sizing Your Sanctioned Load</strong>
+          <small>5 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/electricity-duty-explained/">
+          <strong>Electricity Duty on Your Bill: What It Is and How States Differ</strong>
+          <small>4 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/how-to-read-bses-delhi-bill/">
+          <strong>How to Read Your BSES / Delhi Electricity Bill</strong>
+          <small>6 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/how-to-read-msedcl-bill/">
+          <strong>How to Read Your MSEDCL (Mahavitaran) Electricity Bill</strong>
+          <small>6 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/how-to-read-bescom-bill/">
+          <strong>How to Read Your BESCOM Electricity Bill</strong>
+          <small>5 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/how-to-read-tneb-tangedco-bill/">
+          <strong>How to Read Your TNEB / TANGEDCO Electricity Bill</strong>
+          <small>5 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/solar-net-metering-savings/">
+          <strong>Solar Net Metering: How the Savings Actually Work</strong>
+          <small>6 min read</small>
+        </a>
+      </div>
+    </section>
+    <p class="seo-disclaimer">General guidance based on publicly available tariff orders and
+    regulations; specifics vary by state, DISCOM and consumer category. Verify against your DISCOM's
+    official schedule or your printed bill.</p>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a> &nbsp;|&nbsp; <a href="/glossary/" data-i18n="footer.glossary">Bill Glossary</a></p>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

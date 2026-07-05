@@ -10,11 +10,16 @@
 //   - `titleHi`/`metaTitleHi`/`descriptionHi`/`introHi`/`sectionsHi`/`faqsHi` are the Hindi
 //     renderings used by generate-seo.js to emit the static /hi/guides/... variants.
 //     Internal links inside Hindi sections point at the /hi/ page where one exists
-//     (tariffs, guides, glossary) and at the English page otherwise.
+//     (tariffs, guides, glossary) and at the English page otherwise. Guides without
+//     `sectionsHi` simply stay English-only (no /hi/ twin is emitted).
+//   - `states` (optional) tags the guide to specific states: every DISCOM page in a
+//     tagged state renders a "read the guide" link back to it (topical cluster links
+//     in both directions).
 
 export const GUIDES = [
   {
     slug: 'how-to-read-uppcl-bill',
+    states: ['Uttar Pradesh'],
     title: 'How to Read Your UPPCL Electricity Bill',
     metaTitle: 'How to Read Your UPPCL Electricity Bill — Every Line Explained',
     description: 'A line-by-line walkthrough of a UPPCL (MVVNL, PVVNL, DVVNL, PuVVNL, KESCO) electricity bill: account fields, meter readings, energy charges, fixed charges, FPPA, electricity duty and arrears — and how to verify the total yourself.',
@@ -415,6 +420,7 @@ export const GUIDES = [
       { q: 'Can ToD billing reduce my bill?',
         a: 'Yes — if you shift flexible loads (EV charging, pumping, laundry, water heating) into off-peak or solar-rebate windows, the same total consumption costs less. Consumers who cannot shift any load away from evening hours may see a small increase instead.' },
     ],
+    // (Hindi fields for this guide continue below)
 
     titleHi: 'टाइम-ऑफ़-डे (ToD) बिजली बिलिंग, आसान भाषा में',
     metaTitleHi: 'भारत में टाइम-ऑफ़-डे (ToD) बिजली बिलिंग, आसान भाषा में',
@@ -478,6 +484,559 @@ export const GUIDES = [
         a: 'kWh वास्तविक ऊर्जा मापता है; kVAh आभासी ऊर्जा, जिसमें मोटरों व खराब-पावर-फैक्टर उपकरणों की रिएक्टिव पावर भी झलकती है। kVAh बिलिंग में 1 से कम पावर फैक्टर बिल योग्य यूनिटें बढ़ा देता है — पावर फैक्टर सुधारना (जैसे कैपेसिटर से) सीधे बिल घटाता है।' },
       { q: 'क्या ToD बिलिंग से मेरा बिल घट सकता है?',
         a: 'हाँ — लचीले लोड (EV चार्जिंग, पंपिंग, कपड़े धोना, पानी गर्म करना) ऑफ़-पीक या सौर-छूट खिड़कियों में खिसकाएँ तो वही कुल खपत सस्ती पड़ती है। जो उपभोक्ता शाम के घंटों से कोई लोड नहीं हटा सकते, उनका बिल थोड़ा बढ़ भी सकता है।' },
+    ],
+  },
+
+  {
+    slug: 'how-fppa-fuel-surcharge-is-calculated',
+    title: 'How FPPA (Fuel Surcharge) Is Calculated on Your Electricity Bill',
+    metaTitle: 'FPPA / Fuel Surcharge on Electricity Bills — How It Is Calculated',
+    description: 'What the FPPA / FPPCA / FPPAS / PPAC line on an Indian electricity bill is, the two ways DISCOMs calculate it (per-unit and percentage), why it changes every month, why it can be negative, and how to verify the amount yourself.',
+    minutes: 6,
+    intro: `FPPA — the Fuel and Power Purchase Adjustment, also printed as FPPCA, FPPAS, FAC or
+      (in Delhi) PPAC — recovers the difference between what your DISCOM <em>actually</em> paid for
+      power and what the tariff order <em>assumed</em> it would pay. It is the one line on your bill
+      that changes even when your consumption and the tariff don't, and it can be a charge
+      <em>or a credit</em>.`,
+    sections: `
+      <section class="seo-section">
+        <h2>Why this line exists</h2>
+        <p>Your energy rate is fixed once a year in the tariff order, but the DISCOM's cost of buying
+        power moves every month with coal, gas and market prices. Regulators let DISCOMs pass that
+        difference through automatically — without waiting a year — via the fuel adjustment
+        surcharge. It is trued up annually, so over-recovery in one period comes back as a credit
+        later.</p>
+      </section>
+      <section class="seo-section">
+        <h2>Method 1 — per-unit (₹/unit)</h2>
+        <p>The traditional method prices the gap directly:</p>
+        <p><strong>FPPA per unit = APPC − BPPC</strong>, and your surcharge =
+        that rate × units consumed.</p>
+        <ul>
+          <li><strong>APPC</strong> — actual weighted-average power purchase cost per unit for the
+          month (actual cost ÷ actual units purchased from approved sources).</li>
+          <li><strong>BPPC</strong> — the base cost per unit approved in the tariff order for that
+          month.</li>
+        </ul>
+        <p>If the DISCOM bought power cheaper than approved, APPC &lt; BPPC and the line turns
+        negative — a rebate on every unit.</p>
+      </section>
+      <section class="seo-section">
+        <h2>Method 2 — percentage of the bill</h2>
+        <p>Several states now levy it as a percentage instead. Uttar Pradesh's framework (UPERC MYT
+        Regulations, 2025) is a clear example:</p>
+        <ul>
+          <li>The surcharge is a <strong>percentage of energy charge + fixed/demand charge</strong>,
+          uniform across consumer categories.</li>
+          <li>It runs with a <strong>3-month lag</strong>: this month's percentage recovers the cost
+          gap from three months ago.</li>
+          <li>It is <strong>capped per billing cycle</strong> (10% in UP); anything above the cap
+          carries forward — which is why a capped month is often followed by a credit month.</li>
+        </ul>
+        <p>Delhi's <strong>PPAC</strong> works the same way — a percentage on energy + fixed charges,
+        revised by DERC and different for each DISCOM (BRPL, BYPL, Tata Power-DDL).</p>
+      </section>
+      <section class="seo-section">
+        <h2>Where it sits in the bill maths</h2>
+        <p>Order matters: FPPA is added to your energy + fixed charges <em>before</em> electricity
+        duty is applied, so the duty percentage compounds on top of the surcharge. Our
+        <a href="/#calculator">bill calculator</a> applies exactly this ordering, and can auto-fill
+        the notified FPPA rate for supported states and billing months.</p>
+      </section>
+      <section class="seo-section">
+        <h2>How to verify the FPPA on your bill</h2>
+        <ol>
+          <li>Find the line — FPPA / FPPCA / FPPAS / FAC / PPAC, printed either as ₹/unit or %.</li>
+          <li>Check your DISCOM's notice board or website for the notified rate for your
+          <em>billing month</em> (not the payment month).</li>
+          <li>Recompute: units × rate (per-unit method) or rate% × (energy + fixed) (percentage
+          method).</li>
+          <li>Cross-check the whole bill in the <a href="/#calculator">calculator</a> — enter the
+          FPPA from your bill and compare totals line by line.</li>
+        </ol>
+      </section>`,
+    faqs: [
+      { q: 'What is FPPA on an electricity bill?',
+        a: 'FPPA (Fuel and Power Purchase Adjustment) is a surcharge that passes the difference between the DISCOM’s actual power-purchase cost and the cost assumed in the tariff order through to consumers. It appears as FPPA, FPPCA, FPPAS, FAC or PPAC depending on the state, and is revised monthly or quarterly.' },
+      { q: 'Can FPPA be negative?',
+        a: 'Yes. When the DISCOM buys power cheaper than the tariff order assumed — or when an earlier over-recovery is trued up — the adjustment becomes a credit and reduces your bill for that month.' },
+      { q: 'Is FPPA charged before or after electricity duty?',
+        a: 'Before. FPPA is added to the energy and fixed charges first, and electricity duty is then calculated as a percentage of that larger base — so a higher FPPA also slightly raises your duty.' },
+      { q: 'Why is my FPPA different from my neighbour’s in another state?',
+        a: 'Each state regulator notifies its own mechanism (per-unit or percentage), its own rates and its own revision cycle, and in multi-DISCOM states the rate can differ by DISCOM too — Delhi’s PPAC, for example, is separately approved for BRPL, BYPL and Tata Power-DDL.' },
+    ],
+  },
+
+  {
+    slug: 'reduce-fixed-charges-sanctioned-load',
+    title: 'How to Reduce Fixed Charges by Right-Sizing Your Sanctioned Load',
+    metaTitle: 'Reduce Electricity Fixed Charges: Right-Size Your Sanctioned Load',
+    description: 'Fixed charges are billed per kW of sanctioned load even at zero consumption. How to check if your load is over-sanctioned, how much a reduction saves, the application process, and the excess-demand penalty risk of going too low.',
+    minutes: 5,
+    intro: `The fixed charge on your bill is priced per kW (or kVA) of <strong>sanctioned load</strong>
+      — the capacity you contracted, not the power you actually use. If your load was sanctioned
+      years ago for equipment you no longer run, you are paying every month for headroom you never
+      touch. Right-sizing it is one of the few bill reductions that needs no change in behaviour.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. Check what you're sanctioned vs what you actually draw</h2>
+        <p>Your bill prints both numbers: <strong>sanctioned load</strong> (contracted kW) and, on
+        most modern bills, <strong>recorded / maximum demand</strong> (the highest kW you actually
+        drew). If recorded demand sits well below sanctioned load month after month — say 2 kW
+        recorded against 5 kW sanctioned — you are a candidate for a reduction.</p>
+      </section>
+      <section class="seo-section">
+        <h2>2. What a reduction is worth</h2>
+        <p>Fixed-charge schedules are either flat ₹/kW/month or tiered by load band, so the saving is
+        simply (kW reduced) × (rate) — or a drop to a cheaper band. Some examples of how the
+        structures differ (find your DISCOM's exact schedule on its
+        <a href="/tariffs/states/">tariff page</a>):</p>
+        <ul>
+          <li><strong>Per-kW schedules</strong> (e.g. UPPCL domestic): every kW removed saves the
+          full per-kW rate, every month.</li>
+          <li><strong>Banded schedules</strong> (e.g. <a href="/tariffs/delhi/brpl/">Delhi LT-I</a>,
+          <a href="/tariffs/maharashtra/msedcl/">MSEDCL LT-1</a>): the saving comes from crossing
+          into a lower band — moving from the "2–5 kW" band to "up to 2 kW" can halve the fixed
+          charge in one step.</li>
+        </ul>
+        <p>Estimate it precisely: run the <a href="/#calculator">calculator</a> twice with your
+        current and proposed loads and compare the fixed-charge line.</p>
+      </section>
+      <section class="seo-section">
+        <h2>3. Don't go too low — the excess-demand penalty</h2>
+        <p>This is the trade-off that makes "sanction the minimum" a bad idea. If your recorded
+        demand exceeds the sanctioned load, most DISCOMs bill the excess at a <strong>penal
+        rate</strong> — commonly 1.5× to 2× the normal fixed charge on the excess kW, and repeated
+        breaches can trigger a forced load regularisation. Size for your realistic peak: add up the
+        appliances that genuinely run together on a summer evening (AC + fridge + water heater +
+        lights), not the sum of everything you own.</p>
+      </section>
+      <section class="seo-section">
+        <h2>4. How to apply</h2>
+        <ol>
+          <li>Apply for "load reduction" on your DISCOM's portal or at the sub-division office —
+          the same channel as a new-connection application in most states (see our
+          <a href="/new-connection/">new connection hub</a> for portal links).</li>
+          <li>Expect a small processing fee and, in some states, a fresh test report or inspection.</li>
+          <li>The change takes effect from the next billing cycle; agreements/security deposits are
+          adjusted to the new load.</li>
+        </ol>
+        <p>Also worth checking while you're at it: households that <em>added</em> ACs or an EV
+        charger since sanction may need to go the other way — a small load <em>increase</em> costs
+        less than recurring excess-demand penalties.</p>
+      </section>`,
+    faqs: [
+      { q: 'What is sanctioned load on an electricity bill?',
+        a: 'Sanctioned load is the maximum demand (in kW or kVA) your DISCOM has contracted to supply you, declared when the connection was made. Fixed charges are billed on this value every month regardless of consumption, and drawing more than it can attract an excess-demand penalty.' },
+      { q: 'How much can I save by reducing my sanctioned load?',
+        a: 'On per-kW schedules the saving is the per-kW fixed charge times the kW removed, every month. On banded schedules the saving comes from dropping into a lower band. Run your DISCOM’s numbers in a bill calculator with both loads to see the exact difference.' },
+      { q: 'What happens if my usage exceeds my sanctioned load?',
+        a: 'The excess recorded demand is typically billed at a penal fixed-charge rate (often 1.5–2× normal) for that month, and persistent breaches can lead the DISCOM to regularise your load upward compulsorily. That is why you should size to your realistic simultaneous peak, not the theoretical minimum.' },
+      { q: 'How do I apply to reduce my sanctioned load?',
+        a: 'Submit a load-reduction request on your DISCOM’s consumer portal or at the local sub-division office, pay the small processing fee, and complete any inspection required. The reduced load — and the lower fixed charge — applies from the next billing cycle.' },
+    ],
+  },
+
+  {
+    slug: 'electricity-duty-explained',
+    title: 'Electricity Duty on Your Bill: What It Is and How States Differ',
+    metaTitle: 'Electricity Duty Explained — Why the Tax on Your Bill Varies by State',
+    description: 'Electricity duty is a state tax collected through your electricity bill. How it is calculated (percentage vs paise-per-unit), why it ranges from zero to over 15% across states, which categories are exempt, and how to check yours.',
+    minutes: 4,
+    intro: `The "ED" or "Electricity Duty" line on your bill is not a DISCOM charge at all — it is a
+      <strong>state government tax</strong> collected through the bill and passed to the state
+      treasury. Because each state legislates its own duty, the same consumption can carry a very
+      different tax burden depending on where you live.`,
+    sections: `
+      <section class="seo-section">
+        <h2>How duty is levied</h2>
+        <p>States use one of two bases:</p>
+        <ul>
+          <li><strong>Percentage of charges</strong> — duty as a % of the energy charge (and in many
+          states the fixed charge and fuel surcharge too). Because FPPA is added first, a fuel
+          surcharge increase also raises the duty rupees.</li>
+          <li><strong>Paise per unit</strong> — a flat ₹/kWh levy independent of the rate you pay.</li>
+        </ul>
+        <p>The percentage varies enormously by state and by consumer category. Among the schedules
+        on our tariff pages, <a href="/tariffs/maharashtra/msedcl/">Maharashtra domestic</a> carries
+        one of the highest percentage duties, <a href="/tariffs/delhi/brpl/">Delhi</a> and
+        <a href="/tariffs/tamil-nadu/tangedco/">Tamil Nadu</a> sit at the low single digits, and
+        <a href="/tariffs/karnataka/bescom/">Karnataka</a> publishes duty-inclusive tariffs — no
+        separate ED line appears on a BESCOM bill at all.</p>
+      </section>
+      <section class="seo-section">
+        <h2>Who is exempt</h2>
+        <p>Exemptions are also state policy. Common ones: agricultural pumpsets, lifeline/BPL
+        domestic slabs, government water works, and some industries during promoted periods. If
+        your category is exempt, the ED line should print zero — worth checking after any category
+        change on your bill.</p>
+      </section>
+      <section class="seo-section">
+        <h2>How to check yours</h2>
+        <ol>
+          <li>Open your state's page from the <a href="/tariffs/states/">tariff directory</a> — the
+          "Additional charges" row of each category card shows the duty applied.</li>
+          <li>Verify the base: recompute duty% × (energy + fixed + FPPA) — if the printed figure
+          is higher, the bill may be compounding on arrears, which is worth a complaint.</li>
+          <li>Use the <a href="/#calculator">calculator</a>, which applies each state's duty on the
+          correct base automatically.</li>
+        </ol>
+      </section>`,
+    faqs: [
+      { q: 'What is electricity duty on my bill?',
+        a: 'Electricity duty is a tax levied by your state government on electricity consumption, collected by the DISCOM through your bill and remitted to the state treasury. It is set by state law, so both the rate and the base differ from state to state.' },
+      { q: 'Why is electricity duty so different between states?',
+        a: 'Duty is state legislation, not a central levy. Each state chooses the base (percentage of charges vs paise per unit), the rate, and the exemptions — which is why Maharashtra’s domestic duty is in double digits while Delhi’s is 5% and Karnataka folds it into the printed tariff entirely.' },
+      { q: 'Is electricity duty charged on the fuel surcharge (FPPA)?',
+        a: 'In most states, yes — duty is applied after FPPA is added, i.e. on energy charge + fixed charge + FPPA. That ordering means a fuel-surcharge revision nudges your duty up too.' },
+      { q: 'Are any consumers exempt from electricity duty?',
+        a: 'Many states exempt agricultural connections, lifeline/BPL domestic slabs and certain government or promoted-industry categories. Exemptions are listed in each state’s duty notification; if you qualify, the ED line on your bill should be zero.' },
+    ],
+  },
+
+  {
+    slug: 'how-to-read-bses-delhi-bill',
+    states: ['Delhi'],
+    title: 'How to Read Your BSES / Delhi Electricity Bill',
+    metaTitle: 'How to Read Your BSES Delhi Bill — Subsidy, PPAC & Every Line',
+    description: 'A line-by-line guide to Delhi electricity bills from BSES Rajdhani (BRPL), BSES Yamuna (BYPL) and Tata Power-DDL: LT-I slabs, tiered fixed charges, PPAC, 5% electricity duty, and exactly how the GNCTD subsidy makes bills zero.',
+    minutes: 6,
+    intro: `Delhi bills look confusing for one big reason: two households with identical usage can
+      pay wildly different amounts because of the <strong>GNCTD subsidy</strong>. This guide decodes
+      a domestic (LT-I) bill from <strong>BRPL</strong> (BSES Rajdhani — South &amp; West Delhi),
+      <strong>BYPL</strong> (BSES Yamuna — East &amp; Central Delhi) or
+      <strong>Tata Power-DDL</strong> (North &amp; North-West Delhi), all of which bill on the same
+      DERC tariff schedule.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. The subsidy — why so many Delhi bills are ₹0</h2>
+        <p>The Delhi government subsidy is applied on the bill itself:</p>
+        <ul>
+          <li><strong>Up to 200 units/month:</strong> 100% subsidy — the bill is zero (the charges
+          are printed, then reversed as a subsidy line).</li>
+          <li><strong>201–400 units:</strong> 50% rebate on the first 200 units' charges.</li>
+          <li><strong>Above 400 units:</strong> no subsidy — you pay the full tariff on everything.</li>
+        </ul>
+        <p>The subsidy is optional (consumers can opt out), and it explains the "cliff" at 201 and
+        401 units: one extra unit can add hundreds of rupees. Check both scenarios in the
+        <a href="/?state=Delhi#calculator">Delhi bill calculator</a>, which models the subsidy.</p>
+      </section>
+      <section class="seo-section">
+        <h2>2. Energy charge — the LT-I slabs</h2>
+        <p>Delhi domestic slabs step up at 200, 400 and 800 units, telescopically — each rate
+        applies only to the units inside its slab. The current per-unit rates for your DISCOM are on
+        our tariff pages: <a href="/tariffs/delhi/brpl/">BRPL</a>,
+        <a href="/tariffs/delhi/bypl/">BYPL</a>, <a href="/tariffs/delhi/tpddl/">Tata Power-DDL</a>.</p>
+      </section>
+      <section class="seo-section">
+        <h2>3. Fixed charge — tiered by sanctioned load</h2>
+        <p>Delhi's fixed charge is banded by sanctioned load (up to 2 kW / 2–5 kW / above 5 kW), so
+        the band you're in matters more than the exact kW. If your recorded demand is far below your
+        band, see our <a href="/guides/reduce-fixed-charges-sanctioned-load/">guide to right-sizing
+        sanctioned load</a>.</p>
+      </section>
+      <section class="seo-section">
+        <h2>4. PPAC — Delhi's fuel surcharge</h2>
+        <p>The <strong>Power Purchase Adjustment Cost</strong> is Delhi's version of FPPA: a
+        DERC-approved percentage applied on your energy + fixed charges, different for each DISCOM
+        and revised periodically (monthly since mid-2026). It is the line that moves your bill when
+        nothing else changed — our <a href="/guides/how-fppa-fuel-surcharge-is-calculated/">FPPA
+        guide</a> explains the mechanism.</p>
+      </section>
+      <section class="seo-section">
+        <h2>5. The remaining lines</h2>
+        <ul>
+          <li><strong>Electricity duty:</strong> 5% on the energy charges, per the Delhi schedule.</li>
+          <li><strong>Pension trust surcharge / other DERC-approved surcharges:</strong> small
+          percentage lines that DERC approves from time to time.</li>
+          <li><strong>Arrears &amp; LPSC:</strong> unpaid past amounts plus late-payment surcharge.</li>
+        </ul>
+        <p>To verify the total: enter your units and load in the
+        <a href="/?state=Delhi#calculator">calculator</a>, toggle the subsidy on, add the PPAC
+        percentage printed on your bill, and compare line by line. A mismatch beyond a few rupees
+        usually traces to the meter-status code (estimated reading) or arrears.</p>
+      </section>`,
+    faqs: [
+      { q: 'Why is my Delhi electricity bill zero?',
+        a: 'Because of the GNCTD domestic subsidy: consumers using up to 200 units a month get a 100% subsidy, so the computed charges are fully reversed on the bill. Use 201+ units and the subsidy drops to a 50% rebate on the first 200 units; above 400 units there is no subsidy at all.' },
+      { q: 'What is PPAC on a BSES or Tata Power-DDL bill?',
+        a: 'PPAC (Power Purchase Adjustment Cost) is Delhi’s fuel-cost surcharge — a DERC-approved percentage applied on energy plus fixed charges, separately approved for BRPL, BYPL and Tata Power-DDL and revised periodically. It is why bills change month to month at identical usage.' },
+      { q: 'Are BRPL, BYPL and Tata Power-DDL tariffs different?',
+        a: 'The DERC tariff schedule (slabs, fixed charges, duty) is the same across Delhi’s private DISCOMs; what differs is the service area, the PPAC percentage in force and the billing portal. Your DISCOM is determined by where you live, not by choice.' },
+      { q: 'Why did one extra unit make my Delhi bill jump?',
+        a: 'The subsidy has hard cut-offs at 200 and 400 units. At 201 units you lose the 100% subsidy (keeping only a 50% rebate on the first 200), and at 401 units you lose the subsidy entirely — so a single unit can add several hundred rupees. Shifting a few units of usage to the next month around the cut-off genuinely pays.' },
+    ],
+  },
+
+  {
+    slug: 'how-to-read-msedcl-bill',
+    states: ['Maharashtra'],
+    title: 'How to Read Your MSEDCL (Mahavitaran) Electricity Bill',
+    metaTitle: 'How to Read Your MSEDCL Bill — Slabs, FAC, Wheeling & 16% Duty',
+    description: 'A line-by-line walkthrough of an MSEDCL (Mahavitaran) electricity bill: LT-1 residential slabs at 100/300/500 units, tiered fixed charges, fuel adjustment (FAC), wheeling charge, Maharashtra’s 16% electricity duty and how to verify the total.',
+    minutes: 6,
+    intro: `MSEDCL (Mahavitaran) serves nearly all of Maharashtra outside Mumbai city — Mumbai
+      itself is split between <a href="/tariffs/maharashtra/adani_mumbai/">Adani Electricity</a>,
+      <a href="/tariffs/maharashtra/best_mumbai/">BEST</a> and
+      <a href="/tariffs/maharashtra/tata_power_mumbai/">Tata Power</a>. Maharashtra bills carry more
+      separate charge lines than most states, and one of India's steepest electricity duties, so the
+      total often surprises people who moved from elsewhere.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. Energy charge — LT-1 slabs that climb steeply</h2>
+        <p>Residential (LT-1) consumption is priced telescopically with slab boundaries at
+        <strong>100, 300 and 500 units</strong> — and the jump between the first and last slab is
+        roughly threefold, one of the steepest in India. That is why a heavy-AC month hurts
+        disproportionately. Current rates are on the
+        <a href="/tariffs/maharashtra/msedcl/">MSEDCL tariff page</a>.</p>
+      </section>
+      <section class="seo-section">
+        <h2>2. Fixed charge — banded by sanctioned load</h2>
+        <p>MSEDCL's fixed charge is tiered by load band (up to 1 kW, 1–2 kW, 2–5 kW, 5–10 kW,
+        above 10 kW), so crossing a band boundary changes the monthly amount in a step. If your
+        recorded demand runs well under your band, read our
+        <a href="/guides/reduce-fixed-charges-sanctioned-load/">sanctioned-load guide</a> —
+        Maharashtra also bills excess demand at 1.5×, so don't over-trim.</p>
+      </section>
+      <section class="seo-section">
+        <h2>3. The pass-through lines: FAC and wheeling</h2>
+        <ul>
+          <li><strong>FAC (Fuel Adjustment Charge):</strong> Maharashtra's fuel surcharge, a ₹/unit
+          amount revised periodically. See
+          <a href="/guides/how-fppa-fuel-surcharge-is-calculated/">how fuel surcharges are
+          calculated</a>.</li>
+          <li><strong>Wheeling charge:</strong> a separate ₹/unit line for using the distribution
+          network — MSEDCL prints it separately from the energy charge, which is unusual and makes
+          the per-unit rate look lower than the effective rate.</li>
+        </ul>
+      </section>
+      <section class="seo-section">
+        <h2>4. Electricity duty — the 16% line</h2>
+        <p>Maharashtra levies one of the country's highest domestic electricity duties (16% on
+        residential energy charges in the current schedule). On a large bill the ED line alone can
+        exceed the fixed charge — read <a href="/guides/electricity-duty-explained/">our duty
+        guide</a> for how it compares across states.</p>
+      </section>
+      <section class="seo-section">
+        <h2>5. Verify the total in 30 seconds</h2>
+        <p>Enter your units and sanctioned load in the
+        <a href="/?state=Maharashtra#calculator">MSEDCL bill calculator</a> and compare each line —
+        energy, fixed, duty — against the printed bill. Common causes of mismatch: an estimated
+        reading (check the meter-status code), a billing period longer than 30 days pushing units
+        into higher slabs, or arrears with interest.</p>
+      </section>`,
+    faqs: [
+      { q: 'Why is the MSEDCL per-unit rate on my bill lower than what I actually pay?',
+        a: 'MSEDCL prints the energy charge and the wheeling charge as separate ₹/unit lines, and then adds FAC and 16% electricity duty on top. Your effective per-unit cost is the sum of all of these — typically well above the headline slab rate.' },
+      { q: 'What is the wheeling charge on a Mahavitaran bill?',
+        a: 'It is the regulated fee for carrying power over the distribution network, billed per unit. Most states fold it into the energy rate; Maharashtra shows it separately, which changes the presentation but not the total.' },
+      { q: 'Why is electricity duty so high in Maharashtra?',
+        a: 'Electricity duty is state legislation, and Maharashtra has chosen one of the highest domestic rates in India (16% on residential energy charges in the current schedule). It is a state tax collected through the bill, not an MSEDCL charge.' },
+      { q: 'Does MSEDCL serve Mumbai?',
+        a: 'Mostly no. Mumbai city and suburbs are served by BEST (island city), Adani Electricity (most suburbs) and Tata Power (pockets); MSEDCL covers essentially the rest of Maharashtra, including Navi Mumbai, Thane beyond the BEST/Adani areas, Pune, Nagpur and rural Maharashtra.' },
+    ],
+  },
+
+  {
+    slug: 'how-to-read-bescom-bill',
+    states: ['Karnataka'],
+    title: 'How to Read Your BESCOM Electricity Bill',
+    metaTitle: 'How to Read Your BESCOM Bill — Gruha Jyoti, Slabs & Fixed Charges',
+    description: 'A line-by-line guide to BESCOM (Bengaluru) electricity bills: LT-1 slabs starting at 30 units, duty-inclusive tariffs, sanctioned-load fixed charges, and how the Gruha Jyoti free-electricity scheme decides whether you pay at all.',
+    minutes: 5,
+    intro: `BESCOM bills Bengaluru and seven surrounding districts, on the same KERC-approved
+      schedule as Karnataka's other DISCOMs (MESCOM, CESC, GESCOM, HESCOM). Two things make a
+      Karnataka bill read differently from other states: the tariff is
+      <strong>duty-inclusive</strong> (no separate ED line), and the
+      <strong>Gruha Jyoti</strong> scheme zeroes out a large share of domestic bills.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. Gruha Jyoti — the free-units scheme</h2>
+        <p>Under Gruha Jyoti, registered domestic consumers get their usage free up to an
+        entitlement based on their historical average consumption (capped around 200 units). Use
+        less than your entitlement and the bill prints ₹0; exceed it and you pay for the
+        <em>entire</em> consumption, not just the excess — which is why one heavy month can bring a
+        surprisingly full bill. The <a href="/?state=Karnataka#calculator">Karnataka calculator</a>
+        models the scheme when you opt in.</p>
+      </section>
+      <section class="seo-section">
+        <h2>2. Energy charge — slabs that start at 30 units</h2>
+        <p>Karnataka's LT-1 slab ladder is unusually fine-grained at the bottom: a low first slab
+        for the first 30 units, then steps at 100, 200 and 500 units (telescopic). Current rates are
+        on the <a href="/tariffs/karnataka/bescom/">BESCOM tariff page</a> — and because the
+        schedule is state-wide, the same rates apply on
+        <a href="/tariffs/karnataka/mescom/">MESCOM</a>, <a href="/tariffs/karnataka/cesc_karnataka/">CESC</a>,
+        <a href="/tariffs/karnataka/gescom/">GESCOM</a> and <a href="/tariffs/karnataka/hescom/">HESCOM</a>.</p>
+      </section>
+      <section class="seo-section">
+        <h2>3. Fixed charge — by phase and load</h2>
+        <p>The fixed charge is banded (single-phase up to 2.5 kW, then higher bands), billed on your
+        sanctioned load every month including zero-usage months. Over-sanctioned? See
+        <a href="/guides/reduce-fixed-charges-sanctioned-load/">how to right-size your load</a>.</p>
+      </section>
+      <section class="seo-section">
+        <h2>4. No electricity-duty line — it's already inside</h2>
+        <p>Karnataka publishes duty-inclusive tariffs: the slab rates already contain the state's
+        taxes, so unlike <a href="/guides/how-to-read-msedcl-bill/">Maharashtra</a> or Delhi there
+        is no separate ED percentage at the bottom of the bill. When comparing states, remember the
+        BESCOM headline rate is closer to the true effective rate than most.</p>
+      </section>
+      <section class="seo-section">
+        <h2>5. Verify the total</h2>
+        <ol>
+          <li>Check units = (current − previous reading) × MF.</li>
+          <li>Recompute the slab maths on the <a href="/tariffs/karnataka/bescom/">tariff page</a>,
+          or just enter units + load in the <a href="/?state=Karnataka#calculator">calculator</a>.</li>
+          <li>If Gruha Jyoti applied last month but not this month, the cause is almost always
+          consumption above your entitlement — compare the units, not the rupees.</li>
+        </ol>
+      </section>`,
+    faqs: [
+      { q: 'Why did my BESCOM bill suddenly go from zero to full amount?',
+        a: 'Gruha Jyoti gives free electricity only up to your entitlement (based on historical average use, capped around 200 units). Exceed it and the whole month’s consumption is billed at the normal slab rates — not just the units above the limit. Check your units against your entitlement printed on the bill.' },
+      { q: 'Why is there no electricity duty line on my BESCOM bill?',
+        a: 'Karnataka publishes duty-inclusive tariffs: the KERC slab rates already include state levies, so no separate ED percentage is added at the bottom. The headline rate is therefore closer to your true per-unit cost than in states like Maharashtra.' },
+      { q: 'Do all Karnataka DISCOMs charge the same rates as BESCOM?',
+        a: 'Yes — BESCOM, MESCOM, CESC, GESCOM and HESCOM all bill on the same KERC-approved state schedule. What differs is the service area and the billing portal, not the tariff.' },
+      { q: 'How do I register for Gruha Jyoti?',
+        a: 'Registration is through the Karnataka government’s Seva Sindhu portal with your consumer number and Aadhaar. Once registered, the entitlement (your average consumption, capped) is printed on the bill and usage up to it is free each month.' },
+    ],
+  },
+
+  {
+    slug: 'how-to-read-tneb-tangedco-bill',
+    states: ['Tamil Nadu'],
+    title: 'How to Read Your TNEB / TANGEDCO Electricity Bill',
+    metaTitle: 'How to Read Your TNEB (TANGEDCO) Bill — Bimonthly Slabs & Free Units',
+    description: 'A line-by-line guide to Tamil Nadu (TNEB/TANGEDCO) electricity bills: why billing is bimonthly, how the first 100 free units work, the 500-unit cliff that removes concessions, slab maths to 1000+ units and how to verify the total.',
+    minutes: 5,
+    intro: `Tamil Nadu bills are the most misread in India for one simple reason:
+      <strong>TANGEDCO bills once every two months</strong>, so every slab, every free-unit limit
+      and every comparison with other states must be done on a 2-month cycle. Add the 100 free
+      units and the concession cliff at 500 units, and two similar households can see very
+      different totals.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. Bimonthly billing — the #1 source of confusion</h2>
+        <p>Your "monthly" consumption is actually two months of units. When comparing with friends
+        in other states — or using any calculator built on monthly slabs — halve your TNEB units
+        first. Our <a href="/?state=Tamil%20Nadu#calculator">Tamil Nadu calculator</a> shows a
+        monthly estimate; multiply by two to sanity-check a bimonthly bill.</p>
+      </section>
+      <section class="seo-section">
+        <h2>2. The first 100 units are free — conditionally</h2>
+        <p>Every domestic consumer gets the <strong>first 100 units of each 2-month cycle free</strong>.
+        The catch: the full concession structure applies only if your cycle total stays
+        <strong>within 500 units</strong>. Cross 500, and the concessional slab rates fall away —
+        the whole bill is computed on the regular ladder. That's the "cliff" that makes a
+        510-unit cycle cost far more than a 490-unit one.</p>
+      </section>
+      <section class="seo-section">
+        <h2>3. The slab ladder</h2>
+        <p>Above the free block, slabs step at 200, 500 and 1000 units per cycle (telescopic), with
+        the top slab applying beyond 1000. Current per-unit rates are on the
+        <a href="/tariffs/tamil-nadu/tangedco/">TANGEDCO tariff page</a>. The fixed charge for
+        domestic connections is a modest flat amount per cycle, and electricity duty adds 5% on the
+        energy charges.</p>
+      </section>
+      <section class="seo-section">
+        <h2>4. Verify the total</h2>
+        <ol>
+          <li>Confirm the reading dates span ~60 days — a longer cycle silently pushes units into
+          higher slabs.</li>
+          <li>Check units = (current − previous) × MF.</li>
+          <li>Recompute: free 100 → slab ladder on the rest → duty. Or enter <em>half</em> your
+          cycle units in the <a href="/?state=Tamil%20Nadu#calculator">calculator</a> and double the
+          result.</li>
+          <li>A jump with unchanged habits usually means the cycle crossed 500 units — see our
+          <a href="/guides/why-did-my-electricity-bill-increase/">bill-increase guide</a>.</li>
+        </ol>
+      </section>`,
+    faqs: [
+      { q: 'Why is my TNEB bill for two months?',
+        a: 'TANGEDCO bills domestic consumers bimonthly — meters are read every ~60 days and all slabs and free-unit limits are defined per 2-month cycle. Halve the units before comparing with monthly-billing states.' },
+      { q: 'Are the first 100 units really free in Tamil Nadu?',
+        a: 'Yes — the first 100 units of every 2-month cycle are free for domestic consumers. But the wider concessional structure applies only while the cycle total stays within 500 units; beyond that, regular slab rates apply to the whole consumption.' },
+      { q: 'Why did my TNEB bill jump although my usage barely changed?',
+        a: 'The most common cause is crossing the 500-unit threshold for the 2-month cycle, which removes the concessional rates for the entire bill — a 20-unit increase can add a disproportionate amount. Longer reading cycles and estimated readings are the next suspects.' },
+      { q: 'Does TANGEDCO charge electricity duty?',
+        a: 'Yes — Tamil Nadu adds electricity duty at 5% on the energy charges, one of the lower rates among large states. It appears as a separate line after the slab charges.' },
+    ],
+  },
+
+  {
+    slug: 'solar-net-metering-savings',
+    title: 'Solar Net Metering: How the Savings Actually Work',
+    metaTitle: 'Solar Net Metering Savings Explained — Credits, Sizing & Payback',
+    description: 'How rooftop solar net metering credits work on an Indian electricity bill, why the same system saves different amounts in different states, how slab rates change the maths, sizing rules of thumb and what drives payback time.',
+    minutes: 6,
+    intro: `Net metering lets your rooftop solar system run your meter both ways: units you export
+      offset units you import, and you pay (roughly) for the <strong>net</strong>. But "roughly" is
+      where the money hides — the same 3 kW system can pay back in 4 years in one state and 8 in
+      another, because the value of an offset unit depends on <em>your</em> tariff.`,
+    sections: `
+      <section class="seo-section">
+        <h2>How the billing works</h2>
+        <p>With net metering, a bidirectional meter records import and export separately. At
+        billing, export units are netted against import units; you pay the tariff on the net
+        import, and surplus export typically carries forward as credit (settled at a lower rate at
+        year-end). Two consequences people miss:</p>
+        <ul>
+          <li><strong>Fixed charges, duty and surcharges don't disappear</strong> — they apply on
+          your sanctioned load and net consumption as usual.</li>
+          <li><strong>Offset units are worth your top slab rate.</strong> Netting reduces the most
+          expensive units first — so households deep into high slabs save the most per unit
+          generated.</li>
+        </ul>
+      </section>
+      <section class="seo-section">
+        <h2>Why savings differ by state</h2>
+        <p>Three levers move the economics:</p>
+        <ol>
+          <li><strong>Your slab ladder.</strong> Steep ladders (see
+          <a href="/tariffs/maharashtra/msedcl/">Maharashtra</a>) make each offset unit worth more;
+          flat or subsidised ladders (free-unit schemes in
+          <a href="/tariffs/karnataka/bescom/">Karnataka</a> or
+          <a href="/tariffs/tamil-nadu/tangedco/">Tamil Nadu</a>) can make small systems pointless —
+          you can't save on units that were already free.</li>
+          <li><strong>The state's net-metering rules.</strong> States differ on eligible system
+          sizes, net metering vs net billing (exports credited at a lower feed-in rate), and
+          settlement periods — check your DISCOM's current regulations before sizing.</li>
+          <li><strong>Subsidy.</strong> The central rooftop scheme (PM Surya Ghar) subsidises
+          residential systems up to a capped amount; state top-ups vary.</li>
+        </ol>
+      </section>
+      <section class="seo-section">
+        <h2>Sizing: match your daytime + top-slab usage</h2>
+        <p>A practical rule: size the system to wipe out your <em>top-slab</em> consumption, not
+        your entire bill. Each kW of rooftop solar generates roughly 4 units/day (110–130
+        units/month) in most of India. Our <a href="/solar/">solar savings estimator</a> does this
+        against your actual DISCOM tariff — enter your monthly units and it computes system size,
+        bill-after-solar and payback from the same engine as the
+        <a href="/#calculator">bill calculator</a>.</p>
+      </section>
+      <section class="seo-section">
+        <h2>What drives payback</h2>
+        <ul>
+          <li><strong>Shorter payback:</strong> high top-slab rates, high daytime self-consumption,
+          subsidy captured, net (not gross) metering.</li>
+          <li><strong>Longer payback:</strong> heavily subsidised consumption (free-unit schemes),
+          low sanctioned load limits on system size, feed-in-rate settlement of exports.</li>
+        </ul>
+        <p>Before signing with a vendor, run the numbers yourself on the
+        <a href="/solar/">estimator</a> and against your DISCOM's
+        <a href="/tariffs/states/">tariff page</a> — the vendor's "70% saving" pitch assumes the
+        steepest tariff, which may not be yours.</p>
+      </section>`,
+    faqs: [
+      { q: 'How does net metering reduce my electricity bill?',
+        a: 'Exported solar units are netted against imported units, so you pay the tariff only on net consumption — and because netting removes your most expensive (top-slab) units first, each solar unit is worth your highest applicable rate, not the average.' },
+      { q: 'How many units does 1 kW of rooftop solar generate?',
+        a: 'Roughly 4 units per day — about 110–130 units a month across most of India, varying with location, orientation and season. A 3 kW system therefore offsets around 330–390 units a month.' },
+      { q: 'Is net metering worth it if I get free electricity units?',
+        a: 'Often not for small systems. If a state scheme (like Karnataka’s Gruha Jyoti or Tamil Nadu’s free-unit block) already zeroes your bill, solar can only save on consumption beyond the free entitlement — size for that excess, or skip until your usage grows.' },
+      { q: 'What is the difference between net metering and net billing?',
+        a: 'Under net metering, exported units offset imported units one-for-one at your retail tariff. Under net billing (gross settlement), exports are paid at a lower feed-in rate while imports cost the full tariff — same hardware, materially worse economics. Which applies depends on your state’s current regulations.' },
     ],
   },
 ];

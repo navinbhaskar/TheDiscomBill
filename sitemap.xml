@@ -121,6 +121,54 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.thediscombill.com/guides/how-fppa-fuel-surcharge-is-calculated/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.thediscombill.com/guides/reduce-fixed-charges-sanctioned-load/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.thediscombill.com/guides/electricity-duty-explained/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.thediscombill.com/guides/how-to-read-bses-delhi-bill/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.thediscombill.com/guides/how-to-read-msedcl-bill/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.thediscombill.com/guides/how-to-read-bescom-bill/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.thediscombill.com/guides/how-to-read-tneb-tangedco-bill/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.thediscombill.com/guides/solar-net-metering-savings/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.thediscombill.com/glossary/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://www.thediscombill.com/glossary/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://www.thediscombill.com/hi/glossary/"/>
