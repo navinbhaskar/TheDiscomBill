@@ -5,7 +5,9 @@
 // bill, dynamic select options and JS-managed unit labels stay English (they're value/logic-bound).
 // The choice is persisted in localStorage.
 
-const STRINGS = {
+// Exported so generate-seo.js can reuse the same Hindi strings when pre-rendering the
+// static /hi/ pages (single source of truth for chrome/glossary shell translations).
+export const STRINGS = {
   en: {
     // Header / nav
     'tagline': 'Electricity Bill Calculator · All India',

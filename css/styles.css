@@ -1909,6 +1909,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .seo-page { max-width: 1000px; margin: 0 auto; padding-top: 28px; padding-bottom: 56px; }
 .seo-page h1 { font-size: 27px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.6px; line-height: 1.2; margin: 6px 0 12px; }
 .seo-lead { font-size: 16px; color: var(--text-secondary); line-height: 1.65; max-width: 760px; margin: 0 0 18px; }
+/* Cross-link between the English and Hindi variants of a page */
+.seo-lang-link { font-size: 13px; margin: -2px 0 10px; }
+.seo-lang-link a { color: var(--brand); text-decoration: none; font-weight: 600; }
+.seo-lang-link a:hover { text-decoration: underline; }
 .seo-section { margin-top: 34px; }
 .seo-section > h2 { font-size: 20px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.3px; margin: 0 0 14px; }
 .seo-section p { color: var(--text-secondary); line-height: 1.65; margin: 0 0 14px; max-width: 760px; }

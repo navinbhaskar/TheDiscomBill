@@ -16,6 +16,8 @@ const assets = [
   // the Quick Links destinations 404 in production. tariffs/ also contains the
   // generated per-state and per-DISCOM landing pages (copied recursively).
   'compare', 'usage', 'solar', 'tariffs', 'guides', 'glossary', 'methodology', 'services', 'bill-check', 'bill-review', 'expert', 'admin', 'login', 'my-bills', 'new-connection', 'complaint',
+  // Hindi pre-rendered variants of tariffs/guides/glossary (generated into hi/ by generate-seo.js)
+  'hi',
   'index.html', 'editor.html',
   'sw.js', 'manifest.webmanifest',
   'icon.svg', 'icon-maskable.svg',

@@ -22,6 +22,7 @@ import { TARIFF_DB, STATE_META, getStates, getDiscoms } from './js/tariffs/regis
 import { calculateBill } from './js/engine.js';
 import { GUIDES } from './guides-content.js';
 import { GLOSSARY } from './glossary-content.js';
+import { STRINGS } from './js/i18n.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
@@ -40,6 +41,32 @@ function writePage(relDir, html) {
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
 }
+
+// ── Hindi (/hi/) variants ─────────────────────────────────────────────────────
+// Every tariff, guide and glossary page is emitted twice: at its canonical URL (English)
+// and under /hi/ (Hindi). Both carry the full hreflang trio (en-IN, hi-IN, x-default→en)
+// so Google indexes the Hindi pages instead of treating them as duplicates.
+const hiUrl = (u) => '/hi' + u;
+
+// Devanagari names for every state/UT (used in Hindi titles, H1s and breadcrumbs —
+// "उत्तर प्रदेश बिजली बिल कैलकुलेटर" is the query shape Hindi searchers actually type).
+const STATE_HI = {
+  'Andhra Pradesh': 'आंध्र प्रदेश', 'Arunachal Pradesh': 'अरुणाचल प्रदेश', 'Assam': 'असम',
+  'Bihar': 'बिहार', 'Chandigarh': 'चंडीगढ़', 'Chhattisgarh': 'छत्तीसगढ़',
+  'Dadra and Nagar Haveli and Daman and Diu': 'दादरा और नगर हवेली और दमन और दीव',
+  'Delhi': 'दिल्ली', 'Goa': 'गोवा', 'Gujarat': 'गुजरात', 'Haryana': 'हरियाणा',
+  'Himachal Pradesh': 'हिमाचल प्रदेश', 'Jammu and Kashmir': 'जम्मू और कश्मीर',
+  'Jharkhand': 'झारखंड', 'Karnataka': 'कर्नाटक', 'Kerala': 'केरल', 'Ladakh': 'लद्दाख',
+  'Lakshadweep': 'लक्षद्वीप', 'Madhya Pradesh': 'मध्य प्रदेश', 'Maharashtra': 'महाराष्ट्र',
+  'Manipur': 'मणिपुर', 'Meghalaya': 'मेघालय', 'Mizoram': 'मिज़ोरम', 'Nagaland': 'नागालैंड',
+  'Odisha': 'ओडिशा', 'Puducherry': 'पुदुचेरी', 'Punjab': 'पंजाब', 'Rajasthan': 'राजस्थान',
+  'Sikkim': 'सिक्किम', 'Tamil Nadu': 'तमिलनाडु', 'Telangana': 'तेलंगाना', 'Tripura': 'त्रिपुरा',
+  'Uttar Pradesh': 'उत्तर प्रदेश', 'Uttarakhand': 'उत्तराखंड', 'West Bengal': 'पश्चिम बंगाल',
+  'Andaman and Nicobar Islands': 'अंडमान और निकोबार द्वीप समूह',
+};
+const hiState = (s) => STATE_HI[s] || s;
+// FY label: "FY 2025-26" → "वित्त वर्ष 2025-26"
+const hiFy = (fy) => String(fy).replace(/^FY\s*/i, 'वित्त वर्ष ');
 
 // ── shared chrome (header / footer) ───────────────────────────────────────────
 const HEADER = `
@@ -103,10 +130,22 @@ const FOOTER = `
 </footer>`;
 
 // ── page layout ───────────────────────────────────────────────────────────────
-function layout({ title, description, canonical, jsonld = [], body }) {
+// Rewrite site-chrome links to their /hi/ variants on Hindi pages (only routes that
+// actually have a Hindi twin — tools/services pages stay English).
+function hiChrome(html) {
+  return html
+    .replace(/href="\/tariffs\/states\/"/g, 'href="/hi/tariffs/states/"')
+    .replace(/href="\/guides\/"/g, 'href="/hi/guides/"')
+    .replace(/href="\/glossary\/"/g, 'href="/hi/glossary/"');
+}
+
+// `page` is the site-relative English URL of this page (e.g. "/glossary/"). When given,
+// the hreflang trio for the en/hi pair is emitted; `lang` picks which variant this is.
+function layout({ title, description, canonical, jsonld = [], body, lang = 'en', page = null }) {
   // Every generated page carries a WebPage node with freshness + publisher links —
   // GEO signal for AI crawlers (entity graph anchored to the #org / #website ids
   // declared on the homepage).
+  const hi = lang === 'hi';
   const webPage = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -115,13 +154,23 @@ function layout({ title, description, canonical, jsonld = [], body }) {
     description,
     isPartOf: { '@id': `${SITE}/#website` },
     publisher: { '@id': `${SITE}/#org` },
-    inLanguage: 'en-IN',
+    inLanguage: hi ? 'hi-IN' : 'en-IN',
     dateModified: TODAY
   };
   const ld = [webPage, ...jsonld].filter(Boolean)
     .map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n  ');
+  // hreflang trio: Google needs it on BOTH variants, and x-default points at English.
+  const alternates = page ? `
+  <link rel="alternate" hreflang="en-IN" href="${SITE}${page}">
+  <link rel="alternate" hreflang="hi-IN" href="${SITE}${hiUrl(page)}">
+  <link rel="alternate" hreflang="x-default" href="${SITE}${page}">` : '';
+  // On /hi/ pages the URL itself is an explicit language choice: persist it so the
+  // client i18n layer renders the shared chrome (nav/footer) in Hindi immediately.
+  const langBoot = hi ? `try { localStorage.setItem('lang', 'hi'); } catch (e) {}` : '';
+  const chrome = hi ? hiChrome(HEADER) : HEADER;
+  const footer = hi ? hiChrome(FOOTER) : FOOTER;
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="${hi ? 'hi' : 'en'}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -136,11 +185,12 @@ function layout({ title, description, canonical, jsonld = [], body }) {
         if (t !== 'dark' && t !== 'light') t = 'light';
         document.documentElement.dataset.theme = t;
       } catch (e) {}
+      ${langBoot}
     })();
   </script>
   <title>${esc(title)}</title>
   <meta name="description" content="${attr(description)}">
-  <link rel="canonical" href="${attr(canonical)}">
+  <link rel="canonical" href="${attr(canonical)}">${alternates}
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="TheDiscomBill">
@@ -148,7 +198,8 @@ function layout({ title, description, canonical, jsonld = [], body }) {
   <meta property="og:description" content="${attr(description)}">
   <meta property="og:url" content="${attr(canonical)}">
   <meta property="og:image" content="${SITE}/icon-512.png">
-  <meta property="og:locale" content="en_IN">
+  <meta property="og:locale" content="${hi ? 'hi_IN' : 'en_IN'}">
+  ${hi ? '<meta property="og:locale:alternate" content="en_IN">' : '<meta property="og:locale:alternate" content="hi_IN">'}
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="${attr(title)}">
   <meta name="twitter:description" content="${attr(description)}">
@@ -163,15 +214,22 @@ function layout({ title, description, canonical, jsonld = [], body }) {
   ${ld}
 </head>
 <body>
-${HEADER}
+${chrome}
 <div class="page-body">
 ${body}
 </div>
-${FOOTER}
+${footer}
 <script type="module" src="/js/main.js"></script>
 </body>
 </html>
 `;
+}
+
+// Visible, crawlable link between the two language variants (shown under the breadcrumbs).
+function langSwitchLink(page, lang) {
+  return lang === 'hi'
+    ? `<p class="seo-lang-link"><a href="${attr(page)}" hreflang="en-IN" lang="en">Read this page in English →</a></p>`
+    : `<p class="seo-lang-link"><a href="${attr(hiUrl(page))}" hreflang="hi-IN" lang="hi">यह पेज हिंदी में पढ़ें →</a></p>`;
 }
 
 function breadcrumbs(trail) {
@@ -209,73 +267,75 @@ function faqJsonLd(faqs) {
   };
 }
 
-function faqHtml(faqs) {
+function faqHtml(faqs, hi = false) {
   if (!faqs.length) return '';
   const items = faqs.map(f => `
     <details class="seo-faq-item">
       <summary>${esc(f.q)}</summary>
       <div class="seo-faq-a">${f.a}</div>
     </details>`).join('');
-  return `<section class="seo-section"><h2>Frequently asked questions</h2>${items}</section>`;
+  return `<section class="seo-section"><h2>${hi ? 'अक्सर पूछे जाने वाले सवाल' : 'Frequently asked questions'}</h2>${items}</section>`;
 }
 
 // ── tariff renderers (static, ported from tariff-explorer.js) ─────────────────
-function slabRange(prev, limit) {
-  if (limit === Infinity || limit == null) return `Above ${prev.toLocaleString('en-IN')}`;
+function slabRange(prev, limit, hi = false) {
+  if (limit === Infinity || limit == null) return `${hi ? 'से अधिक ' : 'Above '}${prev.toLocaleString('en-IN')}`;
   if (prev === 0) return `0 – ${limit.toLocaleString('en-IN')}`;
   return `${prev.toLocaleString('en-IN')} – ${limit.toLocaleString('en-IN')}`;
 }
-function energySlabsHtml(slabs) {
-  if (!Array.isArray(slabs) || !slabs.length) return '<p class="tx-muted">Not specified.</p>';
+function energySlabsHtml(slabs, hi = false) {
+  if (!Array.isArray(slabs) || !slabs.length) return `<p class="tx-muted">${hi ? 'निर्दिष्ट नहीं।' : 'Not specified.'}</p>`;
   let prev = 0;
   const rows = slabs.map(s => {
-    const range = slabRange(prev, s.limit);
+    const range = slabRange(prev, s.limit, hi);
     prev = (s.limit === Infinity || s.limit == null) ? prev : s.limit;
     const note = s.label ? ` <span class="tx-muted">(${esc(s.label)})</span>` : '';
-    return `<tr><td>${range} <span class="tx-muted">units</span>${note}</td><td class="num">${rupee(s.rate)}<span class="tx-muted">/unit</span></td></tr>`;
+    return `<tr><td>${range} <span class="tx-muted">${hi ? 'यूनिट' : 'units'}</span>${note}</td><td class="num">${rupee(s.rate)}<span class="tx-muted">${hi ? '/यूनिट' : '/unit'}</span></td></tr>`;
   }).join('');
   return `<table class="tariff-slab-table"><tbody>${rows}</tbody></table>`;
 }
-function fixedChargeHtml(fc) {
+function fixedChargeHtml(fc, hi = false) {
+  const mo = hi ? '/ माह' : '/ month';
+  const flat = hi ? '/ माह (स्थिर)' : '/ month (flat)';
   if (fc == null) return '<span class="tx-muted">—</span>';
-  if (typeof fc === 'number') return `<strong>${rupee(fc)}</strong> <span class="tx-muted">/ month (flat)</span>`;
-  if (fc.type === 'per_kw')  return `<strong>${rupee(fc.rate)}</strong> <span class="tx-muted">/ kW / month</span>`;
-  if (fc.type === 'per_kva') return `<strong>${rupee(fc.rate)}</strong> <span class="tx-muted">/ kVA / month</span>`;
-  if (fc.type === 'flat')    return `<strong>${rupee(fc.rate)}</strong> <span class="tx-muted">/ month (flat)</span>`;
+  if (typeof fc === 'number') return `<strong>${rupee(fc)}</strong> <span class="tx-muted">${flat}</span>`;
+  if (fc.type === 'per_kw')  return `<strong>${rupee(fc.rate)}</strong> <span class="tx-muted">/ kW ${mo}</span>`;
+  if (fc.type === 'per_kva') return `<strong>${rupee(fc.rate)}</strong> <span class="tx-muted">/ kVA ${mo}</span>`;
+  if (fc.type === 'flat')    return `<strong>${rupee(fc.rate)}</strong> <span class="tx-muted">${flat}</span>`;
   if (fc.type === 'tiered' && Array.isArray(fc.slabs)) {
     const rows = fc.slabs.map(s => {
-      const label = s.label || (s.maxLoad === Infinity ? 'Above limit' : `Up to ${s.maxLoad} kW`);
-      return `<tr><td>${esc(label)}</td><td class="num">${rupee(s.rate)}<span class="tx-muted">/mo</span></td></tr>`;
+      const label = s.label || (s.maxLoad === Infinity ? (hi ? 'सीमा से ऊपर' : 'Above limit') : `${hi ? '' : 'Up to '}${s.maxLoad} kW${hi ? ' तक' : ''}`);
+      return `<tr><td>${esc(label)}</td><td class="num">${rupee(s.rate)}<span class="tx-muted">${hi ? '/माह' : '/mo'}</span></td></tr>`;
     }).join('');
     return `<table class="tariff-slab-table"><tbody>${rows}</tbody></table>`;
   }
-  if (typeof fc.rate === 'number') return `<strong>${rupee(fc.rate)}</strong> <span class="tx-muted">/ month</span>`;
+  if (typeof fc.rate === 'number') return `<strong>${rupee(fc.rate)}</strong> <span class="tx-muted">${mo}</span>`;
   return '<span class="tx-muted">—</span>';
 }
-function additionalChargesHtml(arr) {
+function additionalChargesHtml(arr, hi = false) {
   if (!Array.isArray(arr) || !arr.length) return '';
   const items = arr.map(a => {
     const isPct = a.type && String(a.type).includes('percent');
     const val = isPct ? `${a.rate}%` : rupee(a.rate);
     return `<li><span>${esc(a.name || 'Charge')}</span><strong>${val}</strong></li>`;
   }).join('');
-  return `<div class="tariff-field"><div class="tariff-field-label">Additional charges</div><ul class="tariff-addl">${items}</ul></div>`;
+  return `<div class="tariff-field"><div class="tariff-field-label">${hi ? 'अतिरिक्त शुल्क' : 'Additional charges'}</div><ul class="tariff-addl">${items}</ul></div>`;
 }
-function tariffBlockHtml(obj) {
+function tariffBlockHtml(obj, hi = false) {
   return `
     <div class="tariff-block">
       <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value">${fixedChargeHtml(obj.fixedCharge)}</div>
+        <div class="tariff-field-label">${hi ? 'फिक्स्ड चार्ज' : 'Fixed charge'}</div>
+        <div class="tariff-field-value">${fixedChargeHtml(obj.fixedCharge, hi)}</div>
       </div>
       <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        ${energySlabsHtml(obj.energySlabs)}
+        <div class="tariff-field-label">${hi ? 'ऊर्जा शुल्क' : 'Energy charges'}</div>
+        ${energySlabsHtml(obj.energySlabs, hi)}
       </div>
-      ${additionalChargesHtml(obj.additionalCharges)}
+      ${additionalChargesHtml(obj.additionalCharges, hi)}
     </div>`;
 }
-function categoryCardHtml(cat) {
+function categoryCardHtml(cat, hi = false) {
   const hasSupplyTypes = Array.isArray(cat.supplyTypes) && cat.supplyTypes.length > 0;
   let body;
   if (hasSupplyTypes) {
@@ -283,10 +343,10 @@ function categoryCardHtml(cat) {
       <div class="tariff-supplytype">
         <div class="tariff-st-name">${esc(st.name || st.id)}</div>
         ${st.description ? `<p class="tariff-st-desc">${esc(st.description)}</p>` : ''}
-        ${tariffBlockHtml(st)}
+        ${tariffBlockHtml(st, hi)}
       </div>`).join('');
   } else {
-    body = tariffBlockHtml(cat);
+    body = tariffBlockHtml(cat, hi);
   }
   const icon = /commerc|non.?domestic|lt-?2|lmv-?2|ned/i.test(cat.name || cat.id) ? '🏪'
              : /industr/i.test(cat.name || cat.id) ? '🏭'
@@ -312,7 +372,7 @@ function domesticCategory(discom) {
       || cats.find(c => /home|household/i.test(c.name || c.id))
       || cats[0] || null;
 }
-function indicativeBillsHtml(state, discom) {
+function indicativeBillsHtml(state, discom, hi = false) {
   const cat = domesticCategory(discom);
   if (!cat) return '';
   const load = 2;            // assume a typical 2 kW domestic sanctioned load
@@ -322,12 +382,24 @@ function indicativeBillsHtml(state, discom) {
     try {
       const r = calculateBill({ discomId: discom.id, categoryId: cat.id, units, connectedLoadKw: load });
       if (r && !r.error && r.totalPayable != null) {
-        rows.push(`<tr><td>${units.toLocaleString('en-IN')} units</td><td class="num">${rupee(r.totalPayable)}</td></tr>`);
+        rows.push(`<tr><td>${units.toLocaleString('en-IN')} ${hi ? 'यूनिट' : 'units'}</td><td class="num">${rupee(r.totalPayable)}</td></tr>`);
       }
     } catch (e) { /* skip a level that the engine can't price */ }
   }
   if (!rows.length) return '';
-  return `
+  const calcHref = `/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator`;
+  return hi ? `
+    <section class="seo-section">
+      <h2>अनुमानित मासिक बिल — ${esc(discom.name)}</h2>
+      <p>${load} kW स्वीकृत भार पर घरेलू (${esc(cat.name)}) कनेक्शन का अनुमानित कुल मासिक बिल, हमारे कैलकुलेटर वाले ही इंजन से निकाला गया। वास्तविक बिल आपकी उप-श्रेणी, फिक्स्ड/ईंधन शुल्क और स्थानीय करों के अनुसार बदलते हैं।</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>मासिक खपत</th><th class="num">अनुमानित बिल</th></tr></thead>
+          <tbody>${rows.join('')}</tbody>
+        </table>
+      </div>
+      <p class="seo-cta-row"><a class="seo-cta" href="${calcHref}">मेरा सटीक ${esc(discom.name)} बिल निकालें →</a></p>
+    </section>` : `
     <section class="seo-section">
       <h2>Indicative monthly bill — ${esc(discom.name)}</h2>
       <p>Estimated total monthly bill for a domestic (${esc(cat.name)}) connection at a ${load} kW sanctioned load, computed with the same engine as our calculator. Actual bills vary with your sub-category, fixed/fuel charges and local duties.</p>
@@ -337,7 +409,7 @@ function indicativeBillsHtml(state, discom) {
           <tbody>${rows.join('')}</tbody>
         </table>
       </div>
-      <p class="seo-cta-row"><a class="seo-cta" href="/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator">Calculate my exact ${esc(discom.name)} bill →</a></p>
+      <p class="seo-cta-row"><a class="seo-cta" href="${calcHref}">Calculate my exact ${esc(discom.name)} bill →</a></p>
     </section>`;
 }
 
@@ -386,45 +458,49 @@ function sharesScheduleInState(state, discom) {
   return getDiscoms(state).some(d => d.id !== discom.id && JSON.stringify(d.categories) === sig);
 }
 
-function areaServedHtml(discom) {
+function areaServedHtml(discom, hi = false) {
   const { region, cities } = parseArea(discom.area);
   if (!region && !cities.length) return '';
-  const lead = cities.length
-    ? `${esc(discom.name)} (${esc(discom.fullName || discom.name)}) distributes electricity across ${region ? esc(region) : 'its licensed area'}, serving ${cities.length} key district${cities.length > 1 ? 's' : ''} and town${cities.length > 1 ? 's' : ''} including ${esc(cities.slice(0, 4).join(', '))}${cities.length > 4 ? ' and more' : ''}.`
-    : `${esc(discom.name)} distributes electricity across ${esc(region)}.`;
+  const lead = hi
+    ? (cities.length
+      ? `${esc(discom.name)} (${esc(discom.fullName || discom.name)}) ${region ? esc(region) : 'अपने लाइसेंस क्षेत्र'} में बिजली वितरित करती है — ${esc(cities.slice(0, 4).join(', '))}${cities.length > 4 ? ' समेत' : ''} ${cities.length} प्रमुख ज़िलों/शहरों में।`
+      : `${esc(discom.name)} ${esc(region)} में बिजली वितरित करती है।`)
+    : (cities.length
+      ? `${esc(discom.name)} (${esc(discom.fullName || discom.name)}) distributes electricity across ${region ? esc(region) : 'its licensed area'}, serving ${cities.length} key district${cities.length > 1 ? 's' : ''} and town${cities.length > 1 ? 's' : ''} including ${esc(cities.slice(0, 4).join(', '))}${cities.length > 4 ? ' and more' : ''}.`
+      : `${esc(discom.name)} distributes electricity across ${esc(region)}.`);
   const chips = cities.length
     ? `<div class="seo-area-chips">${cities.map(c => `<span>${esc(c)}</span>`).join('')}</div>` : '';
   return `
     <section class="seo-section">
-      <h2>Areas served by ${esc(discom.name)}</h2>
+      <h2>${hi ? `${esc(discom.name)} का सेवा क्षेत्र` : `Areas served by ${esc(discom.name)}`}</h2>
       <p>${lead}</p>
       ${chips}
     </section>`;
 }
 
-function keyFactsHtml(state, discom, fy) {
+function keyFactsHtml(state, discom, fy, hi = false) {
   const { region, cities } = parseArea(discom.area);
   const dr = domesticRates(discom);
   const rows = [];
-  rows.push(['Distribution company', esc(discom.fullName || discom.name)]);
-  rows.push(['Short name', esc(discom.name)]);
-  rows.push(['State / UT', esc(state)]);
-  if (region) rows.push(['Service region', esc(region)]);
-  if (cities.length) rows.push(['Districts / cities served', esc(cities.length) + '+ — ' + esc(cities.slice(0, 6).join(', ')) + (cities.length > 6 ? '…' : '')]);
-  rows.push(['Tariff year', esc(fy)]);
+  rows.push([hi ? 'वितरण कंपनी' : 'Distribution company', esc(discom.fullName || discom.name)]);
+  rows.push([hi ? 'संक्षिप्त नाम' : 'Short name', esc(discom.name)]);
+  rows.push([hi ? 'राज्य / केंद्र शासित प्रदेश' : 'State / UT', esc(hi ? hiState(state) : state)]);
+  if (region) rows.push([hi ? 'सेवा क्षेत्र' : 'Service region', esc(region)]);
+  if (cities.length) rows.push([hi ? 'सेवित ज़िले / शहर' : 'Districts / cities served', esc(cities.length) + '+ — ' + esc(cities.slice(0, 6).join(', ')) + (cities.length > 6 ? '…' : '')]);
+  rows.push([hi ? 'टैरिफ वर्ष' : 'Tariff year', esc(hi ? hiFy(fy) : fy)]);
   // Freshness: states verified against real bills get an explicit badge; the rest
   // state honestly which published order the rates come from. (Never fabricate a
   // "verified" claim — only STATE_META.verified set from an actual bill check.)
   const meta = STATE_META[state] || {};
-  rows.push(['Rates status', meta.verified
-    ? `✅ Verified against real bills — ${esc(meta.ratesAsOf || fy)}`
-    : `Based on the ${esc(fy)} tariff order (latest published data we have verified)`]);
-  if (dr) rows.push(['Domestic energy rate', `${rupee(dr.min)} – ${rupee(dr.max)} per unit`]);
-  if (discom.lpscRate != null) rows.push(['Late payment surcharge (LPSC)', `${discom.lpscRate}% per month`]);
-  if (discom.website) rows.push(['Official website', `<a href="${attr(discom.website)}" target="_blank" rel="noopener">${esc(String(discom.website).replace(/^https?:\/\//, ''))} ↗</a>`]);
+  rows.push([hi ? 'दरों की स्थिति' : 'Rates status', meta.verified
+    ? (hi ? `✅ असली बिलों से सत्यापित — ${esc(meta.ratesAsOf || fy)}` : `✅ Verified against real bills — ${esc(meta.ratesAsOf || fy)}`)
+    : (hi ? `${esc(hiFy(fy))} टैरिफ आदेश पर आधारित (हमारे पास उपलब्ध नवीनतम प्रकाशित डेटा)` : `Based on the ${esc(fy)} tariff order (latest published data we have verified)`)]);
+  if (dr) rows.push([hi ? 'घरेलू ऊर्जा दर' : 'Domestic energy rate', `${rupee(dr.min)} – ${rupee(dr.max)} ${hi ? 'प्रति यूनिट' : 'per unit'}`]);
+  if (discom.lpscRate != null) rows.push([hi ? 'विलंब भुगतान अधिभार (LPSC)' : 'Late payment surcharge (LPSC)', `${discom.lpscRate}% ${hi ? 'प्रति माह' : 'per month'}`]);
+  if (discom.website) rows.push([hi ? 'आधिकारिक वेबसाइट' : 'Official website', `<a href="${attr(discom.website)}" target="_blank" rel="noopener">${esc(String(discom.website).replace(/^https?:\/\//, ''))} ↗</a>`]);
   return `
     <section class="seo-section">
-      <h2>${esc(discom.name)} at a glance</h2>
+      <h2>${hi ? `${esc(discom.name)} एक नज़र में` : `${esc(discom.name)} at a glance`}</h2>
       <table class="seo-facts"><tbody>${rows.map(([k, v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join('')}</tbody></table>
     </section>`;
 }
@@ -433,16 +509,20 @@ function keyFactsHtml(state, discom, fy) {
 // deep-linked with ?state=&discom= so the hub opens pre-selected on this DISCOM and on the right
 // tab. These are internal links to an existing page (not new thin per-DISCOM pages) — they improve
 // crawl depth and topical clustering without duplicate-content risk.
-function discomServiceLinksHtml(state, discom) {
+function discomServiceLinksHtml(state, discom, hi = false) {
   const qs = `?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}`;
-  const links = [
+  const links = hi ? [
+    [`/services/${qs}#pay`, `${esc(discom.name)} बिल देखें व भरें`, 'अपना ताज़ा बिल देखें और आधिकारिक पोर्टल पर भुगतान करें'],
+    [`/services/${qs}#new-connection`, `नया ${esc(discom.name)} कनेक्शन`, 'शुल्क, दस्तावेज़ और आवेदन की चरण-दर-चरण प्रक्रिया'],
+    [`/services/${qs}#complaint`, `${esc(discom.name)} शिकायत दर्ज करें`, 'बिजली गुल, बिलिंग या मीटर की शिकायत डिस्कॉम में दर्ज करें'],
+  ] : [
     [`/services/${qs}#pay`, `Check &amp; pay ${esc(discom.name)} bill`, 'View your latest bill and pay on the official portal'],
     [`/services/${qs}#new-connection`, `New ${esc(discom.name)} connection`, 'Charges, documents and the step-by-step apply process'],
     [`/services/${qs}#complaint`, `Register a ${esc(discom.name)} complaint`, 'Log a no-power, billing or meter complaint with the DISCOM'],
   ];
   return `
     <section class="seo-section">
-      <h2>${esc(discom.name)} quick links</h2>
+      <h2>${hi ? `${esc(discom.name)} त्वरित लिंक` : `${esc(discom.name)} quick links`}</h2>
       <div class="seo-link-grid">
         ${links.map(([href, title, sub]) =>
           `<a class="seo-link-card" href="${href}"><strong>${title}</strong><span>${sub}</span></a>`).join('')}
@@ -453,27 +533,42 @@ function discomServiceLinksHtml(state, discom) {
 // Contextual glossary links from each DISCOM page. Real anchor text into /glossary/#<term>
 // (stronger topical signal than nav/footer boilerplate) that also genuinely helps a reader
 // decode the charge lines they just saw in the tariff schedule above.
-function glossaryLinksHtml(discom) {
-  const terms = [
+function glossaryLinksHtml(discom, hi = false) {
+  const base = hi ? '/hi/glossary/' : '/glossary/';
+  const terms = hi ? [
+    ['fppa', 'FPPA (ईंधन अधिभार)'],
+    ['fixed-charge', 'फिक्स्ड चार्ज'],
+    ['telescopic-slabs', 'टेलीस्कोपिक स्लैब'],
+    ['sanctioned-load', 'स्वीकृत भार'],
+    ['electricity-duty', 'बिजली शुल्क'],
+  ] : [
     ['fppa', 'FPPA (fuel surcharge)'],
     ['fixed-charge', 'fixed charges'],
     ['telescopic-slabs', 'telescopic slabs'],
     ['sanctioned-load', 'sanctioned load'],
     ['electricity-duty', 'electricity duty'],
   ];
-  return `
+  const links = terms.map(([slug, label]) => `<a href="${base}#${slug}">${label}</a>`).join(', ');
+  return hi ? `
+    <section class="seo-section">
+      <h2>अपना ${esc(discom.name)} बिल समझें</h2>
+      <p>ये शुल्क लाइनें नई लगती हैं? हमारी <a href="${base}">बिजली बिल शब्दावली</a> ${esc(discom.name)}
+      बिल के शब्दों को आसान भाषा में समझाती है — जिनमें ${links} शामिल हैं।</p>
+    </section>` : `
     <section class="seo-section">
       <h2>Understand your ${esc(discom.name)} bill</h2>
-      <p>New to these charge lines? Our <a href="/glossary/">electricity bill glossary</a> explains
+      <p>New to these charge lines? Our <a href="${base}">electricity bill glossary</a> explains
       the terms on a ${esc(discom.name)} bill in plain language — including
-      ${terms.map(([slug, label]) => `<a href="/glossary/#${slug}">${label}</a>`).join(', ')}.</p>
+      ${links}.</p>
     </section>`;
 }
 
 // ── page builders ─────────────────────────────────────────────────────────────
-function discomPage(state, discom) {
+function discomPage(state, discom, lang = 'en') {
+  const hi = lang === 'hi';
   const stateSlug = slugify(state);
-  const url = `/tariffs/${stateSlug}/${discom.id}/`;
+  const enUrl = `/tariffs/${stateSlug}/${discom.id}/`;
+  const url = hi ? hiUrl(enUrl) : enUrl;
   const meta = STATE_META[state] || {};
   const fy = discom.tariffYear || 'FY 2025-26';
   const long = discom.fullName || discom.name;
@@ -481,6 +576,8 @@ function discomPage(state, discom) {
   const dr = domesticRates(discom);
   const shared = sharesScheduleInState(state, discom);
   const cityPhrase = cities.length ? cities.slice(0, 3).join(', ') : region;
+
+  if (hi) return discomPageHi({ state, discom, stateSlug, enUrl, url, meta, fy, long, region, cities, dr, shared, cityPhrase });
 
   // Deterministic phrasing variation (keyed off the DISCOM) so titles/intros aren't a single
   // repeated template across 65 pages — each one is differently worded but factually identical.
@@ -558,6 +655,7 @@ function discomPage(state, discom) {
       { name: state, url: `/tariffs/${stateSlug}/` },
       { name: discom.name, url: null },
     ])}
+    ${langSwitchLink(enUrl, 'en')}
     <h1>${h1}</h1>
     <p class="seo-lead">${lead}</p>
     <div class="tariff-discom-headrow seo-discom-head">
@@ -589,7 +687,7 @@ function discomPage(state, discom) {
   </section>`;
 
   return layout({
-    title, description, canonical: SITE + url,
+    title, description, canonical: SITE + url, page: enUrl,
     jsonld: [
       breadcrumbJsonLd([
         { name: 'Home', url: '/' },
@@ -603,9 +701,112 @@ function discomPage(state, discom) {
   });
 }
 
-function statePage(state) {
+// Hindi twin of discomPage — same data, Devanagari copy, links stay inside /hi/ where a
+// Hindi variant exists. No phrasing variants needed: uniqueness comes from the data itself.
+function discomPageHi({ state, discom, stateSlug, enUrl, url, meta, fy, long, region, cities, dr, shared, cityPhrase }) {
+  const stateHi = hiState(state);
+  const fyHi = hiFy(fy);
+  const title = fitTitle(`${discom.name} बिजली बिल कैलकुलेटर व टैरिफ ${fy.replace(/^FY\s*/i, '')}`, [
+    `${discom.name} बिल कैलकुलेटर व टैरिफ`,
+    `${discom.name} टैरिफ ${fy.replace(/^FY\s*/i, '')}`,
+  ]);
+  const description = `${discom.name} (${long}) का बिजली बिल ${fyHi} के लिए निकालें${cityPhrase ? ` — ${cityPhrase}` : ''}। स्लैब दरें, फिक्स्ड चार्ज, FPPA व शुल्क।${dr ? ` घरेलू दर ${rupee(dr.min)}/यूनिट से।` : ''} मुफ़्त, बिना साइन-अप।`;
+  const h1 = `${esc(discom.name)} बिजली बिल कैलकुलेटर व टैरिफ (${esc(fyHi)})`;
+  const lead = `अपना <strong>${esc(long)}</strong> बिल सेकंडों में अनुमानित करें और ${esc(fyHi)} की पूरी टैरिफ अनुसूची देखें — ऊर्जा स्लैब, फिक्स्ड/डिमांड चार्ज, ईंधन अधिभार (FPPA) और बिजली शुल्क${cities.length ? `, ${esc(cities.slice(0, 3).join(', '))} और पूरे ${esc(region || stateHi)} के लिए` : ` — पूरे ${esc(region || stateHi)} के लिए`}।`;
+
+  const badges = [];
+  if (meta.verified) badges.push('<span class="tariff-badge verified">✓ सत्यापित दरें</span>');
+  badges.push(`<span class="tariff-badge">${esc(fyHi)}</span>`);
+  if (region) badges.push(`<span class="tariff-badge">${esc(region)}</span>`);
+  const src = discom.website || meta.sourceUrl;
+
+  const cards = (discom.categories || []).map(c => categoryCardHtml(c, true)).join('') || '<p class="tx-muted">कोई श्रेणी सूचीबद्ध नहीं।</p>';
+
+  const siblings = getDiscoms(state).filter(d => d.id !== discom.id);
+  const siblingHtml = siblings.length ? `
+    <section class="seo-section">
+      <h2>${esc(stateHi)} के अन्य डिस्कॉम</h2>
+      <div class="seo-link-grid">
+        ${siblings.map(d => { const a = parseArea(d.area); return `<a class="seo-link-card" href="/hi/tariffs/${stateSlug}/${d.id}/"><strong>${esc(d.name)}</strong><span>${esc(d.fullName || '')}</span>${a.region ? `<small>${esc(a.region)}</small>` : ''}</a>`; }).join('')}
+      </div>
+    </section>` : '';
+
+  const sharedNote = shared
+    ? `<p class="seo-note">${esc(discom.name)} पर वही राज्यव्यापी ${esc(fyHi)} टैरिफ अनुसूची लागू है जो ${esc(stateHi)} के बाक़ी डिस्कॉम पर (राज्य नियामक द्वारा निर्धारित)। कंपनियों में अंतर <strong>सेवा क्षेत्र</strong>, बिलिंग पोर्टल और संपर्क विवरण का है, जो नीचे दिए हैं।</p>`
+    : '';
+
+  const calcHref = `/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator`;
+  const faqs = [];
+  faqs.push({ q: `${discom.name} बिजली बिल कैसे निकालें?`,
+    a: `<a href="${calcHref}">${esc(discom.name)} बिल कैलकुलेटर</a> खोलें, अपनी खपत (यूनिट) और स्वीकृत भार डालें — यह ${esc(fyHi)} की ${esc(discom.name)} स्लैब दरें, फिक्स्ड चार्ज${meta.verified ? ', FPPA और बिजली शुल्क' : ' और अन्य शुल्क'} लगाकर मदवार अनुमानित बिल देता है।` });
+  if (cities.length) faqs.push({ q: `${discom.name} किन क्षेत्रों और शहरों में बिजली देती है?`,
+    a: `${esc(discom.name)} (${esc(long)}) ${region ? esc(region) + ' — ' : ''}${esc(cities.join(', '))} में बिजली आपूर्ति करती है।` });
+  if (dr) faqs.push({ q: `${discom.name} पर सबसे सस्ती घरेलू बिजली दर क्या है?`,
+    a: `${esc(discom.name)} का घरेलू ऊर्जा शुल्क ${rupee(dr.min)} प्रति यूनिट से शुरू होकर सबसे ऊँचे स्लैब में ${rupee(dr.max)} प्रति यूनिट तक जाता है (${esc(dr.catName)}), साथ में मासिक फिक्स्ड चार्ज${meta.verified ? '' : ' (नवीनतम उपलब्ध अनुमान)'}। पूरी स्लैब तालिका ऊपर है।` });
+  if (discom.website) faqs.push({ q: `${discom.name} बिजली बिल ऑनलाइन कैसे भरें?`,
+    a: `आधिकारिक ${esc(discom.name)} पोर्टल <a href="${attr(discom.website)}" target="_blank" rel="noopener">${esc(String(discom.website).replace(/^https?:\/\//, ''))}</a> पर भुगतान करें। पहले इस पेज से जाँचें कि बिल कितना होना चाहिए, फिर आधिकारिक स्रोत पर भरें।` });
+  if (discom.lpscRate != null) faqs.push({ q: `${discom.name} का विलंब भुगतान अधिभार (LPSC) कितना है?`,
+    a: `${esc(discom.name)} बकाया राशि पर ${discom.lpscRate}% प्रति माह का विलंब भुगतान अधिभार लगाती है। हमारा कैलकुलेटर LPSC और बकाया जोड़कर कुल देय राशि का अनुमान दे सकता है।` });
+
+  const body = `
+  <section class="seo-page container">
+    ${breadcrumbs([
+      { name: 'होम', url: '/' },
+      { name: 'टैरिफ', url: '/hi/tariffs/states/' },
+      { name: stateHi, url: `/hi/tariffs/${stateSlug}/` },
+      { name: discom.name, url: null },
+    ])}
+    ${langSwitchLink(enUrl, 'hi')}
+    <h1>${h1}</h1>
+    <p class="seo-lead">${lead}</p>
+    <div class="tariff-discom-headrow seo-discom-head">
+      <div>
+        <div class="tariff-discom-name">${esc(long)}</div>
+        ${discom.area ? `<div class="tariff-discom-area">सेवा क्षेत्र: ${esc(discom.area)}</div>` : ''}
+      </div>
+      <div class="tariff-badges">${badges.join('')}</div>
+    </div>
+    ${src ? `<p><a class="tariff-source" href="${attr(src)}" target="_blank" rel="noopener">आधिकारिक ${esc(discom.name)} स्रोत ↗</a></p>` : ''}
+    <p class="seo-cta-row"><a class="seo-cta" href="${calcHref}">${esc(discom.name)} बिल कैलकुलेटर खोलें →</a></p>
+
+    ${discomServiceLinksHtml(state, discom, true)}
+
+    ${keyFactsHtml(state, discom, fy, true)}
+    ${areaServedHtml(discom, true)}
+    ${indicativeBillsHtml(state, discom, true)}
+
+    <section class="seo-section">
+      <h2>${esc(discom.name)} टैरिफ अनुसूची (${esc(fyHi)})</h2>
+      ${sharedNote}
+      <div class="tariff-cards">${cards}</div>
+    </section>
+
+    ${glossaryLinksHtml(discom, true)}
+    ${siblingHtml}
+    ${faqHtml(faqs, true)}
+    <p class="seo-disclaimer">आँकड़े सार्वजनिक रूप से उपलब्ध ${esc(stateHi)} टैरिफ आदेशों पर आधारित अनुमानित हैं। हमेशा अपने आधिकारिक ${esc(discom.name)} बिल से मिलान करें — दरें उप-श्रेणी, स्लैब और शहर के अनुसार बदलती हैं।</p>
+  </section>`;
+
+  return layout({
+    title, description, canonical: SITE + url, page: enUrl, lang: 'hi',
+    jsonld: [
+      breadcrumbJsonLd([
+        { name: 'होम', url: '/' },
+        { name: 'टैरिफ', url: '/hi/tariffs/states/' },
+        { name: stateHi, url: `/hi/tariffs/${stateSlug}/` },
+        { name: discom.name, url },
+      ]),
+      faqJsonLd(faqs),
+    ],
+    body,
+  });
+}
+
+function statePage(state, lang = 'en') {
+  const hi = lang === 'hi';
   const stateSlug = slugify(state);
-  const url = `/tariffs/${stateSlug}/`;
+  const enUrl = `/tariffs/${stateSlug}/`;
+  const url = hi ? hiUrl(enUrl) : enUrl;
   const meta = STATE_META[state] || {};
   const discoms = getDiscoms(state);
   const fy = (discoms[0] && discoms[0].tariffYear) || meta.ratesAsOf || 'FY 2025-26';
@@ -617,6 +818,69 @@ function statePage(state) {
   const cityLine = allCities.length ? allCities.slice(0, 6).join(', ') : '';
   const drs = discoms.map(domesticRates).filter(Boolean);
   const stateMin = drs.length ? Math.min(...drs.map(x => x.min)) : null;
+
+  if (hi) {
+    const stateHi = hiState(state);
+    const fyHi = hiFy(fy);
+    const title = fitTitle(`${stateHi} बिजली बिल कैलकुलेटर ${fy.replace(/^FY\s*/i, '')}`, [
+      `${stateHi} बिजली टैरिफ ${fy.replace(/^FY\s*/i, '')}`,
+      `${stateHi} बिजली टैरिफ`,
+    ]);
+    const description = `मुफ़्त ${stateHi} बिजली बिल कैलकुलेटर। ${discoms.length} डिस्कॉम (${names}) — ${fyHi} की स्लैब दरें, फिक्स्ड चार्ज व FPPA।${stateMin != null ? ` घरेलू दर ${rupee(stateMin)}/यूनिट से।` : ''}`;
+    const discomCards = discoms.map(d => {
+      const a = parseArea(d.area);
+      return `
+      <a class="seo-link-card" href="/hi/tariffs/${stateSlug}/${d.id}/">
+        <strong>${esc(d.name)}</strong>
+        <span>${esc(d.fullName || '')}</span>
+        ${a.region ? `<small>${esc(a.region)}${a.cities.length ? ` — ${esc(a.cities.slice(0, 3).join(', '))}` : ''}</small>` : ''}
+      </a>`;
+    }).join('');
+    const faqs = [];
+    faqs.push({ q: `${stateHi} में बिजली बिल कैसे निकाला जाता है?`,
+      a: `${esc(stateHi)} के बिल में स्लैब-वार ऊर्जा शुल्क, प्रति kW (या kVA) फिक्स्ड/डिमांड चार्ज, ईंधन व विद्युत क्रय समायोजन (FPPA) और बिजली शुल्क जुड़ते हैं। अपने डिस्कॉम का मदवार अनुमानित बिल पाने के लिए हमारा <a href="/#calculator">मुफ़्त कैलकुलेटर</a> इस्तेमाल करें।` });
+    faqs.push({ q: `${stateHi} में मेरे इलाक़े में कौन-सी बिजली वितरण कंपनी है?`,
+      a: `${esc(stateHi)} में ${discoms.length} डिस्कॉम ${discoms.length > 1 ? 'हैं' : 'है'}: ${discoms.map(d => { const a = parseArea(d.area); return `<strong>${esc(d.name)}</strong>${a.region ? ` (${esc(a.region)}${a.cities.length ? ` — ${esc(a.cities.slice(0, 3).join(', '))}` : ''})` : ''}`; }).join('; ')}। पूरी टैरिफ और अनुमानित बिल के लिए ऊपर अपना डिस्कॉम खोलें।` });
+    if (stateMin != null) faqs.push({ q: `${stateHi} में सबसे सस्ती घरेलू बिजली दर क्या है?`,
+      a: `${esc(stateHi)} के डिस्कॉम में सबसे कम घरेलू ऊर्जा शुल्क लगभग ${rupee(stateMin)} प्रति यूनिट (सबसे निचला स्लैब) से शुरू होता है — फिक्स्ड चार्ज, FPPA और शुल्क अलग। सटीक दरें आपके डिस्कॉम और खपत स्लैब पर निर्भर हैं।` });
+    faqs.push({ q: `${stateHi} का वर्तमान बिजली टैरिफ वर्ष क्या है?`,
+      a: `दिखाई गई दरें ${esc(fyHi)} की हैं${meta.verified ? ', प्रकाशित टैरिफ आदेश से सत्यापित' : ' (नवीनतम उपलब्ध)'}।` });
+
+    const body = `
+  <section class="seo-page container">
+    ${breadcrumbs([
+      { name: 'होम', url: '/' },
+      { name: 'टैरिफ', url: '/hi/tariffs/states/' },
+      { name: stateHi, url: null },
+    ])}
+    ${langSwitchLink(enUrl, 'hi')}
+    <h1>${esc(stateHi)} बिजली बिल कैलकुलेटर व डिस्कॉम टैरिफ (${esc(fyHi)})</h1>
+    <p class="seo-lead">${esc(stateHi)} की ${discoms.length} वितरण कंपन${discoms.length > 1 ? 'ियों' : 'ी'} — ${esc(names)} — में से किसी का भी अनुमानित बिजली बिल निकालें, ${esc(fyHi)} के पूरे स्लैब-वार विवरण के साथ${cityLine ? ` — ${esc(cityLine)} समेत` : ''}।</p>
+    <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">${esc(stateHi)} बिल कैलकुलेटर खोलें →</a></p>
+
+    <section class="seo-section">
+      <h2>${esc(stateHi)} के बिजली डिस्कॉम</h2>
+      <p>अपनी वितरण कंपनी चुनें — उसकी ${esc(fyHi)} टैरिफ अनुसूची, सेवा क्षेत्र और अनुमानित मासिक बिल देखें।</p>
+      <div class="seo-link-grid">${discomCards}</div>
+    </section>
+
+    ${faqHtml(faqs, true)}
+    <p class="seo-disclaimer">सार्वजनिक रूप से उपलब्ध ${esc(stateHi)} टैरिफ आदेशों पर आधारित अनुमानित आँकड़े${meta.sourceUrl ? ` (स्रोत: <a href="${attr(meta.sourceUrl)}" target="_blank" rel="noopener">${esc(String(meta.sourceUrl).replace(/^https?:\/\//, ''))}</a>)` : ''}। अपने आधिकारिक बिल से मिलान करें — दरें उप-श्रेणी, स्लैब और शहर के अनुसार बदलती हैं।</p>
+  </section>`;
+
+    return layout({
+      title, description, canonical: SITE + url, page: enUrl, lang: 'hi',
+      jsonld: [
+        breadcrumbJsonLd([
+          { name: 'होम', url: '/' },
+          { name: 'टैरिफ', url: '/hi/tariffs/states/' },
+          { name: stateHi, url },
+        ]),
+        faqJsonLd(faqs),
+      ],
+      body,
+    });
+  }
 
   // ≤ ~60 chars, keyword-first, no brand suffix (see the note above the DISCOM-page title).
   const title = fitTitle(variant(seed, [
@@ -660,6 +924,7 @@ function statePage(state) {
       { name: 'Tariffs', url: '/tariffs/states/' },
       { name: state, url: null },
     ])}
+    ${langSwitchLink(enUrl, 'en')}
     <h1>${esc(state)} Electricity Bill Calculator &amp; DISCOM Tariffs (${esc(fy)})</h1>
     <p class="seo-lead">Calculate your provisional electricity bill for any of ${esc(state)}'s ${discoms.length} distribution compan${discoms.length > 1 ? 'ies' : 'y'} — ${esc(names)} — with a full slab-wise breakdown for ${esc(fy)}${cityLine ? `, covering ${esc(cityLine)} and more` : ''}.</p>
     <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Open the ${esc(state)} bill calculator →</a></p>
@@ -675,7 +940,7 @@ function statePage(state) {
   </section>`;
 
   return layout({
-    title, description, canonical: SITE + url,
+    title, description, canonical: SITE + url, page: enUrl,
     jsonld: [
       breadcrumbJsonLd([
         { name: 'Home', url: '/' },
@@ -688,38 +953,58 @@ function statePage(state) {
   });
 }
 
-function directoryPage(states) {
-  const url = '/tariffs/states/';
-  const title = 'All Indian Electricity DISCOMs & Tariffs by State';
-  const description = 'Browse electricity tariffs and bill calculators for every Indian state and union territory. 70+ DISCOMs, slab-wise rates, fixed charges and FPPA — all in one directory.';
+function directoryPage(states, lang = 'en') {
+  const hi = lang === 'hi';
+  const enUrl = '/tariffs/states/';
+  const url = hi ? hiUrl(enUrl) : enUrl;
+  const title = hi
+    ? 'सभी भारतीय बिजली डिस्कॉम व राज्यवार टैरिफ'
+    : 'All Indian Electricity DISCOMs & Tariffs by State';
+  const description = hi
+    ? 'हर भारतीय राज्य और केंद्र शासित प्रदेश के बिजली टैरिफ व बिल कैलकुलेटर देखें। 70+ डिस्कॉम, स्लैब-वार दरें, फिक्स्ड चार्ज और FPPA — एक ही डायरेक्टरी में।'
+    : 'Browse electricity tariffs and bill calculators for every Indian state and union territory. 70+ DISCOMs, slab-wise rates, fixed charges and FPPA — all in one directory.';
 
+  const base = hi ? '/hi/tariffs/' : '/tariffs/';
   let totalDiscoms = 0;
   const sections = states.map(state => {
     const stateSlug = slugify(state);
     const discoms = getDiscoms(state);
     totalDiscoms += discoms.length;
-    const links = discoms.map(d => `<a href="/tariffs/${stateSlug}/${d.id}/">${esc(d.name)}</a>`).join('');
+    const links = discoms.map(d => `<a href="${base}${stateSlug}/${d.id}/">${esc(d.name)}</a>`).join('');
     return `
       <div class="seo-dir-state">
-        <h2><a href="/tariffs/${stateSlug}/">${esc(state)}</a></h2>
+        <h2><a href="${base}${stateSlug}/">${esc(hi ? hiState(state) : state)}</a></h2>
         <div class="seo-dir-discoms">${links}</div>
       </div>`;
   }).join('');
 
-  const body = `
+  const body = hi ? `
+  <section class="seo-page container">
+    ${breadcrumbs([
+      { name: 'होम', url: '/' },
+      { name: 'टैरिफ डायरेक्टरी', url: null },
+    ])}
+    ${langSwitchLink(enUrl, 'hi')}
+    <h1>बिजली टैरिफ व बिल कैलकुलेटर — सभी राज्य व डिस्कॉम</h1>
+    <p class="seo-lead">अपना राज्य चुनें और उसका बिजली बिल कैलकुलेटर व टैरिफ अनुसूची खोलें, या सीधे अपनी वितरण कंपनी पर जाएँ। पूरे भारत के ${states.length} राज्यों/केंद्र शासित प्रदेशों और ${totalDiscoms}+ डिस्कॉम को कवर करती है।</p>
+    <div class="seo-directory">${sections}</div>
+  </section>` : `
   <section class="seo-page container">
     ${breadcrumbs([
       { name: 'Home', url: '/' },
       { name: 'Tariffs Directory', url: null },
     ])}
+    ${langSwitchLink(enUrl, 'en')}
     <h1>Electricity Tariffs &amp; Bill Calculators — All States &amp; DISCOMs</h1>
     <p class="seo-lead">Pick your state to open its electricity bill calculator and tariff schedule, or jump straight to your distribution company. Covering ${states.length} states &amp; UTs and ${totalDiscoms}+ DISCOMs across India.</p>
     <div class="seo-directory">${sections}</div>
   </section>`;
 
   return layout({
-    title, description, canonical: SITE + url,
-    jsonld: [breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Tariffs Directory', url }])],
+    title, description, canonical: SITE + url, page: enUrl, lang,
+    jsonld: [breadcrumbJsonLd(hi
+      ? [{ name: 'होम', url: '/' }, { name: 'टैरिफ डायरेक्टरी', url }]
+      : [{ name: 'Home', url: '/' }, { name: 'Tariffs Directory', url }])],
     body,
   });
 }
@@ -740,61 +1025,98 @@ function articleJsonLd(guide, url) {
   };
 }
 
-function guidePage(guide) {
-  const url = `/guides/${guide.slug}/`;
-  const trail = [
+function guidePage(guide, lang = 'en') {
+  const hi = lang === 'hi' && guide.sectionsHi;   // only emit a Hindi page when translated
+  const enUrl = `/guides/${guide.slug}/`;
+  const url = hi ? hiUrl(enUrl) : enUrl;
+  const title = hi ? guide.titleHi : guide.title;
+  const intro = hi ? guide.introHi : guide.intro;
+  const sections = hi ? guide.sectionsHi : guide.sections;
+  const faqs = hi ? (guide.faqsHi || []) : guide.faqs;
+  const guidesBase = hi ? '/hi/guides/' : '/guides/';
+  const trail = hi ? [
+    { name: 'होम', url: '/' },
+    { name: 'गाइड', url: '/hi/guides/' },
+    { name: title, url: null },
+  ] : [
     { name: 'Home', url: '/' },
     { name: 'Guides', url: '/guides/' },
     { name: guide.title, url: null },
   ];
+  const updated = new Date(TODAY).toLocaleDateString(hi ? 'hi-IN' : 'en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
   const body = `
   <section class="seo-page container">
     ${breadcrumbs(trail)}
-    <h1>${esc(guide.title)}</h1>
-    <p class="guide-meta">${guide.minutes} min read · Updated ${new Date(TODAY).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-    <p class="seo-lead">${guide.intro}</p>
-    ${guide.sections}
-    ${faqHtml(guide.faqs)}
+    ${langSwitchLink(enUrl, hi ? 'hi' : 'en')}
+    <h1>${esc(title)}</h1>
+    <p class="guide-meta">${hi ? `${guide.minutes} मिनट · अपडेट: ${updated}` : `${guide.minutes} min read · Updated ${updated}`}</p>
+    <p class="seo-lead">${intro}</p>
+    ${sections}
+    ${faqHtml(faqs, hi)}
     <section class="seo-section guide-more">
-      <h2>More guides</h2>
+      <h2>${hi ? 'और गाइड' : 'More guides'}</h2>
       <div class="seo-link-grid">${GUIDES.filter(g => g.slug !== guide.slug).map(g => `
-        <a class="seo-link-card" href="/guides/${g.slug}/">
-          <strong>${esc(g.title)}</strong>
-          <small>${g.minutes} min read</small>
+        <a class="seo-link-card" href="${guidesBase}${g.slug}/">
+          <strong>${esc(hi ? (g.titleHi || g.title) : g.title)}</strong>
+          <small>${hi ? `${g.minutes} मिनट` : `${g.minutes} min read`}</small>
         </a>`).join('')}
       </div>
     </section>
-    <p class="seo-disclaimer">General guidance based on publicly available tariff orders and
+    <p class="seo-disclaimer">${hi
+      ? `सार्वजनिक रूप से उपलब्ध टैरिफ आदेशों और विनियमों पर आधारित सामान्य मार्गदर्शन; विवरण राज्य, डिस्कॉम और उपभोक्ता श्रेणी के अनुसार बदलते हैं। अपने डिस्कॉम की आधिकारिक अनुसूची या छपे बिल से मिलान करें।`
+      : `General guidance based on publicly available tariff orders and
     regulations; specifics vary by state, DISCOM and consumer category. Verify against your DISCOM's
-    official schedule or your printed bill.</p>
+    official schedule or your printed bill.`}</p>
   </section>`;
 
+  const articleLd = articleJsonLd(hi ? { ...guide, title: guide.titleHi, description: guide.descriptionHi } : guide, url);
+  if (hi) articleLd.inLanguage = 'hi-IN';
   return layout({
-    title: guide.metaTitle || guide.title,
-    description: guide.description,
+    title: hi ? (guide.metaTitleHi || guide.titleHi) : (guide.metaTitle || guide.title),
+    description: hi ? guide.descriptionHi : guide.description,
     canonical: SITE + url,
+    page: enUrl,
+    lang: hi ? 'hi' : 'en',
     jsonld: [
-      articleJsonLd(guide, url),
-      breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Guides', url: '/guides/' }, { name: guide.title }]),
-      faqJsonLd(guide.faqs),
+      articleLd,
+      breadcrumbJsonLd(hi
+        ? [{ name: 'होम', url: '/' }, { name: 'गाइड', url: '/hi/guides/' }, { name: title }]
+        : [{ name: 'Home', url: '/' }, { name: 'Guides', url: '/guides/' }, { name: guide.title }]),
+      faqJsonLd(faqs),
     ],
     body,
   });
 }
 
-function guidesIndexPage() {
-  const url = '/guides/';
-  const title = 'Electricity Bill Guides — Understand & Reduce Your Bill';
-  const description = 'Plain-language guides to Indian electricity billing: how to read your bill, why bills suddenly increase, Time-of-Day billing, FPPA and more.';
+function guidesIndexPage(lang = 'en') {
+  const hi = lang === 'hi';
+  const enUrl = '/guides/';
+  const url = hi ? hiUrl(enUrl) : enUrl;
+  const title = hi
+    ? 'बिजली बिल गाइड — बिल समझें और घटाएँ'
+    : 'Electricity Bill Guides — Understand & Reduce Your Bill';
+  const description = hi
+    ? 'भारतीय बिजली बिलिंग की आसान भाषा में गाइड: बिल कैसे पढ़ें, बिल अचानक क्यों बढ़ते हैं, टाइम-ऑफ़-डे बिलिंग, FPPA और बहुत कुछ।'
+    : 'Plain-language guides to Indian electricity billing: how to read your bill, why bills suddenly increase, Time-of-Day billing, FPPA and more.';
+  const base = hi ? '/hi/guides/' : '/guides/';
   const cards = GUIDES.map(g => `
-    <a class="seo-link-card" href="/guides/${g.slug}/">
-      <strong>${esc(g.title)}</strong>
-      <span>${esc(g.description.split('.')[0])}.</span>
-      <small>${g.minutes} min read</small>
+    <a class="seo-link-card" href="${base}${g.slug}/">
+      <strong>${esc(hi ? (g.titleHi || g.title) : g.title)}</strong>
+      <span>${esc((hi ? (g.descriptionHi || g.description) : g.description).split('।')[0].split('.')[0])}${hi ? '।' : '.'}</span>
+      <small>${hi ? `${g.minutes} मिनट` : `${g.minutes} min read`}</small>
     </a>`).join('');
-  const body = `
+  const body = hi ? `
+  <section class="seo-page container">
+    ${breadcrumbs([{ name: 'होम', url: '/' }, { name: 'गाइड', url: null }])}
+    ${langSwitchLink(enUrl, 'hi')}
+    <h1>बिजली बिल गाइड</h1>
+    <p class="seo-lead">भारतीय बिजली बिलिंग पर छोटे, व्यावहारिक लेख — ठीक उन्हीं सवालों के जवाब जो लोग पूछते
+    हैं, और हमारे <a href="/#calculator">बिल कैलकुलेटर</a> के पीछे के लाइव टैरिफ डेटा से जुड़े हुए।</p>
+    <div class="seo-link-grid guides-grid">${cards}</div>
+  </section>` : `
   <section class="seo-page container">
     ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Guides', url: null }])}
+    ${langSwitchLink(enUrl, 'en')}
     <h1>Electricity Bill Guides</h1>
     <p class="seo-lead">Short, practical explainers on Indian electricity billing — written to answer
     the exact questions people ask, and linked to the live tariff data behind our
@@ -802,8 +1124,10 @@ function guidesIndexPage() {
     <div class="seo-link-grid guides-grid">${cards}</div>
   </section>`;
   return layout({
-    title, description, canonical: SITE + url,
-    jsonld: [breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Guides', url }])],
+    title, description, canonical: SITE + url, page: enUrl, lang,
+    jsonld: [breadcrumbJsonLd(hi
+      ? [{ name: 'होम', url: '/' }, { name: 'गाइड', url }]
+      : [{ name: 'Home', url: '/' }, { name: 'Guides', url }])],
     body,
   });
 }
@@ -812,24 +1136,30 @@ function guidesIndexPage() {
 // A single definitional page. DefinedTermSet + DefinedTerm JSON-LD is exactly the entity
 // shape LLMs and search engines cite, and every DISCOM/state page links in with real anchor
 // text (nav, footer + a contextual block), making this a topical hub.
-function definedTermSetJsonLd(url) {
+function definedTermSetJsonLd(url, hi = false) {
   return {
     '@context': 'https://schema.org',
     '@type': 'DefinedTermSet',
     '@id': `${SITE}${url}#termset`,
-    name: 'Electricity Bill Glossary',
-    description: 'Definitions of Indian electricity billing and tariff terms — FPPA, electricity duty, kVAh, telescopic slabs, sanctioned load and more.',
+    name: hi ? 'बिजली बिल शब्दावली' : 'Electricity Bill Glossary',
+    description: hi
+      ? 'भारतीय बिजली बिलिंग और टैरिफ शब्दों की परिभाषाएँ — FPPA, बिजली शुल्क, kVAh, टेलीस्कोपिक स्लैब, स्वीकृत भार और बहुत कुछ।'
+      : 'Definitions of Indian electricity billing and tariff terms — FPPA, electricity duty, kVAh, telescopic slabs, sanctioned load and more.',
     url: SITE + url,
-    inLanguage: 'en-IN',
+    inLanguage: hi ? 'hi-IN' : 'en-IN',
     publisher: { '@id': `${SITE}/#org` },
     hasDefinedTerm: GLOSSARY.map(t => {
-      const alt = [t.abbr, ...(t.aka || [])].filter(Boolean);
+      // English term + abbr stay as alternateName on the Hindi page too — that's how
+      // people actually search ("FPPA क्या है").
+      const alt = hi
+        ? [t.term, t.abbr, ...(t.aka || [])].filter(Boolean)
+        : [t.abbr, ...(t.aka || [])].filter(Boolean);
       return {
         '@type': 'DefinedTerm',
         '@id': `${SITE}${url}#${t.slug}`,
-        name: t.term,
+        name: hi ? (t.termHi || t.term) : t.term,
         ...(alt.length ? { alternateName: alt } : {}),
-        description: t.short,
+        description: hi ? (t.shortHi || t.short) : t.short,
         inDefinedTermSet: `${SITE}${url}#termset`,
         url: `${SITE}${url}#${t.slug}`,
       };
@@ -837,27 +1167,36 @@ function definedTermSetJsonLd(url) {
   };
 }
 
-function glossaryPage() {
-  const url = '/glossary/';
-  const title = 'Electricity Bill Glossary — Indian Tariff Terms Explained';
-  const description = 'Plain-language definitions of Indian electricity bill and tariff terms: FPPA, electricity duty, MMC, kVAh, multiplying factor, sanctioned load, telescopic slabs, LPSC and more.';
+function glossaryPage(lang = 'en') {
+  const hi = lang === 'hi';
+  const enUrl = '/glossary/';
+  const url = hi ? hiUrl(enUrl) : enUrl;
+  const title = hi
+    ? 'बिजली बिल शब्दावली — भारतीय टैरिफ शब्दों की आसान परिभाषा'
+    : 'Electricity Bill Glossary — Indian Tariff Terms Explained';
+  const description = hi
+    ? 'भारतीय बिजली बिल और टैरिफ शब्दों की आसान भाषा में परिभाषाएँ: FPPA, बिजली शुल्क, MMC, kVAh, मल्टीप्लाइंग फैक्टर, स्वीकृत भार, टेलीस्कोपिक स्लैब, LPSC और बहुत कुछ।'
+    : 'Plain-language definitions of Indian electricity bill and tariff terms: FPPA, electricity duty, MMC, kVAh, multiplying factor, sanctioned load, telescopic slabs, LPSC and more.';
 
-  const chipText = (t) => t.term.replace(/\s*\(.*?\)\s*/g, '').trim();
+  const chipText = (t) => hi
+    ? (t.chipHi || t.term.replace(/\s*\(.*?\)\s*/g, '').trim())
+    : t.term.replace(/\s*\(.*?\)\s*/g, '').trim();
 
-  // Alphabetical jump index (chips) → anchors below.
+  // Alphabetical jump index (chips) → anchors below. (Hindi page keeps the English sort
+  // order so anchors stay predictable across variants.)
   const index = [...GLOSSARY].sort((a, b) => a.term.localeCompare(b.term))
     .map(t => `<a class="glossary-chip" href="#${t.slug}" data-i18n="gl.${t.slug}.chip">${esc(chipText(t))}</a>`).join('');
 
   const terms = GLOSSARY.map(t => {
-    const alt = [t.abbr, ...(t.aka || [])].filter(Boolean).filter(x => x.toLowerCase() !== t.term.toLowerCase());
-    const also = alt.length ? `<p class="glossary-aka"><span data-i18n="gloss.aka">Also called:</span> ${alt.map(esc).join(', ')}</p>` : '';
+    const alt = [hi ? t.term : null, t.abbr, ...(t.aka || [])].filter(Boolean).filter(x => x.toLowerCase() !== t.term.toLowerCase() || hi);
+    const also = alt.length ? `<p class="glossary-aka"><span data-i18n="gloss.aka">${hi ? 'अन्य नाम:' : 'Also called:'}</span> ${[...new Set(alt)].map(esc).join(', ')}</p>` : '';
     return `
       <section class="seo-section glossary-term" id="${t.slug}">
-        <h2 data-i18n="gl.${t.slug}.term">${esc(t.term)}</h2>
-        <p class="glossary-def" data-i18n="gl.${t.slug}.short">${esc(t.short)}</p>
+        <h2 data-i18n="gl.${t.slug}.term">${esc(hi ? (t.termHi || t.term) : t.term)}</h2>
+        <p class="glossary-def" data-i18n="gl.${t.slug}.short">${esc(hi ? (t.shortHi || t.short) : t.short)}</p>
         ${also}
-        <div class="glossary-body" data-i18n-html="gl.${t.slug}.body">${t.body}</div>
-        <p class="glossary-top"><a href="#glossary-index" data-i18n="gloss.backToTop">↑ Back to all terms</a></p>
+        <div class="glossary-body" data-i18n-html="gl.${t.slug}.body">${hi ? (t.bodyHi || t.body).replace(/href="\/glossary\//g, 'href="/hi/glossary/') : t.body}</div>
+        <p class="glossary-top"><a href="#glossary-index" data-i18n="gloss.backToTop">${hi ? '↑ सभी शब्दों पर वापस' : '↑ Back to all terms'}</a></p>
       </section>`;
   }).join('');
 
@@ -876,35 +1215,51 @@ function glossaryPage() {
   });
   const glossaryDict = `<script>window.__i18nGlossary=${JSON.stringify(i18nGlossary)};</script>`;
 
-  const body = `${glossaryDict}
-  <section class="seo-page container">
-    ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Glossary', url: null, i18n: 'gloss.crumb' }])}
-    <h1 data-i18n="gloss.h1">Electricity Bill Glossary</h1>
-    <p class="seo-lead" data-i18n-html="gloss.lead">Every charge line and code on an Indian electricity bill, defined in plain
+  // Hindi shell strings come from the same dictionary the runtime language switch uses.
+  const HS = STRINGS.hi || {};
+  const crumbName = hi ? (HS['gloss.crumb'] || 'शब्दावली') : 'Glossary';
+  const h1 = hi ? (HS['gloss.h1'] || 'बिजली बिल शब्दावली') : 'Electricity Bill Glossary';
+  const lead = hi
+    ? (HS['gloss.lead'] || '').replace(/href="\/tariffs\/states\/"/g, 'href="/hi/tariffs/states/"')
+    : `Every charge line and code on an Indian electricity bill, defined in plain
     language. These are the terms behind our <a href="/#calculator">bill calculator</a> and
     <a href="/tariffs/states/">tariff pages</a> — from <a href="#fppa">FPPA</a> and
     <a href="#electricity-duty">electricity duty</a> to <a href="#telescopic-slabs">telescopic
-    slabs</a> and <a href="#kvah">kVAh</a>.</p>
+    slabs</a> and <a href="#kvah">kVAh</a>.`;
+  const workH2 = hi ? (HS['gloss.work.h2'] || 'इन शब्दों को काम में लाएँ') : 'Put these terms to work';
+  const card1 = hi ? (HS['gloss.card1'] || '') : '<strong>Bill Calculator</strong><span>Apply these charges to your own units and load for an itemised estimate</span>';
+  const card2 = hi ? (HS['gloss.card2'] || '') : '<strong>Bill Guides</strong><span>Longer walkthroughs: reading your bill, why bills rise, Time-of-Day billing</span>';
+  const card3 = hi ? (HS['gloss.card3'] || '') : '<strong>Tariffs by State</strong><span>The live slab rates, fixed charges and FPPA for every DISCOM</span>';
+  const disclaimer = hi ? (HS['gloss.disclaimer'] || '') : `General definitions based on common Indian tariff practice; the exact
+    treatment of any charge varies by state, DISCOM and consumer category. Verify against your
+    DISCOM's tariff order or your printed bill.`;
+  const guidesHref = hi ? '/hi/guides/' : '/guides/';
+  const tariffsHref = hi ? '/hi/tariffs/states/' : '/tariffs/states/';
+
+  const body = `${glossaryDict}
+  <section class="seo-page container">
+    ${breadcrumbs([{ name: hi ? 'होम' : 'Home', url: '/' }, { name: crumbName, url: null, i18n: 'gloss.crumb' }])}
+    ${langSwitchLink(enUrl, hi ? 'hi' : 'en')}
+    <h1 data-i18n="gloss.h1">${h1}</h1>
+    <p class="seo-lead" data-i18n-html="gloss.lead">${lead}</p>
     <nav class="glossary-index" id="glossary-index" aria-label="Glossary terms">${index}</nav>
     ${terms}
     <section class="seo-section">
-      <h2 data-i18n="gloss.work.h2">Put these terms to work</h2>
+      <h2 data-i18n="gloss.work.h2">${workH2}</h2>
       <div class="seo-link-grid">
-        <a class="seo-link-card" href="/#calculator" data-i18n-html="gloss.card1"><strong>Bill Calculator</strong><span>Apply these charges to your own units and load for an itemised estimate</span></a>
-        <a class="seo-link-card" href="/guides/" data-i18n-html="gloss.card2"><strong>Bill Guides</strong><span>Longer walkthroughs: reading your bill, why bills rise, Time-of-Day billing</span></a>
-        <a class="seo-link-card" href="/tariffs/states/" data-i18n-html="gloss.card3"><strong>Tariffs by State</strong><span>The live slab rates, fixed charges and FPPA for every DISCOM</span></a>
+        <a class="seo-link-card" href="/#calculator" data-i18n-html="gloss.card1">${card1}</a>
+        <a class="seo-link-card" href="${guidesHref}" data-i18n-html="gloss.card2">${card2}</a>
+        <a class="seo-link-card" href="${tariffsHref}" data-i18n-html="gloss.card3">${card3}</a>
       </div>
     </section>
-    <p class="seo-disclaimer" data-i18n="gloss.disclaimer">General definitions based on common Indian tariff practice; the exact
-    treatment of any charge varies by state, DISCOM and consumer category. Verify against your
-    DISCOM's tariff order or your printed bill.</p>
+    <p class="seo-disclaimer" data-i18n="gloss.disclaimer">${disclaimer}</p>
   </section>`;
 
   return layout({
-    title, description, canonical: SITE + url,
+    title, description, canonical: SITE + url, page: enUrl, lang,
     jsonld: [
-      definedTermSetJsonLd(url),
-      breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Glossary', url }]),
+      definedTermSetJsonLd(url, hi),
+      breadcrumbJsonLd([{ name: hi ? 'होम' : 'Home', url: '/' }, { name: crumbName, url }]),
     ],
     body,
   });
@@ -917,7 +1272,7 @@ const STATIC_ROUTES = [
   { loc: '/usage/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/solar/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/tariffs/', priority: '0.8', changefreq: 'monthly' },
-  { loc: '/tariffs/states/', priority: '0.8', changefreq: 'monthly' },
+  // '/tariffs/states/' is added in buildSitemap() with its Hindi alternate.
   { loc: '/services/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/bill-review/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/methodology/', priority: '0.7', changefreq: 'monthly' },
@@ -925,27 +1280,43 @@ const STATIC_ROUTES = [
 
 function buildSitemap(states) {
   const urls = [...STATIC_ROUTES.map(r => ({ ...r }))];
-  urls.push({ loc: '/guides/', priority: '0.8', changefreq: 'monthly' });
+  // `alt: true` marks a URL as having an en/hi pair: both variants are listed, each with
+  // the full xhtml:link hreflang set (Google's recommended sitemap-level annotation).
+  urls.push({ loc: '/guides/', priority: '0.8', changefreq: 'monthly', alt: true });
   for (const g of GUIDES) {
-    urls.push({ loc: `/guides/${g.slug}/`, priority: '0.7', changefreq: 'monthly' });
+    urls.push({ loc: `/guides/${g.slug}/`, priority: '0.7', changefreq: 'monthly', alt: !!g.sectionsHi });
   }
-  urls.push({ loc: '/glossary/', priority: '0.7', changefreq: 'monthly' });
+  urls.push({ loc: '/glossary/', priority: '0.7', changefreq: 'monthly', alt: true });
+  urls.push({ loc: '/tariffs/states/', priority: '0.8', changefreq: 'monthly', alt: true });
   for (const state of states) {
     const stateSlug = slugify(state);
-    urls.push({ loc: `/tariffs/${stateSlug}/`, priority: '0.7', changefreq: 'monthly' });
+    urls.push({ loc: `/tariffs/${stateSlug}/`, priority: '0.7', changefreq: 'monthly', alt: true });
     for (const d of getDiscoms(state)) {
-      urls.push({ loc: `/tariffs/${stateSlug}/${d.id}/`, priority: '0.6', changefreq: 'monthly' });
+      urls.push({ loc: `/tariffs/${stateSlug}/${d.id}/`, priority: '0.6', changefreq: 'monthly', alt: true });
     }
   }
-  const body = urls.map(u => `  <url>
-    <loc>${SITE}${u.loc}</loc>
+  const entries = [];
+  for (const u of urls) {
+    const altLinks = u.alt ? `
+    <xhtml:link rel="alternate" hreflang="en-IN" href="${SITE}${u.loc}"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="${SITE}${hiUrl(u.loc)}"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${u.loc}"/>` : '';
+    entries.push(`  <url>
+    <loc>${SITE}${u.loc}</loc>${altLinks}
     <lastmod>${TODAY}</lastmod>
     <changefreq>${u.changefreq}</changefreq>
     <priority>${u.priority}</priority>
-  </url>`).join('\n');
+  </url>`);
+    if (u.alt) entries.push(`  <url>
+    <loc>${SITE}${hiUrl(u.loc)}</loc>${altLinks}
+    <lastmod>${TODAY}</lastmod>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`);
+  }
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${body}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${entries.join('\n')}
 </urlset>
 `;
 }
@@ -1018,26 +1389,32 @@ export function generateSeo() {
   const states = getStates();
   let pages = 0;
 
-  writePage('tariffs/states', directoryPage(states));
-  pages++;
+  // English at the canonical path, Hindi twin under hi/ — same builders, lang-switched.
+  for (const lang of ['en', 'hi']) {
+    const p = lang === 'hi' ? 'hi/' : '';
 
-  writePage('guides', guidesIndexPage());
-  pages++;
-  for (const guide of GUIDES) {
-    writePage(`guides/${guide.slug}`, guidePage(guide));
+    writePage(`${p}tariffs/states`, directoryPage(states, lang));
     pages++;
-  }
 
-  writePage('glossary', glossaryPage());
-  pages++;
-
-  for (const state of states) {
-    const stateSlug = slugify(state);
-    writePage(`tariffs/${stateSlug}`, statePage(state));
+    writePage(`${p}guides`, guidesIndexPage(lang));
     pages++;
-    for (const discom of getDiscoms(state)) {
-      writePage(`tariffs/${stateSlug}/${discom.id}`, discomPage(state, discom));
+    for (const guide of GUIDES) {
+      if (lang === 'hi' && !guide.sectionsHi) continue;   // untranslated guides stay English-only
+      writePage(`${p}guides/${guide.slug}`, guidePage(guide, lang));
       pages++;
+    }
+
+    writePage(`${p}glossary`, glossaryPage(lang));
+    pages++;
+
+    for (const state of states) {
+      const stateSlug = slugify(state);
+      writePage(`${p}tariffs/${stateSlug}`, statePage(state, lang));
+      pages++;
+      for (const discom of getDiscoms(state)) {
+        writePage(`${p}tariffs/${stateSlug}/${discom.id}`, discomPage(state, discom, lang));
+        pages++;
+      }
     }
   }
 
