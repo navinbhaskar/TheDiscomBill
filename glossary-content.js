@@ -210,8 +210,8 @@ export const GLOSSARY = [
       factor converts the meter's raw reading back to actual consumption:
       <code>units = (present reading &minus; previous reading) &times; MF</code>. For almost all
       direct-metered domestic connections <strong>MF = 1</strong>, so the subtraction alone is your
-      usage. On CT-metered commercial or HT connections MF can be 1, and a wrong MF is a serious
-      billing error worth checking on your bill.</p>`,
+      usage. On CT-metered commercial or HT connections MF is typically greater than 1, and a wrong
+      MF is a serious billing error worth checking on your bill.</p>`,
     termHi: 'गुणक कारक (MF)',
     chipHi: 'गुणक कारक',
     shortHi: 'वह संख्या जिससे दो मीटर रीडिंग के कच्चे अंतर को गुणा करके वास्तविक खपत यूनिट प्राप्त की जाती है, वहाँ उपयोग होती है जहाँ करंट/वोल्टेज ट्रांसफार्मर मीटर को घटा देते हैं।',
