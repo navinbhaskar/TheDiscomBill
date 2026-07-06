@@ -1067,6 +1067,16 @@ function statePage(state, lang = 'en') {
   });
 }
 
+// Region grouping for the directory page — purely presentational.
+const REGIONS = [
+  { en: 'North India', hi: 'उत्तर भारत', states: ['Delhi', 'Haryana', 'Himachal Pradesh', 'Jammu & Kashmir', 'Ladakh', 'Punjab', 'Chandigarh', 'Rajasthan', 'Uttar Pradesh', 'Uttarakhand'] },
+  { en: 'South India', hi: 'दक्षिण भारत', states: ['Andhra Pradesh', 'Karnataka', 'Kerala', 'Puducherry', 'Tamil Nadu', 'Telangana'] },
+  { en: 'West India', hi: 'पश्चिम भारत', states: ['Dadra & Nagar Haveli and Daman & Diu', 'Goa', 'Gujarat', 'Maharashtra'] },
+  { en: 'Central India', hi: 'मध्य भारत', states: ['Chhattisgarh', 'Madhya Pradesh'] },
+  { en: 'East India', hi: 'पूर्व भारत', states: ['Bihar', 'Jharkhand', 'Odisha', 'Sikkim', 'West Bengal'] },
+  { en: 'North-East India', hi: 'पूर्वोत्तर भारत', states: ['Arunachal Pradesh', 'Assam', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Tripura'] },
+];
+
 function directoryPage(states, lang = 'en') {
   const hi = lang === 'hi';
   const enUrl = '/tariffs/states/';
@@ -1080,17 +1090,57 @@ function directoryPage(states, lang = 'en') {
 
   const base = hi ? '/hi/tariffs/' : '/tariffs/';
   let totalDiscoms = 0;
-  const sections = states.map(state => {
+
+  const stateCard = (state) => {
     const stateSlug = slugify(state);
     const discoms = getDiscoms(state);
     totalDiscoms += discoms.length;
+    const displayName = hi ? hiState(state) : state;
     const links = discoms.map(d => `<a href="${base}${stateSlug}/${d.id}/">${esc(d.name)}</a>`).join('');
+    // data-search carries both scripts + discom names so the filter box matches everything
+    const searchBlob = [state, hiState(state), ...discoms.map(d => d.name)].join(' ').toLowerCase();
     return `
-      <div class="seo-dir-state">
-        <h2><a href="${base}${stateSlug}/">${esc(hi ? hiState(state) : state)}</a></h2>
+      <div class="seo-dir-state" data-search="${esc(searchBlob)}">
+        <h2><a href="${base}${stateSlug}/">${esc(displayName)}<span class="seo-dir-arrow" aria-hidden="true">→</span></a>
+          <span class="seo-dir-count">${discoms.length} ${hi ? 'डिस्कॉम' : (discoms.length === 1 ? 'DISCOM' : 'DISCOMs')}</span></h2>
         <div class="seo-dir-discoms">${links}</div>
       </div>`;
-  }).join('');
+  };
+
+  const covered = new Set(states);
+  const grouped = REGIONS
+    .map(r => ({ ...r, states: r.states.filter(s => covered.has(s)) }))
+    .filter(r => r.states.length);
+  const leftovers = states.filter(s => !REGIONS.some(r => r.states.includes(s)));
+  if (leftovers.length) grouped.push({ en: 'Other', hi: 'अन्य', states: leftovers });
+
+  const sections = grouped.map(r => `
+    <section class="seo-dir-region">
+      <h2 class="seo-dir-region-title">${esc(hi ? r.hi : r.en)} <span class="seo-dir-region-count">${r.states.length}</span></h2>
+      <div class="seo-directory">${r.states.map(stateCard).join('')}</div>
+    </section>`).join('');
+
+  // Tiny progressive-enhancement filter: hides cards (and emptied regions) as you type.
+  const filterScript = `
+  <script>(function(){
+    var q=document.getElementById('dirSearch'); if(!q) return;
+    var cards=[].slice.call(document.querySelectorAll('.seo-dir-state'));
+    var regions=[].slice.call(document.querySelectorAll('.seo-dir-region'));
+    var empty=document.getElementById('dirEmpty');
+    q.addEventListener('input',function(){
+      var t=q.value.trim().toLowerCase(), shown=0;
+      cards.forEach(function(c){var hit=!t||c.getAttribute('data-search').indexOf(t)>-1;c.hidden=!hit;if(hit)shown++;});
+      regions.forEach(function(r){r.hidden=!r.querySelector('.seo-dir-state:not([hidden])');});
+      if(empty)empty.hidden=shown>0;
+    });
+  })();</script>`;
+
+  const heroStats = (labels) => `
+      <div class="seo-dir-stats" role="list">
+        <span class="seo-dir-stat" role="listitem"><strong>${states.length}</strong> ${labels.states}</span>
+        <span class="seo-dir-stat" role="listitem"><strong>${totalDiscoms}+</strong> ${labels.discoms}</span>
+        <span class="seo-dir-stat" role="listitem"><strong>100%</strong> ${labels.free}</span>
+      </div>`;
 
   const body = hi ? `
   <section class="seo-page container">
@@ -1099,20 +1149,36 @@ function directoryPage(states, lang = 'en') {
       { name: 'टैरिफ डायरेक्टरी', url: null },
     ])}
     ${langSwitchLink(enUrl, 'hi')}
-    <h1>बिजली टैरिफ व बिल कैलकुलेटर — सभी राज्य व डिस्कॉम</h1>
-    <p class="seo-lead">अपना राज्य चुनें और उसका बिजली बिल कैलकुलेटर व टैरिफ अनुसूची खोलें, या सीधे अपनी वितरण कंपनी पर जाएँ। पूरे भारत के ${states.length} राज्यों/केंद्र शासित प्रदेशों और ${totalDiscoms}+ डिस्कॉम को कवर करती है।</p>
-    <div class="seo-directory">${sections}</div>
-  </section>` : `
+    <div class="seo-dir-hero">
+      <h1>बिजली टैरिफ व बिल कैलकुलेटर — सभी राज्य व डिस्कॉम</h1>
+      <p class="seo-lead">अपना राज्य चुनें और उसका बिजली बिल कैलकुलेटर व टैरिफ अनुसूची खोलें, या सीधे अपनी वितरण कंपनी पर जाएँ।</p>
+      ${heroStats({ states: 'राज्य व केंद्र शासित प्रदेश', discoms: 'डिस्कॉम', free: 'मुफ़्त' })}
+      <div class="seo-dir-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="dirSearch" type="search" placeholder="राज्य या डिस्कॉम खोजें — जैसे दिल्ली, UP, MVVNL…" aria-label="राज्य या डिस्कॉम खोजें" autocomplete="off">
+      </div>
+    </div>
+    ${sections}
+    <p id="dirEmpty" class="seo-dir-empty" hidden>कोई राज्य या डिस्कॉम नहीं मिला। कोई और नाम आज़माएँ।</p>
+  </section>${filterScript}` : `
   <section class="seo-page container">
     ${breadcrumbs([
       { name: 'Home', url: '/' },
       { name: 'Tariffs Directory', url: null },
     ])}
     ${langSwitchLink(enUrl, 'en')}
-    <h1>Electricity Tariffs &amp; Bill Calculators — All States &amp; DISCOMs</h1>
-    <p class="seo-lead">Pick your state to open its electricity bill calculator and tariff schedule, or jump straight to your distribution company. Covering ${states.length} states &amp; UTs and ${totalDiscoms}+ DISCOMs across India.</p>
-    <div class="seo-directory">${sections}</div>
-  </section>`;
+    <div class="seo-dir-hero">
+      <h1>Electricity Tariffs &amp; Bill Calculators — All States &amp; DISCOMs</h1>
+      <p class="seo-lead">Pick your state to open its electricity bill calculator and tariff schedule, or jump straight to your distribution company.</p>
+      ${heroStats({ states: 'states &amp; UTs', discoms: 'DISCOMs', free: 'free' })}
+      <div class="seo-dir-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="dirSearch" type="search" placeholder="Search state or DISCOM — e.g. UP, MVVNL, Tata…" aria-label="Search state or DISCOM" autocomplete="off">
+      </div>
+    </div>
+    ${sections}
+    <p id="dirEmpty" class="seo-dir-empty" hidden>No state or DISCOM matches that search. Try another name.</p>
+  </section>${filterScript}`;
 
   return layout({
     title, description, canonical: SITE + url, page: enUrl, lang,
