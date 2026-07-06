@@ -542,6 +542,21 @@ export function applyLang(lang) {
   try { localStorage.setItem('lang', lang); } catch (e) {}
 }
 
+// Pages with a pre-rendered twin in the other language (tariff/guide/glossary
+// pages) declare it via a hreflang alternate link. Switching language there
+// must navigate to the twin — the in-place dictionary swap only covers the
+// shared chrome, not the page body. Returns the twin's path, or null when the
+// current page has no twin (or is already the right language).
+function altUrlFor(lang) {
+  const want = lang === 'hi' ? 'hi-IN' : 'en-IN';
+  const link = document.querySelector(`link[rel="alternate"][hreflang="${want}"]`);
+  if (!link) return null;
+  try {
+    const u = new URL(link.href);
+    return u.pathname === location.pathname ? null : u.pathname + location.hash;
+  } catch (e) { return null; }
+}
+
 // Reflect the active language in the custom dropdown (trigger label + selected option).
 function syncLangUI(lang) {
   const trigger = document.getElementById('langTriggerText');
@@ -569,7 +584,16 @@ export function initI18n() {
       opts.forEach(o => o.classList.remove('is-active'));
       if (focusTrigger) trigger.focus();
     };
-    const choose = (l) => { applyLang(l); syncLangUI(l); closeMenu(true); };
+    const choose = (l) => {
+      const twin = altUrlFor(l);
+      if (twin) {
+        // Persist before navigating so the twin page boots in the chosen language.
+        try { localStorage.setItem('lang', l); } catch (e) {}
+        location.href = twin;
+        return;
+      }
+      applyLang(l); syncLangUI(l); closeMenu(true);
+    };
 
     trigger.addEventListener('click', (e) => {
       e.stopPropagation();
