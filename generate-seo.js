@@ -1184,7 +1184,20 @@ function directoryPage(states, lang = 'en') {
     title, description, canonical: SITE + url, page: enUrl, lang,
     jsonld: [breadcrumbJsonLd(hi
       ? [{ name: 'होम', url: '/' }, { name: 'टैरिफ डायरेक्टरी', url }]
-      : [{ name: 'Home', url: '/' }, { name: 'Tariffs Directory', url }])],
+      : [{ name: 'Home', url: '/' }, { name: 'Tariffs Directory', url }]),
+    // ItemList of every state landing page — helps Google (and AI crawlers) see the
+    // directory as a structured collection rather than a flat link farm.
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      name: title,
+      numberOfItems: states.length,
+      itemListElement: states.map((s, i) => ({
+        '@type': 'ListItem', position: i + 1,
+        name: hi ? hiState(s) : s,
+        url: SITE + base + slugify(s) + '/',
+      })),
+    }],
     body,
   });
 }
