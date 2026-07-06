@@ -1768,7 +1768,8 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   transition: background var(--t-fast), border-color var(--t-fast), transform var(--t-fast);
 }
 .est-chip:hover { background: var(--brand-faint); border-color: var(--brand); color: var(--brand); transform: translateY(-1px); }
-.est-row-icon { font-size: 15px; line-height: 1; }
+.est-row-icon { font-size: 15px; line-height: 1; display: inline-flex; align-items: center; }
+.est-row-icon svg { width: 16px; height: 16px; color: var(--brand); }
 
 /* Two-column layout: builder + sticky summary */
 .est-layout { display: grid; grid-template-columns: 1fr 320px; gap: 20px; align-items: start; }

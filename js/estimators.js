@@ -8,8 +8,11 @@ const STORE_KEY = 'tdb_estimator_v1';
 
 // Typical Indian-household appliance presets. `w` = running wattage, `hrs` = a sensible default
 // daily run-time. For the fridge/AC, `hrs` is the *effective* compressor run-time (they cycle).
+// The fan has no good emoji (🪭 is a folding hand fan), so it gets a real SVG rotor.
+const FAN_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.827 16.379a6.082 6.082 0 0 1-8.618-7.002l5.412 1.45a6.082 6.082 0 0 1 7.002-8.618l-1.45 5.412a6.082 6.082 0 0 1 8.618 7.002l-5.412-1.45a6.082 6.082 0 0 1-7.002 8.618l1.45-5.412Z"/><path d="M12 12v.01"/></svg>`;
+
 const CATALOG = [
-  { id: 'fan',       name: 'Ceiling Fan',            icon: '🪭', w: 75,   hrs: 12 },
+  { id: 'fan',       name: 'Ceiling Fan',            icon: FAN_SVG, w: 75,   hrs: 12 },
   { id: 'led',       name: 'LED Bulb',               icon: '💡', w: 9,    hrs: 6  },
   { id: 'tube',      name: 'Tube Light',             icon: '🔆', w: 20,   hrs: 6  },
   { id: 'tv',        name: 'LED TV',                 icon: '📺', w: 90,   hrs: 5  },
@@ -31,10 +34,13 @@ const CATALOG = [
 ];
 
 const byId = (id) => CATALOG.find(c => c.id === id);
+// Saved rows carry a snapshot of the icon; prefer the live catalog one so icon
+// upgrades (like the fan emoji → SVG swap) reach rows persisted before the change.
+const iconFor = (r) => (r.catId && byId(r.catId)?.icon) || r.icon || '';
 
 // A sensible starter set shown on first visit so the page isn't empty.
 const DEFAULT_ROWS = [
-  { catId: 'fan',    name: 'Ceiling Fan', icon: '🪭', w: 75,  qty: 3, hrs: 12 },
+  { catId: 'fan',    name: 'Ceiling Fan', icon: FAN_SVG, w: 75,  qty: 3, hrs: 12 },
   { catId: 'led',    name: 'LED Bulb',    icon: '💡', w: 9,   qty: 6, hrs: 6  },
   { catId: 'tv',     name: 'LED TV',      icon: '📺', w: 90,  qty: 1, hrs: 5  },
   { catId: 'fridge', name: 'Refrigerator', icon: '❄️', w: 150, qty: 1, hrs: 8 },
@@ -63,7 +69,7 @@ const fmt = (n, d = 0) => Number(n).toLocaleString('en-IN', { minimumFractionDig
 function rowHtml(r, i) {
   return `
     <div class="est-row" data-i="${i}">
-      <span class="est-row-name"><span class="est-row-icon">${r.icon}</span>${r.name}</span>
+      <span class="est-row-name"><span class="est-row-icon">${iconFor(r)}</span>${r.name}</span>
       <input class="est-in est-w" data-f="w" type="number" min="0" step="1" value="${r.w}" inputmode="numeric" aria-label="Watts">
       <input class="est-in est-q" data-f="qty" type="number" min="0" step="1" value="${r.qty}" inputmode="numeric" aria-label="Quantity">
       <input class="est-in est-h" data-f="hrs" type="number" min="0" max="24" step="0.5" value="${r.hrs}" inputmode="decimal" aria-label="Hours per day">
@@ -76,7 +82,7 @@ function breakdownHtml(total) {
   if (!rows.length || total <= 0) return `<div class="est-bd-empty">Add appliances to see the breakdown.</div>`;
   // Sort descending by share; show top contributors with a proportional bar.
   const items = rows
-    .map(r => ({ name: r.name, icon: r.icon, kwh: monthlyKwh(r) }))
+    .map(r => ({ name: r.name, icon: iconFor(r), kwh: monthlyKwh(r) }))
     .filter(x => x.kwh > 0)
     .sort((a, b) => b.kwh - a.kwh);
   const max = items.length ? items[0].kwh : 1;
