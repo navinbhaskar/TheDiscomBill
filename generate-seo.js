@@ -16,6 +16,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 
 import { TARIFF_DB, STATE_META, getStates, getDiscoms } from './js/tariffs/registry.js';
@@ -28,6 +29,56 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
 const SITE = 'https://www.thediscombill.com';
 const TODAY = new Date().toISOString().slice(0, 10);
+
+// ── Content-derived <lastmod> ─────────────────────────────────────────────────
+// Stamping TODAY on every URL each regen trains crawlers to ignore <lastmod> entirely.
+// Instead each page is rendered with its volatile dates left as tokens, hashed, and only
+// re-dated when that hash changes. The per-URL {hash,lastmod} is persisted (and committed)
+// in sitemap-lastmod.json so the dates are stable across machines and CI. The SAME resolved
+// date then fills the sitemap <lastmod>, the JSON-LD dateModified and the visible "Updated"
+// line — consistent, and unchanged on a no-op regen.
+const LASTMOD_ISO = '%%LASTMOD_ISO%%';         // → YYYY-MM-DD (sitemap + JSON-LD)
+const LASTMOD_EN  = '%%LASTMOD_HUMAN_EN%%';    // → "6 July 2026"
+const LASTMOD_HI  = '%%LASTMOD_HUMAN_HI%%';    // → "6 जुलाई 2026"
+const MANIFEST_PATH = path.join(ROOT, 'sitemap-lastmod.json');
+
+const sha1 = (s) => crypto.createHash('sha1').update(s).digest('hex').slice(0, 16);
+const replaceAllStr = (s, find, repl) => s.split(find).join(repl);
+const humanDate = (iso, lang) => new Date(iso + 'T00:00:00Z')
+  .toLocaleDateString(lang === 'hi' ? 'hi-IN' : 'en-IN', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+let _manifest = null;
+const _seenUrls = new Set();
+function loadManifest() {
+  if (_manifest) return _manifest;
+  try { _manifest = JSON.parse(fs.readFileSync(MANIFEST_PATH, 'utf8')); }
+  catch (e) { _manifest = {}; }
+  return _manifest;
+}
+// Compare this page's content hash to the stored one: unchanged → keep the old date;
+// new or changed → stamp TODAY. Records the URL as "seen" so stale entries can be pruned.
+function resolveLastmod(url, contentHash) {
+  const m = loadManifest();
+  _seenUrls.add(url);
+  if (m[url] && m[url].hash === contentHash) return m[url].lastmod;
+  m[url] = { hash: contentHash, lastmod: TODAY };
+  return TODAY;
+}
+function saveManifest() {
+  const m = loadManifest();
+  const out = {};
+  for (const k of Object.keys(m).sort()) if (_seenUrls.has(k)) out[k] = m[k];  // prune + sort
+  fs.writeFileSync(MANIFEST_PATH, JSON.stringify(out, null, 2) + '\n', 'utf8');
+}
+// Resolve + write a generated page: hash the tokenised HTML for a date-independent
+// signature, then substitute the resolved date into all three token slots.
+function emitPage(relDir, html) {
+  const url = '/' + relDir.replace(/\\/g, '/') + '/';
+  const lastmod = resolveLastmod(url, sha1(html));
+  const final = replaceAllStr(replaceAllStr(replaceAllStr(
+    html, LASTMOD_ISO, lastmod), LASTMOD_EN, humanDate(lastmod, 'en')), LASTMOD_HI, humanDate(lastmod, 'hi'));
+  writePage(relDir, final);
+}
 
 // ── small utilities ──────────────────────────────────────────────────────────
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -155,7 +206,7 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
     isPartOf: { '@id': `${SITE}/#website` },
     publisher: { '@id': `${SITE}/#org` },
     inLanguage: hi ? 'hi-IN' : 'en-IN',
-    dateModified: TODAY
+    dateModified: LASTMOD_ISO   // resolved to the content-derived date by emitPage()
   };
   const ld = [webPage, ...jsonld].filter(Boolean)
     .map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n  ');
@@ -1046,8 +1097,8 @@ function articleJsonLd(guide, url) {
     headline: guide.title,
     description: guide.description,
     mainEntityOfPage: SITE + url,
-    datePublished: guide.published || TODAY,
-    dateModified: TODAY,
+    datePublished: guide.published || LASTMOD_ISO,
+    dateModified: LASTMOD_ISO,
     inLanguage: 'en-IN',
     author: { '@id': `${SITE}/#org` },
     publisher: { '@id': `${SITE}/#org` },
@@ -1073,7 +1124,7 @@ function guidePage(guide, lang = 'en') {
     { name: 'Guides', url: '/guides/' },
     { name: guide.title, url: null },
   ];
-  const updated = new Date(TODAY).toLocaleDateString(hi ? 'hi-IN' : 'en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+  const updated = hi ? LASTMOD_HI : LASTMOD_EN;   // resolved to the content-derived date by emitPage()
   const body = `
   <section class="seo-page container">
     ${breadcrumbs(trail)}
@@ -1308,8 +1359,19 @@ const STATIC_ROUTES = [
   { loc: '/methodology/', priority: '0.7', changefreq: 'monthly' },
 ];
 
+// lastmod for a hand-written static route: hash the source file so the date bumps only
+// when that file is actually edited (these pages carry no volatile TODAY of their own).
+function staticLastmod(loc) {
+  const file = loc === '/' ? 'index.html' : loc.slice(1) + 'index.html';
+  let content = '';
+  try { content = fs.readFileSync(path.join(ROOT, file), 'utf8'); } catch (e) { /* missing → TODAY */ }
+  return resolveLastmod(loc, sha1(content));
+}
+// lastmod for a generated page: emitPage() already resolved and stored it.
+const generatedLastmod = (loc) => (loadManifest()[loc] || {}).lastmod || TODAY;
+
 function buildSitemap(states) {
-  const urls = [...STATIC_ROUTES.map(r => ({ ...r }))];
+  const urls = [...STATIC_ROUTES.map(r => ({ ...r, isStatic: true }))];
   // `alt: true` marks a URL as having an en/hi pair: both variants are listed, each with
   // the full xhtml:link hreflang set (Google's recommended sitemap-level annotation).
   urls.push({ loc: '/guides/', priority: '0.8', changefreq: 'monthly', alt: true });
@@ -1331,15 +1393,16 @@ function buildSitemap(states) {
     <xhtml:link rel="alternate" hreflang="en-IN" href="${SITE}${u.loc}"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="${SITE}${hiUrl(u.loc)}"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${u.loc}"/>` : '';
+    const lastmod = u.isStatic ? staticLastmod(u.loc) : generatedLastmod(u.loc);
     entries.push(`  <url>
     <loc>${SITE}${u.loc}</loc>${altLinks}
-    <lastmod>${TODAY}</lastmod>
+    <lastmod>${lastmod}</lastmod>
     <changefreq>${u.changefreq}</changefreq>
     <priority>${u.priority}</priority>
   </url>`);
     if (u.alt) entries.push(`  <url>
     <loc>${SITE}${hiUrl(u.loc)}</loc>${altLinks}
-    <lastmod>${TODAY}</lastmod>
+    <lastmod>${generatedLastmod(hiUrl(u.loc))}</lastmod>
     <changefreq>${u.changefreq}</changefreq>
     <priority>${u.priority}</priority>
   </url>`);
@@ -1420,35 +1483,39 @@ export function generateSeo() {
   let pages = 0;
 
   // English at the canonical path, Hindi twin under hi/ — same builders, lang-switched.
+  // emitPage() resolves each page's content-derived <lastmod> (see the manifest logic above).
   for (const lang of ['en', 'hi']) {
     const p = lang === 'hi' ? 'hi/' : '';
 
-    writePage(`${p}tariffs/states`, directoryPage(states, lang));
+    emitPage(`${p}tariffs/states`, directoryPage(states, lang));
     pages++;
 
-    writePage(`${p}guides`, guidesIndexPage(lang));
+    emitPage(`${p}guides`, guidesIndexPage(lang));
     pages++;
     for (const guide of GUIDES) {
       if (lang === 'hi' && !guide.sectionsHi) continue;   // untranslated guides stay English-only
-      writePage(`${p}guides/${guide.slug}`, guidePage(guide, lang));
+      emitPage(`${p}guides/${guide.slug}`, guidePage(guide, lang));
       pages++;
     }
 
-    writePage(`${p}glossary`, glossaryPage(lang));
+    emitPage(`${p}glossary`, glossaryPage(lang));
     pages++;
 
     for (const state of states) {
       const stateSlug = slugify(state);
-      writePage(`${p}tariffs/${stateSlug}`, statePage(state, lang));
+      emitPage(`${p}tariffs/${stateSlug}`, statePage(state, lang));
       pages++;
       for (const discom of getDiscoms(state)) {
-        writePage(`${p}tariffs/${stateSlug}/${discom.id}`, discomPage(state, discom, lang));
+        emitPage(`${p}tariffs/${stateSlug}/${discom.id}`, discomPage(state, discom, lang));
         pages++;
       }
     }
   }
 
-  fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), buildSitemap(states), 'utf8');
+  // buildSitemap() resolves the hand-written static routes too, so save the manifest after it.
+  const sitemap = buildSitemap(states);
+  saveManifest();
+  fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
   fs.writeFileSync(path.join(ROOT, 'robots.txt'), ROBOTS, 'utf8');
   fs.writeFileSync(path.join(ROOT, 'llms.txt'), buildLlmsTxt(states), 'utf8');
 
