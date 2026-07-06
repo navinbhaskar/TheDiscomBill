@@ -119,6 +119,20 @@ const hiState = (s) => STATE_HI[s] || s;
 // FY label: "FY 2025-26" → "वित्त वर्ष 2025-26"
 const hiFy = (fy) => String(fy).replace(/^FY\s*/i, 'वित्त वर्ष ');
 
+// Consumer-facing name for the <title>/<h1>. Some DISCOMs are overwhelmingly searched under
+// a predecessor board or parent brand — people type "TNEB bill calculator" (not TANGEDCO)
+// and "UPPCL bill calculator" for the UP VVNLs. Lead the title/H1 with that searched term so
+// the page matches real queries; the page body keeps using discom.name. The higher-volume
+// term comes first. Only well-established aliases here — never invent one.
+const CONSUMER_NAME = {
+  tangedco: 'TNEB (TANGEDCO)',
+  mvvnl: 'MVVNL (UPPCL)', pvvnl: 'PVVNL (UPPCL)', dvvnl: 'DVVNL (UPPCL)',
+  puvvnl: 'PuVVNL (UPPCL)', kesco: 'KESCO (UPPCL)',
+};
+const consumerName = (discom) => CONSUMER_NAME[discom.id] || discom.name;
+// Bare year for titles: "FY 2025-26" / "2025-26" → "2025-26".
+const yearLabel = (fy) => String(fy).replace(/^FY\s*/i, '');
+
 // ── shared chrome (header / footer) ───────────────────────────────────────────
 const HEADER = `
 <header class="site-header">
@@ -266,6 +280,14 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
   <link rel="stylesheet" href="/css/styles.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-D0SSNW5RZ6');
+  </script>
   ${ld}
 </head>
 <body>
@@ -660,27 +682,31 @@ function discomPage(state, discom, lang = 'en') {
   // Deterministic phrasing variation (keyed off the DISCOM) so titles/intros aren't a single
   // repeated template across 65 pages — each one is differently worded but factually identical.
   const seed = discom.id + state;
-  // Titles stay ≤ ~60 chars (Google's truncation width). Keyword-first, no brand suffix —
-  // Google shows the site name separately in results, so the suffix only ate title width.
-  // Long DISCOM names step down to progressively shorter templates via fitTitle().
+  const cname = consumerName(discom);   // leads titles/H1 with the term people actually search
+  const yr = yearLabel(fy);             // tariff-order year — a freshness signal in the title
+  // Titles stay ≤ ~60 chars (Google's truncation width) and ALWAYS lead with
+  // "<name> Bill Calculator <year>" — the exact query shape ("TNEB bill calculator 2024-25",
+  // "MVVNL bill calculator 2025-26") — with only the suffix varied. No brand suffix (Google
+  // shows the site name separately). Long names step down via fitTitle().
   const title = fitTitle(variant(seed, [
-    `${discom.name} Electricity Bill Calculator & Tariff ${fy}`,
-    `${discom.name} Bill Calculator ${fy} — ${state} Tariff`,
-    `${discom.name} Tariff ${fy} — Electricity Bill Calculator`,
+    `${cname} Bill Calculator ${yr} — Tariff & Rates`,
+    `${cname} Bill Calculator ${yr} — ${state} Tariff`,
+    `${cname} Electricity Bill Calculator ${yr}`,
   ]), [
-    `${discom.name} Bill Calculator & Tariff ${fy}`,
-    `${discom.name} Tariff ${fy} & Bill Calculator`,
-    `${discom.name} Tariff ${fy}`,
+    `${cname} Bill Calculator ${yr}`,
+    `${cname} Bill Calculator`,
   ]);
   const description = variant(seed + 'd', [
     `Calculate your ${discom.name} (${long}) electricity bill for ${fy}${cityPhrase ? ` in ${cityPhrase}` : ''}. Slab-wise rates, fixed charges, FPPA & duties.${dr ? ` Domestic from ${rupee(dr.min)}/unit.` : ''} Free, no sign-up.`,
     `${discom.name} electricity bill calculator for ${state}${cityPhrase ? ` (${cityPhrase})` : ''}. ${fy} domestic & commercial slab rates, fixed/demand charges and an instant itemised estimate.`,
     `Free ${discom.name} bill estimate (${fy})${cityPhrase ? ` for ${cityPhrase} and across ${region || state}` : ''}. See the full tariff schedule, indicative monthly bills and pay-bill portal.`,
   ]);
+  // H1 also leads with the searched "<name> Bill Calculator <year>" phrase (matching the title),
+  // then varies the tail — region or the full legal name — for on-page uniqueness.
   const h1 = variant(seed + 'h', [
-    `${esc(discom.name)} Electricity Bill Calculator &amp; Tariff (${esc(fy)})`,
-    `${esc(discom.name)} Bill Calculator &amp; ${esc(fy)} Tariff${region ? ` — ${esc(region)}` : ''}`,
-    `${esc(discom.name)} (${esc(long)}) — Electricity Bill &amp; Tariff ${esc(fy)}`,
+    `${esc(cname)} Bill Calculator ${esc(yr)}${region ? ` — ${esc(region)}` : ''}`,
+    `${esc(cname)} Bill Calculator &amp; Tariff (${esc(yr)})`,
+    `${esc(cname)} Electricity Bill Calculator ${esc(yr)} — ${esc(long)}`,
   ]);
   const lead = variant(seed + 'l', [
     `Estimate your <strong>${esc(long)}</strong> bill in seconds and browse the full ${esc(fy)} tariff schedule — energy slabs, fixed/demand charges, fuel surcharge (FPPA) and electricity duty${cities.length ? ` for ${esc(cities.slice(0, 3).join(', '))} and the rest of ${esc(region || state)}` : ` across ${esc(region || state)}`}.`,
@@ -785,12 +811,14 @@ function discomPage(state, discom, lang = 'en') {
 function discomPageHi({ state, discom, stateSlug, enUrl, url, meta, fy, long, region, cities, dr, shared, cityPhrase }) {
   const stateHi = hiState(state);
   const fyHi = hiFy(fy);
-  const title = fitTitle(`${discom.name} बिजली बिल कैलकुलेटर व टैरिफ ${fy.replace(/^FY\s*/i, '')}`, [
-    `${discom.name} बिल कैलकुलेटर व टैरिफ`,
-    `${discom.name} टैरिफ ${fy.replace(/^FY\s*/i, '')}`,
+  const cname = consumerName(discom);   // TNEB (TANGEDCO) / MVVNL (UPPCL) — leads title + H1
+  const yr = yearLabel(fy);
+  const title = fitTitle(`${cname} बिजली बिल कैलकुलेटर ${yr} — टैरिफ`, [
+    `${cname} बिजली बिल कैलकुलेटर ${yr}`,
+    `${cname} बिल कैलकुलेटर ${yr}`,
   ]);
-  const description = `${discom.name} (${long}) का बिजली बिल ${fyHi} के लिए निकालें${cityPhrase ? ` — ${cityPhrase}` : ''}। स्लैब दरें, फिक्स्ड चार्ज, FPPA व शुल्क।${dr ? ` घरेलू दर ${rupee(dr.min)}/यूनिट से।` : ''} मुफ़्त, बिना साइन-अप।`;
-  const h1 = `${esc(discom.name)} बिजली बिल कैलकुलेटर व टैरिफ (${esc(fyHi)})`;
+  const description = `${cname} (${long}) का बिजली बिल ${fyHi} के लिए निकालें${cityPhrase ? ` — ${cityPhrase}` : ''}। स्लैब दरें, फिक्स्ड चार्ज, FPPA व शुल्क।${dr ? ` घरेलू दर ${rupee(dr.min)}/यूनिट से।` : ''} मुफ़्त, बिना साइन-अप।`;
+  const h1 = `${esc(cname)} बिजली बिल कैलकुलेटर व टैरिफ (${esc(fyHi)})`;
   const lead = `अपना <strong>${esc(long)}</strong> बिल सेकंडों में अनुमानित करें और ${esc(fyHi)} की पूरी टैरिफ अनुसूची देखें — ऊर्जा स्लैब, फिक्स्ड/डिमांड चार्ज, ईंधन अधिभार (FPPA) और बिजली शुल्क${cities.length ? `, ${esc(cities.slice(0, 3).join(', '))} और पूरे ${esc(region || stateHi)} के लिए` : ` — पूरे ${esc(region || stateHi)} के लिए`}।`;
 
   const badges = [];
