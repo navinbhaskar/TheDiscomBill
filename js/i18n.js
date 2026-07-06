@@ -555,7 +555,7 @@ function altUrlFor(lang) {
   if (!link) return null;
   try {
     const u = new URL(link.href);
-    return u.pathname === location.pathname ? null : u.pathname + location.hash;
+    return u.pathname === location.pathname ? null : u.pathname + location.search + location.hash;
   } catch (e) { return null; }
 }
 
@@ -572,6 +572,14 @@ export function initI18n() {
   let lang = 'en';
   try { lang = localStorage.getItem('lang') || 'en'; } catch (e) {}
   if (!STRINGS[lang]) lang = 'en';
+
+  // Honour the saved language on every landing: site links always point at the
+  // English URLs, so a Hindi user following the nav lands on the English variant.
+  // If this page has a twin in the chosen language, go there. (/hi/ pages persist
+  // 'hi' before this runs, and explicit "Read in English" clicks persist 'en', so
+  // this can't loop or fight an explicit choice.)
+  const preferredTwin = altUrlFor(lang);
+  if (preferredTwin) { location.replace(preferredTwin); return; }
 
   const sw = document.getElementById('langSwitch');
   const trigger = document.getElementById('langTrigger');
