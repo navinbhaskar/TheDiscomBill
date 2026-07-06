@@ -2,7 +2,7 @@
 // (/bill-review/ for consumers, /expert/ for the review team): auth card,
 // live chat widget, and small formatting helpers.
 
-import { getSupabase, isConfigured, hasStoredSession } from './supabase-config.js';
+import { getSupabase, isConfigured, hasStoredSession, SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase-config.js';
 
 export const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -73,6 +73,22 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
   // session lands (phone OTP has no signup step of its own, unlike email).
   let pendingName = '';
 
+  // Phone OTP only works once an SMS provider is enabled in Supabase (see
+  // supabase/AUTH_PROVIDERS.md). Probe the public auth settings and keep the
+  // "Use phone number instead" option hidden until the server says it works —
+  // it then appears automatically, no frontend change needed.
+  let phoneEnabled = false;
+  const applyPhoneVis = () => {
+    const b = mount.querySelector('.br-auth-alt');
+    if (b) b.hidden = !phoneEnabled;
+  };
+  const phoneProbe = !configured ? Promise.resolve() :
+    fetch(`${SUPABASE_URL}/auth/v1/settings`, { headers: { apikey: SUPABASE_ANON_KEY } })
+      .then(r => r.json())
+      .then(j => { phoneEnabled = !!j?.external?.phone; })
+      .catch(() => { phoneEnabled = true; }); // probe failed — don't hide a possibly-working option
+  phoneProbe.then(applyPhoneVis);
+
   // Google OAuth is a full-page redirect; on return, onAuthStateChange picks up
   // the session. Requires the Google provider enabled in Supabase → Auth →
   // Providers. redirectTo brings the user back to the page they started on.
@@ -129,7 +145,7 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
           <p class="br-auth-msg" role="alert"></p>
           ${isUp && signupHint ? `<p class="br-auth-hint">${signupHint}</p>` : ''}
         </form>
-        <button type="button" class="br-auth-alt" data-mode="phone">${ICONS.phone} Use phone number instead</button>
+        <button type="button" class="br-auth-alt" data-mode="phone"${phoneEnabled ? '' : ' hidden'}>${ICONS.phone} Use phone number instead</button>
       </div>`;
 
     mount.querySelectorAll('.br-tab, .br-auth-alt').forEach(t =>
@@ -190,12 +206,13 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
           <div class="svc-control"><label for="brPhoneName">Full name <span class="br-label-note">first time only</span></label>
             <input id="brPhoneName" type="text" autocomplete="name" placeholder="Your name"></div>
           <div class="svc-control"><label for="brPhone">Phone number</label>
-            <input id="brPhone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+91 98765 43210" required></div>
+            <div class="br-phone-wrap"><span class="br-phone-cc" aria-hidden="true">+91</span>
+              <input id="brPhone" type="tel" autocomplete="tel-national" inputmode="numeric" placeholder="99999 99999" maxlength="14" required></div></div>
           <div class="svc-control br-otp-row" hidden><label for="brOtp">Verification code</label>
             <input id="brOtp" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code" maxlength="6"></div>
           <button type="submit" class="btn-primary br-auth-submit">Send code</button>
           <p class="br-auth-msg" role="alert"></p>
-          <p class="br-auth-hint">Standard SMS rates may apply. Enter your number with country code (e.g. +91 for India).</p>
+          <p class="br-auth-hint">Standard SMS rates may apply. We'll text a one-time code to this number.</p>
         </form>
       </div>`;
 
@@ -209,14 +226,19 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
     mount.querySelector('.br-social').addEventListener('click', () => signInWithGoogle(msg));
 
     let codeSent = false;
-    const normPhone = () => mount.querySelector('#brPhone').value.replace(/[\s()-]/g, '');
+    // The +91 prefix is fixed in the UI; tolerate users typing it anyway (or a leading 0).
+    const normPhone = () => {
+      const digits = mount.querySelector('#brPhone').value
+        .replace(/[\s()-]/g, '').replace(/^\+?91(?=\d{10}$)/, '').replace(/^0(?=\d{10}$)/, '');
+      return '+91' + digits;
+    };
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!sb) await sbReady;
       if (!sb) { msg.textContent = notConnected; return; }
       const phone = normPhone();
-      if (!/^\+\d{8,15}$/.test(phone)) { msg.textContent = 'Enter your number in international format, e.g. +919876543210.'; return; }
+      if (!/^\+91[6-9]\d{9}$/.test(phone)) { msg.textContent = 'Enter your 10-digit mobile number, e.g. 9999999999.'; return; }
       btn.disabled = true; msg.textContent = '';
       try {
         if (!codeSent) {
@@ -237,7 +259,12 @@ export async function initAuth({ mount, onSignedIn, onSignedOut, signupHint = ''
           // onAuthStateChange takes it from here (saving the name first).
         }
       } catch (err) {
-        msg.textContent = err?.message || 'Something went wrong. Please try again.';
+        const m = err?.message || '';
+        // Server-side provider gaps read badly raw ("Phone signins are disabled",
+        // "unsupported phone provider") — translate them for users.
+        msg.textContent = /disabled|unsupported|provider/i.test(m)
+          ? 'Phone sign-in isn’t available yet — please use email or Google instead.'
+          : (m || 'Something went wrong. Please try again.');
       } finally {
         btn.disabled = false;
       }

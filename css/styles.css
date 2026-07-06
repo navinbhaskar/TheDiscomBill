@@ -2996,6 +2996,20 @@ footer a:hover { color: #fff; text-decoration: none; }
 .svc-control input:focus, .svc-control textarea:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-faint); }
 .svc-control textarea { resize: vertical; line-height: 1.5; }
 .svc-control input[type="file"] { padding: 8px; font-size: 13px; cursor: pointer; }
+/* Footer social icons (hrefs are placeholders until the profiles exist) */
+.soc-links { display: flex; justify-content: center; gap: 18px; margin-top: 12px; }
+.soc-link { display: inline-flex; color: inherit; opacity: .7; transition: opacity .15s, color .15s; }
+.soc-link:hover { opacity: 1; color: var(--brand); }
+.soc-link svg { width: 18px; height: 18px; }
+
+/* Phone sign-in: fixed +91 country code, user types just the 10-digit number */
+.br-phone-wrap { display: flex; align-items: stretch; border: 1px solid var(--border-default);
+  border-radius: var(--radius-md); background: var(--surface-card); overflow: hidden; }
+.br-phone-wrap:focus-within { border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-faint); }
+.br-phone-cc { display: flex; align-items: center; padding: 0 10px 0 12px; font-size: 14px; font-weight: 600;
+  color: var(--text-secondary); border-right: 1px solid var(--border-default); }
+.svc-control .br-phone-wrap input { flex: 1; min-width: 0; border: none; border-radius: 0; background: transparent; }
+.svc-control .br-phone-wrap input:focus { outline: none; box-shadow: none; }
 .br-auth-msg { font-size: 13px; color: var(--text-secondary); min-height: 18px; margin: 0; }
 .br-auth-hint { font-size: 12px; color: var(--text-tertiary); margin: 0; }
 .br-label-note { text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--text-tertiary); margin-left: 4px; }
