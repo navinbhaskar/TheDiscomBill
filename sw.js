@@ -1,6 +1,6 @@
 // sw.js — Service Worker (network-first, cache fallback)
 // Update this version string when deploying new code to bust the cache.
-const CACHE = 'discombill-20260706-89';
+const CACHE = 'discombill-20260706-90';
 
 const CORE = [
   './', './index.html', './compare/', './compare/index.html',
@@ -16,7 +16,7 @@ const CORE = [
   './glossary/', './glossary/index.html',
   './methodology/', './methodology/index.html',
   // Styles
-  './css/styles.css',
+  './css/styles.min.css',
   // Application JS
   // (js/tariffs.js — the pre-split monolith — is dead code; per-state files below are live)
   './js/utils.js', './js/engine.js', './js/i18n.js',

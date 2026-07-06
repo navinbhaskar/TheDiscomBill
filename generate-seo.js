@@ -286,7 +286,7 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
   <!-- Fonts load async (non-render-blocking); display=swap shows fallback text immediately -->
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
-  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/styles.min.css">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
   <script>
@@ -1591,6 +1591,25 @@ ${stateLinks}
 `;
 }
 
+// ── minified CSS ──────────────────────────────────────────────────────────────
+// styles.css (~176 KB unminified) is the page's only render-blocking resource.
+// Every build regenerates css/styles.min.css from it; all pages link the .min
+// file. Edit styles.css as usual — just rerun this script before deploying.
+// Conservative rules only: strip comments, collapse whitespace, tighten around
+// structural punctuation. Colons and '>' keep their spacing so descendant
+// selectors like `.foo :hover` and calc() expressions can never change meaning.
+function writeMinifiedCss() {
+  const src = fs.readFileSync(path.join(ROOT, 'css', 'styles.css'), 'utf8');
+  const min = src
+    .replace(/\/\*[\s\S]*?\*\//g, '')       // comments
+    .replace(/\s+/g, ' ')                   // newlines + indentation → single spaces
+    .replace(/\s*([{};,])\s*/g, '$1')       // no space around structural punctuation
+    .replace(/;}/g, '}')                    // trailing semicolons
+    .trim();
+  fs.writeFileSync(path.join(ROOT, 'css', 'styles.min.css'), min, 'utf8');
+  return `${Math.round(min.length / 1024)} KB from ${Math.round(src.length / 1024)} KB`;
+}
+
 // ── run ───────────────────────────────────────────────────────────────────────
 export function generateSeo() {
   const states = getStates();
@@ -1632,8 +1651,9 @@ export function generateSeo() {
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
   fs.writeFileSync(path.join(ROOT, 'robots.txt'), ROBOTS, 'utf8');
   fs.writeFileSync(path.join(ROOT, 'llms.txt'), buildLlmsTxt(states), 'utf8');
+  const cssKb = writeMinifiedCss();
 
-  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt`);
+  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + styles.min.css (${cssKb})`);
   return { pages, states: states.length };
 }
 
