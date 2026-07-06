@@ -6,6 +6,8 @@
 //   3. Project Settings → API → copy the "Project URL" and the "anon public" key
 //      into the two constants below.
 //   4. Authentication → Providers → Email: leave enabled (default).
+//   5. (Optional) Google + phone (SMS) sign-in are already coded in the auth card —
+//      just enable the providers per supabase/AUTH_PROVIDERS.md.
 //
 // The anon key is safe to ship in client code — all access is enforced by the
 // Row Level Security policies created in schema.sql.
