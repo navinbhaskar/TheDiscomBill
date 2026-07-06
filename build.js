@@ -22,6 +22,7 @@ const assets = [
   'sw.js', 'manifest.webmanifest',
   'icon.svg', 'icon-maskable.svg',
   'icon-192.png', 'icon-512.png',
+  'og-image.jpg',   // 1200×630 social share card (og:image / twitter:image)
   // SEO / hosting files — previously omitted, so they never reached production.
   'sitemap.xml', 'robots.txt', 'llms.txt', 'CNAME'
 ];

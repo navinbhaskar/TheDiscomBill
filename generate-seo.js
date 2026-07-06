@@ -197,13 +197,17 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
   <meta property="og:title" content="${attr(title)}">
   <meta property="og:description" content="${attr(description)}">
   <meta property="og:url" content="${attr(canonical)}">
-  <meta property="og:image" content="${SITE}/icon-512.png">
+  <meta property="og:image" content="${SITE}/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
   <meta property="og:locale" content="${hi ? 'hi_IN' : 'en_IN'}">
   ${hi ? '<meta property="og:locale:alternate" content="en_IN">' : '<meta property="og:locale:alternate" content="hi_IN">'}
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${attr(title)}">
   <meta name="twitter:description" content="${attr(description)}">
-  <meta name="twitter:image" content="${SITE}/icon-512.png">
+  <meta name="twitter:image" content="${SITE}/og-image.jpg">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
