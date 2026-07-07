@@ -110,71 +110,71 @@
 <div class="page-body">
   <section class="solar-section">
     <div class="container container-mid">
-      <h2 class="reveal">Rooftop Solar Savings Calculator</h2>
-      <p class="solar-intro reveal">See how much a rooftop solar system would cost and save you, including the <strong>PM Surya Ghar</strong> central subsidy. Enter your monthly units and roof area to get a system size, net cost after subsidy, monthly savings and payback period.</p>
+      <h2 class="reveal" data-i18n="sol.title">Rooftop Solar Savings Calculator</h2>
+      <p class="solar-intro reveal" data-i18n-html="sol.intro">See how much a rooftop solar system would cost and save you, including the <strong>PM Surya Ghar</strong> central subsidy. Enter your monthly units and roof area to get a system size, net cost after subsidy, monthly savings and payback period.</p>
 
       <div class="solar-layout reveal">
         <!-- Inputs -->
         <div class="solar-inputs">
           <div class="solar-field">
-            <label for="solMonthly">Average monthly consumption (units)</label>
+            <label for="solMonthly" data-i18n="sol.monthly">Average monthly consumption (units)</label>
             <div class="solar-input-row">
-              <input id="solMonthly" type="number" min="0" step="10" placeholder="e.g., 350" inputmode="numeric">
-              <button type="button" class="solar-pull" id="solPull">Use my estimate</button>
+              <input id="solMonthly" type="number" min="0" step="10" placeholder="e.g., 350" data-i18n-ph="sol.phMonthly" inputmode="numeric">
+              <button type="button" class="solar-pull" id="solPull" data-i18n="sol.pull">Use my estimate</button>
             </div>
           </div>
           <div class="solar-field">
-            <label for="solRoof">Shadow-free roof area (sq ft)</label>
-            <input id="solRoof" type="number" min="0" step="10" placeholder="e.g., 300" inputmode="numeric">
-            <span class="solar-hint">~100 sq ft of clear roof is needed per 1 kW.</span>
+            <label for="solRoof" data-i18n="sol.roof">Shadow-free roof area (sq ft)</label>
+            <input id="solRoof" type="number" min="0" step="10" placeholder="e.g., 300" data-i18n-ph="sol.phRoof" inputmode="numeric">
+            <span class="solar-hint" data-i18n="sol.roofHint">~100 sq ft of clear roof is needed per 1 kW.</span>
           </div>
           <div class="solar-field-row">
             <div class="solar-field">
-              <label for="solRate">Tariff (₹/unit)</label>
+              <label for="solRate" data-i18n="sol.rate">Tariff (₹/unit)</label>
               <input id="solRate" type="number" min="0" step="0.5" value="7" inputmode="decimal">
             </div>
             <div class="solar-field">
-              <label for="solState">State subsidy (₹)
+              <label for="solState"><span data-i18n="sol.stateSub">State subsidy (₹)</span>
                 <span class="gloss" tabindex="0" role="img" aria-label="State subsidy info" data-tip="Some states add their own subsidy on top of PM Surya Ghar (e.g. Uttar Pradesh up to ₹30,000, Gujarat, Rajasthan). Enter your state's extra subsidy if any; leave 0 if unsure.">i</span>
               </label>
               <input id="solState" type="number" min="0" step="1000" value="0" inputmode="numeric">
             </div>
           </div>
           <details class="solar-adv">
-            <summary>Advanced</summary>
+            <summary data-i18n="sol.advanced">Advanced</summary>
             <div class="solar-field">
-              <label for="solCost">System cost (₹ per kW)</label>
+              <label for="solCost" data-i18n="sol.cost">System cost (₹ per kW)</label>
               <input id="solCost" type="number" min="0" step="1000" value="55000" inputmode="numeric">
-              <span class="solar-hint">Turnkey installed cost before subsidy. Typically ₹50,000–65,000/kW.</span>
+              <span class="solar-hint" data-i18n="sol.costHint">Turnkey installed cost before subsidy. Typically ₹50,000–65,000/kW.</span>
             </div>
           </details>
         </div>
 
         <!-- Results -->
         <aside class="solar-results">
-          <div class="solar-empty" id="solEmpty">Enter your monthly units or roof area to see your solar estimate.</div>
+          <div class="solar-empty" id="solEmpty" data-i18n="sol.empty">Enter your monthly units or roof area to see your solar estimate.</div>
           <div id="solResult" hidden>
             <div class="solar-hero-card">
-              <div class="solar-hero-label">Recommended system size</div>
+              <div class="solar-hero-label" data-i18n="sol.heroLabel">Recommended system size</div>
               <div class="solar-size"><span id="solSize">0</span><small> kW</small></div>
               <div class="solar-size-note" id="solSizeNote"></div>
-              <div class="solar-payback-pill">Pays for itself in <strong id="solPayback">—</strong></div>
+              <div class="solar-payback-pill"><span data-i18n="sol.paysFor">Pays for itself in</span> <strong id="solPayback">—</strong></div>
             </div>
             <div class="solar-breakdown">
-              <div class="solar-bd-row"><span>Estimated generation</span><strong id="solGen">—</strong></div>
-              <div class="solar-bd-row"><span>System cost (before subsidy)</span><strong id="solGross">—</strong></div>
-              <div class="solar-bd-row solar-bd-credit"><span>PM Surya Ghar central subsidy</span><strong id="solCentral">—</strong></div>
-              <div class="solar-bd-row solar-bd-credit"><span>State subsidy</span><strong id="solState2">—</strong></div>
-              <div class="solar-bd-row solar-bd-total"><span>Net cost to you</span><strong id="solNet">—</strong></div>
-              <div class="solar-bd-row solar-bd-save"><span>Monthly savings</span><strong id="solMonthlySave">—</strong></div>
-              <div class="solar-bd-row solar-bd-save"><span>Net savings over 25 years</span><strong id="solLifetime">—</strong></div>
-              <div class="solar-bd-row"><span>CO₂ avoided</span><strong id="solCo2">—</strong></div>
+              <div class="solar-bd-row"><span data-i18n="sol.gen">Estimated generation</span><strong id="solGen">—</strong></div>
+              <div class="solar-bd-row"><span data-i18n="sol.grossCost">System cost (before subsidy)</span><strong id="solGross">—</strong></div>
+              <div class="solar-bd-row solar-bd-credit"><span data-i18n="sol.centralSub">PM Surya Ghar central subsidy</span><strong id="solCentral">—</strong></div>
+              <div class="solar-bd-row solar-bd-credit"><span data-i18n="sol.stateSub2">State subsidy</span><strong id="solState2">—</strong></div>
+              <div class="solar-bd-row solar-bd-total"><span data-i18n="sol.netCost">Net cost to you</span><strong id="solNet">—</strong></div>
+              <div class="solar-bd-row solar-bd-save"><span data-i18n="sol.monthlySave">Monthly savings</span><strong id="solMonthlySave">—</strong></div>
+              <div class="solar-bd-row solar-bd-save"><span data-i18n="sol.lifetime">Net savings over 25 years</span><strong id="solLifetime">—</strong></div>
+              <div class="solar-bd-row"><span data-i18n="sol.co2">CO₂ avoided</span><strong id="solCo2">—</strong></div>
             </div>
           </div>
         </aside>
       </div>
 
-      <p class="comparison-note reveal">
+      <p class="comparison-note reveal" data-i18n-html="sol.note">
         Estimates use India-average generation (~4 units per kW per day) and the PM Surya Ghar
         residential central subsidy (₹30,000/kW up to 2 kW, ₹18,000 for the 3rd kW, capped at
         ₹78,000). Actual generation, cost and state subsidy vary with location, roof orientation,

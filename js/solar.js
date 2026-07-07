@@ -15,6 +15,25 @@ const $ = (id) => document.getElementById(id);
 const rs  = (n) => '₹' + Math.round(n).toLocaleString('en-IN');
 const num = (n, d = 0) => Number(n).toLocaleString('en-IN', { minimumFractionDigits: d, maximumFractionDigits: d });
 
+// Dynamic result strings in both languages (static labels are handled by i18n data-i18n).
+const lang = () => { try { return localStorage.getItem('lang') === 'hi' ? 'hi' : 'en'; } catch { return 'en'; } };
+const SOL_STR = {
+  en: {
+    roofNote: 'Limited by your roof area — a bigger system would need more shadow-free space.',
+    usageNote: 'Sized to cover your monthly usage.',
+    years: ' years', unitsMo: ' units/mo', capped: ' (capped at 3 kW)', perMo: '/mo', tPerYr: ' t/yr',
+    pullEst: (n) => `Use my estimate (${n} units)`,
+    pullTitle: 'Build an estimate on the Usage Estimator page first',
+  },
+  hi: {
+    roofNote: 'आपकी छत के क्षेत्रफल से सीमित — बड़े सिस्टम के लिए और छाया-रहित जगह चाहिए।',
+    usageNote: 'आपकी मासिक खपत के हिसाब से साइज़ किया गया।',
+    years: ' वर्ष', unitsMo: ' यूनिट/माह', capped: ' (3 kW पर कैप)', perMo: '/माह', tPerYr: ' टन/वर्ष',
+    pullEst: (n) => `मेरा अनुमान इस्तेमाल करें (${n} यूनिट)`,
+    pullTitle: 'पहले यूसेज एस्टिमेटर पेज पर अनुमान बनाएँ',
+  },
+};
+
 // PM Surya Ghar Muft Bijli Yojana central subsidy (residential):
 // ₹30,000/kW for the first 2 kW, ₹18,000/kW for the 3rd kW, capped at ₹78,000 (≥3 kW).
 function centralSubsidy(kW) {
@@ -84,20 +103,19 @@ function render() {
   if (!r.haveInput) { empty.hidden = false; result.hidden = true; return; }
   empty.hidden = true; result.hidden = false;
 
+  const S = SOL_STR[lang()];
   $('solSize').textContent = num(r.size, r.size % 1 ? 1 : 0);
-  $('solSizeNote').textContent = r.roofLimited
-    ? 'Limited by your roof area — a bigger system would need more shadow-free space.'
-    : 'Sized to cover your monthly usage.';
-  $('solPayback').textContent = isFinite(r.paybackYears) ? num(r.paybackYears, 1) + ' years' : '—';
+  $('solSizeNote').textContent = r.roofLimited ? S.roofNote : S.usageNote;
+  $('solPayback').textContent = isFinite(r.paybackYears) ? num(r.paybackYears, 1) + S.years : '—';
 
-  $('solGen').textContent = num(r.monthlyGen) + ' units/mo';
+  $('solGen').textContent = num(r.monthlyGen) + S.unitsMo;
   $('solGross').textContent = rs(r.gross);
-  $('solCentral').textContent = '– ' + rs(r.central) + (r.capped ? ' (capped at 3 kW)' : '');
+  $('solCentral').textContent = '– ' + rs(r.central) + (r.capped ? S.capped : '');
   $('solState2').textContent = r.stateSub > 0 ? '– ' + rs(r.stateSub) : '₹0';
   $('solNet').textContent = rs(r.net);
-  $('solMonthlySave').textContent = rs(r.monthlySavings) + '/mo';
+  $('solMonthlySave').textContent = rs(r.monthlySavings) + S.perMo;
   $('solLifetime').textContent = rs(r.lifetimeSavings);
-  $('solCo2').textContent = num(r.co2Tonnes, 1) + ' t/yr';
+  $('solCo2').textContent = num(r.co2Tonnes, 1) + S.tPerYr;
 }
 
 function init() {
@@ -111,12 +129,21 @@ function init() {
   const est = estimatorUnits();
   if (est) {
     pull.addEventListener('click', () => { $('solMonthly').value = est; render(); });
-    pull.textContent = `Use my estimate (${est} units)`;
+    pull.textContent = SOL_STR[lang()].pullEst(est);
+    pull.removeAttribute('data-i18n');   // dynamic text now owns this button
   } else {
     pull.classList.add('is-disabled');
-    pull.title = 'Build an estimate on the Usage Estimator page first';
+    pull.title = SOL_STR[lang()].pullTitle;
     pull.addEventListener('click', () => { location.href = '/usage/'; });
   }
+
+  // Language switched in place (no reload on tool pages): re-render the dynamic
+  // result strings so they match the freshly swapped static labels.
+  window.addEventListener('storage', () => render());
+  document.getElementById('langMenu')?.addEventListener('click', () => setTimeout(() => {
+    render();
+    if (est) pull.textContent = SOL_STR[lang()].pullEst(est); else pull.title = SOL_STR[lang()].pullTitle;
+  }, 0));
 
   render();
 }
