@@ -2,12 +2,17 @@
 // Self-contained: no engine import. The user adds appliances (wattage × quantity × hours/day),
 // and we compute monthly kWh and an approximate cost, with a visual "where your units go"
 // breakdown. State persists in localStorage so it survives reloads.
+//
+// Three refinements make the estimate more honest:
+//   • Season toggle — AC/cooler/fan/geyser run-times swing wildly across summer/monsoon/winter.
+//   • Star rating  — AC and fridge wattage depends heavily on the BEE star rating.
+//   • Hindi        — the whole JS-rendered UI (names, chips, breakdown) is bilingual.
 
 const DAYS_PER_MONTH = 30;
 const STORE_KEY = 'tdb_estimator_v1';
 
-// Typical Indian-household appliance presets. `w` = running wattage, `hrs` = a sensible default
-// daily run-time. For the fridge/AC, `hrs` is the *effective* compressor run-time (they cycle).
+const lang = () => { try { return localStorage.getItem('lang') === 'hi' ? 'hi' : 'en'; } catch { return 'en'; } };
+
 // Line-style SVG icons for every appliance — emoji render differently on every
 // device (and some, like the old 🪭 fan, are outright wrong), so the whole
 // catalog uses consistent stroke icons tinted via CSS (currentColor).
@@ -33,54 +38,92 @@ const ICONS = {
   router:    I('<path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.86a10 10 0 0 1 14 0"/><path d="M8.5 16.43a5 5 0 0 1 7 0"/>'),
   custom:    I('<path d="M5 12h14"/><path d="M12 5v14"/>'),
 };
+
+// Appliance presets. `w` = running wattage; `hrs` = a sensible default daily run-time (for the
+// fridge/AC this is *effective* compressor run-time, since they cycle). Names are bilingual.
 const CATALOG = [
-  { id: 'fan',       name: 'Ceiling Fan',            icon: ICONS.fan,       w: 75,   hrs: 12 },
-  { id: 'led',       name: 'LED Bulb',               icon: ICONS.led,       w: 9,    hrs: 6  },
-  { id: 'tube',      name: 'Tube Light',             icon: ICONS.tube,      w: 20,   hrs: 6  },
-  { id: 'tv',        name: 'LED TV',                 icon: ICONS.tv,        w: 90,   hrs: 5  },
-  { id: 'fridge',    name: 'Refrigerator',           icon: ICONS.fridge,    w: 150,  hrs: 8  },
-  { id: 'ac',        name: 'Air Conditioner (1.5T)', icon: ICONS.ac,        w: 1500, hrs: 6  },
-  { id: 'cooler',    name: 'Air Cooler',             icon: ICONS.cooler,    w: 180,  hrs: 8  },
-  { id: 'washer',    name: 'Washing Machine',        icon: ICONS.washer,    w: 500,  hrs: 1  },
-  { id: 'geyser',    name: 'Geyser / Water Heater',  icon: ICONS.geyser,    w: 2000, hrs: 1  },
-  { id: 'micro',     name: 'Microwave Oven',         icon: ICONS.micro,     w: 1200, hrs: 0.5 },
-  { id: 'mixer',     name: 'Mixer / Grinder',        icon: ICONS.mixer,     w: 500,  hrs: 0.5 },
-  { id: 'laptop',    name: 'Laptop',                 icon: ICONS.laptop,    w: 60,   hrs: 6  },
-  { id: 'desktop',   name: 'Desktop PC',             icon: ICONS.desktop,   w: 150,  hrs: 5  },
-  { id: 'iron',      name: 'Electric Iron',          icon: ICONS.iron,      w: 1000, hrs: 0.5 },
-  { id: 'induction', name: 'Induction Cooktop',      icon: ICONS.induction, w: 1800, hrs: 1  },
-  { id: 'pump',      name: 'Water Pump / Motor',     icon: ICONS.pump,      w: 750,  hrs: 1  },
-  { id: 'stb',       name: 'Set-Top Box',            icon: ICONS.stb,       w: 15,   hrs: 5  },
-  { id: 'router',    name: 'Wi-Fi Router',           icon: ICONS.router,    w: 10,   hrs: 24 },
-  { id: 'custom',    name: 'Custom Appliance',       icon: ICONS.custom,    w: 100,  hrs: 1  },
+  { id: 'fan',       name: { en: 'Ceiling Fan',            hi: 'सीलिंग फैन' },       icon: ICONS.fan,       w: 75,   hrs: 14 },
+  { id: 'led',       name: { en: 'LED Bulb',               hi: 'LED बल्ब' },          icon: ICONS.led,       w: 9,    hrs: 6  },
+  { id: 'tube',      name: { en: 'Tube Light',             hi: 'ट्यूब लाइट' },        icon: ICONS.tube,      w: 20,   hrs: 6  },
+  { id: 'tv',        name: { en: 'LED TV',                 hi: 'LED टीवी' },          icon: ICONS.tv,        w: 90,   hrs: 5  },
+  { id: 'fridge',    name: { en: 'Refrigerator',           hi: 'रेफ्रिजरेटर' },       icon: ICONS.fridge,    w: 150,  hrs: 8,  star: '3' },
+  { id: 'ac',        name: { en: 'Air Conditioner (1.5T)', hi: 'एयर कंडीशनर (1.5T)' }, icon: ICONS.ac,        w: 1500, hrs: 8,  star: '3' },
+  { id: 'cooler',    name: { en: 'Air Cooler',             hi: 'एयर कूलर' },          icon: ICONS.cooler,    w: 180,  hrs: 10 },
+  { id: 'washer',    name: { en: 'Washing Machine',        hi: 'वॉशिंग मशीन' },       icon: ICONS.washer,    w: 500,  hrs: 1  },
+  { id: 'geyser',    name: { en: 'Geyser / Water Heater',  hi: 'गीज़र / वॉटर हीटर' },  icon: ICONS.geyser,    w: 2000, hrs: 0.3 },
+  { id: 'micro',     name: { en: 'Microwave Oven',         hi: 'माइक्रोवेव ओवन' },     icon: ICONS.micro,     w: 1200, hrs: 0.5 },
+  { id: 'mixer',     name: { en: 'Mixer / Grinder',        hi: 'मिक्सर / ग्राइंडर' },  icon: ICONS.mixer,     w: 500,  hrs: 0.5 },
+  { id: 'laptop',    name: { en: 'Laptop',                 hi: 'लैपटॉप' },            icon: ICONS.laptop,    w: 60,   hrs: 6  },
+  { id: 'desktop',   name: { en: 'Desktop PC',             hi: 'डेस्कटॉप PC' },        icon: ICONS.desktop,   w: 150,  hrs: 5  },
+  { id: 'iron',      name: { en: 'Electric Iron',          hi: 'इलेक्ट्रिक आयरन' },    icon: ICONS.iron,      w: 1000, hrs: 0.5 },
+  { id: 'induction', name: { en: 'Induction Cooktop',      hi: 'इंडक्शन कुकटॉप' },     icon: ICONS.induction, w: 1800, hrs: 1  },
+  { id: 'pump',      name: { en: 'Water Pump / Motor',     hi: 'वॉटर पंप / मोटर' },    icon: ICONS.pump,      w: 750,  hrs: 1  },
+  { id: 'stb',       name: { en: 'Set-Top Box',            hi: 'सेट-टॉप बॉक्स' },      icon: ICONS.stb,       w: 15,   hrs: 5  },
+  { id: 'router',    name: { en: 'Wi-Fi Router',           hi: 'वाई-फाई राउटर' },      icon: ICONS.router,    w: 10,   hrs: 24 },
+  { id: 'custom',    name: { en: 'Custom Appliance',       hi: 'कस्टम उपकरण' },        icon: ICONS.custom,    w: 100,  hrs: 1  },
 ];
 
+// Effective daily run-hours per season for weather-driven appliances. Switching season
+// resets these rows to the seasonal default (they're estimates, not user-entered facts).
+const SEASON_HRS = {
+  summer:  { fan: 14, ac: 8, cooler: 10, geyser: 0.3 },
+  monsoon: { fan: 10, ac: 3, cooler: 4,  geyser: 0.6 },
+  winter:  { fan: 3,  ac: 0, cooler: 0,  geyser: 1.5 },
+};
+const SEASONS = ['summer', 'monsoon', 'winter'];
+
+// BEE star-rating running-wattage presets for the two big-ticket appliances.
+const STAR_W = {
+  ac:     { '3': 1500, '5': 1100 },
+  fridge: { '3': 150,  '5': 90 },
+};
+
+// JS-rendered UI strings (static HTML labels use data-i18n in the page itself).
+const L = {
+  en: {
+    bdEmpty: 'Add appliances to see the breakdown.',
+    custom: 'Custom W', star3: '3★', star5: '5★',
+    seasonNote: { summer: 'Summer run-times — AC & cooler at peak.', monsoon: 'Monsoon run-times — lighter cooling.', winter: 'Winter run-times — heating up, cooling off.' },
+  },
+  hi: {
+    bdEmpty: 'ब्रेकडाउन देखने के लिए उपकरण जोड़ें।',
+    custom: 'कस्टम W', star3: '3★', star5: '5★',
+    seasonNote: { summer: 'गर्मी के घंटे — AC व कूलर पूरी तरह चालू।', monsoon: 'मानसून के घंटे — कम कूलिंग।', winter: 'सर्दी के घंटे — हीटिंग ज़्यादा, कूलिंग कम।' },
+  },
+};
+const t = (k) => L[lang()][k];
+
 const byId = (id) => CATALOG.find(c => c.id === id);
-// Saved rows carry a snapshot of the icon; prefer the live catalog one so icon
-// upgrades (like the fan emoji → SVG swap) reach rows persisted before the change.
 const iconFor = (r) => (r.catId && byId(r.catId)?.icon) || r.icon || '';
+// Name is always resolved from the catalog by catId, so it localizes on language switch.
+const nameFor = (r) => { const c = byId(r.catId); return c ? c.name[lang()] : (typeof r.name === 'string' ? r.name : (r.name?.[lang()] || '')); };
 
 // A sensible starter set shown on first visit so the page isn't empty.
 const DEFAULT_ROWS = [
-  { catId: 'fan',    name: 'Ceiling Fan', icon: ICONS.fan, w: 75,  qty: 3, hrs: 12 },
-  { catId: 'led',    name: 'LED Bulb',    icon: ICONS.led, w: 9,   qty: 6, hrs: 6  },
-  { catId: 'tv',     name: 'LED TV',      icon: ICONS.tv,  w: 90,  qty: 1, hrs: 5  },
-  { catId: 'fridge', name: 'Refrigerator', icon: ICONS.fridge, w: 150, qty: 1, hrs: 8 },
+  { catId: 'fan',    w: 75,  qty: 3, hrs: 14 },
+  { catId: 'led',    w: 9,   qty: 6, hrs: 6  },
+  { catId: 'tv',     w: 90,  qty: 1, hrs: 5  },
+  { catId: 'fridge', w: 150, qty: 1, hrs: 8, star: '3' },
 ];
 
-let rows = [];   // [{ catId, name, icon, w, qty, hrs }]
+let rows = [];        // [{ catId, w, qty, hrs, star? }]
 let rate = 7;
+let season = 'summer';
 
 // ── Persistence ──────────────────────────────────────────────────────────────
 function load() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORE_KEY));
-    if (saved && Array.isArray(saved.rows)) { rows = saved.rows; rate = saved.rate ?? 7; return; }
+    if (saved && Array.isArray(saved.rows)) {
+      rows = saved.rows; rate = saved.rate ?? 7;
+      if (SEASONS.includes(saved.season)) season = saved.season;
+      return;
+    }
   } catch (e) { /* ignore corrupt store */ }
   rows = DEFAULT_ROWS.map(r => ({ ...r }));
 }
 function save() {
-  try { localStorage.setItem(STORE_KEY, JSON.stringify({ rows, rate })); } catch (e) {}
+  try { localStorage.setItem(STORE_KEY, JSON.stringify({ rows, rate, season })); } catch (e) {}
 }
 
 // ── Maths ────────────────────────────────────────────────────────────────────
@@ -88,23 +131,36 @@ const monthlyKwh = (r) => (Number(r.w) * Number(r.qty) * Number(r.hrs) * DAYS_PE
 const fmt = (n, d = 0) => Number(n).toLocaleString('en-IN', { minimumFractionDigits: d, maximumFractionDigits: d });
 
 // ── Rendering ────────────────────────────────────────────────────────────────
+function starSelectHtml(r) {
+  if (!STAR_W[r.catId]) return '';
+  const v = r.star || 'custom';
+  const opt = (val, label) => `<option value="${val}"${v === val ? ' selected' : ''}>${label}</option>`;
+  return `<select class="est-star" data-f="star" aria-label="Efficiency rating">${
+    opt('3', t('star3'))}${opt('5', t('star5'))}${opt('custom', t('custom'))}</select>`;
+}
+
 function rowHtml(r, i) {
   return `
     <div class="est-row" data-i="${i}">
-      <span class="est-row-name"><span class="est-row-icon">${iconFor(r)}</span>${r.name}</span>
+      <span class="est-row-name">
+        <span class="est-row-icon">${iconFor(r)}</span>
+        <span class="est-row-nm">
+          <span class="est-row-label">${nameFor(r)}</span>
+          ${starSelectHtml(r)}
+        </span>
+      </span>
       <input class="est-in est-w" data-f="w" type="number" min="0" step="1" value="${r.w}" inputmode="numeric" aria-label="Watts">
       <input class="est-in est-q" data-f="qty" type="number" min="0" step="1" value="${r.qty}" inputmode="numeric" aria-label="Quantity">
       <input class="est-in est-h" data-f="hrs" type="number" min="0" max="24" step="0.5" value="${r.hrs}" inputmode="decimal" aria-label="Hours per day">
       <span class="est-row-kwh">${fmt(monthlyKwh(r), 1)}</span>
-      <button type="button" class="est-row-remove" data-act="remove" title="Remove" aria-label="Remove ${r.name}">×</button>
+      <button type="button" class="est-row-remove" data-act="remove" title="Remove" aria-label="Remove">×</button>
     </div>`;
 }
 
 function breakdownHtml(total) {
-  if (!rows.length || total <= 0) return `<div class="est-bd-empty">Add appliances to see the breakdown.</div>`;
-  // Sort descending by share; show top contributors with a proportional bar.
+  if (!rows.length || total <= 0) return `<div class="est-bd-empty">${t('bdEmpty')}</div>`;
   const items = rows
-    .map(r => ({ name: r.name, icon: iconFor(r), kwh: monthlyKwh(r) }))
+    .map(r => ({ name: nameFor(r), icon: iconFor(r), kwh: monthlyKwh(r) }))
     .filter(x => x.kwh > 0)
     .sort((a, b) => b.kwh - a.kwh);
   const max = items.length ? items[0].kwh : 1;
@@ -125,60 +181,8 @@ function render() {
   const emptyEl = document.getElementById('estEmpty');
   rowsEl.innerHTML = rows.map(rowHtml).join('');
   emptyEl.hidden = rows.length > 0;
-
-  const totalMonthly = rows.reduce((s, r) => s + monthlyKwh(r), 0);
-  const totalDaily = totalMonthly / DAYS_PER_MONTH;
-
-  document.getElementById('estMonthlyKwh').textContent = fmt(totalMonthly, totalMonthly < 100 ? 1 : 0);
-  document.getElementById('estDailyKwh').textContent = fmt(totalDaily, 1);
-  document.getElementById('estApplianceCount').textContent = rows.reduce((s, r) => s + Number(r.qty || 0), 0);
-  document.getElementById('estCost').textContent = fmt(totalMonthly * rate, 0);
-  document.getElementById('estBreakdown').innerHTML = breakdownHtml(totalMonthly);
-  save();
-}
-
-// ── Events ───────────────────────────────────────────────────────────────────
-function addAppliance(catId) {
-  const c = byId(catId) || byId('custom');
-  rows.push({ catId: c.id, name: c.name, icon: c.icon, w: c.w, qty: 1, hrs: c.hrs });
-  render();
-}
-
-function initChips() {
-  const wrap = document.getElementById('estChips');
-  wrap.innerHTML = CATALOG.filter(c => c.id !== 'custom')
-    .map(c => `<button type="button" class="est-chip" data-cat="${c.id}"><span class="est-row-icon">${c.icon}</span>${c.name}</button>`)
-    .join('');
-  wrap.addEventListener('click', (e) => {
-    const chip = e.target.closest('.est-chip');
-    if (chip) addAppliance(chip.dataset.cat);
-  });
-}
-
-function initRows() {
-  const rowsEl = document.getElementById('estRows');
-  // Edit a field
-  rowsEl.addEventListener('input', (e) => {
-    const input = e.target.closest('.est-in');
-    if (!input) return;
-    const row = e.target.closest('.est-row');
-    const i = +row.dataset.i;
-    const f = input.dataset.f;
-    let v = parseFloat(input.value);
-    if (isNaN(v) || v < 0) v = 0;
-    if (f === 'hrs' && v > 24) v = 24;
-    rows[i][f] = v;
-    // Live-update just this row's kWh + the totals without re-rendering inputs (keeps focus/caret).
-    row.querySelector('.est-row-kwh').textContent = fmt(monthlyKwh(rows[i]), 1);
-    updateTotals();
-  });
-  // Remove a row
-  rowsEl.addEventListener('click', (e) => {
-    if (e.target.dataset.act === 'remove') {
-      rows.splice(+e.target.closest('.est-row').dataset.i, 1);
-      render();
-    }
-  });
+  syncSeasonUI();
+  updateTotals();
 }
 
 function updateTotals() {
@@ -191,11 +195,105 @@ function updateTotals() {
   save();
 }
 
+function syncSeasonUI() {
+  document.querySelectorAll('#estSeason .est-season-btn').forEach(b =>
+    b.setAttribute('aria-pressed', b.dataset.season === season ? 'true' : 'false'));
+  const note = document.getElementById('estSeasonNote');
+  if (note) note.textContent = L[lang()].seasonNote[season];
+}
+
+// ── Events ───────────────────────────────────────────────────────────────────
+function addAppliance(catId) {
+  const c = byId(catId) || byId('custom');
+  const r = { catId: c.id, w: c.w, qty: 1, hrs: c.hrs };
+  if (c.star) r.star = c.star;
+  // Weather-driven appliances inherit the current season's run-time.
+  if (SEASON_HRS[season]?.[c.id] != null) r.hrs = SEASON_HRS[season][c.id];
+  rows.push(r);
+  render();
+}
+
+function applySeason(next) {
+  if (!SEASONS.includes(next)) return;
+  season = next;
+  rows.forEach(r => {
+    const h = SEASON_HRS[season][r.catId];
+    if (h != null) r.hrs = h;
+  });
+  render();
+}
+
+function renderChips() {
+  const wrap = document.getElementById('estChips');
+  wrap.innerHTML = CATALOG.filter(c => c.id !== 'custom')
+    .map(c => `<button type="button" class="est-chip" data-cat="${c.id}"><span class="est-row-icon">${c.icon}</span>${c.name[lang()]}</button>`)
+    .join('');
+}
+
+function initChips() {
+  renderChips();
+  document.getElementById('estChips').addEventListener('click', (e) => {
+    const chip = e.target.closest('.est-chip');
+    if (chip) addAppliance(chip.dataset.cat);
+  });
+}
+
+function initRows() {
+  const rowsEl = document.getElementById('estRows');
+  rowsEl.addEventListener('input', (e) => {
+    const input = e.target.closest('.est-in');
+    if (!input) return;
+    const row = e.target.closest('.est-row');
+    const i = +row.dataset.i;
+    const f = input.dataset.f;
+    let v = parseFloat(input.value);
+    if (isNaN(v) || v < 0) v = 0;
+    if (f === 'hrs' && v > 24) v = 24;
+    rows[i][f] = v;
+    // Manually editing an AC/fridge wattage means it no longer matches a star preset.
+    if (f === 'w' && STAR_W[rows[i].catId]) {
+      rows[i].star = 'custom';
+      const sel = row.querySelector('.est-star');
+      if (sel) sel.value = 'custom';
+    }
+    row.querySelector('.est-row-kwh').textContent = fmt(monthlyKwh(rows[i]), 1);
+    updateTotals();
+  });
+  // Star-rating change → set the preset wattage.
+  rowsEl.addEventListener('change', (e) => {
+    const sel = e.target.closest('.est-star');
+    if (!sel) return;
+    const row = e.target.closest('.est-row');
+    const i = +row.dataset.i;
+    rows[i].star = sel.value;
+    if (sel.value !== 'custom' && STAR_W[rows[i].catId]) {
+      rows[i].w = STAR_W[rows[i].catId][sel.value];
+      row.querySelector('.est-w').value = rows[i].w;
+      row.querySelector('.est-row-kwh').textContent = fmt(monthlyKwh(rows[i]), 1);
+    }
+    updateTotals();
+  });
+  rowsEl.addEventListener('click', (e) => {
+    if (e.target.dataset.act === 'remove') {
+      rows.splice(+e.target.closest('.est-row').dataset.i, 1);
+      render();
+    }
+  });
+}
+
+function initSeason() {
+  document.getElementById('estSeason')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('.est-season-btn');
+    if (btn) applySeason(btn.dataset.season);
+  });
+}
+
 function init() {
   if (!document.getElementById('estRows')) return; // not on the estimator page
   load();
   initChips();
   initRows();
+  initSeason();
 
   document.getElementById('estAddCustom').addEventListener('click', () => addAppliance('custom'));
 
@@ -211,13 +309,16 @@ function init() {
   document.getElementById('estShare')?.addEventListener('click', () => {
     const totalMonthly = rows.reduce((s, r) => s + monthlyKwh(r), 0);
     if (totalMonthly <= 0) return;
-    const top = rows.map(r => ({ name: r.name, kwh: monthlyKwh(r) })).sort((a, b) => b.kwh - a.kwh)[0];
-    const hi = (() => { try { return localStorage.getItem('lang') === 'hi'; } catch { return false; } })();
-    const text = hi
+    const top = rows.map(r => ({ name: nameFor(r), kwh: monthlyKwh(r) })).sort((a, b) => b.kwh - a.kwh)[0];
+    const text = lang() === 'hi'
       ? `⚡ मेरा बिजली खपत अनुमान (TheDiscomBill)\n• मासिक खपत: ~${fmt(totalMonthly)} यूनिट\n• अनुमानित लागत: ₹${fmt(totalMonthly * rate)}/माह (₹${rate}/यूनिट पर)\n• सबसे ज़्यादा खपत: ${top.name} (~${fmt(top.kwh)} यूनिट)\nअपना अनुमान मुफ़्त निकालें: https://www.thediscombill.com/usage/`
       : `⚡ My electricity usage estimate (TheDiscomBill)\n• Monthly usage: ~${fmt(totalMonthly)} units\n• Approx cost: ₹${fmt(totalMonthly * rate)}/month (at ₹${rate}/unit)\n• Biggest consumer: ${top.name} (~${fmt(top.kwh)} units)\nEstimate yours free: https://www.thediscombill.com/usage/`;
     window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener');
   });
+
+  // Language switched in place (no reload on tool pages): re-render the JS-built
+  // chips, rows and breakdown so their names/labels match the new language.
+  document.getElementById('langMenu')?.addEventListener('click', () => setTimeout(() => { renderChips(); render(); }, 0));
 
   render();
 }
