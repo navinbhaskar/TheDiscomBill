@@ -1775,6 +1775,33 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .estimator-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px; text-align: center; }
 .est-intro { color: var(--text-secondary); margin: 0 auto 22px; line-height: 1.6; text-align: center; max-width: 680px; }
 
+/* Estimator hero band */
+.est-hero {
+  text-align: center;
+  background: linear-gradient(135deg, var(--brand-faint), var(--surface-card) 60%);
+  border: 1px solid var(--brand-border); border-radius: var(--radius-xl);
+  padding: 28px 26px 22px; margin-bottom: 24px;
+}
+.est-hero h2 { margin-top: 0; }
+.est-hero .est-intro { margin-bottom: 16px; }
+.est-hero-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.est-hero-chip {
+  font-size: 12.5px; font-weight: 600; color: var(--brand);
+  background: var(--brand-faint); border: 1px solid var(--brand-border);
+  border-radius: var(--radius-full); padding: 5px 13px;
+}
+
+/* Cross-link into the solar calculator */
+.est-solar-link {
+  display: flex; align-items: center; gap: 10px; margin-top: 14px; padding: 13px 16px;
+  background: rgba(251, 191, 36, .14); border: 1px solid rgba(245, 158, 11, .4);
+  border-radius: var(--radius-md); color: #92400e; font-size: 13px; font-weight: 600;
+  text-decoration: none; transition: background var(--t-fast), transform var(--t-fast);
+}
+.est-solar-link:hover { background: rgba(251, 191, 36, .24); transform: translateY(-1px); text-decoration: none; }
+.est-solar-link svg { width: 18px; height: 18px; flex-shrink: 0; color: #f59e0b; }
+[data-theme="dark"] .est-solar-link { color: #fcd34d; }
+
 /* Quick-add appliance chips */
 .est-chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 24px; }
 .est-chip {
