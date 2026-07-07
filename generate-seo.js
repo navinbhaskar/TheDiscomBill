@@ -1067,15 +1067,29 @@ function statePage(state, lang = 'en') {
   });
 }
 
-// Region grouping for the directory page — purely presentational.
+// Region grouping for the directory page — purely presentational. Each region carries
+// an accent colour used for its heading dot, state-code badges and card hover.
 const REGIONS = [
-  { en: 'North India', hi: 'उत्तर भारत', states: ['Delhi', 'Haryana', 'Himachal Pradesh', 'Jammu & Kashmir', 'Ladakh', 'Punjab', 'Chandigarh', 'Rajasthan', 'Uttar Pradesh', 'Uttarakhand'] },
-  { en: 'South India', hi: 'दक्षिण भारत', states: ['Andhra Pradesh', 'Karnataka', 'Kerala', 'Puducherry', 'Tamil Nadu', 'Telangana'] },
-  { en: 'West India', hi: 'पश्चिम भारत', states: ['Dadra & Nagar Haveli and Daman & Diu', 'Goa', 'Gujarat', 'Maharashtra'] },
-  { en: 'Central India', hi: 'मध्य भारत', states: ['Chhattisgarh', 'Madhya Pradesh'] },
-  { en: 'East India', hi: 'पूर्व भारत', states: ['Bihar', 'Jharkhand', 'Odisha', 'Sikkim', 'West Bengal'] },
-  { en: 'North-East India', hi: 'पूर्वोत्तर भारत', states: ['Arunachal Pradesh', 'Assam', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Tripura'] },
+  { en: 'North India', hi: 'उत्तर भारत', color: '#2563eb', states: ['Delhi', 'Haryana', 'Himachal Pradesh', 'Jammu & Kashmir', 'Ladakh', 'Punjab', 'Chandigarh', 'Rajasthan', 'Uttar Pradesh', 'Uttarakhand'] },
+  { en: 'South India', hi: 'दक्षिण भारत', color: '#0d9488', states: ['Andhra Pradesh', 'Karnataka', 'Kerala', 'Puducherry', 'Tamil Nadu', 'Telangana'] },
+  { en: 'West India', hi: 'पश्चिम भारत', color: '#d97706', states: ['Dadra & Nagar Haveli and Daman & Diu', 'Goa', 'Gujarat', 'Maharashtra'] },
+  { en: 'Central India', hi: 'मध्य भारत', color: '#7c3aed', states: ['Chhattisgarh', 'Madhya Pradesh'] },
+  { en: 'East India', hi: 'पूर्व भारत', color: '#e11d48', states: ['Bihar', 'Jharkhand', 'Odisha', 'Sikkim', 'West Bengal'] },
+  { en: 'North-East India', hi: 'पूर्वोत्तर भारत', color: '#0891b2', states: ['Arunachal Pradesh', 'Assam', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Tripura'] },
 ];
+
+// Official state / UT codes (the ones on vehicle plates) — instantly recognisable to
+// Indian users and a compact, colourful anchor for each card.
+const STATE_CODE = {
+  'Delhi': 'DL', 'Haryana': 'HR', 'Himachal Pradesh': 'HP', 'Jammu & Kashmir': 'JK', 'Ladakh': 'LA',
+  'Punjab': 'PB', 'Chandigarh': 'CH', 'Rajasthan': 'RJ', 'Uttar Pradesh': 'UP', 'Uttarakhand': 'UK',
+  'Andhra Pradesh': 'AP', 'Karnataka': 'KA', 'Kerala': 'KL', 'Puducherry': 'PY', 'Tamil Nadu': 'TN', 'Telangana': 'TS',
+  'Dadra & Nagar Haveli and Daman & Diu': 'DD', 'Goa': 'GA', 'Gujarat': 'GJ', 'Maharashtra': 'MH',
+  'Chhattisgarh': 'CG', 'Madhya Pradesh': 'MP',
+  'Bihar': 'BR', 'Jharkhand': 'JH', 'Odisha': 'OD', 'Sikkim': 'SK', 'West Bengal': 'WB',
+  'Arunachal Pradesh': 'AR', 'Assam': 'AS', 'Manipur': 'MN', 'Meghalaya': 'ML', 'Mizoram': 'MZ', 'Nagaland': 'NL', 'Tripura': 'TR',
+};
+const stateCode = (s) => STATE_CODE[s] || s.replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase();
 
 function directoryPage(states, lang = 'en') {
   const hi = lang === 'hi';
@@ -1099,10 +1113,16 @@ function directoryPage(states, lang = 'en') {
     const links = discoms.map(d => `<a href="${base}${stateSlug}/${d.id}/">${esc(d.name)}</a>`).join('');
     // data-search carries both scripts + discom names so the filter box matches everything
     const searchBlob = [state, hiState(state), ...discoms.map(d => d.name)].join(' ').toLowerCase();
+    const nDiscoms = `${discoms.length} ${hi ? 'डिस्कॉम' : (discoms.length === 1 ? 'DISCOM' : 'DISCOMs')}`;
     return `
       <div class="seo-dir-state" data-search="${esc(searchBlob)}">
-        <h2><a href="${base}${stateSlug}/">${esc(displayName)}<span class="seo-dir-arrow" aria-hidden="true">→</span></a>
-          <span class="seo-dir-count">${discoms.length} ${hi ? 'डिस्कॉम' : (discoms.length === 1 ? 'DISCOM' : 'DISCOMs')}</span></h2>
+        <a class="seo-dir-state-head" href="${base}${stateSlug}/">
+          <span class="seo-dir-badge" aria-hidden="true">${esc(stateCode(state))}</span>
+          <span class="seo-dir-state-meta">
+            <h3 class="seo-dir-state-name">${esc(displayName)}<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-count">${nDiscoms}</span>
+          </span>
+        </a>
         <div class="seo-dir-discoms">${links}</div>
       </div>`;
   };
@@ -1112,11 +1132,11 @@ function directoryPage(states, lang = 'en') {
     .map(r => ({ ...r, states: r.states.filter(s => covered.has(s)) }))
     .filter(r => r.states.length);
   const leftovers = states.filter(s => !REGIONS.some(r => r.states.includes(s)));
-  if (leftovers.length) grouped.push({ en: 'Other', hi: 'अन्य', states: leftovers });
+  if (leftovers.length) grouped.push({ en: 'Other', hi: 'अन्य', color: '#64748b', states: leftovers });
 
   const sections = grouped.map(r => `
-    <section class="seo-dir-region">
-      <h2 class="seo-dir-region-title">${esc(hi ? r.hi : r.en)} <span class="seo-dir-region-count">${r.states.length}</span></h2>
+    <section class="seo-dir-region" style="--dir-accent:${r.color}">
+      <h2 class="seo-dir-region-title"><span class="seo-dir-region-dot" aria-hidden="true"></span>${esc(hi ? r.hi : r.en)} <span class="seo-dir-region-count">${r.states.length}</span></h2>
       <div class="seo-directory">${r.states.map(stateCard).join('')}</div>
     </section>`).join('');
 
