@@ -148,10 +148,17 @@
               <input id="solRate" type="number" min="0" step="0.5" value="7" inputmode="decimal">
             </div>
             <div class="solar-field">
-              <label for="solState"><span data-i18n="sol.stateSub">State subsidy (₹)</span>
-                <span class="gloss" tabindex="0" role="img" aria-label="State subsidy info" data-tip="Some states add their own subsidy on top of PM Surya Ghar (e.g. Uttar Pradesh up to ₹30,000, Gujarat, Rajasthan). Enter your state's extra subsidy if any; leave 0 if unsure.">i</span>
+              <label for="solStateSel"><span data-i18n="sol.stateSub">State subsidy (₹)</span>
+                <span class="gloss" tabindex="0" role="img" aria-label="State subsidy info" data-tip="Some states add their own subsidy on top of PM Surya Ghar. Pick your state if listed (amounts auto-adjust to system size), enter a custom amount, or leave as ₹0 if unsure.">i</span>
               </label>
-              <input id="solState" type="number" min="0" step="1000" value="0" inputmode="numeric">
+              <select id="solStateSel">
+                <option value="none" data-i18n="sol.subNone">Not sure / no state top-up (₹0)</option>
+                <option value="up" data-i18n="sol.subUP">Uttar Pradesh — ₹15,000/kW (max ₹30,000)</option>
+                <option value="assam" data-i18n="sol.subAS">Assam — ₹15,000/kW (max ₹45,000)</option>
+                <option value="custom" data-i18n="sol.subCustom">Custom amount…</option>
+              </select>
+              <input id="solState" type="number" min="0" step="1000" value="0" inputmode="numeric" aria-label="State subsidy amount in rupees">
+              <span class="solar-hint" id="solStateHint" hidden></span>
             </div>
           </div>
           <details class="solar-adv">

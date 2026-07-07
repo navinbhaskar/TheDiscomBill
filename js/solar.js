@@ -25,6 +25,8 @@ const SOL_STR = {
     pullEst: (n) => `Use my estimate (${n} units)`,
     pullTitle: 'Build an estimate on the Usage Estimator page first',
     billConv: (u) => `≈ ${u} units at your tariff — filled in above.`,
+    upNote: 'UPNEDA top-up: ₹15,000/kW up to ₹30,000 — limited to the first 1,00,000 installations.',
+    asNote: 'Assam state top-up: ₹15,000/kW, capped at ₹45,000 (3 kW and above).',
     breakEven: (y) => `Break-even in year ${y}`,
     chartCost: 'system cost', chartYr: 'yr',
     shareText: (r) => `☀️ My rooftop solar estimate (TheDiscomBill)\n• System size: ${r.size} kW\n• Net cost after subsidy: ₹${Math.round(r.net).toLocaleString('en-IN')}\n• Savings: ₹${Math.round(r.monthlySavings).toLocaleString('en-IN')}/month\n• Pays back in ~${r.paybackYears.toFixed(1)} years\nCalculate yours free: https://www.thediscombill.com/solar/`,
@@ -36,6 +38,8 @@ const SOL_STR = {
     pullEst: (n) => `मेरा अनुमान इस्तेमाल करें (${n} यूनिट)`,
     pullTitle: 'पहले यूसेज एस्टिमेटर पेज पर अनुमान बनाएँ',
     billConv: (u) => `≈ ${u} यूनिट आपके टैरिफ पर — ऊपर भर दिया गया।`,
+    upNote: 'UPNEDA टॉप-अप: ₹15,000/kW, अधिकतम ₹30,000 — पहले 1,00,000 इंस्टॉलेशन तक सीमित।',
+    asNote: 'असम राज्य टॉप-अप: ₹15,000/kW, अधिकतम ₹45,000 (3 kW और ऊपर)।',
     breakEven: (y) => `वर्ष ${y} में लागत वसूल`,
     chartCost: 'सिस्टम लागत', chartYr: 'वर्ष',
     shareText: (r) => `☀️ मेरा रूफटॉप सोलर अनुमान (TheDiscomBill)\n• सिस्टम साइज़: ${r.size} kW\n• सब्सिडी के बाद नेट लागत: ₹${Math.round(r.net).toLocaleString('en-IN')}\n• बचत: ₹${Math.round(r.monthlySavings).toLocaleString('en-IN')}/माह\n• ~${r.paybackYears.toFixed(1)} वर्ष में लागत वसूल\nअपना अनुमान मुफ़्त निकालें: https://www.thediscombill.com/solar/`,
@@ -69,6 +73,38 @@ function readNum(id, fallback = 0) {
 }
 
 let lastResult = null;   // latest calc() output, for the WhatsApp share text
+
+// Verified state top-up subsidies (on top of the PM Surya Ghar central subsidy).
+// Only states with corroborated, published schemes are listed — a wrong preset is
+// worse than an empty field. Amounts auto-scale with system size up to the cap.
+const STATE_SUBS = {
+  up:    { perKw: 15000, cap: 30000, note: 'upNote' },
+  assam: { perKw: 15000, cap: 45000, note: 'asNote' },
+};
+
+// System size from consumption/roof only (state subsidy doesn't affect size,
+// so this can't recurse with calc()).
+function sizeOnly() {
+  const monthly = readNum('solMonthly');
+  const roof = readNum('solRoof');
+  const consLimit = monthly > 0 ? monthly / UNITS_PER_KW_MONTH : Infinity;
+  const roofLimit = roof > 0 ? roof / SQFT_PER_KW : Infinity;
+  let size = Math.min(consLimit, roofLimit);
+  if (!isFinite(size) || size <= 0) return 0;
+  return Math.max(1, Math.round(size * 2) / 2);
+}
+
+// When a state preset is selected, keep the ₹ field in sync with the system size.
+function updateStateSub() {
+  const sel = $('solStateSel');
+  const hint = $('solStateHint');
+  if (!sel) return;
+  const preset = STATE_SUBS[sel.value];
+  if (!preset) { if (hint) hint.hidden = true; return; }
+  const size = sizeOnly();
+  $('solState').value = size > 0 ? Math.min(preset.perKw * size, preset.cap) : 0;
+  if (hint) { hint.textContent = SOL_STR[lang()][preset.note]; hint.hidden = false; }
+}
 
 function calc() {
   const monthly = readNum('solMonthly');
@@ -136,6 +172,7 @@ function renderChart(r) {
 }
 
 function render() {
+  updateStateSub();   // preset amounts track the system size
   const r = calc();
   const empty = $('solEmpty'), result = $('solResult');
   if (!r.haveInput) { empty.hidden = false; result.hidden = true; return; }
@@ -161,6 +198,15 @@ function render() {
 function init() {
   if (!$('solMonthly')) return; // not on the solar page
 
+  // Registered BEFORE the render listeners below: typing a custom amount must flip
+  // the dropdown to "custom" first, or render()'s preset sync clobbers the input.
+  $('solState').addEventListener('input', () => {
+    const sel = $('solStateSel');
+    if (sel && STATE_SUBS[sel.value]) sel.value = 'custom';
+    const hint = $('solStateHint');
+    if (hint) hint.hidden = true;
+  });
+
   ['solMonthly', 'solRoof', 'solRate', 'solState', 'solCost'].forEach(id =>
     $(id).addEventListener('input', render));
 
@@ -175,6 +221,15 @@ function init() {
       $('solMonthly').value = units;
       if (hint) hint.textContent = SOL_STR[lang()].billConv(units);
     }
+    render();
+  });
+
+  // State-subsidy dropdown: presets fill the ₹ field (size-aware); typing a
+  // custom amount flips the dropdown to "custom" so the preset stops overwriting it.
+  $('solStateSel')?.addEventListener('change', () => {
+    const v = $('solStateSel').value;
+    if (v === 'none') $('solState').value = 0;
+    if (v === 'custom') $('solState').focus();
     render();
   });
 
