@@ -24,6 +24,10 @@ const SOL_STR = {
     years: ' years', unitsMo: ' units/mo', capped: ' (capped at 3 kW)', perMo: '/mo', tPerYr: ' t/yr',
     pullEst: (n) => `Use my estimate (${n} units)`,
     pullTitle: 'Build an estimate on the Usage Estimator page first',
+    billConv: (u) => `≈ ${u} units at your tariff — filled in above.`,
+    breakEven: (y) => `Break-even in year ${y}`,
+    chartCost: 'system cost', chartYr: 'yr',
+    shareText: (r) => `☀️ My rooftop solar estimate (TheDiscomBill)\n• System size: ${r.size} kW\n• Net cost after subsidy: ₹${Math.round(r.net).toLocaleString('en-IN')}\n• Savings: ₹${Math.round(r.monthlySavings).toLocaleString('en-IN')}/month\n• Pays back in ~${r.paybackYears.toFixed(1)} years\nCalculate yours free: https://www.thediscombill.com/solar/`,
   },
   hi: {
     roofNote: 'आपकी छत के क्षेत्रफल से सीमित — बड़े सिस्टम के लिए और छाया-रहित जगह चाहिए।',
@@ -31,6 +35,10 @@ const SOL_STR = {
     years: ' वर्ष', unitsMo: ' यूनिट/माह', capped: ' (3 kW पर कैप)', perMo: '/माह', tPerYr: ' टन/वर्ष',
     pullEst: (n) => `मेरा अनुमान इस्तेमाल करें (${n} यूनिट)`,
     pullTitle: 'पहले यूसेज एस्टिमेटर पेज पर अनुमान बनाएँ',
+    billConv: (u) => `≈ ${u} यूनिट आपके टैरिफ पर — ऊपर भर दिया गया।`,
+    breakEven: (y) => `वर्ष ${y} में लागत वसूल`,
+    chartCost: 'सिस्टम लागत', chartYr: 'वर्ष',
+    shareText: (r) => `☀️ मेरा रूफटॉप सोलर अनुमान (TheDiscomBill)\n• सिस्टम साइज़: ${r.size} kW\n• सब्सिडी के बाद नेट लागत: ₹${Math.round(r.net).toLocaleString('en-IN')}\n• बचत: ₹${Math.round(r.monthlySavings).toLocaleString('en-IN')}/माह\n• ~${r.paybackYears.toFixed(1)} वर्ष में लागत वसूल\nअपना अनुमान मुफ़्त निकालें: https://www.thediscombill.com/solar/`,
   },
 };
 
@@ -59,6 +67,8 @@ function readNum(id, fallback = 0) {
   const v = parseFloat($(id).value);
   return isNaN(v) || v < 0 ? fallback : v;
 }
+
+let lastResult = null;   // latest calc() output, for the WhatsApp share text
 
 function calc() {
   const monthly = readNum('solMonthly');
@@ -97,11 +107,41 @@ function calc() {
   };
 }
 
+// Cumulative-savings timeline: 25 thin bars racing a dashed "net cost" line.
+// Bars turn from amber to green the year cumulative savings pass the net cost.
+function renderChart(r) {
+  const box = $('solChart');
+  if (!box) return;
+  const S = SOL_STR[lang()];
+  const W = 300, H = 110, base = 92, maxVal = Math.max(r.annualSavings * 25, r.net) || 1;
+  const beYear = r.annualSavings > 0 ? Math.ceil(r.net / r.annualSavings) : Infinity;
+  const costY = base - (r.net / maxVal) * 78;
+  let bars = '';
+  for (let y = 1; y <= 25; y++) {
+    const h = Math.max(2, (r.annualSavings * y / maxVal) * 78);
+    const paid = y >= beYear;
+    bars += `<rect x="${8 + (y - 1) * 11.4}" y="${base - h}" width="8" height="${h}" rx="1.5" fill="${paid ? 'var(--success, #16a34a)' : '#f59e0b'}" opacity="${paid ? '0.9' : '0.85'}"/>`;
+  }
+  const beLabel = isFinite(beYear) && beYear <= 25 ? S.breakEven(beYear) : '';
+  box.innerHTML = `
+  <svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${beLabel}">
+    ${bars}
+    <line x1="6" y1="${costY}" x2="${W - 6}" y2="${costY}" stroke="var(--text-tertiary)" stroke-width="1" stroke-dasharray="4 3"/>
+    <line x1="8" y1="9" x2="22" y2="9" stroke="var(--text-tertiary)" stroke-width="1" stroke-dasharray="4 3"/>
+    <text x="27" y="12" font-size="9" fill="var(--text-tertiary)">${S.chartCost} ₹${Math.round(r.net).toLocaleString('en-IN')}</text>
+    <text x="8" y="${H - 4}" font-size="9.5" fill="var(--text-tertiary)">1 ${S.chartYr}</text>
+    <text x="${W - 6}" y="${H - 4}" text-anchor="end" font-size="9.5" fill="var(--text-tertiary)">25 ${S.chartYr}</text>
+  </svg>
+  ${beLabel ? `<div class="solar-chart-be">${beLabel}</div>` : ''}`;
+}
+
 function render() {
   const r = calc();
   const empty = $('solEmpty'), result = $('solResult');
   if (!r.haveInput) { empty.hidden = false; result.hidden = true; return; }
   empty.hidden = true; result.hidden = false;
+  lastResult = r;
+  renderChart(r);
 
   const S = SOL_STR[lang()];
   $('solSize').textContent = num(r.size, r.size % 1 ? 1 : 0);
@@ -123,6 +163,26 @@ function init() {
 
   ['solMonthly', 'solRoof', 'solRate', 'solState', 'solCost'].forEach(id =>
     $(id).addEventListener('input', render));
+
+  // "I only know my bill amount" — one-way conversion: ₹ → units via the tariff rate.
+  // Typing units directly never touches this field, so there's no feedback loop.
+  $('solBillAmt')?.addEventListener('input', () => {
+    const amt = readNum('solBillAmt');
+    const rate = readNum('solRate', 7) || 7;
+    const hint = $('solBillHint');
+    if (amt > 0) {
+      const units = Math.round(amt / rate);
+      $('solMonthly').value = units;
+      if (hint) hint.textContent = SOL_STR[lang()].billConv(units);
+    }
+    render();
+  });
+
+  // Share the current estimate as a pre-filled WhatsApp message.
+  $('solShare')?.addEventListener('click', () => {
+    if (!lastResult) return;
+    window.open('https://wa.me/?text=' + encodeURIComponent(SOL_STR[lang()].shareText(lastResult)), '_blank', 'noopener');
+  });
 
   // "Use my estimate" — fill monthly units from the Consumption Estimator if available.
   const pull = $('solPull');
