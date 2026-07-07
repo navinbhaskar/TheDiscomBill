@@ -111,7 +111,7 @@
 <div class="page-body">
   <section class="estimator-section">
     <div class="container">
-      <div class="est-hero reveal">
+      <div class="est-hero">
         <h2 data-i18n="est.title">Electricity Usage Estimator</h2>
         <p class="est-intro" data-i18n-html="est.intro">Add the appliances you use, set how many you own and how long they run each day. We'll estimate your <strong>monthly units (kWh)</strong> and approximate cost in real time.</p>
         <div class="est-hero-chips" role="list">
@@ -122,7 +122,7 @@
       </div>
 
       <!-- Season toggle — resets AC/cooler/fan/geyser run-times to seasonal defaults -->
-      <div class="est-toolbar reveal">
+      <div class="est-toolbar">
         <span class="est-toolbar-label" data-i18n="est.season">Season</span>
         <div class="est-season" role="group" id="estSeason" aria-label="Season">
           <button type="button" class="est-season-btn" data-season="summer" aria-pressed="true" data-i18n="est.summer">Summer</button>
@@ -133,9 +133,9 @@
       </div>
 
       <!-- Quick-add appliance chips -->
-      <div class="est-chips reveal" id="estChips" aria-label="Add an appliance"></div>
+      <div class="est-chips" id="estChips" aria-label="Add an appliance"></div>
 
-      <div class="est-layout reveal">
+      <div class="est-layout">
         <!-- Left: appliance builder -->
         <div class="est-builder">
           <div class="est-rows-head">
@@ -187,7 +187,7 @@
         </aside>
       </div>
 
-      <p class="comparison-note reveal" data-i18n-html="est.note">
+      <p class="comparison-note" data-i18n-html="est.note">
         Estimates assume a 30-day month. Refrigerator and AC hours mean <em>effective</em> compressor
         run-time, not clock hours (a fridge cycles on/off). Actual consumption varies with appliance
         efficiency (star rating), ambient temperature and usage. Treat this as a planning guide, then

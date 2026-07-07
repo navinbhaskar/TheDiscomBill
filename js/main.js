@@ -293,7 +293,14 @@ function initScrollReveal() {
       if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-  els.forEach(el => io.observe(el));
+  // Reveal anything already within the viewport on load right away — the 12%
+  // threshold never fires for elements taller than the space above the fold
+  // (e.g. the usage-estimator layout), so they'd stay hidden until you scroll.
+  els.forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight * 0.92 && r.bottom > 0) el.classList.add('is-visible');
+    else io.observe(el);
+  });
 }
 
 // Start every load at the top so the hero's reveal-on-load animation plays (the browser would
