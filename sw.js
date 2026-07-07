@@ -1,6 +1,6 @@
 // sw.js — Service Worker (network-first, cache fallback)
 // Update this version string when deploying new code to bust the cache.
-const CACHE = 'discombill-20260706-91';
+const CACHE = 'discombill-20260706-92';
 
 const CORE = [
   './', './index.html', './compare/', './compare/index.html',
@@ -28,7 +28,7 @@ const CORE = [
   './js/bill-review.js', './js/support-common.js', './js/supabase-config.js', './js/login.js', './js/my-bills.js',
   // Vendored libraries — lenis.mjs is a STATIC import of main.js, so if it is missing from
   // the cache offline the whole entry point fails to parse (and the state list never loads).
-  './js/vendor/lenis.mjs', './js/vendor/html2pdf.bundle.min.js',
+  './js/vendor/lenis.mjs',
   // Tariff registry + FPPA
   './js/tariffs/registry.js', './js/tariffs/fppa.js', './js/tariffs/subsidy.js',
   // Per-state tariff data
