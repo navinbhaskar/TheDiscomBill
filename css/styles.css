@@ -1110,6 +1110,23 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .fields-disabled { opacity: 0.5; }
 .fields-disabled input { cursor: not-allowed; }
 
+/* ─── Bill verification (optional printed-bill comparison) ───────────────────── */
+.verify-group { margin-top: 4px; }
+.bill-verdict {
+  border-radius: var(--radius-md); border: 1px solid;
+  padding: 14px 16px; margin-bottom: 12px;
+}
+.bill-verdict strong { display: block; font-size: 15px; margin-bottom: 4px; }
+.bill-verdict span { font-size: 13.5px; line-height: 1.55; display: block; }
+.bill-verdict a { font-weight: 600; color: inherit; text-decoration: underline; }
+.bv-ok   { background: #ecfdf5; border-color: #a7f3d0; color: #065f46; }
+.bv-warn { background: #fffbeb; border-color: #fde68a; color: #92400e; }
+.bv-bad  { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+[data-theme="dark"] .bv-ok   { background: #06281e; border-color: #14532d; color: #86efac; }
+[data-theme="dark"] .bv-warn { background: #2e2306; border-color: #713f12; color: #fcd34d; }
+[data-theme="dark"] .bv-bad  { background: #310c0c; border-color: #7f1d1d; color: #fca5a5; }
+.bill-delta { font-size: 13px; color: var(--text-secondary); margin: 0 0 14px 2px; }
+
 /* ─── Calculate Button ───────────────────────────────────────────────────────── */
 .btn-calculate {
   width: 100%; padding: 15px;

@@ -77,6 +77,9 @@ export const STRINGS = {
     'tab.adjustment': 'Adjustment',
     'mode.meterReading': 'Meter Reading',
     'mode.tod': 'TOD',
+    'label.billedAmount': 'Amount on your DISCOM bill (₹) — optional',
+    'small.billedAmount': "We'll compare it with our calculation and tell you if your bill looks right.",
+
     // Buttons
     'btn.addMeter': '+ Add meter',
     'btn.calculate': '⚡ Calculate Provisional Bill',
@@ -324,6 +327,9 @@ export const STRINGS = {
     'tab.adjustment': 'समायोजन',
     'mode.meterReading': 'मीटर रीडिंग',
     'mode.tod': 'टीओडी',
+    'label.billedAmount': 'आपके डिस्कॉम बिल की राशि (₹) — वैकल्पिक',
+    'small.billedAmount': 'हम इसे अपनी गणना से मिलाकर बताएँगे कि आपका बिल सही लगता है या नहीं।',
+
     // Buttons
     'btn.addMeter': '+ मीटर जोड़ें',
     'btn.calculate': '⚡ अनुमानित बिल गणना करें',

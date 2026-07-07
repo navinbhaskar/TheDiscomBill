@@ -43,11 +43,12 @@ const HISTORY_MAX = 8;
 function readHistory() { try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; } catch { return []; } }
 function writeHistory(list) { try { localStorage.setItem(HISTORY_KEY, JSON.stringify(list.slice(0, HISTORY_MAX))); } catch {} }
 
-// Record a calculated bill so the user can reload it later. `params` is the share-link query string.
-export function saveBillToHistory({ label, amount, params }) {
+// Record a calculated bill so the user can reload it later. `params` is the share-link query
+// string; discomId/categoryId/amountNum power the month-over-month delta on the next bill.
+export function saveBillToHistory({ label, amount, params, discomId, categoryId, amountNum }) {
   if (!params) return;
   const list = readHistory().filter(e => e.params !== params);   // de-dupe identical inputs
-  list.unshift({ label, amount, params, ts: Date.now() });
+  list.unshift({ label, amount, params, discomId, categoryId, amountNum, ts: Date.now() });
   writeHistory(list);
   renderHistory();
   syncBillToCloud({ label, amount, params });   // best-effort, signed-in users only
@@ -80,6 +81,73 @@ export function renderHistory() {
     list.map((e, i) => `<button type="button" class="history-item" data-i="${i}">` +
       `<span class="history-label">${escHtml(e.label)}</span>` +
       `<span class="history-amt">₹ ${escHtml(e.amount)}</span></button>`).join('');
+}
+
+// ─── Bill verification + month-over-month delta ────────────────────────────────
+// Both render into the top of #billPanel after a calculation. Strings live here
+// (not in i18n.js) so pages that use ui.js without the i18n module stay lean.
+const _vlang = () => { try { return localStorage.getItem('lang') === 'hi' ? 'hi' : 'en'; } catch { return 'en'; } };
+const VERDICT_STR = {
+  en: {
+    match: '✅ Your bill looks correct',
+    matchSub: (d) => `The amount you entered matches our calculation (within ${d} — normal rounding territory).`,
+    close: '🟡 Close, but slightly off',
+    closeSub: (d, more) => `Your DISCOM billed ${d} ${more ? 'more' : 'less'} than our estimate. Small gaps usually come from FPPA revisions, subsidy timing or arrears not entered above.`,
+    off: '🔴 Your bill differs from our calculation',
+    offSub: (d, more) => `That's ${d} ${more ? 'more' : 'less'} than the published tariff works out to. Worth a closer look.`,
+    review: 'Get a free expert review →',
+    deltaMore: (d, when) => `📈 ${d} more than your last calculation (${when})`,
+    deltaLess: (d, when) => `📉 ${d} less than your last calculation (${when})`,
+    deltaSame: (when) => `Same as your last calculation (${when})`,
+  },
+  hi: {
+    match: '✅ आपका बिल सही लग रहा है',
+    matchSub: (d) => `आपने जो राशि डाली वह हमारी गणना से मेल खाती है (${d} के भीतर — सामान्य राउंडिंग)।`,
+    close: '🟡 करीब है, पर थोड़ा अंतर है',
+    closeSub: (d, more) => `आपके डिस्कॉम ने हमारे अनुमान से ${d} ${more ? 'अधिक' : 'कम'} बिल किया है। छोटा अंतर आमतौर पर FPPA बदलाव, सब्सिडी या ऊपर दर्ज न किए गए बकाया से आता है।`,
+    off: '🔴 आपका बिल हमारी गणना से अलग है',
+    offSub: (d, more) => `प्रकाशित टैरिफ के हिसाब से यह ${d} ${more ? 'अधिक' : 'कम'} है। इसे जाँचना चाहिए।`,
+    review: 'मुफ़्त विशेषज्ञ समीक्षा कराएँ →',
+    deltaMore: (d, when) => `📈 पिछली गणना से ${d} अधिक (${when})`,
+    deltaLess: (d, when) => `📉 पिछली गणना से ${d} कम (${when})`,
+    deltaSame: (when) => `पिछली गणना के बराबर (${when})`,
+  },
+};
+const _inr = (n) => '₹' + Math.abs(n).toLocaleString('en-IN', { maximumFractionDigits: 0 });
+
+// Compare the user-entered printed-bill total against the engine's total.
+function billVerdictHtml(billed, computed) {
+  if (!(billed > 0) || !(computed > 0)) return '';
+  const S = VERDICT_STR[_vlang()];
+  const diff = billed - computed;
+  const abs = Math.abs(diff);
+  const tolMatch = Math.max(10, computed * 0.01);   // ₹10 or 1% — rounding / paisa territory
+  const tolClose = Math.max(50, computed * 0.05);   // 5% — usually explainable line items
+  if (abs <= tolMatch) {
+    return `<div class="bill-verdict bv-ok"><strong>${S.match}</strong><span>${S.matchSub(_inr(tolMatch))}</span></div>`;
+  }
+  if (abs <= tolClose) {
+    return `<div class="bill-verdict bv-warn"><strong>${S.close}</strong><span>${S.closeSub(_inr(abs), diff > 0)}</span></div>`;
+  }
+  return `<div class="bill-verdict bv-bad"><strong>${S.off}</strong><span>${S.offSub(_inr(abs), diff > 0)} <a href="/bill-review/">${S.review}</a></span></div>`;
+}
+
+// Month-over-month: compare with the most recent saved bill for the same DISCOM + category.
+function billDeltaHtml({ discomId, categoryId, amountNum }) {
+  if (!(amountNum >= 0)) return '';
+  const prev = readHistory().find(e => e.discomId === discomId && e.categoryId === categoryId && typeof e.amountNum === 'number');
+  if (!prev) return '';
+  const S = VERDICT_STR[_vlang()];
+  const when = new Date(prev.ts).toLocaleDateString(_vlang() === 'hi' ? 'hi-IN' : 'en-IN', { day: 'numeric', month: 'short' });
+  const diff = amountNum - prev.amountNum;
+  const text = Math.abs(diff) < 1 ? S.deltaSame(when) : (diff > 0 ? S.deltaMore(_inr(diff), when) : S.deltaLess(_inr(diff), when));
+  return `<div class="bill-delta">${text}</div>`;
+}
+
+// Called by doCalculate() right after the bill is rendered; prepends verdict + delta.
+export function renderBillExtras(panel, { billed, computed, discomId, categoryId }) {
+  const html = billVerdictHtml(billed, computed) + billDeltaHtml({ discomId, categoryId, amountNum: computed });
+  if (html) panel.insertAdjacentHTML('afterbegin', html);
 }
 
 // Wire the Recent-bills panel (delegated). Loading an entry re-opens it via the share-link params.
@@ -1477,10 +1545,15 @@ export function doCalculate() {
       fromDate: fromISO, toDate: toISO,
     });
     panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    renderBillExtras(panel, {
+      billed: +document.getElementById('billedAmount')?.value || 0,
+      computed: Math.max(0, ledger.totalPayable), discomId, categoryId,
+    });
     saveBillToHistory({
       label: `${ledger.discom.name} · ${ledger.category.name} · ${ledger.monthsCount} mo · ${ledger.totalUnits} Units`,
       amount: Math.max(0, ledger.totalPayable).toLocaleString('en-IN'),
       params: new URL(buildShareUrl({ includePersonal: true })).search.slice(1),
+      discomId, categoryId, amountNum: Math.max(0, ledger.totalPayable),
     });
     // Keep the address bar shareable: it always reflects the bill on screen.
     try { history.replaceState(null, '', buildShareUrl()); } catch (e) {}
@@ -1520,10 +1593,15 @@ export function doCalculate() {
   const panel = document.getElementById('billPanel');
   panel.innerHTML = html;
   panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  renderBillExtras(panel, {
+    billed: +document.getElementById('billedAmount')?.value || 0,
+    computed: Math.max(0, result.totalPayable), discomId, categoryId,
+  });
   saveBillToHistory({
     label: `${result.discom.name} · ${result.category.name}${result.supplyTypeName ? ' · ' + result.supplyTypeName : ''} · ${result.units} Units`,
     amount: Math.max(0, result.totalPayable).toLocaleString('en-IN'),
     params: new URL(buildShareUrl({ includePersonal: true })).search.slice(1),
+    discomId, categoryId, amountNum: Math.max(0, result.totalPayable),
   });
   // Keep the address bar shareable: it always reflects the bill on screen.
   try { history.replaceState(null, '', buildShareUrl()); } catch (e) {}
