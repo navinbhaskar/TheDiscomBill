@@ -17,6 +17,7 @@ import { initDatePickers } from './datepicker.js';
 import { initI18n } from './i18n.js';
 import { initComparisonTable } from './compare.js';
 import { isConfigured, getStoredUser, getSupabase } from './supabase-config.js';
+import { initHeaderSearch } from './search.js';
 import Lenis from './vendor/lenis.mjs';
 
 // ── Header account button ─────────────────────────────────────────────────────
@@ -199,16 +200,30 @@ function initLoginButton() {
   themeBtn.after(wrap);   // sits to the right of the theme toggle
 
   const trigger = wrap.querySelector('#headerLoginBtn');
+  // Touch devices routinely emit duplicate / "ghost" click events for a single tap.
+  // A plain toggle + always-on document close-listener collapses the menu on that
+  // second event, so on mobile it flashes open and vanishes before you can tap Logout.
+  // Guard against it: dedupe rapid taps on the trigger, and only listen for the
+  // outside tap (via pointerdown, attached one tick later so the opening tap itself
+  // can't close it) while the menu is actually open.
+  const closeMenu = () => {
+    wrap.classList.remove('open');
+    trigger.setAttribute('aria-expanded', 'false');
+    document.removeEventListener('pointerdown', onOutside);
+  };
+  const onOutside = (e) => { if (!wrap.contains(e.target)) closeMenu(); };
+  const openMenu = () => {
+    wrap.classList.add('open');
+    trigger.setAttribute('aria-expanded', 'true');
+    setTimeout(() => document.addEventListener('pointerdown', onOutside), 0);
+  };
+  let lastToggle = 0;
   trigger.addEventListener('click', (e) => {
     e.stopPropagation();
-    const isOpen = wrap.classList.toggle('open');
-    trigger.setAttribute('aria-expanded', isOpen);
-  });
-  document.addEventListener('click', (e) => {
-    if (!wrap.contains(e.target)) {
-      wrap.classList.remove('open');
-      trigger.setAttribute('aria-expanded', 'false');
-    }
+    const now = Date.now();
+    if (now - lastToggle < 350) return;   // swallow the duplicate tap that would re-close it
+    lastToggle = now;
+    wrap.classList.contains('open') ? closeMenu() : openMenu();
   });
 
   wrap.querySelector('#accountLogout').addEventListener('click', async (e) => {
@@ -327,6 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initI18n();   // apply saved/default language + wire the EN/हिंदी switcher
   initComparisonTable(); // Render the dynamic tariff comparison table
   initLoginButton();     // top-right Login / My Account button
+  initHeaderSearch();    // header magnifier + Ctrl+K / '/' site search
   initGatedLinks();      // Bill Review CTAs open the auth modal, then redirect in
 
   // Theme toggle — data-theme is pre-set by the inline <head> script; here we sync the button
