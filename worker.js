@@ -18,8 +18,11 @@ export default {
     // host, path and query. Cloudflare terminates TLS at the edge, so the original client scheme is
     // reported via the `x-forwarded-proto` header (url.protocol may already read "https" internally).
     const proto = request.headers.get('x-forwarded-proto') || url.protocol.replace(':', '');
-    if (proto === 'http') {
+    if (proto === 'http' || url.hostname === 'www.thediscombill.com') {
       url.protocol = 'https:';
+      if (url.hostname === 'www.thediscombill.com') {
+        url.hostname = 'thediscombill.com';
+      }
       return Response.redirect(url.toString(), 301);
     }
 
