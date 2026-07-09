@@ -429,13 +429,19 @@ function setFppaSource(text, cls) {
   srcEl.style.display = 'block';
 }
 
-// Calendar months (15th of each) spanned by a from→to ISO date range (capped for safety).
+// Billing months (15th of each) covered by a from→to ISO date range, anchored at the start month.
+// The COUNT is the period length rounded to whole months (min 1) — the same rule the engine uses for
+// the fixed-charge multiplier (max(1, round(days/30))). This keeps a ~30-day cycle a single month even
+// when it straddles a calendar boundary (e.g. 15 Jun → 15 Jul) or ends on the 1st of the next month
+// (1 Jun → 1 Jul), so the fixed charge is never doubled for a normal one-month bill.
 function fppaMonthDates(fromISO, toISO) {
   const f = new Date(fromISO), t = new Date(toISO);
   if (isNaN(f) || isNaN(t) || t < f) return [];
+  const days = Math.round((t - f) / 86400000);
+  const N = Math.min(600, Math.max(1, Math.round(days / 30)));
   const out = [];
   let y = f.getFullYear(), m = f.getMonth();
-  for (let i = 0; i < 600 && (y < t.getFullYear() || (y === t.getFullYear() && m <= t.getMonth())); i++) {
+  for (let i = 0; i < N; i++) {
     out.push(new Date(y, m, 15));
     if (++m > 11) { m = 0; y++; }
   }
