@@ -1754,4 +1754,404 @@ export const GUIDES = [
         a: 'MD बिलिंग अवधि में किसी भी डिमांड-मापन विंडो में आपकी खींची गई सबसे ऊँची औसत बिजली (kW में) है, जो मीटर दर्ज करता है और हर चक्र में रीसेट होती है। यह बताती है कि आपने कितने उपकरण एक साथ चलाए, कुल कितनी यूनिटें खर्च कीं यह नहीं।' },
     ],
   },
+
+  {
+    slug: 'smart-meter-running-fast',
+    title: 'Is Your Smart Meter Running Fast? How to Test It Yourself',
+    metaTitle: 'Smart Meter Running Fast? Bill Higher After Installation — How to Test It',
+    description: 'Why electricity bills often jump right after a smart meter is installed, whether smart meters actually record more than old meters, a 30-minute self-test you can run at home, and the official meter-accuracy test you can demand from your DISCOM.',
+    minutes: 6,
+    intro: `Smart meters are <strong>not designed to overbill</strong> — but bills genuinely do jump for
+      many consumers right after one is installed, and the reasons are usually mundane: the old meter
+      was slow, stuck or being estimated, and the new one measures everything. This guide explains why
+      the jump happens, how to test your own meter in about 30 minutes with nothing but an appliance
+      you already own, and how to demand an official accuracy test if the numbers still don't add up.`,
+    sections: `
+      <section class="seo-section">
+        <h2>Why bills jump right after a smart meter is installed</h2>
+        <p>Before assuming the new meter is fast, rule out the four common causes — none of which
+        involve a defective meter:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Cause</th><th>What actually happened</th></tr></thead>
+          <tbody>
+            <tr><td><strong>The old meter was slow or stuck</strong></td><td>Electromechanical (disc) meters lose accuracy with age and often under-record for years. The smart meter's reading is the correct one — the "increase" is consumption you were never billed for.</td></tr>
+            <tr><td><strong>You were on estimated readings</strong></td><td>If the old meter was inaccessible or defective (codes like IDF/RDF on the bill), the DISCOM guessed your usage — often low. The first real readings look like a jump.</td></tr>
+            <tr><td><strong>A catch-up or adjustment bill</strong></td><td>The final reading of the old meter plus the first period of the new one sometimes lands in a single bill, pushing units into higher <a href="/glossary/#telescopic-slabs">slabs</a> for that month only.</td></tr>
+            <tr><td><strong>Demand is now recorded</strong></td><td>Smart meters log <a href="/glossary/#maximum-demand">maximum demand</a>, which old domestic meters never measured. That can trigger a sanctioned-load revision and higher fixed charges — see <a href="/guides/uppcl-sanctioned-load-increased/">why sanctioned load increases after a smart meter</a>.</td></tr>
+          </tbody>
+        </table></div>
+        <p>If your bill rose but the <em>units</em> are similar to last year's same season, the cause is
+        a tariff or charge change instead — work through
+        <a href="/guides/why-did-my-electricity-bill-increase/">the bill-increase checklist</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Can a smart meter actually run fast?</h2>
+        <p>Any meter can be defective, but a smart meter is <em>less</em> likely to over-read than what
+        it replaced. Smart meters are static (electronic) meters of <strong>accuracy class 1.0</strong> —
+        permitted error within ±1% — while the old disc meters were typically class 2.0 (±2%) and
+        drifted further with wear. There is also no mechanism for a DISCOM to "speed up" a meter
+        remotely: the meter firmware is sealed and readings are logged in the meter's own memory,
+        which is exactly what makes the self-test below conclusive.</p>
+        <p>What a smart meter <em>does</em> do is capture consumption the old setup missed: small
+        standby loads around the clock, accurate low-current measurement, and every single day metered
+        instead of estimated. That is measurement completeness, not over-reading.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>The 30-minute self-test</h2>
+        <p>You need one appliance whose wattage you trust — a 2,000 W (2 kW) geyser or room heater is
+        ideal because its draw is steady:</p>
+        <ol>
+          <li><strong>Switch off everything</strong> at the main board except one light so you can see.
+          Note the meter reading (or the reading in your DISCOM's smart-meter app) to two decimals.</li>
+          <li><strong>Run the known load for exactly 30 minutes.</strong> A 2 kW appliance for half an
+          hour should consume almost exactly <strong>1.0 unit</strong> (2 kW × 0.5 h).</li>
+          <li><strong>Read the meter again.</strong> Within class-1 tolerance you should see 0.98–1.02
+          units. If the meter shows, say, 1.3 units for that half hour, you have real evidence of
+          over-recording — proceed to the official test.</li>
+        </ol>
+        <p>Two refinements: run the test twice to rule out a fridge or pump cycling on somewhere, and
+        remember heater elements vary a little with supply voltage — a result within ±5% of expected is
+        normal for this informal method. Also check the bill's
+        <a href="/glossary/#multiplying-factor">multiplying factor</a> is printed as 1 for a domestic
+        single-phase meter; a wrong MF multiplies every unit.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>The official route: demand a meter accuracy test</h2>
+        <p>Every state's Electricity Supply Code gives you the right to have your meter tested:</p>
+        <ol>
+          <li><strong>Apply at your sub-division office</strong> (or the DISCOM's online consumer
+          portal) for a meter accuracy test, citing your self-test result. A small testing fee applies —
+          it is <strong>refunded or adjusted in your bill if the meter turns out defective</strong>.</li>
+          <li><strong>Ask for a check meter.</strong> The DISCOM installs a second, tested meter in
+          series with yours for a cycle or two; the readings are compared. This is the cleanest
+          evidence either way.</li>
+          <li><strong>Lab test.</strong> Alternatively the meter is removed in your presence, sealed,
+          and bench-tested at the DISCOM's meter lab (you can ask to witness the test).</li>
+        </ol>
+        <p>If the meter is confirmed fast, the supply code requires the DISCOM to <strong>revise your
+        bills for the affected period</strong> (typically capped at a defined number of months) and
+        replace the meter free of cost.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>If the DISCOM doesn't act</h2>
+        <p>Escalate in order: a written complaint with your test evidence to the executive engineer →
+        the DISCOM's <strong>Consumer Grievance Redressal Forum (CGRF)</strong> → the state
+        <strong>Electricity Ombudsman</strong>. Keep the self-test numbers, photos of the meter display
+        and every bill — cases with arithmetic win. Verify what the correct bill <em>should</em> be with
+        the <a href="/#calculator">calculator</a>, and attach that breakdown to the complaint.</p>
+      </section>`,
+    faqs: [
+      { q: 'Do smart meters record more units than old meters?',
+        a: 'They record more completely, not incorrectly. Smart meters are class-1.0 static meters (±1% permitted error) replacing old disc meters that were class 2.0 and often under-read with age. The typical post-installation "increase" is consumption the old meter was missing or that estimated billing never captured.' },
+      { q: 'How do I check if my smart meter is running fast?',
+        a: 'Switch everything off, run a single known load — e.g. a 2 kW geyser — for exactly 30 minutes, and compare meter readings before and after. It should register very close to 1.0 unit. A significantly higher figure is evidence to demand an official accuracy test from your DISCOM.' },
+      { q: 'How do I get my electricity meter officially tested?',
+        a: 'Apply at your sub-division office or the DISCOM portal for a meter accuracy test under your state’s Electricity Supply Code. A small fee applies, refundable if the meter proves defective. You can also request a check meter installed in parallel for a billing cycle, or witness a lab bench test.' },
+      { q: 'Will my bills be corrected if the meter is found fast?',
+        a: 'Yes. If testing confirms the meter over-records beyond permitted limits, the supply code requires the DISCOM to revise bills for the affected period (usually capped at a set number of months) and replace the meter at no cost.' },
+      { q: 'Can the DISCOM remotely make a smart meter read higher?',
+        a: 'No. Remote commands cover reading collection, connect/disconnect and tariff-schedule updates — not calibration. The metrology firmware is sealed and type-tested, and readings are logged in the meter’s own memory, which is why a physical self-test or check meter settles the question conclusively.' },
+    ],
+
+    titleHi: 'क्या आपका स्मार्ट मीटर तेज़ चल रहा है? खुद ऐसे जाँचें',
+    metaTitleHi: 'स्मार्ट मीटर तेज़ चल रहा है? लगने के बाद बिल बढ़ा — खुद जाँचने का तरीका',
+    descriptionHi: 'स्मार्ट मीटर लगते ही बिजली बिल अक्सर क्यों बढ़ जाते हैं, क्या स्मार्ट मीटर पुराने मीटर से ज़्यादा दर्ज करते हैं, घर पर 30 मिनट का सेल्फ-टेस्ट, और डिस्कॉम से आधिकारिक मीटर जाँच कराने की प्रक्रिया।',
+    introHi: `स्मार्ट मीटर <strong>ज़्यादा बिल बनाने के लिए नहीं बने हैं</strong> — पर कई उपभोक्ताओं के बिल
+      मीटर लगते ही सचमुच बढ़ जाते हैं, और वजहें आमतौर पर सीधी-सादी होती हैं: पुराना मीटर धीमा, अटका
+      या अनुमानित रीडिंग पर था, और नया सब कुछ मापता है। यह गाइड बताती है कि उछाल क्यों आता है, घर के
+      किसी एक उपकरण से करीब 30 मिनट में अपना मीटर कैसे जाँचें, और आँकड़े फिर भी न मिलें तो आधिकारिक
+      सटीकता जाँच कैसे माँगें।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>स्मार्ट मीटर लगते ही बिल क्यों उछलते हैं</h2>
+        <p>नए मीटर को तेज़ मानने से पहले चार आम कारण खारिज करें — इनमें से किसी में मीटर खराब नहीं होता:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>कारण</th><th>असल में क्या हुआ</th></tr></thead>
+          <tbody>
+            <tr><td><strong>पुराना मीटर धीमा या अटका था</strong></td><td>पुराने डिस्क वाले मीटर उम्र के साथ सटीकता खोते हैं और सालों तक कम दर्ज करते रहते हैं। स्मार्ट मीटर की रीडिंग ही सही है — "बढ़ोतरी" वह खपत है जिसका बिल आपसे कभी लिया ही नहीं गया।</td></tr>
+            <tr><td><strong>आप अनुमानित रीडिंग पर थे</strong></td><td>पुराना मीटर पहुँच से बाहर या खराब (बिल पर IDF/RDF जैसे कोड) था, तो डिस्कॉम खपत का अनुमान — अक्सर कम — लगाता था। पहली असली रीडिंग उछाल जैसी दिखती है।</td></tr>
+            <tr><td><strong>कैच-अप या समायोजन बिल</strong></td><td>पुराने मीटर की अंतिम रीडिंग और नए की पहली अवधि कभी-कभी एक ही बिल में आ जाती है, जिससे उस महीने की यूनिटें ऊँचे <a href="/hi/glossary/#telescopic-slabs">स्लैब</a> में चली जाती हैं।</td></tr>
+            <tr><td><strong>अब मांग भी दर्ज होती है</strong></td><td>स्मार्ट मीटर <a href="/hi/glossary/#maximum-demand">अधिकतम मांग</a> दर्ज करता है, जो पुराने घरेलू मीटर कभी नहीं मापते थे। इससे स्वीकृत भार संशोधन और ऊँचे फिक्स्ड चार्ज लग सकते हैं — देखें <a href="/hi/guides/uppcl-sanctioned-load-increased/">स्मार्ट मीटर के बाद स्वीकृत भार क्यों बढ़ता है</a>।</td></tr>
+          </tbody>
+        </table></div>
+        <p>बिल बढ़ा है पर <em>यूनिटें</em> पिछले साल के इसी मौसम जैसी हैं, तो वजह टैरिफ या शुल्क बदलाव है —
+        <a href="/hi/guides/why-did-my-electricity-bill-increase/">बिल-बढ़ोतरी चेकलिस्ट</a> देखें।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>क्या स्मार्ट मीटर सच में तेज़ चल सकता है?</h2>
+        <p>कोई भी मीटर खराब हो सकता है, पर स्मार्ट मीटर के ज़्यादा दर्ज करने की संभावना पुराने मीटर से
+        <em>कम</em> है। स्मार्ट मीटर <strong>सटीकता श्रेणी 1.0</strong> के स्टैटिक (इलेक्ट्रॉनिक) मीटर हैं —
+        अनुमत त्रुटि ±1% — जबकि पुराने डिस्क मीटर आमतौर पर श्रेणी 2.0 (±2%) के थे और घिसाव से और भटकते
+        थे। डिस्कॉम के पास मीटर को दूर से "तेज़" करने का कोई तंत्र भी नहीं है: मीटर का फर्मवेयर सील्ड होता
+        है और रीडिंग मीटर की अपनी मेमोरी में दर्ज होती है — इसीलिए नीचे दिया सेल्फ-टेस्ट निर्णायक है।</p>
+        <p>स्मार्ट मीटर जो <em>करता</em> है वह है छूटी खपत पकड़ना: चौबीसों घंटे के छोटे स्टैंडबाय लोड, कम
+        करंट का सटीक मापन, और हर दिन की असली रीडिंग। यह मापन की पूर्णता है, ज़्यादा दर्ज करना नहीं।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>30 मिनट का सेल्फ-टेस्ट</h2>
+        <p>एक ऐसा उपकरण चाहिए जिसकी वाट क्षमता पर आपको भरोसा हो — 2,000 W (2 kW) का गीज़र या हीटर
+        सबसे अच्छा है क्योंकि उसका लोड स्थिर रहता है:</p>
+        <ol>
+          <li><strong>मेन बोर्ड से सब कुछ बंद करें</strong>, देखने के लिए बस एक बत्ती छोड़ें। मीटर (या
+          डिस्कॉम के स्मार्ट-मीटर ऐप) की रीडिंग दो दशमलव तक नोट करें।</li>
+          <li><strong>ज्ञात लोड ठीक 30 मिनट चलाएँ।</strong> 2 kW का उपकरण आधे घंटे में लगभग ठीक
+          <strong>1.0 यूनिट</strong> खर्च करेगा (2 kW × 0.5 घंटा)।</li>
+          <li><strong>मीटर दोबारा पढ़ें।</strong> श्रेणी-1 सीमा में 0.98–1.02 यूनिट दिखनी चाहिए। उस आधे घंटे
+          में मीटर मान लीजिए 1.3 यूनिट दिखाए, तो ज़्यादा दर्ज करने का ठोस सबूत है — आधिकारिक जाँच की ओर
+          बढ़ें।</li>
+        </ol>
+        <p>दो सावधानियाँ: टेस्ट दो बार करें ताकि कहीं फ्रिज या पंप का बीच में चल पड़ना खारिज हो, और याद रखें
+        हीटर एलिमेंट का लोड वोल्टेज के साथ थोड़ा बदलता है — इस अनौपचारिक तरीके में अपेक्षित से ±5% के भीतर
+        का नतीजा सामान्य है। बिल पर <a href="/hi/glossary/#multiplying-factor">मल्टीप्लाइंग फैक्टर</a> भी
+        देखें — घरेलू सिंगल-फेज़ मीटर पर 1 छपा होना चाहिए; गलत MF हर यूनिट को गुणा कर देता है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>आधिकारिक रास्ता: मीटर सटीकता जाँच माँगें</h2>
+        <p>हर राज्य की विद्युत आपूर्ति संहिता आपको मीटर जाँच का अधिकार देती है:</p>
+        <ol>
+          <li><strong>उपखंड कार्यालय</strong> (या डिस्कॉम के ऑनलाइन उपभोक्ता पोर्टल) पर सेल्फ-टेस्ट के नतीजे
+          के साथ मीटर सटीकता जाँच का आवेदन करें। छोटा-सा जाँच शुल्क लगता है — <strong>मीटर खराब निकलने पर
+          वह लौटाया या बिल में समायोजित होता है</strong>।</li>
+          <li><strong>चेक मीटर माँगें।</strong> डिस्कॉम आपके मीटर के साथ शृंखला में एक दूसरा, जाँचा हुआ मीटर
+          एक-दो चक्र के लिए लगाता है; रीडिंग का मिलान होता है। दोनों तरफ़ के लिए यही सबसे साफ़ सबूत है।</li>
+          <li><strong>लैब जाँच।</strong> विकल्प में मीटर आपकी मौजूदगी में उतारकर, सील करके डिस्कॉम की मीटर
+          लैब में बेंच-टेस्ट होता है (आप जाँच देखने की माँग कर सकते हैं)।</li>
+        </ol>
+        <p>मीटर तेज़ साबित हुआ तो आपूर्ति संहिता के तहत डिस्कॉम को प्रभावित अवधि के <strong>बिल संशोधित
+        करने</strong> (आमतौर पर तय महीनों की सीमा तक) और मीटर मुफ़्त बदलने होंगे।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>डिस्कॉम कार्रवाई न करे तो</h2>
+        <p>क्रम से आगे बढ़ें: जाँच के सबूतों के साथ अधिशासी अभियंता को लिखित शिकायत → डिस्कॉम का
+        <strong>उपभोक्ता शिकायत निवारण मंच (CGRF)</strong> → राज्य का <strong>विद्युत लोकपाल</strong>।
+        सेल्फ-टेस्ट के आँकड़े, मीटर डिस्प्ले की फ़ोटो और हर बिल सँभालकर रखें — गणित वाले मामले जीतते हैं।
+        सही बिल कितना <em>होना चाहिए</em> यह <a href="/#calculator">कैलकुलेटर</a> से निकालें और वह
+        ब्रेकडाउन शिकायत के साथ लगाएँ।</p>
+      </section>`,
+    faqsHi: [
+      { q: 'क्या स्मार्ट मीटर पुराने मीटर से ज़्यादा यूनिट दर्ज करते हैं?',
+        a: 'वे ज़्यादा पूर्णता से दर्ज करते हैं, गलत नहीं। स्मार्ट मीटर श्रेणी-1.0 स्टैटिक मीटर (±1% अनुमत त्रुटि) हैं जो उन डिस्क मीटरों की जगह लगे हैं जो श्रेणी 2.0 के थे और उम्र के साथ अक्सर कम दर्ज करते थे। लगने के बाद की सामान्य "बढ़ोतरी" वह खपत है जो पुराना मीटर छोड़ रहा था या अनुमानित बिलिंग कभी पकड़ती ही नहीं थी।' },
+      { q: 'कैसे जाँचूँ कि मेरा स्मार्ट मीटर तेज़ चल रहा है?',
+        a: 'सब कुछ बंद करें, एक ज्ञात लोड — जैसे 2 kW गीज़र — ठीक 30 मिनट चलाएँ, और पहले-बाद की मीटर रीडिंग मिलाएँ। लगभग 1.0 यूनिट दर्ज होनी चाहिए। इससे साफ़ ज़्यादा आँकड़ा डिस्कॉम से आधिकारिक सटीकता जाँच माँगने का सबूत है।' },
+      { q: 'बिजली मीटर की आधिकारिक जाँच कैसे कराएँ?',
+        a: 'अपने राज्य की विद्युत आपूर्ति संहिता के तहत उपखंड कार्यालय या डिस्कॉम पोर्टल पर मीटर सटीकता जाँच का आवेदन करें। छोटा शुल्क लगता है, जो मीटर खराब निकलने पर लौटता है। एक बिलिंग चक्र के लिए समानांतर चेक मीटर भी माँग सकते हैं, या लैब बेंच-टेस्ट देख सकते हैं।' },
+      { q: 'मीटर तेज़ निकला तो क्या मेरे बिल सुधरेंगे?',
+        a: 'हाँ। जाँच में मीटर अनुमत सीमा से ज़्यादा दर्ज करता पाया गया, तो आपूर्ति संहिता के तहत डिस्कॉम को प्रभावित अवधि के बिल संशोधित करने (आमतौर पर तय महीनों की सीमा तक) और मीटर मुफ़्त बदलने होंगे।' },
+      { q: 'क्या डिस्कॉम स्मार्ट मीटर को दूर से ज़्यादा पढ़ने वाला बना सकता है?',
+        a: 'नहीं। रिमोट कमांड रीडिंग लेने, कनेक्ट/डिस्कनेक्ट और टैरिफ-अनुसूची अपडेट तक सीमित हैं — कैलिब्रेशन तक नहीं। मापन फर्मवेयर सील्ड और टाइप-टेस्टेड होता है, और रीडिंग मीटर की अपनी मेमोरी में रहती है — इसीलिए भौतिक सेल्फ-टेस्ट या चेक मीटर सवाल को निर्णायक रूप से सुलझा देता है।' },
+    ],
+  },
+
+  {
+    slug: 'smart-meter-prepaid-disconnection',
+    title: 'Smart Prepaid Meter: Recharge, Low Balance and Remote Disconnection',
+    metaTitle: 'Smart Prepaid Meter Disconnected? Recharge, Reconnection Time & Your Rights',
+    description: 'How smart prepaid electricity meters deduct balance, how to tell a remote disconnection from a power cut or fault, when DISCOMs are not allowed to disconnect you, how fast supply returns after a recharge, and how old arrears are recovered.',
+    minutes: 5,
+    intro: `A smart prepaid meter turns your electricity connection into a recharge-and-consume account:
+      the meter deducts your balance daily, warns you when it runs low, and can <strong>disconnect the
+      supply remotely</strong> when it hits zero. If your power just went off, this guide shows how to
+      tell a balance disconnection apart from an ordinary outage or fault, how quickly supply returns
+      after a recharge, and the protections state rules give you against unfair disconnection.`,
+    sections: `
+      <section class="seo-section">
+        <h2>How the daily deduction works</h2>
+        <p>Your recharge is not just paying for units. Each day the meter (or the DISCOM's billing
+        system behind it) deducts:</p>
+        <ul>
+          <li><strong>Energy charge</strong> — the day's consumption priced at your slab/tariff rate,
+          including <a href="/glossary/#fppa">FPPA</a> where applicable;</li>
+          <li><strong>Fixed charge, pro-rated daily</strong> — your monthly
+          <a href="/glossary/#fixed-charge">fixed charge</a> ÷ days in the month, deducted even on days
+          you consume nothing;</li>
+          <li><strong>Electricity duty</strong> and other bill levies, applied the same way as on a
+          postpaid bill.</li>
+        </ul>
+        <p>So a balance that "drains overnight" usually isn't theft — it is the daily fixed-charge
+        deduction plus always-on loads (fridge, inverter charging, routers). The DISCOM app's daily
+        deduction ledger itemises this; check it before suspecting the meter, and verify the rates
+        against your state's page in the <a href="/tariffs/states/">tariff directory</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Was I disconnected remotely — or is it a fault?</h2>
+        <p>Work down this list before calling an electrician:</p>
+        <ol>
+          <li><strong>Check the neighbours / your street.</strong> If they are dark too, it is an area
+          outage, not your meter.</li>
+          <li><strong>Look at the meter display.</strong> A remotely disconnected smart meter still has
+          a live display — most show a relay/disconnect symbol, "OFF", or a specific alert code. A
+          completely dead display points to a supply-side fault instead.</li>
+          <li><strong>Check the app and SMS.</strong> Prepaid disconnections are preceded by low-balance
+          alerts and logged in the DISCOM app with a timestamp. A disconnection entry there settles it.</li>
+          <li><strong>Check your own MCB/ELCB.</strong> If the meter display is on, shows adequate
+          balance and no disconnect symbol, but the house is dark, your main switch or internal wiring
+          tripped — that one is for the electrician.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>When the DISCOM is not allowed to disconnect you</h2>
+        <p>State supply codes and the smart-metering rules build in consumer protections. The details
+        vary by state, but the common pattern:</p>
+        <ul>
+          <li><strong>Advance warning is mandatory</strong> — low-balance alerts by SMS/app before any
+          disconnection, and a defined notice window after the balance hits zero.</li>
+          <li><strong>No disconnection at unreasonable hours</strong> — most codes bar remote
+          disconnection at night, and on Sundays, public holidays and days when a recharge cannot
+          reasonably be made.</li>
+          <li><strong>A grace period or emergency credit</strong> — many DISCOMs offer a small negative
+          balance or "friendly hours" so supply continues until you can top up; the amount is recovered
+          from the next recharge.</li>
+        </ul>
+        <p>If you were cut off with no alert, at night or on a holiday, note the timestamps from the
+        app — that is a supply-code violation worth a written complaint.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Getting reconnected after a recharge</h2>
+        <ol>
+          <li><strong>Recharge</strong> through the DISCOM app/portal or an authorised payment channel.
+          Make sure the amount covers any negative balance <em>plus</em> a positive margin — a recharge
+          that only clears the deficit may not trigger reconnection.</li>
+          <li><strong>Wait for the auto-reconnect command.</strong> Restoration is typically automatic
+          within minutes to a few hours once the payment posts; the meter's relay clicks back in.</li>
+          <li><strong>Some meters need a button press.</strong> For safety, certain models require you
+          to press and hold the meter's push button after the reconnect command arrives, so supply does
+          not return to an unattended house. Check the meter's sticker or the DISCOM app prompt.</li>
+          <li><strong>Still off after a few hours?</strong> Log a supply complaint with the recharge
+          receipt number — the reconnect command can fail if the meter has lost network connectivity,
+          and a lineman visit is then required.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>Old arrears on a new prepaid meter</h2>
+        <p>If you had unpaid postpaid bills when the prepaid meter was installed, the arrears do not
+        vanish — they are typically recovered as a <strong>percentage deduction from every
+        recharge</strong> (the split is shown in the recharge receipt) until cleared. Your effective
+        balance therefore grows slower than the recharge amount. If the deducted arrear figure looks
+        wrong, dispute it in writing; the recharge ledger in the app is your evidence. To sanity-check
+        what a month's consumption <em>should</em> cost against what the meter deducted, use the
+        <a href="/#calculator">calculator</a>.</p>
+      </section>`,
+    faqs: [
+      { q: 'How do I know if my smart meter was disconnected for low balance?',
+        a: 'The meter display stays live and shows a disconnect/relay symbol or "OFF", the DISCOM app logs a disconnection event with a timestamp, and you would have received low-balance SMS alerts beforehand. A completely dead meter display or a whole dark street indicates an outage or fault instead.' },
+      { q: 'How long after recharging does electricity come back?',
+        a: 'Reconnection is normally automatic within minutes to a few hours of the payment posting. Some meter models additionally require a press of the meter’s push button for safety. If supply has not returned within a few hours, complain with your recharge receipt — the reconnect command may not have reached a meter with poor network connectivity.' },
+      { q: 'Can a prepaid smart meter cut my power at night or on a holiday?',
+        a: 'State supply codes generally prohibit remote disconnection at night and on Sundays/public holidays, and require prior low-balance alerts. Many DISCOMs also provide emergency credit or friendly hours so supply continues until you can recharge. A disconnection that violated these windows is grounds for a complaint.' },
+      { q: 'Why does my prepaid balance decrease even when I use no electricity?',
+        a: 'Fixed charges are deducted daily (monthly fixed charge divided by days in the month) regardless of consumption, along with duty on applicable components — plus always-on loads like fridges and routers keep consuming. The app’s daily deduction ledger itemises exactly what was taken.' },
+      { q: 'What happens to my old unpaid bills on a prepaid meter?',
+        a: 'Arrears from the postpaid period are usually recovered as a fixed percentage of every recharge until cleared, shown as a split on the recharge receipt. Your usable balance grows more slowly until the arrear is paid off; if the figure looks wrong, dispute it with the recharge ledger as evidence.' },
+    ],
+
+    titleHi: 'स्मार्ट प्रीपेड मीटर: रिचार्ज, कम बैलेंस और रिमोट डिस्कनेक्शन',
+    metaTitleHi: 'स्मार्ट प्रीपेड मीटर कट गया? रिचार्ज, बिजली लौटने का समय और आपके अधिकार',
+    descriptionHi: 'स्मार्ट प्रीपेड बिजली मीटर बैलेंस कैसे काटता है, रिमोट डिस्कनेक्शन को बिजली कटौती या फॉल्ट से कैसे अलग पहचानें, डिस्कॉम कब आपको काट नहीं सकता, रिचार्ज के बाद बिजली कितनी जल्दी लौटती है, और पुराना बकाया कैसे वसूला जाता है।',
+    introHi: `स्मार्ट प्रीपेड मीटर आपके बिजली कनेक्शन को रिचार्ज-और-खपत खाते में बदल देता है: मीटर रोज़ाना
+      बैलेंस काटता है, कम होने पर चेताता है, और शून्य पर पहुँचते ही <strong>आपूर्ति दूर से काट</strong> सकता
+      है। बिजली अभी-अभी गई है, तो यह गाइड बताती है कि बैलेंस कटौती को आम कटौती या फॉल्ट से कैसे अलग
+      पहचानें, रिचार्ज के बाद बिजली कितनी जल्दी लौटती है, और अनुचित कटौती के विरुद्ध राज्य नियम आपको
+      कौन-सी सुरक्षा देते हैं।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>रोज़ की कटौती कैसे होती है</h2>
+        <p>आपका रिचार्ज सिर्फ़ यूनिटों का भुगतान नहीं है। मीटर (या उसके पीछे डिस्कॉम की बिलिंग प्रणाली)
+        हर दिन काटती है:</p>
+        <ul>
+          <li><strong>ऊर्जा शुल्क</strong> — दिन की खपत आपकी स्लैब/टैरिफ दर पर, जहाँ लागू हो वहाँ
+          <a href="/hi/glossary/#fppa">FPPA</a> समेत;</li>
+          <li><strong>फिक्स्ड चार्ज, दैनिक अनुपात में</strong> — आपका मासिक
+          <a href="/hi/glossary/#fixed-charge">फिक्स्ड चार्ज</a> ÷ महीने के दिन, उन दिनों भी जब आप कुछ
+          खपत नहीं करते;</li>
+          <li><strong>बिजली शुल्क</strong> व अन्य बिल उगाहियाँ, पोस्टपेड बिल की ही तरह।</li>
+        </ul>
+        <p>तो "रात में ही घट गया" बैलेंस आमतौर पर चोरी नहीं है — यह दैनिक फिक्स्ड-चार्ज कटौती और हरदम चलते
+        लोड (फ्रिज, इन्वर्टर चार्जिंग, राउटर) हैं। डिस्कॉम ऐप का दैनिक कटौती खाता इसे मदवार दिखाता है; मीटर
+        पर शक करने से पहले वह देखें, और दरें <a href="/hi/tariffs/states/">टैरिफ डायरेक्टरी</a> में अपने
+        राज्य के पेज से मिलाएँ।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>मुझे दूर से काटा गया — या फॉल्ट है?</h2>
+        <p>इलेक्ट्रीशियन बुलाने से पहले यह सूची क्रम से देखें:</p>
+        <ol>
+          <li><strong>पड़ोसी / अपनी गली देखें।</strong> वे भी अंधेरे में हैं, तो यह क्षेत्रीय कटौती है, आपका
+          मीटर नहीं।</li>
+          <li><strong>मीटर का डिस्प्ले देखें।</strong> दूर से काटे गए स्मार्ट मीटर का डिस्प्ले चालू रहता है —
+          अधिकांश रिले/डिस्कनेक्ट चिह्न, "OFF" या कोई अलर्ट कोड दिखाते हैं। बिल्कुल बुझा डिस्प्ले आपूर्ति-पक्ष
+          के फॉल्ट की ओर इशारा करता है।</li>
+          <li><strong>ऐप और SMS देखें।</strong> प्रीपेड कटौती से पहले कम-बैलेंस अलर्ट आते हैं और डिस्कॉम ऐप
+          में समय-मुहर के साथ कटौती दर्ज होती है। वहाँ की प्रविष्टि मामला साफ़ कर देती है।</li>
+          <li><strong>अपना MCB/ELCB देखें।</strong> मीटर डिस्प्ले चालू है, पर्याप्त बैलेंस दिखाता है और कोई
+          डिस्कनेक्ट चिह्न नहीं, फिर भी घर अंधेरे में है — तो आपका मेन स्विच या भीतरी वायरिंग ट्रिप हुई है;
+          वह इलेक्ट्रीशियन का काम है।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>डिस्कॉम आपको कब नहीं काट सकता</h2>
+        <p>राज्य आपूर्ति संहिताएँ और स्मार्ट-मीटरिंग नियम उपभोक्ता सुरक्षा देते हैं। ब्योरे राज्य-दर-राज्य अलग
+        हैं, पर आम ढाँचा यह है:</p>
+        <ul>
+          <li><strong>पहले चेतावनी अनिवार्य</strong> — किसी भी कटौती से पहले SMS/ऐप से कम-बैलेंस अलर्ट, और
+          बैलेंस शून्य होने के बाद एक तय नोटिस अवधि।</li>
+          <li><strong>अनुचित समय पर कटौती नहीं</strong> — अधिकांश संहिताएँ रात में, रविवार, सार्वजनिक
+          अवकाश और उन दिनों रिमोट कटौती रोकती हैं जब रिचार्ज करना व्यावहारिक न हो।</li>
+          <li><strong>ग्रेस अवधि या आपात क्रेडिट</strong> — कई डिस्कॉम थोड़ा नेगेटिव बैलेंस या "फ्रेंडली ऑवर्स"
+          देते हैं ताकि टॉप-अप तक आपूर्ति चलती रहे; राशि अगले रिचार्ज से वसूली जाती है।</li>
+        </ul>
+        <p>बिना अलर्ट, रात में या अवकाश पर काटा गया हो, तो ऐप की समय-मुहरें नोट करें — यह आपूर्ति-संहिता
+        का उल्लंघन है और लिखित शिकायत के लायक है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>रिचार्ज के बाद बिजली वापस पाना</h2>
+        <ol>
+          <li><strong>रिचार्ज करें</strong> — डिस्कॉम ऐप/पोर्टल या अधिकृत भुगतान चैनल से। राशि नेगेटिव बैलेंस
+          <em>और</em> कुछ पॉज़िटिव मार्जिन दोनों ढके — सिर्फ़ घाटा पाटने वाला रिचार्ज पुनर्संयोजन शुरू नहीं
+          भी कर सकता।</li>
+          <li><strong>ऑटो-रीकनेक्ट कमांड की प्रतीक्षा करें।</strong> भुगतान दर्ज होते ही बहाली आमतौर पर कुछ
+          मिनटों से कुछ घंटों में स्वतः होती है; मीटर का रिले वापस जुड़ जाता है।</li>
+          <li><strong>कुछ मीटरों में बटन दबाना पड़ता है।</strong> सुरक्षा के लिए कुछ मॉडल माँग करते हैं कि
+          रीकनेक्ट कमांड आने के बाद आप मीटर का पुश बटन दबाकर रखें, ताकि खाली घर में आपूर्ति न लौटे। मीटर का
+          स्टिकर या ऐप का संकेत देखें।</li>
+          <li><strong>कुछ घंटों बाद भी बंद?</strong> रिचार्ज रसीद संख्या के साथ आपूर्ति शिकायत दर्ज करें —
+          मीटर की नेटवर्क कनेक्टिविटी छूटी हो तो रीकनेक्ट कमांड विफल हो सकता है और लाइनमैन का दौरा ज़रूरी
+          हो जाता है।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>नए प्रीपेड मीटर पर पुराना बकाया</h2>
+        <p>प्रीपेड मीटर लगते समय पोस्टपेड बिल बकाया थे, तो वे मिटते नहीं — आमतौर पर <strong>हर रिचार्ज से एक
+        प्रतिशत कटौती</strong> के रूप में वसूले जाते हैं (बँटवारा रिचार्ज रसीद में दिखता है) जब तक चुकता न हो
+        जाएँ। इसलिए आपका उपयोगी बैलेंस रिचार्ज राशि से धीमा बढ़ता है। कटा बकाया आँकड़ा गलत लगे, तो लिखित
+        आपत्ति करें; ऐप का रिचार्ज खाता आपका सबूत है। महीने की खपत की लागत कितनी <em>होनी चाहिए</em> बनाम
+        मीटर ने कितना काटा, यह <a href="/#calculator">कैलकुलेटर</a> से मिलाएँ।</p>
+      </section>`,
+    faqsHi: [
+      { q: 'कैसे पता चले कि मेरा स्मार्ट मीटर कम बैलेंस पर काटा गया है?',
+        a: 'मीटर का डिस्प्ले चालू रहता है और डिस्कनेक्ट/रिले चिह्न या "OFF" दिखाता है, डिस्कॉम ऐप में समय-मुहर के साथ कटौती दर्ज होती है, और पहले कम-बैलेंस SMS अलर्ट आए होंगे। बिल्कुल बुझा डिस्प्ले या पूरी अंधेरी गली कटौती या फॉल्ट का संकेत है।' },
+      { q: 'रिचार्ज के कितनी देर बाद बिजली लौटती है?',
+        a: 'भुगतान दर्ज होने के कुछ मिनटों से कुछ घंटों में पुनर्संयोजन आमतौर पर स्वतः होता है। कुछ मीटर मॉडल सुरक्षा के लिए मीटर का पुश बटन दबाने की भी माँग करते हैं। कुछ घंटों में आपूर्ति न लौटे, तो रिचार्ज रसीद के साथ शिकायत करें — कमज़ोर नेटवर्क वाले मीटर तक रीकनेक्ट कमांड नहीं पहुँचा हो सकता।' },
+      { q: 'क्या प्रीपेड स्मार्ट मीटर रात या अवकाश पर बिजली काट सकता है?',
+        a: 'राज्य आपूर्ति संहिताएँ आमतौर पर रात और रविवार/सार्वजनिक अवकाश पर रिमोट कटौती रोकती हैं, और पहले कम-बैलेंस अलर्ट अनिवार्य करती हैं। कई डिस्कॉम आपात क्रेडिट या फ्रेंडली ऑवर्स भी देते हैं ताकि रिचार्ज तक आपूर्ति चले। इन नियमों के विरुद्ध कटौती शिकायत का आधार है।' },
+      { q: 'बिजली इस्तेमाल न करने पर भी मेरा प्रीपेड बैलेंस क्यों घटता है?',
+        a: 'फिक्स्ड चार्ज हर दिन कटता है (मासिक फिक्स्ड चार्ज ÷ महीने के दिन), खपत चाहे शून्य हो, साथ में लागू मदों पर शुल्क — और फ्रिज, राउटर जैसे हरदम चलते लोड खपत करते रहते हैं। ऐप का दैनिक कटौती खाता ठीक-ठीक दिखाता है कि क्या कटा।' },
+      { q: 'प्रीपेड मीटर पर मेरे पुराने बकाया बिलों का क्या होगा?',
+        a: 'पोस्टपेड अवधि का बकाया आमतौर पर हर रिचार्ज के एक तय प्रतिशत के रूप में वसूला जाता है जब तक चुकता न हो, जो रिचार्ज रसीद में बँटवारे के रूप में दिखता है। बकाया चुकने तक आपका उपयोगी बैलेंस धीमा बढ़ता है; आँकड़ा गलत लगे तो रिचार्ज खाते को सबूत बनाकर आपत्ति करें।' },
+    ],
+  },
 ];
