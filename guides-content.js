@@ -513,7 +513,7 @@ export const GUIDES = [
       </section>
       <section class="seo-section">
         <h2>4. How to check it yourself</h2>
-        <img src="/fppa-bill-highlight.png" alt="A sample electricity bill with the FPPA line highlighted in yellow" loading="lazy" style="max-width:100%; border-radius:8px; margin: 1rem 0;">
+        <img src="/fppa-bill-highlight.png" alt="A sample electricity bill with the FPPA line highlighted in yellow" loading="lazy" style="max-width:350px; width:100%; display:block; border-radius:8px; margin: 1.5rem auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
         <ol>
           <li>Look for the line named FPPA, FPPCA, FAC, or PPAC on your bill.</li>
           <li>Check your electricity company's official website to find the official rate for that specific month.</li>
@@ -554,7 +554,7 @@ export const GUIDES = [
       </section>
       <section class="seo-section">
         <h2>4. इसे खुद कैसे चेक करें</h2>
-        <img src="/fppa-bill-highlight.png" alt="A sample electricity bill with the FPPA line highlighted in yellow" loading="lazy" style="max-width:100%; border-radius:8px; margin: 1rem 0;">
+        <img src="/fppa-bill-highlight.png" alt="A sample electricity bill with the FPPA line highlighted in yellow" loading="lazy" style="max-width:350px; width:100%; display:block; border-radius:8px; margin: 1.5rem auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
         <ol>
           <li>अपने बिल पर FPPA, FPPCA, FAC या PPAC नाम की लाइन खोजें।</li>
           <li>उस विशिष्ट महीने की आधिकारिक दर जानने के लिए अपनी बिजली कंपनी की आधिकारिक वेबसाइट देखें।</li>
