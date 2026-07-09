@@ -27,7 +27,8 @@ import { STRINGS } from './js/i18n.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
-const SITE = 'https://www.thediscombill.com';
+const SITE = 'https://thediscombill.com';
+const DOMAIN_STRIPPED = 'thediscombill.com';
 const TODAY = new Date().toISOString().slice(0, 10);
 
 // ── Content-derived <lastmod> ─────────────────────────────────────────────────

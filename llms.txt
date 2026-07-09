@@ -6,71 +6,71 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 
 ## Tools
 
-- [Bill Calculator](https://www.thediscombill.com/): instant provisional electricity bill for any Indian DISCOM with a full slab-wise breakdown
-- [Tariff Comparison](https://www.thediscombill.com/compare/): major DISCOMs compared at 200/400/600/1000 units for domestic and commercial
-- [Usage Estimator](https://www.thediscombill.com/usage/): estimate monthly kWh from household appliances
-- [Rooftop Solar Savings](https://www.thediscombill.com/solar/): system sizing, payback and net-metering savings
-- [Bill Check](https://www.thediscombill.com/bill-check/): direct links to every DISCOM's official view/pay-bill portal
-- [Bill Review by Experts](https://www.thediscombill.com/bill-review/): upload a bill and have a human expert review it (free account)
-- [New Connection](https://www.thediscombill.com/new-connection/): charges, documents and process per DISCOM
-- [Complaint](https://www.thediscombill.com/complaint/): DISCOM complaint portals and the 1912 national helpline
+- [Bill Calculator](https://thediscombill.com/): instant provisional electricity bill for any Indian DISCOM with a full slab-wise breakdown
+- [Tariff Comparison](https://thediscombill.com/compare/): major DISCOMs compared at 200/400/600/1000 units for domestic and commercial
+- [Usage Estimator](https://thediscombill.com/usage/): estimate monthly kWh from household appliances
+- [Rooftop Solar Savings](https://thediscombill.com/solar/): system sizing, payback and net-metering savings
+- [Bill Check](https://thediscombill.com/bill-check/): direct links to every DISCOM's official view/pay-bill portal
+- [Bill Review by Experts](https://thediscombill.com/bill-review/): upload a bill and have a human expert review it (free account)
+- [New Connection](https://thediscombill.com/new-connection/): charges, documents and process per DISCOM
+- [Complaint](https://thediscombill.com/complaint/): DISCOM complaint portals and the 1912 national helpline
 
 ## Guides
 
-- [How to Read Your UPPCL Electricity Bill](https://www.thediscombill.com/guides/how-to-read-uppcl-bill/): A line-by-line walkthrough of a UPPCL (MVVNL, PVVNL, DVVNL, PuVVNL, KESCO) electricity bill: account fields, meter readings, energy charges, fixed charges, FPPA, electricity duty and arrears — and how to verify the total yourself
-- [Why Did My Electricity Bill Suddenly Increase?](https://www.thediscombill.com/guides/why-did-my-electricity-bill-increase/): The 8 most common reasons an Indian electricity bill jumps — slab escalation, catch-up after estimated readings, FPPA revisions, seasonal AC load, arrears with LPSC, meter faults, excess-load penalties — and exactly how to check each one
-- [Time-of-Day (ToD) Electricity Billing Explained](https://www.thediscombill.com/guides/tod-billing-explained/): What Time-of-Day (ToD) electricity billing is, who it applies to in India, how peak and off-peak rates work with smart meters, what kVAh billing means, and practical ways to cut your bill by shifting load
-- [How FPPA (Fuel Surcharge) Is Calculated on Your Electricity Bill](https://www.thediscombill.com/guides/how-fppa-fuel-surcharge-is-calculated/): What the FPPA / FPPCA / FPPAS / PPAC line on an Indian electricity bill is, the two ways DISCOMs calculate it (per-unit and percentage), why it changes every month, why it can be negative, and how to verify the amount yourself
-- [How to Reduce Fixed Charges by Right-Sizing Your Sanctioned Load](https://www.thediscombill.com/guides/reduce-fixed-charges-sanctioned-load/): Fixed charges are billed per kW of sanctioned load even at zero consumption
-- [Electricity Duty on Your Bill: What It Is and How States Differ](https://www.thediscombill.com/guides/electricity-duty-explained/): Electricity duty is a state tax collected through your electricity bill
-- [How to Read Your BSES / Delhi Electricity Bill](https://www.thediscombill.com/guides/how-to-read-bses-delhi-bill/): A line-by-line guide to Delhi electricity bills from BSES Rajdhani (BRPL), BSES Yamuna (BYPL) and Tata Power-DDL: LT-I slabs, tiered fixed charges, PPAC, 5% electricity duty, and exactly how the GNCTD subsidy makes bills zero
-- [How to Read Your MSEDCL (Mahavitaran) Electricity Bill](https://www.thediscombill.com/guides/how-to-read-msedcl-bill/): A line-by-line walkthrough of an MSEDCL (Mahavitaran) electricity bill: LT-1 residential slabs at 100/300/500 units, tiered fixed charges, fuel adjustment (FAC), wheeling charge, Maharashtra’s 16% electricity duty and how to verify the total
-- [How to Read Your BESCOM Electricity Bill](https://www.thediscombill.com/guides/how-to-read-bescom-bill/): A line-by-line guide to BESCOM (Bengaluru) electricity bills: LT-1 slabs starting at 30 units, duty-inclusive tariffs, sanctioned-load fixed charges, and how the Gruha Jyoti free-electricity scheme decides whether you pay at all
-- [How to Read Your TNEB / TANGEDCO Electricity Bill](https://www.thediscombill.com/guides/how-to-read-tneb-tangedco-bill/): A line-by-line guide to Tamil Nadu (TNEB/TANGEDCO) electricity bills: why billing is bimonthly, how the first 100 free units work, the 500-unit cliff that removes concessions, slab maths to 1000+ units and how to verify the total
-- [Solar Net Metering: How the Savings Actually Work](https://www.thediscombill.com/guides/solar-net-metering-savings/): How rooftop solar net metering credits work on an Indian electricity bill, why the same system saves different amounts in different states, how slab rates change the maths, sizing rules of thumb and what drives payback time
+- [How to Read Your UPPCL Electricity Bill](https://thediscombill.com/guides/how-to-read-uppcl-bill/): A line-by-line walkthrough of a UPPCL (MVVNL, PVVNL, DVVNL, PuVVNL, KESCO) electricity bill: account fields, meter readings, energy charges, fixed charges, FPPA, electricity duty and arrears — and how to verify the total yourself
+- [Why Did My Electricity Bill Suddenly Increase?](https://thediscombill.com/guides/why-did-my-electricity-bill-increase/): The 8 most common reasons an Indian electricity bill jumps — slab escalation, catch-up after estimated readings, FPPA revisions, seasonal AC load, arrears with LPSC, meter faults, excess-load penalties — and exactly how to check each one
+- [Time-of-Day (ToD) Electricity Billing Explained](https://thediscombill.com/guides/tod-billing-explained/): What Time-of-Day (ToD) electricity billing is, who it applies to in India, how peak and off-peak rates work with smart meters, what kVAh billing means, and practical ways to cut your bill by shifting load
+- [How FPPA (Fuel Surcharge) Is Calculated on Your Electricity Bill](https://thediscombill.com/guides/how-fppa-fuel-surcharge-is-calculated/): What the FPPA / FPPCA / FPPAS / PPAC line on an Indian electricity bill is, the two ways DISCOMs calculate it (per-unit and percentage), why it changes every month, why it can be negative, and how to verify the amount yourself
+- [How to Reduce Fixed Charges by Right-Sizing Your Sanctioned Load](https://thediscombill.com/guides/reduce-fixed-charges-sanctioned-load/): Fixed charges are billed per kW of sanctioned load even at zero consumption
+- [Electricity Duty on Your Bill: What It Is and How States Differ](https://thediscombill.com/guides/electricity-duty-explained/): Electricity duty is a state tax collected through your electricity bill
+- [How to Read Your BSES / Delhi Electricity Bill](https://thediscombill.com/guides/how-to-read-bses-delhi-bill/): A line-by-line guide to Delhi electricity bills from BSES Rajdhani (BRPL), BSES Yamuna (BYPL) and Tata Power-DDL: LT-I slabs, tiered fixed charges, PPAC, 5% electricity duty, and exactly how the GNCTD subsidy makes bills zero
+- [How to Read Your MSEDCL (Mahavitaran) Electricity Bill](https://thediscombill.com/guides/how-to-read-msedcl-bill/): A line-by-line walkthrough of an MSEDCL (Mahavitaran) electricity bill: LT-1 residential slabs at 100/300/500 units, tiered fixed charges, fuel adjustment (FAC), wheeling charge, Maharashtra’s 16% electricity duty and how to verify the total
+- [How to Read Your BESCOM Electricity Bill](https://thediscombill.com/guides/how-to-read-bescom-bill/): A line-by-line guide to BESCOM (Bengaluru) electricity bills: LT-1 slabs starting at 30 units, duty-inclusive tariffs, sanctioned-load fixed charges, and how the Gruha Jyoti free-electricity scheme decides whether you pay at all
+- [How to Read Your TNEB / TANGEDCO Electricity Bill](https://thediscombill.com/guides/how-to-read-tneb-tangedco-bill/): A line-by-line guide to Tamil Nadu (TNEB/TANGEDCO) electricity bills: why billing is bimonthly, how the first 100 free units work, the 500-unit cliff that removes concessions, slab maths to 1000+ units and how to verify the total
+- [Solar Net Metering: How the Savings Actually Work](https://thediscombill.com/guides/solar-net-metering-savings/): How rooftop solar net metering credits work on an Indian electricity bill, why the same system saves different amounts in different states, how slab rates change the maths, sizing rules of thumb and what drives payback time
 
 ## Reference
 
-- [Electricity Bill Glossary](https://www.thediscombill.com/glossary/): definitions of billing terms — Connected Load, ED, Fixed Charge, FPPA, kVAh, LPSC, Maximum Demand, MMC, MF, Net Metering, PF, Sanctioned Load, Telescopic Slabs, ToD
+- [Electricity Bill Glossary](https://thediscombill.com/glossary/): definitions of billing terms — Connected Load, ED, Fixed Charge, FPPA, kVAh, LPSC, Maximum Demand, MMC, MF, Net Metering, PF, Sanctioned Load, Telescopic Slabs, ToD
 
 ## Tariff reference
 
-- [All states & DISCOMs directory](https://www.thediscombill.com/tariffs/states/): index of every state and DISCOM landing page
+- [All states & DISCOMs directory](https://thediscombill.com/tariffs/states/): index of every state and DISCOM landing page
 
-- [Andhra Pradesh electricity tariffs](https://www.thediscombill.com/tariffs/andhra-pradesh/): DISCOMs, slab rates, fixed charges and indicative bills for Andhra Pradesh
-- [Arunachal Pradesh electricity tariffs](https://www.thediscombill.com/tariffs/arunachal-pradesh/): DISCOMs, slab rates, fixed charges and indicative bills for Arunachal Pradesh
-- [Assam electricity tariffs](https://www.thediscombill.com/tariffs/assam/): DISCOMs, slab rates, fixed charges and indicative bills for Assam
-- [Bihar electricity tariffs](https://www.thediscombill.com/tariffs/bihar/): DISCOMs, slab rates, fixed charges and indicative bills for Bihar
-- [Chandigarh electricity tariffs](https://www.thediscombill.com/tariffs/chandigarh/): DISCOMs, slab rates, fixed charges and indicative bills for Chandigarh
-- [Chhattisgarh electricity tariffs](https://www.thediscombill.com/tariffs/chhattisgarh/): DISCOMs, slab rates, fixed charges and indicative bills for Chhattisgarh
-- [Dadra & Nagar Haveli and Daman & Diu electricity tariffs](https://www.thediscombill.com/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/): DISCOMs, slab rates, fixed charges and indicative bills for Dadra & Nagar Haveli and Daman & Diu
-- [Delhi electricity tariffs](https://www.thediscombill.com/tariffs/delhi/): DISCOMs, slab rates, fixed charges and indicative bills for Delhi
-- [Goa electricity tariffs](https://www.thediscombill.com/tariffs/goa/): DISCOMs, slab rates, fixed charges and indicative bills for Goa
-- [Gujarat electricity tariffs](https://www.thediscombill.com/tariffs/gujarat/): DISCOMs, slab rates, fixed charges and indicative bills for Gujarat
-- [Haryana electricity tariffs](https://www.thediscombill.com/tariffs/haryana/): DISCOMs, slab rates, fixed charges and indicative bills for Haryana
-- [Himachal Pradesh electricity tariffs](https://www.thediscombill.com/tariffs/himachal-pradesh/): DISCOMs, slab rates, fixed charges and indicative bills for Himachal Pradesh
-- [Jammu & Kashmir electricity tariffs](https://www.thediscombill.com/tariffs/jammu-and-kashmir/): DISCOMs, slab rates, fixed charges and indicative bills for Jammu & Kashmir
-- [Jharkhand electricity tariffs](https://www.thediscombill.com/tariffs/jharkhand/): DISCOMs, slab rates, fixed charges and indicative bills for Jharkhand
-- [Karnataka electricity tariffs](https://www.thediscombill.com/tariffs/karnataka/): DISCOMs, slab rates, fixed charges and indicative bills for Karnataka
-- [Kerala electricity tariffs](https://www.thediscombill.com/tariffs/kerala/): DISCOMs, slab rates, fixed charges and indicative bills for Kerala
-- [Ladakh electricity tariffs](https://www.thediscombill.com/tariffs/ladakh/): DISCOMs, slab rates, fixed charges and indicative bills for Ladakh
-- [Madhya Pradesh electricity tariffs](https://www.thediscombill.com/tariffs/madhya-pradesh/): DISCOMs, slab rates, fixed charges and indicative bills for Madhya Pradesh
-- [Maharashtra electricity tariffs](https://www.thediscombill.com/tariffs/maharashtra/): DISCOMs, slab rates, fixed charges and indicative bills for Maharashtra
-- [Manipur electricity tariffs](https://www.thediscombill.com/tariffs/manipur/): DISCOMs, slab rates, fixed charges and indicative bills for Manipur
-- [Meghalaya electricity tariffs](https://www.thediscombill.com/tariffs/meghalaya/): DISCOMs, slab rates, fixed charges and indicative bills for Meghalaya
-- [Mizoram electricity tariffs](https://www.thediscombill.com/tariffs/mizoram/): DISCOMs, slab rates, fixed charges and indicative bills for Mizoram
-- [Nagaland electricity tariffs](https://www.thediscombill.com/tariffs/nagaland/): DISCOMs, slab rates, fixed charges and indicative bills for Nagaland
-- [Odisha electricity tariffs](https://www.thediscombill.com/tariffs/odisha/): DISCOMs, slab rates, fixed charges and indicative bills for Odisha
-- [Puducherry electricity tariffs](https://www.thediscombill.com/tariffs/puducherry/): DISCOMs, slab rates, fixed charges and indicative bills for Puducherry
-- [Punjab electricity tariffs](https://www.thediscombill.com/tariffs/punjab/): DISCOMs, slab rates, fixed charges and indicative bills for Punjab
-- [Rajasthan electricity tariffs](https://www.thediscombill.com/tariffs/rajasthan/): DISCOMs, slab rates, fixed charges and indicative bills for Rajasthan
-- [Sikkim electricity tariffs](https://www.thediscombill.com/tariffs/sikkim/): DISCOMs, slab rates, fixed charges and indicative bills for Sikkim
-- [Tamil Nadu electricity tariffs](https://www.thediscombill.com/tariffs/tamil-nadu/): DISCOMs, slab rates, fixed charges and indicative bills for Tamil Nadu
-- [Telangana electricity tariffs](https://www.thediscombill.com/tariffs/telangana/): DISCOMs, slab rates, fixed charges and indicative bills for Telangana
-- [Tripura electricity tariffs](https://www.thediscombill.com/tariffs/tripura/): DISCOMs, slab rates, fixed charges and indicative bills for Tripura
-- [Uttar Pradesh electricity tariffs](https://www.thediscombill.com/tariffs/uttar-pradesh/): DISCOMs, slab rates, fixed charges and indicative bills for Uttar Pradesh
-- [Uttarakhand electricity tariffs](https://www.thediscombill.com/tariffs/uttarakhand/): DISCOMs, slab rates, fixed charges and indicative bills for Uttarakhand
-- [West Bengal electricity tariffs](https://www.thediscombill.com/tariffs/west-bengal/): DISCOMs, slab rates, fixed charges and indicative bills for West Bengal
+- [Andhra Pradesh electricity tariffs](https://thediscombill.com/tariffs/andhra-pradesh/): DISCOMs, slab rates, fixed charges and indicative bills for Andhra Pradesh
+- [Arunachal Pradesh electricity tariffs](https://thediscombill.com/tariffs/arunachal-pradesh/): DISCOMs, slab rates, fixed charges and indicative bills for Arunachal Pradesh
+- [Assam electricity tariffs](https://thediscombill.com/tariffs/assam/): DISCOMs, slab rates, fixed charges and indicative bills for Assam
+- [Bihar electricity tariffs](https://thediscombill.com/tariffs/bihar/): DISCOMs, slab rates, fixed charges and indicative bills for Bihar
+- [Chandigarh electricity tariffs](https://thediscombill.com/tariffs/chandigarh/): DISCOMs, slab rates, fixed charges and indicative bills for Chandigarh
+- [Chhattisgarh electricity tariffs](https://thediscombill.com/tariffs/chhattisgarh/): DISCOMs, slab rates, fixed charges and indicative bills for Chhattisgarh
+- [Dadra & Nagar Haveli and Daman & Diu electricity tariffs](https://thediscombill.com/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/): DISCOMs, slab rates, fixed charges and indicative bills for Dadra & Nagar Haveli and Daman & Diu
+- [Delhi electricity tariffs](https://thediscombill.com/tariffs/delhi/): DISCOMs, slab rates, fixed charges and indicative bills for Delhi
+- [Goa electricity tariffs](https://thediscombill.com/tariffs/goa/): DISCOMs, slab rates, fixed charges and indicative bills for Goa
+- [Gujarat electricity tariffs](https://thediscombill.com/tariffs/gujarat/): DISCOMs, slab rates, fixed charges and indicative bills for Gujarat
+- [Haryana electricity tariffs](https://thediscombill.com/tariffs/haryana/): DISCOMs, slab rates, fixed charges and indicative bills for Haryana
+- [Himachal Pradesh electricity tariffs](https://thediscombill.com/tariffs/himachal-pradesh/): DISCOMs, slab rates, fixed charges and indicative bills for Himachal Pradesh
+- [Jammu & Kashmir electricity tariffs](https://thediscombill.com/tariffs/jammu-and-kashmir/): DISCOMs, slab rates, fixed charges and indicative bills for Jammu & Kashmir
+- [Jharkhand electricity tariffs](https://thediscombill.com/tariffs/jharkhand/): DISCOMs, slab rates, fixed charges and indicative bills for Jharkhand
+- [Karnataka electricity tariffs](https://thediscombill.com/tariffs/karnataka/): DISCOMs, slab rates, fixed charges and indicative bills for Karnataka
+- [Kerala electricity tariffs](https://thediscombill.com/tariffs/kerala/): DISCOMs, slab rates, fixed charges and indicative bills for Kerala
+- [Ladakh electricity tariffs](https://thediscombill.com/tariffs/ladakh/): DISCOMs, slab rates, fixed charges and indicative bills for Ladakh
+- [Madhya Pradesh electricity tariffs](https://thediscombill.com/tariffs/madhya-pradesh/): DISCOMs, slab rates, fixed charges and indicative bills for Madhya Pradesh
+- [Maharashtra electricity tariffs](https://thediscombill.com/tariffs/maharashtra/): DISCOMs, slab rates, fixed charges and indicative bills for Maharashtra
+- [Manipur electricity tariffs](https://thediscombill.com/tariffs/manipur/): DISCOMs, slab rates, fixed charges and indicative bills for Manipur
+- [Meghalaya electricity tariffs](https://thediscombill.com/tariffs/meghalaya/): DISCOMs, slab rates, fixed charges and indicative bills for Meghalaya
+- [Mizoram electricity tariffs](https://thediscombill.com/tariffs/mizoram/): DISCOMs, slab rates, fixed charges and indicative bills for Mizoram
+- [Nagaland electricity tariffs](https://thediscombill.com/tariffs/nagaland/): DISCOMs, slab rates, fixed charges and indicative bills for Nagaland
+- [Odisha electricity tariffs](https://thediscombill.com/tariffs/odisha/): DISCOMs, slab rates, fixed charges and indicative bills for Odisha
+- [Puducherry electricity tariffs](https://thediscombill.com/tariffs/puducherry/): DISCOMs, slab rates, fixed charges and indicative bills for Puducherry
+- [Punjab electricity tariffs](https://thediscombill.com/tariffs/punjab/): DISCOMs, slab rates, fixed charges and indicative bills for Punjab
+- [Rajasthan electricity tariffs](https://thediscombill.com/tariffs/rajasthan/): DISCOMs, slab rates, fixed charges and indicative bills for Rajasthan
+- [Sikkim electricity tariffs](https://thediscombill.com/tariffs/sikkim/): DISCOMs, slab rates, fixed charges and indicative bills for Sikkim
+- [Tamil Nadu electricity tariffs](https://thediscombill.com/tariffs/tamil-nadu/): DISCOMs, slab rates, fixed charges and indicative bills for Tamil Nadu
+- [Telangana electricity tariffs](https://thediscombill.com/tariffs/telangana/): DISCOMs, slab rates, fixed charges and indicative bills for Telangana
+- [Tripura electricity tariffs](https://thediscombill.com/tariffs/tripura/): DISCOMs, slab rates, fixed charges and indicative bills for Tripura
+- [Uttar Pradesh electricity tariffs](https://thediscombill.com/tariffs/uttar-pradesh/): DISCOMs, slab rates, fixed charges and indicative bills for Uttar Pradesh
+- [Uttarakhand electricity tariffs](https://thediscombill.com/tariffs/uttarakhand/): DISCOMs, slab rates, fixed charges and indicative bills for Uttarakhand
+- [West Bengal electricity tariffs](https://thediscombill.com/tariffs/west-bengal/): DISCOMs, slab rates, fixed charges and indicative bills for West Bengal
 
 ## Notes
 

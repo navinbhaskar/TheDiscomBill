@@ -46,4 +46,4 @@ Allow: /
 User-agent: DuckAssistBot
 Allow: /
 
-Sitemap: https://www.thediscombill.com/sitemap.xml
+Sitemap: https://thediscombill.com/sitemap.xml
