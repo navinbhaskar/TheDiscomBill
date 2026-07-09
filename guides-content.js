@@ -1464,4 +1464,206 @@ export const GUIDES = [
         a: 'नेट मीटरिंग में, निर्यात यूनिटें आपके खुदरा टैरिफ पर एक-के-बदले-एक आयात यूनिटों को ऑफ़सेट करती हैं। नेट बिलिंग (सकल निपटान) में, निर्यात कम फ़ीड-इन दर पर चुकाया जाता है जबकि आयात पर पूरा टैरिफ लगता है — वही हार्डवेयर, काफ़ी बदतर अर्थशास्त्र। कौन-सा लागू है यह आपके राज्य के वर्तमान विनियमों पर निर्भर करता है।' },
     ],
   },
+
+  {
+    slug: 'uppcl-sanctioned-load-increased',
+    states: ['Uttar Pradesh'],
+    title: 'Why Did My Sanctioned Load Suddenly Increase? (UPPCL / UP)',
+    metaTitle: 'UPPCL Increased My Sanctioned Load Automatically — Why, and How to Reduce It',
+    description: 'Why UPPCL suddenly increased your sanctioned load without an application: smart meters record Maximum Demand, and the UP Supply Code lets the DISCOM revise your load to match it. What it costs you, how to check your bill, and how to apply for load reduction.',
+    minutes: 5,
+    intro: `If your UPPCL bill suddenly shows a higher sanctioned load — 1 kW became 2 kW, or
+      2 kW became 4 kW — you are not alone, and it is usually not a mistake. Your new
+      <strong>smart meter records Maximum Demand (MD)</strong>, and under the UP Electricity
+      Supply Code the DISCOM can revise your sanctioned load upward to match the demand you
+      actually drew — <em>without</em> you applying for it. This guide explains why it happens,
+      exactly what it costs you every month, and how to get the load reduced if it was a one-off spike.`,
+    sections: `
+      <section class="seo-section">
+        <h2>The short answer: your smart meter recorded a higher demand</h2>
+        <p>Your old electromechanical meter only counted units. A <strong>smart meter also records
+        Maximum Demand (MD)</strong> — the highest average power you drew in any demand window
+        during the billing month. If that recorded demand repeatedly exceeds your sanctioned load,
+        the UP Electricity Supply Code allows the DISCOM to treat your load as enhanced and revise
+        it to the recorded demand — automatically, on the bill, with no application from you.</p>
+        <p>That is why the increase feels sudden: nothing changed in your house except the meter.
+        The demand was probably always there — running an inverter AC, a geyser and an iron at the
+        same time can easily draw 3–4 kW for a while — but until the smart meter, nobody was
+        measuring it.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>What a higher sanctioned load costs you</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Effect</th><th>Why it hits your bill</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Higher fixed charge — every month</strong></td><td>UP fixed charges are billed <strong>per kW of sanctioned load</strong>, consumption or not. Each extra kW adds the full per-kW fixed charge to every future bill. Current per-kW rates for your DISCOM are on our <a href="/tariffs/uttar-pradesh/">UP tariff pages</a>.</td></tr>
+            <tr><td><strong>Loss of lifeline rates</strong></td><td>UP's lifeline (subsidised) domestic schedule applies only to connections of <strong>up to 1 kW</strong> with low consumption. If your load is revised from 1 kW to 2 kW, you drop out of the lifeline slab even if your usage never changed.</td></tr>
+            <tr><td><strong>Higher schedule for commercial users</strong></td><td>Commercial (LMV-2) connections crossing <strong>4 kW</strong> move to a costlier rate schedule with a higher per-kW fixed charge and steeper energy slabs.</td></tr>
+            <tr><td><strong>Additional security deposit</strong></td><td>The security deposit is linked to load and consumption, so the DISCOM may raise a one-time additional security demand after an enhancement.</td></tr>
+          </tbody>
+        </table></div>
+        <p>To see the exact rupee impact for your connection, put your units into the
+        <a href="/?state=Uttar%20Pradesh#calculator">UPPCL bill calculator</a> twice — once with the
+        old load and once with the new — and compare the totals.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Check your bill: was the increase justified?</h2>
+        <ol>
+          <li><strong>Find the MD line.</strong> Smart-meter bills print the recorded Maximum Demand
+          (often "MD" or "Max Demand", in kW) alongside the sanctioned load. Compare the two across
+          your last few bills.</li>
+          <li><strong>One spike or a pattern?</strong> Load revision is meant for demand that
+          exceeds the sanctioned load <em>repeatedly</em> across billing months — not a single
+          festival-day spike. If only one month crossed the line, you have a case for reversal at
+          your sub-division office.</li>
+          <li><strong>Is the MD plausible?</strong> Add up the wattage of appliances you actually
+          run together. A 1.5-ton inverter AC (~1.5–2 kW) + geyser (~2 kW) alone exceeds 3 kW. If
+          the printed MD is far above anything you could have drawn, ask for the meter's MD data
+          before accepting the revision.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>How to get your load reduced</h2>
+        <ol>
+          <li><strong>Apply for load reduction</strong> at your sub-division office or through
+          UPPCL's online consumer services (uppcl.org → load reduction/enhancement). It is a
+          standard, free-form request — you do not need a lawyer or an agent.</li>
+          <li><strong>Keep your demand inside the lower load first.</strong> Reduction is normally
+          sanctioned only if your recorded MD over recent months actually stays within the load you
+          are asking for — stagger heavy appliances (don't run the geyser and AC together) for a
+          couple of billing cycles before applying.</li>
+          <li><strong>If the enhancement itself was wrong</strong> (single spike, defective meter,
+          MD data doesn't match your appliances), file a written complaint at the sub-division and
+          escalate to the Consumer Grievance Redressal Forum if unresolved — keep copies of the
+          bills showing the MD history.</li>
+        </ol>
+        <p>Not sure whether your numbers justify a complaint? Upload your bill to our free
+        <a href="/bill-review/">expert Bill Review</a> and we'll check the load, MD and fixed-charge
+        lines for you.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>How to stop it happening again</h2>
+        <ul>
+          <li><strong>Know your big loads.</strong> Geyser, AC, iron, induction cooktop and pump are
+          the usual culprits — any two together can cross a 2 kW sanctioned load.</li>
+          <li><strong>Stagger, don't stack.</strong> MD is an average over a demand window, so
+          running heavy appliances one after another instead of together keeps recorded demand
+          low with zero lifestyle cost.</li>
+          <li><strong>Or accept the higher load.</strong> If you genuinely use 3–4 kW routinely,
+          the enhanced load is correct — an under-sanctioned connection risks penalties and is the
+          wrong thing to optimise. Budget the fixed charge with the
+          <a href="/?state=Uttar%20Pradesh#calculator">calculator</a> instead.</li>
+        </ul>
+      </section>`,
+    faqs: [
+      { q: 'Can UPPCL increase my sanctioned load without my permission?',
+        a: 'Yes. Under the UP Electricity Supply Code, if the demand recorded by your meter repeatedly exceeds your sanctioned load, the DISCOM can revise the load upward to the recorded demand without an application from you. The revised load appears directly on your bill.' },
+      { q: 'Why did my load increase after the smart meter was installed?',
+        a: 'Old domestic meters only counted units; smart meters also record Maximum Demand (MD). The demand you drew was probably always above your sanctioned load — running an AC and geyser together easily exceeds 2 kW — but it was only measurable, and therefore actionable, after the smart meter arrived.' },
+      { q: 'How do I reduce my sanctioned load in UP?',
+        a: 'Apply for load reduction at your sub-division office or through UPPCL’s online consumer services. Reduction is normally approved only if your recorded maximum demand over recent billing months stays within the lower load — so stagger heavy appliances for a couple of cycles before applying.' },
+      { q: 'Does a higher sanctioned load increase my bill even if my usage is the same?',
+        a: 'Yes. UP fixed charges are billed per kW of sanctioned load every month regardless of consumption, and a load above 1 kW also disqualifies you from the subsidised lifeline slab. Same units, higher bill.' },
+      { q: 'What is Maximum Demand (MD) on my electricity bill?',
+        a: 'MD is the highest average power (in kW) you drew in any demand-measurement window during the billing period, recorded by the meter and reset each cycle. It reflects how many appliances you ran simultaneously, not how many units you consumed overall.' },
+    ],
+
+    titleHi: 'मेरा स्वीकृत भार अचानक क्यों बढ़ गया? (UPPCL / यूपी)',
+    metaTitleHi: 'UPPCL ने स्वीकृत भार अपने आप बढ़ा दिया — क्यों, और कैसे घटाएँ',
+    descriptionHi: 'UPPCL ने बिना आवेदन आपका स्वीकृत भार क्यों बढ़ाया: स्मार्ट मीटर अधिकतम मांग (MD) दर्ज करता है, और यूपी सप्लाई कोड डिस्कॉम को भार उसी के बराबर संशोधित करने देता है। इसकी मासिक लागत, बिल कैसे जाँचें, और भार घटाने का आवेदन कैसे करें।',
+    introHi: `अगर आपके UPPCL बिल में स्वीकृत भार अचानक बढ़ा दिखे — 1 kW से 2 kW, या 2 kW से 4 kW —
+      तो आप अकेले नहीं हैं, और यह आमतौर पर गलती नहीं है। आपका नया <strong>स्मार्ट मीटर अधिकतम मांग
+      (MD) दर्ज करता है</strong>, और यूपी विद्युत आपूर्ति संहिता के तहत डिस्कॉम आपका स्वीकृत भार आपकी
+      वास्तविक खींची गई मांग के बराबर <em>बिना आपके आवेदन के</em> बढ़ा सकता है। यह गाइड बताती है कि
+      ऐसा क्यों होता है, इसकी हर महीने की कीमत क्या है, और एक बार की स्पाइक होने पर भार वापस कैसे घटवाएँ।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>छोटा जवाब: आपके स्मार्ट मीटर ने ऊँची मांग दर्ज की</h2>
+        <p>आपका पुराना मीटर सिर्फ़ यूनिटें गिनता था। <strong>स्मार्ट मीटर अधिकतम मांग (MD) भी दर्ज
+        करता है</strong> — बिलिंग माह में किसी भी डिमांड विंडो में आपके द्वारा खींची गई सबसे ऊँची औसत
+        बिजली। अगर यह दर्ज मांग आपके स्वीकृत भार से बार-बार ऊपर जाती है, तो यूपी विद्युत आपूर्ति संहिता
+        डिस्कॉम को आपका भार बढ़ा हुआ मानकर दर्ज मांग के बराबर संशोधित करने की अनुमति देती है — अपने आप,
+        बिल पर, आपके किसी आवेदन के बिना।</p>
+        <p>इसीलिए वृद्धि अचानक लगती है: आपके घर में मीटर के अलावा कुछ नहीं बदला। मांग शायद हमेशा से
+        थी — इन्वर्टर AC, गीज़र और प्रेस एक साथ चलाने पर आसानी से कुछ देर के लिए 3–4 kW खिंच जाता है —
+        बस स्मार्ट मीटर से पहले उसे कोई माप नहीं रहा था।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>ऊँचे स्वीकृत भार की कीमत</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>असर</th><th>बिल पर क्यों पड़ता है</th></tr></thead>
+          <tbody>
+            <tr><td><strong>हर महीने ऊँचा फिक्स्ड चार्ज</strong></td><td>यूपी में फिक्स्ड चार्ज <strong>स्वीकृत भार के प्रति kW</strong> पर लगता है, खपत हो या न हो। हर अतिरिक्त kW हर भविष्य के बिल में पूरा प्रति-kW फिक्स्ड चार्ज जोड़ देता है। आपके डिस्कॉम की वर्तमान दरें हमारे <a href="/hi/tariffs/uttar-pradesh/">यूपी टैरिफ पेज</a> पर हैं।</td></tr>
+            <tr><td><strong>लाइफलाइन दरों का नुकसान</strong></td><td>यूपी की लाइफलाइन (सब्सिडी वाली) घरेलू अनुसूची केवल <strong>1 kW तक</strong> के कम-खपत कनेक्शनों पर लागू है। भार 1 kW से 2 kW होते ही आप लाइफलाइन स्लैब से बाहर हो जाते हैं, भले ही खपत न बदली हो।</td></tr>
+            <tr><td><strong>व्यावसायिक उपभोक्ताओं के लिए ऊँची अनुसूची</strong></td><td>व्यावसायिक (LMV-2) कनेक्शन <strong>4 kW</strong> पार करते ही महँगी दर अनुसूची में चले जाते हैं — ऊँचा प्रति-kW फिक्स्ड चार्ज और तीखे ऊर्जा स्लैब।</td></tr>
+            <tr><td><strong>अतिरिक्त जमानत राशि</strong></td><td>सुरक्षा जमा भार और खपत से जुड़ी है, इसलिए भार बढ़ने के बाद डिस्कॉम एक बार की अतिरिक्त जमानत की मांग कर सकता है।</td></tr>
+          </tbody>
+        </table></div>
+        <p>अपने कनेक्शन पर सटीक रुपये का असर देखने के लिए अपनी यूनिटें
+        <a href="/?state=Uttar%20Pradesh#calculator">UPPCL बिल कैलकुलेटर</a> में दो बार डालें — एक बार
+        पुराने भार से, एक बार नए से — और कुल की तुलना करें।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>बिल जाँचें: क्या वृद्धि जायज़ थी?</h2>
+        <ol>
+          <li><strong>MD लाइन खोजें।</strong> स्मार्ट-मीटर बिलों पर दर्ज अधिकतम मांग ("MD" या "Max
+          Demand", kW में) स्वीकृत भार के साथ छपती है। पिछले कुछ बिलों में दोनों की तुलना करें।</li>
+          <li><strong>एक स्पाइक या पैटर्न?</strong> भार संशोधन उस मांग के लिए है जो स्वीकृत भार से
+          <em>बार-बार</em>, कई बिलिंग महीनों में ऊपर जाए — किसी एक त्योहार के दिन की स्पाइक के लिए नहीं।
+          अगर सिर्फ़ एक महीने में सीमा पार हुई, तो उपखंड कार्यालय में वापसी का मज़बूत आधार है।</li>
+          <li><strong>क्या MD विश्वसनीय है?</strong> जो उपकरण आप सच में साथ चलाते हैं उनकी वाट क्षमता
+          जोड़ें। 1.5 टन इन्वर्टर AC (~1.5–2 kW) + गीज़र (~2 kW) मिलकर ही 3 kW पार कर देते हैं। अगर छपा
+          MD आपकी किसी भी संभावित खपत से बहुत ऊपर है, तो संशोधन मानने से पहले मीटर का MD डेटा माँगें।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>भार वापस कैसे घटवाएँ</h2>
+        <ol>
+          <li><strong>भार घटाने का आवेदन करें</strong> — अपने उपखंड कार्यालय में या UPPCL की ऑनलाइन
+          उपभोक्ता सेवाओं (uppcl.org → load reduction/enhancement) से। यह एक सामान्य, निःशुल्क
+          आवेदन है — वकील या एजेंट की ज़रूरत नहीं।</li>
+          <li><strong>पहले अपनी मांग को कम भार के भीतर रखें।</strong> कमी आमतौर पर तभी मंज़ूर होती है
+          जब हाल के महीनों की दर्ज MD माँगे गए भार के भीतर रहे — आवेदन से पहले दो-एक बिलिंग चक्र भारी
+          उपकरण एक साथ न चलाएँ (गीज़र और AC साथ नहीं)।</li>
+          <li><strong>अगर वृद्धि ही गलत थी</strong> (एक स्पाइक, खराब मीटर, MD डेटा आपके उपकरणों से मेल
+          नहीं खाता), तो उपखंड में लिखित शिकायत दें और हल न होने पर उपभोक्ता शिकायत निवारण मंच तक ले
+          जाएँ — MD इतिहास दिखाने वाले बिलों की प्रतियाँ रखें।</li>
+        </ol>
+        <p>पक्का नहीं कि आपके आँकड़े शिकायत लायक़ हैं? अपना बिल हमारी मुफ़्त
+        <a href="/bill-review/">विशेषज्ञ बिल समीक्षा</a> में अपलोड करें — हम भार, MD और फिक्स्ड-चार्ज
+        लाइनें आपके लिए जाँच देंगे।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>दोबारा न हो, इसके लिए</h2>
+        <ul>
+          <li><strong>अपने बड़े लोड पहचानें।</strong> गीज़र, AC, प्रेस, इंडक्शन चूल्हा और पंप ही आम कारण
+          हैं — कोई भी दो साथ चलें तो 2 kW का स्वीकृत भार पार हो सकता है।</li>
+          <li><strong>एक साथ नहीं, बारी-बारी।</strong> MD एक डिमांड विंडो का औसत है, इसलिए भारी उपकरण
+          एक के बाद एक चलाने से दर्ज मांग कम रहती है — जीवनशैली पर कोई असर डाले बिना।</li>
+          <li><strong>या ऊँचा भार स्वीकार करें।</strong> अगर आप सच में नियमित 3–4 kW इस्तेमाल करते हैं,
+          तो बढ़ा हुआ भार सही है — कम स्वीकृत भार पर चलना जुर्माने का जोखिम है और गलत बचत है। फिक्स्ड
+          चार्ज का बजट <a href="/?state=Uttar%20Pradesh#calculator">कैलकुलेटर</a> से बनाएँ।</li>
+        </ul>
+      </section>`,
+    faqsHi: [
+      { q: 'क्या UPPCL मेरी अनुमति के बिना स्वीकृत भार बढ़ा सकता है?',
+        a: 'हाँ। यूपी विद्युत आपूर्ति संहिता के तहत, अगर मीटर द्वारा दर्ज मांग आपके स्वीकृत भार से बार-बार ऊपर जाती है, तो डिस्कॉम बिना आपके आवेदन के भार को दर्ज मांग के बराबर बढ़ा सकता है। संशोधित भार सीधे आपके बिल पर दिखता है।' },
+      { q: 'स्मार्ट मीटर लगने के बाद मेरा भार क्यों बढ़ा?',
+        a: 'पुराने घरेलू मीटर सिर्फ़ यूनिटें गिनते थे; स्मार्ट मीटर अधिकतम मांग (MD) भी दर्ज करता है। आपकी मांग शायद पहले से स्वीकृत भार के ऊपर थी — AC और गीज़र साथ चलाने पर ही 2 kW पार हो जाता है — पर स्मार्ट मीटर आने के बाद ही वह मापी जा सकी।' },
+      { q: 'यूपी में स्वीकृत भार कैसे घटवाएँ?',
+        a: 'उपखंड कार्यालय में या UPPCL की ऑनलाइन उपभोक्ता सेवाओं से भार घटाने का आवेदन करें। कमी आमतौर पर तभी मंज़ूर होती है जब हाल के बिलिंग महीनों की दर्ज अधिकतम मांग कम भार के भीतर रहे — इसलिए आवेदन से पहले कुछ चक्र भारी उपकरण बारी-बारी चलाएँ।' },
+      { q: 'क्या खपत वही रहने पर भी ऊँचा स्वीकृत भार बिल बढ़ाता है?',
+        a: 'हाँ। यूपी में फिक्स्ड चार्ज हर महीने स्वीकृत भार के प्रति kW पर लगता है, खपत चाहे जो हो, और 1 kW से ऊपर का भार आपको सब्सिडी वाले लाइफलाइन स्लैब से भी बाहर कर देता है। यूनिटें वही, बिल ज़्यादा।' },
+      { q: 'बिजली बिल पर अधिकतम मांग (MD) क्या है?',
+        a: 'MD बिलिंग अवधि में किसी भी डिमांड-मापन विंडो में आपकी खींची गई सबसे ऊँची औसत बिजली (kW में) है, जो मीटर दर्ज करता है और हर चक्र में रीसेट होती है। यह बताती है कि आपने कितने उपकरण एक साथ चलाए, कुल कितनी यूनिटें खर्च कीं यह नहीं।' },
+    ],
+  },
 ];

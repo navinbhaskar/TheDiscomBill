@@ -28,6 +28,7 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [How to Read Your BESCOM Electricity Bill](https://thediscombill.com/guides/how-to-read-bescom-bill/): A line-by-line guide to BESCOM (Bengaluru) electricity bills: LT-1 slabs starting at 30 units, duty-inclusive tariffs, sanctioned-load fixed charges, and how the Gruha Jyoti free-electricity scheme decides whether you pay at all
 - [How to Read Your TNEB / TANGEDCO Electricity Bill](https://thediscombill.com/guides/how-to-read-tneb-tangedco-bill/): A line-by-line guide to Tamil Nadu (TNEB/TANGEDCO) electricity bills: why billing is bimonthly, how the first 100 free units work, the 500-unit cliff that removes concessions, slab maths to 1000+ units and how to verify the total
 - [Solar Net Metering: How the Savings Actually Work](https://thediscombill.com/guides/solar-net-metering-savings/): How rooftop solar net metering credits work on an Indian electricity bill, why the same system saves different amounts in different states, how slab rates change the maths, sizing rules of thumb and what drives payback time
+- [Why Did My Sanctioned Load Suddenly Increase? (UPPCL / UP)](https://thediscombill.com/guides/uppcl-sanctioned-load-increased/): Why UPPCL suddenly increased your sanctioned load without an application: smart meters record Maximum Demand, and the UP Supply Code lets the DISCOM revise your load to match it
 
 ## Reference
 

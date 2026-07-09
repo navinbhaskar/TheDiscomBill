@@ -1,6 +1,6 @@
 {
   "/": {
-    "hash": "42566dc9ac2ac52e",
+    "hash": "4424a2c66a2bf493",
     "lastmod": "2026-07-09"
   },
   "/bill-review/": {
@@ -16,51 +16,55 @@
     "lastmod": "2026-07-09"
   },
   "/guides/": {
-    "hash": "37a9c04910ebbf31",
+    "hash": "edd3e012ca8e01a9",
     "lastmod": "2026-07-09"
   },
   "/guides/electricity-duty-explained/": {
-    "hash": "337ea10f975be19d",
+    "hash": "e8787156fc2ba126",
     "lastmod": "2026-07-09"
   },
   "/guides/how-fppa-fuel-surcharge-is-calculated/": {
-    "hash": "6651f6532e9768c6",
+    "hash": "8fc95aff4bbb4e18",
     "lastmod": "2026-07-09"
   },
   "/guides/how-to-read-bescom-bill/": {
-    "hash": "7b84dd4f3598c7ee",
+    "hash": "5410c55c9a2bd9ed",
     "lastmod": "2026-07-09"
   },
   "/guides/how-to-read-bses-delhi-bill/": {
-    "hash": "78ce31912174f58c",
+    "hash": "04bdd000893010e9",
     "lastmod": "2026-07-09"
   },
   "/guides/how-to-read-msedcl-bill/": {
-    "hash": "557b43c30b2eb85f",
+    "hash": "32c28d3a5402782a",
     "lastmod": "2026-07-09"
   },
   "/guides/how-to-read-tneb-tangedco-bill/": {
-    "hash": "9f603f19ad97adf3",
+    "hash": "a8b5f4354c845947",
     "lastmod": "2026-07-09"
   },
   "/guides/how-to-read-uppcl-bill/": {
-    "hash": "d8134bdb1a2a6741",
+    "hash": "d45105c321fc7fab",
     "lastmod": "2026-07-09"
   },
   "/guides/reduce-fixed-charges-sanctioned-load/": {
-    "hash": "396ea85b7930d615",
+    "hash": "6bfcc8697ffc0385",
     "lastmod": "2026-07-09"
   },
   "/guides/solar-net-metering-savings/": {
-    "hash": "9a57523149481be3",
+    "hash": "92047a83e151cdbb",
     "lastmod": "2026-07-09"
   },
   "/guides/tod-billing-explained/": {
-    "hash": "68e37d78ce833b5a",
+    "hash": "415eda69f79e196e",
+    "lastmod": "2026-07-09"
+  },
+  "/guides/uppcl-sanctioned-load-increased/": {
+    "hash": "9aae832e203603dd",
     "lastmod": "2026-07-09"
   },
   "/guides/why-did-my-electricity-bill-increase/": {
-    "hash": "f6b018fc0e72ba3d",
+    "hash": "a3778de714e692f1",
     "lastmod": "2026-07-09"
   },
   "/hi/glossary/": {
@@ -68,51 +72,55 @@
     "lastmod": "2026-07-09"
   },
   "/hi/guides/": {
-    "hash": "a47f1be66666a9ba",
+    "hash": "cc02486aa6c7904b",
     "lastmod": "2026-07-09"
   },
   "/hi/guides/electricity-duty-explained/": {
-    "hash": "283282f00ece591f",
+    "hash": "e67afd9f8354f86e",
     "lastmod": "2026-07-09"
   },
   "/hi/guides/how-fppa-fuel-surcharge-is-calculated/": {
-    "hash": "71078d52630f88f0",
+    "hash": "e38cad7c5f7c1454",
     "lastmod": "2026-07-09"
   },
   "/hi/guides/how-to-read-bescom-bill/": {
-    "hash": "fe500f3091cca88f",
+    "hash": "b8317ba36993ce69",
     "lastmod": "2026-07-09"
   },
   "/hi/guides/how-to-read-bses-delhi-bill/": {
-    "hash": "1eb085e5a09c7e38",
+    "hash": "2fb20b7088892dee",
     "lastmod": "2026-07-09"
   },
   "/hi/guides/how-to-read-msedcl-bill/": {
-    "hash": "b8860bbf7291b191",
+    "hash": "6919dac30277f9ef",
     "lastmod": "2026-07-09"
   },
   "/hi/guides/how-to-read-tneb-tangedco-bill/": {
-    "hash": "5282285ad2a20085",
+    "hash": "0c78b4821975d45c",
     "lastmod": "2026-07-09"
   },
   "/hi/guides/how-to-read-uppcl-bill/": {
-    "hash": "0ee87d70188ac4fe",
+    "hash": "a4663f43742816a2",
     "lastmod": "2026-07-09"
   },
   "/hi/guides/reduce-fixed-charges-sanctioned-load/": {
-    "hash": "dca8e4ebd2bfb9d5",
+    "hash": "f2a210daceb59688",
     "lastmod": "2026-07-09"
   },
   "/hi/guides/solar-net-metering-savings/": {
-    "hash": "12c4fad052daccdd",
+    "hash": "4c86dfb7c1ced859",
     "lastmod": "2026-07-09"
   },
   "/hi/guides/tod-billing-explained/": {
-    "hash": "e3d91ba23efe12bc",
+    "hash": "bfa43988032f48c8",
+    "lastmod": "2026-07-09"
+  },
+  "/hi/guides/uppcl-sanctioned-load-increased/": {
+    "hash": "22b90364f7a4c4cf",
     "lastmod": "2026-07-09"
   },
   "/hi/guides/why-did-my-electricity-bill-increase/": {
-    "hash": "4d6cf2df1f5fbb7a",
+    "hash": "5d838e207341e558",
     "lastmod": "2026-07-09"
   },
   "/hi/tariffs/andhra-pradesh/": {
@@ -472,23 +480,23 @@
     "lastmod": "2026-07-09"
   },
   "/hi/tariffs/uttar-pradesh/dvvnl/": {
-    "hash": "fecffcdf1fe55927",
+    "hash": "602608dcc6d57cda",
     "lastmod": "2026-07-09"
   },
   "/hi/tariffs/uttar-pradesh/kesco/": {
-    "hash": "3138bf1c165c86a8",
+    "hash": "51c1a04e68c88c89",
     "lastmod": "2026-07-09"
   },
   "/hi/tariffs/uttar-pradesh/mvvnl/": {
-    "hash": "b9e2bf4f522e368b",
+    "hash": "a185d35ebe7cf972",
     "lastmod": "2026-07-09"
   },
   "/hi/tariffs/uttar-pradesh/puvvnl/": {
-    "hash": "f5aad55a4ca866a3",
+    "hash": "4f189c217c5e4691",
     "lastmod": "2026-07-09"
   },
   "/hi/tariffs/uttar-pradesh/pvvnl/": {
-    "hash": "def3650e908b26c9",
+    "hash": "3024606df13d7a87",
     "lastmod": "2026-07-09"
   },
   "/hi/tariffs/uttarakhand/": {
@@ -888,23 +896,23 @@
     "lastmod": "2026-07-09"
   },
   "/tariffs/uttar-pradesh/dvvnl/": {
-    "hash": "b66a5135478d545e",
+    "hash": "127f6b802238dd31",
     "lastmod": "2026-07-09"
   },
   "/tariffs/uttar-pradesh/kesco/": {
-    "hash": "83bd98d280a94f10",
+    "hash": "9ee9a4d8d7bba7ad",
     "lastmod": "2026-07-09"
   },
   "/tariffs/uttar-pradesh/mvvnl/": {
-    "hash": "561f59296d8d78e7",
+    "hash": "7aab9d7d9dadf792",
     "lastmod": "2026-07-09"
   },
   "/tariffs/uttar-pradesh/puvvnl/": {
-    "hash": "1dd4697bc444493a",
+    "hash": "7c89bc1cb3212d89",
     "lastmod": "2026-07-09"
   },
   "/tariffs/uttar-pradesh/pvvnl/": {
-    "hash": "e7c7116b759af776",
+    "hash": "28bfaa338329f7a7",
     "lastmod": "2026-07-09"
   },
   "/tariffs/uttarakhand/": {
