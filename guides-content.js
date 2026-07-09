@@ -497,28 +497,73 @@ export const GUIDES = [
     sections: `
       <section class="seo-section">
         <h2>1. Why is this on my bill?</h2>
-        <p>Your main electricity rates are fixed only once a year. However, the cost to produce electricity changes daily based on coal and market prices. The FPPA allows your electricity provider to adjust your bill slightly each month to cover these changing costs without having to change the main electricity rate.</p>
+        <p>Think of the fuel surcharge airlines add to a ticket when jet fuel gets costly — FPPA is
+        the same idea for electricity. Your main electricity rates are fixed once a year, but the
+        cost of the coal and gas used to make your power changes every month. FPPA is the small
+        monthly adjustment that covers this gap — up when fuel gets costlier, and <strong>down (a
+        discount!) when it gets cheaper</strong>.</p>
       </section>
+
       <section class="seo-section">
-        <h2>2. How it is calculated (Two Ways)</h2>
-        <p>Depending on your state, your electricity company calculates this in one of two ways:</p>
+        <h2>2. Where to find it on your bill</h2>
+        <p>Look in the charges table, just below the energy and fixed charges. The name varies by
+        state — <strong>FPPA, FPPCA, FPPAS, FAC or PPAC</strong> — but it is always the same thing:</p>
+        <figure class="guide-fig">
+          <div class="gbill" role="img" aria-label="Sample electricity bill with the Fuel Surcharge (FPPA) line highlighted">
+            <div class="gbill-head">ELECTRICITY BILL <span>450 units · 5 kW</span></div>
+            <div class="gbill-row"><span>Energy Charge <small>450 units × ₹6.50</small></span><b>₹2,925.00</b></div>
+            <div class="gbill-row"><span>Fixed Charge <small>5 kW × ₹120</small></span><b>₹600.00</b></div>
+            <div class="gbill-row is-hl"><span>Fuel Surcharge (FPPA) <small>5% of ₹3,525</small></span><span class="gbill-tag">THIS LINE</span><b>₹176.25</b></div>
+            <div class="gbill-row"><span>Electricity Duty <small>5% of ₹3,701.25</small></span><b>₹185.06</b></div>
+            <div class="gbill-total"><span>Total Bill</span><span>₹3,886.31</span></div>
+          </div>
+          <figcaption>A sample bill. Notice the order: FPPA is added first, and electricity duty is
+          then charged on the total <em>including</em> FPPA.</figcaption>
+        </figure>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. How it is calculated — two ways</h2>
+        <p>Depending on your state, your electricity company uses one of two methods:</p>
+        <div class="method-cards">
+          <div class="method-card">
+            <h3><span class="m-badge">1</span>Per unit</h3>
+            <p>A few paise added (or subtracted) for <strong>every unit you used</strong>. Common in
+            Maharashtra, MP, Rajasthan and most states.</p>
+            <div class="method-example"><small>Example</small>200 units × ₹0.50 = <strong>₹100</strong> extra that month</div>
+          </div>
+          <div class="method-card">
+            <h3><span class="m-badge">2</span>Percentage</h3>
+            <p>A small percentage added <strong>on top of your main charges</strong>. Used in UP
+            (FPPA) and Delhi (PPAC).</p>
+            <div class="method-example"><small>Example</small>₹3,525 charges × 5% = <strong>₹176.25</strong> extra that month</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. Three things worth knowing</h2>
         <ul>
-          <li><strong>Method 1 (Per Unit):</strong> They simply add or subtract a few paise for every unit (kWh) of electricity you use. If power was cheap to produce that month, you get a discount on every unit!</li>
-          <li><strong>Method 2 (Percentage):</strong> States like UP and Delhi add a small percentage (for example, 5%) on top of your main electricity charges.</li>
+          <li><strong>It changes every month or quarter.</strong> So don't compare this line with
+          last month's — compare it with your electricity company's officially announced rate.</li>
+          <li><strong>It can be negative.</strong> If power was cheap to produce, the line becomes a
+          credit and your bill goes <em>down</em>. A minus sign here is good news, not an error.</li>
+          <li><strong>Tax is charged on it too.</strong> As the sample bill above shows, electricity
+          duty is calculated <em>after</em> FPPA is added — so a higher FPPA also nudges your duty up
+          slightly.</li>
         </ul>
       </section>
+
       <section class="seo-section">
-        <h2>3. It is added before taxes</h2>
-        <p>It is important to know that this surcharge is added to your bill <em>before</em> government taxes (like Electricity Duty) are calculated. Our <a href="/#calculator">bill calculator</a> automatically handles this math for you.</p>
-      </section>
-      <section class="seo-section">
-        <h2>4. How to check it yourself</h2>
-        <img src="/fppa-bill-highlight.png" alt="A sample electricity bill with the FPPA line highlighted in yellow" loading="lazy" style="max-width:350px; width:100%; display:block; border-radius:8px; margin: 1.5rem auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <h2>5. Check it yourself in 3 steps</h2>
         <ol>
-          <li>Look for the line named FPPA, FPPCA, FAC, or PPAC on your bill.</li>
-          <li>Check your electricity company's official website to find the official rate for that specific month.</li>
-          <li>Put your details into our <a href="/#calculator">calculator</a> to instantly verify if your bill's total matches up!</li>
+          <li>Find the FPPA / FPPCA / FAC / PPAC line on your bill (see the sample above).</li>
+          <li>Look up this month's official rate on your electricity company's website.</li>
+          <li>Enter your units in our <a href="/#calculator">bill calculator</a> — it applies the
+          right method for your state automatically and shows whether your total matches.</li>
         </ol>
+        <p class="seo-note">Something doesn't add up? Upload your bill to our free
+        <a href="/bill-review/">expert Bill Review</a> and we'll check the FPPA line for you.</p>
       </section>`,
     faqs: [
       { q: 'What is FPPA on an electricity bill?',
@@ -538,28 +583,71 @@ export const GUIDES = [
     sectionsHi: `
       <section class="seo-section">
         <h2>1. यह मेरे बिल में क्यों है?</h2>
-        <p>आपकी मुख्य बिजली दरें साल में केवल एक बार तय होती हैं। लेकिन, कोयले और बाज़ार की कीमतों के आधार पर बिजली बनाने का खर्च रोज़ बदलता है। FPPA आपकी बिजली कंपनी को मुख्य दर बदले बिना इन बदलती लागतों को पूरा करने के लिए आपके बिल को हर महीने थोड़ा एडजस्ट करने की अनुमति देता है।</p>
+        <p>जैसे हवाई जहाज़ का ईंधन महँगा होने पर एयरलाइन टिकट में फ्यूल सरचार्ज जोड़ती है — FPPA
+        बिजली के लिए वही चीज़ है। आपकी मुख्य बिजली दरें साल में एक बार तय होती हैं, पर आपकी बिजली
+        बनाने में लगने वाले कोयले और गैस की कीमत हर महीने बदलती है। FPPA वही छोटा मासिक समायोजन है —
+        ईंधन महँगा हो तो ऊपर, और <strong>सस्ता हो तो नीचे (यानी छूट!)</strong>।</p>
       </section>
+
       <section class="seo-section">
-        <h2>2. इसकी गणना कैसे होती है (दो तरीके)</h2>
-        <p>आपके राज्य के आधार पर, बिजली कंपनी इसकी गणना दो में से किसी एक तरीके से करती है:</p>
+        <h2>2. बिल पर यह कहाँ मिलेगा</h2>
+        <p>शुल्क तालिका में, ऊर्जा और फिक्स्ड चार्ज के ठीक नीचे देखें। नाम राज्य के अनुसार बदलता है —
+        <strong>FPPA, FPPCA, FPPAS, FAC या PPAC</strong> — पर चीज़ हमेशा यही है:</p>
+        <figure class="guide-fig">
+          <div class="gbill" role="img" aria-label="नमूना बिजली बिल जिसमें ईंधन अधिभार (FPPA) लाइन हाइलाइट की गई है">
+            <div class="gbill-head">बिजली बिल <span>450 यूनिट · 5 kW</span></div>
+            <div class="gbill-row"><span>ऊर्जा शुल्क <small>450 यूनिट × ₹6.50</small></span><b>₹2,925.00</b></div>
+            <div class="gbill-row"><span>फिक्स्ड चार्ज <small>5 kW × ₹120</small></span><b>₹600.00</b></div>
+            <div class="gbill-row is-hl"><span>ईंधन अधिभार (FPPA) <small>₹3,525 का 5%</small></span><span class="gbill-tag">यही लाइन</span><b>₹176.25</b></div>
+            <div class="gbill-row"><span>बिजली शुल्क (ED) <small>₹3,701.25 का 5%</small></span><b>₹185.06</b></div>
+            <div class="gbill-total"><span>कुल बिल</span><span>₹3,886.31</span></div>
+          </div>
+          <figcaption>एक नमूना बिल। क्रम पर ध्यान दें: पहले FPPA जुड़ता है, और बिजली शुल्क फिर FPPA
+          <em>समेत</em> कुल पर लगता है।</figcaption>
+        </figure>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. इसकी गणना कैसे होती है — दो तरीके</h2>
+        <p>आपके राज्य के आधार पर, बिजली कंपनी दो में से एक तरीका इस्तेमाल करती है:</p>
+        <div class="method-cards">
+          <div class="method-card">
+            <h3><span class="m-badge">1</span>प्रति यूनिट</h3>
+            <p>आपकी <strong>हर इस्तेमाल की गई यूनिट</strong> पर कुछ पैसे जुड़ते (या घटते) हैं।
+            महाराष्ट्र, एमपी, राजस्थान समेत ज़्यादातर राज्यों में यही तरीका है।</p>
+            <div class="method-example"><small>उदाहरण</small>200 यूनिट × ₹0.50 = उस महीने <strong>₹100</strong> अतिरिक्त</div>
+          </div>
+          <div class="method-card">
+            <h3><span class="m-badge">2</span>प्रतिशत</h3>
+            <p>आपके <strong>मुख्य शुल्कों के ऊपर</strong> एक छोटा प्रतिशत जुड़ता है। यूपी (FPPA)
+            और दिल्ली (PPAC) में यही तरीका है।</p>
+            <div class="method-example"><small>उदाहरण</small>₹3,525 शुल्क × 5% = उस महीने <strong>₹176.25</strong> अतिरिक्त</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. तीन बातें जो जाननी चाहिए</h2>
         <ul>
-          <li><strong>तरीका 1 (प्रति यूनिट):</strong> वे आपके द्वारा इस्तेमाल की गई हर यूनिट (kWh) के लिए कुछ पैसे जोड़ते या घटाते हैं। यदि उस महीने बिजली सस्ती बनी थी, तो आपको हर यूनिट पर छूट मिलती है!</li>
-          <li><strong>तरीका 2 (प्रतिशत):</strong> यूपी और दिल्ली जैसे राज्य आपके मुख्य बिजली शुल्क पर एक छोटा प्रतिशत (जैसे 5%) जोड़ देते हैं।</li>
+          <li><strong>यह हर महीने या तिमाही बदलता है।</strong> इसलिए इस लाइन की तुलना पिछले महीने से
+          नहीं — अपनी बिजली कंपनी की आधिकारिक घोषित दर से करें।</li>
+          <li><strong>यह ऋणात्मक (माइनस) भी हो सकता है।</strong> बिजली सस्ती बनी हो तो यह लाइन क्रेडिट
+          बन जाती है और आपका बिल <em>घटता</em> है। यहाँ माइनस का निशान अच्छी खबर है, गलती नहीं।</li>
+          <li><strong>इस पर टैक्स भी लगता है।</strong> जैसा ऊपर नमूना बिल दिखाता है, बिजली शुल्क FPPA
+          जुड़ने के <em>बाद</em> निकलता है — इसलिए ज़्यादा FPPA आपके शुल्क को भी थोड़ा बढ़ा देता है।</li>
         </ul>
       </section>
+
       <section class="seo-section">
-        <h2>3. यह टैक्स से पहले जुड़ता है</h2>
-        <p>यह जानना ज़रूरी है कि यह शुल्क आपके बिल में सरकारी टैक्स (जैसे इलेक्ट्रिसिटी ड्यूटी) लगने से <em>पहले</em> जोड़ा जाता है। हमारा <a href="/#calculator">बिल कैलकुलेटर</a> स्वचालित रूप से आपके लिए यह सारा हिसाब कर देता है।</p>
-      </section>
-      <section class="seo-section">
-        <h2>4. इसे खुद कैसे चेक करें</h2>
-        <img src="/fppa-bill-highlight-hi.png" alt="A sample electricity bill with the FPPA line highlighted in yellow" loading="lazy" style="max-width:350px; width:100%; display:block; border-radius:8px; margin: 1.5rem auto; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <h2>5. तीन कदमों में खुद जाँचें</h2>
         <ol>
-          <li>अपने बिल पर FPPA, FPPCA, FAC या PPAC नाम की लाइन खोजें।</li>
-          <li>उस विशिष्ट महीने की आधिकारिक दर जानने के लिए अपनी बिजली कंपनी की आधिकारिक वेबसाइट देखें।</li>
-          <li>यह पक्का करने के लिए कि आपके बिल का कुल योग सही है या नहीं, अपना विवरण हमारे <a href="/#calculator">कैलकुलेटर</a> में डालें!</li>
+          <li>अपने बिल पर FPPA / FPPCA / FAC / PPAC लाइन खोजें (ऊपर का नमूना देखें)।</li>
+          <li>इस महीने की आधिकारिक दर अपनी बिजली कंपनी की वेबसाइट पर देखें।</li>
+          <li>अपनी यूनिटें हमारे <a href="/#calculator">बिल कैलकुलेटर</a> में डालें — यह आपके राज्य का
+          सही तरीका अपने आप लागू करता है और दिखाता है कि आपका कुल मिलता है या नहीं।</li>
         </ol>
+        <p class="seo-note">हिसाब नहीं मिल रहा? अपना बिल हमारी मुफ़्त
+        <a href="/bill-review/">विशेषज्ञ बिल समीक्षा</a> में अपलोड करें — हम FPPA लाइन आपके लिए जाँच देंगे।</p>
       </section>`,
     faqsHi: [
       { q: 'बिजली बिल पर FPPA क्या है?',
