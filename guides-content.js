@@ -493,66 +493,31 @@ export const GUIDES = [
     metaTitle: 'FPPA / Fuel Surcharge on Electricity Bills — How It Is Calculated',
     description: 'What the FPPA / FPPCA / FPPAS / PPAC line on an Indian electricity bill is, the two ways DISCOMs calculate it (per-unit and percentage), why it changes every month, why it can be negative, and how to verify the amount yourself.',
     minutes: 6,
-    intro: `FPPA — the Fuel and Power Purchase Adjustment, also printed as FPPCA, FPPAS, FAC or
-      (in Delhi) PPAC — recovers the difference between what your DISCOM <em>actually</em> paid for
-      power and what the tariff order <em>assumed</em> it would pay. It is the one line on your bill
-      that changes even when your consumption and the tariff don't, and it can be a charge
-      <em>or a credit</em>.`,
+    intro: `FPPA (Fuel Surcharge) is a line on your electricity bill that changes every month. It covers the changing costs of coal and gas used to generate your electricity. Sometimes it's an extra charge, and sometimes you actually get a discount! It might also be called FPPCA, FAC, or PPAC depending on where you live.`,
     sections: `
       <section class="seo-section">
-        <h2>Why this line exists</h2>
-        <p>Your energy rate is fixed once a year in the tariff order, but the DISCOM's cost of buying
-        power moves every month with coal, gas and market prices. Regulators let DISCOMs pass that
-        difference through automatically — without waiting a year — via the fuel adjustment
-        surcharge. It is trued up annually, so over-recovery in one period comes back as a credit
-        later.</p>
+        <h2>1. Why is this on my bill?</h2>
+        <p>Your main electricity rates are fixed only once a year. However, the cost to produce electricity changes daily based on coal and market prices. The FPPA allows your electricity provider to adjust your bill slightly each month to cover these changing costs without having to change the main electricity rate.</p>
       </section>
       <section class="seo-section">
-        <h2>Method 1 — per-unit (₹/unit)</h2>
-        <p>The traditional method prices the gap directly:</p>
-        <p><strong>FPPA per unit = APPC − BPPC</strong>, and your surcharge =
-        that rate × units consumed.</p>
+        <h2>2. How it is calculated (Two Ways)</h2>
+        <p>Depending on your state, your electricity company calculates this in one of two ways:</p>
         <ul>
-          <li><strong>APPC</strong> — actual weighted-average power purchase cost per unit for the
-          month (actual cost ÷ actual units purchased from approved sources).</li>
-          <li><strong>BPPC</strong> — the base cost per unit approved in the tariff order for that
-          month.</li>
+          <li><strong>Method 1 (Per Unit):</strong> They simply add or subtract a few paise for every unit (kWh) of electricity you use. If power was cheap to produce that month, you get a discount on every unit!</li>
+          <li><strong>Method 2 (Percentage):</strong> States like UP and Delhi add a small percentage (for example, 5%) on top of your main electricity charges.</li>
         </ul>
-        <p>If the DISCOM bought power cheaper than approved, APPC &lt; BPPC and the line turns
-        negative — a rebate on every unit.</p>
       </section>
       <section class="seo-section">
-        <h2>Method 2 — percentage of the bill</h2>
-        <p>Several states now levy it as a percentage instead. Uttar Pradesh's framework (UPERC MYT
-        Regulations, 2025) is a clear example:</p>
-        <ul>
-          <li>The surcharge is a <strong>percentage of energy charge + fixed/demand charge</strong>,
-          uniform across consumer categories.</li>
-          <li>It runs with a <strong>3-month lag</strong>: this month's percentage recovers the cost
-          gap from three months ago.</li>
-          <li>It is <strong>capped per billing cycle</strong> (10% in UP); anything above the cap
-          carries forward — which is why a capped month is often followed by a credit month.</li>
-        </ul>
-        <p>Delhi's <strong>PPAC</strong> works the same way — a percentage on energy + fixed charges,
-        revised by DERC and different for each DISCOM (BRPL, BYPL, Tata Power-DDL).</p>
+        <h2>3. It is added before taxes</h2>
+        <p>It is important to know that this surcharge is added to your bill <em>before</em> government taxes (like Electricity Duty) are calculated. Our <a href="/#calculator">bill calculator</a> automatically handles this math for you.</p>
       </section>
       <section class="seo-section">
-        <h2>Where it sits in the bill maths</h2>
-        <p>Order matters: FPPA is added to your energy + fixed charges <em>before</em> electricity
-        duty is applied, so the duty percentage compounds on top of the surcharge. Our
-        <a href="/#calculator">bill calculator</a> applies exactly this ordering, and can auto-fill
-        the notified FPPA rate for supported states and billing months.</p>
-      </section>
-      <section class="seo-section">
-        <h2>How to verify the FPPA on your bill</h2>
+        <h2>4. How to check it yourself</h2>
+        <img src="/fppa-bill-highlight.png" alt="A sample electricity bill with the FPPA line highlighted in yellow" loading="lazy" style="max-width:100%; border-radius:8px; margin: 1rem 0;">
         <ol>
-          <li>Find the line — FPPA / FPPCA / FPPAS / FAC / PPAC, printed either as ₹/unit or %.</li>
-          <li>Check your DISCOM's notice board or website for the notified rate for your
-          <em>billing month</em> (not the payment month).</li>
-          <li>Recompute: units × rate (per-unit method) or rate% × (energy + fixed) (percentage
-          method).</li>
-          <li>Cross-check the whole bill in the <a href="/#calculator">calculator</a> — enter the
-          FPPA from your bill and compare totals line by line.</li>
+          <li>Look for the line named FPPA, FPPCA, FAC, or PPAC on your bill.</li>
+          <li>Check your electricity company's official website to find the official rate for that specific month.</li>
+          <li>Put your details into our <a href="/#calculator">calculator</a> to instantly verify if your bill's total matches up!</li>
         </ol>
       </section>`,
     faqs: [
@@ -569,62 +534,31 @@ export const GUIDES = [
     titleHi: 'आपके बिजली बिल पर FPPA (ईंधन अधिभार) कैसे निकाला जाता है',
     metaTitleHi: 'बिजली बिल पर FPPA / ईंधन अधिभार — यह कैसे गणना होता है',
     descriptionHi: 'भारतीय बिजली बिल पर FPPA / FPPCA / FPPAS / PPAC लाइन क्या है, डिस्कॉम इसे किन दो तरीकों (प्रति-यूनिट और प्रतिशत) से निकालते हैं, यह हर महीने क्यों बदलता है, ऋणात्मक क्यों हो सकता है, और राशि खुद कैसे जाँचें।',
-    introHi: `FPPA — Fuel and Power Purchase Adjustment, जो FPPCA, FPPAS, FAC या (दिल्ली में) PPAC के
-      रूप में भी छपता है — आपके डिस्कॉम ने बिजली के लिए <em>वास्तव में</em> जो चुकाया और टैरिफ आदेश ने जो
-      <em>मान लिया था</em> कि वह चुकाएगा, उस अंतर की वसूली करता है। यह आपके बिल की वही एक लाइन है जो आपकी
-      खपत और टैरिफ न बदलने पर भी बदलती है, और यह शुल्क <em>या क्रेडिट</em> दोनों हो सकती है।`,
+    introHi: `FPPA (ईंधन अधिभार) आपके बिजली बिल की एक ऐसी लाइन है जो हर महीने बदलती है। बिजली बनाने में इस्तेमाल होने वाले कोयले और गैस की कीमतों में होने वाले बदलाव की भरपाई इसी से होती है। कभी-कभी यह एक अतिरिक्त शुल्क होता है, और कभी-कभी आपको इसमें छूट (डिस्काउंट) भी मिलती है! आपके राज्य के आधार पर इसे FPPCA, FAC या PPAC भी कहा जा सकता है।`,
     sectionsHi: `
       <section class="seo-section">
-        <h2>यह लाइन क्यों है</h2>
-        <p>आपकी ऊर्जा दर साल में एक बार टैरिफ आदेश में तय होती है, पर डिस्कॉम की बिजली-खरीद लागत कोयले, गैस
-        और बाज़ार भावों के साथ हर महीने बदलती है। नियामक डिस्कॉम को वह अंतर — पूरे साल इंतज़ार किए बिना —
-        ईंधन समायोजन अधिभार के ज़रिए अपने-आप आगे पहुँचाने देते हैं। इसका सालाना ट्रू-अप होता है, इसलिए एक अवधि
-        की अधिक-वसूली बाद में क्रेडिट बनकर लौटती है।</p>
+        <h2>1. यह मेरे बिल में क्यों है?</h2>
+        <p>आपकी मुख्य बिजली दरें साल में केवल एक बार तय होती हैं। लेकिन, कोयले और बाज़ार की कीमतों के आधार पर बिजली बनाने का खर्च रोज़ बदलता है। FPPA आपकी बिजली कंपनी को मुख्य दर बदले बिना इन बदलती लागतों को पूरा करने के लिए आपके बिल को हर महीने थोड़ा एडजस्ट करने की अनुमति देता है।</p>
       </section>
       <section class="seo-section">
-        <h2>तरीका 1 — प्रति-यूनिट (₹/यूनिट)</h2>
-        <p>पारंपरिक तरीका अंतर को सीधे कीमत देता है:</p>
-        <p><strong>FPPA प्रति यूनिट = APPC − BPPC</strong>, और आपका अधिभार =
-        वह दर × खपत की गई यूनिटें।</p>
+        <h2>2. इसकी गणना कैसे होती है (दो तरीके)</h2>
+        <p>आपके राज्य के आधार पर, बिजली कंपनी इसकी गणना दो में से किसी एक तरीके से करती है:</p>
         <ul>
-          <li><strong>APPC</strong> — महीने की वास्तविक भारित-औसत बिजली-खरीद लागत प्रति यूनिट (वास्तविक
-          लागत ÷ स्वीकृत स्रोतों से खरीदी वास्तविक यूनिटें)।</li>
-          <li><strong>BPPC</strong> — उस महीने के लिए टैरिफ आदेश में स्वीकृत आधार लागत प्रति यूनिट।</li>
+          <li><strong>तरीका 1 (प्रति यूनिट):</strong> वे आपके द्वारा इस्तेमाल की गई हर यूनिट (kWh) के लिए कुछ पैसे जोड़ते या घटाते हैं। यदि उस महीने बिजली सस्ती बनी थी, तो आपको हर यूनिट पर छूट मिलती है!</li>
+          <li><strong>तरीका 2 (प्रतिशत):</strong> यूपी और दिल्ली जैसे राज्य आपके मुख्य बिजली शुल्क पर एक छोटा प्रतिशत (जैसे 5%) जोड़ देते हैं।</li>
         </ul>
-        <p>अगर डिस्कॉम ने स्वीकृत से सस्ती बिजली खरीदी, तो APPC &lt; BPPC और यह लाइन ऋणात्मक हो जाती है —
-        हर यूनिट पर छूट।</p>
       </section>
       <section class="seo-section">
-        <h2>तरीका 2 — बिल का प्रतिशत</h2>
-        <p>कई राज्य अब इसे प्रतिशत के रूप में लगाते हैं। उत्तर प्रदेश का ढाँचा (UPERC MYT विनियम, 2025)
-        इसका स्पष्ट उदाहरण है:</p>
-        <ul>
-          <li>अधिभार <strong>ऊर्जा शुल्क + फिक्स्ड/डिमांड चार्ज का प्रतिशत</strong> होता है, सभी उपभोक्ता
-          श्रेणियों में एक समान।</li>
-          <li>यह <strong>3-महीने के अंतराल</strong> से चलता है: इस महीने का प्रतिशत तीन महीने पहले के लागत
-          अंतर की वसूली करता है।</li>
-          <li>यह <strong>प्रति बिलिंग चक्र सीमित</strong> है (यूपी में 10%); सीमा से ऊपर जो भी हो वह आगे
-          बढ़ता है — इसीलिए एक कैप वाले महीने के बाद अक्सर क्रेडिट वाला महीना आता है।</li>
-        </ul>
-        <p>दिल्ली का <strong>PPAC</strong> भी इसी तरह काम करता है — ऊर्जा + फिक्स्ड शुल्क पर एक प्रतिशत,
-        DERC द्वारा संशोधित और हर डिस्कॉम (BRPL, BYPL, Tata Power-DDL) के लिए अलग।</p>
+        <h2>3. यह टैक्स से पहले जुड़ता है</h2>
+        <p>यह जानना ज़रूरी है कि यह शुल्क आपके बिल में सरकारी टैक्स (जैसे इलेक्ट्रिसिटी ड्यूटी) लगने से <em>पहले</em> जोड़ा जाता है। हमारा <a href="/#calculator">बिल कैलकुलेटर</a> स्वचालित रूप से आपके लिए यह सारा हिसाब कर देता है।</p>
       </section>
       <section class="seo-section">
-        <h2>बिल की गणित में यह कहाँ बैठता है</h2>
-        <p>क्रम मायने रखता है: FPPA आपके ऊर्जा + फिक्स्ड शुल्क में बिजली शुल्क लगने से <em>पहले</em> जुड़ता
-        है, इसलिए शुल्क प्रतिशत अधिभार के ऊपर लगकर बढ़ जाता है। हमारा
-        <a href="/#calculator">बिल कैलकुलेटर</a> ठीक यही क्रम लागू करता है, और समर्थित राज्यों व बिलिंग
-        महीनों के लिए अधिसूचित FPPA दर अपने-आप भर सकता है।</p>
-      </section>
-      <section class="seo-section">
-        <h2>अपने बिल पर FPPA कैसे जाँचें</h2>
+        <h2>4. इसे खुद कैसे चेक करें</h2>
+        <img src="/fppa-bill-highlight.png" alt="A sample electricity bill with the FPPA line highlighted in yellow" loading="lazy" style="max-width:100%; border-radius:8px; margin: 1rem 0;">
         <ol>
-          <li>लाइन ढूँढें — FPPA / FPPCA / FPPAS / FAC / PPAC, ₹/यूनिट या % में छपी।</li>
-          <li>अपने <em>बिलिंग महीने</em> (भुगतान महीने का नहीं) की अधिसूचित दर के लिए डिस्कॉम के सूचना बोर्ड
-          या वेबसाइट देखें।</li>
-          <li>दोबारा निकालें: यूनिट × दर (प्रति-यूनिट तरीका) या दर% × (ऊर्जा + फिक्स्ड) (प्रतिशत तरीका)।</li>
-          <li>पूरे बिल की जाँच <a href="/#calculator">कैलकुलेटर</a> में करें — अपने बिल से FPPA डालें और
-          कुल राशि की लाइन-दर-लाइन तुलना करें।</li>
+          <li>अपने बिल पर FPPA, FPPCA, FAC या PPAC नाम की लाइन खोजें।</li>
+          <li>उस विशिष्ट महीने की आधिकारिक दर जानने के लिए अपनी बिजली कंपनी की आधिकारिक वेबसाइट देखें।</li>
+          <li>यह पक्का करने के लिए कि आपके बिल का कुल योग सही है या नहीं, अपना विवरण हमारे <a href="/#calculator">कैलकुलेटर</a> में डालें!</li>
         </ol>
       </section>`,
     faqsHi: [
