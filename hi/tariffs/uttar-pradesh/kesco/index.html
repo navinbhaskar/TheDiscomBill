@@ -10,13 +10,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1d4ed8">
   <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="apple-touch-icon" href="/icon.svg">
+  <link rel="apple-touch-icon" href="/icon-192.png">
   <script>
     (function () {
       document.documentElement.classList.add('js');
       try {
         var t = localStorage.getItem('theme');
-        if (t !== 'dark' && t !== 'light') t = 'light';
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         document.documentElement.dataset.theme = t;
       } catch (e) {}
       try { localStorage.setItem('lang', 'hi'); } catch (e) {}
@@ -60,7 +60,7 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/tariffs/uttar-pradesh/kesco/","name":"KESCO (UPPCL) बिजली बिल कैलकुलेटर 2025-26 — टैरिफ","description":"KESCO (UPPCL) (Kanpur Electricity Supply Company Ltd.) का बिजली बिल 2025-26 के लिए निकालें — Kanpur city and district। स्लैब दरें, फिक्स्ड चार्ज, FPPA व शुल्क। घरेलू दर ₹3/यूनिट से। मुफ़्त, बिना साइन-अप।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-07-09"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/tariffs/uttar-pradesh/kesco/","name":"KESCO (UPPCL) बिजली बिल कैलकुलेटर 2025-26 — टैरिफ","description":"KESCO (UPPCL) (Kanpur Electricity Supply Company Ltd.) का बिजली बिल 2025-26 के लिए निकालें — Kanpur city and district। स्लैब दरें, फिक्स्ड चार्ज, FPPA व शुल्क। घरेलू दर ₹3/यूनिट से। मुफ़्त, बिना साइन-अप।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-07-10"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"टैरिफ","item":"https://thediscombill.com/hi/tariffs/states/"},{"@type":"ListItem","position":3,"name":"उत्तर प्रदेश","item":"https://thediscombill.com/hi/tariffs/uttar-pradesh/"},{"@type":"ListItem","position":4,"name":"KESCO","item":"https://thediscombill.com/hi/tariffs/uttar-pradesh/kesco/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"KESCO बिजली बिल कैसे निकालें?","acceptedAnswer":{"@type":"Answer","text":"<a href=\"/?state=Uttar%20Pradesh&amp;discom=kesco#calculator\">KESCO बिल कैलकुलेटर</a> खोलें, अपनी खपत (यूनिट) और स्वीकृत भार डालें — यह 2025-26 की KESCO स्लैब दरें, फिक्स्ड चार्ज, FPPA और बिजली शुल्क लगाकर मदवार अनुमानित बिल देता है।"}},{"@type":"Question","name":"KESCO पर सबसे सस्ती घरेलू बिजली दर क्या है?","acceptedAnswer":{"@type":"Answer","text":"KESCO का घरेलू ऊर्जा शुल्क ₹3 प्रति यूनिट से शुरू होकर सबसे ऊँचे स्लैब में ₹6.5 प्रति यूनिट तक जाता है (LMV-1 Residential / Domestic), साथ में मासिक फिक्स्ड चार्ज। पूरी स्लैब तालिका ऊपर है।"}},{"@type":"Question","name":"KESCO बिजली बिल ऑनलाइन कैसे भरें?","acceptedAnswer":{"@type":"Answer","text":"आधिकारिक KESCO पोर्टल <a href=\"https://www.kesco.co.in\" target=\"_blank\" rel=\"noopener\">www.kesco.co.in</a> पर भुगतान करें। पहले इस पेज से जाँचें कि बिल कितना होना चाहिए, फिर आधिकारिक स्रोत पर भरें।"}},{"@type":"Question","name":"KESCO का विलंब भुगतान अधिभार (LPSC) कितना है?","acceptedAnswer":{"@type":"Answer","text":"KESCO बकाया राशि पर 1.5% प्रति माह का विलंब भुगतान अधिभार लगाती है। हमारा कैलकुलेटर LPSC और बकाया जोड़कर कुल देय राशि का अनुमान दे सकता है।"}}]}</script>
 </head>

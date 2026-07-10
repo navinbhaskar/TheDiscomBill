@@ -10,13 +10,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1d4ed8">
   <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="apple-touch-icon" href="/icon.svg">
+  <link rel="apple-touch-icon" href="/icon-192.png">
   <script>
     (function () {
       document.documentElement.classList.add('js');
       try {
         var t = localStorage.getItem('theme');
-        if (t !== 'dark' && t !== 'light') t = 'light';
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         document.documentElement.dataset.theme = t;
       } catch (e) {}
       
@@ -60,7 +60,7 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/tariffs/andhra-pradesh/","name":"Andhra Pradesh Electricity Tariff 2024-25 — Bill Calculator","description":"Andhra Pradesh electricity tariffs 2024-25: compare APSPDCL, APEPDCL, see domestic & commercial slab rates and get a provisional bill in seconds. Free, no sign-up.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-07-09"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/tariffs/andhra-pradesh/","name":"Andhra Pradesh Electricity Tariff 2024-25 — Bill Calculator","description":"Andhra Pradesh electricity tariffs 2024-25: compare APSPDCL, APEPDCL, see domestic & commercial slab rates and get a provisional bill in seconds. Free, no sign-up.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-07-10"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Tariffs","item":"https://thediscombill.com/tariffs/states/"},{"@type":"ListItem","position":3,"name":"Andhra Pradesh","item":"https://thediscombill.com/tariffs/andhra-pradesh/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How is the electricity bill calculated in Andhra Pradesh?","acceptedAnswer":{"@type":"Answer","text":"Andhra Pradesh bills combine slab-wise energy charges, a fixed/demand charge per kW (or kVA), a fuel & power purchase adjustment (FPPA) and electricity duty. Use our <a href=\"/#calculator\">free calculator</a> to get an itemised provisional bill for your DISCOM."}},{"@type":"Question","name":"Which electricity distribution company serves my area in Andhra Pradesh?","acceptedAnswer":{"@type":"Answer","text":"Andhra Pradesh is served by 2 DISCOMs: <strong>APSPDCL</strong> (Southern AP — Kurnool, Nellore, Prakasam); <strong>APEPDCL</strong> (Eastern AP — Vishakhapatnam, East Godavari, West Godavari). Open your DISCOM above for its full tariff and an indicative bill."}},{"@type":"Question","name":"What is the cheapest domestic electricity rate in Andhra Pradesh?","acceptedAnswer":{"@type":"Answer","text":"The lowest domestic energy charge across Andhra Pradesh DISCOMs starts at about ₹1.45 per unit (lowest slab), before fixed charges, FPPA and duty. Exact rates depend on your DISCOM and consumption slab."}},{"@type":"Question","name":"What is the current electricity tariff year for Andhra Pradesh?","acceptedAnswer":{"@type":"Answer","text":"The rates shown are for 2024-25 (latest available)."}}]}</script>
 </head>
