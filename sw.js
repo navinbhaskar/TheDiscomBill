@@ -18,7 +18,6 @@ const CORE = [
   // Styles
   './css/styles.min.css',
   // Application JS
-  // (js/tariffs.js — the pre-split monolith — is dead code; per-state files below are live)
   './js/utils.js', './js/engine.js', './js/i18n.js',
   './js/ui.js', './js/datepicker.js', './js/renderer.js', './js/main.js', './js/compare.js',
   './js/estimators.js', './js/tariff-explorer.js', './js/bill-check.js',
