@@ -2,7 +2,7 @@
 // Pick State → DISCOM, then jump to that DISCOM's official complaint portal. Also surfaces the
 // 24×7 national power helpline (1912) and the escalation path (CGRF → Electricity Ombudsman).
 
-import { initPortalPage, esc, portalUrl, hostOf } from './portal-page.js';
+import { initPortalPage, esc, portalUrl, hostOf, discomFactsHtml } from './portal-page.js';
 
 const COMPLAINT_TYPES = [
   ['⚡', 'No power supply / outage'],
@@ -35,6 +35,7 @@ function renderResult(box, state, discom) {
       <div class="svc-host">Opens <strong>${esc(hostOf(url))}</strong> in a new tab</div>
 
       <ul class="svc-types">${types}</ul>
+      ${discomFactsHtml(state, discom)}
     </div>
 
     <p class="svc-escalate">If your complaint isn't resolved in the notified time, escalate to the DISCOM's

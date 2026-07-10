@@ -4,6 +4,7 @@
 // on the authoritative source. We never collect any consumer/account details here.
 
 import { TARIFF_DB, getStates, getDiscoms } from './tariffs/registry.js';
+import { discomFactsHtml } from './portal-page.js';
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -47,6 +48,7 @@ function renderResult(state, discomId) {
         <li>Download bill &amp; payment receipts</li>
         <li>Check past consumption &amp; payment history</li>
       </ul>
+      ${discomFactsHtml(state, discom)}
 
       <p class="billcheck-safety">🔒 You'll be taken to the DISCOM's own website. TheDiscomBill never asks for your
       account number, OTP or password — only enter those on the official portal.</p>

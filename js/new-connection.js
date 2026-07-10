@@ -2,7 +2,7 @@
 // Pick State → DISCOM, then jump to that DISCOM's official portal to apply. Also lays out the
 // typical process, documents and charges so users know what to expect before they apply.
 
-import { initPortalPage, esc, portalUrl, hostOf } from './portal-page.js';
+import { initPortalPage, esc, portalUrl, hostOf, discomFactsHtml } from './portal-page.js';
 
 const STEPS = [
   ['Apply', 'Submit the new-connection application online on the DISCOM portal (or at the local office).'],
@@ -41,6 +41,7 @@ function renderResult(box, state, discom) {
         <span class="svc-cta-arrow" aria-hidden="true">↗</span>
       </a>
       <div class="svc-host">Opens <strong>${esc(hostOf(url))}</strong> in a new tab</div>
+      ${discomFactsHtml(state, discom)}
     </div>
 
     <div class="svc-info-grid">

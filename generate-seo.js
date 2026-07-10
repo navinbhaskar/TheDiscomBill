@@ -253,13 +253,13 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1d4ed8">
   <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="apple-touch-icon" href="/icon.svg">
+  <link rel="apple-touch-icon" href="/icon-192.png">
   <script>
     (function () {
       document.documentElement.classList.add('js');
       try {
         var t = localStorage.getItem('theme');
-        if (t !== 'dark' && t !== 'light') t = 'light';
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         document.documentElement.dataset.theme = t;
       } catch (e) {}
       ${langBoot}
@@ -1097,6 +1097,30 @@ const STATE_CODE = {
 };
 const stateCode = (s) => STATE_CODE[s] || s.replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase();
 
+// Aggregate domestic-rate stats for one state across all its DISCOMs — feeds the
+// directory's per-state stat lines and the comparison table. Derived purely from
+// the tariff DB, so every figure is real and regenerated with the data.
+function stateDomesticStats(state) {
+  let min = Infinity, max = -Infinity, fy = null;
+  for (const d of getDiscoms(state)) {
+    const cat = domesticCategory(d);
+    if (!cat) continue;
+    const blocks = (cat.supplyTypes && cat.supplyTypes.length) ? cat.supplyTypes : [cat];
+    for (const b of blocks) {
+      for (const s of (b.energySlabs || [])) {
+        // Ignore free lifeline slabs (rate 0) — "domestic from ₹0/unit" would misstate
+        // what a consumer actually pays; min is the lowest *paid* rate.
+        if (typeof s.rate !== 'number' || s.rate <= 0) continue;
+        if (s.rate < min) min = s.rate;
+        if (s.rate > max) max = s.rate;
+      }
+    }
+    if (!fy) fy = d.tariffYear || null;
+  }
+  if (!isFinite(min)) return null;
+  return { min, max, fy, verified: !!(STATE_META[state] || {}).verified };
+}
+
 function directoryPage(states, lang = 'en') {
   const hi = lang === 'hi';
   const enUrl = '/tariffs/states/';
@@ -1120,13 +1144,19 @@ function directoryPage(states, lang = 'en') {
     // data-search carries both scripts + discom names so the filter box matches everything
     const searchBlob = [state, hiState(state), ...discoms.map(d => d.name)].join(' ').toLowerCase();
     const nDiscoms = `${discoms.length} ${hi ? 'डिस्कॉम' : (discoms.length === 1 ? 'DISCOM' : 'DISCOMs')}`;
+    // Unique per-state stat line: real domestic rate span pulled from the tariff DB
+    // (plus the verified badge), so no two state cards read the same.
+    const st = stateDomesticStats(state);
+    const statLine = st
+      ? ` · <span class="seo-dir-rate">${hi ? `घरेलू ${rupee(st.min)}–${rupee(st.max)}/यूनिट` : `Domestic ${rupee(st.min)}–${rupee(st.max)}/unit`}</span>${st.verified ? '<span class="seo-dir-verified" title="Verified against real bills">✓</span>' : ''}`
+      : '';
     return `
       <div class="seo-dir-state" data-search="${esc(searchBlob)}">
         <a class="seo-dir-state-head" href="${base}${stateSlug}/">
           <span class="seo-dir-badge" aria-hidden="true">${esc(stateCode(state))}</span>
           <span class="seo-dir-state-meta">
             <h3 class="seo-dir-state-name">${esc(displayName)}<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
-            <span class="seo-dir-count">${nDiscoms}</span>
+            <span class="seo-dir-count">${nDiscoms}${statLine}</span>
           </span>
         </a>
         <div class="seo-dir-discoms">${links}</div>
@@ -1145,6 +1175,51 @@ function directoryPage(states, lang = 'en') {
       <h2 class="seo-dir-region-title"><span class="seo-dir-region-dot" aria-hidden="true"></span>${esc(hi ? r.hi : r.en)} <span class="seo-dir-region-count">${r.states.length}</span></h2>
       <div class="seo-directory">${r.states.map(stateCard).join('')}</div>
     </section>`).join('');
+
+  // State-wise domestic rate comparison — unique aggregated content computed from the
+  // tariff DB at build time (sorted cheapest-first, so the table itself answers the
+  // "which state has the cheapest electricity" query the page ranks for).
+  const cmpRows = states
+    .map(s => ({ s, st: stateDomesticStats(s), n: getDiscoms(s).length }))
+    .filter(r => r.st)
+    .sort((a, b) => a.st.min - b.st.min);
+  const comparisonHtml = cmpRows.length ? `
+    <section class="seo-section">
+      <h2>${hi ? 'राज्यवार घरेलू बिजली दरें — एक नज़र में' : 'Domestic electricity rates by state — at a glance'}</h2>
+      <p>${hi
+        ? 'हर राज्य की सबसे कम और सबसे ऊँची घरेलू (स्लैब) ऊर्जा दर, हमारे टैरिफ डेटा से — सबसे सस्ती दर पहले। फिक्स्ड चार्ज, FPPA और शुल्क अलग से लगते हैं, इसलिए असली बिल की तुलना <a href="/#calculator">कैलकुलेटर</a> से करें।'
+        : 'The lowest and highest domestic (slab) energy rate in every state, straight from our tariff data — cheapest first. Fixed charges, FPPA and duty apply on top, so compare real bills with the <a href="/#calculator">calculator</a>.'}</p>
+      <div class="comparison-table-wrapper"><table class="comparison-table">
+        <thead><tr><th>${hi ? 'राज्य / केंद्र शासित प्रदेश' : 'State / UT'}</th><th>${hi ? 'डिस्कॉम' : 'DISCOMs'}</th><th>${hi ? 'घरेलू दर (न्यूनतम–अधिकतम)' : 'Domestic rate (min–max)'}</th><th>${hi ? 'टैरिफ वर्ष' : 'Tariff year'}</th></tr></thead>
+        <tbody>${cmpRows.map(({ s, st, n }) => `<tr><td><a href="${base}${slugify(s)}/">${esc(hi ? hiState(s) : s)}</a>${st.verified ? ' <span class="seo-dir-verified" title="Verified against real bills">✓</span>' : ''}</td><td>${n}</td><td>${rupee(st.min)} – ${rupee(st.max)}${hi ? '/यूनिट' : '/unit'}</td><td>${esc(hi ? hiFy(st.fy || '') : (st.fy || '—'))}</td></tr>`).join('')}</tbody>
+      </table></div>
+      <p class="seo-note">${hi
+        ? 'दरें प्रकाशित टैरिफ आदेशों से हैं और श्रेणी/स्लैब के अनुसार बदलती हैं; ✓ का मतलब असली बिलों से सत्यापित।'
+        : 'Rates come from published tariff orders and vary by category/slab; ✓ marks states verified against real bills.'}</p>
+    </section>` : '';
+
+  // Directory FAQs — figures derived from the same data (never hand-typed), so they
+  // stay correct on every regeneration.
+  const cheapest = cmpRows[0], dearest = cmpRows[cmpRows.length - 1];
+  const dirFaqs = hi ? [
+    { q: 'डिस्कॉम (DISCOM) क्या है?',
+      a: 'डिस्कॉम यानी Distribution Company — वह कंपनी जो आपके इलाके में बिजली पहुँचाती है और बिल जारी करती है। टैरिफ राज्य का विद्युत नियामक आयोग (SERC) तय करता है, डिस्कॉम नहीं।' },
+    { q: 'भारत में घरेलू बिजली सबसे सस्ती कहाँ है?',
+      a: cheapest ? `हमारे टैरिफ डेटा में सबसे कम घरेलू स्लैब दर ${hiState(cheapest.s)} में ${rupee(cheapest.st.min)}/यूनिट से शुरू होती है, जबकि सबसे ऊँची स्लैब दरें ${hiState(dearest.s)} जैसे राज्यों में ${rupee(dearest.st.max)}/यूनिट तक जाती हैं। असली बिल फिक्स्ड चार्ज, FPPA और शुल्क पर भी निर्भर करता है।` : 'राज्यवार तालिका ऊपर देखें।' },
+    { q: 'मेरा डिस्कॉम कौन-सा है, कैसे पता करूँ?',
+      a: 'अपने बिजली बिल का ऊपरी हिस्सा देखें — कंपनी का नाम/लोगो वहीं छपा होता है। या ऊपर की डायरेक्टरी में अपना राज्य खोलें: हर डिस्कॉम के साथ उसका सेवा क्षेत्र लिखा है।' },
+    { q: 'क्या एक ही राज्य में अलग-अलग डिस्कॉम की दरें अलग होती हैं?',
+      a: 'कहीं हाँ, कहीं नहीं। कई राज्यों (जैसे यूपी) में नियामक एक ही राज्यव्यापी अनुसूची सब डिस्कॉम पर लागू करता है; दिल्ली, महाराष्ट्र, ओडिशा जैसे राज्यों में हर डिस्कॉम की अपनी दरें होती हैं। हर डिस्कॉम पेज पर यह साफ़ लिखा है।' },
+  ] : [
+    { q: 'What is a DISCOM?',
+      a: 'DISCOM stands for Distribution Company — the utility that delivers electricity to your premises and issues your bill. Tariffs are set not by the DISCOM but by the State Electricity Regulatory Commission (SERC), which is why rates differ state to state.' },
+    { q: 'Which state has the cheapest domestic electricity in India?',
+      a: cheapest ? `In our tariff data the lowest domestic slab rate starts at ${rupee(cheapest.st.min)}/unit in ${cheapest.s}, while the highest slab rates reach ${rupee(dearest.st.max)}/unit in states like ${dearest.s}. Real bills also depend on fixed charges, FPPA and duty — compare with the calculator.` : 'See the state-wise table above.' },
+    { q: 'How do I find out which DISCOM serves my area?',
+      a: 'Check the top of your electricity bill — the company name and logo are printed there. Or open your state in the directory above: each DISCOM entry lists its service region and cities.' },
+    { q: 'Do different DISCOMs in the same state charge different rates?',
+      a: 'Sometimes. In many states (like Uttar Pradesh) the regulator applies one state-wide schedule to every DISCOM; in others (Delhi, Maharashtra, Odisha) each company has its own approved rates. Each DISCOM page on this site states clearly whether its schedule is shared.' },
+  ];
 
   // Tiny progressive-enhancement filter: hides cards (and emptied regions) as you type.
   const filterScript = `
@@ -1186,6 +1261,8 @@ function directoryPage(states, lang = 'en') {
     </div>
     ${sections}
     <p id="dirEmpty" class="seo-dir-empty" hidden>कोई राज्य या डिस्कॉम नहीं मिला। कोई और नाम आज़माएँ।</p>
+    ${comparisonHtml}
+    ${faqHtml(dirFaqs, true)}
   </section>${filterScript}` : `
   <section class="seo-page container">
     ${breadcrumbs([
@@ -1204,6 +1281,8 @@ function directoryPage(states, lang = 'en') {
     </div>
     ${sections}
     <p id="dirEmpty" class="seo-dir-empty" hidden>No state or DISCOM matches that search. Try another name.</p>
+    ${comparisonHtml}
+    ${faqHtml(dirFaqs)}
   </section>${filterScript}`;
 
   return layout({
@@ -1223,7 +1302,8 @@ function directoryPage(states, lang = 'en') {
         name: hi ? hiState(s) : s,
         url: SITE + base + slugify(s) + '/',
       })),
-    }],
+    },
+    faqJsonLd(dirFaqs)],
     body,
   });
 }

@@ -18,6 +18,53 @@ export function portalUrl(discom, searchSuffix = '') {
 
 export const hostOf = (url) => url.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
 
+// ── Per-DISCOM facts strip ────────────────────────────────────────────────────
+// The service tabs used to render the same template with only the name swapped.
+// This block injects facts unique to the selected DISCOM (rates, tariff year,
+// LPSC, category count — all straight from the tariff DB) plus deep links to its
+// tariff page and pre-filled calculator, so each selection shows real content.
+
+const slugify = (s) => String(s).toLowerCase().trim()
+  .replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+const rupee = (n) => '₹' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+
+// Domestic slab-rate span for a DISCOM (mirrors the build-time helper in generate-seo.js).
+function domesticRates(discom) {
+  const cats = discom.categories || [];
+  const cat = cats.find(c => /domestic|residential|lmv-?1|lt-?1|^dom/i.test(c.name || c.id))
+      || cats.find(c => /home|household/i.test(c.name || c.id))
+      || cats[0] || null;
+  if (!cat) return null;
+  const blocks = (cat.supplyTypes && cat.supplyTypes.length) ? cat.supplyTypes : [cat];
+  const rates = [];
+  for (const b of blocks) for (const s of (b.energySlabs || [])) if (typeof s.rate === 'number') rates.push(s.rate);
+  if (!rates.length) return null;
+  return { min: Math.min(...rates), max: Math.max(...rates), catName: cat.name };
+}
+
+export function discomFactsHtml(state, discom) {
+  if (!discom) return '';
+  const dr = domesticRates(discom);
+  const fy = discom.tariffYear || '';
+  const nCats = (discom.categories || []).length;
+  const tariffUrl = `/tariffs/${slugify(state)}/${encodeURIComponent(discom.id)}/`;
+  const calcUrl = `/?state=${encodeURIComponent(state)}&discom=${encodeURIComponent(discom.id)}#calculator`;
+  const facts = [];
+  if (dr) facts.push(`<span class="svc-fact"><strong>${rupee(dr.min)}–${rupee(dr.max)}</strong>/unit domestic</span>`);
+  if (fy) facts.push(`<span class="svc-fact"><strong>${esc(fy)}</strong> tariff</span>`);
+  if (discom.lpscRate != null) facts.push(`<span class="svc-fact"><strong>${esc(discom.lpscRate)}%</strong>/mo late fee</span>`);
+  if (nCats) facts.push(`<span class="svc-fact"><strong>${nCats}</strong> tariff categories</span>`);
+  if (!facts.length) return '';
+  return `
+    <div class="svc-facts">
+      <div class="svc-facts-row">${facts.join('')}</div>
+      <div class="svc-facts-links">
+        <a href="${esc(tariffUrl)}">Full ${esc(discom.name)} tariff &amp; rates →</a>
+        <a href="${esc(calcUrl)}">Calculate a ${esc(discom.name)} bill →</a>
+      </div>
+    </div>`;
+}
+
 /**
  * Wire up a portal page.
  * @param {object} cfg
