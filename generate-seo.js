@@ -732,7 +732,7 @@ function discomPage(state, discom, lang = 'en') {
   if (region) badges.push(`<span class="tariff-badge">${esc(region)}</span>`);
   const src = discom.website || meta.sourceUrl;
 
-  const cards = (discom.categories || []).map(categoryCardHtml).join('') || '<p class="tx-muted">No categories listed.</p>';
+  const cards = (discom.categories || []).map(c => categoryCardHtml(c)).join('') || '<p class="tx-muted">No categories listed.</p>';
 
   // Sibling DISCOMs in the same state
   const siblings = getDiscoms(state).filter(d => d.id !== discom.id);
