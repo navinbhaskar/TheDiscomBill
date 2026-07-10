@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      try { localStorage.setItem('lang', 'hi'); } catch (e) {}
+    })();
+  </script>
+  <title>स्मार्ट मीटर बैलेंस चेक — मीटर डिस्प्ले, डिस्कॉम ऐप और दैनिक कटौती</title>
+  <meta name="description" content="प्रीपेड स्मार्ट मीटर का बैलेंस देखने के तीन तरीके — मीटर का पुश-बटन डिस्प्ले, डिस्कॉम ऐप/पोर्टल और SMS अलर्ट — और दैनिक कटौती खाता पढ़ने का तरीका, ताकि पता रहे बैलेंस कहाँ जा रहा है।">
+  <link rel="canonical" href="https://thediscombill.com/hi/guides/smart-meter-balance-check/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/smart-meter-balance-check/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/smart-meter-balance-check/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/smart-meter-balance-check/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="स्मार्ट मीटर बैलेंस चेक — मीटर डिस्प्ले, डिस्कॉम ऐप और दैनिक कटौती">
+  <meta property="og:description" content="प्रीपेड स्मार्ट मीटर का बैलेंस देखने के तीन तरीके — मीटर का पुश-बटन डिस्प्ले, डिस्कॉम ऐप/पोर्टल और SMS अलर्ट — और दैनिक कटौती खाता पढ़ने का तरीका, ताकि पता रहे बैलेंस कहाँ जा रहा है।">
+  <meta property="og:url" content="https://thediscombill.com/hi/guides/smart-meter-balance-check/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:locale" content="hi_IN">
+  <meta property="og:locale:alternate" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="स्मार्ट मीटर बैलेंस चेक — मीटर डिस्प्ले, डिस्कॉम ऐप और दैनिक कटौती">
+  <meta name="twitter:description" content="प्रीपेड स्मार्ट मीटर का बैलेंस देखने के तीन तरीके — मीटर का पुश-बटन डिस्प्ले, डिस्कॉम ऐप/पोर्टल और SMS अलर्ट — और दैनिक कटौती खाता पढ़ने का तरीका, ताकि पता रहे बैलेंस कहाँ जा रहा है।">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fonts load async (non-render-blocking); display=swap shows fallback text immediately -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
+  <link rel="stylesheet" href="/css/styles.min.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/guides/smart-meter-balance-check/","name":"स्मार्ट मीटर बैलेंस चेक — मीटर डिस्प्ले, डिस्कॉम ऐप और दैनिक कटौती","description":"प्रीपेड स्मार्ट मीटर का बैलेंस देखने के तीन तरीके — मीटर का पुश-बटन डिस्प्ले, डिस्कॉम ऐप/पोर्टल और SMS अलर्ट — और दैनिक कटौती खाता पढ़ने का तरीका, ताकि पता रहे बैलेंस कहाँ जा रहा है।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-07-10"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"स्मार्ट मीटर का बैलेंस कैसे देखें (डिस्प्ले, ऐप, SMS)","description":"प्रीपेड स्मार्ट मीटर का बैलेंस देखने के तीन तरीके — मीटर का पुश-बटन डिस्प्ले, डिस्कॉम ऐप/पोर्टल और SMS अलर्ट — और दैनिक कटौती खाता पढ़ने का तरीका, ताकि पता रहे बैलेंस कहाँ जा रहा है।","mainEntityOfPage":"https://thediscombill.com/hi/guides/smart-meter-balance-check/","datePublished":"2026-07-10","dateModified":"2026-07-10","inLanguage":"hi-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"गाइड","item":"https://thediscombill.com/hi/guides/"},{"@type":"ListItem","position":3,"name":"स्मार्ट मीटर का बैलेंस कैसे देखें (डिस्प्ले, ऐप, SMS)"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"मीटर पर ही बैलेंस कैसे देखें?","acceptedAnswer":{"@type":"Answer","text":"मीटर का पुश बटन दबाकर डिस्प्ले की स्क्रीनें बदलें — एक स्क्रीन ₹ में प्रीपेड बैलेंस दिखाती है (अक्सर BAL या CR लेबल), साथ में कुल kWh, लोड और वोल्टेज की स्क्रीनें। इंटरनेट नहीं चाहिए, पर रिचार्ज के तुरंत बाद यह डिस्कॉम ऐप से एक सिंक-चक्र पीछे हो सकता है।"}},{"@type":"Question","name":"बिजली इस्तेमाल न करने पर भी बैलेंस क्यों घटा?","acceptedAnswer":{"@type":"Answer","text":"दैनिक कटौती में मासिक फिक्स्ड चार्ज का हिस्सा (शून्य यूनिट पर भी), FPPA व शुल्क और बकाया किस्त शामिल हैं — और आपूर्ति चालू रही हो तो फ्रिज, राउटर जैसे हरदम चलते लोड भी। ऐप का दैनिक कटौती खाता मदवार दिखाता है कि क्या कटा।"}},{"@type":"Question","name":"ऐप और मीटर का बैलेंस अलग-अलग है — सही कौन?","acceptedAnswer":{"@type":"Answer","text":"डिस्कॉम का बिलिंग सिस्टम (ऐप/पोर्टल वाला आँकड़ा) प्रामाणिक है; मीटर अगली बार जुड़ने पर उससे सिंक होता है। रिचार्ज के तुरंत बाद का अंतर सामान्य है। एक दिन से ज़्यादा अंतर बना रहे तो मीटर का नेटवर्क छूटा हो सकता है — डिस्कॉम को बताएँ।"}},{"@type":"Question","name":"कम-बैलेंस SMS अलर्ट कैसे मिलेंगे?","acceptedAnswer":{"@type":"Answer","text":"अलर्ट कनेक्शन पर पंजीकृत मोबाइल नंबर पर जाते हैं। नहीं मिल रहे तो डिस्कॉम ऐप, पोर्टल या उपखंड कार्यालय से नंबर अपडेट कराएँ — बैलेंस कटौती से पहले चेतावनी देना डिस्कॉम के लिए अनिवार्य है।"}}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <div class="nav-dropdown" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">Quick Links</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu" id="quickLinksMenu" role="menu">
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tools">Tools</span>
+          <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="20" x2="6" y2="14"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="10"/></svg><span data-i18n="ql.compare">Compare DISCOM Tariffs</span></a>
+          <a href="/usage/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span data-i18n="ql.usage">Usage Estimator</span></a>
+          <a href="/solar/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span data-i18n="ql.solar">Rooftop Solar Savings</span></a>
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tariffs">Tariffs</span>
+          <a href="/hi/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span data-i18n="ql.tariffsByState">Tariffs by State &amp; DISCOM</span></a>
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.services">Services</span>
+          <a href="/services/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg><span data-i18n="ql.discomServices">DISCOM Services</span></a>
+          <a href="/bill-review/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4"/><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg><span data-i18n="ql.billReview">Bill Review by Experts</span></a>
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.learn">Learn</span>
+          <a href="/hi/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.guides">Electricity Bill Guides</span></a>
+          <a href="/hi/glossary/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M12 7h5M12 11h5M7 7h.01M7 11h.01"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.glossary">Electricity Bill Glossary</span></a>
+          <a href="/methodology/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 11l2 2 4-4"/></svg><span data-i18n="ql.methodology">Methodology &amp; Accuracy</span></a>
+        </div>
+      </div>
+      <a href="/#about" data-i18n="nav.about">About</a>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body">
+
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/">होम</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><a href="/hi/guides/">गाइड</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">स्मार्ट मीटर का बैलेंस कैसे देखें (डिस्प्ले, ऐप, SMS)</span></li></ol></nav>
+    <p class="seo-lang-link"><a href="/guides/smart-meter-balance-check/" hreflang="en-IN" lang="en">Read this page in English →</a></p>
+    <h1>स्मार्ट मीटर का बैलेंस कैसे देखें (डिस्प्ले, ऐप, SMS)</h1>
+    <p class="guide-meta">4 मिनट · अपडेट: 10 जुलाई 2026</p>
+    <p class="seo-lead">प्रीपेड स्मार्ट मीटर का बैलेंस तीन जगह दिखता है: <strong>मीटर पर ही</strong>, <strong>डिस्कॉम के
+      ऐप या पोर्टल में</strong>, और <strong>SMS अलर्ट</strong> से। तीनों का अलग उपयोग है — डिस्प्ले तुरंत
+      दिखाता है, ऐप में पूरी कटौती का इतिहास रहता है, और SMS बिना स्मार्टफोन के काम करता है। यह गाइड
+      तीनों तरीके और दैनिक कटौती खाता पढ़ना सिखाती है, ताकि घटता बैलेंस कभी चौंकाए नहीं।</p>
+    
+      <section class="seo-section">
+        <h2>1. मीटर के डिस्प्ले पर (बिना इंटरनेट)</h2>
+        <p>हर स्मार्ट मीटर में एक <strong>पुश बटन</strong> होता है जो डिस्प्ले की स्क्रीनें बदलता है — उसे
+        बार-बार दबाएँ और लेबल देखें। क्रम कंपनी के अनुसार अलग है, पर आमतौर पर दिखेगा: मौजूदा बैलेंस (₹),
+        कुल यूनिट (kWh), तात्कालिक लोड (kW) और वोल्टेज। बैलेंस स्क्रीन पर ₹ चिह्न या "BAL"/"CR" लेबल
+        होता है; ऋणात्मक आँकड़े का मतलब है आप उधार पर खपत कर रहे हैं और कटौती कतार में हो सकती है।</p>
+        <p>ध्यान रहे — मीटर का बैलेंस डिस्कॉम सिस्टम से एक सिंक-चक्र पीछे हो सकता है: अभी-अभी रिचार्ज किया
+        हो तो पहले ऐप अपडेट होता है, मीटर अगली बार जुड़ने पर।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. डिस्कॉम ऐप या पोर्टल में (पूरी तस्वीर)</h2>
+        <p>डिस्कॉम का अपना ऐप/उपभोक्ता पोर्टल ही प्रामाणिक जगह है: उपभोक्ता/खाता नंबर से लॉगिन कर लाइव
+        बैलेंस, रिचार्ज इतिहास और — सबसे उपयोगी — <strong>दैनिक कटौती खाता</strong> देखें। उत्तर प्रदेश में
+        <a href="https://uppclonline.com" target="_blank" rel="noopener">uppclonline.com</a> या UPPCL
+        उपभोक्ता ऐप; बिहार में <strong>Bihar Bijli Smart Meter</strong> ऐप। बाक़ी राज्यों में रिचार्ज रसीद
+        पर लिखा ऐप/पोर्टल इस्तेमाल करें — हमारे <a href="/hi/smart-meter-recharge/">डिस्कॉम-वार रिचार्ज
+        पेज</a> हर आधिकारिक पोर्टल से जोड़ते हैं।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. SMS अलर्ट (स्मार्टफोन ज़रूरी नहीं)</h2>
+        <p>डिस्कॉम कम-बैलेंस अलर्ट कनेक्शन पर पंजीकृत मोबाइल नंबर पर भेजते हैं — आमतौर पर कटौती से पहले
+        एक-दो सीमाओं पर, और हर रिचार्ज की पुष्टि। अलर्ट नहीं आ रहे, तो पंजीकृत नंबर शायद पुराना है: डिस्कॉम
+        ऐप, पोर्टल या उपखंड कार्यालय से अपडेट कराएँ। जो ऐप नहीं चला सकते, उनके लिए यही अलर्ट मुख्य
+        सुरक्षा-जाल हैं — नंबर ठीक कराना चक्कर के लायक है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>दैनिक कटौती खाता पढ़ना</h2>
+        <p>हर दिन की कटौती सिर्फ़ "यूनिट × दर" नहीं होती। उसमें शामिल है:</p>
+        <ul>
+          <li><strong>ऊर्जा शुल्क</strong> — उस दिन की यूनिटें आपके <a href="/hi/glossary/#telescopic-slabs">स्लैब
+          दरों</a> पर;</li>
+          <li><strong>फिक्स्ड चार्ज</strong> — मासिक <a href="/hi/glossary/#fixed-charge">फिक्स्ड चार्ज</a>
+          महीने के दिनों में बँटा, शून्य खपत पर भी कटता है;</li>
+          <li><strong>FPPA और शुल्क</strong> — लागू मदों पर <a href="/hi/glossary/#fppa">ईंधन अधिभार</a> और
+          <a href="/hi/glossary/#electricity-duty">बिजली शुल्क</a>;</li>
+          <li><strong>बकाया किस्त</strong> — पुराने पोस्टपेड बकाया वसूले जा रहे हों तो प्रति रिचार्ज/प्रति दिन
+          एक हिस्सा।</li>
+        </ul>
+        <p>इसीलिए घर बंद रहने वाले दिन भी बैलेंस थोड़ा घटता है। आपका सामान्य दैनिक ख़र्च कितना <em>होना
+        चाहिए</em> — और मौजूदा बैलेंस कितने दिन चलेगा — यह <a href="/recharge-calculator/">स्मार्ट मीटर
+        रिचार्ज कैलकुलेटर</a> से देखें, जो आपकी खपत को आपके डिस्कॉम की असली टैरिफ दरों पर आँकता है।</p>
+      </section>
+    <section class="seo-section"><h2>अक्सर पूछे जाने वाले सवाल</h2>
+    <details class="seo-faq-item">
+      <summary>मीटर पर ही बैलेंस कैसे देखें?</summary>
+      <div class="seo-faq-a">मीटर का पुश बटन दबाकर डिस्प्ले की स्क्रीनें बदलें — एक स्क्रीन ₹ में प्रीपेड बैलेंस दिखाती है (अक्सर BAL या CR लेबल), साथ में कुल kWh, लोड और वोल्टेज की स्क्रीनें। इंटरनेट नहीं चाहिए, पर रिचार्ज के तुरंत बाद यह डिस्कॉम ऐप से एक सिंक-चक्र पीछे हो सकता है।</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>बिजली इस्तेमाल न करने पर भी बैलेंस क्यों घटा?</summary>
+      <div class="seo-faq-a">दैनिक कटौती में मासिक फिक्स्ड चार्ज का हिस्सा (शून्य यूनिट पर भी), FPPA व शुल्क और बकाया किस्त शामिल हैं — और आपूर्ति चालू रही हो तो फ्रिज, राउटर जैसे हरदम चलते लोड भी। ऐप का दैनिक कटौती खाता मदवार दिखाता है कि क्या कटा।</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>ऐप और मीटर का बैलेंस अलग-अलग है — सही कौन?</summary>
+      <div class="seo-faq-a">डिस्कॉम का बिलिंग सिस्टम (ऐप/पोर्टल वाला आँकड़ा) प्रामाणिक है; मीटर अगली बार जुड़ने पर उससे सिंक होता है। रिचार्ज के तुरंत बाद का अंतर सामान्य है। एक दिन से ज़्यादा अंतर बना रहे तो मीटर का नेटवर्क छूटा हो सकता है — डिस्कॉम को बताएँ।</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>कम-बैलेंस SMS अलर्ट कैसे मिलेंगे?</summary>
+      <div class="seo-faq-a">अलर्ट कनेक्शन पर पंजीकृत मोबाइल नंबर पर जाते हैं। नहीं मिल रहे तो डिस्कॉम ऐप, पोर्टल या उपखंड कार्यालय से नंबर अपडेट कराएँ — बैलेंस कटौती से पहले चेतावनी देना डिस्कॉम के लिए अनिवार्य है।</div>
+    </details></section>
+    <section class="seo-section guide-more">
+      <h2>और गाइड</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/hi/guides/how-to-read-uppcl-bill/">
+          <strong>अपना UPPCL बिजली बिल कैसे पढ़ें</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/why-did-my-electricity-bill-increase/">
+          <strong>मेरा बिजली बिल अचानक क्यों बढ़ गया?</strong>
+          <small>7 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/tod-billing-explained/">
+          <strong>टाइम-ऑफ़-डे (ToD) बिजली बिलिंग, आसान भाषा में</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/how-fppa-fuel-surcharge-is-calculated/">
+          <strong>आपके बिजली बिल पर FPPA (ईंधन अधिभार) कैसे निकाला जाता है</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/reduce-fixed-charges-sanctioned-load/">
+          <strong>स्वीकृत भार सही करके फिक्स्ड चार्ज कैसे घटाएँ</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/electricity-duty-explained/">
+          <strong>आपके बिल पर बिजली शुल्क: यह क्या है और राज्यों में कैसे अलग है</strong>
+          <small>4 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/how-to-read-bses-delhi-bill/">
+          <strong>अपना BSES / दिल्ली बिजली बिल कैसे पढ़ें</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/how-to-read-msedcl-bill/">
+          <strong>अपना MSEDCL (महावितरण) बिजली बिल कैसे पढ़ें</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/how-to-read-bescom-bill/">
+          <strong>अपना BESCOM बिजली बिल कैसे पढ़ें</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/how-to-read-tneb-tangedco-bill/">
+          <strong>अपना TNEB / TANGEDCO बिजली बिल कैसे पढ़ें</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/solar-net-metering-savings/">
+          <strong>सोलर नेट मीटरिंग: बचत असल में कैसे काम करती है</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/uppcl-sanctioned-load-increased/">
+          <strong>मेरा स्वीकृत भार अचानक क्यों बढ़ गया? (UPPCL / यूपी)</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/smart-meter-running-fast/">
+          <strong>क्या आपका स्मार्ट मीटर तेज़ चल रहा है? खुद ऐसे जाँचें</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/smart-meter-prepaid-disconnection/">
+          <strong>स्मार्ट प्रीपेड मीटर: रिचार्ज, कम बैलेंस और रिमोट डिस्कनेक्शन</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/smart-meter-recharge-failed/">
+          <strong>स्मार्ट मीटर रिचार्ज फेल या बैलेंस अपडेट नहीं हुआ? यह करें</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/prepaid-vs-postpaid-smart-meter/">
+          <strong>प्रीपेड बनाम पोस्टपेड स्मार्ट मीटर: आपके लिए कौन बेहतर?</strong>
+          <small>5 मिनट</small>
+        </a>
+      </div>
+    </section>
+    <p class="seo-disclaimer">सार्वजनिक रूप से उपलब्ध टैरिफ आदेशों और विनियमों पर आधारित सामान्य मार्गदर्शन; विवरण राज्य, डिस्कॉम और उपभोक्ता श्रेणी के अनुसार बदलते हैं। अपने डिस्कॉम की आधिकारिक अनुसूची या छपे बिल से मिलान करें।</p>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/hi/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a> &nbsp;|&nbsp; <a href="/hi/glossary/" data-i18n="footer.glossary">Bill Glossary</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:thediscombill@gmail.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

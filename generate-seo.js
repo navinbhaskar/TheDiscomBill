@@ -600,14 +600,17 @@ function keyFactsHtml(state, discom, fy, hi = false) {
 // crawl depth and topical clustering without duplicate-content risk.
 function discomServiceLinksHtml(state, discom, hi = false) {
   const qs = `?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}`;
+  const smrHref = `${hi ? '/hi' : ''}/smart-meter-recharge/${slugify(state)}/${discom.id}/`;
   const links = hi ? [
     [`/services/${qs}#pay`, `${esc(discom.name)} बिल देखें व भरें`, 'अपना ताज़ा बिल देखें और आधिकारिक पोर्टल पर भुगतान करें'],
     [`/services/${qs}#new-connection`, `नया ${esc(discom.name)} कनेक्शन`, 'शुल्क, दस्तावेज़ और आवेदन की चरण-दर-चरण प्रक्रिया'],
     [`/services/${qs}#complaint`, `${esc(discom.name)} शिकायत दर्ज करें`, 'बिजली गुल, बिलिंग या मीटर की शिकायत डिस्कॉम में दर्ज करें'],
+    [smrHref, `${esc(discom.name)} स्मार्ट मीटर रिचार्ज`, 'प्रीपेड स्मार्ट मीटर ऑनलाइन रिचार्ज करने का तरीक़ा और यूनिट-अनुमान'],
   ] : [
     [`/services/${qs}#pay`, `Check &amp; pay ${esc(discom.name)} bill`, 'View your latest bill and pay on the official portal'],
     [`/services/${qs}#new-connection`, `New ${esc(discom.name)} connection`, 'Charges, documents and the step-by-step apply process'],
     [`/services/${qs}#complaint`, `Register a ${esc(discom.name)} complaint`, 'Log a no-power, billing or meter complaint with the DISCOM'],
+    [smrHref, `${esc(discom.name)} smart meter recharge`, 'How to recharge a prepaid smart meter online, with units-per-recharge estimates'],
   ];
   return `
     <section class="seo-section">
@@ -1565,6 +1568,303 @@ function glossaryPage(lang = 'en') {
   });
 }
 
+// ── smart meter recharge (/smart-meter-recharge/) ─────────────────────────────
+// Prepaid smart meters are being mass-installed under RDSS, and "<DISCOM> smart meter
+// recharge" is a high-volume, low-competition query family. One page per DISCOM (EN + HI),
+// with uniqueness coming from real data: the DISCOM's portal, service area, and a
+// recharge-value table derived from its actual domestic slab rates.
+//
+// State-specific recharge channels: ONLY well-established, verifiable facts here (the same
+// rule as CONSUMER_NAME — never invent an app name). States not listed fall back to the
+// generic official-portal + BBPS guidance, which is accurate everywhere.
+const SMART_METER_CHANNEL = {
+  'Uttar Pradesh': {
+    en: 'UPPCL prepaid consumers recharge on <a href="https://uppclonline.com" target="_blank" rel="noopener">uppclonline.com</a> or the official UPPCL consumer app using the account/meter number on the smart meter card.',
+    hi: 'UPPCL प्रीपेड उपभोक्ता <a href="https://uppclonline.com" target="_blank" rel="noopener">uppclonline.com</a> या आधिकारिक UPPCL उपभोक्ता ऐप पर स्मार्ट मीटर कार्ड पर लिखे खाता/मीटर नंबर से रिचार्ज करते हैं।',
+  },
+  'Bihar': {
+    en: 'Bihar consumers (NBPDCL & SBPDCL) recharge through the official <strong>Bihar Bijli Smart Meter</strong> app or the DISCOM website using the consumer/CA number.',
+    hi: 'बिहार के उपभोक्ता (NBPDCL व SBPDCL) आधिकारिक <strong>Bihar Bijli Smart Meter</strong> ऐप या डिस्कॉम वेबसाइट से उपभोक्ता/CA नंबर डालकर रिचार्ज करते हैं।',
+  },
+};
+
+// ₹ amounts shown in the derived recharge-value table.
+const RECHARGE_AMOUNTS = [200, 500, 1000, 2000];
+
+// Approximate units a recharge buys, from the DISCOM's real domestic slab span.
+// Range = amount at the highest rate (worst case) … at the lowest paid rate (best case).
+function rechargeRowsHtml(discom, hi = false) {
+  const dr = domesticRates(discom);
+  if (!dr || dr.max <= 0) return '';
+  const minRate = Math.max(dr.min, 0.01);
+  return RECHARGE_AMOUNTS.map(amt => {
+    const lo = Math.floor(amt / dr.max), hiU = Math.floor(amt / minRate);
+    const range = lo === hiU ? `≈ ${lo}` : `≈ ${lo} – ${hiU}`;
+    return `<tr><td>${rupee(amt)}</td><td class="num">${range} ${hi ? 'यूनिट' : 'units'}</td></tr>`;
+  }).join('');
+}
+
+function smartMeterDiscomPage(state, discom, lang = 'en') {
+  const hi = lang === 'hi';
+  const stateSlug = slugify(state);
+  const enUrl = `/smart-meter-recharge/${stateSlug}/${discom.id}/`;
+  const url = hi ? hiUrl(enUrl) : enUrl;
+  const stateHi = hiState(state);
+  const long = discom.fullName || discom.name;
+  const cname = consumerName(discom);
+  const { region, cities } = parseArea(discom.area);
+  const dr = domesticRates(discom);
+  const channel = SMART_METER_CHANNEL[state];
+  const site = discom.website ? (/^https?:\/\//i.test(discom.website) ? discom.website : 'https://' + discom.website) : null;
+  const host = site ? String(site).replace(/^https?:\/\//, '').replace(/\/.*$/, '') : null;
+  const tariffHref = hi ? `/hi/tariffs/${stateSlug}/${discom.id}/` : `/tariffs/${stateSlug}/${discom.id}/`;
+  const calcHref = `/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator`;
+  const guideBase = hi ? '/hi/guides/' : '/guides/';
+  const hubHref = hi ? '/hi/smart-meter-recharge/' : '/smart-meter-recharge/';
+
+  const title = hi
+    ? fitTitle(`${cname} स्मार्ट मीटर रिचार्ज कैसे करें — ऑनलाइन`, [`${cname} स्मार्ट मीटर रिचार्ज`, `${discom.name} स्मार्ट मीटर रिचार्ज`])
+    : fitTitle(`${cname} Smart Meter Recharge Online — Steps & Rates`, [`${cname} Smart Meter Recharge Online`, `${cname} Smart Meter Recharge`]);
+  const description = hi
+    ? `${discom.name} (${long}) प्रीपेड स्मार्ट मीटर ऑनलाइन रिचार्ज करें — आधिकारिक पोर्टल, UPI/BBPS के तरीक़े${dr ? `, और ₹500 में लगभग कितनी यूनिट मिलती हैं (${rupee(dr.min)}–${rupee(dr.max)}/यूनिट दर पर)` : ''}। कम बैलेंस व कटौती के नियम भी।`
+    : `Recharge your ${discom.name} (${long}) prepaid smart meter online — official portal, UPI/BBPS options${dr ? `, and roughly how many units ₹500 buys at ${rupee(dr.min)}–${rupee(dr.max)}/unit` : ''}. Plus low-balance and disconnection rules.`;
+
+  const h1 = hi
+    ? `${esc(cname)} स्मार्ट मीटर रिचार्ज — ऑनलाइन तरीक़ा`
+    : `${esc(cname)} Smart Meter Recharge — How to Recharge Online`;
+  const lead = hi
+    ? `<strong>${esc(long)}</strong> के प्रीपेड स्मार्ट मीटर को ऑनलाइन रिचार्ज करने का पूरा तरीक़ा${cities.length ? ` — ${esc(cities.slice(0, 3).join(', '))} समेत पूरे ${esc(region || stateHi)} के लिए` : region ? ` — ${esc(region)} के लिए` : ''}। साथ में असली ${esc(discom.name)} टैरिफ दरों से निकाला गया अनुमान कि हर रिचार्ज में कितनी यूनिट मिलती हैं।`
+    : `Everything you need to recharge a <strong>${esc(long)}</strong> prepaid smart meter online${cities.length ? ` — for ${esc(cities.slice(0, 3).join(', '))} and the rest of ${esc(region || state)}` : region ? ` — across ${esc(region)}` : ''}, plus a units-per-recharge estimate computed from the real ${esc(discom.name)} tariff rates.`;
+
+  // How-to steps (channel line is state-specific where we have verified facts).
+  const channelLine = channel ? (hi ? channel.hi : channel.en)
+    : (hi
+      ? `${esc(discom.name)} ${site ? `के आधिकारिक पोर्टल <a href="${attr(site)}" target="_blank" rel="noopener">${esc(host)}</a>` : 'के आधिकारिक पोर्टल/ऐप'} से, या BBPS-समर्थित UPI ऐप्स (PhonePe, Google Pay, Paytm आदि) में "${esc(discom.name)}" चुनकर रिचार्ज करें।`
+      : `Recharge on the official ${esc(discom.name)} ${site ? `portal at <a href="${attr(site)}" target="_blank" rel="noopener">${esc(host)}</a>` : 'portal or app'}, or through BBPS-enabled UPI apps (PhonePe, Google Pay, Paytm etc.) by selecting "${esc(discom.name)}".`);
+  const steps = hi ? [
+    ['रिचार्ज चैनल खोलें', channelLine],
+    ['उपभोक्ता / मीटर नंबर डालें', 'यह नंबर आपके स्मार्ट मीटर कार्ड, पुराने बिल या मीटर की डिस्प्ले पर मिलता है।'],
+    ['राशि चुनें', 'नीचे दी तालिका से अंदाज़ा लें कि कितने रुपये में लगभग कितनी यूनिट मिलेंगी।'],
+    ['भुगतान करें', 'UPI, डेबिट/क्रेडिट कार्ड या नेट-बैंकिंग — भुगतान की रसीद संभालकर रखें।'],
+    ['बैलेंस अपडेट देखें', 'बैलेंस आमतौर पर कुछ मिनटों में अपडेट हो जाता है; कभी-कभी कुछ घंटे लग सकते हैं। मीटर की डिस्प्ले या ऐप में जाँचें।'],
+  ] : [
+    ['Open the recharge channel', channelLine],
+    ['Enter your consumer / meter number', 'You\'ll find it on your smart meter card, an old bill, or the meter\'s display.'],
+    ['Pick an amount', 'Use the table below to gauge roughly how many units your money buys.'],
+    ['Pay', 'UPI, debit/credit card or net-banking — keep the payment receipt.'],
+    ['Watch the balance update', 'The balance usually updates within minutes; occasionally it can take a few hours. Check the meter display or the app.'],
+  ];
+  const stepsHtml = steps.map(([t, d], i) =>
+    `<li><span class="svc-step-num">${i + 1}</span><div><strong>${esc(t)}</strong><span>${d}</span></div></li>`).join('');
+
+  const rows = rechargeRowsHtml(discom, hi);
+  const valueTable = rows ? (hi ? `
+    <section class="seo-section">
+      <h2>₹ कितने में कितनी यूनिट? — ${esc(discom.name)} दरों पर</h2>
+      <p>${esc(discom.name)} की असली घरेलू स्लैब दरों (${rupee(dr.min)}–${rupee(dr.max)}/यूनिट) से निकाला गया मोटा अनुमान। ध्यान रहे — प्रीपेड बैलेंस से सिर्फ़ ऊर्जा शुल्क ही नहीं, फिक्स्ड चार्ज, FPPA और बिजली शुल्क भी रोज़ाना कटते हैं, इसलिए असली यूनिट इससे कुछ कम मिलेंगी।</p>
+      <div class="comparison-table-wrapper"><table class="comparison-table">
+        <thead><tr><th>रिचार्ज राशि</th><th class="num">अनुमानित यूनिट</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+      <p class="seo-cta-row"><a class="seo-cta" href="${calcHref}">सटीक ${esc(discom.name)} बिल कैलकुलेटर खोलें →</a></p>
+    </section>` : `
+    <section class="seo-section">
+      <h2>How many units does a recharge buy on ${esc(discom.name)}?</h2>
+      <p>A rough estimate computed from ${esc(discom.name)}'s real domestic slab rates (${rupee(dr.min)}–${rupee(dr.max)}/unit). Remember — your prepaid balance doesn't only pay energy charges: fixed charges, FPPA and electricity duty are deducted daily too, so actual units will be somewhat lower.</p>
+      <div class="comparison-table-wrapper"><table class="comparison-table">
+        <thead><tr><th>Recharge amount</th><th class="num">Approx. units</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+      <p class="seo-cta-row"><a class="seo-cta" href="${calcHref}">Open the exact ${esc(discom.name)} bill calculator →</a></p>
+    </section>`) : '';
+
+  const lowBalance = hi ? `
+    <section class="seo-section">
+      <h2>बैलेंस कम या ख़त्म हो जाए तो क्या होता है?</h2>
+      <p>कम बैलेंस पर मीटर/ऐप से अलर्ट (SMS/नोटिफ़िकेशन) मिलता है। बैलेंस निगेटिव होने पर सप्लाई अपने-आप कट सकती है — हालाँकि ज़्यादातर डिस्कॉम रात, रविवार और छुट्टियों में कटौती नहीं करते (नियम डिस्कॉम के अनुसार अलग हैं)। रिचार्ज करते ही सप्लाई आमतौर पर अपने-आप बहाल हो जाती है — कोई अलग reconnection शुल्क नहीं लगता। पूरा विवरण हमारी गाइड में: <a href="${guideBase}smart-meter-prepaid-disconnection/">प्रीपेड स्मार्ट मीटर कटौती के नियम →</a></p>
+    </section>` : `
+    <section class="seo-section">
+      <h2>What happens when the balance runs low or out?</h2>
+      <p>You get low-balance alerts (SMS/app notification) from the meter. If the balance goes negative, supply can be disconnected automatically — though most DISCOMs do not disconnect at night, on Sundays or on holidays (rules vary by DISCOM). Once you recharge, supply is normally restored automatically with no separate reconnection fee. Full details in our guide: <a href="${guideBase}smart-meter-prepaid-disconnection/">prepaid smart meter disconnection rules →</a></p>
+    </section>`;
+
+  // Key facts table — all real data.
+  const factRows = [];
+  factRows.push([hi ? 'डिस्कॉम' : 'DISCOM', esc(long)]);
+  factRows.push([hi ? 'राज्य / केंद्र शासित प्रदेश' : 'State / UT', esc(hi ? stateHi : state)]);
+  if (region) factRows.push([hi ? 'सेवा क्षेत्र' : 'Service region', esc(region)]);
+  if (site) factRows.push([hi ? 'आधिकारिक रिचार्ज पोर्टल' : 'Official recharge portal', `<a href="${attr(site)}" target="_blank" rel="noopener">${esc(host)} ↗</a>`]);
+  if (dr) factRows.push([hi ? 'घरेलू ऊर्जा दर' : 'Domestic energy rate', `${rupee(dr.min)} – ${rupee(dr.max)} ${hi ? 'प्रति यूनिट' : 'per unit'}`]);
+  if (discom.tariffYear) factRows.push([hi ? 'टैरिफ वर्ष' : 'Tariff year', esc(hi ? hiFy(discom.tariffYear) : discom.tariffYear)]);
+  const factsHtml = `
+    <section class="seo-section">
+      <h2>${hi ? `${esc(discom.name)} स्मार्ट मीटर रिचार्ज — एक नज़र में` : `${esc(discom.name)} smart meter recharge at a glance`}</h2>
+      <table class="seo-facts"><tbody>${factRows.map(([k, v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join('')}</tbody></table>
+    </section>`;
+
+  const rcHref = `/recharge-calculator/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}`;
+  const related = hi ? `
+    <section class="seo-section">
+      <h2>स्मार्ट मीटर से जुड़ी और मदद</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="${rcHref}"><strong>रिचार्ज कैलकुलेटर — ₹500 कितने दिन चलेगा?</strong><span>${esc(discom.name)} की असली दरों से दैनिक ख़र्च और आदर्श मासिक रिचार्ज</span></a>
+        <a class="seo-link-card" href="${guideBase}smart-meter-running-fast/"><strong>क्या स्मार्ट मीटर तेज़ चलता है?</strong><span>ज़्यादा रीडिंग की असली वजहें और जाँच का तरीक़ा</span></a>
+        <a class="seo-link-card" href="${guideBase}smart-meter-prepaid-disconnection/"><strong>प्रीपेड कटौती के नियम</strong><span>कब कटती है सप्लाई, कब नहीं — और बहाली कैसे होती है</span></a>
+        <a class="seo-link-card" href="${tariffHref}"><strong>${esc(discom.name)} टैरिफ व दरें</strong><span>पूरी ${esc(hiFy(discom.tariffYear || 'FY 2025-26'))} स्लैब अनुसूची</span></a>
+      </div>
+    </section>` : `
+    <section class="seo-section">
+      <h2>More smart meter help</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="${rcHref}"><strong>Recharge calculator — how long will ₹500 last?</strong><span>Daily burn rate and ideal monthly recharge from real ${esc(discom.name)} rates</span></a>
+        <a class="seo-link-card" href="${guideBase}smart-meter-running-fast/"><strong>Is your smart meter running fast?</strong><span>Real reasons readings jump, and how to test it</span></a>
+        <a class="seo-link-card" href="${guideBase}smart-meter-prepaid-disconnection/"><strong>Prepaid disconnection rules</strong><span>When supply is cut, when it isn't — and how restoration works</span></a>
+        <a class="seo-link-card" href="${tariffHref}"><strong>${esc(discom.name)} tariff &amp; rates</strong><span>The full ${esc(discom.tariffYear || 'FY 2025-26')} slab schedule</span></a>
+      </div>
+    </section>`;
+
+  // FAQs — every answer carries a DISCOM-specific fact.
+  const faqs = [];
+  if (hi) {
+    faqs.push({ q: `${discom.name} स्मार्ट मीटर रिचार्ज कैसे करें?`,
+      a: `${channelLine} भुगतान UPI, कार्ड या नेट-बैंकिंग से करें; बैलेंस आमतौर पर कुछ मिनटों में अपडेट हो जाता है।` });
+    if (dr) faqs.push({ q: `₹500 के रिचार्ज में ${discom.name} पर कितनी यूनिट मिलती हैं?`,
+      a: `${esc(discom.name)} की घरेलू दर ${rupee(dr.min)}–${rupee(dr.max)} प्रति यूनिट है, इसलिए ₹500 में मोटे तौर पर ${Math.floor(500 / dr.max)}–${Math.floor(500 / Math.max(dr.min, 0.01))} यूनिट मिलती हैं — फिक्स्ड चार्ज, FPPA व शुल्क कटने के बाद कुछ कम।` });
+    faqs.push({ q: 'न्यूनतम रिचार्ज राशि कितनी है?',
+      a: 'न्यूनतम राशि डिस्कॉम के अनुसार अलग-अलग है — सटीक सीमा आधिकारिक पोर्टल/ऐप पर रिचार्ज करते समय दिखती है। बार-बार छोटे रिचार्ज से बेहतर है महीने की अनुमानित खपत के बराबर एक रिचार्ज करना।' });
+    faqs.push({ q: 'रिचार्ज के बाद भी बिजली नहीं आई तो?',
+      a: 'भुगतान सफल होने पर सप्लाई आमतौर पर अपने-आप बहाल हो जाती है; कुछ मिनट रुकें। न आए तो मीटर की डिस्प्ले पर बैलेंस देखें, रसीद संभालें और 1912 या डिस्कॉम हेल्पलाइन पर शिकायत करें।' });
+  } else {
+    faqs.push({ q: `How do I recharge my ${discom.name} smart meter?`,
+      a: `${channelLine} Pay by UPI, card or net-banking; the balance usually updates within minutes.` });
+    if (dr) faqs.push({ q: `How many units does a ₹500 recharge give on ${discom.name}?`,
+      a: `${esc(discom.name)}'s domestic rate spans ${rupee(dr.min)}–${rupee(dr.max)} per unit, so ₹500 buys roughly ${Math.floor(500 / dr.max)}–${Math.floor(500 / Math.max(dr.min, 0.01))} units — a little less after fixed charges, FPPA and duty are deducted.` });
+    faqs.push({ q: 'What is the minimum recharge amount?',
+      a: 'The minimum varies by DISCOM — the exact limit is shown on the official portal/app at recharge time. Rather than many small top-ups, one recharge sized to your typical monthly consumption is usually more convenient.' });
+    faqs.push({ q: 'I recharged but power hasn\'t come back — what now?',
+      a: 'After a successful payment, supply is normally restored automatically; give it a few minutes. If not, check the balance on the meter display, keep your receipt, and raise a complaint on 1912 or your DISCOM helpline.' });
+  }
+
+  const trail = hi ? [
+    { name: 'होम', url: '/' },
+    { name: 'स्मार्ट मीटर रिचार्ज', url: '/hi/smart-meter-recharge/' },
+    { name: discom.name, url: null },
+  ] : [
+    { name: 'Home', url: '/' },
+    { name: 'Smart Meter Recharge', url: '/smart-meter-recharge/' },
+    { name: discom.name, url: null },
+  ];
+
+  const body = `
+  <section class="seo-page container">
+    ${breadcrumbs(trail)}
+    ${langSwitchLink(enUrl, hi ? 'hi' : 'en')}
+    <h1>${h1}</h1>
+    <p class="seo-lead">${lead}</p>
+    ${site ? `<p class="seo-cta-row"><a class="seo-cta" href="${attr(site)}" target="_blank" rel="noopener">${hi ? `आधिकारिक ${esc(discom.name)} पोर्टल पर रिचार्ज करें ↗` : `Recharge on the official ${esc(discom.name)} portal ↗`}</a></p>` : ''}
+
+    <section class="seo-section">
+      <h2>${hi ? `${esc(discom.name)} स्मार्ट मीटर रिचार्ज के स्टेप` : `How to recharge a ${esc(discom.name)} smart meter`}</h2>
+      <ol class="svc-steps">${stepsHtml}</ol>
+    </section>
+
+    ${valueTable}
+    ${lowBalance}
+    ${factsHtml}
+    ${related}
+    ${faqHtml(faqs, hi)}
+    <p class="seo-disclaimer">${hi
+      ? `सामान्य मार्गदर्शन — रिचार्ज चैनल, न्यूनतम राशि और कटौती के नियम डिस्कॉम के अनुसार बदलते हैं। भुगतान हमेशा आधिकारिक ${esc(discom.name)} पोर्टल/ऐप या BBPS-समर्थित ऐप से ही करें; TheDiscomBill कभी आपका खाता नंबर, OTP या पासवर्ड नहीं माँगता। <a href="${hubHref}">सभी डिस्कॉम की रिचार्ज गाइड देखें →</a>`
+      : `General guidance — recharge channels, minimum amounts and disconnection rules vary by DISCOM. Always pay only on the official ${esc(discom.name)} portal/app or a BBPS-enabled app; TheDiscomBill never asks for your account number, OTP or password. <a href="${hubHref}">See recharge guides for every DISCOM →</a>`}</p>
+  </section>`;
+
+  return layout({
+    title, description, canonical: SITE + url, page: enUrl, lang: hi ? 'hi' : 'en',
+    jsonld: [
+      breadcrumbJsonLd(trail.map((t, i) => i === trail.length - 1 ? { ...t, url } : t)),
+      faqJsonLd(faqs),
+    ],
+    body,
+  });
+}
+
+function smartMeterHubPage(states, lang = 'en') {
+  const hi = lang === 'hi';
+  const enUrl = '/smart-meter-recharge/';
+  const url = hi ? hiUrl(enUrl) : enUrl;
+  const base = hi ? '/hi/smart-meter-recharge/' : '/smart-meter-recharge/';
+  const guideBase = hi ? '/hi/guides/' : '/guides/';
+  const title = hi
+    ? 'स्मार्ट मीटर रिचार्ज कैसे करें — हर डिस्कॉम की गाइड'
+    : 'Smart Meter Recharge — Online Guide for Every DISCOM';
+  const description = hi
+    ? 'प्रीपेड स्मार्ट मीटर ऑनलाइन रिचार्ज करने की डिस्कॉम-वार गाइड: आधिकारिक पोर्टल, UPI/BBPS, रिचार्ज में मिलने वाली यूनिट और कम-बैलेंस के नियम — सभी राज्यों के लिए।'
+    : 'DISCOM-wise guides to recharging a prepaid smart meter online: official portals, UPI/BBPS, units per recharge and low-balance rules — for every Indian state.';
+
+  const stateBlocks = states.map(state => {
+    const discoms = getDiscoms(state);
+    if (!discoms.length) return '';
+    const links = discoms.map(d => `<a href="${base}${slugify(state)}/${d.id}/">${esc(d.name)}</a>`).join('');
+    return `
+      <div class="seo-dir-state">
+        <div class="seo-dir-state-head">
+          <span class="seo-dir-badge" aria-hidden="true">${esc(stateCode(state))}</span>
+          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">${esc(hi ? hiState(state) : state)}</h3></span>
+        </div>
+        <div class="seo-dir-discoms">${links}</div>
+      </div>`;
+  }).join('');
+
+  const faqs = hi ? [
+    { q: 'स्मार्ट मीटर रिचार्ज कैसे होता है?',
+      a: 'अपने डिस्कॉम के आधिकारिक पोर्टल/ऐप या BBPS-समर्थित UPI ऐप (PhonePe, Google Pay, Paytm) में उपभोक्ता/मीटर नंबर डालकर राशि चुनें और भुगतान करें। बैलेंस आमतौर पर कुछ मिनटों में अपडेट हो जाता है। ऊपर अपना डिस्कॉम चुनें — हर पेज पर सटीक तरीक़ा दिया है।' },
+    { q: 'प्रीपेड स्मार्ट मीटर में बैलेंस ख़त्म हो जाए तो क्या बिजली तुरंत कट जाती है?',
+      a: 'निगेटिव बैलेंस पर सप्लाई अपने-आप कट सकती है, लेकिन ज़्यादातर डिस्कॉम रात, रविवार और छुट्टियों में कटौती नहीं करते। रिचार्ज करते ही सप्लाई आमतौर पर अपने-आप बहाल हो जाती है।' },
+    { q: 'क्या स्मार्ट मीटर सामान्य मीटर से ज़्यादा बिल बनाता है?',
+      a: `नहीं — दरें वही टैरिफ आदेश वाली रहती हैं। रीडिंग बढ़ने की असली वजहें (पुराने मीटर की धीमी रीडिंग, बकाया समायोजन आदि) हमारी <a href="${guideBase}smart-meter-running-fast/">गाइड</a> में देखें।` },
+  ] : [
+    { q: 'How does a smart meter recharge work?',
+      a: 'Enter your consumer/meter number on your DISCOM\'s official portal/app or a BBPS-enabled UPI app (PhonePe, Google Pay, Paytm), pick an amount and pay. The balance usually updates within minutes. Pick your DISCOM above — each page gives the exact channel.' },
+    { q: 'Is power cut immediately when a prepaid smart meter balance runs out?',
+      a: 'Supply can be disconnected automatically on a negative balance, but most DISCOMs do not disconnect at night, on Sundays or holidays. Once you recharge, supply is normally restored automatically.' },
+    { q: 'Does a smart meter bill more than a normal meter?',
+      a: `No — the rates stay exactly as per the tariff order. The real reasons readings jump (an old meter under-reading, arrears adjustment and more) are covered in our <a href="${guideBase}smart-meter-running-fast/">guide</a>.` },
+  ];
+
+  const trail = hi
+    ? [{ name: 'होम', url: '/' }, { name: 'स्मार्ट मीटर रिचार्ज', url: null }]
+    : [{ name: 'Home', url: '/' }, { name: 'Smart Meter Recharge', url: null }];
+
+  const body = `
+  <section class="seo-page container">
+    ${breadcrumbs(trail)}
+    ${langSwitchLink(enUrl, hi ? 'hi' : 'en')}
+    <h1>${hi ? 'स्मार्ट मीटर रिचार्ज — हर डिस्कॉम की ऑनलाइन गाइड' : 'Smart Meter Recharge — Online Guide for Every DISCOM'}</h1>
+    <p class="seo-lead">${hi
+      ? 'भारत में प्रीपेड स्मार्ट मीटर तेज़ी से लग रहे हैं। अपना डिस्कॉम चुनें — आधिकारिक रिचार्ज पोर्टल, स्टेप-बाय-स्टेप तरीक़ा, और असली टैरिफ दरों से निकाला गया अनुमान कि हर रिचार्ज में कितनी यूनिट मिलती हैं।'
+      : 'Prepaid smart meters are rolling out fast across India. Pick your DISCOM for its official recharge portal, step-by-step instructions, and a units-per-recharge estimate computed from its real tariff rates.'}</p>
+    <div class="seo-directory">${stateBlocks}</div>
+    <section class="seo-section">
+      <h2>${hi ? 'स्मार्ट मीटर गाइड व टूल' : 'Smart meter guides & tools'}</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/recharge-calculator/"><strong>${hi ? 'रिचार्ज कैलकुलेटर — ₹500 कितने दिन चलेगा?' : 'Recharge calculator — how long will ₹500 last?'}</strong></a>
+        <a class="seo-link-card" href="${guideBase}smart-meter-running-fast/"><strong>${hi ? 'क्या स्मार्ट मीटर तेज़ चलता है?' : 'Is your smart meter running fast?'}</strong></a>
+        <a class="seo-link-card" href="${guideBase}smart-meter-prepaid-disconnection/"><strong>${hi ? 'प्रीपेड कटौती व बहाली के नियम' : 'Prepaid disconnection & restoration rules'}</strong></a>
+        <a class="seo-link-card" href="${guideBase}smart-meter-recharge-failed/"><strong>${hi ? 'रिचार्ज फेल / बैलेंस अपडेट नहीं हुआ?' : 'Recharge failed or balance not updated?'}</strong></a>
+        <a class="seo-link-card" href="${guideBase}smart-meter-balance-check/"><strong>${hi ? 'बैलेंस कैसे देखें (डिस्प्ले, ऐप, SMS)' : 'How to check your balance (display, app, SMS)'}</strong></a>
+        <a class="seo-link-card" href="${guideBase}prepaid-vs-postpaid-smart-meter/"><strong>${hi ? 'प्रीपेड बनाम पोस्टपेड — कौन बेहतर?' : 'Prepaid vs postpaid — which is better?'}</strong></a>
+      </div>
+    </section>
+    ${faqHtml(faqs, hi)}
+  </section>`;
+
+  return layout({
+    title, description, canonical: SITE + url, page: enUrl, lang: hi ? 'hi' : 'en',
+    jsonld: [breadcrumbJsonLd(trail.map((t, i) => i === trail.length - 1 ? { ...t, url } : t)), faqJsonLd(faqs)],
+    body,
+  });
+}
+
 // ── sitemap + robots ──────────────────────────────────────────────────────────
 const STATIC_ROUTES = [
   { loc: '/', priority: '1.0', changefreq: 'weekly' },
@@ -1574,6 +1874,7 @@ const STATIC_ROUTES = [
   { loc: '/tariffs/', priority: '0.8', changefreq: 'monthly' },
   // '/tariffs/states/' is added in buildSitemap() with its Hindi alternate.
   { loc: '/services/', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/recharge-calculator/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/bill-review/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/methodology/', priority: '0.7', changefreq: 'monthly' },
 ];
@@ -1599,11 +1900,13 @@ function buildSitemap(states) {
   }
   urls.push({ loc: '/glossary/', priority: '0.7', changefreq: 'monthly', alt: true });
   urls.push({ loc: '/tariffs/states/', priority: '0.8', changefreq: 'monthly', alt: true });
+  urls.push({ loc: '/smart-meter-recharge/', priority: '0.8', changefreq: 'monthly', alt: true });
   for (const state of states) {
     const stateSlug = slugify(state);
     urls.push({ loc: `/tariffs/${stateSlug}/`, priority: '0.7', changefreq: 'monthly', alt: true });
     for (const d of getDiscoms(state)) {
       urls.push({ loc: `/tariffs/${stateSlug}/${d.id}/`, priority: '0.6', changefreq: 'monthly', alt: true });
+      urls.push({ loc: `/smart-meter-recharge/${stateSlug}/${d.id}/`, priority: '0.6', changefreq: 'monthly', alt: true });
     }
   }
   const entries = [];
@@ -1673,6 +1976,8 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [Bill Review by Experts](${SITE}/bill-review/): upload a bill and have a human expert review it (free account)
 - [New Connection](${SITE}/new-connection/): charges, documents and process per DISCOM
 - [Complaint](${SITE}/complaint/): DISCOM complaint portals and the 1912 national helpline
+- [Smart Meter Recharge](${SITE}/smart-meter-recharge/): per-DISCOM guides to recharging a prepaid smart meter online, with units-per-recharge estimates from real tariff rates
+- [Smart Meter Recharge Calculator](${SITE}/recharge-calculator/): how many days a ₹200–₹2000 prepaid recharge lasts on any DISCOM — daily burn rate and ideal monthly recharge from real tariff rates
 
 ## Guides
 
@@ -1740,6 +2045,8 @@ function writeSearchIndex(states) {
     ['All Guides', 'सभी गाइड', '/guides/', 'guides articles help'],
     ['Billing Glossary', 'बिलिंग शब्दावली', '/glossary/', 'terms definitions glossary'],
     ['All States & DISCOMs', 'सभी राज्य और डिस्कॉम', '/tariffs/states/', 'tariff directory states list'],
+    ['Smart Meter Recharge', 'स्मार्ट मीटर रिचार्ज', '/smart-meter-recharge/', 'prepaid smart meter recharge online balance'],
+    ['Smart Meter Recharge Calculator', 'स्मार्ट मीटर रिचार्ज कैलकुलेटर', '/recharge-calculator/', 'recharge days last how long 500 prepaid balance calculator'],
     ['Methodology', 'कार्यप्रणाली', '/methodology/', 'how rates verified sources'],
   ].forEach(([t, h, u, k]) => entries.push({ t, h, u, k, g: 'tool' }));
 
@@ -1778,6 +2085,12 @@ function writeSearchIndex(states) {
         k: [discom.fullName, discom.area, state].filter(Boolean).join(' '),
         g: 'tariff',
       });
+      entries.push({
+        t: `${discom.name} Smart Meter Recharge`,
+        u: `/smart-meter-recharge/${stateSlug}/${discom.id}/`, hu: `/hi/smart-meter-recharge/${stateSlug}/${discom.id}/`,
+        k: [discom.fullName, state, 'prepaid recharge online'].filter(Boolean).join(' '),
+        g: 'recharge',
+      });
     }
   }
 
@@ -1813,12 +2126,17 @@ export function generateSeo() {
     emitPage(`${p}glossary`, glossaryPage(lang));
     pages++;
 
+    emitPage(`${p}smart-meter-recharge`, smartMeterHubPage(states, lang));
+    pages++;
+
     for (const state of states) {
       const stateSlug = slugify(state);
       emitPage(`${p}tariffs/${stateSlug}`, statePage(state, lang));
       pages++;
       for (const discom of getDiscoms(state)) {
         emitPage(`${p}tariffs/${stateSlug}/${discom.id}`, discomPage(state, discom, lang));
+        pages++;
+        emitPage(`${p}smart-meter-recharge/${stateSlug}/${discom.id}`, smartMeterDiscomPage(state, discom, lang));
         pages++;
       }
     }

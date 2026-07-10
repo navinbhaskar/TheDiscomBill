@@ -2348,6 +2348,19 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .svc-facts-links { display: flex; flex-wrap: wrap; gap: 4px 18px; justify-content: center; margin-top: 9px; }
 .svc-facts-links a { font-size: 12.5px; font-weight: 500; }
 
+/* Smart Meter Recharge Calculator (/recharge-calculator/) */
+.rc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+.rc-stat { background: var(--surface-sunken); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+.rc-stat-label { font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--text-tertiary); }
+.rc-stat-value { font-size: 22px; font-weight: 800; color: var(--text-primary); font-family: var(--font-display); }
+.rc-stat-value small { font-size: 12px; font-weight: 600; color: var(--text-tertiary); margin-left: 2px; }
+.rc-stat-hero { background: var(--brand-faint); border-color: var(--brand); }
+.rc-stat-hero .rc-stat-value { color: var(--brand); }
+.rc-row-custom td { background: var(--brand-faint); font-weight: 700; }
+.rc-note { font-size: 12.5px; color: var(--text-tertiary); line-height: 1.6; margin: 12px 0 0; }
+.rc-links { margin-top: 12px; }
+@media (max-width: 640px) { .rc-stats { grid-template-columns: 1fr; } }
+
 /* New Connection: info grid (process steps + documents) */
 .svc-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
 .svc-info-card { background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 18px; box-shadow: var(--shadow-sm); }

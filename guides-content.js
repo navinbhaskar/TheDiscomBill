@@ -2154,4 +2154,441 @@ export const GUIDES = [
         a: 'पोस्टपेड अवधि का बकाया आमतौर पर हर रिचार्ज के एक तय प्रतिशत के रूप में वसूला जाता है जब तक चुकता न हो, जो रिचार्ज रसीद में बँटवारे के रूप में दिखता है। बकाया चुकने तक आपका उपयोगी बैलेंस धीमा बढ़ता है; आँकड़ा गलत लगे तो रिचार्ज खाते को सबूत बनाकर आपत्ति करें।' },
     ],
   },
+
+  {
+    slug: 'smart-meter-recharge-failed',
+    title: 'Smart Meter Recharge Failed or Balance Not Updated? What to Do',
+    metaTitle: 'Smart Meter Recharge Failed — Money Deducted but Balance Not Updated',
+    description: 'Money deducted but your smart meter balance hasn’t updated? Why prepaid recharges get stuck (settlement lag, meter offline, wrong consumer number), how long refunds take, and the exact escalation path with the evidence to keep.',
+    minutes: 5,
+    intro: `A prepaid recharge normally reflects on the meter within minutes — so when money leaves your
+      account and the balance doesn't move, it feels alarming. In almost every case the money is not
+      lost: it is either <strong>still settling</strong>, <strong>waiting for the meter to come back
+      online</strong>, or <strong>sitting against a wrong consumer number</strong>. This guide walks
+      through the fix for each case, the refund timelines, and what evidence to keep so a complaint
+      resolves fast.`,
+    sections: `
+      <section class="seo-section">
+        <h2>First: give it 30 minutes, then check in the right place</h2>
+        <p>Recharge money passes through several systems — your bank/UPI app, the payment aggregator or
+        BBPS, the DISCOM's billing system, and finally the meter itself. Each hop can add delay,
+        especially in the evening rush when everyone recharges at once. Before treating it as failed:</p>
+        <ol>
+          <li><strong>Check the payment status in the app you paid from.</strong> "Pending" means the
+          money hasn't reached the DISCOM yet — most pending UPI transactions auto-resolve (success or
+          auto-refund) within a few hours.</li>
+          <li><strong>Check the balance in the DISCOM's own app or portal</strong>, not just the meter
+          display. The billing system often credits first and pushes to the meter afterwards.</li>
+          <li><strong>Check the meter display last.</strong> If the app shows the new balance but the
+          meter doesn't, the meter is likely offline (weak network) — the balance syncs when it
+          reconnects, and your supply is unaffected in the meantime if it was on.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>Money deducted, balance not updated — the three causes</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>What happened</th><th>How it resolves</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Settlement lag</strong> — payment succeeded but is still travelling between the aggregator and the DISCOM</td><td>Self-resolves, usually within a few hours (occasionally up to 24–48 h on a banking holiday). Keep the transaction ID; don't recharge again immediately or you may double-pay.</td></tr>
+            <tr><td><strong>Transaction actually failed</strong> — money debited, payment marked failed</td><td>Auto-refund to the paying account, typically within 3–7 working days under UPI/card chargeback rules. If it doesn't arrive, raise it with the payment app AND your bank, quoting the UTR/transaction ID.</td></tr>
+            <tr><td><strong>Wrong consumer/meter number</strong> — payment succeeded, but into someone else's account</td><td>Won't self-resolve. Complain to the DISCOM in writing with the receipt; they can trace where the credit landed and transfer it. This is the slowest case — double-check the number every time.</td></tr>
+          </tbody>
+        </table></div>
+        <p>One more possibility if the balance updated but <em>supply</em> didn't return: the
+        reconnection command may not have reached the meter — see
+        <a href="/guides/smart-meter-prepaid-disconnection/">getting power back after a recharge</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>The escalation path (and the evidence that wins)</h2>
+        <ol>
+          <li><strong>Save everything now:</strong> payment screenshot, transaction/UTR number, date-time,
+          the consumer number you entered, and the meter's balance screen.</li>
+          <li><strong>Payment app first</strong> if the app shows failed/pending — their support handles
+          refunds for their own leg of the transaction.</li>
+          <li><strong>DISCOM next</strong> if the payment shows success: call <strong>1912</strong> or use
+          the DISCOM app/portal complaint section, quoting the UTR. Ask for a written complaint number.</li>
+          <li><strong>Escalate in writing</strong> to the sub-division office if unresolved in a week,
+          then the DISCOM's Consumer Grievance Redressal Forum (CGRF). Money-trail cases with a UTR
+          almost always resolve at step 3.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>Avoiding a stuck recharge next time</h2>
+        <ul>
+          <li><strong>Recharge before the balance is critical</strong> — a stuck payment at 11 pm with
+          ₹2 left is the worst case. Our <a href="/recharge-calculator/">recharge calculator</a> shows
+          how many days your current balance really has.</li>
+          <li><strong>Save your consumer number</strong> in the payment app rather than typing it
+          each time.</li>
+          <li><strong>Prefer the DISCOM's own app/portal</strong> for large recharges — one hop fewer
+          than third-party channels.</li>
+          <li><strong>Keep one month's bill as the recharge size</strong> so a single failure never
+          becomes an emergency.</li>
+        </ul>
+      </section>`,
+    faqs: [
+      { q: 'My money was deducted but the smart meter balance is not updated. Is it lost?',
+        a: 'Almost never. Either the payment is still settling (resolves within hours), it failed and will auto-refund in 3–7 working days, or it was credited to a wrong consumer number (recoverable via a written DISCOM complaint with your transaction ID). Keep the UTR number — it is the key to every resolution path.' },
+      { q: 'How long does a smart meter recharge take to reflect?',
+        a: 'Usually within minutes. Settlement lag can stretch it to a few hours, and if the meter itself is offline the DISCOM app shows the credit first and the meter syncs when connectivity returns. If the DISCOM app shows nothing after 24 hours, complain with the transaction ID.' },
+      { q: 'I recharged the wrong consumer number. Can I get the money back?',
+        a: 'Yes, but only through the DISCOM — the payment itself succeeded, so the payment app can’t reverse it. Submit a written complaint with the receipt and both numbers (yours and the one paid to); the DISCOM can trace and transfer the credit.' },
+      { q: 'Should I recharge again while the first payment is pending?',
+        a: 'If supply is still on, wait a few hours — pending payments usually resolve and you avoid a double credit. If you are disconnected and need power now, do the second recharge, keep both receipts, and claim the first back once its status settles.' },
+    ],
+
+    titleHi: 'स्मार्ट मीटर रिचार्ज फेल या बैलेंस अपडेट नहीं हुआ? यह करें',
+    metaTitleHi: 'स्मार्ट मीटर रिचार्ज फेल — पैसे कटे पर बैलेंस नहीं बढ़ा? समाधान',
+    descriptionHi: 'पैसे कट गए पर स्मार्ट मीटर का बैलेंस नहीं बढ़ा? प्रीपेड रिचार्ज कहाँ अटकता है (सेटलमेंट देरी, मीटर ऑफ़लाइन, गलत उपभोक्ता नंबर), रिफंड में कितना समय लगता है, और शिकायत का सही क्रम व ज़रूरी सबूत।',
+    introHi: `प्रीपेड रिचार्ज आमतौर पर मिनटों में मीटर पर दिखता है — इसलिए खाते से पैसे कटें और बैलेंस न बढ़े
+      तो घबराहट स्वाभाविक है। लगभग हर मामले में पैसा डूबा नहीं होता: वह या तो <strong>अभी सेटल हो रहा
+      है</strong>, <strong>मीटर के ऑनलाइन आने की प्रतीक्षा में है</strong>, या <strong>गलत उपभोक्ता नंबर पर
+      जमा हो गया है</strong>। यह गाइड तीनों स्थितियों का समाधान, रिफंड की समय-सीमा और वे सबूत बताती है
+      जिनसे शिकायत जल्दी सुलझती है।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>पहले 30 मिनट रुकें, फिर सही जगह देखें</h2>
+        <p>रिचार्ज का पैसा कई प्रणालियों से गुज़रता है — आपका बैंक/UPI ऐप, पेमेंट एग्रीगेटर या BBPS, डिस्कॉम
+        का बिलिंग सिस्टम, और अंत में मीटर। हर पड़ाव देरी जोड़ सकता है, ख़ासकर शाम की भीड़ में। फेल मानने
+        से पहले:</p>
+        <ol>
+          <li><strong>जिस ऐप से भुगतान किया, वहाँ स्टेटस देखें।</strong> "Pending" का मतलब पैसा अभी डिस्कॉम
+          तक पहुँचा नहीं — अधिकांश पेंडिंग UPI लेनदेन कुछ घंटों में खुद सुलझ जाते हैं (सफल या ऑटो-रिफंड)।</li>
+          <li><strong>डिस्कॉम के अपने ऐप/पोर्टल में बैलेंस देखें</strong>, सिर्फ़ मीटर डिस्प्ले नहीं। बिलिंग
+          सिस्टम अक्सर पहले क्रेडिट करता है और बाद में मीटर तक भेजता है।</li>
+          <li><strong>मीटर डिस्प्ले सबसे बाद में देखें।</strong> ऐप में नया बैलेंस दिखे पर मीटर में नहीं, तो मीटर
+          शायद ऑफ़लाइन है (कमज़ोर नेटवर्क) — कनेक्टिविटी लौटते ही बैलेंस सिंक हो जाता है, और तब तक चालू
+          आपूर्ति पर असर नहीं पड़ता।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>पैसे कटे, बैलेंस नहीं बढ़ा — तीन कारण</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>क्या हुआ</th><th>कैसे सुलझता है</th></tr></thead>
+          <tbody>
+            <tr><td><strong>सेटलमेंट देरी</strong> — भुगतान सफल है पर एग्रीगेटर और डिस्कॉम के बीच रास्ते में है</td><td>खुद सुलझ जाता है, आमतौर पर कुछ घंटों में (बैंकिंग अवकाश पर कभी-कभी 24–48 घंटे)। ट्रांज़ैक्शन ID संभालें; तुरंत दोबारा रिचार्ज न करें, दोहरा भुगतान हो सकता है।</td></tr>
+            <tr><td><strong>लेनदेन सचमुच फेल</strong> — पैसा कटा, भुगतान फेल दर्ज हुआ</td><td>UPI/कार्ड नियमों के तहत ऑटो-रिफंड, आमतौर पर 3–7 कार्यदिवस में उसी खाते में। न आए तो UTR/ट्रांज़ैक्शन ID के साथ पेमेंट ऐप और बैंक दोनों से शिकायत करें।</td></tr>
+            <tr><td><strong>गलत उपभोक्ता/मीटर नंबर</strong> — भुगतान सफल, पर किसी और के खाते में</td><td>खुद नहीं सुलझेगा। रसीद के साथ डिस्कॉम को लिखित शिकायत करें; वे क्रेडिट का पता लगाकर स्थानांतरित कर सकते हैं। यह सबसे धीमा मामला है — नंबर हर बार दोबारा जाँचें।</td></tr>
+          </tbody>
+        </table></div>
+        <p>बैलेंस बढ़ गया पर <em>बिजली</em> नहीं लौटी, तो रीकनेक्ट कमांड मीटर तक नहीं पहुँचा हो सकता —
+        देखें <a href="/hi/guides/smart-meter-prepaid-disconnection/">रिचार्ज के बाद बिजली वापस पाना</a>।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>शिकायत का क्रम (और जीतने वाले सबूत)</h2>
+        <ol>
+          <li><strong>अभी सब संभालें:</strong> भुगतान का स्क्रीनशॉट, ट्रांज़ैक्शन/UTR नंबर, दिनांक-समय, डाला
+          गया उपभोक्ता नंबर, और मीटर की बैलेंस स्क्रीन।</li>
+          <li><strong>पहले पेमेंट ऐप</strong> — ऐप में फेल/पेंडिंग दिखे तो; अपने हिस्से के रिफंड वही संभालते हैं।</li>
+          <li><strong>फिर डिस्कॉम</strong> — भुगतान सफल दिखे तो: <strong>1912</strong> पर कॉल करें या डिस्कॉम
+          ऐप/पोर्टल के शिकायत खंड में UTR के साथ दर्ज करें। शिकायत संख्या लिखित माँगें।</li>
+          <li><strong>हफ़्ते भर में न सुलझे</strong> तो उपखंड कार्यालय को लिखित, फिर डिस्कॉम का उपभोक्ता
+          शिकायत निवारण मंच (CGRF)। UTR वाले पैसों के मामले लगभग हमेशा तीसरे चरण पर सुलझ जाते हैं।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>अगली बार रिचार्ज अटकने से बचाव</h2>
+        <ul>
+          <li><strong>बैलेंस गंभीर होने से पहले रिचार्ज करें</strong> — रात 11 बजे ₹2 बचे हों और भुगतान अटक
+          जाए, यही सबसे बुरा हाल है। <a href="/recharge-calculator/">रिचार्ज कैलकुलेटर</a> बताता है कि मौजूदा
+          बैलेंस असल में कितने दिन चलेगा।</li>
+          <li><strong>उपभोक्ता नंबर ऐप में सेव रखें</strong>, हर बार टाइप न करें।</li>
+          <li><strong>बड़े रिचार्ज डिस्कॉम के अपने ऐप/पोर्टल से करें</strong> — तीसरे पक्ष से एक पड़ाव कम।</li>
+          <li><strong>रिचार्ज राशि एक महीने के बिल जितनी रखें</strong> ताकि एक विफलता कभी आपातकाल न बने।</li>
+        </ul>
+      </section>`,
+    faqsHi: [
+      { q: 'पैसे कट गए पर स्मार्ट मीटर का बैलेंस नहीं बढ़ा — क्या पैसा डूब गया?',
+        a: 'लगभग कभी नहीं। या तो भुगतान अभी सेटल हो रहा है (कुछ घंटों में सुलझता है), या फेल हुआ है और 3–7 कार्यदिवस में ऑटो-रिफंड होगा, या गलत उपभोक्ता नंबर पर जमा हुआ है (ट्रांज़ैक्शन ID के साथ डिस्कॉम को लिखित शिकायत से वापसी संभव)। UTR नंबर संभालें — हर समाधान की कुंजी वही है।' },
+      { q: 'स्मार्ट मीटर रिचार्ज दिखने में कितना समय लगता है?',
+        a: 'आमतौर पर मिनटों में। सेटलमेंट देरी इसे कुछ घंटों तक खींच सकती है, और मीटर ऑफ़लाइन हो तो डिस्कॉम ऐप में क्रेडिट पहले दिखता है और मीटर नेटवर्क लौटने पर सिंक होता है। 24 घंटे बाद भी ऐप में कुछ न दिखे तो ट्रांज़ैक्शन ID के साथ शिकायत करें।' },
+      { q: 'गलत उपभोक्ता नंबर पर रिचार्ज कर दिया — पैसे वापस मिलेंगे?',
+        a: 'हाँ, पर सिर्फ़ डिस्कॉम के ज़रिए — भुगतान सफल रहा है, इसलिए पेमेंट ऐप उसे पलट नहीं सकता। रसीद और दोनों नंबरों (आपका और जिस पर गया) के साथ लिखित शिकायत करें; डिस्कॉम क्रेडिट खोजकर स्थानांतरित कर सकता है।' },
+      { q: 'पहला भुगतान पेंडिंग है — क्या दोबारा रिचार्ज करूँ?',
+        a: 'आपूर्ति चालू है तो कुछ घंटे रुकें — पेंडिंग भुगतान आमतौर पर सुलझ जाते हैं और दोहरा क्रेडिट नहीं बनता। बिजली कटी है और तुरंत चाहिए, तो दूसरा रिचार्ज करें, दोनों रसीदें रखें, और पहले वाले का स्टेटस तय होते ही उसे वापस माँगें।' },
+    ],
+  },
+
+  {
+    slug: 'smart-meter-balance-check',
+    title: 'How to Check Your Smart Meter Balance (Display, App, SMS)',
+    metaTitle: 'Smart Meter Balance Check — Meter Display, DISCOM App & Daily Deductions',
+    description: 'Three ways to check a prepaid smart meter balance — the meter’s push-button display, the DISCOM app/portal, and SMS alerts — plus how to read the daily deduction ledger so you know exactly where the balance goes.',
+    minutes: 4,
+    intro: `A prepaid smart meter shows its balance in three places: <strong>on the meter itself</strong>,
+      in the <strong>DISCOM's app or portal</strong>, and through <strong>SMS alerts</strong>. Each has a
+      different use — the display is instant, the app has the full deduction history, and SMS works
+      without a smartphone. This guide covers all three, and shows how to read the daily deduction
+      ledger so a falling balance never surprises you.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. On the meter display (works without internet)</h2>
+        <p>Every smart meter has a <strong>push button</strong> that cycles the display through its
+        screens — press it repeatedly and watch the labels. The exact order varies by make, but you will
+        typically see: current balance (₹), cumulative units (kWh), instantaneous load (kW), and
+        voltage. The balance screen usually shows a ₹ symbol or a "BAL"/"CR" label; a negative figure
+        means you are consuming on credit and a disconnection may be queued.</p>
+        <p>Note that the meter's balance can lag the DISCOM's system by a sync cycle — if you just
+        recharged, the app updates first and the meter follows when it next connects.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. In the DISCOM app or portal (the full picture)</h2>
+        <p>The DISCOM's own app or consumer portal is the authoritative place: log in with your
+        consumer/account number to see the live balance, recharge history and — most usefully — the
+        <strong>daily deduction ledger</strong>. In Uttar Pradesh that is
+        <a href="https://uppclonline.com" target="_blank" rel="noopener">uppclonline.com</a> or the
+        UPPCL consumer app; in Bihar the <strong>Bihar Bijli Smart Meter</strong> app. For other
+        states, use the app or portal named on your recharge receipt — our
+        <a href="/smart-meter-recharge/">DISCOM-wise recharge pages</a> link each official portal.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. SMS alerts (no smartphone needed)</h2>
+        <p>DISCOMs send low-balance alerts to the mobile number registered against your connection —
+        typically at one or two thresholds before disconnection, and a confirmation after each recharge.
+        If you are not getting them, your registered number is likely outdated: update it via the DISCOM
+        app, portal or sub-division office. For anyone who can't use an app, these alerts are the main
+        safety net, so fixing the number is worth the trip.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Reading the daily deduction ledger</h2>
+        <p>Each day's deduction is not just "units × rate". It bundles:</p>
+        <ul>
+          <li><strong>Energy charge</strong> — that day's units priced at your
+          <a href="/glossary/#telescopic-slabs">slab rates</a>;</li>
+          <li><strong>Fixed charge</strong> — the monthly <a href="/glossary/#fixed-charge">fixed
+          charge</a> divided across the days of the month, deducted even at zero consumption;</li>
+          <li><strong>FPPA and duty</strong> — the <a href="/glossary/#fppa">fuel surcharge</a> and
+          <a href="/glossary/#electricity-duty">electricity duty</a> on applicable heads;</li>
+          <li><strong>Arrears instalment</strong> — if old postpaid dues are being recovered, a slice
+          per recharge or per day.</li>
+        </ul>
+        <p>This is why the balance falls a little even on a day the house was locked. To see what your
+        normal daily burn <em>should</em> be — and how long the current balance will last — use the
+        <a href="/recharge-calculator/">smart meter recharge calculator</a>, which prices your usage on
+        your DISCOM's real tariff.</p>
+      </section>`,
+    faqs: [
+      { q: 'How do I check the balance on the smart meter itself?',
+        a: 'Press the meter’s push button to cycle through its display screens — one shows the prepaid balance in ₹ (often labelled BAL or CR), alongside screens for cumulative kWh, load and voltage. It works without internet, though it can lag the DISCOM app by one sync cycle right after a recharge.' },
+      { q: 'Why did my balance decrease when I used no electricity?',
+        a: 'The daily deduction includes a share of the monthly fixed charge (deducted even at zero units), FPPA and duty, and any arrears instalment — plus always-on loads like a fridge or router if the supply was on. The app’s daily deduction ledger itemises exactly what was taken.' },
+      { q: 'The app balance and the meter balance are different — which is correct?',
+        a: 'The DISCOM’s billing system (the app/portal figure) is authoritative; the meter syncs to it when it next connects. A gap right after a recharge is normal. If they stay different for more than a day, the meter may have lost network — raise it with the DISCOM.' },
+      { q: 'How do I get low-balance SMS alerts?',
+        a: 'Alerts go to the mobile number registered against your connection. If you don’t receive them, update your number through the DISCOM app, portal or sub-division office — DISCOMs are required to warn you before any balance disconnection.' },
+    ],
+
+    titleHi: 'स्मार्ट मीटर का बैलेंस कैसे देखें (डिस्प्ले, ऐप, SMS)',
+    metaTitleHi: 'स्मार्ट मीटर बैलेंस चेक — मीटर डिस्प्ले, डिस्कॉम ऐप और दैनिक कटौती',
+    descriptionHi: 'प्रीपेड स्मार्ट मीटर का बैलेंस देखने के तीन तरीके — मीटर का पुश-बटन डिस्प्ले, डिस्कॉम ऐप/पोर्टल और SMS अलर्ट — और दैनिक कटौती खाता पढ़ने का तरीका, ताकि पता रहे बैलेंस कहाँ जा रहा है।',
+    introHi: `प्रीपेड स्मार्ट मीटर का बैलेंस तीन जगह दिखता है: <strong>मीटर पर ही</strong>, <strong>डिस्कॉम के
+      ऐप या पोर्टल में</strong>, और <strong>SMS अलर्ट</strong> से। तीनों का अलग उपयोग है — डिस्प्ले तुरंत
+      दिखाता है, ऐप में पूरी कटौती का इतिहास रहता है, और SMS बिना स्मार्टफोन के काम करता है। यह गाइड
+      तीनों तरीके और दैनिक कटौती खाता पढ़ना सिखाती है, ताकि घटता बैलेंस कभी चौंकाए नहीं।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>1. मीटर के डिस्प्ले पर (बिना इंटरनेट)</h2>
+        <p>हर स्मार्ट मीटर में एक <strong>पुश बटन</strong> होता है जो डिस्प्ले की स्क्रीनें बदलता है — उसे
+        बार-बार दबाएँ और लेबल देखें। क्रम कंपनी के अनुसार अलग है, पर आमतौर पर दिखेगा: मौजूदा बैलेंस (₹),
+        कुल यूनिट (kWh), तात्कालिक लोड (kW) और वोल्टेज। बैलेंस स्क्रीन पर ₹ चिह्न या "BAL"/"CR" लेबल
+        होता है; ऋणात्मक आँकड़े का मतलब है आप उधार पर खपत कर रहे हैं और कटौती कतार में हो सकती है।</p>
+        <p>ध्यान रहे — मीटर का बैलेंस डिस्कॉम सिस्टम से एक सिंक-चक्र पीछे हो सकता है: अभी-अभी रिचार्ज किया
+        हो तो पहले ऐप अपडेट होता है, मीटर अगली बार जुड़ने पर।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. डिस्कॉम ऐप या पोर्टल में (पूरी तस्वीर)</h2>
+        <p>डिस्कॉम का अपना ऐप/उपभोक्ता पोर्टल ही प्रामाणिक जगह है: उपभोक्ता/खाता नंबर से लॉगिन कर लाइव
+        बैलेंस, रिचार्ज इतिहास और — सबसे उपयोगी — <strong>दैनिक कटौती खाता</strong> देखें। उत्तर प्रदेश में
+        <a href="https://uppclonline.com" target="_blank" rel="noopener">uppclonline.com</a> या UPPCL
+        उपभोक्ता ऐप; बिहार में <strong>Bihar Bijli Smart Meter</strong> ऐप। बाक़ी राज्यों में रिचार्ज रसीद
+        पर लिखा ऐप/पोर्टल इस्तेमाल करें — हमारे <a href="/hi/smart-meter-recharge/">डिस्कॉम-वार रिचार्ज
+        पेज</a> हर आधिकारिक पोर्टल से जोड़ते हैं।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. SMS अलर्ट (स्मार्टफोन ज़रूरी नहीं)</h2>
+        <p>डिस्कॉम कम-बैलेंस अलर्ट कनेक्शन पर पंजीकृत मोबाइल नंबर पर भेजते हैं — आमतौर पर कटौती से पहले
+        एक-दो सीमाओं पर, और हर रिचार्ज की पुष्टि। अलर्ट नहीं आ रहे, तो पंजीकृत नंबर शायद पुराना है: डिस्कॉम
+        ऐप, पोर्टल या उपखंड कार्यालय से अपडेट कराएँ। जो ऐप नहीं चला सकते, उनके लिए यही अलर्ट मुख्य
+        सुरक्षा-जाल हैं — नंबर ठीक कराना चक्कर के लायक है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>दैनिक कटौती खाता पढ़ना</h2>
+        <p>हर दिन की कटौती सिर्फ़ "यूनिट × दर" नहीं होती। उसमें शामिल है:</p>
+        <ul>
+          <li><strong>ऊर्जा शुल्क</strong> — उस दिन की यूनिटें आपके <a href="/hi/glossary/#telescopic-slabs">स्लैब
+          दरों</a> पर;</li>
+          <li><strong>फिक्स्ड चार्ज</strong> — मासिक <a href="/hi/glossary/#fixed-charge">फिक्स्ड चार्ज</a>
+          महीने के दिनों में बँटा, शून्य खपत पर भी कटता है;</li>
+          <li><strong>FPPA और शुल्क</strong> — लागू मदों पर <a href="/hi/glossary/#fppa">ईंधन अधिभार</a> और
+          <a href="/hi/glossary/#electricity-duty">बिजली शुल्क</a>;</li>
+          <li><strong>बकाया किस्त</strong> — पुराने पोस्टपेड बकाया वसूले जा रहे हों तो प्रति रिचार्ज/प्रति दिन
+          एक हिस्सा।</li>
+        </ul>
+        <p>इसीलिए घर बंद रहने वाले दिन भी बैलेंस थोड़ा घटता है। आपका सामान्य दैनिक ख़र्च कितना <em>होना
+        चाहिए</em> — और मौजूदा बैलेंस कितने दिन चलेगा — यह <a href="/recharge-calculator/">स्मार्ट मीटर
+        रिचार्ज कैलकुलेटर</a> से देखें, जो आपकी खपत को आपके डिस्कॉम की असली टैरिफ दरों पर आँकता है।</p>
+      </section>`,
+    faqsHi: [
+      { q: 'मीटर पर ही बैलेंस कैसे देखें?',
+        a: 'मीटर का पुश बटन दबाकर डिस्प्ले की स्क्रीनें बदलें — एक स्क्रीन ₹ में प्रीपेड बैलेंस दिखाती है (अक्सर BAL या CR लेबल), साथ में कुल kWh, लोड और वोल्टेज की स्क्रीनें। इंटरनेट नहीं चाहिए, पर रिचार्ज के तुरंत बाद यह डिस्कॉम ऐप से एक सिंक-चक्र पीछे हो सकता है।' },
+      { q: 'बिजली इस्तेमाल न करने पर भी बैलेंस क्यों घटा?',
+        a: 'दैनिक कटौती में मासिक फिक्स्ड चार्ज का हिस्सा (शून्य यूनिट पर भी), FPPA व शुल्क और बकाया किस्त शामिल हैं — और आपूर्ति चालू रही हो तो फ्रिज, राउटर जैसे हरदम चलते लोड भी। ऐप का दैनिक कटौती खाता मदवार दिखाता है कि क्या कटा।' },
+      { q: 'ऐप और मीटर का बैलेंस अलग-अलग है — सही कौन?',
+        a: 'डिस्कॉम का बिलिंग सिस्टम (ऐप/पोर्टल वाला आँकड़ा) प्रामाणिक है; मीटर अगली बार जुड़ने पर उससे सिंक होता है। रिचार्ज के तुरंत बाद का अंतर सामान्य है। एक दिन से ज़्यादा अंतर बना रहे तो मीटर का नेटवर्क छूटा हो सकता है — डिस्कॉम को बताएँ।' },
+      { q: 'कम-बैलेंस SMS अलर्ट कैसे मिलेंगे?',
+        a: 'अलर्ट कनेक्शन पर पंजीकृत मोबाइल नंबर पर जाते हैं। नहीं मिल रहे तो डिस्कॉम ऐप, पोर्टल या उपखंड कार्यालय से नंबर अपडेट कराएँ — बैलेंस कटौती से पहले चेतावनी देना डिस्कॉम के लिए अनिवार्य है।' },
+    ],
+  },
+
+  {
+    slug: 'prepaid-vs-postpaid-smart-meter',
+    title: 'Prepaid vs Postpaid Smart Meter: Which Is Better for You?',
+    metaTitle: 'Prepaid vs Postpaid Smart Meter — Cost, Rebates, Deposit & Which to Choose',
+    description: 'Prepaid and postpaid smart meters charge the same tariff rates — the differences are rebates, security deposit, late fees and cash-flow. A plain comparison of both modes, who each suits, and whether you can switch.',
+    minutes: 5,
+    intro: `The same smart meter can run in <strong>prepaid</strong> (recharge first, consume after) or
+      <strong>postpaid</strong> (consume first, bill later) mode — and the energy rates are identical,
+      set by the same tariff order. What actually differs is cash-flow, the security deposit, late-payment
+      exposure and small rebates. This guide compares the two honestly, so you can decide — where your
+      DISCOM gives a choice — which mode suits your household.`,
+    sections: `
+      <section class="seo-section">
+        <h2>Same tariff, different payment direction</h2>
+        <p>A common fear is that prepaid meters charge more per unit. They don't: the slab rates, fixed
+        charges, <a href="/glossary/#fppa">FPPA</a> and duty come from the same tariff order either way —
+        verify yours on your <a href="/tariffs/states/">state's tariff page</a>. In prepaid mode the same
+        monthly bill is simply deducted from your balance day by day instead of arriving as one demand at
+        the month's end. Over a year, the energy cost is the same to the rupee — before the adjustments
+        below.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Where the real differences are</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th></th><th>Prepaid</th><th>Postpaid</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Rebate</strong></td><td>Several states' tariff orders give a small rebate on prepaid consumption (commonly in the 1–2% range) — check your state's order.</td><td>Usually none (some DISCOMs give small rebates for on-time or digital payment).</td></tr>
+            <tr><td><strong>Security deposit</strong></td><td>Not required — your balance IS the security. Existing deposits are typically adjusted or refunded on conversion.</td><td>Required, roughly 1–2 months of consumption, revised periodically.</td></tr>
+            <tr><td><strong>Late payment surcharge</strong></td><td>Can't arise — there is no due date.</td><td>LPSC (often 1.25–1.5%/month) on any delayed bill.</td></tr>
+            <tr><td><strong>Credit period</strong></td><td>None — you fund consumption in advance.</td><td>You use power ~30–45 days before paying — a real interest-free float.</td></tr>
+            <tr><td><strong>Disconnection risk</strong></td><td>Automatic at negative balance (with alerts and protected hours) — see <a href="/guides/smart-meter-prepaid-disconnection/">the disconnection rules</a>.</td><td>Only after formal notice for unpaid bills.</td></tr>
+            <tr><td><strong>Spending visibility</strong></td><td>Daily — the deduction ledger shows every day's cost.</td><td>Monthly, after the fact.</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section class="seo-section">
+        <h2>Who each mode suits</h2>
+        <p><strong>Prepaid works well</strong> for households that want spending control (the daily
+        ledger makes waste visible), tenants and landlords (no disputed final bills — the balance simply
+        transfers or empties), second homes that sit empty, and anyone who has been stung by LPSC on
+        forgotten due dates. The deposit refund on conversion is a genuine one-time gain.</p>
+        <p><strong>Postpaid suits</strong> households that value the ~month of float, prefer one payment
+        over recharge-watching, or live where connectivity makes recharges unreliable. If someone in the
+        house depends on powered medical equipment, postpaid's formal-notice disconnection process is
+        also the safer default — raise this with your DISCOM before any conversion.</p>
+        <p>Sizing your recharges right removes most prepaid friction: the
+        <a href="/recharge-calculator/">recharge calculator</a> shows the ideal monthly amount for your
+        DISCOM and usage.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Can you choose or switch?</h2>
+        <p>Under the national smart-metering push (RDSS), most DISCOMs are installing meters
+        <strong>prepaid-first for domestic consumers</strong>, and in several states prepaid is the
+        default for new domestic connections. Where both modes are offered, you can apply at the
+        sub-division office or portal to switch; the meter itself doesn't change — only the billing mode.
+        If you are converted to prepaid, check that your old security deposit (with interest, where the
+        supply code provides it) is adjusted into your recharge balance — it is your money.</p>
+      </section>`,
+    faqs: [
+      { q: 'Is electricity cheaper on a prepaid smart meter?',
+        a: 'The tariff rates are identical — same slabs, fixed charges, FPPA and duty. Prepaid can work out slightly cheaper in practice: several states’ tariff orders give a small prepaid rebate (commonly 1–2%), you can never incur late-payment surcharge, and no security deposit is locked up.' },
+      { q: 'Do I get my security deposit back if I move to prepaid?',
+        a: 'Yes — prepaid connections don’t need a security deposit, so the existing deposit is adjusted into your balance or refunded on conversion, with interest where the state’s supply code provides it. Check the adjustment actually appears; it is a common miss.' },
+      { q: 'Which is better for tenants and landlords?',
+        a: 'Prepaid, usually. There is no end-of-tenancy disputed bill: consumption stops when the balance isn’t topped up, and the meter’s ledger shows exactly who consumed what and when. Landlords avoid inheriting arrears; tenants avoid paying someone else’s dues.' },
+      { q: 'Can I refuse a prepaid smart meter?',
+        a: 'The meter installation itself is a licensed activity you generally can’t refuse, but the billing MODE varies by state — some run smart meters in postpaid mode, and some offer a choice. Ask your DISCOM in writing what modes it offers; where prepaid is the notified default for your category, conversion requests are decided per the state’s supply code.' },
+    ],
+
+    titleHi: 'प्रीपेड बनाम पोस्टपेड स्मार्ट मीटर: आपके लिए कौन बेहतर?',
+    metaTitleHi: 'प्रीपेड बनाम पोस्टपेड स्मार्ट मीटर — लागत, छूट, जमानत और सही चुनाव',
+    descriptionHi: 'प्रीपेड और पोस्टपेड स्मार्ट मीटर की टैरिफ दरें एक ही होती हैं — फ़र्क़ छूट, जमानत राशि, विलंब शुल्क और नकदी-प्रवाह का है। दोनों मोड की सीधी तुलना, किसे कौन-सा सूट करता है, और क्या बदलना संभव है।',
+    introHi: `एक ही स्मार्ट मीटर <strong>प्रीपेड</strong> (पहले रिचार्ज, फिर खपत) या <strong>पोस्टपेड</strong>
+      (पहले खपत, बाद में बिल) मोड में चल सकता है — और ऊर्जा दरें दोनों में एक जैसी हैं, एक ही टैरिफ आदेश
+      से। असली फ़र्क़ नकदी-प्रवाह, जमानत राशि, विलंब-भुगतान जोखिम और छोटी छूटों का है। यह गाइड दोनों की
+      ईमानदार तुलना करती है, ताकि — जहाँ डिस्कॉम विकल्प देता है — आप अपने घर के लिए सही मोड चुन सकें।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>टैरिफ वही, भुगतान की दिशा अलग</h2>
+        <p>आम डर यह है कि प्रीपेड मीटर प्रति यूनिट ज़्यादा वसूलता है। ऐसा नहीं है: स्लैब दरें, फिक्स्ड चार्ज,
+        <a href="/hi/glossary/#fppa">FPPA</a> और शुल्क दोनों मोड में एक ही टैरिफ आदेश से आते हैं — अपनी दरें
+        <a href="/hi/tariffs/states/">राज्य के टैरिफ पेज</a> पर मिलाएँ। प्रीपेड में वही मासिक बिल महीने के अंत
+        की एक माँग की जगह दिन-प्रतिदिन बैलेंस से कटता है। साल भर में ऊर्जा लागत रुपये-रुपये बराबर है —
+        नीचे दिए समायोजनों से पहले।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>असली अंतर कहाँ हैं</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th></th><th>प्रीपेड</th><th>पोस्टपेड</th></tr></thead>
+          <tbody>
+            <tr><td><strong>छूट</strong></td><td>कई राज्यों के टैरिफ आदेश प्रीपेड खपत पर छोटी छूट देते हैं (आमतौर पर 1–2% के दायरे में) — अपने राज्य का आदेश देखें।</td><td>आमतौर पर नहीं (कुछ डिस्कॉम समय पर/डिजिटल भुगतान पर छोटी छूट देते हैं)।</td></tr>
+            <tr><td><strong>जमानत राशि</strong></td><td>ज़रूरी नहीं — आपका बैलेंस ही जमानत है। मौजूदा जमा रूपांतरण पर समायोजित या वापस होती है।</td><td>ज़रूरी, लगभग 1–2 महीने की खपत जितनी, समय-समय पर संशोधित।</td></tr>
+            <tr><td><strong>विलंब भुगतान अधिभार</strong></td><td>बन ही नहीं सकता — कोई नियत तिथि नहीं।</td><td>देर से भरे बिल पर LPSC (अक्सर 1.25–1.5%/माह)।</td></tr>
+            <tr><td><strong>क्रेडिट अवधि</strong></td><td>नहीं — खपत का पैसा पहले देना होता है।</td><td>भुगतान से ~30–45 दिन पहले बिजली इस्तेमाल — असली ब्याज-मुक्त सुविधा।</td></tr>
+            <tr><td><strong>कटौती जोखिम</strong></td><td>ऋणात्मक बैलेंस पर स्वतः (अलर्ट और संरक्षित घंटों के साथ) — देखें <a href="/hi/guides/smart-meter-prepaid-disconnection/">कटौती के नियम</a>।</td><td>सिर्फ़ अवैतनिक बिलों पर औपचारिक नोटिस के बाद।</td></tr>
+            <tr><td><strong>ख़र्च की दृश्यता</strong></td><td>दैनिक — कटौती खाता हर दिन की लागत दिखाता है।</td><td>मासिक, खपत के बाद।</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section class="seo-section">
+        <h2>किसे कौन-सा मोड सूट करता है</h2>
+        <p><strong>प्रीपेड उनके लिए अच्छा है</strong> जो ख़र्च पर नियंत्रण चाहते हैं (दैनिक खाता फ़िज़ूलख़र्ची
+        दिखा देता है), किरायेदार-मकान मालिक (अंतिम बिल का विवाद नहीं — बैलेंस बस स्थानांतरित होता है या
+        ख़त्म), खाली पड़े दूसरे घर, और वे जो भूली नियत तिथियों पर LPSC झेल चुके हैं। रूपांतरण पर जमा की
+        वापसी एक असली एकमुश्त लाभ है।</p>
+        <p><strong>पोस्टपेड उन्हें सूट करता है</strong> जिन्हें महीने भर की मोहलत चाहिए, रिचार्ज-निगरानी की जगह
+        एक भुगतान पसंद है, या जहाँ नेटवर्क रिचार्ज को अविश्वसनीय बनाता है। घर में कोई बिजली से चलने वाले
+        चिकित्सा उपकरण पर निर्भर हो, तो पोस्टपेड की औपचारिक-नोटिस कटौती प्रक्रिया ज़्यादा सुरक्षित है —
+        रूपांतरण से पहले डिस्कॉम को यह बताएँ।</p>
+        <p>रिचार्ज सही आकार का हो तो प्रीपेड की ज़्यादातर झंझट मिट जाती है:
+        <a href="/recharge-calculator/">रिचार्ज कैलकुलेटर</a> आपके डिस्कॉम और खपत के लिए आदर्श मासिक राशि
+        दिखाता है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>क्या चुनना या बदलना संभव है?</h2>
+        <p>राष्ट्रीय स्मार्ट-मीटरिंग अभियान (RDSS) के तहत अधिकांश डिस्कॉम घरेलू उपभोक्ताओं के लिए मीटर
+        <strong>प्रीपेड-प्रथम</strong> लगा रहे हैं, और कई राज्यों में नए घरेलू कनेक्शनों के लिए प्रीपेड ही
+        डिफ़ॉल्ट है। जहाँ दोनों मोड मिलते हैं, उपखंड कार्यालय या पोर्टल पर आवेदन से बदलाव हो सकता है; मीटर
+        वही रहता है — सिर्फ़ बिलिंग मोड बदलता है। प्रीपेड में बदले गए हों, तो देखें कि पुरानी जमानत राशि
+        (जहाँ आपूर्ति संहिता ब्याज देती है, ब्याज सहित) आपके रिचार्ज बैलेंस में समायोजित हुई — वह आपका
+        पैसा है।</p>
+      </section>`,
+    faqsHi: [
+      { q: 'क्या प्रीपेड स्मार्ट मीटर पर बिजली सस्ती है?',
+        a: 'टैरिफ दरें एक जैसी हैं — वही स्लैब, फिक्स्ड चार्ज, FPPA और शुल्क। व्यवहार में प्रीपेड थोड़ा सस्ता पड़ सकता है: कई राज्यों के टैरिफ आदेश छोटी प्रीपेड छूट (आमतौर पर 1–2%) देते हैं, विलंब अधिभार कभी नहीं लगता, और जमानत राशि फँसी नहीं रहती।' },
+      { q: 'प्रीपेड में जाने पर क्या जमानत राशि वापस मिलती है?',
+        a: 'हाँ — प्रीपेड कनेक्शन को जमानत नहीं चाहिए, इसलिए मौजूदा जमा रूपांतरण पर बैलेंस में समायोजित या वापस होती है, और जहाँ राज्य की आपूर्ति संहिता ब्याज देती है, ब्याज सहित। समायोजन सचमुच दिखा या नहीं, यह जाँचें — यह अक्सर छूट जाता है।' },
+      { q: 'किरायेदार-मकान मालिक के लिए कौन बेहतर?',
+        a: 'आमतौर पर प्रीपेड। किरायेदारी ख़त्म होने पर विवादित बिल नहीं बनता: बैलेंस टॉप-अप न हो तो खपत रुक जाती है, और मीटर का खाता दिखाता है कि किसने कब कितना खर्च किया। मकान मालिक को बकाया विरासत में नहीं मिलता; किरायेदार को दूसरे का बकाया नहीं भरना पड़ता।' },
+      { q: 'क्या मैं प्रीपेड स्मार्ट मीटर लेने से मना कर सकता हूँ?',
+        a: 'मीटर लगना लाइसेंसी गतिविधि है जिससे आमतौर पर मना नहीं किया जा सकता, पर बिलिंग मोड राज्य-दर-राज्य अलग है — कुछ जगह स्मार्ट मीटर पोस्टपेड मोड में चलते हैं, कुछ विकल्प देते हैं। डिस्कॉम से लिखित पूछें कि कौन-से मोड उपलब्ध हैं; जहाँ आपकी श्रेणी के लिए प्रीपेड अधिसूचित डिफ़ॉल्ट है, वहाँ रूपांतरण आवेदन राज्य की आपूर्ति संहिता के अनुसार तय होते हैं।' },
+    ],
+  },
 ];

@@ -14,6 +14,8 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [Bill Review by Experts](https://thediscombill.com/bill-review/): upload a bill and have a human expert review it (free account)
 - [New Connection](https://thediscombill.com/new-connection/): charges, documents and process per DISCOM
 - [Complaint](https://thediscombill.com/complaint/): DISCOM complaint portals and the 1912 national helpline
+- [Smart Meter Recharge](https://thediscombill.com/smart-meter-recharge/): per-DISCOM guides to recharging a prepaid smart meter online, with units-per-recharge estimates from real tariff rates
+- [Smart Meter Recharge Calculator](https://thediscombill.com/recharge-calculator/): how many days a ₹200–₹2000 prepaid recharge lasts on any DISCOM — daily burn rate and ideal monthly recharge from real tariff rates
 
 ## Guides
 
@@ -31,6 +33,9 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [Why Did My Sanctioned Load Suddenly Increase? (UPPCL / UP)](https://thediscombill.com/guides/uppcl-sanctioned-load-increased/): Why UPPCL suddenly increased your sanctioned load without an application: smart meters record Maximum Demand, and the UP Supply Code lets the DISCOM revise your load to match it
 - [Is Your Smart Meter Running Fast? How to Test It Yourself](https://thediscombill.com/guides/smart-meter-running-fast/): Why electricity bills often jump right after a smart meter is installed, whether smart meters actually record more than old meters, a 30-minute self-test you can run at home, and the official meter-accuracy test you can demand from your DISCOM
 - [Smart Prepaid Meter: Recharge, Low Balance and Remote Disconnection](https://thediscombill.com/guides/smart-meter-prepaid-disconnection/): How smart prepaid electricity meters deduct balance, how to tell a remote disconnection from a power cut or fault, when DISCOMs are not allowed to disconnect you, how fast supply returns after a recharge, and how old arrears are recovered
+- [Smart Meter Recharge Failed or Balance Not Updated? What to Do](https://thediscombill.com/guides/smart-meter-recharge-failed/): Money deducted but your smart meter balance hasn’t updated? Why prepaid recharges get stuck (settlement lag, meter offline, wrong consumer number), how long refunds take, and the exact escalation path with the evidence to keep
+- [How to Check Your Smart Meter Balance (Display, App, SMS)](https://thediscombill.com/guides/smart-meter-balance-check/): Three ways to check a prepaid smart meter balance — the meter’s push-button display, the DISCOM app/portal, and SMS alerts — plus how to read the daily deduction ledger so you know exactly where the balance goes
+- [Prepaid vs Postpaid Smart Meter: Which Is Better for You?](https://thediscombill.com/guides/prepaid-vs-postpaid-smart-meter/): Prepaid and postpaid smart meters charge the same tariff rates — the differences are rebates, security deposit, late fees and cash-flow
 
 ## Reference
 

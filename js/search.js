@@ -10,8 +10,8 @@ let overlay = null;
 let index = null;
 
 const GROUP_LABEL = {
-  en: { tool: 'Tools & pages', guide: 'Guides', glossary: 'Glossary', tariff: 'Tariffs' },
-  hi: { tool: 'टूल और पेज', guide: 'गाइड', glossary: 'शब्दावली', tariff: 'टैरिफ' },
+  en: { tool: 'Tools & pages', guide: 'Guides', glossary: 'Glossary', tariff: 'Tariffs', recharge: 'Smart Meter Recharge' },
+  hi: { tool: 'टूल और पेज', guide: 'गाइड', glossary: 'शब्दावली', tariff: 'टैरिफ', recharge: 'स्मार्ट मीटर रिचार्ज' },
 };
 
 // Hindi context = a /hi/ pre-rendered page, or the runtime language switch set to hi.

@@ -37,6 +37,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/recharge-calculator/</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/bill-review/</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -319,6 +325,60 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/guides/smart-meter-recharge-failed/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/smart-meter-recharge-failed/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/smart-meter-recharge-failed/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/smart-meter-recharge-failed/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/guides/smart-meter-recharge-failed/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/smart-meter-recharge-failed/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/smart-meter-recharge-failed/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/smart-meter-recharge-failed/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/guides/smart-meter-balance-check/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/smart-meter-balance-check/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/smart-meter-balance-check/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/smart-meter-balance-check/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/guides/smart-meter-balance-check/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/smart-meter-balance-check/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/smart-meter-balance-check/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/smart-meter-balance-check/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/guides/prepaid-vs-postpaid-smart-meter/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/prepaid-vs-postpaid-smart-meter/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/prepaid-vs-postpaid-smart-meter/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/prepaid-vs-postpaid-smart-meter/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/guides/prepaid-vs-postpaid-smart-meter/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/prepaid-vs-postpaid-smart-meter/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/prepaid-vs-postpaid-smart-meter/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/prepaid-vs-postpaid-smart-meter/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/glossary/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/glossary/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/glossary/"/>
@@ -350,6 +410,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/states/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -391,6 +469,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/andhra-pradesh/apspdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/andhra-pradesh/apspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/andhra-pradesh/apspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/andhra-pradesh/apspdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/andhra-pradesh/apspdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/andhra-pradesh/apspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/andhra-pradesh/apspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/andhra-pradesh/apspdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/andhra-pradesh/apepdcl/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/andhra-pradesh/apepdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/andhra-pradesh/apepdcl/"/>
@@ -404,6 +500,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/andhra-pradesh/apepdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/andhra-pradesh/apepdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/andhra-pradesh/apepdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/andhra-pradesh/apepdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/andhra-pradesh/apepdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/andhra-pradesh/apepdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/andhra-pradesh/apepdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/andhra-pradesh/apepdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/andhra-pradesh/apepdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/andhra-pradesh/apepdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/andhra-pradesh/apepdcl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -445,6 +559,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/arunachal-pradesh/appdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/arunachal-pradesh/appdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/arunachal-pradesh/appdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/arunachal-pradesh/appdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/arunachal-pradesh/appdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/arunachal-pradesh/appdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/arunachal-pradesh/appdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/arunachal-pradesh/appdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/assam/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/assam/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/assam/"/>
@@ -476,6 +608,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/assam/apdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/assam/apdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/assam/apdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/assam/apdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/assam/apdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/assam/apdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/assam/apdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/assam/apdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/assam/apdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/assam/apdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/assam/apdcl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -517,6 +667,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/bihar/nbpdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/bihar/nbpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/bihar/nbpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/bihar/nbpdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/bihar/nbpdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/bihar/nbpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/bihar/nbpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/bihar/nbpdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/bihar/sbpdcl/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/bihar/sbpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/bihar/sbpdcl/"/>
@@ -530,6 +698,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/bihar/sbpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/bihar/sbpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/bihar/sbpdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/bihar/sbpdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/bihar/sbpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/bihar/sbpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/bihar/sbpdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/bihar/sbpdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/bihar/sbpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/bihar/sbpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/bihar/sbpdcl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -571,6 +757,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/chandigarh/chandigarh_ed/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/chandigarh/chandigarh_ed/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/chandigarh/chandigarh_ed/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/chandigarh/chandigarh_ed/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/chandigarh/chandigarh_ed/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/chandigarh/chandigarh_ed/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/chandigarh/chandigarh_ed/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/chandigarh/chandigarh_ed/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/chhattisgarh/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/chhattisgarh/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/chhattisgarh/"/>
@@ -602,6 +806,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/chhattisgarh/cspdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/chhattisgarh/cspdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/chhattisgarh/cspdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/chhattisgarh/cspdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/chhattisgarh/cspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/chhattisgarh/cspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/chhattisgarh/cspdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/chhattisgarh/cspdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/chhattisgarh/cspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/chhattisgarh/cspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/chhattisgarh/cspdcl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -643,6 +865,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/delhi/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/delhi/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/delhi/"/>
@@ -679,6 +919,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/delhi/brpl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/delhi/brpl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/delhi/brpl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/delhi/brpl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/delhi/brpl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/delhi/brpl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/delhi/brpl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/delhi/brpl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/delhi/bypl/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/delhi/bypl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/delhi/bypl/"/>
@@ -692,6 +950,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/delhi/bypl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/delhi/bypl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/delhi/bypl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/delhi/bypl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/delhi/bypl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/delhi/bypl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/delhi/bypl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/delhi/bypl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/delhi/bypl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/delhi/bypl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/delhi/bypl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -715,6 +991,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/delhi/tpddl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/delhi/tpddl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/delhi/tpddl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/delhi/tpddl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/delhi/tpddl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/delhi/tpddl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/delhi/tpddl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/delhi/tpddl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/delhi/ndmc_delhi/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/delhi/ndmc_delhi/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/delhi/ndmc_delhi/"/>
@@ -728,6 +1022,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/delhi/ndmc_delhi/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/delhi/ndmc_delhi/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/delhi/ndmc_delhi/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/delhi/ndmc_delhi/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/delhi/ndmc_delhi/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/delhi/ndmc_delhi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/delhi/ndmc_delhi/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/delhi/ndmc_delhi/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/delhi/ndmc_delhi/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/delhi/ndmc_delhi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/delhi/ndmc_delhi/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -769,6 +1081,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/goa/ged/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/goa/ged/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/goa/ged/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/goa/ged/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/goa/ged/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/goa/ged/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/goa/ged/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/goa/ged/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/gujarat/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/gujarat/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/gujarat/"/>
@@ -805,6 +1135,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/gujarat/ugvcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/gujarat/ugvcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/gujarat/ugvcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/gujarat/ugvcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/gujarat/ugvcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/gujarat/ugvcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/gujarat/ugvcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/gujarat/ugvcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/gujarat/mgvcl/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/gujarat/mgvcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/gujarat/mgvcl/"/>
@@ -818,6 +1166,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/gujarat/mgvcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/gujarat/mgvcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/gujarat/mgvcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/gujarat/mgvcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/gujarat/mgvcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/gujarat/mgvcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/gujarat/mgvcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/gujarat/mgvcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/gujarat/mgvcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/gujarat/mgvcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/gujarat/mgvcl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -841,6 +1207,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/gujarat/pgvcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/gujarat/pgvcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/gujarat/pgvcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/gujarat/pgvcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/gujarat/pgvcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/gujarat/pgvcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/gujarat/pgvcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/gujarat/pgvcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/gujarat/dgvcl/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/gujarat/dgvcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/gujarat/dgvcl/"/>
@@ -854,6 +1238,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/gujarat/dgvcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/gujarat/dgvcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/gujarat/dgvcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/gujarat/dgvcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/gujarat/dgvcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/gujarat/dgvcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/gujarat/dgvcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/gujarat/dgvcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/gujarat/dgvcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/gujarat/dgvcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/gujarat/dgvcl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -895,6 +1297,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/haryana/dhbvn/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/haryana/dhbvn/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/haryana/dhbvn/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/haryana/dhbvn/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/haryana/dhbvn/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/haryana/dhbvn/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/haryana/dhbvn/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/haryana/dhbvn/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/haryana/uhbvn/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/haryana/uhbvn/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/haryana/uhbvn/"/>
@@ -908,6 +1328,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/haryana/uhbvn/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/haryana/uhbvn/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/haryana/uhbvn/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/haryana/uhbvn/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/haryana/uhbvn/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/haryana/uhbvn/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/haryana/uhbvn/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/haryana/uhbvn/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/haryana/uhbvn/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/haryana/uhbvn/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/haryana/uhbvn/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -949,6 +1387,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/himachal-pradesh/hpsebl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/himachal-pradesh/hpsebl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/himachal-pradesh/hpsebl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/himachal-pradesh/hpsebl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/himachal-pradesh/hpsebl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/himachal-pradesh/hpsebl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/himachal-pradesh/hpsebl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/himachal-pradesh/hpsebl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/jammu-and-kashmir/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/jammu-and-kashmir/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/jammu-and-kashmir/"/>
@@ -985,6 +1441,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/jammu-and-kashmir/jkpdd_jammu/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/jammu-and-kashmir/jkpdd_jammu/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/jammu-and-kashmir/jkpdd_jammu/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/jammu-and-kashmir/jkpdd_jammu/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/jammu-and-kashmir/jkpdd_jammu/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/jammu-and-kashmir/jkpdd_jammu/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/jammu-and-kashmir/jkpdd_jammu/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/jammu-and-kashmir/jkpdd_jammu/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/jammu-and-kashmir/jkpdd_kashmir/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/jammu-and-kashmir/jkpdd_kashmir/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/jammu-and-kashmir/jkpdd_kashmir/"/>
@@ -998,6 +1472,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/jammu-and-kashmir/jkpdd_kashmir/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/jammu-and-kashmir/jkpdd_kashmir/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/jammu-and-kashmir/jkpdd_kashmir/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/jammu-and-kashmir/jkpdd_kashmir/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/jammu-and-kashmir/jkpdd_kashmir/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/jammu-and-kashmir/jkpdd_kashmir/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/jammu-and-kashmir/jkpdd_kashmir/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/jammu-and-kashmir/jkpdd_kashmir/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/jammu-and-kashmir/jkpdd_kashmir/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/jammu-and-kashmir/jkpdd_kashmir/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/jammu-and-kashmir/jkpdd_kashmir/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1039,6 +1531,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/jharkhand/jbvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/jharkhand/jbvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/jharkhand/jbvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/jharkhand/jbvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/jharkhand/jbvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/jharkhand/jbvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/jharkhand/jbvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/jharkhand/jbvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/karnataka/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/karnataka/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/karnataka/"/>
@@ -1075,6 +1585,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/karnataka/bescom/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/karnataka/bescom/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/karnataka/bescom/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/karnataka/bescom/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/karnataka/bescom/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/karnataka/bescom/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/karnataka/bescom/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/karnataka/bescom/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/karnataka/mescom/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/karnataka/mescom/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/karnataka/mescom/"/>
@@ -1088,6 +1616,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/karnataka/mescom/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/karnataka/mescom/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/karnataka/mescom/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/karnataka/mescom/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/karnataka/mescom/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/karnataka/mescom/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/karnataka/mescom/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/karnataka/mescom/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/karnataka/mescom/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/karnataka/mescom/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/karnataka/mescom/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1111,6 +1657,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/karnataka/cesc_karnataka/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/karnataka/cesc_karnataka/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/karnataka/cesc_karnataka/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/karnataka/cesc_karnataka/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/karnataka/cesc_karnataka/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/karnataka/cesc_karnataka/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/karnataka/cesc_karnataka/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/karnataka/cesc_karnataka/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/karnataka/gescom/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/karnataka/gescom/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/karnataka/gescom/"/>
@@ -1129,6 +1693,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/karnataka/gescom/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/karnataka/gescom/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/karnataka/gescom/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/karnataka/gescom/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/karnataka/gescom/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/karnataka/gescom/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/karnataka/gescom/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/karnataka/gescom/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/karnataka/hescom/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/karnataka/hescom/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/karnataka/hescom/"/>
@@ -1142,6 +1724,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/karnataka/hescom/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/karnataka/hescom/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/karnataka/hescom/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/karnataka/hescom/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/karnataka/hescom/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/karnataka/hescom/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/karnataka/hescom/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/karnataka/hescom/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/karnataka/hescom/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/karnataka/hescom/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/karnataka/hescom/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1183,6 +1783,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/kerala/kseb/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/kerala/kseb/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/kerala/kseb/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/kerala/kseb/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/kerala/kseb/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/kerala/kseb/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/kerala/kseb/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/kerala/kseb/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/ladakh/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/ladakh/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/ladakh/"/>
@@ -1214,6 +1832,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/ladakh/lpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/ladakh/lpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/ladakh/lpdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/ladakh/lpdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/ladakh/lpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/ladakh/lpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/ladakh/lpdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/ladakh/lpdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/ladakh/lpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/ladakh/lpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/ladakh/lpdcl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1255,6 +1891,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/madhya-pradesh/mppkvvcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/madhya-pradesh/mppkvvcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/madhya-pradesh/mppkvvcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/madhya-pradesh/mppkvvcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/madhya-pradesh/mppkvvcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/madhya-pradesh/mppkvvcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/madhya-pradesh/mppkvvcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/madhya-pradesh/mppkvvcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/madhya-pradesh/mpmkvvcl/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/madhya-pradesh/mpmkvvcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/madhya-pradesh/mpmkvvcl/"/>
@@ -1273,6 +1927,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/madhya-pradesh/mpmkvvcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/madhya-pradesh/mpmkvvcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/madhya-pradesh/mpmkvvcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/madhya-pradesh/mpmkvvcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/madhya-pradesh/mpmkvvcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/madhya-pradesh/mpmkvvcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/madhya-pradesh/mpmkvvcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/madhya-pradesh/mpmkvvcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/madhya-pradesh/mpez/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/madhya-pradesh/mpez/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/madhya-pradesh/mpez/"/>
@@ -1286,6 +1958,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/madhya-pradesh/mpez/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/madhya-pradesh/mpez/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/madhya-pradesh/mpez/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/madhya-pradesh/mpez/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/madhya-pradesh/mpez/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/madhya-pradesh/mpez/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/madhya-pradesh/mpez/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/madhya-pradesh/mpez/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/madhya-pradesh/mpez/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/madhya-pradesh/mpez/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/madhya-pradesh/mpez/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1327,6 +2017,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/maharashtra/msedcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/maharashtra/msedcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/maharashtra/msedcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/maharashtra/msedcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/maharashtra/msedcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/maharashtra/msedcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/maharashtra/msedcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/maharashtra/msedcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/maharashtra/adani_mumbai/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/maharashtra/adani_mumbai/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/maharashtra/adani_mumbai/"/>
@@ -1340,6 +2048,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/maharashtra/adani_mumbai/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/maharashtra/adani_mumbai/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/maharashtra/adani_mumbai/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/maharashtra/adani_mumbai/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/maharashtra/adani_mumbai/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/maharashtra/adani_mumbai/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/maharashtra/adani_mumbai/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/maharashtra/adani_mumbai/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/maharashtra/adani_mumbai/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/maharashtra/adani_mumbai/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/maharashtra/adani_mumbai/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1363,6 +2089,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/maharashtra/best_mumbai/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/maharashtra/best_mumbai/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/maharashtra/best_mumbai/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/maharashtra/best_mumbai/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/maharashtra/best_mumbai/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/maharashtra/best_mumbai/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/maharashtra/best_mumbai/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/maharashtra/best_mumbai/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/maharashtra/tata_power_mumbai/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/maharashtra/tata_power_mumbai/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/maharashtra/tata_power_mumbai/"/>
@@ -1376,6 +2120,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/maharashtra/tata_power_mumbai/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/maharashtra/tata_power_mumbai/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/maharashtra/tata_power_mumbai/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/maharashtra/tata_power_mumbai/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/maharashtra/tata_power_mumbai/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/maharashtra/tata_power_mumbai/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/maharashtra/tata_power_mumbai/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/maharashtra/tata_power_mumbai/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/maharashtra/tata_power_mumbai/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/maharashtra/tata_power_mumbai/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/maharashtra/tata_power_mumbai/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1417,6 +2179,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/manipur/mspdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/manipur/mspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/manipur/mspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/manipur/mspdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/manipur/mspdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/manipur/mspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/manipur/mspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/manipur/mspdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/meghalaya/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/meghalaya/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/meghalaya/"/>
@@ -1448,6 +2228,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/meghalaya/mepdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/meghalaya/mepdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/meghalaya/mepdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/meghalaya/mepdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/meghalaya/mepdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/meghalaya/mepdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/meghalaya/mepdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/meghalaya/mepdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/meghalaya/mepdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/meghalaya/mepdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/meghalaya/mepdcl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1489,6 +2287,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/mizoram/ped_mizoram/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/mizoram/ped_mizoram/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/mizoram/ped_mizoram/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/mizoram/ped_mizoram/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/mizoram/ped_mizoram/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/mizoram/ped_mizoram/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/mizoram/ped_mizoram/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/mizoram/ped_mizoram/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/nagaland/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/nagaland/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/nagaland/"/>
@@ -1520,6 +2336,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/nagaland/doe_nagaland/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/nagaland/doe_nagaland/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/nagaland/doe_nagaland/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/nagaland/doe_nagaland/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/nagaland/doe_nagaland/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/nagaland/doe_nagaland/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/nagaland/doe_nagaland/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/nagaland/doe_nagaland/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/nagaland/doe_nagaland/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/nagaland/doe_nagaland/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/nagaland/doe_nagaland/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1561,6 +2395,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/odisha/tpnodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpnodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpnodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpnodl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/odisha/tpnodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpnodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpnodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpnodl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/odisha/tpsodl/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpsodl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpsodl/"/>
@@ -1574,6 +2426,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpsodl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpsodl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpsodl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/odisha/tpsodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpsodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpsodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpsodl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/odisha/tpsodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpsodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpsodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpsodl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1597,6 +2467,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/odisha/tpwodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpwodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpwodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpwodl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/odisha/tpwodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpwodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpwodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpwodl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/odisha/tpcodl/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpcodl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpcodl/"/>
@@ -1610,6 +2498,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpcodl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpcodl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpcodl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/odisha/tpcodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpcodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpcodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpcodl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/odisha/tpcodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpcodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpcodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpcodl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1651,6 +2557,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/puducherry/pdicl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/puducherry/pdicl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/puducherry/pdicl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/puducherry/pdicl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/puducherry/pdicl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/puducherry/pdicl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/puducherry/pdicl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/puducherry/pdicl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/punjab/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/punjab/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/punjab/"/>
@@ -1682,6 +2606,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/punjab/pspcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/punjab/pspcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/punjab/pspcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/punjab/pspcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/punjab/pspcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/punjab/pspcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/punjab/pspcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/punjab/pspcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/punjab/pspcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/punjab/pspcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/punjab/pspcl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1723,6 +2665,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/rajasthan/jvvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/rajasthan/jvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/rajasthan/jvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/rajasthan/jvvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/rajasthan/jvvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/rajasthan/jvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/rajasthan/jvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/rajasthan/jvvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/rajasthan/avvnl/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/rajasthan/avvnl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/rajasthan/avvnl/"/>
@@ -1741,6 +2701,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/rajasthan/avvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/rajasthan/avvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/rajasthan/avvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/rajasthan/avvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/rajasthan/avvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/rajasthan/avvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/rajasthan/avvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/rajasthan/avvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/rajasthan/jdvvnl/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/rajasthan/jdvvnl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/rajasthan/jdvvnl/"/>
@@ -1754,6 +2732,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/rajasthan/jdvvnl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/rajasthan/jdvvnl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/rajasthan/jdvvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/rajasthan/jdvvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/rajasthan/jdvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/rajasthan/jdvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/rajasthan/jdvvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/rajasthan/jdvvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/rajasthan/jdvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/rajasthan/jdvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/rajasthan/jdvvnl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1795,6 +2791,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/sikkim/energy_sikkim/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/sikkim/energy_sikkim/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/sikkim/energy_sikkim/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/sikkim/energy_sikkim/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/sikkim/energy_sikkim/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/sikkim/energy_sikkim/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/sikkim/energy_sikkim/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/sikkim/energy_sikkim/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/tamil-nadu/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/tamil-nadu/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/tamil-nadu/"/>
@@ -1826,6 +2840,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/tamil-nadu/tangedco/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/tamil-nadu/tangedco/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/tamil-nadu/tangedco/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/tamil-nadu/tangedco/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/tamil-nadu/tangedco/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/tamil-nadu/tangedco/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/tamil-nadu/tangedco/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/tamil-nadu/tangedco/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/tamil-nadu/tangedco/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/tamil-nadu/tangedco/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/tamil-nadu/tangedco/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1867,6 +2899,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/telangana/tsspdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/telangana/tsspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/telangana/tsspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/telangana/tsspdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/telangana/tsspdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/telangana/tsspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/telangana/tsspdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/telangana/tsspdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/telangana/tsnpdcl/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/telangana/tsnpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/telangana/tsnpdcl/"/>
@@ -1880,6 +2930,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/telangana/tsnpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/telangana/tsnpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/telangana/tsnpdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/telangana/tsnpdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/telangana/tsnpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/telangana/tsnpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/telangana/tsnpdcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/telangana/tsnpdcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/telangana/tsnpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/telangana/tsnpdcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/telangana/tsnpdcl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1921,6 +2989,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/tripura/tsecl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/tripura/tsecl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/tripura/tsecl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/tripura/tsecl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/tripura/tsecl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/tripura/tsecl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/tripura/tsecl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/tripura/tsecl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/uttar-pradesh/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/uttar-pradesh/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/uttar-pradesh/"/>
@@ -1957,6 +3043,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/uttar-pradesh/dvvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/dvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/uttar-pradesh/dvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/dvvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/uttar-pradesh/dvvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/dvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/uttar-pradesh/dvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/dvvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/uttar-pradesh/mvvnl/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/uttar-pradesh/mvvnl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/uttar-pradesh/mvvnl/"/>
@@ -1970,6 +3074,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/uttar-pradesh/mvvnl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/uttar-pradesh/mvvnl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/uttar-pradesh/mvvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/uttar-pradesh/mvvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/mvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/uttar-pradesh/mvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/mvvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/uttar-pradesh/mvvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/mvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/uttar-pradesh/mvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/mvvnl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -1993,6 +3115,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/uttar-pradesh/pvvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/pvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/uttar-pradesh/pvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/pvvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/uttar-pradesh/pvvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/pvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/uttar-pradesh/pvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/pvvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/uttar-pradesh/puvvnl/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/uttar-pradesh/puvvnl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/uttar-pradesh/puvvnl/"/>
@@ -2011,6 +3151,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/uttar-pradesh/puvvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/puvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/uttar-pradesh/puvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/puvvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/uttar-pradesh/puvvnl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/puvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/uttar-pradesh/puvvnl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/puvvnl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/uttar-pradesh/kesco/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/uttar-pradesh/kesco/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/uttar-pradesh/kesco/"/>
@@ -2024,6 +3182,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/uttar-pradesh/kesco/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/uttar-pradesh/kesco/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/uttar-pradesh/kesco/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/uttar-pradesh/kesco/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/kesco/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/uttar-pradesh/kesco/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/kesco/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/uttar-pradesh/kesco/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/kesco/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/uttar-pradesh/kesco/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/uttar-pradesh/kesco/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -2065,6 +3241,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/uttarakhand/upcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/uttarakhand/upcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/uttarakhand/upcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/uttarakhand/upcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/uttarakhand/upcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/uttarakhand/upcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/uttarakhand/upcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/uttarakhand/upcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/west-bengal/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/west-bengal/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/west-bengal/"/>
@@ -2101,6 +3295,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/west-bengal/wbsedcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/west-bengal/wbsedcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/west-bengal/wbsedcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/west-bengal/wbsedcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/west-bengal/wbsedcl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/west-bengal/wbsedcl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/west-bengal/wbsedcl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/west-bengal/wbsedcl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/west-bengal/cesc_kolkata/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/west-bengal/cesc_kolkata/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/west-bengal/cesc_kolkata/"/>
@@ -2119,6 +3331,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/west-bengal/cesc_kolkata/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/west-bengal/cesc_kolkata/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/west-bengal/cesc_kolkata/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/west-bengal/cesc_kolkata/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/west-bengal/cesc_kolkata/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/west-bengal/cesc_kolkata/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/west-bengal/cesc_kolkata/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/west-bengal/cesc_kolkata/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/tariffs/west-bengal/dpl/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/west-bengal/dpl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/west-bengal/dpl/"/>
@@ -2132,6 +3362,24 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/west-bengal/dpl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/west-bengal/dpl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/west-bengal/dpl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/west-bengal/dpl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/west-bengal/dpl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/west-bengal/dpl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/west-bengal/dpl/"/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/west-bengal/dpl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/west-bengal/dpl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/west-bengal/dpl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/west-bengal/dpl/"/>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
