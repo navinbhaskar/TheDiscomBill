@@ -135,7 +135,7 @@ function initLoginButton() {
     // Real href for no-JS, middle-click and bookmarks; a normal click opens
     // the in-page auth modal instead so the visitor keeps their page state.
     a.href = '/login/?next=' + encodeURIComponent(location.pathname);
-    a.innerHTML = '<span>Login</span>';
+    a.innerHTML = '<svg class="login-btn-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/></svg><span>Login</span>';
     a.addEventListener('click', (e) => {
       if (e.metaKey || e.ctrlKey || e.shiftKey) return;  // let "open in new tab" through
       e.preventDefault();
