@@ -953,7 +953,7 @@ function statePage(state, lang = 'en') {
       `${stateHi} बिजली टैरिफ ${fy.replace(/^FY\s*/i, '')}`,
       `${stateHi} बिजली टैरिफ`,
     ]);
-    const description = `मुफ़्त ${stateHi} बिजली बिल कैलकुलेटर। ${discoms.length} डिस्कॉम (${names}) — ${fyHi} की स्लैब दरें, फिक्स्ड चार्ज व FPPA।${stateMin != null ? ` घरेलू दर ${rupee(stateMin)}/यूनिट से।` : ''}`;
+    const description = `${stateHi} की ${fyHi} स्लैब दरें देखें और 30 सेकंड में अपना सटीक बिजली बिल निकालें। ${discoms.length} डिस्कॉम (${names}) — फिक्स्ड चार्ज व FPPA सहित।${stateMin != null ? ` घरेलू दर ${rupee(stateMin)}/यूनिट से।` : ''} मुफ़्त, बिना साइन-अप।`;
     const discomCards = discoms.map(d => {
       const a = parseArea(d.area);
       return `
@@ -1020,9 +1020,9 @@ function statePage(state, lang = 'en') {
     `${state} Tariff ${fy}`,
   ]);
   const description = variant(seed + 'd', [
-    `Free ${state} electricity bill calculator. ${discoms.length} DISCOM${discoms.length > 1 ? 's' : ''} (${names}) with slab-wise rates, fixed charges and FPPA for ${fy}.${stateMin != null ? ` Domestic from ${rupee(stateMin)}/unit.` : ''}`,
-    `Calculate your ${state} electricity bill (${fy})${cityLine ? ` — covering ${cityLine}` : ''}. Pick your DISCOM for its full tariff schedule and an instant itemised estimate.`,
-    `${state} electricity tariffs ${fy}: compare ${names}, see domestic & commercial slab rates and get a provisional bill in seconds. Free, no sign-up.`,
+    `Check ${state}'s ${fy} slab rates & calculate your exact electricity bill in 30 seconds. ${discoms.length} DISCOM${discoms.length > 1 ? 's' : ''} with fixed charges & FPPA${stateMin != null ? `, domestic from ${rupee(stateMin)}/unit` : ''}. Free, no sign-up.`,
+    `See what electricity costs in ${state} (${fy})${cityLine ? ` — ${cityLine} & more` : ''}. Pick your DISCOM for its full slab table and an instant itemised bill. Free, no sign-up.`,
+    `${state} electricity tariff ${fy}: compare ${names}${stateMin != null ? `, rates from ${rupee(stateMin)}/unit,` : ''} and get your exact bill in seconds. Free, no sign-up.`,
   ]);
 
   const discomCards = discoms.map(d => {

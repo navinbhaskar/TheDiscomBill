@@ -210,20 +210,32 @@ function initLoginButton() {
     wrap.classList.remove('open');
     trigger.setAttribute('aria-expanded', 'false');
     document.removeEventListener('pointerdown', onOutside);
+    document.removeEventListener('click', onOutside);
   };
   const onOutside = (e) => { if (!wrap.contains(e.target)) closeMenu(); };
+  let openedAt = 0;
   const openMenu = () => {
+    openedAt = Date.now();
     wrap.classList.add('open');
     trigger.setAttribute('aria-expanded', 'true');
-    setTimeout(() => document.addEventListener('pointerdown', onOutside), 0);
+    // Outside-tap close listens on BOTH pointerdown and click (older mobile browsers fire
+    // only compatibility mouse events), attached after the opening tap's own event burst
+    // (touchend → mousedown → click can trail by 100ms+) so it can never self-close.
+    setTimeout(() => {
+      document.addEventListener('pointerdown', onOutside);
+      document.addEventListener('click', onOutside);
+    }, 120);
   };
-  let lastToggle = 0;
   trigger.addEventListener('click', (e) => {
     e.stopPropagation();
-    const now = Date.now();
-    if (now - lastToggle < 350) return;   // swallow the duplicate tap that would re-close it
-    lastToggle = now;
-    wrap.classList.contains('open') ? closeMenu() : openMenu();
+    if (!wrap.classList.contains('open')) { openMenu(); return; }
+    // Closing tap: ignore anything within 450ms of opening. Mobile browsers deliver
+    // ghost/duplicate clicks for one physical tap anywhere up to ~400ms later — a
+    // fixed dedupe window let slow devices re-toggle the menu shut mid-fade, which
+    // read as "the logout popup never opens". A human closing it on purpose taps
+    // well after half a second.
+    if (Date.now() - openedAt < 450) return;
+    closeMenu();
   });
 
   wrap.querySelector('#accountLogout').addEventListener('click', async (e) => {
@@ -503,7 +515,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('calculateBtn').addEventListener('click', doCalculate);
     document.getElementById('sampleBtn').addEventListener('click', loadSample);
+    document.getElementById('sampleBtnPanel')?.addEventListener('click', loadSample);
     initHistory();
+
+    // ── Simple / Detailed mode ────────────────────────────────────────────────
+    // Simple mode strips the form to state → DISCOM → category → units → load. It reuses the
+    // existing meter row in direct-units mode, so validation, sharing and history are untouched.
+    const setCalcMode = (mode) => {
+      const simple = mode === 'simple';
+      formPanel.classList.toggle('simple-mode', simple);
+      document.querySelectorAll('#calcMode .calc-mode-btn').forEach(b => {
+        const on = b.dataset.mode === mode;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      const hint = document.getElementById('calcModeHint');
+      if (hint) hint.style.display = simple ? '' : 'none';
+      if (simple) {
+        // Force the plain "type your units" path: Meter Reading mode + direct-units override.
+        const radio = document.querySelector('input[name="meterMode"][value="advanced"]');
+        if (radio && !radio.checked) { radio.checked = true; radio.dispatchEvent(new Event('change')); }
+        const row = document.querySelector('#advancedRows .meter-row');
+        const chk = row?.querySelector('.m-override-chk');
+        if (chk && !chk.checked) { chk.checked = true; chk.dispatchEvent(new Event('change')); }
+        const lbl = row?.querySelector('.m-units-label');
+        if (lbl) lbl.textContent = (localStorage.getItem('lang') === 'hi')
+          ? 'इस महीने की खपत (यूनिट)' : 'Units consumed this month';
+      }
+      try { localStorage.setItem('calcMode', mode); } catch (e) {}
+    };
+    document.querySelectorAll('#calcMode .calc-mode-btn').forEach(b => {
+      b.addEventListener('click', () => setCalcMode(b.dataset.mode));
+    });
+    // Default new visitors to Simple; shared bill links open in Detailed so every field they
+    // carry (arrears, TOD, dates…) is visible.
+    let savedMode = null;
+    try { savedMode = localStorage.getItem('calcMode'); } catch (e) {}
+    const hasSharePayload = new URLSearchParams(location.search).has('q');
+    setCalcMode(hasSharePayload ? 'detailed' : (savedMode || 'simple'));
 
     const netChk = document.getElementById('netMeteringChk');
     netChk.addEventListener('change', () => {

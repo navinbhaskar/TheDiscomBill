@@ -25,14 +25,14 @@
       } catch (e) {}
     })();
   </script>
-  <title>TheDiscomBill – Electricity Bill Calculator for All Indian DISCOMs</title>
-  <meta name="description" content="Calculate your provisional electricity bill for any DISCOM in India. Supports all states and union territories. Free, instant, no sign-up required.">
+  <title>Electricity Bill Calculator India (2026) — 70+ DISCOMs, Free</title>
+  <meta name="description" content="Check 2025-26 slab rates for 70+ Indian DISCOMs and calculate your exact electricity bill in 30 seconds — slab-wise breakdown, FPPA & duty included. Free, no sign-up.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <link rel="canonical" href="https://thediscombill.com/">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="TheDiscomBill">
-  <meta property="og:title" content="TheDiscomBill – Electricity Bill Calculator for All Indian DISCOMs">
+  <meta property="og:title" content="Electricity Bill Calculator India (2026) — 70+ DISCOMs, Free">
   <meta property="og:description" content="Calculate your provisional electricity bill for any DISCOM in India. All states & UTs, slab-wise breakdown, FPPA, solar net metering. Free, instant, no sign-up.">
   <meta property="og:url" content="https://thediscombill.com/">
   <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
@@ -42,7 +42,7 @@
   <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
   <meta property="og:locale" content="en_IN">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="TheDiscomBill – Electricity Bill Calculator for All Indian DISCOMs">
+  <meta name="twitter:title" content="Electricity Bill Calculator India (2026) — 70+ DISCOMs, Free">
   <meta name="twitter:description" content="Free electricity bill calculator for every Indian DISCOM — slab-wise breakdown, FPPA, solar net metering. No sign-up.">
   <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -281,6 +281,16 @@
         <span data-i18n="calc.title">Bill Calculator</span>
       </h2>
 
+      <!-- Simple / Detailed mode. Simple = state, DISCOM, category, units, load — everything
+           else (personal details, tabs, TOD, dates, FPPA, net metering) stays at its default. -->
+      <div class="calc-mode-row">
+        <div class="calc-mode" id="calcMode" role="group" aria-label="Calculator mode">
+          <button type="button" class="calc-mode-btn" data-mode="simple" aria-pressed="false" data-i18n="mode.simple">⚡ Simple</button>
+          <button type="button" class="calc-mode-btn" data-mode="detailed" aria-pressed="false" data-i18n="mode.detailed">Detailed</button>
+        </div>
+        <span class="calc-mode-hint" id="calcModeHint" data-i18n="mode.simpleHint">Just your DISCOM and units — we handle the rest.</span>
+      </div>
+
       <div class="form-row">
         <!-- Step 1: State -->
         <div class="form-group">
@@ -318,7 +328,7 @@
         </div>
       </div>
 
-      <div class="form-row">
+      <div class="form-row adv-only">
         <div class="form-group">
           <label for="consumerName" data-i18n="label.consumerName">Consumer Name</label>
           <input type="text" id="consumerName" placeholder="e.g., Rajesh Kumar" data-i18n-ph="ph.consumerName">
@@ -329,7 +339,7 @@
         </div>
       </div>
 
-      <div class="form-row">
+      <div class="form-row adv-only">
         <div class="form-group">
           <label for="address" data-i18n="label.address">Address</label>
           <input type="text" id="address" placeholder="e.g., 12 Main Road, New Delhi" data-i18n-ph="ph.address">
@@ -363,7 +373,7 @@
         <!-- ── Meter Read ── -->
         <div class="bill-tab-panel active" id="tab-meterread" role="tabpanel" aria-labelledby="bt-meterread">
           <!-- Reading mode: one unified Meter Reading section (add 1+ meters) / TOD -->
-          <div class="meter-mode" role="radiogroup" aria-label="Meter reading mode">
+          <div class="meter-mode adv-only" role="radiogroup" aria-label="Meter reading mode">
             <label class="meter-mode-opt"><input type="radio" name="meterMode" value="advanced" checked><span data-i18n="mode.meterReading">Meter Reading</span></label>
             <label class="meter-mode-opt"><input type="radio" name="meterMode" value="tod"><span data-i18n="mode.tod">TOD</span></label>
           </div>
@@ -379,7 +389,7 @@
           </div>
 
           <!-- Billing period dates (Simple & TOD; auto-filled from the meter table in Advanced) -->
-          <div id="meterDatesRow">
+          <div id="meterDatesRow" class="adv-only">
             <div class="form-row">
               <div class="form-group">
                 <label for="fromDate" data-i18n="label.fromDate">From Date</label>
@@ -413,7 +423,7 @@
           <div class="meter-mode-panel" id="meterAdvanced">
             <p class="tab-hint" id="advHint" data-i18n="hint.advanced"></p>
             <div id="advancedRows"></div>
-            <button class="btn-add-row" id="addMeterRowBtn" type="button" data-i18n="btn.addMeter">+ Add meter</button>
+            <button class="btn-add-row adv-only" id="addMeterRowBtn" type="button" data-i18n="btn.addMeter">+ Add meter</button>
             <div class="units-display" id="advancedTotalDisplay" style="display:none">
               <span data-i18n="lbl.total">Total:</span> <strong id="advTotalUnits">0</strong> <span class="reading-unit">units</span> &mdash; <span data-i18n="lbl.period">period</span> <strong id="advTotalMonths">0.00</strong> <span data-i18n="lbl.months">months</span>
             </div>
@@ -471,7 +481,7 @@
               <input type="number" id="connectedLoad" placeholder="e.g., 2" min="0.1" step="0.1" value="1">
               <small data-i18n="small.sanctioned">Contracted / sanctioned load. Used for fixed charge and excess demand check.</small>
             </div>
-            <div class="form-group">
+            <div class="form-group adv-only">
               <label for="facRate" id="facRateLabel"><span class="lbl-text">FPPA / FAC Surcharge (₹/unit)</span><span class="gloss" tabindex="0" role="img" aria-label="FPPA: Fuel and Power Purchase Adjustment — a periodic surcharge passing the utility's varying fuel and power-purchase cost on to consumers." data-tip="FPPA — Fuel &amp; Power Purchase Adjustment: a periodic surcharge passing the utility's varying fuel / power-purchase cost on to consumers.">ⓘ</span></label>
               <div class="fac-input-row">
                 <input type="number" id="facRate" placeholder="e.g., 0.20" step="0.01" value="0">
@@ -490,7 +500,7 @@
           </div>
 
           <!-- Rooftop solar / net metering -->
-          <div class="form-group" id="netMeteringGroup">
+          <div class="form-group adv-only" id="netMeteringGroup">
             <label class="checkbox-label">
               <input type="checkbox" id="netMeteringChk">
               <span data-i18n-html="chk.netMetering"><strong>Rooftop solar / net metering</strong> — bill on net import</span>
@@ -511,7 +521,7 @@
             </div>
           </div>
 
-          <div class="form-group" id="lpscApplicableGroup">
+          <div class="form-group adv-only" id="lpscApplicableGroup">
             <label class="checkbox-label lpsc-applicable-label">
               <input type="checkbox" id="lpscApplicable" checked>
               <span data-i18n-html="chk.lpsc"><strong>LPSC Applicable</strong> — apply late-payment surcharge on the current bill</span>
@@ -599,7 +609,7 @@
       </div>
 
       <!-- Optional bill-verification: compare the engine's total against the printed bill -->
-      <div class="form-group verify-group">
+      <div class="form-group verify-group adv-only">
         <label for="billedAmount"><span class="lbl-text" data-i18n="label.billedAmount">Amount on your DISCOM bill (₹) — optional</span><span class="gloss" tabindex="0" role="img" aria-label="Enter the net payable total printed on your bill and we will tell you whether it matches our calculation." data-tip="Enter the net payable total printed on your bill and we'll tell you whether it matches our calculation.">ⓘ</span></label>
         <input type="number" id="billedAmount" min="0" step="0.01" inputmode="decimal" placeholder="1240">
         <small data-i18n="small.billedAmount">We'll compare it with our calculation and tell you if your bill looks right.</small>
@@ -646,6 +656,9 @@
         <div class="bill-placeholder-msg">
           <h3 data-i18n="placeholder.title">Your provisional bill will appear here</h3>
           <p data-i18n-html="placeholder.sub">Select your DISCOM, fill in the details, and click<br><strong>Calculate Provisional Bill</strong></p>
+          <button id="sampleBtnPanel" type="button" class="btn-sample btn-sample-hero">
+            <span aria-hidden="true">✨</span> <span data-i18n="btn.sampleHero">See a sample bill in one click</span>
+          </button>
         </div>
       </div>
     </div>
