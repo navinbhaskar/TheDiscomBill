@@ -165,6 +165,7 @@ const HEADER = `
           <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span data-i18n="ql.tariffsByState">Tariffs by State &amp; DISCOM</span></a>
           <span class="nav-dropdown-label" role="presentation" data-i18n="ql.services">Services</span>
           <a href="/services/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg><span data-i18n="ql.discomServices">DISCOM Services</span></a>
+          <a href="/smart-meter-recharge/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/><path d="M11 9l-2 3h3l-2 3"/></svg><span data-i18n="ql.smartMeter">Smart Meter Recharge</span></a>
           <a href="/bill-review/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4"/><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg><span data-i18n="ql.billReview">Bill Review by Experts</span></a>
           <span class="nav-dropdown-label" role="presentation" data-i18n="ql.learn">Learn</span>
           <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.guides">Electricity Bill Guides</span></a>
@@ -208,7 +209,8 @@ function hiChrome(html) {
   return html
     .replace(/href="\/tariffs\/states\/"/g, 'href="/hi/tariffs/states/"')
     .replace(/href="\/guides\/"/g, 'href="/hi/guides/"')
-    .replace(/href="\/glossary\/"/g, 'href="/hi/glossary/"');
+    .replace(/href="\/glossary\/"/g, 'href="/hi/glossary/"')
+    .replace(/href="\/smart-meter-recharge\/"/g, 'href="/hi/smart-meter-recharge/"');
 }
 
 // `page` is the site-relative English URL of this page (e.g. "/glossary/"). When given,
@@ -784,6 +786,7 @@ function discomPage(state, discom, lang = 'en') {
       </div>
       <div class="tariff-badges">${badges.join('')}</div>
     </div>
+    <p class="guide-meta">Tariffs last updated: ${LASTMOD_EN}${meta.verified ? ' · ✓ verified against real bills' : ''}</p>
     ${src ? `<p><a class="tariff-source" href="${attr(src)}" target="_blank" rel="noopener">Official ${esc(discom.name)} source ↗</a></p>` : ''}
     <p class="seo-cta-row"><a class="seo-cta" href="/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator">Open the ${esc(discom.name)} bill calculator →</a></p>
 
@@ -888,6 +891,7 @@ function discomPageHi({ state, discom, stateSlug, enUrl, url, meta, fy, long, re
       </div>
       <div class="tariff-badges">${badges.join('')}</div>
     </div>
+    <p class="guide-meta">टैरिफ अंतिम अपडेट: ${LASTMOD_HI}${meta.verified ? ' · ✓ असली बिलों से सत्यापित' : ''}</p>
     ${src ? `<p><a class="tariff-source" href="${attr(src)}" target="_blank" rel="noopener">आधिकारिक ${esc(discom.name)} स्रोत ↗</a></p>` : ''}
     <p class="seo-cta-row"><a class="seo-cta" href="${calcHref}">${esc(discom.name)} बिल कैलकुलेटर खोलें →</a></p>
 
@@ -978,6 +982,7 @@ function statePage(state, lang = 'en') {
     ])}
     ${langSwitchLink(enUrl, 'hi')}
     <h1>${esc(stateHi)} बिजली बिल कैलकुलेटर व डिस्कॉम टैरिफ (${esc(fyHi)})</h1>
+    <p class="guide-meta">टैरिफ अंतिम अपडेट: ${LASTMOD_HI}${meta.verified ? ' · ✓ असली बिलों से सत्यापित' : ''}</p>
     <p class="seo-lead">${esc(stateHi)} की ${discoms.length} वितरण कंपन${discoms.length > 1 ? 'ियों' : 'ी'} — ${esc(names)} — में से किसी का भी अनुमानित बिजली बिल निकालें, ${esc(fyHi)} के पूरे स्लैब-वार विवरण के साथ${cityLine ? ` — ${esc(cityLine)} समेत` : ''}।</p>
     <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">${esc(stateHi)} बिल कैलकुलेटर खोलें →</a></p>
 
@@ -1049,6 +1054,7 @@ function statePage(state, lang = 'en') {
     ])}
     ${langSwitchLink(enUrl, 'en')}
     <h1>${esc(state)} Electricity Bill Calculator &amp; DISCOM Tariffs (${esc(fy)})</h1>
+    <p class="guide-meta">Tariffs last updated: ${LASTMOD_EN}${meta.verified ? ' · ✓ verified against real bills' : ''}</p>
     <p class="seo-lead">Calculate your provisional electricity bill for any of ${esc(state)}'s ${discoms.length} distribution compan${discoms.length > 1 ? 'ies' : 'y'} — ${esc(names)} — with a full slab-wise breakdown for ${esc(fy)}${cityLine ? `, covering ${esc(cityLine)} and more` : ''}.</p>
     <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Open the ${esc(state)} bill calculator →</a></p>
 
@@ -1356,6 +1362,13 @@ function guidePage(guide, lang = 'en') {
     <p class="seo-lead">${intro}</p>
     ${sections}
     ${faqHtml(faqs, hi)}
+    <section class="seo-section guide-calc-cta">
+      <h2>${hi ? 'अब अपना असली बिल जाँचें' : 'Now check your own bill'}</h2>
+      <p>${hi
+        ? 'पढ़ना काफ़ी नहीं — अपने डिस्कॉम की असली स्लैब दरों, फिक्स्ड चार्ज और FPPA के साथ अपना मदवार बिल सेकंडों में निकालें। मुफ़्त, बिना साइन-अप।'
+        : 'Reading is half the job — run your own units through your DISCOM\'s real slab rates, fixed charges and FPPA and get an itemised bill in seconds. Free, no sign-up.'}</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">${hi ? 'बिजली बिल कैलकुलेटर खोलें →' : 'Open the electricity bill calculator →'}</a></p>
+    </section>
     <section class="seo-section guide-more">
       <h2>${hi ? 'और गाइड' : 'More guides'}</h2>
       <div class="seo-link-grid">${GUIDES.filter(g => g.slug !== guide.slug).map(g => `
