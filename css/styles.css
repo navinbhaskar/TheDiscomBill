@@ -1271,9 +1271,18 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .simple-mode .meter-row .meter-row-top { display: none; }
 .simple-mode .meter-row .mf-field:not(.mf-units) { display: none; }
 .simple-mode .meter-row .mf-override-label { display: none; }
-.simple-mode .meter-row { padding-top: 0; }
-.simple-mode .meter-row .mf-units input { max-width: 100%; height: 40px; font-size: 15px; }
-.simple-mode .meter-row .mf-units > span { font-size: 12px; }
+/* With the tabs and meter chrome hidden, the lone Units field would otherwise sit
+   inside two leftover boxes (tab container + meter-row card) with its own mini
+   label style. Flatten both and mirror .form-group's label/input metrics so it
+   reads as just another field of the form. */
+.simple-mode .bill-tabs-container { margin-top: 0; border: 0; border-radius: 0; background: transparent; }
+.simple-mode .bill-tab-panel { padding: 0; }
+.simple-mode .meter-row { background: transparent; border: 0; border-radius: 0; padding: 0; margin: 0; }
+.simple-mode .meter-row .mf-units > span {
+  font-size: 12.5px; font-weight: 600; color: var(--text-primary) !important;
+  text-transform: none; letter-spacing: normal; margin-bottom: 2px;
+}
+.simple-mode .meter-row .mf-units input { max-width: 100%; height: 32px; font-size: 13px; padding: 0 11px; }
 .simple-mode #advHint { display: none; }
 .simple-mode .meter-role-badge { display: none; }
 
