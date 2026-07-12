@@ -131,6 +131,9 @@ function armAccountOutsideCloser() {
   };
   document.addEventListener('pointerdown', onOutside, true);
   document.addEventListener('click', onOutside, true);
+  // Old WebKit doesn't emit click (or pointerdown) for taps on non-interactive
+  // page areas — touchstart always fires, so outside taps can never go unseen.
+  document.addEventListener('touchstart', onOutside, { capture: true, passive: true });
 }
 
 // hand-editing. Signed out: a plain "Login" button (one action, no dropdown).
@@ -147,8 +150,13 @@ function initLoginButton() {
   // confirmed role differs from the cached one), reopen it after the rebuild —
   // otherwise the user's just-opened menu vanishes under their finger on mobile.
   const existing = document.getElementById('headerLoginBtn');
-  const wasOpen = !!existing?.closest('.account-dropdown')?.classList.contains('open');
-  if (existing) (existing.closest('.account-dropdown') || existing).remove();
+  const prevWrap = existing?.closest('.account-dropdown');
+  const wasOpen = !!prevWrap?.classList.contains('open');
+  // Carry the ghost-tap guard timestamp across the rebuild. Restarting it on every
+  // re-render re-armed the "swallow taps for 450ms" window behind the user's back,
+  // so outside taps landing in that window did nothing ("menu won't close").
+  const prevOpenedAt = prevWrap?.__openedAt || 0;
+  if (existing) (prevWrap || existing).remove();
 
   const escText = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const user = getStoredUser();
@@ -236,14 +244,16 @@ function initLoginButton() {
     wrap.classList.remove('open');
     trigger.setAttribute('aria-expanded', 'false');
   };
-  const openMenu = () => {
-    wrap.__openedAt = Date.now();
+  // fromTap: a real user tap starts a fresh ghost-tap guard window; a re-render
+  // restore keeps the previous window so rebuilds can't re-arm it silently.
+  const openMenu = (fromTap) => {
+    wrap.__openedAt = fromTap ? Date.now() : (prevOpenedAt || Date.now());
     wrap.classList.add('open');
     trigger.setAttribute('aria-expanded', 'true');
   };
   trigger.addEventListener('click', (e) => {
     e.stopPropagation();
-    if (!wrap.classList.contains('open')) { openMenu(); return; }
+    if (!wrap.classList.contains('open')) { openMenu(true); return; }
     // Closing tap: ignore anything within 450ms of opening. Mobile browsers deliver
     // ghost/duplicate clicks for one physical tap anywhere up to ~400ms later — a
     // fixed dedupe window let slow devices re-toggle the menu shut mid-fade, which
@@ -253,7 +263,7 @@ function initLoginButton() {
     closeMenu();
   });
   armAccountOutsideCloser();
-  if (wasOpen) openMenu();   // restore the menu the re-render just tore down
+  if (wasOpen) openMenu(false);   // restore the menu the re-render just tore down
 
   wrap.querySelector('#accountLogout').addEventListener('click', async (e) => {
     const btn = e.currentTarget;
@@ -273,7 +283,14 @@ function initLoginButton() {
   syncAccountRole(role);
 }
 
+let roleSyncedOnce = false;
 async function syncAccountRole(currentRole) {
+  // At most one confirm-and-re-render per page load. The loop was previously broken
+  // only by the localStorage role cache matching on the next call — if that write
+  // fails (private mode, quota), the header rebuilt itself once per network
+  // round-trip forever, eating the open menu's tap guard each time.
+  if (roleSyncedOnce) return;
+  roleSyncedOnce = true;
   try {
     const sb = await getSupabase();
     if (!sb) return;
