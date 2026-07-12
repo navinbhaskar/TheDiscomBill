@@ -32,10 +32,20 @@ async function init() {
     return;
   }
 
-  // Signed-out visitors go to the dedicated login page and come straight back.
+  // Signed-out visitors stay on the page — the value-prop sections above are the
+  // pitch (who the experts are, turnaround, sample report), so bouncing straight
+  // to /login/ would hide exactly what convinces them. Offer sign-in as the CTA.
   sb = await getSupabase();
   const { data: { session } } = await sb.auth.getSession();
-  if (!session) { location.replace(LOGIN_URL); return; }
+  if (!session) {
+    mainEl.innerHTML = `
+      <div class="br-signin-cta">
+        <p><strong>Ready to have your bill checked?</strong> Create a free account or sign in to upload
+        your bill and open a case — your documents stay private to you and your expert.</p>
+        <a class="seo-cta" href="${LOGIN_URL}">Sign in &amp; start my review <span aria-hidden="true">→</span></a>
+      </div>`;
+    return;
+  }
 
   me = session.user;
   const { data } = await sb.from('profiles').select('*').eq('id', me.id).single();

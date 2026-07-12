@@ -1889,6 +1889,7 @@ const STATIC_ROUTES = [
   { loc: '/services/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/recharge-calculator/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/bill-review/', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/bill-review/sample-report/', priority: '0.5', changefreq: 'yearly' },
   { loc: '/methodology/', priority: '0.7', changefreq: 'monthly' },
 ];
 
