@@ -1225,20 +1225,43 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 
 /* ── Simple / Detailed calculator mode ──────────────────────────────────────── */
 .calc-mode-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 2px 0 16px; }
+/* Segmented control: equal-width buttons on a sunken track, with a glossy pill
+   (same gradient family as the header Login button) sliding between them. */
 .calc-mode {
-  display: inline-flex; padding: 3px;
+  position: relative;
+  display: inline-grid; grid-auto-columns: 1fr; grid-auto-flow: column;
+  padding: 3px;
   background: var(--surface-sunken); border: 1px solid var(--border-default);
   border-radius: var(--radius-full);
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, .07);
 }
 .calc-mode-btn {
-  border: 0; background: transparent; padding: 6px 16px;
+  position: relative; z-index: 1;   /* text above the sliding thumb */
+  border: 0; background: transparent; padding: 6px 18px;
   border-radius: var(--radius-full); font-size: 13px; font-weight: 600;
   font-family: inherit; color: var(--text-tertiary); cursor: pointer;
-  transition: background var(--t-fast), color var(--t-fast);
+  white-space: nowrap;
+  transition: color var(--t-fast);
 }
 .calc-mode-btn:hover { color: var(--text-primary); }
-.calc-mode-btn.active { background: var(--brand); color: #fff; }
+.calc-mode-btn.active { color: #fff; }
 .calc-mode-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+/* JS stamps data-active="simple|detailed" on the container (setCalcMode) — the
+   thumb slides on that attribute. Hidden until JS applies the saved mode. */
+.calc-mode::before {
+  content: ""; position: absolute; z-index: 0;
+  top: 3px; bottom: 3px; left: 3px; width: calc(50% - 3px);
+  border-radius: var(--radius-full);
+  background: linear-gradient(180deg, var(--p-blue-500), var(--p-blue-600));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 1px 3px rgba(37, 99, 235, .35);
+  opacity: 0;
+  transition: transform .28s cubic-bezier(.3, 1.4, .4, 1);
+}
+.calc-mode[data-active]::before { opacity: 1; }
+.calc-mode[data-active="detailed"]::before { transform: translateX(100%); }
+@media (prefers-reduced-motion: reduce) {
+  .calc-mode::before { transition: none; }
+}
 .calc-mode-hint { font-size: 12px; color: var(--text-tertiary); }
 
 /* Simple mode: hide everything that isn't state → DISCOM → category → units → load.

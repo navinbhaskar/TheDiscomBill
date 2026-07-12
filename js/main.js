@@ -529,6 +529,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const setCalcMode = (mode) => {
       const simple = mode === 'simple';
       formPanel.classList.toggle('simple-mode', simple);
+      // Drives the segmented control's sliding thumb (CSS keys off this attribute)
+      document.getElementById('calcMode')?.setAttribute('data-active', mode);
       document.querySelectorAll('#calcMode .calc-mode-btn').forEach(b => {
         const on = b.dataset.mode === mode;
         b.classList.toggle('active', on);
