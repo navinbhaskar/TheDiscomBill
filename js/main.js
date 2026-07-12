@@ -112,6 +112,27 @@ function initGatedLinks() {
   });
 }
 
+// One persistent, capture-phase outside-tap closer for the account menu. Armed once
+// and querying the live DOM on every tap, it survives the header re-renders
+// (syncAccountRole) that orphaned per-render document listeners, and capture phase
+// means no in-page stopPropagation can starve it of the event.
+let accountCloserArmed = false;
+function armAccountOutsideCloser() {
+  if (accountCloserArmed) return;
+  accountCloserArmed = true;
+  const onOutside = (e) => {
+    const w = document.querySelector('.account-dropdown.open');
+    if (!w || w.contains(e.target)) return;
+    // The opening tap's own event burst (pointerdown → click can trail by 100ms+ on
+    // mobile, plus ghost clicks) must never close the menu it just opened.
+    if (Date.now() - (w.__openedAt || 0) < 450) return;
+    w.classList.remove('open');
+    w.querySelector('#headerLoginBtn')?.setAttribute('aria-expanded', 'false');
+  };
+  document.addEventListener('pointerdown', onOutside, true);
+  document.addEventListener('click', onOutside, true);
+}
+
 // hand-editing. Signed out: a plain "Login" button (one action, no dropdown).
 // Signed in: an account dropdown — profile identity, My Complaints, My Bills,
 // Expert Console (experts only, via a role flag cached by /expert/), Logout.
@@ -204,31 +225,21 @@ function initLoginButton() {
   themeBtn.after(wrap);   // sits to the right of the theme toggle
 
   const trigger = wrap.querySelector('#headerLoginBtn');
-  // Touch devices routinely emit duplicate / "ghost" click events for a single tap.
-  // A plain toggle + always-on document close-listener collapses the menu on that
-  // second event, so on mobile it flashes open and vanishes before you can tap Logout.
-  // Guard against it: dedupe rapid taps on the trigger, and only listen for the
-  // outside tap (via pointerdown, attached one tick later so the opening tap itself
-  // can't close it) while the menu is actually open.
+  // Touch devices routinely emit duplicate / "ghost" click events for a single tap,
+  // and syncAccountRole can re-render this whole dropdown mid-interaction. Per-render
+  // document listeners (attached on open, removed on close) kept dying in that churn —
+  // orphaned by a re-render or not yet attached when the outside tap landed — so the
+  // menu either vanished instantly or refused to close. Instead: one PERSISTENT
+  // capture-phase closer (armed once, below) queries the live DOM on every tap, and
+  // the open/close here only flips classes.
   const closeMenu = () => {
     wrap.classList.remove('open');
     trigger.setAttribute('aria-expanded', 'false');
-    document.removeEventListener('pointerdown', onOutside);
-    document.removeEventListener('click', onOutside);
   };
-  const onOutside = (e) => { if (!wrap.contains(e.target)) closeMenu(); };
-  let openedAt = 0;
   const openMenu = () => {
-    openedAt = Date.now();
+    wrap.__openedAt = Date.now();
     wrap.classList.add('open');
     trigger.setAttribute('aria-expanded', 'true');
-    // Outside-tap close listens on BOTH pointerdown and click (older mobile browsers fire
-    // only compatibility mouse events), attached after the opening tap's own event burst
-    // (touchend → mousedown → click can trail by 100ms+) so it can never self-close.
-    setTimeout(() => {
-      document.addEventListener('pointerdown', onOutside);
-      document.addEventListener('click', onOutside);
-    }, 120);
   };
   trigger.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -238,9 +249,10 @@ function initLoginButton() {
     // fixed dedupe window let slow devices re-toggle the menu shut mid-fade, which
     // read as "the logout popup never opens". A human closing it on purpose taps
     // well after half a second.
-    if (Date.now() - openedAt < 450) return;
+    if (Date.now() - wrap.__openedAt < 450) return;
     closeMenu();
   });
+  armAccountOutsideCloser();
   if (wasOpen) openMenu();   // restore the menu the re-render just tore down
 
   wrap.querySelector('#accountLogout').addEventListener('click', async (e) => {
