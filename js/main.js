@@ -122,7 +122,11 @@ function initLoginButton() {
   if (location.pathname.startsWith('/login')) return;   // pointless on the login page itself
 
   // Re-runnable: after an in-modal sign-in we refresh the button in place.
+  // If the menu was open (syncAccountRole re-renders ~1s after page load when the
+  // confirmed role differs from the cached one), reopen it after the rebuild —
+  // otherwise the user's just-opened menu vanishes under their finger on mobile.
   const existing = document.getElementById('headerLoginBtn');
+  const wasOpen = !!existing?.closest('.account-dropdown')?.classList.contains('open');
   if (existing) (existing.closest('.account-dropdown') || existing).remove();
 
   const escText = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -237,6 +241,7 @@ function initLoginButton() {
     if (Date.now() - openedAt < 450) return;
     closeMenu();
   });
+  if (wasOpen) openMenu();   // restore the menu the re-render just tore down
 
   wrap.querySelector('#accountLogout').addEventListener('click', async (e) => {
     const btn = e.currentTarget;
