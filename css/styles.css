@@ -365,7 +365,7 @@
 
 .nav-dropdown-menu {
   position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(-6px) scale(.98); 
-  z-index: 70; min-width: 196px; list-style: none; margin: 0; padding: 4px;
+  z-index: 70; min-width: 208px; list-style: none; margin: 0; padding: 5px;
   background: var(--surface-card); border: 1px solid var(--border-default);
   border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
   opacity: 0; pointer-events: none; transition: opacity var(--t-fast), transform var(--t-fast);
@@ -376,8 +376,8 @@
    (light slate, meant for the dark header bar) — otherwise the items render
    light-grey on the white menu and look disabled. */
 .header-nav .nav-dropdown-item {
-  display: flex; align-items: center; gap: 8px; padding: 3px 10px; border-radius: var(--radius-md);
-  color: var(--text-primary); font-size: 12.5px; font-weight: 500; line-height: 1.5; text-decoration: none;
+  display: flex; align-items: center; gap: 8px; padding: 5px 11px; border-radius: var(--radius-md);
+  color: var(--text-primary); font-size: 13px; font-weight: 500; line-height: 1.5; text-decoration: none;
   transition: background var(--t-fast), color var(--t-fast);
 }
 /* Sober monochrome line icons: muted by default, brand on hover (no colourful emoji). */
@@ -386,12 +386,12 @@
 .header-nav .nav-dropdown-item:hover svg { color: var(--brand); }
 /* Section headers grouping the Quick Links into Tools / Tariffs / Services / Learn */
 .header-nav .nav-dropdown-label {
-  display: block; padding: 3px 10px 1px; font-size: 9.5px; font-weight: 700;
+  display: block; padding: 5px 11px 2px; font-size: 10px; font-weight: 700;
   letter-spacing: .07em; text-transform: uppercase; color: var(--text-tertiary);
 }
 .header-nav .nav-dropdown-label + .nav-dropdown-item { margin-top: 0; }
 .header-nav .nav-dropdown-label:not(:first-child) {
-  margin-top: 2px; padding-top: 4px; border-top: 1px solid var(--border-default);
+  margin-top: 3px; padding-top: 5px; border-top: 1px solid var(--border-default);
 }
 
 /* Custom language dropdown — a styled menu replacing the native <select> popup */
