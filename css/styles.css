@@ -365,36 +365,33 @@
 
 .nav-dropdown-menu {
   position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%) translateY(-6px) scale(.98); 
-  z-index: 70; min-width: 220px; list-style: none; margin: 0; padding: 5px;
+  z-index: 70; min-width: 196px; list-style: none; margin: 0; padding: 4px;
   background: var(--surface-card); border: 1px solid var(--border-default);
   border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
   opacity: 0; pointer-events: none; transition: opacity var(--t-fast), transform var(--t-fast);
 }
 .nav-dropdown.open .nav-dropdown-menu { opacity: 1; transform: translateX(-50%) scale(1); pointer-events: auto; }
-/* Quick Links has four grouped sections; cap height so it never runs off-screen, but the
-   compact spacing below means the scrollbar only appears on genuinely short viewports. */
-#quickLinksMenu { max-height: min(82vh, 640px); overflow-y: auto; overscroll-behavior: contain; }
 
 /* Scoped under .header-nav so the dark item text beats `.header-nav a`
    (light slate, meant for the dark header bar) — otherwise the items render
    light-grey on the white menu and look disabled. */
 .header-nav .nav-dropdown-item {
-  display: flex; align-items: center; gap: 9px; padding: 5px 12px; border-radius: var(--radius-md);
-  color: var(--text-primary); font-size: 13.5px; font-weight: 500; text-decoration: none;
+  display: flex; align-items: center; gap: 8px; padding: 3px 10px; border-radius: var(--radius-md);
+  color: var(--text-primary); font-size: 12.5px; font-weight: 500; line-height: 1.5; text-decoration: none;
   transition: background var(--t-fast), color var(--t-fast);
 }
 /* Sober monochrome line icons: muted by default, brand on hover (no colourful emoji). */
-.header-nav .nav-dropdown-item svg { width: 16px; height: 16px; flex-shrink: 0; color: var(--text-tertiary); transition: color var(--t-fast); }
+.header-nav .nav-dropdown-item svg { width: 14px; height: 14px; flex-shrink: 0; color: var(--text-tertiary); transition: color var(--t-fast); }
 .header-nav .nav-dropdown-item:hover { background: var(--brand-faint); color: var(--brand); text-decoration: none; }
 .header-nav .nav-dropdown-item:hover svg { color: var(--brand); }
 /* Section headers grouping the Quick Links into Tools / Tariffs / Services / Learn */
 .header-nav .nav-dropdown-label {
-  display: block; padding: 5px 12px 2px; font-size: 10px; font-weight: 700;
+  display: block; padding: 3px 10px 1px; font-size: 9.5px; font-weight: 700;
   letter-spacing: .07em; text-transform: uppercase; color: var(--text-tertiary);
 }
 .header-nav .nav-dropdown-label + .nav-dropdown-item { margin-top: 0; }
 .header-nav .nav-dropdown-label:not(:first-child) {
-  margin-top: 3px; padding-top: 6px; border-top: 1px solid var(--border-default);
+  margin-top: 2px; padding-top: 4px; border-top: 1px solid var(--border-default);
 }
 
 /* Custom language dropdown — a styled menu replacing the native <select> popup */
@@ -2069,7 +2066,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 
 /* ── Programmatic SEO landing pages (state / DISCOM / directory) ──────────────── */
-.seo-page { max-width: 1000px; margin: 0 auto; padding-top: 28px; padding-bottom: 56px; }
+/* Side padding matters below ~1050px: unlike the homepage sections (which carry
+   their own 24px gutters), .seo-page sits directly in .page-body, so without it
+   the text on all generated pages runs flush against the screen edge on mobile. */
+.seo-page { max-width: 1000px; margin: 0 auto; padding: 28px 24px 56px; }
 .seo-page h1 { font-size: 27px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.6px; line-height: 1.2; margin: 6px 0 12px; }
 .seo-lead { font-size: 16px; color: var(--text-secondary); line-height: 1.65; max-width: 760px; margin: 0 0 18px; }
 /* Cross-link between the English and Hindi variants of a page */
@@ -2082,6 +2082,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .seo-section ul, .seo-section ol { color: var(--text-secondary); line-height: 1.65; margin: 0 0 14px; padding-left: 24px; max-width: 760px; }
 .seo-section li { margin-bottom: 10px; }
 .seo-section li:last-child { margin-bottom: 0; }
+/* The 660px table min-width exists for the homepage's many-column compare tool;
+   the small 2-column tables on these pages fit any phone, so drop it here —
+   otherwise the ₹ column scrolls out of view on mobile. */
+.seo-page .comparison-table { min-width: 0; }
 
 /* Guides (/guides/) */
 .guide-meta { font-size: 12.5px; color: var(--text-tertiary); margin: -6px 0 16px; }
