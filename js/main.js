@@ -123,9 +123,11 @@ function armAccountOutsideCloser() {
   const onOutside = (e) => {
     const w = document.querySelector('.account-dropdown.open');
     if (!w || w.contains(e.target)) return;
-    // The opening tap's own event burst (pointerdown → click can trail by 100ms+ on
-    // mobile, plus ghost clicks) must never close the menu it just opened.
-    if (Date.now() - (w.__openedAt || 0) < 450) return;
+    // No time-based guard here: the opening tap can never reach this point, because
+    // its pointerdown/touchstart fires BEFORE the menu opens (no-op) and its click
+    // targets the trigger, which is inside the wrap. Any event that gets here is a
+    // genuine outside tap, so it always closes — timing windows previously swallowed
+    // real taps and made closing feel random.
     w.classList.remove('open');
     w.querySelector('#headerLoginBtn')?.setAttribute('aria-expanded', 'false');
   };
@@ -152,10 +154,6 @@ function initLoginButton() {
   const existing = document.getElementById('headerLoginBtn');
   const prevWrap = existing?.closest('.account-dropdown');
   const wasOpen = !!prevWrap?.classList.contains('open');
-  // Carry the ghost-tap guard timestamp across the rebuild. Restarting it on every
-  // re-render re-armed the "swallow taps for 450ms" window behind the user's back,
-  // so outside taps landing in that window did nothing ("menu won't close").
-  const prevOpenedAt = prevWrap?.__openedAt || 0;
   if (existing) (prevWrap || existing).remove();
 
   const escText = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -244,26 +242,24 @@ function initLoginButton() {
     wrap.classList.remove('open');
     trigger.setAttribute('aria-expanded', 'false');
   };
-  // fromTap: a real user tap starts a fresh ghost-tap guard window; a re-render
-  // restore keeps the previous window so rebuilds can't re-arm it silently.
-  const openMenu = (fromTap) => {
-    wrap.__openedAt = fromTap ? Date.now() : (prevOpenedAt || Date.now());
+  const openMenu = () => {
     wrap.classList.add('open');
     trigger.setAttribute('aria-expanded', 'true');
   };
+  // Plain toggle. Ghost/duplicate clicks (one physical tap delivering two click
+  // events, legacy WebKit) are deduped against the LAST HANDLED toggle — not
+  // against "time since open", which swallowed the user's deliberate taps and
+  // made open/close feel random on mobile.
+  let lastToggle = 0;
   trigger.addEventListener('click', (e) => {
     e.stopPropagation();
-    if (!wrap.classList.contains('open')) { openMenu(true); return; }
-    // Closing tap: ignore anything within 450ms of opening. Mobile browsers deliver
-    // ghost/duplicate clicks for one physical tap anywhere up to ~400ms later — a
-    // fixed dedupe window let slow devices re-toggle the menu shut mid-fade, which
-    // read as "the logout popup never opens". A human closing it on purpose taps
-    // well after half a second.
-    if (Date.now() - wrap.__openedAt < 450) return;
-    closeMenu();
+    const now = Date.now();
+    if (now - lastToggle < 350) return;
+    lastToggle = now;
+    if (wrap.classList.contains('open')) closeMenu(); else openMenu();
   });
   armAccountOutsideCloser();
-  if (wasOpen) openMenu(false);   // restore the menu the re-render just tore down
+  if (wasOpen) openMenu();   // restore the menu the re-render just tore down
 
   wrap.querySelector('#accountLogout').addEventListener('click', async (e) => {
     const btn = e.currentTarget;
