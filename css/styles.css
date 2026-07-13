@@ -3600,3 +3600,51 @@ a.mb-open:hover { border-color: var(--brand); color: var(--brand); text-decorati
 .mb-delete:hover { border-color: #b91c1c; color: #b91c1c; background: #fee2e2; }
 a.mb-cta { display: inline-flex; align-items: center; text-decoration: none; }
 @media (max-width: 560px) { .mb-bill { flex-wrap: wrap; } .mb-actions { margin-left: auto; } }
+
+/* ── Bill OCR auto-fill (calculator) ─────────────────────────────────────── */
+.ocr-upload { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 18px; padding: 12px 14px; border: 1.5px dashed var(--border, #d5dbe5); border-radius: 12px; background: color-mix(in srgb, var(--brand) 4%, transparent); }
+.ocr-btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border: none; border-radius: 10px; background: var(--brand); color: #fff; font-weight: 600; font-size: 0.92rem; cursor: pointer; transition: filter .15s ease; }
+.ocr-btn:hover { filter: brightness(1.08); }
+.ocr-btn:disabled { opacity: .6; cursor: wait; }
+.ocr-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+.ocr-privacy { font-size: 0.8rem; color: var(--muted, #64748b); flex: 1; min-width: 180px; }
+.ocr-progress { flex-basis: 100%; display: flex; align-items: center; gap: 10px; }
+.ocr-progress-track { flex: 1; height: 8px; border-radius: 999px; background: var(--border, #e2e8f0); overflow: hidden; }
+.ocr-progress-bar { height: 100%; width: 0; border-radius: 999px; background: var(--brand); transition: width .2s ease; }
+.ocr-status { font-size: 0.8rem; color: var(--muted, #64748b); white-space: nowrap; }
+.ocr-result { flex-basis: 100%; }
+.ocr-result p { margin: 4px 0 8px; font-size: 0.86rem; }
+.ocr-ok { color: var(--ok, #15803d); font-weight: 600; }
+.ocr-fail { color: #b91c1c; }
+.ocr-note-cat { color: var(--muted, #64748b); }
+.ocr-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.ocr-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border, #e2e8f0); background: var(--panel, #fff); font-size: 0.8rem; }
+.ocr-chip-k { font-weight: 600; color: var(--brand); }
+:root[data-theme="dark"] .ocr-chip { background: rgba(255,255,255,0.04); }
+@media (max-width: 560px) { .ocr-upload { padding: 10px 12px; } .ocr-privacy { font-size: 0.75rem; } }
+
+/* ── Hero "Get your bill reviewed" chooser ───────────────────────────────── */
+.review-chooser-wrap { position: relative; display: inline-block; }
+button.hero-cta { font: inherit; cursor: pointer; }
+.review-chooser { min-width: 300px; padding: 6px; border-radius: 14px; border: 1px solid var(--border, #e2e8f0); background: var(--panel, #fff); box-shadow: 0 12px 32px rgba(15, 23, 42, 0.16); }
+.review-chooser-item { display: flex; align-items: flex-start; gap: 10px; width: 100%; padding: 10px 12px; border: none; border-radius: 10px; background: none; text-align: left; text-decoration: none; color: inherit; cursor: pointer; font: inherit; }
+.review-chooser-item:hover { background: color-mix(in srgb, var(--brand) 8%, transparent); text-decoration: none; }
+.rc-icon { font-size: 1.15rem; line-height: 1.3; }
+.rc-text { display: flex; flex-direction: column; gap: 2px; }
+.rc-text b { font-size: 0.92rem; font-weight: 600; }
+.rc-text small { font-size: 0.78rem; color: var(--muted, #64748b); }
+:root[data-theme="dark"] .review-chooser { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5); }
+@media (max-width: 560px) { .review-chooser { min-width: 270px; } }
+
+/* ── OCR review screen (confirm values before they hit the form) ─────────── */
+.ocr-rev-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; margin: 10px 0; }
+.ocr-rev-row { display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem; font-weight: 600; color: var(--muted, #64748b); }
+.ocr-rev-row input { padding: 8px 10px; border: 1px solid var(--border, #d5dbe5); border-radius: 8px; font: inherit; font-weight: 500; color: inherit; background: var(--panel, #fff); }
+.ocr-rev-row input:focus { outline: 2px solid var(--brand); outline-offset: 1px; }
+.ocr-rev-row input::placeholder { font-weight: 400; color: #b45309; opacity: .9; }
+.ocr-rev-missing { color: #b45309; font-size: 0.82rem; font-weight: 600; margin: 4px 0 8px; }
+.ocr-rev-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.ocr-btn-ghost { background: none; color: var(--brand); border: 1.5px solid var(--brand); }
+.ocr-btn-ghost:hover { filter: none; background: color-mix(in srgb, var(--brand) 8%, transparent); }
+.ocr-btn:disabled { opacity: .55; cursor: not-allowed; }
+:root[data-theme="dark"] .ocr-rev-row input { background: rgba(255,255,255,0.05); }
