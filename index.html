@@ -179,8 +179,13 @@
           <span class="nav-dropdown-label" role="presentation" data-i18n="ql.services">Services</span>
           <a href="/services/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg><span data-i18n="ql.discomServices">DISCOM Services</span></a>
           <a href="/smart-meter-recharge/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/><path d="M11 9l-2 3h3l-2 3"/></svg><span data-i18n="ql.smartMeter">Smart Meter Recharge</span></a>
-          <a href="/#calculator" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span data-i18n="ql.ocrCheck">Scan Bill — Instant Self-Check</span></a>
-          <a href="/bill-review/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4"/><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg><span data-i18n="ql.billReview">Bill Review by an Expert</span></a>
+          <div class="nav-subgroup">
+          <button type="button" class="nav-dropdown-item nav-subgroup-trigger" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4"/><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg><span data-i18n="ql.billReviewGroup">Get Your Bill Reviewed</span><svg class="nav-subgroup-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+          <div class="nav-submenu" role="menu">
+            <a href="/#calculator" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span data-i18n="ql.ocrCheck">Instant Self-Check (OCR)</span></a>
+            <a href="/bill-review/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg><span data-i18n="ql.billReview">From an Expert</span></a>
+          </div>
+          </div>
           <span class="nav-dropdown-label" role="presentation" data-i18n="ql.learn">Learn</span>
           <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.guides">Electricity Bill Guides</span></a>
           <a href="/glossary/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M12 7h5M12 11h5M7 7h.01M7 11h.01"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.glossary">Electricity Bill Glossary</span></a>
@@ -230,17 +235,20 @@
   <!-- Primary call to action (smooth-scrolls to the form via the Lenis anchor handler)
        + secondary CTA to the expert Bill Review service -->
   <div class="hero-ctas reveal">
-    <a href="#calculator" class="hero-cta"><span data-i18n="hero.cta">Calculate my bill</span> <span aria-hidden="true">↓</span></a>
+    <a href="#calculator" class="hero-cta"><span data-i18n="hero.cta">Calculate my bill</span> <svg class="rc-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
     <div class="review-chooser-wrap">
-      <button type="button" class="hero-cta hero-cta-secondary" id="reviewChooserBtn" aria-haspopup="true" aria-expanded="false"><span data-i18n="hero.cta2">Get your bill reviewed</span> <span aria-hidden="true">▾</span></button>
+      <button type="button" class="hero-cta hero-cta-secondary" id="reviewChooserBtn" aria-haspopup="true" aria-expanded="false"><span data-i18n="hero.cta2">Get your bill reviewed</span> <svg class="rc-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
       <div class="review-chooser" id="reviewChooser" hidden>
+        <p class="rc-title" data-i18n="review.title">How would you like your bill checked?</p>
         <button type="button" class="review-chooser-item" id="reviewViaOcr">
-          <span class="rc-icon" aria-hidden="true">📷</span>
+          <span class="rc-badge rc-badge-ocr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
           <span class="rc-text"><b data-i18n="review.ocr">Instant self-check (OCR)</b><small data-i18n="review.ocrSub">Upload a bill photo/PDF — the calculator fills itself</small></span>
+          <svg class="rc-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
         </button>
         <a class="review-chooser-item" href="/bill-review/">
-          <span class="rc-icon" aria-hidden="true">👤</span>
+          <span class="rc-badge rc-badge-expert" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg></span>
           <span class="rc-text"><b data-i18n="review.expert">From an expert</b><small data-i18n="review.expertSub">Free human review of your uploaded bill</small></span>
+          <svg class="rc-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
         </a>
       </div>
     </div>
@@ -304,17 +312,16 @@
         <span class="calc-mode-hint" id="calcModeHint" data-i18n="mode.simpleHint">Just your DISCOM and units — we handle the rest.</span>
       </div>
 
-      <!-- OCR auto-fill: photo/PDF of the bill → Tesseract.js in-browser → form fields -->
-      <div class="ocr-upload" id="ocrUpload">
+      <!-- OCR auto-fill workspace (progress + review screen). Hidden until a scan
+           starts — the entry point is the "Get your bill reviewed" chooser (hero /
+           Quick Links), which is sign-in gated. -->
+      <div class="ocr-upload" id="ocrUpload" hidden>
         <input type="file" id="ocrFile" accept="image/*,application/pdf" hidden>
-        <button type="button" class="ocr-btn" id="ocrBtn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-          <span>Auto-fill from bill photo / PDF</span>
-        </button>
         <span class="ocr-privacy">Reads the bill right in your browser — nothing is uploaded anywhere.</span>
         <div class="ocr-progress" id="ocrProgress" hidden>
+          <span class="ocr-spinner" aria-hidden="true"></span>
           <div class="ocr-progress-track"><div class="ocr-progress-bar" id="ocrProgressBar"></div></div>
-          <span class="ocr-status" id="ocrStatus"></span>
+          <span class="ocr-status" id="ocrStatus" role="status"></span>
         </div>
         <div class="ocr-result" id="ocrResult" hidden></div>
       </div>

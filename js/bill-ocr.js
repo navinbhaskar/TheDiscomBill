@@ -10,6 +10,9 @@
 // Libraries are lazy-loaded from jsDelivr only when a file is picked, so normal
 // page loads carry zero extra weight and the bill never leaves the device.
 
+import { getStates, getDiscoms } from './tariffs/registry.js';
+import { isConfigured, getStoredUser } from './supabase-config.js';
+
 const TESSERACT_SRC = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
 const PDFJS_SRC     = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js';
 const PDFJS_WORKER  = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
@@ -162,6 +165,38 @@ function fixDigitConfusions(text) {
 
 const MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
 
+// ── DISCOM detection ──────────────────────────────────────────────────────────
+// The utility's name is printed at the top of every bill; matching it against
+// the tariff registry gives us DISCOM + state in one shot. Generic words that
+// appear in almost every utility name carry no signal — only the distinctive
+// ones (Madhyanchal, Torrent, BESCOM…) count.
+const DISCOM_STOPWORDS = new Set([
+  'vidyut', 'vitaran', 'vitran', 'nigam', 'limited', 'ltd', 'power', 'distribution',
+  'company', 'corporation', 'corp', 'electricity', 'electrical', 'electricals',
+  'energy', 'board', 'state', 'city', 'supply', 'undertaking', 'department',
+  'operations', 'services', 'utility', 'zone', 'region', 'area', 'discom',
+]);
+
+function detectDiscom(rawText) {
+  const text = ' ' + rawText.toLowerCase().replace(/[^a-z0-9]+/g, ' ') + ' ';
+  let best = null;
+  for (const state of getStates()) {
+    for (const d of getDiscoms(state)) {
+      let score = 0;
+      // Acronym token, e.g. "MVVNL" / "BESCOM" printed on the bill
+      const acro = d.name.toLowerCase();
+      if (/^[a-z]{3,10}$/.test(acro) && text.includes(' ' + acro + ' ')) score += 3;
+      // All distinctive words of the full name present (spelling variants of the
+      // generic words — Vitaran/Vitran — are in the stoplist, so they can't hurt)
+      const words = d.fullName.toLowerCase().replace(/[^a-z]+/g, ' ').split(' ')
+        .filter((w) => w.length >= 4 && !DISCOM_STOPWORDS.has(w));
+      if (words.length && words.every((w) => text.includes(w))) score += 2 + words.length;
+      if (!best || score > best.score) best = { state, id: d.id, name: d.name, score };
+    }
+  }
+  return best && best.score >= 2 ? { state: best.state, id: best.id, name: best.name } : null;
+}
+
 // UPPCL e-bills print the amount summary as boxes: one line of labels, the
 // next line the values in the same column order —
 //   "Previous Dues   Current Bill Amount   Payable Amount"
@@ -301,6 +336,13 @@ function parseBillText(raw) {
   const catM = text.match(/\b(LMV|HV|ST|LT|HT)\s*[-–]?\s*(\d{1,2}[A-Za-z]?)\b/i);
   if (catM) f.category = `${catM[1].toUpperCase()}-${catM[2].toUpperCase()}`;
 
+  // "Supply Type : 17" (UPPCL prints the ST schedule number here)
+  const st = grab(/supply\s*type[^A-Za-z0-9\n]{0,8}([A-Z]{0,3}[- ]?\d{1,3}[A-Za-z]?)\b/i);
+  if (st) f.supplyType = st.trim();
+
+  const discom = detectDiscom(raw);
+  if (discom) f.discom = discom;
+
   // Billing period: numeric (14-05-2026) or month-name (25-JAN-2026, UPPCL e-bills),
   // after "Bill Duration / Period / from … to …"
   const D = '(\\d{1,2}[-\\/. ](?:\\d{1,2}|[A-Za-z]{3,9})[-\\/. ]\\d{2,4})';
@@ -349,6 +391,22 @@ function normDate(s) {
 
 const fire = (el, type = 'input') => el && el.dispatchEvent(new Event(type, { bubbles: true }));
 
+// Lenis owns page scrolling (native scrollIntoView is a no-op under it); if its
+// animation loop is throttled (background tab), snap instead so the user is
+// never left staring at the wrong part of the page.
+function smoothTo(el, offset = -90) {
+  if (!el) return;
+  if (window.__lenis) {
+    const y0 = window.scrollY;
+    window.__lenis.scrollTo(el, { offset });
+    setTimeout(() => {
+      if (Math.abs(window.scrollY - y0) < 4) window.__lenis.scrollTo(el, { offset, immediate: true });
+    }, 600);
+  } else {
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
 function setValue(id, v) {
   const el = document.getElementById(id);
   if (!el || v == null) return false;
@@ -369,6 +427,22 @@ function setDateField(id, d) {
 function applyFields(f) {
   const applied = [];
   const row = document.querySelector('#advancedRows .meter-row');
+
+  // State + DISCOM first: their change events cascade the Category and Supply
+  // Type selects, which the category/supply-type steps below depend on.
+  if (f.discom) {
+    const sSel = document.getElementById('stateSelect');
+    const dSel = document.getElementById('discomSelect');
+    if (sSel && [...sSel.options].some((o) => o.value === f.discom.state)) {
+      sSel.value = f.discom.state;
+      fire(sSel, 'change');
+      if (dSel && [...dSel.options].some((o) => o.value === f.discom.id)) {
+        dSel.value = f.discom.id;
+        fire(dSel, 'change');
+        applied.push(['DISCOM', `${f.discom.name} (${f.discom.state})`]);
+      }
+    }
+  }
 
   if (f.units != null) {
     // Direct-units mode on the first meter row — works in both Simple and
@@ -453,6 +527,21 @@ function applyFields(f) {
     }
   }
 
+  // Supply type — the category change above just repopulated this select
+  if (f.supplyType) {
+    const stSel = document.getElementById('supplyTypeSelect');
+    const stNum = f.supplyType.replace(/[^0-9]/g, '');
+    if (stSel && stNum) {
+      const re = new RegExp(`\\bST\\s*[-–]?\\s*${stNum}\\b`, 'i');
+      const opt = [...stSel.options].find((o) => re.test(o.value + ' ' + o.textContent));
+      if (opt) {
+        stSel.value = opt.value;
+        fire(stSel, 'change');
+        applied.push(['Supply type', 'ST-' + stNum]);
+      }
+    }
+  }
+
   return { applied, categoryNote };
 }
 
@@ -461,8 +550,8 @@ function applyFields(f) {
 function initBillOcr() {
   const box = document.getElementById('ocrUpload');
   const fileInput = document.getElementById('ocrFile');
-  const btn = document.getElementById('ocrBtn');
-  if (!box || !fileInput || !btn) return;
+  const btn = document.getElementById('ocrBtn'); // optional — entry is the gated chooser
+  if (!box || !fileInput) return;
 
   const progressWrap = document.getElementById('ocrProgress');
   const progressBar = document.getElementById('ocrProgressBar');
@@ -472,7 +561,7 @@ function initBillOcr() {
   const setStatus = (t) => { statusEl.textContent = t; };
   const setProgress = (p) => { progressBar.style.width = Math.round(p * 100) + '%'; };
 
-  btn.addEventListener('click', () => fileInput.click());
+  btn?.addEventListener('click', () => fileInput.click());
 
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -495,7 +584,7 @@ function initBillOcr() {
 
   function renderReview(fields) {
     resultEl.hidden = false;
-    const foundCount = Object.keys(fields).filter((k) => !['billMonth', 'billYear', 'category'].includes(k)).length;
+    const foundCount = Object.keys(fields).filter((k) => !['billMonth', 'billYear', 'category', 'discom', 'supplyType'].includes(k)).length;
 
     // Unreadable upload → ask for a better picture up front
     const unclearNote = foundCount < 2
@@ -510,7 +599,9 @@ function initBillOcr() {
     }).join('');
 
     const extras = [];
-    if (fields.category) extras.push(`Detected tariff category <b>${esc(fields.category)}</b>`);
+    if (fields.discom) extras.push(`DISCOM <b>${esc(fields.discom.name)}</b> (${esc(fields.discom.state)})`);
+    if (fields.category) extras.push(`Tariff category <b>${esc(fields.category)}</b>`);
+    if (fields.supplyType) extras.push(`Supply type <b>${esc(fields.supplyType)}</b>`);
     if (fields.billMonth && fields.billYear) extras.push(`Bill month <b>${fields.billMonth}/${fields.billYear}</b>`);
 
     resultEl.innerHTML =
@@ -564,6 +655,8 @@ function initBillOcr() {
       f.category = fields.category;
       f.billMonth = fields.billMonth;
       f.billYear = fields.billYear;
+      f.discom = fields.discom;
+      f.supplyType = fields.supplyType;
       Object.keys(f).forEach((k) => { if (f[k] == null) delete f[k]; });
 
       // Detailed mode first, so every field the user just confirmed is visible
@@ -576,7 +669,7 @@ function initBillOcr() {
         `<p class="ocr-ok">Applied ${applied.length} field${applied.length > 1 ? 's' : ''} to the calculator:</p>` +
         `<div class="ocr-chips">${chips}</div>` +
         (categoryNote ? `<p class="ocr-note-cat">${categoryNote}</p>` : '');
-      document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
+      smoothTo(document.getElementById('calculator'), -20);
     });
   }
 
@@ -585,7 +678,9 @@ function initBillOcr() {
     if (!file) return;
     fileInput.value = ''; // allow re-picking the same file
 
-    btn.disabled = true;
+    box.hidden = false; // the workspace card stays hidden until a scan starts
+    smoothTo(box);
+    if (btn) btn.disabled = true;
     resultEl.hidden = true;
     resultEl.innerHTML = '';
     progressWrap.hidden = false;
@@ -612,9 +707,17 @@ function initBillOcr() {
         (err && err.message ? err.message : 'unknown error') +
         '). Check your connection and try again.</p>';
     } finally {
-      btn.disabled = false;
+      if (btn) btn.disabled = false;
     }
   });
+}
+
+// Sign-in gate for the review flows: configured deployments require an account
+// before the chooser opens; local/dev builds without Supabase skip the gate.
+function requireSignIn(triggerEl, afterSignIn) {
+  if (!isConfigured() || getStoredUser()) return true;
+  window.__openAuthModal?.(triggerEl, { afterSignIn });
+  return false;
 }
 
 // Hero "Get your bill reviewed" chooser: OCR self-check vs expert review.
@@ -637,6 +740,8 @@ function initReviewChooser() {
   const close = () => { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); };
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
+    // Sign in first; once done, the chooser reopens by itself so the flow continues
+    if (menu.hidden && !requireSignIn(btn, () => btn.click())) return;
     menu.hidden = !menu.hidden;
     if (!menu.hidden) place();
     btn.setAttribute('aria-expanded', String(!menu.hidden));
@@ -650,8 +755,20 @@ function initReviewChooser() {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
   document.getElementById('reviewViaOcr')?.addEventListener('click', () => {
     close();
-    document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' });
+    // A file picker can only open from a user gesture, so post-sign-in we reopen
+    // the chooser instead — one tap on OCR then goes straight to the picker.
+    if (!requireSignIn(btn, () => btn.click())) return;
     document.getElementById('ocrFile')?.click(); // same user gesture — picker is allowed
+  });
+
+  // Quick Links "Scan Bill" item: on the calculator page run the same gated OCR
+  // flow instead of a plain anchor jump (other pages navigate to /#calculator).
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('#quickLinksMenu a[href="/#calculator"]');
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+    e.preventDefault();
+    if (!requireSignIn(a, () => btn.click())) return;
+    document.getElementById('ocrFile')?.click();
   });
 }
 

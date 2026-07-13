@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      try { localStorage.setItem('lang', 'hi'); } catch (e) {}
+    })();
+  </script>
+  <title>UPPCL स्मार्ट मीटर रीडिंग की पूरी जानकारी — डिस्प्ले कोड, बिलिंग अवधि, बैलेंस</title>
+  <meta name="description" content="UPPCL स्मार्ट मीटर रीडिंग कैसे दर्ज और रिपोर्ट करता है: डिस्प्ले पर क्या-क्या दिखता है, बिलिंग अवधि साधारण मीटर से कैसे अलग है, दैनिक रीडिंग कहाँ देखें, प्रीपेड बैलेंस कैसे कटता है, और बिल की यूनिटें खुद कैसे सत्यापित करें।">
+  <link rel="canonical" href="https://thediscombill.com/hi/guides/uppcl-smart-meter-readings-explained/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/uppcl-smart-meter-readings-explained/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/uppcl-smart-meter-readings-explained/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/uppcl-smart-meter-readings-explained/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="UPPCL स्मार्ट मीटर रीडिंग की पूरी जानकारी — डिस्प्ले कोड, बिलिंग अवधि, बैलेंस">
+  <meta property="og:description" content="UPPCL स्मार्ट मीटर रीडिंग कैसे दर्ज और रिपोर्ट करता है: डिस्प्ले पर क्या-क्या दिखता है, बिलिंग अवधि साधारण मीटर से कैसे अलग है, दैनिक रीडिंग कहाँ देखें, प्रीपेड बैलेंस कैसे कटता है, और बिल की यूनिटें खुद कैसे सत्यापित करें।">
+  <meta property="og:url" content="https://thediscombill.com/hi/guides/uppcl-smart-meter-readings-explained/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:locale" content="hi_IN">
+  <meta property="og:locale:alternate" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="UPPCL स्मार्ट मीटर रीडिंग की पूरी जानकारी — डिस्प्ले कोड, बिलिंग अवधि, बैलेंस">
+  <meta name="twitter:description" content="UPPCL स्मार्ट मीटर रीडिंग कैसे दर्ज और रिपोर्ट करता है: डिस्प्ले पर क्या-क्या दिखता है, बिलिंग अवधि साधारण मीटर से कैसे अलग है, दैनिक रीडिंग कहाँ देखें, प्रीपेड बैलेंस कैसे कटता है, और बिल की यूनिटें खुद कैसे सत्यापित करें।">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fonts load async (non-render-blocking); display=swap shows fallback text immediately -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
+  <link rel="stylesheet" href="/css/styles.min.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/guides/uppcl-smart-meter-readings-explained/","name":"UPPCL स्मार्ट मीटर रीडिंग की पूरी जानकारी — डिस्प्ले कोड, बिलिंग अवधि, बैलेंस","description":"UPPCL स्मार्ट मीटर रीडिंग कैसे दर्ज और रिपोर्ट करता है: डिस्प्ले पर क्या-क्या दिखता है, बिलिंग अवधि साधारण मीटर से कैसे अलग है, दैनिक रीडिंग कहाँ देखें, प्रीपेड बैलेंस कैसे कटता है, और बिल की यूनिटें खुद कैसे सत्यापित करें।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-07-13"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"UPPCL स्मार्ट मीटर रीडिंग को समझें","description":"UPPCL स्मार्ट मीटर रीडिंग कैसे दर्ज और रिपोर्ट करता है: डिस्प्ले पर क्या-क्या दिखता है, बिलिंग अवधि साधारण मीटर से कैसे अलग है, दैनिक रीडिंग कहाँ देखें, प्रीपेड बैलेंस कैसे कटता है, और बिल की यूनिटें खुद कैसे सत्यापित करें।","mainEntityOfPage":"https://thediscombill.com/hi/guides/uppcl-smart-meter-readings-explained/","datePublished":"2026-07-13","dateModified":"2026-07-13","inLanguage":"hi-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"गाइड","item":"https://thediscombill.com/hi/guides/"},{"@type":"ListItem","position":3,"name":"UPPCL स्मार्ट मीटर रीडिंग को समझें"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"बिलिंग के लिए UPPCL स्मार्ट मीटर की रीडिंग कैसे ली जाती है?","acceptedAnswer":{"@type":"Answer","text":"मीटर हर 15–30 मिनट में खपत दर्ज करता है और मोबाइल नेटवर्क से भेजता है। महीने की बिल यूनिटें इसी रिमोट डेटा से बनती हैं — कोई मीटर रीडर नहीं आता, और बिलिंग अवधि पिछले कैलेंडर महीने की पहली से आख़िरी तारीख़ होती है।"}},{"@type":"Question","name":"मेरे UPPCL स्मार्ट मीटर बिल की अवधि पुराने बिलों से अलग क्यों है?","acceptedAnswer":{"@type":"Answer","text":"साधारण मीटर रीडिंग-तारीख़ से रीडिंग-तारीख़ तक बिल होते हैं; स्मार्ट मीटर (MRI) उपभोक्ता साफ़ कैलेंडर महीनों पर — पिछले महीने की पहली से आख़िरी तारीख़ तक। इंस्टॉलेशन के बाद पहला बिल चक्र जुड़ने तक अजीब लंबाई का हो सकता है।"}},{"@type":"Question","name":"कैसे जाँचें कि स्मार्ट मीटर की रीडिंग बिल से मेल खाती है?","acceptedAnswer":{"@type":"Answer","text":"महीने की शुरुआत और अंत में संचयी kWh डिस्प्ले नोट करें — अंतर ही आपकी खपत है (घरेलू स्मार्ट मीटरों पर MF = 1)। इसे बिल की Net Billed Units और UPPCL ऐप के दैनिक डेटा से मिलाएँ; तीनों एक ही काउंटर से आते हैं और मेल खाने चाहिए।"}},{"@type":"Question","name":"UPPCL स्मार्ट मीटर बिल पर Net Billed Units का क्या मतलब है?","acceptedAnswer":{"@type":"Answer","text":"यह कैलेंडर महीने की आयातित यूनिटें घटा सोलर निर्यात यूनिटें (यदि हों) है — इसी पर ऊर्जा शुल्क, FPPA और बिजली शुल्क की गणना होती है। इसे महीने भर के kWh काउंटर के अंतर से सत्यापित करें।"}}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <div class="nav-dropdown" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">Quick Links</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu" id="quickLinksMenu" role="menu">
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tools">Tools</span>
+          <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="20" x2="6" y2="14"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="10"/></svg><span data-i18n="ql.compare">Compare DISCOM Tariffs</span></a>
+          <a href="/usage/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span data-i18n="ql.usage">Usage Estimator</span></a>
+          <a href="/solar/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span data-i18n="ql.solar">Rooftop Solar Savings</span></a>
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tariffs">Tariffs</span>
+          <a href="/hi/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span data-i18n="ql.tariffsByState">Tariffs by State &amp; DISCOM</span></a>
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.services">Services</span>
+          <a href="/services/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg><span data-i18n="ql.discomServices">DISCOM Services</span></a>
+          <a href="/hi/smart-meter-recharge/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/><path d="M11 9l-2 3h3l-2 3"/></svg><span data-i18n="ql.smartMeter">Smart Meter Recharge</span></a>
+          <div class="nav-subgroup">
+          <button type="button" class="nav-dropdown-item nav-subgroup-trigger" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4"/><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg><span data-i18n="ql.billReviewGroup">Get Your Bill Reviewed</span><svg class="nav-subgroup-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+          <div class="nav-submenu" role="menu">
+            <a href="/#calculator" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span data-i18n="ql.ocrCheck">Instant Self-Check (OCR)</span></a>
+            <a href="/bill-review/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg><span data-i18n="ql.billReview">From an Expert</span></a>
+          </div>
+          </div>
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.learn">Learn</span>
+          <a href="/hi/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.guides">Electricity Bill Guides</span></a>
+          <a href="/hi/glossary/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M12 7h5M12 11h5M7 7h.01M7 11h.01"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.glossary">Electricity Bill Glossary</span></a>
+          <a href="/methodology/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 11l2 2 4-4"/></svg><span data-i18n="ql.methodology">Methodology &amp; Accuracy</span></a>
+        </div>
+      </div>
+      <a href="/#about" data-i18n="nav.about">About</a>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body">
+
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/">होम</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><a href="/hi/guides/">गाइड</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">UPPCL स्मार्ट मीटर रीडिंग को समझें</span></li></ol></nav>
+    <p class="seo-lang-link"><a href="/guides/uppcl-smart-meter-readings-explained/" hreflang="en-IN" lang="en">Read this page in English →</a></p>
+    <h1>UPPCL स्मार्ट मीटर रीडिंग को समझें</h1>
+    <p class="guide-meta">6 मिनट · अपडेट: 13 जुलाई 2026</p>
+    <p class="seo-lead">UPPCL का स्मार्ट मीटर आपकी खपत हर 15–30 मिनट में दर्ज करता है और मोबाइल नेटवर्क से भेजता है,
+      इसलिए रीडिंग लेने कोई नहीं आता। आपकी बिल की यूनिटें इसी रिमोट डेटा से बनती हैं: स्मार्ट मीटर (MRI)
+      उपभोक्ताओं की बिलिंग अवधि <strong>पिछले महीने की पहली से आख़िरी तारीख़</strong> होती है, जबकि साधारण
+      मीटर रीडिंग-तारीख़ से रीडिंग-तारीख़ तक बिल होते हैं। यह गाइड मीटर का डिस्प्ले, बिल के पीछे का रीडिंग
+      डेटा और वे जाँचें समझाती है जो बिलिंग गलतियाँ जल्दी पकड़ लेती हैं।</p>
+    
+      <section class="seo-section">
+        <h2>मीटर डिस्प्ले पर क्या-क्या दिखता है</h2>
+        <p>LCD एक तय क्रम में स्क्रीनें बदलता रहता है (बटन दबाकर तेज़ी से आगे बढ़ा सकते हैं)। काम की
+        स्क्रीनें ये हैं:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>डिस्प्ले</th><th>क्या दिखाता है</th></tr></thead>
+          <tbody>
+            <tr><td><strong>kWh (संचयी)</strong></td><td>यूनिटों का लाइफ़टाइम काउंटर — वही संख्या जो
+            मीटर रीडर नोट करता। किसी भी अवधि की बिल यूनिटें = अंतिम kWh − प्रारंभिक kWh।</td></tr>
+            <tr><td><strong>kW / MD</strong></td><td>वर्तमान लोड, और इस चक्र की अधिकतम मांग। MD बार-बार
+            स्वीकृत भार से ऊपर जाए तो लोड-नियमितीकरण नोटिस आ सकता है — हमारी
+            <a href="/hi/guides/uppcl-sanctioned-load-increased/">स्वीकृत भार गाइड</a> देखें।</td></tr>
+            <tr><td><strong>बैलेंस (प्रीपेड)</strong></td><td>प्रीपेड कनेक्शन पर बचा हुआ रुपया बैलेंस।
+            मीटर शुल्क मासिक नहीं, रोज़ाना काटता है।</td></tr>
+            <tr><td><strong>रिले / स्थिति</strong></td><td>आपूर्ति जुड़ी है या नहीं, और त्रुटि कोड (छेड़छाड़,
+            कवर-ओपन, संचार विफलता)। संचार टूटे मीटर का बिल कनेक्शन लौटते ही संग्रहीत डेटा से बनता है —
+            अनुमान से नहीं।</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section class="seo-section">
+        <h2>बिलिंग अवधि साधारण मीटर से कैसे अलग है</h2>
+        <p>UPPCL स्मार्ट-मीटर बिलों की सबसे ग़लत समझी जाने वाली बात यही है, और यह बिल के नोट्स में ही छपी
+        होती है: साधारण उपभोक्ताओं की बिलिंग अवधि पिछली रीडिंग-तारीख़ से वर्तमान रीडिंग-तारीख़ तक चलती है,
+        जबकि <strong>स्मार्ट मीटर / MRI उपभोक्ताओं की अवधि पिछले महीने की पहली से आख़िरी तारीख़</strong> —
+        यानी साफ़ कैलेंडर महीना — होती है।</p>
+        <ul>
+          <li>इंस्टॉलेशन के बाद पहला स्मार्ट-मीटर बिल अजीब लंबाई की अवधि का हो सकता है, जब तक चक्र कैलेंडर
+          महीनों से नहीं जुड़ जाता — यह एक बार की बात है, गलती नहीं।</li>
+          <li>हर अवधि ~30 दिन की होने से "मेरी अवधि 45 दिन थी और ऊँचे स्लैब में चली गई" जैसे विवाद लगभग
+          ख़त्म हो जाते हैं।</li>
+          <li>बिल की <strong>Net Billed Units</strong> लाइन = कैलेंडर महीने का आयात − सोलर निर्यात (यदि
+          हो) — यही संख्या मीटर के kWh काउंटर से मिलानी है।</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>रीडिंग कहाँ देखें — और बिल की यूनिटें कैसे सत्यापित करें</h2>
+        <ol>
+          <li><strong>मीटर पर:</strong> महीने की आख़िरी तारीख़ (या किन्हीं दो तारीख़ों) पर संचयी kWh नोट
+          करें। दोनों का अंतर ही उस बीच की खपत है — घरेलू स्मार्ट मीटरों पर कोई MF गणित नहीं (MF = 1)।</li>
+          <li><strong>ऐप/पोर्टल पर:</strong> UPPCL का उपभोक्ता ऐप और पोर्टल वही रिमोट रीडिंग-डेटा दैनिक
+          स्तर तक दिखाते हैं जिससे बिल बनता है। ऐप का मासिक योग और बिल की Net Billed Units काफ़ी अलग हों
+          तो शिकायत करें — दोनों एक ही स्रोत से आते हैं।</li>
+          <li><strong>बिल से:</strong> बिल की Net Billed Units की तुलना अपनी दो-रीडिंग घटाव से करें, फिर
+          यूनिटें हमारे <a href="/?state=Uttar%20Pradesh#calculator">UPPCL बिल कैलकुलेटर</a> में डालें —
+          यह टैरिफ आदेश जैसा ही स्लैब, फिक्स्ड-चार्ज, FPPA और शुल्क तर्क लगाता है, और असली UPPCL बिलों से
+          पैसे-पैसे तक सत्यापित है।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>प्रीपेड मोड: दैनिक कटौती कैसे होती है</h2>
+        <p>प्रीपेड कनेक्शन पर मीटर हर दिन की खपत को रुपयों में बदलकर बैलेंस से काटता है, साथ में फिक्स्ड
+        चार्ज का दैनिक हिस्सा भी। व्यावहारिक बातें:</p>
+        <ul>
+          <li>"तेज़ी से घटता" बैलेंस अक्सर सचमुच भारी-खपत वाला हफ़्ता होता है — मीटर पर शक करने से पहले ऐप
+          में दैनिक kWh का रुझान देखें। संरचित जाँच हमारी
+          <a href="/hi/guides/smart-meter-running-fast/">स्मार्ट-मीटर-तेज़-चलने की गाइड</a> में है।</li>
+          <li>बैलेंस कम/ख़त्म होने पर SMS चेतावनियाँ आती हैं और ग्रेस अवधि के बाद रिमोट डिस्कनेक्शन —
+          समय और पुनर्संयोजन के चरण हमारी
+          <a href="/hi/guides/smart-meter-prepaid-disconnection/">प्रीपेड डिस्कनेक्शन गाइड</a> में हैं।</li>
+          <li>रिचार्ज मीटर पर रिमोट तरीक़े से लगते हैं; कोई रिचार्ज फेल हो या दिखे नहीं, तो
+          <a href="/hi/guides/smart-meter-recharge-failed/">रिचार्ज-विफल गाइड</a> में समाधान-क्रम है।</li>
+        </ul>
+      </section>
+    <section class="seo-section"><h2>अक्सर पूछे जाने वाले सवाल</h2>
+    <details class="seo-faq-item">
+      <summary>बिलिंग के लिए UPPCL स्मार्ट मीटर की रीडिंग कैसे ली जाती है?</summary>
+      <div class="seo-faq-a">मीटर हर 15–30 मिनट में खपत दर्ज करता है और मोबाइल नेटवर्क से भेजता है। महीने की बिल यूनिटें इसी रिमोट डेटा से बनती हैं — कोई मीटर रीडर नहीं आता, और बिलिंग अवधि पिछले कैलेंडर महीने की पहली से आख़िरी तारीख़ होती है।</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>मेरे UPPCL स्मार्ट मीटर बिल की अवधि पुराने बिलों से अलग क्यों है?</summary>
+      <div class="seo-faq-a">साधारण मीटर रीडिंग-तारीख़ से रीडिंग-तारीख़ तक बिल होते हैं; स्मार्ट मीटर (MRI) उपभोक्ता साफ़ कैलेंडर महीनों पर — पिछले महीने की पहली से आख़िरी तारीख़ तक। इंस्टॉलेशन के बाद पहला बिल चक्र जुड़ने तक अजीब लंबाई का हो सकता है।</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>कैसे जाँचें कि स्मार्ट मीटर की रीडिंग बिल से मेल खाती है?</summary>
+      <div class="seo-faq-a">महीने की शुरुआत और अंत में संचयी kWh डिस्प्ले नोट करें — अंतर ही आपकी खपत है (घरेलू स्मार्ट मीटरों पर MF = 1)। इसे बिल की Net Billed Units और UPPCL ऐप के दैनिक डेटा से मिलाएँ; तीनों एक ही काउंटर से आते हैं और मेल खाने चाहिए।</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>UPPCL स्मार्ट मीटर बिल पर Net Billed Units का क्या मतलब है?</summary>
+      <div class="seo-faq-a">यह कैलेंडर महीने की आयातित यूनिटें घटा सोलर निर्यात यूनिटें (यदि हों) है — इसी पर ऊर्जा शुल्क, FPPA और बिजली शुल्क की गणना होती है। इसे महीने भर के kWh काउंटर के अंतर से सत्यापित करें।</div>
+    </details></section>
+    <section class="seo-section guide-calc-cta">
+      <h2>अब अपना असली बिल जाँचें</h2>
+      <p>पढ़ना काफ़ी नहीं — अपने डिस्कॉम की असली स्लैब दरों, फिक्स्ड चार्ज और FPPA के साथ अपना मदवार बिल सेकंडों में निकालें। मुफ़्त, बिना साइन-अप।</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">बिजली बिल कैलकुलेटर खोलें →</a></p>
+    </section>
+    <section class="seo-section guide-more">
+      <h2>और गाइड</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/hi/guides/how-to-read-uppcl-bill/">
+          <strong>अपना UPPCL बिजली बिल कैसे पढ़ें</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/why-did-my-electricity-bill-increase/">
+          <strong>मेरा बिजली बिल अचानक क्यों बढ़ गया?</strong>
+          <small>7 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/tod-billing-explained/">
+          <strong>टाइम-ऑफ़-डे (ToD) बिजली बिलिंग, आसान भाषा में</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/how-fppa-fuel-surcharge-is-calculated/">
+          <strong>आपके बिजली बिल पर FPPA (ईंधन अधिभार) कैसे निकाला जाता है</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/reduce-fixed-charges-sanctioned-load/">
+          <strong>स्वीकृत भार सही करके फिक्स्ड चार्ज कैसे घटाएँ</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/electricity-duty-explained/">
+          <strong>आपके बिल पर बिजली शुल्क: यह क्या है और राज्यों में कैसे अलग है</strong>
+          <small>4 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/how-to-read-bses-delhi-bill/">
+          <strong>अपना BSES / दिल्ली बिजली बिल कैसे पढ़ें</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/how-to-read-msedcl-bill/">
+          <strong>अपना MSEDCL (महावितरण) बिजली बिल कैसे पढ़ें</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/how-to-read-bescom-bill/">
+          <strong>अपना BESCOM बिजली बिल कैसे पढ़ें</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/how-to-read-tneb-tangedco-bill/">
+          <strong>अपना TNEB / TANGEDCO बिजली बिल कैसे पढ़ें</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/solar-net-metering-savings/">
+          <strong>सोलर नेट मीटरिंग: बचत असल में कैसे काम करती है</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/uppcl-sanctioned-load-increased/">
+          <strong>मेरा स्वीकृत भार अचानक क्यों बढ़ गया? (UPPCL / यूपी)</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/smart-meter-running-fast/">
+          <strong>क्या आपका स्मार्ट मीटर तेज़ चल रहा है? खुद ऐसे जाँचें</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/smart-meter-prepaid-disconnection/">
+          <strong>स्मार्ट प्रीपेड मीटर: रिचार्ज, कम बैलेंस और रिमोट डिस्कनेक्शन</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/smart-meter-recharge-failed/">
+          <strong>स्मार्ट मीटर रिचार्ज फेल या बैलेंस अपडेट नहीं हुआ? यह करें</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/smart-meter-balance-check/">
+          <strong>स्मार्ट मीटर का बैलेंस कैसे देखें (डिस्प्ले, ऐप, SMS)</strong>
+          <small>4 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/prepaid-vs-postpaid-smart-meter/">
+          <strong>प्रीपेड बनाम पोस्टपेड स्मार्ट मीटर: आपके लिए कौन बेहतर?</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/msedcl-fppa-charges-explained/">
+          <strong>How to Calculate MSEDCL FPPCA (Fuel Adjustment) Charges</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/what-is-a-unit-of-electricity/">
+          <strong>What Is a Unit of Electricity? kWh Explained with Appliance Math</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/power-factor-kvah-billing-explained/">
+          <strong>Power Factor, kVAh Billing and PF Penalty Explained</strong>
+          <small>6 मिनट</small>
+        </a>
+      </div>
+    </section>
+    <p class="seo-disclaimer">सार्वजनिक रूप से उपलब्ध टैरिफ आदेशों और विनियमों पर आधारित सामान्य मार्गदर्शन; विवरण राज्य, डिस्कॉम और उपभोक्ता श्रेणी के अनुसार बदलते हैं। अपने डिस्कॉम की आधिकारिक अनुसूची या छपे बिल से मिलान करें।</p>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/hi/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a> &nbsp;|&nbsp; <a href="/hi/glossary/" data-i18n="footer.glossary">Bill Glossary</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:thediscombill@gmail.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

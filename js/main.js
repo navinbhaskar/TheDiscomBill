@@ -89,10 +89,17 @@ async function openAuthModal(triggerEl, opts = {}) {
       // lands in localStorage just before this fires; reload as a belt-and-braces
       // fallback if it hasn't (so the header never lies about auth state).
       initLoginButton();
-      if (!document.querySelector('.account-dropdown')) location.reload();
+      if (!document.querySelector('.account-dropdown')) { location.reload(); return; }
+      // Let the gated flow that summoned this dialog pick up where it left off
+      // (e.g. reopen the "Get your bill reviewed" chooser).
+      opts.afterSignIn?.();
     }
   });
 }
+
+// Other modules (bill-ocr.js gates the "Get your bill reviewed" chooser) need to
+// summon the same sign-in dialog without importing this entry module.
+window.__openAuthModal = openAuthModal;
 
 // Gated CTAs → auth modal (not the full /login/ page). The Bill Review portal
 // requires an account and would otherwise bounce a logged-out visitor to /login/.
@@ -422,6 +429,23 @@ document.addEventListener('DOMContentLoaded', () => {
         qlDrop.classList.remove('open');
         qlTrigger.setAttribute('aria-expanded', 'false');
       }
+    });
+    // Nested "Get Your Bill Reviewed" subsection: a side flyout on desktop (tap
+    // toggles it; hover handles itself in CSS), an inline accordion on mobile.
+    // stopPropagation keeps the parent menu open. If the flyout would run off
+    // the right edge of the viewport it flips to the left side instead.
+    qlDrop.querySelectorAll('.nav-subgroup-trigger').forEach((t) => {
+      const g = t.closest('.nav-subgroup');
+      const setFlip = () => {
+        g.classList.toggle('flip', g.getBoundingClientRect().right + 250 > window.innerWidth);
+      };
+      g.addEventListener('mouseenter', setFlip);
+      t.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setFlip();
+        const open = g.classList.toggle('open');
+        t.setAttribute('aria-expanded', String(open));
+      });
     });
   }
 

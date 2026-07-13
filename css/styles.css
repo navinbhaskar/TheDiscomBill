@@ -667,31 +667,52 @@ a:hover { text-decoration: underline; }
 }
 .hero p { font-size: 16px; color: var(--p-blue-200); max-width: 520px; margin: 0 auto; line-height: 1.6; }
 
-/* Hero CTA — primary action, scrolls to the form */
+/* Hero CTA pair — matched geometry, primary solid / secondary glass */
 .hero-cta {
-  display: inline-flex; align-items: center; gap: 8px;
+  position: relative; overflow: hidden;
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
   margin: 22px auto 0;
-  background: #fff; color: var(--brand-dark);
-  font-size: 15px; font-weight: 700;
-  padding: 12px 26px; border-radius: var(--radius-full);
+  min-height: 48px;
+  background: linear-gradient(180deg, #ffffff 0%, #eef4ff 100%);
+  color: var(--brand-dark);
+  font-size: 15px; font-weight: 700; letter-spacing: 0.1px;
+  padding: 12px 28px; border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, .9);
   text-decoration: none;
-  box-shadow: 0 8px 24px rgba(8, 20, 48, .22);
-  transition: transform var(--t-fast), box-shadow var(--t-fast);
+  box-shadow: 0 8px 24px rgba(8, 20, 48, .28), inset 0 1px 0 rgba(255, 255, 255, .9);
+  transition: transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
 }
-.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(8, 20, 48, .30); }
-.hero-cta span { transition: transform var(--t-fast); }
-.hero-cta:hover span { transform: translateY(3px); }
+.hero-cta::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(56, 189, 248, .28) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform .55s ease;
+  pointer-events: none;
+}
+.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 34px rgba(8, 20, 48, .36), inset 0 1px 0 rgba(255, 255, 255, .9); }
+.hero-cta:hover::after { transform: translateX(120%); }
+.hero-cta:active { transform: translateY(0); }
+.hero-cta .rc-caret { transition: transform var(--t-fast); }
+.hero-cta:hover .rc-caret { transform: translateY(2px); }
 
-/* Two CTAs side by side; the secondary one leads to the Bill Review service */
-.hero-ctas { display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; }
+/* Two CTAs side by side; the secondary one opens the review chooser */
+.hero-ctas { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; }
 .hero-ctas .hero-cta { margin: 22px 0 0; }
 .hero-cta-secondary {
-  background: rgba(255, 255, 255, .12); color: #fff;
-  border: 1px solid rgba(255, 255, 255, .45);
-  box-shadow: none;
+  background: rgba(255, 255, 255, .10); color: #fff;
+  border: 1px solid rgba(255, 255, 255, .38);
+  box-shadow: 0 8px 24px rgba(8, 20, 48, .18), inset 0 1px 0 rgba(255, 255, 255, .18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
-.hero-cta-secondary:hover { background: rgba(255, 255, 255, .2); box-shadow: none; }
-.hero-cta-secondary:hover span { transform: translateX(3px); }
+.hero-cta-secondary::after {
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .22) 50%, transparent 65%);
+}
+.hero-cta-secondary:hover {
+  background: rgba(255, 255, 255, .18);
+  border-color: rgba(255, 255, 255, .6);
+  box-shadow: 0 14px 34px rgba(8, 20, 48, .26), inset 0 1px 0 rgba(255, 255, 255, .22);
+}
 
 /* Hero stat trio — coverage at a glance */
 .hero-stats { display: flex; justify-content: center; margin: 22px auto 0; }
@@ -3602,6 +3623,7 @@ a.mb-cta { display: inline-flex; align-items: center; text-decoration: none; }
 @media (max-width: 560px) { .mb-bill { flex-wrap: wrap; } .mb-actions { margin-left: auto; } }
 
 /* ── Bill OCR auto-fill (calculator) ─────────────────────────────────────── */
+.ocr-upload[hidden] { display: none; }
 .ocr-upload { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 18px; padding: 12px 14px; border: 1.5px dashed var(--border, #d5dbe5); border-radius: 12px; background: color-mix(in srgb, var(--brand) 4%, transparent); }
 .ocr-btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border: none; border-radius: 10px; background: var(--brand); color: #fff; font-weight: 600; font-size: 0.92rem; cursor: pointer; transition: filter .15s ease; }
 .ocr-btn:hover { filter: brightness(1.08); }
@@ -3625,16 +3647,40 @@ a.mb-cta { display: inline-flex; align-items: center; text-decoration: none; }
 
 /* ── Hero "Get your bill reviewed" chooser ───────────────────────────────── */
 .review-chooser-wrap { position: relative; display: inline-block; }
-button.hero-cta { font: inherit; cursor: pointer; }
-.review-chooser { min-width: 300px; padding: 6px; border-radius: 14px; border: 1px solid var(--border, #e2e8f0); background: var(--panel, #fff); box-shadow: 0 12px 32px rgba(15, 23, 42, 0.16); }
-.review-chooser-item { display: flex; align-items: flex-start; gap: 10px; width: 100%; padding: 10px 12px; border: none; border-radius: 10px; background: none; text-align: left; text-decoration: none; color: inherit; cursor: pointer; font: inherit; }
-.review-chooser-item:hover { background: color-mix(in srgb, var(--brand) 8%, transparent); text-decoration: none; }
-.rc-icon { font-size: 1.15rem; line-height: 1.3; }
-.rc-text { display: flex; flex-direction: column; gap: 2px; }
-.rc-text b { font-size: 0.92rem; font-weight: 600; }
-.rc-text small { font-size: 0.78rem; color: var(--muted, #64748b); }
-:root[data-theme="dark"] .review-chooser { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5); }
-@media (max-width: 560px) { .review-chooser { min-width: 270px; } }
+button.hero-cta { font-family: inherit; cursor: pointer; }
+.rc-caret { width: 16px; height: 16px; flex-shrink: 0; transition: transform .22s cubic-bezier(.16,1,.3,1); }
+#reviewChooserBtn[aria-expanded="true"] .rc-caret { transform: rotate(180deg); }
+.review-chooser {
+  min-width: 340px; padding: 10px; border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--brand) 14%, var(--border, #e2e8f0));
+  background: color-mix(in srgb, var(--panel, #fff) 88%, transparent);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  box-shadow: 0 2px 6px rgba(15,23,42,.08), 0 18px 44px rgba(15,23,42,.20);
+  transform-origin: top center;
+}
+.review-chooser:not([hidden]) { animation: rcPop .2s cubic-bezier(.16,1,.3,1); }
+@keyframes rcPop { from { opacity: 0; transform: translateY(-6px) scale(.97); } to { opacity: 1; transform: none; } }
+.rc-title { margin: 2px 6px 8px; font-size: .74rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted, #64748b); }
+.review-chooser-item {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px;
+  border: none; border-radius: 12px; background: none; text-align: left;
+  text-decoration: none; color: inherit; cursor: pointer; font: inherit;
+  transition: background .16s ease, transform .16s ease;
+}
+.review-chooser-item + .review-chooser-item { margin-top: 4px; }
+.review-chooser-item:hover { background: color-mix(in srgb, var(--brand) 8%, transparent); transform: translateX(2px); text-decoration: none; }
+.rc-badge { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0; color: #fff; }
+.rc-badge svg { width: 22px; height: 22px; }
+.rc-badge-ocr { background: linear-gradient(135deg, #2563eb, #38bdf8); box-shadow: 0 4px 12px rgba(37,99,235,.35); }
+.rc-badge-expert { background: linear-gradient(135deg, #059669, #34d399); box-shadow: 0 4px 12px rgba(5,150,105,.35); }
+.rc-text { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.rc-text b { font-size: .95rem; font-weight: 650; }
+.rc-text small { font-size: .78rem; color: var(--muted, #64748b); line-height: 1.35; }
+.rc-go { width: 16px; height: 16px; flex-shrink: 0; color: var(--muted, #94a3b8); opacity: 0; transform: translateX(-4px); transition: opacity .16s ease, transform .16s ease; }
+.review-chooser-item:hover .rc-go { opacity: 1; transform: none; }
+:root[data-theme="dark"] .review-chooser { background: color-mix(in srgb, var(--panel, #0f172a) 85%, transparent); box-shadow: 0 2px 6px rgba(0,0,0,.4), 0 18px 44px rgba(0,0,0,.55); }
+@media (max-width: 560px) { .review-chooser { min-width: 300px; } }
+@media (prefers-reduced-motion: reduce) { .review-chooser:not([hidden]) { animation: none; } .review-chooser-item, .rc-go, .rc-caret { transition: none; } }
 
 /* ── OCR review screen (confirm values before they hit the form) ─────────── */
 .ocr-rev-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; margin: 10px 0; }
@@ -3648,3 +3694,42 @@ button.hero-cta { font: inherit; cursor: pointer; }
 .ocr-btn-ghost:hover { filter: none; background: color-mix(in srgb, var(--brand) 8%, transparent); }
 .ocr-btn:disabled { opacity: .55; cursor: not-allowed; }
 :root[data-theme="dark"] .ocr-rev-row input { background: rgba(255,255,255,0.05); }
+
+/* ── Quick Links nested "Get Your Bill Reviewed" subsection ──────────────── */
+/* Desktop: side flyout panel next to the item. Mobile (≤600px, where the menu
+   is viewport-wide): inline accordion, since there is no side to fly out to. */
+.nav-subgroup { position: relative; display: flex; flex-direction: column; }
+button.nav-subgroup-trigger { width: 100%; background: none; border: none; font: inherit; color: inherit; cursor: pointer; text-align: left; }
+.nav-subgroup-caret { width: 14px; height: 14px; margin-left: auto; flex-shrink: 0; transition: transform .18s ease; }
+.nav-submenu { display: none; }
+.nav-subgroup.open > .nav-submenu { display: block; }
+@media (min-width: 601px) {
+  .nav-submenu {
+    position: absolute; left: calc(100% - 4px); top: -6px; min-width: 240px; padding: 5px; z-index: 80;
+    background: var(--surface-card); border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+    animation: rcPop .16s cubic-bezier(.16,1,.3,1);
+  }
+  .nav-subgroup.flip > .nav-submenu { left: auto; right: calc(100% - 4px); }
+  .nav-subgroup.open > .nav-subgroup-trigger,
+  .nav-subgroup:hover > .nav-subgroup-trigger { background: var(--brand-faint); color: var(--brand); }
+  .nav-subgroup.open > .nav-subgroup-trigger svg,
+  .nav-subgroup:hover > .nav-subgroup-trigger svg { color: var(--brand); }
+  @media (hover: hover) { .nav-subgroup:hover > .nav-submenu { display: block; } }
+}
+@media (max-width: 600px) {
+  .nav-submenu { padding-left: 18px; }
+  .nav-subgroup.open .nav-subgroup-caret { transform: rotate(90deg); }
+}
+
+/* ── OCR flow smoothness: spinner + staged transitions ───────────────────── */
+.ocr-spinner { width: 15px; height: 15px; border: 2px solid color-mix(in srgb, var(--brand) 25%, transparent); border-top-color: var(--brand); border-radius: 50%; flex-shrink: 0; animation: ocrSpin .7s linear infinite; }
+@keyframes ocrSpin { to { transform: rotate(360deg); } }
+.ocr-result:not([hidden]) { animation: ocrFadeUp .28s cubic-bezier(.16,1,.3,1); }
+.ocr-upload:not([hidden]) { animation: ocrFadeUp .3s cubic-bezier(.16,1,.3,1); }
+@keyframes ocrFadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.ocr-chips .ocr-chip { animation: ocrFadeUp .3s cubic-bezier(.16,1,.3,1) backwards; }
+.ocr-chips .ocr-chip:nth-child(2) { animation-delay: .04s; } .ocr-chips .ocr-chip:nth-child(3) { animation-delay: .08s; }
+.ocr-chips .ocr-chip:nth-child(4) { animation-delay: .12s; } .ocr-chips .ocr-chip:nth-child(5) { animation-delay: .16s; }
+.ocr-chips .ocr-chip:nth-child(n+6) { animation-delay: .2s; }
+@media (prefers-reduced-motion: reduce) { .ocr-result:not([hidden]), .ocr-upload:not([hidden]), .ocr-chips .ocr-chip { animation: none; } .ocr-spinner { animation-duration: 1.4s; } }

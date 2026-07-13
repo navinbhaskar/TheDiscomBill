@@ -2591,4 +2591,473 @@ export const GUIDES = [
         a: 'मीटर लगना लाइसेंसी गतिविधि है जिससे आमतौर पर मना नहीं किया जा सकता, पर बिलिंग मोड राज्य-दर-राज्य अलग है — कुछ जगह स्मार्ट मीटर पोस्टपेड मोड में चलते हैं, कुछ विकल्प देते हैं। डिस्कॉम से लिखित पूछें कि कौन-से मोड उपलब्ध हैं; जहाँ आपकी श्रेणी के लिए प्रीपेड अधिसूचित डिफ़ॉल्ट है, वहाँ रूपांतरण आवेदन राज्य की आपूर्ति संहिता के अनुसार तय होते हैं।' },
     ],
   },
+
+  {
+    slug: 'msedcl-fppa-charges-explained',
+    states: ['Maharashtra'],
+    title: 'How to Calculate MSEDCL FPPCA (Fuel Adjustment) Charges',
+    metaTitle: 'MSEDCL FPPCA / FAC Charges — How the Fuel Adjustment Is Calculated',
+    description: 'What the FPPCA (Fuel and Power Purchase Cost Adjustment) line on an MSEDCL bill means, how the monthly ₹/unit rate is set, how to recalculate the charge from your own units, and what to check when it suddenly jumps.',
+    minutes: 6,
+    intro: `The <strong>FPPCA</strong> line on an MSEDCL bill is the Fuel and Power Purchase Cost
+      Adjustment — a monthly ₹-per-unit surcharge (positive or negative) that passes changes in
+      MSEDCL's actual power-purchase cost on to consumers. To verify it, multiply the FPPCA rate
+      printed on your bill by your billed units for the month:
+      <strong>FPPCA charge = FPPCA rate (₹/unit) × units consumed</strong>. This guide explains
+      where that rate comes from, why it changes every month, and how to check the line yourself.`,
+    sections: `
+      <section class="seo-section">
+        <h2>What FPPCA is — and why it exists</h2>
+        <p>MSEDCL's base energy rates are fixed for the year by MERC (the Maharashtra Electricity
+        Regulatory Commission) in the tariff order. But the price MSEDCL actually pays for power —
+        coal costs, gas prices, market purchases during shortfalls — moves every month. Rather than
+        reopen the tariff each time, the regulator allows an automatic pass-through:</p>
+        <ul>
+          <li>When actual power-purchase cost runs <strong>above</strong> what the tariff assumed,
+          FPPCA is <strong>positive</strong> and is added to your bill.</li>
+          <li>When it runs <strong>below</strong> the assumption (cheaper coal, good hydro months),
+          FPPCA turns <strong>negative</strong> and appears as a credit.</li>
+        </ul>
+        <p>Older MSEDCL bills called this line <strong>FAC</strong> (Fuel Adjustment Charge). FPPCA
+        is the same mechanism under the current MERC framework — a monthly, formula-driven
+        adjustment computed on units consumed.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>How the monthly ₹/unit rate is set</h2>
+        <p>Each month MSEDCL computes the gap between the power-purchase cost <em>approved</em> in
+        the tariff and the cost it <em>actually incurred</em> (typically with a two-month lag, so a
+        summer cost spike shows up on bills a couple of months later). That gap, divided across the
+        units sold, gives a per-unit adjustment. Two things matter for your bill:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Property</th><th>What it means for you</th></tr></thead>
+          <tbody>
+            <tr><td><strong>It varies by category and slab</strong></td><td>MSEDCL publishes the
+            month's FPPCA as a schedule of ₹/unit rates — residential slabs, commercial, industrial
+            and agricultural connections each get their own rate. Your bill applies the rate for
+            <em>your</em> category and consumption slab.</td></tr>
+            <tr><td><strong>It changes every month</strong></td><td>Comparing this month's FPPCA to
+            last month's explains many "why did my bill increase?" cases on otherwise identical
+            usage. The rate itself is printed on the bill next to the FPPCA line.</td></tr>
+          </tbody>
+        </table></div>
+        <p>Because the rate is revised monthly, never assume last month's figure — always read the
+        rate off the current bill or MSEDCL's published FPPCA schedule for the billing month.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Recalculating the FPPCA line yourself</h2>
+        <p>The check takes under a minute:</p>
+        <ol>
+          <li>Find your <strong>billed units</strong> for the month (the meter block shows current −
+          previous reading × MF).</li>
+          <li>Find the <strong>FPPCA rate</strong> printed on the bill (₹/unit, sometimes shown in
+          paise — 65 paise = ₹0.65).</li>
+          <li>Multiply: <strong>units × rate</strong>. The result should match the FPPCA amount to
+          within a paisa of rounding.</li>
+        </ol>
+        <p>For slab-rated categories, MSEDCL applies the slab-wise FPPCA to the units falling in
+        each slab — the same way energy charges are slabbed. Our
+        <a href="/?state=Maharashtra#calculator">Maharashtra bill calculator</a> applies the
+        surcharge with the same per-unit logic: enter your units and the FPPCA rate from your bill,
+        and compare the full total. Current MSEDCL base rates are on the
+        <a href="/tariffs/maharashtra/">Maharashtra tariff pages</a>.</p>
+        <p>One ordering rule worth knowing: <strong>electricity duty is calculated after FPPCA is
+        added</strong>. So a higher FPPCA month also nudges the duty line up — both lines move
+        together, which is normal, not a double-charge.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>When the FPPCA line looks wrong</h2>
+        <ul>
+          <li><strong>The multiplication doesn't match.</strong> Check whether the rate is printed
+          in paise but you multiplied in rupees, and whether the bill period spans two months (units
+          may be split across two different monthly rates).</li>
+          <li><strong>The rate looks unusually high.</strong> Compare it against MSEDCL's published
+          FPPCA schedule for that month and your category. A commercial rate applied to a
+          residential connection is a category error worth disputing.</li>
+          <li><strong>FPPCA appeared on an estimated bill.</strong> If the month was billed on an
+          estimated reading, the FPPCA rides on estimated units too — it self-corrects when a real
+          reading is taken, together with the energy charge.</li>
+        </ul>
+        <p>If the numbers still refuse to reconcile, upload the bill to our free
+        <a href="/bill-review/">expert bill review</a> — FPPCA application errors are one of the
+        most common things reviewers find.</p>
+      </section>`,
+    faqs: [
+      { q: 'What is FPPCA on an MSEDCL electricity bill?',
+        a: 'FPPCA (Fuel and Power Purchase Cost Adjustment) is a monthly ₹-per-unit surcharge that passes changes in MSEDCL\'s actual power-purchase cost on to consumers. It replaces the older FAC line, is set per category and slab each month, and can be positive (charge) or negative (credit).' },
+      { q: 'How do I calculate the FPPCA charge on my MSEDCL bill?',
+        a: 'Multiply your billed units for the month by the FPPCA rate printed on the bill (mind paise vs rupees). For slab-rated categories the rate applies slab-wise, the same way energy charges are slabbed. The product should match the FPPCA line to rounding.' },
+      { q: 'Why does MSEDCL FPPCA change every month?',
+        a: 'The adjustment tracks the monthly gap between the power-purchase cost approved in the MERC tariff and what MSEDCL actually paid, usually with about a two-month lag. Coal and market-power price movements therefore show up on bills a couple of months later.' },
+      { q: 'Can FPPCA be negative on an MSEDCL bill?',
+        a: 'Yes. In months where actual power-purchase cost runs below the level assumed in the tariff, the adjustment is negative and appears as a per-unit credit that reduces your bill.' },
+      { q: 'Is electricity duty charged on FPPCA in Maharashtra?',
+        a: 'Yes — electricity duty is computed after FPPCA is added, so the duty base includes the fuel adjustment. A higher-FPPCA month raises the duty line proportionally; that is the prescribed ordering, not a double charge.' },
+    ],
+  },
+
+  {
+    slug: 'uppcl-smart-meter-readings-explained',
+    states: ['Uttar Pradesh'],
+    title: 'Understanding UPPCL Smart Meter Readings',
+    metaTitle: 'UPPCL Smart Meter Readings Explained — Display Codes, Billing Period, Balance',
+    description: 'How UPPCL smart meters record and report readings: what the display cycles through, how the billing period differs from ordinary meters, where the daily readings go, how prepaid balance is deducted, and how to verify billed units yourself.',
+    minutes: 6,
+    intro: `A UPPCL smart meter records your consumption every 15–30 minutes and reports it over the
+      mobile network, so nobody visits to take a reading. Your billed units come from the remotely
+      collected data: for smart-meter (MRI) consumers the billing period runs from the
+      <strong>first to the last day of the previous month</strong>, unlike ordinary meters which are
+      billed reading-date to reading-date. This guide decodes the meter's display, the reading data
+      behind your bill, and the checks that catch billing errors early.`,
+    sections: `
+      <section class="seo-section">
+        <h2>What the meter display cycles through</h2>
+        <p>The LCD auto-cycles through a fixed sequence (a button press steps through it faster).
+        The screens that matter:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Display</th><th>What it shows</th></tr></thead>
+          <tbody>
+            <tr><td><strong>kWh (cumulative)</strong></td><td>The lifetime units counter — the same
+            number a human reader would note. Billed units for any period = closing kWh − opening
+            kWh.</td></tr>
+            <tr><td><strong>kW / MD</strong></td><td>Present load, and the maximum demand recorded
+            this cycle. If MD keeps landing above your sanctioned load, expect a load-regularisation
+            notice — see our <a href="/guides/uppcl-sanctioned-load-increased/">sanctioned-load
+            guide</a>.</td></tr>
+            <tr><td><strong>Balance (prepaid)</strong></td><td>Remaining rupee balance on prepaid
+            connections. The meter deducts charges from it daily rather than monthly.</td></tr>
+            <tr><td><strong>Relay / status</strong></td><td>Whether supply is connected, and error
+            codes (tamper, cover-open, comms failure). A comms-failure meter is billed on stored
+            data once the connection recovers — not estimated.</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section class="seo-section">
+        <h2>How the billing period differs from an ordinary meter</h2>
+        <p>This is the single most misunderstood thing about UPPCL smart-meter bills, and it is
+        printed in the bill's own notes: for ordinary consumers the billing period runs from the
+        previous reading date to the current reading date, but for <strong>smart meter / MRI
+        consumers it is the first day to the last day of the previous month</strong> — a clean
+        calendar month.</p>
+        <ul>
+          <li>Your first smart-meter bill after installation can therefore cover an odd-length
+          period while the cycle aligns to calendar months — a one-time artefact, not an error.</li>
+          <li>Because every period is ~30 days, slab proration disputes ("my bill period was 45 days
+          and pushed me into higher slabs") largely disappear after the switch.</li>
+          <li>The bill's <strong>Net Billed Units</strong> line is the calendar month's import minus
+          any solar export — the number to verify against the meter's kWh counter.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>Where to see your readings — and how to verify billed units</h2>
+        <ol>
+          <li><strong>On the meter:</strong> note the cumulative kWh on the last day of the month
+          (or any two dates). The difference is your consumption between those dates — no MF
+          arithmetic on ordinary domestic smart meters (MF = 1).</li>
+          <li><strong>On the app/portal:</strong> UPPCL's consumer app and portal expose daily and
+          even interval-level consumption from the same remote reads that produce the bill. If the
+          app's month total and your bill's Net Billed Units differ materially, raise it — they come
+          from one data source and should match.</li>
+          <li><strong>Against the bill:</strong> multiply nothing, assume nothing: compare the
+          bill's Net Billed Units to your own two-reading subtraction, then feed the units into our
+          <a href="/?state=Uttar%20Pradesh#calculator">UPPCL bill calculator</a> — it applies the
+          same slab, fixed-charge, FPPA and duty logic as the tariff order, verified to the paisa
+          against real UPPCL bills.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>Prepaid mode: how the daily deduction works</h2>
+        <p>On prepaid connections the meter converts each day's consumption to rupees and deducts it
+        from your balance daily, along with a daily slice of the fixed charge. Practical
+        implications:</p>
+        <ul>
+          <li>A "fast-draining" balance usually means a genuinely heavy-usage week — check the daily
+          kWh trend in the app before suspecting the meter. Our
+          <a href="/guides/smart-meter-running-fast/">smart-meter-running-fast guide</a> shows a
+          structured way to test it.</li>
+          <li>Balance low/exhausted triggers SMS warnings and, after the grace window, remote
+          disconnection — timings and reconnection steps are in our
+          <a href="/guides/smart-meter-prepaid-disconnection/">prepaid disconnection guide</a>.</li>
+          <li>Recharges apply to the meter remotely; if one fails or doesn't reflect, the
+          <a href="/guides/smart-meter-recharge-failed/">recharge-failed guide</a> covers the fix
+          sequence.</li>
+        </ul>
+      </section>`,
+    faqs: [
+      { q: 'How is a UPPCL smart meter read for billing?',
+        a: 'The meter records consumption every 15–30 minutes and reports it over the mobile network. Billed units for the month are computed from the remotely collected data — no meter reader visits, and the billing period is the first to last day of the previous calendar month.' },
+      { q: 'Why does my UPPCL smart meter bill period differ from my old bills?',
+        a: 'Ordinary meters are billed from reading date to reading date; smart-meter (MRI) consumers are billed on clean calendar months — the first to the last day of the previous month. The first bill after installation may cover an odd-length period while the cycle aligns.' },
+      { q: 'How do I check my smart meter reading matches my UPPCL bill?',
+        a: 'Note the cumulative kWh display at the start and end of the month — the difference is your consumption (MF is 1 on domestic smart meters). Compare it with the bill\'s Net Billed Units and with the daily data in the UPPCL app; all three come from the same counter and should agree.' },
+      { q: 'What does Net Billed Units mean on a UPPCL smart meter bill?',
+        a: 'It is the calendar month\'s imported units minus any solar export units — the figure on which energy charges, FPPA and duty are computed. Verify it against the meter\'s kWh counter difference for the month.' },
+    ],
+
+    titleHi: 'UPPCL स्मार्ट मीटर रीडिंग को समझें',
+    metaTitleHi: 'UPPCL स्मार्ट मीटर रीडिंग की पूरी जानकारी — डिस्प्ले कोड, बिलिंग अवधि, बैलेंस',
+    descriptionHi: 'UPPCL स्मार्ट मीटर रीडिंग कैसे दर्ज और रिपोर्ट करता है: डिस्प्ले पर क्या-क्या दिखता है, बिलिंग अवधि साधारण मीटर से कैसे अलग है, दैनिक रीडिंग कहाँ देखें, प्रीपेड बैलेंस कैसे कटता है, और बिल की यूनिटें खुद कैसे सत्यापित करें।',
+    introHi: `UPPCL का स्मार्ट मीटर आपकी खपत हर 15–30 मिनट में दर्ज करता है और मोबाइल नेटवर्क से भेजता है,
+      इसलिए रीडिंग लेने कोई नहीं आता। आपकी बिल की यूनिटें इसी रिमोट डेटा से बनती हैं: स्मार्ट मीटर (MRI)
+      उपभोक्ताओं की बिलिंग अवधि <strong>पिछले महीने की पहली से आख़िरी तारीख़</strong> होती है, जबकि साधारण
+      मीटर रीडिंग-तारीख़ से रीडिंग-तारीख़ तक बिल होते हैं। यह गाइड मीटर का डिस्प्ले, बिल के पीछे का रीडिंग
+      डेटा और वे जाँचें समझाती है जो बिलिंग गलतियाँ जल्दी पकड़ लेती हैं।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>मीटर डिस्प्ले पर क्या-क्या दिखता है</h2>
+        <p>LCD एक तय क्रम में स्क्रीनें बदलता रहता है (बटन दबाकर तेज़ी से आगे बढ़ा सकते हैं)। काम की
+        स्क्रीनें ये हैं:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>डिस्प्ले</th><th>क्या दिखाता है</th></tr></thead>
+          <tbody>
+            <tr><td><strong>kWh (संचयी)</strong></td><td>यूनिटों का लाइफ़टाइम काउंटर — वही संख्या जो
+            मीटर रीडर नोट करता। किसी भी अवधि की बिल यूनिटें = अंतिम kWh − प्रारंभिक kWh।</td></tr>
+            <tr><td><strong>kW / MD</strong></td><td>वर्तमान लोड, और इस चक्र की अधिकतम मांग। MD बार-बार
+            स्वीकृत भार से ऊपर जाए तो लोड-नियमितीकरण नोटिस आ सकता है — हमारी
+            <a href="/hi/guides/uppcl-sanctioned-load-increased/">स्वीकृत भार गाइड</a> देखें।</td></tr>
+            <tr><td><strong>बैलेंस (प्रीपेड)</strong></td><td>प्रीपेड कनेक्शन पर बचा हुआ रुपया बैलेंस।
+            मीटर शुल्क मासिक नहीं, रोज़ाना काटता है।</td></tr>
+            <tr><td><strong>रिले / स्थिति</strong></td><td>आपूर्ति जुड़ी है या नहीं, और त्रुटि कोड (छेड़छाड़,
+            कवर-ओपन, संचार विफलता)। संचार टूटे मीटर का बिल कनेक्शन लौटते ही संग्रहीत डेटा से बनता है —
+            अनुमान से नहीं।</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section class="seo-section">
+        <h2>बिलिंग अवधि साधारण मीटर से कैसे अलग है</h2>
+        <p>UPPCL स्मार्ट-मीटर बिलों की सबसे ग़लत समझी जाने वाली बात यही है, और यह बिल के नोट्स में ही छपी
+        होती है: साधारण उपभोक्ताओं की बिलिंग अवधि पिछली रीडिंग-तारीख़ से वर्तमान रीडिंग-तारीख़ तक चलती है,
+        जबकि <strong>स्मार्ट मीटर / MRI उपभोक्ताओं की अवधि पिछले महीने की पहली से आख़िरी तारीख़</strong> —
+        यानी साफ़ कैलेंडर महीना — होती है।</p>
+        <ul>
+          <li>इंस्टॉलेशन के बाद पहला स्मार्ट-मीटर बिल अजीब लंबाई की अवधि का हो सकता है, जब तक चक्र कैलेंडर
+          महीनों से नहीं जुड़ जाता — यह एक बार की बात है, गलती नहीं।</li>
+          <li>हर अवधि ~30 दिन की होने से "मेरी अवधि 45 दिन थी और ऊँचे स्लैब में चली गई" जैसे विवाद लगभग
+          ख़त्म हो जाते हैं।</li>
+          <li>बिल की <strong>Net Billed Units</strong> लाइन = कैलेंडर महीने का आयात − सोलर निर्यात (यदि
+          हो) — यही संख्या मीटर के kWh काउंटर से मिलानी है।</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>रीडिंग कहाँ देखें — और बिल की यूनिटें कैसे सत्यापित करें</h2>
+        <ol>
+          <li><strong>मीटर पर:</strong> महीने की आख़िरी तारीख़ (या किन्हीं दो तारीख़ों) पर संचयी kWh नोट
+          करें। दोनों का अंतर ही उस बीच की खपत है — घरेलू स्मार्ट मीटरों पर कोई MF गणित नहीं (MF = 1)।</li>
+          <li><strong>ऐप/पोर्टल पर:</strong> UPPCL का उपभोक्ता ऐप और पोर्टल वही रिमोट रीडिंग-डेटा दैनिक
+          स्तर तक दिखाते हैं जिससे बिल बनता है। ऐप का मासिक योग और बिल की Net Billed Units काफ़ी अलग हों
+          तो शिकायत करें — दोनों एक ही स्रोत से आते हैं।</li>
+          <li><strong>बिल से:</strong> बिल की Net Billed Units की तुलना अपनी दो-रीडिंग घटाव से करें, फिर
+          यूनिटें हमारे <a href="/?state=Uttar%20Pradesh#calculator">UPPCL बिल कैलकुलेटर</a> में डालें —
+          यह टैरिफ आदेश जैसा ही स्लैब, फिक्स्ड-चार्ज, FPPA और शुल्क तर्क लगाता है, और असली UPPCL बिलों से
+          पैसे-पैसे तक सत्यापित है।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>प्रीपेड मोड: दैनिक कटौती कैसे होती है</h2>
+        <p>प्रीपेड कनेक्शन पर मीटर हर दिन की खपत को रुपयों में बदलकर बैलेंस से काटता है, साथ में फिक्स्ड
+        चार्ज का दैनिक हिस्सा भी। व्यावहारिक बातें:</p>
+        <ul>
+          <li>"तेज़ी से घटता" बैलेंस अक्सर सचमुच भारी-खपत वाला हफ़्ता होता है — मीटर पर शक करने से पहले ऐप
+          में दैनिक kWh का रुझान देखें। संरचित जाँच हमारी
+          <a href="/hi/guides/smart-meter-running-fast/">स्मार्ट-मीटर-तेज़-चलने की गाइड</a> में है।</li>
+          <li>बैलेंस कम/ख़त्म होने पर SMS चेतावनियाँ आती हैं और ग्रेस अवधि के बाद रिमोट डिस्कनेक्शन —
+          समय और पुनर्संयोजन के चरण हमारी
+          <a href="/hi/guides/smart-meter-prepaid-disconnection/">प्रीपेड डिस्कनेक्शन गाइड</a> में हैं।</li>
+          <li>रिचार्ज मीटर पर रिमोट तरीक़े से लगते हैं; कोई रिचार्ज फेल हो या दिखे नहीं, तो
+          <a href="/hi/guides/smart-meter-recharge-failed/">रिचार्ज-विफल गाइड</a> में समाधान-क्रम है।</li>
+        </ul>
+      </section>`,
+    faqsHi: [
+      { q: 'बिलिंग के लिए UPPCL स्मार्ट मीटर की रीडिंग कैसे ली जाती है?',
+        a: 'मीटर हर 15–30 मिनट में खपत दर्ज करता है और मोबाइल नेटवर्क से भेजता है। महीने की बिल यूनिटें इसी रिमोट डेटा से बनती हैं — कोई मीटर रीडर नहीं आता, और बिलिंग अवधि पिछले कैलेंडर महीने की पहली से आख़िरी तारीख़ होती है।' },
+      { q: 'मेरे UPPCL स्मार्ट मीटर बिल की अवधि पुराने बिलों से अलग क्यों है?',
+        a: 'साधारण मीटर रीडिंग-तारीख़ से रीडिंग-तारीख़ तक बिल होते हैं; स्मार्ट मीटर (MRI) उपभोक्ता साफ़ कैलेंडर महीनों पर — पिछले महीने की पहली से आख़िरी तारीख़ तक। इंस्टॉलेशन के बाद पहला बिल चक्र जुड़ने तक अजीब लंबाई का हो सकता है।' },
+      { q: 'कैसे जाँचें कि स्मार्ट मीटर की रीडिंग बिल से मेल खाती है?',
+        a: 'महीने की शुरुआत और अंत में संचयी kWh डिस्प्ले नोट करें — अंतर ही आपकी खपत है (घरेलू स्मार्ट मीटरों पर MF = 1)। इसे बिल की Net Billed Units और UPPCL ऐप के दैनिक डेटा से मिलाएँ; तीनों एक ही काउंटर से आते हैं और मेल खाने चाहिए।' },
+      { q: 'UPPCL स्मार्ट मीटर बिल पर Net Billed Units का क्या मतलब है?',
+        a: 'यह कैलेंडर महीने की आयातित यूनिटें घटा सोलर निर्यात यूनिटें (यदि हों) है — इसी पर ऊर्जा शुल्क, FPPA और बिजली शुल्क की गणना होती है। इसे महीने भर के kWh काउंटर के अंतर से सत्यापित करें।' },
+    ],
+  },
+
+  {
+    slug: 'what-is-a-unit-of-electricity',
+    title: 'What Is a Unit of Electricity? kWh Explained with Appliance Math',
+    metaTitle: 'What Is a Unit of Electricity (kWh)? — Appliance Consumption Math Explained',
+    description: 'One unit of electricity = 1 kilowatt-hour (kWh): a 1,000-watt appliance running for one hour. How your meter counts units, how to estimate any appliance\'s monthly consumption, and why "units" drive every line of your bill.',
+    minutes: 5,
+    intro: `One <strong>unit</strong> of electricity is one <strong>kilowatt-hour (kWh)</strong> —
+      the energy a 1,000-watt appliance consumes in one hour. A 500 W appliance takes two hours to
+      use a unit; a 2,000 W geyser uses a unit in 30 minutes. Every charge on your electricity bill
+      is ultimately driven by how many of these units your meter counted, so appliance-level unit
+      math is the fastest way to understand — and predict — your bill.`,
+    sections: `
+      <section class="seo-section">
+        <h2>The formula, and worked examples</h2>
+        <p><strong>Units (kWh) = power rating (watts) × hours used ÷ 1,000.</strong></p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Appliance</th><th>Typical rating</th><th>Daily use</th><th>Units/month (≈)</th></tr></thead>
+          <tbody>
+            <tr><td>Ceiling fan</td><td>75 W</td><td>12 h</td><td>27</td></tr>
+            <tr><td>LED TV (43")</td><td>80 W</td><td>5 h</td><td>12</td></tr>
+            <tr><td>Refrigerator (250 L)</td><td>~150 W compressor, cycling</td><td>24 h plugged</td><td>30–45</td></tr>
+            <tr><td>1.5-ton inverter AC</td><td>1,200–1,800 W varying</td><td>8 h</td><td>250–350</td></tr>
+            <tr><td>Geyser (storage)</td><td>2,000 W</td><td>45 min</td><td>45</td></tr>
+            <tr><td>Washing machine</td><td>500 W (no heater)</td><td>1 h × 15 days</td><td>7–8</td></tr>
+          </tbody>
+        </table></div>
+        <p>Two habits make these estimates accurate: use the <em>actual</em> nameplate wattage (on a
+        sticker near the plug or in the manual), and remember that thermostat-driven appliances
+        (fridge, AC, geyser) cycle on and off — their effective consumption is well below rating ×
+        hours, which is why the AC and fridge rows above are ranges. To model a whole home, our
+        <a href="/usage/">usage estimator</a> does this appliance-by-appliance.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>How your meter counts units</h2>
+        <ul>
+          <li>The meter accumulates kWh continuously on a lifetime counter — it never resets. Your
+          billed consumption is simply <strong>current reading − previous reading</strong>.</li>
+          <li>Where a current transformer steps the load down for the meter (large connections), the
+          difference is multiplied by an <strong>MF</strong> (multiplying factor). Domestic meters
+          almost always have MF = 1.</li>
+          <li>Some commercial and industrial supplies are billed in <strong>kVAh</strong> (apparent
+          energy) instead of kWh — kVAh = kWh ÷ power factor, so a poor power factor directly
+          inflates billed units. See our <a href="/guides/tod-billing-explained/">TOD and kVAh
+          billing guide</a>.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>Why units matter more than anything else on the bill</h2>
+        <p>Almost every line of an Indian electricity bill scales with units:</p>
+        <ol>
+          <li><strong>Energy charge</strong> — units priced through your state's slab schedule.
+          Because slabs step up, unit #350 can cost nearly twice what unit #50 costs. Slab rates for
+          every DISCOM are on our <a href="/tariffs/">tariff pages</a>.</li>
+          <li><strong>Fuel surcharge (FPPA/FPPCA)</strong> — levied per unit or as a percentage of
+          the energy charge, either way tracking units.</li>
+          <li><strong>Electricity duty</strong> — a percentage on top of the above, so it inherits
+          the unit-driven total.</li>
+        </ol>
+        <p>Only the fixed charge (₹ per kW of sanctioned load) ignores units. That's why the same
+        50-unit reduction saves more in a high-slab month than a low one — and why estimating units
+        appliance-by-appliance, then checking them in the
+        <a href="/#calculator">bill calculator</a>, predicts your bill within a few percent.</p>
+      </section>`,
+    faqs: [
+      { q: 'How much is 1 unit of electricity?',
+        a: 'One unit equals one kilowatt-hour (kWh): a 1,000-watt appliance running for one hour. Its price depends on your state, category and consumption slab — the same unit can cost a few rupees in a low slab and roughly double that in a high slab.' },
+      { q: 'How do I calculate units consumed by an appliance?',
+        a: 'Units = watts × hours ÷ 1,000. A 75 W fan running 12 hours a day uses 0.9 units daily, about 27 a month. For thermostat-driven appliances like ACs, fridges and geysers, effective consumption is lower than rating × hours because the compressor or element cycles on and off.' },
+      { q: 'How many units does a 1.5-ton AC use per day?',
+        a: 'A 1.5-ton inverter AC typically consumes roughly 1 to 1.5 units per hour depending on the set temperature, insulation and outside heat — around 8 to 12 units for an 8-hour night. Older non-inverter units run higher.' },
+      { q: 'What is the difference between kWh and kVAh on a bill?',
+        a: 'kWh measures active energy actually converted into work; kVAh measures apparent energy, which equals kWh divided by power factor. Some commercial and industrial tariffs bill on kVAh, so a poor power factor directly increases billed units.' },
+    ],
+  },
+
+  {
+    slug: 'power-factor-kvah-billing-explained',
+    title: 'Power Factor, kVAh Billing and PF Penalty Explained',
+    metaTitle: 'Power Factor & kVAh Billing Explained — Penalties, Incentives, and Who Pays Them',
+    description: 'What power factor is, why DISCOMs care about it, how kVAh billing makes a poor PF cost you money automatically, when PF penalties and incentives apply, and how capacitors fix a low power factor.',
+    minutes: 6,
+    intro: `<strong>Power factor (PF)</strong> is the fraction of the electricity you draw that does
+      useful work: PF = kW ÷ kVA, ranging from 0 to 1. Motors, welders and old ballasts draw
+      "reactive" current that loads the network without doing work, dragging PF down. DISCOMs
+      recover that burden two ways — an explicit <strong>PF penalty</strong> on kWh tariffs, or
+      <strong>kVAh billing</strong>, where energy is metered as kWh ÷ PF so a poor power factor
+      inflates your billed units automatically. Households are almost never affected; commercial and
+      industrial connections routinely are.`,
+    sections: `
+      <section class="seo-section">
+        <h2>Power factor in plain terms</h2>
+        <p>Think of a mug of beer: the liquid is <strong>kW</strong> (real power that does work),
+        the foam is <strong>kVAR</strong> (reactive power that fills the mug without quenching
+        thirst), and the whole mug is <strong>kVA</strong> (apparent power the network must carry).
+        PF is liquid ÷ mug:</p>
+        <ul>
+          <li><strong>PF = 1.0</strong> — purely resistive load (heaters, incandescent bulbs). All
+          current does work.</li>
+          <li><strong>PF ≈ 0.8</strong> — typical uncorrected motor-heavy load. The network carries
+          25% more current than the useful power requires.</li>
+          <li><strong>Low PF hurts the grid</strong>, not the appliance: cables, transformers and
+          generators are sized by kVA, so reactive current wastes their capacity and increases
+          losses. That's why regulators let DISCOMs charge for it.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>The two billing mechanisms — penalty vs kVAh</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th></th><th>PF penalty / incentive (kWh tariffs)</th><th>kVAh billing</th></tr></thead>
+          <tbody>
+            <tr><td><strong>How it works</strong></td><td>Energy is billed in kWh; a separate
+            surcharge applies if average monthly PF falls below the threshold in the tariff order,
+            and some states pay an incentive above a higher threshold.</td><td>Energy is metered and
+            billed in kVAh = kWh ÷ PF. No separate penalty line — a PF of 0.9 silently bills ~11%
+            more units than the work you used.</td></tr>
+            <tr><td><strong>Where you see it</strong></td><td>A "PF surcharge/penalty" or "PF
+            incentive" line on the bill.</td><td>The units line itself says kVAh; demand is billed
+            in kVA. Many HT and large-LT commercial tariffs have moved this way.</td></tr>
+            <tr><td><strong>Who is affected</strong></td><td colspan="2">Commercial and industrial
+            connections with motors, compressors, welding sets or large HVAC. Domestic supplies are
+            billed flat kWh with no PF term in almost every state.</td></tr>
+          </tbody>
+        </table></div>
+        <p>Which regime applies to you is stated in your tariff schedule — check your category on
+        our <a href="/tariffs/">state tariff pages</a>, and if your bill shows kVAh units or a kVA
+        maximum demand, use the kVA-based option in the
+        <a href="/#calculator">bill calculator</a> to reproduce it.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Reading PF off your bill — and the arithmetic check</h2>
+        <ol>
+          <li>Find the <strong>PF</strong> field (bills print the month's average PF, computed from
+          kWh and kVAh registers).</li>
+          <li>On kVAh billing: check <strong>kVAh ≈ kWh ÷ PF</strong>. If the bill shows kWh 9,000,
+          PF 0.9, the kVAh line should read ~10,000. A mismatch means a register or data-entry
+          error.</li>
+          <li>On kWh billing with a penalty line: confirm the month's PF is actually below the
+          threshold in your tariff order before the penalty percentage is applied — reviewers
+          regularly find penalties applied at compliant PF.</li>
+        </ol>
+        <p>If the lines refuse to reconcile, our free <a href="/bill-review/">expert bill
+        review</a> can audit the bill against your tariff schedule.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Fixing a low power factor</h2>
+        <ul>
+          <li><strong>Capacitor banks</strong> — the standard fix. Capacitors supply the reactive
+          current locally so the grid doesn't have to; automatic PF-correction (APFC) panels switch
+          capacitor steps to track the load and hold PF near unity.</li>
+          <li><strong>Payback is fast</strong> where kVAh billing applies: raising PF from 0.85 to
+          0.99 cuts billed units by ~14% for the same real consumption, and demand billed in kVA
+          falls with it.</li>
+          <li><strong>Size to the load</strong> — over-correction (leading PF) is also penalised in
+          several tariff orders. An electrician sizes the bank from your motor loads and the PF
+          history printed on past bills.</li>
+        </ul>
+      </section>`,
+    faqs: [
+      { q: 'What is a good power factor for an electricity connection?',
+        a: 'As close to 1.0 (unity) as practical. Most tariff orders treat roughly 0.9 and above as compliant; incentives, where offered, typically start above 0.95. Below the threshold, kWh tariffs add a PF surcharge, and kVAh tariffs inflate billed units automatically.' },
+      { q: 'Does power factor affect home electricity bills in India?',
+        a: 'Practically no. Domestic tariffs bill flat kWh with no PF term in almost every state, and household PF is decent anyway with modern electronics. PF penalties and kVAh billing target commercial and industrial connections with significant motor loads.' },
+      { q: 'What is kVAh billing?',
+        a: 'Under kVAh billing the meter records apparent energy — kWh ÷ power factor — and the tariff prices those units. A PF of 0.9 means about 11% more billed units for the same real consumption, which is why kVAh tariffs need no separate PF penalty line.' },
+      { q: 'How do capacitor banks improve power factor?',
+        a: 'Inductive loads like motors draw reactive current from the grid. Capacitors supply that reactive current locally, so the grid only carries the useful component — raising PF toward unity, cutting kVAh units and kVA demand. APFC panels switch capacitor steps automatically as the load varies.' },
+    ],
+  },
 ];
