@@ -8,7 +8,7 @@ unconfigured, the site works exactly as before.
 |---|---|---|
 | `fppa_rates` table | Monthly FPPA/PPAC rates updated from the dashboard, no redeploy | SQL paste only |
 | `ocr` Edge Function | Opt-in cloud OCR (OCR.space) behind explicit user consent | yes + secret |
-| `calc` Edge Function | Public bill-calculation API (same engine as the site) | yes |
+| `calc` Edge Function | Public bill-calculation API (same engine as the site) | yes (`npm run api:bundle`) |
 
 ---
 
@@ -60,26 +60,43 @@ oversized PDFs get a "use a screenshot" message).
 ## 3. Public calc API (`calc` function)
 
 The same pure engine the browser runs (`js/engine.js` + tariff data), exposed as HTTP for
-a future mobile app or third parties. The website itself never calls it. The function
-imports the engine **from the live site** (`https://thediscombill.com/js/engine.js`) —
-Deno snapshots the module graph at deploy time, so no code is duplicated.
+a future mobile app or third parties. The website itself never calls it.
 
-**Deploy:** paste `functions/calc/index.ts` into the dashboard's function editor
-(name `calc`, JWT verification **OFF** — it's a public endpoint), or with the CLI:
+Supabase's bundler can't import from arbitrary domains, so the engine is **vendored at
+deploy time** instead of imported from the live site: `npm run api:bundle` copies
+`js/engine.js`, `js/utils.js`, and `js/tariffs/` into `functions/calc/vendor/`
+(git-ignored) and esbuild-flattens the function into a single `bundle.ts`. `js/` stays the
+one source of truth — never edit `vendor/`.
+
+**Deploy:**
 
 ```sh
-supabase functions deploy calc --no-verify-jwt
+npm run api:bundle
+# then paste functions/calc/bundle.ts into the dashboard's function editor (name: calc)
+# or with the CLI:
+supabase functions deploy calc
 ```
 
 Redeploy after big engine/tariff changes so the API snapshot catches up with the site.
+
+**Auth:** JWT verification is **ON**, so every call must send the project's **anon key**
+(already public — it ships in the site's JS) as a Bearer token. This still counts as a
+public API: the anon key is not a secret, it just scopes calls to this project so the
+free-tier invocation cap can't be burned by anonymous internet traffic. To make it fully
+keyless, toggle **Verify JWT → OFF** in the function's dashboard settings (or deploy with
+`--no-verify-jwt`).
 
 **Use:**
 
 ```
 GET  https://<project-ref>.supabase.co/functions/v1/calc
+     Authorization: Bearer <anon-key>
+     apikey: <anon-key>
      → { usage, docs, discoms: [ { discomId, state, categories: [...] } ] }
 
 POST https://<project-ref>.supabase.co/functions/v1/calc
+     Authorization: Bearer <anon-key>
+     apikey: <anon-key>
      Content-Type: application/json
 
      { "discomId": "mvvnl", "categoryId": "domestic", "supplyTypeId": "17",
@@ -91,7 +108,8 @@ POST https://<project-ref>.supabase.co/functions/v1/calc
        currentNet, totalPayable, tariff metadata (verified badge, period label…)
 ```
 
-Errors: `400` bad/missing params, `404` unknown discom/category, `405` wrong method.
+Errors: `400` bad/missing params, `404` unknown discom/category, `405` wrong method,
+`401` missing/invalid anon key (while JWT verification is on).
 All responses are JSON with CORS `*`.
 
 Note: Supabase Edge Functions have no built-in rate limiting — free-tier invocation
