@@ -122,6 +122,7 @@ export function renderBill(params) {
           excessDemand, excessDemandPenalty, excessDemandRate,
           excessDemandMultiplier, excessDemandPctEnergyPerKw, excessDemandTolerancePct,
           minChargeFloor, minChargeTopUp,
+          wheelingCharge, wheelingRate, wheelingType, wheelingLabel,
           todUnits, todPeakSurcharge, todOffPeakRebate,
           extraCharges, facAmount, facRate, facMode,
           tariffPeriodLabel, tariffEstimated, tariffVerified, tariffAsOf, tariffSourceUrl, tariffRates,
@@ -183,6 +184,17 @@ export function renderBill(params) {
       <td class="indent">Minimum Charge top-up (bill raised to floor of ${formatINR(minChargeFloor)})</td>
       <td></td><td></td>
       <td class="num amt">${formatINR(minChargeTopUp)}</td>
+    </tr>` : '';
+
+  // Wheeling charge — shown only for DISCOMs whose tariff itemises it (opt-in per tariff).
+  const wheelingBasis = wheelingType === 'per_unit'
+    ? `${netUnits} ${eUnit} × ₹ ${(+wheelingRate).toFixed(2)}/${eUnit}`
+    : (wheelingType && wheelingType !== 'flat' ? `₹ ${(+wheelingRate).toFixed(2)}/${dU}/month` : '');
+  const wheelingRow = wheelingCharge > 0 ? `
+    <tr class="wheeling-row">
+      <td class="indent">${wheelingLabel || 'Wheeling Charges'}${wheelingBasis ? ` (${wheelingBasis})` : ''}</td>
+      <td></td><td></td>
+      <td class="num amt">${formatINR(wheelingCharge)}</td>
     </tr>` : '';
 
   const todRows = todUnits ? `
@@ -443,6 +455,7 @@ export function renderBill(params) {
           </tr>
           ${todRows}
           ${minChargeRow}
+          ${wheelingRow}
           ${facRow}
           ${extraRows}
         </tbody>

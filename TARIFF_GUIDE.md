@@ -206,6 +206,17 @@ dated windows:
   - If nothing is defined anywhere, the engine default is `{ multiplier: 2 }` (the common 2×-the-
     demand-rate rule). Known states (MH 1.5×, GJ flat, KA 1.5×, TN %-of-energy, DL 30%-of-fixed)
     override this at the state level; the rest fall back to the 2× default.
+- `wheelingCharge` on a tariff — an itemised **wheeling charge** (use of the distribution network),
+  shown as its own bill line only for DISCOMs that separate it out (e.g. MSEDCL and other MERC
+  utilities); tariffs that fold wheeling into the energy rate simply omit it. Shapes:
+  - `wheelingCharge: 1.28` → a bare number is treated as **₹/unit**, levied on net units.
+  - `wheelingCharge: { type: "per_unit", rate: 1.28, label: "Wheeling Charges" }` → same, explicit.
+  - `wheelingCharge: { type: "per_kw", rate: 50 }` (or `"per_kva"` / `"flat"`) → a **monthly** charge
+    on the billing demand, prorated by the whole billing months like the fixed charge.
+
+  It is a network charge, so **FPPA does not apply** to it (it stays out of the FPPA base), but it is
+  part of the bill gross and any percent-of-total duty. `minCharge: <₹/month or { type, rate }>` works
+  the same opt-in way for a minimum monthly charge (consumption guarantee).
 - `currentRatesFrom: "YYYY-MM-DD"` at the state level + `rateHistory: [ … ]` on a tariff — for
   date-versioned historical rates (bills dated before the current set resolve to the older rates).
 

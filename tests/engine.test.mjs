@@ -119,6 +119,42 @@ group('minimum charge top-up', () => {
   }
 });
 
+// ── Wheeling charge — opt-in `wheelingCharge` primitive (MSEDCL-style) ────────
+group('wheeling charge', () => {
+  const base = { discomId: 'msedcl', categoryId: 'domestic',
+    units: 100, connectedLoadKw: 1, billingPeriodDays: 30, billingDate: DATE,
+    facRate: 0, facMode: 'per_unit', lpscApplicable: false };
+
+  // Inert unless the tariff declares wheelingCharge: an MSEDCL bill is unchanged.
+  const off = calculateBill(base);
+  check('no wheelingCharge → 0', off.wheelingCharge, 0);
+  const baseGross = off.currentGross;
+  const baseED = off.extraCharges.find(c => /Duty/.test(c.name)).amount;
+
+  const cat = getCategory('msedcl', 'domestic');
+  try {
+    // per_unit form: 100 units × ₹1.28 = ₹128 added to gross.
+    cat.wheelingCharge = { type: 'per_unit', rate: 1.28, label: 'Wheeling Charges' };
+    const on = calculateBill(base);
+    check('per_unit = 100 × 1.28', on.wheelingCharge, 128);
+    check('gross += wheeling', on.currentGross, +(baseGross + 128).toFixed(2));
+    // MSEDCL ED is percent_energy (on energy only) — wheeling must NOT inflate it.
+    check('percent_energy ED unchanged by wheeling',
+      on.extraCharges.find(c => /Duty/.test(c.name)).amount, baseED);
+
+    // Bare-number shorthand is treated as ₹/unit.
+    cat.wheelingCharge = 1.5;
+    check('flat number → per_unit', calculateBill(base).wheelingCharge, 150);
+
+    // per_kw form is monthly, prorated by whole billing months.
+    cat.wheelingCharge = { type: 'per_kw', rate: 50 };
+    check('per_kw × 1kW × 1mo', calculateBill(base).wheelingCharge, 50);
+    check('per_kw prorated × 2mo', calculateBill({ ...base, billingPeriodDays: 60 }).wheelingCharge, 100);
+  } finally {
+    delete cat.wheelingCharge;   // don't leak into other tests
+  }
+});
+
 // ── kVA Maximum Demand + billing-demand floor (Adani HT-I, per_kva 472) ───────
 group('kVA demand + floor', () => {
   // MD above floor → bills on MD

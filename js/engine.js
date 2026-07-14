@@ -275,6 +275,29 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
   const minChargeBase  = fixedCharge + totalEnergy + excessDemandPenalty + todNet;
   const minChargeTopUp = minChargeFloor > 0 ? Math.max(0, +(minChargeFloor - minChargeBase).toFixed(2)) : 0;
 
+  // ── Wheeling charge (use of the distribution network) ───────────────────────
+  // Some DISCOMs (notably MSEDCL and other MERC utilities) bill a separate "Wheeling
+  // Charge" for use of the distribution wires, itemised on the bill instead of being
+  // folded into the energy rate. Opt-in per tariff via `wheelingCharge` — a flat ₹/unit
+  // number, or a { type:'per_unit'|'per_kw'|'per_kva'|'flat', rate, label } config.
+  // per_unit is levied on net units; per_kw/per_kva/flat are monthly and prorated by the
+  // billing months like the fixed charge. It is a network charge, so FPPA (a fuel/power-
+  // purchase adjustment) does NOT apply to it — it stays out of the FPPA base but is part
+  // of the bill gross and any percent-of-total duty. Inert (0) unless the tariff declares
+  // it, so tariffs that bundle wheeling into the energy rate are untouched.
+  const wheelingCfg = (typeof eff.wheelingCharge === 'number')
+    ? { type: 'per_unit', rate: eff.wheelingCharge }
+    : eff.wheelingCharge;
+  let wheelingCharge = 0;
+  if (wheelingCfg && wheelingCfg.rate) {
+    wheelingCharge = wheelingCfg.type === 'per_unit'
+      ? +(netUnits * wheelingCfg.rate).toFixed(2)
+      : +(resolveFixedCharge(wheelingCfg, demandForFixed) * fixedChargeMonths).toFixed(2);
+  }
+  const wheelingRate  = wheelingCfg ? (wheelingCfg.rate || 0) : 0;
+  const wheelingType  = wheelingCfg ? (wheelingCfg.type || 'per_unit') : null;
+  const wheelingLabel = wheelingCfg ? (wheelingCfg.label || 'Wheeling Charges') : '';
+
   // FPPA / FAC — computed BEFORE percent_total charges so it's in their base (e.g. UPPCL ED%).
   // Two correct methods per SERC regulations:
   //   per_unit: FPPCA = (APPC − BPPC) × units  (notified ₹/unit, traditional)
@@ -291,8 +314,8 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
     if (charge.type === 'percent_energy') {
       amount = +(totalEnergy * charge.rate / 100).toFixed(2);
     } else if (charge.type === 'percent_total') {
-      // Base includes excess demand, TOD net, and FPPA/FAC (per UPPCL tariff order)
-      amount = +((fixedCharge + totalEnergy + excessDemandPenalty + todNet + minChargeTopUp + facAmount) * charge.rate / 100).toFixed(2);
+      // Base includes excess demand, TOD net, wheeling, and FPPA/FAC (per UPPCL tariff order)
+      amount = +((fixedCharge + totalEnergy + excessDemandPenalty + todNet + minChargeTopUp + wheelingCharge + facAmount) * charge.rate / 100).toFixed(2);
     } else if (charge.type === 'per_unit') {
       amount = +(netUnits * charge.rate).toFixed(2);
     } else if (charge.type === 'flat') {
@@ -302,7 +325,7 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
     totalExtra += amount;
   }
 
-  const currentGross = +(fixedCharge + totalEnergy + excessDemandPenalty + todNet + minChargeTopUp + facAmount + totalExtra).toFixed(2);
+  const currentGross = +(fixedCharge + totalEnergy + excessDemandPenalty + todNet + minChargeTopUp + wheelingCharge + facAmount + totalExtra).toFixed(2);
 
   // Domestic subsidy. A resolved `subsidy` scheme (from DOMESTIC_SUBSIDY) takes precedence; the
   // legacy `delhiSubsidy` boolean (old share links) maps to the Delhi GNCTD scheme.
@@ -385,6 +408,10 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
     excessDemandTolerancePct: excessTolerancePct,
     minChargeFloor,
     minChargeTopUp,
+    wheelingCharge,
+    wheelingRate,
+    wheelingType,
+    wheelingLabel,
     todUnits: todUnits || null,
     todPeakSurcharge,
     todOffPeakRebate,

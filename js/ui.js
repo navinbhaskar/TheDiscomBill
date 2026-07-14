@@ -113,9 +113,6 @@ const VERDICT_STR = {
     under: (d) => `🟢 Your bill is ${d} lower than the tariff`,
     underSub: (d) => `Your DISCOM billed ${d} less than the published tariff works out to — usually a subsidy or an earlier credit. Nothing to worry about.`,
     review: 'Get a free expert review →',
-    deltaMore: (d, when) => `📈 ${d} more than your last calculation (${when})`,
-    deltaLess: (d, when) => `📉 ${d} less than your last calculation (${when})`,
-    deltaSame: (when) => `Same as your last calculation (${when})`,
   },
   hi: {
     match: '✅ आपका बिल सही लग रहा है',
@@ -127,9 +124,6 @@ const VERDICT_STR = {
     under: (d) => `🟢 आपका बिल टैरिफ से ${d} कम है`,
     underSub: (d) => `प्रकाशित टैरिफ के हिसाब से आपके डिस्कॉम ने ${d} कम बिल किया है — आमतौर पर यह सब्सिडी या पिछला क्रेडिट होता है। चिंता की कोई बात नहीं।`,
     review: 'मुफ़्त विशेषज्ञ समीक्षा कराएँ →',
-    deltaMore: (d, when) => `📈 पिछली गणना से ${d} अधिक (${when})`,
-    deltaLess: (d, when) => `📉 पिछली गणना से ${d} कम (${when})`,
-    deltaSame: (when) => `पिछली गणना के बराबर (${when})`,
   },
 };
 const _inr = (n) => '₹' + Math.abs(n).toLocaleString('en-IN', { maximumFractionDigits: 0 });
@@ -156,21 +150,9 @@ function billVerdictHtml(billed, computed) {
   return `<div class="bill-verdict bv-warn"><strong>${S.under(_inr(abs))}</strong><span>${S.underSub(_inr(abs))}</span></div>`;
 }
 
-// Month-over-month: compare with the most recent saved bill for the same DISCOM + category.
-function billDeltaHtml({ discomId, categoryId, amountNum }) {
-  if (!(amountNum >= 0)) return '';
-  const prev = readHistory().find(e => e.discomId === discomId && e.categoryId === categoryId && typeof e.amountNum === 'number');
-  if (!prev) return '';
-  const S = VERDICT_STR[_vlang()];
-  const when = new Date(prev.ts).toLocaleDateString(_vlang() === 'hi' ? 'hi-IN' : 'en-IN', { day: 'numeric', month: 'short' });
-  const diff = amountNum - prev.amountNum;
-  const text = Math.abs(diff) < 1 ? S.deltaSame(when) : (diff > 0 ? S.deltaMore(_inr(diff), when) : S.deltaLess(_inr(diff), when));
-  return `<div class="bill-delta">${text}</div>`;
-}
-
-// Called by doCalculate() right after the bill is rendered; prepends verdict + delta.
-export function renderBillExtras(panel, { billed, computed, discomId, categoryId }) {
-  const html = billVerdictHtml(billed, computed) + billDeltaHtml({ discomId, categoryId, amountNum: computed });
+// Called by doCalculate() right after the bill is rendered; prepends the billed-vs-computed verdict.
+export function renderBillExtras(panel, { billed, computed }) {
+  const html = billVerdictHtml(billed, computed);
   if (html) panel.insertAdjacentHTML('afterbegin', html);
 }
 
@@ -1577,7 +1559,7 @@ export function doCalculate() {
     smoothTo(panel, -20);
     renderBillExtras(panel, {
       billed: +document.getElementById('billedAmount')?.value || 0,
-      computed: Math.max(0, ledger.totalPayable), discomId, categoryId,
+      computed: Math.max(0, ledger.totalPayable),
     });
     saveBillToHistory({
       label: `${ledger.discom.name} · ${ledger.category.name} · ${ledger.monthsCount} mo · ${ledger.totalUnits} Units`,
@@ -1625,7 +1607,7 @@ export function doCalculate() {
   smoothTo(panel, -20);
   renderBillExtras(panel, {
     billed: +document.getElementById('billedAmount')?.value || 0,
-    computed: Math.max(0, result.totalPayable), discomId, categoryId,
+    computed: Math.max(0, result.totalPayable),
   });
   saveBillToHistory({
     label: `${result.discom.name} · ${result.category.name}${result.supplyTypeName ? ' · ' + result.supplyTypeName : ''} · ${result.units} Units`,
