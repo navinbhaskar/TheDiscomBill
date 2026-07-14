@@ -16,3 +16,7 @@ Thumbs.db
 
 # Cloudflare Wrangler local state
 .wrangler/
+
+# Deploy-time copies for the calc Edge Function (scripts/sync-calc-api.mjs)
+supabase/functions/calc/vendor/
+supabase/functions/calc/bundle.ts

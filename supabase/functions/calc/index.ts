@@ -1,13 +1,14 @@
 // supabase/functions/calc/index.ts — public bill-calculation API.
 //
-// Exposes the SAME pure engine the website runs in the browser, imported straight from
-// the deployed site (Deno remote imports — GitHub Pages serves the ESM files). The
-// module graph is snapshotted at DEPLOY time, so results always match the site as of
-// the last deploy of this function; redeploy it after big engine/tariff changes.
+// Exposes the SAME pure engine the website runs in the browser. Supabase's bundler
+// can't import from arbitrary domains, so `npm run api:bundle` copies js/ into
+// vendor/ (git-ignored) and flattens everything into bundle.ts for deploying.
+// Redeploy after big engine/tariff changes so the API snapshot matches the site.
 // The site itself never calls this: it exists for mobile apps / third parties.
 //
-// DEPLOY: paste into the dashboard's function editor (name: calc, JWT verification OFF —
-// it's a public endpoint), or with the CLI: supabase functions deploy calc --no-verify-jwt
+// DEPLOY: npm run api:bundle, then paste bundle.ts into the dashboard's function
+// editor (name: calc, JWT verification OFF — it's a public endpoint), or with the
+// CLI: supabase functions deploy calc --no-verify-jwt
 //
 // GET  /functions/v1/calc            → API usage + the DISCOM/category catalogue
 // POST /functions/v1/calc            → calculate a bill
@@ -18,8 +19,8 @@
 //   response: the engine's full result object (line items, totals, tariff metadata)
 
 // @ts-nocheck — the engine is plain browser JS; no type info.
-import { calculateBill } from "https://thediscombill.com/js/engine.js";
-import { TARIFF_DB } from "https://thediscombill.com/js/tariffs/registry.js";
+import { calculateBill } from "./vendor/engine.js";
+import { TARIFF_DB } from "./vendor/tariffs/registry.js";
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
