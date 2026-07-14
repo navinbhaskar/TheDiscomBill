@@ -612,17 +612,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (lbl) lbl.textContent = (localStorage.getItem('lang') === 'hi')
           ? 'इस महीने की खपत (यूनिट)' : 'Units consumed this month';
       }
-      try { localStorage.setItem('calcMode', mode); } catch (e) {}
     };
     document.querySelectorAll('#calcMode .calc-mode-btn').forEach(b => {
       b.addEventListener('click', () => setCalcMode(b.dataset.mode));
     });
-    // Default new visitors to Simple; shared bill links open in Detailed so every field they
-    // carry (arrears, TOD, dates…) is visible.
-    let savedMode = null;
-    try { savedMode = localStorage.getItem('calcMode'); } catch (e) {}
+    // Always open in Simple — the calculator's default face is the stripped-down state → DISCOM →
+    // category → units → load form. Switching to Detailed is per-session only (not remembered), so
+    // every fresh load and every "Calculate new bill" reset lands back in Simple. The one exception
+    // is a legacy ?q= share link, which opens Detailed so every field it carries (arrears, TOD,
+    // dates…) stays visible.
     const hasSharePayload = new URLSearchParams(location.search).has('q');
-    setCalcMode(hasSharePayload ? 'detailed' : (savedMode || 'simple'));
+    setCalcMode(hasSharePayload ? 'detailed' : 'simple');
 
     const netChk = document.getElementById('netMeteringChk');
     netChk.addEventListener('change', () => {

@@ -1,6 +1,6 @@
 // sw.js — Service Worker (network-first, cache fallback)
 // Update this version string when deploying new code to bust the cache.
-const CACHE = 'discombill-20260715-117';
+const CACHE = 'discombill-20260715-118';
 
 const CORE = [
   './', './index.html', './compare/', './compare/index.html',
