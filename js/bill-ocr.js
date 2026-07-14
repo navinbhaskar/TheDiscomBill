@@ -11,7 +11,7 @@
 // page loads carry zero extra weight and the bill never leaves the device.
 
 import { getStates, getDiscoms } from './tariffs/registry.js';
-import { isConfigured, getStoredUser } from './supabase-config.js';
+import { isConfigured, getStoredUser, getSupabase, SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase-config.js';
 
 const TESSERACT_SRC = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
 const PDFJS_SRC     = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js';
@@ -603,6 +603,74 @@ function initBillOcr() {
 
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
+  // The last uploaded file, kept so the opt-in cloud scan can re-read the same bill.
+  let lastUpload = null;
+
+  // ── Opt-in cloud OCR (Supabase Edge Function → OCR.space) ────────────────────
+  // Privacy contract: NOTHING is uploaded unless the user explicitly confirms the
+  // consent notice below. The Edge Function passes the image through transiently
+  // (no storage); the provider key never reaches the client.
+  const CLOUD_MAX_BYTES = 1024 * 1024; // OCR.space free-tier file cap
+
+  const fileToDataUrl = (blob) => new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(r.result);
+    r.onerror = () => reject(new Error('Could not read the file'));
+    r.readAsDataURL(blob);
+  });
+
+  // Images over the cap are downscaled to a JPEG that fits; PDFs can't be shrunk here.
+  async function cloudPayload(file) {
+    const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+    if (file.size <= CLOUD_MAX_BYTES) {
+      return { image: await fileToDataUrl(file), filetype: isPdf ? 'PDF' : undefined };
+    }
+    if (isPdf) throw new Error('This PDF is over the 1 MB cloud limit — upload a screenshot of the bill instead.');
+    const bmp = await createImageBitmap(file);
+    for (const maxDim of [2000, 1600, 1200]) {
+      const scale = Math.min(1, maxDim / Math.max(bmp.width, bmp.height));
+      const c = document.createElement('canvas');
+      c.width = Math.round(bmp.width * scale);
+      c.height = Math.round(bmp.height * scale);
+      c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+      const dataUrl = c.toDataURL('image/jpeg', 0.85);
+      if (dataUrl.length <= CLOUD_MAX_BYTES * 1.4) return { image: dataUrl, filetype: 'JPG' };
+    }
+    throw new Error('This photo is too large for cloud OCR even after resizing — try a screenshot.');
+  }
+
+  async function runCloudScan() {
+    progressWrap.hidden = false;
+    setProgress(0.2);
+    setStatus('Uploading to cloud OCR…');
+    try {
+      const sb = await getSupabase();
+      const { data: { session } } = await sb.auth.getSession();
+      if (!session) throw new Error('Please sign in first.');
+      const payload = await cloudPayload(lastUpload);
+      setProgress(0.5);
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/ocr`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || `Cloud OCR failed (HTTP ${res.status}).`);
+      setProgress(1);
+      window.__lastOcrText = data.text;
+      progressWrap.hidden = true;
+      renderReview(parseBillText(data.text), { cloud: true });
+    } catch (err) {
+      progressWrap.hidden = true;
+      const note = document.getElementById('ocrCloudNote');
+      if (note) { note.hidden = false; note.textContent = '☁ ' + (err && err.message ? err.message : 'Cloud scan failed — your local result above is untouched.'); }
+    }
+  }
+
   // ── Review screen: user confirms / completes values BEFORE they hit the form ──
   const REVIEW_FIELDS = [
     ['units', 'Units consumed', 'number'],
@@ -620,7 +688,7 @@ function initBillOcr() {
     ['accountNo', 'Account no.', 'text'],
   ];
 
-  function renderReview(fields) {
+  function renderReview(fields, opts = {}) {
     resultEl.hidden = false;
     const foundCount = Object.keys(fields).filter((k) => !['billMonth', 'billYear', 'category', 'discom', 'supplyType'].includes(k)).length;
 
@@ -651,7 +719,20 @@ function initBillOcr() {
       '<div class="ocr-rev-actions">' +
       '<button type="button" class="ocr-btn" id="ocrApplyBtn">Use these values →</button>' +
       '<button type="button" class="ocr-btn ocr-btn-ghost" id="ocrRetryBtn">↺ Upload again</button>' +
-      '</div>';
+      (isConfigured() && lastUpload && !opts.cloud
+        ? '<button type="button" class="ocr-btn ocr-btn-ghost" id="ocrCloudBtn">☁ Try cloud scan (more accurate)</button>'
+        : '') +
+      '</div>' +
+      (opts.cloud ? '<p class="ocr-note-cat">☁ Read by cloud OCR. Your bill was processed transiently and not stored.</p>' : '') +
+      // Consent notice — hidden until the cloud button is pressed; nothing uploads before "Yes".
+      '<div id="ocrCloudConsent" hidden><p class="ocr-note-cat">Cloud scan sends this bill to OCR.space (a third-party service) ' +
+      'for more accurate reading. It contains personal details like your name and account number. ' +
+      'We don’t store it, and the upload happens only if you agree.</p>' +
+      '<div class="ocr-rev-actions">' +
+      '<button type="button" class="ocr-btn" id="ocrCloudYes">Agree &amp; scan</button>' +
+      '<button type="button" class="ocr-btn ocr-btn-ghost" id="ocrCloudNo">Cancel</button>' +
+      '</div></div>' +
+      '<p class="ocr-note-cat" id="ocrCloudNote" hidden></p>';
 
     const missingEl = document.getElementById('ocrRevMissing');
     const applyBtn = document.getElementById('ocrApplyBtn');
@@ -673,6 +754,14 @@ function initBillOcr() {
     validate();
 
     document.getElementById('ocrRetryBtn').addEventListener('click', () => fileInput.click());
+
+    const cloudBtn = document.getElementById('ocrCloudBtn');
+    if (cloudBtn) {
+      const consentEl = document.getElementById('ocrCloudConsent');
+      cloudBtn.addEventListener('click', () => { consentEl.hidden = false; cloudBtn.disabled = true; });
+      document.getElementById('ocrCloudNo').addEventListener('click', () => { consentEl.hidden = true; cloudBtn.disabled = false; });
+      document.getElementById('ocrCloudYes').addEventListener('click', () => { consentEl.hidden = true; runCloudScan(); });
+    }
 
     applyBtn.addEventListener('click', () => {
       if (!validate()) return;
@@ -715,6 +804,7 @@ function initBillOcr() {
     const file = fileInput.files && fileInput.files[0];
     if (!file) return;
     fileInput.value = ''; // allow re-picking the same file
+    lastUpload = file;    // kept only in memory, for the opt-in cloud scan
 
     box.hidden = false; // the workspace card stays hidden until a scan starts
     smoothTo(box);

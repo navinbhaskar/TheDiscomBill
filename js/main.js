@@ -17,6 +17,7 @@ import { initDatePickers } from './datepicker.js';
 import { initI18n } from './i18n.js';
 import { initComparisonTable } from './compare.js';
 import { isConfigured, getStoredUser, getSupabase } from './supabase-config.js';
+import { initRemoteRates } from './rates.js';
 import { initHeaderSearch } from './search.js';
 import Lenis from './vendor/lenis.mjs';
 
@@ -388,6 +389,18 @@ document.addEventListener('DOMContentLoaded', () => {
     populateMonthYear();
     initTabs();
   }
+  // Remote FPPA rates (Supabase, cached + offline-safe). When fresh rows land after the
+  // form has rendered, re-run the auto prefill so the visible rate updates too.
+  initRemoteRates();
+  window.addEventListener('fppa-rates-updated', () => {
+    const discomEl = document.getElementById('discomSelect');
+    const autoEl   = document.getElementById('fppaAuto');
+    if (discomEl && discomEl.value && autoEl && autoEl.checked) {
+      prefillFac(discomEl.value,
+        document.getElementById('categorySelect')?.value,
+        document.getElementById('supplyTypeSelect')?.value);
+    }
+  });
   initI18n();   // apply saved/default language + wire the EN/हिंदी switcher
   initComparisonTable(); // Render the dynamic tariff comparison table
   initLoginButton();     // top-right Login / My Account button
