@@ -259,11 +259,27 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
     }
   }
 
+  // ── Minimum charge (consumption guarantee) ──────────────────────────────────
+  // Some commercial/industrial tariffs levy a MINIMUM monthly charge: when the fixed + energy
+  // charges fall below a floor, the shortfall is billed as a "Minimum Charge" top-up so a near-idle
+  // connection still pays a baseline (the additive "Minimum Charges" line on low-consumption
+  // multi-month LMV-2 bills). Opt-in per tariff via `minCharge` — a flat ₹/month number, or a
+  // { type:'per_kw'|'per_kva'|'flat', rate } config resolved on the billing demand. Prorated by the
+  // whole billing months like the fixed charge, and assessed on the pre-FPPA energy+demand base so
+  // FPPA and percent-of-total duties then apply on top of the topped-up amount. Inert (0) unless the
+  // tariff declares `minCharge`, so it never disturbs existing bills.
+  const minChargeCfg   = (typeof eff.minCharge === 'number') ? { type: 'flat', rate: eff.minCharge } : eff.minCharge;
+  const minChargeFloor = minChargeCfg
+    ? +(resolveFixedCharge(minChargeCfg, demandForFixed) * fixedChargeMonths).toFixed(2)
+    : 0;
+  const minChargeBase  = fixedCharge + totalEnergy + excessDemandPenalty + todNet;
+  const minChargeTopUp = minChargeFloor > 0 ? Math.max(0, +(minChargeFloor - minChargeBase).toFixed(2)) : 0;
+
   // FPPA / FAC — computed BEFORE percent_total charges so it's in their base (e.g. UPPCL ED%).
   // Two correct methods per SERC regulations:
   //   per_unit: FPPCA = (APPC − BPPC) × units  (notified ₹/unit, traditional)
   //   percent:  surcharge = rate% × (supply + demand charges)  (e.g. UP MYT Reg. 2025, cl.16(4))
-  const facBase   = fixedCharge + totalEnergy + excessDemandPenalty + todNet;
+  const facBase   = fixedCharge + totalEnergy + excessDemandPenalty + todNet + minChargeTopUp;
   const facAmount = facMode === 'percent'
     ? +(facBase * (facRate || 0) / 100).toFixed(2)
     : +(netUnits * (facRate || 0)).toFixed(2);
@@ -276,7 +292,7 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
       amount = +(totalEnergy * charge.rate / 100).toFixed(2);
     } else if (charge.type === 'percent_total') {
       // Base includes excess demand, TOD net, and FPPA/FAC (per UPPCL tariff order)
-      amount = +((fixedCharge + totalEnergy + excessDemandPenalty + todNet + facAmount) * charge.rate / 100).toFixed(2);
+      amount = +((fixedCharge + totalEnergy + excessDemandPenalty + todNet + minChargeTopUp + facAmount) * charge.rate / 100).toFixed(2);
     } else if (charge.type === 'per_unit') {
       amount = +(netUnits * charge.rate).toFixed(2);
     } else if (charge.type === 'flat') {
@@ -286,7 +302,7 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
     totalExtra += amount;
   }
 
-  const currentGross = +(fixedCharge + totalEnergy + excessDemandPenalty + todNet + facAmount + totalExtra).toFixed(2);
+  const currentGross = +(fixedCharge + totalEnergy + excessDemandPenalty + todNet + minChargeTopUp + facAmount + totalExtra).toFixed(2);
 
   // Domestic subsidy. A resolved `subsidy` scheme (from DOMESTIC_SUBSIDY) takes precedence; the
   // legacy `delhiSubsidy` boolean (old share links) maps to the Delhi GNCTD scheme.
@@ -367,6 +383,8 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
     excessDemandMultiplier,
     excessDemandPctEnergyPerKw: excessPctEnergyPerKw,
     excessDemandTolerancePct: excessTolerancePct,
+    minChargeFloor,
+    minChargeTopUp,
     todUnits: todUnits || null,
     todPeakSurcharge,
     todOffPeakRebate,

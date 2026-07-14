@@ -7,6 +7,7 @@
 // files; if a rate genuinely changes, update the expectation here in the same commit.
 
 import { calculateBill, calculateEnergySlabs, resolveFixedCharge } from '../js/engine.js';
+import { getCategory } from '../js/tariffs/registry.js';
 
 let passed = 0, failed = 0;
 const fmt = n => (typeof n === 'number' ? n.toFixed(2) : String(n));
@@ -78,6 +79,44 @@ group('FPPA modes', () => {
     units: 350, connectedLoadKw: 5, billingPeriodDays: 30, billingDate: DATE,
     facRate: 0.5, facMode: 'per_unit', lpscApplicable: false });
   check('per_unit FPPA = ₹/unit × units', pu.facAmount, 175);          // 350 × 0.50
+});
+
+// ── Minimum charge (consumption guarantee) — opt-in `minCharge` primitive ─────
+group('minimum charge top-up', () => {
+  const base = { discomId: 'dvvnl', categoryId: 'commercial', supplyTypeId: '20',
+    units: 50, connectedLoadKw: 3, billingPeriodDays: 30, billingDate: DATE,
+    facRate: 0, facMode: 'per_unit', lpscApplicable: false };
+
+  // Inert unless the tariff declares minCharge: a low-consumption LMV-2 bill is unchanged.
+  const off = calculateBill(base);
+  check('no minCharge → topUp 0', off.minChargeTopUp, 0);
+  check('no minCharge → floor 0', off.minChargeFloor, 0);
+  check('baseline net (990 fixed + 375 energy + 7.5% ED)', off.currentNet, 1467);
+
+  // Declare a per-kW minimum on the resolved tariff, then compute: fixed 990 + energy 375 = 1365
+  // is below the 600×3 = 1800 floor, so a 435 top-up is added and 7.5% ED applies on 1800.
+  // Mutate the live supply-type object so the value survives into the engine's resolved tariff.
+  const st = getCategory('dvvnl', 'commercial').supplyTypes.find(s => s.id === '20');
+  st.minCharge = { type: 'per_kw', rate: 600 };
+  try {
+    const on = calculateBill(base);
+    check('floor = 600 × 3kW', on.minChargeFloor, 1800);
+    check('top-up = 1800 − 1365', on.minChargeTopUp, 435);
+    check('ED base includes top-up (7.5% × 1800)',
+      on.extraCharges.find(c => /Duty/.test(c.name)).amount, 135);
+    check('gross = 990+375+435+135', on.currentGross, 1935);
+
+    // When charges already clear the floor, no top-up is levied.
+    const high = calculateBill({ ...base, units: 500 });   // energy 300×7.50 + 200×8.40 = 3930
+    check('above floor → topUp 0', high.minChargeTopUp, 0);
+
+    // Flat ₹/month form, prorated by whole billing months.
+    st.minCharge = 2000;
+    const flat = calculateBill({ ...base, billingPeriodDays: 60 });
+    check('flat floor × 2 months', flat.minChargeFloor, 4000);
+  } finally {
+    delete st.minCharge;   // don't leak into other tests
+  }
 });
 
 // ── kVA Maximum Demand + billing-demand floor (Adani HT-I, per_kva 472) ───────

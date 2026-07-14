@@ -7,7 +7,7 @@
   "scripts": {
     "seo": "node generate-seo.js",
     "build": "node build.js",
-    "test": "node tests/engine.test.mjs",
+    "test": "node tests/engine.test.mjs && node tests/bill-ocr.test.mjs",
     "serve": "npx http-server . -p 3456"
   },
   "license": "MIT",

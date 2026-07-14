@@ -121,6 +121,7 @@ export function renderBill(params) {
           fixedCharge, fixedChargeMonths, fixedPerMonth, slabBreakdown, totalEnergy,
           excessDemand, excessDemandPenalty, excessDemandRate,
           excessDemandMultiplier, excessDemandPctEnergyPerKw, excessDemandTolerancePct,
+          minChargeFloor, minChargeTopUp,
           todUnits, todPeakSurcharge, todOffPeakRebate,
           extraCharges, facAmount, facRate, facMode,
           tariffPeriodLabel, tariffEstimated, tariffVerified, tariffAsOf, tariffSourceUrl, tariffRates,
@@ -175,6 +176,13 @@ export function renderBill(params) {
       <td class="indent">Excess Demand Penalty (${excessDemand.toFixed(2)} ${dU} × ${excessBasis}${excessTolNote})</td>
       <td></td><td></td>
       <td class="num amt">${formatINR(excessDemandPenalty)}</td>
+    </tr>` : '';
+
+  const minChargeRow = minChargeTopUp > 0 ? `
+    <tr class="min-charge-row">
+      <td class="indent">Minimum Charge top-up (bill raised to floor of ${formatINR(minChargeFloor)})</td>
+      <td></td><td></td>
+      <td class="num amt">${formatINR(minChargeTopUp)}</td>
     </tr>` : '';
 
   const todRows = todUnits ? `
@@ -434,6 +442,7 @@ export function renderBill(params) {
             <td class="num amt"><strong>${formatINR(totalEnergy)}</strong></td>
           </tr>
           ${todRows}
+          ${minChargeRow}
           ${facRow}
           ${extraRows}
         </tbody>

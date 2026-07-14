@@ -357,12 +357,26 @@ function parseBillText(raw) {
 
   // Tariff / category code, e.g. LMV-1, LMV1, ST-17, HV-2 (UPPCL uses LMV/HV; some
   // DISCOMs print ST/LT/HT codes)
-  const catM = text.match(/\b(LMV|HV|ST|LT|HT)\s*[-–]?\s*(\d{1,2}[A-Za-z]?)\b/i);
-  if (catM) f.category = `${catM[1].toUpperCase()}-${catM[2].toUpperCase()}`;
+  // Anchor on the "Category" label first — a global scan otherwise skips "LMVI"
+  // (OCR reads the "1" in LMV1 as the letter I/l) and wrongly latches onto an
+  // "ST <digit>" printed elsewhere on the bill. The digit group accepts I/l/O so
+  // an OCR'd "LMVI" / "LMVl" resolves to LMV-1.
+  const catDigit = (s) => s.replace(/[Il]/g, '1').replace(/O/g, '0').toUpperCase();
+  const catM = text.match(/category[^A-Za-z0-9\n]{0,6}(LMV|HV|ST|LT|HT)\s*[-–]?\s*([0-9IlO]{1,2}[A-Za-z]?)/i)
+            || text.match(/\b(LMV|HV|ST|LT|HT)\s*[-–]?\s*(\d{1,2}[A-Za-z]?)\b/i);
+  if (catM) f.category = `${catM[1].toUpperCase()}-${catDigit(catM[2])}`;
 
-  // "Supply Type : 17" (UPPCL prints the ST schedule number here)
+  // "Supply Type : 17" (UPPCL prints the ST schedule number here). The bold ":" is
+  // often misread as a "0"/"1" fused onto the number ("Supply Type : 17" → "017" or
+  // "117"). UPPCL ST schedule codes are 1–2 digits, so a 3-digit code starting with
+  // 0/1 is that fused colon — strip the leading digit.
   const st = grab(/supply\s*type[^A-Za-z0-9\n]{0,8}([A-Z]{0,3}[- ]?\d{1,3}[A-Za-z]?)\b/i);
-  if (st) f.supplyType = st.trim();
+  if (st) {
+    let stv = st.trim();
+    const d = stv.replace(/[^0-9]/g, '');
+    if (/^[01]\d{2}$/.test(d)) stv = d.slice(1);
+    f.supplyType = stv;
+  }
 
   const discom = detectDiscom(raw);
   if (discom) f.discom = discom;
