@@ -108,8 +108,10 @@ const VERDICT_STR = {
     matchSub: (d) => `The amount you entered matches our calculation (within ${d} — normal rounding territory).`,
     close: '🟡 Close, but slightly off',
     closeSub: (d, more) => `Your DISCOM billed ${d} ${more ? 'more' : 'less'} than our estimate. Small gaps usually come from FPPA revisions, subsidy timing or arrears not entered above.`,
-    off: '🔴 Your bill differs from our calculation',
-    offSub: (d, more) => `That's ${d} ${more ? 'more' : 'less'} than the published tariff works out to. Worth a closer look.`,
+    over: (d) => `🔴 Your bill looks ${d} higher than the tariff`,
+    overSub: (d) => `By the published tariff you may have been overcharged by about ${d}. The usual culprits are the wrong slab, an FPPA surcharge, or demand charges.`,
+    under: (d) => `🟢 Your bill is ${d} lower than the tariff`,
+    underSub: (d) => `Your DISCOM billed ${d} less than the published tariff works out to — usually a subsidy or an earlier credit. Nothing to worry about.`,
     review: 'Get a free expert review →',
     deltaMore: (d, when) => `📈 ${d} more than your last calculation (${when})`,
     deltaLess: (d, when) => `📉 ${d} less than your last calculation (${when})`,
@@ -120,8 +122,10 @@ const VERDICT_STR = {
     matchSub: (d) => `आपने जो राशि डाली वह हमारी गणना से मेल खाती है (${d} के भीतर — सामान्य राउंडिंग)।`,
     close: '🟡 करीब है, पर थोड़ा अंतर है',
     closeSub: (d, more) => `आपके डिस्कॉम ने हमारे अनुमान से ${d} ${more ? 'अधिक' : 'कम'} बिल किया है। छोटा अंतर आमतौर पर FPPA बदलाव, सब्सिडी या ऊपर दर्ज न किए गए बकाया से आता है।`,
-    off: '🔴 आपका बिल हमारी गणना से अलग है',
-    offSub: (d, more) => `प्रकाशित टैरिफ के हिसाब से यह ${d} ${more ? 'अधिक' : 'कम'} है। इसे जाँचना चाहिए।`,
+    over: (d) => `🔴 आपका बिल टैरिफ से ${d} ज़्यादा लग रहा है`,
+    overSub: (d) => `प्रकाशित टैरिफ के हिसाब से आपसे लगभग ${d} अधिक वसूला गया हो सकता है। आमतौर पर इसकी वजह ग़लत स्लैब, FPPA सरचार्ज या डिमांड चार्ज होती है।`,
+    under: (d) => `🟢 आपका बिल टैरिफ से ${d} कम है`,
+    underSub: (d) => `प्रकाशित टैरिफ के हिसाब से आपके डिस्कॉम ने ${d} कम बिल किया है — आमतौर पर यह सब्सिडी या पिछला क्रेडिट होता है। चिंता की कोई बात नहीं।`,
     review: 'मुफ़्त विशेषज्ञ समीक्षा कराएँ →',
     deltaMore: (d, when) => `📈 पिछली गणना से ${d} अधिक (${when})`,
     deltaLess: (d, when) => `📉 पिछली गणना से ${d} कम (${when})`,
@@ -144,7 +148,12 @@ function billVerdictHtml(billed, computed) {
   if (abs <= tolClose) {
     return `<div class="bill-verdict bv-warn"><strong>${S.close}</strong><span>${S.closeSub(_inr(abs), diff > 0)}</span></div>`;
   }
-  return `<div class="bill-verdict bv-bad"><strong>${S.off}</strong><span>${S.offSub(_inr(abs), diff > 0)} <a href="/bill-review/">${S.review}</a></span></div>`;
+  // Beyond 5%: an overcharge drives the review funnel; an undercharge is just informational
+  // (nudging someone to "review" a bill that's LOWER than tariff would work against them).
+  if (diff > 0) {
+    return `<div class="bill-verdict bv-bad"><strong>${S.over(_inr(abs))}</strong><span>${S.overSub(_inr(abs))} <a href="/bill-review/">${S.review}</a></span></div>`;
+  }
+  return `<div class="bill-verdict bv-warn"><strong>${S.under(_inr(abs))}</strong><span>${S.underSub(_inr(abs))}</span></div>`;
 }
 
 // Month-over-month: compare with the most recent saved bill for the same DISCOM + category.
