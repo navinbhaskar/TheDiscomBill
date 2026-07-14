@@ -796,7 +796,8 @@ function initBillOcr() {
         `<p class="ocr-ok">Applied ${applied.length} field${applied.length > 1 ? 's' : ''} to the calculator:</p>` +
         `<div class="ocr-chips">${chips}</div>` +
         (categoryNote ? `<p class="ocr-note-cat">${categoryNote}</p>` : '');
-      smoothTo(document.getElementById('calculator'), -20);
+      // Intentionally no scroll here: applying OCR values should leave the page where it is
+      // (the confirmed-fields chips render in place). The calculate-bill scroll is separate.
     });
   }
 

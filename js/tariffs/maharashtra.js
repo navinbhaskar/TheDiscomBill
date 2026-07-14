@@ -15,10 +15,19 @@ export default {
       area: "Maharashtra (except Mumbai city area served by Adani/BEST/Tata Power)",
       tariffYear: "2024-25",
       website: "https://www.mahadiscom.in",
+      // LT-I (domestic) refreshed to the FY2026-27 order (MERC Case 217 of 2024). Marked
+      // estimated — energy + wheeling are provisional pending verification against a real
+      // MSEDCL bill (public sources disagreed on the exact slab rates), and the load-tiered
+      // fixed charge is carried forward from the prior order. LT-II (commercial) below is
+      // still on FY2024-25 data (no reliable FY2026-27 commercial figures were available).
+      sourceUrl: "https://www.mahadiscom.in/consumer/wp-content/uploads/2025/08/MSEDCL-MYT-Order_Case_no_217-of-2024.pdf",
+      ratesAsOf: "2026-04-01",
       categories: [
         {
           id: "domestic",
           name: "LT-1 (Residential)",
+          estimated: true,
+          periodLabel: "FY 2026-27 (provisional)",
           fixedCharge: {
             type: "tiered",
             slabs: [
@@ -52,21 +61,24 @@ export default {
           energySlabs: [
             {
               limit: 100,
-              rate: 3.46
+              rate: 5.65
             },
             {
               limit: 300,
-              rate: 6.71
-            },
-            {
-              limit: 500,
               rate: 10.45
             },
             {
+              limit: 500,
+              rate: 14.90
+            },
+            {
               limit: Infinity,
-              rate: 11.13
+              rate: 17.20
             }
           ],
+          // Wheeling charge (use of the distribution network) — MSEDCL itemises this
+          // separately on LT bills. FY2026-27 estimate, per unit; verify against a real bill.
+          wheelingCharge: { type: "per_unit", rate: 1.45, label: "Wheeling Charges" },
           additionalCharges: [
             {
               name: "Electricity Duty (ED)",

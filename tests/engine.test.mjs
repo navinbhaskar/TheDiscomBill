@@ -120,25 +120,27 @@ group('minimum charge top-up', () => {
 });
 
 // ── Wheeling charge — opt-in `wheelingCharge` primitive (MSEDCL-style) ────────
+// Uses APSPDCL (a percent_energy-duty tariff that does NOT ship a wheeling charge) so the
+// "inert by default" baseline holds — MSEDCL now declares a real wheelingCharge of its own.
 group('wheeling charge', () => {
-  const base = { discomId: 'msedcl', categoryId: 'domestic',
+  const base = { discomId: 'apspdcl', categoryId: 'domestic',
     units: 100, connectedLoadKw: 1, billingPeriodDays: 30, billingDate: DATE,
     facRate: 0, facMode: 'per_unit', lpscApplicable: false };
 
-  // Inert unless the tariff declares wheelingCharge: an MSEDCL bill is unchanged.
+  // Inert unless the tariff declares wheelingCharge: the bill is unchanged.
   const off = calculateBill(base);
   check('no wheelingCharge → 0', off.wheelingCharge, 0);
   const baseGross = off.currentGross;
   const baseED = off.extraCharges.find(c => /Duty/.test(c.name)).amount;
 
-  const cat = getCategory('msedcl', 'domestic');
+  const cat = getCategory('apspdcl', 'domestic');
   try {
     // per_unit form: 100 units × ₹1.28 = ₹128 added to gross.
     cat.wheelingCharge = { type: 'per_unit', rate: 1.28, label: 'Wheeling Charges' };
     const on = calculateBill(base);
     check('per_unit = 100 × 1.28', on.wheelingCharge, 128);
     check('gross += wheeling', on.currentGross, +(baseGross + 128).toFixed(2));
-    // MSEDCL ED is percent_energy (on energy only) — wheeling must NOT inflate it.
+    // ED here is percent_energy (on energy only) — wheeling must NOT inflate it.
     check('percent_energy ED unchanged by wheeling',
       on.extraCharges.find(c => /Duty/.test(c.name)).amount, baseED);
 
@@ -153,6 +155,12 @@ group('wheeling charge', () => {
   } finally {
     delete cat.wheelingCharge;   // don't leak into other tests
   }
+
+  // MSEDCL ships a real wheeling charge (FY2026-27 estimate) — regression guard for the wired data.
+  const msedcl = calculateBill({ discomId: 'msedcl', categoryId: 'domestic',
+    units: 100, connectedLoadKw: 1, billingPeriodDays: 30, billingDate: DATE,
+    facRate: 0, facMode: 'per_unit', lpscApplicable: false });
+  check('MSEDCL domestic wheeling wired (100 × 1.45)', msedcl.wheelingCharge, 145);
 });
 
 // ── kVA Maximum Demand + billing-demand floor (Adani HT-I, per_kva 472) ───────

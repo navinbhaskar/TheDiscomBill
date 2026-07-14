@@ -188,19 +188,23 @@ export function resolveDatedTariff(tariff, billingDate, currentRatesFrom, curren
   };
 
   const curFromStr = currentRatesFrom || DEFAULT_CURRENT_FROM;
-  const curLabel   = currentLabel || (tariff.tariffYear ? `FY ${tariff.tariffYear}` : 'Current rates');
+  // A tariff may self-declare its own period label / estimated flag (e.g. a category refreshed to a
+  // newer order ahead of full verification). Those win over the discom-level defaults; when unset,
+  // the current set is treated as verified with the discom's FY label, exactly as before.
+  const curLabel   = tariff.periodLabel || currentLabel || (tariff.tariffYear ? `FY ${tariff.tariffYear}` : 'Current rates');
+  const curEstimated = !!tariff.estimated;
 
   if (!billingDate) {
-    return { ...currentSet, periodLabel: curLabel, estimated: false, effectiveFrom: curFromStr };
+    return { ...currentSet, periodLabel: curLabel, estimated: curEstimated, effectiveFrom: curFromStr };
   }
   const bd = billingDate instanceof Date ? billingDate : new Date(billingDate);
   if (isNaN(bd)) {
-    return { ...currentSet, periodLabel: curLabel, estimated: false, effectiveFrom: curFromStr };
+    return { ...currentSet, periodLabel: curLabel, estimated: curEstimated, effectiveFrom: curFromStr };
   }
 
   // Build dated candidate list (current + historical overrides)
   const candidates = [{
-    from: new Date(curFromStr), label: curLabel, estimated: false, set: currentSet,
+    from: new Date(curFromStr), label: curLabel, estimated: curEstimated, set: currentSet,
     effectiveFrom: curFromStr
   }];
   for (const h of (tariff.rateHistory || [])) {
