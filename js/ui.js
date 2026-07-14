@@ -18,6 +18,21 @@ const CAL_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stro
 const dateFieldHtml = (cls, placeholder, extra = '') =>
   `<div class="date-field-wrap"><input type="text" class="date-field ${cls}" data-datepicker ${extra} placeholder="${placeholder}"><button type="button" class="date-field-btn" aria-label="Open calendar" tabindex="-1">${CAL_SVG}</button></div>`;
 
+// Lenis hijacks wheel scrolling, so native scrollIntoView is a no-op — route
+// programmatic scrolls through it (with an instant fallback if it stalls).
+export function smoothTo(el, offset = -90) {
+  if (!el) return;
+  if (window.__lenis) {
+    const y0 = window.scrollY;
+    window.__lenis.scrollTo(el, { offset });
+    setTimeout(() => {
+      if (Math.abs(window.scrollY - y0) < 4) window.__lenis.scrollTo(el, { offset, immediate: true });
+    }, 600);
+  } else {
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + offset, behavior: 'smooth' });
+  }
+}
+
 // ─── Toast ────────────────────────────────────────────────────────────────────
 
 let _toastTimer = null;
@@ -163,7 +178,7 @@ export function initHistory() {
       // Re-open the saved bill in place: apply its inputs and recalculate without
       // touching the URL or reloading the page.
       loadFromUrl(entry.params).then(() => {
-        document.getElementById('billPanel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        smoothTo(document.getElementById('billPanel'), -20);
       });
     }
   });
@@ -992,7 +1007,7 @@ function showRequiredWarning(missing) {
   missing.forEach(m => m.els.forEach(el => el && el.classList.add('input-error')));
   setReqBannerText(missing);
   const banner = document.getElementById('requiredWarningBanner');
-  if (banner) { banner.style.display = 'flex'; banner.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+  if (banner) { banner.style.display = 'flex'; smoothTo(banner, -Math.round(window.innerHeight / 3)); }
   const first = missing[0]?.els?.[0];
   if (first?.focus) first.focus();
 }
@@ -1488,7 +1503,7 @@ export function compareDiscoms() {
   const catName = (getCategories(curDiscom).find(c => c.id === categoryId) || {}).name || categoryId;
   const panel = document.getElementById('billPanel');
   panel.innerHTML = renderComparison({ state, categoryName: catName, units, rows });
-  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  smoothTo(panel, -20);
 }
 
 export function doCalculate() {
@@ -1550,7 +1565,7 @@ export function doCalculate() {
       meterNo:      getMeterNo(),
       fromDate: fromISO, toDate: toISO,
     });
-    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    smoothTo(panel, -20);
     renderBillExtras(panel, {
       billed: +document.getElementById('billedAmount')?.value || 0,
       computed: Math.max(0, ledger.totalPayable), discomId, categoryId,
@@ -1598,7 +1613,7 @@ export function doCalculate() {
 
   const panel = document.getElementById('billPanel');
   panel.innerHTML = html;
-  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  smoothTo(panel, -20);
   renderBillExtras(panel, {
     billed: +document.getElementById('billedAmount')?.value || 0,
     computed: Math.max(0, result.totalPayable), discomId, categoryId,

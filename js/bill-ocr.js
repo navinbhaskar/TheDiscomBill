@@ -260,9 +260,13 @@ function parseBillText(raw) {
   if (load && num(load) > 0 && num(load) < 5000) f.sanctionedLoad = num(load);
 
   const units = grabAny([
-    // Colon-anchored first so footnote digits can't be mistaken for the value:
-    // UPPCL prints "Net Billed Unit ⁷ : 54.00 KWH"
-    new RegExp(`(?:(?:net|total|chargeable|billed|billable|consumed|adjusted)\\s+){1,3}units?[^:\\n]{0,10}[:\\-]\\s*${NUM}`, 'i'),
+    // KWH-anchored first: UPPCL prints "Net Billed Unit ⁷ : 993.00 KWH" and OCR
+    // sometimes eats the colon or wraps the line — the number right before KWH
+    // is the value, never the footnote superscript.
+    new RegExp(`(?:(?:net|total|chargeable|billed|billable|consumed|adjusted)\\s+){1,3}units?[\\s\\S]{0,15}?${NUM}\\s*k\\s*[vw]\\s*a?h`, 'i'),
+    // Colon-anchored next so footnote digits can't be mistaken for the value
+    // (gap may span a line break when OCR wraps before the colon):
+    new RegExp(`(?:(?:net|total|chargeable|billed|billable|consumed|adjusted)\\s+){1,3}units?[^:]{0,12}[:\\-]\\s*${NUM}`, 'i'),
     // allow stacked qualifiers, e.g. "Net Billed Units 54"
     new RegExp(`(?:(?:net|total|chargeable|billed|billable|consumed|adjusted)\\s+){1,3}units?\\s*(?:consum(?:ed|ption))?\\s*(?:\\(?\\s*k[vw]ah?\\s*\\)?)?${GAP}${NUM}`, 'i'),
     new RegExp(`units?\\s*(?:consum(?:ed|ption)|billed|charged)${GAP}${NUM}`, 'i'),
@@ -289,7 +293,20 @@ function parseBillText(raw) {
     new RegExp(`(?:max(?:imum)?|recorded|billed)\\s*demand\\s*(?:\\(?\\s*k[vw]a?\\s*\\)?)?${GAP}${NUM}`, 'i'),
     new RegExp(`\\bMD\\b\\s*(?:\\(?\\s*k[vw]a?\\s*\\)?)?${GAP}${NUM}`),
   ]);
-  if (md && num(md) > 0 && num(md) < 10000) f.maxDemand = num(md);
+  if (md && num(md) > 0 && num(md) < 10000) {
+    let mdVal = num(md);
+    // The red footnote ¹ (and sometimes the colon) after "Billed Demand (Load)"
+    // fuses into the value — "¹ : 0.78" comes out as "10.78" or "20.78". An MD
+    // far above sanctioned load means glued junk digits: peel them off the
+    // front; if it never becomes plausible, leave the field for the user.
+    if (f.sanctionedLoad) {
+      while (mdVal >= 10 && mdVal > f.sanctionedLoad * 3) {
+        mdVal = num(String(mdVal).replace(/^\d/, ''));
+      }
+      if (!(mdVal > 0) || mdVal > f.sanctionedLoad * 3) mdVal = 0;
+    }
+    if (mdVal > 0) f.maxDemand = mdVal;
+  }
 
   const amount = grabAny([
     new RegExp(`(?:net|total|current)?\\s*(?:amount|bill)?\\s*payable\\s*(?:amount)?\\s*(?:by|before)?\\s*(?:due\\s*date)?${GAP}(?:rs\\.?|₹|inr)?\\s*${NUM}`, 'i'),
@@ -316,7 +333,14 @@ function parseBillText(raw) {
     if (digits.length >= 8 && digits.length <= 14) f.accountNo = acct.replace(/ /g, '').trim();
   }
 
-  const meterNo = grab(/meter\s*(?:no|number|संख्या)\s*\.?\s*[:\-]?\s*([A-Z]{0,3}\d{5,12})\b/i);
+  // Prefer a match where the label's colon survived OCR; when it didn't, the
+  // bold ":" was usually misread as a "1" fused onto the number ("Meter
+  // Number : 3265063" → "13265063") — strip that leading 1.
+  let meterNo = grab(/meter\s*(?:no|number|संख्या)\s*\.?\s*[:\-]\s*([A-Z]{0,3}\d{5,12})\b/i);
+  if (!meterNo) {
+    meterNo = grab(/meter\s*(?:no|number|संख्या)\s*\.?\s*([A-Z]{0,3}\d{5,12})\b/i);
+    if (meterNo && /^1\d{6,}$/.test(meterNo)) meterNo = meterNo.slice(1);
+  }
   if (meterNo) f.meterNo = meterNo;
 
   const prevDues = grab(new RegExp(`(?:previous|past)\\s*(?:dues|balance|outstanding|arrears?)${GAP}${NUM}`, 'i'))

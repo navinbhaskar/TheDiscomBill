@@ -3631,6 +3631,7 @@ a.mb-cta { display: inline-flex; align-items: center; text-decoration: none; }
 .ocr-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
 .ocr-privacy { font-size: 0.8rem; color: var(--muted, #64748b); flex: 1; min-width: 180px; }
 .ocr-progress { flex-basis: 100%; display: flex; align-items: center; gap: 10px; }
+.ocr-progress[hidden] { display: none; } /* display:flex above would otherwise beat the hidden attribute */
 .ocr-progress-track { flex: 1; height: 8px; border-radius: 999px; background: var(--border, #e2e8f0); overflow: hidden; }
 .ocr-progress-bar { height: 100%; width: 0; border-radius: 999px; background: var(--brand); transition: width .2s ease; }
 .ocr-status { font-size: 0.8rem; color: var(--muted, #64748b); white-space: nowrap; }
