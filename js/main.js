@@ -8,7 +8,7 @@ import {
   updateTodDisplay, updateFacUnitLabel, updateTariffPeriodHint,
   onFppaAutoToggle, markFppaManual,
   doCalculate, refreshSubsidyToggle,
-  shareBill, shareBillWhatsApp, loadFromUrl, loadSample, initHistory,
+  shareBill, shareBillWhatsApp, resetCalculator, loadFromUrl, loadSample, initHistory,
   refreshSupplyTypeDependent, applyLifelineDefaultLoad, checkLifelineLimits,
   getMeterMode, setMeterMode, addMeterRow, updateAdvancedMeter,
   syncBillingMonthYear, applyDefaultBillingBasis, showToast, refreshRequiredValidation,
@@ -375,6 +375,7 @@ if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 // Expose helpers called from onclick in the rendered bill HTML
 window.__shareBill = shareBill;
 window.__shareBillWa = shareBillWhatsApp;
+window.__resetCalculator = resetCalculator;
 
 // Register the service worker for offline support (no-op on unsupported / insecure contexts).
 if ('serviceWorker' in navigator) {

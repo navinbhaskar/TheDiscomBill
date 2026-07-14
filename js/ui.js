@@ -264,6 +264,19 @@ export function shareBillWhatsApp() {
   window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank', 'noopener');
 }
 
+// "Calculate new bill" — wipe the calculator back to a pristine state and drop the rendered
+// bill. Guarded by a confirm since it discards everything the user entered. A hard load of the
+// bare path (no query string) is the most reliable full reset: every field, meter row, advanced
+// option and the address bar return to their fresh-page-load state, and #billPanel reverts to its
+// empty placeholder. The #calculator hash lands the user back on the form, ready for a new bill.
+export function resetCalculator() {
+  const msg = _vlang() === 'hi'
+    ? 'नया बिल बनाएँ? इससे आपके द्वारा दर्ज सभी मान हट जाएँगे।'
+    : 'Start a new bill? This clears everything you entered.';
+  if (!window.confirm(msg)) return;
+  window.location.href = location.origin + location.pathname + '#calculator';
+}
+
 // ─── Tabs ─────────────────────────────────────────────────────────────────────
 
 export function initTabs() {
