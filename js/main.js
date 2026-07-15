@@ -643,6 +643,18 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Enter' && e.target.matches('input')) { e.preventDefault(); doCalculate(); }
     });
 
+    // A browser refresh should start fresh — the same clean slate as the "Calculate new bill"
+    // button — instead of restoring the bill from the share params still in the address bar after
+    // a calculation. Detect a reload (vs a first visit or an opened share link, which should still
+    // restore) and reset to the clean URL. The clean reload then has no params, so no loop.
+    const navEntry = performance.getEntriesByType('navigation')[0];
+    const isReload = navEntry ? navEntry.type === 'reload'
+                              : (performance.navigation && performance.navigation.type === 1);
+    if (isReload && location.search.length > 1) {
+      location.replace(location.pathname + '#calculator');
+      return;
+    }
+
     loadFromUrl();
   }
 });
