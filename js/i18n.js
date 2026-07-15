@@ -1414,8 +1414,23 @@ function syncLangUI(lang) {
 // pre-rendered ones, whose static HTML only lists EN/HI — offers every language
 // without touching their markup. (The static <li>s are just a no-JS placeholder;
 // the menu itself only works with JS anyway.)
+// Which languages the switcher should offer on THIS page. App pages (calculator, tools)
+// translate their whole body at runtime, so they offer every language. Static-body content
+// pages translate only via a pre-rendered twin; they opt in with <html data-i18n-twins-only>
+// and we then hide any language they have no twin for — otherwise the option is a dead click
+// that leaves the body in the wrong language (e.g. the Methodology page, which has no twins).
+function availableLangs() {
+  if (!document.documentElement.hasAttribute('data-i18n-twins-only')) return LANGS;
+  const here = document.documentElement.lang || 'en';
+  return LANGS.filter(l =>
+    l.code === 'en' ||
+    l.code === here ||
+    document.querySelector(`link[rel="alternate"][hreflang="${l.hreflang}"]`)
+  );
+}
+
 function buildLangMenu(menu) {
-  menu.innerHTML = LANGS.map(l =>
+  menu.innerHTML = availableLangs().map(l =>
     `<li class="lang-opt" role="option" data-lang="${l.code}" aria-selected="false"><span class="lang-opt-name">${l.name}</span><span class="lang-opt-code">${l.badge}</span></li>`
   ).join('');
 }
