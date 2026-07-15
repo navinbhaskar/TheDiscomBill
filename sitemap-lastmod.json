@@ -40,8 +40,8 @@
     "lastmod": "2026-07-14"
   },
   "/guides/how-to-read-msedcl-bill/": {
-    "hash": "208b9c99da5aec0e",
-    "lastmod": "2026-07-14"
+    "hash": "a89add69d5332411",
+    "lastmod": "2026-07-15"
   },
   "/guides/how-to-read-tneb-tangedco-bill/": {
     "hash": "d598390a51bd9bc8",
@@ -132,8 +132,8 @@
     "lastmod": "2026-07-14"
   },
   "/hi/guides/how-to-read-msedcl-bill/": {
-    "hash": "3c341a124f1eed47",
-    "lastmod": "2026-07-14"
+    "hash": "a9077085accd6227",
+    "lastmod": "2026-07-15"
   },
   "/hi/guides/how-to-read-tneb-tangedco-bill/": {
     "hash": "4021b058696e79c7",
@@ -860,8 +860,12 @@
     "lastmod": "2026-07-14"
   },
   "/mr/guides/": {
-    "hash": "3def84d5999af150",
-    "lastmod": "2026-07-14"
+    "hash": "b23b3f46eb4ed96f",
+    "lastmod": "2026-07-15"
+  },
+  "/mr/guides/how-to-read-msedcl-bill/": {
+    "hash": "1e233dacfdb9f10e",
+    "lastmod": "2026-07-15"
   },
   "/mr/smart-meter-recharge/": {
     "hash": "fa352dc07c14b67b",
@@ -888,20 +892,20 @@
     "lastmod": "2026-07-14"
   },
   "/mr/tariffs/maharashtra/adani_mumbai/": {
-    "hash": "b766498e2029366a",
-    "lastmod": "2026-07-14"
+    "hash": "e64a01d21e536d35",
+    "lastmod": "2026-07-15"
   },
   "/mr/tariffs/maharashtra/best_mumbai/": {
-    "hash": "2657e0db42305878",
-    "lastmod": "2026-07-14"
+    "hash": "27ad6593652d0f68",
+    "lastmod": "2026-07-15"
   },
   "/mr/tariffs/maharashtra/msedcl/": {
-    "hash": "7a6a8a53fe29e2cf",
-    "lastmod": "2026-07-14"
+    "hash": "4e542e66949bd222",
+    "lastmod": "2026-07-15"
   },
   "/mr/tariffs/maharashtra/tata_power_mumbai/": {
-    "hash": "e9c81c345d8bdaf7",
-    "lastmod": "2026-07-14"
+    "hash": "9e8dd9aa599da3ba",
+    "lastmod": "2026-07-15"
   },
   "/mr/tariffs/states/": {
     "hash": "72f75e814234d409",
@@ -1188,8 +1192,12 @@
     "lastmod": "2026-07-14"
   },
   "/ta/guides/": {
-    "hash": "f283baf4a2b9104f",
-    "lastmod": "2026-07-14"
+    "hash": "55fe6254a2413099",
+    "lastmod": "2026-07-15"
+  },
+  "/ta/guides/how-to-read-msedcl-bill/": {
+    "hash": "80b9fd1f3f5d9a8d",
+    "lastmod": "2026-07-15"
   },
   "/ta/smart-meter-recharge/": {
     "hash": "d0c8b1b830f9c161",
