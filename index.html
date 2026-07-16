@@ -50,6 +50,60 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
   <link rel="stylesheet" href="css/styles.min.css">
+  <!-- Module-graph preload: main.js sits at the end of <body> and its import graph is
+       4 levels deep (main → ui → registry → 37 state files); without hints the browser
+       discovers each level only after downloading the previous one. These start the
+       whole graph in parallel with the HTML/CSS instead of after them. -->
+  <link rel="modulepreload" href="js/main.js">
+  <link rel="modulepreload" href="js/ui.js">
+  <link rel="modulepreload" href="js/i18n.js">
+  <link rel="modulepreload" href="js/engine.js">
+  <link rel="modulepreload" href="js/renderer.js">
+  <link rel="modulepreload" href="js/datepicker.js">
+  <link rel="modulepreload" href="js/utils.js">
+  <link rel="modulepreload" href="js/compare.js">
+  <link rel="modulepreload" href="js/search.js">
+  <link rel="modulepreload" href="js/rates.js">
+  <link rel="modulepreload" href="js/supabase-config.js">
+  <link rel="modulepreload" href="js/vendor/lenis.mjs">
+  <link rel="modulepreload" href="js/bill-ocr.js">
+  <link rel="modulepreload" href="js/tariffs/registry.js">
+  <link rel="modulepreload" href="js/tariffs/fppa.js">
+  <link rel="modulepreload" href="js/tariffs/subsidy.js">
+  <link rel="modulepreload" href="js/tariffs/andhra-pradesh.js">
+  <link rel="modulepreload" href="js/tariffs/arunachal-pradesh.js">
+  <link rel="modulepreload" href="js/tariffs/assam.js">
+  <link rel="modulepreload" href="js/tariffs/bihar.js">
+  <link rel="modulepreload" href="js/tariffs/chandigarh.js">
+  <link rel="modulepreload" href="js/tariffs/chhattisgarh.js">
+  <link rel="modulepreload" href="js/tariffs/dadra-and-nagar-haveli-and-daman-and-diu.js">
+  <link rel="modulepreload" href="js/tariffs/delhi.js">
+  <link rel="modulepreload" href="js/tariffs/goa.js">
+  <link rel="modulepreload" href="js/tariffs/gujarat.js">
+  <link rel="modulepreload" href="js/tariffs/haryana.js">
+  <link rel="modulepreload" href="js/tariffs/himachal-pradesh.js">
+  <link rel="modulepreload" href="js/tariffs/jammu-and-kashmir.js">
+  <link rel="modulepreload" href="js/tariffs/jharkhand.js">
+  <link rel="modulepreload" href="js/tariffs/karnataka.js">
+  <link rel="modulepreload" href="js/tariffs/kerala.js">
+  <link rel="modulepreload" href="js/tariffs/ladakh.js">
+  <link rel="modulepreload" href="js/tariffs/madhya-pradesh.js">
+  <link rel="modulepreload" href="js/tariffs/maharashtra.js">
+  <link rel="modulepreload" href="js/tariffs/manipur.js">
+  <link rel="modulepreload" href="js/tariffs/meghalaya.js">
+  <link rel="modulepreload" href="js/tariffs/mizoram.js">
+  <link rel="modulepreload" href="js/tariffs/nagaland.js">
+  <link rel="modulepreload" href="js/tariffs/odisha.js">
+  <link rel="modulepreload" href="js/tariffs/puducherry.js">
+  <link rel="modulepreload" href="js/tariffs/punjab.js">
+  <link rel="modulepreload" href="js/tariffs/rajasthan.js">
+  <link rel="modulepreload" href="js/tariffs/sikkim.js">
+  <link rel="modulepreload" href="js/tariffs/tamil-nadu.js">
+  <link rel="modulepreload" href="js/tariffs/telangana.js">
+  <link rel="modulepreload" href="js/tariffs/tripura.js">
+  <link rel="modulepreload" href="js/tariffs/uttar-pradesh.js">
+  <link rel="modulepreload" href="js/tariffs/uttarakhand.js">
+  <link rel="modulepreload" href="js/tariffs/west-bengal.js">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",

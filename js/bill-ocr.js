@@ -932,10 +932,16 @@ function initReviewChooser() {
     menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - w - 8)) + 'px';
   };
   const close = () => { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); };
+  // Register with the shared popup coordinator (main.js) so this chooser and the
+  // header popups (account, Quick Links, language) never stack — opening one closes
+  // the rest. Optional-chained: main.js loads first on every page and creates it.
+  window.__popups?.register('reviewChooser', close);
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
     // Sign in first; once done, the chooser reopens by itself so the flow continues
     if (menu.hidden && !requireSignIn(btn, () => btn.click())) return;
+    const willOpen = menu.hidden;
+    if (willOpen) window.__popups?.closeOthers('reviewChooser');   // only one popup open at a time
     menu.hidden = !menu.hidden;
     if (!menu.hidden) place();
     btn.setAttribute('aria-expanded', String(!menu.hidden));

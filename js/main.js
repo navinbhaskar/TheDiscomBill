@@ -21,6 +21,24 @@ import { initRemoteRates } from './rates.js';
 import { initHeaderSearch } from './search.js';
 import Lenis from './vendor/lenis.mjs';
 
+// ── Popup coordinator ─────────────────────────────────────────────────────────
+// The header/hero carry four independent popups — the account menu, Quick Links,
+// the language switcher (i18n.js) and the "Get your bill reviewed" chooser
+// (bill-ocr.js). Each lives in a different module and each trigger calls
+// stopPropagation(), so a trigger click never reaches the others' outside-close
+// listeners — which let all four stack open at once. This shared registry is the
+// single source of truth for "only one open at a time": every popup registers a
+// close() and calls closeOthers(name) as it opens, so opening any one dismisses
+// the rest. Defined with `||` so whichever module entry point evaluates first
+// creates it and the others reuse the same instance.
+window.__popups = window.__popups || {
+  _reg: new Map(),                        // name → close()
+  register(name, close) { this._reg.set(name, close); },
+  closeOthers(except) {
+    this._reg.forEach((close, name) => { if (name !== except) { try { close(); } catch (e) {} } });
+  },
+};
+
 // ── Header account button ─────────────────────────────────────────────────────
 // Injected on every page (all pages load main.js) so the header never needs
 // ── Auth modal ────────────────────────────────────────────────────────────────
@@ -30,6 +48,9 @@ import Lenis from './vendor/lenis.mjs';
 // /login/ remains the fallback for no-JS, new-tab clicks and ?next= deep links.
 async function openAuthModal(triggerEl, opts = {}) {
   if (document.querySelector('.auth-modal-overlay')) return;
+  // Dismiss any open header/hero popup — this dialog blocks the page, so leaving
+  // one open behind the backdrop would strand it there.
+  window.__popups.closeOthers('authModal');
 
   const overlay = document.createElement('div');
   overlay.className = 'auth-modal-overlay';
@@ -251,9 +272,11 @@ function initLoginButton() {
     trigger.setAttribute('aria-expanded', 'false');
   };
   const openMenu = () => {
+    window.__popups.closeOthers('account');   // only one popup open at a time
     wrap.classList.add('open');
     trigger.setAttribute('aria-expanded', 'true');
   };
+  window.__popups.register('account', closeMenu);
   // Plain toggle. Ghost/duplicate clicks (one physical tap delivering two click
   // events, legacy WebKit) are deduped against the LAST HANDLED toggle — not
   // against "time since open", which swallowed the user's deliberate taps and
@@ -378,8 +401,14 @@ window.__shareBillWa = shareBillWhatsApp;
 window.__resetCalculator = resetCalculator;
 
 // Register the service worker for offline support (no-op on unsupported / insecure contexts).
+// Deferred to idle time after load: SW install pre-caches ~60 URLs, and starting that
+// download burst during initial render steals bandwidth from what the user is looking at.
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  window.addEventListener('load', () => {
+    const register = () => navigator.serviceWorker.register('sw.js').catch(() => {});
+    if ('requestIdleCallback' in window) requestIdleCallback(register, { timeout: 8000 });
+    else setTimeout(register, 4000);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -433,16 +462,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const qlDrop = document.getElementById('quickLinksDropdown');
   const qlTrigger = document.getElementById('quickLinksTrigger');
   if (qlDrop && qlTrigger) {
+    const qlClose = () => {
+      qlDrop.classList.remove('open');
+      qlTrigger.setAttribute('aria-expanded', 'false');
+    };
+    window.__popups.register('quickLinks', qlClose);
     qlTrigger.addEventListener('click', (e) => {
       e.stopPropagation();
-      const isOpen = qlDrop.classList.toggle('open');
-      qlTrigger.setAttribute('aria-expanded', isOpen);
+      if (qlDrop.classList.contains('open')) { qlClose(); return; }
+      window.__popups.closeOthers('quickLinks');   // only one popup open at a time
+      qlDrop.classList.add('open');
+      qlTrigger.setAttribute('aria-expanded', 'true');
     });
     document.addEventListener('click', (e) => {
-      if (!qlDrop.contains(e.target)) {
-        qlDrop.classList.remove('open');
-        qlTrigger.setAttribute('aria-expanded', 'false');
-      }
+      if (!qlDrop.contains(e.target)) qlClose();
     });
     // Nested "Get Your Bill Reviewed" subsection: a side flyout on desktop (tap
     // toggles it; hover handles itself in CSS), an inline accordion on mobile.

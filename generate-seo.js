@@ -23,7 +23,14 @@ import { TARIFF_DB, STATE_META, getStates, getDiscoms } from './js/tariffs/regis
 import { calculateBill } from './js/engine.js';
 import { GUIDES } from './guides-content.js';
 import { GLOSSARY } from './glossary-content.js';
-import { STRINGS } from './js/i18n.js';
+// Runtime i18n.js carries only English; the vernacular tables are split into
+// per-language modules (lazy-loaded in the browser) — the pre-renderer needs
+// them all, so import and merge them here.
+import { STRINGS as BASE_STRINGS } from './js/i18n.js';
+import hiStrings from './js/i18n/hi.js';
+import mrStrings from './js/i18n/mr.js';
+import taStrings from './js/i18n/ta.js';
+const STRINGS = { ...BASE_STRINGS, hi: hiStrings, mr: mrStrings, ta: taStrings };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
