@@ -86,6 +86,7 @@
   --surface-page:   var(--p-slate-50);
   --surface-card:   var(--p-slate-0);
   --surface-sunken: var(--p-slate-100);
+  --surface-hover:  #eef3fb;             /* cool-tinted hover wash for chips/rows */
   --surface-overlay:rgba(15,23,42,.04);
 
   /* Brand */
@@ -119,14 +120,18 @@
   --err-bg:   var(--p-red-50);
   --err-text: var(--p-red-700);
 
-  /* Elevation */
-  --shadow-xs:    0 1px 2px rgba(0,0,0,.05);
-  --shadow-sm:    0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
-  --shadow-md:    0 4px 8px rgba(0,0,0,.07), 0 2px 4px rgba(0,0,0,.04);
-  --shadow-lg:    0 12px 28px rgba(0,0,0,.09), 0 4px 10px rgba(0,0,0,.04);
-  --shadow-xl:    0 24px 48px rgba(0,0,0,.12), 0 8px 16px rgba(0,0,0,.05);
+  /* Elevation — shadows are tinted with the deep brand slate-blue (never pure
+     black) so surfaces read as one cool-lit system instead of grey smudges. */
+  --shadow-xs:    0 1px 2px rgba(23,37,84,.06);
+  --shadow-sm:    0 1px 3px rgba(23,37,84,.09), 0 1px 2px rgba(23,37,84,.05);
+  --shadow-md:    0 4px 10px rgba(23,37,84,.08), 0 2px 4px rgba(23,37,84,.05);
+  --shadow-lg:    0 12px 32px rgba(23,37,84,.10), 0 4px 10px rgba(23,37,84,.05);
+  --shadow-xl:    0 24px 52px rgba(23,37,84,.13), 0 8px 16px rgba(23,37,84,.06);
   --shadow-brand: 0 4px 16px rgba(37,99,235,.3);
-  --shadow-inner: inset 0 2px 4px rgba(0,0,0,.05);
+  --shadow-inner: inset 0 2px 4px rgba(23,37,84,.06);
+
+  /* Focus ring — one token so every control glows the same */
+  --focus-ring: rgba(59,130,246,.22);
 
   /* Radii */
   --radius-xs:   4px;
@@ -183,6 +188,7 @@
   --surface-page:   #0b1220;
   --surface-card:   #131c2e;
   --surface-sunken: #0f1828;
+  --surface-hover:  #1a2740;
   --surface-overlay: rgba(255,255,255,.05);
 
   --brand-faint:   #14233c;
@@ -208,6 +214,8 @@
   --shadow-md: 0 4px 8px rgba(0,0,0,.55), 0 2px 4px rgba(0,0,0,.4);
   --shadow-lg: 0 12px 28px rgba(0,0,0,.6), 0 4px 10px rgba(0,0,0,.45);
   --shadow-xl: 0 24px 48px rgba(0,0,0,.65), 0 8px 16px rgba(0,0,0,.5);
+
+  --focus-ring: rgba(127,178,255,.28);
 
   --gray-50:  #0f1828; --gray-100: #131c2e; --gray-200: #1d2a3e;
   --gray-300: #2b3a52; --gray-400: #6b7c93; --gray-600: #9fb0c5;
@@ -484,6 +492,42 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/* Atmosphere: a whisper of the brand's sky-blue along the top horizon and a
+   trace of the amber spark low-right — the page glows faintly instead of
+   sitting on flat grey. A fixed composited layer (not background-attachment,
+   which repaints every scroll frame under smooth scrolling). */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(59,130,246,.045), transparent 60%),
+    radial-gradient(80% 50% at 100% 100%, rgba(251,191,36,.035), transparent 60%);
+}
+:root[data-theme="dark"] body::before {
+  background:
+    radial-gradient(120% 60% at 50% 0%, rgba(96,165,250,.06), transparent 60%),
+    radial-gradient(80% 50% at 100% 100%, rgba(251,191,36,.04), transparent 60%);
+}
+
+/* Text selection carries the brand */
+::selection { background: var(--brand-subtle); color: var(--p-slate-900); }
+:root[data-theme="dark"] ::selection { background: #2a4a80; color: #f2f7ff; }
+
+/* Slim, quiet scrollbar (WebKit + Firefox) */
+html { scrollbar-color: var(--border-strong) transparent; scrollbar-width: thin; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover { background-color: var(--text-tertiary); }
+
+/* Headings never orphan a single word onto their own line */
+h1, h2, h3 { text-wrap: balance; }
 
 /* Display typeface — wordmark, headings, key numerics */
 .logo-text, .hero h1, .form-panel h2, .about-section h2,
@@ -573,6 +617,7 @@ a:hover { text-decoration: underline; }
   transition: background var(--t-fast), color var(--t-fast);
 }
 .header-nav a:hover { background: rgba(255,255,255,.08); color: var(--text-inverse); text-decoration: none; }
+.header-nav a:focus-visible { outline: 2px solid var(--p-blue-400); outline-offset: 2px; }
 
 /* ─── Hero ───────────────────────────────────────────────────────────────────── */
 .hero {
@@ -910,11 +955,12 @@ select {
 select:focus, input:focus {
   outline: none;
   border-color: var(--brand);
-  box-shadow: 0 0 0 3px rgba(37,99,235,.14);
+  box-shadow: 0 0 0 3px var(--focus-ring);
   background: var(--surface-card);
 }
-select:hover:not(:disabled), input:hover:not(:disabled) {
+select:hover:not(:disabled):not(:focus), input:hover:not(:disabled):not(:focus) {
   border-color: var(--border-strong);
+  box-shadow: var(--shadow-xs);
 }
 select:disabled, input:disabled {
   background: var(--surface-sunken);
@@ -1208,24 +1254,44 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .bill-delta { font-size: 13px; color: var(--text-secondary); margin: 0 0 14px 2px; }
 
 /* ─── Calculate Button ───────────────────────────────────────────────────────── */
+/* The one loud element on the form: an electric gradient with the site's amber
+   spark sweeping across on hover — same current that runs the header live wire. */
 .btn-calculate {
   width: 100%; padding: 15px;
-  background: linear-gradient(180deg, var(--p-blue-500), var(--p-blue-600));
+  background: linear-gradient(180deg, var(--p-blue-500) 0%, var(--p-blue-600) 55%, var(--p-blue-700) 100%);
   color: var(--text-inverse);
   border: none; border-radius: var(--radius-md);
   font-size: 15px; font-weight: 700; font-family: inherit;
   cursor: pointer; letter-spacing: 0.2px;
-  transition: background var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast);
-  box-shadow: var(--shadow-brand), inset 0 1px 0 rgba(255,255,255,.18);
+  transition: transform var(--t-fast), box-shadow var(--t-base), filter var(--t-fast);
+  box-shadow: var(--shadow-brand), inset 0 1px 0 rgba(255,255,255,.22), inset 0 -1px 0 rgba(8,20,48,.25);
   margin-top: 6px;
   position: relative; overflow: hidden;
 }
-.btn-calculate:hover:not(:disabled) {
-  background: linear-gradient(180deg, var(--p-blue-600), var(--p-blue-700));
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(37,99,235,.38);
+.btn-calculate::before {
+  /* Amber-white spark sheen, parked off-canvas until hover sweeps it across */
+  content: '';
+  position: absolute; top: 0; bottom: 0; left: -75%; width: 50%;
+  background: linear-gradient(105deg,
+    transparent 0%, rgba(255,255,255,.16) 35%,
+    rgba(251,191,36,.30) 50%, rgba(255,255,255,.16) 65%, transparent 100%);
+  transform: skewX(-18deg) translateX(0);
+  pointer-events: none;
 }
-.btn-calculate:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.btn-calculate:hover:not(:disabled) {
+  filter: brightness(1.06) saturate(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 26px rgba(37,99,235,.42), inset 0 1px 0 rgba(255,255,255,.25), inset 0 -1px 0 rgba(8,20,48,.25);
+}
+.btn-calculate:hover:not(:disabled)::before { animation: sparkSweep .65s ease; }
+@keyframes sparkSweep {
+  from { transform: skewX(-18deg) translateX(0); }
+  to   { transform: skewX(-18deg) translateX(420%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-calculate:hover:not(:disabled)::before { animation: none; }
+}
+.btn-calculate:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; box-shadow: var(--shadow-brand), 0 0 0 5px var(--focus-ring); }
 .btn-calculate:active:not(:disabled) { transform: translateY(0); box-shadow: var(--shadow-brand); }
 .btn-calculate:disabled {
   background: var(--border-strong); color: var(--text-tertiary);
@@ -1240,9 +1306,6 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 .btn-sample:hover { background: var(--brand-faint); border-color: var(--brand); }
 .btn-sample:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-
-.btn-secondary-row { display: flex; gap: 8px; }
-.btn-secondary-row .btn-sample { margin-top: 8px; }
 
 /* ── Simple / Detailed calculator mode ──────────────────────────────────────── */
 .calc-mode-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 2px 0 16px; }
@@ -1684,8 +1747,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 .ql-btn:hover {
   background: var(--surface-hover); border-color: var(--brand-border);
-  color: var(--brand-dark); transform: translateY(-1px);
+  color: var(--text-brand-dark); transform: translateY(-1px);
+  box-shadow: var(--shadow-xs);
 }
+.ql-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 .ql-icon { font-size: 16px; }
 
 /* ─── Comparison Section ─────────────────────────────────────────────────────── */
@@ -2674,6 +2739,9 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   padding: 14px 18px; border-radius: 0 var(--radius) var(--radius) 0;
   font-size: 13px; color: var(--p-slate-700); line-height: 1.65;
 }
+:root[data-theme="dark"] .disclaimer {
+  background: #2a2410; color: #e3d9bd; border-left-color: var(--p-amber-500);
+}
 
 .stats-row {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -2689,11 +2757,22 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 .stat-card:hover {
   box-shadow: var(--shadow-md);
+  border-color: var(--brand-border);
   transform: translateY(-2px);
 }
 .stat-number {
-  font-size: 34px; font-weight: 700; color: var(--brand); line-height: 1;
+  font-size: 34px; font-weight: 700; line-height: 1;
   letter-spacing: -1px;
+  font-variant-numeric: tabular-nums;
+  /* Electric gradient on the numbers — the current flows through the stats */
+  color: var(--brand);
+  background: linear-gradient(135deg, var(--p-blue-500), var(--p-blue-700));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+:root[data-theme="dark"] .stat-number {
+  background: linear-gradient(135deg, #8ab8ff, #5a8fe8);
+  -webkit-background-clip: text; background-clip: text;
 }
 .stat-label { font-size: 12px; color: var(--text-secondary); margin-top: 6px; font-weight: 500; }
 
@@ -2718,9 +2797,10 @@ footer a:hover { color: #fff; text-decoration: none; }
 /* ─── Toast ──────────────────────────────────────────────────────────────────── */
 #toast {
   position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
-  background: var(--p-slate-900); color: var(--text-inverse);
+  background: var(--p-slate-900); color: #fff;
   padding: 12px 24px; border-radius: var(--radius-full);
   font-size: 14px; font-weight: 500;
+  border: 1px solid rgba(255,255,255,.12);   /* keeps the pill visible on the dark theme */
   box-shadow: var(--shadow-lg);
   transition: transform var(--t-slow);
   z-index: 9999; pointer-events: none;
