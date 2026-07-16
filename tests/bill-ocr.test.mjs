@@ -42,6 +42,55 @@ group('billed demand — footnote fusion peel', () => {
   check('clean 2.5 untouched', parseBillText('Sanction Load 1KW\nBilled Demand : 2.5 KW').maxDemand, 2.5);
 });
 
+// ── BSES (Delhi) scan layout — table-only units, "Bill Amount Payable", CA No ──
+group('BSES layout — TOTAL units, Rs-anchored payable, CA No, word category', () => {
+  const txt = [
+    'BSES Rajdhani Power Ltd.',
+    'Sanctioned Load :1.00 (kW)',
+    'CA No. Contract Demand Energisation Date', // column-scrambled header pair
+    'Tariff Category :Domestic [Residential ]',
+    'Net Amount Payable',
+    '1069.49', // decoy: net-of-subsidy figure that used to win
+    'TOTAL -> 248 799.50 133.44',
+    'Bill Amount Payable Rs. 230.00',
+    'payable to BRPL CA No. 111122223',
+  ].join('\n');
+  const f = parseBillText(txt);
+  check('units from TOTAL -> row', f.units, 248);
+  check('Rs-anchored Bill Amount Payable beats decoy', f.billAmount, 230);
+  check('CA No accepted as account label', f.accountNo, '111122223');
+  check('word category captured', f.category, 'DOMESTIC');
+});
+
+// ── MSEDCL (Mahavitaran) scan layout — Pay Rs box, standalone bill-for month ──
+group('MSEDCL layout — Pay Rs amount, DEC - 16 month, multi-word category', () => {
+  const txt = [
+    'MAHAVITARAN\nMaharashtra State Electricity Distribution Co. Ltd.',
+    'Bill For:\nDEC - 16\nBill Date:\n18-JAN-17',
+    'Bill period:\n30-NOV-16 to 14-JAN-17',
+    'Category\nLT | Res 1-\nPhase',
+    'Pay Rs. 1830',
+  ].join('\n');
+  const f = parseBillText(txt);
+  check('Pay Rs. box read as amount', f.billAmount, 1830);
+  check('standalone DEC - 16 month', f.billMonth, 12);
+  check('two-digit year expanded', f.billYear, 2016);
+  check('month inside 18-JAN-17 not mistaken', f.billMonth !== 1, true);
+  check('multi-word category captured', f.category, 'LT RES');
+  check('period from dates', f.toDate && f.toDate.iso, '2017-01-14');
+});
+
+// ── Sanctioned/connected load — abbreviated labels, leading-decimal values ────
+group('load — Sanct./Conn. abbreviations and ".5 KW" values', () => {
+  check('Sanct. Load .5 KW', parseBillText('Sanct.\nLoad\n.5 KW').sanctionedLoad, 0.5);
+  check('Conn. Load .5 KW', parseBillText('Conn. Load .5 KW').sanctionedLoad, 0.5);
+  check('value-anchored "Load ... 2 KW"', parseBillText('Load\n2 KW').sanctionedLoad, 2);
+  check('UPPCL "Sanction Load 1KW" untouched', parseBillText('Sanction Load 1KW').sanctionedLoad, 1);
+  check('kW in label parentheses', parseBillText('Sanctioned Load :1.00 (kW)').sanctionedLoad, 1);
+  check('MDI label read as demand', parseBillText('Sanction Load 5KW\nMDI : 2.4').maxDemand, 2.4);
+  check('zero MDI left empty', parseBillText('Sanction Load 5KW\nMDI : .00').maxDemand, undefined);
+});
+
 console.log(failed ? `\n✗ FAILURES — ${passed} passed, ${failed} failed`
                    : `\n✓ ALL PASSED — ${passed} passed, 0 failed`);
 process.exit(failed ? 1 : 0);

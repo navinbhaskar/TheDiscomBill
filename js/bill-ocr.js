@@ -1,14 +1,14 @@
 // ── Bill OCR auto-fill ────────────────────────────────────────────────────────
 // Lets the user upload a photo or PDF of their electricity bill and auto-fills
-// the calculator form. Everything runs client-side and free:
+// the calculator form:
 //   • Digital PDFs (DISCOM portal downloads) — read the embedded text layer via
-//     pdf.js; no OCR at all, so extraction is instant and exact.
-//   • Scanned PDFs — the scan JPEGs are pulled straight out of the PDF bytes and
-//     OCR'd with Tesseract.js (pdf.js page.render can hang for minutes on big
-//     scans, so we never rasterize whole pages).
-//   • Photos — upscaled if small, then OCR'd.
-// Libraries are lazy-loaded from jsDelivr only when a file is picked, so normal
-// page loads carry zero extra weight and the bill never leaves the device.
+//     pdf.js right in the browser; no OCR at all, instant and exact.
+//   • Scanned PDFs / photos — sent to cloud OCR (Supabase Edge Function →
+//     OCR.space) after the user consents once per session; it reads noisy scans
+//     far better than on-device OCR. If the user declines or the cloud is
+//     unreachable/over-quota, Tesseract.js runs on-device as the fallback.
+// Libraries are lazy-loaded from jsDelivr only when actually needed, so normal
+// page loads carry zero extra weight.
 
 import { getStates, getDiscoms } from './tariffs/registry.js';
 import { isConfigured, getStoredUser, getSupabase, SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase-config.js';
@@ -252,14 +252,24 @@ function parseBillText(raw) {
   const NUM = '(\\d[\\d,]{0,8}(?:\\.\\d+)?)';
   const GAP = '[^0-9\\-]{0,20}';
 
+  // MSEDCL prints ".5 KW" (leading decimal point, no zero) and abbreviates the
+  // labels to "Sanct. Load" / "Conn. Load". The gap must exclude "." too, or it
+  // greedily swallows the leading decimal point and captures ".5" as 5.
+  const LNUM = `(\\.\\d+|${NUM.slice(1, -1)})`;
+  const LGAP = '[^0-9.\\-]{0,20}';
   const load = grabAny([
-    new RegExp(`(?:sanction(?:ed)?|contract(?:ed)?|connected)\\s*(?:load|demand)\\s*(?:\\(?\\s*(?:in\\s*)?k[vw]a?\\s*\\)?)?${GAP}${NUM}`, 'i'),
-    new RegExp(`(?:load|भार)\\s*\\(?\\s*k[vw]a?\\s*\\)?${GAP}${NUM}`, 'i'),
-    new RegExp(`स्वीकृत\\s*भार${GAP}${NUM}`, 'i'),
+    new RegExp(`(?:sanct(?:ion(?:ed)?)?|conn(?:ect(?:ed)?)?|contract(?:ed)?)\\s*\\.?\\s*(?:load|demand)\\s*(?:\\(?\\s*(?:in\\s*)?k[vw]a?\\s*\\)?)?${LGAP}${LNUM}`, 'i'),
+    new RegExp(`(?:load|भार)\\s*\\(?\\s*k[vw]a?\\s*\\)?${LGAP}${LNUM}`, 'i'),
+    // Value-anchored: "Load" label with the number and KW unit nearby ("Load .5 KW")
+    new RegExp(`load[^0-9.]{0,20}${LNUM}\\s*k\\s*[vw]a?\\b`, 'i'),
+    new RegExp(`स्वीकृत\\s*भार${LGAP}${LNUM}`, 'i'),
   ]);
   if (load && num(load) > 0 && num(load) < 5000) f.sanctionedLoad = num(load);
 
   const units = grabAny([
+    // BSES prints units only inside the billing table, summed on a "TOTAL ->"
+    // row with no "units" label nearby — anchor on the TOTAL marker itself.
+    new RegExp(`\\bTOTAL\\s*[-–—=>\\]]{1,4}\\s*${NUM}\\b`, 'i'),
     // KWH-anchored first: UPPCL prints "Net Billed Unit ⁷ : 993.00 KWH" and OCR
     // sometimes eats the colon or wraps the line — the number right before KWH
     // is the value, never the footnote superscript.
@@ -291,7 +301,8 @@ function parseBillText(raw) {
     // footnote digit so the superscript isn't mistaken for the value
     new RegExp(`(?:max(?:imum)?|recorded|billed)\\s*demand\\s*(?:\\(\\s*load\\s*\\))?\\s*\\d?\\s*[:\\-]\\s*${NUM}`, 'i'),
     new RegExp(`(?:max(?:imum)?|recorded|billed)\\s*demand\\s*(?:\\(?\\s*k[vw]a?\\s*\\)?)?${GAP}${NUM}`, 'i'),
-    new RegExp(`\\bMD\\b\\s*(?:\\(?\\s*k[vw]a?\\s*\\)?)?${GAP}${NUM}`),
+    // BSES prints "MDI : .00" — leading-decimal value, gap must not eat the dot
+    new RegExp(`\\bMDI?\\b\\s*(?:\\(?\\s*k[vw]a?\\s*\\)?)?${LGAP}${LNUM}`),
   ]);
   if (md && num(md) > 0 && num(md) < 10000) {
     let mdVal = num(md);
@@ -309,10 +320,16 @@ function parseBillText(raw) {
   }
 
   const amount = grabAny([
+    // "Bill Amount Payable / Rs. 230.00" (BSES) — the currency marker is required
+    // so a garbled duplicate of the label elsewhere on the page can't win.
+    new RegExp(`bill\\s*amount\\s*payable\\s*:?[^0-9]{0,12}(?:rs\\.?|₹|inr)\\s*\\.?\\s*${NUM}`, 'i'),
     new RegExp(`(?:net|total|current)?\\s*(?:amount|bill)?\\s*payable\\s*(?:amount)?\\s*(?:by|before)?\\s*(?:due\\s*date)?${GAP}(?:rs\\.?|₹|inr)?\\s*${NUM}`, 'i'),
     new RegExp(`(?:net|total|bill)\\s*amount\\s*(?:due)?${GAP}(?:rs\\.?|₹|inr)?\\s*${NUM}`, 'i'),
     new RegExp(`amount\\s*(?:before|by)\\s*due\\s*date${GAP}(?:rs\\.?|₹|inr)?\\s*${NUM}`, 'i'),
     new RegExp(`देय\\s*(?:धन)?राशि${GAP}(?:rs\\.?|₹)?\\s*${NUM}`, 'i'),
+    // MSEDCL prints the amount table column-scrambled, but the DPC box carries
+    // "Pay Rs. 1830" with real adjacency — currency marker required.
+    new RegExp(`\\bpay\\s*(?:rs\\.?|₹)\\s*\\.?\\s*${NUM}`, 'i'),
   ]);
   if (amount && num(amount) > 0) f.billAmount = Math.round(num(amount) * 100) / 100;
 
@@ -325,7 +342,7 @@ function parseBillText(raw) {
 
   // UPPCL prints the account number hyphen-grouped ("1538-298-215")
   const acct = grabAny([
-    /(?:account|consumer|a\/?c|connection)\s*(?:no|number|id)\s*\.?\s*[:\-]?\s*(\d[\d\- ]{7,15}\d)/i,
+    /\b(?:account|consumer|a\/?c|ca|connection)\s*(?:no|number|id)\s*\.?\s*[:\-]?\s*(\d[\d\- ]{7,15}\d)/i,
     /(?:खाता|उपभोक्ता)\s*(?:सं(?:ख्या)?|क्रमांक)\.?\s*[:\-]?\s*(\d[\d\- ]{7,15}\d)/i,
   ]);
   if (acct) {
@@ -365,6 +382,14 @@ function parseBillText(raw) {
   const catM = text.match(/category[^A-Za-z0-9\n]{0,6}(LMV|HV|ST|LT|HT)\s*[-–]?\s*([0-9IlO]{1,2}[A-Za-z]?)/i)
             || text.match(/\b(LMV|HV|ST|LT|HT)\s*[-–]?\s*(\d{1,2}[A-Za-z]?)\b/i);
   if (catM) f.category = `${catM[1].toUpperCase()}-${catDigit(catM[2])}`;
+  else {
+    // BSES/MSEDCL print a word category ("Tariff Category : Domestic
+    // [Residential]", "Category / LT Res 1-Phase") instead of a code — capture
+    // up to 4 words and match against the category select's option text; when
+    // no option matches, applyFields shows it to the user as a note.
+    const catW = text.match(/(?:tariff\s*)?\bcategory\b[^A-Za-z0-9]{0,6}([A-Za-z]+(?:[^\S\n]+[A-Za-z]+){0,3})/i);
+    if (catW) f.category = catW[1].replace(/\s+/g, ' ').trim().toUpperCase();
+  }
 
   // "Supply Type : 17" (UPPCL prints the ST schedule number here). The bold ":" is
   // often misread as a "0"/"1" fused onto the number ("Supply Type : 17" → "017" or
@@ -405,6 +430,16 @@ function parseBillText(raw) {
       f.billMonth = mo;
       f.billYear = bm[2].length === 2 ? 2000 + +bm[2] : +bm[2];
       break;
+    }
+  }
+  // No labelled bill month (MSEDCL prints "Bill For:" and "DEC - 16" in separate
+  // table cells) — fall back to the first standalone MON-YY token. The lookbehind
+  // rejects month names inside dates like "18-JAN-17".
+  if (!f.billMonth) {
+    const sm = text.match(/(?<![\dA-Za-z][-\/])\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s*[-\/ ]\s*(\d{4}|\d{2})\b/i);
+    if (sm) {
+      f.billMonth = MONTHS[sm[1].toLowerCase()];
+      f.billYear = sm[2].length === 2 ? 2000 + +sm[2] : +sm[2];
     }
   }
 
@@ -603,14 +638,12 @@ function initBillOcr() {
 
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-  // The last uploaded file, kept so the opt-in cloud scan can re-read the same bill.
-  let lastUpload = null;
-
-  // ── Opt-in cloud OCR (Supabase Edge Function → OCR.space) ────────────────────
-  // Privacy contract: NOTHING is uploaded unless the user explicitly confirms the
-  // consent notice below. The Edge Function passes the image through transiently
-  // (no storage); the provider key never reaches the client.
+  // ── Cloud OCR (Supabase Edge Function → OCR.space) — the primary engine ──────
+  // Privacy contract: NOTHING is uploaded until the user confirms the consent
+  // notice (once per session). The Edge Function passes the image through
+  // transiently (no storage); the provider key never reaches the client.
   const CLOUD_MAX_BYTES = 1024 * 1024; // OCR.space free-tier file cap
+  const CONSENT_KEY = 'ocrCloudConsent';
 
   const fileToDataUrl = (blob) => new Promise((resolve, reject) => {
     const r = new FileReader();
@@ -619,14 +652,20 @@ function initBillOcr() {
     r.readAsDataURL(blob);
   });
 
-  // Images over the cap are downscaled to a JPEG that fits; PDFs can't be shrunk here.
-  async function cloudPayload(file) {
-    const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
-    if (file.size <= CLOUD_MAX_BYTES) {
-      return { image: await fileToDataUrl(file), filetype: isPdf ? 'PDF' : undefined };
+  // Images over the cap are downscaled to a JPEG that fits; PDFs can't be shrunk
+  // here. Accepts a File, an extracted-JPEG Blob (no .name), or a rasterized canvas.
+  async function cloudPayload(source) {
+    if (source instanceof HTMLCanvasElement) {
+      const dataUrl = source.toDataURL('image/jpeg', 0.85);
+      if (dataUrl.length > CLOUD_MAX_BYTES * 1.4) throw new Error('This page is too large for cloud OCR — try a screenshot of the bill.');
+      return { image: dataUrl, filetype: 'JPG' };
+    }
+    const isPdf = source.type === 'application/pdf' || /\.pdf$/i.test(source.name || '');
+    if (source.size <= CLOUD_MAX_BYTES) {
+      return { image: await fileToDataUrl(source), filetype: isPdf ? 'PDF' : undefined };
     }
     if (isPdf) throw new Error('This PDF is over the 1 MB cloud limit — upload a screenshot of the bill instead.');
-    const bmp = await createImageBitmap(file);
+    const bmp = await createImageBitmap(source);
     for (const maxDim of [2000, 1600, 1200]) {
       const scale = Math.min(1, maxDim / Math.max(bmp.width, bmp.height));
       const c = document.createElement('canvas');
@@ -639,36 +678,56 @@ function initBillOcr() {
     throw new Error('This photo is too large for cloud OCR even after resizing — try a screenshot.');
   }
 
-  async function runCloudScan() {
-    progressWrap.hidden = false;
+  async function cloudOcrText(source, setStatus, setProgress) {
+    setStatus('Reading your bill with cloud OCR…');
     setProgress(0.2);
-    setStatus('Uploading to cloud OCR…');
-    try {
-      const sb = await getSupabase();
-      const { data: { session } } = await sb.auth.getSession();
-      if (!session) throw new Error('Please sign in first.');
-      const payload = await cloudPayload(lastUpload);
-      setProgress(0.5);
-      const res = await fetch(`${SUPABASE_URL}/functions/v1/ocr`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          apikey: SUPABASE_ANON_KEY,
-          Authorization: `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify(payload),
+    const sb = await getSupabase();
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) throw new Error('Please sign in first.');
+    const payload = await cloudPayload(source);
+    setProgress(0.5);
+    const res = await fetch(`${SUPABASE_URL}/functions/v1/ocr`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || `Cloud OCR failed (HTTP ${res.status}).`);
+    setProgress(1);
+    return data.text;
+  }
+
+  // One-time (per session) consent before anything is uploaded. Resolves true
+  // (scan in the cloud) or false (user chose to stay on-device).
+  function askCloudConsent() {
+    if (sessionStorage.getItem(CONSENT_KEY) === 'yes') return Promise.resolve(true);
+    return new Promise((resolve) => {
+      progressWrap.hidden = true;
+      resultEl.hidden = false;
+      resultEl.innerHTML =
+        '<div id="ocrCloudConsent"><p class="ocr-note-cat">To read your bill accurately, it is sent to OCR.space ' +
+        '(a third-party service) through our server. The bill contains personal details like your name and account ' +
+        'number; it is processed transiently and never stored. Upload happens only if you agree.</p>' +
+        '<div class="ocr-rev-actions">' +
+        '<button type="button" class="ocr-btn" id="ocrCloudYes">Agree &amp; scan</button>' +
+        '<button type="button" class="ocr-btn ocr-btn-ghost" id="ocrCloudNo">Read on-device instead (less accurate)</button>' +
+        '</div></div>';
+      document.getElementById('ocrCloudYes').addEventListener('click', () => {
+        sessionStorage.setItem(CONSENT_KEY, 'yes');
+        resultEl.hidden = true; resultEl.innerHTML = '';
+        progressWrap.hidden = false;
+        resolve(true);
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || `Cloud OCR failed (HTTP ${res.status}).`);
-      setProgress(1);
-      window.__lastOcrText = data.text;
-      progressWrap.hidden = true;
-      renderReview(parseBillText(data.text), { cloud: true });
-    } catch (err) {
-      progressWrap.hidden = true;
-      const note = document.getElementById('ocrCloudNote');
-      if (note) { note.hidden = false; note.textContent = '☁ ' + (err && err.message ? err.message : 'Cloud scan failed — your local result above is untouched.'); }
-    }
+      document.getElementById('ocrCloudNo').addEventListener('click', () => {
+        resultEl.hidden = true; resultEl.innerHTML = '';
+        progressWrap.hidden = false;
+        resolve(false);
+      });
+    });
   }
 
   // ── Review screen: user confirms / completes values BEFORE they hit the form ──
@@ -719,20 +778,9 @@ function initBillOcr() {
       '<div class="ocr-rev-actions">' +
       '<button type="button" class="ocr-btn" id="ocrApplyBtn">Use these values →</button>' +
       '<button type="button" class="ocr-btn ocr-btn-ghost" id="ocrRetryBtn">↺ Upload again</button>' +
-      (isConfigured() && lastUpload && !opts.cloud
-        ? '<button type="button" class="ocr-btn ocr-btn-ghost" id="ocrCloudBtn">☁ Try cloud scan (more accurate)</button>'
-        : '') +
       '</div>' +
       (opts.cloud ? '<p class="ocr-note-cat">☁ Read by cloud OCR. Your bill was processed transiently and not stored.</p>' : '') +
-      // Consent notice — hidden until the cloud button is pressed; nothing uploads before "Yes".
-      '<div id="ocrCloudConsent" hidden><p class="ocr-note-cat">Cloud scan sends this bill to OCR.space (a third-party service) ' +
-      'for more accurate reading. It contains personal details like your name and account number. ' +
-      'We don’t store it, and the upload happens only if you agree.</p>' +
-      '<div class="ocr-rev-actions">' +
-      '<button type="button" class="ocr-btn" id="ocrCloudYes">Agree &amp; scan</button>' +
-      '<button type="button" class="ocr-btn ocr-btn-ghost" id="ocrCloudNo">Cancel</button>' +
-      '</div></div>' +
-      '<p class="ocr-note-cat" id="ocrCloudNote" hidden></p>';
+      (opts.note ? `<p class="ocr-note-cat">${esc(opts.note)}</p>` : '');
 
     const missingEl = document.getElementById('ocrRevMissing');
     const applyBtn = document.getElementById('ocrApplyBtn');
@@ -754,14 +802,6 @@ function initBillOcr() {
     validate();
 
     document.getElementById('ocrRetryBtn').addEventListener('click', () => fileInput.click());
-
-    const cloudBtn = document.getElementById('ocrCloudBtn');
-    if (cloudBtn) {
-      const consentEl = document.getElementById('ocrCloudConsent');
-      cloudBtn.addEventListener('click', () => { consentEl.hidden = false; cloudBtn.disabled = true; });
-      document.getElementById('ocrCloudNo').addEventListener('click', () => { consentEl.hidden = true; cloudBtn.disabled = false; });
-      document.getElementById('ocrCloudYes').addEventListener('click', () => { consentEl.hidden = true; runCloudScan(); });
-    }
 
     applyBtn.addEventListener('click', () => {
       if (!validate()) return;
@@ -805,7 +845,6 @@ function initBillOcr() {
     const file = fileInput.files && fileInput.files[0];
     if (!file) return;
     fileInput.value = ''; // allow re-picking the same file
-    lastUpload = file;    // kept only in memory, for the opt-in cloud scan
 
     box.hidden = false; // the workspace card stays hidden until a scan starts
     smoothTo(box);
@@ -817,17 +856,43 @@ function initBillOcr() {
     setStatus('Preparing…');
 
     try {
-      let text;
-      if (file.type === 'application/pdf' || /\.pdf$/i.test(file.name)) {
+      const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+      let text = null;
+      let images = null;
+      let cloud = false;
+      let note = null;
+
+      if (isPdf) {
+        // Digital PDFs keep the free, instant, exact local path — no upload.
         const got = await extractFromPdf(file, setStatus);
-        text = got.text != null ? got.text : await ocrImages(got.images, setStatus, setProgress);
+        if (got.text != null) text = got.text;
+        else images = got.images;
       } else {
-        text = await ocrImages([file], setStatus, setProgress);
+        images = [file];
       }
+
+      if (text == null) {
+        // Scan/photo → cloud OCR is the primary engine (needs consent);
+        // Tesseract on-device is the fallback.
+        if (isConfigured() && await askCloudConsent()) {
+          try {
+            // A small-enough PDF goes up whole; otherwise the extracted page image.
+            const source = isPdf && file.size <= CLOUD_MAX_BYTES ? file : images[0];
+            text = await cloudOcrText(source, setStatus, setProgress);
+            cloud = true;
+          } catch (err) {
+            note = '☁ Cloud OCR unavailable (' + (err && err.message ? err.message : 'unknown error') + ') — this bill was read on-device instead, which can be less accurate.';
+            text = await ocrImages(images, setStatus, setProgress);
+          }
+        } else {
+          text = await ocrImages(images, setStatus, setProgress);
+        }
+      }
+
       window.__lastOcrText = text; // debugging hook: inspect what OCR actually saw
       const fields = parseBillText(text);
       progressWrap.hidden = true;
-      renderReview(fields);
+      renderReview(fields, { cloud, note });
     } catch (err) {
       console.error('Bill OCR failed:', err);
       progressWrap.hidden = true;
