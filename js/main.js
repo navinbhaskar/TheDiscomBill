@@ -582,7 +582,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.getElementById('calculateBtn').addEventListener('click', doCalculate);
-    document.getElementById('sampleBtn').addEventListener('click', loadSample);
     document.getElementById('sampleBtnPanel')?.addEventListener('click', loadSample);
     initHistory();
 
