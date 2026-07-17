@@ -736,7 +736,7 @@ function keyFactsHtml(state, discom, fy, lang = 'en') {
         mr: `✅ खऱ्या बिलांवरून पडताळलेले — ${esc(meta.ratesAsOf || fy)}`,
         ta: `✅ உண்மையான பில்களுடன் சரிபார்க்கப்பட்டது — ${esc(meta.ratesAsOf || fy)}` })
     : T(lang, {
-        en: `Based on the ${esc(fy)} tariff order (latest published data we have verified)`,
+        en: `Based on the ${esc(fy)} tariff order (latest published data we have)`,
         hi: `${esc(fyLabel(fy, 'hi'))} टैरिफ आदेश पर आधारित (हमारे पास उपलब्ध नवीनतम प्रकाशित डेटा)`,
         mr: `${esc(fyLabel(fy, 'mr'))} टॅरिफ आदेशावर आधारित (आमच्याकडील नवीनतम प्रकाशित डेटा)`,
         ta: `${esc(fyLabel(fy, 'ta'))} கட்டண ஆணையை அடிப்படையாகக் கொண்டது (எங்களிடம் உள்ள சமீபத்திய வெளியிடப்பட்ட தரவு)` })]);

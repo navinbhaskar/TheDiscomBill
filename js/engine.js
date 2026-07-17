@@ -336,12 +336,20 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
     if (subsidyScheme.type === 'free-units') {
       // First N units/month free — waive the telescopic energy charge on those units only (fixed,
       // FPPA and duty still apply). N scales with the whole months in the billing period.
-      const freeUnits = Math.max(0, (subsidyScheme.units || 0) * fixedChargeMonths);
+      // A scheme may TAPER: once consumption passes `thresholdUnits`/month the allowance drops to
+      // `reducedUnits` (Tamil Nadu gives 200 free units per 2-month cycle up to 500 units billed,
+      // and only 100 above it). The threshold scales by the same months as the allowance, so a
+      // 2-month bill is tested against 2 × thresholdUnits.
+      const tapered = subsidyScheme.thresholdUnits != null &&
+        netUnits > subsidyScheme.thresholdUnits * fixedChargeMonths;
+      const perMonth = tapered ? (subsidyScheme.reducedUnits || 0) : (subsidyScheme.units || 0);
+      const freeUnits = Math.max(0, perMonth * fixedChargeMonths);
       const subsidisedUnits = Math.min(freeUnits, netUnits);
       const freeEnergy = calculateEnergySlabs(eff.energySlabs, subsidisedUnits, billingMonths)
         .reduce((s, r) => s + r.amount, 0);
       subsidyAmount = Math.min(freeEnergy, totalEnergy);
-      subsidyLabel  = subsidyScheme.label || 'Domestic subsidy (free units)';
+      subsidyLabel  = (tapered && subsidyScheme.reducedLabel) ||
+        subsidyScheme.label || 'Domestic subsidy (free units)';
     } else {
       // Delhi GNCTD rebate schedule (tier-specific bill labels regardless of the form label).
       if (netUnits <= 200) {
