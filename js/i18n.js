@@ -62,6 +62,7 @@ export const STRINGS = {
     'hero.trust': 'Built on publicly available tariff orders · Updated for FY 2025-26',
     // Calculator form
     'calc.title': 'Bill Calculator',
+    'legend.required': 'Marks a required field',
     'label.state': 'State / Union Territory',
     'label.discom': 'Electricity Utility (DISCOM)',
     'label.category': 'Consumer Category',

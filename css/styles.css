@@ -1109,6 +1109,27 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   outline: none;
 }
 
+/* Required-field marker. Rendered as a pseudo-element rather than a child span so it
+   survives the textContent rewrites in i18n and the meter-row label swaps. */
+.req::after {
+  content: "*";
+  margin-left: 3px;
+  color: var(--p-red-600, #dc2626);
+  font-weight: 700;
+}
+
+.req-legend {
+  margin: 0 0 14px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.req-legend::before {
+  content: "*";
+  margin-right: 4px;
+  color: var(--p-red-600, #dc2626);
+  font-weight: 700;
+}
+
 .btn-add-row {
   display: inline-flex; align-items: center; gap: 4px;
   padding: 5px 10px;
@@ -1238,6 +1259,9 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 
 /* ─── Bill verification (optional printed-bill comparison) ───────────────────── */
 .verify-group { margin-top: 4px; }
+/* Standalone form-group, so the global input[type=number] width:100% stretched it across
+   the whole panel. A rupee amount needs far less room than that. */
+.verify-group input { max-width: 190px; }
 .bill-verdict {
   border-radius: var(--radius-md); border: 1px solid;
   padding: 14px 16px; margin-bottom: 12px;

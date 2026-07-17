@@ -725,8 +725,8 @@ export function addMeterRow(label = '') {
       <div class="mf-field"><span>${prevDateLabel}</span>${dateFieldHtml('m-prevdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
       <div class="mf-field"><span>${currDateLabel}</span>${dateFieldHtml('m-currdate', 'DD-MM-YYYY', 'data-cap-bill')}</div>
       
-      <div class="mf-field"><span class="m-prevread-label">Prev Read</span><input type="number" class="m-prevread" placeholder="0" min="0" step="0.01"></div>
-      <div class="mf-field"><span class="m-currread-label">Curr Read</span><input type="number" class="m-currread" placeholder="0" min="0" step="0.01"></div>
+      <div class="mf-field"><span class="m-prevread-label req">Prev Read</span><input type="number" class="m-prevread" placeholder="0" min="0" step="0.01"></div>
+      <div class="mf-field"><span class="m-currread-label req">Curr Read</span><input type="number" class="m-currread" placeholder="0" min="0" step="0.01"></div>
       
       <div class="mf-field"><span>MF</span><input type="number" class="m-mf" value="1" min="0.01" step="0.01" title="Multiplying Factor"></div>
       <div class="mf-field"><span class="m-md-label">MD (kW)</span><input type="number" class="m-md" placeholder="0" min="0" step="0.01" title="Maximum demand recorded"></div>
@@ -756,6 +756,10 @@ export function addMeterRow(label = '') {
       unitsInput.readOnly = true;
       unitsLabel.textContent = _t('Total Units (Calculated)', 'कुल यूनिट (गणना)');
     }
+    // The required field swaps with the mode: readings when calculated, Units when overridden.
+    row.querySelector('.m-prevread-label').classList.toggle('req', !chk.checked);
+    row.querySelector('.m-currread-label').classList.toggle('req', !chk.checked);
+    unitsLabel.classList.toggle('req', chk.checked);
     updateAdvancedMeter();
   });
 

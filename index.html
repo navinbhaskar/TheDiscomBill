@@ -380,19 +380,21 @@
         <div class="ocr-result" id="ocrResult" hidden></div>
       </div>
 
+      <p class="req-legend" data-i18n="legend.required">Marks a required field</p>
+
       <div class="form-row">
         <!-- Step 1: State -->
         <div class="form-group">
-          <label for="stateSelect" data-i18n="label.state">State / Union Territory</label>
-          <select id="stateSelect">
+          <label for="stateSelect" class="req" data-i18n="label.state">State / Union Territory</label>
+          <select id="stateSelect" aria-required="true">
             <option value="" data-i18n="opt.selectState">— Select State / UT —</option>
           </select>
         </div>
 
         <!-- Step 2: DISCOM -->
         <div class="form-group">
-          <label for="discomSelect" data-i18n="label.discom">Electricity Utility (DISCOM)</label>
-          <select id="discomSelect" disabled>
+          <label for="discomSelect" class="req" data-i18n="label.discom">Electricity Utility (DISCOM)</label>
+          <select id="discomSelect" disabled aria-required="true">
             <option value="" data-i18n="opt.selectStateFirst">— Select State First —</option>
           </select>
         </div>
@@ -401,16 +403,16 @@
       <div class="form-row">
         <!-- Step 3: Category -->
         <div class="form-group">
-          <label for="categorySelect" data-i18n="label.category">Consumer Category</label>
-          <select id="categorySelect" disabled>
+          <label for="categorySelect" class="req" data-i18n="label.category">Consumer Category</label>
+          <select id="categorySelect" disabled aria-required="true">
             <option value="" data-i18n="opt.selectDiscomFirst">— Select DISCOM First —</option>
           </select>
         </div>
 
         <!-- Step 4: Supply Type (shown only when applicable) -->
         <div class="form-group" id="supplyTypeGroup" style="display:none">
-          <label for="supplyTypeSelect" data-i18n="label.supplyType">Supply Type / Area</label>
-          <select id="supplyTypeSelect">
+          <label for="supplyTypeSelect" class="req" data-i18n="label.supplyType">Supply Type / Area</label>
+          <select id="supplyTypeSelect" aria-required="true">
             <option value="">— Select Supply Type —</option>
           </select>
           <small id="supplyTypeDesc"></small>
@@ -566,7 +568,7 @@
 
           <div class="form-row form-row-uneven">
             <div class="form-group">
-              <label for="connectedLoad"><span class="lbl-text" data-i18n="label.sanctioned">Sanctioned Load (kW)</span><span class="gloss" tabindex="0" role="img" aria-label="Sanctioned / contract demand: the load you have contracted with the utility; fixed / demand charges and the excess-demand check are based on it." data-tip="Sanctioned Load / Contract Demand: the load you've contracted with the utility. Fixed / demand charges and the excess-demand check are based on it.">ⓘ</span></label>
+              <label for="connectedLoad"><span class="lbl-text req" data-i18n="label.sanctioned">Sanctioned Load (kW)</span><span class="gloss" tabindex="0" role="img" aria-label="Sanctioned / contract demand: the load you have contracted with the utility; fixed / demand charges and the excess-demand check are based on it." data-tip="Sanctioned Load / Contract Demand: the load you've contracted with the utility. Fixed / demand charges and the excess-demand check are based on it.">ⓘ</span></label>
               <input type="number" id="connectedLoad" placeholder="e.g., 2" min="0.1" step="0.1" value="1">
               <small data-i18n="small.sanctioned">Contracted / sanctioned load. Used for fixed charge and excess demand check.</small>
             </div>

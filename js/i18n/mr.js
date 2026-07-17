@@ -56,6 +56,7 @@ export default {
     'hero.trust': 'सार्वजनिक टॅरिफ आदेशांवर आधारित · आर्थिक वर्ष 2025-26 साठी अद्ययावत',
     // Calculator form
     'calc.title': 'बिल कॅल्क्युलेटर',
+    'legend.required': 'आवश्यक फील्ड दर्शवते',
     'label.state': 'राज्य / केंद्रशासित प्रदेश',
     'label.discom': 'वीज कंपनी (डिस्कॉम)',
     'label.category': 'ग्राहक श्रेणी',

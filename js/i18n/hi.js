@@ -56,6 +56,7 @@ export default {
     'hero.trust': 'सार्वजनिक टैरिफ आदेशों पर आधारित · वित्त वर्ष 2025-26 हेतु अद्यतन',
     // Calculator form
     'calc.title': 'बिल कैलकुलेटर',
+    'legend.required': 'आवश्यक फ़ील्ड दर्शाता है',
     'label.state': 'राज्य / केंद्र शासित प्रदेश',
     'label.discom': 'बिजली कंपनी (डिस्कॉम)',
     'label.category': 'उपभोक्ता श्रेणी',

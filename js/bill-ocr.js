@@ -732,8 +732,10 @@ function initBillOcr() {
 
   // ── Review screen: user confirms / completes values BEFORE they hit the form ──
   const REVIEW_FIELDS = [
-    ['units', 'Units consumed', 'number'],
-    ['sanctionedLoad', 'Sanctioned load (kW)', 'number'],
+    // 4th element flags the fields Apply blocks on (see validate() below). Units is
+    // satisfied either directly or by both readings, so its label carries the alternative.
+    ['units', 'Units consumed (or both readings below)', 'number', true],
+    ['sanctionedLoad', 'Sanctioned load (kW)', 'number', true],
     ['prevRead', 'Previous reading', 'number'],
     ['currRead', 'Current reading', 'number'],
     ['fromDate', 'From date (DD-MM-YYYY)', 'text'],
@@ -756,11 +758,11 @@ function initBillOcr() {
       ? '<p class="ocr-fail">This upload was too unclear to read — take a sharper, well-lit photo straight-on (or a screenshot of the PDF) and try again. You can also type the values below yourself.</p>'
       : '';
 
-    const rows = REVIEW_FIELDS.map(([key, label, type]) => {
+    const rows = REVIEW_FIELDS.map(([key, label, type, required]) => {
       let v = fields[key];
       if (v && typeof v === 'object') v = v.display; // dates
-      return `<label class="ocr-rev-row"><span>${label}</span>` +
-        `<input data-ocr-k="${key}" type="${type}" step="any" value="${v != null ? esc(v) : ''}" placeholder="${v != null ? '' : 'not read — fill if known'}"></label>`;
+      return `<label class="ocr-rev-row"><span${required ? ' class="req"' : ''}>${label}</span>` +
+        `<input data-ocr-k="${key}" type="${type}" step="any"${required ? ' aria-required="true"' : ''} value="${v != null ? esc(v) : ''}" placeholder="${v != null ? '' : 'not read — fill if known'}"></label>`;
     }).join('');
 
     const extras = [];
@@ -773,6 +775,7 @@ function initBillOcr() {
       unclearNote +
       `<p class="ocr-ok">Check what was read from your bill${foundCount ? ` (${foundCount} value${foundCount > 1 ? 's' : ''} found)` : ''} — correct or fill anything before applying:</p>` +
       (extras.length ? `<p class="ocr-note-cat">${extras.join(' · ')}</p>` : '') +
+      '<p class="req-legend">Marks a required field</p>' +
       `<div class="ocr-rev-grid">${rows}</div>` +
       '<p class="ocr-rev-missing" id="ocrRevMissing"></p>' +
       '<div class="ocr-rev-actions">' +
