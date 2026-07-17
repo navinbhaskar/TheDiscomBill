@@ -29,7 +29,7 @@ export const STRINGS = {
     'ql.billReviewGroup': 'Get Your Bill Reviewed',
     'ql.ocrCheck': 'Instant Self-Check (OCR)',
     'ql.billReview': 'From an Expert',
-    'ql.guides': 'Electricity Bill Guides',
+    'ql.guides': 'Articles & Guides',
     'ql.glossary': 'Electricity Bill Glossary',
     'ql.methodology': 'Methodology & Accuracy',
     // Shared footer links (generated pages + key pages)

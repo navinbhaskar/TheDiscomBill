@@ -23,7 +23,7 @@ export default {
     'ql.billReviewGroup': 'अपने बिल की जाँच कराएँ',
     'ql.ocrCheck': 'तुरंत स्व-जाँच (OCR)',
     'ql.billReview': 'विशेषज्ञ से',
-    'ql.guides': 'बिजली बिल गाइड',
+    'ql.guides': 'लेख और गाइड',
     'ql.glossary': 'बिजली बिल शब्दावली',
     'ql.methodology': 'कार्यप्रणाली व सटीकता',
     // Shared footer links (generated pages + key pages)

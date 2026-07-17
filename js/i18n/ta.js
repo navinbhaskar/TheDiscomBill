@@ -23,7 +23,7 @@ export default {
     'ql.billReviewGroup': 'உங்கள் பில்லை ஆய்வு செய்யுங்கள்',
     'ql.ocrCheck': 'உடனடி சுய சரிபார்ப்பு (OCR)',
     'ql.billReview': 'நிபுணரிடமிருந்து',
-    'ql.guides': 'மின் கட்டண வழிகாட்டிகள்',
+    'ql.guides': 'கட்டுரைகள் & வழிகாட்டிகள்',
     'ql.glossary': 'மின் கட்டணச் சொற்களஞ்சியம்',
     'ql.methodology': 'முறையியல் & துல்லியம்',
     // Shared footer links (generated pages + key pages)

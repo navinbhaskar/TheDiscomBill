@@ -3423,32 +3423,58 @@ footer a:hover { color: #fff; text-decoration: none; }
   position: fixed; inset: 0; z-index: 1000;
   display: flex; align-items: center; justify-content: center;
   padding: 24px;
-  background: rgba(11, 18, 32, .55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  /* Faint blue cast over the dimmed page — the dialog's glow bleeding outward */
+  background:
+    radial-gradient(90% 70% at 50% 0%, rgba(37,99,235,.14), transparent 60%),
+    rgba(11, 18, 32, .58);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
   animation: authOverlayIn var(--t-base) both;
 }
 .auth-modal {
   position: relative;
-  width: 100%; max-width: 420px;
-  max-height: min(640px, calc(100vh - 48px));
+  width: 100%; max-width: 396px;
+  max-height: min(660px, calc(100vh - 48px));
   overflow-y: auto;
-  background: var(--surface-card);
+  /* Aurora crown: a soft brand glow falling from the top edge of the card
+     (painted as background, not a pseudo-element, so it survives inner scroll) */
+  background:
+    radial-gradient(120% 110px at 50% 0%, var(--brand-faint), transparent),
+    var(--surface-card);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-xl);
-  padding: 24px 26px 22px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl), 0 0 0 1px rgba(37,99,235,.05);
+  padding: 20px 22px 16px;
   animation: authModalIn var(--t-slow) cubic-bezier(.2, .9, .3, 1.1) both;
 }
-.auth-modal-title {
-  font-family: var(--font-display);
-  font-size: 19px; font-weight: 600; letter-spacing: -0.4px;
-  color: var(--text-primary);
-  margin: 0 32px 16px 0;                     /* keep clear of the close button */
+/* Live-wire strip: current entering the card — same amber-in-blue spark
+   language as the calculator's Calculate button */
+.auth-modal::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg,
+    var(--p-blue-700) 0%, var(--p-blue-500) 32%,
+    var(--amber) 50%, var(--p-blue-500) 68%, var(--p-blue-700) 100%);
 }
+.auth-modal-title {
+  display: flex; align-items: center; gap: 9px;
+  font-family: var(--font-brand);
+  font-size: 17px; font-weight: 700; letter-spacing: -0.3px;
+  color: var(--text-primary);
+  margin: 0 32px 14px 0;                     /* keep clear of the close button */
+}
+.auth-modal-spark {
+  flex: none; width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--p-blue-500), var(--p-blue-700));
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(37,99,235,.35), inset 0 1px 0 rgba(255,255,255,.25);
+}
+.auth-modal-spark svg { width: 15px; height: 15px; }
 .auth-modal-close {
-  position: absolute; top: 14px; right: 14px;
-  width: 32px; height: 32px;
+  position: absolute; top: 12px; right: 12px;
+  width: 30px; height: 30px;
   display: flex; align-items: center; justify-content: center;
   background: none; border: none; border-radius: var(--radius-full);
   color: var(--text-tertiary); cursor: pointer;
@@ -3459,20 +3485,96 @@ footer a:hover { color: #fff; text-decoration: none; }
 .auth-modal-close svg { width: 16px; height: 16px; }
 /* The shared auth card renders inside the dialog — strip its own chrome */
 .auth-modal .br-card.br-auth { border: none; box-shadow: none; padding: 0; max-width: none; background: none; }
-/* Compact vertical rhythm so even the Create-account tab (name + email + password
-   + hint) fits without an inner scrollbar on ordinary laptop viewports. */
-.auth-modal .br-tabs { margin-bottom: 12px; }
-.auth-modal .br-tab { padding: 6px 10px; }
-.auth-modal .br-social { padding: 8px 12px; }
-.auth-modal .br-or { margin: 11px 0; }
-.auth-modal .br-auth-form { gap: 9px; }
-.auth-modal .svc-control { gap: 3px; }
-.auth-modal .svc-control input { padding: 8px 12px; }
-.auth-modal .btn-primary { height: 38px; }
+/* Tabs become a segmented pill control (the shared underline tabs stay as-is
+   on /bill-review/ and /login/) */
+.auth-modal .br-tabs {
+  flex-wrap: nowrap; gap: 3px;
+  margin-bottom: 12px; padding: 3px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+}
+.auth-modal .br-tab {
+  flex: 1; padding: 6px 10px;
+  border: none; border-radius: var(--radius-full);
+  font-size: 13px;
+  color: var(--text-secondary);
+  transition: color var(--t-fast), background var(--t-fast), box-shadow var(--t-fast);
+}
+.auth-modal .br-tab:hover { color: var(--text-primary); }
+.auth-modal .br-tab.active {
+  background: var(--surface-card);
+  color: var(--text-brand);
+  box-shadow: var(--shadow-sm);
+}
+.auth-modal .br-tabs .br-back { flex: none; height: auto; margin-left: auto; border: none; background: none; }
+.auth-modal .br-tabs .br-back:hover { color: var(--text-primary); }
+/* Google button — quiet, but tactile */
+.auth-modal .br-social {
+  padding: 8px 12px; font-size: 13.5px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-xs);
+  transition: background var(--t-fast), border-color var(--t-fast),
+              transform var(--t-fast), box-shadow var(--t-fast);
+}
+.auth-modal .br-social:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.auth-modal .br-or { margin: 9px 0; }
+.auth-modal .br-auth-form { gap: 8px; }
+/* Fields: sunken at rest, lift to the card surface + brand glow on focus.
+   Light (300) type in the fields — the visitor's own words stay airy against
+   the bold chrome around them. */
+.auth-modal .svc-control { gap: 4px; }
+.auth-modal .svc-control label { transition: color var(--t-fast); }
+.auth-modal .svc-control:focus-within label { color: var(--text-brand); }
+.auth-modal .svc-control input {
+  padding: 8px 12px; font-size: 14px;
+  font-weight: 300; letter-spacing: .1px;
+  border-radius: var(--radius);
+  background: var(--surface-sunken);
+  border-color: var(--border-subtle);
+  transition: background var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.auth-modal .svc-control input:hover:not(:focus) { border-color: var(--border-strong); }
+.auth-modal .svc-control input:focus {
+  background: var(--surface-card);
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+.auth-modal .svc-control input::placeholder { color: var(--text-tertiary); font-weight: 300; }
+.auth-modal .br-phone-wrap { background: var(--surface-sunken); border-color: var(--border-subtle); border-radius: var(--radius); }
+.auth-modal .br-phone-wrap:focus-within {
+  background: var(--surface-card);
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+.auth-modal .svc-control .br-phone-wrap input { background: transparent; }
+/* Submit inherits the Calculate button's energy: blue gradient + spark sheen */
+.auth-modal .br-auth-submit {
+  position: relative; overflow: hidden;
+  height: 38px; border-radius: var(--radius);
+  font-weight: 700; letter-spacing: .2px;
+  background: linear-gradient(180deg, var(--p-blue-500) 0%, var(--p-blue-600) 55%, var(--p-blue-700) 100%);
+  box-shadow: 0 2px 8px rgba(37,99,235,.35), inset 0 1px 0 rgba(255,255,255,.2);
+}
+.auth-modal .br-auth-submit::before {
+  content: '';
+  position: absolute; top: 0; bottom: 0; left: -75%; width: 50%;
+  background: linear-gradient(105deg,
+    transparent 0%, rgba(255,255,255,.16) 35%,
+    rgba(251,191,36,.30) 50%, rgba(255,255,255,.16) 65%, transparent 100%);
+  transform: skewX(-18deg);
+  pointer-events: none;
+}
+.auth-modal .br-auth-submit:hover:not(:disabled) {
+  background: linear-gradient(180deg, var(--p-blue-500) 0%, var(--p-blue-600) 45%, var(--p-blue-700) 100%);
+  filter: brightness(1.05) saturate(1.05);
+  box-shadow: 0 4px 14px rgba(37,99,235,.42), inset 0 1px 0 rgba(255,255,255,.2);
+}
+.auth-modal .br-auth-submit:hover:not(:disabled)::before { animation: sparkSweep .65s ease; }
 .auth-modal .br-auth-msg { min-height: 0; }
 .auth-modal .br-auth-msg:empty { display: none; }
 .auth-modal .br-auth-hint { line-height: 1.45; }
-.auth-modal .br-auth-alt { margin-top: 8px; padding: 6px; }
+.auth-modal .br-auth-alt { margin-top: 6px; padding: 4px; }
 @keyframes authOverlayIn { from { opacity: 0; } }
 @keyframes authModalIn   { from { opacity: 0; transform: translateY(14px) scale(.97); } }
 /* Small screens: bottom sheet instead of a floating card */
@@ -3482,13 +3584,16 @@ footer a:hover { color: #fff; text-decoration: none; }
     max-width: none; max-height: 86vh;
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
     border-bottom: none;
-    padding: 22px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+    padding: 23px 20px calc(20px + env(safe-area-inset-bottom, 0px));
     animation-name: authSheetIn;
   }
+  /* 16px keeps iOS Safari from zooming the page when a field is focused */
+  .auth-modal .svc-control input { font-size: 16px; }
   @keyframes authSheetIn { from { opacity: 0; transform: translateY(40px); } }
 }
 @media (prefers-reduced-motion: reduce) {
   .auth-modal-overlay, .auth-modal { animation: none; }
+  .auth-modal .br-auth-submit:hover:not(:disabled)::before { animation: none; }
 }
 
 /* Auth card */

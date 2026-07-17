@@ -62,7 +62,12 @@ async function openAuthModal(triggerEl, opts = {}) {
       <button type="button" class="auth-modal-close" aria-label="Close sign-in dialog">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
       </button>
-      <h2 class="auth-modal-title" id="authModalTitle">Sign in to TheDiscomBill</h2>
+      <h2 class="auth-modal-title" id="authModalTitle">
+        <span class="auth-modal-spark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4.6 13.4h5.9L9.4 22 18 10.6h-5.9L13 2z"/></svg>
+        </span>
+        Sign in to TheDiscomBill
+      </h2>
       <div class="auth-modal-body"><p class="tx-muted">Loading…</p></div>
     </div>`;
   document.body.appendChild(overlay);

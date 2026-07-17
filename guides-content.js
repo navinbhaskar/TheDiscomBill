@@ -4678,4 +4678,706 @@ export const GUIDES = [
         a: 'मोटरसारखे प्रेरक भार ग्रिडमधून रिअॅक्टिव्ह करंट ओढतात. कॅपॅसिटर तो रिअॅक्टिव्ह करंट स्थानिक पातळीवर पुरवतात, म्हणून ग्रिड फक्त उपयुक्त घटक वाहतो — PF एककाकडे नेत, kVAh युनिटे व kVA मागणी कमी करत. APFC पॅनेल भार बदलताच कॅपॅसिटर टप्पे आपोआप स्विच करतात.' },
     ],
   },
+  {
+    slug: 'uppcl-new-connection-jhatpat',
+    states: ['Uttar Pradesh'],
+    title: 'How to Get a New UPPCL Electricity Connection (Jhatpat Portal)',
+    metaTitle: 'UPPCL New Connection Online — Jhatpat Portal: Documents, Fees, Timeline',
+    description: 'Step-by-step guide to a new UPPCL electricity connection through the Jhatpat portal: who can apply online, the exact document checklist, registration fee, estimate and security deposit, statutory timelines under the Rights of Consumers Rules, and what to do when the application stalls.',
+    minutes: 8,
+    intro: `A new domestic electricity connection in Uttar Pradesh no longer needs a trip to the
+      sub-division office. UPPCL's <strong>Jhatpat portal</strong>
+      (<a href="https://jhatpatportal.uppcl.org/" rel="nofollow noopener" target="_blank">jhatpatportal.uppcl.org</a>)
+      takes the application, documents, fees and even the cost estimate online for domestic (LMV-1)
+      and commercial (LMV-2) connections. This guide walks through the whole flow — what to keep
+      ready, what it costs, how long UPPCL is legally allowed to take, and how to push back when
+      nothing happens.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. What the Jhatpat portal is — and when to use it</h2>
+        <p><em>Jhatpat</em> ("instantly") is UPPCL's online new-connection scheme, launched in 2019
+        so that small consumers never have to chase a lineman or a babu for a form. It covers all five
+        UP DISCOMs — MVVNL, PVVNL, DVVNL, PuVVNL and KESCO — from a single portal.</p>
+        <ul>
+          <li><strong>Fully online flow:</strong> domestic <strong>LMV-1</strong> and commercial
+          <strong>LMV-2</strong> applications for small loads (the scheme was designed around
+          connections up to 25 kW). Registration, document upload, fee payment and estimate payment
+          all happen on the portal.</li>
+          <li><strong>Higher loads</strong> still apply through the same portal, but expect a site
+          inspection and a manually prepared estimate before sanction.</li>
+          <li><strong>Not for:</strong> reconnections, name changes, load changes on an existing
+          connection — those go through the UPPCL consumer portal
+          (<a href="https://uppclonline.com/" rel="nofollow noopener" target="_blank">uppclonline.com</a>),
+          not Jhatpat. If you want a <em>higher</em> load on an existing connection, read our
+          <a href="/guides/uppcl-sanctioned-load-increased/">sanctioned-load guide</a> instead.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. Documents — keep these scanned before you start</h2>
+        <p>The portal rejects nothing as often as a blurry ownership proof. One passport-size photo
+        and two documents do most of the work:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Requirement</th><th>Accepted documents</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Identity proof</strong></td><td>Aadhaar (used for OTP verification on the portal), voter ID, passport, driving licence or PAN.</td></tr>
+            <tr><td><strong>Address / premises proof</strong></td><td>Registry or sale deed, house-tax receipt, or rent agreement for tenants. The connection is issued for the <em>premises</em>, so this decides whose name goes on the bill.</td></tr>
+            <tr><td><strong>Photograph</strong></td><td>One passport-size photo of the applicant (JPEG upload).</td></tr>
+            <tr><td><strong>BPL card</strong></td><td>Only if applying under the BPL category — it changes the registration fee and the default 1 kW load.</td></tr>
+          </tbody>
+        </table></div>
+        <p><strong>Tenants can apply.</strong> Supply is a statutory right of the occupier under
+        Section 43 of the Electricity Act, 2003 — a rent agreement plus an indemnity/no-objection
+        undertaking is the usual paper trail when the landlord will not sign.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. The application, step by step</h2>
+        <ol>
+          <li><strong>Register</strong> on
+          <a href="https://jhatpatportal.uppcl.org/" rel="nofollow noopener" target="_blank">jhatpatportal.uppcl.org</a>
+          with your mobile number (OTP-verified) and choose urban or rural supply.</li>
+          <li><strong>Fill the application:</strong> district → DISCOM → sub-division are picked
+          from dropdowns, then category (LMV-1 domestic / LMV-2 commercial) and the load you want.
+          Ask for the load you realistically need — fixed charges are billed per sanctioned kW every
+          month, so an oversized connection costs you forever. Our
+          <a href="/guides/reduce-fixed-charges-sanctioned-load/">fixed-charges guide</a> shows how
+          to size it.</li>
+          <li><strong>Upload documents</strong> and pay the <strong>registration fee</strong> online —
+          ₹10 for BPL applicants, ₹100 for others (verify the amount shown at the payment step;
+          it is set by the Cost Data Book in force).</li>
+          <li><strong>Estimate generation.</strong> For small loads near an existing line the portal
+          generates the estimate automatically from UPPCL's Cost Data Book; larger or far-from-line
+          premises get a junior engineer's site visit first. The estimate bundles line charges,
+          meter cost and <strong>security deposit</strong> (a per-kW amount that stays with UPPCL
+          against your future bills).</li>
+          <li><strong>Pay the estimate online.</strong> This is the point the clock starts for
+          meter installation.</li>
+          <li><strong>Meter installation and energisation.</strong> The meter serial number and your
+          new 10/12-digit account number arrive by SMS. First bill follows in the next billing cycle.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. What it costs — the three separate amounts</h2>
+        <p>People quote wildly different "connection cost" figures because three different amounts
+        get mixed up. Keep them separate:</p>
+        <ol>
+          <li><strong>Registration fee</strong> — the small application charge (₹10 BPL / ₹100
+          others) paid when you submit.</li>
+          <li><strong>Estimate / line charges</strong> — the real cost, set by load, phase and the
+          distance from the nearest pole, per the Cost Data Book. A 1–2 kW domestic connection next
+          to an existing line typically lands in the low thousands of rupees; extra poles or cable
+          raise it.</li>
+          <li><strong>Security deposit</strong> — refundable-with-interest per-kW deposit collected
+          inside the estimate. It appears back on your side only at permanent disconnection, adjusted
+          against dues.</li>
+        </ol>
+        <p>We deliberately don't print rupee tables here — the Cost Data Book is revised, and a
+        stale number is worse than none. The portal shows your exact estimate before you pay
+        anything beyond the registration fee.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. How long UPPCL can legally take</h2>
+        <p>Two clocks apply, and the stricter one wins:</p>
+        <ul>
+          <li>The central <strong>Electricity (Rights of Consumers) Rules, 2020</strong> cap new
+          connections at <strong>7 days in metropolitan areas, 15 days in other municipal areas and
+          30 days in rural areas</strong> after a complete application.</li>
+          <li>The Jhatpat scheme's own service promise for small loads is a working connection
+          within about <strong>10 days</strong> of estimate payment.</li>
+        </ul>
+        <p>Miss the deadline and the UP supply code entitles you to compensation — but in practice
+        the useful lever is the complaint chain in the next section.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. Application stuck? The escalation ladder</h2>
+        <ol>
+          <li><strong>Track first:</strong> the Jhatpat portal login shows the application stage
+          (document verification → estimate → payment → installation), so you know <em>where</em>
+          it is stuck.</li>
+          <li><strong>1912</strong> — UPPCL's 24×7 helpline; quote the application number and ask
+          for a complaint number.</li>
+          <li><strong>The sub-division JE/SDO</strong> named on the portal for your area — most
+          stalls are a pending site visit that one phone call unsticks.</li>
+          <li><strong>CGRF</strong> (Consumer Grievance Redressal Forum) of your DISCOM, then the
+          <strong>Electricity Ombudsman</strong>, both free — the statutory route when the deadline
+          in section 5 has lapsed.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>7. After the meter arrives — check your first bill</h2>
+        <p>New connections are where category and load errors are born. On the first bill, verify
+        the tariff category (LMV-1 for a home), the sanctioned load you applied for, and the meter
+        number. Then put your units into our
+        <a href="/?state=Uttar%20Pradesh#calculator">UPPCL bill calculator</a> — it implements the
+        current slab, fixed-charge, FPPA and duty logic, verified against real UPPCL bills — and
+        compare. Our <a href="/guides/how-to-read-uppcl-bill/">UPPCL bill-reading guide</a> decodes
+        every line, and <a href="/bill-review/">Bill Review</a> can check a suspicious first bill
+        for free.</p>
+      </section>`,
+    faqs: [
+      { q: 'What is the Jhatpat connection scheme of UPPCL?',
+        a: 'Jhatpat is UPPCL’s online new-connection scheme (jhatpatportal.uppcl.org) covering all five UP DISCOMs. Domestic LMV-1 and commercial LMV-2 applicants register, upload documents, pay the registration fee and the system-generated estimate online, with small loads promised a working connection in about 10 days.' },
+      { q: 'What documents are required for a new UPPCL connection?',
+        a: 'Identity proof (Aadhaar is used for portal OTP verification), premises proof (registry, house-tax receipt or rent agreement for tenants), one passport-size photograph, and the BPL card if applying under the BPL category.' },
+      { q: 'What is the UPPCL new connection registration fee?',
+        a: 'The registration fee is nominal — ₹10 for BPL applicants and ₹100 for others. The real cost is the estimate (line charges, meter and security deposit) generated from UPPCL’s Cost Data Book after the application, which the portal shows before you pay.' },
+      { q: 'How many days does a new UPPCL connection take?',
+        a: 'Under the Electricity (Rights of Consumers) Rules, 2020, a complete application must be energised within 7 days in metropolitan areas, 15 days in other municipal areas and 30 days in rural areas. The Jhatpat scheme itself promises roughly 10 days for small loads after estimate payment.' },
+      { q: 'Can a tenant get an electricity connection in UP without the landlord?',
+        a: 'Yes. Section 43 of the Electricity Act, 2003 gives the occupier of a premises the right to supply. A rent agreement plus an indemnity/no-objection undertaking is the usual documentation when the owner will not sign the application.' },
+    ],
+
+    titleHi: 'UPPCL में नया बिजली कनेक्शन कैसे लें — Jhatpat पोर्टल गाइड',
+    metaTitleHi: 'UPPCL नया कनेक्शन ऑनलाइन — Jhatpat पोर्टल: दस्तावेज़, फीस, समयसीमा',
+    descriptionHi: 'Jhatpat पोर्टल से UPPCL का नया बिजली कनेक्शन लेने की स्टेप-बाय-स्टेप गाइड: ऑनलाइन आवेदन कौन कर सकता है, दस्तावेज़ों की पूरी सूची, रजिस्ट्रेशन फीस, एस्टीमेट और सिक्योरिटी डिपॉज़िट, उपभोक्ता अधिकार नियमों के तहत कानूनी समयसीमा, और आवेदन अटकने पर क्या करें।',
+    introHi: `उत्तर प्रदेश में नए घरेलू बिजली कनेक्शन के लिए अब उपखंड कार्यालय के चक्कर लगाने की ज़रूरत
+      नहीं है। UPPCL का <strong>Jhatpat पोर्टल</strong>
+      (<a href="https://jhatpatportal.uppcl.org/" rel="nofollow noopener" target="_blank">jhatpatportal.uppcl.org</a>)
+      घरेलू (LMV-1) और वाणिज्यिक (LMV-2) कनेक्शनों के लिए आवेदन, दस्तावेज़, फीस और लागत का एस्टीमेट —
+      सब कुछ ऑनलाइन कर देता है। यह गाइड पूरी प्रक्रिया समझाती है — क्या तैयार रखें, कितना खर्च आएगा,
+      UPPCL को कानूनन कितने दिन मिलते हैं, और कुछ न हो तो दबाव कैसे बनाएँ।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>1. Jhatpat पोर्टल क्या है — और कब इस्तेमाल करें</h2>
+        <p><em>झटपट</em> UPPCL की ऑनलाइन नई-कनेक्शन योजना है, जो 2019 में शुरू हुई ताकि छोटे उपभोक्ताओं
+        को फॉर्म के लिए किसी लाइनमैन या बाबू के पीछे न भागना पड़े। यह एक ही पोर्टल से यूपी की पाँचों
+        DISCOM — MVVNL, PVVNL, DVVNL, PuVVNL और KESCO — को कवर करती है।</p>
+        <ul>
+          <li><strong>पूरी तरह ऑनलाइन:</strong> घरेलू <strong>LMV-1</strong> और वाणिज्यिक
+          <strong>LMV-2</strong> के छोटे भार के आवेदन (योजना 25 kW तक के कनेक्शनों के लिए बनाई गई थी)।
+          रजिस्ट्रेशन, दस्तावेज़ अपलोड, फीस और एस्टीमेट भुगतान — सब पोर्टल पर।</li>
+          <li><strong>बड़े भार</strong> भी इसी पोर्टल से आवेदन करते हैं, पर मंज़ूरी से पहले साइट निरीक्षण
+          और मैन्युअल एस्टीमेट की उम्मीद रखें।</li>
+          <li><strong>इनके लिए नहीं:</strong> रीकनेक्शन, नाम परिवर्तन, मौजूदा कनेक्शन का लोड बदलना —
+          ये UPPCL उपभोक्ता पोर्टल
+          (<a href="https://uppclonline.com/" rel="nofollow noopener" target="_blank">uppclonline.com</a>)
+          से होते हैं, Jhatpat से नहीं। मौजूदा कनेक्शन का भार <em>बढ़ाना</em> हो तो हमारी
+          <a href="/hi/guides/uppcl-sanctioned-load-increased/">स्वीकृत भार गाइड</a> पढ़ें।</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. दस्तावेज़ — शुरू करने से पहले ये स्कैन कर रखें</h2>
+        <p>पोर्टल पर सबसे ज़्यादा आवेदन धुंधले स्वामित्व प्रमाण की वजह से अटकते हैं। एक पासपोर्ट-साइज़
+        फोटो और दो दस्तावेज़ों से ज़्यादातर काम हो जाता है:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>ज़रूरत</th><th>मान्य दस्तावेज़</th></tr></thead>
+          <tbody>
+            <tr><td><strong>पहचान प्रमाण</strong></td><td>आधार (पोर्टल पर OTP सत्यापन के लिए), वोटर ID, पासपोर्ट, ड्राइविंग लाइसेंस या PAN।</td></tr>
+            <tr><td><strong>पता / परिसर प्रमाण</strong></td><td>रजिस्ट्री या सेल डीड, हाउस-टैक्स रसीद, किरायेदारों के लिए रेंट एग्रीमेंट। कनेक्शन <em>परिसर</em> के लिए जारी होता है, इसी से तय होता है कि बिल किसके नाम आएगा।</td></tr>
+            <tr><td><strong>फोटो</strong></td><td>आवेदक की एक पासपोर्ट-साइज़ फोटो (JPEG अपलोड)।</td></tr>
+            <tr><td><strong>BPL कार्ड</strong></td><td>केवल BPL श्रेणी में आवेदन करने पर — इससे रजिस्ट्रेशन फीस और डिफ़ॉल्ट 1 kW भार बदलता है।</td></tr>
+          </tbody>
+        </table></div>
+        <p><strong>किरायेदार भी आवेदन कर सकते हैं।</strong> विद्युत अधिनियम, 2003 की धारा 43 के तहत
+        बिजली आपूर्ति परिसर में रहने वाले (occupier) का वैधानिक अधिकार है — मकान मालिक साइन न करे तो
+        रेंट एग्रीमेंट के साथ क्षतिपूर्ति/अनापत्ति शपथपत्र सामान्य तरीका है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. आवेदन, स्टेप-बाय-स्टेप</h2>
+        <ol>
+          <li><strong>रजिस्टर करें:</strong>
+          <a href="https://jhatpatportal.uppcl.org/" rel="nofollow noopener" target="_blank">jhatpatportal.uppcl.org</a>
+          पर मोबाइल नंबर (OTP सत्यापित) से, और शहरी या ग्रामीण आपूर्ति चुनें।</li>
+          <li><strong>आवेदन भरें:</strong> ज़िला → DISCOM → उपखंड ड्रॉपडाउन से चुने जाते हैं, फिर श्रेणी
+          (LMV-1 घरेलू / LMV-2 वाणिज्यिक) और मनचाहा भार। उतना ही भार माँगें जितनी वाकई ज़रूरत है —
+          फिक्स्ड चार्ज हर महीने प्रति स्वीकृत kW लगता है, इसलिए ज़रूरत से बड़ा कनेक्शन हमेशा महँगा
+          पड़ता है। सही आकार चुनने के लिए हमारी
+          <a href="/hi/guides/reduce-fixed-charges-sanctioned-load/">फिक्स्ड चार्ज गाइड</a> देखें।</li>
+          <li><strong>दस्तावेज़ अपलोड करें</strong> और <strong>रजिस्ट्रेशन फीस</strong> ऑनलाइन भरें —
+          BPL आवेदकों के लिए ₹10, बाकी के लिए ₹100 (भुगतान स्टेप पर दिख रही राशि ही मान्य है; यह लागू
+          Cost Data Book से तय होती है)।</li>
+          <li><strong>एस्टीमेट बनना।</strong> मौजूदा लाइन के पास छोटे भार के लिए पोर्टल Cost Data Book
+          से अपने आप एस्टीमेट बना देता है; बड़े या लाइन से दूर परिसरों में पहले अवर अभियंता (JE) का
+          साइट विज़िट होता है। एस्टीमेट में लाइन शुल्क, मीटर लागत और <strong>सिक्योरिटी डिपॉज़िट</strong>
+          (प्रति-kW राशि जो आपके भविष्य के बिलों की ज़मानत के तौर पर UPPCL के पास रहती है) शामिल होते हैं।</li>
+          <li><strong>एस्टीमेट ऑनलाइन भरें।</strong> मीटर लगाने की घड़ी यहीं से शुरू होती है।</li>
+          <li><strong>मीटर लगना और सप्लाई चालू होना।</strong> मीटर सीरियल नंबर और आपका नया 10/12 अंकों
+          का खाता नंबर SMS से मिलता है। पहला बिल अगले बिलिंग चक्र में आता है।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. खर्च कितना — तीन अलग-अलग राशियाँ</h2>
+        <p>"कनेक्शन का खर्च" के आँकड़े इसलिए इतने अलग-अलग सुनाई देते हैं क्योंकि तीन अलग राशियाँ
+        आपस में मिला दी जाती हैं। इन्हें अलग रखें:</p>
+        <ol>
+          <li><strong>रजिस्ट्रेशन फीस</strong> — आवेदन जमा करते समय दी जाने वाली छोटी राशि
+          (BPL ₹10 / अन्य ₹100)।</li>
+          <li><strong>एस्टीमेट / लाइन शुल्क</strong> — असली लागत, जो भार, फेज़ और नज़दीकी पोल से दूरी
+          पर Cost Data Book के हिसाब से तय होती है। मौजूदा लाइन के पास 1–2 kW का घरेलू कनेक्शन आम तौर
+          पर कुछ हज़ार रुपये में हो जाता है; अतिरिक्त पोल या केबल से लागत बढ़ती है।</li>
+          <li><strong>सिक्योरिटी डिपॉज़िट</strong> — एस्टीमेट के भीतर वसूली जाने वाली प्रति-kW वापसी-योग्य
+          (ब्याज सहित) राशि। यह स्थायी विच्छेदन पर ही, बकाया समायोजित करके, वापस मिलती है।</li>
+        </ol>
+        <p>हम यहाँ जानबूझकर रुपये की तालिकाएँ नहीं छापते — Cost Data Book संशोधित होती रहती है, और
+        पुराना आँकड़ा न होने से बुरा है। रजिस्ट्रेशन फीस के अलावा कुछ भी भरने से पहले पोर्टल आपका सटीक
+        एस्टीमेट दिखा देता है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. UPPCL कानूनन कितने दिन ले सकता है</h2>
+        <p>दो घड़ियाँ चलती हैं, और सख़्त वाली जीतती है:</p>
+        <ul>
+          <li>केंद्रीय <strong>विद्युत (उपभोक्ता अधिकार) नियम, 2020</strong> के अनुसार पूर्ण आवेदन पर
+          कनेक्शन <strong>महानगरों में 7 दिन, अन्य नगरीय क्षेत्रों में 15 दिन और ग्रामीण क्षेत्रों में
+          30 दिन</strong> के भीतर देना अनिवार्य है।</li>
+          <li>छोटे भार के लिए Jhatpat योजना का अपना सेवा-वादा एस्टीमेट भुगतान के बाद लगभग
+          <strong>10 दिन</strong> में चालू कनेक्शन है।</li>
+        </ul>
+        <p>समयसीमा चूकने पर यूपी सप्लाई कोड मुआवज़े का हक़ देता है — पर व्यवहार में काम अगले सेक्शन
+        की शिकायत-सीढ़ी से बनता है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. आवेदन अटक गया? शिकायत की सीढ़ी</h2>
+        <ol>
+          <li><strong>पहले ट्रैक करें:</strong> Jhatpat पोर्टल लॉगिन आवेदन का चरण दिखाता है
+          (दस्तावेज़ सत्यापन → एस्टीमेट → भुगतान → इंस्टॉलेशन), जिससे पता चलता है कि वह <em>कहाँ</em>
+          अटका है।</li>
+          <li><strong>1912</strong> — UPPCL की 24×7 हेल्पलाइन; आवेदन नंबर बताकर शिकायत नंबर ज़रूर लें।</li>
+          <li><strong>उपखंड के JE/SDO</strong> — पोर्टल पर आपके क्षेत्र के लिए नामित; ज़्यादातर रुकावटें
+          लंबित साइट विज़िट की होती हैं जो एक फोन से खुल जाती हैं।</li>
+          <li><strong>CGRF</strong> (उपभोक्ता शिकायत निवारण मंच), फिर <strong>विद्युत लोकपाल</strong> —
+          दोनों निःशुल्क; सेक्शन 5 की समयसीमा बीत जाने पर यही वैधानिक रास्ता है।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>7. मीटर लग जाए तो — पहला बिल जाँचें</h2>
+        <p>श्रेणी और भार की गलतियाँ नए कनेक्शन पर ही जन्म लेती हैं। पहले बिल पर टैरिफ श्रेणी (घर के लिए
+        LMV-1), आवेदन वाला स्वीकृत भार और मीटर नंबर जाँचें। फिर अपनी यूनिटें हमारे
+        <a href="/?state=Uttar%20Pradesh#calculator">UPPCL बिल कैलकुलेटर</a> में डालें — यह मौजूदा
+        स्लैब, फिक्स्ड चार्ज, FPPA और ड्यूटी का वही गणित लगाता है और असली UPPCL बिलों से सत्यापित है —
+        और मिलान करें। हर लाइन समझने के लिए
+        <a href="/hi/guides/how-to-read-uppcl-bill/">UPPCL बिल पढ़ने की गाइड</a> देखें, और संदिग्ध पहले
+        बिल की <a href="/bill-review/">Bill Review</a> से निःशुल्क जाँच कराएँ।</p>
+      </section>`,
+    faqsHi: [
+      { q: 'UPPCL की Jhatpat कनेक्शन योजना क्या है?',
+        a: 'Jhatpat UPPCL की ऑनलाइन नई-कनेक्शन योजना है (jhatpatportal.uppcl.org), जो यूपी की पाँचों DISCOM को कवर करती है। घरेलू LMV-1 और वाणिज्यिक LMV-2 आवेदक रजिस्ट्रेशन, दस्तावेज़ अपलोड, फीस और सिस्टम से बने एस्टीमेट का भुगतान ऑनलाइन करते हैं; छोटे भार पर लगभग 10 दिन में चालू कनेक्शन का वादा है।' },
+      { q: 'UPPCL नए कनेक्शन के लिए कौन से दस्तावेज़ चाहिए?',
+        a: 'पहचान प्रमाण (पोर्टल OTP सत्यापन के लिए आधार), परिसर प्रमाण (रजिस्ट्री, हाउस-टैक्स रसीद या किरायेदारों के लिए रेंट एग्रीमेंट), एक पासपोर्ट-साइज़ फोटो, और BPL श्रेणी में आवेदन करने पर BPL कार्ड।' },
+      { q: 'UPPCL नए कनेक्शन की रजिस्ट्रेशन फीस कितनी है?',
+        a: 'रजिस्ट्रेशन फीस नाममात्र है — BPL आवेदकों के लिए ₹10 और अन्य के लिए ₹100। असली लागत एस्टीमेट है (लाइन शुल्क, मीटर और सिक्योरिटी डिपॉज़िट), जो आवेदन के बाद UPPCL की Cost Data Book से बनता है और भुगतान से पहले पोर्टल पर दिखता है।' },
+      { q: 'UPPCL का नया कनेक्शन कितने दिन में मिलता है?',
+        a: 'विद्युत (उपभोक्ता अधिकार) नियम, 2020 के तहत पूर्ण आवेदन पर कनेक्शन महानगरों में 7 दिन, अन्य नगरीय क्षेत्रों में 15 दिन और ग्रामीण क्षेत्रों में 30 दिन के भीतर देना अनिवार्य है। Jhatpat योजना खुद छोटे भार पर एस्टीमेट भुगतान के बाद लगभग 10 दिन का वादा करती है।' },
+      { q: 'क्या यूपी में किरायेदार मकान मालिक के बिना बिजली कनेक्शन ले सकता है?',
+        a: 'हाँ। विद्युत अधिनियम, 2003 की धारा 43 परिसर में रहने वाले (occupier) को आपूर्ति का अधिकार देती है। मालिक आवेदन पर साइन न करे तो रेंट एग्रीमेंट के साथ क्षतिपूर्ति/अनापत्ति शपथपत्र सामान्य दस्तावेज़ है।' },
+    ],
+  },
+  {
+    slug: 'msedcl-new-connection-online',
+    states: ['Maharashtra'],
+    title: 'How to Get a New MSEDCL (Mahavitaran) Electricity Connection Online',
+    metaTitle: 'MSEDCL New Connection Online — WSS Portal: Documents, Charges, Timeline',
+    description: 'Step-by-step guide to a new MSEDCL/Mahavitaran electricity connection through the WSS portal: the document checklist (including 7/12 extract for agricultural), application flow, firm quotation and security deposit, statutory timelines, and the escalation ladder when it stalls.',
+    minutes: 8,
+    intro: `Mahavitaran (MSEDCL) serves nearly all of Maharashtra outside Mumbai city, and a new
+      connection no longer needs the A-1 form queue at the section office. The
+      <strong>Web Self Service (WSS) portal</strong>
+      (<a href="https://wss.mahadiscom.in/wss/" rel="nofollow noopener" target="_blank">wss.mahadiscom.in</a>)
+      takes the application, document upload, payments and status tracking online for residential,
+      commercial, industrial and agricultural connections. This guide walks the whole flow — what
+      to scan first, the three payments involved, how long MSEDCL legally has, and whom to push
+      when nothing moves.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. Two ways to apply — portal or A-1 form</h2>
+        <ul>
+          <li><strong>Online (recommended):</strong> the WSS portal's
+          <em>New Connection Request</em> flow works without even creating an account first — you
+          get a <strong>Service Request ID</strong> on submission, which later tracks everything.
+          Payments and document upload are online end-to-end.</li>
+          <li><strong>Offline:</strong> the traditional <strong>A-1 application form</strong> at
+          your MSEDCL section office still works and follows the same fee schedule and timelines.
+          Use it only where the premises has no papers a portal upload can carry.</li>
+        </ul>
+        <p>Note the boundary: Mumbai city proper is served by BEST, Adani Electricity and Tata
+        Power — not MSEDCL. Check who serves your address on our
+        <a href="/tariffs/maharashtra/">Maharashtra tariff pages</a> before applying.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. Documents — scan these before you start</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Requirement</th><th>Accepted documents</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Identity proof</strong></td><td>Aadhaar, voter ID, passport, driving licence or PAN.</td></tr>
+            <tr><td><strong>Premises / ownership proof</strong></td><td>Sale deed or Index-II, property card, latest property-tax receipt — or a registered rent agreement plus the owner's NOC for tenants.</td></tr>
+            <tr><td><strong>Photograph</strong></td><td>One passport-size photo of the applicant.</td></tr>
+            <tr><td><strong>Agricultural connections</strong></td><td>The <strong>7/12 extract</strong> (satbara utara) of the land, plus caste/scheme certificates where a subsidised scheme applies.</td></tr>
+            <tr><td><strong>Nearest consumer number</strong></td><td>Not a document, but the WSS form asks for the consumer number of the <em>nearest existing MSEDCL connection</em> — a neighbour's bill locates your premises on the network instantly. Keep one handy.</td></tr>
+          </tbody>
+        </table></div>
+        <p><strong>Tenants can apply.</strong> Section 43 of the Electricity Act, 2003 makes supply
+        the occupier's right; a registered rent agreement with an indemnity undertaking is the
+        standard route when the owner won't co-sign.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. The WSS application, step by step</h2>
+        <ol>
+          <li><strong>Open the New Connection Request</strong> on
+          <a href="https://wss.mahadiscom.in/wss/" rel="nofollow noopener" target="_blank">wss.mahadiscom.in</a>
+          and pick your consumer category (residential / commercial / industrial / agricultural)
+          and supply type.</li>
+          <li><strong>Fill the application:</strong> applicant details, full address with landmark,
+          the nearest consumer number, and the <strong>requested load in kW</strong>. Ask for what
+          you actually need — fixed charges are billed on sanctioned load every month, and our
+          <a href="/guides/reduce-fixed-charges-sanctioned-load/">fixed-charges guide</a> shows how
+          to size it.</li>
+          <li><strong>Verify mobile by OTP, upload documents, pay the application fee</strong>
+          online. You receive the Service Request ID — save it.</li>
+          <li><strong>Site inspection.</strong> An MSEDCL engineer checks feasibility — whether the
+          existing line can serve you or an extension is needed.</li>
+          <li><strong>Firm quotation (demand note).</strong> MSEDCL issues the payable estimate:
+          service connection charges, security deposit and meter-related charges per the MERC
+          Schedule of Charges. Pay it online against the Service Request ID.</li>
+          <li><strong>Meter installation and energisation.</strong> Your 12-digit consumer number
+          arrives with the first bill in the next cycle.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. What it costs — three separate payments</h2>
+        <ol>
+          <li><strong>Application / processing fee</strong> — small, paid at submission, varies by
+          category and load.</li>
+          <li><strong>Firm quotation</strong> — the real cost: service connection charges set by
+          MERC's Schedule of Charges, higher where poles or cable must be added. Normal-charges
+          connections near an existing line are typically a few thousand rupees for a small
+          residential load.</li>
+          <li><strong>Security deposit</strong> — roughly sized to your expected billing (MERC's
+          supply code frames it around average consumption for the billing cycle), refundable with
+          interest at permanent disconnection.</li>
+        </ol>
+        <p>We deliberately don't print rupee tables — MERC revises the Schedule of Charges, and the
+        firm quotation the portal shows for <em>your</em> premises is the only number that matters.
+        Nothing beyond the application fee is payable before you see it.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. How long MSEDCL can legally take</h2>
+        <ul>
+          <li>The central <strong>Electricity (Rights of Consumers) Rules, 2020</strong> cap new
+          connections at <strong>7 days in metropolitan areas</strong> (Pune, Nagpur, and the
+          Mumbai-region municipal belt MSEDCL serves), <strong>15 days in other municipal areas
+          and 30 days in rural areas</strong> once the application is complete and paid.</li>
+          <li>Where a <strong>line extension</strong> is genuinely required, MERC's Standards of
+          Performance regulations allow longer, published timelines — but the clock and the
+          compensation for missing it are both defined there, not open-ended.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. Application stuck? The escalation ladder</h2>
+        <ol>
+          <li><strong>Track online:</strong> the WSS portal shows your Service Request status
+          (inspection → quotation → payment → installation), so you know where it sits.</li>
+          <li><strong>1912 / 1800-233-3435 / 1800-212-3435</strong> — Mahavitaran's 24×7 helplines;
+          quote the Service Request ID and take a complaint number.</li>
+          <li><strong>The section/sub-division office</strong> named on your quotation — pending
+          site visits and material availability are the usual stalls.</li>
+          <li><strong>IGRC → CGRF → Electricity Ombudsman</strong> — MSEDCL's Internal Grievance
+          Redressal Cell first, then the Consumer Grievance Redressal Forum, then the Ombudsman
+          (Mumbai/Nagpur benches). All free, and the Standards-of-Performance compensation applies
+          once statutory timelines lapse.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>7. After the meter — check your first bill</h2>
+        <p>New connections are where wrong categories and loads are born. On the first bill,
+        verify the tariff category (LT-1 residential for a home), the sanctioned load you applied
+        for, and the meter number. Then put your units into our
+        <a href="/?state=Maharashtra#calculator">MSEDCL bill calculator</a> — it implements the
+        current slab, wheeling, fixed-charge and FAC logic, verified against real Mahavitaran
+        bills — and compare. Our <a href="/guides/how-to-read-msedcl-bill/">MSEDCL bill-reading
+        guide</a> decodes every line, the
+        <a href="/guides/msedcl-fppa-charges-explained/">FAC/FPPA guide</a> explains the fuel
+        surcharge, and <a href="/bill-review/">Bill Review</a> can check a suspicious first bill
+        for free.</p>
+      </section>`,
+    faqs: [
+      { q: 'How do I apply for a new MSEDCL connection online?',
+        a: 'Use the New Connection Request flow on Mahavitaran’s WSS portal (wss.mahadiscom.in): pick the category, enter the address and requested load in kW, verify your mobile by OTP, upload identity and ownership documents, and pay the application fee. You get a Service Request ID to track everything, pay the firm quotation when issued, and the meter follows.' },
+      { q: 'What documents are needed for a Mahavitaran new connection?',
+        a: 'Identity proof (Aadhaar, voter ID, passport, driving licence or PAN), premises proof (sale deed/Index-II, property card or property-tax receipt; registered rent agreement plus owner NOC for tenants), and one photograph. Agricultural applicants also need the land’s 7/12 extract.' },
+      { q: 'How much does a new MSEDCL connection cost?',
+        a: 'Three payments: a small application fee at submission, the firm quotation (service connection charges per MERC’s Schedule of Charges — typically a few thousand rupees for a small residential load near an existing line, more if poles or cable are needed), and a refundable security deposit sized to expected consumption.' },
+      { q: 'How many days does MSEDCL take to give a new connection?',
+        a: 'Under the Electricity (Rights of Consumers) Rules, 2020: 7 days in metropolitan areas, 15 days in other municipal areas and 30 days in rural areas after a complete, paid application. Where a line extension is required, MERC’s Standards of Performance set longer but still fixed timelines with compensation for default.' },
+      { q: 'What is the nearest consumer number asked in the MSEDCL application?',
+        a: 'The WSS form asks for the consumer number of the nearest existing MSEDCL connection — usually a neighbour’s. It locates your premises on the distribution network so the feasibility check and estimate are faster and more accurate.' },
+    ],
+
+    titleHi: 'MSEDCL (Mahavitaran) में नया बिजली कनेक्शन ऑनलाइन कैसे लें',
+    metaTitleHi: 'MSEDCL नया कनेक्शन ऑनलाइन — WSS पोर्टल: दस्तावेज़, शुल्क, समयसीमा',
+    descriptionHi: 'WSS पोर्टल से नया MSEDCL/Mahavitaran बिजली कनेक्शन लेने की स्टेप-बाय-स्टेप गाइड: दस्तावेज़ सूची (कृषि के लिए 7/12 उतारा सहित), आवेदन प्रक्रिया, फर्म कोटेशन और सिक्योरिटी डिपॉज़िट, कानूनी समयसीमा, और अटकने पर शिकायत की सीढ़ी।',
+    introHi: `मुंबई शहर को छोड़कर लगभग पूरे महाराष्ट्र में बिजली Mahavitaran (MSEDCL) देती है, और नए
+      कनेक्शन के लिए अब सेक्शन ऑफिस में A-1 फॉर्म की लाइन ज़रूरी नहीं। <strong>Web Self Service (WSS)
+      पोर्टल</strong>
+      (<a href="https://wss.mahadiscom.in/wss/" rel="nofollow noopener" target="_blank">wss.mahadiscom.in</a>)
+      घरेलू, वाणिज्यिक, औद्योगिक और कृषि कनेक्शनों के लिए आवेदन, दस्तावेज़ अपलोड, भुगतान और स्टेटस
+      ट्रैकिंग ऑनलाइन कर देता है। यह गाइड पूरी प्रक्रिया समझाती है — पहले क्या स्कैन करें, कौन से तीन
+      भुगतान होते हैं, MSEDCL के पास कानूनन कितने दिन हैं, और कुछ न चले तो किस पर दबाव डालें।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>1. आवेदन के दो रास्ते — पोर्टल या A-1 फॉर्म</h2>
+        <ul>
+          <li><strong>ऑनलाइन (बेहतर):</strong> WSS पोर्टल का <em>New Connection Request</em> फ्लो बिना
+          खाता बनाए भी चलता है — जमा करते ही <strong>Service Request ID</strong> मिलती है, जिससे आगे
+          सब कुछ ट्रैक होता है। भुगतान और दस्तावेज़ अपलोड शुरू से अंत तक ऑनलाइन हैं।</li>
+          <li><strong>ऑफलाइन:</strong> सेक्शन ऑफिस में पारंपरिक <strong>A-1 आवेदन फॉर्म</strong> अब भी
+          चलता है और उसी शुल्क-सूची व समयसीमा का पालन करता है।</li>
+        </ul>
+        <p>सीमा ध्यान रखें: मुंबई शहर में BEST, Adani Electricity और Tata Power सप्लाई करती हैं —
+        MSEDCL नहीं। आवेदन से पहले हमारे
+        <a href="/hi/tariffs/maharashtra/">महाराष्ट्र टैरिफ पेज</a> पर देखें कि आपका पता कौन सर्व
+        करता है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. दस्तावेज़ — शुरू करने से पहले स्कैन कर रखें</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>ज़रूरत</th><th>मान्य दस्तावेज़</th></tr></thead>
+          <tbody>
+            <tr><td><strong>पहचान प्रमाण</strong></td><td>आधार, वोटर ID, पासपोर्ट, ड्राइविंग लाइसेंस या PAN।</td></tr>
+            <tr><td><strong>परिसर / स्वामित्व प्रमाण</strong></td><td>सेल डीड या Index-II, प्रॉपर्टी कार्ड, ताज़ा प्रॉपर्टी-टैक्स रसीद — किरायेदारों के लिए रजिस्टर्ड रेंट एग्रीमेंट और मालिक की NOC।</td></tr>
+            <tr><td><strong>फोटो</strong></td><td>आवेदक की एक पासपोर्ट-साइज़ फोटो।</td></tr>
+            <tr><td><strong>कृषि कनेक्शन</strong></td><td>ज़मीन का <strong>7/12 उतारा</strong> (सातबारा), और सब्सिडी योजना लागू होने पर जाति/योजना प्रमाणपत्र।</td></tr>
+            <tr><td><strong>नज़दीकी उपभोक्ता नंबर</strong></td><td>दस्तावेज़ नहीं, पर WSS फॉर्म <em>सबसे नज़दीकी मौजूदा MSEDCL कनेक्शन</em> का उपभोक्ता नंबर माँगता है — पड़ोसी के बिल से आपका परिसर नेटवर्क पर तुरंत मिल जाता है। एक तैयार रखें।</td></tr>
+          </tbody>
+        </table></div>
+        <p><strong>किरायेदार भी आवेदन कर सकते हैं।</strong> विद्युत अधिनियम, 2003 की धारा 43 आपूर्ति को
+        परिसर में रहने वाले का अधिकार बनाती है; मालिक साथ साइन न करे तो रजिस्टर्ड रेंट एग्रीमेंट और
+        क्षतिपूर्ति शपथपत्र सामान्य रास्ता है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. WSS आवेदन, स्टेप-बाय-स्टेप</h2>
+        <ol>
+          <li><strong>New Connection Request खोलें:</strong>
+          <a href="https://wss.mahadiscom.in/wss/" rel="nofollow noopener" target="_blank">wss.mahadiscom.in</a>
+          पर, और उपभोक्ता श्रेणी (घरेलू / वाणिज्यिक / औद्योगिक / कृषि) व सप्लाई प्रकार चुनें।</li>
+          <li><strong>आवेदन भरें:</strong> आवेदक विवरण, लैंडमार्क सहित पूरा पता, नज़दीकी उपभोक्ता नंबर,
+          और <strong>माँगा गया भार kW में</strong>। उतना ही माँगें जितनी वाकई ज़रूरत है — फिक्स्ड चार्ज हर
+          महीने स्वीकृत भार पर लगता है; आकार तय करने के लिए हमारी
+          <a href="/hi/guides/reduce-fixed-charges-sanctioned-load/">फिक्स्ड चार्ज गाइड</a> देखें।</li>
+          <li><strong>OTP से मोबाइल सत्यापित करें, दस्तावेज़ अपलोड करें, आवेदन शुल्क</strong> ऑनलाइन भरें।
+          Service Request ID मिलती है — सँभालकर रखें।</li>
+          <li><strong>साइट निरीक्षण।</strong> MSEDCL इंजीनियर व्यवहार्यता देखता है — मौजूदा लाइन से काम
+          चलेगा या विस्तार लगेगा।</li>
+          <li><strong>फर्म कोटेशन (डिमांड नोट)।</strong> MERC की शुल्क अनुसूची के अनुसार सर्विस कनेक्शन
+          शुल्क, सिक्योरिटी डिपॉज़िट और मीटर शुल्क का देय एस्टीमेट जारी होता है। Service Request ID पर
+          ऑनलाइन भरें।</li>
+          <li><strong>मीटर लगना और सप्लाई चालू।</strong> 12 अंकों का उपभोक्ता नंबर अगले चक्र के पहले बिल
+          के साथ आता है।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. खर्च कितना — तीन अलग भुगतान</h2>
+        <ol>
+          <li><strong>आवेदन / प्रोसेसिंग शुल्क</strong> — छोटा, जमा करते समय; श्रेणी और भार से बदलता है।</li>
+          <li><strong>फर्म कोटेशन</strong> — असली लागत: MERC की शुल्क अनुसूची के सर्विस कनेक्शन शुल्क,
+          पोल या केबल जुड़ने पर ज़्यादा। मौजूदा लाइन के पास छोटे घरेलू भार का सामान्य-शुल्क कनेक्शन आम
+          तौर पर कुछ हज़ार रुपये में हो जाता है।</li>
+          <li><strong>सिक्योरिटी डिपॉज़िट</strong> — मोटे तौर पर आपकी अपेक्षित बिलिंग के हिसाब से (MERC
+          सप्लाई कोड इसे बिलिंग चक्र की औसत खपत के आसपास रखता है), स्थायी विच्छेदन पर ब्याज सहित
+          वापसी-योग्य।</li>
+        </ol>
+        <p>हम जानबूझकर रुपये की तालिकाएँ नहीं छापते — MERC शुल्क अनुसूची संशोधित करता रहता है, और
+        <em>आपके</em> परिसर के लिए पोर्टल पर दिखा फर्म कोटेशन ही एकमात्र मायने रखने वाला आँकड़ा है।
+        आवेदन शुल्क के अलावा कुछ भी उसे देखे बिना देय नहीं है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. MSEDCL कानूनन कितने दिन ले सकता है</h2>
+        <ul>
+          <li>केंद्रीय <strong>विद्युत (उपभोक्ता अधिकार) नियम, 2020</strong>: पूर्ण व भुगतान हो चुके आवेदन
+          पर <strong>महानगरों में 7 दिन</strong> (पुणे, नागपुर और MSEDCL द्वारा सर्व किया जाने वाला
+          मुंबई-क्षेत्र का नगरीय इलाका), <strong>अन्य नगरीय क्षेत्रों में 15 दिन और ग्रामीण क्षेत्रों में
+          30 दिन</strong>।</li>
+          <li>जहाँ वाकई <strong>लाइन विस्तार</strong> लगे, वहाँ MERC के Standards of Performance नियम
+          लंबी पर प्रकाशित समयसीमाएँ देते हैं — घड़ी और चूक का मुआवज़ा दोनों वहीं तय हैं, खुले नहीं।</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. आवेदन अटक गया? शिकायत की सीढ़ी</h2>
+        <ol>
+          <li><strong>पहले ऑनलाइन ट्रैक करें:</strong> WSS पोर्टल Service Request का चरण दिखाता है
+          (निरीक्षण → कोटेशन → भुगतान → इंस्टॉलेशन)।</li>
+          <li><strong>1912 / 1800-233-3435 / 1800-212-3435</strong> — Mahavitaran की 24×7 हेल्पलाइनें;
+          Service Request ID बताकर शिकायत नंबर लें।</li>
+          <li><strong>कोटेशन पर लिखा सेक्शन/उपखंड कार्यालय</strong> — लंबित साइट विज़िट और सामग्री की
+          कमी ही आम रुकावटें हैं।</li>
+          <li><strong>IGRC → CGRF → विद्युत लोकपाल</strong> — पहले MSEDCL की आंतरिक शिकायत निवारण
+          इकाई, फिर उपभोक्ता शिकायत निवारण मंच, फिर लोकपाल (मुंबई/नागपुर)। सब निःशुल्क, और वैधानिक
+          समयसीमा बीतने पर Standards-of-Performance मुआवज़ा लागू होता है।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>7. मीटर लगने के बाद — पहला बिल जाँचें</h2>
+        <p>गलत श्रेणी और भार नए कनेक्शन पर ही जन्म लेते हैं। पहले बिल पर टैरिफ श्रेणी (घर के लिए LT-1
+        घरेलू), आवेदन वाला स्वीकृत भार और मीटर नंबर जाँचें। फिर अपनी यूनिटें हमारे
+        <a href="/?state=Maharashtra#calculator">MSEDCL बिल कैलकुलेटर</a> में डालें — यह मौजूदा स्लैब,
+        व्हीलिंग, फिक्स्ड चार्ज और FAC का वही गणित लगाता है और असली Mahavitaran बिलों से सत्यापित है —
+        और मिलान करें। हर लाइन के लिए
+        <a href="/hi/guides/how-to-read-msedcl-bill/">MSEDCL बिल पढ़ने की गाइड</a> देखें, ईंधन अधिभार के
+        लिए <a href="/hi/guides/msedcl-fppa-charges-explained/">FAC/FPPA गाइड</a>, और संदिग्ध पहले बिल
+        की <a href="/bill-review/">Bill Review</a> से निःशुल्क जाँच कराएँ।</p>
+      </section>`,
+    faqsHi: [
+      { q: 'MSEDCL का नया कनेक्शन ऑनलाइन कैसे लें?',
+        a: 'Mahavitaran के WSS पोर्टल (wss.mahadiscom.in) पर New Connection Request खोलें: श्रेणी चुनें, पता और माँगा गया भार kW में भरें, OTP से मोबाइल सत्यापित करें, पहचान व स्वामित्व दस्तावेज़ अपलोड करें और आवेदन शुल्क भरें। ट्रैकिंग के लिए Service Request ID मिलती है; फर्म कोटेशन जारी होने पर भरें, फिर मीटर लगता है।' },
+      { q: 'Mahavitaran नए कनेक्शन के लिए कौन से दस्तावेज़ चाहिए?',
+        a: 'पहचान प्रमाण (आधार, वोटर ID, पासपोर्ट, ड्राइविंग लाइसेंस या PAN), परिसर प्रमाण (सेल डीड/Index-II, प्रॉपर्टी कार्ड या प्रॉपर्टी-टैक्स रसीद; किरायेदारों के लिए रजिस्टर्ड रेंट एग्रीमेंट और मालिक की NOC), और एक फोटो। कृषि आवेदकों को ज़मीन का 7/12 उतारा भी चाहिए।' },
+      { q: 'MSEDCL नए कनेक्शन का खर्च कितना है?',
+        a: 'तीन भुगतान: जमा करते समय छोटा आवेदन शुल्क, फर्म कोटेशन (MERC शुल्क अनुसूची के सर्विस कनेक्शन शुल्क — मौजूदा लाइन के पास छोटे घरेलू भार पर आम तौर पर कुछ हज़ार रुपये, पोल/केबल जुड़ने पर ज़्यादा), और अपेक्षित खपत के हिसाब से वापसी-योग्य सिक्योरिटी डिपॉज़िट।' },
+      { q: 'MSEDCL नया कनेक्शन कितने दिन में देता है?',
+        a: 'विद्युत (उपभोक्ता अधिकार) नियम, 2020 के तहत पूर्ण व भुगतान हो चुके आवेदन पर महानगरों में 7 दिन, अन्य नगरीय क्षेत्रों में 15 दिन और ग्रामीण क्षेत्रों में 30 दिन। लाइन विस्तार लगने पर MERC के Standards of Performance लंबी पर तय समयसीमाएँ और चूक पर मुआवज़ा देते हैं।' },
+      { q: 'MSEDCL आवेदन में नज़दीकी उपभोक्ता नंबर क्यों माँगा जाता है?',
+        a: 'WSS फॉर्म सबसे नज़दीकी मौजूदा MSEDCL कनेक्शन का उपभोक्ता नंबर माँगता है — आम तौर पर पड़ोसी का। इससे आपका परिसर वितरण नेटवर्क पर तुरंत मिल जाता है और व्यवहार्यता जाँच व एस्टीमेट तेज़ और सटीक बनते हैं।' },
+    ],
+
+    titleMr: 'MSEDCL (महावितरण) मध्ये नवीन वीज जोडणी ऑनलाइन कशी घ्यावी',
+    metaTitleMr: 'MSEDCL नवीन जोडणी ऑनलाइन — WSS पोर्टल: कागदपत्रे, शुल्क, कालमर्यादा',
+    descriptionMr: 'WSS पोर्टलवरून नवीन MSEDCL/महावितरण वीज जोडणी घेण्याची स्टेप-बाय-स्टेप मार्गदर्शिका: कागदपत्रांची यादी (शेतीसाठी 7/12 उताऱ्यासह), अर्ज प्रक्रिया, फर्म कोटेशन आणि सुरक्षा ठेव, कायदेशीर कालमर्यादा, आणि अर्ज रखडल्यास तक्रारीची शिडी।',
+    introMr: `मुंबई शहर वगळता जवळपास संपूर्ण महाराष्ट्राला महावितरण (MSEDCL) वीज पुरवते, आणि नवीन
+      जोडणीसाठी आता सेक्शन ऑफिसमधील A-1 फॉर्मची रांग गरजेची नाही. <strong>Web Self Service (WSS)
+      पोर्टल</strong>
+      (<a href="https://wss.mahadiscom.in/wss/" rel="nofollow noopener" target="_blank">wss.mahadiscom.in</a>)
+      घरगुती, व्यावसायिक, औद्योगिक आणि कृषी जोडण्यांसाठी अर्ज, कागदपत्र अपलोड, भरणा आणि स्थिती
+      ट्रॅकिंग ऑनलाइन करते. ही मार्गदर्शिका संपूर्ण प्रक्रिया समजावते — आधी काय स्कॅन करावे, कोणते तीन
+      भरणे होतात, MSEDCL ला कायद्याने किती दिवस मिळतात, आणि काहीच हलले नाही तर कोणावर दबाव आणावा.`,
+    sectionsMr: `
+      <section class="seo-section">
+        <h2>1. अर्जाचे दोन मार्ग — पोर्टल किंवा A-1 फॉर्म</h2>
+        <ul>
+          <li><strong>ऑनलाइन (शिफारसीय):</strong> WSS पोर्टलचा <em>New Connection Request</em> फ्लो
+          आधी खाते न बनवताही चालतो — सबमिट करताच <strong>Service Request ID</strong> मिळतो, ज्याने
+          पुढचे सर्व ट्रॅक होते. भरणा आणि कागदपत्र अपलोड सुरुवातीपासून शेवटपर्यंत ऑनलाइन.</li>
+          <li><strong>ऑफलाइन:</strong> सेक्शन ऑफिसमधील पारंपरिक <strong>A-1 अर्ज</strong> अजूनही चालतो
+          आणि त्याच शुल्क-सूची व कालमर्यादांचे पालन करतो.</li>
+        </ul>
+        <p>सीमा लक्षात ठेवा: मुंबई शहरात BEST, Adani Electricity आणि Tata Power वीज पुरवतात —
+        MSEDCL नाही. अर्जापूर्वी आमच्या
+        <a href="/mr/tariffs/maharashtra/">महाराष्ट्र टॅरिफ पानांवर</a> तुमचा पत्ता कोण सर्व्ह करते
+        ते पाहा.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. कागदपत्रे — सुरुवात करण्यापूर्वी स्कॅन करून ठेवा</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>गरज</th><th>मान्य कागदपत्रे</th></tr></thead>
+          <tbody>
+            <tr><td><strong>ओळखीचा पुरावा</strong></td><td>आधार, मतदार ओळखपत्र, पासपोर्ट, ड्रायव्हिंग लायसन्स किंवा PAN.</td></tr>
+            <tr><td><strong>जागा / मालकीचा पुरावा</strong></td><td>खरेदीखत किंवा Index-II, प्रॉपर्टी कार्ड, ताजी मालमत्ता-कर पावती — भाडेकरूंसाठी नोंदणीकृत भाडेकरार आणि मालकाची NOC.</td></tr>
+            <tr><td><strong>छायाचित्र</strong></td><td>अर्जदाराचा एक पासपोर्ट-साइझ फोटो.</td></tr>
+            <tr><td><strong>कृषी जोडणी</strong></td><td>जमिनीचा <strong>7/12 उतारा</strong> (सातबारा), आणि अनुदान योजना लागू असल्यास जात/योजना प्रमाणपत्रे.</td></tr>
+            <tr><td><strong>जवळचा ग्राहक क्रमांक</strong></td><td>कागदपत्र नाही, पण WSS फॉर्म <em>सर्वात जवळच्या विद्यमान MSEDCL जोडणीचा</em> ग्राहक क्रमांक विचारतो — शेजाऱ्याच्या बिलाने तुमची जागा नेटवर्कवर लगेच सापडते. एक तयार ठेवा.</td></tr>
+          </tbody>
+        </table></div>
+        <p><strong>भाडेकरूही अर्ज करू शकतात.</strong> विद्युत कायदा, 2003 चे कलम 43 वीजपुरवठा हा
+        जागेत राहणाऱ्याचा (occupier) हक्क बनवते; मालक सही करत नसेल तर नोंदणीकृत भाडेकरार आणि
+        क्षतिपूर्ती प्रतिज्ञापत्र हा नेहमीचा मार्ग आहे.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. WSS अर्ज, स्टेप-बाय-स्टेप</h2>
+        <ol>
+          <li><strong>New Connection Request उघडा:</strong>
+          <a href="https://wss.mahadiscom.in/wss/" rel="nofollow noopener" target="_blank">wss.mahadiscom.in</a>
+          वर, आणि ग्राहक वर्ग (घरगुती / व्यावसायिक / औद्योगिक / कृषी) व पुरवठा प्रकार निवडा.</li>
+          <li><strong>अर्ज भरा:</strong> अर्जदाराचे तपशील, लँडमार्कसह पूर्ण पत्ता, जवळचा ग्राहक क्रमांक,
+          आणि <strong>मागितलेला भार kW मध्ये</strong>. खरोखर गरज आहे तेवढाच मागा — स्थिर आकार दर महिन्याला
+          मंजूर भारावर लागतो; आकार ठरवण्यासाठी आमची
+          <a href="/mr/guides/reduce-fixed-charges-sanctioned-load/">स्थिर आकार मार्गदर्शिका</a> पाहा.</li>
+          <li><strong>OTP ने मोबाइल पडताळा, कागदपत्रे अपलोड करा, अर्ज शुल्क</strong> ऑनलाइन भरा.
+          Service Request ID मिळतो — जपून ठेवा.</li>
+          <li><strong>जागेची पाहणी.</strong> MSEDCL अभियंता व्यवहार्यता तपासतो — विद्यमान लाइनने काम
+          होईल की विस्तार लागेल.</li>
+          <li><strong>फर्म कोटेशन (डिमांड नोट).</strong> MERC च्या शुल्क अनुसूचीनुसार सर्व्हिस कनेक्शन
+          शुल्क, सुरक्षा ठेव आणि मीटर शुल्काचा देय अंदाज जारी होतो. Service Request ID वर ऑनलाइन भरा.</li>
+          <li><strong>मीटर बसणे आणि वीजपुरवठा सुरू.</strong> 12 अंकी ग्राहक क्रमांक पुढील चक्राच्या
+          पहिल्या बिलासोबत येतो.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. खर्च किती — तीन वेगळे भरणे</h2>
+        <ol>
+          <li><strong>अर्ज / प्रक्रिया शुल्क</strong> — लहान, सबमिट करताना; वर्ग आणि भारानुसार बदलते.</li>
+          <li><strong>फर्म कोटेशन</strong> — खरी किंमत: MERC च्या शुल्क अनुसूचीतील सर्व्हिस कनेक्शन शुल्क,
+          खांब किंवा केबल जोडावी लागल्यास जास्त. विद्यमान लाइनजवळ लहान घरगुती भाराची सामान्य-शुल्क जोडणी
+          साधारण काही हजार रुपयांत होते.</li>
+          <li><strong>सुरक्षा ठेव</strong> — साधारण तुमच्या अपेक्षित बिलिंगच्या प्रमाणात (MERC चा पुरवठा
+          संहिता तिला बिलिंग चक्राच्या सरासरी वापराभोवती ठेवतो), कायम खंडित करतेवेळी व्याजासह परत.</li>
+        </ol>
+        <p>आम्ही मुद्दाम रुपयांची कोष्टके छापत नाही — MERC शुल्क अनुसूची सुधारत राहते, आणि
+        <em>तुमच्या</em> जागेसाठी पोर्टलवर दिसणारे फर्म कोटेशन हाच एकमेव महत्त्वाचा आकडा. अर्ज
+        शुल्काशिवाय ते न पाहता काहीही देय नाही.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. MSEDCL कायद्याने किती दिवस घेऊ शकते</h2>
+        <ul>
+          <li>केंद्रीय <strong>विद्युत (ग्राहक हक्क) नियम, 2020</strong>: पूर्ण व भरणा झालेल्या अर्जावर
+          <strong>महानगरांत 7 दिवस</strong> (पुणे, नागपूर आणि MSEDCL सर्व्ह करत असलेला मुंबई-क्षेत्रातील
+          नागरी पट्टा), <strong>इतर नगरपालिका क्षेत्रांत 15 दिवस आणि ग्रामीण भागांत 30 दिवस</strong>.</li>
+          <li>जिथे खरोखर <strong>लाइन विस्तार</strong> लागतो, तिथे MERC चे Standards of Performance
+          नियम अधिक पण प्रकाशित कालमर्यादा देतात — घड्याळ आणि चुकल्यास भरपाई दोन्ही तिथेच ठरलेली,
+          खुली नाही.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. अर्ज रखडला? तक्रारीची शिडी</h2>
+        <ol>
+          <li><strong>आधी ऑनलाइन ट्रॅक करा:</strong> WSS पोर्टल Service Request चा टप्पा दाखवते
+          (पाहणी → कोटेशन → भरणा → इंस्टॉलेशन).</li>
+          <li><strong>1912 / 1800-233-3435 / 1800-212-3435</strong> — महावितरणच्या 24×7 हेल्पलाइन;
+          Service Request ID सांगून तक्रार क्रमांक घ्या.</li>
+          <li><strong>कोटेशनवर लिहिलेले सेक्शन/उपविभाग कार्यालय</strong> — प्रलंबित पाहणी आणि साहित्याची
+          कमतरता याच नेहमीच्या अडचणी.</li>
+          <li><strong>IGRC → CGRF → विद्युत लोकपाल</strong> — आधी MSEDCL ची अंतर्गत तक्रार निवारण
+          यंत्रणा, मग ग्राहक तक्रार निवारण मंच, मग लोकपाल (मुंबई/नागपूर). सर्व मोफत, आणि वैधानिक
+          कालमर्यादा उलटल्यावर Standards-of-Performance भरपाई लागू होते.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>7. मीटर बसल्यावर — पहिले बिल तपासा</h2>
+        <p>चुकीचा वर्ग आणि भार नव्या जोडणीवरच जन्म घेतात. पहिल्या बिलावर टॅरिफ वर्ग (घरासाठी LT-1
+        घरगुती), अर्जातील मंजूर भार आणि मीटर क्रमांक तपासा. मग तुमची युनिटे आमच्या
+        <a href="/?state=Maharashtra#calculator">MSEDCL बिल कॅल्क्युलेटर</a> मध्ये टाका — तो सध्याचे
+        स्लॅब, व्हीलिंग, स्थिर आकार आणि FAC चे तेच गणित करतो आणि खऱ्या महावितरण बिलांशी पडताळलेला
+        आहे — आणि तुलना करा. प्रत्येक ओळीसाठी
+        <a href="/mr/guides/how-to-read-msedcl-bill/">MSEDCL बिल वाचण्याची मार्गदर्शिका</a> पाहा,
+        इंधन अधिभारासाठी <a href="/mr/guides/msedcl-fppa-charges-explained/">FAC/FPPA मार्गदर्शिका</a>,
+        आणि संशयास्पद पहिल्या बिलाची <a href="/bill-review/">Bill Review</a> कडून मोफत तपासणी करा.</p>
+      </section>`,
+    faqsMr: [
+      { q: 'MSEDCL ची नवीन जोडणी ऑनलाइन कशी घ्यावी?',
+        a: 'महावितरणच्या WSS पोर्टलवर (wss.mahadiscom.in) New Connection Request उघडा: वर्ग निवडा, पत्ता आणि मागितलेला भार kW मध्ये भरा, OTP ने मोबाइल पडताळा, ओळख व मालकीची कागदपत्रे अपलोड करा आणि अर्ज शुल्क भरा. ट्रॅकिंगसाठी Service Request ID मिळतो; फर्म कोटेशन जारी झाल्यावर भरा, मग मीटर बसते.' },
+      { q: 'महावितरण नवीन जोडणीसाठी कोणती कागदपत्रे लागतात?',
+        a: 'ओळखीचा पुरावा (आधार, मतदार ओळखपत्र, पासपोर्ट, ड्रायव्हिंग लायसन्स किंवा PAN), जागेचा पुरावा (खरेदीखत/Index-II, प्रॉपर्टी कार्ड किंवा मालमत्ता-कर पावती; भाडेकरूंसाठी नोंदणीकृत भाडेकरार आणि मालकाची NOC), आणि एक फोटो. कृषी अर्जदारांना जमिनीचा 7/12 उताराही लागतो.' },
+      { q: 'MSEDCL नवीन जोडणीचा खर्च किती?',
+        a: 'तीन भरणे: सबमिट करताना लहान अर्ज शुल्क, फर्म कोटेशन (MERC शुल्क अनुसूचीतील सर्व्हिस कनेक्शन शुल्क — विद्यमान लाइनजवळ लहान घरगुती भारासाठी साधारण काही हजार रुपये, खांब/केबल लागल्यास जास्त), आणि अपेक्षित वापराच्या प्रमाणात परत मिळणारी सुरक्षा ठेव.' },
+      { q: 'MSEDCL नवीन जोडणी किती दिवसांत देते?',
+        a: 'विद्युत (ग्राहक हक्क) नियम, 2020 नुसार पूर्ण व भरणा झालेल्या अर्जावर महानगरांत 7 दिवस, इतर नगरपालिका क्षेत्रांत 15 दिवस आणि ग्रामीण भागांत 30 दिवस. लाइन विस्तार लागल्यास MERC चे Standards of Performance अधिक पण ठरलेल्या कालमर्यादा आणि चुकल्यास भरपाई देतात.' },
+      { q: 'MSEDCL अर्जात जवळचा ग्राहक क्रमांक का विचारला जातो?',
+        a: 'WSS फॉर्म सर्वात जवळच्या विद्यमान MSEDCL जोडणीचा ग्राहक क्रमांक विचारतो — सहसा शेजाऱ्याचा. त्याने तुमची जागा वितरण नेटवर्कवर लगेच सापडते आणि व्यवहार्यता तपासणी व अंदाज वेगवान आणि अचूक होतात.' },
+    ],
+  },
 ];
