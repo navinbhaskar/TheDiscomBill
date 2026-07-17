@@ -78,7 +78,7 @@ export const STRINGS = {
     'small.toDate': 'Billing period end date',
     'label.sanctioned': 'Sanctioned Load (kW)',
     'small.sanctioned': 'Contracted / sanctioned load. Used for fixed charge and excess demand check.',
-    'small.fppa': 'Fuel & Power Purchase Adjustment. ₹/unit = (actual − base power cost) × units, or % of supply+demand charges (UP MYT 2025). Uncheck above (or type a value) to enter manually. Can be negative (credit).',
+    'small.fppa': 'Uncheck above (or type a value) to enter manually · can be negative (credit).',
     // Tabs
     'tab.meterread': 'Meter Read',
     'tab.arrear': 'Arrear',

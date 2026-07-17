@@ -577,7 +577,7 @@
               <small data-i18n="small.sanctioned">Contracted / sanctioned load. Used for fixed charge and excess demand check.</small>
             </div>
             <div class="form-group adv-only">
-              <label for="facRate" id="facRateLabel"><span class="lbl-text">FPPA / FAC Surcharge (₹/unit)</span><span class="gloss" tabindex="0" role="img" aria-label="FPPA: Fuel and Power Purchase Adjustment — a periodic surcharge passing the utility's varying fuel and power-purchase cost on to consumers." data-tip="FPPA — Fuel &amp; Power Purchase Adjustment: a periodic surcharge passing the utility's varying fuel / power-purchase cost on to consumers.">ⓘ</span></label>
+              <label for="facRate" id="facRateLabel"><span class="lbl-text">FPPA / FAC Surcharge (₹/unit)</span><span class="gloss" tabindex="0" role="img" aria-label="FPPA: Fuel and Power Purchase Adjustment — a periodic surcharge passing the utility's varying fuel and power-purchase cost on to consumers. Per unit: (actual minus base power cost) times units, or a percentage of supply plus demand charges (UP MYT 2025)." data-tip="FPPA — Fuel &amp; Power Purchase Adjustment: a periodic surcharge passing the utility's varying fuel / power-purchase cost on to consumers. ₹/unit = (actual − base power cost) × units, or % of supply+demand charges (UP MYT 2025).">ⓘ</span></label>
               <div class="fac-input-row">
                 <input type="number" id="facRate" placeholder="e.g., 0.20" step="0.01" value="0">
                 <select id="facMode" title="How the surcharge is levied">
@@ -590,7 +590,7 @@
                 <span data-i18n="chk.fppaAuto">Auto-fill from verified government data</span>
               </label>
               <small id="fppaSource" class="fppa-source" style="display:none"></small>
-              <small data-i18n="small.fppa">Fuel &amp; Power Purchase Adjustment. ₹/unit = (actual − base power cost) × units, or % of supply+demand charges (UP MYT 2025). Uncheck above (or type a value) to enter manually. Can be negative (credit).</small>
+              <small data-i18n="small.fppa">Uncheck above (or type a value) to enter manually · can be negative (credit).</small>
             </div>
           </div>
 
