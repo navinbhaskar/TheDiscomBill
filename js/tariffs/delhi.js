@@ -1,10 +1,20 @@
-// Delhi — Electricity Tariff Data (2024-25)
-// Source: Publicly available tariff orders from the respective SERC.
+// Delhi — Electricity Tariff Data (DERC retail supply schedule, in force FY 2025-26)
+// Source: DERC-approved retail supply tariff schedule (BRPL/BYPL/TPDDL/NDMC). Delhi's base
+// energy/fixed charges are a long-standing DERC schedule carried forward year to year; the live
+// component is the PPAC (Power Purchase Adjustment Charge), revised MONTHLY since Jun 2026 and
+// kept per-discom in js/tariffs/fppa.js (FPPA_BY_DISCOM) — it auto-fills the FPPA field rather
+// than living here, because it changes every month and differs by discom.
 // To update rates: edit energySlabs, fixedCharge, or additionalCharges below.
 // See TARIFF_GUIDE.md for the complete field schema and step-by-step instructions.
+//
+// Domestic slabs are the DERC 5-slab schedule: 0-200 ₹3.00, 201-400 ₹4.50, 401-800 ₹6.50,
+// 801-1200 ₹7.00, above 1200 ₹8.00 (the top ₹8 slab was previously missing). A ₹0.10/unit
+// Pension Trust Surcharge also applies to all Delhi consumers but is not yet modelled here.
 
 export default {
   state: "Delhi",
+  ratesAsOf: "FY 2025-26 (DERC schedule; PPAC monthly, see fppa.js)",
+  sourceUrl: "https://www.derc.gov.in/tarriff-orders",
   // DERC: a 30% surcharge on the fixed charge corresponding to the excess load (kW/kVA) for that billing cycle.
   excessDemand: { multiplier: 0.30, tolerancePct: 0 },
   discoms: [
@@ -13,7 +23,7 @@ export default {
       name: "BRPL (BSES Rajdhani)",
       fullName: "BSES Rajdhani Power Ltd.",
       area: "South & West Delhi",
-      tariffYear: "2024-25",
+      tariffYear: "2025-26",
       website: "https://www.bsesdelhi.com",
       categories: [
         {
@@ -53,8 +63,12 @@ export default {
               rate: 6.5
             },
             {
-              limit: Infinity,
+              limit: 1200,
               rate: 7
+            },
+            {
+              limit: Infinity,
+              rate: 8
             }
           ],
           additionalCharges: [
@@ -117,7 +131,7 @@ export default {
       name: "BYPL (BSES Yamuna)",
       fullName: "BSES Yamuna Power Ltd.",
       area: "East & Central Delhi",
-      tariffYear: "2024-25",
+      tariffYear: "2025-26",
       website: "https://www.bsesdelhi.com",
       categories: [
         {
@@ -157,8 +171,12 @@ export default {
               rate: 6.5
             },
             {
-              limit: Infinity,
+              limit: 1200,
               rate: 7
+            },
+            {
+              limit: Infinity,
+              rate: 8
             }
           ],
           additionalCharges: [
@@ -213,7 +231,7 @@ export default {
       name: "Tata Power-DDL (TPDDL)",
       fullName: "Tata Power Delhi Distribution Ltd.",
       area: "North & North-West Delhi",
-      tariffYear: "2024-25",
+      tariffYear: "2025-26",
       website: "https://www.tatapower-ddl.com",
       categories: [
         {
@@ -253,8 +271,12 @@ export default {
               rate: 6.5
             },
             {
-              limit: Infinity,
+              limit: 1200,
               rate: 7
+            },
+            {
+              limit: Infinity,
+              rate: 8
             }
           ],
           additionalCharges: [
@@ -309,7 +331,7 @@ export default {
       name: "NDMC",
       fullName: "New Delhi Municipal Council",
       area: "Lutyens' Delhi (Central Government area)",
-      tariffYear: "2024-25",
+      tariffYear: "2025-26",
       website: "https://www.ndmc.gov.in",
       categories: [
         {
@@ -326,8 +348,16 @@ export default {
               rate: 4.5
             },
             {
-              limit: Infinity,
+              limit: 800,
               rate: 6.5
+            },
+            {
+              limit: 1200,
+              rate: 7
+            },
+            {
+              limit: Infinity,
+              rate: 8
             }
           ],
           additionalCharges: [
