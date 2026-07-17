@@ -464,9 +464,10 @@
         <!-- ── Meter Read ── -->
         <div class="bill-tab-panel active" id="tab-meterread" role="tabpanel" aria-labelledby="bt-meterread">
           <!-- TOD split — replaces the old Meter Reading / TOD second tab row with one switch -->
-          <label class="checkbox-label tod-split-label adv-only">
+          <label class="tod-split-label adv-only">
             <input type="checkbox" id="todSplitChk">
-            <span data-i18n="mode.todSplit">TOD split (peak / normal / off-peak units)</span>
+            <span class="switch" aria-hidden="true"></span>
+            <span class="switch-text" data-i18n="mode.todSplit">TOD split (peak / normal / off-peak units)</span>
           </label>
 
           <!-- Billing Basis — segmented kWh/kVAh toggle; sets reading & demand units (kWh/kW vs kVAh/kVA).
