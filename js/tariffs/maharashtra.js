@@ -1,7 +1,12 @@
-// Maharashtra — Electricity Tariff Data (2024-25)
+// Maharashtra — Electricity Tariff Data
 // Source: Publicly available tariff orders from the respective SERC.
 // To update rates: edit energySlabs, fixedCharge, or additionalCharges below.
 // See TARIFF_GUIDE.md for the complete field schema and step-by-step instructions.
+//
+// STATUS (2026-07): MSEDCL (whole state ex-Mumbai) updated to FY 2026-27 from the MERC MYT
+// Order Case 217/2024. The three Mumbai licensees below — Adani, BEST, Tata Power — are each
+// governed by their OWN MERC order (different case numbers) and are still on FY 2024-25 data;
+// they remain to be audited against their respective FY 2026-27 orders.
 
 export default {
   state: "Maharashtra",
@@ -13,117 +18,127 @@ export default {
       name: "MSEDCL",
       fullName: "Maharashtra State Electricity Distribution Co. Ltd.",
       area: "Maharashtra (except Mumbai city area served by Adani/BEST/Tata Power)",
-      tariffYear: "2024-25",
+      tariffYear: "2026-27",
       website: "https://www.mahadiscom.in",
-      // LT-I (domestic) refreshed to the FY2026-27 order (MERC Case 217 of 2024). Marked
-      // estimated — energy + wheeling are provisional pending verification against a real
-      // MSEDCL bill (public sources disagreed on the exact slab rates), and the load-tiered
-      // fixed charge is carried forward from the prior order. LT-II (commercial) below is
-      // still on FY2024-25 data (no reliable FY2026-27 commercial figures were available).
+      // LT-I(B) domestic and LT-II commercial both taken from MERC's 5th-Control-Period MYT
+      // Order (Case 217 of 2024, dt. 31-Mar-2025), Annexure I tariff schedule, read from the
+      // order PDF: FY 2026-27 rates (eff. 1 Apr 2026) with FY 2025-26 in each category's
+      // rateHistory. The MYT trajectory REDUCES rates year-on-year, so the old FY2024-25 data
+      // was overestimating bills. Not yet checked against a real bill → no verified badge.
       sourceUrl: "https://www.mahadiscom.in/consumer/wp-content/uploads/2025/08/MSEDCL-MYT-Order_Case_no_217-of-2024.pdf",
-      ratesAsOf: "2026-04-01",
+      ratesAsOf: "FY 2026-27 (MERC Case 217/2024)",
       categories: [
         {
           id: "domestic",
-          name: "LT-1 (Residential)",
-          estimated: true,
-          periodLabel: "FY 2026-27 (provisional)",
+          name: "LT-I(B) (Residential)",
+          // MERC Case 217/2024 sets a flat fixed charge by phase, not by load: ₹130/month
+          // single-phase, ₹435/month three-phase (FY 2026-27). Single-phase LT supply runs up
+          // to ~5 kW, so the load tiers approximate the phase split for the common household.
           fixedCharge: {
             type: "tiered",
             slabs: [
-              {
-                maxLoad: 1,
-                rate: 100,
-                label: "Up to 1 kW"
-              },
-              {
-                maxLoad: 2,
-                rate: 180,
-                label: "1 kW – 2 kW"
-              },
-              {
-                maxLoad: 5,
-                rate: 335,
-                label: "2 kW – 5 kW"
-              },
-              {
-                maxLoad: 10,
-                rate: 605,
-                label: "5 kW – 10 kW"
-              },
-              {
-                maxLoad: Infinity,
-                rate: 900,
-                label: "Above 10 kW"
-              }
+              { maxLoad: 5, rate: 130, label: "Single phase (≤ 5 kW)" },
+              { maxLoad: Infinity, rate: 435, label: "Three phase (> 5 kW)" }
             ]
           },
+          // Telescopic energy slabs, FY 2026-27 (effective 1 Apr 2026).
           energySlabs: [
-            {
-              limit: 100,
-              rate: 5.65
-            },
-            {
-              limit: 300,
-              rate: 10.45
-            },
-            {
-              limit: 500,
-              rate: 14.90
-            },
-            {
-              limit: Infinity,
-              rate: 17.20
-            }
+            { limit: 100, rate: 4.32 },
+            { limit: 300, rate: 9.40 },
+            { limit: 500, rate: 12.51 },
+            { limit: Infinity, rate: 13.97 }
           ],
-          // Wheeling charge (use of the distribution network) — MSEDCL itemises this
-          // separately on LT bills. FY2026-27 estimate, per unit; verify against a real bill.
-          wheelingCharge: { type: "per_unit", rate: 1.45, label: "Wheeling Charges" },
+          // Wheeling (distribution-network use) itemised separately on MSEDCL LT bills.
+          wheelingCharge: { type: "per_unit", rate: 1.20, label: "Wheeling Charges" },
           additionalCharges: [
             {
               name: "Electricity Duty (ED)",
               type: "percent_energy",
               rate: 16
+            }
+          ],
+          currentRatesFrom: "2026-04-01",
+          periodLabel: "FY 2026-27 (MERC Case 217/2024)",
+          rateHistory: [
+            {
+              from: "2025-04-01",
+              label: "FY 2025-26 (MERC Case 217/2024)",
+              estimated: false,
+              fixedCharge: {
+                type: "tiered",
+                slabs: [
+                  { maxLoad: 5, rate: 130, label: "Single phase (≤ 5 kW)" },
+                  { maxLoad: Infinity, rate: 430, label: "Three phase (> 5 kW)" }
+                ]
+              },
+              energySlabs: [
+                { limit: 100, rate: 4.43 },
+                { limit: 300, rate: 9.64 },
+                { limit: 500, rate: 12.83 },
+                { limit: Infinity, rate: 14.33 }
+              ],
+              wheelingCharge: { type: "per_unit", rate: 1.24, label: "Wheeling Charges" }
             }
           ]
         },
+        // LT-II Commercial is banded by SANCTIONED LOAD, not consumption, and the two upper
+        // bands bill on kVA / kVAh (apparent energy), so each band is its own supply type.
         {
           id: "commercial",
-          name: "LT-2 (Commercial / Non-Residential)",
-          fixedCharge: {
-            type: "tiered",
-            slabs: [
-              {
-                maxLoad: 5,
-                rate: 450,
-                label: "Up to 5 kW"
-              },
-              {
-                maxLoad: Infinity,
-                rate: 750,
-                label: "Above 5 kW"
-              }
-            ]
-          },
-          energySlabs: [
+          name: "LT-II (Commercial / Non-Residential)",
+          supplyTypes: [
             {
-              limit: 100,
-              rate: 7.5
+              id: "II-A",
+              name: "LT-II(A) — up to 20 kW",
+              description: "Commercial / non-residential supply with sanctioned load up to 20 kW. Billed on kWh; fixed charge is a flat ₹525 per connection per month (FY 2026-27).",
+              fixedCharge: 525,
+              energySlabs: [{ limit: Infinity, rate: 6.44 }],
+              wheelingCharge: { type: "per_unit", rate: 1.20, label: "Wheeling Charges" },
+              additionalCharges: [{ name: "Electricity Duty (ED)", type: "percent_energy", rate: 16 }],
+              currentRatesFrom: "2026-04-01",
+              periodLabel: "FY 2026-27 (MERC Case 217/2024)",
+              rateHistory: [{
+                from: "2025-04-01", label: "FY 2025-26 (MERC Case 217/2024)", estimated: false,
+                fixedCharge: 520,
+                energySlabs: [{ limit: Infinity, rate: 6.60 }],
+                wheelingCharge: { type: "per_unit", rate: 1.24, label: "Wheeling Charges" }
+              }]
             },
             {
-              limit: 300,
-              rate: 9.5
+              id: "II-B",
+              name: "LT-II(B) — 20 to 50 kW",
+              description: "Commercial supply with sanctioned load above 20 kW and up to 50 kW. Billed on kVA demand and kVAh (apparent energy): a poor power factor raises the bill directly. Demand charge ₹525/kVA/month (FY 2026-27).",
+              demandUnit: "kVA",
+              fixedCharge: { type: "per_kva", rate: 525 },
+              energySlabs: [{ limit: Infinity, rate: 10.07 }],
+              wheelingCharge: { type: "per_unit", rate: 1.14, label: "Wheeling Charges" },
+              additionalCharges: [{ name: "Electricity Duty (ED)", type: "percent_energy", rate: 16 }],
+              currentRatesFrom: "2026-04-01",
+              periodLabel: "FY 2026-27 (MERC Case 217/2024)",
+              rateHistory: [{
+                from: "2025-04-01", label: "FY 2025-26 (MERC Case 217/2024)", estimated: false,
+                fixedCharge: { type: "per_kva", rate: 520 },
+                energySlabs: [{ limit: Infinity, rate: 10.33 }],
+                wheelingCharge: { type: "per_unit", rate: 1.17, label: "Wheeling Charges" }
+              }]
             },
             {
-              limit: Infinity,
-              rate: 11.5
-            }
-          ],
-          additionalCharges: [
-            {
-              name: "Electricity Duty (ED)",
-              type: "percent_energy",
-              rate: 16
+              id: "II-C",
+              name: "LT-II(C) — above 50 kW",
+              description: "Commercial supply with sanctioned load above 50 kW. Billed on kVA demand and kVAh (apparent energy). Demand charge ₹525/kVA/month (FY 2026-27).",
+              demandUnit: "kVA",
+              fixedCharge: { type: "per_kva", rate: 525 },
+              energySlabs: [{ limit: Infinity, rate: 12.16 }],
+              wheelingCharge: { type: "per_unit", rate: 1.14, label: "Wheeling Charges" },
+              additionalCharges: [{ name: "Electricity Duty (ED)", type: "percent_energy", rate: 16 }],
+              currentRatesFrom: "2026-04-01",
+              periodLabel: "FY 2026-27 (MERC Case 217/2024)",
+              rateHistory: [{
+                from: "2025-04-01", label: "FY 2025-26 (MERC Case 217/2024)", estimated: false,
+                fixedCharge: { type: "per_kva", rate: 520 },
+                energySlabs: [{ limit: Infinity, rate: 12.47 }],
+                wheelingCharge: { type: "per_unit", rate: 1.17, label: "Wheeling Charges" }
+              }]
             }
           ]
         }

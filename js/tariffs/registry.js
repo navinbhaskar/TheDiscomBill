@@ -184,6 +184,7 @@ export function resolveDatedTariff(tariff, billingDate, currentRatesFrom, curren
     energySlabs:       tariff.energySlabs,
     additionalCharges: tariff.additionalCharges,
     excessDemandRate:  tariff.excessDemandRate,
+    wheelingCharge:    tariff.wheelingCharge,
     fac:               tariff.fac,
   };
 
@@ -220,6 +221,7 @@ export function resolveDatedTariff(tariff, billingDate, currentRatesFrom, curren
         energySlabs:       h.energySlabs       !== undefined ? h.energySlabs       : tariff.energySlabs,
         additionalCharges: h.additionalCharges !== undefined ? h.additionalCharges : tariff.additionalCharges,
         excessDemandRate:  h.excessDemandRate  !== undefined ? h.excessDemandRate  : tariff.excessDemandRate,
+        wheelingCharge:    h.wheelingCharge    !== undefined ? h.wheelingCharge    : tariff.wheelingCharge,
         fac:               h.fac               !== undefined ? h.fac               : tariff.fac,
       }
     });

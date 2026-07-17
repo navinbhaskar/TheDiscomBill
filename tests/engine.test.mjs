@@ -156,11 +156,13 @@ group('wheeling charge', () => {
     delete cat.wheelingCharge;   // don't leak into other tests
   }
 
-  // MSEDCL ships a real wheeling charge (FY2026-27 estimate) — regression guard for the wired data.
+  // MSEDCL ships a real wheeling charge from the MERC MYT order — regression guard for the wired
+  // data AND for date-versioned wheeling: DATE is in FY2025-26, whose rate (₹1.24) differs from
+  // the current FY2026-27 rate (₹1.20), so this only passes if rateHistory swaps wheelingCharge.
   const msedcl = calculateBill({ discomId: 'msedcl', categoryId: 'domestic',
     units: 100, connectedLoadKw: 1, billingPeriodDays: 30, billingDate: DATE,
     facRate: 0, facMode: 'per_unit', lpscApplicable: false });
-  check('MSEDCL domestic wheeling wired (100 × 1.45)', msedcl.wheelingCharge, 145);
+  check('MSEDCL domestic wheeling wired FY2025-26 (100 × 1.24)', msedcl.wheelingCharge, 124);
 });
 
 // ── kVA Maximum Demand + billing-demand floor (Adani HT-I, per_kva 472) ───────
