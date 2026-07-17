@@ -187,10 +187,11 @@ export function resolveDatedTariff(tariff, billingDate, currentRatesFrom, curren
     fac:               tariff.fac,
   };
 
-  const curFromStr = currentRatesFrom || DEFAULT_CURRENT_FROM;
-  // A tariff may self-declare its own period label / estimated flag (e.g. a category refreshed to a
-  // newer order ahead of full verification). Those win over the discom-level defaults; when unset,
-  // the current set is treated as verified with the discom's FY label, exactly as before.
+  // A tariff may self-declare its own effective-from / period label / estimated flag (e.g. one
+  // supply type refreshed to a newer order or subsidy notification while the rest of the state
+  // schedule is unchanged). Those win over the discom-level defaults; when unset, the current set
+  // is treated as verified with the discom's FY label, exactly as before.
+  const curFromStr = tariff.currentRatesFrom || currentRatesFrom || DEFAULT_CURRENT_FROM;
   const curLabel   = tariff.periodLabel || currentLabel || (tariff.tariffYear ? `FY ${tariff.tariffYear}` : 'Current rates');
   const curEstimated = !!tariff.estimated;
 

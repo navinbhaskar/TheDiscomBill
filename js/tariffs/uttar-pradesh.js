@@ -1,4 +1,4 @@
-// Uttar Pradesh — Electricity Tariff Data (2025-26)
+// Uttar Pradesh — Electricity Tariff Data (2026-27; rates retained from 2025-26 per UPERC order dt. 02-Jul-2026)
 // Source: Publicly available tariff orders from the respective SERC.
 // To update rates: edit the shared makeCategories() factory below.
 // See TARIFF_GUIDE.md for the complete field schema and step-by-step instructions.
@@ -7,7 +7,7 @@
 // tariff schedule. Rates are defined ONCE in makeCategories() and cloned per DISCOM to
 // keep the module small (~240 lines vs. ~1,160 with inline repetition).
 
-// ── Shared UPERC tariff schedule (FY 2025-26) ────────────────────────────────
+// ── Shared UPERC tariff schedule (FY 2026-27 — retained unchanged from FY 2025-26) ───────────
 
 function makeCategories() {
   return [
@@ -18,16 +18,32 @@ function makeCategories() {
         {
           id: "10A",
           name: "ST-10A – Urban Life Line (Sanctioned Load ≤ 1 kW)",
-          description: "Urban/non-rural domestic Life Line consumers: contracted load ≤ 1 kW, consuming up to 100 units/month. Gross ₹6.50/unit; ₹3.50/unit Govt. subsidy; net consumer rate ₹3.00/unit. For load > 1 kW or > 100 units/month, select ST-10B.",
+          description: "Urban/non-rural domestic Life Line consumers: contracted load ≤ 1 kW, consuming up to 100 units/month. Gross ₹6.50/unit; ₹3.75/unit Govt. subsidy (raised from ₹3.50 in the FY 2026-27 order); net consumer rate ₹2.75/unit. For load > 1 kW or > 100 units/month, select ST-10B.",
           fixedCharge: { type: "per_kw", rate: 50 },
           energySlabs: [
-            { limit: 100, rate: 3.00 },
+            { limit: 100, rate: 2.75 },
             { limit: Infinity, rate: 5.50 }
           ],
           additionalCharges: [
             { name: "Electricity Duty", type: "percent_total", rate: 5 }
           ],
-          fac: 0.00
+          fac: 0.00,
+          // Gross tariff unchanged in the FY 2026-27 order (dt. 02-Jul-2026); only the GoUP
+          // lifeline subsidy moved (₹3.50 → ₹3.75/unit), so the net first-slab rate is what changes.
+          currentRatesFrom: "2026-07-02",
+          periodLabel: "FY 2026-27 (subsidy revised 02-Jul-2026)",
+          rateHistory: [
+            {
+              from: "2024-10-01",
+              label: "FY 2024-25 – Jun 2026 (₹3.50/unit subsidy)",
+              estimated: false,
+              fixedCharge: { type: "per_kw", rate: 50 },
+              energySlabs: [
+                { limit: 100, rate: 3.00 },
+                { limit: Infinity, rate: 5.50 }
+              ]
+            }
+          ]
         },
         {
           id: "10B",
@@ -62,32 +78,68 @@ function makeCategories() {
         {
           id: "17",
           name: "ST-17 – Rural Life Line (≤ 1 kW, ≤ 100 units)",
-          description: "Life Line rural consumers: contracted load ≤ 1 kW consuming up to 100 units/month. Gross ₹6.50/unit; ₹3.50/unit Govt. subsidy; net consumer rate ₹3.00/unit. For load > 1 kW or > 100 units/month, select 'Rural Non-Life Line'.",
+          description: "Life Line rural consumers: contracted load ≤ 1 kW consuming up to 100 units/month. Gross ₹6.50/unit; ₹3.75/unit Govt. subsidy (raised from ₹3.50 in the FY 2026-27 order); net consumer rate ₹2.75/unit. For load > 1 kW or > 100 units/month, select 'Rural Non-Life Line'.",
           fixedCharge: { type: "per_kw", rate: 50 },
           energySlabs: [
-            { limit: 100, rate: 3.00 },
-            { limit: Infinity, rate: 3.35 }
+            { limit: 100, rate: 2.75 },
+            { limit: Infinity, rate: 2.95 }
           ],
           additionalCharges: [
             { name: "Electricity Duty", type: "percent_total", rate: 5 }
           ],
-          fac: 0.00
+          fac: 0.00,
+          // Gross tariff unchanged in the FY 2026-27 order (dt. 02-Jul-2026); GoUP subsidy moved
+          // (lifeline ₹3.50 → ₹3.75, rural 0–100 ₹3.30 → ₹3.70), changing both net slab rates.
+          // The Infinity slab mirrors rural non-lifeline's first slab, as before.
+          currentRatesFrom: "2026-07-02",
+          periodLabel: "FY 2026-27 (subsidy revised 02-Jul-2026)",
+          rateHistory: [
+            {
+              from: "2024-10-01",
+              label: "FY 2024-25 – Jun 2026 (₹3.50/unit subsidy)",
+              estimated: false,
+              fixedCharge: { type: "per_kw", rate: 50 },
+              energySlabs: [
+                { limit: 100, rate: 3.00 },
+                { limit: Infinity, rate: 3.35 }
+              ]
+            }
+          ]
         },
         {
           id: "17B",
           name: "ST-17 – Rural Non-Life Line (Sanctioned Load > 1 kW)",
-          description: "Metered rural/gram sabha domestic consumers with sanctioned load above 1 kW, or consuming more than 100 units/month. Fixed charge ₹90/kW/month.",
+          description: "Metered rural/gram sabha domestic consumers with sanctioned load above 1 kW, or consuming more than 100 units/month. Fixed charge ₹90/kW/month. First two slabs are net of the GoUP subsidy (0–100: ₹3.70/unit, 101–150: ₹3.50/unit, both raised in the FY 2026-27 order).",
           fixedCharge: { type: "per_kw", rate: 90 },
           energySlabs: [
-            { limit: 100, rate: 3.35 },
-            { limit: 150, rate: 3.85 },
+            { limit: 100, rate: 2.95 },
+            { limit: 150, rate: 3.35 },
             { limit: 300, rate: 5.00 },
             { limit: Infinity, rate: 5.50 }
           ],
           additionalCharges: [
             { name: "Electricity Duty", type: "percent_total", rate: 5 }
           ],
-          fac: 0.00
+          fac: 0.00,
+          // Gross tariff unchanged in the FY 2026-27 order (dt. 02-Jul-2026); GoUP subsidy moved
+          // on the first two slabs only (0–100: ₹3.30 → ₹3.70 ⇒ net 3.35 → 2.95; 101–150:
+          // ₹3.00 → ₹3.50 ⇒ net 3.85 → 3.35). Slabs above 150 units carry no subsidy — unchanged.
+          currentRatesFrom: "2026-07-02",
+          periodLabel: "FY 2026-27 (subsidy revised 02-Jul-2026)",
+          rateHistory: [
+            {
+              from: "2024-10-01",
+              label: "FY 2024-25 – Jun 2026 (₹3.30/₹3.00 subsidy)",
+              estimated: false,
+              fixedCharge: { type: "per_kw", rate: 90 },
+              energySlabs: [
+                { limit: 100, rate: 3.35 },
+                { limit: 150, rate: 3.85 },
+                { limit: 300, rate: 5.00 },
+                { limit: Infinity, rate: 5.50 }
+              ]
+            }
+          ]
         },
         {
           id: "13",
@@ -203,16 +255,21 @@ export default {
   state: "Uttar Pradesh",
   // Date the current (latest) rate set took effect. Bills before this resolve to a
   // historical entry (see each supply type's rateHistory) or are flagged ESTIMATED.
-  // UP's 2025-26 order continues the 2024-25 (Oct 2024) rates with no hike.
+  // UPERC's FY 2026-27 order (dt. 02-Jul-2026) retained the whole retail schedule unchanged —
+  // gross rates and fixed charges date from Oct 2024, so that stays the state-level default.
+  // Only the GoUP domestic subsidy moved; the three subsidised supply types (ST-10A, ST-17,
+  // ST-17B) self-declare currentRatesFrom: "2026-07-02" with their pre-July nets in rateHistory.
   currentRatesFrom: "2024-10-01",
-  // These LMV-1/LMV-2 rates are the UPERC FY2025-26 schedule and have been checked to the paisa
-  // against real MVVNL bills, so the bill shows a "Verified rates" confidence badge.
+  // The FY2025-26 schedule was checked to the paisa against real MVVNL bills; the FY 2026-27
+  // order retains it unchanged, so the "Verified rates" badge stands. The July-2026
+  // subsidy-adjusted lifeline/rural nets are computed from the notified subsidy amounts and
+  // still await confirmation against a post-July real bill.
   verified: true,
-  ratesAsOf: "FY 2025-26 (UPERC)",
+  ratesAsOf: "FY 2026-27 (UPERC order dt. 02-Jul-2026, rates retained)",
   sourceUrl: "https://www.uperc.org",
   discoms: DISCOM_META.map(d => ({
     ...d,
-    tariffYear: "2025-26",
+    tariffYear: "2026-27",
     lpscRate: 1.5,
     categories: makeCategories(),
   })),
