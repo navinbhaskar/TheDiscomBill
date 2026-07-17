@@ -18,6 +18,7 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 
 import { TARIFF_DB, STATE_META, getStates, getDiscoms } from './js/tariffs/registry.js';
 import { calculateBill } from './js/engine.js';
@@ -91,6 +92,34 @@ function emitPage(relDir, html) {
   for (const l of ALL_LANGS) final = replaceAllStr(final, LASTMOD_TOKEN[l], humanDate(lastmod, l));
   writePage(relDir, final);
 }
+
+// ── Tariff-data-derived "Tariffs last updated" ────────────────────────────────
+// The visible "Tariffs last updated" line must move ONLY when the state's tariff data
+// changes — a chrome tweak re-dating every page was making all 400+ pages claim a tariff
+// review that never happened. So this date hashes the registry data alone (manifest key
+// "tariff:<state-slug>", beside the URL entries). No token needed: the data hash doesn't
+// depend on the rendered page, so the date interpolates directly — and because it then
+// participates in the page hash, a real tariff change re-dates <lastmod> too.
+// First sighting seeds from git's last commit touching js/tariffs/<slug>.js — the honest
+// date the data last moved — falling back to TODAY outside a git checkout.
+function tariffLastmod(state) {
+  const slug = slugify(state);
+  const key = `tariff:${slug}`;
+  const m = loadManifest();
+  _seenUrls.add(key);   // saveManifest() prunes anything unseen
+  const hash = sha1(JSON.stringify({ meta: STATE_META[state] ?? null, discoms: getDiscoms(state) }));
+  if (m[key] && m[key].hash === hash) return m[key].lastmod;
+  let date = TODAY;
+  if (!m[key]) {
+    try {
+      date = execSync(`git log -1 --format=%cs -- "js/tariffs/${slug}.js"`,
+        { cwd: ROOT, encoding: 'utf8' }).trim() || TODAY;
+    } catch (e) { /* no git — TODAY is the best we have */ }
+  }
+  m[key] = { hash, lastmod: date };
+  return date;
+}
+const tariffUpdated = (state, lang) => humanDate(tariffLastmod(state), lang);
 
 // ── small utilities ──────────────────────────────────────────────────────────
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -922,7 +951,7 @@ function discomPage(state, discom, lang = 'en') {
       </div>
       <div class="tariff-badges">${badges.join('')}</div>
     </div>
-    <p class="guide-meta">Tariffs last updated: ${LASTMOD_EN}${meta.verified ? ' · ✓ verified against real bills' : ''}</p>
+    <p class="guide-meta">Tariffs last updated: ${tariffUpdated(state, 'en')}${meta.verified ? ' · ✓ verified against real bills' : ''}</p>
     ${src ? `<p><a class="tariff-source" href="${attr(src)}" target="_blank" rel="noopener">Official ${esc(discom.name)} source ↗</a></p>` : ''}
     <p class="seo-cta-row"><a class="seo-cta" href="/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator">Open the ${esc(discom.name)} bill calculator →</a></p>
 
@@ -1068,9 +1097,9 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
   const bcTariffs = T(lang, { hi: 'टैरिफ', mr: 'टॅरिफ', ta: 'கட்டணங்கள்', en: 'Tariffs' });
   const areaPrefix = T(lang, { hi: 'सेवा क्षेत्र:', mr: 'सेवा क्षेत्र:', ta: 'சேவைப் பகுதி:', en: 'Service area:' });
   const updated = T(lang, {
-    hi: `टैरिफ अंतिम अपडेट: ${LASTMOD_HI}${meta.verified ? ' · ✓ असली बिलों से सत्यापित' : ''}`,
-    mr: `टॅरिफ शेवटचे अपडेट: ${LASTMOD_MR}${meta.verified ? ' · ✓ खऱ्या बिलांवरून पडताळलेले' : ''}`,
-    ta: `கட்டணங்கள் கடைசியாக புதுப்பிக்கப்பட்டது: ${LASTMOD_TA}${meta.verified ? ' · ✓ உண்மையான பில்களுடன் சரிபார்க்கப்பட்டது' : ''}`,
+    hi: `टैरिफ अंतिम अपडेट: ${tariffUpdated(state, 'hi')}${meta.verified ? ' · ✓ असली बिलों से सत्यापित' : ''}`,
+    mr: `टॅरिफ शेवटचे अपडेट: ${tariffUpdated(state, 'mr')}${meta.verified ? ' · ✓ खऱ्या बिलांवरून पडताळलेले' : ''}`,
+    ta: `கட்டணங்கள் கடைசியாக புதுப்பிக்கப்பட்டது: ${tariffUpdated(state, 'ta')}${meta.verified ? ' · ✓ உண்மையான பில்களுடன் சரிபார்க்கப்பட்டது' : ''}`,
     en: '' });
   const sourceLink = T(lang, { hi: `आधिकारिक ${nm} स्रोत ↗`, mr: `अधिकृत ${nm} स्रोत ↗`, ta: `அதிகாரப்பூர்வ ${nm} ஆதாரம் ↗`, en: '' });
   const openCta = T(lang, { hi: `${nm} बिल कैलकुलेटर खोलें →`, mr: `${nm} बिल कॅल्क्युलेटर उघडा →`, ta: `${nm} கட்டண கணிப்பானைத் திறக்கவும் →`, en: '' });
@@ -1216,9 +1245,9 @@ function statePage(state, lang = 'en') {
     const bcTariffs = T(lang, { hi: 'टैरिफ', mr: 'टॅरिफ', ta: 'கட்டணங்கள்', en: 'Tariffs' });
     const h1 = T(lang, { hi: `${esc(sl)} बिजली बिल कैलकुलेटर व डिस्कॉम टैरिफ (${esc(fyL)})`, mr: `${esc(sl)} वीज बिल कॅल्क्युलेटर व डिस्कॉम टॅरिफ (${esc(fyL)})`, ta: `${esc(sl)} மின் கட்டண கணிப்பான் & DISCOM கட்டணம் (${esc(fyL)})`, en: '' });
     const updated = T(lang, {
-      hi: `टैरिफ अंतिम अपडेट: ${LASTMOD_HI}${meta.verified ? ' · ✓ असली बिलों से सत्यापित' : ''}`,
-      mr: `टॅरिफ शेवटचे अपडेट: ${LASTMOD_MR}${meta.verified ? ' · ✓ खऱ्या बिलांवरून पडताळलेले' : ''}`,
-      ta: `கட்டணங்கள் கடைசியாக புதுப்பிக்கப்பட்டது: ${LASTMOD_TA}${meta.verified ? ' · ✓ உண்மையான பில்களுடன் சரிபார்க்கப்பட்டது' : ''}`,
+      hi: `टैरिफ अंतिम अपडेट: ${tariffUpdated(state, 'hi')}${meta.verified ? ' · ✓ असली बिलों से सत्यापित' : ''}`,
+      mr: `टॅरिफ शेवटचे अपडेट: ${tariffUpdated(state, 'mr')}${meta.verified ? ' · ✓ खऱ्या बिलांवरून पडताळलेले' : ''}`,
+      ta: `கட்டணங்கள் கடைசியாக புதுப்பிக்கப்பட்டது: ${tariffUpdated(state, 'ta')}${meta.verified ? ' · ✓ உண்மையான பில்களுடன் சரிபார்க்கப்பட்டது' : ''}`,
       en: '' });
     const lead = T(lang, {
       hi: `${esc(sl)} की ${nd} वितरण कंपन${many ? 'ियों' : 'ी'} — ${esc(names)} — में से किसी का भी अनुमानित बिजली बिल निकालें, ${esc(fyL)} के पूरे स्लैब-वार विवरण के साथ${cityLine ? ` — ${esc(cityLine)} समेत` : ''}।`,
@@ -1324,7 +1353,7 @@ function statePage(state, lang = 'en') {
     ])}
     ${langSwitchLink(enUrl, 'en', altLangs)}
     <h1>${esc(state)} Electricity Bill Calculator ${TITLE_YEAR} &amp; DISCOM Tariffs (${esc(fy)})</h1>
-    <p class="guide-meta">Tariffs last updated: ${LASTMOD_EN}${meta.verified ? ' · ✓ verified against real bills' : ''}</p>
+    <p class="guide-meta">Tariffs last updated: ${tariffUpdated(state, 'en')}${meta.verified ? ' · ✓ verified against real bills' : ''}</p>
     <p class="seo-lead">Calculate your provisional electricity bill for any of ${esc(state)}'s ${discoms.length} distribution compan${discoms.length > 1 ? 'ies' : 'y'} — ${esc(names)} — with a full slab-wise breakdown for ${esc(fy)}${cityLine ? `, covering ${esc(cityLine)} and more` : ''}.</p>
     <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Open the ${esc(state)} bill calculator →</a></p>
 
