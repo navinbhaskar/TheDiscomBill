@@ -3,7 +3,7 @@
 // chat opens once an expert accepts it.
 
 import { getStates, getDiscoms } from './tariffs/registry.js';
-import { isConfigured, getSupabase } from './supabase-config.js';
+import { isConfigured, getSupabase, clearStoredSession } from './supabase-config.js';
 import { initAuth, accountBarHtml, startChat, fileListHtml,
          esc, fmtWhen, fmtSize, statusChip, ICONS } from './support-common.js';
 
@@ -65,7 +65,13 @@ async function init() {
 
 function renderAccountBar() {
   accountEl.innerHTML = accountBarHtml(myProfile?.full_name, me.email);
-  $('brSignOut').addEventListener('click', () => sb.auth.signOut());
+  $('brSignOut').addEventListener('click', async () => {
+    // signOut() resolves with { error } and keeps the local session on failure —
+    // clear it explicitly so Sign out always signs out.
+    try { await Promise.race([sb.auth.signOut(), new Promise(r => setTimeout(r, 2500))]); } catch (e) {}
+    clearStoredSession();
+    location.reload();
+  });
 }
 
 // ── Dashboard: complaint list + new-complaint entry ──────────────────────────

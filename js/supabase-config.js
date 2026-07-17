@@ -45,6 +45,17 @@ export function getStoredUser() {
   } catch (e) { return null; }
 }
 
+// Force-clear the persisted session — the logout fallback. supabase-js v2's
+// signOut() resolves with { error } rather than throwing, and on a network or
+// server failure it leaves the local session in localStorage; without this,
+// a failed revoke keeps the header signed in forever.
+export function clearStoredSession() {
+  try {
+    const ref = new URL(SUPABASE_URL).hostname.split('.')[0];
+    localStorage.removeItem(`sb-${ref}-auth-token`);
+  } catch (e) {}
+}
+
 // The supabase-js client is loaded from a CDN only when actually needed, so the
 // rest of the site keeps working offline and pays no cost for this feature.
 let _client = null;

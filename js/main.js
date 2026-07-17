@@ -16,7 +16,7 @@ import {
 import { initDatePickers } from './datepicker.js';
 import { initI18n } from './i18n.js';
 import { initComparisonTable } from './compare.js';
-import { isConfigured, getStoredUser, getSupabase } from './supabase-config.js';
+import { isConfigured, getStoredUser, getSupabase, clearStoredSession } from './supabase-config.js';
 import { initRemoteRates } from './rates.js';
 import { initHeaderSearch } from './search.js';
 import Lenis from './vendor/lenis.mjs';
@@ -302,9 +302,14 @@ function initLoginButton() {
     btn.disabled = true; btn.textContent = 'Signing out…';
     try {
       const sb = await getSupabase();
-      await sb.auth.signOut();
-    } catch (err) { /* token may already be stale — still clear local state */ }
+      // Best-effort server-side revoke, capped so a dead network can't strand the
+      // button on "Signing out…". signOut() resolves with { error } rather than
+      // throwing, and on failure keeps the local session — the explicit
+      // clearStoredSession() below is the logout that must always happen.
+      await Promise.race([sb.auth.signOut(), new Promise(res => setTimeout(res, 2500))]);
+    } catch (err) { /* SDK failed to load — clear locally below */ }
     try { localStorage.removeItem('discombill.role'); } catch (err) {}
+    clearStoredSession();
     location.href = '/';
   });
 

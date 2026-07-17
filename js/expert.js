@@ -3,7 +3,7 @@
 // documents and chat with the consumer. Accounts become experts when you set
 // profiles.role = 'expert' in the Supabase dashboard (see supabase/schema.sql).
 
-import { isConfigured, getSupabase } from './supabase-config.js';
+import { isConfigured, getSupabase, clearStoredSession } from './supabase-config.js';
 import { initAuth, accountBarHtml, startChat, fileListHtml,
          esc, fmtWhen, statusChip } from './support-common.js';
 
@@ -49,7 +49,13 @@ async function init() {
   } catch (e) {}
   accountEl.innerHTML = accountBarHtml(myProfile?.full_name, me.email,
     myProfile?.role === 'expert' ? 'EXPERT' : '');
-  $('brSignOut').addEventListener('click', () => sb.auth.signOut());
+  $('brSignOut').addEventListener('click', async () => {
+    // signOut() resolves with { error } and keeps the local session on failure —
+    // clear it explicitly so Sign out always signs out.
+    try { await Promise.race([sb.auth.signOut(), new Promise(r => setTimeout(r, 2500))]); } catch (e) {}
+    clearStoredSession();
+    location.reload();
+  });
 
   if (myProfile?.role !== 'expert') {
     mainEl.innerHTML = `

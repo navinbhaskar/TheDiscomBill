@@ -3,7 +3,7 @@
 // calculates one. "Open" reloads the bill in the calculator via its share-link
 // params; "Delete" removes the row (RLS restricts everything to the owner).
 
-import { isConfigured, getSupabase } from './supabase-config.js';
+import { isConfigured, getSupabase, clearStoredSession } from './supabase-config.js';
 import { accountBarHtml, renderSetupNotice, esc, fmtWhen } from './support-common.js';
 
 const LOGIN_URL = '/login/?next=' + encodeURIComponent('/my-bills/');
@@ -28,7 +28,13 @@ async function init() {
   });
 
   accountEl.innerHTML = accountBarHtml(me.user_metadata?.full_name, me.email);
-  $('brSignOut').addEventListener('click', () => sb.auth.signOut());
+  $('brSignOut').addEventListener('click', async () => {
+    // signOut() resolves with { error } and keeps the local session on failure —
+    // clear it explicitly so Sign out always signs out.
+    try { await Promise.race([sb.auth.signOut(), new Promise(r => setTimeout(r, 2500))]); } catch (e) {}
+    clearStoredSession();
+    location.reload();
+  });
 
   renderBills();
 }

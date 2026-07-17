@@ -4,7 +4,7 @@
 // supabase/admin.sql that re-checks the admin role server-side — the page is
 // just a UI, it holds no privileged keys.
 
-import { isConfigured, getSupabase } from './supabase-config.js';
+import { isConfigured, getSupabase, clearStoredSession } from './supabase-config.js';
 import { initAuth, accountBarHtml, esc, fmtWhen, ICONS } from './support-common.js';
 
 const LOGIN_URL = '/login/?next=' + encodeURIComponent('/admin/');
@@ -41,7 +41,13 @@ async function init() {
   } catch (e) {}
   accountEl.innerHTML = accountBarHtml(myProfile?.full_name, me.email,
     myProfile?.role === 'admin' ? 'ADMIN' : '');
-  $('brSignOut').addEventListener('click', () => sb.auth.signOut());
+  $('brSignOut').addEventListener('click', async () => {
+    // signOut() resolves with { error } and keeps the local session on failure —
+    // clear it explicitly so Sign out always signs out.
+    try { await Promise.race([sb.auth.signOut(), new Promise(r => setTimeout(r, 2500))]); } catch (e) {}
+    clearStoredSession();
+    location.reload();
+  });
 
   if (myProfile?.role !== 'admin') {
     mainEl.innerHTML = `
