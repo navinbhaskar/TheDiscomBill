@@ -196,6 +196,12 @@ const CONSUMER_NAME = {
 const consumerName = (discom) => CONSUMER_NAME[discom.id] || discom.name;
 // Bare year for titles: "FY 2025-26" / "2025-26" → "2025-26".
 const yearLabel = (fy) => String(fy).replace(/^FY\s*/i, '');
+// The year for the "…Bill Calculator <year>" slot: the plain calendar year people type
+// into search at build time — NOT the tariff-order vintage. The order year (fy) stays on
+// every "Tariff" phrase, description, badge and body line, so the SERP looks current
+// without overstating how new the rates are. (July-2026 builds were still titling pages
+// "2024-25" — a sitewide CTR leak.)
+const TITLE_YEAR = String(new Date().getFullYear());
 
 // ── shared chrome (header / footer) ───────────────────────────────────────────
 const HEADER = `
@@ -836,11 +842,11 @@ function discomPage(state, discom, lang = 'en') {
   // "MVVNL bill calculator 2025-26") — with only the suffix varied. No brand suffix (Google
   // shows the site name separately). Long names step down via fitTitle().
   const title = fitTitle(variant(seed, [
-    `${cname} Bill Calculator ${yr} — Tariff & Rates`,
-    `${cname} Bill Calculator ${yr} — ${state} Tariff`,
-    `${cname} Electricity Bill Calculator ${yr}`,
+    `${cname} Bill Calculator ${TITLE_YEAR} — Tariff & Rates`,
+    `${cname} Bill Calculator ${TITLE_YEAR} — ${state} Tariff`,
+    `${cname} Electricity Bill Calculator ${TITLE_YEAR}`,
   ]), [
-    `${cname} Bill Calculator ${yr}`,
+    `${cname} Bill Calculator ${TITLE_YEAR}`,
     `${cname} Bill Calculator`,
   ]);
   const description = variant(seed + 'd', [
@@ -851,9 +857,9 @@ function discomPage(state, discom, lang = 'en') {
   // H1 also leads with the searched "<name> Bill Calculator <year>" phrase (matching the title),
   // then varies the tail — region or the full legal name — for on-page uniqueness.
   const h1 = variant(seed + 'h', [
-    `${esc(cname)} Bill Calculator ${esc(yr)}${region ? ` — ${esc(region)}` : ''}`,
-    `${esc(cname)} Bill Calculator &amp; Tariff (${esc(yr)})`,
-    `${esc(cname)} Electricity Bill Calculator ${esc(yr)} — ${esc(long)}`,
+    `${esc(cname)} Bill Calculator ${TITLE_YEAR}${region ? ` — ${esc(region)}` : ''}`,
+    `${esc(cname)} Bill Calculator ${TITLE_YEAR} — ${esc(yr)} Tariff`,
+    `${esc(cname)} Electricity Bill Calculator ${TITLE_YEAR} — ${esc(long)}`,
   ]);
   const lead = variant(seed + 'l', [
     `Estimate your <strong>${esc(long)}</strong> bill in seconds and browse the full ${esc(fy)} tariff schedule — energy slabs, fixed/demand charges, fuel surcharge (FPPA) and electricity duty${cities.length ? ` for ${esc(cities.slice(0, 3).join(', '))} and the rest of ${esc(region || state)}` : ` across ${esc(region || state)}`}.`,
@@ -968,10 +974,10 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
   const rgn = region || sl;
 
   const title = fitTitle(
-    T(lang, { hi: `${cname} बिजली बिल कैलकुलेटर ${yr} — टैरिफ`, mr: `${cname} वीज बिल कॅल्क्युलेटर ${yr} — टॅरिफ`, ta: `${cname} மின் கட்டண கணிப்பான் ${yr} — கட்டணம்`, en: `${cname} Bill Calculator ${yr}` }),
+    T(lang, { hi: `${cname} बिजली बिल कैलकुलेटर ${TITLE_YEAR} — टैरिफ`, mr: `${cname} वीज बिल कॅल्क्युलेटर ${TITLE_YEAR} — टॅरिफ`, ta: `${cname} மின் கட்டண கணிப்பான் ${TITLE_YEAR} — கட்டணம்`, en: `${cname} Bill Calculator ${TITLE_YEAR}` }),
     [
-      T(lang, { hi: `${cname} बिजली बिल कैलकुलेटर ${yr}`, mr: `${cname} वीज बिल कॅल्क्युलेटर ${yr}`, ta: `${cname} மின் கட்டண கணிப்பான் ${yr}`, en: `${cname} Bill Calculator ${yr}` }),
-      T(lang, { hi: `${cname} बिल कैलकुलेटर ${yr}`, mr: `${cname} बिल कॅल्क्युलेटर ${yr}`, ta: `${cname} கட்டண கணிப்பான் ${yr}`, en: `${cname} Bill Calculator` }),
+      T(lang, { hi: `${cname} बिजली बिल कैलकुलेटर ${TITLE_YEAR}`, mr: `${cname} वीज बिल कॅल्क्युलेटर ${TITLE_YEAR}`, ta: `${cname} மின் கட்டண கணிப்பான் ${TITLE_YEAR}`, en: `${cname} Bill Calculator ${TITLE_YEAR}` }),
+      T(lang, { hi: `${cname} बिल कैलकुलेटर ${TITLE_YEAR}`, mr: `${cname} बिल कॅल्क्युलेटर ${TITLE_YEAR}`, ta: `${cname} கட்டண கணிப்பான் ${TITLE_YEAR}`, en: `${cname} Bill Calculator` }),
     ]);
   const description = T(lang, {
     hi: `${cname} (${long}) का बिजली बिल ${fyL} के लिए निकालें${cityPhrase ? ` — ${cityPhrase}` : ''}। स्लैब दरें, फिक्स्ड चार्ज, FPPA व शुल्क।${dr ? ` घरेलू दर ${rupee(dr.min)}/यूनिट से।` : ''} मुफ़्त, बिना साइन-अप।`,
@@ -1157,7 +1163,7 @@ function statePage(state, lang = 'en') {
     const many = nd > 1;
     const pfx = `/${lang}`;
     const title = fitTitle(
-      T(lang, { hi: `${sl} बिजली बिल कैलकुलेटर ${yr}`, mr: `${sl} वीज बिल कॅल्क्युलेटर ${yr}`, ta: `${sl} மின் கட்டண கணிப்பான் ${yr}`, en: '' }), [
+      T(lang, { hi: `${sl} बिजली बिल कैलकुलेटर ${TITLE_YEAR}`, mr: `${sl} वीज बिल कॅल्क्युलेटर ${TITLE_YEAR}`, ta: `${sl} மின் கட்டண கணிப்பான் ${TITLE_YEAR}`, en: '' }), [
       T(lang, { hi: `${sl} बिजली टैरिफ ${yr}`, mr: `${sl} वीज टॅरिफ ${yr}`, ta: `${sl} மின் கட்டணம் ${yr}`, en: '' }),
       T(lang, { hi: `${sl} बिजली टैरिफ`, mr: `${sl} वीज टॅरिफ`, ta: `${sl} மின் கட்டணம்`, en: '' }),
     ]);
@@ -1276,9 +1282,9 @@ function statePage(state, lang = 'en') {
 
   // ≤ ~60 chars, keyword-first, no brand suffix (see the note above the DISCOM-page title).
   const title = fitTitle(variant(seed, [
-    `${state} Electricity Bill Calculator ${fy}`,
+    `${state} Electricity Bill Calculator ${TITLE_YEAR}`,
     `${state} Electricity Tariff ${fy} — Bill Calculator`,
-    `${state} DISCOM Tariffs & Bill Calculator ${fy}`,
+    `${state} DISCOM Tariffs & Bill Calculator ${TITLE_YEAR}`,
   ]), [
     `${state} Electricity Tariff ${fy}`,
     `${state} Tariff ${fy}`,
@@ -1317,7 +1323,7 @@ function statePage(state, lang = 'en') {
       { name: state, url: null },
     ])}
     ${langSwitchLink(enUrl, 'en', altLangs)}
-    <h1>${esc(state)} Electricity Bill Calculator &amp; DISCOM Tariffs (${esc(fy)})</h1>
+    <h1>${esc(state)} Electricity Bill Calculator ${TITLE_YEAR} &amp; DISCOM Tariffs (${esc(fy)})</h1>
     <p class="guide-meta">Tariffs last updated: ${LASTMOD_EN}${meta.verified ? ' · ✓ verified against real bills' : ''}</p>
     <p class="seo-lead">Calculate your provisional electricity bill for any of ${esc(state)}'s ${discoms.length} distribution compan${discoms.length > 1 ? 'ies' : 'y'} — ${esc(names)} — with a full slab-wise breakdown for ${esc(fy)}${cityLine ? `, covering ${esc(cityLine)} and more` : ''}.</p>
     <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Open the ${esc(state)} bill calculator →</a></p>
