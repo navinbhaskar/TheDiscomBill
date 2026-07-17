@@ -602,10 +602,10 @@ export function populateMonthYear() {
 
 // ─── Units Display ────────────────────────────────────────────────────────────
 
-// Reading mode: 'simple' | 'advanced' | 'tod' (selected by the radio group)
+// Reading mode: 'advanced' (meter reading) | 'tod' — driven by the TOD-split switch
 export function getMeterMode() {
-  const r = document.querySelector('input[name="meterMode"]:checked');
-  return r ? r.value : 'advanced';
+  const chk = document.getElementById('todSplitChk');
+  return (chk && chk.checked) ? 'tod' : 'advanced';
 }
 
 // Meter number: TOD has its own field; the unified Meter Reading mode derives it from the
@@ -1132,8 +1132,8 @@ export function updateReadingUnitLabels() {
 }
 
 export function getBillingBasis() {
-  const sel = document.getElementById('billingBasis');
-  return sel ? sel.value : 'kwh';
+  const r = document.querySelector('input[name="billingBasis"]:checked');
+  return r ? r.value : 'kwh';
 }
 
 // The natural basis for the selected tariff: kVA tariffs default to kVA-based (kVAh), else kWh.
@@ -1145,10 +1145,10 @@ function defaultBillingBasis() {
   return (t && (t.demandUnit === 'kVA' || t.demandUnit === 'kva')) ? 'kvah' : 'kwh';
 }
 
-// Reset the Billing Basis selector to the tariff's natural default (called on category change).
+// Reset the Billing Basis toggle to the tariff's natural default (called on category change).
 export function applyDefaultBillingBasis() {
-  const sel = document.getElementById('billingBasis');
-  if (sel) sel.value = defaultBillingBasis();
+  const r = document.querySelector(`input[name="billingBasis"][value="${defaultBillingBasis()}"]`);
+  if (r) r.checked = true;
 }
 
 // Demand is labelled/charged in kVA for the kVA-based (kVAh) basis; in kW for the active (kWh) basis.
@@ -1706,8 +1706,8 @@ export async function loadFromUrl(paramsSource) {
     }
     // Billing basis — overrides the category-driven default; refresh labels/visibility
     if (p.get('basis')) {
-      const b = document.getElementById('billingBasis');
-      if (b) { b.value = p.get('basis'); b.dispatchEvent(new Event('change')); }
+      const b = document.querySelector(`input[name="billingBasis"][value="${p.get('basis')}"]`);
+      if (b) { b.checked = true; b.dispatchEvent(new Event('change')); }
     }
     if (p.get('month') || p.get('year')) {
       const mm = +(p.get('month') || document.getElementById('billingMonth').value);
@@ -1717,8 +1717,8 @@ export async function loadFromUrl(paramsSource) {
     // Restore reading mode. Advanced rows aren't serialized — those links carry the
     // computed total in `units` and load as Simple, which reproduces the same bill.
     if (p.get('mmode') === 'tod') {
-      const r = document.querySelector('input[name="meterMode"][value="tod"]');
-      if (r) { r.checked = true; setMeterMode('tod'); }
+      const chk = document.getElementById('todSplitChk');
+      if (chk) { chk.checked = true; setMeterMode('tod'); }
     }
     if (p.get('lpscon') === '0') {
       const c = document.getElementById('lpscApplicable');

@@ -885,8 +885,27 @@ a:hover { text-decoration: underline; }
 
 /* Billing Basis — shorter width, secondary feel (rarely changed once set) */
 #billingBasisGroup { margin-bottom: 8px; }
-#billingBasisGroup label { font-size: 11px; margin-bottom: 2px; color: var(--text-secondary); font-weight: 500; }
-#billingBasis { width: auto; max-width: 260px; }
+/* Inline label + segmented kWh/kVAh toggle + ⓘ, all on one line */
+.basis-row { display: flex; align-items: center; gap: 8px; }
+.basis-label { font-size: 11px; color: var(--text-secondary); font-weight: 500; }
+.basis-seg {
+  display: inline-flex; gap: 3px; padding: 3px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+}
+.basis-opt {
+  padding: 3px 12px; border-radius: var(--radius-full);
+  font-size: 11px; font-weight: 600; color: var(--text-secondary);
+  cursor: pointer; transition: var(--t-fast); user-select: none;
+}
+.basis-opt input { position: absolute; opacity: 0; pointer-events: none; }
+.basis-opt:hover { color: var(--text-primary); }
+.basis-opt:has(input:checked) {
+  background: var(--surface-card); color: var(--text-brand);
+  box-shadow: var(--shadow-xs);
+}
+.tod-split-label { margin-bottom: 10px; }
 
 .form-row {
   display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
@@ -1164,28 +1183,6 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   transition: background var(--t-fast);
 }
 .btn-remove-row:hover { background: var(--p-red-100); }
-
-/* ─── Meter-read mode selector (Simple / Advanced / TOD) ─────────────────────── */
-.meter-mode {
-  display: flex; gap: 4px; padding: 4px;
-  background: var(--surface-sunken);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  margin-bottom: 16px;
-}
-.meter-mode-opt {
-  flex: 1; display: flex; align-items: center; justify-content: center;
-  padding: 6px 4px; border-radius: var(--radius-sm);
-  font-size: 11px; font-weight: 600; color: var(--text-secondary);
-  text-transform: uppercase; letter-spacing: 0.02em;
-  cursor: pointer; transition: var(--t-fast); user-select: none;
-}
-.meter-mode-opt input { position: absolute; opacity: 0; pointer-events: none; }
-.meter-mode-opt:hover { color: var(--text-primary); }
-.meter-mode-opt:has(input:checked) {
-  background: var(--surface-card); color: var(--text-brand);
-  box-shadow: var(--shadow-xs);
-}
 
 /* Advanced sub-tabs */
 .adv-subtabs { display: flex; gap: 6px; margin-bottom: 10px; }

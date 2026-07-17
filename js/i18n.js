@@ -71,7 +71,7 @@ export const STRINGS = {
     'label.accountNo': 'Account / Consumer No.',
     'label.address': 'Address',
     'label.billingMonth': 'Billing Month & Year',
-    'label.billingBasis': 'Billing Basis (energy & demand)',
+    'label.billingBasis': 'Billing basis',
     'label.fromDate': 'From Date',
     'label.toDate': 'To Date',
     'small.fromDate': 'Billing period start date',
@@ -84,8 +84,7 @@ export const STRINGS = {
     'tab.arrear': 'Arrear',
     'tab.payment': 'Payment',
     'tab.adjustment': 'Adjustment',
-    'mode.meterReading': 'Meter Reading',
-    'mode.tod': 'TOD',
+    'mode.todSplit': 'TOD split (peak / normal / off-peak units)',
     'label.billedAmount': 'Amount on your actual bill (₹) — optional',
     'small.billedAmount': "We'll compare it with our calculation and tell you if your bill looks right.",
 
@@ -204,7 +203,6 @@ export const STRINGS = {
     'opt.selectStateFirst': '— Select State First —',
     'opt.selectDiscomFirst': '— Select DISCOM First —',
     // Billing Basis small
-    'small.billingBasis': '<strong>kWh</strong>: meter read in kWh, demand in kW. <strong>kVA based</strong>: meter read in kVAh (apparent energy) and demand billed in kVA — a low power factor already shows up as more kVAh, so there is no separate PF penalty. Auto-set for kVA (HT/large-LT) tariffs — override as needed.',
     // Billed demand
     'label.billedDemand': 'Maximum Demand (MD) (kW)',
     'small.billedDemand': 'Peak demand recorded by the meter this period. For demand-billed (commercial) categories it drives the demand charge and the excess-demand penalty when it exceeds the sanctioned load. Leave blank to bill on sanctioned load.',

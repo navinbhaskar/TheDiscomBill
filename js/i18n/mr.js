@@ -65,7 +65,7 @@ export default {
     'label.accountNo': 'खाते / ग्राहक क्रमांक',
     'label.address': 'पत्ता',
     'label.billingMonth': 'बिलिंग महिना व वर्ष',
-    'label.billingBasis': 'बिलिंग आधार (ऊर्जा व मागणी)',
+    'label.billingBasis': 'बिलिंग आधार',
     'label.fromDate': 'प्रारंभ दिनांक',
     'label.toDate': 'अंतिम दिनांक',
     'small.fromDate': 'बिलिंग कालावधीची सुरुवात',
@@ -78,8 +78,7 @@ export default {
     'tab.arrear': 'थकबाकी',
     'tab.payment': 'भरणा',
     'tab.adjustment': 'समायोजन',
-    'mode.meterReading': 'मीटर रीडिंग',
-    'mode.tod': 'टीओडी',
+    'mode.todSplit': 'टीओडी विभागणी (पीक / सामान्य / ऑफ-पीक युनिट)',
     'label.billedAmount': 'तुमच्या प्रत्यक्ष बिलावरील रक्कम (₹) — ऐच्छिक',
     'small.billedAmount': 'आम्ही ती आमच्या गणनेशी पडताळून तुमचे बिल बरोबर वाटते का ते सांगू.',
 
@@ -198,7 +197,6 @@ export default {
     'opt.selectStateFirst': '— आधी राज्य निवडा —',
     'opt.selectDiscomFirst': '— आधी डिस्कॉम निवडा —',
     // Billing Basis small
-    'small.billingBasis': '<strong>kWh</strong>: मीटर रीडिंग kWh मध्ये, मागणी kW मध्ये. <strong>kVA आधारित</strong>: मीटर रीडिंग kVAh मध्ये (आभासी ऊर्जा) व मागणी kVA मध्ये — कमी पॉवर फॅक्टर थेट जास्त kVAh म्हणून दिसतो, वेगळा PF दंड नाही. kVA (HT/मोठ्या-LT) टॅरिफसाठी आपोआप निवडले जाते — गरजेनुसार बदला.',
     // Billed demand
     'label.billedDemand': 'कमाल मागणी (MD) (kW)',
     'small.billedDemand': 'या कालावधीत मीटरने नोंदवलेली सर्वोच्च मागणी. मागणी-आधारित (व्यावसायिक) श्रेणींत ती मागणी शुल्क ठरवते आणि मंजूर भारापेक्षा जास्त झाल्यास जादा-मागणी दंडही. मंजूर भारावर बिलासाठी रिकामे ठेवा.',

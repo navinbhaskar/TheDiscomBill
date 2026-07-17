@@ -548,8 +548,10 @@ document.addEventListener('DOMContentLoaded', () => {
       refreshSubsidyToggle();
     });
 
-    document.getElementById('billingBasis').addEventListener('change', () => {
-      updateBilledDemandVisibility(discomEl.value, categoryEl.value, supplyTypeEl.value);
+    document.querySelectorAll('input[name="billingBasis"]').forEach(r => {
+      r.addEventListener('change', () => {
+        updateBilledDemandVisibility(discomEl.value, categoryEl.value, supplyTypeEl.value);
+      });
     });
 
     supplyTypeEl.addEventListener('change', () => {
@@ -593,9 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.getElementById('facRate').addEventListener('input', markFppaManual);
 
-    document.querySelectorAll('input[name="meterMode"]').forEach(r => {
-      r.addEventListener('change', () => setMeterMode(getMeterMode()));
-    });
+    document.getElementById('todSplitChk').addEventListener('change', () => setMeterMode(getMeterMode()));
     document.getElementById('addMeterRowBtn').addEventListener('click', () => { addMeterRow(''); updateAdvancedMeter(); });
     setMeterMode(getMeterMode());
 
@@ -644,9 +644,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const hint = document.getElementById('calcModeHint');
       if (hint) hint.style.display = simple ? '' : 'none';
       if (simple) {
-        // Force the plain "type your units" path: Meter Reading mode + direct-units override.
-        const radio = document.querySelector('input[name="meterMode"][value="advanced"]');
-        if (radio && !radio.checked) { radio.checked = true; radio.dispatchEvent(new Event('change')); }
+        // Force the plain "type your units" path: TOD split off + direct-units override.
+        const todChk = document.getElementById('todSplitChk');
+        if (todChk && todChk.checked) { todChk.checked = false; todChk.dispatchEvent(new Event('change')); }
         const row = document.querySelector('#advancedRows .meter-row');
         const chk = row?.querySelector('.m-override-chk');
         if (chk && !chk.checked) { chk.checked = true; chk.dispatchEvent(new Event('change')); }

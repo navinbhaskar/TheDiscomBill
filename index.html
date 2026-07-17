@@ -463,20 +463,23 @@
 
         <!-- ── Meter Read ── -->
         <div class="bill-tab-panel active" id="tab-meterread" role="tabpanel" aria-labelledby="bt-meterread">
-          <!-- Reading mode: one unified Meter Reading section (add 1+ meters) / TOD -->
-          <div class="meter-mode adv-only" role="radiogroup" aria-label="Meter reading mode">
-            <label class="meter-mode-opt"><input type="radio" name="meterMode" value="advanced" checked><span data-i18n="mode.meterReading">Meter Reading</span></label>
-            <label class="meter-mode-opt"><input type="radio" name="meterMode" value="tod"><span data-i18n="mode.tod">TOD</span></label>
-          </div>
+          <!-- TOD split — replaces the old Meter Reading / TOD second tab row with one switch -->
+          <label class="checkbox-label tod-split-label adv-only">
+            <input type="checkbox" id="todSplitChk">
+            <span data-i18n="mode.todSplit">TOD split (peak / normal / off-peak units)</span>
+          </label>
 
-          <!-- Billing Basis — pick first; it sets the reading & demand units (kWh/kW vs kVAh/kVA) -->
-          <div class="form-group" id="billingBasisGroup" style="display:none">
-            <label for="billingBasis"><span data-i18n="label.billingBasis">Billing Basis (energy &amp; demand)</span><span class="gloss" tabindex="0" role="img" aria-label="kVAh: apparent-energy units, equal to kWh divided by power factor. kVA-based billing meters energy in kVAh and demand in kVA." data-tip="kVAh — apparent energy = kWh ÷ power factor. kVA-based billing meters energy in kVAh and demand in kVA, so a poor power factor raises the bill directly.">ⓘ</span></label>
-            <select id="billingBasis">
-              <option value="kwh">Active energy (kWh) — demand in kW</option>
-              <option value="kvah">kVA based — kVAh units + kVA demand</option>
-            </select>
-            <small data-i18n-html="small.billingBasis"><strong>kWh</strong>: meter read in kWh, demand in kW. <strong>kVA based</strong>: meter read in kVAh (apparent energy) and demand billed in kVA — a low power factor already shows up as more kVAh, so there is no separate PF penalty. Auto-set for kVA (HT/large-LT) tariffs — override as needed.</small>
+          <!-- Billing Basis — segmented kWh/kVAh toggle; sets reading & demand units (kWh/kW vs kVAh/kVA).
+               Auto-set from the tariff (kVA tariffs default to kVAh), so it stays advanced-only. -->
+          <div class="form-group adv-only" id="billingBasisGroup" style="display:none">
+            <div class="basis-row">
+              <span class="basis-label" id="billingBasisLabel" data-i18n="label.billingBasis">Billing basis</span>
+              <div class="basis-seg" role="radiogroup" aria-labelledby="billingBasisLabel">
+                <label class="basis-opt"><input type="radio" name="billingBasis" value="kwh" checked><span>kWh</span></label>
+                <label class="basis-opt"><input type="radio" name="billingBasis" value="kvah"><span>kVAh</span></label>
+              </div>
+              <span class="gloss" tabindex="0" role="img" aria-label="kWh: meter read in kWh, demand in kW. kVAh: apparent energy equal to kWh divided by power factor, demand billed in kVA — a poor power factor raises the bill directly, so there is no separate PF penalty. Auto-set for kVA tariffs." data-tip="kWh: meter read in kWh, demand in kW (the usual case). kVAh: apparent energy = kWh ÷ power factor, demand billed in kVA — a poor power factor already shows up as more kVAh, so there is no separate PF penalty. Auto-set for kVA (HT/large-LT) tariffs — override as needed.">ⓘ</span>
+            </div>
           </div>
 
           <!-- Billing period dates (Simple & TOD; auto-filled from the meter table in Advanced) -->
