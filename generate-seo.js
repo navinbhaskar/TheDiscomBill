@@ -740,7 +740,8 @@ function keyFactsHtml(state, discom, fy, lang = 'en') {
         hi: `${esc(fyLabel(fy, 'hi'))} टैरिफ आदेश पर आधारित (हमारे पास उपलब्ध नवीनतम प्रकाशित डेटा)`,
         mr: `${esc(fyLabel(fy, 'mr'))} टॅरिफ आदेशावर आधारित (आमच्याकडील नवीनतम प्रकाशित डेटा)`,
         ta: `${esc(fyLabel(fy, 'ta'))} கட்டண ஆணையை அடிப்படையாகக் கொண்டது (எங்களிடம் உள்ள சமீபத்திய வெளியிடப்பட்ட தரவு)` })]);
-  if (dr) rows.push([T(lang, { en: 'Domestic energy rate', hi: 'घरेलू ऊर्जा दर', mr: 'घरगुती ऊर्जा दर', ta: 'வீட்டு மின் கட்டணம்' }), `${rupee(dr.min)} – ${rupee(dr.max)} ${T(lang, { en: 'per unit', hi: 'प्रति यूनिट', mr: 'प्रति युनिट', ta: 'ஒரு யூனிட்டுக்கு' })}`]);
+  // Flat-rate states (e.g. Bihar's single ₹7.42 slab) collapse to one figure, not "x – x".
+  if (dr) rows.push([T(lang, { en: 'Domestic energy rate', hi: 'घरेलू ऊर्जा दर', mr: 'घरगुती ऊर्जा दर', ta: 'வீட்டு மின் கட்டணம்' }), `${dr.min === dr.max ? rupee(dr.min) : `${rupee(dr.min)} – ${rupee(dr.max)}`} ${T(lang, { en: 'per unit', hi: 'प्रति यूनिट', mr: 'प्रति युनिट', ta: 'ஒரு யூனிட்டுக்கு' })}`]);
   if (discom.lpscRate != null) rows.push([T(lang, { en: 'Late payment surcharge (LPSC)', hi: 'विलंब भुगतान अधिभार (LPSC)', mr: 'विलंब भरणा अधिभार (LPSC)', ta: 'தாமத கட்டண மிகைக்கட்டணம் (LPSC)' }), `${discom.lpscRate}% ${T(lang, { en: 'per month', hi: 'प्रति माह', mr: 'दरमहा', ta: 'ஒரு மாதத்திற்கு' })}`]);
   if (discom.website) rows.push([T(lang, { en: 'Official website', hi: 'आधिकारिक वेबसाइट', mr: 'अधिकृत वेबसाइट', ta: 'அதிகாரப்பூர்வ இணையதளம்' }), `<a href="${attr(discom.website)}" target="_blank" rel="noopener">${esc(String(discom.website).replace(/^https?:\/\//, ''))} ↗</a>`]);
   const heading = T(lang, { en: `${esc(discom.name)} at a glance`, hi: `${esc(discom.name)} एक नज़र में`, mr: `${esc(discom.name)} एका दृष्टिक्षेपात`, ta: `${esc(discom.name)} ஒரு பார்வையில்` });

@@ -18,6 +18,10 @@
 // (e.g. Karnataka Gruha Jyoti is avg-consumption + 10%, capped at 200), we model the simple flat
 // free-units cap and say so in the label. States absent here have no modelled subsidy.
 export const DOMESTIC_SUBSIDY = {
+  // GoB cabinet decision, in force since the Aug-2025 billing cycle: first 125 units/month free
+  // for every domestic consumer, applied automatically by NBPDCL/SBPDCL. We waive only the
+  // energy charge on those units (the conservative free-units model).
+  'Bihar':      { type: 'free-units', units: 125, label: 'Bihar domestic subsidy: first 125 units/month free' },
   'Delhi':      { type: 'delhi-gnctd', label: 'Delhi GNCTD subsidy (≤200 units: nil; 201–400: 50% on first 200)' },
   'Punjab':     { type: 'free-units', units: 300, label: 'Punjab domestic subsidy: first 300 units/month free' },
   'Karnataka':  { type: 'free-units', units: 200, label: 'Karnataka Gruha Jyoti: up to 200 units/month free' },
