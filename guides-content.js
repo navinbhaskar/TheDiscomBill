@@ -5380,4 +5380,910 @@ export const GUIDES = [
         a: 'WSS फॉर्म सर्वात जवळच्या विद्यमान MSEDCL जोडणीचा ग्राहक क्रमांक विचारतो — सहसा शेजाऱ्याचा. त्याने तुमची जागा वितरण नेटवर्कवर लगेच सापडते आणि व्यवहार्यता तपासणी व अंदाज वेगवान आणि अचूक होतात.' },
     ],
   },
+  {
+    slug: 'bses-delhi-new-connection',
+    states: ['Delhi'],
+    title: 'How to Get a New BSES Electricity Connection in Delhi (BRPL / BYPL)',
+    metaTitle: 'BSES New Connection Online — Delhi: Documents, Charges, 7-Day Timeline',
+    description: 'Step-by-step guide to a new BSES electricity connection in Delhi: BRPL vs BYPL areas, the online application on bsesdelhi.com, the DERC document checklist (tenants included), demand note and security deposit, the 7-day metro timeline, and what to do when it stalls.',
+    minutes: 7,
+    intro: `Delhi's new-connection process is among the fastest in India on paper — the capital counts
+      as a metropolitan area, so a completed application must be energised in days, not weeks. This
+      guide covers the two BSES DISCOMs — <strong>BRPL</strong> (BSES Rajdhani, south and west Delhi)
+      and <strong>BYPL</strong> (BSES Yamuna, central and east Delhi) — from the online application on
+      <a href="https://www.bsesdelhi.com/" rel="nofollow noopener" target="_blank">bsesdelhi.com</a>
+      through the demand note, meter installation and the first-bill checks that catch expensive
+      category mistakes early.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. First, confirm BSES actually serves you</h2>
+        <p>Delhi is split three ways: <strong>BRPL</strong> covers south and west Delhi (Alaknanda
+        to Dwarka), <strong>BYPL</strong> covers central and east Delhi (Chandni Chowk to Mayur
+        Vihar), and <strong>Tata Power DDL</strong> serves north and north-west Delhi. The NDMC area
+        (Lutyens' Delhi) has its own supply. A neighbour's bill settles it instantly — or check our
+        <a href="/tariffs/delhi/">Delhi tariff pages</a> for the DISCOM-wise split. The
+        bsesdelhi.com portal makes you pick BRPL or BYPL at the start, and an application to the
+        wrong company is simply rejected days later.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. Documents — the DERC checklist</h2>
+        <p>BSES follows the Delhi Electricity Regulatory Commission (DERC) Supply Code, which keeps
+        the list short:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Requirement</th><th>Accepted documents</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Identity proof</strong></td><td>Aadhaar, voter ID, passport, PAN, driving licence, or any government photo ID.</td></tr>
+            <tr><td><strong>Ownership / occupancy proof</strong></td><td>Registered sale deed, conveyance deed, property-tax receipt, or possession letter. Tenants: registered rent agreement plus an indemnity bond — ownership of the premises is <em>not</em> required for a connection.</td></tr>
+            <tr><td><strong>Photograph</strong></td><td>One passport-size photo (captured digitally at a Seva Kendra if you apply offline).</td></tr>
+          </tbody>
+        </table></div>
+        <p>Two Delhi-specific notes: a connection does <strong>not</strong> confer ownership rights
+        on the premises (the application form says so explicitly, which is why landlords' fears
+        about tenant connections are misplaced), and unauthorised-colony premises are eligible
+        under their own DERC-notified terms.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. The application, step by step</h2>
+        <ol>
+          <li><strong>Apply online:</strong> on
+          <a href="https://www.bsesdelhi.com/" rel="nofollow noopener" target="_blank">bsesdelhi.com</a>,
+          pick your DISCOM (BRPL/BYPL) → <em>New Connection</em>, register with your mobile number,
+          fill the form, choose category (domestic/non-domestic) and the load you need, and upload
+          documents. The same request can be raised on the <strong>BSES mobile app</strong> or the
+          24×7 call centre <strong>19123</strong>.</li>
+          <li><strong>Size the load honestly.</strong> Delhi's domestic fixed charges are billed per
+          kW of sanctioned load, and the subsidy slabs make over-declaring doubly wasteful. Our
+          <a href="/guides/reduce-fixed-charges-sanctioned-load/">fixed-charges guide</a> shows how
+          to estimate from your appliances.</li>
+          <li><strong>Site inspection.</strong> A BSES team verifies the premises and feasibility;
+          for standard urban connections near the network this is quick.</li>
+          <li><strong>Demand note.</strong> BSES issues the payable amount — service-line and
+          development (SLD) charges per DERC's schedule plus the <strong>security deposit</strong>
+          (Advance Consumption Deposit), which scales with load and category. Pay it online.</li>
+          <li><strong>Meter installation.</strong> The connection is energised within
+          <strong>7 working days of demand-note payment</strong> for standard cases; your CA
+          (contract account) number arrives by SMS.</li>
+          <li><strong>Offline fallback:</strong> the <strong>Seva Kendra / connection desk</strong>
+          at divisional offices fills the same online form for you, capturing photo and signature
+          on the spot — useful when documents need explaining.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. What it costs</h2>
+        <ol>
+          <li><strong>Application/processing charges</strong> — nominal, per DERC's schedule of
+          miscellaneous charges.</li>
+          <li><strong>SLD charges</strong> — the normative service-line-cum-development charge for
+          LT connections, a per-kW amount set by DERC rather than a made-up estimate, which keeps
+          small-connection costs predictable.</li>
+          <li><strong>Security deposit (ACD)</strong> — sized to expected consumption for the
+          billing cycle, refundable with interest and revised annually against your actual usage.</li>
+        </ol>
+        <p>As always we skip rupee tables — DERC revises the schedules, and the demand note the
+        portal generates for <em>your</em> load is the number that matters. Nothing beyond the
+        processing fee is payable before you see it.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. The timeline Delhi is entitled to</h2>
+        <ul>
+          <li>All of Delhi is a <strong>metropolitan area</strong> under the Electricity (Rights of
+          Consumers) Rules, 2020 — a complete application must be energised within
+          <strong>7 days</strong>.</li>
+          <li>DERC's own Supply Code and performance standards mirror this, with compensation per
+          day of default where the delay is the DISCOM's.</li>
+          <li>Where network extension is genuinely needed, the published DERC timelines apply
+          instead — longer, but fixed and compensable, not open-ended.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. Application stuck? The escalation ladder</h2>
+        <ol>
+          <li><strong>Track online</strong> — the portal/app shows the request stage against your
+          application number.</li>
+          <li><strong>19123</strong> — the BSES 24×7 helpline (BRPL and BYPL both); always take a
+          complaint number.</li>
+          <li><strong>The division's Seva Kendra</strong> — face-to-face resolution for document
+          disputes, which cause most Delhi rejections.</li>
+          <li><strong>CGRF</strong> — each BSES DISCOM has a Consumer Grievance Redressal Forum,
+          then the <strong>Delhi Electricity Ombudsman</strong>. Free, and the DERC compensation
+          schedule applies once the 7-day clock has lapsed.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>7. After the meter — check your first bill</h2>
+        <p>Verify three things on the first bill: the tariff category (domestic, not the costlier
+        non-domestic), the sanctioned load you applied for, and that the <strong>Delhi subsidy</strong>
+        is applied if you're eligible — up to 200 units free and 201–400 half-rate (capped), which
+        makes a wrongly categorised first bill very visible. Then put your units into our
+        <a href="/?state=Delhi#calculator">Delhi bill calculator</a>, which models the slabs, fixed
+        charges, PPAC and the subsidy, and compare. Our
+        <a href="/guides/how-to-read-bses-delhi-bill/">BSES bill-reading guide</a> decodes every
+        line, and <a href="/bill-review/">Bill Review</a> checks a suspicious first bill for free.</p>
+      </section>`,
+    faqs: [
+      { q: 'How do I apply for a new BSES connection in Delhi?',
+        a: 'On bsesdelhi.com pick your DISCOM (BRPL for south/west Delhi, BYPL for central/east), open New Connection, register with your mobile number, fill the form with category and load, and upload identity and ownership/occupancy documents. The same request works via the BSES app or the 24×7 helpline 19123, and Seva Kendras handle it in person.' },
+      { q: 'What documents are needed for a BSES new connection?',
+        a: 'One government photo ID (Aadhaar, voter ID, passport, PAN or driving licence), ownership or occupancy proof (sale deed, property-tax receipt, possession letter — or registered rent agreement plus indemnity bond for tenants), and a passport-size photo. A connection does not confer ownership rights on the premises.' },
+      { q: 'Can a tenant get a BSES connection without the landlord?',
+        a: 'Yes. Supply is the occupier’s right under Section 43 of the Electricity Act, 2003, and DERC’s rules accept a registered rent agreement with an indemnity bond. The connection explicitly creates no ownership rights, so a landlord’s NOC is helpful but not a legal precondition.' },
+      { q: 'How many days does a new BSES connection take?',
+        a: 'Delhi is a metropolitan area under the Electricity (Rights of Consumers) Rules, 2020, so a complete application must be energised within 7 days; BSES commits to 7 working days from demand-note payment for standard cases. Network-extension cases follow DERC’s published longer timelines with compensation for default.' },
+      { q: 'What are SLD charges in a BSES demand note?',
+        a: 'Service-Line-cum-Development charges — the normative per-kW amount DERC lets the DISCOM collect toward the service line and network development for new LT connections. They appear in the demand note alongside the refundable security deposit (Advance Consumption Deposit).' },
+    ],
+
+    titleHi: 'दिल्ली में नया BSES बिजली कनेक्शन कैसे लें (BRPL / BYPL)',
+    metaTitleHi: 'BSES नया कनेक्शन ऑनलाइन — दिल्ली: दस्तावेज़, शुल्क, 7-दिन समयसीमा',
+    descriptionHi: 'दिल्ली में नया BSES बिजली कनेक्शन लेने की स्टेप-बाय-स्टेप गाइड: BRPL बनाम BYPL क्षेत्र, bsesdelhi.com पर ऑनलाइन आवेदन, DERC दस्तावेज़ सूची (किरायेदार सहित), डिमांड नोट और सिक्योरिटी डिपॉज़िट, 7-दिन की मेट्रो समयसीमा, और अटकने पर क्या करें।',
+    introHi: `कागज़ पर दिल्ली की नई-कनेक्शन प्रक्रिया भारत में सबसे तेज़ में से है — राजधानी महानगर
+      क्षेत्र गिनी जाती है, इसलिए पूर्ण आवेदन हफ़्तों में नहीं, दिनों में चालू होना अनिवार्य है। यह गाइड
+      BSES की दोनों DISCOM — <strong>BRPL</strong> (BSES राजधानी, दक्षिणी और पश्चिमी दिल्ली) और
+      <strong>BYPL</strong> (BSES यमुना, मध्य और पूर्वी दिल्ली) — को कवर करती है:
+      <a href="https://www.bsesdelhi.com/" rel="nofollow noopener" target="_blank">bsesdelhi.com</a>
+      पर ऑनलाइन आवेदन से लेकर डिमांड नोट, मीटर इंस्टॉलेशन और पहले बिल की उन जाँचों तक जो महँगी
+      श्रेणी-गलतियाँ शुरू में ही पकड़ लेती हैं।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>1. पहले पक्का करें कि BSES ही आपको सप्लाई देती है</h2>
+        <p>दिल्ली तीन हिस्सों में बँटी है: <strong>BRPL</strong> दक्षिणी और पश्चिमी दिल्ली (अलकनंदा से
+        द्वारका), <strong>BYPL</strong> मध्य और पूर्वी दिल्ली (चांदनी चौक से मयूर विहार), और
+        <strong>Tata Power DDL</strong> उत्तरी व उत्तर-पश्चिमी दिल्ली। NDMC क्षेत्र (लुटियंस दिल्ली) की
+        अपनी सप्लाई है। पड़ोसी का बिल तुरंत बता देता है — या हमारे
+        <a href="/hi/tariffs/delhi/">दिल्ली टैरिफ पेज</a> पर DISCOM-वार बँटवारा देखें। bsesdelhi.com
+        पोर्टल शुरू में ही BRPL या BYPL चुनवाता है, और गलत कंपनी को गया आवेदन कुछ दिनों बाद बस
+        अस्वीकार हो जाता है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. दस्तावेज़ — DERC की सूची</h2>
+        <p>BSES दिल्ली विद्युत नियामक आयोग (DERC) के सप्लाई कोड का पालन करती है, जो सूची छोटी
+        रखता है:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>ज़रूरत</th><th>मान्य दस्तावेज़</th></tr></thead>
+          <tbody>
+            <tr><td><strong>पहचान प्रमाण</strong></td><td>आधार, वोटर ID, पासपोर्ट, PAN, ड्राइविंग लाइसेंस, या कोई भी सरकारी फोटो ID।</td></tr>
+            <tr><td><strong>स्वामित्व / अधिभोग प्रमाण</strong></td><td>रजिस्टर्ड सेल डीड, कन्वेयंस डीड, प्रॉपर्टी-टैक्स रसीद, या पज़ेशन लेटर। किरायेदार: रजिस्टर्ड रेंट एग्रीमेंट और क्षतिपूर्ति बॉन्ड — कनेक्शन के लिए परिसर का मालिक होना <em>ज़रूरी नहीं</em> है।</td></tr>
+            <tr><td><strong>फोटो</strong></td><td>एक पासपोर्ट-साइज़ फोटो (ऑफलाइन आवेदन पर सेवा केंद्र में डिजिटल खींची जाती है)।</td></tr>
+          </tbody>
+        </table></div>
+        <p>दिल्ली की दो खास बातें: कनेक्शन से परिसर पर <strong>मालिकाना हक़ नहीं</strong> बनता (आवेदन
+        फॉर्म खुद यह लिखता है — इसीलिए किरायेदार के कनेक्शन को लेकर मकान मालिकों का डर बेवजह है),
+        और अनधिकृत कॉलोनियों के परिसर DERC-अधिसूचित अपनी शर्तों पर पात्र हैं।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. आवेदन, स्टेप-बाय-स्टेप</h2>
+        <ol>
+          <li><strong>ऑनलाइन आवेदन:</strong>
+          <a href="https://www.bsesdelhi.com/" rel="nofollow noopener" target="_blank">bsesdelhi.com</a>
+          पर अपनी DISCOM (BRPL/BYPL) → <em>New Connection</em> चुनें, मोबाइल नंबर से रजिस्टर करें,
+          फॉर्म भरें, श्रेणी (घरेलू/गैर-घरेलू) और ज़रूरी भार चुनें, दस्तावेज़ अपलोड करें। यही अनुरोध
+          <strong>BSES मोबाइल ऐप</strong> या 24×7 कॉल सेंटर <strong>19123</strong> से भी हो जाता है।</li>
+          <li><strong>भार ईमानदारी से तय करें।</strong> दिल्ली के घरेलू फिक्स्ड चार्ज प्रति स्वीकृत kW
+          लगते हैं, और सब्सिडी स्लैब की वजह से ज़्यादा भार घोषित करना दोहरा नुकसान है। उपकरणों से
+          अनुमान लगाने के लिए हमारी
+          <a href="/hi/guides/reduce-fixed-charges-sanctioned-load/">फिक्स्ड चार्ज गाइड</a> देखें।</li>
+          <li><strong>साइट निरीक्षण।</strong> BSES टीम परिसर और व्यवहार्यता जाँचती है; नेटवर्क के पास
+          के सामान्य शहरी कनेक्शनों में यह जल्दी होता है।</li>
+          <li><strong>डिमांड नोट।</strong> BSES देय राशि जारी करती है — DERC की अनुसूची के अनुसार
+          सर्विस-लाइन व डेवलपमेंट (SLD) शुल्क और <strong>सिक्योरिटी डिपॉज़िट</strong> (Advance
+          Consumption Deposit), जो भार और श्रेणी से बढ़ता है। ऑनलाइन भरें।</li>
+          <li><strong>मीटर इंस्टॉलेशन।</strong> सामान्य मामलों में डिमांड नोट भुगतान के
+          <strong>7 कार्यदिवसों</strong> के भीतर कनेक्शन चालू; आपका CA (contract account) नंबर SMS
+          से आता है।</li>
+          <li><strong>ऑफलाइन विकल्प:</strong> मंडल कार्यालयों का <strong>सेवा केंद्र / कनेक्शन डेस्क</strong>
+          वही ऑनलाइन फॉर्म आपके लिए भरता है, फोटो और हस्ताक्षर वहीं लेकर — दस्तावेज़ों पर सफ़ाई देनी
+          हो तो उपयोगी।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. खर्च कितना</h2>
+        <ol>
+          <li><strong>आवेदन/प्रोसेसिंग शुल्क</strong> — नाममात्र, DERC की विविध शुल्क अनुसूची से।</li>
+          <li><strong>SLD शुल्क</strong> — LT कनेक्शनों के लिए DERC का तय प्रति-kW मानक सर्विस-लाइन-व-
+          डेवलपमेंट शुल्क — मनगढ़ंत एस्टीमेट नहीं, इसीलिए छोटे कनेक्शन की लागत अनुमान योग्य रहती है।</li>
+          <li><strong>सिक्योरिटी डिपॉज़िट (ACD)</strong> — बिलिंग चक्र की अपेक्षित खपत के अनुसार,
+          ब्याज सहित वापसी-योग्य, और आपकी असल खपत के हिसाब से सालाना संशोधित।</li>
+        </ol>
+        <p>हम हमेशा की तरह रुपये की तालिकाएँ छोड़ रहे हैं — DERC अनुसूचियाँ संशोधित करता है, और
+        <em>आपके</em> भार के लिए पोर्टल पर बना डिमांड नोट ही असल आँकड़ा है। प्रोसेसिंग फीस के अलावा
+        उसे देखे बिना कुछ देय नहीं।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. दिल्ली की हक़दारी वाली समयसीमा</h2>
+        <ul>
+          <li>विद्युत (उपभोक्ता अधिकार) नियम, 2020 के तहत पूरी दिल्ली <strong>महानगर क्षेत्र</strong> है —
+          पूर्ण आवेदन <strong>7 दिनों</strong> में चालू होना अनिवार्य।</li>
+          <li>DERC का सप्लाई कोड और परफ़ॉर्मेंस मानक भी यही दोहराते हैं, और DISCOM की देरी पर
+          प्रतिदिन मुआवज़ा तय है।</li>
+          <li>जहाँ वाकई नेटवर्क विस्तार लगे, वहाँ DERC की प्रकाशित समयसीमाएँ लागू होती हैं — लंबी, पर
+          तय और मुआवज़ा-योग्य, खुली नहीं।</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. आवेदन अटक गया? शिकायत की सीढ़ी</h2>
+        <ol>
+          <li><strong>ऑनलाइन ट्रैक करें</strong> — पोर्टल/ऐप आवेदन नंबर पर अनुरोध का चरण दिखाता है।</li>
+          <li><strong>19123</strong> — BSES की 24×7 हेल्पलाइन (BRPL और BYPL दोनों); शिकायत नंबर ज़रूर लें।</li>
+          <li><strong>मंडल का सेवा केंद्र</strong> — दस्तावेज़ विवादों का आमने-सामने समाधान; दिल्ली में
+          ज़्यादातर अस्वीकृतियाँ इन्हीं से होती हैं।</li>
+          <li><strong>CGRF</strong> — हर BSES DISCOM का उपभोक्ता शिकायत निवारण मंच, फिर
+          <strong>दिल्ली विद्युत लोकपाल</strong>। निःशुल्क, और 7-दिन की घड़ी बीतते ही DERC की मुआवज़ा
+          अनुसूची लागू।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>7. मीटर लगने के बाद — पहला बिल जाँचें</h2>
+        <p>पहले बिल पर तीन चीज़ें जाँचें: टैरिफ श्रेणी (घरेलू, महँगी गैर-घरेलू नहीं), आवेदन वाला स्वीकृत
+        भार, और पात्र होने पर <strong>दिल्ली सब्सिडी</strong> लगी है या नहीं — 200 यूनिट तक मुफ़्त और
+        201–400 आधी दर (कैप सहित), इसलिए गलत श्रेणी वाला पहला बिल साफ़ दिख जाता है। फिर अपनी
+        यूनिटें हमारे <a href="/?state=Delhi#calculator">दिल्ली बिल कैलकुलेटर</a> में डालें — यह स्लैब,
+        फिक्स्ड चार्ज, PPAC और सब्सिडी का गणित लगाता है — और मिलान करें। हर लाइन के लिए
+        <a href="/hi/guides/how-to-read-bses-delhi-bill/">BSES बिल पढ़ने की गाइड</a> देखें, और संदिग्ध
+        पहले बिल की <a href="/bill-review/">Bill Review</a> से निःशुल्क जाँच कराएँ।</p>
+      </section>`,
+    faqsHi: [
+      { q: 'दिल्ली में नया BSES कनेक्शन कैसे लें?',
+        a: 'bsesdelhi.com पर अपनी DISCOM चुनें (दक्षिण/पश्चिम दिल्ली के लिए BRPL, मध्य/पूर्व के लिए BYPL), New Connection खोलें, मोबाइल नंबर से रजिस्टर करें, श्रेणी व भार के साथ फॉर्म भरें और पहचान व स्वामित्व/अधिभोग दस्तावेज़ अपलोड करें। यही अनुरोध BSES ऐप या 24×7 हेल्पलाइन 19123 से भी होता है, और सेवा केंद्र इसे आमने-सामने कर देते हैं।' },
+      { q: 'BSES नए कनेक्शन के लिए कौन से दस्तावेज़ चाहिए?',
+        a: 'एक सरकारी फोटो ID (आधार, वोटर ID, पासपोर्ट, PAN या ड्राइविंग लाइसेंस), स्वामित्व या अधिभोग प्रमाण (सेल डीड, प्रॉपर्टी-टैक्स रसीद, पज़ेशन लेटर — किरायेदारों के लिए रजिस्टर्ड रेंट एग्रीमेंट और क्षतिपूर्ति बॉन्ड), और एक पासपोर्ट-साइज़ फोटो। कनेक्शन से परिसर पर मालिकाना हक़ नहीं बनता।' },
+      { q: 'क्या किरायेदार मकान मालिक के बिना BSES कनेक्शन ले सकता है?',
+        a: 'हाँ। विद्युत अधिनियम, 2003 की धारा 43 के तहत आपूर्ति परिसर में रहने वाले का अधिकार है, और DERC के नियम रजिस्टर्ड रेंट एग्रीमेंट व क्षतिपूर्ति बॉन्ड स्वीकार करते हैं। कनेक्शन से कोई मालिकाना हक़ नहीं बनता, इसलिए मकान मालिक की NOC मददगार है पर कानूनी शर्त नहीं।' },
+      { q: 'BSES नया कनेक्शन कितने दिनों में मिलता है?',
+        a: 'विद्युत (उपभोक्ता अधिकार) नियम, 2020 के तहत दिल्ली महानगर क्षेत्र है, इसलिए पूर्ण आवेदन 7 दिनों में चालू होना अनिवार्य है; सामान्य मामलों में BSES डिमांड नोट भुगतान से 7 कार्यदिवसों का वादा करती है। नेटवर्क-विस्तार मामलों में DERC की प्रकाशित लंबी समयसीमाएँ और चूक पर मुआवज़ा लागू है।' },
+      { q: 'BSES डिमांड नोट में SLD शुल्क क्या है?',
+        a: 'Service-Line-cum-Development शुल्क — नए LT कनेक्शनों की सर्विस लाइन व नेटवर्क विकास के लिए DERC का तय प्रति-kW मानक शुल्क। यह डिमांड नोट में वापसी-योग्य सिक्योरिटी डिपॉज़िट (Advance Consumption Deposit) के साथ दिखता है।' },
+    ],
+  },
+  {
+    slug: 'tata-power-ddl-new-connection',
+    states: ['Delhi'],
+    title: 'How to Get a New Tata Power DDL Connection (North Delhi)',
+    metaTitle: 'Tata Power DDL New Connection Online — Documents, Charges in First Bill',
+    description: 'Step-by-step guide to a new Tata Power DDL electricity connection in north and north-west Delhi: the two-document online application, field inspection, why the demand-note charges arrive in your first bill, the 7-day metro timeline, and the escalation path when it stalls.',
+    minutes: 7,
+    intro: `Tata Power Delhi Distribution (TPDDL) serves north and north-west Delhi — Rohini,
+      Pitampura, Model Town, Civil Lines, Narela and around — and runs one of the leanest
+      new-connection flows in the country: <strong>two documents, an online form, and the connection
+      charges billed in your first electricity bill</strong> rather than as an upfront demand-note
+      payment. This guide walks the flow on
+      <a href="https://www.tatapower-ddl.com/" rel="nofollow noopener" target="_blank">tatapower-ddl.com</a>,
+      what the charges are, the 7-day clock Delhi is entitled to, and the first-bill checks that
+      matter more here than anywhere — because that first bill also carries the connection charges.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. Confirm TPDDL serves your address</h2>
+        <p>Delhi is split three ways: <strong>Tata Power DDL</strong> covers north and north-west
+        Delhi, while <strong>BRPL</strong> takes south/west and <strong>BYPL</strong> central/east —
+        we cover those in the <a href="/guides/bses-delhi-new-connection/">BSES new-connection
+        guide</a>. A neighbour's bill settles it instantly, or check the DISCOM split on our
+        <a href="/tariffs/delhi/">Delhi tariff pages</a>. The tariff itself is the same
+        DERC-approved schedule across all three, subsidy included — the difference is process,
+        and TPDDL's is the most automated.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. Documents — deliberately just two</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Requirement</th><th>Accepted documents</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Identity proof</strong></td><td>Aadhaar, voter ID, passport, PAN, driving licence, or any government photo ID.</td></tr>
+            <tr><td><strong>Ownership / occupancy proof</strong></td><td>Registered sale deed, property-tax receipt, possession letter — or a registered rent agreement plus indemnity bond for tenants. As across Delhi, the connection confers no ownership rights on the premises.</td></tr>
+          </tbody>
+        </table></div>
+        <p>That two-document list is a deliberate Ease-of-Doing-Business commitment, and the portal
+        flags any deficit document against your application number rather than silently rejecting —
+        watch for the SMS asking you to re-upload.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. The application, step by step</h2>
+        <ol>
+          <li><strong>Apply online</strong> at
+          <a href="https://www.tatapower-ddl.com/" rel="nofollow noopener" target="_blank">tatapower-ddl.com</a>
+          → <em>Apply New Connection</em>: pick domestic or non-domestic, fill the premises details
+          and requested load, and upload the two documents. The <strong>19124</strong> helpline
+          (or 1800-208-9124 from outside Delhi) and customer care centres take the same request.</li>
+          <li><strong>Size the load honestly</strong> — fixed charges are billed per sanctioned kW
+          monthly. Our <a href="/guides/reduce-fixed-charges-sanctioned-load/">fixed-charges
+          guide</a> shows how to estimate from appliances.</li>
+          <li><strong>Field inspection.</strong> A TPDDL team verifies the premises; for standard
+          urban connections near the network this is the only physical step.</li>
+          <li><strong>Meter installation and energisation.</strong> No upfront demand-note payment
+          for standard cases — the connection is energised first.</li>
+          <li><strong>Charges arrive in the first bill.</strong> The service-line/development
+          charges and security deposit that other DISCOMs collect before connecting appear as
+          line items in your first electricity bill instead. Budget for a first bill that is
+          noticeably larger than a normal month.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. What it costs — same DERC schedule, different timing</h2>
+        <ol>
+          <li><strong>SLD charges</strong> — the DERC-set normative per-kW service-line-cum-
+          development charge, identical in principle to the BSES demand note; TPDDL just defers
+          it to the first bill.</li>
+          <li><strong>Security deposit (ACD)</strong> — sized to expected billing-cycle consumption,
+          refundable with interest, revised annually against actual usage.</li>
+          <li><strong>Meter and miscellaneous charges</strong> — per DERC's schedule of charges.</li>
+        </ol>
+        <p>No rupee tables here as usual — DERC revises the schedules, and the amounts printed on
+        your first bill are itemised and checkable against the DERC schedule in force.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. The timeline north Delhi is entitled to</h2>
+        <ul>
+          <li>All of Delhi is <strong>metropolitan</strong> under the Electricity (Rights of
+          Consumers) Rules, 2020 — a complete application must be energised within
+          <strong>7 days</strong>.</li>
+          <li>TPDDL's own EODB commitments for standard urban connections run on the same clock,
+          and DERC's performance standards attach per-day compensation to DISCOM-caused delay.</li>
+          <li>Genuine network-extension cases follow DERC's published longer-but-fixed timelines.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. Application stuck? The escalation ladder</h2>
+        <ol>
+          <li><strong>Track online</strong> against your application number — deficit-document
+          flags are the most common silent stall; clear them first.</li>
+          <li><strong>19124 / 1800-208-9124</strong> — TPDDL's 24×7 helpline, or
+          tpddl@tatapower-ddl.com; always take a complaint number.</li>
+          <li><strong>The district customer care centre</strong> for document disputes.</li>
+          <li><strong>CGRF → Delhi Electricity Ombudsman</strong> — free, statutory, and the DERC
+          compensation schedule applies once the 7-day clock lapses.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>7. The first bill matters double here</h2>
+        <p>Because TPDDL bills the connection charges in the first bill, check it more carefully
+        than usual: the tariff category (domestic, not non-domestic), the sanctioned load you
+        applied for, the <strong>Delhi subsidy</strong> if eligible (up to 200 units free,
+        201–400 half-rate, capped), and that the one-time SLD/deposit line items match what the
+        application quoted. Separate the one-time charges, then put your units into our
+        <a href="/?state=Delhi#calculator">Delhi bill calculator</a> — it models the slabs, fixed
+        charges, PPAC and subsidy — and the recurring part should match. Our
+        <a href="/guides/how-to-read-bses-delhi-bill/">Delhi bill-reading guide</a> decodes the
+        line items (the DERC bill format is shared across DISCOMs), and
+        <a href="/bill-review/">Bill Review</a> checks a suspicious first bill for free.</p>
+      </section>`,
+    faqs: [
+      { q: 'How do I apply for a new Tata Power DDL connection?',
+        a: 'Apply online at tatapower-ddl.com → Apply New Connection: choose domestic or non-domestic, enter premises details and requested load, and upload just two documents — a government photo ID and ownership/occupancy proof. The 19124 helpline and customer care centres take the same request, and field inspection follows before energisation.' },
+      { q: 'Does Tata Power DDL take a demand note payment before connecting?',
+        a: 'For standard cases, no — TPDDL energises the connection first and raises the demand-note charges (SLD charges, security deposit, meter charges per the DERC schedule) as line items in your first electricity bill. Expect that first bill to be noticeably larger than a normal month.' },
+      { q: 'Which areas of Delhi does Tata Power DDL cover?',
+        a: 'North and north-west Delhi — including Rohini, Pitampura, Shalimar Bagh, Model Town, Civil Lines, Azadpur, Badli and Narela. South and west Delhi are BRPL and central/east are BYPL; the tariff schedule and subsidy are the same DERC-approved ones across all three.' },
+      { q: 'How many days does a Tata Power DDL new connection take?',
+        a: 'Delhi is a metropolitan area under the Electricity (Rights of Consumers) Rules, 2020, so a complete application must be energised within 7 days. DERC’s performance standards attach per-day compensation to DISCOM-caused delay; genuine network-extension cases follow published longer timelines.' },
+      { q: 'What documents does Tata Power DDL need for a new connection?',
+        a: 'Two: a government photo ID (Aadhaar, voter ID, passport, PAN or driving licence) and ownership or occupancy proof (sale deed, property-tax receipt, possession letter — or registered rent agreement plus indemnity bond for tenants). Deficit documents are flagged by SMS against your application number for re-upload.' },
+    ],
+
+    titleHi: 'Tata Power DDL में नया बिजली कनेक्शन कैसे लें (उत्तरी दिल्ली)',
+    metaTitleHi: 'Tata Power DDL नया कनेक्शन ऑनलाइन — दस्तावेज़, शुल्क पहले बिल में',
+    descriptionHi: 'उत्तरी और उत्तर-पश्चिमी दिल्ली में नया Tata Power DDL बिजली कनेक्शन लेने की स्टेप-बाय-स्टेप गाइड: दो-दस्तावेज़ ऑनलाइन आवेदन, फील्ड निरीक्षण, डिमांड-नोट शुल्क पहले बिल में क्यों आते हैं, 7-दिन की मेट्रो समयसीमा, और अटकने पर शिकायत का रास्ता।',
+    introHi: `Tata Power Delhi Distribution (TPDDL) उत्तरी और उत्तर-पश्चिमी दिल्ली — रोहिणी, पीतमपुरा,
+      मॉडल टाउन, सिविल लाइंस, नरेला वगैरह — को सप्लाई देती है और देश की सबसे सरल नई-कनेक्शन
+      प्रक्रियाओं में से एक चलाती है: <strong>दो दस्तावेज़, एक ऑनलाइन फॉर्म, और कनेक्शन शुल्क अग्रिम
+      डिमांड-नोट के बजाय आपके पहले बिजली बिल में</strong>। यह गाइड
+      <a href="https://www.tatapower-ddl.com/" rel="nofollow noopener" target="_blank">tatapower-ddl.com</a>
+      का पूरा फ्लो समझाती है — शुल्क क्या हैं, दिल्ली की 7-दिन की हक़दारी, और पहले बिल की वे जाँचें
+      जो यहाँ सबसे ज़्यादा मायने रखती हैं — क्योंकि उसी पहले बिल में कनेक्शन शुल्क भी आते हैं।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>1. पक्का करें कि TPDDL ही आपका पता सर्व करती है</h2>
+        <p>दिल्ली तीन हिस्सों में बँटी है: <strong>Tata Power DDL</strong> उत्तरी और उत्तर-पश्चिमी दिल्ली,
+        जबकि <strong>BRPL</strong> दक्षिण/पश्चिम और <strong>BYPL</strong> मध्य/पूर्व — उन्हें हमने
+        <a href="/hi/guides/bses-delhi-new-connection/">BSES नई-कनेक्शन गाइड</a> में कवर किया है।
+        पड़ोसी का बिल तुरंत बता देता है, या हमारे
+        <a href="/hi/tariffs/delhi/">दिल्ली टैरिफ पेज</a> पर DISCOM-वार बँटवारा देखें। टैरिफ तीनों में
+        वही DERC-अनुमोदित अनुसूची है, सब्सिडी समेत — फ़र्क़ प्रक्रिया का है, और TPDDL की सबसे
+        स्वचालित है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. दस्तावेज़ — जानबूझकर सिर्फ़ दो</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>ज़रूरत</th><th>मान्य दस्तावेज़</th></tr></thead>
+          <tbody>
+            <tr><td><strong>पहचान प्रमाण</strong></td><td>आधार, वोटर ID, पासपोर्ट, PAN, ड्राइविंग लाइसेंस, या कोई भी सरकारी फोटो ID।</td></tr>
+            <tr><td><strong>स्वामित्व / अधिभोग प्रमाण</strong></td><td>रजिस्टर्ड सेल डीड, प्रॉपर्टी-टैक्स रसीद, पज़ेशन लेटर — किरायेदारों के लिए रजिस्टर्ड रेंट एग्रीमेंट और क्षतिपूर्ति बॉन्ड। पूरी दिल्ली की तरह, कनेक्शन से परिसर पर मालिकाना हक़ नहीं बनता।</td></tr>
+          </tbody>
+        </table></div>
+        <p>दो-दस्तावेज़ की यह सूची एक सोची-समझी Ease-of-Doing-Business प्रतिबद्धता है, और पोर्टल कमी
+        वाला दस्तावेज़ चुपचाप अस्वीकार करने के बजाय आवेदन नंबर पर फ्लैग करता है — दोबारा अपलोड करने
+        का SMS देखते रहें।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. आवेदन, स्टेप-बाय-स्टेप</h2>
+        <ol>
+          <li><strong>ऑनलाइन आवेदन:</strong>
+          <a href="https://www.tatapower-ddl.com/" rel="nofollow noopener" target="_blank">tatapower-ddl.com</a>
+          → <em>Apply New Connection</em>: घरेलू या गैर-घरेलू चुनें, परिसर विवरण और माँगा गया भार भरें,
+          दो दस्तावेज़ अपलोड करें। <strong>19124</strong> हेल्पलाइन (दिल्ली के बाहर से 1800-208-9124)
+          और कस्टमर केयर सेंटर भी यही अनुरोध लेते हैं।</li>
+          <li><strong>भार ईमानदारी से तय करें</strong> — फिक्स्ड चार्ज हर महीने प्रति स्वीकृत kW लगता
+          है। उपकरणों से अनुमान के लिए हमारी
+          <a href="/hi/guides/reduce-fixed-charges-sanctioned-load/">फिक्स्ड चार्ज गाइड</a> देखें।</li>
+          <li><strong>फील्ड निरीक्षण।</strong> TPDDL टीम परिसर जाँचती है; नेटवर्क के पास के सामान्य शहरी
+          कनेक्शनों में यही एकमात्र भौतिक चरण है।</li>
+          <li><strong>मीटर लगना और सप्लाई चालू।</strong> सामान्य मामलों में कोई अग्रिम डिमांड-नोट भुगतान
+          नहीं — पहले कनेक्शन चालू होता है।</li>
+          <li><strong>शुल्क पहले बिल में आते हैं।</strong> जो सर्विस-लाइन/डेवलपमेंट शुल्क और सिक्योरिटी
+          डिपॉज़िट बाकी DISCOM कनेक्शन से पहले वसूलती हैं, वे यहाँ आपके पहले बिजली बिल में लाइन
+          आइटम बनकर आते हैं। पहला बिल सामान्य महीने से खासा बड़ा आने का बजट रखें।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. खर्च कितना — वही DERC अनुसूची, समय अलग</h2>
+        <ol>
+          <li><strong>SLD शुल्क</strong> — DERC का तय प्रति-kW मानक सर्विस-लाइन-व-डेवलपमेंट शुल्क,
+          सिद्धांत में BSES के डिमांड नोट जैसा ही; TPDDL बस इसे पहले बिल तक टाल देती है।</li>
+          <li><strong>सिक्योरिटी डिपॉज़िट (ACD)</strong> — बिलिंग चक्र की अपेक्षित खपत के अनुसार, ब्याज
+          सहित वापसी-योग्य, असल खपत पर सालाना संशोधित।</li>
+          <li><strong>मीटर व विविध शुल्क</strong> — DERC की शुल्क अनुसूची से।</li>
+        </ol>
+        <p>हमेशा की तरह रुपये की तालिकाएँ नहीं — DERC अनुसूचियाँ संशोधित करता है, और आपके पहले बिल
+        पर छपी राशियाँ मदवार होती हैं और लागू DERC अनुसूची से मिलाई जा सकती हैं।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. उत्तरी दिल्ली की हक़दारी वाली समयसीमा</h2>
+        <ul>
+          <li>विद्युत (उपभोक्ता अधिकार) नियम, 2020 के तहत पूरी दिल्ली <strong>महानगर</strong> है — पूर्ण
+          आवेदन <strong>7 दिनों</strong> में चालू होना अनिवार्य।</li>
+          <li>सामान्य शहरी कनेक्शनों के लिए TPDDL की अपनी EODB प्रतिबद्धताएँ इसी घड़ी पर चलती हैं,
+          और DERC के परफ़ॉर्मेंस मानक DISCOM की देरी पर प्रतिदिन मुआवज़ा जोड़ते हैं।</li>
+          <li>वाकई नेटवर्क-विस्तार वाले मामले DERC की प्रकाशित लंबी-पर-तय समयसीमाओं पर चलते हैं।</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. आवेदन अटक गया? शिकायत की सीढ़ी</h2>
+        <ol>
+          <li><strong>आवेदन नंबर पर ऑनलाइन ट्रैक करें</strong> — कमी वाले दस्तावेज़ का फ्लैग सबसे आम
+          चुपचाप रुकावट है; पहले उसे साफ़ करें।</li>
+          <li><strong>19124 / 1800-208-9124</strong> — TPDDL की 24×7 हेल्पलाइन, या
+          tpddl@tatapower-ddl.com; शिकायत नंबर ज़रूर लें।</li>
+          <li><strong>ज़िले का कस्टमर केयर सेंटर</strong> — दस्तावेज़ विवादों के लिए।</li>
+          <li><strong>CGRF → दिल्ली विद्युत लोकपाल</strong> — निःशुल्क, वैधानिक, और 7-दिन की घड़ी बीतते
+          ही DERC की मुआवज़ा अनुसूची लागू।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>7. पहला बिल यहाँ दोगुना मायने रखता है</h2>
+        <p>चूँकि TPDDL कनेक्शन शुल्क पहले बिल में लगाती है, उसे सामान्य से ज़्यादा ध्यान से जाँचें: टैरिफ
+        श्रेणी (घरेलू, गैर-घरेलू नहीं), आवेदन वाला स्वीकृत भार, पात्र होने पर <strong>दिल्ली सब्सिडी</strong>
+        (200 यूनिट तक मुफ़्त, 201–400 आधी दर, कैप सहित), और यह कि एकमुश्त SLD/डिपॉज़िट लाइनें
+        आवेदन के समय बताई राशियों से मिलती हैं। एकमुश्त शुल्क अलग करें, फिर अपनी यूनिटें हमारे
+        <a href="/?state=Delhi#calculator">दिल्ली बिल कैलकुलेटर</a> में डालें — यह स्लैब, फिक्स्ड चार्ज,
+        PPAC और सब्सिडी का गणित लगाता है — और आवर्ती हिस्सा मिलना चाहिए। लाइन आइटम समझने के लिए
+        <a href="/hi/guides/how-to-read-bses-delhi-bill/">दिल्ली बिल पढ़ने की गाइड</a> देखें (DERC का
+        बिल फ़ॉर्मैट तीनों DISCOM में साझा है), और संदिग्ध पहले बिल की
+        <a href="/bill-review/">Bill Review</a> से निःशुल्क जाँच कराएँ।</p>
+      </section>`,
+    faqsHi: [
+      { q: 'Tata Power DDL का नया कनेक्शन कैसे लें?',
+        a: 'tatapower-ddl.com → Apply New Connection पर ऑनलाइन आवेदन करें: घरेलू या गैर-घरेलू चुनें, परिसर विवरण और माँगा गया भार भरें, और सिर्फ़ दो दस्तावेज़ अपलोड करें — सरकारी फोटो ID और स्वामित्व/अधिभोग प्रमाण। 19124 हेल्पलाइन और कस्टमर केयर सेंटर भी यही अनुरोध लेते हैं; फील्ड निरीक्षण के बाद कनेक्शन चालू होता है।' },
+      { q: 'क्या Tata Power DDL कनेक्शन से पहले डिमांड नोट का भुगतान लेती है?',
+        a: 'सामान्य मामलों में नहीं — TPDDL पहले कनेक्शन चालू करती है और डिमांड-नोट शुल्क (DERC अनुसूची के SLD शुल्क, सिक्योरिटी डिपॉज़िट, मीटर शुल्क) आपके पहले बिजली बिल में लाइन आइटम बनकर आते हैं। पहला बिल सामान्य महीने से खासा बड़ा आने की उम्मीद रखें।' },
+      { q: 'Tata Power DDL दिल्ली के कौन से इलाक़े कवर करती है?',
+        a: 'उत्तरी और उत्तर-पश्चिमी दिल्ली — रोहिणी, पीतमपुरा, शालीमार बाग, मॉडल टाउन, सिविल लाइंस, आज़ादपुर, बादली और नरेला समेत। दक्षिण/पश्चिम दिल्ली BRPL और मध्य/पूर्व BYPL के पास हैं; टैरिफ अनुसूची और सब्सिडी तीनों में वही DERC-अनुमोदित हैं।' },
+      { q: 'Tata Power DDL नया कनेक्शन कितने दिनों में देती है?',
+        a: 'विद्युत (उपभोक्ता अधिकार) नियम, 2020 के तहत दिल्ली महानगर क्षेत्र है, इसलिए पूर्ण आवेदन 7 दिनों में चालू होना अनिवार्य है। DERC के परफ़ॉर्मेंस मानक DISCOM की देरी पर प्रतिदिन मुआवज़ा जोड़ते हैं; वाकई नेटवर्क-विस्तार वाले मामले प्रकाशित लंबी समयसीमाओं पर चलते हैं।' },
+      { q: 'Tata Power DDL नए कनेक्शन के लिए कौन से दस्तावेज़ चाहिए?',
+        a: 'दो: सरकारी फोटो ID (आधार, वोटर ID, पासपोर्ट, PAN या ड्राइविंग लाइसेंस) और स्वामित्व या अधिभोग प्रमाण (सेल डीड, प्रॉपर्टी-टैक्स रसीद, पज़ेशन लेटर — किरायेदारों के लिए रजिस्टर्ड रेंट एग्रीमेंट और क्षतिपूर्ति बॉन्ड)। कमी वाले दस्तावेज़ आवेदन नंबर पर SMS से फ्लैग होते हैं।' },
+    ],
+  },
+  {
+    slug: 'tneb-tangedco-new-connection',
+    states: ['Tamil Nadu'],
+    title: 'How to Get a New TNEB (TANGEDCO) Electricity Connection Online',
+    metaTitle: 'TNEB New Connection Online — TANGEDCO/TNPDCL: Documents, Deposits, Timeline',
+    description: 'Step-by-step guide to a new TNEB electricity connection in Tamil Nadu: the TANGEDCO/TNPDCL online application, the document checklist (Form 5 consent and Form 6 indemnity for non-owners), deposits and TNERC charges, statutory timelines, and the Minnagam escalation route.',
+    minutes: 8,
+    intro: `Everyone in Tamil Nadu still says "EB connection", and the flow is now genuinely online:
+      the new service connection portal
+      (<a href="https://app1.tangedco.org/nsconline/" rel="nofollow noopener" target="_blank">app1.tangedco.org/nsconline</a>)
+      takes the application, documents and payments end-to-end. One naming note up front — the
+      distribution business of <strong>TANGEDCO</strong> (successor of the old TNEB) has been
+      restructured as <strong>TNPDCL</strong> (Tamil Nadu Power Distribution Corporation,
+      <a href="https://www.tnpdcl.org/" rel="nofollow noopener" target="_blank">tnpdcl.org</a>) —
+      same offices, same section engineers, new letterhead. This guide walks the application,
+      the deposits, the legal timelines and what to do when it sits still.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. One DISCOM, whatever you call it</h2>
+        <p>Unlike Delhi or Maharashtra, Tamil Nadu has a single distribution utility statewide —
+        TNEB in old parlance, TANGEDCO on most portals, TNPDCL after the restructuring. Your local
+        contact point is the <strong>section office</strong> (every locality has one, headed by an
+        Assistant Engineer), and every online application still routes to it for inspection and
+        energisation. Current LT tariffs, slabs and subsidy are on our
+        <a href="/tariffs/tamil-nadu/tangedco/">TANGEDCO tariff page</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. Documents — owners have it easy, non-owners use Form 5/6</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Requirement</th><th>Accepted documents</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Identity proof</strong></td><td>Aadhaar, voter ID, passport, PAN or driving licence.</td></tr>
+            <tr><td><strong>Ownership proof</strong></td><td>Sale deed, patta, property-tax receipt, or a court order establishing legal possession.</td></tr>
+            <tr><td><strong>Non-owners (tenants, disputes)</strong></td><td>The owner's <strong>consent letter (Form 5)</strong> — or, when the owner won't sign, an <strong>indemnity bond (Form 6)</strong> with occupancy proof. The TNERC Supply Code makes Form 6 a right, not a favour.</td></tr>
+            <tr><td><strong>Building completion certificate</strong></td><td>Required from the local authority for larger/newer buildings; ordinary small residences are generally exempt under the notified norms.</td></tr>
+          </tbody>
+        </table></div>
+        <p>The Form 5/Form 6 pair is the detail most applicants miss: supply is the occupier's
+        right under Section 43 of the Electricity Act, 2003, and Tamil Nadu operationalised it
+        with a standard indemnity format instead of leaving tenants to argue at the counter.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. The application, step by step</h2>
+        <ol>
+          <li><strong>Apply online</strong> at the
+          <a href="https://app1.tangedco.org/nsconline/" rel="nofollow noopener" target="_blank">new
+          service connection portal</a> (also reachable via tnpdcl.org → Online Services): pick LT
+          domestic (or the category you need), fill the premises details and load, and upload the
+          documents. You receive an <strong>Application Reference Number</strong> — everything
+          hangs off it.</li>
+          <li><strong>Pay the registration/application charges online.</strong> The payment portal
+          (<a href="https://tnebnet.org/awp/login" rel="nofollow noopener" target="_blank">tnebnet.org/awp</a>)
+          logs you in with the <em>application reference number as username and your mobile number
+          as password</em> — an odd convention worth knowing before you assume the login is
+          broken.</li>
+          <li><strong>Section office inspection.</strong> The AE's team verifies the premises,
+          wiring-readiness and feasibility.</li>
+          <li><strong>Demand for deposits and charges.</strong> Development and service-connection
+          charges plus the <strong>security deposit</strong> (current-consumption deposit) are
+          raised per the TNERC schedule — pay online against the same reference number.</li>
+          <li><strong>Meter installation and energisation.</strong> Your consumer number arrives —
+          and note TN's quirk: billing is <strong>bi-monthly</strong>, so the first bill covers
+          roughly two months.</li>
+          <li><strong>Offline fallback:</strong> the section office accepts the same application on
+          paper, and authorised agents/e-sevai centres can file it for you.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. What it costs</h2>
+        <ol>
+          <li><strong>Registration/application fee</strong> — nominal, paid at submission.</li>
+          <li><strong>Development + service connection charges</strong> — per-kW amounts from the
+          TNERC Schedule of Miscellaneous Charges; a small domestic connection near the network
+          typically lands in the low thousands of rupees, more where the line must be extended.</li>
+          <li><strong>Security deposit (CC deposit)</strong> — sized to expected consumption
+          (bi-monthly billing makes it roughly two months' worth), refundable with interest,
+          trued-up annually.</li>
+        </ol>
+        <p>We skip rupee tables as always — TNERC revises the schedule, and the demand raised
+        against your application reference number is the number that matters. Nothing beyond the
+        registration fee is payable before you see it.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. How long TANGEDCO can legally take</h2>
+        <ul>
+          <li>The central <strong>Electricity (Rights of Consumers) Rules, 2020</strong> cap new
+          connections at <strong>7 days in metropolitan areas</strong> (Chennai),
+          <strong>15 days in other municipal areas and 30 days in rural areas</strong> after a
+          complete, paid application.</li>
+          <li>TNERC's Distribution Standards of Performance set the state's own service levels and
+          per-default compensation where extension work is genuinely required.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. Application stuck? The escalation ladder</h2>
+        <ol>
+          <li><strong>Track online</strong> with the application reference number on the portal.</li>
+          <li><strong>Minnagam</strong> — TANGEDCO/TNPDCL's centralised consumer care:
+          <strong>1912</strong> (or 94987-94987 by phone/WhatsApp). Quote the reference number and
+          take a complaint number.</li>
+          <li><strong>The section AE, then the sub-division AEE</strong> — most stalls are a
+          pending inspection or a materials gap that one visit resolves.</li>
+          <li><strong>CGRF → TNERC Electricity Ombudsman</strong> — the free statutory route once
+          timelines lapse, with Standards-of-Performance compensation.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>7. After the meter — check your first (bi-monthly) bill</h2>
+        <p>Check the tariff category (LT I-A domestic for a home), the sanctioned load, and that
+        the <strong>free-units subsidy</strong> (100 free units per bi-monthly cycle for domestic
+        consumers, per the state scheme) has been applied. Remember the bill covers ~two months
+        before concluding it's too high. Then put the units into our
+        <a href="/?state=Tamil%20Nadu#calculator">TNEB bill calculator</a> — it implements the
+        current TNERC slabs and subsidy — and compare. Our
+        <a href="/guides/how-to-read-tneb-tangedco-bill/">TNEB bill-reading guide</a> decodes every
+        line, and <a href="/bill-review/">Bill Review</a> checks a suspicious first bill for
+        free.</p>
+      </section>`,
+    faqs: [
+      { q: 'How do I apply for a new TNEB connection online?',
+        a: 'Use TANGEDCO/TNPDCL’s new service connection portal (app1.tangedco.org/nsconline, also via tnpdcl.org → Online Services): choose the category, enter premises details and load, upload documents and pay the registration fee. You get an Application Reference Number; the section office inspects, you pay the demanded deposits online, and the meter follows.' },
+      { q: 'What documents are needed for a TNEB new connection?',
+        a: 'Identity proof (Aadhaar, voter ID, passport, PAN or driving licence) and ownership proof (sale deed, patta or property-tax receipt). Non-owners use the owner’s consent letter (Form 5) or an indemnity bond (Form 6) with occupancy proof. Larger/newer buildings also need a completion certificate.' },
+      { q: 'Can a tenant get a TNEB connection without the owner’s signature?',
+        a: 'Yes — Tamil Nadu’s supply code provides Form 6, a standard indemnity bond a tenant files with occupancy proof when the owner won’t sign Form 5 consent. Supply is the occupier’s statutory right under Section 43 of the Electricity Act, 2003.' },
+      { q: 'How do I log in to pay TNEB new connection charges?',
+        a: 'On the payment portal (tnebnet.org/awp), the username is your Application Reference Number and the password is the mobile number you registered — an unusual convention that catches many applicants. All demands raised against the application are payable there.' },
+      { q: 'How many days does a new TNEB connection take?',
+        a: 'Under the Electricity (Rights of Consumers) Rules, 2020: 7 days in Chennai (metropolitan), 15 days in other municipal areas and 30 days in rural areas after a complete, paid application. TNERC’s Standards of Performance add compensation where TANGEDCO defaults, with longer published timelines only for genuine line-extension work.' },
+    ],
+
+    titleHi: 'TNEB (TANGEDCO) में नया बिजली कनेक्शन ऑनलाइन कैसे लें',
+    metaTitleHi: 'TNEB नया कनेक्शन ऑनलाइन — TANGEDCO/TNPDCL: दस्तावेज़, डिपॉज़िट, समयसीमा',
+    descriptionHi: 'तमिलनाडु में नया TNEB बिजली कनेक्शन लेने की स्टेप-बाय-स्टेप गाइड: TANGEDCO/TNPDCL ऑनलाइन आवेदन, दस्तावेज़ सूची (गैर-मालिकों के लिए Form 5 सहमति और Form 6 क्षतिपूर्ति), TNERC शुल्क और डिपॉज़िट, कानूनी समयसीमा, और Minnagam शिकायत मार्ग।',
+    introHi: `तमिलनाडु में आज भी सब "EB कनेक्शन" ही कहते हैं, और प्रक्रिया अब सचमुच ऑनलाइन है: नया
+      सर्विस कनेक्शन पोर्टल
+      (<a href="https://app1.tangedco.org/nsconline/" rel="nofollow noopener" target="_blank">app1.tangedco.org/nsconline</a>)
+      आवेदन, दस्तावेज़ और भुगतान शुरू से अंत तक सँभालता है। एक नाम की बात पहले — पुराने TNEB की
+      उत्तराधिकारी <strong>TANGEDCO</strong> का वितरण कारोबार अब <strong>TNPDCL</strong> (Tamil Nadu
+      Power Distribution Corporation,
+      <a href="https://www.tnpdcl.org/" rel="nofollow noopener" target="_blank">tnpdcl.org</a>) के रूप
+      में पुनर्गठित है — दफ़्तर वही, सेक्शन इंजीनियर वही, लेटरहेड नया। यह गाइड आवेदन, डिपॉज़िट,
+      कानूनी समयसीमाएँ और अटकने पर क्या करें, सब समझाती है।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>1. एक ही DISCOM, नाम चाहे जो लें</h2>
+        <p>दिल्ली या महाराष्ट्र से उलट, तमिलनाडु में पूरे राज्य की एक ही वितरण कंपनी है — पुरानी भाषा
+        में TNEB, ज़्यादातर पोर्टलों पर TANGEDCO, पुनर्गठन के बाद TNPDCL। आपका स्थानीय संपर्क
+        <strong>सेक्शन ऑफिस</strong> है (हर इलाक़े में एक, सहायक अभियंता के अधीन), और हर ऑनलाइन
+        आवेदन निरीक्षण व सप्लाई चालू करने के लिए वहीं पहुँचता है। मौजूदा LT टैरिफ, स्लैब और सब्सिडी
+        हमारे <a href="/hi/tariffs/tamil-nadu/tangedco/">TANGEDCO टैरिफ पेज</a> पर हैं।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. दस्तावेज़ — मालिकों के लिए आसान, गैर-मालिक Form 5/6 इस्तेमाल करें</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>ज़रूरत</th><th>मान्य दस्तावेज़</th></tr></thead>
+          <tbody>
+            <tr><td><strong>पहचान प्रमाण</strong></td><td>आधार, वोटर ID, पासपोर्ट, PAN या ड्राइविंग लाइसेंस।</td></tr>
+            <tr><td><strong>स्वामित्व प्रमाण</strong></td><td>सेल डीड, पट्टा, प्रॉपर्टी-टैक्स रसीद, या वैध कब्ज़ा साबित करता कोर्ट आदेश।</td></tr>
+            <tr><td><strong>गैर-मालिक (किरायेदार, विवाद)</strong></td><td>मालिक का <strong>सहमति पत्र (Form 5)</strong> — या मालिक साइन न करे तो अधिभोग प्रमाण के साथ <strong>क्षतिपूर्ति बॉन्ड (Form 6)</strong>। TNERC सप्लाई कोड Form 6 को एहसान नहीं, अधिकार बनाता है।</td></tr>
+            <tr><td><strong>बिल्डिंग कम्प्लीशन सर्टिफ़िकेट</strong></td><td>बड़ी/नई इमारतों के लिए स्थानीय निकाय से ज़रूरी; सामान्य छोटे घर अधिसूचित मानदंडों में आम तौर पर छूट पाते हैं।</td></tr>
+          </tbody>
+        </table></div>
+        <p>Form 5/Form 6 की जोड़ी ही वह बारीकी है जो ज़्यादातर आवेदक चूक जाते हैं: विद्युत अधिनियम,
+        2003 की धारा 43 के तहत आपूर्ति परिसर में रहने वाले का अधिकार है, और तमिलनाडु ने किरायेदारों
+        को काउंटर पर बहस के लिए छोड़ने के बजाय मानक क्षतिपूर्ति फ़ॉर्मैट से इसे लागू किया है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. आवेदन, स्टेप-बाय-स्टेप</h2>
+        <ol>
+          <li><strong>ऑनलाइन आवेदन:</strong>
+          <a href="https://app1.tangedco.org/nsconline/" rel="nofollow noopener" target="_blank">नए
+          सर्विस कनेक्शन पोर्टल</a> पर (tnpdcl.org → Online Services से भी): LT घरेलू (या ज़रूरी श्रेणी)
+          चुनें, परिसर विवरण और भार भरें, दस्तावेज़ अपलोड करें। <strong>Application Reference
+          Number</strong> मिलता है — आगे सब कुछ उसी पर टिका है।</li>
+          <li><strong>रजिस्ट्रेशन/आवेदन शुल्क ऑनलाइन भरें।</strong> भुगतान पोर्टल
+          (<a href="https://tnebnet.org/awp/login" rel="nofollow noopener" target="_blank">tnebnet.org/awp</a>)
+          में <em>यूज़रनेम आवेदन संदर्भ संख्या और पासवर्ड आपका मोबाइल नंबर</em> होता है — लॉगिन टूटा
+          मानने से पहले यह अजीब परंपरा जान लें।</li>
+          <li><strong>सेक्शन ऑफिस निरीक्षण।</strong> AE की टीम परिसर, वायरिंग-तैयारी और व्यवहार्यता
+          जाँचती है।</li>
+          <li><strong>डिपॉज़िट और शुल्क की माँग।</strong> TNERC अनुसूची के अनुसार डेवलपमेंट व सर्विस
+          कनेक्शन शुल्क और <strong>सिक्योरिटी डिपॉज़िट</strong> (current-consumption deposit) — उसी
+          संदर्भ संख्या पर ऑनलाइन भरें।</li>
+          <li><strong>मीटर लगना और सप्लाई चालू।</strong> उपभोक्ता नंबर मिलता है — और TN की खासियत
+          याद रखें: बिलिंग <strong>द्विमासिक</strong> है, पहला बिल क़रीब दो महीने का होगा।</li>
+          <li><strong>ऑफलाइन विकल्प:</strong> सेक्शन ऑफिस काग़ज़ पर वही आवेदन लेता है, और अधिकृत
+          एजेंट/ई-सेवई केंद्र आपकी ओर से दाख़िल कर सकते हैं।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. खर्च कितना</h2>
+        <ol>
+          <li><strong>रजिस्ट्रेशन/आवेदन शुल्क</strong> — नाममात्र, जमा करते समय।</li>
+          <li><strong>डेवलपमेंट + सर्विस कनेक्शन शुल्क</strong> — TNERC विविध शुल्क अनुसूची की प्रति-kW
+          राशियाँ; नेटवर्क के पास छोटा घरेलू कनेक्शन आम तौर पर कुछ हज़ार रुपये में, लाइन बढ़ानी पड़े
+          तो ज़्यादा।</li>
+          <li><strong>सिक्योरिटी डिपॉज़िट (CC deposit)</strong> — अपेक्षित खपत के अनुसार (द्विमासिक
+          बिलिंग से क़रीब दो महीने जितना), ब्याज सहित वापसी-योग्य, सालाना समायोजित।</li>
+        </ol>
+        <p>हमेशा की तरह रुपये की तालिकाएँ नहीं — TNERC अनुसूची संशोधित करता है, और आपकी आवेदन
+        संदर्भ संख्या पर उठी माँग ही असल आँकड़ा है। रजिस्ट्रेशन फीस के अलावा उसे देखे बिना कुछ देय
+        नहीं।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. TANGEDCO कानूनन कितने दिन ले सकती है</h2>
+        <ul>
+          <li>केंद्रीय <strong>विद्युत (उपभोक्ता अधिकार) नियम, 2020</strong>: पूर्ण व भुगतान हो चुके आवेदन
+          पर <strong>महानगर में 7 दिन</strong> (चेन्नई), <strong>अन्य नगरीय क्षेत्रों में 15 दिन और
+          ग्रामीण क्षेत्रों में 30 दिन</strong>।</li>
+          <li>TNERC के Distribution Standards of Performance राज्य के अपने सेवा-स्तर और चूक पर
+          मुआवज़ा तय करते हैं, जहाँ विस्तार कार्य वाकई ज़रूरी हो।</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. आवेदन अटक गया? शिकायत की सीढ़ी</h2>
+        <ol>
+          <li><strong>पोर्टल पर</strong> आवेदन संदर्भ संख्या से ट्रैक करें।</li>
+          <li><strong>Minnagam</strong> — TANGEDCO/TNPDCL की केंद्रीकृत उपभोक्ता सेवा:
+          <strong>1912</strong> (या फोन/WhatsApp पर 94987-94987)। संदर्भ संख्या बताकर शिकायत नंबर लें।</li>
+          <li><strong>सेक्शन AE, फिर उपखंड AEE</strong> — ज़्यादातर रुकावटें लंबित निरीक्षण या सामग्री की
+          कमी होती हैं जो एक मुलाक़ात से सुलझ जाती हैं।</li>
+          <li><strong>CGRF → TNERC विद्युत लोकपाल</strong> — समयसीमा बीतने पर निःशुल्क वैधानिक रास्ता,
+          Standards-of-Performance मुआवज़े के साथ।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>7. मीटर लगने के बाद — पहला (द्विमासिक) बिल जाँचें</h2>
+        <p>टैरिफ श्रेणी (घर के लिए LT I-A घरेलू), स्वीकृत भार, और <strong>मुफ़्त-यूनिट सब्सिडी</strong>
+        (राज्य योजना के तहत घरेलू उपभोक्ताओं को प्रति द्विमासिक चक्र 100 मुफ़्त यूनिट) लगी है या नहीं —
+        ये तीनों जाँचें। बिल ज़्यादा लगे तो पहले याद रखें कि वह क़रीब दो महीने का है। फिर यूनिटें हमारे
+        <a href="/?state=Tamil%20Nadu#calculator">TNEB बिल कैलकुलेटर</a> में डालें — यह मौजूदा TNERC
+        स्लैब और सब्सिडी का गणित लगाता है — और मिलान करें। हर लाइन के लिए
+        <a href="/hi/guides/how-to-read-tneb-tangedco-bill/">TNEB बिल पढ़ने की गाइड</a> देखें, और
+        संदिग्ध पहले बिल की <a href="/bill-review/">Bill Review</a> से निःशुल्क जाँच कराएँ।</p>
+      </section>`,
+    faqsHi: [
+      { q: 'TNEB का नया कनेक्शन ऑनलाइन कैसे लें?',
+        a: 'TANGEDCO/TNPDCL के नए सर्विस कनेक्शन पोर्टल (app1.tangedco.org/nsconline, tnpdcl.org → Online Services से भी) पर श्रेणी चुनें, परिसर विवरण व भार भरें, दस्तावेज़ अपलोड करें और रजिस्ट्रेशन शुल्क भरें। Application Reference Number मिलती है; सेक्शन ऑफिस निरीक्षण करता है, माँगे गए डिपॉज़िट ऑनलाइन भरें, फिर मीटर लगता है।' },
+      { q: 'TNEB नए कनेक्शन के लिए कौन से दस्तावेज़ चाहिए?',
+        a: 'पहचान प्रमाण (आधार, वोटर ID, पासपोर्ट, PAN या ड्राइविंग लाइसेंस) और स्वामित्व प्रमाण (सेल डीड, पट्टा या प्रॉपर्टी-टैक्स रसीद)। गैर-मालिक मालिक का सहमति पत्र (Form 5) या अधिभोग प्रमाण के साथ क्षतिपूर्ति बॉन्ड (Form 6) दें। बड़ी/नई इमारतों को कम्प्लीशन सर्टिफ़िकेट भी चाहिए।' },
+      { q: 'क्या किरायेदार मालिक के हस्ताक्षर के बिना TNEB कनेक्शन ले सकता है?',
+        a: 'हाँ — तमिलनाडु का सप्लाई कोड Form 6 देता है: मालिक Form 5 सहमति पर साइन न करे तो किरायेदार अधिभोग प्रमाण के साथ मानक क्षतिपूर्ति बॉन्ड दाख़िल करता है। विद्युत अधिनियम, 2003 की धारा 43 के तहत आपूर्ति रहने वाले का वैधानिक अधिकार है।' },
+      { q: 'TNEB नए कनेक्शन के शुल्क भरने के लिए लॉगिन कैसे करें?',
+        a: 'भुगतान पोर्टल (tnebnet.org/awp) पर यूज़रनेम आपकी Application Reference Number और पासवर्ड रजिस्टर किया मोबाइल नंबर है — यह असामान्य परंपरा कई आवेदकों को उलझाती है। आवेदन पर उठी सभी माँगें वहीं देय हैं।' },
+      { q: 'TNEB नया कनेक्शन कितने दिनों में मिलता है?',
+        a: 'विद्युत (उपभोक्ता अधिकार) नियम, 2020 के तहत पूर्ण व भुगतान हो चुके आवेदन पर चेन्नई (महानगर) में 7 दिन, अन्य नगरीय क्षेत्रों में 15 दिन और ग्रामीण क्षेत्रों में 30 दिन। TNERC के Standards of Performance चूक पर मुआवज़ा जोड़ते हैं; लंबी प्रकाशित समयसीमाएँ सिर्फ़ वास्तविक लाइन-विस्तार पर लागू हैं।' },
+    ],
+
+    titleTa: 'TNEB (TANGEDCO) புதிய மின் இணைப்பு ஆன்லைனில் பெறுவது எப்படி',
+    metaTitleTa: 'TNEB புதிய இணைப்பு ஆன்லைன் — TANGEDCO/TNPDCL: ஆவணங்கள், வைப்புத்தொகை, காலக்கெடு',
+    descriptionTa: 'தமிழ்நாட்டில் புதிய TNEB மின் இணைப்பு பெறும் படிப்படியான வழிகாட்டி: TANGEDCO/TNPDCL ஆன்லைன் விண்ணப்பம், ஆவணப் பட்டியல் (உரிமையாளர் அல்லாதவர்களுக்கு படிவம் 5 சம்மதம் மற்றும் படிவம் 6 உத்தரவாதம்), TNERC கட்டணங்கள் மற்றும் வைப்புத்தொகை, சட்டப்படியான காலக்கெடுகள், Minnagam புகார் வழி.',
+    introTa: `தமிழ்நாட்டில் இன்றும் எல்லோரும் "EB கனெக்ஷன்" என்றே சொல்கிறார்கள், இப்போது செயல்முறை
+      உண்மையிலேயே ஆன்லைன்: புதிய மின் இணைப்பு போர்டல்
+      (<a href="https://app1.tangedco.org/nsconline/" rel="nofollow noopener" target="_blank">app1.tangedco.org/nsconline</a>)
+      விண்ணப்பம், ஆவணங்கள், கட்டணங்கள் அனைத்தையும் முழுமையாக ஆன்லைனில் கையாள்கிறது. முதலில் ஒரு
+      பெயர்க் குறிப்பு — பழைய TNEB-இன் வாரிசான <strong>TANGEDCO</strong>-வின் மின் விநியோகப் பிரிவு
+      இப்போது <strong>TNPDCL</strong> (Tamil Nadu Power Distribution Corporation,
+      <a href="https://www.tnpdcl.org/" rel="nofollow noopener" target="_blank">tnpdcl.org</a>) என
+      மறுசீரமைக்கப்பட்டுள்ளது — அலுவலகங்கள் அதே, செக்ஷன் பொறியாளர்கள் அதே, லெட்டர்ஹெட் மட்டும் புதியது.
+      விண்ணப்பம், வைப்புத்தொகை, சட்டப்படியான காலக்கெடுகள், நகராமல் நின்றால் என்ன செய்வது — எல்லாம்
+      இந்த வழிகாட்டியில்.`,
+    sectionsTa: `
+      <section class="seo-section">
+        <h2>1. எந்தப் பெயரில் அழைத்தாலும் ஒரே நிறுவனம்</h2>
+        <p>டெல்லி அல்லது மகாராஷ்டிரா போலல்லாமல், தமிழ்நாடு முழுவதற்கும் ஒரே மின் விநியோக நிறுவனம் —
+        பழைய வழக்கில் TNEB, பெரும்பாலான போர்டல்களில் TANGEDCO, மறுசீரமைப்புக்குப் பின் TNPDCL.
+        உங்கள் உள்ளூர் தொடர்பு <strong>செக்ஷன் அலுவலகம்</strong> (ஒவ்வொரு பகுதிக்கும் ஒன்று, உதவிப்
+        பொறியாளர் தலைமையில்), ஒவ்வொரு ஆன்லைன் விண்ணப்பமும் ஆய்வுக்கும் மின் இணைப்புக்கும் அங்கேயே
+        செல்கிறது. தற்போதைய LT கட்டணங்கள், அடுக்குகள், மானியம் — எல்லாம் எங்கள்
+        <a href="/ta/tariffs/tamil-nadu/tangedco/">TANGEDCO கட்டணப் பக்கத்தில்</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. ஆவணங்கள் — உரிமையாளர்களுக்கு எளிது, மற்றவர்களுக்கு படிவம் 5/6</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>தேவை</th><th>ஏற்கப்படும் ஆவணங்கள்</th></tr></thead>
+          <tbody>
+            <tr><td><strong>அடையாளச் சான்று</strong></td><td>ஆதார், வாக்காளர் அட்டை, பாஸ்போர்ட், PAN அல்லது ஓட்டுநர் உரிமம்.</td></tr>
+            <tr><td><strong>உரிமைச் சான்று</strong></td><td>கிரயப் பத்திரம், பட்டா, சொத்து வரி ரசீது, அல்லது சட்டப்படியான உடைமையை நிறுவும் நீதிமன்ற ஆணை.</td></tr>
+            <tr><td><strong>உரிமையாளர் அல்லாதவர்கள் (குடியிருப்பாளர்கள், தகராறுகள்)</strong></td><td>உரிமையாளரின் <strong>சம்மதக் கடிதம் (படிவம் 5)</strong> — அல்லது உரிமையாளர் கையொப்பமிட மறுத்தால், குடியிருப்புச் சான்றுடன் <strong>உத்தரவாதப் பத்திரம் (படிவம் 6)</strong>. TNERC விநியோகக் கோட் படிவம் 6-ஐ உதவியாக அல்ல, உரிமையாக்குகிறது.</td></tr>
+            <tr><td><strong>கட்டிட முடிவுச் சான்றிதழ்</strong></td><td>பெரிய/புதிய கட்டிடங்களுக்கு உள்ளாட்சி அமைப்பிடமிருந்து தேவை; சாதாரண சிறிய வீடுகளுக்கு அறிவிக்கப்பட்ட விதிமுறைகளில் பொதுவாக விலக்கு.</td></tr>
+          </tbody>
+        </table></div>
+        <p>படிவம் 5/படிவம் 6 ஜோடிதான் பெரும்பாலான விண்ணப்பதாரர்கள் தவறவிடும் நுணுக்கம்: மின்சாரச்
+        சட்டம், 2003-இன் பிரிவு 43-இன் கீழ் மின்சாரம் என்பது குடியிருப்பவரின் உரிமை; குடியிருப்பாளர்களை
+        கவுண்டரில் வாதாட விடாமல், தமிழ்நாடு அதை நிலையான உத்தரவாத வடிவத்தில் நடைமுறைப்படுத்தியுள்ளது.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. விண்ணப்பம், படிப்படியாக</h2>
+        <ol>
+          <li><strong>ஆன்லைனில் விண்ணப்பியுங்கள்:</strong>
+          <a href="https://app1.tangedco.org/nsconline/" rel="nofollow noopener" target="_blank">புதிய
+          மின் இணைப்பு போர்டலில்</a> (tnpdcl.org → Online Services வழியாகவும்): LT குடியிருப்பு (அல்லது
+          தேவையான வகை) தேர்ந்தெடுத்து, இட விவரங்களும் மின்சுமையும் நிரப்பி, ஆவணங்களைப் பதிவேற்றுங்கள்.
+          <strong>Application Reference Number</strong> கிடைக்கும் — இனி எல்லாம் அதன் மீதுதான்.</li>
+          <li><strong>பதிவு/விண்ணப்பக் கட்டணத்தை ஆன்லைனில் செலுத்துங்கள்.</strong> கட்டண போர்டலில்
+          (<a href="https://tnebnet.org/awp/login" rel="nofollow noopener" target="_blank">tnebnet.org/awp</a>)
+          <em>பயனர்பெயர் = விண்ணப்ப எண், கடவுச்சொல் = பதிவு செய்த மொபைல் எண்</em> — லாகின்
+          உடைந்துவிட்டதாக நினைக்கும் முன் இந்த வித்தியாசமான வழக்கத்தை அறிந்து கொள்ளுங்கள்.</li>
+          <li><strong>செக்ஷன் அலுவலக ஆய்வு.</strong> AE குழு இடம், வயரிங்-தயார்நிலை, சாத்தியத்தை
+          சரிபார்க்கிறது.</li>
+          <li><strong>வைப்புத்தொகை மற்றும் கட்டணக் கோரிக்கை.</strong> TNERC அட்டவணைப்படி மேம்பாடு
+          மற்றும் இணைப்புக் கட்டணங்களும் <strong>பாதுகாப்பு வைப்புத்தொகையும்</strong> (current-consumption
+          deposit) கோரப்படும் — அதே விண்ணப்ப எண்ணில் ஆன்லைனில் செலுத்துங்கள்.</li>
+          <li><strong>மீட்டர் பொருத்தி மின் இணைப்பு.</strong> நுகர்வோர் எண் வரும் — தமிழ்நாட்டின்
+          தனித்தன்மையை நினைவில் கொள்ளுங்கள்: பில்லிங் <strong>இருமாதத்திற்கு ஒருமுறை</strong>, முதல் பில்
+          சுமார் இரண்டு மாதங்களுக்கானது.</li>
+          <li><strong>ஆஃப்லைன் மாற்று:</strong> செக்ஷன் அலுவலகம் அதே விண்ணப்பத்தை காகிதத்திலும்
+          ஏற்கிறது; அங்கீகரிக்கப்பட்ட முகவர்கள்/இ-சேவை மையங்களும் தாக்கல் செய்யலாம்.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. செலவு எவ்வளவு</h2>
+        <ol>
+          <li><strong>பதிவு/விண்ணப்பக் கட்டணம்</strong> — சிறியது, சமர்ப்பிக்கும்போது.</li>
+          <li><strong>மேம்பாடு + இணைப்புக் கட்டணங்கள்</strong> — TNERC இதர கட்டண அட்டவணையின்
+          kW-ஒன்றுக்கான தொகைகள்; நெட்வொர்க்கிற்கு அருகிலுள்ள சிறிய குடியிருப்பு இணைப்பு பொதுவாக சில
+          ஆயிரம் ரூபாய்க்குள்; லைன் நீட்டிக்க வேண்டியிருந்தால் அதிகம்.</li>
+          <li><strong>பாதுகாப்பு வைப்புத்தொகை (CC deposit)</strong> — எதிர்பார்க்கப்படும் நுகர்வுக்கு ஏற்ப
+          (இருமாத பில்லிங்கால் சுமார் இரண்டு மாத அளவு), வட்டியுடன் திரும்பக் கிடைக்கும், ஆண்டுதோறும்
+          சரிசெய்யப்படும்.</li>
+        </ol>
+        <p>வழக்கம்போல ரூபாய் அட்டவணைகள் இல்லை — TNERC அட்டவணையைத் திருத்திக்கொண்டே இருக்கும்;
+        உங்கள் விண்ணப்ப எண்ணின் மீது எழுப்பப்படும் கோரிக்கைதான் உண்மையான எண். பதிவுக் கட்டணம் தவிர
+        அதைப் பார்க்காமல் எதுவும் செலுத்தத் தேவையில்லை.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. TANGEDCO சட்டப்படி எத்தனை நாள் எடுக்கலாம்</h2>
+        <ul>
+          <li>மத்திய <strong>மின்சார (நுகர்வோர் உரிமைகள்) விதிகள், 2020</strong>: முழுமையான, கட்டணம்
+          செலுத்திய விண்ணப்பத்திற்கு <strong>பெருநகரங்களில் 7 நாட்கள்</strong> (சென்னை),
+          <strong>மற்ற நகராட்சி பகுதிகளில் 15 நாட்கள், கிராமப்புறங்களில் 30 நாட்கள்</strong>.</li>
+          <li>உண்மையிலேயே லைன் நீட்டிப்பு தேவைப்படும் இடங்களில், TNERC-இன் Distribution Standards of
+          Performance மாநிலத்தின் சொந்த சேவை நிலைகளையும் தவறினால் இழப்பீட்டையும் வரையறுக்கிறது.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. விண்ணப்பம் நகரவில்லையா? புகார் ஏணி</h2>
+        <ol>
+          <li><strong>போர்டலில்</strong> விண்ணப்ப எண்ணுடன் நிலையைக் கண்காணியுங்கள்.</li>
+          <li><strong>Minnagam</strong> — TANGEDCO/TNPDCL-இன் மையப்படுத்தப்பட்ட நுகர்வோர் சேவை:
+          <strong>1912</strong> (அல்லது தொலைபேசி/WhatsApp-இல் 94987-94987). விண்ணப்ப எண் சொல்லி
+          புகார் எண் வாங்குங்கள்.</li>
+          <li><strong>செக்ஷன் AE, பிறகு உட்பிரிவு AEE</strong> — பெரும்பாலான தேக்கங்கள் நிலுவை ஆய்வு
+          அல்லது பொருள் பற்றாக்குறை; ஒரு சந்திப்பில் தீரும்.</li>
+          <li><strong>CGRF → TNERC மின்சார குறைதீர்ப்பாளர் (Ombudsman)</strong> — காலக்கெடு முடிந்ததும்
+          இலவச சட்டப்படியான வழி, Standards-of-Performance இழப்பீட்டுடன்.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>7. மீட்டர் வந்த பிறகு — முதல் (இருமாத) பில்லைச் சரிபாருங்கள்</h2>
+        <p>கட்டண வகை (வீட்டுக்கு LT I-A குடியிருப்பு), அனுமதிக்கப்பட்ட மின்சுமை, மற்றும்
+        <strong>இலவச யூனிட் மானியம்</strong> (மாநிலத் திட்டப்படி குடியிருப்பு நுகர்வோருக்கு இருமாத
+        சுழற்சிக்கு 100 இலவச யூனிட்கள்) பொருந்தியுள்ளதா — இம்மூன்றையும் சரிபாருங்கள். பில் அதிகம்
+        என்று முடிவு செய்யும் முன் அது சுமார் இரண்டு மாதங்களுக்கானது என்பதை நினைவில் கொள்ளுங்கள்.
+        பிறகு யூனிட்களை எங்கள்
+        <a href="/?state=Tamil%20Nadu#calculator">TNEB பில் கால்குலேட்டரில்</a> போடுங்கள் — அது
+        தற்போதைய TNERC அடுக்குகளையும் மானியத்தையும் கணக்கிடுகிறது — ஒப்பிடுங்கள். ஒவ்வொரு வரியையும்
+        புரிந்துகொள்ள <a href="/guides/how-to-read-tneb-tangedco-bill/">TNEB பில் படிக்கும்
+        வழிகாட்டியைப்</a> பாருங்கள்; சந்தேகமான முதல் பில்லை
+        <a href="/bill-review/">Bill Review</a> இலவசமாகச் சரிபார்க்கும்.</p>
+      </section>`,
+    faqsTa: [
+      { q: 'TNEB புதிய இணைப்புக்கு ஆன்லைனில் எப்படி விண்ணப்பிப்பது?',
+        a: 'TANGEDCO/TNPDCL-இன் புதிய மின் இணைப்பு போர்டலில் (app1.tangedco.org/nsconline, tnpdcl.org → Online Services வழியாகவும்) வகையைத் தேர்ந்தெடுத்து, இட விவரங்களும் மின்சுமையும் நிரப்பி, ஆவணங்களைப் பதிவேற்றி பதிவுக் கட்டணம் செலுத்துங்கள். Application Reference Number கிடைக்கும்; செக்ஷன் அலுவலகம் ஆய்வு செய்யும், கோரப்படும் வைப்புத்தொகையை ஆன்லைனில் செலுத்தியதும் மீட்டர் பொருத்தப்படும்.' },
+      { q: 'TNEB புதிய இணைப்புக்கு என்ன ஆவணங்கள் தேவை?',
+        a: 'அடையாளச் சான்று (ஆதார், வாக்காளர் அட்டை, பாஸ்போர்ட், PAN அல்லது ஓட்டுநர் உரிமம்) மற்றும் உரிமைச் சான்று (கிரயப் பத்திரம், பட்டா அல்லது சொத்து வரி ரசீது). உரிமையாளர் அல்லாதவர்கள் உரிமையாளரின் சம்மதக் கடிதம் (படிவம் 5) அல்லது குடியிருப்புச் சான்றுடன் உத்தரவாதப் பத்திரம் (படிவம் 6) தரலாம். பெரிய/புதிய கட்டிடங்களுக்கு முடிவுச் சான்றிதழும் தேவை.' },
+      { q: 'உரிமையாளர் கையொப்பம் இல்லாமல் குடியிருப்பாளர் TNEB இணைப்பு பெற முடியுமா?',
+        a: 'முடியும் — தமிழ்நாட்டின் விநியோகக் கோட் படிவம் 6-ஐ வழங்குகிறது: உரிமையாளர் படிவம் 5 சம்மதத்தில் கையொப்பமிட மறுத்தால், குடியிருப்பாளர் குடியிருப்புச் சான்றுடன் நிலையான உத்தரவாதப் பத்திரத்தைத் தாக்கல் செய்யலாம். மின்சாரச் சட்டம், 2003-இன் பிரிவு 43-இன் கீழ் மின்சாரம் குடியிருப்பவரின் சட்டப்படியான உரிமை.' },
+      { q: 'TNEB புதிய இணைப்புக் கட்டணங்களைச் செலுத்த லாகின் எப்படி?',
+        a: 'கட்டண போர்டலில் (tnebnet.org/awp) பயனர்பெயர் உங்கள் Application Reference Number, கடவுச்சொல் பதிவு செய்த மொபைல் எண் — பல விண்ணப்பதாரர்களைக் குழப்பும் அசாதாரண வழக்கம் இது. விண்ணப்பத்தின் மீதான எல்லாக் கோரிக்கைகளும் அங்கேயே செலுத்தலாம்.' },
+      { q: 'TNEB புதிய இணைப்பு எத்தனை நாட்களில் கிடைக்கும்?',
+        a: 'மின்சார (நுகர்வோர் உரிமைகள்) விதிகள், 2020-இன் கீழ் முழுமையான, கட்டணம் செலுத்திய விண்ணப்பத்திற்கு சென்னையில் (பெருநகரம்) 7 நாட்கள், மற்ற நகராட்சி பகுதிகளில் 15 நாட்கள், கிராமப்புறங்களில் 30 நாட்கள். TNERC-இன் Standards of Performance தவறினால் இழப்பீடு சேர்க்கிறது; நீண்ட வெளியிடப்பட்ட காலக்கெடுகள் உண்மையான லைன்-நீட்டிப்பு வேலைகளுக்கு மட்டுமே.' },
+    ],
+  },
 ];

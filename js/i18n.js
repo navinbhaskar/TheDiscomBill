@@ -85,7 +85,7 @@ export const STRINGS = {
     'tab.adjustment': 'Adjustment',
     'mode.meterReading': 'Meter Reading',
     'mode.tod': 'TOD',
-    'label.billedAmount': 'Amount on your DISCOM bill (₹) — optional',
+    'label.billedAmount': 'Amount on your actual bill (₹) — optional',
     'small.billedAmount': "We'll compare it with our calculation and tell you if your bill looks right.",
 
     // Solar calculator (/solar/)

@@ -79,7 +79,7 @@ export default {
     'tab.adjustment': 'समायोजन',
     'mode.meterReading': 'मीटर रीडिंग',
     'mode.tod': 'टीओडी',
-    'label.billedAmount': 'आपके डिस्कॉम बिल की राशि (₹) — वैकल्पिक',
+    'label.billedAmount': 'आपके असली बिल की राशि (₹) — वैकल्पिक',
     'small.billedAmount': 'हम इसे अपनी गणना से मिलाकर बताएँगे कि आपका बिल सही लगता है या नहीं।',
 
     // Solar calculator (/solar/)

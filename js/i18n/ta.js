@@ -79,7 +79,7 @@ export default {
     'tab.adjustment': 'சரிக்கட்டல்',
     'mode.meterReading': 'மீட்டர் ரீடிங்',
     'mode.tod': 'ToD',
-    'label.billedAmount': 'உங்கள் டிஸ்காம் பில்லில் உள்ள தொகை (₹) — விருப்பத்திற்கு',
+    'label.billedAmount': 'உங்கள் உண்மையான பில்லில் உள்ள தொகை (₹) — விருப்பத்திற்கு',
     'small.billedAmount': 'எங்கள் கணக்கீட்டுடன் ஒப்பிட்டு உங்கள் பில் சரியாக உள்ளதா எனச் சொல்வோம்.',
 
     // Solar calculator (/solar/)
