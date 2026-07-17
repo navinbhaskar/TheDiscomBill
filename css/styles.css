@@ -942,16 +942,21 @@ a:hover { text-decoration: underline; }
 .form-row-uneven {
   grid-template-columns: 1fr 1.55fr;
 }
-/* Keep the two uneven-row labels (Sanctioned Load / FPPA surcharge) on a single line so the
-   fields beneath them line up. nowrap is safe at every width: below 481px the row stacks to
-   full width, and above it the FPPA column (1.7fr) is wide enough for the longest "% of
-   charges" variant. min-width:0 lets the grid columns shrink instead of forcing a scrollbar. */
+/* The two uneven-row labels (Sanctioned Load / FPPA surcharge) may wrap to a second line —
+   never overlap. The label text grows dynamically (required *, "% of charges" mode), so nowrap
+   is NOT safe; instead the labels wrap and align to the bottom so the inputs stay level, and
+   the row stacks to one column earlier (560px). min-width:0 lets the columns shrink. */
 .form-row-uneven .form-group { min-width: 0; }
-.form-row-uneven .form-group > label { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
-.form-row-uneven .form-group > label .lbl-text { white-space: nowrap; }
+.form-row-uneven .form-group > label {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 4px;
+  min-height: 34px; align-content: flex-end;
+}
 @media (max-width: 480px) {
   .form-row { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
   .form-row-uneven { grid-template-columns: 1fr; }
+  .form-row-uneven .form-group > label { min-height: 0; }
 }
 
 select,
