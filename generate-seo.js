@@ -125,6 +125,8 @@ const tariffUpdated = (state, lang) => humanDate(tariffLastmod(state), lang);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const attr = (s) => esc(s);
 const rupee = (n) => '₹' + Number(n).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+// Per-unit rates read as money, so they keep both paise digits: ₹5.80/unit, not ₹5.8/unit.
+const rupeeRate = (n) => '₹' + Number(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const slugify = (s) => String(s).toLowerCase().trim()
   .replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
@@ -512,7 +514,7 @@ function energySlabsHtml(slabs, lang = 'en') {
     const range = slabRange(prev, s.limit, lang);
     prev = (s.limit === Infinity || s.limit == null) ? prev : s.limit;
     const note = s.label ? ` <span class="tx-muted">(${esc(s.label)})</span>` : '';
-    return `<tr><td>${range} <span class="tx-muted">${unit}</span>${note}</td><td class="num">${rupee(s.rate)}<span class="tx-muted">${perUnit}</span></td></tr>`;
+    return `<tr><td>${range} <span class="tx-muted">${unit}</span>${note}</td><td class="num">${rupeeRate(s.rate)}<span class="tx-muted">${perUnit}</span></td></tr>`;
   }).join('');
   return `<table class="tariff-slab-table"><tbody>${rows}</tbody></table>`;
 }
@@ -741,7 +743,7 @@ function keyFactsHtml(state, discom, fy, lang = 'en') {
         mr: `${esc(fyLabel(fy, 'mr'))} टॅरिफ आदेशावर आधारित (आमच्याकडील नवीनतम प्रकाशित डेटा)`,
         ta: `${esc(fyLabel(fy, 'ta'))} கட்டண ஆணையை அடிப்படையாகக் கொண்டது (எங்களிடம் உள்ள சமீபத்திய வெளியிடப்பட்ட தரவு)` })]);
   // Flat-rate states (e.g. Bihar's single ₹7.42 slab) collapse to one figure, not "x – x".
-  if (dr) rows.push([T(lang, { en: 'Domestic energy rate', hi: 'घरेलू ऊर्जा दर', mr: 'घरगुती ऊर्जा दर', ta: 'வீட்டு மின் கட்டணம்' }), `${dr.min === dr.max ? rupee(dr.min) : `${rupee(dr.min)} – ${rupee(dr.max)}`} ${T(lang, { en: 'per unit', hi: 'प्रति यूनिट', mr: 'प्रति युनिट', ta: 'ஒரு யூனிட்டுக்கு' })}`]);
+  if (dr) rows.push([T(lang, { en: 'Domestic energy rate', hi: 'घरेलू ऊर्जा दर', mr: 'घरगुती ऊर्जा दर', ta: 'வீட்டு மின் கட்டணம்' }), `${dr.min === dr.max ? rupeeRate(dr.min) : `${rupeeRate(dr.min)} – ${rupeeRate(dr.max)}`} ${T(lang, { en: 'per unit', hi: 'प्रति यूनिट', mr: 'प्रति युनिट', ta: 'ஒரு யூனிட்டுக்கு' })}`]);
   if (discom.lpscRate != null) rows.push([T(lang, { en: 'Late payment surcharge (LPSC)', hi: 'विलंब भुगतान अधिभार (LPSC)', mr: 'विलंब भरणा अधिभार (LPSC)', ta: 'தாமத கட்டண மிகைக்கட்டணம் (LPSC)' }), `${discom.lpscRate}% ${T(lang, { en: 'per month', hi: 'प्रति माह', mr: 'दरमहा', ta: 'ஒரு மாதத்திற்கு' })}`]);
   if (discom.website) rows.push([T(lang, { en: 'Official website', hi: 'आधिकारिक वेबसाइट', mr: 'अधिकृत वेबसाइट', ta: 'அதிகாரப்பூர்வ இணையதளம்' }), `<a href="${attr(discom.website)}" target="_blank" rel="noopener">${esc(String(discom.website).replace(/^https?:\/\//, ''))} ↗</a>`]);
   const heading = T(lang, { en: `${esc(discom.name)} at a glance`, hi: `${esc(discom.name)} एक नज़र में`, mr: `${esc(discom.name)} एका दृष्टिक्षेपात`, ta: `${esc(discom.name)} ஒரு பார்வையில்` });
@@ -880,7 +882,7 @@ function discomPage(state, discom, lang = 'en') {
     `${cname} Bill Calculator`,
   ]);
   const description = variant(seed + 'd', [
-    `Calculate your ${discom.name} (${long}) electricity bill for ${fy}${cityPhrase ? ` in ${cityPhrase}` : ''}. Slab-wise rates, fixed charges, FPPA & duties.${dr ? ` Domestic from ${rupee(dr.min)}/unit.` : ''} Free, no sign-up.`,
+    `Calculate your ${discom.name} (${long}) electricity bill for ${fy}${cityPhrase ? ` in ${cityPhrase}` : ''}. Slab-wise rates, fixed charges, FPPA & duties.${dr ? ` Domestic from ${rupeeRate(dr.min)}/unit.` : ''} Free, no sign-up.`,
     `${discom.name} electricity bill calculator for ${state}${cityPhrase ? ` (${cityPhrase})` : ''}. ${fy} domestic & commercial slab rates, fixed/demand charges and an instant itemised estimate.`,
     `Free ${discom.name} bill estimate (${fy})${cityPhrase ? ` for ${cityPhrase} and across ${region || state}` : ''}. See the full tariff schedule, indicative monthly bills and pay-bill portal.`,
   ]);
