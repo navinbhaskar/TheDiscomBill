@@ -24,8 +24,8 @@ export default {
     'ql.billReviewGroup': 'तुमचे बिल तपासून घ्या',
     'ql.ocrCheck': 'झटपट स्व-तपासणी (OCR)',
     'ql.billReview': 'तज्ज्ञांकडून',
-    'ql.guides': 'लेख आणि मार्गदर्शक',
-    'ql.glossary': 'वीज बिल शब्दकोश',
+    'ql.guides': 'ब्लॉग आणि लेख',
+    'ql.glossary': 'वीज बिल मार्गदर्शक',
     'ql.methodology': 'कार्यपद्धती व अचूकता',
     // Shared footer links (generated pages + key pages)
     'footer.rights': '© 2026 TheDiscomBill. सर्व हक्क राखीव.',

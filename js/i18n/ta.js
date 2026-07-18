@@ -24,8 +24,8 @@ export default {
     'ql.billReviewGroup': 'உங்கள் பில்லை ஆய்வு செய்யுங்கள்',
     'ql.ocrCheck': 'உடனடி சுய சரிபார்ப்பு (OCR)',
     'ql.billReview': 'நிபுணரிடமிருந்து',
-    'ql.guides': 'கட்டுரைகள் & வழிகாட்டிகள்',
-    'ql.glossary': 'மின் கட்டணச் சொற்களஞ்சியம்',
+    'ql.guides': 'வலைப்பதிவுகள் & கட்டுரைகள்',
+    'ql.glossary': 'மின் பில் வழிகாட்டி',
     'ql.methodology': 'முறையியல் & துல்லியம்',
     // Shared footer links (generated pages + key pages)
     'footer.rights': '© 2026 TheDiscomBill. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.',

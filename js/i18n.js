@@ -30,8 +30,8 @@ export const STRINGS = {
     'ql.billReviewGroup': 'Get Your Bill Reviewed',
     'ql.ocrCheck': 'Instant Self-Check (OCR)',
     'ql.billReview': 'From an Expert',
-    'ql.guides': 'Articles & Guides',
-    'ql.glossary': 'Electricity Bill Glossary',
+    'ql.guides': 'Blogs & Articles',
+    'ql.glossary': 'Electricity Bill Guide',
     'ql.methodology': 'Methodology & Accuracy',
     // Shared footer links (generated pages + key pages)
     'footer.rights': '© 2026 TheDiscomBill. All rights reserved.',

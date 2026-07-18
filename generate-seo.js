@@ -274,8 +274,8 @@ const HEADER = `
           </div>
           </div>
           <span class="nav-dropdown-label" role="presentation" data-i18n="ql.learn">Learn</span>
-          <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.guides">Articles &amp; Guides</span></a>
-          <a href="/glossary/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M12 7h5M12 11h5M7 7h.01M7 11h.01"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.glossary">Electricity Bill Glossary</span></a>
+          <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.guides">Blogs &amp; Articles</span></a>
+          <a href="/glossary/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M12 7h5M12 11h5M7 7h.01M7 11h.01"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.glossary">Electricity Bill Guide</span></a>
           <a href="/methodology/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 11l2 2 4-4"/></svg><span data-i18n="ql.methodology">Methodology &amp; Accuracy</span></a>
         </div>
       </div>
@@ -1748,6 +1748,31 @@ function guidePage(guide, lang = 'en') {
   });
 }
 
+// Category tag shown on each guide card (blog-style). An explicit `category` id on the
+// guide wins; otherwise it's derived from the slug. Labels are translated per language.
+const GUIDE_CATEGORIES = {
+  solar:       { en: 'Solar',          hi: 'सोलर',          mr: 'सोलर',          ta: 'சோலார்' },
+  ev:          { en: 'EV Guide',       hi: 'EV गाइड',       mr: 'EV मार्गदर्शक', ta: 'EV வழிகாட்டி' },
+  smartMeter:  { en: 'Smart Meter',    hi: 'स्मार्ट मीटर',  mr: 'स्मार्ट मीटर',  ta: 'ஸ்மார்ட் மீட்டர்' },
+  newConn:     { en: 'New Connection', hi: 'नया कनेक्शन',    mr: 'नवीन जोडणी',    ta: 'புதிய இணைப்பு' },
+  charges:     { en: 'Bill Charges',   hi: 'बिल शुल्क',      mr: 'बिल शुल्क',      ta: 'பில் கட்டணம்' },
+  saveMoney:   { en: 'Save Money',     hi: 'बचत',           mr: 'बचत',           ta: 'சேமிப்பு' },
+  basics:      { en: 'Bill Basics',    hi: 'बिल बेसिक्स',    mr: 'बिल बेसिक्स',    ta: 'பில் அடிப்படை' },
+};
+function guideCategoryId(g) {
+  if (g.category && GUIDE_CATEGORIES[g.category]) return g.category;
+  const s = g.slug;
+  if (/^ev-|ev-charging/.test(s)) return 'ev';
+  if (/solar|surya/.test(s)) return 'solar';
+  if (/smart-meter|prepaid-vs-postpaid/.test(s)) return 'smartMeter';
+  if (/new-connection/.test(s)) return 'newConn';
+  if (/sanctioned-load|reduce-fixed/.test(s)) return 'saveMoney';
+  if (/fppa|electricity-duty|power-factor|kvah/.test(s)) return 'charges';
+  if (/how-to-read|bill-increase|what-is-a-unit|tod-billing/.test(s)) return 'basics';
+  return 'basics';
+}
+const guideCategoryLabel = (g, lang) => T(lang, GUIDE_CATEGORIES[guideCategoryId(g)]);
+
 function guidesIndexPage(lang = 'en') {
   const enUrl = '/guides/';
   const url = langUrl(enUrl, lang);
@@ -1762,7 +1787,10 @@ function guidesIndexPage(lang = 'en') {
     ta: 'இந்திய மின் பில்லிங் குறித்த எளிய மொழி வழிகாட்டிகள்: பில்லை எப்படிப் படிப்பது, பில்கள் ஏன் திடீரெனக் கூடுகின்றன, டைம்-ஆஃப்-டே பில்லிங், FPPA மற்றும் பல.',
     en: 'Plain-language guides to Indian electricity billing: how to read your bill, why bills suddenly increase, Time-of-Day billing, FPPA and more.' });
   const base = `${lang === 'en' ? '' : '/' + lang}/guides/`;
-  const cards = GUIDES.map(g => {
+  const readMore = T(lang, { hi: 'लेख पढ़ें', mr: 'लेख वाचा', ta: 'கட்டுரையைப் படிக்க', en: 'Read article' });
+  // Newest first so fresh content leads the blog grid; guides carry a `published` date.
+  const ordered = [...GUIDES].sort((a, b) => (b.published || '').localeCompare(a.published || ''));
+  const cards = ordered.map(g => {
     // Link to the vernacular twin only where the article body is translated; else English.
     const translated = lang !== 'en' && guideHasBody(g, lang);
     const href = translated ? `/${lang}/guides/${g.slug}/` : `/guides/${g.slug}/`;
@@ -1771,11 +1799,21 @@ function guidesIndexPage(lang = 'en') {
     const snip = gd.split('।')[0].split('.')[0];
     const end = T(lang, { hi: '।', mr: '.', ta: '.', en: '.' });
     const gm = T(lang, { hi: `${g.minutes} मिनट`, mr: `${g.minutes} मिनिटे`, ta: `${g.minutes} நிமிடம்`, en: `${g.minutes} min read` });
+    const cat = guideCategoryLabel(g, lang);
+    const date = g.published ? humanDate(g.published, lang) : '';
     return `
-    <a class="seo-link-card" href="${href}">
-      <strong>${esc(gt)}</strong>
-      <span>${esc(snip)}${end}</span>
-      <small>${gm}</small>
+    <a class="blog-card" href="${href}">
+      <div class="blog-card-top">
+        <span class="blog-tag">${esc(cat)}</span>
+        <span class="blog-meta-dot" aria-hidden="true">&bull;</span>
+        <span class="blog-read">${gm}</span>
+      </div>
+      <strong class="blog-card-title">${esc(gt)}</strong>
+      <span class="blog-card-desc">${esc(snip)}${end}</span>
+      <span class="blog-card-foot">
+        <span class="blog-date">${date}</span>
+        <span class="blog-read-link">${readMore}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span>
+      </span>
     </a>`;
   }).join('');
   const bcHome = T(lang, { hi: 'होम', mr: 'होम', ta: 'முகப்பு', en: 'Home' });
@@ -1792,7 +1830,7 @@ function guidesIndexPage(lang = 'en') {
     ${langSwitchLink(enUrl, lang)}
     <h1>${h1}</h1>
     <p class="seo-lead">${lead}</p>
-    <div class="seo-link-grid guides-grid">${cards}</div>
+    <div class="blog-grid">${cards}</div>
   </section>`;
   return layout({
     title, description, canonical: SITE + url, page: enUrl, lang,
