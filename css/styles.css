@@ -2745,6 +2745,42 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   background: radial-gradient(circle, rgba(251, 191, 36, .35), rgba(251, 191, 36, .12) 55%, transparent 72%);
   pointer-events: none;
 }
+
+/* ─── EV Charging Cost Calculator (/ev/) — rides on the solar-* layout ───────── */
+/* Hero bolt: soft electric-teal glow with a pulsing bolt, the EV page's signature. */
+.ev-hero-bolt {
+  position: absolute; top: -56px; right: -46px; width: 200px; height: 200px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(45, 212, 191, .28), rgba(59, 130, 246, .12) 55%, transparent 72%);
+  pointer-events: none; display: flex; align-items: center; justify-content: center;
+}
+.ev-hero-bolt svg {
+  width: 54px; height: 54px; color: #2dd4bf; opacity: .55;
+  animation: ev-bolt-pulse 2.6s ease-in-out infinite;
+}
+@keyframes ev-bolt-pulse {
+  0%, 100% { transform: scale(1); opacity: .55; }
+  50% { transform: scale(1.12); opacity: .85; }
+}
+@media (prefers-reduced-motion: reduce) { .ev-hero-bolt svg { animation: none; } }
+
+/* Hero result card: electric green-teal instead of solar amber */
+.ev-hero-card { background: linear-gradient(135deg, #0d9488, #2563eb); }
+.ev-perkm { font-size: 44px; font-weight: 800; line-height: 1.05; margin-top: 2px; letter-spacing: -1px; }
+.ev-perkm small { font-size: 18px; font-weight: 700; opacity: .9; letter-spacing: 0; }
+.ev-vs-petrol { font-size: 13px; opacity: .92; margin-top: 6px; }
+.ev-vs-petrol s { opacity: .85; font-weight: 600; }
+.ev-cheaper-pill { background: rgba(255,255,255,.22); font-weight: 700; }
+
+/* Monthly-cost comparison bars */
+.ev-bars { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+.ev-bar-row { display: grid; grid-template-columns: 92px 1fr auto; align-items: center; gap: 8px; font-size: 12px; }
+.ev-bar-label { color: var(--text-secondary); font-weight: 500; }
+.ev-bar-track { background: var(--surface-sunken); border-radius: var(--radius-full); height: 14px; overflow: hidden; }
+.ev-bar-fill { display: block; height: 100%; border-radius: var(--radius-full); transition: width .5s ease; }
+.ev-bar-home { background: linear-gradient(90deg, #0d9488, #2dd4bf); }
+.ev-bar-public { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+.ev-bar-petrol { background: linear-gradient(90deg, #dc2626, #f97316); }
+.ev-bar-val { color: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
 .solar-hero h2 { margin-top: 0; }
 .solar-hero .solar-intro { margin-bottom: 16px; }
 .solar-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }

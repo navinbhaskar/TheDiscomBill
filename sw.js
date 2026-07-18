@@ -1,11 +1,12 @@
 // sw.js — Service Worker (network-first, cache fallback)
 // Update this version string when deploying new code to bust the cache.
-const CACHE = 'discombill-20260716-144';
+const CACHE = 'discombill-20260716-145';
 
 const CORE = [
   './', './index.html', './compare/', './compare/index.html',
   './usage/', './usage/index.html',
   './solar/', './solar/index.html',
+  './ev/', './ev/index.html',
   './tariffs/', './tariffs/index.html',
   './services/', './services/index.html',
   './bill-review/', './bill-review/index.html',
@@ -23,7 +24,7 @@ const CORE = [
   './js/ui.js', './js/datepicker.js', './js/renderer.js', './js/main.js', './js/compare.js',
   './js/estimators.js', './js/tariff-explorer.js', './js/bill-check.js',
   './js/portal-page.js', './js/new-connection.js', './js/complaint.js', './js/services.js', './js/solar.js',
-  './js/recharge-calculator.js',
+  './js/recharge-calculator.js', './js/ev.js',
   // Bill Review portal — bill-review.js statically imports these two, so they
   // must be cached together or the page fails to parse offline.
   './js/bill-review.js', './js/support-common.js', './js/supabase-config.js', './js/login.js', './js/my-bills.js',

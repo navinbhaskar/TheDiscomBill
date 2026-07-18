@@ -10,6 +10,7 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [Tariff Comparison](https://thediscombill.com/compare/): major DISCOMs compared at 200/400/600/1000 units for domestic and commercial
 - [Usage Estimator](https://thediscombill.com/usage/): estimate monthly kWh from household appliances
 - [Rooftop Solar Savings](https://thediscombill.com/solar/): system sizing, payback and net-metering savings
+- [EV Charging Cost Calculator](https://thediscombill.com/ev/): cost per charge, per km and monthly charging bill for any EV, with petrol comparison
 - [Bill Check](https://thediscombill.com/bill-check/): direct links to every DISCOM's official view/pay-bill portal
 - [Bill Review by Experts](https://thediscombill.com/bill-review/): upload a bill and have a human expert review it (free account)
 - [New Connection](https://thediscombill.com/new-connection/): charges, documents and process per DISCOM

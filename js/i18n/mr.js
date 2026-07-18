@@ -17,6 +17,7 @@ export default {
     'ql.compare': 'डिस्कॉम टॅरिफ तुलना',
     'ql.usage': 'वापर अंदाजक',
     'ql.solar': 'रूफटॉप सोलर बचत',
+    'ql.ev': 'EV चार्जिंग खर्च',
     'ql.tariffsByState': 'राज्य व डिस्कॉमनुसार टॅरिफ',
     'ql.discomServices': 'डिस्कॉम सेवा',
     'ql.smartMeter': 'स्मार्ट मीटर रिचार्ज',
