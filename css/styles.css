@@ -684,32 +684,57 @@ a:hover { text-decoration: underline; }
   background: rgba(37,99,235,.09); border: 1px solid rgba(37,99,235,.28);
   padding: 3px 10px; border-radius: var(--radius-full); white-space: nowrap;
 }
-.hbc-rows { margin-top: 8px; }
-.hbc-row {
-  display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
-  padding: 9px 0; border-bottom: 1px solid rgba(15,23,42,.08);
-  font-size: 13.5px; color: #475569;
+/* Card 1 — total up top, then a charge-composition bar + legend */
+.hbc-hero { margin: 12px 0 14px; }
+.hbc-hero-amount {
+  display: block; font-family: var(--font-display);
+  font-size: 40px; font-weight: 800; letter-spacing: -1.2px; line-height: 1;
+  color: var(--brand-dark, #1d4ed8);
 }
-.hbc-row:last-child { border-bottom: none; }
-.hbc-row strong {
-  font-family: var(--font-display);
-  font-weight: 600; color: #0f172a; font-variant-numeric: tabular-nums;
-  letter-spacing: 0.2px; white-space: nowrap;
+.hbc-hero-sub { display: block; margin-top: 5px; font-size: 12.5px; color: #64748b; font-weight: 500; }
+.hbc-compbar {
+  display: flex; gap: 2px; height: 12px; border-radius: 6px; overflow: hidden;
+  background: #eef2f7;
 }
-.hbc-credit strong { color: #15803d; }
-.hbc-total { border-top: 1px solid rgba(15,23,42,.18); margin-top: 2px; padding-top: 12px; }
-.hbc-total span { font-weight: 700; color: #0f172a; font-size: 14px; }
-.hbc-total strong { font-size: 24px; font-weight: 800; letter-spacing: -0.4px; color: var(--brand-dark, #1d4ed8); }
+.hbc-compbar .seg { height: 100%; }
+.seg-energy { background: linear-gradient(90deg, #2563eb, #3b82f6); }
+.seg-fixed  { background: #93c5fd; }
+.seg-duty   { background: #f59e0b; }
+.hbc-legend {
+  display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 12px;
+  font-size: 12px; color: #475569;
+}
+.hbc-leg { display: inline-flex; align-items: center; gap: 6px; }
+.hbc-leg b { color: #0f172a; font-weight: 700; font-variant-numeric: tabular-nums; }
+.hbc-leg .dot { width: 8px; height: 8px; border-radius: 2.5px; flex-shrink: 0; }
+.dot-energy { background: #2563eb; }
+.dot-fixed  { background: #93c5fd; }
+.dot-duty   { background: #f59e0b; }
+.hbc-leg-credit { color: #15803d; margin-left: auto; }
+.hbc-leg-credit b { color: #15803d; }
 .hbc-foot {
-  margin-top: 10px; font-size: 10.5px; color: #64748b; letter-spacing: 0.3px;
+  margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(15,23,42,.10);
+  font-size: 10.5px; color: #64748b; letter-spacing: 0.3px;
   display: flex; align-items: center; gap: 6px;
 }
 .hbc-foot::before {
   content: ''; width: 6px; height: 6px; border-radius: 50%;
   background: #16a34a; box-shadow: 0 0 8px rgba(22,163,74,.55); flex-shrink: 0;
 }
-.hero-compare-card .hbc-row { padding: 7px 0; font-size: 12.5px; }
-.hero-compare-card .hbc-row strong { font-size: 13px; }
+
+/* Card 2 — ranked comparison bars, your state highlighted */
+.hcc-bars { display: flex; flex-direction: column; gap: 11px; margin-top: 12px; }
+.hcc-row {
+  display: grid; grid-template-columns: 84px 1fr auto; align-items: center; gap: 10px;
+  font-size: 12.5px;
+}
+.hcc-state { color: #475569; font-weight: 500; white-space: nowrap; }
+.hcc-track { height: 8px; background: #eef2f7; border-radius: 4px; overflow: hidden; }
+.hcc-fill { display: block; height: 100%; border-radius: 4px; background: #cbd5e1; }
+.hcc-amt { color: #0f172a; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.hcc-you .hcc-state { color: var(--brand-dark, #1d4ed8); font-weight: 700; }
+.hcc-you .hcc-fill { background: linear-gradient(90deg, #2563eb, #3b82f6); }
+.hcc-you .hcc-amt { color: var(--brand-dark, #1d4ed8); }
 
 @media (max-width: 1000px) {
   .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 34px; }

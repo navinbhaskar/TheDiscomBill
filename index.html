@@ -324,24 +324,50 @@
   <div class="hero-right reveal">
     <div class="hero-bill-card">
       <div class="hbc-head">
-        <span class="hbc-title" data-i18n="hero.card.title">Sample bill · 250 units</span>
+        <span class="hbc-title" data-i18n="hero.card.title">Estimated monthly bill</span>
         <span class="hbc-chip">UPPCL · Lucknow</span>
       </div>
-      <div class="hbc-rows">
-        <div class="hbc-row"><span data-i18n="hero.card.energy">Energy charges</span><strong>₹1,100.00</strong></div>
-        <div class="hbc-row"><span data-i18n="hero.card.fixed">Fixed charge</span><strong>₹100.00</strong></div>
-        <div class="hbc-row hbc-credit"><span data-i18n="hero.card.fppa">FPPA — July credit</span><strong>−₹53.16</strong></div>
-        <div class="hbc-row"><span data-i18n="hero.card.duty">Electricity duty</span><strong>₹57.34</strong></div>
-        <div class="hbc-row hbc-total"><span data-i18n="hero.card.total">Total bill</span><strong>₹1,204</strong></div>
+      <!-- Total up top (our engine leads with the answer), then a visual composition bar -->
+      <div class="hbc-hero">
+        <span class="hbc-hero-amount">₹1,204</span>
+        <span class="hbc-hero-sub" data-i18n="hero.card.sub">250 units · LMV-1 domestic</span>
       </div>
-      <div class="hbc-foot" data-i18n="hero.card.foot">Computed by our live engine · verified against real bills</div>
+      <div class="hbc-compbar" role="img" aria-label="Charge composition: energy 87%, fixed 8%, duty 5%">
+        <span class="seg seg-energy" style="width:87.5%"></span>
+        <span class="seg seg-fixed" style="width:8%"></span>
+        <span class="seg seg-duty" style="width:4.5%"></span>
+      </div>
+      <div class="hbc-legend">
+        <span class="hbc-leg"><i class="dot dot-energy"></i><span data-i18n="hero.card.energy">Energy</span> <b>₹1,100</b></span>
+        <span class="hbc-leg"><i class="dot dot-fixed"></i><span data-i18n="hero.card.fixed">Fixed</span> <b>₹100</b></span>
+        <span class="hbc-leg"><i class="dot dot-duty"></i><span data-i18n="hero.card.duty">Duty</span> <b>₹57</b></span>
+        <span class="hbc-leg hbc-leg-credit"><span data-i18n="hero.card.credit">FPPA credit</span> <b>−₹53</b></span>
+      </div>
+      <div class="hbc-foot" data-i18n="hero.card.foot">Live engine · matched to the paisa on real UPPCL bills</div>
     </div>
     <div class="hero-compare-card">
-      <div class="hbc-title" data-i18n="hero.card.cmpTitle">Same 250 units elsewhere</div>
-      <div class="hbc-rows">
-        <div class="hbc-row"><span data-i18n="hero.card.dl">Delhi (BRPL)</span><strong>₹1,038</strong></div>
-        <div class="hbc-row"><span data-i18n="hero.card.ka">Karnataka (BESCOM)</span><strong>₹1,750</strong></div>
-        <div class="hbc-row"><span data-i18n="hero.card.mh">Maharashtra (MSEDCL)</span><strong>₹2,567</strong></div>
+      <div class="hbc-title" data-i18n="hero.card.cmpTitle">Same home, other states</div>
+      <div class="hcc-bars">
+        <div class="hcc-row hcc-you">
+          <span class="hcc-state" data-i18n="hero.card.up">Uttar Pradesh</span>
+          <span class="hcc-track"><span class="hcc-fill" style="width:47%"></span></span>
+          <span class="hcc-amt">₹1,204</span>
+        </div>
+        <div class="hcc-row">
+          <span class="hcc-state" data-i18n="hero.card.dl">Delhi</span>
+          <span class="hcc-track"><span class="hcc-fill" style="width:40%"></span></span>
+          <span class="hcc-amt">₹1,038</span>
+        </div>
+        <div class="hcc-row">
+          <span class="hcc-state" data-i18n="hero.card.ka">Karnataka</span>
+          <span class="hcc-track"><span class="hcc-fill" style="width:68%"></span></span>
+          <span class="hcc-amt">₹1,750</span>
+        </div>
+        <div class="hcc-row">
+          <span class="hcc-state" data-i18n="hero.card.mh">Maharashtra</span>
+          <span class="hcc-track"><span class="hcc-fill" style="width:100%"></span></span>
+          <span class="hcc-amt">₹2,567</span>
+        </div>
       </div>
     </div>
   </div>
