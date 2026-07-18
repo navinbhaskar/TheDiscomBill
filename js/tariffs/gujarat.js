@@ -45,7 +45,7 @@ export default {
               rate: 20
             }
           ],
-          notes: "Telescopic tariff. Electricity Duty is 20% of energy charges."
+          notes: "Slab-wise tariff. Electricity Duty is 20% of energy charges."
         },
         {
           id: "commercial",

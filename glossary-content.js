@@ -287,24 +287,24 @@ export const GLOSSARY = [
       दिखता है और हमारे कैलकुलेटर में भार के रूप में दर्ज किया जाता है।</p>`,
   },
   {
-    term: 'Telescopic Slabs',
+    term: 'Slab-wise Rates',
     slug: 'telescopic-slabs',
-    aka: ['Telescopic Tariff', 'Slab-wise Rates'],
-    short: 'A slab-rate structure where each per-unit rate applies only to the units that fall within its own slab band, so higher rates never apply to your entire consumption.',
-    body: `<p>Most Indian domestic tariffs are telescopic. If the slabs are 0–100, 101–300 and 300+
-      units, a consumer using 250 units pays the first-slab rate on the first 100 units and the
-      second-slab rate only on the next 150 — not the higher rate on all 250. This is the opposite of
-      a <strong>non-telescopic</strong> (or "slab-benefit lost") tariff, where crossing a threshold
-      applies the higher rate to <em>every</em> unit, creating a cliff. Knowing which one your DISCOM
-      uses explains why a bill can jump sharply near a slab boundary. Our
+    aka: ['Telescopic Slabs', 'Telescopic Tariff', 'Cumulative Slabs'],
+    short: 'A slab-rate structure where each per-unit rate applies only to the units that fall within its own slab band, so higher rates never apply to your entire consumption. (The technical name is a "telescopic" tariff.)',
+    body: `<p>Most Indian domestic tariffs are billed <strong>slab-wise</strong> — the technical name is
+      "telescopic". If the slabs are 0–100, 101–300 and 300+ units, a consumer using 250 units pays the
+      first-slab rate on the first 100 units and the second-slab rate only on the next 150 — not the
+      higher rate on all 250. This is the opposite of a <strong>"slab-benefit-lost"</strong> tariff,
+      where crossing a threshold applies the higher rate to <em>every</em> unit, creating a cliff.
+      Knowing which one your DISCOM uses explains why a bill can jump sharply near a slab boundary. Our
       <a href="/#calculator">calculator</a> applies each DISCOM's slabs exactly as published.</p>`,
-    termHi: 'टेलिस्कोपिक स्लैब',
-    chipHi: 'टेलिस्कोपिक स्लैब',
-    shortHi: 'एक स्लैब-दर संरचना जहाँ प्रत्येक प्रति-यूनिट दर केवल उन्हीं यूनिटों पर लागू होती है जो उसके अपने स्लैब बैंड में आती हैं, इसलिए उच्च दरें आपकी पूरी खपत पर कभी लागू नहीं होतीं।',
-    bodyHi: `<p>अधिकांश भारतीय घरेलू टैरिफ टेलिस्कोपिक हैं। यदि स्लैब 0–100, 101–300 व 300+ यूनिट हैं, तो 250 यूनिट
-      उपयोग करने वाला उपभोक्ता पहली 100 यूनिट पर पहले-स्लैब की दर और अगली 150 पर केवल दूसरे-स्लैब की दर देता है —
-      सभी 250 पर उच्च दर नहीं। यह <strong>गैर-टेलिस्कोपिक</strong> (या "स्लैब-लाभ-हानि") टैरिफ के विपरीत है, जहाँ
-      किसी सीमा को पार करने पर उच्च दर <em>हर</em> यूनिट पर लागू होती है, जिससे एक झटका बनता है। यह जानना कि आपका
+    termHi: 'स्लैब-वार दरें',
+    chipHi: 'स्लैब-वार दरें',
+    shortHi: 'एक स्लैब-दर संरचना जहाँ प्रत्येक प्रति-यूनिट दर केवल उन्हीं यूनिटों पर लागू होती है जो उसके अपने स्लैब बैंड में आती हैं, इसलिए उच्च दरें आपकी पूरी खपत पर कभी लागू नहीं होतीं। (तकनीकी नाम "टेलिस्कोपिक" टैरिफ है।)',
+    bodyHi: `<p>अधिकांश भारतीय घरेलू टैरिफ <strong>स्लैब-वार</strong> बिल होते हैं — तकनीकी नाम "टेलिस्कोपिक" है। यदि स्लैब
+      0–100, 101–300 व 300+ यूनिट हैं, तो 250 यूनिट उपयोग करने वाला उपभोक्ता पहली 100 यूनिट पर पहले-स्लैब की दर और
+      अगली 150 पर केवल दूसरे-स्लैब की दर देता है — सभी 250 पर उच्च दर नहीं। यह <strong>"स्लैब-लाभ-हानि"</strong> टैरिफ के
+      विपरीत है, जहाँ किसी सीमा को पार करने पर उच्च दर <em>हर</em> यूनिट पर लागू होती है, जिससे एक झटका बनता है। यह जानना कि आपका
       डिस्कॉम कौन-सा उपयोग करता है, बताता है कि किसी स्लैब सीमा के पास बिल तेज़ी से क्यों बढ़ सकता है। हमारा
       <a href="/#calculator">कैलकुलेटर</a> प्रत्येक डिस्कॉम के स्लैब ठीक वैसे ही लागू करता है जैसे प्रकाशित हैं।</p>`,
   },

@@ -366,7 +366,7 @@ function renderFixed(targetPath, fc) {
 }
 function renderSlabs(targetPath, slabs) {
   const tp = `${targetPath}.energySlabs`;
-  return `<div class="ed-subhead">Energy Slabs (telescopic — rate applies only within each band)</div>
+  return `<div class="ed-subhead">Energy Slabs (slab-wise — rate applies only within each band)</div>
     <div class="ed-row ed-rowhdr ed-row-slab"><span>Up to (cumulative units)</span><span></span><span>Rate (₹/unit)</span><span></span></div>`
     + slabs.map((s, i) => `<div class="ed-row ed-row-slab">
         <input type="number" data-path="${tp}.${i}.limit" value="${esc(s.limit)}" placeholder="upper limit" step="0.01" ${s.inf ? 'disabled' : ''}>

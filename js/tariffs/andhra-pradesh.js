@@ -80,7 +80,7 @@ export default {
               rate: 5
             }
           ],
-          notes: "Telescopic tariff. Fixed charge based on connected load."
+          notes: "Slab-wise tariff. Fixed charge based on connected load."
         },
         {
           id: "commercial",

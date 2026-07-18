@@ -119,7 +119,7 @@
           "width": 512, "height": 512
         },
         "description": "Independent, free electricity bill tools for Indian consumers: a provisional bill calculator covering 70+ DISCOMs, tariff references, solar savings estimates and expert bill review. Not affiliated with any DISCOM, SERC or government body.",
-        "knowsAbout": ["electricity tariffs in India", "DISCOM billing", "telescopic slab calculation", "FPPA fuel surcharge", "solar net metering", "Time-of-Day billing"]
+        "knowsAbout": ["electricity tariffs in India", "DISCOM billing", "slab-wise tariff calculation", "FPPA fuel surcharge", "solar net metering", "Time-of-Day billing"]
       },
       {
         "@type": "WebSite",
@@ -142,7 +142,7 @@
         "browserRequirements": "Requires JavaScript",
         "description": "Calculate a provisional electricity bill for any DISCOM in India with a slab-wise breakdown, fixed/demand charges, FPPA and solar net metering.",
         "featureList": [
-          "Slab-wise (telescopic) energy charge breakdown",
+          "Slab-wise energy charge breakdown",
           "Fixed and demand charges by sanctioned load",
           "FPPA fuel surcharge and electricity duty",
           "Solar net metering credits",
@@ -158,7 +158,7 @@
           {
             "@type": "Question",
             "name": "How does TheDiscomBill calculate my electricity bill?",
-            "acceptedAnswer": { "@type": "Answer", "text": "It applies your DISCOM's published tariff using the telescopic (cumulative) slab method: each slab rate applies only to units consumed within that slab. Fixed or demand charges are added based on your sanctioned load, then fuel surcharge (FPPA), electricity duty and other state levies as specified in the tariff schedule." }
+            "acceptedAnswer": { "@type": "Answer", "text": "It applies your DISCOM's published tariff using the slab-wise (cumulative) method: each slab rate applies only to units consumed within that slab. Fixed or demand charges are added based on your sanctioned load, then fuel surcharge (FPPA), electricity duty and other state levies as specified in the tariff schedule." }
           },
           {
             "@type": "Question",
@@ -850,7 +850,7 @@
     <h2 class="reveal" style="margin-top:28px" data-i18n="about.howTitle">How It Works</h2>
     <p class="reveal" data-i18n-html="about.p2">
       The calculator uses the latest publicly available tariff orders from each DISCOM.
-      It computes charges using the <strong>telescopic (cumulative) slab method</strong>:
+      It computes charges using the <strong>slab-wise (cumulative) method</strong>:
       the rate for each slab applies only to the units consumed within that slab,
       not to the entire consumption. Fixed / demand charges are applied separately
       based on your connected (sanctioned) load.
@@ -874,7 +874,7 @@
       <h2 id="faqTitle" class="reveal">Frequently asked questions</h2>
       <details class="seo-faq-item">
         <summary>How does TheDiscomBill calculate my electricity bill?</summary>
-        <div class="seo-faq-a">It applies your DISCOM's published tariff using the telescopic (cumulative) slab method:
+        <div class="seo-faq-a">It applies your DISCOM's published tariff using the slab-wise (cumulative) method:
           each slab rate applies only to units consumed within that slab. Fixed or demand charges are added
           based on your sanctioned load, then fuel surcharge (FPPA), electricity duty and other state levies
           as specified in the tariff schedule. We verify the engine against real consumer bills — see our

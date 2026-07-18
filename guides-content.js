@@ -1360,7 +1360,7 @@ export const GUIDES = [
       </section>
       <section class="seo-section">
         <h2>2. Energy charge — the LT-I slabs</h2>
-        <p>Delhi domestic slabs step up at 200, 400 and 800 units, telescopically — each rate
+        <p>Delhi domestic slabs step up at 200, 400 and 800 units, slab-wise — each rate
         applies only to the units inside its slab. The current per-unit rates for your DISCOM are on
         our tariff pages: <a href="/tariffs/delhi/brpl/">BRPL</a>,
         <a href="/tariffs/delhi/bypl/">BYPL</a>, <a href="/tariffs/delhi/tpddl/">Tata Power-DDL</a>.</p>
@@ -1428,7 +1428,7 @@ export const GUIDES = [
       </section>
       <section class="seo-section">
         <h2>2. ऊर्जा शुल्क — LT-I स्लैब</h2>
-        <p>दिल्ली के घरेलू स्लैब 200, 400 व 800 यूनिट पर, टेलीस्कोपिक रूप से बढ़ते हैं — हर दर केवल अपने
+        <p>दिल्ली के घरेलू स्लैब 200, 400 व 800 यूनिट पर, स्लैब-वार बढ़ते हैं — हर दर केवल अपने
         स्लैब के भीतर की यूनिटों पर लगती है। आपके डिस्कॉम की वर्तमान प्रति-यूनिट दरें हमारे टैरिफ पेजों पर हैं:
         <a href="/hi/tariffs/delhi/brpl/">BRPL</a>, <a href="/hi/tariffs/delhi/bypl/">BYPL</a>,
         <a href="/hi/tariffs/delhi/tpddl/">Tata Power-DDL</a>।</p>
@@ -1494,7 +1494,7 @@ export const GUIDES = [
       </section>
       <section class="seo-section">
         <h2>2. ऊर्जा आकार — LT-I स्लॅब</h2>
-        <p>दिल्लीचे घरगुती स्लॅब 200, 400 व 800 युनिटवर, टेलिस्कोपिक पद्धतीने वाढतात — प्रत्येक दर फक्त
+        <p>दिल्लीचे घरगुती स्लॅब 200, 400 व 800 युनिटवर, स्लॅबनिहाय पद्धतीने वाढतात — प्रत्येक दर फक्त
         त्याच्या स्लॅबमधील युनिटांवर लागतो. तुमच्या डिस्कॉमचे सध्याचे प्रति-युनिट दर आमच्या टॅरिफ पेजांवर
         आहेत: <a href="/tariffs/delhi/brpl/">BRPL</a>, <a href="/tariffs/delhi/bypl/">BYPL</a>,
         <a href="/tariffs/delhi/tpddl/">Tata Power-DDL</a>.</p>
@@ -1554,7 +1554,7 @@ export const GUIDES = [
     sections: `
       <section class="seo-section">
         <h2>1. Energy charge — LT-1 slabs that climb steeply</h2>
-        <p>Residential (LT-1) consumption is priced telescopically with slab boundaries at
+        <p>Residential (LT-1) consumption is priced slab-wise with slab boundaries at
         <strong>100, 300 and 500 units</strong> — and the jump between the first and last slab is
         roughly threefold, one of the steepest in India. That is why a heavy-AC month hurts
         disproportionately. Current rates are on the
@@ -1618,7 +1618,7 @@ export const GUIDES = [
     sectionsHi: `
       <section class="seo-section">
         <h2>1. ऊर्जा शुल्क — LT-1 स्लैब जो तेज़ी से चढ़ते हैं</h2>
-        <p>आवासीय (LT-1) खपत टेलीस्कोपिक रूप से मूल्यांकित होती है, स्लैब सीमाएँ
+        <p>आवासीय (LT-1) खपत स्लैब-वार मूल्यांकित होती है, स्लैब सीमाएँ
         <strong>100, 300 व 500 यूनिट</strong> पर — और पहले व आख़िरी स्लैब के बीच का उछाल लगभग तीन गुना है,
         भारत में सबसे तीव्र में से एक। इसीलिए भारी-AC वाला महीना अनुपात से ज़्यादा चुभता है। वर्तमान दरें
         <a href="/hi/tariffs/maharashtra/msedcl/">MSEDCL टैरिफ पेज</a> पर हैं।</p>
@@ -1677,7 +1677,7 @@ export const GUIDES = [
     sectionsMr: `
       <section class="seo-section">
         <h2>1. ऊर्जा शुल्क — LT-1 स्लॅब जे झपाट्याने वाढतात</h2>
-        <p>निवासी (LT-1) वापर टेलिस्कोपिक पद्धतीने आकारला जातो, स्लॅब सीमा
+        <p>निवासी (LT-1) वापर स्लॅबनिहाय पद्धतीने आकारला जातो, स्लॅब सीमा
         <strong>100, 300 व 500 युनिट</strong> वर — आणि पहिल्या व शेवटच्या स्लॅबमधील उडी जवळपास तिप्पट आहे,
         भारतातील सर्वात तीव्रांपैकी एक. म्हणूनच जास्त-AC चा महिना प्रमाणापेक्षा जास्त झोंबतो. सध्याचे दर
         <a href="/mr/tariffs/maharashtra/msedcl/">MSEDCL टॅरिफ पेज</a> वर आहेत.</p>
@@ -1736,7 +1736,7 @@ export const GUIDES = [
     sectionsTa: `
       <section class="seo-section">
         <h2>1. ஆற்றல் கட்டணம் — செங்குத்தாக ஏறும் LT-1 ஸ்லாப்கள்</h2>
-        <p>குடியிருப்பு (LT-1) நுகர்வு டெலஸ்கோபிக் முறையில் விலை நிர்ணயிக்கப்படுகிறது, ஸ்லாப் எல்லைகள்
+        <p>குடியிருப்பு (LT-1) நுகர்வு அடுக்கு வாரியாக விலை நிர்ணயிக்கப்படுகிறது, ஸ்லாப் எல்லைகள்
         <strong>100, 300 மற்றும் 500 யூனிட்டில்</strong> — முதல் மற்றும் கடைசி ஸ்லாப்பிற்கு இடையிலான தாவல்
         ஏறக்குறைய மூன்று மடங்கு, இந்தியாவில் மிகக் கடுமையானவற்றில் ஒன்று. அதனால்தான் அதிக-AC மாதம் விகிதத்திற்கு
         மீறி வலிக்கிறது. தற்போதைய கட்டணங்கள் <a href="/ta/tariffs/maharashtra/msedcl/">MSEDCL கட்டணப் பக்கத்தில்</a>
@@ -1814,7 +1814,7 @@ export const GUIDES = [
       <section class="seo-section">
         <h2>2. Energy charge — slabs that start at 30 units</h2>
         <p>Karnataka's LT-1 slab ladder is unusually fine-grained at the bottom: a low first slab
-        for the first 30 units, then steps at 100, 200 and 500 units (telescopic). Current rates are
+        for the first 30 units, then steps at 100, 200 and 500 units (slab-wise). Current rates are
         on the <a href="/tariffs/karnataka/bescom/">BESCOM tariff page</a> — and because the
         schedule is state-wide, the same rates apply on
         <a href="/tariffs/karnataka/mescom/">MESCOM</a>, <a href="/tariffs/karnataka/cesc_karnataka/">CESC</a>,
@@ -1873,7 +1873,7 @@ export const GUIDES = [
       <section class="seo-section">
         <h2>2. ऊर्जा शुल्क — स्लैब जो 30 यूनिट से शुरू होते हैं</h2>
         <p>कर्नाटक की LT-1 स्लैब सीढ़ी नीचे असामान्य रूप से बारीक है: पहली 30 यूनिट के लिए एक कम पहला स्लैब,
-        फिर 100, 200 व 500 यूनिट पर कदम (टेलीस्कोपिक)। वर्तमान दरें
+        फिर 100, 200 व 500 यूनिट पर कदम (स्लैब-वार)। वर्तमान दरें
         <a href="/hi/tariffs/karnataka/bescom/">BESCOM टैरिफ पेज</a> पर हैं — और चूँकि अनुसूची राज्यव्यापी है,
         वही दरें <a href="/hi/tariffs/karnataka/mescom/">MESCOM</a>,
         <a href="/hi/tariffs/karnataka/cesc_karnataka/">CESC</a>,
@@ -1933,7 +1933,7 @@ export const GUIDES = [
       <section class="seo-section">
         <h2>2. ऊर्जा आकार — 30 युनिटपासून सुरू होणारे स्लॅब</h2>
         <p>कर्नाटकची LT-1 स्लॅब शिडी तळाशी असामान्यपणे बारीक आहे: पहिल्या 30 युनिटांसाठी एक कमी पहिला
-        स्लॅब, मग 100, 200 व 500 युनिटवर टप्पे (टेलिस्कोपिक). सध्याचे दर <a href="/tariffs/karnataka/bescom/">BESCOM
+        स्लॅब, मग 100, 200 व 500 युनिटवर टप्पे (स्लॅबनिहाय). सध्याचे दर <a href="/tariffs/karnataka/bescom/">BESCOM
         टॅरिफ पेज</a> वर आहेत — आणि अनुसूची राज्यव्यापी असल्याने, तेच दर
         <a href="/tariffs/karnataka/mescom/">MESCOM</a>,
         <a href="/tariffs/karnataka/cesc_karnataka/">CESC</a>,
@@ -2006,7 +2006,7 @@ export const GUIDES = [
       </section>
       <section class="seo-section">
         <h2>3. The slab ladder</h2>
-        <p>Above the free block, slabs step at 200, 500 and 1000 units per cycle (telescopic), with
+        <p>Above the free block, slabs step at 200, 500 and 1000 units per cycle (slab-wise), with
         the top slab applying beyond 1000. Current per-unit rates are on the
         <a href="/tariffs/tamil-nadu/tangedco/">TANGEDCO tariff page</a>. The fixed charge for
         domestic connections is a modest flat amount per cycle, and electricity duty adds 5% on the
@@ -2060,7 +2060,7 @@ export const GUIDES = [
       </section>
       <section class="seo-section">
         <h2>3. स्लैब सीढ़ी</h2>
-        <p>मुफ़्त ब्लॉक के ऊपर, स्लैब प्रति चक्र 200, 500 व 1000 यूनिट पर कदम बढ़ाते हैं (टेलीस्कोपिक), और शीर्ष
+        <p>मुफ़्त ब्लॉक के ऊपर, स्लैब प्रति चक्र 200, 500 व 1000 यूनिट पर कदम बढ़ाते हैं (स्लैब-वार), और शीर्ष
         स्लैब 1000 से आगे लागू होता है। वर्तमान प्रति-यूनिट दरें
         <a href="/hi/tariffs/tamil-nadu/tangedco/">TANGEDCO टैरिफ पेज</a> पर हैं। घरेलू कनेक्शनों का फिक्स्ड
         चार्ज प्रति चक्र एक मामूली स्थिर राशि है, और बिजली शुल्क ऊर्जा शुल्कों पर 5% जोड़ता है।</p>
@@ -2114,7 +2114,7 @@ export const GUIDES = [
       </section>
       <section class="seo-section">
         <h2>3. स्लॅब शिडी</h2>
-        <p>मोफत ब्लॉकच्या वर, स्लॅब प्रति चक्र 200, 500 व 1000 युनिटवर टप्पे घेतात (टेलिस्कोपिक), आणि
+        <p>मोफत ब्लॉकच्या वर, स्लॅब प्रति चक्र 200, 500 व 1000 युनिटवर टप्पे घेतात (स्लॅबनिहाय), आणि
         सर्वोच्च स्लॅब 1000 च्या पुढे लागू होतो. सध्याचे प्रति-युनिट दर <a href="/tariffs/tamil-nadu/tangedco/">TANGEDCO
         टॅरिफ पेज</a> वर आहेत. घरगुती जोडण्यांचा स्थिर आकार प्रति चक्र एक माफक स्थिर रक्कम आहे, आणि वीज
         शुल्क ऊर्जा शुल्कांवर 5% जोडते.</p>

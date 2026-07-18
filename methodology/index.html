@@ -147,10 +147,10 @@
       <p data-i18n="meth.s2.p1">A tariff order is prose and tables; a bill is arithmetic applied in a specific order. Our
       engine encodes that arithmetic exactly as the order specifies, rather than approximating it:</p>
       <ul data-i18n-html="meth.s2.ul">
-        <li><strong>Telescopic slabs</strong> — each slab rate applies only to the units that fall
+        <li><strong>Slab-wise rates</strong> — each slab rate applies only to the units that fall
         within its band, so a higher rate never applies to your whole consumption (see
-        <a href="/glossary/#telescopic-slabs">telescopic slabs</a>). Non-telescopic "slab-benefit-lost"
-        tariffs are modelled where a DISCOM uses them.</li>
+        <a href="/glossary/#telescopic-slabs">slab-wise rates</a>). "Slab-benefit-lost" tariffs, where
+        crossing a threshold re-rates every unit, are modelled where a DISCOM uses them.</li>
         <li><strong>Fixed / demand charges</strong> — billed per kW of sanctioned load, per kVA of
         demand, or as a flat amount, following the category. For demand-billed categories the
         <a href="/glossary/#maximum-demand">billed demand</a> and any excess-demand penalty over the
@@ -191,7 +191,7 @@
       <h2 data-i18n="meth.s4.h2">4. What we model — and what we don't yet</h2>
       <p data-i18n="meth.s4.p1">Being clear about the edges is part of being accurate. What the tool models well:</p>
       <ul data-i18n-html="meth.s4.ul1">
-        <li>Telescopic and non-telescopic energy slabs, fixed/demand charges, excess-demand penalty.</li>
+        <li>Slab-wise and "slab-benefit-lost" energy slabs, fixed/demand charges, excess-demand penalty.</li>
         <li>FPPA by both per-unit and percentage methods, electricity duty, and common state levies.</li>
         <li>kVAh apparent-energy billing and power-factor effects.</li>
         <li>Time-of-Day peak/off-peak billing and rooftop-solar net metering.</li>

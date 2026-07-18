@@ -298,7 +298,7 @@ export function renderBill(params) {
     <table class="acc-table">
       <tr><td>Demand / Fixed Charge</td><td class="num">${fixedChargeDesc(tariffRates && tariffRates.fixedCharge, billingDemand != null ? billingDemand : billedDemandKw, dU)}${fixedChargeMonths > 1 ? ` × ${fixedChargeMonths} months` : ''} = <strong>${formatINR(fixedCharge)}</strong></td></tr>
     </table>
-    <div class="acc-subhead">Energy charge slabs (telescopic)</div>
+    <div class="acc-subhead">Energy charge slabs (slab-wise)</div>
     <table class="acc-table">${slabScheduleRows(tariffRates && tariffRates.energySlabs)}</table>
     ${edCharge ? `<div class="acc-note">Electricity Duty: <strong>${edCharge.rate}%</strong> ${edCharge.type === 'percent_total' ? 'of fixed + energy + FPPA charges' : 'of energy charges'}.</div>` : ''}
     ${tariffRates && tariffRates.excessDemandRate ? `<div class="acc-note">Excess demand penalty: <strong>₹ ${tariffRates.excessDemandRate}/${dU}</strong> on demand above sanctioned load.</div>` : ''}
@@ -306,7 +306,7 @@ export function renderBill(params) {
       ? `<div class="acc-note">Billing basis: <strong>kVA based (kVAh)</strong> — demand charged in kVA and energy on apparent units (kVAh), read directly from the kVAh meter; a poor power factor already shows up as more kVAh, so there is no separate PF penalty.</div>`
       : ''}
     ${demandFloorApplied ? `<div class="acc-note">Billing demand floored at <strong>${demandFloorPct}% of contract demand</strong> (${billingDemand.toFixed(2)} ${dU}), as the recorded MD (${billedDemandKw.toFixed(2)} ${dU}) was lower.</div>` : ''}
-    <div class="acc-note acc-muted">Telescopic slabs — each rate applies only to units within that band.${result.billingPeriodDays ? ` Slab limits prorated for the ${result.billingPeriodDays}-day period.` : ''}</div>`;
+    <div class="acc-note acc-muted">Slab-wise — each rate applies only to units within that band.${result.billingPeriodDays ? ` Slab limits prorated for the ${result.billingPeriodDays}-day period.` : ''}</div>`;
 
   const lpscBody = `
     <div class="acc-meta">Rate: <strong>${lpscRate || 0}% per month</strong>, charged on the current net bill.${lpscApplicable === false ? ' <span class="tariff-est-tag">(LPSC not applicable)</span>' : ''}</div>

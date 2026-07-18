@@ -797,7 +797,7 @@ function glossaryLinksHtml(discom, lang = 'en') {
   const terms = [
     ['fppa', T(lang, { en: 'FPPA (fuel surcharge)', hi: 'FPPA (ईंधन अधिभार)', mr: 'FPPA (इंधन अधिभार)', ta: 'FPPA (எரிபொருள் கட்டணம்)' })],
     ['fixed-charge', T(lang, { en: 'fixed charges', hi: 'फिक्स्ड चार्ज', mr: 'फिक्स्ड चार्ज', ta: 'நிலையான கட்டணங்கள்' })],
-    ['telescopic-slabs', T(lang, { en: 'telescopic slabs', hi: 'टेलीस्कोपिक स्लैब', mr: 'टेलिस्कोपिक स्लॅब', ta: 'தொலைநோக்கு அடுக்குகள்' })],
+    ['telescopic-slabs', T(lang, { en: 'slab-wise rates', hi: 'स्लैब-वार दरें', mr: 'स्लॅबनिहाय दर', ta: 'அடுக்கு வாரியான விகிதங்கள்' })],
     ['sanctioned-load', T(lang, { en: 'sanctioned load', hi: 'स्वीकृत भार', mr: 'मंजूर भार', ta: 'அனுமதிக்கப்பட்ட சுமை' })],
     ['electricity-duty', T(lang, { en: 'electricity duty', hi: 'बिजली शुल्क', mr: 'वीज शुल्क', ta: 'மின் வரி' })],
   ];
@@ -1850,10 +1850,10 @@ function definedTermSetJsonLd(url, lang = 'en') {
     '@id': `${SITE}${url}#termset`,
     name: T(lang, { hi: 'बिजली बिल शब्दावली', mr: 'वीज बिल शब्दावली', ta: 'மின் பில் சொற்களஞ்சியம்', en: 'Electricity Bill Glossary' }),
     description: T(lang, {
-      hi: 'भारतीय बिजली बिलिंग और टैरिफ शब्दों की परिभाषाएँ — FPPA, बिजली शुल्क, kVAh, टेलीस्कोपिक स्लैब, स्वीकृत भार और बहुत कुछ।',
-      mr: 'भारतीय वीज बिलिंग आणि टॅरिफ शब्दांच्या व्याख्या — FPPA, वीज शुल्क, kVAh, टेलिस्कोपिक स्लॅब, मंजूर भार आणि बरेच काही.',
-      ta: 'இந்திய மின் பில்லிங் மற்றும் கட்டண சொற்களின் வரையறைகள் — FPPA, மின் வரி, kVAh, தொலைநோக்கு அடுக்குகள், அனுமதிக்கப்பட்ட சுமை மற்றும் பல.',
-      en: 'Definitions of Indian electricity billing and tariff terms — FPPA, electricity duty, kVAh, telescopic slabs, sanctioned load and more.' }),
+      hi: 'भारतीय बिजली बिलिंग और टैरिफ शब्दों की परिभाषाएँ — FPPA, बिजली शुल्क, kVAh, स्लैब-वार दरें, स्वीकृत भार और बहुत कुछ।',
+      mr: 'भारतीय वीज बिलिंग आणि टॅरिफ शब्दांच्या व्याख्या — FPPA, वीज शुल्क, kVAh, स्लॅबनिहाय दर, मंजूर भार आणि बरेच काही.',
+      ta: 'இந்திய மின் பில்லிங் மற்றும் கட்டண சொற்களின் வரையறைகள் — FPPA, மின் வரி, kVAh, அடுக்கு வாரியான விகிதங்கள், அனுமதிக்கப்பட்ட சுமை மற்றும் பல.',
+      en: 'Definitions of Indian electricity billing and tariff terms — FPPA, electricity duty, kVAh, slab-wise rates, sanctioned load and more.' }),
     url: SITE + url,
     inLanguage: LANG_LOCALE[lang] || 'en-IN',
     publisher: { '@id': `${SITE}/#org` },
@@ -1886,10 +1886,10 @@ function glossaryPage(lang = 'en') {
     ta: 'மின் பில் சொற்களஞ்சியம் — இந்திய கட்டண சொற்கள் விளக்கம்',
     en: 'Electricity Bill Glossary — Indian Tariff Terms Explained' });
   const description = T(lang, {
-    hi: 'भारतीय बिजली बिल और टैरिफ शब्दों की आसान भाषा में परिभाषाएँ: FPPA, बिजली शुल्क, MMC, kVAh, मल्टीप्लाइंग फैक्टर, स्वीकृत भार, टेलीस्कोपिक स्लैब, LPSC और बहुत कुछ।',
-    mr: 'भारतीय वीज बिल आणि टॅरिफ शब्दांच्या सोप्या भाषेतील व्याख्या: FPPA, वीज शुल्क, MMC, kVAh, मल्टिप्लाईंग फॅक्टर, मंजूर भार, टेलिस्कोपिक स्लॅब, LPSC आणि बरेच काही.',
-    ta: 'இந்திய மின் பில் மற்றும் கட்டண சொற்களின் எளிய மொழி வரையறைகள்: FPPA, மின் வரி, MMC, kVAh, பெருக்கல் காரணி, அனுமதிக்கப்பட்ட சுமை, தொலைநோக்கு அடுக்குகள், LPSC மற்றும் பல.',
-    en: 'Plain-language definitions of Indian electricity bill and tariff terms: FPPA, electricity duty, MMC, kVAh, multiplying factor, sanctioned load, telescopic slabs, LPSC and more.' });
+    hi: 'भारतीय बिजली बिल और टैरिफ शब्दों की आसान भाषा में परिभाषाएँ: FPPA, बिजली शुल्क, MMC, kVAh, मल्टीप्लाइंग फैक्टर, स्वीकृत भार, स्लैब-वार दरें, LPSC और बहुत कुछ।',
+    mr: 'भारतीय वीज बिल आणि टॅरिफ शब्दांच्या सोप्या भाषेतील व्याख्या: FPPA, वीज शुल्क, MMC, kVAh, मल्टिप्लाईंग फॅक्टर, मंजूर भार, स्लॅबनिहाय दर, LPSC आणि बरेच काही.',
+    ta: 'இந்திய மின் பில் மற்றும் கட்டண சொற்களின் எளிய மொழி வரையறைகள்: FPPA, மின் வரி, MMC, kVAh, பெருக்கல் காரணி, அனுமதிக்கப்பட்ட சுமை, அடுக்கு வாரியான விகிதங்கள், LPSC மற்றும் பல.',
+    en: 'Plain-language definitions of Indian electricity bill and tariff terms: FPPA, electricity duty, MMC, kVAh, multiplying factor, sanctioned load, slab-wise rates, LPSC and more.' });
 
   const clean = (t) => t.term.replace(/\s*\(.*?\)\s*/g, '').trim();
   const chipText = (t) => (lang !== 'en' && guideField(t, 'chip', lang)) || clean(t);
@@ -2420,9 +2420,9 @@ function buildLlmsTxt(states) {
   ).join('\n');
   return `# TheDiscomBill
 
-> Free, browser-based electricity bill calculator for India. Covers 70+ distribution companies (DISCOMs) across all 35 states and union territories with slab-wise (telescopic) energy charges, fixed/demand charges, FPPA fuel surcharge, electricity duty, solar net metering and Time-of-Day billing. Independent — not affiliated with any DISCOM, SERC or government body. Estimates are provisional; official bills come from the DISCOM.
+> Free, browser-based electricity bill calculator for India. Covers 70+ distribution companies (DISCOMs) across all 35 states and union territories with slab-wise energy charges, fixed/demand charges, FPPA fuel surcharge, electricity duty, solar net metering and Time-of-Day billing. Independent — not affiliated with any DISCOM, SERC or government body. Estimates are provisional; official bills come from the DISCOM.
 
-Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025-26) and the calculation engine applies each DISCOM's published methodology: telescopic slabs, sanctioned-load-based fixed charges, then surcharges and duty.
+Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025-26) and the calculation engine applies each DISCOM's published methodology: slab-wise rates, sanctioned-load-based fixed charges, then surcharges and duty.
 
 ## Tools
 
@@ -2456,7 +2456,7 @@ ${stateLinks}
 
 - All amounts are in Indian Rupees (INR). "Units" are kWh.
 - FPPA (Fuel and Power Purchase Adjustment) is applied per-unit or as a percentage of energy charges, whichever the state's tariff order specifies.
-- Slab calculations are telescopic: each rate applies only to units within its slab.
+- Slab calculations are slab-wise: each rate applies only to units within its slab.
 `;
 }
 
