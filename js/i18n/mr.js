@@ -55,6 +55,18 @@ export default {
     'hero.feat.duty': 'वीज शुल्क व राज्य कर',
     'hero.discoms.label': '35+ राज्ये व केंद्रशासित प्रदेशांतील 70+ डिस्कॉमचे टॅरिफ — यांसह',
     'hero.trust': 'सार्वजनिक टॅरिफ आदेशांवर आधारित · आर्थिक वर्ष 2025-26 साठी अद्ययावत',
+    // Hero sample-bill cards
+    'hero.card.title': 'नमुना बिल · 250 युनिट',
+    'hero.card.energy': 'ऊर्जा शुल्क',
+    'hero.card.fixed': 'फिक्स्ड शुल्क',
+    'hero.card.fppa': 'FPPA — जुलै क्रेडिट',
+    'hero.card.duty': 'वीज शुल्क',
+    'hero.card.total': 'एकूण बिल',
+    'hero.card.foot': 'आमच्या लाइव्ह इंजिनने गणना · खऱ्या बिलांशी पडताळणी',
+    'hero.card.cmpTitle': 'तेच 250 युनिट इतर राज्यांत',
+    'hero.card.dl': 'दिल्ली (BRPL)',
+    'hero.card.ka': 'कर्नाटक (BESCOM)',
+    'hero.card.mh': 'महाराष्ट्र (MSEDCL)',
     // Calculator form
     'calc.title': 'बिल कॅल्क्युलेटर',
     'legend.required': 'आवश्यक फील्ड दर्शवते',

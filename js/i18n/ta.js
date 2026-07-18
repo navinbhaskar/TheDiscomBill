@@ -55,6 +55,18 @@ export default {
     'hero.feat.duty': 'மின்சார வரி & மாநில வரிகள்',
     'hero.discoms.label': '35+ மாநிலங்கள் & யூனியன் பிரதேசங்களில் 70+ டிஸ்காம்களின் கட்டணங்கள் — உட்பட',
     'hero.trust': 'பொதுவில் வெளியான கட்டண ஆணைகளின் அடிப்படையில் · நிதியாண்டு 2025-26க்கு புதுப்பிக்கப்பட்டது',
+    // Hero sample-bill cards
+    'hero.card.title': 'மாதிரி பில் · 250 யூனிட்',
+    'hero.card.energy': 'மின்சக்திக் கட்டணம்',
+    'hero.card.fixed': 'நிலைக் கட்டணம்',
+    'hero.card.fppa': 'FPPA — ஜூலை கிரெடிட்',
+    'hero.card.duty': 'மின்சார வரி',
+    'hero.card.total': 'மொத்த பில்',
+    'hero.card.foot': 'எங்கள் லைவ் இன்ஜினால் கணக்கிடப்பட்டது · உண்மை பில்களுடன் சரிபார்க்கப்பட்டது',
+    'hero.card.cmpTitle': 'அதே 250 யூனிட் மற்ற மாநிலங்களில்',
+    'hero.card.dl': 'டெல்லி (BRPL)',
+    'hero.card.ka': 'கர்நாடகா (BESCOM)',
+    'hero.card.mh': 'மகாராஷ்டிரா (MSEDCL)',
     // Calculator form
     'calc.title': 'பில் கால்குலேட்டர்',
     'legend.required': 'கட்டாயப் புலத்தைக் குறிக்கிறது',

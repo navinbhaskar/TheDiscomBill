@@ -61,6 +61,18 @@ export const STRINGS = {
     'hero.feat.duty': 'Electricity duty & state levies',
     'hero.discoms.label': 'Tariffs for 70+ DISCOMs across 35 states & UTs — including',
     'hero.trust': 'Built on publicly available tariff orders · Updated for FY 2025-26',
+    // Hero sample-bill cards
+    'hero.card.title': 'Sample bill · 250 units',
+    'hero.card.energy': 'Energy charges',
+    'hero.card.fixed': 'Fixed charge',
+    'hero.card.fppa': 'FPPA — July credit',
+    'hero.card.duty': 'Electricity duty',
+    'hero.card.total': 'Total bill',
+    'hero.card.foot': 'Computed by our live engine · verified against real bills',
+    'hero.card.cmpTitle': 'Same 250 units elsewhere',
+    'hero.card.dl': 'Delhi (BRPL)',
+    'hero.card.ka': 'Karnataka (BESCOM)',
+    'hero.card.mh': 'Maharashtra (MSEDCL)',
     // Calculator form
     'calc.title': 'Bill Calculator',
     'legend.required': 'Marks a required field',

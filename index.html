@@ -282,6 +282,8 @@
     <svg class="hero-floater" style="--fx:34%; --fy:40%; --fd:-15s; --fdur:23s; --fsize:28px; --frot:-6deg;"  viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 12l4-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
   </div>
 
+  <div class="hero-grid">
+  <div class="hero-left">
   <div class="hero-badge reveal" data-i18n="hero.badge">Free &middot; All DISCOMs &middot; Instant Estimate</div>
   <h1 class="reveal" data-i18n="hero.title">Electricity Bill Calculator for Every DISCOM in India</h1>
   <p class="reveal" data-i18n="hero.sub">Get an instant provisional bill with slab-wise breakdown for any state electricity utility.</p>
@@ -314,6 +316,36 @@
     <div class="hero-stat"><span class="hero-stat-num">70+</span><span class="hero-stat-label" data-i18n="hero.stat.discoms">DISCOMs</span></div>
     <div class="hero-stat"><span class="hero-stat-num">150+</span><span class="hero-stat-label" data-i18n="hero.stat.categories">Categories</span></div>
   </div>
+  </div><!-- /hero-left -->
+
+  <!-- Right: sample bill card stack. Figures come from OUR engine (MVVNL LMV-1 urban,
+       250 units / 2 kW, Jul 2026 incl. the −4.43% FPPAS credit; comparison = same inputs
+       on brpl / bescom / msedcl). Regenerate with js/engine.js if tariffs change. -->
+  <div class="hero-right reveal">
+    <div class="hero-bill-card">
+      <div class="hbc-head">
+        <span class="hbc-title" data-i18n="hero.card.title">Sample bill · 250 units</span>
+        <span class="hbc-chip">UPPCL · Lucknow</span>
+      </div>
+      <div class="hbc-rows">
+        <div class="hbc-row"><span data-i18n="hero.card.energy">Energy charges</span><strong>₹1,100.00</strong></div>
+        <div class="hbc-row"><span data-i18n="hero.card.fixed">Fixed charge</span><strong>₹100.00</strong></div>
+        <div class="hbc-row hbc-credit"><span data-i18n="hero.card.fppa">FPPA — July credit</span><strong>−₹53.16</strong></div>
+        <div class="hbc-row"><span data-i18n="hero.card.duty">Electricity duty</span><strong>₹57.34</strong></div>
+        <div class="hbc-row hbc-total"><span data-i18n="hero.card.total">Total bill</span><strong>₹1,204</strong></div>
+      </div>
+      <div class="hbc-foot" data-i18n="hero.card.foot">Computed by our live engine · verified against real bills</div>
+    </div>
+    <div class="hero-compare-card">
+      <div class="hbc-title" data-i18n="hero.card.cmpTitle">Same 250 units elsewhere</div>
+      <div class="hbc-rows">
+        <div class="hbc-row"><span data-i18n="hero.card.dl">Delhi (BRPL)</span><strong>₹1,038</strong></div>
+        <div class="hbc-row"><span data-i18n="hero.card.ka">Karnataka (BESCOM)</span><strong>₹1,750</strong></div>
+        <div class="hbc-row"><span data-i18n="hero.card.mh">Maharashtra (MSEDCL)</span><strong>₹2,567</strong></div>
+      </div>
+    </div>
+  </div>
+  </div><!-- /hero-grid -->
 
   <!-- What the calculator handles -->
   <div class="hero-features reveal">
