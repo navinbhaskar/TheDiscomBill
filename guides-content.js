@@ -6317,9 +6317,9 @@ export const GUIDES = [
     slug: 'ev-home-vs-public-charging-cost',
     published: "2026-06-11",
     title: 'What Charging an EV Really Costs in India: Home Socket vs Public Fast Charger',
-    metaTitle: 'EV Charging Cost in India — Home vs Public DC, Per-km Maths & Petrol Comparison',
-    description: 'The real cost of charging an electric car or scooter in India: the formula (with charging losses), why home charging on your domestic slab beats public DC fast charging 3× over, per-km cost vs petrol, and how ToD night rates and solar cut it further.',
-    minutes: 7,
+    metaTitle: 'EV Charging Cost in India — Home vs Public DC, Per-km Maths & Petrol/Diesel Comparison',
+    description: 'The real cost of charging an electric car or scooter in India: the formula with charging losses, a per-EV cost table (Nexon, Tiago, Ather, Atto 3…), why home charging beats public DC 3× over, a monthly petrol-vs-diesel-vs-EV showdown, and how ToD night rates and solar cut it further.',
+    minutes: 8,
     intro: `Charging an EV at home costs a fraction of what petrol does — but the number on EV
       brochures is usually wrong in both directions. It ignores <strong>charging losses</strong>
       (you pay for more units than the battery holds) and assumes a flat tariff, when home
@@ -6340,6 +6340,27 @@ export const GUIDES = [
       </section>
 
       <section class="seo-section">
+        <h2>What popular EVs actually cost to charge</h2>
+        <p>Here is a full home charge for common Indian EVs, costed honestly — battery drawn from
+        the meter (with ~10% charging loss) at a ₹7/unit slab, and per-km against a
+        <em>conservative real-world</em> range rather than the ARAI claim:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>EV</th><th>Battery</th><th>Full charge @ ₹7/unit</th><th>Real range</th><th>Cost / km</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Ather 450X</strong> (scooter)</td><td>3.7 kWh</td><td>₹28</td><td>~105 km</td><td><strong>₹0.27</strong></td></tr>
+            <tr><td><strong>TVS iQube</strong> (scooter)</td><td>3.4 kWh</td><td>₹26</td><td>~90 km</td><td><strong>₹0.29</strong></td></tr>
+            <tr><td><strong>Tata Tiago EV</strong></td><td>24 kWh</td><td>₹185</td><td>~190 km</td><td><strong>₹0.97</strong></td></tr>
+            <tr><td><strong>Tata Nexon EV</strong></td><td>40.5 kWh</td><td>₹312</td><td>~320 km</td><td><strong>₹0.97</strong></td></tr>
+            <tr><td><strong>MG ZS EV</strong></td><td>50.3 kWh</td><td>₹387</td><td>~370 km</td><td><strong>₹1.05</strong></td></tr>
+            <tr><td><strong>BYD Atto 3</strong></td><td>60.5 kWh</td><td>₹466</td><td>~420 km</td><td><strong>₹1.11</strong></td></tr>
+          </tbody>
+        </table></div>
+        <p>Two things the showroom won't stress: bigger batteries don't cost more <em>per km</em>
+        (energy is energy), and your real figure moves with your slab rate — swap ₹7 for your own
+        top-slab rate in the <a href="/ev/">calculator</a> to see it.</p>
+      </section>
+
+      <section class="seo-section">
         <h2>Home charging: billed at your top slab, not the average</h2>
         <p>Home EV charging goes through your ordinary domestic meter, so the units are priced by
         your DISCOM's slab ladder — and because they add <em>on top of</em> your household
@@ -6353,6 +6374,11 @@ export const GUIDES = [
         from your DISCOM — drawing a wallbox on a 2 kW sanctioned load invites excess-demand
         penalties. See our guide to
         <a href="/guides/reduce-fixed-charges-sanctioned-load/">sanctioned load and fixed charges</a>.</p>
+        <p>One habit worth building: for daily use most owners charge to about <strong>80%</strong>,
+        not 100% — it protects long-term battery health and a full charge is rarely needed for a
+        day's driving. That also means a typical top-up costs less than the full-charge figures
+        above; the <a href="/ev/">calculator's charge-level slider</a> shows the cost and time for
+        any level.</p>
       </section>
 
       <section class="seo-section">
@@ -6375,14 +6401,23 @@ export const GUIDES = [
       </section>
 
       <section class="seo-section">
-        <h2>EV vs petrol: the per-km showdown</h2>
-        <p>A mid-size petrol car doing 12–15 km/l at today's fuel prices costs roughly
-        <strong>₹7–9 per km</strong>. The same car as an EV, charged at home, typically runs at
-        <strong>₹1–1.5 per km</strong> — and an electric scooter at <strong>under 30 paise per
-        km</strong>. Even charged exclusively on public DC, an EV still undercuts petrol by half or
-        more. Run your own vehicle, your own km and your own tariff through the
-        <a href="/ev/">EV calculator</a> — it prints the monthly savings and the petrol
-        equivalent side by side.</p>
+        <h2>EV vs petrol vs diesel: the monthly bill</h2>
+        <p>Per-km numbers are abstract; the monthly bill isn't. Here is the same mid-size car
+        driven <strong>1,000 km a month</strong>, as petrol, diesel, and an EV charged two ways:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Fuel</th><th>Assumptions</th><th>Cost / km</th><th>Per month</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Petrol car</strong></td><td>15 km/l @ ₹105/l</td><td>₹7.00</td><td>₹7,000</td></tr>
+            <tr><td><strong>Diesel car</strong></td><td>18 km/l @ ₹90/l</td><td>₹5.00</td><td>₹5,000</td></tr>
+            <tr><td><strong>EV — home charging</strong></td><td>₹7/unit slab, real range</td><td>₹0.97</td><td><strong>₹970</strong></td></tr>
+            <tr><td><strong>EV — public DC only</strong></td><td>₹20/unit fast charger</td><td>₹2.78</td><td>₹2,780</td></tr>
+          </tbody>
+        </table></div>
+        <p>Charged at home, the EV saves roughly <strong>₹6,000 a month over petrol — about
+        ₹72,000 a year</strong>. Even if you only ever used public DC fast chargers, you'd still
+        beat petrol by more than half. Run <em>your</em> vehicle, km and tariff through the
+        <a href="/ev/">EV calculator</a> — it prints your monthly savings, the petrol equivalent,
+        and a home-vs-public-vs-petrol bar chart side by side.</p>
       </section>
 
       <section class="seo-section">
@@ -6412,6 +6447,8 @@ export const GUIDES = [
         a: 'Not for a 15A socket (3.3 kW) in most homes. A 7.2 kW wallbox usually does need a sanctioned-load increase from your DISCOM — without it, the extra draw can trigger excess-demand penalties that undo the fuel savings.' },
       { q: 'Is an EV cheaper per km than petrol in India?',
         a: 'Substantially. Home-charged EVs typically run at ₹1–1.5 per km for cars and under 30 paise for scooters, versus ₹7–9 per km for a comparable petrol car — an 80–90% reduction. Even on public DC charging the EV usually stays 50%+ cheaper.' },
+      { q: 'How much can an EV save per month compared to petrol?',
+        a: 'For a mid-size car driven 1,000 km a month, home charging costs about ₹970 versus roughly ₹7,000 for petrol — a saving of around ₹6,000 a month, or ₹72,000 a year. A diesel car at about ₹5,000 a month still costs 5× more to run than the home-charged EV. Your exact saving depends on your slab rate and how far you drive.' },
     ],
   },
 
