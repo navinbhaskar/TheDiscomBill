@@ -660,58 +660,53 @@ a:hover { text-decoration: underline; }
 .hero-left .hero-stats { justify-content: flex-start; }
 .hero-left .hero-stat:first-child { padding-left: 0; }
 
-/* Glass bill cards — crisp 1px borders + specular top edge over backdrop blur */
-.hero-right { position: relative; justify-self: end; width: min(400px, 100%); }
+/* White bill cards — solid white on the dark hero, stacked with a clear gap */
+.hero-right {
+  position: relative; justify-self: end; width: min(400px, 100%);
+  display: flex; flex-direction: column; gap: 16px;
+}
 .hero-bill-card, .hero-compare-card {
-  background: linear-gradient(168deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,.04) 60%, rgba(255,255,255,.02) 100%);
-  border: 1px solid rgba(255,255,255,.16);
-  border-top-color: rgba(255,255,255,.38);          /* specular edge */
+  background: #ffffff;
+  border: 1px solid rgba(255,255,255,.9);
   border-radius: 18px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 24px 60px rgba(2, 8, 26, .45), inset 0 1px 0 rgba(255,255,255,.08);
+  box-shadow: 0 24px 60px rgba(2, 8, 26, .45);
   text-align: left;
 }
-.hero-bill-card { position: relative; z-index: 2; padding: 20px 22px 16px; }
-.hero-compare-card {
-  position: relative; z-index: 1;
-  width: 82%; margin: -22px 0 0 auto; padding: 16px 20px 14px;
-  transform: rotate(1deg) translateX(14px);
-  background: linear-gradient(168deg, rgba(255,255,255,.07) 0%, rgba(255,255,255,.025) 100%);
-}
+.hero-bill-card { padding: 20px 22px 16px; }
+.hero-compare-card { padding: 16px 20px 14px; }
 .hbc-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
 .hbc-title {
   font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
-  color: var(--p-blue-300);
+  color: var(--p-slate-500, #64748b);
 }
 .hbc-chip {
-  font-size: 11px; font-weight: 700; color: #93c5fd;
-  background: rgba(59,130,246,.18); border: 1px solid rgba(96,165,250,.35);
+  font-size: 11px; font-weight: 700; color: var(--brand-dark, #1d4ed8);
+  background: rgba(37,99,235,.09); border: 1px solid rgba(37,99,235,.28);
   padding: 3px 10px; border-radius: var(--radius-full); white-space: nowrap;
 }
 .hbc-rows { margin-top: 8px; }
 .hbc-row {
   display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
-  padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,.09);
-  font-size: 13.5px; color: rgba(226,232,240,.85);
+  padding: 9px 0; border-bottom: 1px solid rgba(15,23,42,.08);
+  font-size: 13.5px; color: #475569;
 }
 .hbc-row:last-child { border-bottom: none; }
 .hbc-row strong {
   font-family: var(--font-display);
-  font-weight: 600; color: #fff; font-variant-numeric: tabular-nums;
+  font-weight: 600; color: #0f172a; font-variant-numeric: tabular-nums;
   letter-spacing: 0.2px; white-space: nowrap;
 }
-.hbc-credit strong { color: #4ade80; }
-.hbc-total { border-top: 1px solid rgba(255,255,255,.22); margin-top: 2px; padding-top: 12px; }
-.hbc-total span { font-weight: 700; color: #fff; font-size: 14px; }
-.hbc-total strong { font-size: 24px; font-weight: 800; letter-spacing: -0.4px; }
+.hbc-credit strong { color: #15803d; }
+.hbc-total { border-top: 1px solid rgba(15,23,42,.18); margin-top: 2px; padding-top: 12px; }
+.hbc-total span { font-weight: 700; color: #0f172a; font-size: 14px; }
+.hbc-total strong { font-size: 24px; font-weight: 800; letter-spacing: -0.4px; color: var(--brand-dark, #1d4ed8); }
 .hbc-foot {
-  margin-top: 10px; font-size: 10.5px; color: var(--p-blue-300); letter-spacing: 0.3px;
+  margin-top: 10px; font-size: 10.5px; color: #64748b; letter-spacing: 0.3px;
   display: flex; align-items: center; gap: 6px;
 }
 .hbc-foot::before {
   content: ''; width: 6px; height: 6px; border-radius: 50%;
-  background: #4ade80; box-shadow: 0 0 8px rgba(74,222,128,.8); flex-shrink: 0;
+  background: #16a34a; box-shadow: 0 0 8px rgba(22,163,74,.55); flex-shrink: 0;
 }
 .hero-compare-card .hbc-row { padding: 7px 0; font-size: 12.5px; }
 .hero-compare-card .hbc-row strong { font-size: 13px; }
@@ -722,7 +717,6 @@ a:hover { text-decoration: underline; }
   .hero-left .hero-ctas, .hero-left .hero-stats { justify-content: center; }
   .hero-left .hero-stat:first-child { padding-left: 28px; }
   .hero-right { justify-self: center; }
-  .hero-compare-card { transform: none; margin: -18px auto 0; }
 }
 /* ── Floating electricity icons ── drift slowly behind the hero content ──────── */
 .hero-floaters {
