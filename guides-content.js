@@ -6286,4 +6286,215 @@ export const GUIDES = [
         a: 'மின்சார (நுகர்வோர் உரிமைகள்) விதிகள், 2020-இன் கீழ் முழுமையான, கட்டணம் செலுத்திய விண்ணப்பத்திற்கு சென்னையில் (பெருநகரம்) 7 நாட்கள், மற்ற நகராட்சி பகுதிகளில் 15 நாட்கள், கிராமப்புறங்களில் 30 நாட்கள். TNERC-இன் Standards of Performance தவறினால் இழப்பீடு சேர்க்கிறது; நீண்ட வெளியிடப்பட்ட காலக்கெடுகள் உண்மையான லைன்-நீட்டிப்பு வேலைகளுக்கு மட்டுமே.' },
     ],
   },
+
+  {
+    slug: 'ev-home-vs-public-charging-cost',
+    title: 'What Charging an EV Really Costs in India: Home Socket vs Public Fast Charger',
+    metaTitle: 'EV Charging Cost in India — Home vs Public DC, Per-km Maths & Petrol Comparison',
+    description: 'The real cost of charging an electric car or scooter in India: the formula (with charging losses), why home charging on your domestic slab beats public DC fast charging 3× over, per-km cost vs petrol, and how ToD night rates and solar cut it further.',
+    minutes: 7,
+    intro: `Charging an EV at home costs a fraction of what petrol does — but the number on EV
+      brochures is usually wrong in both directions. It ignores <strong>charging losses</strong>
+      (you pay for more units than the battery holds) and assumes a flat tariff, when home
+      charging actually lands on your <strong>top domestic slab</strong>. This guide walks the
+      honest maths for home 15A charging, wallbox charging and public DC fast charging — and
+      shows exactly where each rupee goes.`,
+    sections: `
+      <section class="seo-section">
+        <h2>The formula — with the part brochures skip</h2>
+        <p>Cost of a full charge = <strong>battery size (kWh) × your per-unit rate × ~1.1</strong>.
+        That last factor is charging loss: AC chargers waste roughly 8–12% as heat between the wall
+        socket and the battery, and your meter bills the wall side. A 40 kWh car battery therefore
+        draws about 44 units from the meter, not 40.</p>
+        <p>Cost per km follows directly: full-charge cost ÷ <em>real-world</em> range. Use the
+        range you actually get, not the ARAI figure — owners typically see 15–25% less. Our
+        <a href="/ev/">EV charging cost calculator</a> does all of this with editable real-world
+        presets for common EVs and scooters.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Home charging: billed at your top slab, not the average</h2>
+        <p>Home EV charging goes through your ordinary domestic meter, so the units are priced by
+        your DISCOM's slab ladder — and because they add <em>on top of</em> your household
+        consumption, they land in the highest slab you touch. A household already in the top slab
+        pays the top-slab rate for every EV unit, which can differ noticeably from the "average
+        rate" the showroom quoted. Find your ladder on our
+        <a href="/tariffs/states/">state tariff pages</a>.</p>
+        <p>Hardware matters less than people think: a regular 15A socket (~3.3 kW) fills a big car
+        battery overnight (10–14 hours) and a scooter in 1–2 hours. A 7.2 kW AC wallbox roughly
+        halves car charging time, but usually requires a <strong>sanctioned-load increase</strong>
+        from your DISCOM — drawing a wallbox on a 2 kW sanctioned load invites excess-demand
+        penalties. See our guide to
+        <a href="/guides/reduce-fixed-charges-sanctioned-load/">sanctioned load and fixed charges</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Public charging: convenience priced at 2–3× home rates</h2>
+        <p>Public networks (Tata Power EZ Charge, Statiq, Zeon, Jio-bp and others) pay commercial
+        tariffs, add their margin and GST, and typically land between <strong>₹15 and ₹25 per
+        unit</strong> — AC posts at the lower end, DC fast chargers at the upper end. The
+        electricity is identical; you are paying for speed and location.</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Where you charge</th><th>Typical rate</th><th>Time for a car (0→80–100%)</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Home 15A socket (3.3 kW)</strong></td><td>Your domestic slab rate</td><td>10–14 hours (overnight)</td></tr>
+            <tr><td><strong>Home wallbox (7.2 kW)</strong></td><td>Your domestic slab rate</td><td>5–6 hours</td></tr>
+            <tr><td><strong>Public AC post</strong></td><td>~₹8–15/unit</td><td>4–8 hours</td></tr>
+            <tr><td><strong>Public DC fast (25–150 kW)</strong></td><td>~₹18–25/unit + GST</td><td>30–60 minutes to 80%</td></tr>
+          </tbody>
+        </table></div>
+        <p>The practical rule: <strong>home for daily charging, DC only on highways.</strong>
+        Routine DC fast charging both triples your per-km cost and ages the battery faster.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>EV vs petrol: the per-km showdown</h2>
+        <p>A mid-size petrol car doing 12–15 km/l at today's fuel prices costs roughly
+        <strong>₹7–9 per km</strong>. The same car as an EV, charged at home, typically runs at
+        <strong>₹1–1.5 per km</strong> — and an electric scooter at <strong>under 30 paise per
+        km</strong>. Even charged exclusively on public DC, an EV still undercuts petrol by half or
+        more. Run your own vehicle, your own km and your own tariff through the
+        <a href="/ev/">EV calculator</a> — it prints the monthly savings and the petrol
+        equivalent side by side.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Four ways to cut the cost further</h2>
+        <ol>
+          <li><strong>Charge at night on a ToD meter.</strong> Several states give off-peak
+          Time-of-Day rebates in the late-night window. A charger timer moves virtually all EV
+          units into the discount. How ToD windows work:
+          <a href="/guides/tod-billing-explained/">ToD billing explained</a>.</li>
+          <li><strong>Check for a dedicated EV tariff.</strong> Some states publish a separate
+          LT EV-charging category cheaper than the top domestic slab — worth a separate meter if
+          you drive a lot.</li>
+          <li><strong>Pair with rooftop solar.</strong> Daytime charging on your own generation
+          brings marginal fuel cost near zero; see
+          <a href="/guides/solar-net-metering-savings/">how net-metering savings work</a> and the
+          <a href="/solar/">solar sizing estimator</a>.</li>
+          <li><strong>Keep your sanctioned load honest.</strong> If you add a wallbox, regularise
+          the load first — the penalty maths otherwise eats the fuel savings.</li>
+        </ol>
+      </section>`,
+    faqs: [
+      { q: 'How much does it cost to charge an electric car at home in India?',
+        a: 'Battery size × your domestic per-unit rate × about 1.1 for charging losses. A 40 kWh battery at a ₹7/unit slab rate costs roughly ₹310 for a full charge — but the exact figure depends on your DISCOM’s slab ladder, since EV units land on top of household usage.' },
+      { q: 'Why is public DC fast charging so much more expensive than home charging?',
+        a: 'Operators pay commercial tariffs, then add equipment, land and margin plus GST, landing at roughly ₹18–25 per unit against a domestic slab rate. You are buying speed: 30–60 minutes to 80% instead of an overnight charge.' },
+      { q: 'Do I need to increase my sanctioned load for EV charging?',
+        a: 'Not for a 15A socket (3.3 kW) in most homes. A 7.2 kW wallbox usually does need a sanctioned-load increase from your DISCOM — without it, the extra draw can trigger excess-demand penalties that undo the fuel savings.' },
+      { q: 'Is an EV cheaper per km than petrol in India?',
+        a: 'Substantially. Home-charged EVs typically run at ₹1–1.5 per km for cars and under 30 paise for scooters, versus ₹7–9 per km for a comparable petrol car — an 80–90% reduction. Even on public DC charging the EV usually stays 50%+ cheaper.' },
+    ],
+  },
+
+  {
+    slug: 'pm-surya-ghar-solar-subsidy',
+    title: 'PM Surya Ghar Explained: The Rooftop Solar Subsidy, Rupee by Rupee',
+    metaTitle: 'PM Surya Ghar Muft Bijli Yojana — Subsidy Slabs, Eligibility & How to Apply',
+    description: 'How the PM Surya Ghar Muft Bijli Yojana rooftop solar subsidy actually works: ₹30,000/kW slabs up to the ₹78,000 cap, who qualifies, the national-portal application flow, state top-ups, and the payback maths after subsidy.',
+    minutes: 7,
+    intro: `PM Surya Ghar Muft Bijli Yojana is the central government's residential rooftop solar
+      scheme: it pays a direct subsidy into your bank account for installing grid-connected solar,
+      with the pitch of running your home on (near) free electricity. The subsidy is real and
+      substantial — <strong>up to ₹78,000</strong> — but how much <em>you</em> get depends on
+      system size, and the economics depend on your tariff. Here is the scheme rupee by rupee.`,
+    sections: `
+      <section class="seo-section">
+        <h2>The subsidy slabs — what you actually receive</h2>
+        <p>The central subsidy for residential consumers is tiered by system capacity:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>System size</th><th>Central subsidy</th><th>Running total</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1st kW</strong></td><td>₹30,000</td><td>₹30,000</td></tr>
+            <tr><td><strong>2nd kW</strong></td><td>₹30,000</td><td>₹60,000</td></tr>
+            <tr><td><strong>3rd kW</strong></td><td>₹18,000</td><td><strong>₹78,000 (cap)</strong></td></tr>
+            <tr><td><strong>4 kW and above</strong></td><td>Nothing further</td><td>₹78,000</td></tr>
+          </tbody>
+        </table></div>
+        <p>Two implications follow. First, the subsidy covers a much larger <em>share</em> of a
+        small system — on typical turnkey prices it can be close to half the cost of a 2 kW
+        install, but a much smaller fraction of a 5 kW one. Second, the sweet spot for most
+        households is <strong>2–3 kW</strong>, which also happens to match the consumption of a
+        typical urban home. Some states add their own top-up on top of the central amount — our
+        <a href="/solar/">solar calculator</a> carries the verified ones and computes your net
+        cost after both.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Who qualifies</h2>
+        <ul>
+          <li>You own a residential connection in your name (the subsidy is per household, paid
+          against your electricity connection).</li>
+          <li>You have roof rights and shadow-free area — roughly <strong>100 sq ft per kW</strong>.</li>
+          <li>The system is grid-connected through your DISCOM (net metering / net billing per
+          your state's rules) and installed by a vendor empanelled on the national portal.</li>
+          <li>Panels must meet the scheme's domestic-content requirements — the empanelled vendor
+          handles this, but it is why quotes for "scheme" systems can differ from open-market ones.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>How to apply — the actual flow</h2>
+        <ol>
+          <li><strong>Register on pmsuryaghar.gov.in</strong> with your state, DISCOM, consumer
+          number and mobile.</li>
+          <li><strong>Apply for the rooftop system</strong> — the portal routes a feasibility
+          request to your DISCOM against your sanctioned load.</li>
+          <li><strong>Choose an empanelled vendor</strong> after feasibility approval and get the
+          system installed.</li>
+          <li><strong>Net meter installation and inspection</strong> by the DISCOM follows
+          commissioning.</li>
+          <li><strong>Submit bank details</strong> on the portal; the subsidy is credited directly
+          to your account, typically within weeks of commissioning approval.</li>
+        </ol>
+        <p>Nothing in this flow requires an agent or a fee to a middleman — the portal, the DISCOM
+        and the vendor are the only three parties.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>The payback maths after subsidy</h2>
+        <p>What the subsidy really buys you is a shorter payback. The value of every solar unit is
+        the tariff you would otherwise have paid — and because netting removes your most expensive
+        slab units first, households deep in high slabs recover the net cost fastest, often in
+        3–5 years. Two honest caveats:</p>
+        <ul>
+          <li><strong>Free-unit states change the picture.</strong> If a state scheme already
+          zeroes your bill at your consumption level, solar can only save on usage beyond the free
+          block — run the numbers before signing. Details in
+          <a href="/guides/solar-net-metering-savings/">our net-metering guide</a>.</li>
+          <li><strong>Fixed charges and duty stay.</strong> "Muft bijli" refers to energy charges
+          offset by generation; the fixed charge on your sanctioned load and duties still bill as
+          usual.</li>
+        </ul>
+        <p>The <a href="/solar/">solar savings calculator</a> sizes a system from your monthly
+        units and roof area, applies the central + state subsidy, and prints net cost, monthly
+        saving and payback year against your own DISCOM's rates.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Mistakes that cost people money</h2>
+        <ol>
+          <li><strong>Oversizing past the cap.</strong> Every kW beyond 3 is unsubsidised — size to
+          your top-slab consumption, not your roof's maximum.</li>
+          <li><strong>Ignoring your state's settlement rules.</strong> Net metering vs net billing
+          changes the value of exported units materially.</li>
+          <li><strong>Paying "processing fees" to agents.</strong> The portal flow is direct;
+          there is no official agent channel.</li>
+          <li><strong>Believing the vendor's savings slide.</strong> It usually assumes the
+          steepest tariff in the country. Check against your own slab ladder on our
+          <a href="/tariffs/states/">tariff pages</a>.</li>
+        </ol>
+      </section>`,
+    faqs: [
+      { q: 'How much subsidy does PM Surya Ghar give for rooftop solar?',
+        a: '₹30,000 per kW for the first 2 kW and ₹18,000 for the third kW, capping at ₹78,000 for systems of 3 kW and above. Some states add their own top-up over the central amount.' },
+      { q: 'Is electricity really free under PM Surya Ghar?',
+        a: 'The scheme’s pitch of ~300 free units a month corresponds to what a 3 kW system generates. Your energy charges can fall to near zero if generation covers consumption, but fixed charges, duty and any net-billing settlement still apply.' },
+      { q: 'How do I apply for the PM Surya Ghar subsidy?',
+        a: 'Register on pmsuryaghar.gov.in with your DISCOM and consumer number, get feasibility approval, install through an empanelled vendor, complete the DISCOM net-meter inspection, and submit bank details — the subsidy is credited directly to your account. No agent or fee is required.' },
+      { q: 'What system size gives the best value under the scheme?',
+        a: '2–3 kW for most homes: the subsidy covers its largest share of cost there, the cap lands at exactly 3 kW, and that size matches typical urban consumption. Beyond 3 kW every additional kW is fully self-funded.' },
+    ],
+  },
 ];

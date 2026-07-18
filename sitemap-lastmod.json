@@ -24,111 +24,119 @@
     "lastmod": "2026-07-18"
   },
   "/guides/": {
-    "hash": "12454f7dc95e8bc1",
+    "hash": "15ec3d19860a2719",
     "lastmod": "2026-07-18"
   },
   "/guides/bses-delhi-new-connection/": {
-    "hash": "beca0245faa5dafb",
+    "hash": "ba829e6e581c7fea",
     "lastmod": "2026-07-18"
   },
   "/guides/electricity-duty-explained/": {
-    "hash": "76f57121be27b883",
+    "hash": "29a6483d284bda90",
+    "lastmod": "2026-07-18"
+  },
+  "/guides/ev-home-vs-public-charging-cost/": {
+    "hash": "108c42c8c3ded6e7",
     "lastmod": "2026-07-18"
   },
   "/guides/how-fppa-fuel-surcharge-is-calculated/": {
-    "hash": "6c7eb964d2faa619",
+    "hash": "85118116a91831ce",
     "lastmod": "2026-07-18"
   },
   "/guides/how-to-read-bescom-bill/": {
-    "hash": "bae0422081df096e",
+    "hash": "d681b1334a5c9a63",
     "lastmod": "2026-07-18"
   },
   "/guides/how-to-read-bses-delhi-bill/": {
-    "hash": "f253d8b1c5fe572b",
+    "hash": "83b31378fe60cd7d",
     "lastmod": "2026-07-18"
   },
   "/guides/how-to-read-msedcl-bill/": {
-    "hash": "eacfe47377ad0e85",
+    "hash": "948bffe6dbbef016",
     "lastmod": "2026-07-18"
   },
   "/guides/how-to-read-tneb-tangedco-bill/": {
-    "hash": "22443e75b000050c",
+    "hash": "74778a3ed4fbcef8",
     "lastmod": "2026-07-18"
   },
   "/guides/how-to-read-uppcl-bill/": {
-    "hash": "52c4f8fa591d2b42",
+    "hash": "bbb69de9e52a7b77",
     "lastmod": "2026-07-18"
   },
   "/guides/msedcl-fppa-charges-explained/": {
-    "hash": "ce04dd33b8fee5ee",
+    "hash": "b6a389867c2999d2",
     "lastmod": "2026-07-18"
   },
   "/guides/msedcl-new-connection-online/": {
-    "hash": "1b2247a303f7a61d",
+    "hash": "6e2fedd5f9a10ccf",
+    "lastmod": "2026-07-18"
+  },
+  "/guides/pm-surya-ghar-solar-subsidy/": {
+    "hash": "3b1be095e9867c98",
     "lastmod": "2026-07-18"
   },
   "/guides/power-factor-kvah-billing-explained/": {
-    "hash": "c58aea5ad241d92c",
+    "hash": "dc50d13ff25851b4",
     "lastmod": "2026-07-18"
   },
   "/guides/prepaid-vs-postpaid-smart-meter/": {
-    "hash": "8c77fc284823deaa",
+    "hash": "56796e290a557dfe",
     "lastmod": "2026-07-18"
   },
   "/guides/reduce-fixed-charges-sanctioned-load/": {
-    "hash": "6d26285d85f803c0",
+    "hash": "c54f7e011a08b514",
     "lastmod": "2026-07-18"
   },
   "/guides/smart-meter-balance-check/": {
-    "hash": "84f161b460173f4a",
+    "hash": "f8572e4a31b686aa",
     "lastmod": "2026-07-18"
   },
   "/guides/smart-meter-prepaid-disconnection/": {
-    "hash": "8574ab74d8e40029",
+    "hash": "bc1f492e79840ea4",
     "lastmod": "2026-07-18"
   },
   "/guides/smart-meter-recharge-failed/": {
-    "hash": "6de3520e252b89fd",
+    "hash": "bb4ce8dc76c0dad3",
     "lastmod": "2026-07-18"
   },
   "/guides/smart-meter-running-fast/": {
-    "hash": "1fae8e8321ba320e",
+    "hash": "7f022ed02934e62f",
     "lastmod": "2026-07-18"
   },
   "/guides/solar-net-metering-savings/": {
-    "hash": "ac61b226af01584b",
+    "hash": "e14b0a86f94a2668",
     "lastmod": "2026-07-18"
   },
   "/guides/tata-power-ddl-new-connection/": {
-    "hash": "2d0b236c8090123f",
+    "hash": "cd242a33c9ed9c59",
     "lastmod": "2026-07-18"
   },
   "/guides/tneb-tangedco-new-connection/": {
-    "hash": "5b85bde1648f7eb5",
+    "hash": "22f35846a7da38da",
     "lastmod": "2026-07-18"
   },
   "/guides/tod-billing-explained/": {
-    "hash": "87b897510781884b",
+    "hash": "da5ae914737be74b",
     "lastmod": "2026-07-18"
   },
   "/guides/uppcl-new-connection-jhatpat/": {
-    "hash": "d30ef7c6f6acdb3d",
+    "hash": "f15502f7debe1a84",
     "lastmod": "2026-07-18"
   },
   "/guides/uppcl-sanctioned-load-increased/": {
-    "hash": "d422606045e07e97",
+    "hash": "3f1f888e0ba5bd16",
     "lastmod": "2026-07-18"
   },
   "/guides/uppcl-smart-meter-readings-explained/": {
-    "hash": "aec8804eb1d0f8d5",
+    "hash": "2f46a6ed46a44aa1",
     "lastmod": "2026-07-18"
   },
   "/guides/what-is-a-unit-of-electricity/": {
-    "hash": "1a82557cf4a8baf0",
+    "hash": "f0f550a076147fec",
     "lastmod": "2026-07-18"
   },
   "/guides/why-did-my-electricity-bill-increase/": {
-    "hash": "2b0815a9247b6414",
+    "hash": "22aaac67f321544b",
     "lastmod": "2026-07-18"
   },
   "/hi/glossary/": {
@@ -136,99 +144,99 @@
     "lastmod": "2026-07-18"
   },
   "/hi/guides/": {
-    "hash": "f942dcb1a67208da",
+    "hash": "ec3145705f52e6ac",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/bses-delhi-new-connection/": {
-    "hash": "460617fa78a03b0f",
+    "hash": "fb2c34bad26bc793",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/electricity-duty-explained/": {
-    "hash": "34664033112e44ff",
+    "hash": "8d77aecb4ca5e5e6",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/how-fppa-fuel-surcharge-is-calculated/": {
-    "hash": "561b8ac68cc2e074",
+    "hash": "6da26ebc13d184e3",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/how-to-read-bescom-bill/": {
-    "hash": "d2a9dbbf0a4daeb9",
+    "hash": "4f3d982f39230604",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/how-to-read-bses-delhi-bill/": {
-    "hash": "45eb1079d3378626",
+    "hash": "7eac11832279ce06",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/how-to-read-msedcl-bill/": {
-    "hash": "c0a3cd44718f3309",
+    "hash": "8f23d0e2595c6fa6",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/how-to-read-tneb-tangedco-bill/": {
-    "hash": "83dde6cd68356a15",
+    "hash": "250f25e214894d72",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/how-to-read-uppcl-bill/": {
-    "hash": "023ce17a4396b6dc",
+    "hash": "c979f89d5b0ee6d9",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/msedcl-new-connection-online/": {
-    "hash": "dcde45a65073eca9",
+    "hash": "ff0ab634f0e7dab1",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/prepaid-vs-postpaid-smart-meter/": {
-    "hash": "7f24de9dd4c38d17",
+    "hash": "51302885d744f787",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/reduce-fixed-charges-sanctioned-load/": {
-    "hash": "e4260276ec69ece9",
+    "hash": "f2aac9b91623f84d",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/smart-meter-balance-check/": {
-    "hash": "1cda78ce3638ad78",
+    "hash": "34a845f5ac12a4fd",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/smart-meter-prepaid-disconnection/": {
-    "hash": "ca84832827e39847",
+    "hash": "43f7bcfe0f36f769",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/smart-meter-recharge-failed/": {
-    "hash": "54b51f57cf4db16c",
+    "hash": "097239d5d4372b12",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/smart-meter-running-fast/": {
-    "hash": "30113b9602c7506f",
+    "hash": "b199ff051f4c6ac2",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/solar-net-metering-savings/": {
-    "hash": "c3c0f7f01c3a0c98",
+    "hash": "9813df78f376e3a4",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/tata-power-ddl-new-connection/": {
-    "hash": "a1b5bb05d1f2ff35",
+    "hash": "627c680df682dd40",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/tneb-tangedco-new-connection/": {
-    "hash": "d0d834453b1d2098",
+    "hash": "5c22ef6ff845d9ab",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/tod-billing-explained/": {
-    "hash": "943e46a4ca639d65",
+    "hash": "7664c6cd09c0c297",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/uppcl-new-connection-jhatpat/": {
-    "hash": "9662a343ff9b64c4",
+    "hash": "f5c18a7f231a1d34",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/uppcl-sanctioned-load-increased/": {
-    "hash": "10f5c1e9464a012a",
+    "hash": "06e448233bc1c1c3",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/uppcl-smart-meter-readings-explained/": {
-    "hash": "3e3838ef9d1fd20c",
+    "hash": "e8b5eb7e3a91e207",
     "lastmod": "2026-07-18"
   },
   "/hi/guides/why-did-my-electricity-bill-increase/": {
-    "hash": "c0c385f7d52bb8f7",
+    "hash": "fc6fbc2208ae492f",
     "lastmod": "2026-07-18"
   },
   "/hi/smart-meter-recharge/": {
@@ -904,95 +912,95 @@
     "lastmod": "2026-07-18"
   },
   "/mr/guides/": {
-    "hash": "7bfd59a9c4304799",
+    "hash": "73fe6c589ca38ed9",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/electricity-duty-explained/": {
-    "hash": "68d929029cc965ed",
+    "hash": "c0fb9728bc994165",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/how-fppa-fuel-surcharge-is-calculated/": {
-    "hash": "01c6971e87e911a4",
+    "hash": "f2bdeae05f9fb7f8",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/how-to-read-bescom-bill/": {
-    "hash": "8bb52598fec43d19",
+    "hash": "d4d6f7dc9895fbc4",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/how-to-read-bses-delhi-bill/": {
-    "hash": "12a6709a534b8ef9",
+    "hash": "0ae48303362c92d8",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/how-to-read-msedcl-bill/": {
-    "hash": "dbdf766d373c1fe3",
+    "hash": "df66ffeeb2fa9f8e",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/how-to-read-tneb-tangedco-bill/": {
-    "hash": "dd582361cc7f20dc",
+    "hash": "dce3e57a93beeaa5",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/how-to-read-uppcl-bill/": {
-    "hash": "306c0c94c232c11f",
+    "hash": "46d07f20c2a5b018",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/msedcl-fppa-charges-explained/": {
-    "hash": "67ea4efc9e242110",
+    "hash": "0429381f5b37ea31",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/msedcl-new-connection-online/": {
-    "hash": "456268afbe3a8eb0",
+    "hash": "632b85a3520ed6ff",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/power-factor-kvah-billing-explained/": {
-    "hash": "8b9eb710c23a00b5",
+    "hash": "e97b9cdb1a6e2936",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/prepaid-vs-postpaid-smart-meter/": {
-    "hash": "ca2d9fe2e85121b3",
+    "hash": "8a6a225698de51dc",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/reduce-fixed-charges-sanctioned-load/": {
-    "hash": "4983ffd4f16d67e6",
+    "hash": "966e4f427508f6cc",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/smart-meter-balance-check/": {
-    "hash": "bfb8336baf016871",
+    "hash": "3a4185339f7b6a84",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/smart-meter-prepaid-disconnection/": {
-    "hash": "7afe08950b981d14",
+    "hash": "c4585a96772a074f",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/smart-meter-recharge-failed/": {
-    "hash": "6bb57d13368b7e17",
+    "hash": "e280e6bf42bbd0ab",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/smart-meter-running-fast/": {
-    "hash": "68e65af271130314",
+    "hash": "59a6962716db9fb0",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/solar-net-metering-savings/": {
-    "hash": "830093d9eaa82030",
+    "hash": "7c758318656a9447",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/tod-billing-explained/": {
-    "hash": "f33b10f2780989d9",
+    "hash": "02fa6831f9504409",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/uppcl-sanctioned-load-increased/": {
-    "hash": "14f4e2e7aa9fa949",
+    "hash": "f978ec7fe4b439d1",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/uppcl-smart-meter-readings-explained/": {
-    "hash": "4df5d5457dcaf614",
+    "hash": "73e7f1b060e5c67e",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/what-is-a-unit-of-electricity/": {
-    "hash": "092dec8f2329e0f8",
+    "hash": "4686bf8953dec830",
     "lastmod": "2026-07-18"
   },
   "/mr/guides/why-did-my-electricity-bill-increase/": {
-    "hash": "776bdd15886dc04d",
+    "hash": "bdc46aec4444e20e",
     "lastmod": "2026-07-18"
   },
   "/mr/smart-meter-recharge/": {
@@ -1320,15 +1328,15 @@
     "lastmod": "2026-07-18"
   },
   "/ta/guides/": {
-    "hash": "5bb999e6dc83ca73",
+    "hash": "049ce6e825d00b38",
     "lastmod": "2026-07-18"
   },
   "/ta/guides/how-to-read-msedcl-bill/": {
-    "hash": "1dcf5cb821962a78",
+    "hash": "831d88323f3d1a46",
     "lastmod": "2026-07-18"
   },
   "/ta/guides/tneb-tangedco-new-connection/": {
-    "hash": "2e32b47c2a06c184",
+    "hash": "178b7e8f95c01e7f",
     "lastmod": "2026-07-18"
   },
   "/ta/smart-meter-recharge/": {
