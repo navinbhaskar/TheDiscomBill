@@ -2936,6 +2936,18 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .ev-bar-public { background: linear-gradient(90deg, #2563eb, #60a5fa); }
 .ev-bar-petrol { background: linear-gradient(90deg, #dc2626, #f97316); }
 .ev-bar-val { color: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* Charge-level slider */
+.ev-depth-field label { display: flex; align-items: center; gap: 8px; }
+.ev-depth-val {
+  font-variant-numeric: tabular-nums; color: var(--text-brand); font-weight: 700;
+  background: var(--brand-faint); padding: 1px 8px; border-radius: var(--radius-full); font-size: 12.5px;
+}
+.ev-range { width: 100%; accent-color: #0d9488; cursor: pointer; }
+/* Highlighted "range on ₹100" row — the memorable takeaway */
+.ev-bd-hl { background: linear-gradient(90deg, rgba(13,148,136,.10), transparent); border-radius: 8px; padding-left: 8px; padding-right: 8px; }
+.ev-bd-hl strong { color: #0d9488; }
+:root[data-theme="dark"] .ev-bd-hl strong { color: #2dd4bf; }
 .solar-hero h2 { margin-top: 0; }
 .solar-hero .solar-intro { margin-bottom: 16px; }
 .solar-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }

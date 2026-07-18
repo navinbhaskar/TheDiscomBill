@@ -168,6 +168,14 @@
               <span class="solar-hint"><a href="/tariffs/states/" data-i18n="ev.rateLink">Find your DISCOM's rate →</a></span>
             </div>
           </div>
+          <div class="solar-field ev-depth-field">
+            <label for="evDepth">
+              <span data-i18n="ev.depth">Typical charge level</span>
+              <b class="ev-depth-val" id="evDepthVal">80%</b>
+              <span class="gloss" tabindex="0" role="img" aria-label="Most EVs are charged to about 80 percent day to day to protect battery life, and fast chargers slow sharply past 80 percent. This sets the cost and time per charging session; your monthly cost is driven by the kilometres you drive, so it does not change." data-tip="Charging to ~80% daily protects battery health, and DC chargers slow sharply past 80%. This sets the per-session cost & time. Your monthly cost tracks the km you drive, so it's unaffected.">ⓘ</span>
+            </label>
+            <input id="evDepth" type="range" min="50" max="100" step="5" value="80" class="ev-range">
+          </div>
           <details class="solar-adv">
             <summary data-i18n="ev.advanced">Advanced</summary>
             <div class="solar-field-row">
@@ -205,7 +213,8 @@
               <div class="solar-payback-pill ev-cheaper-pill" id="evCheaperPill">—</div>
             </div>
             <div class="solar-breakdown">
-              <div class="solar-bd-row"><span data-i18n="ev.rCharge">Cost per full charge</span><strong id="evRCharge">—</strong></div>
+              <div class="solar-bd-row"><span data-i18n="ev.rCharge">Cost per charge</span><strong id="evRCharge">—</strong></div>
+              <div class="solar-bd-row ev-bd-hl"><span data-i18n="ev.rRange100">Range on ₹100 of charging</span><strong id="evRRange100">—</strong></div>
               <div class="solar-bd-row"><span data-i18n="ev.rUnits">Extra units on your bill</span><strong id="evRUnits">—</strong></div>
               <div class="solar-bd-row"><span data-i18n="ev.rMonthly">Monthly charging cost</span><strong id="evRMonthly">—</strong></div>
               <div class="solar-bd-row"><span data-i18n="ev.rPetrol">Petrol for the same km</span><strong id="evRPetrol">—</strong></div>
@@ -233,8 +242,9 @@
         <a href="/tariffs/states/">tariff pages</a>). Several states (Delhi, Maharashtra,
         Karnataka, UP and others) have dedicated EV-charging categories or night Time-of-Day
         discounts that can cut the rate further. Installing a 7.2 kW wallbox usually needs a
-        sanctioned-load upgrade from your DISCOM — check before you install. Charge times are
-        0→100% approximations that ignore end-of-charge taper.
+        sanctioned-load upgrade from your DISCOM — check before you install. Cost and time per
+        charge follow your chosen charge level (most owners stop near 80% for battery health);
+        your monthly cost tracks the kilometres you drive, so the slider doesn't change it.
       </p>
     </div>
   </section>

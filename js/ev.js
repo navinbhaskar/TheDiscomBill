@@ -41,7 +41,7 @@ const EV_STR = {
     perKm: '/km', perMo: '/mo', perYr: '/yr', unitsMo: ' units/mo',
     cheaper: (p) => `${p}% cheaper than petrol`,
     hrs: (h) => { const H = Math.floor(h), M = Math.round((h - H) * 60); return H ? `${H}h ${M ? M + 'm' : ''}`.trim() : `${M}m`; },
-    fullCharge: 'full charge',
+    toPct: (p) => p >= 100 ? 'full charge' : `to ${p}%`,
     petrolSame: (km) => `petrol for the same ${num(km)} km`,
     shareText: (r) => `🔌 My EV charging cost (TheDiscomBill)\n• ${r.evLabel}: ₹${r.evPerKm.toFixed(2)}/km vs petrol ₹${r.petrolPerKm.toFixed(2)}/km\n• Monthly charging: ₹${Math.round(r.monthlyCost).toLocaleString('en-IN')} for ${Math.round(r.monthlyKm).toLocaleString('en-IN')} km\n• I save ₹${Math.round(r.monthlySave).toLocaleString('en-IN')}/month vs petrol\nCalculate yours free: https://thediscombill.com/ev/`,
   },
@@ -50,7 +50,7 @@ const EV_STR = {
     perKm: '/किमी', perMo: '/माह', perYr: '/वर्ष', unitsMo: ' यूनिट/माह',
     cheaper: (p) => `पेट्रोल से ${p}% सस्ता`,
     hrs: (h) => { const H = Math.floor(h), M = Math.round((h - H) * 60); return H ? `${H}घं ${M ? M + 'मि' : ''}`.trim() : `${M}मि`; },
-    fullCharge: 'फुल चार्ज',
+    toPct: (p) => p >= 100 ? 'फुल चार्ज' : `${p}% तक`,
     petrolSame: (km) => `इतने ही ${num(km)} किमी के लिए पेट्रोल`,
     shareText: (r) => `🔌 मेरी EV चार्जिंग लागत (TheDiscomBill)\n• ${r.evLabel}: ₹${r.evPerKm.toFixed(2)}/किमी बनाम पेट्रोल ₹${r.petrolPerKm.toFixed(2)}/किमी\n• मासिक चार्जिंग: ₹${Math.round(r.monthlyCost).toLocaleString('en-IN')} (${Math.round(r.monthlyKm).toLocaleString('en-IN')} किमी)\n• पेट्रोल की तुलना में ₹${Math.round(r.monthlySave).toLocaleString('en-IN')}/माह की बचत\nअपनी लागत मुफ़्त निकालें: https://thediscombill.com/ev/`,
   },
@@ -105,11 +105,18 @@ function calc() {
 
   if (battery <= 0 || range <= 0 || monthlyKm <= 0) return { haveInput: false };
 
+  // Typical charge level (%). Owners usually stop near 80% for battery health, and it sets the
+  // per-session cost/time. Monthly energy is km-based, so depth does NOT change the monthly cost.
+  const depthPct = Math.min(100, Math.max(10, readNum('evDepth', 80) || 80));
+  const depth = depthPct / 100;
+
   const loss = 1 + lossPct / 100;               // wall units = battery units × loss factor
-  const wallPerCharge = battery * loss;         // kWh drawn from the meter per 0→100%
-  const costPerCharge = wallPerCharge * rate;
-  const evPerKm       = costPerCharge / range;
-  const unitsPerMonth = (monthlyKm / range) * wallPerCharge;
+  const wallPerFull = battery * loss;           // kWh drawn from the meter for a full 0→100%
+  const wallPerSession = wallPerFull * depth;   // a typical top-up to `depthPct`
+  const costPerCharge = wallPerSession * rate;  // cost of that session
+  const evPerKm       = (wallPerFull * rate) / range;   // per-km uses full-battery energy (depth-independent)
+  const kmPer100      = evPerKm > 0 ? 100 / evPerKm : 0; // km you travel on ₹100 of home charging
+  const unitsPerMonth = (monthlyKm / range) * wallPerFull;
   const monthlyCost   = unitsPerMonth * rate;
   const chargesPerMonth = monthlyKm / range;
 
@@ -119,11 +126,12 @@ function calc() {
   const yearlySave   = monthlySave * 12;
   const cheaperPct   = petrolMonthly > 0 ? Math.round((monthlySave / petrolMonthly) * 100) : 0;
 
-  const publicPerKm  = (battery * loss * pubRate) / range;
+  const publicPerKm  = (wallPerFull * pubRate) / range;
   const publicMonthly = publicPerKm * monthlyKm;
 
-  const slowHours    = battery / SLOW_KW;       // 0→100% (approx; taper ignored)
-  const wallboxHours = battery / WALLBOX_KW;
+  // Time to reach the chosen charge level (approx; ignores end-of-charge taper).
+  const slowHours    = (battery * depth) / SLOW_KW;
+  const wallboxHours = (battery * depth) / WALLBOX_KW;
 
   const sel = $('evSelect');
   const evLabel = sel.value === 'custom'
@@ -131,8 +139,8 @@ function calc() {
     : (EV_PRESETS.find(x => x.id === sel.value)?.label || 'EV');
 
   return {
-    haveInput: true, evLabel, battery, range, monthlyKm,
-    wallPerCharge, costPerCharge, evPerKm, unitsPerMonth, monthlyCost, chargesPerMonth,
+    haveInput: true, evLabel, battery, range, monthlyKm, depthPct,
+    wallPerSession, costPerCharge, evPerKm, kmPer100, unitsPerMonth, monthlyCost, chargesPerMonth,
     petrolPerKm, petrolMonthly, monthlySave, yearlySave, cheaperPct,
     publicPerKm, publicMonthly, slowHours, wallboxHours,
   };
@@ -173,7 +181,8 @@ function render() {
   $('evCheaperPill').textContent = S.cheaper(r.cheaperPct);
   $('evCheaperPill').hidden = r.cheaperPct <= 0;
 
-  $('evRCharge').textContent = rs(r.costPerCharge) + ' · ' + num(r.wallPerCharge, 1) + ' kWh ' + S.fullCharge;
+  $('evRCharge').textContent = rs(r.costPerCharge) + ' · ' + num(r.wallPerSession, 1) + ' kWh ' + S.toPct(r.depthPct);
+  $('evRRange100').textContent = num(r.kmPer100) + ' km';
   $('evRUnits').textContent = num(r.unitsPerMonth) + S.unitsMo;
   $('evRMonthly').textContent = rs(r.monthlyCost) + S.perMo;
   $('evRPetrol').textContent = rs(r.petrolMonthly) + S.perMo;
@@ -193,6 +202,10 @@ function init() {
   applyPreset();
 
   $('evSelect').addEventListener('change', () => { applyPreset(); render(); });
+  // Charge-level slider: live % label + recompute.
+  const depthLabel = () => { const v = $('evDepthVal'); if (v) v.textContent = ($('evDepth').value || 80) + '%'; };
+  $('evDepth')?.addEventListener('input', () => { depthLabel(); render(); });
+  depthLabel();
   ['evBattery', 'evRange', 'evKm', 'evRate', 'evLoss', 'evPetrol', 'evMileage', 'evPublicRate']
     .forEach(id => $(id)?.addEventListener('input', () => {
       // Editing battery/range detaches from the preset (it no longer matches).

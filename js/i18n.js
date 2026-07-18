@@ -165,7 +165,9 @@ export const STRINGS = {
     'ev.heroLabel': 'Your EV running cost',
     'ev.perKmUnit': ' per km',
     'ev.vsPetrol': 'vs petrol',
-    'ev.rCharge': 'Cost per full charge',
+    'ev.rCharge': 'Cost per charge',
+    'ev.depth': 'Typical charge level',
+    'ev.rRange100': 'Range on ₹100 of charging',
     'ev.rUnits': 'Extra units on your bill',
     'ev.rMonthly': 'Monthly charging cost',
     'ev.rPetrol': 'Petrol for the same km',
@@ -176,7 +178,7 @@ export const STRINGS = {
     'ev.rPublic': 'Public DC fast charging',
     'ev.chartTitle': 'Monthly cost: home vs public vs petrol',
     'ev.share': 'Share this estimate on WhatsApp',
-    'ev.note': 'Home charging is billed at your domestic slab rate — EV units land <em>on top of</em> your household usage, so use your top-slab rate for accuracy (find it on our <a href="/tariffs/states/">tariff pages</a>). Several states (Delhi, Maharashtra, Karnataka, UP and others) have dedicated EV-charging categories or night Time-of-Day discounts that can cut the rate further. Installing a 7.2 kW wallbox usually needs a sanctioned-load upgrade from your DISCOM — check before you install. Charge times are 0→100% approximations that ignore end-of-charge taper.',
+    'ev.note': 'Home charging is billed at your domestic slab rate — EV units land <em>on top of</em> your household usage, so use your top-slab rate for accuracy (find it on our <a href="/tariffs/states/">tariff pages</a>). Several states (Delhi, Maharashtra, Karnataka, UP and others) have dedicated EV-charging categories or night Time-of-Day discounts that can cut the rate further. Installing a 7.2 kW wallbox usually needs a sanctioned-load upgrade from your DISCOM — check before you install. Cost and time per charge follow your chosen charge level (most owners stop near 80% for battery health); your monthly cost tracks the kilometres you drive, so the slider does not change it.',
 
     'sol.note': "Estimates use India-average generation (~4 units per kW per day) and the PM Surya Ghar residential central subsidy (₹30,000/kW up to 2 kW, ₹18,000 for the 3rd kW, capped at ₹78,000). Actual generation, cost and state subsidy vary with location, roof orientation, shading and your DISCOM's net-metering policy. Treat this as a planning guide and get a quote from an empanelled vendor on the <a href=\"https://pmsuryaghar.gov.in\" target=\"_blank\" rel=\"noopener noreferrer\">National Portal ↗</a>.",
 
