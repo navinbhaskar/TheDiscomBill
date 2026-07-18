@@ -17,7 +17,7 @@ adjustments. No sign-up, no backend — it runs entirely in the browser.
 
 ## Features
 
-- **All-India coverage** — 35 states & UTs, 70+ DISCOMs, 150+ consumer categories.
+- **All-India coverage** — 35 states & UTs, 65+ DISCOMs, 150+ consumer categories.
 - **Telescopic slab billing** — each rate applies only to the units within its band; slab limits
   prorate automatically for multi-month periods.
 - **Three meter-reading modes**

@@ -23,6 +23,7 @@ export const GLOSSARY = [
   {
     term: 'Connected Load',
     slug: 'connected-load',
+    guide: 'reduce-fixed-charges-sanctioned-load',
     aka: ['Contract Demand'],
     short: 'The total load of all the appliances and equipment wired to your connection, declared in kW — the basis on which a supply connection is sanctioned.',
     body: `<p>Connected load is the sum of the wattage of everything that can draw power on your
@@ -45,6 +46,7 @@ export const GLOSSARY = [
   {
     term: 'Electricity Duty',
     slug: 'electricity-duty',
+    guide: 'electricity-duty-explained',
     abbr: 'ED',
     short: 'A tax levied by the state government on electricity consumption — collected through your bill but paid to the state treasury, not the DISCOM.',
     body: `<p>Electricity duty is a <strong>state tax</strong>, not a DISCOM charge. It is added to
@@ -65,6 +67,7 @@ export const GLOSSARY = [
   {
     term: 'Fixed Charge (Demand Charge)',
     slug: 'fixed-charge',
+    guide: 'reduce-fixed-charges-sanctioned-load',
     aka: ['Demand Charge', 'Fixed Cost'],
     short: 'A standing monthly charge billed on your sanctioned load or demand (per kW / kVA, or a flat amount) regardless of how many units you consume.',
     body: `<p>The fixed charge recovers the cost of keeping capacity available for you — wires,
@@ -86,6 +89,7 @@ export const GLOSSARY = [
   {
     term: 'FPPA (Fuel & Power Purchase Adjustment)',
     slug: 'fppa',
+    guide: 'how-fppa-fuel-surcharge-is-calculated',
     abbr: 'FPPA',
     aka: ['FPPCA', 'FAC', 'Fuel Surcharge', 'Fuel Adjustment Charge'],
     short: 'A periodic surcharge that passes the utility’s changing fuel and power-purchase costs through to consumers, levied either per unit or as a percentage of the energy charge.',
@@ -119,6 +123,7 @@ export const GLOSSARY = [
   {
     term: 'kVAh (Kilovolt-Ampere-Hour)',
     slug: 'kvah',
+    guide: 'power-factor-kvah-billing-explained',
     abbr: 'kVAh',
     short: 'A unit of apparent energy equal to kWh divided by the power factor; on kVAh billing you pay for apparent energy, so a poor power factor directly raises the bill.',
     body: `<p>Ordinary meters record <strong>kWh</strong> (real energy). Many commercial and industrial
@@ -141,6 +146,7 @@ export const GLOSSARY = [
   {
     term: 'LPSC (Late Payment Surcharge)',
     slug: 'lpsc',
+    guide: 'why-did-my-electricity-bill-increase',
     abbr: 'LPSC',
     aka: ['Late Payment Surcharge', 'DPC', 'Delayed Payment Charge'],
     short: 'A surcharge added for each month a bill stays unpaid past its due date, usually a fixed percentage of the outstanding amount.',
@@ -160,6 +166,7 @@ export const GLOSSARY = [
   {
     term: 'Maximum Demand (Billed Demand)',
     slug: 'maximum-demand',
+    guide: 'reduce-fixed-charges-sanctioned-load',
     aka: ['Billed Demand', 'Recorded Demand', 'MD'],
     short: 'The highest average load (in kW or kVA) drawn over a short interval during the billing period, used as the basis for the demand charge on larger connections.',
     body: `<p>Demand meters record the peak load your connection pulls, averaged over a rolling window
@@ -203,6 +210,7 @@ export const GLOSSARY = [
   {
     term: 'Multiplying Factor (MF)',
     slug: 'multiplying-factor',
+    guide: 'how-to-read-uppcl-bill',
     abbr: 'MF',
     short: 'The number by which the raw difference between two meter readings is multiplied to get the actual units consumed, used where current/voltage transformers scale the meter down.',
     body: `<p>On connections metered through a current transformer (CT) or potential transformer (PT),
@@ -225,6 +233,7 @@ export const GLOSSARY = [
   {
     term: 'Net Metering',
     slug: 'net-metering',
+    guide: 'solar-net-metering-savings',
     short: 'A rooftop-solar billing arrangement where you are charged only on net import — units imported from the grid minus units exported to it — with any surplus banked as a credit.',
     body: `<p>With net metering, your solar system feeds surplus generation back into the grid and a
       bidirectional meter tracks both directions. You pay energy charges on
@@ -246,6 +255,7 @@ export const GLOSSARY = [
   {
     term: 'Power Factor',
     slug: 'power-factor',
+    guide: 'power-factor-kvah-billing-explained',
     abbr: 'PF',
     short: 'The ratio of real power (kW) to apparent power (kVA) drawn by a load; a value below 1 means wasted capacity, and low power factor attracts penalties or higher kVAh billing.',
     body: `<p>Power factor measures how effectively your load turns supplied power into useful work.
@@ -268,6 +278,7 @@ export const GLOSSARY = [
   {
     term: 'Sanctioned Load',
     slug: 'sanctioned-load',
+    guide: 'reduce-fixed-charges-sanctioned-load',
     aka: ['Contracted Load', 'Sanctioned Demand'],
     short: 'The maximum load, in kW or kVA, that the DISCOM has formally contracted to supply to your connection — the basis for fixed charges and the ceiling you should stay under.',
     body: `<p>When your connection is approved, the DISCOM sanctions a load based on your declared
@@ -289,6 +300,7 @@ export const GLOSSARY = [
   {
     term: 'Slab-wise Rates',
     slug: 'telescopic-slabs',
+    guide: 'why-did-my-electricity-bill-increase',
     aka: ['Telescopic Slabs', 'Telescopic Tariff', 'Cumulative Slabs'],
     short: 'A slab-rate structure where each per-unit rate applies only to the units that fall within its own slab band, so higher rates never apply to your entire consumption. (The technical name is a "telescopic" tariff.)',
     body: `<p>Most Indian domestic tariffs are billed <strong>slab-wise</strong> — the technical name is
@@ -311,6 +323,7 @@ export const GLOSSARY = [
   {
     term: 'Time-of-Day Tariff (ToD / ToU)',
     slug: 'tod-tariff',
+    guide: 'tod-billing-explained',
     abbr: 'ToD',
     aka: ['ToU', 'Time-of-Use', 'Time-of-Day'],
     short: 'A tariff where the per-unit rate changes by time of day — higher during peak hours and lower off-peak — to reward shifting usage away from peak demand.',

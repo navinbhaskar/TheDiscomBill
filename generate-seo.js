@@ -1446,10 +1446,10 @@ function directoryPage(states, lang = 'en') {
     ta: 'அனைத்து இந்திய மின் DISCOM-கள் & மாநில வாரியான கட்டணங்கள்',
     en: 'All Indian Electricity DISCOMs & Tariffs by State' });
   const description = T(lang, {
-    hi: 'हर भारतीय राज्य और केंद्र शासित प्रदेश के बिजली टैरिफ व बिल कैलकुलेटर देखें। 70+ डिस्कॉम, स्लैब-वार दरें, फिक्स्ड चार्ज और FPPA — एक ही डायरेक्टरी में।',
-    mr: 'प्रत्येक भारतीय राज्य आणि केंद्रशासित प्रदेशाचे वीज टॅरिफ व बिल कॅल्क्युलेटर पाहा. 70+ डिस्कॉम, स्लॅब-निहाय दर, फिक्स्ड चार्ज आणि FPPA — एकाच डिरेक्टरीमध्ये.',
-    ta: 'ஒவ்வொரு இந்திய மாநிலம் மற்றும் யூனியன் பிரதேசத்தின் மின் கட்டணங்கள் மற்றும் பில் கணிப்பான்களைப் பாருங்கள். 70+ DISCOM-கள், அடுக்கு வாரியான விகிதங்கள், நிலையான கட்டணம் மற்றும் FPPA — ஒரே டைரக்டரியில்.',
-    en: 'Browse electricity tariffs and bill calculators for every Indian state and union territory. 70+ DISCOMs, slab-wise rates, fixed charges and FPPA — all in one directory.' });
+    hi: 'हर भारतीय राज्य और केंद्र शासित प्रदेश के बिजली टैरिफ व बिल कैलकुलेटर देखें। 65+ डिस्कॉम, स्लैब-वार दरें, फिक्स्ड चार्ज और FPPA — एक ही डायरेक्टरी में।',
+    mr: 'प्रत्येक भारतीय राज्य आणि केंद्रशासित प्रदेशाचे वीज टॅरिफ व बिल कॅल्क्युलेटर पाहा. 65+ डिस्कॉम, स्लॅब-निहाय दर, फिक्स्ड चार्ज आणि FPPA — एकाच डिरेक्टरीमध्ये.',
+    ta: 'ஒவ்வொரு இந்திய மாநிலம் மற்றும் யூனியன் பிரதேசத்தின் மின் கட்டணங்கள் மற்றும் பில் கணிப்பான்களைப் பாருங்கள். 65+ DISCOM-கள், அடுக்கு வாரியான விகிதங்கள், நிலையான கட்டணம் மற்றும் FPPA — ஒரே டைரக்டரியில்.',
+    en: 'Browse electricity tariffs and bill calculators for every Indian state and union territory. 65+ DISCOMs, slab-wise rates, fixed charges and FPPA — all in one directory.' });
 
   const pfx = lang === 'en' ? '' : `/${lang}`;
   // A vernacular tariff twin only exists for states this language is scoped to; elsewhere the
@@ -1910,12 +1910,25 @@ function glossaryPage(lang = 'en') {
     const also = alt.length ? `<p class="glossary-aka"><span data-i18n="gloss.aka">${akaLabel}</span> ${[...new Set(alt)].map(esc).join(', ')}</p>` : '';
     const body = (guideField(t, 'body', lang) || t.body).replace(/href="\/glossary\//g, `href="${pfx}/glossary/`);
     const backToTop = T(lang, { hi: '↑ सभी शब्दों पर वापस', mr: '↑ सर्व शब्दांवर परत', ta: '↑ அனைத்து சொற்களுக்கும் திரும்பு', en: '↑ Back to all terms' });
+    // Contextual "related guide" link: every term that maps to an explainer earns an internal
+    // link to it (deep-linking to the vernacular twin where the guide is translated).
+    let related = '';
+    if (t.guide) {
+      const g = GUIDES.find(x => x.slug === t.guide);
+      if (g) {
+        const gHref = (lang !== 'en' && guideHasBody(g, lang)) ? `/${lang}/guides/${g.slug}/` : `/guides/${g.slug}/`;
+        const gTitle = esc(guideField(g, 'title', lang) || g.title);
+        const relLabel = T(lang, { hi: 'संबंधित गाइड:', mr: 'संबंधित मार्गदर्शक:', ta: 'தொடர்புடைய வழிகாட்டி:', en: 'Related guide:' });
+        related = `<p class="glossary-more"><span class="glossary-more-label" data-i18n="gloss.relatedGuide">${relLabel}</span> <a href="${gHref}">${gTitle} →</a></p>`;
+      }
+    }
     return `
       <section class="seo-section glossary-term" id="${t.slug}">
         <h2 data-i18n="gl.${t.slug}.term">${esc(guideField(t, 'term', lang) || t.term)}</h2>
         <p class="glossary-def" data-i18n="gl.${t.slug}.short">${esc(guideField(t, 'short', lang) || t.short)}</p>
         ${also}
         <div class="glossary-body" data-i18n-html="gl.${t.slug}.body">${body}</div>
+        ${related}
         <p class="glossary-top"><a href="#glossary-index" data-i18n="gloss.backToTop">${backToTop}</a></p>
       </section>`;
   }).join('');
@@ -2424,7 +2437,7 @@ function buildLlmsTxt(states) {
   ).join('\n');
   return `# TheDiscomBill
 
-> Free, browser-based electricity bill calculator for India. Covers 70+ distribution companies (DISCOMs) across all 35 states and union territories with slab-wise energy charges, fixed/demand charges, FPPA fuel surcharge, electricity duty, solar net metering and Time-of-Day billing. Independent — not affiliated with any DISCOM, SERC or government body. Estimates are provisional; official bills come from the DISCOM.
+> Free, browser-based electricity bill calculator for India. Covers 65+ distribution companies (DISCOMs) across all 35 states and union territories with slab-wise energy charges, fixed/demand charges, FPPA fuel surcharge, electricity duty, solar net metering and Time-of-Day billing. Independent — not affiliated with any DISCOM, SERC or government body. Estimates are provisional; official bills come from the DISCOM.
 
 Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025-26) and the calculation engine applies each DISCOM's published methodology: slab-wise rates, sanctioned-load-based fixed charges, then surcharges and duty.
 

@@ -62,7 +62,7 @@ export const STRINGS = {
     'hero.feat.tod': 'Time-of-Day & kVAh billing',
     'hero.feat.demand': 'Excess demand penalty',
     'hero.feat.duty': 'Electricity duty & state levies',
-    'hero.discoms.label': 'Tariffs for 70+ DISCOMs across 35 states & UTs — including',
+    'hero.discoms.label': 'Tariffs for 65+ DISCOMs across 35 states & UTs — including',
     'hero.trust': 'Built on publicly available tariff orders · Updated for FY 2025-26',
     // Hero sample-bill cards
     'hero.card.title': 'Estimated monthly bill',
@@ -382,6 +382,7 @@ export const STRINGS = {
     'gloss.h1': 'Electricity Bill Glossary',
     'gloss.lead': 'Every charge line and code on an Indian electricity bill, defined in plain language. These are the terms behind our <a href="/#calculator">bill calculator</a> and <a href="/tariffs/states/">tariff pages</a> — from <a href="#fppa">FPPA</a> and <a href="#electricity-duty">electricity duty</a> to <a href="#telescopic-slabs">slab-wise rates</a> and <a href="#kvah">kVAh</a>.',
     'gloss.aka': 'Also called:',
+    'gloss.relatedGuide': 'Related guide:',
     'gloss.backToTop': '↑ Back to all terms',
     'gloss.work.h2': 'Put these terms to work',
     'gloss.card1': '<strong>Bill Calculator</strong><span>Apply these charges to your own units and load for an itemised estimate</span>',

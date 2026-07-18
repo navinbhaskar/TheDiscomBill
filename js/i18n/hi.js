@@ -56,7 +56,7 @@ export default {
     'hero.feat.tod': 'टाइम-ऑफ-डे व kVAh बिलिंग',
     'hero.feat.demand': 'अतिरिक्त मांग जुर्माना',
     'hero.feat.duty': 'बिजली शुल्क व राज्य उद्ग्रहण',
-    'hero.discoms.label': '35+ राज्यों व केंद्रशासित प्रदेशों के 70+ डिस्कॉम के टैरिफ — जैसे',
+    'hero.discoms.label': '35+ राज्यों व केंद्रशासित प्रदेशों के 65+ डिस्कॉम के टैरिफ — जैसे',
     'hero.trust': 'सार्वजनिक टैरिफ आदेशों पर आधारित · वित्त वर्ष 2025-26 हेतु अद्यतन',
     // Hero sample-bill cards
     'hero.card.title': 'अनुमानित मासिक बिल',
@@ -376,6 +376,7 @@ export default {
     'gloss.h1': 'बिजली बिल शब्दावली',
     'gloss.lead': 'भारतीय बिजली बिल की हर शुल्क पंक्ति व कोड, सरल भाषा में परिभाषित। ये वही शब्द हैं जो हमारे <a href="/#calculator">बिल कैलकुलेटर</a> व <a href="/tariffs/states/">टैरिफ पृष्ठों</a> के पीछे हैं — <a href="#fppa">FPPA</a> व <a href="#electricity-duty">बिजली शुल्क</a> से लेकर <a href="#telescopic-slabs">स्लैब-वार दरें</a> व <a href="#kvah">kVAh</a> तक।',
     'gloss.aka': 'इन नामों से भी:',
+    'gloss.relatedGuide': 'संबंधित गाइड:',
     'gloss.backToTop': '↑ सभी शब्दों पर वापस',
     'gloss.work.h2': 'इन शब्दों को काम में लाएँ',
     'gloss.card1': '<strong>बिल कैलकुलेटर</strong><span>मदवार आकलन के लिए इन शुल्कों को अपनी यूनिट व भार पर लागू करें</span>',
