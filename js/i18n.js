@@ -13,6 +13,9 @@ export const STRINGS = {
     'tagline': 'Electricity Bill Calculator · All India',
     'nav.calculator': 'Calculator',
     'nav.compare': 'Compare',
+    'nav.solar': 'Solar',
+    'nav.ev': 'EV Cost',
+    'nav.blog': 'Blog',
     'nav.about': 'About',
     // Quick Links dropdown (shared chrome on every page)
     'nav.quickLinks': 'Quick Links',
@@ -21,7 +24,7 @@ export const STRINGS = {
     'ql.services': 'Services',
     'ql.learn': 'Learn',
     'ql.compare': 'Compare DISCOM Tariffs',
-    'ql.usage': 'Usage Estimator',
+    'ql.usage': 'Electricity Cost Calculator',
     'ql.solar': 'Rooftop Solar Savings',
     'ql.ev': 'EV Charging Cost',
     'ql.tariffsByState': 'Tariffs by State & DISCOM',
@@ -178,7 +181,7 @@ export const STRINGS = {
     'sol.note': "Estimates use India-average generation (~4 units per kW per day) and the PM Surya Ghar residential central subsidy (₹30,000/kW up to 2 kW, ₹18,000 for the 3rd kW, capped at ₹78,000). Actual generation, cost and state subsidy vary with location, roof orientation, shading and your DISCOM's net-metering policy. Treat this as a planning guide and get a quote from an empanelled vendor on the <a href=\"https://pmsuryaghar.gov.in\" target=\"_blank\" rel=\"noopener noreferrer\">National Portal ↗</a>.",
 
     // Usage estimator (/usage/)
-    'est.title': 'Electricity Usage Estimator',
+    'est.title': 'Electricity Cost Calculator',
     'est.intro': "Add the appliances you use, set how many you own and how long they run each day. We'll estimate your <strong>monthly units (kWh)</strong> and approximate cost in real time.",
     'est.chip1': '19 common appliances',
     'est.chip2': 'Live kWh & ₹ estimate',

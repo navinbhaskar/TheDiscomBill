@@ -251,6 +251,10 @@ const HEADER = `
     </a>
     <nav class="header-nav">
       <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <a href="/compare/" class="nav-promoted" data-i18n="nav.compare">Compare</a>
+      <a href="/solar/" class="nav-promoted" data-i18n="nav.solar">Solar</a>
+      <a href="/ev/" class="nav-promoted" data-i18n="nav.ev">EV Cost</a>
+      <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
       <div class="nav-dropdown" id="quickLinksDropdown">
         <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
           <span data-i18n="nav.quickLinks">Quick Links</span>
@@ -259,7 +263,7 @@ const HEADER = `
         <div class="nav-dropdown-menu" id="quickLinksMenu" role="menu">
           <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tools">Tools</span>
           <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="20" x2="6" y2="14"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="10"/></svg><span data-i18n="ql.compare">Compare DISCOM Tariffs</span></a>
-          <a href="/usage/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span data-i18n="ql.usage">Usage Estimator</span></a>
+          <a href="/usage/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span data-i18n="ql.usage">Electricity Cost Calculator</span></a>
           <a href="/solar/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span data-i18n="ql.solar">Rooftop Solar Savings</span></a>
           <a href="/ev/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="13" height="10" rx="2"/><path d="M15 10h3l3 3v4h-6"/><path d="M9.5 9.5 7.5 12h3l-2 2.5"/></svg><span data-i18n="ql.ev">EV Charging Cost</span></a>          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tariffs">Tariffs</span>
           <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span data-i18n="ql.tariffsByState">Tariffs by State &amp; DISCOM</span></a>
@@ -2428,7 +2432,7 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 
 - [Bill Calculator](${SITE}/): instant provisional electricity bill for any Indian DISCOM with a full slab-wise breakdown
 - [Tariff Comparison](${SITE}/compare/): major DISCOMs compared at 200/400/600/1000 units for domestic and commercial
-- [Usage Estimator](${SITE}/usage/): estimate monthly kWh from household appliances
+- [Electricity Cost Calculator](${SITE}/usage/): estimate monthly kWh and cost from household appliances
 - [Rooftop Solar Savings](${SITE}/solar/): system sizing, payback and net-metering savings
 - [EV Charging Cost Calculator](${SITE}/ev/): cost per charge, per km and monthly charging bill for any EV, with petrol comparison
 - [Bill Check](${SITE}/bill-check/): direct links to every DISCOM's official view/pay-bill portal
@@ -2497,7 +2501,7 @@ function writeSearchIndex(states) {
     ['Compare Tariffs', 'टैरिफ तुलना', '/compare/', 'comparison states discom rates'],
     ['Solar Savings Calculator', 'सोलर बचत कैलकुलेटर', '/solar/', 'rooftop solar net metering pm surya ghar'],
     ['EV Charging Cost Calculator', 'EV चार्जिंग लागत कैलकुलेटर', '/ev/', 'ev electric vehicle charging cost per km nexon ather petrol comparison'],
-    ['Usage Estimator', 'खपत अनुमानक', '/usage/', 'appliance units consumption estimate kwh'],
+    ['Electricity Cost Calculator', 'बिजली लागत कैलकुलेटर', '/usage/', 'appliance electricity cost usage estimator units consumption kwh'],
     ['Bill Check', 'बिल जांच', '/bill-check/', 'verify bill overcharge audit'],
     ['Expert Bill Review', 'विशेषज्ञ बिल समीक्षा', '/services/', 'services expert review complaint help'],
     ['New Connection Guide', 'नया कनेक्शन गाइड', '/new-connection/', 'apply new electricity connection documents'],

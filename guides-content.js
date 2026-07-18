@@ -282,7 +282,7 @@ export const GUIDES = [
         <p>A single 1.5-ton AC draws roughly 1.2–1.6 kW. Run it 8 hours a night and that's
         <strong>~300 extra units a month</strong> — often more than the rest of the house combined.
         <em>Check:</em> compare this month's units (not rupees) with the same month <strong>last
-        year</strong>, not last month. Our <a href="/usage/">usage estimator</a> converts your
+        year</strong>, not last month. Our <a href="/usage/">electricity cost calculator</a> converts your
         appliances into expected units.</p>
       </section>
       <section class="seo-section">

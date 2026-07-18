@@ -98,13 +98,34 @@ const iconFor = (r) => (r.catId && byId(r.catId)?.icon) || r.icon || '';
 // Name is always resolved from the catalog by catId, so it localizes on language switch.
 const nameFor = (r) => { const c = byId(r.catId); return c ? c.name[lang()] : (typeof r.name === 'string' ? r.name : (r.name?.[lang()] || '')); };
 
-// A sensible starter set shown on first visit so the page isn't empty.
-const DEFAULT_ROWS = [
-  { catId: 'fan',    w: 75,  qty: 3, hrs: 14 },
-  { catId: 'led',    w: 9,   qty: 6, hrs: 6  },
-  { catId: 'tv',     w: 90,  qty: 1, hrs: 5  },
-  { catId: 'fridge', w: 150, qty: 1, hrs: 8, star: '3' },
-];
+// Weather-driven appliances that a season toggle manages.
+const WEATHER_IDS = ['fan', 'ac', 'cooler', 'geyser'];
+// Which weather appliances are PRE-ADDED for each season. Others stay in the catalog and can
+// be added by hand — e.g. winter drops the fan/AC/cooler and pre-adds the geyser instead.
+const SEASON_APPLIANCES = {
+  summer:  ['fan'],
+  monsoon: ['fan'],
+  winter:  ['geyser'],
+};
+
+// Build one seasonal weather row (tagged `seasonal` so a season switch can swap it without
+// touching anything the user added by hand).
+function seasonalRow(id, seas) {
+  const c = byId(id);
+  return { catId: id, w: c.w, qty: id === 'fan' ? 3 : 1, hrs: SEASON_HRS[seas]?.[id] ?? c.hrs,
+           seasonal: true, ...(c.star ? { star: c.star } : {}) };
+}
+
+// A sensible starter set shown on first visit: season-appropriate weather appliances plus a
+// common base (lights, TV, fridge) that applies year-round.
+function defaultRows(seas) {
+  return [
+    ...(SEASON_APPLIANCES[seas] || []).map(id => seasonalRow(id, seas)),
+    { catId: 'led',    w: 9,   qty: 6, hrs: 6 },
+    { catId: 'tv',     w: 90,  qty: 1, hrs: 5 },
+    { catId: 'fridge', w: 150, qty: 1, hrs: 8, star: '3' },
+  ];
+}
 
 let rows = [];        // [{ catId, w, qty, hrs, star? }]
 let rate = 7;
@@ -120,7 +141,7 @@ function load() {
       return;
     }
   } catch (e) { /* ignore corrupt store */ }
-  rows = DEFAULT_ROWS.map(r => ({ ...r }));
+  rows = defaultRows(season);
 }
 function save() {
   try { localStorage.setItem(STORE_KEY, JSON.stringify({ rows, rate, season })); } catch (e) {}
@@ -216,10 +237,14 @@ function addAppliance(catId) {
 function applySeason(next) {
   if (!SEASONS.includes(next)) return;
   season = next;
-  rows.forEach(r => {
-    const h = SEASON_HRS[season][r.catId];
-    if (h != null) r.hrs = h;
-  });
+  const keep = SEASON_APPLIANCES[next] || [];
+  // Drop only auto-added (seasonal) weather rows that don't belong to the new season —
+  // anything the user added by hand is left in place.
+  rows = rows.filter(r => !(r.seasonal && WEATHER_IDS.includes(r.catId) && !keep.includes(r.catId)));
+  // Pre-add this season's weather appliances if they aren't already present.
+  keep.forEach(id => { if (!rows.some(r => r.catId === id)) rows.unshift(seasonalRow(id, next)); });
+  // Reset run-times for any weather rows still present (seasonal estimates, not user facts).
+  rows.forEach(r => { const h = SEASON_HRS[next]?.[r.catId]; if (h != null) r.hrs = h; });
   render();
 }
 

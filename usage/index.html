@@ -17,7 +17,7 @@
       } catch (e) {}
     })();
   </script>
-  <title>Electricity Usage Estimator – TheDiscomBill</title>
+  <title>Electricity Cost Calculator – Appliance Usage &amp; Bill Estimate | TheDiscomBill</title>
   <meta name="description" content="Estimate your monthly electricity usage (kWh) and cost from your home appliances — fans, AC, fridge, geyser and more.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +28,7 @@
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="TheDiscomBill">
-  <meta property="og:title" content="Electricity Usage Estimator – TheDiscomBill">
+  <meta property="og:title" content="Electricity Cost Calculator – TheDiscomBill">
   <meta property="og:description" content="Estimate your monthly electricity usage (kWh) and cost from your home appliances — fans, AC, fridge, geyser and more.">
   <meta property="og:url" content="https://thediscombill.com/usage/">
   <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
@@ -38,7 +38,7 @@
   <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
   <meta property="og:locale" content="en_IN">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Electricity Usage Estimator – TheDiscomBill">
+  <meta name="twitter:title" content="Electricity Cost Calculator – TheDiscomBill">
   <meta name="twitter:description" content="Estimate your monthly electricity usage (kWh) and cost from your home appliances.">
   <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
   <link rel="stylesheet" href="../css/styles.min.css">
@@ -50,8 +50,8 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Electricity Usage Estimator","url":"https://thediscombill.com/usage/","description":"Estimate your monthly electricity usage (kWh) and cost from your home appliances — fans, AC, fridge, geyser and more.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Usage Estimator","item":"https://thediscombill.com/usage/"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Electricity Cost Calculator","url":"https://thediscombill.com/usage/","description":"Estimate your monthly electricity usage (kWh) and cost from your home appliances — fans, AC, fridge, geyser and more.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Electricity Cost Calculator","item":"https://thediscombill.com/usage/"}]}</script>
 </head>
 <body>
 
@@ -71,6 +71,10 @@
     </a>
     <nav class="header-nav">
       <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <a href="/compare/" class="nav-promoted" data-i18n="nav.compare">Compare</a>
+      <a href="/solar/" class="nav-promoted" data-i18n="nav.solar">Solar</a>
+      <a href="/ev/" class="nav-promoted" data-i18n="nav.ev">EV Cost</a>
+      <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
       <div class="nav-dropdown" id="quickLinksDropdown">
         <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
           <span data-i18n="nav.quickLinks">Quick Links</span>
@@ -79,7 +83,7 @@
         <div class="nav-dropdown-menu" id="quickLinksMenu" role="menu">
           <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tools">Tools</span>
           <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="20" x2="6" y2="14"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="10"/></svg><span data-i18n="ql.compare">Compare DISCOM Tariffs</span></a>
-          <a href="/usage/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span data-i18n="ql.usage">Usage Estimator</span></a>
+          <a href="/usage/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span data-i18n="ql.usage">Electricity Cost Calculator</span></a>
           <a href="/solar/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span data-i18n="ql.solar">Rooftop Solar Savings</span></a>
           <a href="/ev/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="13" height="10" rx="2"/><path d="M15 10h3l3 3v4h-6"/><path d="M9.5 9.5 7.5 12h3l-2 2.5"/></svg><span data-i18n="ql.ev">EV Charging Cost</span></a>          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tariffs">Tariffs</span>
           <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span data-i18n="ql.tariffsByState">Tariffs by State &amp; DISCOM</span></a>
@@ -119,7 +123,7 @@
   <section class="estimator-section">
     <div class="container">
       <div class="est-hero">
-        <h2 data-i18n="est.title">Electricity Usage Estimator</h2>
+        <h2 data-i18n="est.title">Electricity Cost Calculator</h2>
         <p class="est-intro" data-i18n-html="est.intro">Add the appliances you use, set how many you own and how long they run each day. We'll estimate your <strong>monthly units (kWh)</strong> and approximate cost in real time.</p>
         <div class="est-hero-chips" role="list">
           <span class="est-hero-chip" role="listitem" data-i18n="est.chip1">19 common appliances</span>

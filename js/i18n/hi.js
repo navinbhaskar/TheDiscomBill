@@ -7,6 +7,9 @@ export default {
     'tagline': 'बिजली बिल कैलकुलेटर · पूरे भारत के लिए',
     'nav.calculator': 'कैलकुलेटर',
     'nav.compare': 'तुलना',
+    'nav.solar': 'सोलर',
+    'nav.ev': 'EV लागत',
+    'nav.blog': 'ब्लॉग',
     'nav.about': 'परिचय',
     // Quick Links dropdown (shared chrome on every page)
     'nav.quickLinks': 'त्वरित लिंक',
@@ -15,7 +18,7 @@ export default {
     'ql.services': 'सेवाएँ',
     'ql.learn': 'जानें',
     'ql.compare': 'डिस्कॉम टैरिफ तुलना',
-    'ql.usage': 'खपत अनुमानक',
+    'ql.usage': 'बिजली लागत कैलकुलेटर',
     'ql.solar': 'रूफटॉप सोलर बचत',
     'ql.ev': 'EV चार्जिंग लागत',
     'ql.tariffsByState': 'राज्य व डिस्कॉम अनुसार टैरिफ',
@@ -172,7 +175,7 @@ export default {
     'sol.note': 'अनुमान भारत के औसत उत्पादन (~4 यूनिट प्रति kW प्रति दिन) और PM सूर्य घर आवासीय केंद्रीय सब्सिडी (2 kW तक ₹30,000/kW, तीसरे kW पर ₹18,000, अधिकतम ₹78,000) पर आधारित हैं। वास्तविक उत्पादन, लागत और राज्य सब्सिडी स्थान, छत की दिशा, छाया और आपके डिस्कॉम की नेट-मीटरिंग नीति पर निर्भर करती है। इसे एक योजना-गाइड मानें और <a href="https://pmsuryaghar.gov.in" target="_blank" rel="noopener noreferrer">राष्ट्रीय पोर्टल ↗</a> पर सूचीबद्ध विक्रेता से कोटेशन लें।',
 
     // Usage estimator (/usage/)
-    'est.title': 'बिजली खपत अनुमानक',
+    'est.title': 'बिजली लागत कैलकुलेटर',
     'est.intro': "अपने उपकरण जोड़ें, बताएँ कि कितने हैं और रोज़ कितने घंटे चलते हैं। हम आपकी <strong>मासिक यूनिट (kWh)</strong> और अनुमानित लागत तुरंत बता देंगे।",
     'est.chip1': '19 आम उपकरण',
     'est.chip2': 'लाइव kWh व ₹ अनुमान',

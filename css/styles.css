@@ -618,6 +618,10 @@ a:hover { text-decoration: underline; }
 }
 .header-nav a:hover { background: rgba(255,255,255,.08); color: var(--text-inverse); text-decoration: none; }
 .header-nav a:focus-visible { outline: 2px solid var(--p-blue-400); outline-offset: 2px; }
+/* Promoted top-bar shortcuts (Compare / Solar / EV / Blog): shown on wide screens only —
+   below 1040px they collapse back into the Quick Links dropdown, which holds the same links. */
+.header-nav .nav-promoted { padding: 6px 12px; }
+@media (max-width: 1040px) { .header-nav .nav-promoted { display: none; } }
 
 /* ─── Hero ───────────────────────────────────────────────────────────────────── */
 .hero {
