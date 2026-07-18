@@ -103,7 +103,7 @@ const WEATHER_IDS = ['fan', 'ac', 'cooler', 'geyser'];
 // Which weather appliances are PRE-ADDED for each season. Others stay in the catalog and can
 // be added by hand — e.g. winter drops the fan/AC/cooler and pre-adds the geyser instead.
 const SEASON_APPLIANCES = {
-  summer:  ['fan'],
+  summer:  ['fan', 'cooler'],   // peak cooling season — fan + air cooler by default
   monsoon: ['fan'],
   winter:  ['geyser'],
 };
