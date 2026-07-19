@@ -146,6 +146,25 @@ function initGatedLinks() {
   });
 }
 
+// Highlight the current page's link in the top nav. Section links match by their
+// first path segment (so /tariffs/uppcl/ still lights up "Tariffs", which points
+// at /tariffs/states/); language twins (/hi/ /mr/ /ta/) are normalized first.
+function initNavActive() {
+  let path = location.pathname.replace(/^\/(hi|mr|ta)(?=\/|$)/, '') || '/';
+  let best = null, bestLen = 0;
+  document.querySelectorAll('.header-nav > a').forEach(a => {
+    const href = a.getAttribute('href') || '';
+    if (href.startsWith('#') || href.startsWith('/#')) {
+      // Anchor links (Calculator, About) — Calculator stands for the homepage.
+      if (href.endsWith('#calculator') && (path === '/' || path === '/index.html') && bestLen === 0) best = best || a;
+      return;
+    }
+    const seg = '/' + (new URL(href, location.origin).pathname.split('/')[1] || '') + '/';
+    if (seg !== '//' && (path + '/').startsWith(seg) && seg.length > bestLen) { best = a; bestLen = seg.length; }
+  });
+  if (best) { best.classList.add('nav-active'); best.setAttribute('aria-current', 'page'); }
+}
+
 // One persistent, capture-phase outside-tap closer for the account menu. Armed once
 // and querying the live DOM on every tap, it survives the header re-renders
 // (syncAccountRole) that orphaned per-render document listeners, and capture phase
@@ -446,6 +465,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLoginButton();     // top-right Login / My Account button
   initHeaderSearch();    // header magnifier + Ctrl+K / '/' site search
   initGatedLinks();      // Bill Review CTAs open the auth modal, then redirect in
+  initNavActive();       // highlight the current page's link in the top nav
 
   // Theme toggle — data-theme is pre-set by the inline <head> script; here we sync the button
   // and let the user flip + persist their choice.
@@ -589,6 +609,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('facMode').addEventListener('change', () => {
       updateFacUnitLabel();
       markFppaManual();
+    });
+    // Segmented ₹/unit ⇄ % pill mirrors the hidden #facMode select (the JS source of truth)
+    document.querySelectorAll('input[name="facModeSeg"]').forEach(r => {
+      r.addEventListener('change', () => {
+        const sel = document.getElementById('facMode');
+        if (sel && sel.value !== r.value) { sel.value = r.value; sel.dispatchEvent(new Event('change')); }
+      });
     });
     document.getElementById('fppaAuto').addEventListener('change', () => {
       onFppaAutoToggle(discomEl.value, categoryEl.value, supplyTypeEl.value);

@@ -251,22 +251,19 @@ const HEADER = `
     </a>
     <nav class="header-nav">
       <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
-      <a href="/compare/" class="nav-promoted" data-i18n="nav.compare">Compare</a>
-      <a href="/solar/" class="nav-promoted" data-i18n="nav.solar">Solar</a>
-      <a href="/ev/" class="nav-promoted" data-i18n="nav.ev">EV Cost</a>
+      <a href="/compare/" class="nav-promoted" data-i18n="nav.compare">Compare DISCOMs</a>
+      <a href="/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
       <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
       <div class="nav-dropdown" id="quickLinksDropdown">
         <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
-          <span data-i18n="nav.quickLinks">Quick Links</span>
+          <span data-i18n="nav.quickLinks">More</span>
           <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="nav-dropdown-menu" id="quickLinksMenu" role="menu">
           <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tools">Tools</span>
-          <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="20" x2="6" y2="14"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="10"/></svg><span data-i18n="ql.compare">Compare DISCOM Tariffs</span></a>
           <a href="/usage/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span data-i18n="ql.usage">Electricity Cost Calculator</span></a>
           <a href="/solar/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span data-i18n="ql.solar">Rooftop Solar Savings</span></a>
-          <a href="/ev/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="13" height="10" rx="2"/><path d="M15 10h3l3 3v4h-6"/><path d="M9.5 9.5 7.5 12h3l-2 2.5"/></svg><span data-i18n="ql.ev">EV Charging Cost</span></a>          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tariffs">Tariffs</span>
-          <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span data-i18n="ql.tariffsByState">Tariffs by State &amp; DISCOM</span></a>
+          <a href="/ev/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="13" height="10" rx="2"/><path d="M15 10h3l3 3v4h-6"/><path d="M9.5 9.5 7.5 12h3l-2 2.5"/></svg><span data-i18n="ql.ev">EV Charging Cost</span></a>
           <span class="nav-dropdown-label" role="presentation" data-i18n="ql.services">Services</span>
           <a href="/services/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg><span data-i18n="ql.discomServices">DISCOM Services</span></a>
           <a href="/smart-meter-recharge/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/><path d="M11 9l-2 3h3l-2 3"/></svg><span data-i18n="ql.smartMeter">Smart Meter Recharge</span></a>
@@ -278,7 +275,6 @@ const HEADER = `
           </div>
           </div>
           <span class="nav-dropdown-label" role="presentation" data-i18n="ql.learn">Learn</span>
-          <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.guides">Blogs &amp; Articles</span></a>
           <a href="/glossary/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M12 7h5M12 11h5M7 7h.01M7 11h.01"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.glossary">Electricity Bill Guide</span></a>
           <a href="/methodology/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 11l2 2 4-4"/></svg><span data-i18n="ql.methodology">Methodology &amp; Accuracy</span></a>
         </div>
@@ -1822,7 +1818,7 @@ function guidesIndexPage(lang = 'en') {
   }).join('');
   const bcHome = T(lang, { hi: 'होम', mr: 'होम', ta: 'முகப்பு', en: 'Home' });
   const bcGuides = T(lang, { hi: 'गाइड', mr: 'मार्गदर्शक', ta: 'வழிகாட்டிகள்', en: 'Guides' });
-  const h1 = T(lang, { hi: 'बिजली बिल गाइड', mr: 'वीज बिल मार्गदर्शक', ta: 'மின் பில் வழிகாட்டிகள்', en: 'Electricity Bill Guides' });
+  const h1 = T(lang, { hi: 'ब्लॉग और लेख', mr: 'ब्लॉग आणि लेख', ta: 'வலைப்பதிவுகள் & கட்டுரைகள்', en: 'Blogs & Articles' });
   const lead = T(lang, {
     hi: 'भारतीय बिजली बिलिंग पर छोटे, व्यावहारिक लेख — ठीक उन्हीं सवालों के जवाब जो लोग पूछते हैं, और हमारे <a href="/#calculator">बिल कैलकुलेटर</a> के पीछे के लाइव टैरिफ डेटा से जुड़े हुए।',
     mr: 'भारतीय वीज बिलिंगवरील छोटे, व्यावहारिक लेख — लोक विचारतात त्याच प्रश्नांची उत्तरे, आणि आमच्या <a href="/#calculator">बिल कॅल्क्युलेटर</a> मागील लाइव्ह टॅरिफ डेटाशी जोडलेले.',
@@ -1953,7 +1949,7 @@ function glossaryPage(lang = 'en') {
   const S = STRINGS[lang] || {};
   const gs = (key, en) => (lang === 'en' ? en : (S[key] || en));
   const crumbName = gs('gloss.crumb', 'Glossary');
-  const h1 = gs('gloss.h1', 'Electricity Bill Glossary');
+  const h1 = gs('gloss.h1', 'Electricity Bill Guide');
   const leadEn = `Every charge line and code on an Indian electricity bill, defined in plain
     language. These are the terms behind our <a href="/#calculator">bill calculator</a> and
     <a href="/tariffs/states/">tariff pages</a> — from <a href="#fppa">FPPA</a> and

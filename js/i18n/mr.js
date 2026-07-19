@@ -6,13 +6,14 @@ export default {
     // Header / nav
     'tagline': 'वीज बिल कॅल्क्युलेटर · संपूर्ण भारतासाठी',
     'nav.calculator': 'कॅल्क्युलेटर',
-    'nav.compare': 'तुलना',
+    'nav.compare': 'DISCOM तुलना',
+    'nav.tariffs': 'टॅरिफ',
     'nav.solar': 'सोलर',
     'nav.ev': 'EV खर्च',
     'nav.blog': 'ब्लॉग',
     'nav.about': 'आमच्याबद्दल',
     // Quick Links dropdown (shared chrome on every page)
-    'nav.quickLinks': 'क्विक लिंक्स',
+    'nav.quickLinks': 'अधिक',
     'ql.tools': 'टूल्स',
     'ql.tariffs': 'टॅरिफ',
     'ql.services': 'सेवा',
@@ -57,7 +58,8 @@ export default {
     'hero.feat.demand': 'जादा मागणी दंड',
     'hero.feat.duty': 'वीज शुल्क व राज्य कर',
     'hero.discoms.label': '35+ राज्ये व केंद्रशासित प्रदेशांतील 65+ डिस्कॉमचे टॅरिफ — यांसह',
-    'hero.trust': 'सार्वजनिक टॅरिफ आदेशांवर आधारित · आर्थिक वर्ष 2025-26 साठी अद्ययावत',
+    'hero.trust1': 'प्रत्येक टॅरिफ स्लॅब अधिकृत SERC व DISCOM आदेशांशी पडताळलेला',
+    'hero.trust2': 'आर्थिक वर्ष 2025-26 टॅरिफ डेटा',
     // Hero sample-bill cards
     'hero.card.title': 'अंदाजित मासिक बिल',
     'hero.card.sub': '250 युनिट · LMV-1 घरगुती',
@@ -336,7 +338,7 @@ export default {
     'meth.disclaimer': 'आकडे प्रकाशित टॅरिफ आदेशांवरून गणलेले व नमुना बिलांशी पडताळलेले अंदाजित आकडे आहेत; कोणत्याही शुल्काची नेमकी अंमलबजावणी राज्य, डिस्कॉम व ग्राहक श्रेणीनुसार बदलते. नेहमी तुमच्या डिस्कॉमच्या टॅरिफ आदेशाशी वा छापील बिलाशी पडताळा.',
     // Glossary page framing (/glossary/)
     'gloss.crumb': 'शब्दकोश',
-    'gloss.h1': 'वीज बिल शब्दकोश',
+    'gloss.h1': 'वीज बिल मार्गदर्शक',
     'gloss.lead': 'भारतीय वीज बिलावरील प्रत्येक शुल्क ओळ व कोड, सोप्या भाषेत. हेच शब्द आमच्या <a href="/#calculator">बिल कॅल्क्युलेटर</a> व <a href="/tariffs/states/">टॅरिफ पानांमागे</a> आहेत — <a href="#fppa">FPPA</a> व <a href="#electricity-duty">वीज शुल्कापासून</a> <a href="#telescopic-slabs">स्लॅबनिहाय दर</a> व <a href="#kvah">kVAh</a> पर्यंत.',
     'gloss.aka': 'इतर नावे:',
     'gloss.relatedGuide': 'संबंधित मार्गदर्शक:',

@@ -17,6 +17,13 @@ Thumbs.db
 # Cloudflare Wrangler local state
 .wrangler/
 
+# Local Claude Code tooling artifacts (not website content)
+.claude/skills/
+.claude/launch.json
+skills-lock.json
+graphify-out/
+js/graphify-out/
+
 # Deploy-time copies for the calc Edge Function (scripts/sync-calc-api.mjs)
 supabase/functions/calc/vendor/
 supabase/functions/calc/bundle.ts

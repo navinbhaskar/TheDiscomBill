@@ -52,7 +52,7 @@ export function showToast(msg) {
 
 // ─── Saved-bill history (localStorage) ─────────────────────────────────────────
 const HISTORY_KEY = 'discombill.history';
-const HISTORY_MAX = 8;
+const HISTORY_MAX = 15;
 // escHtml is now imported from utils.js
 
 function readHistory() { try { return JSON.parse(localStorage.getItem(HISTORY_KEY)) || []; } catch { return []; } }
@@ -84,18 +84,30 @@ async function syncBillToCloud({ label, amount, params }) {
   } catch (e) { /* offline / stale token — local history still has the bill */ }
 }
 
+const HISTORY_PREVIEW = 4;          // collapsed view shows this many; "View all" reveals the rest
+let historyExpanded = false;
+
 export function renderHistory() {
   const box = document.getElementById('historyPanel');
   if (!box) return;
   const list = readHistory();
   if (!list.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
   box.style.display = 'block';
+  const shown = historyExpanded ? list : list.slice(0, HISTORY_PREVIEW);
+  const hidden = list.length - shown.length;
   box.innerHTML =
-    `<div class="history-head"><span>Recent bills</span>` +
+    `<div class="history-head"><span class="history-title">` +
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>` +
+    `Recent bills</span>` +
     `<button type="button" id="historyClear" class="history-clear">Clear</button></div>` +
-    list.map((e, i) => `<button type="button" class="history-item" data-i="${i}">` +
+    shown.map((e, i) => `<button type="button" class="history-item" data-i="${i}">` +
       `<span class="history-label">${escHtml(e.label)}</span>` +
-      `<span class="history-amt">₹ ${escHtml(e.amount)}</span></button>`).join('');
+      `<span class="history-amt">₹ ${escHtml(e.amount)}</span></button>`).join('') +
+    (hidden > 0
+      ? `<button type="button" id="historyToggle" class="history-toggle">View all (${list.length})</button>`
+      : (historyExpanded && list.length > HISTORY_PREVIEW
+        ? `<button type="button" id="historyToggle" class="history-toggle">Show less</button>`
+        : ''));
 }
 
 // ─── Bill verification + month-over-month delta ────────────────────────────────
@@ -162,6 +174,7 @@ export function initHistory() {
   if (!box) return;
   box.addEventListener('click', e => {
     if (e.target.closest('#historyClear')) { writeHistory([]); renderHistory(); return; }
+    if (e.target.closest('#historyToggle')) { historyExpanded = !historyExpanded; renderHistory(); return; }
     const item = e.target.closest('.history-item');
     if (!item) return;
     const entry = readHistory()[+item.dataset.i];
@@ -543,6 +556,10 @@ export function updateFacUnitLabel() {
   t.textContent = modeEl.value === 'percent'
     ? 'FPPA / FAC Surcharge (% of charges)'
     : 'FPPA / FAC Surcharge (₹/unit)';
+  // Keep the segmented ₹/unit ⇄ % pill in sync — every programmatic set of
+  // #facMode (prefill, auto-toggle, share-URL load) calls this function.
+  const seg = document.querySelector(`input[name="facModeSeg"][value="${modeEl.value}"]`);
+  if (seg && !seg.checked) seg.checked = true;
 }
 
 // Live hint showing which tariff period a bill will use (and whether it's estimated)
@@ -749,7 +766,7 @@ export function addMeterRow(label = '') {
       row.querySelector('.m-currread').disabled = true;
       row.querySelector('.m-prevread').disabled = true;
       unitsInput.readOnly = false;
-      unitsLabel.textContent = _t('Total Units (Manual Override)', 'कुल यूनिट (मैन्युअल)');
+      unitsLabel.textContent = _t('Total Units', 'कुल यूनिट');
     } else {
       row.querySelector('.m-currread').disabled = false;
       row.querySelector('.m-prevread').disabled = false;

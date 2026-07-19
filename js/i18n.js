@@ -12,13 +12,14 @@ export const STRINGS = {
     // Header / nav
     'tagline': 'Electricity Bill Calculator · All India',
     'nav.calculator': 'Calculator',
-    'nav.compare': 'Compare',
+    'nav.compare': 'Compare DISCOMs',
+    'nav.tariffs': 'Tariffs',
     'nav.solar': 'Solar',
     'nav.ev': 'EV Cost',
     'nav.blog': 'Blog',
     'nav.about': 'About',
     // Quick Links dropdown (shared chrome on every page)
-    'nav.quickLinks': 'Quick Links',
+    'nav.quickLinks': 'More',
     'ql.tools': 'Tools',
     'ql.tariffs': 'Tariffs',
     'ql.services': 'Services',
@@ -63,7 +64,8 @@ export const STRINGS = {
     'hero.feat.demand': 'Excess demand penalty',
     'hero.feat.duty': 'Electricity duty & state levies',
     'hero.discoms.label': 'Tariffs for 65+ DISCOMs across 35 states & UTs — including',
-    'hero.trust': 'Built on publicly available tariff orders · Updated for FY 2025-26',
+    'hero.trust1': 'Every tariff slab verified against official SERC & DISCOM orders',
+    'hero.trust2': 'FY 2025-26 tariff data',
     // Hero sample-bill cards
     'hero.card.title': 'Estimated monthly bill',
     'hero.card.sub': '250 units · LMV-1 domestic',
@@ -379,7 +381,7 @@ export const STRINGS = {
     'meth.disclaimer': 'Figures are provisional estimates computed from published tariff orders and verified against sample bills; the exact treatment of any charge varies by state, DISCOM and consumer category. Always verify against your DISCOM\'s tariff order or your printed bill.',
     // Glossary page framing (/glossary/) — the 14 term definitions stay in English (technical reference)
     'gloss.crumb': 'Glossary',
-    'gloss.h1': 'Electricity Bill Glossary',
+    'gloss.h1': 'Electricity Bill Guide',
     'gloss.lead': 'Every charge line and code on an Indian electricity bill, defined in plain language. These are the terms behind our <a href="/#calculator">bill calculator</a> and <a href="/tariffs/states/">tariff pages</a> — from <a href="#fppa">FPPA</a> and <a href="#electricity-duty">electricity duty</a> to <a href="#telescopic-slabs">slab-wise rates</a> and <a href="#kvah">kVAh</a>.',
     'gloss.aka': 'Also called:',
     'gloss.relatedGuide': 'Related guide:',

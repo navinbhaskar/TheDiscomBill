@@ -6,13 +6,14 @@ export default {
     // Header / nav
     'tagline': 'बिजली बिल कैलकुलेटर · पूरे भारत के लिए',
     'nav.calculator': 'कैलकुलेटर',
-    'nav.compare': 'तुलना',
+    'nav.compare': 'DISCOM तुलना',
+    'nav.tariffs': 'टैरिफ',
     'nav.solar': 'सोलर',
     'nav.ev': 'EV लागत',
     'nav.blog': 'ब्लॉग',
     'nav.about': 'परिचय',
     // Quick Links dropdown (shared chrome on every page)
-    'nav.quickLinks': 'त्वरित लिंक',
+    'nav.quickLinks': 'और देखें',
     'ql.tools': 'टूल्स',
     'ql.tariffs': 'टैरिफ',
     'ql.services': 'सेवाएँ',
@@ -57,7 +58,8 @@ export default {
     'hero.feat.demand': 'अतिरिक्त मांग जुर्माना',
     'hero.feat.duty': 'बिजली शुल्क व राज्य उद्ग्रहण',
     'hero.discoms.label': '35+ राज्यों व केंद्रशासित प्रदेशों के 65+ डिस्कॉम के टैरिफ — जैसे',
-    'hero.trust': 'सार्वजनिक टैरिफ आदेशों पर आधारित · वित्त वर्ष 2025-26 हेतु अद्यतन',
+    'hero.trust1': 'हर टैरिफ स्लैब आधिकारिक SERC व DISCOM आदेशों से सत्यापित',
+    'hero.trust2': 'वित्त वर्ष 2025-26 टैरिफ डेटा',
     // Hero sample-bill cards
     'hero.card.title': 'अनुमानित मासिक बिल',
     'hero.card.sub': '250 यूनिट · LMV-1 घरेलू',
@@ -373,7 +375,7 @@ export default {
     'meth.disclaimer': 'आँकड़े प्रकाशित टैरिफ आदेशों से गणना किए गए और नमूना बिलों के विरुद्ध सत्यापित अनुमानित आकलन हैं; किसी भी शुल्क का सटीक उपचार राज्य, डिस्कॉम व उपभोक्ता श्रेणी के अनुसार भिन्न होता है। हमेशा अपने डिस्कॉम के टैरिफ आदेश या मुद्रित बिल से मिलान करें।',
     // Glossary page framing (/glossary/) — the 14 term definitions stay in English (technical reference)
     'gloss.crumb': 'शब्दावली',
-    'gloss.h1': 'बिजली बिल शब्दावली',
+    'gloss.h1': 'बिजली बिल गाइड',
     'gloss.lead': 'भारतीय बिजली बिल की हर शुल्क पंक्ति व कोड, सरल भाषा में परिभाषित। ये वही शब्द हैं जो हमारे <a href="/#calculator">बिल कैलकुलेटर</a> व <a href="/tariffs/states/">टैरिफ पृष्ठों</a> के पीछे हैं — <a href="#fppa">FPPA</a> व <a href="#electricity-duty">बिजली शुल्क</a> से लेकर <a href="#telescopic-slabs">स्लैब-वार दरें</a> व <a href="#kvah">kVAh</a> तक।',
     'gloss.aka': 'इन नामों से भी:',
     'gloss.relatedGuide': 'संबंधित गाइड:',
