@@ -1,7 +1,7 @@
 // solar-battery.js — Solar Battery Backup Calculator (/solar-battery-backup-calculator/).
-// From AC tonnage + star rating, extra load and backup hours, size the battery bank
-// (kWh + Ah) for LiFePO4 and lead-acid side by side, with ballpark 2026 India costs.
-// Self-contained. English-only page.
+// Tap-friendly inputs: AC tonnage + star rating as chips, other load and backup
+// hours as +/- steppers. Sizes the battery bank (kWh + Ah) for LiFePO4 and
+// lead-acid side by side, with ballpark 2026 India costs. Self-contained.
 
 const INVERTER_EFF = 0.90;
 const DOD_LFP = 0.80;   // usable depth of discharge, LiFePO4
@@ -22,12 +22,14 @@ const num = (n, d = 0) => Number(n).toLocaleString('en-IN', { minimumFractionDig
 // Round a bank up to the next practical increment (0.5 kWh) — you buy whole batteries.
 const bank = (kWh) => Math.ceil(kWh * 2) / 2;
 
+const chipVal = (boxId) => $(boxId).querySelector('.psz-chip-btn.is-active').dataset.val;
+
 function calc() {
-  const ton = $('sbbTon').value;
-  const star = Number($('sbbStar').value);
+  const ton = chipVal('sbbTonChips');
+  const star = Number(chipVal('sbbStarChips'));
   const acW = ton === '0' ? 0 : AC_WATTS[ton][star];
-  const extraW = parseFloat($('sbbExtra').value) || 0;
-  const hours = parseFloat($('sbbHours').value) || 0;
+  const extraW = parseFloat($('sbbExtra').dataset.val) || 0;
+  const hours = parseFloat($('sbbHours').dataset.val) || 0;
 
   const loadW = acW + extraW;
   if (loadW <= 0 || hours <= 0) return { haveInput: false };
@@ -66,7 +68,7 @@ function render() {
   if (!r.haveInput) return;
 
   $('sbbEnergy').textContent = num(r.energyKwh, 1);
-  $('sbbLoad').textContent = num(r.loadW) + ' W for ' + num(r.hours, r.hours % 1 ? 1 : 0) + ' hrs';
+  $('sbbLoad').textContent = num(r.loadW) + ' W for ' + num(r.hours) + ' hrs';
   $('sbbLoadNote').textContent = r.acW
     ? `AC average draw ${num(r.acW)} W (BEE part-load, not nameplate) + ${num(r.extraW)} W other load, incl. 90% inverter efficiency.`
     : `${num(r.extraW)} W of load through a 90%-efficient inverter.`;
@@ -82,11 +84,38 @@ function render() {
 }
 
 function init() {
-  if (!$('sbbTon')) return; // not on this page
-  ['sbbTon', 'sbbStar', 'sbbExtra', 'sbbHours', 'sbbLfpPrice', 'sbbLaPrice', 'sbbVolt'].forEach(id => {
+  if (!$('sbbTonChips')) return; // not on this page
+
+  // Chip groups: one active per group.
+  ['sbbTonChips', 'sbbStarChips'].forEach(boxId => {
+    $(boxId).addEventListener('click', (e) => {
+      const c = e.target.closest('.psz-chip-btn');
+      if (!c) return;
+      $(boxId).querySelectorAll('.psz-chip-btn').forEach(b => b.classList.remove('is-active'));
+      c.classList.add('is-active');
+      render();
+    });
+  });
+
+  // Steppers: value lives in data-val; label shows value + unit.
+  const steppers = { sbbExtra: { step: 50, min: 0, max: 3000, unit: ' W' }, sbbHours: { step: 1, min: 1, max: 24, unit: ' h' } };
+  Object.entries(steppers).forEach(([id, cfg]) => {
+    $(id).addEventListener('click', (e) => {
+      const b = e.target.closest('.psz-step-btn');
+      if (!b) return;
+      const el = $(id);
+      const v = Math.min(cfg.max, Math.max(cfg.min, parseFloat(el.dataset.val) + Number(b.dataset.d) * cfg.step));
+      el.dataset.val = v;
+      el.querySelector('.psz-step-val').textContent = num(v) + cfg.unit;
+      render();
+    });
+  });
+
+  ['sbbLfpPrice', 'sbbLaPrice', 'sbbVolt'].forEach(id => {
     $(id).addEventListener('input', render);
     $(id).addEventListener('change', render);
   });
+
   render();
 }
 

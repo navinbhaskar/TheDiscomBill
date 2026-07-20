@@ -151,33 +151,47 @@
       <div class="solar-layout reveal">
         <!-- Inputs -->
         <div class="solar-inputs">
-          <div class="solar-field-row">
-            <div class="solar-field">
-              <label for="sbbTon">AC tonnage</label>
-              <select id="sbbTon">
-                <option value="0">No AC — other load only</option>
-                <option value="0.8">0.8 ton</option>
-                <option value="1">1 ton</option>
-                <option value="1.5" selected>1.5 ton</option>
-                <option value="2">2 ton</option>
-              </select>
+          <div class="solar-field">
+            <label>Step 1 — Your AC</label>
+            <div class="psz-ac-card">
+              <div class="psz-line"><span class="psz-line-label">Tonnage</span>
+                <div class="psz-chips" id="sbbTonChips">
+                  <button type="button" class="psz-chip-btn" data-val="0">No AC</button>
+                  <button type="button" class="psz-chip-btn" data-val="0.8">0.8T</button>
+                  <button type="button" class="psz-chip-btn" data-val="1">1T</button>
+                  <button type="button" class="psz-chip-btn is-active" data-val="1.5">1.5T</button>
+                  <button type="button" class="psz-chip-btn" data-val="2">2T</button>
+                </div>
+              </div>
+              <div class="psz-line"><span class="psz-line-label">Star rating</span>
+                <div class="psz-chips" id="sbbStarChips">
+                  <button type="button" class="psz-chip-btn" data-val="3">3★</button>
+                  <button type="button" class="psz-chip-btn is-active" data-val="5">5★</button>
+                </div>
+              </div>
             </div>
-            <div class="solar-field">
-              <label for="sbbStar">BEE star rating</label>
-              <select id="sbbStar">
-                <option value="3">3 star</option>
-                <option value="5" selected>5 star</option>
-              </select>
-            </div>
+            <span class="solar-hint">We use the AC's average overnight draw — an inverter AC holding a set temperature uses far less than its nameplate watts.</span>
           </div>
           <div class="solar-field">
-            <label for="sbbExtra">Other load running on backup (watts)</label>
-            <input id="sbbExtra" type="number" min="0" step="50" value="200" inputmode="numeric">
-            <span class="solar-hint">Fans, lights, Wi-Fi, fridge — a typical bedroom set is 150–300 W.</span>
+            <label>Step 2 — Other load on backup</label>
+            <div class="psz-line"><span class="psz-line-label">Fans, lights, Wi-Fi, fridge</span>
+              <div class="psz-step" id="sbbExtra" data-val="200">
+                <button type="button" class="psz-step-btn" data-d="-1" aria-label="decrease">−</button>
+                <span class="psz-step-val">200 W</span>
+                <button type="button" class="psz-step-btn" data-d="1" aria-label="increase">+</button>
+              </div>
+            </div>
+            <span class="solar-hint">A typical bedroom set is 150–300 W.</span>
           </div>
           <div class="solar-field">
-            <label for="sbbHours">Backup hours needed</label>
-            <input id="sbbHours" type="number" min="0.5" max="24" step="0.5" value="8" inputmode="decimal">
+            <label>Step 3 — Backup hours needed</label>
+            <div class="psz-line"><span class="psz-line-label">Hours of power cut to cover</span>
+              <div class="psz-step" id="sbbHours" data-val="8">
+                <button type="button" class="psz-step-btn" data-d="-1" aria-label="decrease">−</button>
+                <span class="psz-step-val">8 h</span>
+                <button type="button" class="psz-step-btn" data-d="1" aria-label="increase">+</button>
+              </div>
+            </div>
             <span class="solar-hint">Summer power cuts in much of India cluster overnight — 8 hours covers 10 PM to 6 AM.</span>
           </div>
           <details class="solar-adv">
