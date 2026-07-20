@@ -19,7 +19,7 @@
 export const GUIDES = [
   {
     slug: 'how-to-read-uppcl-bill',
-    published: "2025-08-03",
+    published: "2026-07-16",
     states: ['Uttar Pradesh'],
     title: 'How to Read Your UPPCL Electricity Bill',
     metaTitle: 'How to Read Your UPPCL Electricity Bill — Every Line Explained',
@@ -268,7 +268,7 @@ export const GUIDES = [
 
   {
     slug: 'why-did-my-electricity-bill-increase',
-    published: "2025-08-15",
+    published: "2026-07-13",
     title: 'Why Did My Electricity Bill Suddenly Increase?',
     metaTitle: 'Why Did My Electricity Bill Suddenly Increase? 8 Causes to Check',
     description: 'The 8 most common reasons an Indian electricity bill jumps — slab escalation, catch-up after estimated readings, FPPA revisions, seasonal AC load, arrears with LPSC, meter faults, excess-load penalties — and exactly how to check each one.',
@@ -513,7 +513,7 @@ export const GUIDES = [
 
   {
     slug: 'tod-billing-explained',
-    published: "2025-08-27",
+    published: "2026-07-06",
     title: 'Time-of-Day (ToD) Electricity Billing Explained',
     metaTitle: 'Time-of-Day (ToD) Electricity Billing in India, Explained Simply',
     description: 'What Time-of-Day (ToD) electricity billing is, who it applies to in India, how peak and off-peak rates work with smart meters, what kVAh billing means, and practical ways to cut your bill by shifting load.',
@@ -714,7 +714,7 @@ export const GUIDES = [
 
   {
     slug: 'how-fppa-fuel-surcharge-is-calculated',
-    published: "2025-09-08",
+    published: "2026-07-01",
     title: 'How FPPA (Fuel Surcharge) Is Calculated on Your Electricity Bill',
     metaTitle: 'FPPA / Fuel Surcharge on Electricity Bills — How It Is Calculated',
     description: 'What the FPPA / FPPCA / FPPAS / PPAC line on an Indian electricity bill is, the two ways DISCOMs calculate it (per-unit and percentage), why it changes every month, why it can be negative, and how to verify the amount yourself.',
@@ -973,7 +973,7 @@ export const GUIDES = [
 
   {
     slug: 'reduce-fixed-charges-sanctioned-load',
-    published: "2025-09-20",
+    published: "2026-06-28",
     title: 'How to Reduce Fixed Charges by Right-Sizing Your Sanctioned Load',
     metaTitle: 'Reduce Electricity Fixed Charges: Right-Size Your Sanctioned Load',
     description: 'Fixed charges are billed per kW of sanctioned load even at zero consumption. How to check if your load is over-sanctioned, how much a reduction saves, the application process, and the excess-demand penalty risk of going too low.',
@@ -1171,7 +1171,7 @@ export const GUIDES = [
 
   {
     slug: 'electricity-duty-explained',
-    published: "2025-10-02",
+    published: "2026-06-18",
     title: 'Electricity Duty on Your Bill: What It Is and How States Differ',
     metaTitle: 'Electricity Duty Explained — Why the Tax on Your Bill Varies by State',
     description: 'Electricity duty is a state tax collected through your electricity bill. How it is calculated (percentage vs paise-per-unit), why it ranges from zero to over 15% across states, which categories are exempt, and how to check yours.',
@@ -1332,7 +1332,7 @@ export const GUIDES = [
 
   {
     slug: 'how-to-read-bses-delhi-bill',
-    published: "2025-10-14",
+    published: "2026-06-05",
     states: ['Delhi'],
     title: 'How to Read Your BSES / Delhi Electricity Bill',
     metaTitle: 'How to Read Your BSES Delhi Bill — Subsidy, PPAC & Every Line',
@@ -1539,7 +1539,7 @@ export const GUIDES = [
 
   {
     slug: 'how-to-read-msedcl-bill',
-    published: "2025-10-26",
+    published: "2026-05-25",
     states: ['Maharashtra'],
     title: 'How to Read Your MSEDCL (Mahavitaran) Electricity Bill',
     metaTitle: 'How to Read Your MSEDCL Bill — Slabs, FAC, Wheeling & 16% Duty',
@@ -1790,7 +1790,7 @@ export const GUIDES = [
 
   {
     slug: 'how-to-read-bescom-bill',
-    published: "2025-11-07",
+    published: "2026-05-13",
     states: ['Karnataka'],
     title: 'How to Read Your BESCOM Electricity Bill',
     metaTitle: 'How to Read Your BESCOM Bill — Gruha Jyoti, Slabs & Fixed Charges',
@@ -1977,7 +1977,7 @@ export const GUIDES = [
 
   {
     slug: 'how-to-read-tneb-tangedco-bill',
-    published: "2025-11-19",
+    published: "2026-05-02",
     states: ['Tamil Nadu'],
     title: 'How to Read Your TNEB / TANGEDCO Electricity Bill',
     metaTitle: 'How to Read Your TNEB (TANGEDCO) Bill — Bimonthly Slabs & Free Units',
@@ -2145,7 +2145,7 @@ export const GUIDES = [
 
   {
     slug: 'solar-net-metering-savings',
-    published: "2025-12-01",
+    published: "2026-04-18",
     title: 'Solar Net Metering: How the Savings Actually Work',
     metaTitle: 'Solar Net Metering Savings Explained — Credits, Sizing & Payback',
     description: 'How rooftop solar net metering credits work on an Indian electricity bill, why the same system saves different amounts in different states, how slab rates change the maths, sizing rules of thumb and what drives payback time.',
@@ -2357,7 +2357,7 @@ export const GUIDES = [
 
   {
     slug: 'uppcl-sanctioned-load-increased',
-    published: "2025-12-13",
+    published: "2026-04-05",
     states: ['Uttar Pradesh'],
     title: 'Why Did My Sanctioned Load Suddenly Increase? (UPPCL / UP)',
     metaTitle: 'UPPCL Increased My Sanctioned Load Automatically — Why, and How to Reduce It',
@@ -2652,7 +2652,7 @@ export const GUIDES = [
 
   {
     slug: 'smart-meter-running-fast',
-    published: "2025-12-25",
+    published: "2026-03-25",
     title: 'Is Your Smart Meter Running Fast? How to Test It Yourself',
     metaTitle: 'Smart Meter Running Fast? Bill Higher After Installation — How to Test It',
     description: 'Why electricity bills often jump right after a smart meter is installed, whether smart meters actually record more than old meters, a 30-minute self-test you can run at home, and the official meter-accuracy test you can demand from your DISCOM.',
@@ -6564,7 +6564,7 @@ export const GUIDES = [
   },
   {
     slug: 'bescom-new-connection-online',
-    published: "2026-07-20",
+    published: "2026-07-18",
     states: ['Karnataka'],
     title: 'How to Get a New BESCOM Electricity Connection Online (Bengaluru)',
     metaTitle: 'BESCOM New Connection Online — Portal, Documents, Charges, Timeline',
@@ -6692,7 +6692,7 @@ export const GUIDES = [
   },
   {
     slug: 'kseb-new-connection-online',
-    published: "2026-07-20",
+    published: "2026-07-15",
     states: ['Kerala'],
     title: 'How to Get a New KSEB Electricity Connection Online (WSS Portal)',
     metaTitle: 'KSEB New Connection Online — WSS Portal: ₹50 Fee, Documents, 2-Day Package Connection',
@@ -6809,7 +6809,7 @@ export const GUIDES = [
   },
   {
     slug: 'haryana-new-connection-dhbvn-uhbvn',
-    published: "2026-07-20",
+    published: "2026-07-11",
     states: ['Haryana'],
     title: 'How to Get a New Electricity Connection in Haryana (DHBVN / UHBVN eConnection)',
     metaTitle: 'DHBVN & UHBVN New Connection Online — eConnection Portal, Documents, 7-Day Payment Rule',
@@ -7027,7 +7027,7 @@ export const GUIDES = [
   },
   {
     slug: 'wbsedcl-new-connection-online',
-    published: "2026-07-20",
+    published: "2026-07-08",
     states: ['West Bengal'],
     title: 'How to Get a New WBSEDCL Electricity Connection Online (West Bengal)',
     metaTitle: 'WBSEDCL New Connection Online — Instant Quotation, Documents, Vidyut Sahayogi App',
@@ -7241,7 +7241,7 @@ export const GUIDES = [
   },
   {
     slug: 'pspcl-new-connection-online',
-    published: "2026-07-20",
+    published: "2026-07-04",
     states: ['Punjab'],
     title: 'How to Get a New PSPCL Electricity Connection Online (Punjab)',
     metaTitle: 'PSPCL New Connection Online — NSC Portal, A&A Form, Documents, 30-Day Rule',

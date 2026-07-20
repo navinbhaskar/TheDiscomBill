@@ -449,6 +449,10 @@ if ('serviceWorker' in navigator) {
 document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();   // Lenis momentum scrolling (skipped under prefers-reduced-motion)
   initScrollReveal();   // fade + rise elements as they enter the viewport
+  // /guides/ index only — filter + paging, loaded on demand so other pages don't pay for it.
+  if (document.getElementById('blogGrid')) {
+    import('./blog-index.js').then(m => m.initBlogIndex()).catch(() => {});
+  }
   if (document.getElementById('stateSelect')) {
     populateStates();
     populateMonthYear();

@@ -1819,7 +1819,7 @@ function guidesIndexPage(lang = 'en') {
     const cat = guideCategoryLabel(g, lang);
     const date = g.published ? humanDate(g.published, lang) : '';
     return `
-    <a class="blog-card" href="${href}">
+    <a class="blog-card" href="${href}" data-cat="${esc(guideCategoryId(g))}">
       <div class="blog-card-top">
         <span class="blog-tag">${esc(cat)}</span>
         <span class="blog-meta-dot" aria-hidden="true">&bull;</span>
@@ -1833,6 +1833,24 @@ function guidesIndexPage(lang = 'en') {
       </span>
     </a>`;
   }).join('');
+  // Filter chips — only categories that actually have an article, in taxonomy order so the
+  // bar reads the same on every language build. Counts help people see what's behind a chip.
+  const present = Object.keys(GUIDE_CATEGORIES).filter(id => ordered.some(g => guideCategoryId(g) === id));
+  const allLabel = T(lang, { hi: 'सभी', mr: 'सर्व', ta: 'அனைத்தும்', en: 'All' });
+  const filterLabel = T(lang, { hi: 'विषय के अनुसार छाँटें', mr: 'विषयानुसार गाळा', ta: 'தலைப்பு வாரியாக வடிகட்டு', en: 'Filter by topic' });
+  const moreLabel = T(lang, { hi: 'और लेख दिखाएँ', mr: 'आणखी लेख दाखवा', ta: 'மேலும் கட்டுரைகள்', en: 'Load more articles' });
+  const noneLabel = T(lang, { hi: 'इस विषय पर अभी कोई लेख नहीं।', mr: 'या विषयावर अद्याप लेख नाही.', ta: 'இந்தத் தலைப்பில் இன்னும் கட்டுரைகள் இல்லை.', en: 'No articles in this topic yet.' });
+  const chip = (id, label, count) =>
+    `<button type="button" class="blog-filter${id === 'all' ? ' is-active' : ''}" data-filter="${esc(id)}" aria-pressed="${id === 'all'}">${esc(label)}<span class="blog-filter-n">${count}</span></button>`;
+  const filterBar = `
+    <div class="blog-filters" role="group" aria-label="${attr(filterLabel)}" hidden>
+      ${chip('all', allLabel, ordered.length)}
+      ${present.map(id => chip(id, T(lang, GUIDE_CATEGORIES[id]), ordered.filter(g => guideCategoryId(g) === id).length)).join('\n      ')}
+    </div>`;
+  const loadMore = `
+    <div class="blog-more-wrap" hidden>
+      <button type="button" class="blog-more" id="blogMore">${esc(moreLabel)}<span class="blog-more-n"></span></button>
+    </div>`;
   const bcHome = T(lang, { hi: 'होम', mr: 'होम', ta: 'முகப்பு', en: 'Home' });
   const bcGuides = T(lang, { hi: 'गाइड', mr: 'मार्गदर्शक', ta: 'வழிகாட்டிகள்', en: 'Guides' });
   const h1 = T(lang, { hi: 'ब्लॉग और लेख', mr: 'ब्लॉग आणि लेख', ta: 'வலைப்பதிவுகள் & கட்டுரைகள்', en: 'Blogs & Articles' });
@@ -1847,7 +1865,12 @@ function guidesIndexPage(lang = 'en') {
     ${langSwitchLink(enUrl, lang)}
     <h1>${h1}</h1>
     <p class="seo-lead">${lead}</p>
-    <div class="blog-grid">${cards}</div>
+    ${filterBar}
+    <div class="blog-grid blog-paged" id="blogGrid">${cards}</div>
+    ${loadMore}
+    <p class="blog-empty" id="blogEmpty" hidden>${noneLabel}</p>
+    <!-- Without JS the paging/filter chrome is inert, so reveal every card instead. -->
+    <noscript><style>.blog-paged .blog-card { display: flex !important; }</style></noscript>
   </section>`;
   return layout({
     title, description, canonical: SITE + url, page: enUrl, lang,
