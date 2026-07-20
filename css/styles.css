@@ -3377,6 +3377,17 @@ footer a:hover { color: #fff; text-decoration: none; }
   .no-print, .site-header, .hero, .form-panel, .about-section, footer,
   .calculator-section > .calculator-grid > .form-panel { display: none !important; }
 
+  /* The list above is a blocklist, and it silently rots: any section added to the
+     page later prints unless someone remembers to name it here. That is how the
+     states directory started spilling onto a near-blank second sheet.
+     So once a bill exists, keep only the bill and its ancestors — everything that
+     neither contains, is, nor sits inside .bill-wrap is dropped at every depth.
+     Gated on body:has(.bill-wrap) so pages without a bill (and the pre-calculation
+     placeholder) still print via the blocklist above rather than coming out blank. */
+  body:has(.bill-wrap) *:not(:has(.bill-wrap)):not(.bill-wrap):not(.bill-wrap *) {
+    display: none !important;
+  }
+
   html, body { background: #fff !important; font-size: 12px; color: #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .calculator-section { margin: 0; padding: 0; max-width: none; }
   .calculator-grid { display: block; }
