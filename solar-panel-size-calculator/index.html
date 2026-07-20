@@ -73,6 +73,17 @@
       <a href="/compare/" class="nav-promoted" data-i18n="nav.compare">Compare Rates</a>
       <a href="/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
       <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <div class="nav-dropdown nav-solar-drop" id="solarDropdown">
+        <button type="button" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.solar">Solar</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="/solar-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</span></a>
+          <a href="/solar-panel-size-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg><span data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</span></a>
+          <a href="/solar-battery-backup-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/><path d="M11 9l-2 3h3l-2 3"/></svg><span data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</span></a>
+        </div>
+      </div>
       <div class="nav-dropdown" id="quickLinksDropdown">
         <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
           <span data-i18n="nav.quickLinks">More</span>
@@ -90,6 +101,8 @@
           <a href="/electricity-cost-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span data-i18n="ql.usage">Electricity Cost Calculator</span></a>
           <a href="/solar-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span data-i18n="ql.solar">Rooftop Solar Savings</span></a>
           <a href="/ev-charging-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="13" height="10" rx="2"/><path d="M15 10h3l3 3v4h-6"/><path d="M9.5 9.5 7.5 12h3l-2 2.5"/></svg><span data-i18n="ql.ev">EV Charging Cost</span></a>
+          <a href="/solar-panel-size-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg><span data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</span></a>
+          <a href="/solar-battery-backup-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/><path d="M11 9l-2 3h3l-2 3"/></svg><span data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</span></a>
           <span class="nav-dropdown-label" role="presentation" data-i18n="ql.services">Services</span>
           <a href="/services/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg><span data-i18n="ql.discomServices">DISCOM Services</span></a>
           <a href="/smart-meter-recharge/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/><path d="M11 9l-2 3h3l-2 3"/></svg><span data-i18n="ql.smartMeter">Smart Meter Recharge</span></a>
@@ -139,20 +152,23 @@
         <!-- Inputs -->
         <div class="solar-inputs">
           <div class="solar-field">
-            <label>Your air conditioners</label>
+            <label>Step 1 — Your air conditioners</label>
             <div id="pszAcRows"></div>
             <button type="button" class="solar-pull" id="pszAddAc">+ Add another AC</button>
-            <span class="solar-hint">Average running draw is estimated from tonnage and BEE star rating — not the peak nameplate watts.</span>
+            <span class="solar-hint">We use the average running draw for the tonnage and BEE star rating — not the scary nameplate watts.</span>
+          </div>
+          <div class="solar-field">
+            <label>Step 2 — Sunlight in your region</label>
+            <div class="psz-zones" id="pszZones">
+              <button type="button" class="psz-zone" data-sun="4.2"><strong>Low sun</strong><span>NE India &amp; hills · 4.2 hrs/day</span></button>
+              <button type="button" class="psz-zone is-active" data-sun="4.8"><strong>Average India</strong><span>Most states · 4.8 hrs/day</span></button>
+              <button type="button" class="psz-zone" data-sun="5.5"><strong>High sun</strong><span>Rajasthan, Gujarat · 5.5 hrs/day</span></button>
+            </div>
           </div>
           <div class="solar-field">
             <label for="pszOther">Other monthly consumption (units, optional)</label>
             <input id="pszOther" type="number" min="0" step="10" placeholder="e.g., 150 — fridge, fans, lights" inputmode="numeric">
             <span class="solar-hint">Everything on your bill that isn't the ACs above. Leave blank to size for the ACs only.</span>
-          </div>
-          <div class="solar-field">
-            <label for="pszState">Your state (for sunlight hours)</label>
-            <select id="pszState"></select>
-            <span class="solar-hint" id="pszSunHint"></span>
           </div>
           <details class="solar-adv">
             <summary>Advanced</summary>
@@ -197,8 +213,8 @@
         <p class="solar-proj-note" style="margin-top:0">
           Each AC's average running draw = cooling capacity ÷ ISEER for its BEE star rating (an inverter AC
           cycling at part load draws far less than its nameplate watts). Daily consumption = that draw × your
-          usage hours, plus your other monthly units ÷ 30. Required system size = daily kWh ÷ (your state's
-          peak sun hours × 0.80 performance ratio, which covers inverter losses, temperature derating and dust).
+          usage hours, plus your other monthly units ÷ 30. Required system size = daily kWh ÷ (your sun
+          zone's peak sun hours × 0.80 performance ratio, which covers inverter losses, temperature derating and dust).
           As a rule of thumb, a 1.5-ton 5-star AC running 8 hours a day needs roughly 1.2 kW of panels.
           Treat this as a planning guide — a site survey by an empanelled vendor on the
           <a href="https://pmsuryaghar.gov.in" target="_blank" rel="noopener noreferrer">National Portal ↗</a> is the final word.

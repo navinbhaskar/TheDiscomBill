@@ -498,30 +498,33 @@ document.addEventListener('DOMContentLoaded', () => {
     syncThemeBtn();
   }
 
-  // Quick Links dropdown
-  const qlDrop = document.getElementById('quickLinksDropdown');
-  const qlTrigger = document.getElementById('quickLinksTrigger');
-  if (qlDrop && qlTrigger) {
-    const qlClose = () => {
-      qlDrop.classList.remove('open');
-      qlTrigger.setAttribute('aria-expanded', 'false');
+  // Header dropdowns (Solar tools, Quick Links / More). One generic handler per
+  // dropdown; the shared popup registry keeps only one open at a time. The account
+  // dropdown is excluded — it has its own lifecycle (see renderAccountUi).
+  document.querySelectorAll('.header-nav .nav-dropdown').forEach((drop, i) => {
+    const trigger = drop.querySelector(':scope > .nav-dropdown-trigger');
+    if (!trigger) return;
+    const key = drop.id || 'navDrop' + i;
+    const close = () => {
+      drop.classList.remove('open');
+      trigger.setAttribute('aria-expanded', 'false');
     };
-    window.__popups.register('quickLinks', qlClose);
-    qlTrigger.addEventListener('click', (e) => {
+    window.__popups.register(key, close);
+    trigger.addEventListener('click', (e) => {
       e.stopPropagation();
-      if (qlDrop.classList.contains('open')) { qlClose(); return; }
-      window.__popups.closeOthers('quickLinks');   // only one popup open at a time
-      qlDrop.classList.add('open');
-      qlTrigger.setAttribute('aria-expanded', 'true');
+      if (drop.classList.contains('open')) { close(); return; }
+      window.__popups.closeOthers(key);   // only one popup open at a time
+      drop.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
     });
     document.addEventListener('click', (e) => {
-      if (!qlDrop.contains(e.target)) qlClose();
+      if (!drop.contains(e.target)) close();
     });
     // Nested "Get Your Bill Reviewed" subsection: a side flyout on desktop (tap
     // toggles it; hover handles itself in CSS), an inline accordion on mobile.
     // stopPropagation keeps the parent menu open. If the flyout would run off
     // the right edge of the viewport it flips to the left side instead.
-    qlDrop.querySelectorAll('.nav-subgroup-trigger').forEach((t) => {
+    drop.querySelectorAll('.nav-subgroup-trigger').forEach((t) => {
       const g = t.closest('.nav-subgroup');
       const setFlip = () => {
         g.classList.toggle('flip', g.getBoundingClientRect().right + 250 > window.innerWidth);
@@ -534,7 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
         t.setAttribute('aria-expanded', String(open));
       });
     });
-  }
+  });
 
   const stateEl      = document.getElementById('stateSelect');
   const discomEl     = document.getElementById('discomSelect');

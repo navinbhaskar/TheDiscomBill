@@ -1,11 +1,11 @@
 // solar-panel-size.js — Solar Panel Size Calculator (/solar-panel-size-calculator/).
-// User lists their ACs (tonnage + BEE star + hours + qty) and other monthly units;
-// we size the solar array: kW required, panel count, roof area and cost after the
-// PM Surya Ghar subsidy. Self-contained (no engine import). English-only page.
+// User picks each AC with tap-friendly chips (tonnage + BEE star), steppers for
+// hours and quantity, and one of three sun zones; we size the solar array: kW,
+// panel count, roof area and cost after the PM Surya Ghar subsidy. Self-contained.
 
-const SQFT_PER_KW  = 100;    // shadow-free roof area per kW
-const PERF_RATIO   = 0.80;   // inverter losses + temperature derating + dust
-const MAX_AC_ROWS  = 6;
+const SQFT_PER_KW = 100;    // shadow-free roof area per kW
+const PERF_RATIO  = 0.80;   // inverter losses + temperature derating + dust
+const MAX_AC_ROWS = 6;
 
 // Average running input power (watts) — cooling capacity ÷ typical ISEER for the
 // star band, NOT the peak nameplate draw (inverter ACs cycle at part load).
@@ -15,17 +15,6 @@ const AC_WATTS = {
   '1.5': { 3: 1345, 5: 1115 },
   '2':   { 3: 1795, 5: 1490 },
 };
-
-// Peak sun hours (annual average of daily equivalent full-sun hours).
-const SUN_HOURS = {
-  'Rajasthan': 5.6, 'Gujarat': 5.5, 'Madhya Pradesh': 5.3, 'Maharashtra': 5.2,
-  'Telangana': 5.2, 'Andhra Pradesh': 5.1, 'Karnataka': 5.1, 'Tamil Nadu': 5.0,
-  'Chhattisgarh': 5.0, 'Haryana': 5.0, 'Delhi': 5.0, 'Punjab': 5.0,
-  'Uttar Pradesh': 4.9, 'Bihar': 4.8, 'Jharkhand': 4.8, 'Odisha': 4.8,
-  'West Bengal': 4.6, 'Kerala': 4.6, 'Uttarakhand': 4.5, 'Himachal Pradesh': 4.5,
-  'Assam': 4.2, 'Other / not sure (India average)': 4.8,
-};
-const DEFAULT_STATE = 'Other / not sure (India average)';
 
 const $ = (id) => document.getElementById(id);
 const rs = (n) => '₹' + Math.round(n).toLocaleString('en-IN');
@@ -39,41 +28,51 @@ function centralSubsidy(kW) {
   return 78000;
 }
 
+const chip = (cls, val, label, on) =>
+  `<button type="button" class="psz-chip-btn${on ? ' is-active' : ''}" data-group="${cls}" data-val="${val}">${label}</button>`;
+
+const stepper = (cls, val, unit) =>
+  `<div class="psz-step" data-group="${cls}" data-val="${val}" data-unit="${unit}">
+    <button type="button" class="psz-step-btn" data-d="-1" aria-label="decrease">−</button>
+    <span class="psz-step-val">${val}${unit}</span>
+    <button type="button" class="psz-step-btn" data-d="1" aria-label="increase">+</button>
+  </div>`;
+
 function acRowHtml(i) {
-  return `<div class="psz-ac-row" data-row="${i}">
-    <select class="psz-ton" aria-label="AC ${i + 1} tonnage">
-      <option value="0.8">0.8 ton</option>
-      <option value="1">1 ton</option>
-      <option value="1.5" selected>1.5 ton</option>
-      <option value="2">2 ton</option>
-    </select>
-    <select class="psz-star" aria-label="AC ${i + 1} star rating">
-      <option value="3">3★</option>
-      <option value="5" selected>5★</option>
-    </select>
-    <input class="psz-hrs" type="number" min="0" max="24" step="0.5" value="${i === 0 ? 8 : ''}" placeholder="hrs/day" aria-label="AC ${i + 1} hours per day" inputmode="decimal">
-    <input class="psz-qty" type="number" min="1" max="9" step="1" value="1" aria-label="AC ${i + 1} quantity" inputmode="numeric">
-    ${i > 0 ? `<button type="button" class="psz-del" aria-label="Remove AC ${i + 1}">×</button>` : '<span class="psz-del-spacer"></span>'}
+  return `<div class="psz-ac-card" data-row="${i}">
+    <div class="psz-ac-head">
+      <span class="psz-ac-title">AC ${i + 1}</span>
+      ${i > 0 ? `<button type="button" class="psz-del" aria-label="Remove AC ${i + 1}">×</button>` : ''}
+    </div>
+    <div class="psz-line"><span class="psz-line-label">Tonnage</span>
+      <div class="psz-chips">${chip('ton', '0.8', '0.8T')}${chip('ton', '1', '1T')}${chip('ton', '1.5', '1.5T', true)}${chip('ton', '2', '2T')}</div>
+    </div>
+    <div class="psz-line"><span class="psz-line-label">Star rating</span>
+      <div class="psz-chips">${chip('star', '3', '3★')}${chip('star', '5', '5★', true)}</div>
+    </div>
+    <div class="psz-line"><span class="psz-line-label">Hours/day</span>${stepper('hrs', 8, 'h')}</div>
+    <div class="psz-line"><span class="psz-line-label">No. of units</span>${stepper('qty', 1, '')}</div>
   </div>`;
 }
 
 function addRow() {
   const box = $('pszAcRows');
-  const n = box.querySelectorAll('.psz-ac-row').length;
+  const n = box.querySelectorAll('.psz-ac-card').length;
   if (n >= MAX_AC_ROWS) return;
   box.insertAdjacentHTML('beforeend', acRowHtml(n));
   if (n + 1 >= MAX_AC_ROWS) $('pszAddAc').hidden = true;
 }
 
+const pick = (card, group) => card.querySelector(`.psz-chip-btn[data-group="${group}"].is-active`).dataset.val;
+const stepVal = (card, group) => parseFloat(card.querySelector(`.psz-step[data-group="${group}"]`).dataset.val);
+
 function calc() {
   let acDailyKwh = 0, acCount = 0;
-  document.querySelectorAll('.psz-ac-row').forEach(row => {
-    const ton = row.querySelector('.psz-ton').value;
-    const star = Number(row.querySelector('.psz-star').value);
-    const hrs = parseFloat(row.querySelector('.psz-hrs').value);
-    const qty = parseInt(row.querySelector('.psz-qty').value, 10) || 1;
-    if (!hrs || hrs <= 0) return;
-    acDailyKwh += (AC_WATTS[ton][star] * hrs * qty) / 1000;
+  document.querySelectorAll('.psz-ac-card').forEach(card => {
+    const w = AC_WATTS[pick(card, 'ton')][Number(pick(card, 'star'))];
+    const hrs = stepVal(card, 'hrs'), qty = stepVal(card, 'qty');
+    if (hrs <= 0) return;
+    acDailyKwh += (w * hrs * qty) / 1000;
     acCount += qty;
   });
 
@@ -81,27 +80,24 @@ function calc() {
   const dailyKwh = acDailyKwh + otherMonthly / 30;
   if (dailyKwh <= 0) return { haveInput: false };
 
-  const sun = SUN_HOURS[$('pszState').value] || SUN_HOURS[DEFAULT_STATE];
-  const rawKw = dailyKwh / (sun * PERF_RATIO);
-  const size = Math.max(1, Math.round(rawKw * 2) / 2);   // nearest 0.5 kW, min 1 kW
+  const sun = parseFloat(document.querySelector('.psz-zone.is-active').dataset.sun);
+  const size = Math.max(1, Math.round((dailyKwh / (sun * PERF_RATIO)) * 2) / 2);   // nearest 0.5 kW, min 1 kW
 
   const panelW = parseFloat($('pszPanel').value) || 540;
   const panels = Math.ceil((size * 1000) / panelW);
-  const roof = size * SQFT_PER_KW;
-  const dailyGen = size * sun * PERF_RATIO;
-
   const costPerKw = parseFloat($('pszCost').value) || 55000;
   const gross = size * costPerKw;
   const sub = centralSubsidy(size);
-  const net = Math.max(0, gross - sub);
 
-  return { haveInput: true, size, panels, panelW, roof, dailyKwh, dailyGen, gross, sub, net, sun, acCount, otherMonthly };
+  return {
+    haveInput: true, size, panels, panelW, dailyKwh, sun, acCount, otherMonthly,
+    roof: size * SQFT_PER_KW, dailyGen: size * sun * PERF_RATIO,
+    gross, sub, net: Math.max(0, gross - sub),
+  };
 }
 
 function render() {
   const r = calc();
-  const sun = SUN_HOURS[$('pszState').value] || SUN_HOURS[DEFAULT_STATE];
-  $('pszSunHint').textContent = `~${sun} peak sun hours per day (annual average).`;
   $('pszEmpty').hidden = r.haveInput;
   $('pszResult').hidden = !r.haveInput;
   if (!r.haveInput) return;
@@ -123,31 +119,46 @@ function init() {
   const box = $('pszAcRows');
   if (!box) return; // not on this page
 
-  addRow(); // first AC row
+  addRow(); // first AC card
 
-  box.addEventListener('input', render);
-  box.addEventListener('change', render);
   box.addEventListener('click', (e) => {
     const del = e.target.closest('.psz-del');
-    if (!del) return;
-    del.closest('.psz-ac-row').remove();
-    $('pszAddAc').hidden = box.querySelectorAll('.psz-ac-row').length >= MAX_AC_ROWS;
-    render();
+    if (del) {
+      del.closest('.psz-ac-card').remove();
+      $('pszAddAc').hidden = box.querySelectorAll('.psz-ac-card').length >= MAX_AC_ROWS;
+      render();
+      return;
+    }
+    const c = e.target.closest('.psz-chip-btn');
+    if (c) {
+      c.parentElement.querySelectorAll('.psz-chip-btn').forEach(b => b.classList.remove('is-active'));
+      c.classList.add('is-active');
+      render();
+      return;
+    }
+    const s = e.target.closest('.psz-step-btn');
+    if (s) {
+      const step = s.closest('.psz-step');
+      const isQty = step.dataset.group === 'qty';
+      const d = Number(s.dataset.d) * (isQty ? 1 : 0.5);
+      const min = isQty ? 1 : 0.5, max = isQty ? 9 : 24;
+      const v = Math.min(max, Math.max(min, parseFloat(step.dataset.val) + d));
+      step.dataset.val = v;
+      step.querySelector('.psz-step-val').textContent = (v % 1 ? v.toFixed(1) : v) + step.dataset.unit;
+      render();
+    }
   });
   $('pszAddAc').addEventListener('click', () => { addRow(); render(); });
 
-  const sel = $('pszState');
-  Object.keys(SUN_HOURS).forEach(s => {
-    const o = document.createElement('option');
-    o.value = s; o.textContent = s;
-    if (s === DEFAULT_STATE) o.selected = true;
-    sel.appendChild(o);
+  $('pszZones').addEventListener('click', (e) => {
+    const z = e.target.closest('.psz-zone');
+    if (!z) return;
+    document.querySelectorAll('.psz-zone').forEach(b => b.classList.remove('is-active'));
+    z.classList.add('is-active');
+    render();
   });
 
-  ['pszOther', 'pszState', 'pszPanel', 'pszCost'].forEach(id => {
-    $(id).addEventListener('input', render);
-    $(id).addEventListener('change', render);
-  });
+  ['pszOther', 'pszPanel', 'pszCost'].forEach(id => $(id).addEventListener('input', render));
 
   render();
 }
