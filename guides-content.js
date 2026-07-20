@@ -282,7 +282,7 @@ export const GUIDES = [
         <p>A single 1.5-ton AC draws roughly 1.2–1.6 kW. Run it 8 hours a night and that's
         <strong>~300 extra units a month</strong> — often more than the rest of the house combined.
         <em>Check:</em> compare this month's units (not rupees) with the same month <strong>last
-        year</strong>, not last month. Our <a href="/usage/">electricity cost calculator</a> converts your
+        year</strong>, not last month. Our <a href="/electricity-cost-calculator/">electricity cost calculator</a> converts your
         appliances into expected units.</p>
       </section>
       <section class="seo-section">
@@ -365,7 +365,7 @@ export const GUIDES = [
         <p>एक 1.5-टन AC लगभग 1.2–1.6 kW खींचता है। रात में 8 घंटे चलाइए तो
         <strong>~300 अतिरिक्त यूनिट प्रति माह</strong> — अक्सर बाक़ी पूरे घर से ज़्यादा।
         <em>जाँचें:</em> इस महीने की यूनिटों (रुपये नहीं) की तुलना <strong>पिछले साल</strong> के इसी महीने से
-        करें, पिछले महीने से नहीं। हमारा <a href="/usage/">खपत अनुमानक</a> आपके उपकरणों को अपेक्षित
+        करें, पिछले महीने से नहीं। हमारा <a href="/electricity-cost-calculator/">खपत अनुमानक</a> आपके उपकरणों को अपेक्षित
         यूनिटों में बदल देता है।</p>
       </section>
       <section class="seo-section">
@@ -444,7 +444,7 @@ export const GUIDES = [
         <p>एक 1.5-टन AC सुमारे 1.2–1.6 kW ओढतो. रात्री 8 तास चालवला तर
         <strong>~300 अतिरिक्त युनिट प्रति महिना</strong> — अनेकदा उर्वरित संपूर्ण घरापेक्षा जास्त.
         <em>तपासा:</em> या महिन्याच्या युनिटांची (रुपयांची नव्हे) तुलना <strong>मागील वर्षीच्या</strong>
-        याच महिन्याशी करा, मागील महिन्याशी नव्हे. आमचा <a href="/usage/">वापर अंदाजक</a> तुमची उपकरणे
+        याच महिन्याशी करा, मागील महिन्याशी नव्हे. आमचा <a href="/electricity-cost-calculator/">वापर अंदाजक</a> तुमची उपकरणे
         अपेक्षित युनिटांत रूपांतरित करतो.</p>
       </section>
       <section class="seo-section">
@@ -565,7 +565,7 @@ export const GUIDES = [
           and ease it during 6–10 pm.</li>
           <li><strong>Pair with rooftop solar:</strong> daytime self-consumption already offsets the
           window where grid power is cheapest, so size the system for your evening needs — see our
-          <a href="/solar/">solar savings estimator</a>.</li>
+          <a href="/solar-calculator/">solar savings estimator</a>.</li>
           <li><strong>Mind the batch loads:</strong> for shops and small industry, moving compressor,
           pumping or refrigeration-defrost cycles off the evening peak is usually the single biggest win.</li>
         </ul>
@@ -630,7 +630,7 @@ export const GUIDES = [
           6–10 बजे हल्का रखें।</li>
           <li><strong>रूफटॉप सोलर के साथ जोड़ें:</strong> दिन की स्व-खपत उसी खिड़की की भरपाई करती है जहाँ
           ग्रिड बिजली सबसे सस्ती है, इसलिए सिस्टम शाम की ज़रूरतों के हिसाब से चुनें — देखें हमारा
-          <a href="/solar/">सोलर बचत अनुमानक</a>।</li>
+          <a href="/solar-calculator/">सोलर बचत अनुमानक</a>।</li>
           <li><strong>बैच लोड का ध्यान रखें:</strong> दुकानों व छोटे उद्योगों के लिए कंप्रेसर, पंपिंग या
           रेफ्रिजरेशन-डीफ्रॉस्ट चक्रों को शाम के पीक से हटाना आम तौर पर सबसे बड़ी बचत है।</li>
         </ul>
@@ -695,7 +695,7 @@ export const GUIDES = [
           दरम्यान हलका ठेवा.</li>
           <li><strong>रूफटॉप सोलरसह जोडा:</strong> दिवसाचा स्व-वापर त्याच खिडकीची भरपाई करतो जिथे ग्रिड
           वीज सर्वात स्वस्त आहे, म्हणून सिस्टम संध्याकाळच्या गरजांनुसार निवडा — पहा आमचा
-          <a href="/solar/">सोलर बचत अंदाजक</a>.</li>
+          <a href="/solar-calculator/">सोलर बचत अंदाजक</a>.</li>
           <li><strong>बॅच भारांकडे लक्ष द्या:</strong> दुकाने व छोट्या उद्योगांसाठी कॉम्प्रेसर, पंपिंग
           किंवा रेफ्रिजरेशन-डीफ्रॉस्ट चक्रे संध्याकाळच्या पीकपासून हलवणे सहसा सर्वात मोठी बचत असते.</li>
         </ul>
@@ -2190,7 +2190,7 @@ export const GUIDES = [
         <h2>Sizing: match your daytime + top-slab usage</h2>
         <p>A practical rule: size the system to wipe out your <em>top-slab</em> consumption, not
         your entire bill. Each kW of rooftop solar generates roughly 4 units/day (110–130
-        units/month) in most of India. Our <a href="/solar/">solar savings estimator</a> does this
+        units/month) in most of India. Our <a href="/solar-calculator/">solar savings estimator</a> does this
         against your actual DISCOM tariff — enter your monthly units and it computes system size,
         bill-after-solar and payback from the same engine as the
         <a href="/#calculator">bill calculator</a>.</p>
@@ -2204,7 +2204,7 @@ export const GUIDES = [
           low sanctioned load limits on system size, feed-in-rate settlement of exports.</li>
         </ul>
         <p>Before signing with a vendor, run the numbers yourself on the
-        <a href="/solar/">estimator</a> and against your DISCOM's
+        <a href="/solar-calculator/">estimator</a> and against your DISCOM's
         <a href="/tariffs/states/">tariff page</a> — the vendor's "70% saving" pitch assumes the
         steepest tariff, which may not be yours.</p>
       </section>`,
@@ -2259,7 +2259,7 @@ export const GUIDES = [
         <h2>साइज़िंग: अपनी दिन + शीर्ष-स्लैब खपत से मिलाएँ</h2>
         <p>एक व्यावहारिक नियम: सिस्टम को अपनी <em>शीर्ष-स्लैब</em> खपत मिटाने के हिसाब से आकार दें, अपने पूरे
         बिल के नहीं। भारत के अधिकांश हिस्सों में हर kW रूफटॉप सोलर लगभग 4 यूनिट/दिन (110–130 यूनिट/माह) उत्पन्न
-        करता है। हमारा <a href="/solar/">सोलर बचत अनुमानक</a> यह आपके वास्तविक डिस्कॉम टैरिफ के विरुद्ध करता है
+        करता है। हमारा <a href="/solar-calculator/">सोलर बचत अनुमानक</a> यह आपके वास्तविक डिस्कॉम टैरिफ के विरुद्ध करता है
         — अपनी मासिक यूनिटें डालें और यह <a href="/#calculator">बिल कैलकुलेटर</a> वाले ही इंजन से सिस्टम आकार,
         सोलर-के-बाद बिल और पेबैक निकालता है।</p>
       </section>
@@ -2271,7 +2271,7 @@ export const GUIDES = [
           <li><strong>लंबा पेबैक:</strong> भारी सब्सिडी वाली खपत (मुफ़्त-यूनिट योजनाएँ), सिस्टम आकार पर कम
           स्वीकृत भार सीमाएँ, निर्यात का फ़ीड-इन-दर निपटान।</li>
         </ul>
-        <p>किसी विक्रेता से करार से पहले, संख्याएँ खुद <a href="/solar/">अनुमानक</a> पर और अपने डिस्कॉम के
+        <p>किसी विक्रेता से करार से पहले, संख्याएँ खुद <a href="/solar-calculator/">अनुमानक</a> पर और अपने डिस्कॉम के
         <a href="/hi/tariffs/states/">टैरिफ पेज</a> के विरुद्ध चलाएँ — विक्रेता का "70% बचत" दावा सबसे तीव्र
         टैरिफ मानता है, जो आपका न हो।</p>
       </section>`,
@@ -2327,7 +2327,7 @@ export const GUIDES = [
         <h2>साइझिंग: तुमचा दिवस + सर्वोच्च-स्लॅब वापराशी जुळवा</h2>
         <p>एक व्यावहारिक नियम: सिस्टम तुमचा <em>सर्वोच्च-स्लॅब</em> वापर पुसण्याच्या हिशेबाने आकार द्या,
         तुमच्या संपूर्ण बिलाच्या नव्हे. भारताच्या बहुतेक भागांत प्रत्येक kW रूफटॉप सोलर सुमारे 4 युनिट/दिवस
-        (110–130 युनिट/महिना) उत्पन्न करते. आमचा <a href="/solar/">सोलर बचत अंदाजक</a> हे तुमच्या प्रत्यक्ष
+        (110–130 युनिट/महिना) उत्पन्न करते. आमचा <a href="/solar-calculator/">सोलर बचत अंदाजक</a> हे तुमच्या प्रत्यक्ष
         डिस्कॉम टॅरिफविरुद्ध करतो — तुमची मासिक युनिटे टाका आणि तो <a href="/#calculator">बिल
         कॅल्क्युलेटर</a> वापरणाऱ्या त्याच इंजिनने सिस्टम आकार, सोलर-नंतरचे बिल आणि पेबॅक काढतो.</p>
       </section>
@@ -2339,7 +2339,7 @@ export const GUIDES = [
           <li><strong>मोठा पेबॅक:</strong> जास्त अनुदानित वापर (मोफत-युनिट योजना), सिस्टम आकारावर कमी मंजूर
           भार मर्यादा, निर्यातीचा फीड-इन-दर निपटान.</li>
         </ul>
-        <p>एखाद्या विक्रेत्याशी करार करण्यापूर्वी, आकडे स्वतः <a href="/solar/">अंदाजक</a> वर आणि तुमच्या
+        <p>एखाद्या विक्रेत्याशी करार करण्यापूर्वी, आकडे स्वतः <a href="/solar-calculator/">अंदाजक</a> वर आणि तुमच्या
         डिस्कॉमच्या <a href="/mr/tariffs/states/">टॅरिफ पेज</a> विरुद्ध चालवा — विक्रेत्याचा "70% बचत"
         दावा सर्वात तीव्र टॅरिफ गृहीत धरतो, जो तुमचा नसेल.</p>
       </section>`,
@@ -4396,7 +4396,7 @@ export const GUIDES = [
         sticker near the plug or in the manual), and remember that thermostat-driven appliances
         (fridge, AC, geyser) cycle on and off — their effective consumption is well below rating ×
         hours, which is why the AC and fridge rows above are ranges. To model a whole home, our
-        <a href="/usage/">usage estimator</a> does this appliance-by-appliance.</p>
+        <a href="/electricity-cost-calculator/">usage estimator</a> does this appliance-by-appliance.</p>
       </section>
 
       <section class="seo-section">
@@ -4468,7 +4468,7 @@ export const GUIDES = [
         <p>दोन सवयी हे अंदाज अचूक करतात: <em>प्रत्यक्ष</em> नेमप्लेट वॅटेज वापरा (प्लगजवळील स्टिकरवर किंवा
         पुस्तिकेत), आणि लक्षात ठेवा की थर्मोस्टॅट-चालित उपकरणे (फ्रिज, AC, गिझर) चालू-बंद होत राहतात —
         त्यांचा प्रभावी वापर रेटिंग × तास पेक्षा बराच कमी असतो, म्हणूनच वरील AC व फ्रिज ओळी श्रेणी आहेत.
-        संपूर्ण घर मॉडेल करण्यासाठी, आमचा <a href="/usage/">वापर अंदाजक</a> हे उपकरण-दर-उपकरण करतो.</p>
+        संपूर्ण घर मॉडेल करण्यासाठी, आमचा <a href="/electricity-cost-calculator/">वापर अंदाजक</a> हे उपकरण-दर-उपकरण करतो.</p>
       </section>
 
       <section class="seo-section">
@@ -6335,7 +6335,7 @@ export const GUIDES = [
         draws about 44 units from the meter, not 40.</p>
         <p>Cost per km follows directly: full-charge cost ÷ <em>real-world</em> range. Use the
         range you actually get, not the ARAI figure — owners typically see 15–25% less. Our
-        <a href="/ev/">EV charging cost calculator</a> does all of this with editable real-world
+        <a href="/ev-charging-calculator/">EV charging cost calculator</a> does all of this with editable real-world
         presets for common EVs and scooters.</p>
       </section>
 
@@ -6357,7 +6357,7 @@ export const GUIDES = [
         </table></div>
         <p>Two things the showroom won't stress: bigger batteries don't cost more <em>per km</em>
         (energy is energy), and your real figure moves with your slab rate — swap ₹7 for your own
-        top-slab rate in the <a href="/ev/">calculator</a> to see it.</p>
+        top-slab rate in the <a href="/ev-charging-calculator/">calculator</a> to see it.</p>
       </section>
 
       <section class="seo-section">
@@ -6377,7 +6377,7 @@ export const GUIDES = [
         <p>One habit worth building: for daily use most owners charge to about <strong>80%</strong>,
         not 100% — it protects long-term battery health and a full charge is rarely needed for a
         day's driving. That also means a typical top-up costs less than the full-charge figures
-        above; the <a href="/ev/">calculator's charge-level slider</a> shows the cost and time for
+        above; the <a href="/ev-charging-calculator/">calculator's charge-level slider</a> shows the cost and time for
         any level.</p>
       </section>
 
@@ -6416,7 +6416,7 @@ export const GUIDES = [
         <p>Charged at home, the EV saves roughly <strong>₹6,000 a month over petrol — about
         ₹72,000 a year</strong>. Even if you only ever used public DC fast chargers, you'd still
         beat petrol by more than half. Run <em>your</em> vehicle, km and tariff through the
-        <a href="/ev/">EV calculator</a> — it prints your monthly savings, the petrol equivalent,
+        <a href="/ev-charging-calculator/">EV calculator</a> — it prints your monthly savings, the petrol equivalent,
         and a home-vs-public-vs-petrol bar chart side by side.</p>
       </section>
 
@@ -6433,7 +6433,7 @@ export const GUIDES = [
           <li><strong>Pair with rooftop solar.</strong> Daytime charging on your own generation
           brings marginal fuel cost near zero; see
           <a href="/guides/solar-net-metering-savings/">how net-metering savings work</a> and the
-          <a href="/solar/">solar sizing estimator</a>.</li>
+          <a href="/solar-calculator/">solar sizing estimator</a>.</li>
           <li><strong>Keep your sanctioned load honest.</strong> If you add a wallbox, regularise
           the load first — the penalty maths otherwise eats the fuel savings.</li>
         </ol>
@@ -6482,7 +6482,7 @@ export const GUIDES = [
         install, but a much smaller fraction of a 5 kW one. Second, the sweet spot for most
         households is <strong>2–3 kW</strong>, which also happens to match the consumption of a
         typical urban home. Some states add their own top-up on top of the central amount — our
-        <a href="/solar/">solar calculator</a> carries the verified ones and computes your net
+        <a href="/solar-calculator/">solar calculator</a> carries the verified ones and computes your net
         cost after both.</p>
       </section>
 
@@ -6532,7 +6532,7 @@ export const GUIDES = [
           offset by generation; the fixed charge on your sanctioned load and duties still bill as
           usual.</li>
         </ul>
-        <p>The <a href="/solar/">solar savings calculator</a> sizes a system from your monthly
+        <p>The <a href="/solar-calculator/">solar savings calculator</a> sizes a system from your monthly
         units and roof area, applies the central + state subsidy, and prints net cost, monthly
         saving and payback year against your own DISCOM's rates.</p>
       </section>

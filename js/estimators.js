@@ -336,8 +336,8 @@ function init() {
     if (totalMonthly <= 0) return;
     const top = rows.map(r => ({ name: nameFor(r), kwh: monthlyKwh(r) })).sort((a, b) => b.kwh - a.kwh)[0];
     const text = lang() === 'hi'
-      ? `⚡ मेरा बिजली खपत अनुमान (TheDiscomBill)\n• मासिक खपत: ~${fmt(totalMonthly)} यूनिट\n• अनुमानित लागत: ₹${fmt(totalMonthly * rate)}/माह (₹${rate}/यूनिट पर)\n• सबसे ज़्यादा खपत: ${top.name} (~${fmt(top.kwh)} यूनिट)\nअपना अनुमान मुफ़्त निकालें: https://thediscombill.com/usage/`
-      : `⚡ My electricity usage estimate (TheDiscomBill)\n• Monthly usage: ~${fmt(totalMonthly)} units\n• Approx cost: ₹${fmt(totalMonthly * rate)}/month (at ₹${rate}/unit)\n• Biggest consumer: ${top.name} (~${fmt(top.kwh)} units)\nEstimate yours free: https://thediscombill.com/usage/`;
+      ? `⚡ मेरा बिजली खपत अनुमान (TheDiscomBill)\n• मासिक खपत: ~${fmt(totalMonthly)} यूनिट\n• अनुमानित लागत: ₹${fmt(totalMonthly * rate)}/माह (₹${rate}/यूनिट पर)\n• सबसे ज़्यादा खपत: ${top.name} (~${fmt(top.kwh)} यूनिट)\nअपना अनुमान मुफ़्त निकालें: https://thediscombill.com/electricity-cost-calculator/`
+      : `⚡ My electricity usage estimate (TheDiscomBill)\n• Monthly usage: ~${fmt(totalMonthly)} units\n• Approx cost: ₹${fmt(totalMonthly * rate)}/month (at ₹${rate}/unit)\n• Biggest consumer: ${top.name} (~${fmt(top.kwh)} units)\nEstimate yours free: https://thediscombill.com/electricity-cost-calculator/`;
     window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener');
   });
 

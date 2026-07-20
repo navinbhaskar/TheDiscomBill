@@ -268,9 +268,9 @@ const HEADER = `
             <a href="/#about" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span data-i18n="nav.about">About</span></a>
           </div>
           <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tools">Tools</span>
-          <a href="/usage/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span data-i18n="ql.usage">Electricity Cost Calculator</span></a>
-          <a href="/solar/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span data-i18n="ql.solar">Rooftop Solar Savings</span></a>
-          <a href="/ev/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="13" height="10" rx="2"/><path d="M15 10h3l3 3v4h-6"/><path d="M9.5 9.5 7.5 12h3l-2 2.5"/></svg><span data-i18n="ql.ev">EV Charging Cost</span></a>
+          <a href="/electricity-cost-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span data-i18n="ql.usage">Electricity Cost Calculator</span></a>
+          <a href="/solar-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span data-i18n="ql.solar">Rooftop Solar Savings</span></a>
+          <a href="/ev-charging-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="13" height="10" rx="2"/><path d="M15 10h3l3 3v4h-6"/><path d="M9.5 9.5 7.5 12h3l-2 2.5"/></svg><span data-i18n="ql.ev">EV Charging Cost</span></a>
           <span class="nav-dropdown-label" role="presentation" data-i18n="ql.services">Services</span>
           <a href="/services/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg><span data-i18n="ql.discomServices">DISCOM Services</span></a>
           <a href="/smart-meter-recharge/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/><path d="M11 9l-2 3h3l-2 3"/></svg><span data-i18n="ql.smartMeter">Smart Meter Recharge</span></a>
@@ -282,7 +282,7 @@ const HEADER = `
           </div>
           </div>
           <span class="nav-dropdown-label" role="presentation" data-i18n="ql.learn">Learn</span>
-          <a href="/glossary/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M12 7h5M12 11h5M7 7h.01M7 11h.01"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.glossary">Electricity Bill Guide</span></a>
+          <a href="/glossary/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M12 7h5M12 11h5M7 7h.01M7 11h.01"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.glossary">Bill Glossary</span></a>
           <a href="/methodology/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 11l2 2 4-4"/></svg><span data-i18n="ql.methodology">Methodology &amp; Accuracy</span></a>
         </div>
       </div>
@@ -905,7 +905,7 @@ function stateToolLinksHtml(state, lang = 'en') {
     [smrHref,
       T(lang, { en: `${sl} smart meter recharge`, hi: `${sl} स्मार्ट मीटर रिचार्ज`, mr: `${sl} स्मार्ट मीटर रिचार्ज`, ta: `${sl} ஸ்மார்ட் மீட்டர் ரீசார்ஜ்` }),
       T(lang, { en: 'Recharge steps, units-per-recharge and low-balance rules', hi: 'रिचार्ज के स्टेप, प्रति रिचार्ज यूनिट और लो-बैलेंस नियम', mr: 'रिचार्जचे टप्पे, प्रति रिचार्ज युनिट आणि लो-बॅलन्स नियम', ta: 'ரீசார்ஜ் படிகள், ரீசார்ஜுக்கான யூனிட்கள் மற்றும் குறைந்த-பேலன்ஸ் விதிகள்' })],
-    ['/solar/',
+    ['/solar-calculator/',
       T(lang, { en: 'Rooftop solar savings calculator', hi: 'रूफटॉप सोलर बचत कैलकुलेटर', mr: 'रूफटॉप सोलर बचत कॅल्क्युलेटर', ta: 'கூரை சோலார் சேமிப்பு கணிப்பான்' }),
       T(lang, { en: `How much a rooftop system would cut a ${sl} bill`, hi: `रूफटॉप सिस्टम से ${sl} का बिल कितना घटेगा`, mr: `रूफटॉप सिस्टिमने ${sl} चे बिल किती कमी होईल`, ta: `கூரை அமைப்பு ஒரு ${sl} பில்லை எவ்வளவு குறைக்கும்` })],
     ['/new-connection/',
@@ -1780,9 +1780,9 @@ function articleJsonLd(guide, url) {
 // is tagged to plus the one tool page that matches its category. Real contextual anchors
 // from long-form content into the money pages — the strongest internal-link direction.
 const GUIDE_TOOL_LINK = {
-  solar:      ['/solar/', { en: 'Rooftop solar savings calculator', hi: 'रूफटॉप सोलर बचत कैलकुलेटर', mr: 'रूफटॉप सोलर बचत कॅल्क्युलेटर', ta: 'கூரை சோலார் சேமிப்பு கணிப்பான்' },
+  solar:      ['/solar-calculator/', { en: 'Rooftop solar savings calculator', hi: 'रूफटॉप सोलर बचत कैलकुलेटर', mr: 'रूफटॉप सोलर बचत कॅल्क्युलेटर', ta: 'கூரை சோலார் சேமிப்பு கணிப்பான்' },
     { en: 'Size a system and see the payback on your own bill', hi: 'सिस्टम का आकार तय करें और अपने बिल पर पेबैक देखें', mr: 'सिस्टिमचा आकार ठरवा आणि तुमच्या बिलावरील परतावा पाहा', ta: 'அமைப்பின் அளவை தீர்மானித்து உங்கள் பில்லில் திருப்பிச் செலுத்தும் காலத்தைப் பாருங்கள்' }],
-  ev:         ['/ev/', { en: 'EV charging cost calculator', hi: 'EV चार्जिंग लागत कैलकुलेटर', mr: 'EV चार्जिंग खर्च कॅल्क्युलेटर', ta: 'EV சார்ஜிங் செலவு கணிப்பான்' },
+  ev:         ['/ev-charging-calculator/', { en: 'EV charging cost calculator', hi: 'EV चार्जिंग लागत कैलकुलेटर', mr: 'EV चार्जिंग खर्च कॅल्क्युलेटर', ta: 'EV சார்ஜிங் செலவு கணிப்பான்' },
     { en: 'Per-km cost of charging at home on your tariff', hi: 'अपने टैरिफ पर घर पर चार्जिंग की प्रति-किमी लागत', mr: 'तुमच्या टॅरिफवर घरी चार्जिंगचा प्रति-किमी खर्च', ta: 'உங்கள் கட்டணத்தில் வீட்டில் சார்ஜ் செய்யும் கி.மீ.-க்கான செலவு' }],
   smartMeter: ['/recharge-calculator/', { en: 'Smart meter recharge calculator', hi: 'स्मार्ट मीटर रिचार्ज कैलकुलेटर', mr: 'स्मार्ट मीटर रिचार्ज कॅल्क्युलेटर', ta: 'ஸ்மார்ட் மீட்டர் ரீசார்ஜ் கணிப்பான்' },
     { en: 'How many days a recharge lasts at your DISCOM\'s real rates', hi: 'आपके डिस्कॉम की असली दरों पर रिचार्ज कितने दिन चलेगा', mr: 'तुमच्या डिस्कॉमच्या खऱ्या दरांवर रिचार्ज किती दिवस पुरेल', ta: 'உங்கள் DISCOM-இன் உண்மையான விகிதங்களில் ரீசார்ஜ் எத்தனை நாள் நீடிக்கும்' }],
@@ -1991,7 +1991,7 @@ function guidesIndexPage(lang = 'en') {
     </div>`;
   const bcHome = T(lang, { hi: 'होम', mr: 'होम', ta: 'முகப்பு', en: 'Home' });
   const bcGuides = T(lang, { hi: 'गाइड', mr: 'मार्गदर्शक', ta: 'வழிகாட்டிகள்', en: 'Guides' });
-  const h1 = T(lang, { hi: 'ब्लॉग और लेख', mr: 'ब्लॉग आणि लेख', ta: 'வலைப்பதிவுகள் & கட்டுரைகள்', en: 'Blogs & Articles' });
+  const h1 = T(lang, { hi: 'बिजली बिल गाइड और लेख', mr: 'वीज बिल मार्गदर्शक आणि लेख', ta: 'மின் கட்டண வழிகாட்டிகள் & கட்டுரைகள்', en: 'Electricity Bill Guides & Explainers' });
   const lead = T(lang, {
     hi: 'भारतीय बिजली बिलिंग पर छोटे, व्यावहारिक लेख — ठीक उन्हीं सवालों के जवाब जो लोग पूछते हैं, और हमारे <a href="/#calculator">बिल कैलकुलेटर</a> के पीछे के लाइव टैरिफ डेटा से जुड़े हुए।',
     mr: 'भारतीय वीज बिलिंगवरील छोटे, व्यावहारिक लेख — लोक विचारतात त्याच प्रश्नांची उत्तरे, आणि आमच्या <a href="/#calculator">बिल कॅल्क्युलेटर</a> मागील लाइव्ह टॅरिफ डेटाशी जोडलेले.',
@@ -2127,7 +2127,7 @@ function glossaryPage(lang = 'en') {
   const S = STRINGS[lang] || {};
   const gs = (key, en) => (lang === 'en' ? en : (S[key] || en));
   const crumbName = gs('gloss.crumb', 'Glossary');
-  const h1 = gs('gloss.h1', 'Electricity Bill Guide');
+  const h1 = gs('gloss.h1', 'Electricity Bill Glossary');
   const leadEn = `Every charge line and code on an Indian electricity bill, defined in plain
     language. These are the terms behind our <a href="/#calculator">bill calculator</a> and
     <a href="/tariffs/states/">tariff pages</a> — from <a href="#fppa">FPPA</a> and
@@ -2512,9 +2512,9 @@ function smartMeterHubPage(states, lang = 'en') {
 const STATIC_ROUTES = [
   { loc: '/', priority: '1.0', changefreq: 'weekly' },
   { loc: '/compare/', priority: '0.8', changefreq: 'monthly' },
-  { loc: '/usage/', priority: '0.7', changefreq: 'monthly' },
-  { loc: '/solar/', priority: '0.7', changefreq: 'monthly' },
-  { loc: '/ev/', priority: '0.8', changefreq: 'monthly' },
+  { loc: '/electricity-cost-calculator/', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/solar-calculator/', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/ev-charging-calculator/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/tariffs/', priority: '0.8', changefreq: 'monthly' },
   // '/tariffs/states/' is added in buildSitemap() with its Hindi alternate.
   { loc: '/services/', priority: '0.7', changefreq: 'monthly' },
@@ -2619,7 +2619,7 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 
 - [Bill Calculator](${SITE}/): instant provisional electricity bill for any Indian DISCOM with a full slab-wise breakdown
 - [Tariff Comparison](${SITE}/compare/): major DISCOMs compared at 200/400/600/1000 units for domestic and commercial
-- [Electricity Cost Calculator](${SITE}/usage/): estimate monthly kWh and cost from household appliances
+- [Electricity Cost Calculator](${SITE}/electricity-cost-calculator/): estimate monthly kWh and cost from household appliances
 - [Rooftop Solar Savings](${SITE}/solar/): system sizing, payback and net-metering savings
 - [EV Charging Cost Calculator](${SITE}/ev/): cost per charge, per km and monthly charging bill for any EV, with petrol comparison
 - [Bill Check](${SITE}/bill-check/): direct links to every DISCOM's official view/pay-bill portal
@@ -2686,9 +2686,9 @@ function writeSearchIndex(states) {
   [
     ['Bill Calculator', 'बिजली बिल कैलकुलेटर', '/#calculator', 'electricity bill calculator check'],
     ['Compare Tariffs', 'टैरिफ तुलना', '/compare/', 'comparison states discom rates'],
-    ['Solar Savings Calculator', 'सोलर बचत कैलकुलेटर', '/solar/', 'rooftop solar net metering pm surya ghar'],
-    ['EV Charging Cost Calculator', 'EV चार्जिंग लागत कैलकुलेटर', '/ev/', 'ev electric vehicle charging cost per km nexon ather petrol comparison'],
-    ['Electricity Cost Calculator', 'बिजली लागत कैलकुलेटर', '/usage/', 'appliance electricity cost usage estimator units consumption kwh'],
+    ['Solar Savings Calculator', 'सोलर बचत कैलकुलेटर', '/solar-calculator/', 'rooftop solar net metering pm surya ghar'],
+    ['EV Charging Cost Calculator', 'EV चार्जिंग लागत कैलकुलेटर', '/ev-charging-calculator/', 'ev electric vehicle charging cost per km nexon ather petrol comparison'],
+    ['Electricity Cost Calculator', 'बिजली लागत कैलकुलेटर', '/electricity-cost-calculator/', 'appliance electricity cost usage estimator units consumption kwh'],
     ['Bill Check', 'बिल जांच', '/bill-check/', 'verify bill overcharge audit'],
     ['Expert Bill Review', 'विशेषज्ञ बिल समीक्षा', '/services/', 'services expert review complaint help'],
     ['New Connection Guide', 'नया कनेक्शन गाइड', '/new-connection/', 'apply new electricity connection documents'],

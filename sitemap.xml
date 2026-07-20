@@ -13,19 +13,19 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://thediscombill.com/usage/</loc>
+    <loc>https://thediscombill.com/electricity-cost-calculator/</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thediscombill.com/solar/</loc>
+    <loc>https://thediscombill.com/solar-calculator/</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://thediscombill.com/ev/</loc>
+    <loc>https://thediscombill.com/ev-charging-calculator/</loc>
     <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

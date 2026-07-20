@@ -43,7 +43,7 @@ const EV_STR = {
     hrs: (h) => { const H = Math.floor(h), M = Math.round((h - H) * 60); return H ? `${H}h ${M ? M + 'm' : ''}`.trim() : `${M}m`; },
     toPct: (p) => p >= 100 ? 'full charge' : `to ${p}%`,
     petrolSame: (km) => `petrol for the same ${num(km)} km`,
-    shareText: (r) => `🔌 My EV charging cost (TheDiscomBill)\n• ${r.evLabel}: ₹${r.evPerKm.toFixed(2)}/km vs petrol ₹${r.petrolPerKm.toFixed(2)}/km\n• Monthly charging: ₹${Math.round(r.monthlyCost).toLocaleString('en-IN')} for ${Math.round(r.monthlyKm).toLocaleString('en-IN')} km\n• I save ₹${Math.round(r.monthlySave).toLocaleString('en-IN')}/month vs petrol\nCalculate yours free: https://thediscombill.com/ev/`,
+    shareText: (r) => `🔌 My EV charging cost (TheDiscomBill)\n• ${r.evLabel}: ₹${r.evPerKm.toFixed(2)}/km vs petrol ₹${r.petrolPerKm.toFixed(2)}/km\n• Monthly charging: ₹${Math.round(r.monthlyCost).toLocaleString('en-IN')} for ${Math.round(r.monthlyKm).toLocaleString('en-IN')} km\n• I save ₹${Math.round(r.monthlySave).toLocaleString('en-IN')}/month vs petrol\nCalculate yours free: https://thediscombill.com/ev-charging-calculator/`,
   },
   hi: {
     custom: 'कस्टम / अन्य EV…', grp2w: 'दोपहिया', grp4w: 'कार व SUV',
@@ -52,7 +52,7 @@ const EV_STR = {
     hrs: (h) => { const H = Math.floor(h), M = Math.round((h - H) * 60); return H ? `${H}घं ${M ? M + 'मि' : ''}`.trim() : `${M}मि`; },
     toPct: (p) => p >= 100 ? 'फुल चार्ज' : `${p}% तक`,
     petrolSame: (km) => `इतने ही ${num(km)} किमी के लिए पेट्रोल`,
-    shareText: (r) => `🔌 मेरी EV चार्जिंग लागत (TheDiscomBill)\n• ${r.evLabel}: ₹${r.evPerKm.toFixed(2)}/किमी बनाम पेट्रोल ₹${r.petrolPerKm.toFixed(2)}/किमी\n• मासिक चार्जिंग: ₹${Math.round(r.monthlyCost).toLocaleString('en-IN')} (${Math.round(r.monthlyKm).toLocaleString('en-IN')} किमी)\n• पेट्रोल की तुलना में ₹${Math.round(r.monthlySave).toLocaleString('en-IN')}/माह की बचत\nअपनी लागत मुफ़्त निकालें: https://thediscombill.com/ev/`,
+    shareText: (r) => `🔌 मेरी EV चार्जिंग लागत (TheDiscomBill)\n• ${r.evLabel}: ₹${r.evPerKm.toFixed(2)}/किमी बनाम पेट्रोल ₹${r.petrolPerKm.toFixed(2)}/किमी\n• मासिक चार्जिंग: ₹${Math.round(r.monthlyCost).toLocaleString('en-IN')} (${Math.round(r.monthlyKm).toLocaleString('en-IN')} किमी)\n• पेट्रोल की तुलना में ₹${Math.round(r.monthlySave).toLocaleString('en-IN')}/माह की बचत\nअपनी लागत मुफ़्त निकालें: https://thediscombill.com/ev-charging-calculator/`,
   },
 };
 

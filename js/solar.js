@@ -29,7 +29,7 @@ const SOL_STR = {
     asNote: 'Assam state top-up: ₹15,000/kW, capped at ₹45,000 (3 kW and above).',
     breakEven: (y) => `Break-even in year ${y}`,
     chartCost: 'system cost', chartYr: 'yr',
-    shareText: (r) => `☀️ My rooftop solar estimate (TheDiscomBill)\n• System size: ${r.size} kW\n• Net cost after subsidy: ₹${Math.round(r.net).toLocaleString('en-IN')}\n• Savings: ₹${Math.round(r.monthlySavings).toLocaleString('en-IN')}/month\n• Pays back in ~${r.paybackYears.toFixed(1)} years\nCalculate yours free: https://thediscombill.com/solar/`,
+    shareText: (r) => `☀️ My rooftop solar estimate (TheDiscomBill)\n• System size: ${r.size} kW\n• Net cost after subsidy: ₹${Math.round(r.net).toLocaleString('en-IN')}\n• Savings: ₹${Math.round(r.monthlySavings).toLocaleString('en-IN')}/month\n• Pays back in ~${r.paybackYears.toFixed(1)} years\nCalculate yours free: https://thediscombill.com/solar-calculator/`,
   },
   hi: {
     roofNote: 'आपकी छत के क्षेत्रफल से सीमित — बड़े सिस्टम के लिए और छाया-रहित जगह चाहिए।',
@@ -42,7 +42,7 @@ const SOL_STR = {
     asNote: 'असम राज्य टॉप-अप: ₹15,000/kW, अधिकतम ₹45,000 (3 kW और ऊपर)।',
     breakEven: (y) => `वर्ष ${y} में लागत वसूल`,
     chartCost: 'सिस्टम लागत', chartYr: 'वर्ष',
-    shareText: (r) => `☀️ मेरा रूफटॉप सोलर अनुमान (TheDiscomBill)\n• सिस्टम साइज़: ${r.size} kW\n• सब्सिडी के बाद नेट लागत: ₹${Math.round(r.net).toLocaleString('en-IN')}\n• बचत: ₹${Math.round(r.monthlySavings).toLocaleString('en-IN')}/माह\n• ~${r.paybackYears.toFixed(1)} वर्ष में लागत वसूल\nअपना अनुमान मुफ़्त निकालें: https://thediscombill.com/solar/`,
+    shareText: (r) => `☀️ मेरा रूफटॉप सोलर अनुमान (TheDiscomBill)\n• सिस्टम साइज़: ${r.size} kW\n• सब्सिडी के बाद नेट लागत: ₹${Math.round(r.net).toLocaleString('en-IN')}\n• बचत: ₹${Math.round(r.monthlySavings).toLocaleString('en-IN')}/माह\n• ~${r.paybackYears.toFixed(1)} वर्ष में लागत वसूल\nअपना अनुमान मुफ़्त निकालें: https://thediscombill.com/solar-calculator/`,
   },
 };
 
@@ -249,7 +249,7 @@ function init() {
   } else {
     pull.classList.add('is-disabled');
     pull.title = SOL_STR[lang()].pullTitle;
-    pull.addEventListener('click', () => { location.href = '/usage/'; });
+    pull.addEventListener('click', () => { location.href = '/electricity-cost-calculator/'; });
   }
 
   // Language switched in place (no reload on tool pages): re-render the dynamic

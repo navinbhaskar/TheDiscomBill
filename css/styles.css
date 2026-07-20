@@ -2077,18 +2077,18 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   border-top: 1px solid var(--border-default);
 }
 .comparison-section .container { max-width: 1000px; margin: 0 auto; }
-.comparison-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; letter-spacing: -0.5px; text-align: center; }
+.comparison-section h1, .comparison-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; letter-spacing: -0.5px; text-align: center; }
 
 /* Spark divider — centered section/page titles get a small blue→amber current
    bar, echoing the header's live wire. (One shared rule for all portal pages.) */
-.comparison-section h2::after, .estimator-section h2::after, .tariff-section h2::after,
-.billcheck-section h2::after, .svc-section h2::after, .solar-section h2::after {
+.comparison-section h1::after, .comparison-section h2::after, .estimator-section h1::after, .estimator-section h2::after, .tariff-section h2::after,
+.billcheck-section h1::after, .billcheck-section h2::after, .svc-section h1::after, .svc-section h2::after, .solar-section h1::after, .solar-section h2::after {
   content: ''; display: block; width: 56px; height: 3px; margin: 12px auto 0;
   border-radius: var(--radius-full);
   background: linear-gradient(90deg, var(--p-blue-500), var(--p-amber-400));
 }
-.comparison-section h2, .estimator-section h2, .tariff-section h2,
-.billcheck-section h2, .svc-section h2, .solar-section h2 {
+.comparison-section h1, .comparison-section h2, .estimator-section h1, .estimator-section h2, .tariff-section h2,
+.billcheck-section h1, .billcheck-section h2, .svc-section h1, .svc-section h2, .solar-section h1, .solar-section h2 {
   font-family: var(--font-display);
 }
 .comparison-section p { color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; text-align: center; max-width: 700px; margin-left: auto; margin-right: auto; }
@@ -2339,7 +2339,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 /* ─── Appliance Consumption Estimator (/estimators/) ─────────────────────────── */
 .estimator-section { background: var(--surface-sunken); padding: 32px 24px 56px; border-top: 1px solid var(--border-default); }
 .estimator-section .container { max-width: 1040px; margin: 0 auto; }
-.estimator-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px; text-align: center; }
+.estimator-section h1, .estimator-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px; text-align: center; }
 .est-intro { color: var(--text-secondary); margin: 0 auto 22px; line-height: 1.6; text-align: center; max-width: 680px; }
 
 /* Estimator hero band */
@@ -2349,7 +2349,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   border: 1px solid var(--brand-border); border-radius: var(--radius-xl);
   padding: 28px 26px 22px; margin-bottom: 24px;
 }
-.est-hero h2 { margin-top: 0; }
+.est-hero h1, .est-hero h2 { margin-top: 0; }
 .est-hero .est-intro { margin-bottom: 16px; }
 .est-hero-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .est-hero-chip {
@@ -2882,7 +2882,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 /* ─── Bill Check page (/bill-check/) ─────────────────────────────────────────── */
 .billcheck-section { background: var(--surface-sunken); padding: 32px 24px 56px; border-top: 1px solid var(--border-default); }
 .container-narrow { max-width: 620px; margin: 0 auto; }
-.billcheck-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px; text-align: center; }
+.billcheck-section h1, .billcheck-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px; text-align: center; }
 .billcheck-intro { color: var(--text-secondary); margin: 0 auto 24px; line-height: 1.6; text-align: center; }
 
 .billcheck-controls { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 18px; }
@@ -2925,7 +2925,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 /* ─── Service pages: New Connection + Register Complaint (/new-connection/, /complaint/) ── */
 .svc-section { background: var(--surface-sunken); padding: 32px 24px 56px; border-top: 1px solid var(--border-default); }
 .container-mid { max-width: 760px; margin: 0 auto; }
-.svc-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px; text-align: center; }
+.svc-section h1, .svc-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px; text-align: center; }
 .svc-intro { color: var(--text-secondary); margin: 0 auto 22px; line-height: 1.6; text-align: center; max-width: 640px; }
 /* DISCOM Services hub — tabbed panels (Pay Bill / New Connection / Complaint / Helplines) */
 .svc-tabs { flex-wrap: wrap; }
@@ -3094,7 +3094,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 
 /* ─── Rooftop Solar calculator (/solar/) ─────────────────────────────────────── */
 .solar-section { background: var(--surface-sunken); padding: 32px 24px 56px; border-top: 1px solid var(--border-default); }
-.solar-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px; text-align: center; }
+.solar-section h1, .solar-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px; text-align: center; }
 .solar-intro { color: var(--text-secondary); margin: 0 auto 24px; line-height: 1.6; text-align: center; max-width: 660px; }
 
 .solar-layout { display: grid; grid-template-columns: 1fr 340px; gap: 20px; align-items: start; }
@@ -3196,7 +3196,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .ev-bd-hl { background: linear-gradient(90deg, rgba(13,148,136,.10), transparent); border-radius: 8px; padding-left: 8px; padding-right: 8px; }
 .ev-bd-hl strong { color: #0d9488; }
 :root[data-theme="dark"] .ev-bd-hl strong { color: #2dd4bf; }
-.solar-hero h2 { margin-top: 0; }
+.solar-hero h1, .solar-hero h2 { margin-top: 0; }
 .solar-hero .solar-intro { margin-bottom: 16px; }
 .solar-chips { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .solar-chip {

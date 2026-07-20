@@ -29,7 +29,7 @@ export default {
     'ql.ocrCheck': 'झटपट स्व-तपासणी (OCR)',
     'ql.billReview': 'तज्ज्ञांकडून',
     'ql.guides': 'ब्लॉग आणि लेख',
-    'ql.glossary': 'वीज बिल मार्गदर्शक',
+    'ql.glossary': 'बिल शब्दावली',
     'ql.methodology': 'कार्यपद्धती व अचूकता',
     // Shared footer links (generated pages + key pages)
     'footer.rights': '© 2026 TheDiscomBill. सर्व हक्क राखीव.',
@@ -340,7 +340,7 @@ export default {
     'meth.disclaimer': 'आकडे प्रकाशित टॅरिफ आदेशांवरून गणलेले व नमुना बिलांशी पडताळलेले अंदाजित आकडे आहेत; कोणत्याही शुल्काची नेमकी अंमलबजावणी राज्य, डिस्कॉम व ग्राहक श्रेणीनुसार बदलते. नेहमी तुमच्या डिस्कॉमच्या टॅरिफ आदेशाशी वा छापील बिलाशी पडताळा.',
     // Glossary page framing (/glossary/)
     'gloss.crumb': 'शब्दकोश',
-    'gloss.h1': 'वीज बिल मार्गदर्शक',
+    'gloss.h1': 'वीज बिल शब्दावली',
     'gloss.lead': 'भारतीय वीज बिलावरील प्रत्येक शुल्क ओळ व कोड, सोप्या भाषेत. हेच शब्द आमच्या <a href="/#calculator">बिल कॅल्क्युलेटर</a> व <a href="/tariffs/states/">टॅरिफ पानांमागे</a> आहेत — <a href="#fppa">FPPA</a> व <a href="#electricity-duty">वीज शुल्कापासून</a> <a href="#telescopic-slabs">स्लॅबनिहाय दर</a> व <a href="#kvah">kVAh</a> पर्यंत.',
     'gloss.aka': 'इतर नावे:',
     'gloss.relatedGuide': 'संबंधित मार्गदर्शक:',

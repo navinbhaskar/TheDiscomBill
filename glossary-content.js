@@ -241,7 +241,7 @@ export const GLOSSARY = [
       than you import in a month, the surplus is <strong>banked</strong> as a unit credit carried to
       the next month (usually settled annually). <a href="/glossary/#fixed-charge">Fixed and demand
       charges</a> still apply on your sanctioned load regardless of solar. Estimate your savings with
-      the <a href="/solar/">rooftop solar calculator</a>.</p>`,
+      the <a href="/solar-calculator/">rooftop solar calculator</a>.</p>`,
     termHi: 'नेट मीटरिंग',
     chipHi: 'नेट मीटरिंग',
     shortHi: 'एक रूफटॉप-सोलर बिलिंग व्यवस्था जहाँ आपसे केवल नेट आयात पर शुल्क लिया जाता है — ग्रिड से आयातित यूनिट घटा उसे निर्यातित यूनिट — किसी भी अधिशेष को क्रेडिट के रूप में बैंक किया जाता है।',
@@ -250,7 +250,7 @@ export const GLOSSARY = [
       पर ऊर्जा शुल्क देते हैं। यदि आप किसी माह में आयात से अधिक निर्यात करते हैं, तो अधिशेष अगले माह के लिए यूनिट
       क्रेडिट के रूप में <strong>बैंक</strong> किया जाता है (आम तौर पर वार्षिक रूप से निपटाया जाता है)। सोलर की
       परवाह किए बिना आपके स्वीकृत भार पर <a href="/glossary/#fixed-charge">फिक्स्ड व मांग शुल्क</a> फिर भी लागू
-      होते हैं। <a href="/solar/">रूफटॉप सोलर कैलकुलेटर</a> से अपनी बचत का अनुमान लगाएँ।</p>`,
+      होते हैं। <a href="/solar-calculator/">रूफटॉप सोलर कैलकुलेटर</a> से अपनी बचत का अनुमान लगाएँ।</p>`,
   },
   {
     term: 'Power Factor',

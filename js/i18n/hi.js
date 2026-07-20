@@ -29,7 +29,7 @@ export default {
     'ql.ocrCheck': 'तुरंत स्व-जाँच (OCR)',
     'ql.billReview': 'विशेषज्ञ से',
     'ql.guides': 'ब्लॉग और लेख',
-    'ql.glossary': 'बिजली बिल गाइड',
+    'ql.glossary': 'बिल शब्दावली',
     'ql.methodology': 'कार्यप्रणाली व सटीकता',
     // Shared footer links (generated pages + key pages)
     'footer.rights': '© 2026 TheDiscomBill. सर्वाधिकार सुरक्षित।',
@@ -377,7 +377,7 @@ export default {
     'meth.disclaimer': 'आँकड़े प्रकाशित टैरिफ आदेशों से गणना किए गए और नमूना बिलों के विरुद्ध सत्यापित अनुमानित आकलन हैं; किसी भी शुल्क का सटीक उपचार राज्य, डिस्कॉम व उपभोक्ता श्रेणी के अनुसार भिन्न होता है। हमेशा अपने डिस्कॉम के टैरिफ आदेश या मुद्रित बिल से मिलान करें।',
     // Glossary page framing (/glossary/) — the 14 term definitions stay in English (technical reference)
     'gloss.crumb': 'शब्दावली',
-    'gloss.h1': 'बिजली बिल गाइड',
+    'gloss.h1': 'बिजली बिल शब्दावली',
     'gloss.lead': 'भारतीय बिजली बिल की हर शुल्क पंक्ति व कोड, सरल भाषा में परिभाषित। ये वही शब्द हैं जो हमारे <a href="/#calculator">बिल कैलकुलेटर</a> व <a href="/tariffs/states/">टैरिफ पृष्ठों</a> के पीछे हैं — <a href="#fppa">FPPA</a> व <a href="#electricity-duty">बिजली शुल्क</a> से लेकर <a href="#telescopic-slabs">स्लैब-वार दरें</a> व <a href="#kvah">kVAh</a> तक।',
     'gloss.aka': 'इन नामों से भी:',
     'gloss.relatedGuide': 'संबंधित गाइड:',

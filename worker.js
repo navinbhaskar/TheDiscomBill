@@ -26,6 +26,16 @@ export default {
       return Response.redirect(url.toString(), 301);
     }
 
+    // Permanent moves (Jul 2026): descriptive calculator slugs. Old paths 301 to the new
+    // ones (query string preserved) so existing backlinks and indexed URLs keep their equity.
+    const MOVED = { '/usage': '/electricity-cost-calculator', '/ev': '/ev-charging-calculator', '/solar': '/solar-calculator' };
+    for (const [oldP, newP] of Object.entries(MOVED)) {
+      if (url.pathname === oldP || url.pathname === oldP + '/' || url.pathname === oldP + '/index.html') {
+        url.pathname = newP + '/';
+        return Response.redirect(url.toString(), 301);
+      }
+    }
+
     if (url.pathname.startsWith('/api/')) {
       try {
         return await handleApi(request, env, url);
