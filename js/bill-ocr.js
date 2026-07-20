@@ -802,7 +802,7 @@ function initBillOcr() {
         '(a third-party service) through our server. The bill contains personal details like your name and account ' +
         'number; it is processed transiently and never stored. Upload happens only if you agree.</p>' +
         '<div class="ocr-rev-actions">' +
-        '<button type="button" class="ocr-btn" id="ocrCloudYes">Agree &amp; scan</button>' +
+        '<button type="button" class="ocr-btn ocr-btn-next" id="ocrCloudYes">Agree &amp; scan</button>' +
         '<button type="button" class="ocr-btn ocr-btn-ghost" id="ocrCloudNo">Read on-device instead (less accurate)</button>' +
         '</div></div>';
       document.getElementById('ocrCloudYes').addEventListener('click', () => {
