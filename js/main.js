@@ -3,7 +3,7 @@
 import {
   populateStates, populateDiscoms, populateCategories, populateSupplyTypes,
   populateMonthYear, prefillFac, prefillLpsc, updateBilledDemandVisibility,
-  initTabs, addPaymentRow, addAdjustmentRow,
+  initTabs, initLoadChips, addPaymentRow, addAdjustmentRow,
   updateArrearTotal, updateUnitsDisplay, updateCalcButton, updateBillingPeriod,
   updateTodDisplay, updateFacUnitLabel, updateTariffPeriodHint,
   onFppaAutoToggle, markFppaManual,
@@ -731,5 +731,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     loadFromUrl();
+    initLoadChips();   // after loadFromUrl so the active chip reflects a URL-provided load
   }
 });

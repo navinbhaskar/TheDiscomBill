@@ -417,6 +417,42 @@
   margin-top: 3px; padding-top: 5px; border-top: 1px solid var(--border-default);
 }
 
+/* Quick Links "More" menu — polished card matching the account dropdown:
+   16px-radius card, tinted square icon chips that light up brand-blue on
+   hover, airier section labels. Scoped to the id so the account menu and
+   any other .nav-dropdown keep their own look. */
+#quickLinksMenu { min-width: 268px; border-radius: 16px; padding: 8px; }
+.header-nav #quickLinksMenu .nav-dropdown-item {
+  gap: 10px; padding: 6px 9px; border-radius: 10px;
+}
+.header-nav #quickLinksMenu .nav-dropdown-item svg {
+  box-sizing: border-box; width: 28px; height: 28px; padding: 7px;
+  border-radius: 8px; background: var(--surface-sunken); color: var(--text-secondary);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.header-nav #quickLinksMenu .nav-dropdown-item:hover svg,
+.header-nav #quickLinksMenu .nav-subgroup.open > .nav-subgroup-trigger svg,
+.header-nav #quickLinksMenu .nav-subgroup:hover > .nav-subgroup-trigger svg {
+  background: var(--brand-faint); color: var(--brand);
+}
+/* Row hover stays quieter than the chip so the chip reads as the accent */
+.header-nav #quickLinksMenu .nav-dropdown-item:hover { background: var(--surface-sunken); color: var(--text-primary); }
+/* The subgroup caret is an arrow, not an icon — keep it small and chipless */
+.header-nav #quickLinksMenu svg.nav-subgroup-caret {
+  width: 14px; height: 14px; padding: 0; background: none; border-radius: 0;
+  color: var(--text-tertiary);
+}
+.header-nav #quickLinksMenu .nav-dropdown-label { padding: 7px 10px 3px; letter-spacing: .09em; }
+.header-nav #quickLinksMenu .nav-dropdown-label:not(:first-child) {
+  margin-top: 6px; padding-top: 10px; border-top: 1px solid var(--border-subtle);
+}
+/* On mobile .nav-mob-links draws its own bottom border; on desktop it is
+   hidden — either way the label right after it must not add a second line. */
+.header-nav #quickLinksMenu .nav-mob-links + .nav-dropdown-label { border-top: 0; margin-top: 0; padding-top: 5px; }
+@media (min-width: 601px) {
+  #quickLinksMenu .nav-submenu { border-radius: 14px; padding: 8px; min-width: 252px; }
+}
+
 /* Custom language dropdown — a styled menu replacing the native <select> popup */
 .lang-switch { position: relative; display: inline-block; }
 .lang-trigger {
@@ -1025,6 +1061,21 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
   margin-bottom: 5px;
 }
 .form-group small { display: block; font-size: 11px; color: var(--text-tertiary); margin-top: 4px; line-height: 1.5; }
+
+/* Sanctioned Load quick-pick chips (replace the old helper text; full explanation lives in the ⓘ tooltip) */
+.load-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.load-chip {
+  padding: 4px 12px; font-size: 12px; font-weight: 600; line-height: 1.4;
+  border: 1px solid var(--border-default); border-radius: var(--radius-full);
+  background: var(--surface-card); color: var(--text-secondary);
+  cursor: pointer; transition: background .15s, border-color .15s, color .15s;
+}
+.load-chip:hover { background: var(--surface-hover); border-color: var(--brand-border); color: var(--text-brand); }
+.load-chip.active {
+  background: var(--brand-faint); border-color: var(--brand);
+  color: var(--text-brand-dark); font-weight: 700;
+}
+.load-chip:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
 
 /* Billing Basis — shorter width, secondary feel (rarely changed once set) */
 #billingBasisGroup { margin-bottom: 8px; }

@@ -38,7 +38,7 @@ export const DEFAULT_DEMAND_FLOOR_PCT = 75;
  * @param {number} connectedLoadKw - Connected load or billing demand in kW/kVA.
  * @returns {number} The resolved fixed charge in rupees.
  */
-export function resolveFixedCharge(fixedCharge, connectedLoadKw) {
+export function resolveFixedCharge(fixedCharge, connectedLoadKw, units = 0) {
   if (typeof fixedCharge === 'number') return fixedCharge;
   if (!fixedCharge) return 0;
   if (fixedCharge.type === 'flat') return fixedCharge.rate;
@@ -48,6 +48,16 @@ export function resolveFixedCharge(fixedCharge, connectedLoadKw) {
   if (fixedCharge.type === 'tiered') {
     for (const slab of fixedCharge.slabs) {
       if (connectedLoadKw <= slab.maxLoad) return slab.rate;
+    }
+    return fixedCharge.slabs[fixedCharge.slabs.length - 1].rate;
+  }
+  // by_consumption — the monthly fixed charge is set by the consumption slab the bill falls into,
+  // not by load. Used by the Mumbai licensees (Adani/BEST/Tata Power) whose MERC orders levy
+  // ₹90 up to 100 units, ₹135 up to 500, ₹160 above. Slabs are monthly thresholds; `units` is the
+  // metered consumption for the period (the calculator bills 1 month, so no scaling is applied).
+  if (fixedCharge.type === 'by_consumption') {
+    for (const slab of fixedCharge.slabs) {
+      if (units <= slab.maxUnits) return slab.rate;
     }
     return fixedCharge.slabs[fixedCharge.slabs.length - 1].rate;
   }
@@ -193,7 +203,7 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
   // Fixed/demand charge is a per-MONTH charge → multiply by the whole months in the period.
   // Whole-month rounding matches real UPPCL bills (a ~33-day cycle bills 1 month, not 1.1).
   const fixedChargeMonths = Math.max(1, Math.round(billingMonths));
-  const fixedPerMonth     = resolveFixedCharge(eff.fixedCharge, demandForFixed);
+  const fixedPerMonth     = resolveFixedCharge(eff.fixedCharge, demandForFixed, units);
   const fixedCharge       = +(fixedPerMonth * fixedChargeMonths).toFixed(2);
 
   // Under kVA-based billing the meter is read in kVAh (apparent energy), so the units entered are

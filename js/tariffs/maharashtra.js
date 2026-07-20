@@ -4,9 +4,14 @@
 // See TARIFF_GUIDE.md for the complete field schema and step-by-step instructions.
 //
 // STATUS (2026-07): MSEDCL (whole state ex-Mumbai) updated to FY 2026-27 from the MERC MYT
-// Order Case 217/2024. The three Mumbai licensees below — Adani, BEST, Tata Power — are each
-// governed by their OWN MERC order (different case numbers) and are still on FY 2024-25 data;
-// they remain to be audited against their respective FY 2026-27 orders.
+// Order Case 217/2024. The three Mumbai licensees below — Adani (Case 211/2024), Tata Power
+// (Case 210/2024) and BEST (Case 207/2024) — are each on FY 2026-27 rates read from their own
+// MERC MYT press-note annexures (5th Control Period, eff. 1 Apr 2026), with FY 2025-26 in each
+// category's rateHistory. All three levy the residential FIXED charge by CONSUMPTION slab
+// (₹90 ≤100 u, ₹135 up to 500, ₹160 above — held at FY 2024-25 levels across the control period),
+// modelled with fixedCharge.type "by_consumption". Wheeling is itemised separately (per unit) and
+// Electricity Duty is 16% on the energy charge, as for MSEDCL. Not yet checked against a real
+// Mumbai bill → no verified badge.
 
 export default {
   state: "Maharashtra",
@@ -149,73 +154,85 @@ export default {
       name: "Adani Electricity Mumbai",
       fullName: "Adani Electricity Mumbai Ltd. (formerly Reliance Infrastructure)",
       area: "Mumbai suburbs (Bandra, Andheri, Kurla, Borivali, Malad, etc.)",
-      tariffYear: "2024-25",
+      tariffYear: "2026-27",
       website: "https://www.adanielectricity.com",
+      sourceUrl: "https://merc.gov.in/wp-content/uploads/2025/03/Press-Note_MYT-Order_AEML_English.pdf",
+      ratesAsOf: "FY 2026-27 (MERC Case 211/2024)",
       categories: [
         {
           id: "domestic",
-          name: "LT-1 (Residential)",
+          name: "LT-I (Residential)",
+          // MERC AEML-D MYT Order (Case 211/2024), Annexure 3: fixed charge by consumption slab
+          // (₹90 ≤100 u, ₹135 up to 500, ₹160 above), held at FY 2024-25 levels across the period.
           fixedCharge: {
-            type: "tiered",
+            type: "by_consumption",
             slabs: [
-              {
-                maxLoad: 1,
-                rate: 175,
-                label: "Up to 1 kW"
-              },
-              {
-                maxLoad: 2,
-                rate: 280,
-                label: "1 kW – 2 kW"
-              },
-              {
-                maxLoad: 5,
-                rate: 420,
-                label: "2 kW – 5 kW"
-              },
-              {
-                maxLoad: Infinity,
-                rate: 630,
-                label: "Above 5 kW"
-              }
+              { maxUnits: 100, rate: 90, label: "Up to 100 units" },
+              { maxUnits: 500, rate: 135, label: "101 – 500 units" },
+              { maxUnits: Infinity, rate: 160, label: "Above 500 units" }
             ]
           },
+          // Energy charge (₹/kWh), telescopic, FY 2026-27 (effective 1 Apr 2026).
           energySlabs: [
-            {
-              limit: 100,
-              rate: 3.35
-            },
-            {
-              limit: 300,
-              rate: 6.58
-            },
-            {
-              limit: 500,
-              rate: 9.6
-            },
-            {
-              limit: Infinity,
-              rate: 10.57
-            }
+            { limit: 100, rate: 2.65 },
+            { limit: 300, rate: 5.85 },
+            { limit: 500, rate: 7.10 },
+            { limit: Infinity, rate: 8.35 }
           ],
+          // Wheeling (distribution-network use) is itemised separately on Mumbai LT bills.
+          wheelingCharge: { type: "per_unit", rate: 2.28, label: "Wheeling Charges" },
           additionalCharges: [
+            { name: "Electricity Duty (ED)", type: "percent_energy", rate: 16 }
+          ],
+          currentRatesFrom: "2026-04-01",
+          periodLabel: "FY 2026-27 (MERC Case 211/2024)",
+          rateHistory: [
             {
-              name: "Electricity Duty (ED)",
-              type: "percent_energy",
-              rate: 16
+              from: "2025-04-01",
+              label: "FY 2025-26 (MERC Case 211/2024)",
+              estimated: false,
+              fixedCharge: {
+                type: "by_consumption",
+                slabs: [
+                  { maxUnits: 100, rate: 90, label: "Up to 100 units" },
+                  { maxUnits: 500, rate: 135, label: "101 – 500 units" },
+                  { maxUnits: Infinity, rate: 160, label: "Above 500 units" }
+                ]
+              },
+              energySlabs: [
+                { limit: 100, rate: 3.45 },
+                { limit: 300, rate: 6.70 },
+                { limit: 500, rate: 8.10 },
+                { limit: Infinity, rate: 9.05 }
+              ],
+              wheelingCharge: { type: "per_unit", rate: 2.93, label: "Wheeling Charges" }
             }
           ]
         },
         {
           id: "ht_industrial",
-          name: "HT-I Industrial (HT · kVA)",
+          name: "HT-I Industrial (HT · kVAh)",
           demandUnit: "kVA",
-          fixedCharge: { type: "per_kva", rate: 472 },
-          // Billing demand = higher of recorded MD or 75% of contract demand (common HT rule).
+          // MERC AEML-D Case 211/2024, Annexure 3 (FY 2026-27): demand ₹400/kVA, energy ₹5.73/kVAh,
+          // wheeling ₹0.57/kVAh. Billing demand = higher of recorded MD or 75% of contract demand.
+          fixedCharge: { type: "per_kva", rate: 400 },
           billingDemandFloorPct: 75,
-          energySlabs: [ { limit: Infinity, rate: 6.73 } ],
+          energySlabs: [ { limit: Infinity, rate: 5.73 } ],
+          wheelingCharge: { type: "per_unit", rate: 0.57, label: "Wheeling Charges" },
           additionalCharges: [ { name: "Electricity Duty (ED)", type: "percent_energy", rate: 9.3 } ],
-          notes: "HT-I industrial supply, kVA based — demand charge ₹472/kVA/month on the recorded MD (floored at 75% of contract demand), energy ₹6.73 per kVAh (apparent units = kWh ÷ power factor, so a poor PF raises the bill directly). Demand above contract demand is charged at 150% (state rule). Representative FY2024-25 MSEDCL HT rates; verify with the official tariff order."
+          currentRatesFrom: "2026-04-01",
+          periodLabel: "FY 2026-27 (MERC Case 211/2024)",
+          notes: "HT-I industrial supply, kVAh based (MERC Case 211/2024, FY 2026-27) — demand charge ₹400/kVA/month on the recorded MD (floored at 75% of contract demand), energy ₹5.73 per kVAh plus ₹0.57 wheeling (apparent units = kWh ÷ power factor, so a poor PF raises the bill directly). Demand above contract demand is charged at 150% (state rule).",
+          rateHistory: [
+            {
+              from: "2025-04-01",
+              label: "FY 2025-26 (MERC Case 211/2024)",
+              estimated: false,
+              fixedCharge: { type: "per_kva", rate: 400 },
+              energySlabs: [ { limit: Infinity, rate: 6.13 } ],
+              wheelingCharge: { type: "per_unit", rate: 0.74, label: "Wheeling Charges" }
+            }
+          ]
         }
       ]
     },
@@ -224,36 +241,57 @@ export default {
       name: "BEST Mumbai",
       fullName: "Brihanmumbai Electricity Supply and Transport (BEST)",
       area: "Mumbai Island City (South Mumbai – Colaba to Mahim/Sion)",
-      tariffYear: "2024-25",
+      tariffYear: "2026-27",
       website: "https://www.bestundertaking.com",
+      sourceUrl: "https://merc.gov.in/wp-content/uploads/2025/03/Press-Note_MYT-Order_BEST_English.pdf",
+      ratesAsOf: "FY 2026-27 (MERC Case 207/2024)",
       categories: [
         {
           id: "domestic",
-          name: "LT-1 (Residential)",
-          fixedCharge: 60,
+          name: "LT-I(B) (Residential)",
+          // MERC BEST MYT Order (Case 207/2024), Annexure 3: fixed charge by consumption slab
+          // (₹90 ≤100 u, ₹135 up to 500, ₹160 above), held at FY 2024-25 levels across the period.
+          fixedCharge: {
+            type: "by_consumption",
+            slabs: [
+              { maxUnits: 100, rate: 90, label: "Up to 100 units" },
+              { maxUnits: 500, rate: 135, label: "101 – 500 units" },
+              { maxUnits: Infinity, rate: 160, label: "Above 500 units" }
+            ]
+          },
+          // Energy charge (₹/kWh), telescopic, FY 2026-27 (effective 1 Apr 2026).
           energySlabs: [
-            {
-              limit: 100,
-              rate: 3.07
-            },
-            {
-              limit: 300,
-              rate: 5.98
-            },
-            {
-              limit: 500,
-              rate: 8.9
-            },
-            {
-              limit: Infinity,
-              rate: 10
-            }
+            { limit: 100, rate: 2.02 },
+            { limit: 300, rate: 5.35 },
+            { limit: 500, rate: 10.04 },
+            { limit: Infinity, rate: 11.25 }
           ],
+          wheelingCharge: { type: "per_unit", rate: 1.82, label: "Wheeling Charges" },
           additionalCharges: [
+            { name: "Electricity Duty (ED)", type: "percent_energy", rate: 16 }
+          ],
+          currentRatesFrom: "2026-04-01",
+          periodLabel: "FY 2026-27 (MERC Case 207/2024)",
+          rateHistory: [
             {
-              name: "Electricity Duty (ED)",
-              type: "percent_energy",
-              rate: 16
+              from: "2025-04-01",
+              label: "FY 2025-26 (MERC Case 207/2024)",
+              estimated: false,
+              fixedCharge: {
+                type: "by_consumption",
+                slabs: [
+                  { maxUnits: 100, rate: 90, label: "Up to 100 units" },
+                  { maxUnits: 500, rate: 135, label: "101 – 500 units" },
+                  { maxUnits: Infinity, rate: 160, label: "Above 500 units" }
+                ]
+              },
+              energySlabs: [
+                { limit: 100, rate: 1.74 },
+                { limit: 300, rate: 5.33 },
+                { limit: 500, rate: 9.81 },
+                { limit: Infinity, rate: 12.01 }
+              ],
+              wheelingCharge: { type: "per_unit", rate: 2.10, label: "Wheeling Charges" }
             }
           ]
         }
@@ -264,36 +302,57 @@ export default {
       name: "Tata Power Mumbai",
       fullName: "Tata Power Company Ltd. – Mumbai Distribution",
       area: "Parts of Mumbai (Dharavi, Wadala, parts of Kurla, Chembur, etc.)",
-      tariffYear: "2024-25",
+      tariffYear: "2026-27",
       website: "https://www.tatapower.com",
+      sourceUrl: "https://merc.gov.in/wp-content/uploads/2025/03/Press-Note_MYT-Order_TPC_English.pdf",
+      ratesAsOf: "FY 2026-27 (MERC Case 210/2024)",
       categories: [
         {
           id: "domestic",
-          name: "LT-1 (Residential)",
-          fixedCharge: 70,
+          name: "LT-I(B) (Residential)",
+          // MERC TPC-D MYT Order (Case 210/2024), Annexure 3: fixed charge by consumption slab
+          // (₹90 ≤100 u, ₹135 up to 500, ₹160 above), held at FY 2024-25 levels across the period.
+          fixedCharge: {
+            type: "by_consumption",
+            slabs: [
+              { maxUnits: 100, rate: 90, label: "Up to 100 units" },
+              { maxUnits: 500, rate: 135, label: "101 – 500 units" },
+              { maxUnits: Infinity, rate: 160, label: "Above 500 units" }
+            ]
+          },
+          // Energy charge (₹/kWh), telescopic, FY 2026-27 (effective 1 Apr 2026).
           energySlabs: [
-            {
-              limit: 100,
-              rate: 3.1
-            },
-            {
-              limit: 300,
-              rate: 5.95
-            },
-            {
-              limit: 500,
-              rate: 8.9
-            },
-            {
-              limit: Infinity,
-              rate: 9.95
-            }
+            { limit: 100, rate: 1.90 },
+            { limit: 300, rate: 4.70 },
+            { limit: 500, rate: 9.24 },
+            { limit: Infinity, rate: 10.24 }
           ],
+          wheelingCharge: { type: "per_unit", rate: 2.40, label: "Wheeling Charges" },
           additionalCharges: [
+            { name: "Electricity Duty (ED)", type: "percent_energy", rate: 16 }
+          ],
+          currentRatesFrom: "2026-04-01",
+          periodLabel: "FY 2026-27 (MERC Case 210/2024)",
+          rateHistory: [
             {
-              name: "Electricity Duty (ED)",
-              type: "percent_energy",
-              rate: 16
+              from: "2025-04-01",
+              label: "FY 2025-26 (MERC Case 210/2024)",
+              estimated: false,
+              fixedCharge: {
+                type: "by_consumption",
+                slabs: [
+                  { maxUnits: 100, rate: 90, label: "Up to 100 units" },
+                  { maxUnits: 500, rate: 135, label: "101 – 500 units" },
+                  { maxUnits: Infinity, rate: 160, label: "Above 500 units" }
+                ]
+              },
+              energySlabs: [
+                { limit: 100, rate: 2.00 },
+                { limit: 300, rate: 5.20 },
+                { limit: 500, rate: 10.79 },
+                { limit: Infinity, rate: 11.79 }
+              ],
+              wheelingCharge: { type: "per_unit", rate: 2.76, label: "Wheeling Charges" }
             }
           ]
         }

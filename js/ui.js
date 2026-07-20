@@ -304,6 +304,27 @@ export function initTabs() {
   });
 }
 
+// Sanctioned Load quick-pick chips: one tap sets the load; the active chip
+// tracks whatever value is in the field (typed or tapped).
+export function initLoadChips() {
+  const wrap = document.getElementById('loadChips');
+  const loadEl = document.getElementById('connectedLoad');
+  if (!wrap || !loadEl) return;
+  const sync = () => {
+    const v = parseFloat(loadEl.value);
+    wrap.querySelectorAll('.load-chip').forEach(b => b.classList.toggle('active', +b.dataset.kw === v));
+  };
+  wrap.addEventListener('click', e => {
+    const btn = e.target.closest('.load-chip');
+    if (!btn) return;
+    loadEl.value = btn.dataset.kw;
+    loadEl.dispatchEvent(new Event('input',  { bubbles: true }));
+    loadEl.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+  loadEl.addEventListener('input', sync);
+  sync();
+}
+
 // ─── Dynamic Rows ─────────────────────────────────────────────────────────────
 
 function fmtTotal(n) {
@@ -1251,7 +1272,9 @@ export function refreshSupplyTypeDependent() {
 // When a lifeline supply type is selected, default the Sanctioned Load field to 1 kW.
 export function applyLifelineDefaultLoad(discomId, categoryId, supplyTypeId) {
   if (lifelineCounterpart(discomId, categoryId, supplyTypeId)) {
-    document.getElementById('connectedLoad').value = LIFELINE_MAX_LOAD_KW;
+    const el = document.getElementById('connectedLoad');
+    el.value = LIFELINE_MAX_LOAD_KW;
+    el.dispatchEvent(new Event('input', { bubbles: true }));   // keep quick-pick chips in sync
   }
 }
 
@@ -1470,6 +1493,7 @@ export async function loadSample() {
     if ([...st.options].some(o => o.value === '10B')) { st.value = '10B'; st.dispatchEvent(new Event('change')); }
     document.getElementById('consumerName').value = 'Sample Consumer';
     document.getElementById('connectedLoad').value = 3;
+    document.getElementById('connectedLoad').dispatchEvent(new Event('input', { bubbles: true }));
     // Reset to a clean single meter row and type 350 units directly into its Units field;
     // clear any leftover derived period so the sample bills as a single current-month bill.
     setFieldDate(document.getElementById('fromDate'), '');

@@ -43,6 +43,14 @@ function fixedChargeHtml(fc) {
     }).join('');
     return `<table class="tariff-slab-table"><tbody>${rows}</tbody></table>`;
   }
+  // by_consumption — fixed charge set by the consumption slab (Mumbai licensees).
+  if (fc.type === 'by_consumption' && Array.isArray(fc.slabs)) {
+    const rows = fc.slabs.map(s => {
+      const label = s.label || (s.maxUnits === Infinity ? 'Above top slab' : `Up to ${s.maxUnits} units`);
+      return `<tr><td>${esc(label)}</td><td class="num">${rupee(s.rate)}<span class="tx-muted">/mo</span></td></tr>`;
+    }).join('');
+    return `<table class="tariff-slab-table"><tbody>${rows}</tbody></table>`;
+  }
   if (typeof fc.rate === 'number') return `<strong>${rupee(fc.rate)}</strong> <span class="tx-muted">/ month</span>`;
   return '<span class="tx-muted">—</span>';
 }

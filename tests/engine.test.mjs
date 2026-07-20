@@ -63,17 +63,19 @@ group('kWh domestic bill (Adani LT-1)', () => {
   });
   check('demandUnit', r.demandUnit, 'kW');
   check('billingBasis defaults kwh', r.billingBasis, 'kwh');
-  check('fixed (tiered ≤5kW)', r.fixedCharge, 420);
-  check('energy', r.totalEnergy, 2131);
-  check('ED 16% of energy', r.extraCharges.find(c => /Duty/.test(c.name)).amount, 340.96);
-  check('net', r.currentNet, 2892);              // 420 + 2131 + 340.96 → 2891.96 → round
+  // FY 2025-26 Adani (MERC Case 211/2024): fixed by consumption slab (350 u → ₹135),
+  // energy 100×3.45 + 200×6.70 + 50×8.10 = 2090, wheeling 350×2.93 = 1025.50, ED 16% of energy.
+  check('fixed (by consumption ≤500u)', r.fixedCharge, 135);
+  check('energy', r.totalEnergy, 2090);
+  check('ED 16% of energy', r.extraCharges.find(c => /Duty/.test(c.name)).amount, 334.40);
+  check('net', r.currentNet, 3585);              // 135 + 2090 + 1025.50 + 334.40 → 3584.90 → round
 });
 
 group('FPPA modes', () => {
   const pct = calculateBill({ discomId: 'adani_mumbai', categoryId: 'domestic',
     units: 350, connectedLoadKw: 5, billingPeriodDays: 30, billingDate: DATE,
     facRate: 10, facMode: 'percent', lpscApplicable: false });
-  check('percent FPPA = 10% of fixed+energy', pct.facAmount, 255.10);   // 10% × (420+2131)
+  check('percent FPPA = 10% of fixed+energy', pct.facAmount, 222.50);   // 10% × (135+2090)
 
   const pu = calculateBill({ discomId: 'adani_mumbai', categoryId: 'domestic',
     units: 350, connectedLoadKw: 5, billingPeriodDays: 30, billingDate: DATE,
@@ -165,7 +167,7 @@ group('wheeling charge', () => {
   check('MSEDCL domestic wheeling wired FY2025-26 (100 × 1.24)', msedcl.wheelingCharge, 124);
 });
 
-// ── kVA Maximum Demand + billing-demand floor (Adani HT-I, per_kva 472) ───────
+// ── kVA Maximum Demand + billing-demand floor (Adani HT-I, per_kva 400) ───────
 group('kVA demand + floor', () => {
   // MD above floor → bills on MD
   const above = calculateBill({ discomId: 'adani_mumbai', categoryId: 'ht_industrial',
@@ -174,7 +176,7 @@ group('kVA demand + floor', () => {
   check('demandUnit kVA', above.demandUnit, 'kVA');
   check('energyUnit kVAh', above.energyUnit, 'kVAh');
   check('billingDemand = MD', above.billingDemand, 90);
-  check('demand charge 472×90', above.fixedCharge, 42480);
+  check('demand charge 400×90', above.fixedCharge, 36000);
 
   // MD below 75% floor → bills on 75% of contract demand
   const below = calculateBill({ discomId: 'adani_mumbai', categoryId: 'ht_industrial',
@@ -182,7 +184,7 @@ group('kVA demand + floor', () => {
     billingPeriodDays: 30, billingDate: DATE, facRate: 0, lpscApplicable: false });
   check('floor applied', below.demandFloorApplied, true);
   check('billingDemand = 75% CD', below.billingDemand, 75);
-  check('demand charge 472×75', below.fixedCharge, 35400);
+  check('demand charge 400×75', below.fixedCharge, 30000);
 });
 
 // ── kVAh apparent energy billed directly (no ÷PF conversion) ──────────────────
@@ -190,8 +192,8 @@ group('kVAh direct energy', () => {
   const r = calculateBill({ discomId: 'adani_mumbai', categoryId: 'ht_industrial',
     units: 1000, connectedLoadKw: 100, billedDemandKw: 90, billingBasis: 'kvah',
     billingPeriodDays: 30, billingDate: DATE, facRate: 0, lpscApplicable: false });
-  check('energy on entered units (1000 × 6.73)', r.totalEnergy, 6730);
-  check('ED 9.3% of kVAh energy', r.extraCharges.find(c => /Duty/.test(c.name)).amount, 625.89);
+  check('energy on entered units (1000 × 6.13)', r.totalEnergy, 6130);
+  check('ED 9.3% of kVAh energy', r.extraCharges.find(c => /Duty/.test(c.name)).amount, 570.09);
 });
 
 // ── Regression: kVA config survives resolveDatedTariff (the whitelist bug) ─────
@@ -209,8 +211,8 @@ group('excess demand penalty', () => {
     units: 1000, connectedLoadKw: 100, billedDemandKw: 120, billingBasis: 'kvah',
     billingPeriodDays: 30, billingDate: DATE, facRate: 0, lpscApplicable: false });
   check('excess kVA', r.excessDemand, 20);                  // 120 − 100
-  check('excess rate 1.5 × 472', r.excessDemandRate, 708);
-  check('penalty 20 × 708', r.excessDemandPenalty, 14160);
+  check('excess rate 1.5 × 400', r.excessDemandRate, 600);
+  check('penalty 20 × 600', r.excessDemandPenalty, 12000);
 });
 
 // ── Net metering (rooftop solar) ─────────────────────────────────────────────
@@ -222,8 +224,8 @@ group('net metering', () => {
     netMetering: true, exportUnits: 150, openingCreditUnits: 50 });
   check('net billed units', net.netUnits, 200);
   check('no surplus credit', net.closingCredit, 0);
-  // energy on 200 units (telescopic): 100×3.35 + 100×6.58 = 335 + 658 = 993
-  check('energy on net units', net.totalEnergy, 993);
+  // energy on 200 units (telescopic, FY 2025-26): 100×3.45 + 100×6.70 = 345 + 670 = 1015
+  check('energy on net units', net.totalEnergy, 1015);
 
   // export exceeds import → zero energy + banked surplus carried forward
   const surplus = calculateBill({ discomId: 'adani_mumbai', categoryId: 'domestic',

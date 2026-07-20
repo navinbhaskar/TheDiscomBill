@@ -12,7 +12,7 @@ export const STRINGS = {
     // Header / nav
     'tagline': 'Electricity Bill Calculator · All India',
     'nav.calculator': 'Calculator',
-    'nav.compare': 'Compare DISCOMs',
+    'nav.compare': 'Compare Rates',
     'nav.tariffs': 'Tariffs',
     'nav.solar': 'Solar',
     'nav.ev': 'EV Cost',
@@ -221,7 +221,7 @@ export const STRINGS = {
     'mode.simple': '⚡ Simple',
     'mode.detailed': 'Detailed',
     'mode.simpleHint': 'Just your DISCOM and units — we handle the rest.',
-    'btn.compare': '⚖ Compare DISCOMs',
+    'btn.compare': '⚖ Compare Electricity Rates',
     'btn.addPayment': '+ Add Payment',
     'btn.addAdjustment': '+ Add Adjustment',
     // Checkboxes / toggles
@@ -324,7 +324,7 @@ export const STRINGS = {
     'svc.chargeNote': '💡 Keep your consumer / account number and the DISCOM complaint number handy at every step.',
     'svc.note': 'TheDiscomBill is independent and not affiliated with any DISCOM. We link only to official portals and helplines — we never ask for your account number, OTP or password. For an estimate of your charges before paying, use the <a href="/#calculator">bill calculator</a>.',
     // Compare page (/compare/)
-    'cmp.h2': 'Tariff Comparison (Major DISCOMs)',
+    'cmp.h2': 'Electricity Rate Comparison (Major Providers)',
     'cmp.intro': 'See how major electricity providers stack up against each other for a typical month at a <strong>1&nbsp;kW sanctioned load</strong>. Calculated dynamically based on current FY 2025-26 tariffs.',
     'cmp.cc.title': 'Compare any two DISCOMs',
     'cmp.cc.sub': 'Not just the majors — pick any two providers and enter your own monthly usage for a like-for-like bill estimate, with a full breakdown.',

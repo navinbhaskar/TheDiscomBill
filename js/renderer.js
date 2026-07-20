@@ -72,6 +72,13 @@ function fixedChargeDesc(config, demandKw, unit = 'kW') {
       return `${band}: ₹ ${s.rate}`;
     }).join(' · ');
   }
+  // by_consumption — the monthly fixed charge is set by the consumption slab (Mumbai licensees).
+  if (config.type === 'by_consumption') {
+    return config.slabs.map(s => {
+      const band = s.label || (s.maxUnits === Infinity ? 'above top slab' : `up to ${s.maxUnits} units`);
+      return `${band}: ₹ ${s.rate}`;
+    }).join(' · ');
+  }
   return '—';
 }
 

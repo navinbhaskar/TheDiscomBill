@@ -251,7 +251,7 @@ const HEADER = `
     </a>
     <nav class="header-nav">
       <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
-      <a href="/compare/" class="nav-promoted" data-i18n="nav.compare">Compare DISCOMs</a>
+      <a href="/compare/" class="nav-promoted" data-i18n="nav.compare">Compare Rates</a>
       <a href="/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
       <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
       <div class="nav-dropdown" id="quickLinksDropdown">
@@ -262,7 +262,7 @@ const HEADER = `
         <div class="nav-dropdown-menu" id="quickLinksMenu" role="menu">
           <div class="nav-mob-links" role="presentation">
             <a href="/#calculator" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
-            <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-i18n="nav.compare">Compare DISCOMs</span></a>
+            <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-i18n="nav.compare">Compare Rates</span></a>
             <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
             <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
             <a href="/#about" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span data-i18n="nav.about">About</span></a>
@@ -539,6 +539,16 @@ function fixedChargeHtml(fc, lang = 'en') {
       const label = s.label || (s.maxLoad === Infinity
         ? T(lang, { en: 'Above limit', hi: 'सीमा से ऊपर', mr: 'मर्यादेपेक्षा जास्त', ta: 'வரம்பிற்கு மேல்' })
         : T(lang, { en: `Up to ${s.maxLoad} kW`, hi: `${s.maxLoad} kW तक`, mr: `${s.maxLoad} kW पर्यंत`, ta: `${s.maxLoad} kW வரை` }));
+      return `<tr><td>${esc(label)}</td><td class="num">${rupee(s.rate)}<span class="tx-muted">${perMo}</span></td></tr>`;
+    }).join('');
+    return `<table class="tariff-slab-table"><tbody>${rows}</tbody></table>`;
+  }
+  // by_consumption — fixed charge set by the consumption slab (Mumbai licensees).
+  if (fc.type === 'by_consumption' && Array.isArray(fc.slabs)) {
+    const rows = fc.slabs.map(s => {
+      const label = s.label || (s.maxUnits === Infinity
+        ? T(lang, { en: 'Above top slab', hi: 'सर्वोच्च स्लैब से ऊपर', mr: 'सर्वोच्च स्लॅबवर', ta: 'மேல் அடுக்கிற்கு மேல்' })
+        : T(lang, { en: `Up to ${s.maxUnits} units`, hi: `${s.maxUnits} यूनिट तक`, mr: `${s.maxUnits} युनिटपर्यंत`, ta: `${s.maxUnits} யூனிட் வரை` }));
       return `<tr><td>${esc(label)}</td><td class="num">${rupee(s.rate)}<span class="tx-muted">${perMo}</span></td></tr>`;
     }).join('');
     return `<table class="tariff-slab-table"><tbody>${rows}</tbody></table>`;
