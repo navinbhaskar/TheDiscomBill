@@ -6562,4 +6562,905 @@ export const GUIDES = [
         a: '2–3 kW for most homes: the subsidy covers its largest share of cost there, the cap lands at exactly 3 kW, and that size matches typical urban consumption. Beyond 3 kW every additional kW is fully self-funded.' },
     ],
   },
+  {
+    slug: 'bescom-new-connection-online',
+    published: "2026-07-20",
+    states: ['Karnataka'],
+    title: 'How to Get a New BESCOM Electricity Connection Online (Bengaluru)',
+    metaTitle: 'BESCOM New Connection Online — Portal, Documents, Charges, Timeline',
+    description: 'Step-by-step guide to a new BESCOM electricity connection in Bengaluru and surrounding districts: which portal actually takes the application (bescom.co.in, not just Seva Sindhu), the document checklist including the wiring test report, deposits and charges, statutory timelines, and how to chase a stalled application.',
+    minutes: 8,
+    intro: `A new domestic connection in BESCOM territory — Bengaluru and seven surrounding
+      districts — is applied for online, but the right portal depends on where the premises is.
+      Most applicants use BESCOM's own LT services portal at
+      <a href="https://www.bescom.co.in/bescom/auth/forms" rel="nofollow noopener" target="_blank">bescom.co.in</a>;
+      Karnataka's <a href="https://sevasindhu.karnataka.gov.in/" rel="nofollow noopener" target="_blank">Seva Sindhu</a>
+      portal also carries the service. This guide covers who applies where, the document list
+      (including the wiring-contractor test report that surprises most first-time applicants),
+      what you pay, and the legally enforceable timelines.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. Which portal — bescom.co.in, ieasybill or Seva Sindhu?</h2>
+        <p>BESCOM splits its online services by area, and its own site links two different
+        application portals:</p>
+        <ul>
+          <li><strong>RAPDRP (urban) areas</strong> — Bengaluru city plus towns such as Ramanagara,
+          Kanakapura, Kolar, Chikkaballapura, Doddaballapura, KGF, Tumakuru, Davanagere and
+          Chitradurga — apply on
+          <a href="https://www.bescom.co.in/bescom/auth/forms" rel="nofollow noopener" target="_blank">bescom.co.in/bescom/auth/forms</a>.</li>
+          <li><strong>Non-RAPDRP (rural) areas</strong> use BESCOM's ieasybill portal
+          (linked from the same
+          <a href="https://bescom.karnataka.gov.in/info-3/Apply+Online+for+LT+New+Connection+and+Other+Services/en" rel="nofollow noopener" target="_blank">Apply Online page</a>
+          on bescom.karnataka.gov.in), which handles new connections, tariff changes and name
+          transfers for rural sub-divisions.</li>
+          <li><strong>Seva Sindhu</strong> (<a href="https://sevasindhu.karnataka.gov.in/" rel="nofollow noopener" target="_blank">sevasindhu.karnataka.gov.in</a>)
+          is Karnataka's umbrella service portal and also accepts BESCOM new-connection
+          applications — useful if you already have a DigiLocker-linked Seva Sindhu login. The
+          application lands with the same sub-division either way.</li>
+        </ul>
+        <p>Domestic supply in Bengaluru is billed under LT-2a. Current slab rates and fixed
+        charges are on our <a href="/tariffs/karnataka/bescom/">BESCOM tariff page</a> — worth a
+        look before you choose the sanctioned load, since the fixed charge is per kW per month.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. Documents — the wiring test report is the one people miss</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Requirement</th><th>Accepted documents</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Identity proof</strong></td><td>Aadhaar, voter ID, passport, PAN or driving licence.</td></tr>
+            <tr><td><strong>Ownership / occupancy proof</strong></td><td>Sale deed, khata certificate/extract, property-tax paid receipt, or allotment letter. Tenants: rent agreement plus the owner's no-objection letter.</td></tr>
+            <tr><td><strong>Wiring test report</strong></td><td>Issued by a <strong>licensed electrical contractor</strong> after wiring the premises — BESCOM will not energise without it. Keep the contractor's licence number handy; it goes into the form.</td></tr>
+            <tr><td><strong>Photograph</strong></td><td>One passport-size photo of the applicant.</td></tr>
+          </tbody>
+        </table></div>
+        <p><strong>Tenants can apply in their own name.</strong> Supply is the occupier's right
+        under Section 43 of the Electricity Act, 2003 — the connection attaches to the premises,
+        and a rent agreement with the owner's NOC (or an indemnity bond where the owner will not
+        sign) is the standard paper trail.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. The application, step by step</h2>
+        <ol>
+          <li><strong>Register</strong> on the portal for your area (mobile-OTP login), pick
+          <em>New Connection</em>, and select the supply category — LT-2a for a home.</li>
+          <li><strong>Fill premises and load details.</strong> Ask for the load you actually need —
+          1–3 kW covers most flats; every sanctioned kW adds to the monthly fixed charge. Our
+          <a href="/guides/reduce-fixed-charges-sanctioned-load/">fixed-charges guide</a> shows how
+          to size it.</li>
+          <li><strong>Upload documents</strong> (PDF/JPEG) including the wiring test report, and pay
+          the application/registration fee online.</li>
+          <li><strong>Site inspection.</strong> A BESCOM engineer verifies the wiring, the load and
+          the distance from the nearest pole — typically within 3–5 working days in Bengaluru.</li>
+          <li><strong>Pay the demand note.</strong> After inspection BESCOM issues a note covering
+          the security deposit, meter cost and any service-line charges. Pay it online; this
+          payment starts the energisation clock.</li>
+          <li><strong>Meter installation.</strong> New BESCOM connections now get smart meters by
+          default. Your 10-digit account ID / RR number arrives by SMS; the first bill follows in
+          the next cycle. Learn to decode it with our
+          <a href="/guides/how-to-read-bescom-bill/">BESCOM bill guide</a>.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. What it costs</h2>
+        <p>Three separate amounts, often confused with each other:</p>
+        <ul>
+          <li><strong>Application fee</strong> — a small registration amount paid at submission.</li>
+          <li><strong>Security deposit (MSD/ISD)</strong> — roughly two months' expected
+          consumption, held against your future bills and refundable when the connection is
+          surrendered. Scales with sanctioned load.</li>
+          <li><strong>Service-line and meter charges</strong> — fixed by BESCOM's schedule of
+          charges; small if the premises is within a service-drop of an existing pole, higher when
+          a line extension is needed (the inspection decides this).</li>
+        </ul>
+        <p>The exact figures print on the demand note — pay only what it shows, through the portal.
+        No lineman or middleman fee is ever payable; estimate your future bills with the
+        <a href="/">bill calculator</a> before choosing the load.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. Timelines — and what to do when nothing moves</h2>
+        <p>Under the Electricity (Rights of Consumers) Rules, 2020, a complete paid application
+        must be energised within <strong>7 days in metropolitan areas</strong> (Bengaluru), 15 days
+        in other municipal areas and 30 days in rural areas — line-extension cases follow the
+        KERC Standards of Performance instead. BESCOM services are also covered by Karnataka's
+        Sakala guarantee, which stamps a due date on the acknowledgement.</p>
+        <ul>
+          <li><strong>Stalled application?</strong> Quote the application number at BESCOM's 1912
+          helpline, or escalate to the sub-division AEE — the portal dashboard names the officer.</li>
+          <li><strong>Still stuck?</strong> A written complaint to the Consumer Grievance Redressal
+          Forum (CGRF) citing the Rules usually unblocks it; compensation for delay is payable
+          under KERC's SoP regulations.</li>
+          <li><strong>Gruha Jyothi:</strong> once the connection is live, register it on Seva
+          Sindhu for the scheme's free-units benefit — it is not automatic for new RR numbers.</li>
+        </ul>
+      </section>`,
+    faqs: [
+      { q: 'Which website do I use for a new BESCOM connection?',
+        a: 'BESCOM’s own LT portal at bescom.co.in/bescom/auth/forms for Bengaluru and other RAPDRP towns, the ieasybill portal (linked from bescom.karnataka.gov.in) for rural areas, or Seva Sindhu — all reach the same sub-division. Avoid third-party "agents"; there is no official fee outside the portal.' },
+      { q: 'What documents does BESCOM need for a new connection?',
+        a: 'Identity proof (Aadhaar/voter ID/PAN), ownership or occupancy proof (sale deed, khata, tax receipt — or rent agreement plus owner NOC for tenants), a passport photo, and a wiring test report from a licensed electrical contractor.' },
+      { q: 'How long does a new BESCOM connection take?',
+        a: 'The Rights of Consumers Rules, 2020 require energisation within 7 days in Bengaluru (metropolitan), 15 days in other municipal areas and 30 days rural, once the application is complete and paid. Inspection typically happens within 3–5 working days.' },
+      { q: 'How much does a new BESCOM connection cost?',
+        a: 'An application fee at submission, plus a demand note after inspection covering the security deposit (about two months’ expected billing, refundable), meter cost and service-line charges. Exact amounts depend on load and distance from the network — pay only what the demand note shows.' },
+      { q: 'Can a tenant get a BESCOM connection without the owner?',
+        a: 'Yes. Supply is the occupier’s statutory right under Section 43 of the Electricity Act, 2003. A rent agreement with the owner’s no-objection letter is standard; where the owner refuses to sign, an indemnity bond generally suffices.' },
+    ],
+  },
+  {
+    slug: 'kseb-new-connection-online',
+    published: "2026-07-20",
+    states: ['Kerala'],
+    title: 'How to Get a New KSEB Electricity Connection Online (WSS Portal)',
+    metaTitle: 'KSEB New Connection Online — WSS Portal: ₹50 Fee, Documents, 2-Day Package Connection',
+    description: 'Step-by-step guide to a new KSEB electricity connection through the Web Self Service portal (wss.kseb.in): the ₹50 LT application fee, exact document checklist, the two-working-day "package connection" for small loads, tenant NOC rules, deposits, and statutory timelines.',
+    minutes: 7,
+    intro: `Kerala has one electricity distributor for the whole state, so every new domestic
+      connection goes through KSEB — and almost all of it happens on one site: the
+      <strong>Web Self Service (WSS) portal</strong> at
+      <a href="https://wss.kseb.in/selfservices/" rel="nofollow noopener" target="_blank">wss.kseb.in</a>.
+      The LT application fee is a flat ₹50, and small connections that need nothing more than a
+      weather-proof service drop qualify for KSEB's <em>package connection</em> — energised in as
+      little as two working days. Here is the whole flow: documents, fees, the one paper step that
+      remains, and what to do if it stalls.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. The WSS portal — one login for the whole state</h2>
+        <p>KSEB's WSS portal handles new LT service connections end to end: application, document
+        upload, the ₹50 fee, status tracking and later your bills for the same consumer number.
+        Register with a mobile number and email, choose <em>New Connection</em>, and pick your
+        electrical section (the office that serves the premises — the portal narrows this by
+        district).</p>
+        <ul>
+          <li><strong>Domestic (LT-1) applications</strong> are fully online; the same portal also
+          takes non-domestic and, via a separate flow, HT applications.</li>
+          <li><strong>Existing-connection changes</strong> — ownership transfer, load change, tariff
+          change — are separate WSS services, not the new-connection form.</li>
+          <li>Slab rates and fixed charges for what you will pay once live are on our
+          <a href="/tariffs/kerala/kseb/">KSEB tariff page</a>.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. Documents — and the tenant NOC rule</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Requirement</th><th>Accepted documents</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Identity proof</strong></td><td>Aadhaar, voter ID, passport, driving licence, ration card, PAN, or a photo ID certificate from the village panchayat / municipality.</td></tr>
+            <tr><td><strong>Ownership / occupancy proof</strong></td><td>Ownership certificate, attested title deed, land tax receipt (within the last year), possession certificate, or the building's occupancy certificate.</td></tr>
+            <tr><td><strong>Tenants</strong></td><td>Any occupancy proof <strong>plus a no-objection certificate from the owner</strong> — KSEB asks for the NOC explicitly.</td></tr>
+            <tr><td><strong>New buildings</strong></td><td>Approved building permit works as proof while the occupancy certificate is pending.</td></tr>
+          </tbody>
+        </table></div>
+        <p>Scan everything before you start — the portal takes PDF/JPEG uploads, and the original
+        documents are shown once, at the site inspection.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. The application, step by step</h2>
+        <ol>
+          <li><strong>Apply on WSS</strong> — fill the premises details, connected load and tariff
+          (LT-1 domestic), upload documents, and pay the <strong>₹50 application fee</strong>
+          online.</li>
+          <li><strong>Print, sign, photograph.</strong> KSEB still wants one physical artefact: the
+          system-generated application form, printed, signed and with a photo affixed. Hand it over
+          at the site inspection along with the originals.</li>
+          <li><strong>Site inspection.</strong> The section's overseer checks the wiring, the
+          service-drop distance and the load. Any line-extension cost is worked out here and
+          communicated by SMS/email.</li>
+          <li><strong>Pay the demand</strong> — security deposit plus any service-connection
+          charges, payable online on WSS.</li>
+          <li><strong>Energisation.</strong> For a <em>package connection</em> — broadly, a small LT
+          supply needing only a weather-proof service wire of up to ~35 m from the post —
+          KSEB's own promise is <strong>about two working days</strong> when no earlier
+          application is pending in the queue for that category. Your 13-digit consumer number
+          arrives by SMS.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. What it costs</h2>
+        <ul>
+          <li><strong>₹50 application fee</strong> for any LT new connection — the only amount due
+          at submission.</li>
+          <li><strong>Security deposit</strong> — set from the connected load and expected
+          consumption, held against future bills, refundable with interest on surrender.</li>
+          <li><strong>Service-connection charges</strong> — nil to modest when the premises is
+          within a standard service drop; a costed estimate when poles or line extension are
+          needed, decided at inspection.</li>
+        </ul>
+        <p>Nothing is payable in cash to field staff. Estimate the monthly bill for your planned
+        load and usage with the <a href="/">bill calculator</a> — Kerala's telescopic slabs make
+        the first connection size decision worth five minutes' thought.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. Timelines and escalation</h2>
+        <p>Beyond the two-day package promise, the Electricity (Rights of Consumers) Rules, 2020
+        back-stop every case: energisation within 7 days in metropolitan areas, 15 days in other
+        municipal areas and 30 days in rural areas once the paid application is complete —
+        line-extension cases follow KSERC's Standards of Performance.</p>
+        <ul>
+          <li><strong>Track it:</strong> the WSS dashboard shows the application stage; the portal
+          also publishes the pending-applications queue per section, so you can see exactly where
+          you stand.</li>
+          <li><strong>Stalled?</strong> Call 1912 with the application number, then the section's
+          Assistant Engineer. The next step is a written complaint to KSEB's CGRF citing the 2020
+          Rules — delay compensation is payable under the KSERC SoP.</li>
+          <li>Once live, decode your first bill with our reading guides and check the slab math on
+          the <a href="/tariffs/kerala/kseb/">KSEB tariff page</a>.</li>
+        </ul>
+      </section>`,
+    faqs: [
+      { q: 'Where do I apply for a new KSEB connection online?',
+        a: 'On KSEB’s Web Self Service portal at wss.kseb.in — register, choose New Connection, upload documents and pay the ₹50 LT application fee. The same login later shows your bills and application status.' },
+      { q: 'What is a KSEB package connection?',
+        a: 'A fast-track for small LT connections that need only a weather-proof service wire (roughly up to 35 m from the post): KSEB’s own promise is energisation in about two working days when no earlier application is pending in that category.' },
+      { q: 'What documents do I need for a KSEB new connection?',
+        a: 'Identity proof (Aadhaar, voter ID, passport, ration card, PAN), plus ownership or occupancy proof — title deed, ownership certificate, recent land tax receipt or occupancy certificate. Tenants additionally need a no-objection certificate from the owner.' },
+      { q: 'How much does a new KSEB connection cost?',
+        a: '₹50 application fee at submission; then a security deposit based on load and expected use (refundable), and service-connection charges that are small unless poles or a line extension are required — the inspection fixes the exact figure.' },
+      { q: 'My KSEB application is stuck — what do I do?',
+        a: 'Check the stage on the WSS dashboard and the published pending queue for your section, call 1912 with the application number, then the section AE. A written CGRF complaint citing the Rights of Consumers Rules, 2020 (7/15/30-day limits) is the formal remedy.' },
+    ],
+  },
+  {
+    slug: 'haryana-new-connection-dhbvn-uhbvn',
+    published: "2026-07-20",
+    states: ['Haryana'],
+    title: 'How to Get a New Electricity Connection in Haryana (DHBVN / UHBVN eConnection)',
+    metaTitle: 'DHBVN & UHBVN New Connection Online — eConnection Portal, Documents, 7-Day Payment Rule',
+    description: 'Step-by-step guide to a new DHBVN or UHBVN electricity connection in Haryana through the dedicated eConnection portals: which DISCOM serves your district, the document checklist, the ₹20 processing fee, the 7-day payment deadline that cancels applications, and statutory timelines.',
+    minutes: 7,
+    intro: `Haryana's two DISCOMs take new-connection applications on dedicated
+      <strong>eConnection portals</strong> — <a href="https://econnection.dhbvn.org.in/" rel="nofollow noopener" target="_blank">econnection.dhbvn.org.in</a>
+      for South Haryana and
+      <a href="https://econnection.uhbvn.org.in/" rel="nofollow noopener" target="_blank">econnection.uhbvn.org.in</a>
+      for the north — not the general Antyodaya Saral portal, which handles other government
+      services. The flow is simple, but one rule catches applicants out: <strong>charges must be
+      paid within 7 days of applying or the application is cancelled</strong>. Here is the whole
+      process — which portal is yours, documents, fees and the timelines you can enforce.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. DHBVN or UHBVN — which portal is yours?</h2>
+        <ul>
+          <li><strong>DHBVN (Dakshin Haryana Bijli Vitran Nigam)</strong> serves South Haryana —
+          Gurugram, Faridabad, Hisar, Rewari, Narnaul, Bhiwani, Sirsa, Fatehabad, Jind, Palwal and
+          nearby districts. Apply on
+          <a href="https://econnection.dhbvn.org.in/" rel="nofollow noopener" target="_blank">econnection.dhbvn.org.in</a>.</li>
+          <li><strong>UHBVN (Uttar Haryana Bijli Vitran Nigam)</strong> serves the north —
+          Panchkula, Ambala, Kurukshetra, Karnal, Panipat, Sonipat, Rohtak, Yamunanagar, Kaithal
+          and around. Apply on
+          <a href="https://econnection.uhbvn.org.in/" rel="nofollow noopener" target="_blank">econnection.uhbvn.org.in</a>.</li>
+        </ul>
+        <p>Both portals work the same way; both DISCOMs answer on the common 1912 helpline. Slab
+        rates and monthly fixed charges for domestic supply are on our
+        <a href="/tariffs/haryana/dhbvn/">DHBVN</a> and
+        <a href="/tariffs/haryana/uhbvn/">UHBVN</a> tariff pages.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. Documents</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Requirement</th><th>Accepted documents</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Identity proof</strong></td><td>Aadhaar, voter ID, passport, PAN or driving licence.</td></tr>
+            <tr><td><strong>Ownership / occupancy proof</strong></td><td>Registry / sale deed, allotment letter, house-tax receipt, or a rent/lease deed for tenants (with the owner's consent letter).</td></tr>
+            <tr><td><strong>Load details</strong></td><td>The form asks for connected-load appliances — a simple list; the portal totals the kW for you.</td></tr>
+            <tr><td><strong>Photograph</strong></td><td>One passport-size photo of the applicant.</td></tr>
+          </tbody>
+        </table></div>
+        <p><strong>Tenants can apply:</strong> supply is the occupier's right under Section 43 of
+        the Electricity Act, 2003 — rent deed plus the owner's consent (or an indemnity bond) is
+        the accepted trail in both DISCOMs.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. The application, step by step — mind the 7-day rule</h2>
+        <ol>
+          <li><strong>Register</strong> on your DISCOM's eConnection portal with mobile OTP, then
+          choose the connection type — Domestic, Non-domestic/Commercial, Agriculture or
+          Industrial.</li>
+          <li><strong>Fill the form:</strong> district → sub-division, premises address, sanctioned
+          load requested and the appliance list. Ask only for the load you need — the monthly fixed
+          charge is per sanctioned kW (see our
+          <a href="/guides/reduce-fixed-charges-sanctioned-load/">load-sizing guide</a>).</li>
+          <li><strong>Upload documents and pay.</strong> The processing fee is nominal (₹20 on
+          DHBVN's schedule) and the portal shows a charges calculator for the rest.
+          <strong>Pay whatever the portal demands within 7 days of applying — the application is
+          auto-cancelled otherwise.</strong></li>
+          <li><strong>Site inspection</strong> by the sub-division's JE to verify load and distance
+          from the network; any service-line estimate is raised after this visit and is also
+          payable online.</li>
+          <li><strong>Meter installation and energisation.</strong> Haryana is rolling out smart
+          meters, so new urban connections generally get one. The account number arrives by SMS;
+          the first bill follows in the next cycle.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. What it costs</h2>
+        <ul>
+          <li><strong>Processing fee</strong> — nominal, paid at submission (₹20 for a DHBVN
+          domestic application).</li>
+          <li><strong>Security deposit (ACD)</strong> — held against future bills, scaled to load
+          and category, refundable on surrender.</li>
+          <li><strong>Service connection charges</strong> — fixed per the sales circulars for a
+          standard service drop; a costed estimate when line extension is needed.</li>
+        </ul>
+        <p>Every amount is shown and paid on the portal — nothing is payable in cash to field
+        staff. Project your bills for the load you plan to take with the
+        <a href="/">bill calculator</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. Timelines and escalation</h2>
+        <p>The Electricity (Rights of Consumers) Rules, 2020 require energisation within
+        <strong>7 days in metropolitan areas, 15 days in other municipal areas and 30 days in
+        rural areas</strong> after a complete, paid application; line-extension cases follow the
+        HERC Standards of Performance, which also prescribe delay compensation.</p>
+        <ul>
+          <li><strong>Track</strong> the application on the same eConnection portal (status,
+          payments, inspection remarks).</li>
+          <li><strong>Stalled?</strong> Call 1912 with the application number; escalate to the
+          sub-division SDO — the portal names the office. DHBVN also takes complaints at
+          dhcomplaints@dhbvn.org.in.</li>
+          <li><strong>Formal remedy:</strong> a written complaint to the DISCOM's CGRF citing the
+          2020 Rules and the HERC SoP.</li>
+        </ul>
+      </section>`,
+    faqs: [
+      { q: 'Which portal do I use for a new electricity connection in Haryana?',
+        a: 'The DISCOM eConnection portals — econnection.dhbvn.org.in for South Haryana (Gurugram, Faridabad, Hisar…) and econnection.uhbvn.org.in for the north (Panchkula, Karnal, Panipat…). Electricity connections are not applied for on the Antyodaya Saral portal.' },
+      { q: 'What is the 7-day payment rule on DHBVN/UHBVN applications?',
+        a: 'Charges demanded at application must be paid within 7 days of the application date, or the portal cancels the application automatically. Pay online on the same portal and keep the receipt in your account.' },
+      { q: 'What documents are needed for a DHBVN or UHBVN new connection?',
+        a: 'Identity proof (Aadhaar/voter ID/PAN), ownership proof (registry, allotment letter or house-tax receipt — or rent deed plus owner consent for tenants), a passport photo, and the appliance/load list the form asks for.' },
+      { q: 'How long does a new Haryana connection take?',
+        a: 'Under the Rights of Consumers Rules, 2020: 7 days in metropolitan areas, 15 days in municipal areas, 30 days rural, once the application is complete and paid. In practice expect roughly 1–2 weeks where no line extension is needed.' },
+      { q: 'Whom do I contact if the application is stuck?',
+        a: 'Call 1912 with the application number, then the sub-division SDO named on the portal. DHBVN also answers at dhcomplaints@dhbvn.org.in; the formal route is the CGRF, citing the 2020 Rules and HERC Standards of Performance.' },
+    ],
+    titleHi: 'हरियाणा में नया बिजली कनेक्शन कैसे लें (DHBVN / UHBVN eConnection)',
+    metaTitleHi: 'DHBVN और UHBVN नया कनेक्शन ऑनलाइन — eConnection पोर्टल, दस्तावेज़, 7-दिन भुगतान नियम',
+    descriptionHi: 'हरियाणा में DHBVN या UHBVN के नए बिजली कनेक्शन की स्टेप-बाय-स्टेप गाइड: आपके ज़िले की DISCOM कौन-सी है, eConnection पोर्टल, दस्तावेज़ चेकलिस्ट, ₹20 प्रोसेसिंग फीस, 7 दिन में भुगतान न करने पर आवेदन रद्द होने का नियम, और वैधानिक समय-सीमाएँ।',
+    introHi: `हरियाणा की दोनों DISCOM नए कनेक्शन के आवेदन अपने-अपने
+      <strong>eConnection पोर्टल</strong> पर लेती हैं —
+      दक्षिण हरियाणा के लिए <a href="https://econnection.dhbvn.org.in/" rel="nofollow noopener" target="_blank">econnection.dhbvn.org.in</a>
+      और उत्तर के लिए <a href="https://econnection.uhbvn.org.in/" rel="nofollow noopener" target="_blank">econnection.uhbvn.org.in</a> —
+      अंत्योदय सरल पोर्टल पर नहीं, वह बाकी सरकारी सेवाओं के लिए है। प्रक्रिया सीधी है, बस एक नियम
+      ध्यान रखें: <strong>आवेदन के 7 दिन के भीतर शुल्क न भरा तो आवेदन रद्द</strong>। यहाँ पूरा
+      तरीका है — आपका पोर्टल कौन-सा है, दस्तावेज़, फीस और वे समय-सीमाएँ जो आप कानूनन लागू करा सकते हैं।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>1. DHBVN या UHBVN — आपका पोर्टल कौन-सा?</h2>
+        <ul>
+          <li><strong>DHBVN (दक्षिण हरियाणा बिजली वितरण निगम)</strong> — गुरुग्राम, फ़रीदाबाद,
+          हिसार, रेवाड़ी, नारनौल, भिवानी, सिरसा, फ़तेहाबाद, जींद, पलवल और आस-पास के ज़िले। आवेदन
+          <a href="https://econnection.dhbvn.org.in/" rel="nofollow noopener" target="_blank">econnection.dhbvn.org.in</a> पर।</li>
+          <li><strong>UHBVN (उत्तर हरियाणा बिजली वितरण निगम)</strong> — पंचकूला, अंबाला,
+          कुरुक्षेत्र, करनाल, पानीपत, सोनीपत, रोहतक, यमुनानगर, कैथल आदि। आवेदन
+          <a href="https://econnection.uhbvn.org.in/" rel="nofollow noopener" target="_blank">econnection.uhbvn.org.in</a> पर।</li>
+        </ul>
+        <p>दोनों पोर्टल एक जैसे चलते हैं; हेल्पलाइन दोनों की 1912 है। घरेलू स्लैब दरें और मासिक
+        फिक्स्ड चार्ज हमारी <a href="/hi/tariffs/haryana/dhbvn/">DHBVN</a> और
+        <a href="/hi/tariffs/haryana/uhbvn/">UHBVN</a> टैरिफ पेजों पर हैं।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. दस्तावेज़</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>ज़रूरत</th><th>मान्य दस्तावेज़</th></tr></thead>
+          <tbody>
+            <tr><td><strong>पहचान प्रमाण</strong></td><td>आधार, वोटर ID, पासपोर्ट, PAN या ड्राइविंग लाइसेंस।</td></tr>
+            <tr><td><strong>स्वामित्व / कब्ज़ा प्रमाण</strong></td><td>रजिस्ट्री / सेल डीड, अलॉटमेंट लेटर, हाउस-टैक्स रसीद, या किरायेदारों के लिए रेंट/लीज़ डीड (मालिक की सहमति के साथ)।</td></tr>
+            <tr><td><strong>लोड विवरण</strong></td><td>फॉर्म में उपकरणों की सूची भरनी होती है — पोर्टल कुल kW खुद जोड़ देता है।</td></tr>
+            <tr><td><strong>फोटो</strong></td><td>आवेदक की एक पासपोर्ट-साइज़ फोटो।</td></tr>
+          </tbody>
+        </table></div>
+        <p><strong>किरायेदार भी आवेदन कर सकते हैं:</strong> विद्युत अधिनियम, 2003 की धारा 43 के
+        तहत बिजली परिसर में रहने वाले का अधिकार है — रेंट डीड और मालिक की सहमति (या क्षतिपूर्ति
+        बॉन्ड) दोनों निगमों में मान्य तरीका है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. आवेदन, स्टेप-बाय-स्टेप — 7 दिन का नियम याद रखें</h2>
+        <ol>
+          <li><strong>रजिस्टर करें</strong> अपनी DISCOM के eConnection पोर्टल पर (मोबाइल OTP), फिर
+          कनेक्शन का प्रकार चुनें — घरेलू, गैर-घरेलू/वाणिज्यिक, कृषि या औद्योगिक।</li>
+          <li><strong>फॉर्म भरें:</strong> ज़िला → उपखंड, परिसर का पता, माँगा गया स्वीकृत भार और
+          उपकरण सूची। उतना ही भार माँगें जितनी ज़रूरत है — फिक्स्ड चार्ज हर महीने प्रति स्वीकृत kW
+          लगता है (हमारी <a href="/hi/guides/reduce-fixed-charges-sanctioned-load/">लोड गाइड</a> देखें)।</li>
+          <li><strong>दस्तावेज़ अपलोड कर भुगतान करें।</strong> प्रोसेसिंग फीस मामूली है (DHBVN में
+          घरेलू के लिए ₹20) और बाकी राशि पोर्टल का कैलकुलेटर दिखा देता है।
+          <strong>पोर्टल जो भी माँगे, आवेदन के 7 दिन के भीतर भरें — वरना आवेदन अपने आप रद्द।</strong></li>
+          <li><strong>साइट निरीक्षण</strong> — उपखंड का JE लोड और नेटवर्क से दूरी जाँचता है; लाइन
+          बढ़ानी हो तो एस्टीमेट इसी के बाद बनता है, भुगतान ऑनलाइन।</li>
+          <li><strong>मीटर लगना और सप्लाई चालू।</strong> हरियाणा में स्मार्ट मीटर लग रहे हैं, नए शहरी
+          कनेक्शनों पर प्रायः यही मिलेगा। खाता नंबर SMS से आता है; पहला बिल अगले चक्र में।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. खर्च कितना</h2>
+        <ul>
+          <li><strong>प्रोसेसिंग फीस</strong> — आवेदन पर मामूली राशि (DHBVN घरेलू: ₹20)।</li>
+          <li><strong>सिक्योरिटी डिपॉज़िट (ACD)</strong> — भार और श्रेणी के हिसाब से; भविष्य के बिलों
+          की ज़मानत, कनेक्शन छोड़ने पर वापसी योग्य।</li>
+          <li><strong>सर्विस कनेक्शन शुल्क</strong> — सामान्य सर्विस ड्रॉप के लिए सर्कुलर-निर्धारित;
+          लाइन बढ़ानी हो तो एस्टीमेट के अनुसार।</li>
+        </ul>
+        <p>हर राशि पोर्टल पर दिखती और वहीं भरी जाती है — फ़ील्ड स्टाफ़ को नकद कुछ नहीं देना।
+        अपने भार के हिसाब से बिल का अनुमान <a href="/">बिल कैलकुलेटर</a> से लगाएँ।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. समय-सीमाएँ और शिकायत</h2>
+        <p>विद्युत (उपभोक्ता अधिकार) नियम, 2020 के तहत पूर्ण और भुगतान-सहित आवेदन पर कनेक्शन
+        <strong>महानगरों में 7 दिन, अन्य नगरीय क्षेत्रों में 15 दिन और ग्रामीण क्षेत्रों में 30 दिन</strong>
+        में चालू होना चाहिए; लाइन-विस्तार के मामले HERC के Standards of Performance से चलते हैं,
+        जिनमें देरी पर मुआवज़ा भी तय है।</p>
+        <ul>
+          <li><strong>ट्रैकिंग:</strong> उसी eConnection पोर्टल पर स्थिति, भुगतान और निरीक्षण
+          टिप्पणियाँ दिखती हैं।</li>
+          <li><strong>अटक गया?</strong> आवेदन नंबर के साथ 1912 पर कॉल करें; फिर पोर्टल पर दिख रहे
+          उपखंड SDO से। DHBVN में dhcomplaints@dhbvn.org.in पर भी शिकायत होती है।</li>
+          <li><strong>औपचारिक रास्ता:</strong> 2020 नियमों और HERC SoP का हवाला देते हुए CGRF में
+          लिखित शिकायत।</li>
+        </ul>
+      </section>`,
+    faqsHi: [
+      { q: 'हरियाणा में नए बिजली कनेक्शन के लिए कौन-सा पोर्टल है?',
+        a: 'DISCOM के eConnection पोर्टल — दक्षिण हरियाणा (गुरुग्राम, फ़रीदाबाद, हिसार…) के लिए econnection.dhbvn.org.in और उत्तर (पंचकूला, करनाल, पानीपत…) के लिए econnection.uhbvn.org.in। बिजली कनेक्शन अंत्योदय सरल पोर्टल से नहीं होते।' },
+      { q: 'DHBVN/UHBVN आवेदन का 7-दिन भुगतान नियम क्या है?',
+        a: 'आवेदन पर माँगा गया शुल्क आवेदन की तारीख से 7 दिन के भीतर न भरने पर पोर्टल आवेदन अपने आप रद्द कर देता है। भुगतान उसी पोर्टल पर ऑनलाइन करें और रसीद खाते में सँभालें।' },
+      { q: 'नए कनेक्शन के लिए कौन-से दस्तावेज़ चाहिए?',
+        a: 'पहचान प्रमाण (आधार/वोटर ID/PAN), स्वामित्व प्रमाण (रजिस्ट्री, अलॉटमेंट लेटर या हाउस-टैक्स रसीद — किरायेदारों के लिए रेंट डीड + मालिक की सहमति), पासपोर्ट फोटो, और फॉर्म में माँगी गई उपकरण/लोड सूची।' },
+      { q: 'हरियाणा में नया कनेक्शन कितने दिन में मिलता है?',
+        a: 'उपभोक्ता अधिकार नियम, 2020 के अनुसार: महानगरों में 7 दिन, नगरीय क्षेत्रों में 15 दिन, ग्रामीण में 30 दिन — पूर्ण, भुगतान-सहित आवेदन के बाद। लाइन-विस्तार न हो तो व्यवहार में 1–2 हफ़्ते सामान्य हैं।' },
+      { q: 'आवेदन अटक जाए तो किससे संपर्क करें?',
+        a: 'आवेदन नंबर के साथ 1912 पर, फिर पोर्टल पर दिख रहे उपखंड SDO से। DHBVN में dhcomplaints@dhbvn.org.in भी है; औपचारिक रास्ता CGRF है — 2020 नियमों और HERC SoP का हवाला दें।' },
+    ],
+  },
+  {
+    slug: 'wbsedcl-new-connection-online',
+    published: "2026-07-20",
+    states: ['West Bengal'],
+    title: 'How to Get a New WBSEDCL Electricity Connection Online (West Bengal)',
+    metaTitle: 'WBSEDCL New Connection Online — Instant Quotation, Documents, Vidyut Sahayogi App',
+    description: 'Step-by-step guide to a new WBSEDCL electricity connection: applying on wbsedcl.in or the Vidyut Sahayogi app, the instant provisional quotation and 10-digit application number, documents, security deposit, inspection timelines, and what to do when it stalls. Kolkata city readers: CESC is a separate utility.',
+    minutes: 7,
+    intro: `WBSEDCL serves nearly all of West Bengal outside Kolkata city (Kolkata proper is
+      <a href="/tariffs/west-bengal/cesc_kolkata/">CESC territory</a> — a different company with
+      its own process). A new WBSEDCL domestic connection is applied for on
+      <a href="https://www.wbsedcl.in/" rel="nofollow noopener" target="_blank">wbsedcl.in</a> or
+      the <strong>Vidyut Sahayogi</strong> mobile app, and the portal's best feature is speed at
+      the first step: the moment you submit, it generates an <strong>instant provisional
+      quotation</strong> and a 10-digit application number. Here is the full flow — documents,
+      the quotation, inspection timelines and escalation.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. Where to apply — and the CESC exception</h2>
+        <ul>
+          <li><strong>WBSEDCL web portal:</strong> <em>Online Application → New Connection</em> on
+          <a href="https://www.wbsedcl.in/" rel="nofollow noopener" target="_blank">wbsedcl.in</a> —
+          the LT domestic flow covers houses, flats and small shops.</li>
+          <li><strong>Vidyut Sahayogi app</strong> (Android/iOS) — the same application, quotation
+          and payment flow on a phone.</li>
+          <li><strong>Kolkata city:</strong> premises inside the CESC licence area (roughly the
+          KMC core) apply to CESC, not WBSEDCL — check whose bill your neighbours receive if in
+          doubt.</li>
+        </ul>
+        <p>Domestic slab rates and the fixed charge you will pay once live are on our
+        <a href="/tariffs/west-bengal/wbsedcl/">WBSEDCL tariff page</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. Documents</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Requirement</th><th>Accepted documents</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Identity proof</strong></td><td>Aadhaar, voter ID, passport, driving licence, PAN or any government photo ID.</td></tr>
+            <tr><td><strong>Ownership / occupancy proof</strong></td><td>Sale deed, lease or rent deed, panchayat/municipal tax receipt, or a government document evidencing occupancy — WBSEDCL's list is deliberately broad.</td></tr>
+            <tr><td><strong>Photograph</strong></td><td>One passport-size photo of the applicant.</td></tr>
+            <tr><td><strong>Tenants</strong></td><td>Rent deed or rent receipt works as occupancy proof; the owner's no-objection letter smooths the inspection.</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. The application, step by step</h2>
+        <ol>
+          <li><strong>Fill the online form</strong> — district → supply office, premises details,
+          load and phase (single-phase covers most homes). Ask only for the load you need; the
+          fixed charge scales with it (our
+          <a href="/guides/reduce-fixed-charges-sanctioned-load/">load-sizing guide</a> helps).</li>
+          <li><strong>Instant provisional quotation.</strong> On submission the system immediately
+          generates the quotation for service-connection charges plus security deposit, tied to a
+          <strong>10-digit application number</strong>. Download it — everything else quotes this
+          number.</li>
+          <li><strong>Pay the quotation</strong> online (net-banking/UPI/card on the portal or app)
+          or at the local Customer Care Centre.</li>
+          <li><strong>Site inspection.</strong> A WBSEDCL representative inspects within about
+          <strong>3–7 days of payment</strong> (urban faster, rural allowed longer) to confirm
+          technical feasibility and that the premises wiring is ready.</li>
+          <li><strong>Energisation.</strong> After formalities WBSEDCL's charter promises execution
+          of the service-connection work within about <strong>7 days</strong>; the consumer ID
+          arrives by SMS and the first bill follows in the next cycle.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. What it costs</h2>
+        <ul>
+          <li><strong>Service-connection charges</strong> — printed on the instant quotation; small
+          for a premises within a standard service drop of the line.</li>
+          <li><strong>Security deposit</strong> — calculated from the contractual load and tariff,
+          shown on the same quotation; held against future bills and refundable on surrender. An
+          existing consumer shifting premises can ask for the old deposit to be adjusted.</li>
+          <li><strong>Line extension</strong> — where poles or line are needed, a revised estimate
+          follows the inspection instead of the flat quotation.</li>
+        </ul>
+        <p>Pay only through the portal, app or Customer Care Centre — never in cash to field
+        staff. Estimate the monthly bill for your planned load with the
+        <a href="/">bill calculator</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. Timelines and escalation</h2>
+        <p>West Bengal's Right to Public Services Act puts a 7-day clock on the approval stage,
+        and the Electricity (Rights of Consumers) Rules, 2020 back-stop energisation: 7 days
+        metropolitan, 15 days municipal, 30 days rural after a complete paid application —
+        line-extension cases follow WBERC's Standards of Performance.</p>
+        <ul>
+          <li><strong>Track</strong> with the 10-digit application number on the portal or the
+          Vidyut Sahayogi app.</li>
+          <li><strong>Stalled?</strong> Call 19121 (WBSEDCL's helpline) with the number, then the
+          Station Manager of the supply office named on your quotation.</li>
+          <li><strong>Formal remedy:</strong> written complaint to WBSEDCL's grievance cell and the
+          CGRF, citing the 2020 Rules and the WBERC SoP.</li>
+        </ul>
+      </section>`,
+    faqs: [
+      { q: 'Where do I apply for a new WBSEDCL connection?',
+        a: 'On wbsedcl.in (Online Application → New Connection) or the Vidyut Sahayogi mobile app. Premises inside Kolkata city are served by CESC, a separate company, and apply there instead.' },
+      { q: 'What is the WBSEDCL instant provisional quotation?',
+        a: 'The system generates the quotation for service-connection charges plus security deposit the moment you submit the application, with a 10-digit application number. Pay it online or at a Customer Care Centre to move to inspection.' },
+      { q: 'What documents does WBSEDCL need?',
+        a: 'Any government photo ID (Aadhaar, voter ID, passport, PAN), ownership or occupancy proof (sale/lease/rent deed, municipal tax receipt), and a passport-size photo. Tenants can use a rent deed or rent receipt.' },
+      { q: 'How long does a new WBSEDCL connection take?',
+        a: 'Inspection is due within about 3–7 days of paying the quotation, and the charter promises the connection work within about 7 days after formalities. The 2020 Rights of Consumers Rules cap the whole thing at 7/15/30 days (metro/municipal/rural).' },
+      { q: 'The application is stuck — whom do I contact?',
+        a: 'Call 19121 with your 10-digit application number, then the Station Manager of your supply office. The formal route is WBSEDCL’s grievance cell and the CGRF, citing the 2020 Rules and WBERC Standards of Performance.' },
+    ],
+    titleHi: 'WBSEDCL का नया बिजली कनेक्शन ऑनलाइन कैसे लें (पश्चिम बंगाल)',
+    metaTitleHi: 'WBSEDCL नया कनेक्शन ऑनलाइन — तुरंत कोटेशन, दस्तावेज़, विद्युत सहयोगी ऐप',
+    descriptionHi: 'WBSEDCL के नए बिजली कनेक्शन की स्टेप-बाय-स्टेप गाइड: wbsedcl.in या विद्युत सहयोगी ऐप से आवेदन, तुरंत मिलने वाला प्रोविज़नल कोटेशन और 10-अंकों का आवेदन नंबर, दस्तावेज़, सिक्योरिटी डिपॉज़िट, निरीक्षण की समय-सीमाएँ और शिकायत का तरीका। कोलकाता शहर में CESC अलग कंपनी है।',
+    introHi: `कोलकाता शहर को छोड़कर लगभग पूरे पश्चिम बंगाल में बिजली WBSEDCL देती है (कोलकाता
+      <a href="/hi/tariffs/west-bengal/cesc_kolkata/">CESC का क्षेत्र</a> है — अलग कंपनी, अलग
+      प्रक्रिया)। WBSEDCL का नया घरेलू कनेक्शन
+      <a href="https://www.wbsedcl.in/" rel="nofollow noopener" target="_blank">wbsedcl.in</a> या
+      <strong>विद्युत सहयोगी</strong> मोबाइल ऐप से लिया जाता है, और इस पोर्टल की सबसे अच्छी बात
+      पहला कदम है: सबमिट करते ही <strong>तुरंत प्रोविज़नल कोटेशन</strong> और 10 अंकों का आवेदन
+      नंबर मिल जाता है। यहाँ पूरी प्रक्रिया है — दस्तावेज़, कोटेशन, निरीक्षण की समय-सीमाएँ और
+      शिकायत का रास्ता।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>1. आवेदन कहाँ करें — और कोलकाता का अपवाद</h2>
+        <ul>
+          <li><strong>WBSEDCL वेब पोर्टल:</strong>
+          <a href="https://www.wbsedcl.in/" rel="nofollow noopener" target="_blank">wbsedcl.in</a> पर
+          <em>Online Application → New Connection</em> — LT घरेलू फ़्लो में मकान, फ़्लैट और छोटी
+          दुकानें आती हैं।</li>
+          <li><strong>विद्युत सहयोगी ऐप</strong> (Android/iOS) — वही आवेदन, कोटेशन और भुगतान फोन
+          पर।</li>
+          <li><strong>कोलकाता शहर:</strong> CESC लाइसेंस क्षेत्र (मोटे तौर पर KMC का कोर) के परिसर
+          WBSEDCL नहीं, CESC में आवेदन करते हैं — शक हो तो देखें पड़ोसियों का बिल किसका आता है।</li>
+        </ul>
+        <p>घरेलू स्लैब दरें और फिक्स्ड चार्ज हमारी
+        <a href="/hi/tariffs/west-bengal/wbsedcl/">WBSEDCL टैरिफ पेज</a> पर हैं।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. दस्तावेज़</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>ज़रूरत</th><th>मान्य दस्तावेज़</th></tr></thead>
+          <tbody>
+            <tr><td><strong>पहचान प्रमाण</strong></td><td>आधार, वोटर ID, पासपोर्ट, ड्राइविंग लाइसेंस, PAN या कोई सरकारी फोटो ID।</td></tr>
+            <tr><td><strong>स्वामित्व / कब्ज़ा प्रमाण</strong></td><td>सेल डीड, लीज़ या रेंट डीड, पंचायत/नगरपालिका टैक्स रसीद, या कब्ज़ा दर्शाने वाला सरकारी दस्तावेज़ — WBSEDCL की सूची जान-बूझकर व्यापक है।</td></tr>
+            <tr><td><strong>फोटो</strong></td><td>आवेदक की एक पासपोर्ट-साइज़ फोटो।</td></tr>
+            <tr><td><strong>किरायेदार</strong></td><td>रेंट डीड या किराया रसीद कब्ज़ा-प्रमाण का काम करती है; मालिक का अनापत्ति पत्र निरीक्षण आसान कर देता है।</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. आवेदन, स्टेप-बाय-स्टेप</h2>
+        <ol>
+          <li><strong>ऑनलाइन फॉर्म भरें</strong> — ज़िला → सप्लाई ऑफ़िस, परिसर विवरण, भार और फेज़
+          (ज़्यादातर घरों के लिए सिंगल-फेज़)। उतना ही भार माँगें जितनी ज़रूरत है — फिक्स्ड चार्ज उसी से
+          बढ़ता है (हमारी <a href="/hi/guides/reduce-fixed-charges-sanctioned-load/">लोड गाइड</a> देखें)।</li>
+          <li><strong>तुरंत प्रोविज़नल कोटेशन।</strong> सबमिट करते ही सिस्टम सर्विस-कनेक्शन शुल्क +
+          सिक्योरिटी डिपॉज़िट का कोटेशन बना देता है, साथ में <strong>10 अंकों का आवेदन नंबर</strong>।
+          इसे डाउनलोड कर लें — आगे सब कुछ इसी नंबर से चलता है।</li>
+          <li><strong>कोटेशन भरें</strong> — पोर्टल/ऐप पर नेट-बैंकिंग/UPI/कार्ड से, या नज़दीकी
+          कस्टमर केयर सेंटर पर।</li>
+          <li><strong>साइट निरीक्षण।</strong> भुगतान के लगभग <strong>3–7 दिन</strong> में (शहरी जल्दी,
+          ग्रामीण में थोड़ा अधिक) WBSEDCL का प्रतिनिधि तकनीकी व्यवहार्यता और वायरिंग की तैयारी
+          जाँचता है।</li>
+          <li><strong>सप्लाई चालू।</strong> औपचारिकताओं के बाद चार्टर लगभग <strong>7 दिन</strong> में
+          कनेक्शन का काम पूरा करने का वादा करता है; कंज़्यूमर ID SMS से आती है और पहला बिल अगले
+          चक्र में।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. खर्च कितना</h2>
+        <ul>
+          <li><strong>सर्विस-कनेक्शन शुल्क</strong> — तुरंत मिले कोटेशन पर छपा होता है; लाइन के पास के
+          परिसर के लिए छोटा।</li>
+          <li><strong>सिक्योरिटी डिपॉज़िट</strong> — अनुबंधित भार और टैरिफ से तय, उसी कोटेशन पर;
+          भविष्य के बिलों की ज़मानत, कनेक्शन छोड़ने पर वापसी योग्य। पुराने उपभोक्ता परिसर बदलें तो
+          पुराना डिपॉज़िट समायोजित कराने को कह सकते हैं।</li>
+          <li><strong>लाइन विस्तार</strong> — पोल या लाइन की ज़रूरत हो तो निरीक्षण के बाद संशोधित
+          एस्टीमेट आता है।</li>
+        </ul>
+        <p>भुगतान केवल पोर्टल, ऐप या कस्टमर केयर सेंटर से — फ़ील्ड स्टाफ़ को नकद कभी नहीं। अपने भार
+        के हिसाब से बिल का अनुमान <a href="/">बिल कैलकुलेटर</a> से लगाएँ।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. समय-सीमाएँ और शिकायत</h2>
+        <p>पश्चिम बंगाल का Right to Public Services अधिनियम मंज़ूरी पर 7 दिन की घड़ी लगाता है, और
+        विद्युत (उपभोक्ता अधिकार) नियम, 2020 पूरे काम की सीमा तय करते हैं: पूर्ण, भुगतान-सहित आवेदन
+        पर महानगर में 7, नगरीय क्षेत्र में 15 और ग्रामीण में 30 दिन — लाइन-विस्तार के मामले WBERC के
+        Standards of Performance से।</p>
+        <ul>
+          <li><strong>ट्रैकिंग:</strong> 10 अंकों के आवेदन नंबर से पोर्टल या विद्युत सहयोगी ऐप पर।</li>
+          <li><strong>अटक गया?</strong> आवेदन नंबर के साथ 19121 (WBSEDCL हेल्पलाइन) पर, फिर कोटेशन
+          पर लिखे सप्लाई ऑफ़िस के स्टेशन मैनेजर से।</li>
+          <li><strong>औपचारिक रास्ता:</strong> 2020 नियमों और WBERC SoP का हवाला देते हुए WBSEDCL
+          ग्रीवांस सेल और CGRF में लिखित शिकायत।</li>
+        </ul>
+      </section>`,
+    faqsHi: [
+      { q: 'WBSEDCL का नया कनेक्शन कहाँ से लें?',
+        a: 'wbsedcl.in पर (Online Application → New Connection) या विद्युत सहयोगी मोबाइल ऐप से। कोलकाता शहर के परिसर CESC (अलग कंपनी) के हैं — वहाँ आवेदन CESC में होता है।' },
+      { q: 'WBSEDCL का तुरंत प्रोविज़नल कोटेशन क्या है?',
+        a: 'आवेदन सबमिट करते ही सिस्टम सर्विस-कनेक्शन शुल्क + सिक्योरिटी डिपॉज़िट का कोटेशन और 10 अंकों का आवेदन नंबर बना देता है। इसे ऑनलाइन या कस्टमर केयर सेंटर पर भरते ही निरीक्षण का चरण शुरू होता है।' },
+      { q: 'WBSEDCL को कौन-से दस्तावेज़ चाहिए?',
+        a: 'कोई सरकारी फोटो ID (आधार, वोटर ID, पासपोर्ट, PAN), स्वामित्व/कब्ज़ा प्रमाण (सेल/लीज़/रेंट डीड, नगरपालिका टैक्स रसीद) और एक पासपोर्ट-साइज़ फोटो। किरायेदार रेंट डीड या किराया रसीद दे सकते हैं।' },
+      { q: 'WBSEDCL का नया कनेक्शन कितने दिन में मिलता है?',
+        a: 'कोटेशन भरने के लगभग 3–7 दिन में निरीक्षण, और औपचारिकताओं के बाद लगभग 7 दिन में कनेक्शन का काम — चार्टर का वादा। 2020 उपभोक्ता अधिकार नियम पूरी प्रक्रिया 7/15/30 दिन (महानगर/नगरीय/ग्रामीण) में बाँधते हैं।' },
+      { q: 'आवेदन अटक जाए तो किससे संपर्क करें?',
+        a: '10 अंकों के आवेदन नंबर के साथ 19121 पर कॉल करें, फिर अपने सप्लाई ऑफ़िस के स्टेशन मैनेजर से। औपचारिक रास्ता WBSEDCL ग्रीवांस सेल और CGRF है — 2020 नियमों और WBERC SoP का हवाला दें।' },
+    ],
+  },
+  {
+    slug: 'pspcl-new-connection-online',
+    published: "2026-07-20",
+    states: ['Punjab'],
+    title: 'How to Get a New PSPCL Electricity Connection Online (Punjab)',
+    metaTitle: 'PSPCL New Connection Online — NSC Portal, A&A Form, Documents, 30-Day Rule',
+    description: 'Step-by-step guide to a new PSPCL electricity connection in Punjab: applying on the online NSC portal via pspcl.in, the A&A (Application & Agreement) form, documents, processing fee, ACD and meter security, the 30-day auto-cancellation rule, demand notice download, and statutory timelines.',
+    minutes: 7,
+    intro: `Punjab has a single DISCOM — PSPCL — and since 2021 every new-connection application
+      is registered online, through the <strong>New Service Connection (NSC) flow</strong> reached
+      from <a href="https://www.pspcl.in/" rel="nofollow noopener" target="_blank">pspcl.in</a> →
+      <em>New Connection</em>. The portal is genuinely self-service — it shows your application,
+      payment and document timelines, and even the phone number of the XEN handling your file —
+      but it also enforces a hard deadline: <strong>upload the A&amp;A form and pay within 30
+      days, or the application cancels itself</strong>. Here is the whole flow.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. The NSC portal — and what the A&amp;A form is</h2>
+        <p>From <a href="https://www.pspcl.in/" rel="nofollow noopener" target="_blank">pspcl.in</a>,
+        <em>New Connection</em> opens the online NSC application (hosted on PSPCL's connections
+        portal). Register with mobile OTP, and note two PSPCL-specific things:</p>
+        <ul>
+          <li><strong>The A&amp;A form</strong> — Application &amp; Agreement — is the signed
+          contract between you and PSPCL. The portal generates it; you print, sign and upload it
+          back. An application without the A&amp;A form is not complete.</li>
+          <li><strong>Everything is tracked in your login:</strong> application status, charges,
+          payment history, a <em>Document Timeline</em> (where the demand notice appears for
+          download) and the <em>XEN contact details</em> for your division.</li>
+        </ul>
+        <p>Domestic supply is billed under DS; current slab rates and fixed charges — and
+        Punjab's 300-unit free-power subsidy for domestic consumers — are on our
+        <a href="/tariffs/punjab/pspcl/">PSPCL tariff page</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. Documents</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Requirement</th><th>Accepted documents</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Identity proof</strong></td><td>Aadhaar, voter ID, passport, driving licence, ration card, PAN or any government photo ID.</td></tr>
+            <tr><td><strong>Ownership / occupancy proof</strong></td><td>Registry, fard (revenue record), allotment letter, sale deed, rent or lease deed.</td></tr>
+            <tr><td><strong>A&amp;A form</strong></td><td>Portal-generated; print, sign and upload (PDF/JPG).</td></tr>
+            <tr><td><strong>Photograph</strong></td><td>One passport-size photo of the applicant.</td></tr>
+          </tbody>
+        </table></div>
+        <p><strong>Tenants:</strong> a rent or lease deed is accepted as occupancy proof — supply
+        is the occupier's right under Section 43 of the Electricity Act, 2003; an indemnity bond
+        covers the case where the owner will not sign.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. The application, step by step — mind the 30-day rule</h2>
+        <ol>
+          <li><strong>Register and fill the NSC form:</strong> district → division → sub-division,
+          category (DS for a home), and the load you need. Fixed charges scale per kW, so size it
+          honestly — our <a href="/guides/reduce-fixed-charges-sanctioned-load/">load guide</a>
+          shows the trade-off.</li>
+          <li><strong>Upload documents</strong> (PDF/JPG) and pay the <strong>processing fee</strong>
+          online.</li>
+          <li><strong>Download, sign and re-upload the A&amp;A form.</strong>
+          <strong>Both the A&amp;A upload and the security payment must happen within 30 days of
+          applying — the portal cancels the application after that.</strong></li>
+          <li><strong>Demand notice.</strong> PSPCL raises the charges — ACD (advance consumption
+          deposit), meter security and any service-line cost per the Schedule of General Charges —
+          and the notice lands in your <em>Document Timeline</em> for download. Pay online.</li>
+          <li><strong>Inspection and meter.</strong> The sub-division verifies the premises wiring
+          and installs the meter; your account number arrives by SMS and the first bill follows in
+          the next cycle.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. What it costs</h2>
+        <ul>
+          <li><strong>Processing fee</strong> — small, paid at application.</li>
+          <li><strong>ACD (advance consumption deposit)</strong> — roughly ₹1,000–₹3,000 for typical
+          domestic loads, held against your future bills and refundable on surrender.</li>
+          <li><strong>Meter security</strong> — a separate deposit for the meter itself, per the
+          Schedule of General Charges.</li>
+          <li><strong>Service-line charges</strong> — nil to modest within a standard service drop;
+          a costed estimate when line extension is needed.</li>
+        </ul>
+        <p>Every rupee is demanded and paid through the portal — no cash to field staff. Remember
+        Punjab's domestic subsidy (zero bill up to 300 units for eligible households) applies only
+        after the connection is in your name; project the post-subsidy bill with the
+        <a href="/">bill calculator</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. Timelines and escalation</h2>
+        <p>The Electricity (Rights of Consumers) Rules, 2020 require energisation within
+        <strong>7 days in metropolitan areas, 15 days in other municipal areas and 30 days in
+        rural areas</strong> once the paid, complete application (A&amp;A included) is in;
+        line-extension cases follow PSERC's Standards of Performance, which prescribe
+        compensation for delay.</p>
+        <ul>
+          <li><strong>Track:</strong> the NSC login shows every stage; the XEN's name and number
+          for your division are right there — use them.</li>
+          <li><strong>Stalled?</strong> Call 1912 with the application number, then the XEN. PSPCL's
+          single-window cell also answers at sws.pspcl@gmail.com.</li>
+          <li><strong>Formal remedy:</strong> written complaint to the CGRF (Forum for Redressal of
+          Grievances of Consumers), citing the 2020 Rules and PSERC SoP.</li>
+        </ul>
+      </section>`,
+    faqs: [
+      { q: 'Where do I apply for a new PSPCL connection?',
+        a: 'Online, from pspcl.in → New Connection, which opens PSPCL’s NSC (New Service Connection) portal. Online registration has been mandatory since 2021 — no office visit is needed to apply.' },
+      { q: 'What is the PSPCL A&A form?',
+        a: 'The Application & Agreement form — the signed supply contract. The portal generates it; you print, sign and upload it back. The application is incomplete without it, and A&A plus security payment must be done within 30 days or the application auto-cancels.' },
+      { q: 'What does a new PSPCL connection cost?',
+        a: 'A small processing fee at application, then ACD (advance consumption deposit, roughly ₹1,000–₹3,000 for typical domestic loads), meter security, and service-line charges per the Schedule of General Charges. The demand notice in your Document Timeline shows the exact figures.' },
+      { q: 'How long does a new PSPCL connection take?',
+        a: 'The Rights of Consumers Rules, 2020 require 7 days in metropolitan areas, 15 in municipal, 30 in rural once the complete paid application is in. The NSC portal shows each stage, and the XEN contact for your division if it stalls.' },
+      { q: 'Does Punjab’s 300-unit free power apply to a new connection?',
+        a: 'Yes, once the connection is live and in the eligible household’s name — the subsidy attaches to the domestic account, not the application. Bills up to 300 units/billing cycle are zeroed for eligible consumers; above that, normal DS slabs apply.' },
+    ],
+    titleHi: 'पंजाब में नया PSPCL बिजली कनेक्शन ऑनलाइन कैसे लें',
+    metaTitleHi: 'PSPCL नया कनेक्शन ऑनलाइन — NSC पोर्टल, A&A फॉर्म, दस्तावेज़, 30-दिन नियम',
+    descriptionHi: 'पंजाब में नए PSPCL बिजली कनेक्शन की स्टेप-बाय-स्टेप गाइड: pspcl.in से NSC पोर्टल पर आवेदन, A&A (Application & Agreement) फॉर्म, दस्तावेज़, प्रोसेसिंग फीस, ACD और मीटर सिक्योरिटी, 30 दिन में काम पूरा न करने पर आवेदन रद्द होने का नियम, डिमांड नोटिस डाउनलोड और वैधानिक समय-सीमाएँ।',
+    introHi: `पंजाब में एक ही DISCOM है — PSPCL — और 2021 से हर नए कनेक्शन का आवेदन ऑनलाइन ही
+      दर्ज होता है, <a href="https://www.pspcl.in/" rel="nofollow noopener" target="_blank">pspcl.in</a> →
+      <em>New Connection</em> से खुलने वाले <strong>NSC (New Service Connection) फ़्लो</strong> पर।
+      पोर्टल सचमुच सेल्फ़-सर्विस है — आवेदन, भुगतान और दस्तावेज़ों की टाइमलाइन, यहाँ तक कि आपकी
+      फ़ाइल देख रहे XEN का फ़ोन नंबर भी दिखाता है — पर एक सख़्त समय-सीमा भी लगाता है:
+      <strong>A&amp;A फॉर्म अपलोड और भुगतान 30 दिन के भीतर, वरना आवेदन अपने आप रद्द</strong>।
+      पूरी प्रक्रिया यह रही।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>1. NSC पोर्टल — और A&amp;A फॉर्म क्या है</h2>
+        <p><a href="https://www.pspcl.in/" rel="nofollow noopener" target="_blank">pspcl.in</a> से
+        <em>New Connection</em> पर ऑनलाइन NSC आवेदन खुलता है (PSPCL के कनेक्शन पोर्टल पर)। मोबाइल
+        OTP से रजिस्टर करें, और PSPCL की दो ख़ास बातें नोट करें:</p>
+        <ul>
+          <li><strong>A&amp;A फॉर्म</strong> — Application &amp; Agreement — आपके और PSPCL के बीच
+          हस्ताक्षरित अनुबंध है। पोर्टल इसे बनाता है; आप प्रिंट कर, साइन कर वापस अपलोड करते हैं।
+          A&amp;A के बिना आवेदन अधूरा है।</li>
+          <li><strong>सब कुछ आपके लॉगिन में:</strong> आवेदन की स्थिति, शुल्क, भुगतान इतिहास,
+          <em>Document Timeline</em> (जहाँ डिमांड नोटिस डाउनलोड के लिए आता है) और आपके डिवीज़न के
+          <em>XEN का संपर्क</em>।</li>
+        </ul>
+        <p>घरेलू सप्लाई DS श्रेणी में बिल होती है; मौजूदा स्लैब दरें, फिक्स्ड चार्ज — और पंजाब की
+        300 यूनिट मुफ़्त बिजली सब्सिडी — हमारी
+        <a href="/hi/tariffs/punjab/pspcl/">PSPCL टैरिफ पेज</a> पर हैं।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. दस्तावेज़</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>ज़रूरत</th><th>मान्य दस्तावेज़</th></tr></thead>
+          <tbody>
+            <tr><td><strong>पहचान प्रमाण</strong></td><td>आधार, वोटर ID, पासपोर्ट, ड्राइविंग लाइसेंस, राशन कार्ड, PAN या कोई सरकारी फोटो ID।</td></tr>
+            <tr><td><strong>स्वामित्व / कब्ज़ा प्रमाण</strong></td><td>रजिस्ट्री, फ़र्द (राजस्व रिकॉर्ड), अलॉटमेंट लेटर, सेल डीड, रेंट या लीज़ डीड।</td></tr>
+            <tr><td><strong>A&amp;A फॉर्म</strong></td><td>पोर्टल से बनता है; प्रिंट, साइन और अपलोड (PDF/JPG)।</td></tr>
+            <tr><td><strong>फोटो</strong></td><td>आवेदक की एक पासपोर्ट-साइज़ फोटो।</td></tr>
+          </tbody>
+        </table></div>
+        <p><strong>किरायेदार:</strong> रेंट या लीज़ डीड कब्ज़ा-प्रमाण के तौर पर मान्य है — विद्युत
+        अधिनियम, 2003 की धारा 43 के तहत बिजली परिसर में रहने वाले का अधिकार है; मालिक साइन न करे
+        तो क्षतिपूर्ति बॉन्ड से काम चलता है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. आवेदन, स्टेप-बाय-स्टेप — 30 दिन का नियम याद रखें</h2>
+        <ol>
+          <li><strong>रजिस्टर कर NSC फॉर्म भरें:</strong> ज़िला → डिवीज़न → उपखंड, श्रेणी (घर के लिए
+          DS) और ज़रूरत का भार। फिक्स्ड चार्ज प्रति kW बढ़ता है, इसलिए भार ईमानदारी से चुनें — हमारी
+          <a href="/hi/guides/reduce-fixed-charges-sanctioned-load/">लोड गाइड</a> देखें।</li>
+          <li><strong>दस्तावेज़ अपलोड करें</strong> (PDF/JPG) और <strong>प्रोसेसिंग फीस</strong>
+          ऑनलाइन भरें।</li>
+          <li><strong>A&amp;A फॉर्म डाउनलोड, साइन और वापस अपलोड करें।</strong>
+          <strong>A&amp;A अपलोड और सिक्योरिटी भुगतान दोनों आवेदन के 30 दिन के भीतर — वरना पोर्टल
+          आवेदन रद्द कर देता है।</strong></li>
+          <li><strong>डिमांड नोटिस।</strong> PSPCL शुल्क तय करता है — ACD (एडवांस कंज़म्प्शन
+          डिपॉज़िट), मीटर सिक्योरिटी और Schedule of General Charges के अनुसार सर्विस-लाइन लागत —
+          और नोटिस आपकी <em>Document Timeline</em> में डाउनलोड के लिए आ जाता है। भुगतान ऑनलाइन।</li>
+          <li><strong>निरीक्षण और मीटर।</strong> उपखंड परिसर की वायरिंग जाँचकर मीटर लगाता है; खाता
+          नंबर SMS से आता है और पहला बिल अगले चक्र में।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. खर्च कितना</h2>
+        <ul>
+          <li><strong>प्रोसेसिंग फीस</strong> — आवेदन पर छोटी राशि।</li>
+          <li><strong>ACD (एडवांस कंज़म्प्शन डिपॉज़िट)</strong> — सामान्य घरेलू भार पर लगभग
+          ₹1,000–₹3,000; भविष्य के बिलों की ज़मानत, कनेक्शन छोड़ने पर वापसी योग्य।</li>
+          <li><strong>मीटर सिक्योरिटी</strong> — मीटर के लिए अलग डिपॉज़िट, Schedule of General
+          Charges के अनुसार।</li>
+          <li><strong>सर्विस-लाइन शुल्क</strong> — सामान्य सर्विस ड्रॉप में नगण्य; लाइन बढ़ानी हो तो
+          एस्टीमेट के अनुसार।</li>
+        </ul>
+        <p>हर रुपया पोर्टल से माँगा और भरा जाता है — फ़ील्ड स्टाफ़ को नकद नहीं। याद रखें, पंजाब की
+        घरेलू सब्सिडी (पात्र परिवारों को 300 यूनिट तक शून्य बिल) कनेक्शन आपके नाम होने के बाद ही
+        लागू होती है; सब्सिडी के बाद का बिल <a href="/">बिल कैलकुलेटर</a> से आँकें।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. समय-सीमाएँ और शिकायत</h2>
+        <p>विद्युत (उपभोक्ता अधिकार) नियम, 2020 के तहत पूर्ण, भुगतान-सहित (A&amp;A समेत) आवेदन पर
+        कनेक्शन <strong>महानगरों में 7 दिन, अन्य नगरीय क्षेत्रों में 15 दिन और ग्रामीण में 30 दिन</strong>
+        में चालू होना चाहिए; लाइन-विस्तार के मामले PSERC के Standards of Performance से चलते हैं,
+        जिनमें देरी पर मुआवज़ा तय है।</p>
+        <ul>
+          <li><strong>ट्रैकिंग:</strong> NSC लॉगिन हर चरण दिखाता है; आपके डिवीज़न के XEN का नाम-नंबर
+          वहीं है — इस्तेमाल करें।</li>
+          <li><strong>अटक गया?</strong> आवेदन नंबर के साथ 1912 पर, फिर XEN से। PSPCL का सिंगल-विंडो
+          सेल sws.pspcl@gmail.com पर भी जवाब देता है।</li>
+          <li><strong>औपचारिक रास्ता:</strong> 2020 नियमों और PSERC SoP का हवाला देते हुए CGRF में
+          लिखित शिकायत।</li>
+        </ul>
+      </section>`,
+    faqsHi: [
+      { q: 'नए PSPCL कनेक्शन का आवेदन कहाँ होता है?',
+        a: 'ऑनलाइन — pspcl.in → New Connection से PSPCL का NSC (New Service Connection) पोर्टल खुलता है। 2021 से ऑनलाइन पंजीकरण अनिवार्य है; आवेदन के लिए दफ़्तर जाने की ज़रूरत नहीं।' },
+      { q: 'PSPCL का A&A फॉर्म क्या है?',
+        a: 'Application & Agreement फॉर्म — हस्ताक्षरित सप्लाई अनुबंध। पोर्टल इसे बनाता है; आप प्रिंट, साइन कर वापस अपलोड करते हैं। इसके बिना आवेदन अधूरा है, और A&A + सिक्योरिटी भुगतान 30 दिन में न हो तो आवेदन अपने आप रद्द।' },
+      { q: 'नए PSPCL कनेक्शन का खर्च कितना है?',
+        a: 'आवेदन पर छोटी प्रोसेसिंग फीस, फिर ACD (सामान्य घरेलू भार पर लगभग ₹1,000–₹3,000), मीटर सिक्योरिटी और Schedule of General Charges के अनुसार सर्विस-लाइन शुल्क। सटीक राशि Document Timeline में आए डिमांड नोटिस पर होती है।' },
+      { q: 'नया PSPCL कनेक्शन कितने दिन में मिलता है?',
+        a: 'उपभोक्ता अधिकार नियम, 2020: पूर्ण भुगतान-सहित आवेदन पर महानगर में 7, नगरीय में 15, ग्रामीण में 30 दिन। NSC पोर्टल हर चरण दिखाता है, और अटकने पर आपके डिवीज़न के XEN का संपर्क भी।' },
+      { q: 'क्या पंजाब की 300 यूनिट मुफ़्त बिजली नए कनेक्शन पर मिलती है?',
+        a: 'हाँ, कनेक्शन चालू होकर पात्र परिवार के नाम होते ही — सब्सिडी घरेलू खाते से जुड़ती है, आवेदन से नहीं। पात्र उपभोक्ताओं के 300 यूनिट/चक्र तक के बिल शून्य होते हैं; उससे ऊपर सामान्य DS स्लैब लगते हैं।' },
+    ],
+  },
 ];
