@@ -863,6 +863,97 @@ function guideLinksHtml(state, discom, lang = 'en') {
     </section>`;
 }
 
+// State-page variant of guideLinksHtml: ONLY guides tagged to this state (no evergreen
+// filler — that would render the same three cards on all 36 state pages). Returns '' when
+// nothing is tagged so thin states don't get a boilerplate block.
+function stateGuideLinksHtml(state, lang = 'en') {
+  const picks = GUIDES.filter(g => (g.states || []).includes(state)).slice(0, 4);
+  if (!picks.length) return '';
+  const cards = picks.map(g => {
+    const href = (lang !== 'en' && guideHasBody(g, lang)) ? `/${lang}/guides/${g.slug}/` : `/guides/${g.slug}/`;
+    const title = guideField(g, 'title', lang) || g.title;
+    const mins = T(lang, { en: `${g.minutes} min read`, hi: `${g.minutes} मिनट`, mr: `${g.minutes} मिनिटे`, ta: `${g.minutes} நிமிட வாசிப்பு` });
+    return `<a class="seo-link-card" href="${href}"><strong>${esc(title)}</strong><small>${mins}</small></a>`;
+  }).join('');
+  const heading = T(lang, {
+    en: `Guides for ${esc(state)} consumers`, hi: `${esc(stateName(state, 'hi'))} के उपभोक्ताओं के लिए गाइड`,
+    mr: `${esc(stateName(state, 'mr'))} ग्राहकांसाठी मार्गदर्शक`, ta: `${esc(stateName(state, 'ta'))} நுகர்வோருக்கான வழிகாட்டிகள்` });
+  const allHref = `${lang === 'en' ? '' : '/' + lang}/guides/`;
+  const browseAll = T(lang, { en: 'Browse all guides →', hi: 'सभी गाइड देखें →', mr: 'सर्व मार्गदर्शक पहा →', ta: 'அனைத்து வழிகாட்டிகளையும் பார்க்கவும் →' });
+  return `
+    <section class="seo-section">
+      <h2>${heading}</h2>
+      <div class="seo-link-grid">${cards}</div>
+      <p><a href="${allHref}">${browseAll}</a></p>
+    </section>`;
+}
+
+// State-page tools row. Tool/app pages exist only at English URLs (they translate at
+// runtime via i18n.js), so hrefs stay unprefixed in every language — only labels localise.
+// smart-meter-recharge DOES have vernacular twins, so that one link is lang-aware.
+function stateToolLinksHtml(state, lang = 'en') {
+  const stateSlug = slugify(state);
+  const discoms = getDiscoms(state);
+  const sl = esc(stateName(state, lang));
+  const smrHref = discoms.length === 1
+    ? `${lang === 'en' ? '' : '/' + lang}/smart-meter-recharge/${stateSlug}/${discoms[0].id}/`
+    : `${lang === 'en' ? '' : '/' + lang}/smart-meter-recharge/`;
+  const links = [
+    ['/compare/',
+      T(lang, { en: `Compare ${sl} rates with other states`, hi: `${sl} की दरें अन्य राज्यों से तुलना करें`, mr: `${sl} चे दर इतर राज्यांशी तुलना करा`, ta: `${sl} விகிதங்களை மற்ற மாநிலங்களுடன் ஒப்பிடுங்கள்` }),
+      T(lang, { en: 'Same units, every state — see where power is cheapest', hi: 'समान यूनिट, हर राज्य — देखें बिजली कहाँ सस्ती है', mr: 'समान युनिट, प्रत्येक राज्य — वीज कुठे स्वस्त आहे ते पाहा', ta: 'அதே யூனிட், ஒவ்வொரு மாநிலமும் — மின்சாரம் எங்கே மலிவு எனப் பாருங்கள்' })],
+    [smrHref,
+      T(lang, { en: `${sl} smart meter recharge`, hi: `${sl} स्मार्ट मीटर रिचार्ज`, mr: `${sl} स्मार्ट मीटर रिचार्ज`, ta: `${sl} ஸ்மார்ட் மீட்டர் ரீசார்ஜ்` }),
+      T(lang, { en: 'Recharge steps, units-per-recharge and low-balance rules', hi: 'रिचार्ज के स्टेप, प्रति रिचार्ज यूनिट और लो-बैलेंस नियम', mr: 'रिचार्जचे टप्पे, प्रति रिचार्ज युनिट आणि लो-बॅलन्स नियम', ta: 'ரீசார்ஜ் படிகள், ரீசார்ஜுக்கான யூனிட்கள் மற்றும் குறைந்த-பேலன்ஸ் விதிகள்' })],
+    ['/solar/',
+      T(lang, { en: 'Rooftop solar savings calculator', hi: 'रूफटॉप सोलर बचत कैलकुलेटर', mr: 'रूफटॉप सोलर बचत कॅल्क्युलेटर', ta: 'கூரை சோலார் சேமிப்பு கணிப்பான்' }),
+      T(lang, { en: `How much a rooftop system would cut a ${sl} bill`, hi: `रूफटॉप सिस्टम से ${sl} का बिल कितना घटेगा`, mr: `रूफटॉप सिस्टिमने ${sl} चे बिल किती कमी होईल`, ta: `கூரை அமைப்பு ஒரு ${sl} பில்லை எவ்வளவு குறைக்கும்` })],
+    ['/new-connection/',
+      T(lang, { en: `New electricity connection in ${sl}`, hi: `${sl} में नया बिजली कनेक्शन`, mr: `${sl} मध्ये नवीन वीज जोडणी`, ta: `${sl} இல் புதிய மின் இணைப்பு` }),
+      T(lang, { en: 'Documents, charges and the step-by-step apply process', hi: 'दस्तावेज़, शुल्क और आवेदन की चरण-दर-चरण प्रक्रिया', mr: 'कागदपत्रे, शुल्क आणि टप्प्याटप्प्याने अर्ज प्रक्रिया', ta: 'ஆவணங்கள், கட்டணங்கள் மற்றும் படிப்படியான விண்ணப்ப செயல்முறை' })],
+  ];
+  const heading = T(lang, { en: `More ${sl} electricity tools`, hi: `${sl} बिजली से जुड़े और टूल`, mr: `${sl} विजेशी संबंधित आणखी साधने`, ta: `மேலும் ${sl} மின்சார கருவிகள்` });
+  return `
+    <section class="seo-section">
+      <h2>${heading}</h2>
+      <div class="seo-link-grid">
+        ${links.map(([href, title, sub]) =>
+          `<a class="seo-link-card" href="${href}"><strong>${title}</strong><span>${sub}</span></a>`).join('')}
+      </div>
+    </section>`;
+}
+
+// Sibling-state links within the same region — lateral mesh between the 36 state hubs so
+// crawl paths (and readers comparing with a neighbour) don't have to bounce through the
+// directory page. Vernacular pages link into /<lang>/ only where that language has a twin.
+function nearbyStatesHtml(state, lang = 'en') {
+  const region = REGIONS.find(r => r.states.includes(state));
+  if (!region) return '';
+  const covered = new Set(getStates());
+  const others = region.states.filter(s => s !== state && covered.has(s));
+  if (!others.length) return '';
+  const cards = others.map(s => {
+    const pfx = (lang !== 'en' && langServesState(lang, s)) ? `/${lang}` : '';
+    const nd = getDiscoms(s).length;
+    const sub = T(lang, {
+      en: `${nd} DISCOM${nd > 1 ? 's' : ''} · tariff & bill calculator`,
+      hi: `${nd} डिस्कॉम · टैरिफ व बिल कैलकुलेटर`, mr: `${nd} डिस्कॉम · टॅरिफ व बिल कॅल्क्युलेटर`,
+      ta: `${nd} DISCOM · கட்டணம் & பில் கணிப்பான்` });
+    return `<a class="seo-link-card" href="${pfx}/tariffs/${slugify(s)}/"><strong>${esc(stateName(s, lang))}</strong><small>${sub}</small></a>`;
+  }).join('');
+  const heading = T(lang, {
+    en: `Electricity tariffs across ${region.en}`, hi: `${region.hi} की बिजली दरें`,
+    mr: `${region.mr}मधील वीज दर`, ta: `${region.ta} மின் கட்டணங்கள்` });
+  const allHref = `${lang === 'en' ? '' : '/' + lang}/tariffs/states/`;
+  const allLabel = T(lang, { en: 'All states & UTs →', hi: 'सभी राज्य व केंद्रशासित प्रदेश →', mr: 'सर्व राज्ये व केंद्रशासित प्रदेश →', ta: 'அனைத்து மாநிலங்கள் & யூனியன் பிரதேசங்கள் →' });
+  return `
+    <section class="seo-section">
+      <h2>${heading}</h2>
+      <div class="seo-link-grid">${cards}</div>
+      <p><a href="${allHref}">${allLabel}</a></p>
+    </section>`;
+}
+
 // ── page builders ─────────────────────────────────────────────────────────────
 function discomPage(state, discom, lang = 'en') {
   const stateSlug = slugify(state);
@@ -1311,6 +1402,9 @@ function statePage(state, lang = 'en') {
       <div class="seo-link-grid">${discomCards}</div>
     </section>
 
+    ${stateGuideLinksHtml(state, lang)}
+    ${stateToolLinksHtml(state, lang)}
+    ${nearbyStatesHtml(state, lang)}
     ${faqHtml(faqs, lang)}
     <p class="seo-disclaimer">${disclaimer}</p>
   </section>`;
@@ -1383,6 +1477,9 @@ function statePage(state, lang = 'en') {
       <div class="seo-link-grid">${discomCards}</div>
     </section>
 
+    ${stateGuideLinksHtml(state)}
+    ${stateToolLinksHtml(state)}
+    ${nearbyStatesHtml(state)}
     ${faqHtml(faqs)}
     <p class="seo-disclaimer">Provisional estimates based on publicly available ${esc(state)} tariff orders${meta.sourceUrl ? ` (source: <a href="${attr(meta.sourceUrl)}" target="_blank" rel="noopener">${esc(String(meta.sourceUrl).replace(/^https?:\/\//, ''))}</a>)` : ''}. Verify against your official bill — rates vary by sub-category, slab and city.</p>
   </section>`;
@@ -1679,6 +1776,46 @@ function articleJsonLd(guide, url) {
   };
 }
 
+// Guide → tool/tariff cross-links: each guide points readers at the state tariff hubs it
+// is tagged to plus the one tool page that matches its category. Real contextual anchors
+// from long-form content into the money pages — the strongest internal-link direction.
+const GUIDE_TOOL_LINK = {
+  solar:      ['/solar/', { en: 'Rooftop solar savings calculator', hi: 'रूफटॉप सोलर बचत कैलकुलेटर', mr: 'रूफटॉप सोलर बचत कॅल्क्युलेटर', ta: 'கூரை சோலார் சேமிப்பு கணிப்பான்' },
+    { en: 'Size a system and see the payback on your own bill', hi: 'सिस्टम का आकार तय करें और अपने बिल पर पेबैक देखें', mr: 'सिस्टिमचा आकार ठरवा आणि तुमच्या बिलावरील परतावा पाहा', ta: 'அமைப்பின் அளவை தீர்மானித்து உங்கள் பில்லில் திருப்பிச் செலுத்தும் காலத்தைப் பாருங்கள்' }],
+  ev:         ['/ev/', { en: 'EV charging cost calculator', hi: 'EV चार्जिंग लागत कैलकुलेटर', mr: 'EV चार्जिंग खर्च कॅल्क्युलेटर', ta: 'EV சார்ஜிங் செலவு கணிப்பான்' },
+    { en: 'Per-km cost of charging at home on your tariff', hi: 'अपने टैरिफ पर घर पर चार्जिंग की प्रति-किमी लागत', mr: 'तुमच्या टॅरिफवर घरी चार्जिंगचा प्रति-किमी खर्च', ta: 'உங்கள் கட்டணத்தில் வீட்டில் சார்ஜ் செய்யும் கி.மீ.-க்கான செலவு' }],
+  smartMeter: ['/recharge-calculator/', { en: 'Smart meter recharge calculator', hi: 'स्मार्ट मीटर रिचार्ज कैलकुलेटर', mr: 'स्मार्ट मीटर रिचार्ज कॅल्क्युलेटर', ta: 'ஸ்மார்ட் மீட்டர் ரீசார்ஜ் கணிப்பான்' },
+    { en: 'How many days a recharge lasts at your DISCOM\'s real rates', hi: 'आपके डिस्कॉम की असली दरों पर रिचार्ज कितने दिन चलेगा', mr: 'तुमच्या डिस्कॉमच्या खऱ्या दरांवर रिचार्ज किती दिवस पुरेल', ta: 'உங்கள் DISCOM-இன் உண்மையான விகிதங்களில் ரீசார்ஜ் எத்தனை நாள் நீடிக்கும்' }],
+  newConn:    ['/new-connection/', { en: 'New connection helper', hi: 'नया कनेक्शन हेल्पर', mr: 'नवीन जोडणी मदतनीस', ta: 'புதிய இணைப்பு உதவியாளர்' },
+    { en: 'Documents, charges and apply steps for your DISCOM', hi: 'आपके डिस्कॉम के दस्तावेज़, शुल्क और आवेदन के स्टेप', mr: 'तुमच्या डिस्कॉमसाठी कागदपत्रे, शुल्क आणि अर्जाचे टप्पे', ta: 'உங்கள் DISCOM-க்கான ஆவணங்கள், கட்டணங்கள் மற்றும் விண்ணப்ப படிகள்' }],
+  charges:    ['/glossary/', { en: 'Electricity bill glossary', hi: 'बिजली बिल शब्दावली', mr: 'वीज बिल शब्दावली', ta: 'மின் கட்டண சொற்களஞ்சியம்' },
+    { en: 'Every charge line on an Indian bill, in plain language', hi: 'भारतीय बिल की हर शुल्क लाइन, आसान भाषा में', mr: 'भारतीय बिलावरील प्रत्येक शुल्क ओळ, सोप्या भाषेत', ta: 'இந்திய பில்லில் உள்ள ஒவ்வொரு கட்டண வரியும், எளிய மொழியில்' }],
+  saveMoney:  ['/compare/', { en: 'Compare tariffs across states', hi: 'राज्यों के टैरिफ की तुलना करें', mr: 'राज्यांच्या टॅरिफची तुलना करा', ta: 'மாநிலங்களுக்கிடையே கட்டணங்களை ஒப்பிடுங்கள்' },
+    { en: 'Same units, every state — see where power is cheapest', hi: 'समान यूनिट, हर राज्य — देखें बिजली कहाँ सस्ती है', mr: 'समान युनिट, प्रत्येक राज्य — वीज कुठे स्वस्त आहे ते पाहा', ta: 'அதே யூனிட், ஒவ்வொரு மாநிலமும் — மின்சாரம் எங்கே மலிவு எனப் பாருங்கள்' }],
+  basics:     ['/glossary/', { en: 'Electricity bill glossary', hi: 'बिजली बिल शब्दावली', mr: 'वीज बिल शब्दावली', ta: 'மின் கட்டண சொற்களஞ்சியம்' },
+    { en: 'Every charge line on an Indian bill, in plain language', hi: 'भारतीय बिल की हर शुल्क लाइन, आसान भाषा में', mr: 'भारतीय बिलावरील प्रत्येक शुल्क ओळ, सोप्या भाषेत', ta: 'இந்திய பில்லில் உள்ள ஒவ்வொரு கட்டண வரியும், எளிய மொழியில்' }],
+};
+
+function guideRelatedPagesHtml(guide, lang = 'en') {
+  const cards = [];
+  for (const s of (guide.states || []).slice(0, 3)) {
+    const pfx = (lang !== 'en' && langServesState(lang, s)) ? `/${lang}` : '';
+    const sl = esc(stateName(s, lang));
+    const title = T(lang, { en: `${sl} electricity tariff & bill calculator`, hi: `${sl} बिजली टैरिफ व बिल कैलकुलेटर`, mr: `${sl} वीज टॅरिफ व बिल कॅल्क्युलेटर`, ta: `${sl} மின் கட்டணம் & பில் கணிப்பான்` });
+    const sub = T(lang, { en: 'Current slab rates, every DISCOM, itemised bills', hi: 'वर्तमान स्लैब दरें, हर डिस्कॉम, मदवार बिल', mr: 'सध्याचे स्लॅब दर, प्रत्येक डिस्कॉम, तपशीलवार बिले', ta: 'தற்போதைய அடுக்கு விகிதங்கள், ஒவ்வொரு DISCOM, விவரமான பில்கள்' });
+    cards.push(`<a class="seo-link-card" href="${pfx}/tariffs/${slugify(s)}/"><strong>${title}</strong><span>${sub}</span></a>`);
+  }
+  const tool = GUIDE_TOOL_LINK[guideCategoryId(guide)];
+  if (tool) cards.push(`<a class="seo-link-card" href="${tool[0]}"><strong>${T(lang, tool[1])}</strong><span>${T(lang, tool[2])}</span></a>`);
+  if (!cards.length) return '';
+  const heading = T(lang, { en: 'Related on TheDiscomBill', hi: 'TheDiscomBill पर संबंधित पेज', mr: 'TheDiscomBill वरील संबंधित पाने', ta: 'TheDiscomBill-இல் தொடர்புடையவை' });
+  return `
+    <section class="seo-section">
+      <h2>${heading}</h2>
+      <div class="seo-link-grid">${cards.join('')}</div>
+    </section>`;
+}
+
 function guidePage(guide, lang = 'en') {
   // A guide only renders in a vernacular when its body is translated in the data file;
   // otherwise fall back to English (the driver also guards emission, so this is belt-and-braces).
@@ -1732,6 +1869,7 @@ function guidePage(guide, lang = 'en') {
       <p>${ctaP}</p>
       <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">${ctaBtn}</a></p>
     </section>
+    ${guideRelatedPagesHtml(guide, L)}
     <section class="seo-section guide-more">
       <h2>${moreH2}</h2>
       <div class="seo-link-grid">${GUIDES.filter(g => g.slug !== guide.slug).map(g => {
