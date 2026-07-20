@@ -2514,6 +2514,8 @@ const STATIC_ROUTES = [
   { loc: '/compare/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/electricity-cost-calculator/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/solar-calculator/', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/solar-panel-size-calculator/', priority: '0.6', changefreq: 'monthly' },
+  { loc: '/solar-battery-backup-calculator/', priority: '0.6', changefreq: 'monthly' },
   { loc: '/ev-charging-calculator/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/tariffs/', priority: '0.8', changefreq: 'monthly' },
   // '/tariffs/states/' is added in buildSitemap() with its Hindi alternate.
@@ -2687,6 +2689,8 @@ function writeSearchIndex(states) {
     ['Bill Calculator', 'बिजली बिल कैलकुलेटर', '/#calculator', 'electricity bill calculator check'],
     ['Compare Tariffs', 'टैरिफ तुलना', '/compare/', 'comparison states discom rates'],
     ['Solar Savings Calculator', 'सोलर बचत कैलकुलेटर', '/solar-calculator/', 'rooftop solar net metering pm surya ghar'],
+    ['Solar Panel Size Calculator', 'सोलर पैनल साइज़ कैलकुलेटर', '/solar-panel-size-calculator/', 'solar panel size kw ac roof area panels count'],
+    ['Solar Battery Backup Calculator', 'सोलर बैटरी बैकअप कैलकुलेटर', '/solar-battery-backup-calculator/', 'battery backup inverter lifepo4 lead acid power cut'],
     ['EV Charging Cost Calculator', 'EV चार्जिंग लागत कैलकुलेटर', '/ev-charging-calculator/', 'ev electric vehicle charging cost per km nexon ather petrol comparison'],
     ['Electricity Cost Calculator', 'बिजली लागत कैलकुलेटर', '/electricity-cost-calculator/', 'appliance electricity cost usage estimator units consumption kwh'],
     ['Bill Check', 'बिल जांच', '/bill-check/', 'verify bill overcharge audit'],

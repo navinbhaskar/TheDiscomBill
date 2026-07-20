@@ -3232,6 +3232,13 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .sp-chip-recover { background: rgba(220, 38, 38, 0.10); color: #dc2626; }
 .solar-proj-note { font-size: 12px; color: var(--text-tertiary); margin: 10px 0 0; line-height: 1.5; }
 
+/* Panel-size calculator: per-AC input rows */
+.psz-ac-row { display: grid; grid-template-columns: 1.2fr 0.8fr 1fr 0.7fr 28px; gap: 8px; align-items: center; margin-bottom: 8px; }
+.psz-ac-row select, .psz-ac-row input { width: 100%; min-width: 0; }
+.psz-del { border: 1px solid var(--border-default); background: transparent; color: var(--text-tertiary); border-radius: var(--radius-sm, 8px); width: 28px; height: 32px; font-size: 16px; line-height: 1; cursor: pointer; }
+.psz-del:hover { color: #dc2626; border-color: #dc2626; }
+.psz-next { text-decoration: none; }
+
 /* WhatsApp share */
 .solar-share {
   display: flex; align-items: center; justify-content: center; gap: 9px; width: 100%;
