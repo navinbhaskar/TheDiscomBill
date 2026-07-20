@@ -394,6 +394,20 @@
 .header-nav .nav-dropdown-item:hover { background: var(--brand-faint); color: var(--brand); text-decoration: none; }
 .header-nav .nav-dropdown-item:hover svg { color: var(--brand); }
 /* Section headers grouping the Quick Links into Tools / Tariffs / Services / Learn */
+/* Mobile-only primary links inside the More menu. Desktop (>1040px) never shows
+   them — the promoted top-bar links cover it — so the desktop dropdown stays lean.
+   1040px is where .nav-promoted links hide; 600px is where Calculator/About hide. */
+.nav-mob-links { display: none; }
+@media (max-width: 1040px) {
+  .nav-mob-links {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0 6px;
+    padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--border-subtle);
+  }
+  .nav-mob-links .nav-mob-sm { display: none; }
+}
+@media (max-width: 600px) {
+  .nav-mob-links .nav-mob-sm { display: flex; }
+}
 .header-nav .nav-dropdown-label {
   display: block; padding: 5px 11px 2px; font-size: 10px; font-weight: 700;
   letter-spacing: .07em; text-transform: uppercase; color: var(--text-tertiary);
@@ -623,13 +637,12 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
   padding: 6px 14px; border-radius: var(--radius-full);
   transition: background var(--t-fast), color var(--t-fast);
 }
-/* Current page — lit pill in the dark header */
+/* Current page — brand-blue text, no pill */
 .header-nav a.nav-active {
-  background: rgba(96, 165, 250, .16);
-  color: #fff;
+  color: var(--p-blue-400, #60a5fa);
   font-weight: 600;
-  box-shadow: inset 0 0 0 1px rgba(96, 165, 250, .35);
 }
+.header-nav a.nav-active:hover { color: var(--p-blue-400, #60a5fa); }
 .header-nav a:hover { background: rgba(255,255,255,.08); color: var(--text-inverse); text-decoration: none; }
 .header-nav a:focus-visible { outline: 2px solid var(--p-blue-400); outline-offset: 2px; }
 /* Promoted top-bar shortcuts (Compare / Solar / EV / Blog): shown on wide screens only —
@@ -759,19 +772,35 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
   background: #16a34a; box-shadow: 0 0 8px rgba(22,163,74,.55); flex-shrink: 0;
 }
 
-/* Card 2 — ranked comparison bars, your state highlighted */
-.hcc-bars { display: flex; flex-direction: column; gap: 11px; margin-top: 12px; }
-.hcc-row {
-  display: grid; grid-template-columns: 84px 1fr auto; align-items: center; gap: 10px;
-  font-size: 12.5px;
+/* Card 2 — column chart: same 250 units priced in four states, yours highlighted */
+.hcc-chart {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+  margin-top: 14px; align-items: end;
 }
-.hcc-state { color: #475569; font-weight: 500; white-space: nowrap; }
-.hcc-track { height: 8px; background: #eef2f7; border-radius: 4px; overflow: hidden; }
-.hcc-fill { display: block; height: 100%; border-radius: 4px; background: #cbd5e1; }
-.hcc-amt { color: #0f172a; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.hcc-you .hcc-state { color: var(--brand-dark, #1d4ed8); font-weight: 700; }
-.hcc-you .hcc-fill { background: linear-gradient(90deg, #2563eb, #3b82f6); }
-.hcc-you .hcc-amt { color: var(--brand-dark, #1d4ed8); }
+.hcc-col { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 0; }
+.hcc-track {
+  height: 92px; width: 100%;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.hcc-bar {
+  display: block; width: min(100%, 40px); min-height: 8px;
+  border-radius: 7px 7px 3px 3px;
+  background: linear-gradient(180deg, #dbe3ee, #cbd5e1);
+}
+.hcc-amt {
+  font-size: 12px; color: #0f172a; font-weight: 700;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.hcc-state {
+  font-size: 10.5px; color: #64748b; font-weight: 500;
+  text-align: center; line-height: 1.2;
+}
+.hcc-you .hcc-bar {
+  background: linear-gradient(180deg, #3b82f6, #2563eb);
+  box-shadow: 0 6px 16px -6px rgba(37, 99, 235, .55);
+}
+.hcc-you .hcc-amt, .hcc-you .hcc-state { color: var(--brand-dark, #1d4ed8); }
+.hcc-you .hcc-state { font-weight: 700; }
 
 @media (max-width: 1000px) {
   .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 34px; }
@@ -2067,27 +2096,50 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 
 .comparison-tabs {
-  display: flex; justify-content: center; gap: 8px; margin-bottom: 24px;
+  display: flex; justify-content: center; margin-bottom: 24px;
+}
+/* Segmented Domestic / Commercial switch */
+.comp-seg {
+  display: inline-flex; gap: 4px; padding: 4px;
+  background: var(--surface-sunken); border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
 }
 .comp-tab {
-  padding: 10px 24px; border-radius: 99px; font-size: 14px; font-weight: 600; cursor: pointer;
-  background: var(--surface-card); color: var(--text-secondary); border: 1px solid var(--border-default);
-  transition: background-color var(--t-fast), color var(--t-fast), border-color var(--t-fast), box-shadow var(--t-fast);
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 22px; border-radius: 99px; font-size: 13.5px; font-weight: 600; cursor: pointer;
+  background: transparent; color: var(--text-secondary); border: none;
+  transition: background-color var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
 }
+.comp-tab-ico { width: 16px; height: 16px; flex-shrink: 0; opacity: .65; transition: opacity var(--t-fast); }
 .comp-tab:hover { background: var(--surface-hover); color: var(--text-primary); }
-.comp-tab.active { background: var(--brand); color: #fff; border-color: var(--brand); box-shadow: var(--shadow-sm); }
+.comp-tab.active {
+  background: var(--brand); color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 4px 12px -4px rgba(29,78,216,.55);
+}
+.comp-tab.active .comp-tab-ico { opacity: 1; }
 
 .comparison-table-wrapper {
   background: var(--surface-card);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-default);
-  /* Full table shown without an inner vertical scroll; only allow horizontal scroll on
-     narrow screens (the table has a 660px min-width) so mobile layout doesn't break. */
+  /* Shrink the card to the table's content and center it — a 100%-wide table dumps
+     all its slack into the first column. Long tables still scroll sideways on phones. */
+  width: fit-content; max-width: 100%; margin-inline: auto;
   overflow-x: auto;
   box-shadow: var(--shadow-sm);
 }
-.comparison-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 660px; }
-.comparison-table th, .comparison-table td { padding: 8px 16px; text-align: left; border-bottom: 1px solid var(--border-subtle); transition: background var(--t-fast); }
+.comparison-table { width: auto; border-collapse: separate; border-spacing: 0; }
+.comparison-table th, .comparison-table td { padding: 8px 13px; text-align: left; border-bottom: 1px solid var(--border-subtle); transition: background var(--t-fast); white-space: nowrap; }
+.comparison-table th:first-child, .comparison-table td:first-child { white-space: normal; }
+/* Tariff-fact headings: the label stays on one line and its unit drops to a small
+   second line, so the column is only as wide as the label (e.g. "Highest slab") — not
+   the full "Highest slab (₹/unit)" string that used to force the column wide. */
+.comparison-table thead th.num { vertical-align: bottom; line-height: 1.25; }
+.comparison-table thead th.num .th-unit {
+  display: block; margin-top: 1px;
+  font-size: 9.5px; font-weight: 500; letter-spacing: 0; text-transform: none;
+  color: var(--text-tertiary);
+}
 .comparison-table thead th {
   position: sticky; top: 0; z-index: 2;
   background: var(--surface-sunken); color: var(--text-secondary);
@@ -2096,7 +2148,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 .comparison-table th.num, .comparison-table td.num { text-align: right; }
 /* Data cells: normal weight (no bold) — legibility comes from tabular figures + spacing. */
-.comparison-table td { font-size: 14px; color: var(--text-primary); font-weight: 400; font-variant-numeric: tabular-nums; }
+.comparison-table td { font-size: 13px; color: var(--text-primary); font-weight: 400; font-variant-numeric: tabular-nums; }
 .comparison-table tbody tr:last-child td { border-bottom: none; }
 
 /* Sticky first column (the DISCOM name) so it stays visible on horizontal scroll. */
@@ -2130,6 +2182,9 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .comp-state { display: block; font-size: 13px; font-weight: 600; color: var(--text-primary); }
 .comp-code { display: block; font-size: 11px; font-weight: 400; color: var(--text-tertiary); margin-top: 0; }
 .comp-na { color: var(--text-tertiary); font-weight: 400; }
+/* Tariff-fact columns (slab rates, fixed charge, free units) — quieter than the bill amounts */
+.comparison-table td.comp-fact { color: var(--text-secondary); font-size: 12.5px; }
+.comp-free { color: var(--success, #15803d); font-weight: 600; }
 
 .comp-loading { text-align: center !important; color: var(--text-tertiary); font-style: italic; padding: 30px !important; }
 
@@ -2352,8 +2407,9 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .tariff-field-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; color: var(--text-tertiary); margin-bottom: 5px; }
 .tariff-field-value { font-size: 14px; color: var(--text-primary); }
 
-.tariff-slab-table { width: 100%; border-collapse: collapse; }
+.tariff-slab-table { width: fit-content; max-width: 100%; min-width: 60%; border-collapse: collapse; }
 .tariff-slab-table td { padding: 5px 8px; font-size: 13px; color: var(--text-primary); border-bottom: 1px dashed var(--border-subtle); }
+.tariff-slab-table td:first-child { padding-right: 28px; }
 .tariff-slab-table tr:last-child td { border-bottom: none; }
 /* Zebra on long slab lists — solid mix so it reads in dark mode too */
 .tariff-slab-table tr:nth-child(even) td { background: color-mix(in srgb, var(--surface-sunken) 60%, var(--surface-card)); }
@@ -2398,6 +2454,12 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
    the small 2-column tables on these pages fit any phone, so drop it here —
    otherwise the ₹ column scrolls out of view on mobile. */
 .seo-page .comparison-table { min-width: 0; }
+/* Content-page tables shrink to their content instead of stretching columns across
+   the full article width — keeps them compact; long tables still scroll sideways. */
+.seo-page .comparison-table-wrapper { width: fit-content; max-width: 100%; }
+.seo-page .comparison-table { width: auto; }
+/* Cap cell width so prose cells wrap instead of blowing the column out sideways */
+.seo-page .comparison-table th, .seo-page .comparison-table td { max-width: 38ch; }
 
 /* Guides (/guides/) */
 .guide-meta { font-size: 12.5px; color: var(--text-tertiary); margin: -6px 0 16px; }
@@ -2615,10 +2677,11 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 @media (max-width: 560px) { .seo-dir-hero { padding: 20px 16px; } }
 
 /* Key-facts table (per DISCOM) */
-.seo-facts { width: 100%; border-collapse: collapse; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-md); overflow: hidden; }
-.seo-facts th, .seo-facts td { text-align: left; padding: 10px 14px; font-size: 13.5px; border-bottom: 1px solid var(--border-subtle); vertical-align: top; }
+.seo-facts { width: fit-content; max-width: 100%; border-collapse: collapse; background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-md); overflow: hidden; }
+.seo-facts th, .seo-facts td { text-align: left; padding: 7px 12px; font-size: 13px; border-bottom: 1px solid var(--border-subtle); vertical-align: top; }
 .seo-facts tr:last-child th, .seo-facts tr:last-child td { border-bottom: none; }
-.seo-facts th { width: 38%; color: var(--text-secondary); font-weight: 600; background: var(--surface-sunken); }
+.seo-facts th { color: var(--text-secondary); font-weight: 600; background: var(--surface-sunken); white-space: nowrap; }
+.seo-facts td { max-width: 52ch; }
 .seo-facts td { color: var(--text-primary); }
 .seo-facts a { color: var(--brand); }
 
@@ -4073,16 +4136,25 @@ input[type="text"].br-chat-input { flex: 1; height: 40px; padding: 0 12px; font-
 @media (max-width: 860px) { .login-btn .login-btn-icon { display: none; } }
 @media (max-width: 700px) { .login-btn { padding: 0 12px; font-size: 12px; height: 32px; } }
 
-/* Signed-in account dropdown (reuses the Quick Links .nav-dropdown mechanics) */
-.account-dropdown .login-btn { border: none; cursor: pointer; font-family: inherit; }
-.account-btn { padding: 0 12px 0 5px; gap: 7px; }
+/* Signed-in account dropdown (reuses the Quick Links .nav-dropdown mechanics).
+   Trigger is a round avatar chip with a warm gradient ring — no name/caret pill. */
+.account-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; padding: 2px; border: none; cursor: pointer;
+  border-radius: var(--radius-full); background: linear-gradient(135deg, #f59e0b, #f472b6, #60a5fa);
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
+}
+.account-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px -6px rgba(244, 114, 182, .5); }
+.account-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .account-avatar { display: inline-flex; align-items: center; justify-content: center; flex: none;
-  width: 26px; height: 26px; border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, .22); border: 1px solid rgba(255, 255, 255, .35);
-  color: #fff; font-size: 12px; font-weight: 700; line-height: 1; }
-.account-dropdown.open .nav-caret { transform: rotate(180deg); }
-.account-menu { right: 0; left: auto; min-width: 240px; transform: translateY(-6px) scale(.98); }
+  width: 100%; height: 100%; border-radius: var(--radius-full);
+  background: var(--p-blue-700, #1d4ed8); border: 2px solid var(--p-blue-950, #0f1828);
+  color: #fff; font-size: 13.5px; font-weight: 700; line-height: 1; }
+.account-menu { right: 0; left: auto; min-width: 250px; border-radius: 16px; padding: 8px;
+  transform: translateY(-6px) scale(.98); }
 .nav-dropdown.open .account-menu { transform: scale(1); }
+.account-menu .nav-dropdown-item { border-radius: 10px; padding: 9px 12px; }
+.account-menu-sep { height: 1px; background: var(--border-default); margin: 6px 4px; }
 .account-menu-head { display: flex; align-items: center; gap: 10px; padding: 8px 12px 10px;
   border-bottom: 1px solid var(--border-default); margin-bottom: 6px; }
 .account-avatar-lg { width: 34px; height: 34px; font-size: 14.5px;
@@ -4098,6 +4170,73 @@ button.nav-dropdown-item { width: 100%; background: none; border: none; font-fam
 .account-logout { color: #b91c1c; }
 .account-logout:hover { background: #fee2e2; color: #b91c1c; }
 [data-theme="dark"] .account-logout:hover { background: rgba(239, 68, 68, .15); }
+
+/* ── Profile page (/profile/) ─────────────────────────────────────────────── */
+.pf-card { background: var(--surface-card); border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow-sm); max-width: 560px; }
+.pf-head { display: flex; align-items: center; gap: 14px; padding-bottom: 16px; margin-bottom: 18px;
+  border-bottom: 1px solid var(--border-subtle); }
+.pf-avatar { display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 52px; height: 52px; border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--p-blue-500, #3b82f6), var(--p-blue-700, #1d4ed8));
+  color: #fff; font-size: 22px; font-weight: 700; }
+.pf-id { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pf-id strong { font-size: 16px; color: var(--text-primary); }
+.pf-id span { font-size: 12.5px; color: var(--text-tertiary); word-break: break-all; }
+.pf-role { margin-left: auto; flex: none; font-size: 11px; font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase; padding: 4px 10px; border-radius: var(--radius-full);
+  background: var(--brand-faint); color: var(--text-brand-dark, var(--brand)); }
+.pf-role-expert { background: var(--ok-bg, #dcfce7); color: var(--ok-text, #15803d); }
+.pf-form input:disabled { opacity: .65; cursor: not-allowed; }
+.pf-actions { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
+.pf-status { font-size: 12.5px; color: var(--text-tertiary); }
+.pf-status-ok { color: var(--ok-text, #15803d); }
+.pf-status-err { color: #b91c1c; }
+.pf-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-subtle);
+  font-size: 12.5px; color: var(--text-tertiary); }
+.pf-signout { background: none; border: none; cursor: pointer; font-family: inherit;
+  font-size: 12.5px; font-weight: 600; color: #b91c1c; padding: 6px 10px; border-radius: 8px; }
+.pf-signout:hover { background: #fee2e2; }
+[data-theme="dark"] .pf-signout:hover { background: rgba(239, 68, 68, .15); }
+.pf-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px;
+  max-width: 560px; margin-top: 14px; }
+.pf-link { display: flex; flex-direction: column; gap: 3px; padding: 13px 15px;
+  background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-md);
+  text-decoration: none; transition: border-color var(--t-fast), box-shadow var(--t-fast); }
+.pf-link:hover { border-color: var(--brand); box-shadow: var(--shadow-sm); text-decoration: none; }
+.pf-link strong { font-size: 13.5px; color: var(--text-primary); }
+.pf-link span { font-size: 12px; color: var(--text-tertiary); }
+
+/* ── Community page (/community/) ─────────────────────────────────────────── */
+.cm-signin { display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  flex-wrap: wrap; margin-bottom: 18px; }
+.cm-signin p { margin: 0; color: var(--text-secondary); }
+a.cm-signin-btn { display: inline-flex; align-items: center; text-decoration: none; }
+.cm-composer { margin-bottom: 22px; }
+.cm-label { display: block; font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; }
+.cm-composer input, .cm-composer textarea { width: 100%; margin-bottom: 10px; }
+.cm-composer textarea { height: auto; padding: 10px 12px; resize: vertical; font-family: inherit; font-size: 13.5px; }
+.cm-composer-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.cm-hint { font-size: 12.5px; color: var(--text-tertiary); }
+.cm-status { margin: 8px 0 0; font-size: 12.5px; color: #b91c1c; }
+.cm-post { margin-bottom: 12px; }
+.cm-post-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.cm-post-avatar { display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 34px; height: 34px; border-radius: var(--radius-full);
+  background: var(--brand-faint); color: var(--text-brand-dark, var(--brand));
+  font-size: 14px; font-weight: 700; }
+.cm-post-meta { display: flex; flex-direction: column; gap: 0; min-width: 0; }
+.cm-post-meta strong { font-size: 13px; color: var(--text-primary); }
+.cm-post-meta span { font-size: 11.5px; color: var(--text-tertiary); }
+.cm-del { margin-left: auto; flex: none; background: none; border: 1px solid var(--border-default);
+  border-radius: 8px; padding: 4px 10px; font-family: inherit; font-size: 12px; cursor: pointer;
+  color: var(--text-tertiary); transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast); }
+.cm-del:hover { border-color: #b91c1c; color: #b91c1c; background: #fee2e2; }
+[data-theme="dark"] .cm-del:hover { background: rgba(239, 68, 68, .15); }
+.cm-post-title { margin: 0 0 6px; font-size: 15.5px; color: var(--text-primary); }
+.cm-post-body { margin: 0; font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; white-space: pre-line; }
+.cm-empty { text-align: center; }
 
 /* My Bills page (/my-bills/) */
 .mb-amt { font-weight: 600; color: var(--text-primary); font-variant-numeric: tabular-nums; white-space: nowrap; }

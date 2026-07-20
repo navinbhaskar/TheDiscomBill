@@ -1,6 +1,6 @@
 // sw.js — Service Worker (network-first, cache fallback)
 // Update this version string when deploying new code to bust the cache.
-const CACHE = 'discombill-20260716-167';
+const CACHE = 'discombill-20260716-175';
 
 const CORE = [
   './', './index.html', './compare/', './compare/index.html',
@@ -12,6 +12,8 @@ const CORE = [
   './bill-review/', './bill-review/index.html',
   './login/', './login/index.html',
   './my-bills/', './my-bills/index.html',
+  './profile/', './profile/index.html',
+  './community/', './community/index.html',
   './new-connection/', './new-connection/index.html',
   './complaint/', './complaint/index.html',
   './glossary/', './glossary/index.html',
@@ -28,6 +30,7 @@ const CORE = [
   // Bill Review portal — bill-review.js statically imports these two, so they
   // must be cached together or the page fails to parse offline.
   './js/bill-review.js', './js/support-common.js', './js/supabase-config.js', './js/login.js', './js/my-bills.js',
+  './js/profile.js', './js/community.js',
   // Vendored libraries — lenis.mjs is a STATIC import of main.js, so if it is missing from
   // the cache offline the whole entry point fails to parse (and the state list never loads).
   './js/vendor/lenis.mjs',

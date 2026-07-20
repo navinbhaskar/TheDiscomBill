@@ -253,6 +253,8 @@ function initLoginButton() {
   const icon = (paths) => `<svg class="account-item-icon" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
   const icComplaints = icon('<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 7v4"/><path d="M12 14h.01"/>');
   const icBills = icon('<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/>');
+  const icProfile = icon('<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>');
+  const icCommunity = icon('<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>');
   const icExpert = icon('<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>');
   const icAdmin = icon('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>');
   const icEditor = icon('<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>');
@@ -261,10 +263,8 @@ function initLoginButton() {
   const wrap = document.createElement('div');
   wrap.className = 'nav-dropdown account-dropdown';
   wrap.innerHTML = `
-    <button type="button" class="login-btn account-btn" id="headerLoginBtn" aria-haspopup="true" aria-expanded="false">
+    <button type="button" class="account-btn" id="headerLoginBtn" aria-haspopup="true" aria-expanded="false" aria-label="Account menu — ${escText(firstName)}" title="${escText(user.name || user.email)}">
       <span class="account-avatar" aria-hidden="true">${escText(initial)}</span>
-      <span>${escText(firstName)}</span>
-      <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
     <div class="nav-dropdown-menu account-menu" role="menu">
       <div class="account-menu-head">
@@ -274,12 +274,15 @@ function initLoginButton() {
           <span>${escText(user.email)}</span>
         </div>
       </div>
-      <a href="/bill-review/" class="nav-dropdown-item" role="menuitem">${icComplaints} My Complaints</a>
+      <a href="/profile/" class="nav-dropdown-item" role="menuitem">${icProfile} Profile</a>
+      <a href="/community/" class="nav-dropdown-item" role="menuitem">${icCommunity} Community</a>
       <a href="/my-bills/" class="nav-dropdown-item" role="menuitem">${icBills} My Bills</a>
+      <a href="/bill-review/" class="nav-dropdown-item" role="menuitem">${icComplaints} My Complaints</a>
       ${isExpert ? `<a href="/expert/" class="nav-dropdown-item" role="menuitem">${icExpert} Expert Console</a>` : ''}
       ${isAdmin ? `<a href="/admin/" class="nav-dropdown-item" role="menuitem">${icAdmin} Admin Console</a>` : ''}
       ${isAdmin ? `<a href="/editor.html" class="nav-dropdown-item" role="menuitem">${icEditor} Tariff Editor</a>` : ''}
-      <button type="button" id="accountLogout" class="nav-dropdown-item account-logout" role="menuitem">${icLogout} Logout</button>
+      <div class="account-menu-sep" role="presentation"></div>
+      <button type="button" id="accountLogout" class="nav-dropdown-item account-logout" role="menuitem">${icLogout} Sign out</button>
     </div>`;
   themeBtn.after(wrap);   // sits to the right of the theme toggle
 
@@ -409,7 +412,10 @@ function initScrollReveal() {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    // threshold 0 + a small fixed rootMargin: reveal as soon as ~40px of the element
+    // enters the viewport. A ratio threshold made TALL elements (like the 20-row
+    // comparison table) stay invisible until hundreds of px had scrolled past.
+  }, { threshold: 0, rootMargin: '0px 0px -40px 0px' });
   // Reveal anything already within the viewport on load right away — the 12%
   // threshold never fires for elements taller than the space above the fold
   // (e.g. the usage-estimator layout), so they'd stay hidden until you scroll.

@@ -34,7 +34,7 @@ const MAJOR_DISCOMS = [
 // Flatten all state DISCOM arrays into a single lookup list.
 const ALL_DISCOMS = Object.values(TARIFF_DB).flat();
 
-const UNIT_TIERS = [200, 400, 600, 1000];
+const UNIT_TIERS = [200, 500, 1000];
 
 // Fixed 1 kW sanctioned/connected load for every tier, so the comparison isolates the
 // per-unit energy + fixed charge differences between DISCOMs on a like-for-like basis.
@@ -62,18 +62,51 @@ function billFor(discomId, categoryTarget, units, state) {
       lpscApplicable: false,
       subsidy: categoryTarget === 'domestic' ? (DOMESTIC_SUBSIDY[state] || null) : null,
     });
-    return bill.totalPayable;
+    return bill;
   } catch (err) {
     console.error(`Compare error for ${discomId} @ ${units}u (${categoryTarget}):`, err);
     return null;
   }
 }
 
+// Compact ₹/unit rate: whole rupees stay whole, paise trimmed of trailing zeros.
+const fmtRate = (r) => '₹' + Number(r.toFixed(2)).toString();
+
+// Tariff facts straight from the schedule: first-slab and top-slab ₹/unit for this
+// category (across its supply types), plus the state's free-units allowance (domestic
+// only; Delhi's GNCTD "nil bill up to 200" scheme is shown as 200).
+function tariffFacts(discomId, categoryTarget, state) {
+  const discom = ALL_DISCOMS.find(d => d.id === discomId);
+  const cat = discom && discom.categories.find(c => c.id === categoryTarget);
+  if (!cat) return null;
+  const blocks = (cat.supplyTypes && cat.supplyTypes.length) ? cat.supplyTypes : [cat];
+  const rates = [];
+  for (const b of blocks) for (const s of (b.energySlabs || [])) if (typeof s.rate === 'number') rates.push(s.rate);
+  const firstSlab = blocks[0].energySlabs && typeof blocks[0].energySlabs[0]?.rate === 'number'
+    ? blocks[0].energySlabs[0].rate : (rates.length ? Math.min(...rates) : null);
+  const topSlab = rates.length ? Math.max(...rates) : null;
+  let freeUnits = null;
+  if (categoryTarget === 'domestic') {
+    const sub = DOMESTIC_SUBSIDY[state];
+    if (sub) freeUnits = sub.type === 'delhi-gnctd' ? 200 : sub.units;
+  }
+  return { firstSlab, topSlab, freeUnits };
+}
+
 // Build all table rows for one category, highlighting the cheapest DISCOM in each column.
 function generateComparisonRows(categoryTarget) {
-  // First pass: compute every amount so we can find the lowest per consumption tier.
+  // First pass: compute every bill so we can find the lowest per consumption tier.
   const rows = MAJOR_DISCOMS
-    .map(d => ({ state: d.state, discom: d.discom, amounts: UNIT_TIERS.map(u => billFor(d.id, categoryTarget, u, d.state)) }))
+    .map(d => {
+      const bills = UNIT_TIERS.map(u => billFor(d.id, categoryTarget, u, d.state));
+      return {
+        state: d.state, discom: d.discom,
+        facts: tariffFacts(d.id, categoryTarget, d.state),
+        amounts: bills.map(b => b ? b.totalPayable : null),
+        // Fixed charge shown for the like-for-like 1 kW / 1 month basis used everywhere here.
+        fixed: bills.find(b => b) ? bills.find(b => b).fixedCharge : null,
+      };
+    })
     .filter(r => r.amounts.some(a => a !== null)); // drop DISCOMs with no data for this category
 
   const columnMin = UNIT_TIERS.map((_, col) => {
@@ -83,6 +116,12 @@ function generateComparisonRows(categoryTarget) {
 
   // Second pass: render. The cheapest cell in each column gets a green "lowest" highlight.
   return rows.map(r => {
+    const f = r.facts || {};
+    const factCells =
+      `<td class="num comp-fact">${f.firstSlab != null ? fmtRate(f.firstSlab) : '<span class="comp-na">—</span>'}</td>` +
+      `<td class="num comp-fact">${f.topSlab != null ? fmtRate(f.topSlab) : '<span class="comp-na">—</span>'}</td>` +
+      `<td class="num comp-fact">${r.fixed != null ? fmt(r.fixed) : '<span class="comp-na">—</span>'}</td>` +
+      `<td class="num comp-fact">${f.freeUnits != null ? `<span class="comp-free">${f.freeUnits}</span>` : '<span class="comp-na">—</span>'}</td>`;
     const cells = r.amounts.map((amt, col) => {
       if (amt === null) return `<td class="num comp-na">—</td>`;
       const isBest = columnMin[col] !== null && amt === columnMin[col];
@@ -91,6 +130,7 @@ function generateComparisonRows(categoryTarget) {
     }).join('');
     return `<tr>
       <td class="comp-name"><span class="comp-state">${r.state}</span><span class="comp-code">${r.discom}</span></td>
+      ${factCells}
       ${cells}
     </tr>`;
   }).join('');
@@ -108,9 +148,10 @@ export function initComparisonTable() {
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
+      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-pressed', 'false'); });
       tab.classList.add('active');
-      tbody.innerHTML = `<tr><td colspan="5" class="comp-loading">Calculating…</td></tr>`;
+      tab.setAttribute('aria-pressed', 'true');
+      tbody.innerHTML = `<tr><td colspan="8" class="comp-loading">Calculating…</td></tr>`;
       setTimeout(() => renderTable(tab.dataset.target), 30); // tiny timeout for the loading flash
     });
   });
