@@ -970,6 +970,13 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
   gap: 8px 10px; margin: 28px auto 0;
 }
+/* The chip is a single sentence, so it should read as one line. It is a <p> and
+   inherits .hero p's 520px measure — correct for the paragraph above it, but it
+   breaks this one in half. Released from the cap it sits on one line at any
+   desktop width, and still wraps on its own if a translation runs long. */
+@media (min-width: 601px) {
+  .hero .hero-trust { max-width: none; }
+}
 .trust-item {
   display: inline-flex; align-items: center; gap: 7px;
   font-size: 12.5px; font-weight: 500; color: var(--text-secondary);
