@@ -58,8 +58,7 @@ export default {
     'hero.feat.demand': 'अतिरिक्त मांग जुर्माना',
     'hero.feat.duty': 'बिजली शुल्क व राज्य उद्ग्रहण',
     'hero.discoms.label': '35+ राज्यों व केंद्रशासित प्रदेशों के 65+ डिस्कॉम के टैरिफ — जैसे',
-    'hero.trust1': 'हर टैरिफ स्लैब आधिकारिक SERC व DISCOM आदेशों से सत्यापित',
-    'hero.trust2': 'वित्त वर्ष 2025-26 टैरिफ डेटा',
+    'hero.trust1': 'हर टैरिफ स्लैब आधिकारिक SERC व DISCOM आदेशों से सत्यापित — वित्त वर्ष 2026-27 के लिए अपडेटेड',
     // Hero sample-bill cards
     'hero.card.title': 'अनुमानित मासिक बिल',
     'hero.card.sub': '250 यूनिट · LMV-1 घरेलू',

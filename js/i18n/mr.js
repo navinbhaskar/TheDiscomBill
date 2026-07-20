@@ -58,8 +58,7 @@ export default {
     'hero.feat.demand': 'जादा मागणी दंड',
     'hero.feat.duty': 'वीज शुल्क व राज्य कर',
     'hero.discoms.label': '35+ राज्ये व केंद्रशासित प्रदेशांतील 65+ डिस्कॉमचे टॅरिफ — यांसह',
-    'hero.trust1': 'प्रत्येक टॅरिफ स्लॅब अधिकृत SERC व DISCOM आदेशांशी पडताळलेला',
-    'hero.trust2': 'आर्थिक वर्ष 2025-26 टॅरिफ डेटा',
+    'hero.trust1': 'प्रत्येक टॅरिफ स्लॅब अधिकृत SERC व DISCOM आदेशांशी पडताळलेला — आर्थिक वर्ष 2026-27 साठी अद्ययावत',
     // Hero sample-bill cards
     'hero.card.title': 'अंदाजित मासिक बिल',
     'hero.card.sub': '250 युनिट · LMV-1 घरगुती',

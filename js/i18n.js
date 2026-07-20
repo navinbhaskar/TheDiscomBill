@@ -64,8 +64,7 @@ export const STRINGS = {
     'hero.feat.demand': 'Excess demand penalty',
     'hero.feat.duty': 'Electricity duty & state levies',
     'hero.discoms.label': 'Tariffs for 65+ DISCOMs across 35 states & UTs — including',
-    'hero.trust1': 'Every tariff slab verified against official SERC & DISCOM orders',
-    'hero.trust2': 'FY 2025-26 tariff data',
+    'hero.trust1': 'Every tariff slab verified against official SERC & DISCOM orders — updated for FY 2026-27',
     // Hero sample-bill cards
     'hero.card.title': 'Estimated monthly bill',
     'hero.card.sub': '250 units · LMV-1 domestic',
