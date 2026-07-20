@@ -209,32 +209,78 @@ const BOX_LABELS = [
   ['payableByDue', /payable\s*by\s*due\s*date/i],
   ['minPayable', /minimum\s*payable/i],
   ['currentBill', /current\s*bill\s*amount/i],
-  ['payable', /(?<!minimum\s)payable\s*amount/i],
+  // Tata Power-DDL's "Your Electricity Bill Summary" strip uses its own wording
+  ['arrearsBox', /arrears?\s*\/?\s*refund/i],
+  ['adjustments', /adjustments?/i],
+  ['currentDemandBox', /current\s*demand/i],
+  ['subsidy', /subsidy/i],
+  ['lpscBox', /\bLPSC\b/i],
+  ['payable', /(?<!minimum\s)(?:net\s*amount\s*)?payable(?:\s*amount)?/i],
 ];
+
+// Zip a row of labels to the row of numbers underneath it.
+//
+// Numbers are matched to labels by horizontal position, not by index: a summary
+// strip routinely leaves cells blank (Tata Power-DDL prints nothing under
+// "Adjustments" and "LPSC"), and index-zipping then shifts every value one
+// column left — which is how an ₹8.51 arrears figure ended up being shown as the
+// amount payable. Requires the caller to pass text with its spacing intact.
+const COL_TOLERANCE = 30; // chars; a value may sit this far from its label's centre
+
+function zipColumns(labelLine, valueLine) {
+  const found = [];
+  for (const [key, re] of BOX_LABELS) {
+    const m = labelLine.match(re);
+    if (!m) continue;
+    // "Payable Amount" also matches inside "Minimum Payable Amount" — keep the
+    // more specific label when both land on the same spot.
+    if (key === 'payable' && found.some(f => f.key === 'minPayable' && Math.abs(f.pos - m.index) < 12)) continue;
+    found.push({ key, pos: m.index + m[0].length / 2 });
+  }
+  if (found.length < 2) return [];
+
+  const nums = [...valueLine.matchAll(/-?\d[\d,]*(?:\.\d+)?/g)]
+    .map((m) => ({ v: num(m[0]), pos: m.index + m[0].length / 2 }));
+  if (!nums.length || nums.length > found.length) return [];
+
+  // Exact fill (no blank cells) — order alone is unambiguous, so trust it.
+  if (nums.length === found.length) {
+    const byPos = found.slice().sort((a, b) => a.pos - b.pos);
+    return byPos.map((f, k) => [f.key, nums[k].v]);
+  }
+
+  // Blanks present — pair off closest label/value first so a gap can't cascade.
+  const pairs = [];
+  for (const n of nums) {
+    for (const f of found) pairs.push({ key: f.key, v: n.v, d: Math.abs(f.pos - n.pos), n });
+  }
+  pairs.sort((a, b) => a.d - b.d);
+  const usedKey = new Set(), usedNum = new Set(), out = [];
+  for (const p of pairs) {
+    if (p.d > COL_TOLERANCE || usedKey.has(p.key) || usedNum.has(p.n)) continue;
+    usedKey.add(p.key); usedNum.add(p.n);
+    out.push([p.key, p.v]);
+  }
+  return out;
+}
+
 function columnarAmounts(text) {
   const out = {};
   const lines = text.split('\n');
   for (let i = 0; i < lines.length - 1; i++) {
-    const found = [];
-    for (const [key, re] of BOX_LABELS) {
-      const m = lines[i].match(re);
-      if (m && !(key === 'payable' && found.some(f => f.key === 'minPayable' && Math.abs(f.pos - m.index) < 12))) {
-        found.push({ key, pos: m.index });
-      }
+    for (const [key, v] of zipColumns(lines[i], lines[i + 1])) {
+      if (out[key] === undefined) out[key] = v;
     }
-    if (found.length < 2) continue;
-    found.sort((a, b) => a.pos - b.pos);
-    const nums = (lines[i + 1].match(/-?\d[\d,]*(?:\.\d+)?/g) || []).map(num);
-    if (!nums.length || nums.length > found.length) continue;
-    found.slice(0, nums.length).forEach((fnd, k) => {
-      if (out[fnd.key] === undefined) out[fnd.key] = nums[k];
-    });
   }
   return out;
 }
 
 function parseBillText(raw) {
-  const text = fixDigitConfusions(raw.replace(/[|]/g, ' ').replace(/[ \t]+/g, ' '));
+  // Two views of the same bill: `text` has runs of whitespace collapsed (what the
+  // label regexes want), `spaced` keeps them so the summary-box columns can still
+  // be lined up by horizontal position.
+  const spaced = fixDigitConfusions(raw.replace(/[|]/g, ' '));
+  const text = spaced.replace(/[ \t]+/g, ' ');
   const f = {};
   const grab = (re, idx = 1) => {
     const m = text.match(re);
@@ -293,6 +339,28 @@ function parseBillText(raw) {
     f.currRead = num(currRead);
   }
 
+  // Meter tables with no "Previous/Current Reading" labels on the value row (Tata
+  // Power-DDL prints date+reading pairs side by side under a spanning header).
+  // Two "date then number" pairs on one line are that table; the later date is the
+  // current read, so the column order on the bill does not matter.
+  if (f.prevRead === undefined) {
+    for (const line of text.split('\n')) {
+      const pairs = [...line.matchAll(/(\d{1,2}[-\/.]\d{1,2}[-\/.]\d{2,4})\s+(\d[\d,]*(?:\.\d+)?)/g)]
+        .map((m) => ({ d: normDate(m[1]), v: num(m[2]) }))
+        .filter((p) => p.d);
+      if (pairs.length !== 2) continue;
+      const [older, newer] = pairs.slice().sort((a, b) => a.d.iso < b.d.iso ? -1 : 1);
+      const days = (Date.parse(newer.d.iso) - Date.parse(older.d.iso)) / 86400000;
+      // A real billing cycle, and a meter that ran forward by a believable amount.
+      if (days < 20 || days > 70) continue;
+      if (!(newer.v >= older.v) || newer.v - older.v > 100000) continue;
+      f.prevRead = older.v;
+      f.currRead = newer.v;
+      if (!f.fromDate) { f.fromDate = older.d; f.toDate = newer.d; }
+      break;
+    }
+  }
+
   const mf = grab(new RegExp(`(?:multiply(?:ing)?\\s*factor|\\bMF\\b)${GAP}(\\d+(?:\\.\\d+)?)`, 'i'));
   if (mf && num(mf) >= 1 && num(mf) <= 5000) f.mf = num(mf);
 
@@ -335,10 +403,25 @@ function parseBillText(raw) {
 
   // Column-aware summary boxes override the flat matches — they know which
   // number belongs to which label.
-  const box = columnarAmounts(text);
+  const box = columnarAmounts(spaced);
   if (box.payable > 0) f.billAmount = box.payable;
   else if (box.payableByDue > 0) f.billAmount = box.payableByDue;
-  if (box.prevDues > 0) f.arrears = box.prevDues;
+  // Which fields the box settled — the flat fallbacks below must not overwrite these.
+  const boxSaw = new Set();
+  if (box.prevDues > 0) { f.arrears = box.prevDues; boxSaw.add('arrears'); }
+  else if (box.arrearsBox > 0) { f.arrears = box.arrearsBox; boxSaw.add('arrears'); }
+  // The box knows which column LPSC actually sits in; a flat match on the label
+  // row would pick up whichever number happens to come first underneath it. A
+  // blank LPSC cell is an answer too — it means there is no late-payment charge.
+  if (box.lpscBox !== undefined) {
+    boxSaw.add('lpsc');
+    if (box.lpscBox > 0) f.lpsc = box.lpscBox;
+  } else if (box.arrearsBox !== undefined) {
+    boxSaw.add('lpsc');
+  }
+  // Subsidy prints as a negative (a deduction). Carry it as a positive amount —
+  // the review screen and the calculator both treat it as a rebate.
+  if (box.subsidy !== undefined && box.subsidy !== 0) f.subsidy = Math.abs(box.subsidy);
 
   // UPPCL prints the account number hyphen-grouped ("1538-298-215")
   const acct = grabAny([
@@ -360,12 +443,18 @@ function parseBillText(raw) {
   }
   if (meterNo) f.meterNo = meterNo;
 
-  const prevDues = grab(new RegExp(`(?:previous|past)\\s*(?:dues|balance|outstanding|arrears?)${GAP}${NUM}`, 'i'))
-    || grab(new RegExp(`arrears?\\s*(?:amount)?${GAP}${NUM}`, 'i'));
-  if (prevDues && num(prevDues) > 0) f.arrears = num(prevDues);
+  // Flat label matches, used only where the summary box did not already answer —
+  // the box is column-aware and always the better source when it fired.
+  if (!boxSaw.has('arrears')) {
+    const prevDues = grab(new RegExp(`(?:previous|past)\\s*(?:dues|balance|outstanding|arrears?)${GAP}${NUM}`, 'i'))
+      || grab(new RegExp(`arrears?\\s*(?:amount)?${GAP}${NUM}`, 'i'));
+    if (prevDues && num(prevDues) > 0) f.arrears = num(prevDues);
+  }
 
-  const lpsc = grab(new RegExp(`(?:lpsc|late\\s*payment\\s*surcharge|surcharge\\s*on\\s*arrears?|विलंब\\s*भुगतान\\s*अधिभार)${GAP}${NUM}`, 'i'));
-  if (lpsc && num(lpsc) > 0) f.lpsc = num(lpsc);
+  if (!boxSaw.has('lpsc')) {
+    const lpsc = grab(new RegExp(`(?:lpsc|late\\s*payment\\s*surcharge|surcharge\\s*on\\s*arrears?|विलंब\\s*भुगतान\\s*अधिभार)${GAP}${NUM}`, 'i'));
+    if (lpsc && num(lpsc) > 0) f.lpsc = num(lpsc);
+  }
 
   // Name capture stays on one line ([ \t] separators only) so it can't swallow
   // the next label on the bill.
@@ -770,6 +859,9 @@ function initBillOcr() {
     if (fields.category) extras.push(`Tariff category <b>${esc(fields.category)}</b>`);
     if (fields.supplyType) extras.push(`Supply type <b>${esc(fields.supplyType)}</b>`);
     if (fields.billMonth && fields.billYear) extras.push(`Bill month <b>${fields.billMonth}/${fields.billYear}</b>`);
+    // Read-only: the calculator derives the subsidy from the tariff itself, so this
+    // is shown to confirm the bill was understood, not as a value to apply.
+    if (fields.subsidy) extras.push(`Subsidy on the bill <b>₹${esc(fields.subsidy)}</b>`);
 
     resultEl.innerHTML =
       unclearNote +

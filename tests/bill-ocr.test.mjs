@@ -91,6 +91,43 @@ group('load — Sanct./Conn. abbreviations and ".5 KW" values', () => {
   check('zero MDI left empty', parseBillText('Sanction Load 5KW\nMDI : .00').maxDemand, undefined);
 });
 
+// ── Tata Power-DDL (Delhi) — columnar summary strip with blank cells ──────────
+group('Tata Power-DDL — summary strip with empty columns', () => {
+  // "Your Electricity Bill Summary" prints labels over values; Adjustments and
+  // LPSC are blank on this bill, which used to shift every value one column left
+  // and report the ₹8.51 arrears figure as the amount payable.
+  const txt = [
+    'TATA POWER DELHI DISTRIBUTION LIMITED',
+    'Name : MR. KUMAR',
+    'Sanctioned Load (KW/KVA): 2.00',
+    'MDI Reading : 2.10KW',
+    'CA NO.    : 60001234567',
+    'Tariff Category : Domestic Lighting-DL',
+    'Arrears / Refund   Adjustments   Current Demand   Subsidy   LPSC   Net Amount Payable',
+    '8.51                             2028.97          -844.06          1193.42',
+    'Meter No. Current Meter Reading Previous Meter Reading Reading Difference',
+    'Single Phase Meter Ok KWH KW 17/07/2015 9350 2.10 16/06/2015 9000 350 350',
+  ].join('\n');
+  const f = parseBillText(txt);
+  check('payable comes from its own column', f.billAmount, 1193.42);
+  check('arrears not mistaken for the total', f.arrears, 8.51);
+  check('blank LPSC cell stays empty', f.lpsc, undefined);
+  check('subsidy captured as a positive', f.subsidy, 844.06);
+  check('DISCOM detected', f.discom && f.discom.id, 'tpddl');
+  check('sanctioned load past "(KW/KVA)"', f.sanctionedLoad, 2);
+  check('unlabelled reading pair — previous', f.prevRead, 9000);
+  check('unlabelled reading pair — current', f.currRead, 9350);
+  check('later date wins as current read', f.toDate && f.toDate.iso, '2015-07-17');
+});
+
+// A date+reading pair that is not a billing cycle must not be read as meter reads.
+group('reading pairs — implausible spans rejected', () => {
+  const same = 'Issued 01/01/2015 4000 Printed 03/01/2015 4200';
+  check('2-day span ignored', parseBillText(same).prevRead, undefined);
+  const backwards = 'Reading 17/07/2015 9000 and 16/06/2015 9350';
+  check('meter running backwards ignored', parseBillText(backwards).prevRead, undefined);
+});
+
 console.log(failed ? `\n✗ FAILURES — ${passed} passed, ${failed} failed`
                    : `\n✓ ALL PASSED — ${passed} passed, 0 failed`);
 process.exit(failed ? 1 : 0);
