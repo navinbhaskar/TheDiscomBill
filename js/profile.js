@@ -45,6 +45,15 @@ function render(profile) {
   const initial = ((name || me.email)[0] || '?').toUpperCase();
   const roleLabel = role === 'expert' ? 'Expert' : role === 'admin' ? 'Admin' : 'Member';
 
+  // The email is read-only, so say WHY rather than just "can't be changed":
+  // an OAuth address is owned by the provider, a password address by us.
+  const verified = !!me.email_confirmed_at;
+  const provider = me.app_metadata?.provider || 'email';
+  const providerName = { google: 'Google', github: 'GitHub', facebook: 'Facebook' }[provider];
+  const providerHint = providerName
+    ? `Signed in with ${providerName} — your email is managed there.`
+    : "Your sign-in email can't be changed here.";
+
   mainEl.innerHTML = `
     <div class="pf-card">
       <div class="pf-head">
@@ -64,8 +73,15 @@ function render(profile) {
         </div>
         <div class="form-group">
           <label for="pfEmail">Email</label>
-          <input type="email" id="pfEmail" value="${esc(me.email)}" disabled>
-          <small>Your sign-in email can't be changed here.</small>
+          <div class="pf-email">
+            <svg class="pf-email-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+            <input type="email" id="pfEmail" value="${esc(me.email)}" readonly aria-describedby="pfEmailHint">
+            ${verified ? '<span class="pf-email-badge" title="Email confirmed">Verified</span>' : ''}
+            <button type="button" class="pf-email-copy" id="pfEmailCopy" title="Copy email" aria-label="Copy email address">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </button>
+          </div>
+          <small id="pfEmailHint">${providerHint}</small>
         </div>
         <div class="pf-actions">
           <button type="submit" class="btn-primary" id="pfSave">Save changes</button>
@@ -86,6 +102,21 @@ function render(profile) {
     </div>`;
 
   document.getElementById('pfForm').addEventListener('submit', saveName);
+
+  // Copy-to-clipboard with inline confirmation. Falls back to selecting the text
+  // when the Clipboard API is unavailable (http origins, older browsers).
+  document.getElementById('pfEmailCopy').addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    const input = document.getElementById('pfEmail');
+    try {
+      await navigator.clipboard.writeText(me.email);
+      btn.classList.add('is-copied');
+      btn.setAttribute('aria-label', 'Email copied');
+      setTimeout(() => { btn.classList.remove('is-copied'); btn.setAttribute('aria-label', 'Copy email address'); }, 1600);
+    } catch (err) {
+      input.focus(); input.select();
+    }
+  });
   document.getElementById('pfSignOut').addEventListener('click', async () => {
     try { await Promise.race([sb.auth.signOut(), new Promise(r => setTimeout(r, 2500))]); } catch (e) {}
     try { localStorage.removeItem('discombill.role'); } catch (e) {}

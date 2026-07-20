@@ -4245,6 +4245,51 @@ button.nav-dropdown-item { width: 100%; background: none; border: none; font-fam
   background: var(--brand-faint); color: var(--text-brand-dark, var(--brand)); }
 .pf-role-expert { background: var(--ok-bg, #dcfce7); color: var(--ok-text, #15803d); }
 .pf-form input:disabled { opacity: .65; cursor: not-allowed; }
+
+/* Email — read-only identity, not a dead form control. A disabled input read as
+   "broken"; this is a composed row (icon + selectable address + status + copy) that
+   looks deliberately locked. The input stays readonly, not disabled, so the address
+   is still focusable and selectable and the <label> association survives. */
+/* Height/border/radius mirror the base input rule (which only covers text/number/date,
+   so type=email never picked it up) — the row must sit flush with the name field. */
+.pf-email {
+  display: flex; align-items: center; gap: 8px;
+  height: 36px; padding: 0 5px 0 10px;
+  border: 1.5px solid var(--border-default); border-radius: var(--radius);
+  background: var(--surface-sunken);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.pf-email:focus-within { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-faint); }
+.pf-email-icon { width: 16px; height: 16px; flex: none; color: var(--text-brand); }
+.pf-email input {
+  flex: 1; min-width: 0; width: auto; height: 100%; margin: 0; padding: 0;
+  border: 0; background: transparent; box-shadow: none;
+  /* text-primary, not a muted grey: the address is real content, and secondary
+     grey on the sunken fill only reached ~4.1:1 in light mode. */
+  font-family: inherit; font-size: 13.5px; color: var(--text-primary); text-overflow: ellipsis;
+}
+.pf-email input:focus, .pf-email input:focus-visible { outline: none; box-shadow: none; border: 0; }
+.pf-email-badge {
+  flex: none; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: var(--radius-full);
+  background: var(--ok-bg, #dcfce7); color: var(--ok-text, #15803d);
+  border: 1px solid var(--ok-border, transparent);
+}
+.pf-email-copy {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; padding: 0; cursor: pointer;
+  border: 0; border-radius: var(--radius-sm); background: transparent;
+  color: var(--text-tertiary); transition: background var(--t-fast), color var(--t-fast);
+}
+.pf-email-copy svg { width: 15px; height: 15px; }
+.pf-email-copy:hover { background: var(--surface-hover); color: var(--text-brand); }
+.pf-email-copy:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+/* Swap the clipboard glyph for a tick on success — no layout shift, no toast. */
+.pf-email-copy.is-copied { color: var(--ok-text, #15803d); }
+.pf-email-copy.is-copied svg { display: none; }
+.pf-email-copy.is-copied::after {
+  content: '✓'; font-size: 15px; font-weight: 700; line-height: 1;
+}
 .pf-actions { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
 .pf-status { font-size: 12.5px; color: var(--text-tertiary); }
 .pf-status-ok { color: var(--ok-text, #15803d); }
