@@ -217,6 +217,25 @@
         </aside>
       </div>
 
+      <div class="solar-proj-card reveal" id="solProj" hidden>
+        <h2 class="solar-proj-title" data-i18n="sol.projTitle">Year-by-Year Savings Projection</h2>
+        <div class="solar-proj-scroll">
+          <table class="solar-proj-table">
+            <thead>
+              <tr>
+                <th data-i18n="sol.projYear">Year</th>
+                <th data-i18n="sol.projAnnual">Annual savings</th>
+                <th data-i18n="sol.projCumul">Cumulative savings</th>
+                <th data-i18n="sol.projNet">Net position</th>
+                <th data-i18n="sol.projStatus">Status</th>
+              </tr>
+            </thead>
+            <tbody id="solProjBody"></tbody>
+          </table>
+        </div>
+        <p class="solar-proj-note" data-i18n="sol.projNote">Assumes electricity tariffs rise ~5% a year and panel output degrades ~0.7% a year, so the flat headline figures above are on the conservative side. Net position = cumulative savings minus your net system cost after subsidy.</p>
+      </div>
+
       <p class="comparison-note reveal" data-i18n-html="sol.note">
         Estimates use India-average generation (~4 units per kW per day) and the PM Surya Ghar
         residential central subsidy (₹30,000/kW up to 2 kW, ₹18,000 for the 3rd kW, capped at

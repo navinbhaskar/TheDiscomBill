@@ -29,6 +29,7 @@ const SOL_STR = {
     asNote: 'Assam state top-up: ₹15,000/kW, capped at ₹45,000 (3 kW and above).',
     breakEven: (y) => `Break-even in year ${y}`,
     chartCost: 'system cost', chartYr: 'yr',
+    projYear: (y) => `Year ${y}`, projProfit: 'Profit', projRecovering: 'Recovering',
     shareText: (r) => `☀️ My rooftop solar estimate (TheDiscomBill)\n• System size: ${r.size} kW\n• Net cost after subsidy: ₹${Math.round(r.net).toLocaleString('en-IN')}\n• Savings: ₹${Math.round(r.monthlySavings).toLocaleString('en-IN')}/month\n• Pays back in ~${r.paybackYears.toFixed(1)} years\nCalculate yours free: https://thediscombill.com/solar-calculator/`,
   },
   hi: {
@@ -42,6 +43,7 @@ const SOL_STR = {
     asNote: 'असम राज्य टॉप-अप: ₹15,000/kW, अधिकतम ₹45,000 (3 kW और ऊपर)।',
     breakEven: (y) => `वर्ष ${y} में लागत वसूल`,
     chartCost: 'सिस्टम लागत', chartYr: 'वर्ष',
+    projYear: (y) => `वर्ष ${y}`, projProfit: 'मुनाफ़ा', projRecovering: 'लागत वसूली जारी',
     shareText: (r) => `☀️ मेरा रूफटॉप सोलर अनुमान (TheDiscomBill)\n• सिस्टम साइज़: ${r.size} kW\n• सब्सिडी के बाद नेट लागत: ₹${Math.round(r.net).toLocaleString('en-IN')}\n• बचत: ₹${Math.round(r.monthlySavings).toLocaleString('en-IN')}/माह\n• ~${r.paybackYears.toFixed(1)} वर्ष में लागत वसूल\nअपना अनुमान मुफ़्त निकालें: https://thediscombill.com/solar-calculator/`,
   },
 };
@@ -171,14 +173,45 @@ function renderChart(r) {
   ${beLabel ? `<div class="solar-chart-be">${beLabel}</div>` : ''}`;
 }
 
+// Year-by-year projection table. Unlike the flat headline numbers, this models
+// tariff escalation and panel degradation, so the two must not be conflated:
+// the table's footnote states its assumptions and the headline stays conservative.
+const TARIFF_ESCALATION = 0.05;   // grid tariffs rise ~5%/yr (long-run India average)
+const PANEL_DEGRADATION = 0.007;  // output falls ~0.7%/yr (typical warranty curve)
+const PROJ_YEARS = [1, 2, 3, 4, 5, 7, 10, 15, 20, 25];
+
+function renderProjTable(r) {
+  const body = $('solProjBody');
+  if (!body) return;
+  const S = SOL_STR[lang()];
+  let cum = 0, rows = '';
+  for (let y = 1; y <= PANEL_LIFE_YEARS; y++) {
+    const annual = r.annualSavings * Math.pow(1 + TARIFF_ESCALATION, y - 1) * Math.pow(1 - PANEL_DEGRADATION, y - 1);
+    cum += annual;
+    if (!PROJ_YEARS.includes(y)) continue;
+    const net = cum - r.net;
+    const profit = net >= 0;
+    rows += `<tr>
+      <td class="sp-year">${S.projYear(y)}</td>
+      <td class="sp-annual">${rs(annual)}</td>
+      <td class="sp-cumul">${rs(cum)}</td>
+      <td class="${profit ? 'sp-net-pos' : 'sp-net-neg'}">${profit ? '+' : '−'}${rs(Math.abs(net)).slice(1)}</td>
+      <td><span class="sp-chip ${profit ? 'sp-chip-profit' : 'sp-chip-recover'}">${profit ? S.projProfit : S.projRecovering}</span></td>
+    </tr>`;
+  }
+  body.innerHTML = rows;
+}
+
 function render() {
   updateStateSub();   // preset amounts track the system size
   const r = calc();
-  const empty = $('solEmpty'), result = $('solResult');
-  if (!r.haveInput) { empty.hidden = false; result.hidden = true; return; }
+  const empty = $('solEmpty'), result = $('solResult'), proj = $('solProj');
+  if (!r.haveInput) { empty.hidden = false; result.hidden = true; if (proj) proj.hidden = true; return; }
   empty.hidden = true; result.hidden = false;
+  if (proj) proj.hidden = false;
   lastResult = r;
   renderChart(r);
+  renderProjTable(r);
 
   const S = SOL_STR[lang()];
   $('solSize').textContent = num(r.size, r.size % 1 ? 1 : 0);

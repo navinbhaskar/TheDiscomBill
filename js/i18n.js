@@ -144,6 +144,13 @@ export const STRINGS = {
     'sol.monthlySave': 'Monthly savings',
     'sol.lifetime': 'Net savings over 25 years',
     'sol.co2': 'CO₂ avoided',
+    'sol.projTitle': 'Year-by-Year Savings Projection',
+    'sol.projYear': 'Year',
+    'sol.projAnnual': 'Annual savings',
+    'sol.projCumul': 'Cumulative savings',
+    'sol.projNet': 'Net position',
+    'sol.projStatus': 'Status',
+    'sol.projNote': 'Assumes electricity tariffs rise ~5% a year and panel output degrades ~0.7% a year, so the flat headline figures above are on the conservative side. Net position = cumulative savings minus your net system cost after subsidy.',
     // EV charging cost calculator (/ev/)
     'ev.title': 'EV Charging Cost Calculator',
     'ev.intro': 'What does charging your EV at home <strong>really</strong> cost? Pick your vehicle, enter your monthly km and your tariff — get cost per charge, cost per km, your monthly charging bill and exactly how much you save vs petrol.',
