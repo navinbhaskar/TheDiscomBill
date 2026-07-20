@@ -1157,6 +1157,9 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
 /* Simple mode hides the FPPA column, so there is no second label to stay level with —
    the 34px reservation just left dead space under the one-line Sanctioned Load label. */
 .simple-mode .form-row-uneven .form-group > label { min-height: 0; }
+/* The meter/units panel ends with a row whose groups drop their own bottom margin, so the
+   panel sat flush (0px) against the Sanctioned Load row — give it the standard group gap. */
+.meter-mode-panel { margin-bottom: 14px; }
 
 select,
 input[type="text"],
