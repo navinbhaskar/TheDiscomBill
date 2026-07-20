@@ -2180,6 +2180,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   overflow-x: auto;
   box-shadow: var(--shadow-sm);
 }
+/* Exception — /compare/ only (.comparison-section appears on no other page): that table is
+   the page's centred hero content, not a figure sitting beside prose, so it stays centred. */
+.comparison-section .comparison-table-wrapper { margin-inline: auto; }
+
 .comparison-table { width: auto; border-collapse: separate; border-spacing: 0; }
 .comparison-table th, .comparison-table td { padding: 8px 13px; text-align: left; border-bottom: 1px solid var(--border-subtle); transition: background var(--t-fast); }
 /* Numeric cells stay on one line (a wrapped "₹ 1,234.56" is unreadable); prose cells
