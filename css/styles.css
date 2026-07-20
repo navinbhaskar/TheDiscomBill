@@ -1886,8 +1886,12 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   .bill-perf { margin: 0; }
 }
 
+/* Colour budget for the printed bill: the masthead and the final amount payable
+   are the only saturated surfaces. Everything between them is neutral, so the
+   eye lands on the total instead of being pulled around by competing blue bands.
+   The masthead is flat rather than a gradient — the same identity, less shout. */
 .bill-header {
-  background: linear-gradient(135deg, var(--p-blue-700) 0%, var(--p-blue-500) 100%);
+  background: var(--brand-dark);
   color: #fff;
   padding: 18px 24px 16px;
   display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
@@ -1916,12 +1920,12 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .conf-verified { border-color: rgba(255,255,255,.55); }
 .conf-estimate { border-color: rgba(255,255,255,.35); color: rgba(255,255,255,.85); }
 
-/* Section titles — brand-blue text + soft blue underline */
+/* Section titles — quiet grey caps; the uppercase weight is enough of a marker */
 .bill-section-title {
-  font-size: 10.5px; font-weight: 700; color: var(--brand);
+  font-size: 10.5px; font-weight: 700; color: var(--text-secondary);
   text-transform: uppercase; letter-spacing: 1.2px;
   margin-bottom: 8px; padding-bottom: 6px;
-  border-bottom: 2px solid var(--brand-border);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .bill-details-row {
@@ -1942,10 +1946,11 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 6px;
 }
 .bill-reading-table th {
-  background: var(--brand); color: #fff;
-  padding: 8px 12px; font-weight: 600; text-align: center; font-size: 12px; letter-spacing: 0.3px;
+  background: var(--surface-sunken); color: var(--text-secondary);
+  padding: 8px 12px; font-weight: 700; text-align: center; font-size: 12px; letter-spacing: 0.3px;
+  border: 1px solid var(--border-default);
 }
-.bill-reading-table td { padding: 8px 12px; text-align: center; background: var(--brand-faint); font-weight: 600; border: 1px solid var(--brand-border); }
+.bill-reading-table td { padding: 8px 12px; text-align: center; background: transparent; font-weight: 600; border: 1px solid var(--border-default); }
 
 .bill-charges-section { padding: 11px 20px; border-bottom: 1px solid var(--border-default); }
 
@@ -1953,9 +1958,9 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 6px;
 }
 .bill-charges-table th {
-  background: transparent; color: var(--brand-dark);
+  background: transparent; color: var(--text-secondary);
   padding: 7px 12px; font-weight: 700; font-size: 11.5px; letter-spacing: 0.4px;
-  text-align: left; border-bottom: 2px solid var(--brand);
+  text-align: left; border-bottom: 1.5px solid var(--border-strong);
 }
 .bill-charges-table td { padding: 5px 12px; border-bottom: 1px solid var(--border-subtle); }
 .bill-charges-table .num { text-align: right; }
@@ -1972,25 +1977,28 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .bill-charges-table .arrears-row td { background: var(--surface-sunken); }
 .bill-charges-table .lpsc-row td { background: var(--surface-sunken); }
 
-/* Sub-total — soft blue tint to read as a roll-up */
+/* Sub-total — reads as a roll-up through its rules and weight, not a fill */
 .bill-charges-table .subtotal-row td {
-  background: var(--brand-faint); font-weight: 600;
-  border-top: 1px solid var(--brand-border); border-bottom: 1px solid var(--brand-border);
+  background: transparent; font-weight: 700;
+  border-top: 1px solid var(--border-strong); border-bottom: 1px solid var(--border-strong);
 }
-/* Section dividers (Arrears / Adjustments) — light blue bar, dark-blue label */
+/* Section dividers (Arrears / Adjustments) — quiet grey bar */
 .bill-charges-table .section-header-row td {
-  background: var(--brand-faint); color: var(--brand-dark);
+  background: var(--surface-sunken); color: var(--text-secondary);
   font-size: 10.5px; font-weight: 700; letter-spacing: 1px;
   text-transform: uppercase; padding: 6px 12px;
-  border-top: 1px solid var(--brand-border); border-bottom: 1px solid var(--brand-border);
+  border-top: 1px solid var(--border-default); border-bottom: 1px solid var(--border-default);
 }
 
 .bill-charges-table tfoot .gross-row td {
   background: var(--surface-sunken); border-top: 2px solid var(--border-strong);
   font-size: 14px; padding: 7px 12px; font-weight: 600;
 }
+/* Net — a staging post on the way to the total, so it is emphasised with weight
+   and a rule rather than a second full-strength blue band above the real total. */
 .bill-charges-table tfoot .net-row td {
-  background: var(--brand); color: #fff;
+  background: var(--surface-sunken); color: var(--text-primary);
+  border-top: 1px solid var(--border-strong);
   font-size: 14px; padding: 8px 12px; font-weight: 700;
 }
 .net-amt { font-size: 17px !important; font-weight: 800 !important; }
@@ -2001,13 +2009,13 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 .total-amt { font-size: 22px !important; font-weight: 800 !important; }
 
-/* Amount-in-words — soft blue inset */
+/* Amount-in-words — neutral inset */
 .bill-words {
-  padding: 9px 20px; background: var(--brand-faint);
-  border-bottom: 1px solid var(--brand-border);
+  padding: 9px 20px; background: var(--surface-sunken);
+  border-bottom: 1px solid var(--border-default);
   font-size: 13px; color: var(--text-secondary);
 }
-.bill-words em { font-style: normal; font-weight: 700; color: var(--brand-dark); }
+.bill-words em { font-style: normal; font-weight: 700; color: var(--text-primary); }
 
 /* Category note — neutral light inset */
 .bill-category-note {
@@ -2020,7 +2028,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   font-size: 11px; color: var(--text-secondary); line-height: 1.7;
   border-top: 1px solid var(--border-default);
 }
-.bill-disclaimer strong { color: var(--brand-dark); }
+.bill-disclaimer strong { color: var(--text-primary); }
 .bill-disclaimer a { color: var(--brand); text-decoration: underline; }
 
 /* Internal link from the provisional bill to the full per-DISCOM tariff page
