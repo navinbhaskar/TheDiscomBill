@@ -417,40 +417,50 @@
   margin-top: 3px; padding-top: 5px; border-top: 1px solid var(--border-default);
 }
 
-/* Quick Links "More" menu — polished card matching the account dropdown:
+/* Polished dropdown card (More menu + Solar menu, via .nav-menu-card):
    16px-radius card, tinted square icon chips that light up brand-blue on
    hover, airier section labels. Scoped to the id so the account menu and
    any other .nav-dropdown keep their own look. */
-#quickLinksMenu { min-width: 268px; border-radius: 16px; padding: 8px; }
-.header-nav #quickLinksMenu .nav-dropdown-item {
+.nav-menu-card { min-width: 268px; border-radius: 16px; padding: 8px; }
+.header-nav .nav-menu-card .nav-dropdown-item {
   gap: 10px; padding: 6px 9px; border-radius: 10px;
 }
-.header-nav #quickLinksMenu .nav-dropdown-item svg {
+.header-nav .nav-menu-card .nav-dropdown-item svg {
   box-sizing: border-box; width: 28px; height: 28px; padding: 7px;
   border-radius: 8px; background: var(--surface-sunken); color: var(--text-secondary);
   transition: background var(--t-fast), color var(--t-fast);
 }
-.header-nav #quickLinksMenu .nav-dropdown-item:hover svg,
-.header-nav #quickLinksMenu .nav-subgroup.open > .nav-subgroup-trigger svg,
-.header-nav #quickLinksMenu .nav-subgroup:hover > .nav-subgroup-trigger svg {
+.header-nav .nav-menu-card .nav-dropdown-item:hover svg,
+.header-nav .nav-menu-card .nav-subgroup.open > .nav-subgroup-trigger svg,
+.header-nav .nav-menu-card .nav-subgroup:hover > .nav-subgroup-trigger svg {
   background: var(--brand-faint); color: var(--brand);
 }
 /* Row hover stays quieter than the chip so the chip reads as the accent */
-.header-nav #quickLinksMenu .nav-dropdown-item:hover { background: var(--surface-sunken); color: var(--text-primary); }
+.header-nav .nav-menu-card .nav-dropdown-item:hover { background: var(--surface-sunken); color: var(--text-primary); }
 /* The subgroup caret is an arrow, not an icon — keep it small and chipless */
-.header-nav #quickLinksMenu svg.nav-subgroup-caret {
+.header-nav .nav-menu-card svg.nav-subgroup-caret {
   width: 14px; height: 14px; padding: 0; background: none; border-radius: 0;
   color: var(--text-tertiary);
 }
-.header-nav #quickLinksMenu .nav-dropdown-label { padding: 7px 10px 3px; letter-spacing: .09em; }
-.header-nav #quickLinksMenu .nav-dropdown-label:not(:first-child) {
+.header-nav .nav-menu-card .nav-dropdown-label { padding: 7px 10px 3px; letter-spacing: .09em; }
+.header-nav .nav-menu-card .nav-dropdown-label:not(:first-child) {
   margin-top: 6px; padding-top: 10px; border-top: 1px solid var(--border-subtle);
 }
 /* On mobile .nav-mob-links draws its own bottom border; on desktop it is
    hidden — either way the label right after it must not add a second line. */
-.header-nav #quickLinksMenu .nav-mob-links + .nav-dropdown-label { border-top: 0; margin-top: 0; padding-top: 5px; }
+.header-nav .nav-menu-card .nav-mob-links + .nav-dropdown-label { border-top: 0; margin-top: 0; padding-top: 5px; }
 @media (min-width: 601px) {
-  #quickLinksMenu .nav-submenu { border-radius: 14px; padding: 8px; min-width: 252px; }
+  .nav-menu-card .nav-submenu { border-radius: 14px; padding: 8px; min-width: 252px; }
+}
+/* On phones the centered menus can run past the viewport edge (the trigger sits
+   near one side) — pin the card to the viewport under the sticky header instead. */
+@media (max-width: 600px) {
+  .header-nav .nav-menu-card {
+    position: fixed; left: 12px; right: 12px; top: 70px; min-width: 0;
+    max-height: calc(100vh - 84px); overflow-y: auto;
+    transform: translateY(-6px) scale(.98);
+  }
+  .header-nav .nav-dropdown.open .nav-menu-card { transform: none; }
 }
 
 /* Custom language dropdown — a styled menu replacing the native <select> popup */
@@ -684,7 +694,7 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
 /* Promoted top-bar shortcuts (Compare / Solar / EV / Blog): shown on wide screens only —
    below 1040px they collapse back into the Quick Links dropdown, which holds the same links. */
 .header-nav .nav-promoted { padding: 6px 12px; }
-@media (max-width: 1040px) { .header-nav .nav-promoted, .header-nav .nav-solar-drop { display: none; } }
+@media (max-width: 1040px) { .header-nav .nav-promoted { display: none; } }
 
 /* ─── Hero ───────────────────────────────────────────────────────────────────── */
 /* Light, airy hero: soft blue gradient washes on the page background, with the
