@@ -107,7 +107,7 @@ export const STRINGS = {
     'small.billedAmount': "We'll compare it with our calculation and tell you if your bill looks right.",
 
     // Solar calculator (/solar/)
-    'sol.title': 'Rooftop Solar Savings Calculator',
+    'sol.title': 'Rooftop Solar Savings Calculator (2026)',
     'sol.intro': 'See how much a rooftop solar system would cost and save you, including the <strong>PM Surya Ghar</strong> central subsidy. Enter your monthly units and roof area to get a system size, net cost after subsidy, monthly savings and payback period.',
     'sol.chip1': 'Up to ₹78,000 central subsidy',
     'sol.chip2': '25-year panel life',

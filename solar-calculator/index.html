@@ -16,7 +16,7 @@
       } catch (e) {}
     })();
   </script>
-  <title>Rooftop Solar Savings Calculator (PM Surya Ghar)</title>
+  <title>Rooftop Solar Savings Calculator 2026 (PM Surya Ghar)</title>
   <meta name="description" content="Estimate rooftop solar system size, cost, PM Surya Ghar central + state subsidy, monthly savings and payback period from your electricity usage and roof area.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +27,7 @@
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="TheDiscomBill">
-  <meta property="og:title" content="Rooftop Solar Savings Calculator (PM Surya Ghar) – TheDiscomBill">
+  <meta property="og:title" content="Rooftop Solar Savings Calculator 2026 (PM Surya Ghar) – TheDiscomBill">
   <meta property="og:description" content="Estimate rooftop solar system size, cost, PM Surya Ghar central + state subsidy, monthly savings and payback period from your electricity usage and roof area.">
   <meta property="og:url" content="https://thediscombill.com/solar-calculator/">
   <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
@@ -37,7 +37,7 @@
   <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
   <meta property="og:locale" content="en_IN">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Rooftop Solar Savings Calculator (PM Surya Ghar) – TheDiscomBill">
+  <meta name="twitter:title" content="Rooftop Solar Savings Calculator 2026 (PM Surya Ghar) – TheDiscomBill">
   <meta name="twitter:description" content="Estimate rooftop solar size, cost, PM Surya Ghar subsidy, monthly savings and payback period.">
   <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
   <link rel="stylesheet" href="../css/styles.min.css">
@@ -49,7 +49,7 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Rooftop Solar Savings Calculator (PM Surya Ghar)","url":"https://thediscombill.com/solar-calculator/","description":"Estimate rooftop solar system size, cost, PM Surya Ghar central + state subsidy, monthly savings and payback period from your electricity usage and roof area.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Rooftop Solar Savings Calculator 2026 (PM Surya Ghar)","url":"https://thediscombill.com/solar-calculator/","description":"Estimate rooftop solar system size, cost, PM Surya Ghar central + state subsidy, monthly savings and payback period from your electricity usage and roof area.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Rooftop Solar Savings","item":"https://thediscombill.com/solar-calculator/"}]}</script>
 </head>
 <body>
@@ -136,7 +136,7 @@
     <div class="container container-mid">
       <div class="solar-hero reveal">
         <div class="solar-hero-sun" aria-hidden="true"></div>
-        <h1 data-i18n="sol.title">Rooftop Solar Savings Calculator</h1>
+        <h1 data-i18n="sol.title">Rooftop Solar Savings Calculator (2026)</h1>
         <p class="solar-intro" data-i18n-html="sol.intro">See how much a rooftop solar system would cost and save you, including the <strong>PM Surya Ghar</strong> central subsidy. Enter your monthly units and roof area to get a system size, net cost after subsidy, monthly savings and payback period.</p>
         <div class="solar-chips" role="list">
           <span class="solar-chip" role="listitem" data-i18n="sol.chip1">Up to ₹78,000 central subsidy</span>
@@ -154,6 +154,12 @@
               <input id="solMonthly" type="number" min="0" step="10" placeholder="e.g., 350" data-i18n-ph="sol.phMonthly" inputmode="numeric">
               <button type="button" class="solar-pull" id="solPull" data-i18n="sol.pull">Use my estimate</button>
             </div>
+            <div class="psz-chips sol-quick" data-for="solMonthly">
+              <button type="button" class="psz-chip-btn" data-val="150">150</button>
+              <button type="button" class="psz-chip-btn" data-val="250">250</button>
+              <button type="button" class="psz-chip-btn" data-val="350">350</button>
+              <button type="button" class="psz-chip-btn" data-val="500">500</button>
+            </div>
           </div>
           <div class="solar-or"><span data-i18n="sol.or">or, if you only know your bill</span></div>
           <div class="solar-field">
@@ -164,12 +170,22 @@
           <div class="solar-field">
             <label for="solRoof" data-i18n="sol.roof">Shadow-free roof area (sq ft)</label>
             <input id="solRoof" type="number" min="0" step="10" placeholder="e.g., 300" data-i18n-ph="sol.phRoof" inputmode="numeric">
+            <div class="psz-chips sol-quick" data-for="solRoof">
+              <button type="button" class="psz-chip-btn" data-val="200">200</button>
+              <button type="button" class="psz-chip-btn" data-val="300">300</button>
+              <button type="button" class="psz-chip-btn" data-val="500">500</button>
+            </div>
             <span class="solar-hint" data-i18n="sol.roofHint">~100 sq ft of clear roof is needed per 1 kW.</span>
           </div>
           <div class="solar-field-row">
             <div class="solar-field">
               <label for="solRate" data-i18n="sol.rate">Tariff (₹/unit)</label>
               <input id="solRate" type="number" min="0" step="0.5" value="7" inputmode="decimal">
+              <div class="psz-chips sol-quick" data-for="solRate">
+                <button type="button" class="psz-chip-btn" data-val="6">₹6</button>
+                <button type="button" class="psz-chip-btn is-active" data-val="7">₹7</button>
+                <button type="button" class="psz-chip-btn" data-val="8">₹8</button>
+              </div>
             </div>
             <div class="solar-field">
               <label for="solStateSel"><span data-i18n="sol.stateSub">State subsidy (₹)</span>

@@ -243,6 +243,25 @@ function init() {
   ['solMonthly', 'solRoof', 'solRate', 'solState', 'solCost'].forEach(id =>
     $(id).addEventListener('input', render));
 
+  // Quick-pick chips: one tap fills the matching input. Typing a custom value
+  // afterwards clears the highlight so the chip never lies about the field.
+  document.querySelectorAll('.sol-quick').forEach(box => {
+    const input = $(box.dataset.for);
+    box.addEventListener('click', (e) => {
+      const c = e.target.closest('.psz-chip-btn');
+      if (!c) return;
+      box.querySelectorAll('.psz-chip-btn').forEach(b => b.classList.remove('is-active'));
+      c.classList.add('is-active');
+      input.value = c.dataset.val;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    input.addEventListener('input', (e) => {
+      if (!e.isTrusted) return;   // chip-driven updates keep their highlight
+      box.querySelectorAll('.psz-chip-btn').forEach(b =>
+        b.classList.toggle('is-active', b.dataset.val === input.value));
+    });
+  });
+
   // "I only know my bill amount" — one-way conversion: ₹ → units via the tariff rate.
   // Typing units directly never touches this field, so there's no feedback loop.
   $('solBillAmt')?.addEventListener('input', () => {
