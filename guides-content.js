@@ -22,8 +22,8 @@ export const GUIDES = [
     published: "2026-07-16",
     states: ['Uttar Pradesh'],
     title: 'How to Read Your UPPCL Electricity Bill',
-    metaTitle: 'How to Read Your UPPCL Electricity Bill — Every Line Explained',
-    description: 'A line-by-line walkthrough of a UPPCL (MVVNL, PVVNL, DVVNL, PuVVNL, KESCO) electricity bill: account fields, meter readings, energy charges, fixed charges, FPPA, electricity duty and arrears — and how to verify the total yourself.',
+    metaTitle: 'How to Read a UPPCL Bill 2026 — LMV-1, FPPA & Every Line Explained',
+    description: 'Every line of a UPPCL bill (MVVNL, PVVNL, DVVNL, PuVVNL, KESCO) decoded: LMV-1 category, units × slab rates, fixed charge per kW, FPPA and electricity duty — plus the 4 fields behind most wrong bills (category, MF, IDF estimated readings, arrears) and how to verify the total yourself.',
     minutes: 6,
     intro: `Your UPPCL bill packs a dozen codes and charge lines into one page. This guide decodes
       every field on a bill from any of Uttar Pradesh's five distribution companies —
@@ -1335,8 +1335,8 @@ export const GUIDES = [
     published: "2026-06-05",
     states: ['Delhi'],
     title: 'How to Read Your BSES / Delhi Electricity Bill',
-    metaTitle: 'How to Read Your BSES Delhi Bill — Subsidy, PPAC & Every Line',
-    description: 'A line-by-line guide to Delhi electricity bills from BSES Rajdhani (BRPL), BSES Yamuna (BYPL) and Tata Power-DDL: LT-I slabs, tiered fixed charges, PPAC, 5% electricity duty, and exactly how the GNCTD subsidy makes bills zero.',
+    metaTitle: 'How to Read a BSES Delhi Bill 2026 — Zero-Bill Subsidy, PPAC & Slabs',
+    description: 'BRPL, BYPL and Tata Power-DDL bills decoded line by line: LT-I slabs, tiered fixed charges, PPAC surcharge and 5% electricity duty — and exactly how the Delhi subsidy makes a ≤200-unit bill zero, tapers to 400 units and vanishes above it. Verify your total yourself.',
     minutes: 6,
     intro: `Delhi bills look confusing for one big reason: two households with identical usage can
       pay wildly different amounts because of the <strong>GNCTD subsidy</strong>. This guide decodes
@@ -2360,8 +2360,8 @@ export const GUIDES = [
     published: "2026-04-05",
     states: ['Uttar Pradesh'],
     title: 'Why Did My Sanctioned Load Suddenly Increase? (UPPCL / UP)',
-    metaTitle: 'UPPCL Increased My Sanctioned Load Automatically — Why, and How to Reduce It',
-    description: 'Why UPPCL suddenly increased your sanctioned load without an application: smart meters record Maximum Demand, and the UP Supply Code lets the DISCOM revise your load to match it. What it costs you, how to check your bill, and how to apply for load reduction.',
+    metaTitle: 'UPPCL Increased Your Sanctioned Load in 2026? Why — and How to Reduce It',
+    description: 'Your smart meter records Maximum Demand, and the UP Supply Code lets UPPCL raise your sanctioned load to match it — raising the fixed charge you pay every single month. How to spot the revision on your bill, what it costs per kW, and the load-reduction application step by step.',
     minutes: 5,
     intro: `If your UPPCL bill suddenly shows a higher sanctioned load — 1 kW became 2 kW, or
       2 kW became 4 kW — you are not alone, and it is usually not a mistake. Your new
@@ -4098,8 +4098,8 @@ export const GUIDES = [
     published: "2026-03-07",
     states: ['Uttar Pradesh'],
     title: 'Understanding UPPCL Smart Meter Readings',
-    metaTitle: 'UPPCL Smart Meter Readings Explained — Display Codes, Billing Period, Balance',
-    description: 'How UPPCL smart meters record and report readings: what the display cycles through, how the billing period differs from ordinary meters, where the daily readings go, how prepaid balance is deducted, and how to verify billed units yourself.',
+    metaTitle: 'UPPCL Smart Meter Readings 2026 — Display Codes, Billing Cycle & Balance',
+    description: 'What your UPPCL smart meter\'s display actually cycles through, why the billing period differs from an ordinary meter, where the daily readings go, how prepaid balance is deducted each day — and how to verify your billed units against the meter yourself.',
     minutes: 6,
     intro: `A UPPCL smart meter records your consumption every 15–30 minutes and reports it over the
       mobile network, so nobody visits to take a reading. Your billed units come from the remotely
