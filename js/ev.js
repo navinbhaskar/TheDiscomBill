@@ -170,9 +170,10 @@ function renderBars(r) {
 
 function render() {
   const r = calc();
-  const empty = $('evEmpty'), result = $('evResult');
-  if (!r.haveInput) { empty.hidden = false; result.hidden = true; return; }
+  const empty = $('evEmpty'), result = $('evResult'), chartCard = $('evChartCard');
+  if (!r.haveInput) { empty.hidden = false; result.hidden = true; if (chartCard) chartCard.hidden = true; return; }
   empty.hidden = true; result.hidden = false;
+  if (chartCard) chartCard.hidden = false;
   lastResult = r;
   const S = EV_STR[lang()];
 

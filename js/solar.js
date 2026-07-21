@@ -205,10 +205,11 @@ function renderProjTable(r) {
 function render() {
   updateStateSub();   // preset amounts track the system size
   const r = calc();
-  const empty = $('solEmpty'), result = $('solResult'), proj = $('solProj');
-  if (!r.haveInput) { empty.hidden = false; result.hidden = true; if (proj) proj.hidden = true; return; }
+  const empty = $('solEmpty'), result = $('solResult'), proj = $('solProj'), chartCard = $('solChartCard');
+  if (!r.haveInput) { empty.hidden = false; result.hidden = true; if (proj) proj.hidden = true; if (chartCard) chartCard.hidden = true; return; }
   empty.hidden = true; result.hidden = false;
   if (proj) proj.hidden = false;
+  if (chartCard) chartCard.hidden = false;
   lastResult = r;
   renderChart(r);
   renderProjTable(r);

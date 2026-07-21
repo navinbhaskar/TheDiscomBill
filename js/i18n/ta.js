@@ -15,6 +15,7 @@ export default {
     // Quick Links dropdown (shared chrome on every page)
     'nav.quickLinks': 'மேலும்',
     'ql.tools': 'கருவிகள்',
+    'ql.solarTools': 'சோலார் கருவிகள்',
     'ql.tariffs': 'கட்டண விகிதங்கள்',
     'ql.services': 'சேவைகள்',
     'ql.learn': 'அறிந்துகொள்ள',

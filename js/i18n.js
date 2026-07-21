@@ -21,6 +21,7 @@ export const STRINGS = {
     // Quick Links dropdown (shared chrome on every page)
     'nav.quickLinks': 'More',
     'ql.tools': 'Tools',
+    'ql.solarTools': 'Solar Tools',
     'ql.tariffs': 'Tariffs',
     'ql.services': 'Services',
     'ql.learn': 'Learn',
