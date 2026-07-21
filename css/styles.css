@@ -4011,45 +4011,48 @@ footer a:hover { color: #fff; text-decoration: none; }
 }
 .auth-modal {
   position: relative;
-  width: 100%; max-width: 396px;
-  max-height: min(660px, calc(100vh - 48px));
+  width: 100%; max-width: 400px;
+  max-height: min(680px, calc(100vh - 48px));
   overflow-y: auto;
-  /* Aurora crown: a soft brand glow falling from the top edge of the card
-     (painted as background, not a pseudo-element, so it survives inner scroll) */
+  /* Frosted glass: a translucent card with a faint top-light gradient, so the
+     blurred page glows through the edges. rgba fallback first, then color-mix. */
   background:
-    radial-gradient(120% 110px at 50% 0%, var(--brand-faint), transparent),
-    var(--surface-card);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl), 0 0 0 1px rgba(37,99,235,.05);
-  padding: 20px 22px 16px;
+    linear-gradient(180deg, rgba(255,255,255,.10) 0%, transparent 34%),
+    rgba(255,255,255,.86);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.10) 0%, transparent 34%),
+    color-mix(in srgb, var(--surface-card) 88%, transparent);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  box-shadow: 0 24px 70px -18px rgba(11,18,32,.45), inset 0 1px 0 rgba(255,255,255,.35);
+  padding: 34px 28px 20px;
   animation: authModalIn var(--t-slow) cubic-bezier(.2, .9, .3, 1.1) both;
 }
-/* Live-wire strip: current entering the card — same amber-in-blue spark
-   language as the calculator's Calculate button */
-.auth-modal::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg,
-    var(--p-blue-700) 0%, var(--p-blue-500) 32%,
-    var(--amber) 50%, var(--p-blue-500) 68%, var(--p-blue-700) 100%);
-}
+html[data-theme="dark"] .auth-modal { box-shadow: 0 24px 70px -18px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.06); }
+/* Centered header: mark → title → one quiet line, like a proper welcome */
+.auth-modal-head { text-align: center; margin: 0 0 18px; }
 .auth-modal-title {
-  display: flex; align-items: center; gap: 9px;
-  font-family: var(--font-brand);
-  font-size: 17px; font-weight: 700; letter-spacing: -0.3px;
+  font-family: var(--font-display);
+  font-size: 20px; font-weight: 600; letter-spacing: -0.4px; line-height: 1.25;
   color: var(--text-primary);
-  margin: 0 32px 14px 0;                     /* keep clear of the close button */
+  margin: 12px 0 0;
+}
+.auth-modal-sub {
+  margin: 6px 0 0;
+  font-size: 13px; font-weight: 400; line-height: 1.5;
+  color: var(--text-tertiary);
 }
 .auth-modal-spark {
-  flex: none; width: 28px; height: 28px;
+  width: 44px; height: 44px; margin: 0 auto;
   display: flex; align-items: center; justify-content: center;
-  border-radius: var(--radius);
-  background: linear-gradient(135deg, var(--p-blue-500), var(--p-blue-700));
+  border-radius: 14px;
+  background: linear-gradient(145deg, var(--p-blue-500), var(--p-blue-700));
   color: #fff;
-  box-shadow: 0 2px 8px rgba(37,99,235,.35), inset 0 1px 0 rgba(255,255,255,.25);
+  box-shadow: 0 6px 18px -6px rgba(37,99,235,.5), inset 0 1px 0 rgba(255,255,255,.3);
 }
-.auth-modal-spark svg { width: 15px; height: 15px; }
+.auth-modal-spark svg { width: 21px; height: 21px; }
 .auth-modal-close {
   position: absolute; top: 12px; right: 12px;
   width: 30px; height: 30px;
@@ -4161,7 +4164,7 @@ footer a:hover { color: #fff; text-decoration: none; }
     max-width: none; max-height: 86vh;
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
     border-bottom: none;
-    padding: 23px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+    padding: 28px 22px calc(20px + env(safe-area-inset-bottom, 0px));
     animation-name: authSheetIn;
   }
   /* 16px keeps iOS Safari from zooming the page when a field is focused */
