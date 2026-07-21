@@ -978,6 +978,11 @@ export const GUIDES = [
     metaTitle: 'Reduce Electricity Fixed Charges: Right-Size Your Sanctioned Load',
     description: 'Fixed charges are billed per kW of sanctioned load even at zero consumption. How to check if your load is over-sanctioned, how much a reduction saves, the application process, and the excess-demand penalty risk of going too low.',
     minutes: 5,
+    toolCta: {
+      href: '/sanctioned-load-optimizer/',
+      title: { en: 'Find the sanctioned load you actually need', hi: 'वह स्वीकृत भार जानें जिसकी आपको वास्तव में ज़रूरत है' },
+      sub: { en: 'Enter your load and demand — see the right load, your new fixed charge and the yearly saving on your DISCOM.', hi: 'अपना भार और मांग डालें — सही भार, नया फिक्स्ड चार्ज और अपने डिस्कॉम पर सालाना बचत देखें।' },
+    },
     intro: `The fixed charge on your bill is priced per kW (or kVA) of <strong>sanctioned load</strong>
       — the capacity you contracted, not the power you actually use. If your load was sanctioned
       years ago for equipment you no longer run, you are paying every month for headroom you never
@@ -2428,6 +2433,11 @@ export const GUIDES = [
     metaTitle: 'UPPCL Increased Your Sanctioned Load in 2026? Why — and How to Reduce It',
     description: 'Your smart meter records Maximum Demand, and the UP Supply Code lets UPPCL raise your sanctioned load to match it — raising the fixed charge you pay every single month. How to spot the revision on your bill, what it costs per kW, and the load-reduction application step by step.',
     minutes: 5,
+    toolCta: {
+      href: '/sanctioned-load-optimizer/',
+      title: { en: 'Check the sanctioned load you actually need', hi: 'वह स्वीकृत भार जाँचें जिसकी आपको वास्तव में ज़रूरत है' },
+      sub: { en: 'Compare your load against your recorded demand and see the fixed charge — and yearly saving — at the right kW.', hi: 'अपने भार की तुलना दर्ज मांग से करें और सही kW पर फिक्स्ड चार्ज — और सालाना बचत — देखें।' },
+    },
     intro: `If your UPPCL bill suddenly shows a higher sanctioned load — 1 kW became 2 kW, or
       2 kW became 4 kW — you are not alone, and it is usually not a mistake. Your new
       <strong>smart meter records Maximum Demand (MD)</strong>, and under the UP Electricity

@@ -179,6 +179,19 @@
       </div>
     </div>
 
+    <details class="sl-est" id="slEstPanel">
+      <summary>Not sure about your highest MD? Estimate it from your appliances</summary>
+      <p class="sl-est-note">List what's in the house — wattage and how many, no run-hours needed. The estimate
+      counts everything that typically runs together on a hot evening (fans, lights, fridge, AC, TV…) plus your
+      single biggest heat appliance (geyser, induction, iron — they rarely run at the same time as each other).</p>
+      <div class="est-rows" id="slEstRows" aria-live="polite"></div>
+      <select id="slEstAdd" class="est-in sl-est-add" aria-label="Add an appliance"></select>
+      <div class="sl-est-out">
+        <span>Estimated maximum demand: <strong id="slEstVal">—</strong></span>
+        <button type="button" id="slEstApply" class="btn-add-appliance sl-est-apply">Use this as my MD ↑</button>
+      </div>
+    </details>
+
     <div id="slResult"></div>
 
     <section class="seo-section">

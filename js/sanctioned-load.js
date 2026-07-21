@@ -149,6 +149,107 @@ function render() {
     </div>`;
 }
 
+// ── Appliance-based MD estimator ──────────────────────────────────────────────
+// For users who can't find MD on their bills. Same catalog idea as the Electricity
+// Cost Calculator but with no run-hours: MD is about what draws power AT ONCE, not
+// for how long. Model: everything in the "runs together on a hot evening" group
+// counts in full (fans, lights, fridge, AC, TV…), plus only the single LARGEST
+// heat appliance — geysers, irons and induction tops are short-burst loads that
+// rarely coincide with each other, and counting them all would inflate the MD
+// into exactly the oversized sanctioned load this tool exists to fix.
+const HEAT_IDS = new Set(['geyser', 'iron', 'induction', 'micro', 'washer', 'pump', 'mixer']);
+const MD_CATALOG = [
+  { id: 'fan',       name: { en: 'Ceiling Fan',            hi: 'सीलिंग फैन' },        w: 75 },
+  { id: 'led',       name: { en: 'LED Bulb',               hi: 'LED बल्ब' },           w: 9 },
+  { id: 'tube',      name: { en: 'Tube Light',             hi: 'ट्यूब लाइट' },         w: 20 },
+  { id: 'tv',        name: { en: 'LED TV',                 hi: 'LED टीवी' },           w: 90 },
+  { id: 'fridge',    name: { en: 'Refrigerator',           hi: 'रेफ्रिजरेटर' },        w: 150 },
+  { id: 'ac',        name: { en: 'Air Conditioner (1.5T)', hi: 'एयर कंडीशनर (1.5T)' },  w: 1500 },
+  { id: 'cooler',    name: { en: 'Air Cooler',             hi: 'एयर कूलर' },           w: 180 },
+  { id: 'washer',    name: { en: 'Washing Machine',        hi: 'वॉशिंग मशीन' },        w: 500 },
+  { id: 'geyser',    name: { en: 'Geyser / Water Heater',  hi: 'गीज़र / वॉटर हीटर' },   w: 2000 },
+  { id: 'micro',     name: { en: 'Microwave Oven',         hi: 'माइक्रोवेव ओवन' },      w: 1200 },
+  { id: 'mixer',     name: { en: 'Mixer / Grinder',        hi: 'मिक्सर / ग्राइंडर' },   w: 500 },
+  { id: 'laptop',    name: { en: 'Laptop',                 hi: 'लैपटॉप' },             w: 60 },
+  { id: 'desktop',   name: { en: 'Desktop PC',             hi: 'डेस्कटॉप PC' },         w: 150 },
+  { id: 'iron',      name: { en: 'Electric Iron',          hi: 'इलेक्ट्रिक आयरन' },     w: 1000 },
+  { id: 'induction', name: { en: 'Induction Cooktop',      hi: 'इंडक्शन कुकटॉप' },      w: 1800 },
+  { id: 'pump',      name: { en: 'Water Pump / Motor',     hi: 'वॉटर पंप / मोटर' },     w: 750 },
+  { id: 'router',    name: { en: 'Wi-Fi Router',           hi: 'वाई-फाई राउटर' },       w: 10 },
+  { id: 'custom',    name: { en: 'Custom Appliance',       hi: 'कस्टम उपकरण' },         w: 100 },
+];
+const estLang = () => { try { return localStorage.getItem('lang') === 'hi' ? 'hi' : 'en'; } catch (e) { return 'en'; } };
+const mdName = (id) => { const c = MD_CATALOG.find(x => x.id === id); return c ? c.name[estLang()] : id; };
+
+// A typical starter household; every row stays editable/removable.
+let estRows = [
+  { id: 'fan', w: 75, qty: 3 }, { id: 'led', w: 9, qty: 6 }, { id: 'fridge', w: 150, qty: 1 },
+  { id: 'tv', w: 90, qty: 1 }, { id: 'ac', w: 1500, qty: 1 }, { id: 'geyser', w: 2000, qty: 1 },
+];
+
+function estimateMdKw() {
+  let together = 0;
+  let biggestHeat = 0;
+  for (const r of estRows) {
+    const kw = (Number(r.w) || 0) * (Number(r.qty) || 0);
+    if (HEAT_IDS.has(r.id)) biggestHeat = Math.max(biggestHeat, (Number(r.w) || 0)); // one at a time
+    else together += kw;
+  }
+  return Math.ceil((together + biggestHeat) / 100) / 10;   // kW, rounded UP to 0.1
+}
+
+function renderEst() {
+  const wrap = $('slEstRows');
+  if (!wrap) return;
+  wrap.innerHTML = estRows.map((r, i) => `
+    <div class="est-row" data-i="${i}">
+      <span class="est-row-name">${esc(mdName(r.id))}${HEAT_IDS.has(r.id) ? ' <small class="sl-est-heat">short-burst</small>' : ''}</span>
+      <input class="est-in" data-f="w" data-i="${i}" type="number" min="1" step="10" value="${r.w}" inputmode="numeric" aria-label="Wattage (W)">
+      <input class="est-in" data-f="qty" data-i="${i}" type="number" min="0" step="1" value="${r.qty}" inputmode="numeric" aria-label="Quantity">
+      <button type="button" class="est-row-remove" data-i="${i}" title="Remove" aria-label="Remove ${esc(mdName(r.id))}">×</button>
+    </div>`).join('') || '<p class="est-empty">Add appliances below to estimate your MD.</p>';
+  const kw = estimateMdKw();
+  $('slEstVal').textContent = kw > 0 ? `≈ ${kw} kW` : '—';
+  $('slEstApply').disabled = !(kw > 0);
+}
+
+function initEstimator() {
+  const panel = $('slEstPanel');
+  if (!panel) return;
+  const addSel = $('slEstAdd');
+  const opts = MD_CATALOG.map(c => `<option value="${c.id}">${esc(c.name[estLang()])} (${c.w} W)</option>`).join('');
+  addSel.innerHTML = `<option value="" selected disabled>+ Add an appliance…</option>${opts}`;
+
+  addSel.addEventListener('change', () => {
+    const c = MD_CATALOG.find(x => x.id === addSel.value);
+    if (c) { estRows.push({ id: c.id, w: c.w, qty: 1 }); renderEst(); }
+    addSel.value = '';
+  });
+  $('slEstRows').addEventListener('input', (e) => {
+    const f = e.target.dataset.f, i = Number(e.target.dataset.i);
+    if (!f || !(i >= 0) || !estRows[i]) return;
+    estRows[i][f] = Number(e.target.value) || 0;
+    const kw = estimateMdKw();          // update the readout without rebuilding (keeps focus)
+    $('slEstVal').textContent = kw > 0 ? `≈ ${kw} kW` : '—';
+    $('slEstApply').disabled = !(kw > 0);
+  });
+  $('slEstRows').addEventListener('click', (e) => {
+    const btn = e.target.closest('.est-row-remove');
+    if (!btn) return;
+    estRows.splice(Number(btn.dataset.i), 1);
+    renderEst();
+  });
+  $('slEstApply').addEventListener('click', () => {
+    const kw = estimateMdKw();
+    if (!(kw > 0)) return;
+    $('slMd').value = kw;
+    panel.open = false;
+    render();
+    $('slMd').focus();
+  });
+  renderEst();
+}
+
 function populateDiscoms(preselect) {
   const sel = $('slDiscom');
   const discoms = getDiscoms($('slState').value);
@@ -176,6 +277,7 @@ function init() {
   stateSel.addEventListener('change', () => populateDiscoms());
   $('slDiscom').addEventListener('change', render);
   for (const id of ['slLoad', 'slMd', 'slUnits']) $(id).addEventListener('input', render);
+  initEstimator();
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

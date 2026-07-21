@@ -1840,6 +1840,22 @@ const GUIDE_TOOL_LINK = {
     { en: 'Every charge line on an Indian bill, in plain language', hi: 'भारतीय बिल की हर शुल्क लाइन, आसान भाषा में', mr: 'भारतीय बिलावरील प्रत्येक शुल्क ओळ, सोप्या भाषेत', ta: 'இந்திய பில்லில் உள்ள ஒவ்வொரு கட்டண வரியும், எளிய மொழியில்' }],
 };
 
+// Prominent inline CTA into an interactive tool, placed right under a guide's intro. Opt-in
+// per guide (guide.toolCta) so only the guides whose search intent a tool directly answers —
+// e.g. the sanctioned-load explainers → the Sanctioned Load Optimizer — get one, high on the page.
+function guideToolCtaHtml(guide, lang = 'en') {
+  const c = guide.toolCta;
+  if (!c) return '';
+  const label = T(lang, { en: 'Interactive tool', hi: 'इंटरैक्टिव टूल', mr: 'इंटरॅक्टिव्ह साधन', ta: 'ஊடாடும் கருவி' });
+  return `
+    <a class="guide-tool-cta" href="${c.href}">
+      <span class="guide-tool-cta-kicker">${label}</span>
+      <strong>${T(lang, c.title)}</strong>
+      <span class="guide-tool-cta-sub">${T(lang, c.sub)}</span>
+      <span class="guide-tool-cta-go" aria-hidden="true">→</span>
+    </a>`;
+}
+
 function guideRelatedPagesHtml(guide, lang = 'en') {
   const cards = [];
   for (const s of (guide.states || []).slice(0, 3)) {
@@ -1906,6 +1922,7 @@ function guidePage(guide, lang = 'en') {
     <h1>${esc(title)}</h1>
     <p class="guide-meta">${meta}</p>
     <p class="seo-lead">${intro}</p>
+    ${guideToolCtaHtml(guide, L)}
     ${sections}
     ${faqHtml(faqs, L)}
     <section class="seo-section guide-calc-cta">
