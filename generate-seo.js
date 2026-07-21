@@ -1898,6 +1898,15 @@ function guidePage(guide, lang = 'en') {
 
   const articleLd = articleJsonLd(L !== 'en' ? { ...guide, title, description: guideField(guide, 'description', L) || guide.description } : guide, url);
   articleLd.inLanguage = LANG_LOCALE[L];
+  // Step-by-step guides (new connection etc.) declare howtoSteps for a HowTo rich result.
+  // English-only: emitting English step text on a vernacular twin would mismatch its page language.
+  const howToLd = (L === 'en' && guide.howtoSteps && guide.howtoSteps.length) ? {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: guide.title,
+    description: guide.description,
+    step: guide.howtoSteps.map((s, i) => ({ '@type': 'HowToStep', position: i + 1, name: s.name, text: s.text })),
+  } : null;
   return layout({
     title: guideField(guide, 'metaTitle', L) || title,
     description: guideField(guide, 'description', L) || guide.description,
@@ -1908,6 +1917,7 @@ function guidePage(guide, lang = 'en') {
       articleLd,
       breadcrumbJsonLd([{ name: bcHome, url: '/' }, { name: bcGuides, url: guidesBase }, { name: title }]),
       faqJsonLd(faqs),
+      ...(howToLd ? [howToLd] : []),
     ],
     body,
   });

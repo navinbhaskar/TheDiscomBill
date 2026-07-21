@@ -3249,8 +3249,8 @@ export const GUIDES = [
     slug: 'smart-meter-recharge-failed',
     published: "2026-01-18",
     title: 'Smart Meter Recharge Failed or Balance Not Updated? What to Do',
-    metaTitle: 'Smart Meter Recharge Failed — Money Deducted but Balance Not Updated',
-    description: 'Money deducted but your smart meter balance hasn’t updated? Why prepaid recharges get stuck (settlement lag, meter offline, wrong consumer number), how long refunds take, and the exact escalation path with the evidence to keep.',
+    metaTitle: 'Smart Meter Recharge Failed 2026 — Money Deducted, Balance Not Updated: Fix',
+    description: 'Money gone but balance unchanged? Settlement lag self-resolves within hours; a failed transaction auto-refunds in 3–7 working days; a wrong consumer number needs a written DISCOM complaint. Keep the UTR number — the exact escalation path for each case, with 1912 and app steps.',
     minutes: 5,
     intro: `A prepaid recharge normally reflects on the meter within minutes — so when money leaves your
       account and the balance doesn't move, it feels alarming. In almost every case the money is not
@@ -4704,8 +4704,15 @@ export const GUIDES = [
     published: "2026-04-12",
     states: ['Uttar Pradesh'],
     title: 'How to Get a New UPPCL Electricity Connection (Jhatpat Portal)',
-    metaTitle: 'UPPCL New Connection Online — Jhatpat Portal: Documents, Fees, Timeline',
-    description: 'Step-by-step guide to a new UPPCL electricity connection through the Jhatpat portal: who can apply online, the exact document checklist, registration fee, estimate and security deposit, statutory timelines under the Rights of Consumers Rules, and what to do when the application stalls.',
+    metaTitle: 'UPPCL New Connection 2026 — Jhatpat Portal: ₹10–₹100 Fee, Documents, Timeline',
+    howtoSteps: [
+      { name: 'Register on the Jhatpat portal', text: 'Create an account on UPPCL\'s Jhatpat online portal with your mobile number and fill the new-connection application with premises and load details.' },
+      { name: 'Upload documents and pay the registration fee', text: 'Upload identity, address and ownership/occupancy proof, then pay the registration fee online — ₹10 for BPL applicants, ₹100 for others.' },
+      { name: 'Pay the estimate', text: 'UPPCL generates an estimate (line charges, meter cost and security deposit) from its Cost Data Book; review and pay it online.' },
+      { name: 'Inspection and meter installation', text: 'A field inspection follows and the meter is installed — the Rights of Consumers Rules set the timeline at roughly 7 to 30 days depending on area.' },
+      { name: 'Escalate if the application stalls', text: 'Chase a stalled application through 1912 with your application number, then the sub-division office and the division XEN.' },
+    ],
+    description: 'Apply on UPPCL\'s Jhatpat portal for ₹10 (BPL) or ₹100 → upload Aadhaar + address proof → pay the Cost Data Book estimate online. Connection is due in 7–30 days under the Rights of Consumers Rules. Every document, charge and the fix when the application stalls.',
     minutes: 8,
     intro: `A new domestic electricity connection in Uttar Pradesh no longer needs a trip to the
       sub-division office. UPPCL's <strong>Jhatpat portal</strong>
@@ -4999,8 +5006,15 @@ export const GUIDES = [
     published: "2026-04-24",
     states: ['Maharashtra'],
     title: 'How to Get a New MSEDCL (Mahavitaran) Electricity Connection Online',
-    metaTitle: 'MSEDCL New Connection Online — WSS Portal: Documents, Charges, Timeline',
-    description: 'Step-by-step guide to a new MSEDCL/Mahavitaran electricity connection through the WSS portal: the document checklist (including 7/12 extract for agricultural), application flow, firm quotation and security deposit, statutory timelines, and the escalation ladder when it stalls.',
+    metaTitle: 'MSEDCL New Connection Online 2026 — WSS Portal, Documents & 7-Day Rule',
+    howtoSteps: [
+      { name: 'Register on the WSS portal', text: 'Create an account on Mahavitaran\'s Web Self Service portal and start the new-connection application with premises and load details.' },
+      { name: 'Upload the documents', text: 'Upload identity, address and ownership/occupancy proof — agricultural connections also need the 7/12 land extract.' },
+      { name: 'Pay the firm quotation and deposit', text: 'MSEDCL issues a firm quotation with the security deposit and charges; pay it online to move the application forward.' },
+      { name: 'Inspection and meter installation', text: 'A field inspection follows and the meter is installed — due within 7 days in metro areas and up to 30 days elsewhere under the statutory timelines.' },
+      { name: 'Escalate if it stalls', text: 'Chase a stalled application through the portal status page and 1912, then the sub-division office and the consumer grievance ladder.' },
+    ],
+    description: 'Apply on Mahavitaran\'s WSS portal → upload the document checklist (7/12 extract for agricultural) → pay the firm quotation and security deposit. Connection is due in 7 days in metro areas, up to 30 elsewhere. Every step, charge and the escalation ladder when it stalls.',
     minutes: 8,
     intro: `Mahavitaran (MSEDCL) serves nearly all of Maharashtra outside Mumbai city, and a new
       connection no longer needs the A-1 form queue at the section office. The
@@ -5408,8 +5422,15 @@ export const GUIDES = [
     published: "2026-05-06",
     states: ['Delhi'],
     title: 'How to Get a New BSES Electricity Connection in Delhi (BRPL / BYPL)',
-    metaTitle: 'BSES New Connection Online — Delhi: Documents, Charges, 7-Day Timeline',
-    description: 'Step-by-step guide to a new BSES electricity connection in Delhi: BRPL vs BYPL areas, the online application on bsesdelhi.com, the DERC document checklist (tenants included), demand note and security deposit, the 7-day metro timeline, and what to do when it stalls.',
+    metaTitle: 'BSES Delhi New Connection Online 2026 — Documents, Charges & 7-Day Rule',
+    howtoSteps: [
+      { name: 'Identify your DISCOM', text: 'Check whether your area falls under BSES Rajdhani (BRPL, south and west Delhi) or BSES Yamuna (BYPL, east and central Delhi) and open the new-connection flow on bsesdelhi.com.' },
+      { name: 'Apply online with the DERC checklist', text: 'Fill the application and upload the DERC document checklist — identity, address and ownership or occupancy proof; tenants can also apply.' },
+      { name: 'Site inspection', text: 'BSES inspects the premises and verifies the load requested before generating charges.' },
+      { name: 'Pay the demand note and deposit', text: 'Pay the demand note and security deposit online once issued.' },
+      { name: 'Meter installation within 7 days', text: 'Delhi\'s metro timeline requires the connection to be energised within 7 days of a complete, paid application; escalate through the BSES helpline and DERC CGRF if it lapses.' },
+    ],
+    description: 'Apply on bsesdelhi.com (BRPL or BYPL by area) → upload the DERC document checklist (tenants included) → pay the demand note and security deposit. Delhi\'s metro timeline mandates connection in 7 days. Every step, charge and what to do when it stalls.',
     minutes: 7,
     intro: `Delhi's new-connection process is among the fastest in India on paper — the capital counts
       as a metropolitan area, so a completed application must be energised in days, not weeks. This
@@ -5675,8 +5696,15 @@ export const GUIDES = [
     published: "2026-05-18",
     states: ['Delhi'],
     title: 'How to Get a New Tata Power DDL Connection (North Delhi)',
-    metaTitle: 'Tata Power DDL New Connection Online — Documents, Charges in First Bill',
-    description: 'Step-by-step guide to a new Tata Power DDL electricity connection in north and north-west Delhi: the two-document online application, field inspection, why the demand-note charges arrive in your first bill, the 7-day metro timeline, and the escalation path when it stalls.',
+    metaTitle: 'Tata Power DDL New Connection 2026 — 2 Documents, Charges & 7-Day Rule',
+    howtoSteps: [
+      { name: 'Apply online with two documents', text: 'Fill the Tata Power DDL new-connection application (north and north-west Delhi) with just identity proof and ownership/occupancy proof.' },
+      { name: 'Field inspection', text: 'Tata Power DDL inspects the premises and verifies the requested load.' },
+      { name: 'Connection within the 7-day metro timeline', text: 'The meter is installed and the connection energised within Delhi\'s 7-day metro timeline for complete applications.' },
+      { name: 'Charges arrive in the first bill', text: 'Unlike most DISCOMs, the demand-note charges and security deposit are billed in your first bill rather than upfront.' },
+      { name: 'Escalate if it stalls', text: 'Chase a stalled application through the Tata Power DDL helpline and, if unresolved, the DERC consumer grievance forum.' },
+    ],
+    description: 'Apply online with just two documents (ID + ownership/occupancy proof) → field inspection → charges arrive in your first bill, not upfront. North & north-west Delhi, 7-day metro timeline. Every step and the escalation path when it stalls.',
     minutes: 7,
     intro: `Tata Power Delhi Distribution (TPDDL) serves north and north-west Delhi — Rohini,
       Pitampura, Model Town, Civil Lines, Narela and around — and runs one of the leanest
@@ -5923,8 +5951,15 @@ export const GUIDES = [
     published: "2026-05-30",
     states: ['Tamil Nadu'],
     title: 'How to Get a New TNEB (TANGEDCO) Electricity Connection Online',
-    metaTitle: 'TNEB New Connection Online — TANGEDCO/TNPDCL: Documents, Deposits, Timeline',
-    description: 'Step-by-step guide to a new TNEB electricity connection in Tamil Nadu: the TANGEDCO/TNPDCL online application, the document checklist (Form 5 consent and Form 6 indemnity for non-owners), deposits and TNERC charges, statutory timelines, and the Minnagam escalation route.',
+    metaTitle: 'TNEB New Connection Online 2026 — Documents, Deposit & 7-Day Timeline',
+    howtoSteps: [
+      { name: 'Register on the TNPDCL online portal', text: 'Create an account on the TANGEDCO/TNPDCL online services portal and start the new LT connection application with premises and load details.' },
+      { name: 'Upload the documents', text: 'Upload identity and ownership proof — tenants and other non-owners attach Form 5 (owner consent) and Form 6 (indemnity bond) instead.' },
+      { name: 'Pay the deposits and charges', text: 'Pay the TNERC-scheduled deposits and service-connection charges shown after scrutiny.' },
+      { name: 'Inspection and meter installation', text: 'A field inspection follows and the meter is installed — due within 7 days where distribution lines exist and up to 30 days otherwise.' },
+      { name: 'Escalate through Minnagam if it stalls', text: 'Chase a stalled application with your application number through TNPDCL\'s Minnagam consumer care route, then the section and division offices.' },
+    ],
+    description: 'Apply on the TANGEDCO/TNPDCL portal → upload ownership proof (Form 5 consent + Form 6 indemnity if you rent) → pay the TNERC deposit. Connection is due in 7 days where lines exist, 30 days otherwise. Every document, charge and the Minnagam escalation route, step by step.',
     minutes: 8,
     intro: `Everyone in Tamil Nadu still says "EB connection", and the flow is now genuinely online:
       the new service connection portal
