@@ -1972,7 +1972,10 @@ function guidesIndexPage(lang = 'en') {
     const href = translated ? `/${lang}/guides/${g.slug}/` : `/guides/${g.slug}/`;
     const gt = guideField(g, 'title', lang) || g.title;
     const gd = guideField(g, 'description', lang) || g.description;
-    const snip = gd.split('।')[0].split('.')[0];
+    // First sentence only. Split on a Devanagari danda or a period that actually ends a
+    // sentence (followed by whitespace or end-of-string) so decimals like "1.5 ton" don't
+    // truncate the snippet mid-number.
+    const snip = gd.split(/[।](?:\s|$)|\.(?:\s|$)/)[0];
     const end = T(lang, { hi: '।', mr: '.', ta: '.', en: '.' });
     const gm = T(lang, { hi: `${g.minutes} मिनट`, mr: `${g.minutes} मिनिटे`, ta: `${g.minutes} நிமிடம்`, en: `${g.minutes} min read` });
     const cat = guideCategoryLabel(g, lang);
@@ -2654,7 +2657,7 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 
 ## Guides
 
-${GUIDES.map(g => `- [${g.title}](${SITE}/guides/${g.slug}/): ${g.description.split('.')[0]}`).join('\n')}
+${GUIDES.map(g => `- [${g.title}](${SITE}/guides/${g.slug}/): ${g.description.split(/\.(?:\s|$)/)[0]}`).join('\n')}
 
 ## Reference
 
