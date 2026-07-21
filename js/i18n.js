@@ -334,7 +334,7 @@ export const STRINGS = {
     'svc.chargeNote': '💡 Keep your consumer / account number and the DISCOM complaint number handy at every step.',
     'svc.note': 'TheDiscomBill is independent and not affiliated with any DISCOM. We link only to official portals and helplines — we never ask for your account number, OTP or password. For an estimate of your charges before paying, use the <a href="/#calculator">bill calculator</a>.',
     // Compare page (/compare/)
-    'cmp.h2': 'Electricity Rate Comparison (Major Providers)',
+    'cmp.h2': 'Electricity Rate Comparison {year} (Major Providers)',
     'cmp.intro': 'See how major electricity providers stack up against each other for a typical month at a <strong>1&nbsp;kW sanctioned load</strong>. Calculated dynamically based on current FY 2025-26 tariffs.',
     'cmp.cc.title': 'Compare any two DISCOMs',
     'cmp.cc.sub': 'Not just the majors — pick any two providers and enter your own monthly usage for a like-for-like bill estimate, with a full breakdown.',
@@ -459,13 +459,17 @@ export async function applyLang(lang) {
   const base = await loadStrings(lang);
   const extra = (typeof window !== 'undefined' && window.__i18nGlossary && window.__i18nGlossary[lang]) || null;
   const dict = extra ? { ...base, ...extra } : base;
+  // Strings may carry a {year} token so freshness-sensitive headings (e.g. the rate
+  // comparison) stay current without hardcoding a calendar year in every locale.
+  const YEAR = String(new Date().getFullYear());
+  const sub = s => (typeof s === 'string' ? s.replace(/\{year\}/g, YEAR) : s);
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const v = dict[el.dataset.i18n];
-    if (v != null) el.textContent = v;
+    if (v != null) el.textContent = sub(v);
   });
   document.querySelectorAll('[data-i18n-html]').forEach(el => {
     const v = dict[el.dataset.i18nHtml];
-    if (v != null) el.innerHTML = v;
+    if (v != null) el.innerHTML = sub(v);
   });
   document.querySelectorAll('[data-i18n-ph]').forEach(el => {
     const v = dict[el.dataset.i18nPh];
