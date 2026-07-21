@@ -18,6 +18,7 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [Smart Meter Recharge](https://thediscombill.com/smart-meter-recharge/): per-DISCOM guides to recharging a prepaid smart meter online, with units-per-recharge estimates from real tariff rates
 - [Smart Meter Recharge Calculator](https://thediscombill.com/recharge-calculator/): how many days a ₹200–₹2000 prepaid recharge lasts on any DISCOM — daily burn rate and ideal monthly recharge from real tariff rates
 - [Sanctioned Load Optimizer](https://thediscombill.com/sanctioned-load-optimizer/): whether your sanctioned load is higher than your recorded demand needs — the right load, the fixed charge at each step and the yearly saving, per DISCOM
+- [Subsidy Eligibility Checker](https://thediscombill.com/subsidy-checker/): which electricity subsidies you qualify for — PM Surya Ghar rooftop-solar subsidy, your state's free-units / lifeline scheme and farm-power eligibility — with an estimated benefit for your usage
 
 ## Guides
 

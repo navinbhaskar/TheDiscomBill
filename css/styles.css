@@ -2459,6 +2459,22 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .sl-est-apply { margin-top: 0; width: auto; padding: 9px 16px; }
 .sl-est-apply:disabled { opacity: .5; cursor: not-allowed; }
 
+/* Subsidy Eligibility Checker — result cards, one per scheme. */
+.sub-cards { display: grid; gap: 14px; margin-top: 4px; }
+.sub-card { border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 18px 20px; background: var(--surface-default); }
+.sub-card.sub-good { border-color: color-mix(in srgb, #22c55e 40%, transparent); background: linear-gradient(90deg, color-mix(in srgb, #22c55e 8%, transparent), transparent); }
+.sub-card.sub-muted { opacity: .92; }
+.sub-card-head { display: flex; align-items: flex-start; gap: 12px; }
+.sub-icon { font-size: 24px; line-height: 1.2; flex: none; }
+.sub-card-head strong { display: block; font-family: var(--font-display); font-size: 16px; color: var(--text-primary); }
+.sub-verdict { display: block; font-size: 14px; font-weight: 600; color: var(--brand); margin-top: 2px; }
+.sub-card.sub-good .sub-verdict { color: #16a34a; }
+.sub-card.sub-muted .sub-verdict { color: var(--text-tertiary); }
+.sub-card-body { margin-top: 10px; font-size: 14px; line-height: 1.6; color: var(--text-secondary); }
+.sub-card-body p { margin: 0 0 8px; }
+.sub-card-body p:last-child { margin-bottom: 0; }
+.sub-links { font-size: 13.5px; font-weight: 500; }
+
 /* Summary column */
 .est-summary { position: sticky; top: 92px; display: flex; flex-direction: column; gap: 16px; }
 .est-total-card { background: var(--brand); color: #fff; border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-md); }

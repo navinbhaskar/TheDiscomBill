@@ -1,7 +1,7 @@
 // sw.js — Service Worker (network-first, cache fallback)
 // CACHE is stamped automatically by generate-seo.js (stampServiceWorker) from a
 // content hash of the CORE assets below — do not hand-edit it; run `npm run seo`.
-const CACHE = 'discombill-20260721-386e6511';
+const CACHE = 'discombill-20260721-92a76f32';
 
 const CORE = [
   './', './index.html', './compare/', './compare/index.html',
@@ -23,6 +23,7 @@ const CORE = [
   './methodology/', './methodology/index.html',
   './recharge-calculator/', './recharge-calculator/index.html',
   './sanctioned-load-optimizer/', './sanctioned-load-optimizer/index.html',
+  './subsidy-checker/', './subsidy-checker/index.html',
   // Styles + self-hosted fonts. Only the @font-face manifest and the weights we
   // preload are precached; the rest of the woff2 files are cached on demand by the
   // fetch handler (unicode-range means most pages never request them).
@@ -35,7 +36,7 @@ const CORE = [
   './js/ui.js', './js/datepicker.js', './js/renderer.js', './js/main.js', './js/compare.js',
   './js/estimators.js', './js/tariff-explorer.js', './js/bill-check.js',
   './js/portal-page.js', './js/new-connection.js', './js/complaint.js', './js/services.js', './js/solar.js',
-  './js/recharge-calculator.js', './js/ev.js', './js/blog-index.js', './js/sanctioned-load.js',
+  './js/recharge-calculator.js', './js/ev.js', './js/blog-index.js', './js/sanctioned-load.js', './js/subsidy-checker.js',
   './js/solar-panel-size.js', './js/solar-battery.js',
   // Bill Review portal — bill-review.js statically imports these two, so they
   // must be cached together or the page fails to parse offline.

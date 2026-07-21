@@ -309,6 +309,7 @@ const HEADER = `
           <a href="/electricity-cost-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span data-i18n="ql.usage">Electricity Cost Calculator</span></a>
           <a href="/ev-charging-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="13" height="10" rx="2"/><path d="M15 10h3l3 3v4h-6"/><path d="M9.5 9.5 7.5 12h3l-2 2.5"/></svg><span data-i18n="ql.ev">EV Charging Cost</span></a>
           <a href="/sanctioned-load-optimizer/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21a9 9 0 1 1 9-9"/><path d="M12 12l4.5-4.5"/><path d="M17 21l2-2 2 2"/><path d="M19 14v5"/></svg><span data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</span></a>
+          <a href="/subsidy-checker/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span data-i18n="ql.subsidyChecker">Subsidy Checker</span></a>
           <span class="nav-dropdown-label" role="presentation" data-i18n="ql.services">Services</span>
           <a href="/services/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg><span data-i18n="ql.discomServices">DISCOM Services</span></a>
           <a href="/smart-meter-recharge/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/><path d="M11 9l-2 3h3l-2 3"/></svg><span data-i18n="ql.smartMeter">Smart Meter Recharge</span></a>
@@ -2631,6 +2632,7 @@ const STATIC_ROUTES = [
   { loc: '/services/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/recharge-calculator/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/sanctioned-load-optimizer/', priority: '0.8', changefreq: 'monthly' },
+  { loc: '/subsidy-checker/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/bill-review/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/bill-review/sample-report/', priority: '0.5', changefreq: 'yearly' },
   { loc: '/methodology/', priority: '0.7', changefreq: 'monthly' },
@@ -2741,6 +2743,7 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [Smart Meter Recharge](${SITE}/smart-meter-recharge/): per-DISCOM guides to recharging a prepaid smart meter online, with units-per-recharge estimates from real tariff rates
 - [Smart Meter Recharge Calculator](${SITE}/recharge-calculator/): how many days a ₹200–₹2000 prepaid recharge lasts on any DISCOM — daily burn rate and ideal monthly recharge from real tariff rates
 - [Sanctioned Load Optimizer](${SITE}/sanctioned-load-optimizer/): whether your sanctioned load is higher than your recorded demand needs — the right load, the fixed charge at each step and the yearly saving, per DISCOM
+- [Subsidy Eligibility Checker](${SITE}/subsidy-checker/): which electricity subsidies you qualify for — PM Surya Ghar rooftop-solar subsidy, your state's free-units / lifeline scheme and farm-power eligibility — with an estimated benefit for your usage
 
 ## Guides
 
@@ -2842,6 +2845,7 @@ function writeSearchIndex(states) {
     ['Smart Meter Recharge', 'स्मार्ट मीटर रिचार्ज', '/smart-meter-recharge/', 'prepaid smart meter recharge online balance'],
     ['Smart Meter Recharge Calculator', 'स्मार्ट मीटर रिचार्ज कैलकुलेटर', '/recharge-calculator/', 'recharge days last how long 500 prepaid balance calculator'],
     ['Sanctioned Load Optimizer', 'स्वीकृत भार ऑप्टिमाइज़र', '/sanctioned-load-optimizer/', 'sanctioned load reduce fixed charge kw contracted demand md maximum demand optimizer'],
+    ['Subsidy Eligibility Checker', 'सब्सिडी पात्रता चेकर', '/subsidy-checker/', 'pm surya ghar rooftop solar subsidy free units lifeline slab farm agricultural eligibility scheme'],
     ['Methodology', 'कार्यप्रणाली', '/methodology/', 'how rates verified sources'],
   ].forEach(([t, h, u, k]) => entries.push({ t, h, u, k, g: 'tool' }));
 

@@ -67,6 +67,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/subsidy-checker/</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/bill-review/</loc>
     <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
