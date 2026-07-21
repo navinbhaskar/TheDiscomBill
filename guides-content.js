@@ -7463,4 +7463,383 @@ export const GUIDES = [
         a: 'हाँ, कनेक्शन चालू होकर पात्र परिवार के नाम होते ही — सब्सिडी घरेलू खाते से जुड़ती है, आवेदन से नहीं। पात्र उपभोक्ताओं के 300 यूनिट/चक्र तक के बिल शून्य होते हैं; उससे ऊपर सामान्य DS स्लैब लगते हैं।' },
     ],
   },
+
+  {
+    slug: 'ac-1-5-ton-electricity-bill',
+    published: "2026-07-21",
+    title: 'How Much Does a 1.5 Ton AC Add to Your Electricity Bill?',
+    metaTitle: '1.5 Ton AC Electricity Bill Per Month — Units, Cost & the Slab Trap',
+    description: 'How many units a 1.5 ton AC consumes per hour and per month by star rating, why AC units are billed at your highest slab rate, a realistic monthly cost table, and five ways to cut the bill without sweating.',
+    minutes: 6,
+    intro: `A 1.5 ton AC run 8 hours a day adds roughly <strong>250–370 units a month</strong> to
+      your meter, depending on its star rating and age — and because slab tariffs are telescopic,
+      every one of those units is billed at your <em>highest</em> applicable rate, not the average.
+      This guide shows the actual math: units per hour by star rating, what that costs at typical
+      marginal rates, and what genuinely reduces it.`,
+    sections: `
+      <section class="seo-section">
+        <h2>How many units does a 1.5 ton AC use per hour?</h2>
+        <p>"1.5 ton" describes cooling output (about 5,100 watts of heat removed), not electricity
+        drawn. What the meter records depends on the AC's efficiency — its <strong>ISEER</strong>
+        (Indian Seasonal Energy Efficiency Ratio), which is what the BEE star label grades. The
+        seasonal average is simply:</p>
+        <p><strong>Units per hour ≈ cooling watts ÷ ISEER ÷ 1000</strong></p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>1.5 ton AC type</th><th>Typical ISEER</th><th>Units per hour (avg)</th><th>8 h/day × 30 days</th></tr></thead>
+          <tbody>
+            <tr><td>5-star inverter (current label)</td><td>~5.0+</td><td>≈ 1.0</td><td>≈ 245 units</td></tr>
+            <tr><td>3-star inverter</td><td>~3.9–4.0</td><td>≈ 1.3</td><td>≈ 310 units</td></tr>
+            <tr><td>Old fixed-speed / pre-2022 label</td><td>~3.0–3.3</td><td>≈ 1.5–1.7</td><td>≈ 370–410 units</td></tr>
+          </tbody>
+        </table></div>
+        <p>These are seasonal averages: an inverter AC draws more in the first pull-down minutes and
+        much less once the room holds temperature, so a well-insulated room at a moderate setting
+        can beat these numbers, while a west-facing room at 18&nbsp;°C will exceed them.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>The slab trap: AC units are billed at your highest rate</h2>
+        <p>This is the part most cost estimates get wrong. Domestic tariffs in most states are
+        <strong>telescopic slabs</strong> — the first units are cheap, later units cost progressively
+        more. Your fridge, fans and lights already fill the cheap slabs; the AC's 250–400 units
+        stack <em>on top</em>, landing in the most expensive slabs you touch.</p>
+        <p>So the honest cost of running an AC is its units × your <strong>marginal</strong> rate —
+        the rate of the last slab your total consumption reaches — plus the fuel surcharge (FPPA)
+        and electricity duty that most states apply on top. In many states, adding an AC also pushes
+        your total consumption past a slab boundary, silently re-pricing part of your existing usage
+        too (and in states with non-telescopic or subsidy-threshold tariffs, crossing the limit can
+        re-rate the <em>entire</em> bill).</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>What that costs per month</h2>
+        <p>Marginal domestic rates in India today mostly fall between ₹5 and ₹12 per unit once you
+        are past the lifeline slabs. Using the table above:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Monthly AC units</th><th>@ ₹6/unit marginal</th><th>@ ₹8/unit</th><th>@ ₹10/unit</th></tr></thead>
+          <tbody>
+            <tr><td>245 (5-star, 8 h/day)</td><td>₹1,470</td><td>₹1,960</td><td>₹2,450</td></tr>
+            <tr><td>310 (3-star, 8 h/day)</td><td>₹1,860</td><td>₹2,480</td><td>₹3,100</td></tr>
+            <tr><td>400 (old AC / longer hours)</td><td>₹2,400</td><td>₹3,200</td><td>₹4,000</td></tr>
+          </tbody>
+        </table></div>
+        <p>Add roughly 5–20% on top for FPPA and electricity duty depending on your state. For your
+        actual slab rates, don't guess — run your summer and winter units through the
+        <a href="/#calculator">bill calculator</a> for your DISCOM and subtract: the difference is
+        what the AC really costs you. The <a href="/electricity-cost-calculator/">appliance cost
+        calculator</a> does the per-appliance version of this math.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Five things that actually cut the AC bill</h2>
+        <ul>
+          <li><strong>Set 24–26 °C, not 18–20 °C.</strong> Each degree cooler adds roughly 6% to
+          consumption. 24&nbsp;°C with a ceiling fan feels like 22&nbsp;°C and saves 20–30% versus
+          an 18&nbsp;°C habit — the single biggest free saving.</li>
+          <li><strong>Service before summer.</strong> Choked filters and dirty condenser coils force
+          longer compressor runs; a ₹500 service routinely saves 10–15%.</li>
+          <li><strong>Seal the room.</strong> Door gaps, single-pane west windows and uninsulated
+          ceilings are why "the AC runs all night." Curtains and draft strips are cheaper than
+          units.</li>
+          <li><strong>Use timer/sleep mode.</strong> A room holds its chill; running 5 hours with a
+          sleep curve instead of 8 flat hours cuts a third of the units.</li>
+          <li><strong>Do the 5-star math before replacing.</strong> Upgrading an old fixed-speed AC
+          (~1.6 units/hr) to a 5-star inverter (~1.0) saves ~145 units/month over an 8 h/day summer —
+          ₹1,000+ per month at typical marginal rates, so heavy users recover the price difference
+          in two or three seasons. Light users (2–3 h/day) may never recover it.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>Check what an AC would do to your bill</h2>
+        <p>Take last month's units, add the AC estimate for your star rating and hours from the
+        table above, and run both numbers through the
+        <a href="/#calculator">bill calculator</a> for your state. The difference — computed on your
+        DISCOM's real slabs, fixed charges, FPPA and duty — is the true monthly cost of the AC,
+        including any slab boundary you cross on the way.</p>
+      </section>`,
+    faqs: [
+      { q: 'How many units does a 1.5 ton AC consume in one hour?',
+        a: 'Roughly 1 unit per hour for a current 5-star inverter model, about 1.3 units for a 3-star inverter, and 1.5–1.7 units for an old fixed-speed AC — seasonal averages computed as cooling watts (≈5,100 for 1.5 ton) divided by the ISEER on the BEE label.' },
+      { q: 'What is the monthly electricity bill for a 1.5 ton AC running 8 hours a day?',
+        a: 'Around 245–410 units a month depending on star rating and age. At marginal domestic rates of ₹6–10 per unit that is roughly ₹1,500–₹4,000 per month, plus fuel surcharge and electricity duty. The exact figure depends on your state slabs — the AC units are billed at your highest applicable slab rate.' },
+      { q: 'Does an inverter AC really reduce the electricity bill?',
+        a: 'Yes, for anyone running the AC several hours daily. An inverter compressor modulates instead of stop-starting, so a 5-star inverter averages ~1 unit/hour against ~1.6 for an old fixed-speed unit — about 35–40% fewer units for the same cooling.' },
+      { q: 'What AC temperature setting saves the most electricity?',
+        a: '24–26 °C. Consumption rises roughly 6% for every degree below that, so 18 °C costs about a third more than 24 °C. Pairing 24–25 °C with a ceiling fan gives the same comfort as a much colder setting.' },
+      { q: 'Why did my bill double after buying an AC?',
+        a: 'Two effects stack: the AC adds 250–400 units, and those units land in your highest tariff slabs — in some states they also push you past a subsidy or slab threshold that re-prices existing usage. Compare your pre-AC and post-AC units in a bill calculator to separate the two effects.' },
+    ],
+
+    titleHi: '1.5 टन AC से बिजली बिल कितना बढ़ता है?',
+    metaTitleHi: '1.5 टन AC का मासिक बिजली बिल — यूनिट, खर्च और स्लैब का गणित',
+    descriptionHi: 'स्टार रेटिंग के हिसाब से 1.5 टन AC प्रति घंटे और प्रति माह कितनी यूनिट खाता है, AC की यूनिटें आपके सबसे महंगे स्लैब पर क्यों लगती हैं, असली मासिक खर्च की तालिका और बिल घटाने के 5 कारगर तरीके।',
+    introHi: `रोज़ 8 घंटे चलने वाला 1.5 टन AC महीने में करीब <strong>250–370 यूनिट</strong> मीटर पर
+      चढ़ाता है — स्टार रेटिंग और उम्र के हिसाब से। और चूँकि घरेलू टैरिफ टेलीस्कोपिक स्लैब में होता है,
+      ये सारी यूनिटें आपके <em>सबसे महंगे</em> लागू स्लैब पर बिल होती हैं, औसत दर पर नहीं। इस गाइड में
+      पूरा गणित है: स्टार रेटिंग के हिसाब से प्रति घंटा यूनिट, सामान्य दरों पर मासिक खर्च, और बिल
+      वाकई किन उपायों से घटता है।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>1.5 टन AC एक घंटे में कितनी यूनिट खाता है?</h2>
+        <p>"1.5 टन" ठंडक की क्षमता बताता है (करीब 5,100 वाट गर्मी निकालना), बिजली की खपत नहीं। मीटर
+        पर क्या चढ़ेगा यह AC की दक्षता — <strong>ISEER</strong> (BEE स्टार लेबल की रेटिंग) — पर निर्भर
+        है। सीज़न का औसत सीधा सूत्र है:</p>
+        <p><strong>यूनिट प्रति घंटा ≈ कूलिंग वाट ÷ ISEER ÷ 1000</strong></p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>1.5 टन AC का प्रकार</th><th>सामान्य ISEER</th><th>यूनिट/घंटा (औसत)</th><th>8 घं/दिन × 30 दिन</th></tr></thead>
+          <tbody>
+            <tr><td>5-स्टार इन्वर्टर (नया लेबल)</td><td>~5.0+</td><td>≈ 1.0</td><td>≈ 245 यूनिट</td></tr>
+            <tr><td>3-स्टार इन्वर्टर</td><td>~3.9–4.0</td><td>≈ 1.3</td><td>≈ 310 यूनिट</td></tr>
+            <tr><td>पुराना फिक्स्ड-स्पीड / 2022 से पहले का</td><td>~3.0–3.3</td><td>≈ 1.5–1.7</td><td>≈ 370–410 यूनिट</td></tr>
+          </tbody>
+        </table></div>
+        <p>ये सीज़न के औसत हैं: इन्वर्टर AC शुरुआती मिनटों में ज़्यादा और कमरा ठंडा होने के बाद काफ़ी
+        कम खींचता है — अच्छे इंसुलेशन और 24&nbsp;°C पर आँकड़े इनसे बेहतर, पश्चिममुखी कमरे और
+        18&nbsp;°C पर इनसे ऊपर जा सकते हैं।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>स्लैब का जाल: AC की यूनिटें सबसे महंगी दर पर लगती हैं</h2>
+        <p>यही वह हिस्सा है जो ज़्यादातर अनुमान गलत कर देते हैं। घरेलू टैरिफ <strong>टेलीस्कोपिक
+        स्लैब</strong> में होता है — पहली यूनिटें सस्ती, आगे की क्रमशः महंगी। फ्रिज, पंखे और बत्तियाँ
+        सस्ते स्लैब पहले ही भर देती हैं; AC की 250–400 यूनिटें उनके <em>ऊपर</em> चढ़ती हैं, यानी
+        आपके सबसे महंगे स्लैब में।</p>
+        <p>इसलिए AC का असली खर्च = उसकी यूनिटें × आपकी <strong>सीमांत (marginal)</strong> दर — यानी
+        कुल खपत जिस आख़िरी स्लैब तक पहुँचती है उसकी दर — और ऊपर से FPPA (फ्यूल सरचार्ज) और बिजली
+        शुल्क। कई बार AC जुड़ने से कुल खपत कोई स्लैब सीमा पार कर जाती है और पुरानी खपत का हिस्सा भी
+        महंगा हो जाता है (जिन राज्यों में नॉन-टेलीस्कोपिक दरें या सब्सिडी-सीमा है, वहाँ सीमा पार होते
+        ही <em>पूरा</em> बिल नई दर पर लग सकता है)।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>महीने का खर्च कितना बैठेगा</h2>
+        <p>लाइफलाइन स्लैब के बाद भारत में घरेलू सीमांत दरें ज़्यादातर ₹5–12 प्रति यूनिट के बीच हैं।
+        ऊपर की तालिका के हिसाब से:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>AC की मासिक यूनिटें</th><th>₹6/यूनिट पर</th><th>₹8/यूनिट पर</th><th>₹10/यूनिट पर</th></tr></thead>
+          <tbody>
+            <tr><td>245 (5-स्टार, 8 घं/दिन)</td><td>₹1,470</td><td>₹1,960</td><td>₹2,450</td></tr>
+            <tr><td>310 (3-स्टार, 8 घं/दिन)</td><td>₹1,860</td><td>₹2,480</td><td>₹3,100</td></tr>
+            <tr><td>400 (पुराना AC / लंबे घंटे)</td><td>₹2,400</td><td>₹3,200</td><td>₹4,000</td></tr>
+          </tbody>
+        </table></div>
+        <p>राज्य के हिसाब से FPPA और बिजली शुल्क के 5–20% और जोड़ लें। अंदाज़े के बजाय अपने डिस्कॉम
+        की असली दरों पर गर्मी और सर्दी की यूनिटें <a href="/#calculator">बिल कैलकुलेटर</a> में डालकर
+        घटा लें — अंतर ही AC की असली लागत है। उपकरण-वार गणित के लिए
+        <a href="/electricity-cost-calculator/">एप्लायंस कॉस्ट कैलकुलेटर</a> है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>AC का बिल वाकई घटाने वाले 5 उपाय</h2>
+        <ul>
+          <li><strong>24–26 °C रखें, 18–20 °C नहीं।</strong> हर डिग्री नीचे खपत करीब 6% बढ़ाती है।
+          सीलिंग फैन के साथ 24&nbsp;°C, 22&nbsp;°C जैसा महसूस होता है और 18&nbsp;°C की आदत के मुकाबले
+          20–30% बचाता है — सबसे बड़ी मुफ़्त बचत।</li>
+          <li><strong>गर्मी से पहले सर्विस।</strong> जाम फ़िल्टर और गंदी कंडेंसर कॉइल कंप्रेसर को
+          ज़्यादा देर चलाती हैं; ₹500 की सर्विस आमतौर पर 10–15% बचाती है।</li>
+          <li><strong>कमरा सील करें।</strong> दरवाज़े की झिरियाँ और पश्चिम की खुली खिड़कियाँ ही वजह
+          हैं कि "AC रात भर चलता है।" पर्दे और ड्राफ्ट-स्ट्रिप यूनिटों से सस्ते हैं।</li>
+          <li><strong>टाइमर/स्लीप मोड।</strong> ठंडा कमरा देर तक ठंडा रहता है; 8 घंटे लगातार के बजाय
+          5 घंटे + स्लीप कर्व एक-तिहाई यूनिटें बचाता है।</li>
+          <li><strong>बदलने से पहले 5-स्टार का हिसाब।</strong> पुराना फिक्स्ड-स्पीड (~1.6 यूनिट/घं)
+          हटाकर 5-स्टार इन्वर्टर (~1.0) लगाने से 8 घं/दिन की गर्मी में ~145 यूनिट/माह बचती हैं —
+          सामान्य दरों पर ₹1,000+ मासिक, यानी भारी इस्तेमाल में 2–3 सीज़न में दाम वसूल। पर 2–3 घंटे
+          रोज़ चलाने वालों का फ़र्क़ शायद कभी न निकले।</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>देखें AC आपके बिल का क्या करेगा</h2>
+        <p>पिछले महीने की यूनिटों में ऊपर की तालिका से अपनी स्टार रेटिंग और घंटों का अनुमान जोड़ें,
+        और दोनों आँकड़े <a href="/#calculator">बिल कैलकुलेटर</a> में चलाएँ। आपके डिस्कॉम के असली
+        स्लैब, फिक्स्ड चार्ज, FPPA और शुल्क पर निकला अंतर ही AC की सच्ची मासिक लागत है — रास्ते में
+        पार हुई स्लैब सीमा समेत।</p>
+      </section>`,
+    faqsHi: [
+      { q: '1.5 टन AC एक घंटे में कितनी यूनिट बिजली खाता है?',
+        a: 'नए 5-स्टार इन्वर्टर में करीब 1 यूनिट/घंटा, 3-स्टार इन्वर्टर में ~1.3, और पुराने फिक्स्ड-स्पीड AC में 1.5–1.7 यूनिट — सीज़न का औसत, जो कूलिंग वाट (1.5 टन ≈ 5,100) को BEE लेबल के ISEER से भाग देकर निकलता है।' },
+      { q: 'रोज़ 8 घंटे चलने पर 1.5 टन AC का मासिक बिल कितना आता है?',
+        a: 'स्टार रेटिंग और उम्र के हिसाब से महीने में करीब 245–410 यूनिट। ₹6–10 प्रति यूनिट की सीमांत दर पर मोटे तौर पर ₹1,500–₹4,000 मासिक, ऊपर से FPPA और बिजली शुल्क। सटीक आँकड़ा राज्य के स्लैब पर निर्भर है — AC की यूनिटें सबसे महंगे लागू स्लैब पर लगती हैं।' },
+      { q: 'क्या इन्वर्टर AC सच में बिल घटाता है?',
+        a: 'हाँ, रोज़ कई घंटे चलाने वालों के लिए। इन्वर्टर कंप्रेसर रुक-रुक कर चलने के बजाय गति घटाता-बढ़ाता है, इसलिए 5-स्टार इन्वर्टर ~1 यूनिट/घंटा लेता है जबकि पुराना फिक्स्ड-स्पीड ~1.6 — समान ठंडक पर 35–40% कम यूनिटें।' },
+      { q: 'AC किस तापमान पर सबसे कम बिजली खाता है?',
+        a: '24–26 °C पर। इससे हर डिग्री नीचे खपत करीब 6% बढ़ती है — 18 °C, 24 °C से करीब एक-तिहाई महंगा पड़ता है। 24–25 °C के साथ सीलिंग फैन काफ़ी ठंडी सेटिंग जितना आराम देता है।' },
+      { q: 'AC लगवाने के बाद बिल दोगुना क्यों हो गया?',
+        a: 'दो असर जुड़ते हैं: AC 250–400 यूनिटें जोड़ता है, और ये यूनिटें सबसे महंगे स्लैब में लगती हैं — कुछ राज्यों में कुल खपत सब्सिडी/स्लैब सीमा पार कर जाए तो पुरानी खपत भी महंगी हो जाती है। AC से पहले और बाद की यूनिटें बिल कैलकुलेटर में डालकर दोनों असर अलग-अलग देखें।' },
+    ],
+  },
+
+  {
+    slug: 'tamil-nadu-electricity-tariff-july-2026',
+    published: "2026-07-21",
+    states: ['Tamil Nadu'],
+    title: 'Tamil Nadu Electricity Tariff, July 2026: What Changed and What Hasn’t',
+    metaTitle: 'TNEB/TNPDCL Tariff July 2026 — Free 200 Units, Rates & Pending Revision',
+    description: 'Where Tamil Nadu electricity tariffs stand in July 2026: the FY 2025-26 TNERC schedule still in force, the free-electricity expansion to 200 units bi-monthly for households up to 500 units, and the inflation-based revision that is due but not yet notified.',
+    minutes: 5,
+    intro: `As of July 2026, Tamil Nadu households are still billed on the <strong>FY 2025-26
+      schedule</strong> (TNERC Suo-motu Order No. 6 of 2025, in force since 1 July 2025) — the
+      annual inflation-based revision that was scheduled to take effect on 1 July 2026 has
+      <strong>not yet been notified</strong>. What <em>did</em> change this year is the subsidy:
+      from FY 2026-27 the Tamil Nadu government's free-electricity allowance rises to
+      <strong>200 units per bi-monthly cycle</strong> for households consuming up to 500 units in
+      the cycle. Here is exactly what that means for your next TNPDCL (TANGEDCO) bill.`,
+    sections: `
+      <section class="seo-section">
+        <h2>The rates in force right now (and since July 2025)</h2>
+        <p>TNERC's Order No. 6 of 2025 (30 June 2025, effective 1 July 2025) set the current LT-IA
+        domestic schedule: <strong>no fixed charge</strong>, and telescopic energy rates from
+        ₹4.95 per unit on the first slab up to ₹12.15 on the highest, on monthly-equivalent bands
+        of 0–200, 201–250, 251–300, 301–400, 401–500 and 500+ units (TNPDCL bills bi-monthly, so
+        the printed bands are double these). Electricity duty of 5% applies on the energy charge.
+        The full current schedule, with slab-by-slab detail, is on our
+        <a href="/tariffs/tamil-nadu/tangedco/">TNPDCL tariff page</a> — that page is regenerated
+        from the order data, so it stays current if rates move.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>What actually changed in 2026: free units expanded to 200</h2>
+        <p>By G.O. (Ms) No. 50 (10 May 2026), given effect by TNERC Order No. 5 of 2026
+        (26 May 2026), the Government of Tamil Nadu's free-electricity scheme for FY 2026-27 works
+        like this:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Your bi-monthly consumption</th><th>Free units per cycle</th></tr></thead>
+          <tbody>
+            <tr><td>Up to 500 units</td><td><strong>200 units free</strong></td></tr>
+            <tr><td>Above 500 units</td><td>100 units free</td></tr>
+          </tbody>
+        </table></div>
+        <p>Because the LT-IA slabs are telescopic and the free units are the <em>cheapest</em> ones,
+        the rupee value of the subsidy depends on your total usage — and crossing the 500-unit
+        bi-monthly line doesn't just halve your free units, it does so exactly when your marginal
+        rate is climbing. A household at 490 bi-monthly units gets a noticeably smaller bill than
+        one at 520, out of proportion to the 30 extra units. If you hover near the threshold, that
+        is worth managing.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>The revision that hasn't arrived yet</h2>
+        <p>Order No. 6 of 2025 itself states that the FY 2025-26 fixed and energy charges "shall
+        undergo an inflation based adjustment" effective <strong>1 July 2026</strong>, under the
+        multi-year tariff framework of Order No. 7 of 2022. As of late July 2026, no order carrying
+        the adjusted figures has appeared on TNERC's tariff-orders index — the most recent tariff
+        order remains the May 2026 subsidy order. Going by the framework's past working, when the
+        adjustment is notified it should be an inflation-indexed single-digit-percent move rather
+        than a restructuring, and bills raised after its effective date would use the new rates.
+        We track the TNERC index and update our tariff data from the order PDF itself when it
+        publishes — not from press reports, which have mis-dated TN revisions before.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>How to check a July 2026 TNPDCL bill</h2>
+        <ul>
+          <li><strong>Confirm the cycle.</strong> TNPDCL bills bi-monthly; the assessment shows
+          roughly 60 days of consumption. All slab bands on the bill are the bi-monthly ones.</li>
+          <li><strong>Check the free units line.</strong> ≤500 units in the cycle should show 200
+          units free; above 500, 100 units. If a ≤500-unit bill shows only 100 free units after the
+          FY 2026-27 subsidy took effect, that is worth a complaint.</li>
+          <li><strong>Re-compute the total.</strong> Enter your units in the
+          <a href="/?state=Tamil%20Nadu#calculator">Tamil Nadu bill calculator</a> with the
+          Government Subsidy box ticked — it applies the current TNERC slabs, the 5% duty and the
+          free-unit rule, and shows the itemised result to compare against the printed bill.</li>
+        </ul>
+      </section>`,
+    faqs: [
+      { q: 'Did Tamil Nadu electricity rates increase in July 2026?',
+        a: 'Not yet. The FY 2025-26 schedule (TNERC Order No. 6 of 2025) is still in force. An inflation-based adjustment was scheduled to take effect on 1 July 2026 under the multi-year tariff framework, but as of late July 2026 no order with the revised figures has been published on the TNERC index.' },
+      { q: 'How many free electricity units does Tamil Nadu give in 2026?',
+        a: 'For FY 2026-27, 200 units free per bi-monthly cycle for domestic consumers using up to 500 units in the cycle, and 100 free units for those using more — per G.O. (Ms) No. 50 of May 2026, given effect by TNERC Order No. 5 of 2026.' },
+      { q: 'What is the current TNEB rate per unit for domestic consumers?',
+        a: 'The LT-IA schedule in force since 1 July 2025 is telescopic, from ₹4.95 per unit on the first monthly-equivalent slab (0–200 units) up to ₹12.15 above 500 units, with no fixed charge and 5% electricity duty on the energy charge. See the TNPDCL tariff page for the full slab table.' },
+      { q: 'Why does my TNEB bill jump when I cross 500 units?',
+        a: 'Two things happen at once on a bi-monthly bill above 500 units: your free allowance drops from 200 units to 100, and the extra consumption is priced in the higher telescopic slabs. Together they make the 500-unit line the most expensive threshold on a Tamil Nadu domestic bill.' },
+      { q: 'Is TANGEDCO now called TNPDCL?',
+        a: 'Yes — distribution in Tamil Nadu is now under Tamil Nadu Power Distribution Corporation Ltd. (TNPDCL) following the restructuring of TANGEDCO. Bills, portals and tariff orders increasingly use the new name; the tariffs themselves are unaffected by the renaming.' },
+    ],
+
+    titleTa: 'தமிழ்நாடு மின் கட்டணம், ஜூலை 2026: மாறியது எது, மாறாதது எது',
+    metaTitleTa: 'TNEB/TNPDCL கட்டணம் ஜூலை 2026 — இலவச 200 யூனிட், விகிதங்கள் & நிலுவை திருத்தம்',
+    descriptionTa: 'ஜூலை 2026-இல் தமிழ்நாடு மின் கட்டண நிலை: இன்னும் அமலில் உள்ள FY 2025-26 TNERC அட்டவணை, 500 யூனிட் வரை பயன்படுத்தும் குடும்பங்களுக்கு இருமாதத்திற்கு 200 யூனிட்டாக உயர்ந்த இலவச மின்சாரம், மற்றும் அறிவிக்கப்படாத பணவீக்க அடிப்படை திருத்தம்.',
+    introTa: `ஜூலை 2026 நிலவரப்படி, தமிழ்நாடு வீட்டு நுகர்வோர் இன்னும் <strong>FY 2025-26
+      அட்டவணையிலேயே</strong> (TNERC தன்னிச்சை ஆணை எண் 6/2025, 1 ஜூலை 2025 முதல் அமலில்) பில்
+      செய்யப்படுகிறார்கள் — 1 ஜூலை 2026 முதல் அமலாக இருந்த ஆண்டு பணவீக்க அடிப்படை திருத்தம்
+      <strong>இன்னும் அறிவிக்கப்படவில்லை</strong>. இந்த ஆண்டு உண்மையில் மாறியது மானியம்தான்:
+      FY 2026-27 முதல், இருமாத சுழற்சியில் 500 யூனிட் வரை பயன்படுத்தும் குடும்பங்களுக்கு அரசின்
+      இலவச மின்சாரம் <strong>சுழற்சிக்கு 200 யூனிட்டாக</strong> உயர்ந்துள்ளது. உங்கள் அடுத்த
+      TNPDCL (TANGEDCO) பில்லுக்கு இது என்ன அர்த்தம் என்பதை இங்கே பார்க்கலாம்.`,
+    sectionsTa: `
+      <section class="seo-section">
+        <h2>இப்போது (ஜூலை 2025 முதல்) அமலில் உள்ள விகிதங்கள்</h2>
+        <p>TNERC-இன் ஆணை எண் 6/2025 (30 ஜூன் 2025, 1 ஜூலை 2025 முதல் அமல்) தற்போதைய LT-IA வீட்டு
+        அட்டவணையை நிர்ணயித்தது: <strong>நிலையான கட்டணம் இல்லை</strong>; மாத-சமான 0–200, 201–250,
+        251–300, 301–400, 401–500, 500+ யூனிட் அடுக்குகளில் யூனிட்டுக்கு ₹4.95 முதல் ₹12.15 வரை
+        தொலைநோக்கி (telescopic) விகிதங்கள் (TNPDCL இருமாதமாக பில் செய்வதால், பில்லில் அச்சிடப்படும்
+        அடுக்குகள் இதன் இரு மடங்கு). மின் கட்டணத்தின் மீது 5% மின்சார வரி உண்டு. அடுக்கு வாரியான
+        முழு அட்டவணை எங்கள் <a href="/ta/tariffs/tamil-nadu/tangedco/">TNPDCL கட்டணப் பக்கத்தில்</a>
+        உள்ளது — அந்தப் பக்கம் ஆணைத் தரவிலிருந்து உருவாக்கப்படுவதால், விகிதங்கள் மாறினால் அதுவும்
+        புதுப்பிக்கப்படும்.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2026-இல் உண்மையில் மாறியது: இலவச யூனிட்கள் 200 ஆக உயர்வு</h2>
+        <p>அரசாணை (Ms) எண் 50 (10 மே 2026) மற்றும் அதற்கு அமல் வழங்கிய TNERC ஆணை எண் 5/2026
+        (26 மே 2026) படி, FY 2026-27-க்கான தமிழ்நாடு அரசின் இலவச மின்சாரத் திட்டம்:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>உங்கள் இருமாத நுகர்வு</th><th>சுழற்சிக்கு இலவச யூனிட்கள்</th></tr></thead>
+          <tbody>
+            <tr><td>500 யூனிட் வரை</td><td><strong>200 யூனிட் இலவசம்</strong></td></tr>
+            <tr><td>500 யூனிட்டுக்கு மேல்</td><td>100 யூனிட் இலவசம்</td></tr>
+          </tbody>
+        </table></div>
+        <p>LT-IA அடுக்குகள் தொலைநோக்கி என்பதாலும், இலவச யூனிட்கள் <em>மலிவான</em> யூனிட்கள்
+        என்பதாலும், மானியத்தின் ரூபாய் மதிப்பு உங்கள் மொத்த நுகர்வைப் பொறுத்தது — இருமாத 500-யூனிட்
+        கோட்டைத் தாண்டினால் இலவச யூனிட்கள் பாதியாகக் குறைவதோடு, அதே நேரம் உங்கள் விளிம்பு விகிதமும்
+        ஏறுகிறது. 490 யூனிட் பயன்படுத்தும் குடும்பத்தின் பில், 520 யூனிட் குடும்பத்தை விட —
+        கூடுதல் 30 யூனிட்டுக்கு விகிதாசாரமின்றி — குறிப்பிடத்தக்க அளவு குறைவாக இருக்கும். எல்லைக்கு
+        அருகில் இருந்தால் அதைக் கவனத்தில் கொள்ளுங்கள்.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>இன்னும் வராத திருத்தம்</h2>
+        <p>ஆணை எண் 6/2025-இலேயே, FY 2025-26 நிலையான மற்றும் மின் கட்டணங்கள் ஆணை எண் 7/2022-இன்
+        பல்லாண்டு கட்டண கட்டமைப்பின்படி <strong>1 ஜூலை 2026</strong> முதல் "பணவீக்க அடிப்படையிலான
+        சரிசெய்தலுக்கு" உட்படும் எனக் கூறப்பட்டுள்ளது. ஜூலை 2026 இறுதி வரை, திருத்தப்பட்ட
+        எண்ணிக்கைகளுடன் எந்த ஆணையும் TNERC கட்டண ஆணை பட்டியலில் வெளியாகவில்லை — சமீபத்திய கட்டண
+        ஆணை மே 2026 மானிய ஆணைதான். கட்டமைப்பின் முந்தைய செயல்பாட்டைப் பார்த்தால், அறிவிக்கப்படும்போது
+        அது மறுசீரமைப்பு அல்ல, பணவீக்கக் குறியீட்டு அடிப்படையிலான ஒற்றை இலக்க சதவீத மாற்றமாகவே
+        இருக்க வேண்டும்; அமல் தேதிக்குப் பிறகு தயாரிக்கப்படும் பில்கள் புதிய விகிதங்களில் இருக்கும்.
+        நாங்கள் TNERC பட்டியலைக் கண்காணித்து, ஆணை வெளியானதும் — பத்திரிகை செய்திகளிலிருந்து அல்ல,
+        ஆணை PDF-இலிருந்தே — எங்கள் கட்டணத் தரவைப் புதுப்பிக்கிறோம்.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>ஜூலை 2026 TNPDCL பில்லை எப்படிச் சரிபார்ப்பது</h2>
+        <ul>
+          <li><strong>சுழற்சியை உறுதிசெய்யுங்கள்.</strong> TNPDCL இருமாதமாக பில் செய்கிறது; மதிப்பீடு
+          சுமார் 60 நாட்களின் நுகர்வைக் காட்டும். பில்லில் உள்ள அடுக்குகள் அனைத்தும் இருமாத
+          அடுக்குகள்.</li>
+          <li><strong>இலவச யூனிட் வரியைப் பாருங்கள்.</strong> சுழற்சியில் ≤500 யூனிட் என்றால் 200
+          யூனிட் இலவசம் காட்ட வேண்டும்; 500-க்கு மேல் என்றால் 100. FY 2026-27 மானியம் அமலான பிறகும்
+          ≤500-யூனிட் பில்லில் 100 இலவச யூனிட்களே இருந்தால், அது புகாருக்கு உரியது.</li>
+          <li><strong>மொத்தத்தை மீண்டும் கணக்கிடுங்கள்.</strong> உங்கள் யூனிட்களை
+          <a href="/?state=Tamil%20Nadu#calculator">தமிழ்நாடு மின் பில் கணிப்பானில்</a> அரசு மானியப்
+          பெட்டியைத் தேர்வுசெய்து உள்ளிடுங்கள் — அது தற்போதைய TNERC அடுக்குகள், 5% வரி மற்றும்
+          இலவச யூனிட் விதியைப் பயன்படுத்தி, அச்சிடப்பட்ட பில்லுடன் ஒப்பிட விவரமான முடிவைக்
+          காட்டும்.</li>
+        </ul>
+      </section>`,
+    faqsTa: [
+      { q: 'ஜூலை 2026-இல் தமிழ்நாடு மின் கட்டணம் உயர்ந்ததா?',
+        a: 'இன்னும் இல்லை. FY 2025-26 அட்டவணை (TNERC ஆணை எண் 6/2025) தொடர்ந்து அமலில் உள்ளது. பல்லாண்டு கட்டண கட்டமைப்பின்படி 1 ஜூலை 2026 முதல் பணவீக்க அடிப்படை சரிசெய்தல் அமலாக இருந்தது; ஆனால் ஜூலை 2026 இறுதி வரை திருத்தப்பட்ட எண்ணிக்கைகளுடன் எந்த ஆணையும் TNERC பட்டியலில் வெளியாகவில்லை.' },
+      { q: '2026-இல் தமிழ்நாடு எத்தனை இலவச மின்சார யூனிட்கள் வழங்குகிறது?',
+        a: 'FY 2026-27-க்கு, இருமாத சுழற்சியில் 500 யூனிட் வரை பயன்படுத்தும் வீட்டு நுகர்வோருக்கு சுழற்சிக்கு 200 யூனிட் இலவசம்; அதற்கு மேல் பயன்படுத்துவோருக்கு 100 யூனிட் — மே 2026 அரசாணை (Ms) எண் 50, TNERC ஆணை எண் 5/2026 மூலம் அமல்.' },
+      { q: 'வீட்டு நுகர்வோருக்கு தற்போதைய TNEB யூனிட் விலை என்ன?',
+        a: '1 ஜூலை 2025 முதல் அமலில் உள்ள LT-IA அட்டவணை தொலைநோக்கி முறையில், முதல் மாத-சமான அடுக்கில் (0–200 யூனிட்) யூனிட்டுக்கு ₹4.95 முதல், 500 யூனிட்டுக்கு மேல் ₹12.15 வரை; நிலையான கட்டணம் இல்லை, மின் கட்டணத்தின் மீது 5% மின்சார வரி. முழு அடுக்கு அட்டவணைக்கு TNPDCL கட்டணப் பக்கத்தைப் பாருங்கள்.' },
+      { q: '500 யூனிட்டைத் தாண்டியதும் என் TNEB பில் ஏன் திடீரென உயர்கிறது?',
+        a: '500 யூனிட்டுக்கு மேலான இருமாத பில்லில் இரண்டு விஷயங்கள் ஒரே நேரத்தில் நடக்கின்றன: இலவச ஒதுக்கீடு 200 யூனிட்டிலிருந்து 100 ஆகக் குறைகிறது, கூடுதல் நுகர்வு உயர்ந்த தொலைநோக்கி அடுக்குகளில் விலை நிர்ணயிக்கப்படுகிறது. இவை சேர்ந்து 500-யூனிட் கோட்டைத் தமிழ்நாடு வீட்டு பில்லின் மிக விலையுயர்ந்த எல்லையாக்குகின்றன.' },
+      { q: 'TANGEDCO இப்போது TNPDCL ஆகிவிட்டதா?',
+        a: 'ஆம் — TANGEDCO மறுசீரமைப்பைத் தொடர்ந்து தமிழ்நாட்டில் மின் விநியோகம் இப்போது தமிழ்நாடு மின் விநியோகக் கழகம் (TNPDCL) கீழ் உள்ளது. பில்கள், போர்ட்டல்கள், கட்டண ஆணைகளில் புதிய பெயர் அதிகரித்து வருகிறது; பெயர் மாற்றத்தால் கட்டணங்களில் எந்த மாற்றமும் இல்லை.' },
+    ],
+  },
 ];

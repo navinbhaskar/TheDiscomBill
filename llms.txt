@@ -53,6 +53,8 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [How to Get a New Electricity Connection in Haryana (DHBVN / UHBVN eConnection)](https://thediscombill.com/guides/haryana-new-connection-dhbvn-uhbvn/): Step-by-step guide to a new DHBVN or UHBVN electricity connection in Haryana through the dedicated eConnection portals: which DISCOM serves your district, the document checklist, the ₹20 processing fee, the 7-day payment deadline that cancels applications, and statutory timelines
 - [How to Get a New WBSEDCL Electricity Connection Online (West Bengal)](https://thediscombill.com/guides/wbsedcl-new-connection-online/): Step-by-step guide to a new WBSEDCL electricity connection: applying on wbsedcl
 - [How to Get a New PSPCL Electricity Connection Online (Punjab)](https://thediscombill.com/guides/pspcl-new-connection-online/): Step-by-step guide to a new PSPCL electricity connection in Punjab: applying on the online NSC portal via pspcl
+- [How Much Does a 1.5 Ton AC Add to Your Electricity Bill?](https://thediscombill.com/guides/ac-1-5-ton-electricity-bill/): How many units a 1
+- [Tamil Nadu Electricity Tariff, July 2026: What Changed and What Hasn’t](https://thediscombill.com/guides/tamil-nadu-electricity-tariff-july-2026/): Where Tamil Nadu electricity tariffs stand in July 2026: the FY 2025-26 TNERC schedule still in force, the free-electricity expansion to 200 units bi-monthly for households up to 500 units, and the inflation-based revision that is due but not yet notified
 
 ## Reference
 
