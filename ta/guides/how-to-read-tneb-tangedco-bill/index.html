@@ -40,7 +40,7 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:image:alt" content="TNEB (TANGEDCO) பில் எப்படிப் படிப்பது — இருமாத அடுக்குகள் &amp; இலவச யூனிட்">
   <meta property="og:locale" content="ta_IN">
   <meta property="og:locale:alternate" content="en_IN">
   <meta name="twitter:card" content="summary_large_image">
@@ -48,11 +48,12 @@
   <meta name="twitter:description" content="தமிழ்நாடு (TNEB/TANGEDCO) மின் பில்களின் வரி-வரியான விளக்கம்: பில் ஏன் இருமாதம், இலவச யூனிட்கள் (FY 2026-27 முதல் பெரும்பாலானோருக்கு சுழற்சிக்கு 200) எப்படி வேலை செய்கின்றன, சலுகைகளை நீக்கும் 500-யூனிட் எல்லை, 1000+ யூனிட் வரை அடுக்குக் கணக்கு, மற்றும் மொத்தத்தை எப்படிச் சரிபார்ப்பது.">
   <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Fonts load async (non-render-blocking); display=swap shows fallback text immediately -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. Preload the weights that paint first. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-600-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
+  <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/css/styles.min.css">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
@@ -145,7 +146,7 @@
     </nav>
   </div>
 </header>
-<div class="page-body">
+<div class="page-body" role="main">
 
   <section class="seo-page container">
     <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/">முகப்பு</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><a href="/ta/guides/">வழிகாட்டிகள்</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">உங்கள் TNEB / TANGEDCO மின் பில்லை எப்படிப் படிப்பது</span></li></ol></nav>

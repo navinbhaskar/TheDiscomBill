@@ -40,7 +40,7 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:image:alt" content="உங்கள் MSEDCL பில்லை எப்படிப் படிப்பது — ஸ்லாப், FAC, வீலிங் &amp; 16% வரி">
   <meta property="og:locale" content="ta_IN">
   <meta property="og:locale:alternate" content="en_IN">
   <meta name="twitter:card" content="summary_large_image">
@@ -48,11 +48,12 @@
   <meta name="twitter:description" content="MSEDCL (மகாவிதரண்) மின் பில்லின் வரிக்கு வரி விளக்கம்: 100/300/500 யூனிட்டில் LT-1 குடியிருப்பு ஸ்லாப்கள், அடுக்கு நிலையான கட்டணம், எரிபொருள் சரிசெய்தல் (FAC), வீலிங் கட்டணம், மகாராஷ்டிராவின் 16% மின் வரி மற்றும் மொத்தத்தை எப்படிச் சரிபார்ப்பது.">
   <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Fonts load async (non-render-blocking); display=swap shows fallback text immediately -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. Preload the weights that paint first. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-600-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
+  <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/css/styles.min.css">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
@@ -145,7 +146,7 @@
     </nav>
   </div>
 </header>
-<div class="page-body">
+<div class="page-body" role="main">
 
   <section class="seo-page container">
     <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/">முகப்பு</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><a href="/ta/guides/">வழிகாட்டிகள்</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">உங்கள் MSEDCL (மகாவிதரண்) மின் பில்லை எப்படிப் படிப்பது</span></li></ol></nav>
@@ -153,9 +154,9 @@
     <h1>உங்கள் MSEDCL (மகாவிதரண்) மின் பில்லை எப்படிப் படிப்பது</h1>
     <p class="guide-meta">6 நிமிட வாசிப்பு · புதுப்பிக்கப்பட்டது: 21 ஜூலை, 2026</p>
     <p class="seo-lead">MSEDCL (மகாவிதரண்) மும்பை நகரம் தவிர கிட்டத்தட்ட முழு மகாராஷ்டிராவுக்கும் மின்சாரம் வழங்குகிறது —
-      மும்பை தானே <a href="/ta/tariffs/maharashtra/adani_mumbai/">Adani Electricity</a>,
-      <a href="/ta/tariffs/maharashtra/best_mumbai/">BEST</a> மற்றும்
-      <a href="/ta/tariffs/maharashtra/tata_power_mumbai/">Tata Power</a> இடையே பிரிக்கப்பட்டுள்ளது. மகாராஷ்டிரா
+      மும்பை தானே <a href="/tariffs/maharashtra/adani_mumbai/">Adani Electricity</a>,
+      <a href="/tariffs/maharashtra/best_mumbai/">BEST</a> மற்றும்
+      <a href="/tariffs/maharashtra/tata_power_mumbai/">Tata Power</a> இடையே பிரிக்கப்பட்டுள்ளது. மகாராஷ்டிரா
       பில்கள் பெரும்பாலான மாநிலங்களை விட அதிகத் தனிக் கட்டண வரிகளைக் கொண்டுள்ளன, மேலும் இந்தியாவின் மிக அதிக
       மின் வரிகளில் ஒன்று, எனவே மொத்தம் பெரும்பாலும் வேறு இடங்களிலிருந்து வந்தவர்களை ஆச்சரியப்படுத்துகிறது.</p>
     
@@ -164,7 +165,7 @@
         <p>குடியிருப்பு (LT-1) நுகர்வு அடுக்கு வாரியாக விலை நிர்ணயிக்கப்படுகிறது, ஸ்லாப் எல்லைகள்
         <strong>100, 300 மற்றும் 500 யூனிட்டில்</strong> — முதல் மற்றும் கடைசி ஸ்லாப்பிற்கு இடையிலான தாவல்
         ஏறக்குறைய மூன்று மடங்கு, இந்தியாவில் மிகக் கடுமையானவற்றில் ஒன்று. அதனால்தான் அதிக-AC மாதம் விகிதத்திற்கு
-        மீறி வலிக்கிறது. தற்போதைய கட்டணங்கள் <a href="/ta/tariffs/maharashtra/msedcl/">MSEDCL கட்டணப் பக்கத்தில்</a>
+        மீறி வலிக்கிறது. தற்போதைய கட்டணங்கள் <a href="/tariffs/maharashtra/msedcl/">MSEDCL கட்டணப் பக்கத்தில்</a>
         உள்ளன.</p>
       </section>
       <section class="seo-section">
@@ -172,14 +173,14 @@
         <p>MSEDCL இன் நிலையான கட்டணம் சுமை பட்டைகளின்படி (1 kW வரை, 1–2 kW, 2–5 kW, 5–10 kW, 10 kW க்கு மேல்)
         அடுக்கப்படுகிறது, எனவே ஒரு பட்டை எல்லையைக் கடப்பது மாதாந்திரத் தொகையை ஒரே படியில் மாற்றுகிறது. உங்கள்
         பதிவு செய்யப்பட்ட தேவை உங்கள் பட்டையை விட மிகக் குறைவாக இருந்தால், எங்கள்
-        <a href="/ta/guides/reduce-fixed-charges-sanctioned-load/">அனுமதிக்கப்பட்ட-சுமை வழிகாட்டியைப்</a>
+        <a href="/guides/reduce-fixed-charges-sanctioned-load/">அனுமதிக்கப்பட்ட-சுமை வழிகாட்டியைப்</a>
         படியுங்கள் — மகாராஷ்டிரா கூடுதல் தேவையை 1.5× இல் பில் செய்கிறது, எனவே அதிகமாகக் குறைக்காதீர்கள்.</p>
       </section>
       <section class="seo-section">
         <h2>3. பாஸ்-த்ரூ வரிகள்: FAC மற்றும் வீலிங்</h2>
         <ul>
           <li><strong>FAC (Fuel Adjustment Charge):</strong> மகாராஷ்டிராவின் எரிபொருள் கூடுதல் கட்டணம்,
-          அவ்வப்போது திருத்தப்படும் ஒரு ₹/யூனிட் தொகை. <a href="/ta/guides/how-fppa-fuel-surcharge-is-calculated/">எரிபொருள்
+          அவ்வப்போது திருத்தப்படும் ஒரு ₹/யூனிட் தொகை. <a href="/guides/how-fppa-fuel-surcharge-is-calculated/">எரிபொருள்
           கூடுதல் கட்டணங்கள் எப்படிக் கணக்கிடப்படுகின்றன</a> என்பதைப் பார்க்கவும்.</li>
           <li><strong>வீலிங் கட்டணம்:</strong> விநியோக வலையமைப்பைப் பயன்படுத்துவதற்கான தனி ₹/யூனிட் வரி —
           MSEDCL அதை ஆற்றல் கட்டணத்திலிருந்து தனியாக அச்சிடுகிறது, இது வழக்கத்திற்கு மாறானது மற்றும் ஒரு யூனிட்
@@ -190,7 +191,7 @@
         <h2>4. மின் வரி — 16% வரி</h2>
         <p>மகாராஷ்டிரா நாட்டின் மிக அதிக வீட்டு மின் வரிகளில் ஒன்றை விதிக்கிறது (தற்போதைய அட்டவணையில்
         குடியிருப்பு ஆற்றல் கட்டணங்களில் 16%). ஒரு பெரிய பில்லில் ED வரி மட்டுமே நிலையான கட்டணத்தை விட
-        அதிகமாக இருக்கலாம் — மாநிலங்களுக்கிடையே ஒப்பிடுவதற்கு <a href="/ta/guides/electricity-duty-explained/">எங்கள்
+        அதிகமாக இருக்கலாம் — மாநிலங்களுக்கிடையே ஒப்பிடுவதற்கு <a href="/guides/electricity-duty-explained/">எங்கள்
         வரி வழிகாட்டியைப்</a> படியுங்கள்.</p>
       </section>
       <section class="seo-section">

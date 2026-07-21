@@ -16,5 +16,18 @@ jobs:
       # No dependencies to install — the suite is plain Node ESM.
       - name: Syntax-check all JS files
         run: find js/ -name '*.js' -exec node --check {} +
-      - name: Run engine regression tests
+      - name: Verify generated output is committed (no drift)
+        # `npm run seo` is deterministic; if the committed HTML / sitemap / sw.js cache
+        # version differ from a fresh build, someone edited a data file without re-running
+        # it. Fail loudly so stale pages never ship.
+        run: |
+          npm run seo
+          if ! git diff --quiet; then
+            echo "::error::Generated output is out of date. Run 'npm run seo' and commit the result."
+            git --no-pager diff --stat
+            exit 1
+          fi
+      - name: Run regression + site integrity tests
+        # engine + bill-ocr calculations, plus internal-link integrity and SEO structure
+        # (title / single H1 / canonical) across all generated pages.
         run: npm test

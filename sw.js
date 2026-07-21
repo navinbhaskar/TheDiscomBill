@@ -1,6 +1,7 @@
 // sw.js — Service Worker (network-first, cache fallback)
-// Update this version string when deploying new code to bust the cache.
-const CACHE = 'discombill-20260721-213';
+// CACHE is stamped automatically by generate-seo.js (stampServiceWorker) from a
+// content hash of the CORE assets below — do not hand-edit it; run `npm run seo`.
+const CACHE = 'discombill-20260721-d7ed4bf0';
 
 const CORE = [
   './', './index.html', './compare/', './compare/index.html',
@@ -21,8 +22,13 @@ const CORE = [
   './glossary/', './glossary/index.html',
   './methodology/', './methodology/index.html',
   './recharge-calculator/', './recharge-calculator/index.html',
-  // Styles
+  // Styles + self-hosted fonts. Only the @font-face manifest and the weights we
+  // preload are precached; the rest of the woff2 files are cached on demand by the
+  // fetch handler (unicode-range means most pages never request them).
   './css/styles.min.css',
+  './fonts/fonts.css',
+  './fonts/inter-400-latin.woff2', './fonts/inter-600-latin.woff2',
+  './fonts/space-grotesk-700-latin.woff2', './fonts/inter-400-latinext.woff2',
   // Application JS
   './js/utils.js', './js/engine.js', './js/i18n.js',
   './js/ui.js', './js/datepicker.js', './js/renderer.js', './js/main.js', './js/compare.js',

@@ -7,9 +7,10 @@
   "scripts": {
     "seo": "node generate-seo.js",
     "build": "node build.js",
-    "test": "node tests/engine.test.mjs && node tests/bill-ocr.test.mjs",
+    "test": "node tests/engine.test.mjs && node tests/bill-ocr.test.mjs && node tests/site.test.mjs",
     "api:bundle": "node scripts/sync-calc-api.mjs",
-    "serve": "npx http-server . -p 3456"
+    "serve": "npx http-server . -p 3456",
+    "og": "node scripts/og-images.mjs"
   },
   "license": "MIT",
   "repository": {

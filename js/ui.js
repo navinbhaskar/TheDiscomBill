@@ -773,6 +773,15 @@ export function addMeterRow(label = '') {
       <div class="mf-field mf-units"><span class="m-units-label">${_t('Total Units (Calculated)', 'कुल यूनिट (गणना)')}</span><input type="number" class="m-units" placeholder="${_t('Total Consumed Units', 'कुल खपत यूनिट')}" data-i18n-ph="ph.totalUnits" min="0" step="0.01" readonly></div>
     </div>`;
     
+  // Accessibility: each .mf-field pairs a visible <span> caption with its input, but
+  // nothing associates them programmatically — a screen reader announces "edit text,
+  // blank". Mirror the caption (already in the user's language) onto the input.
+  row.querySelectorAll('.mf-field').forEach(f => {
+    const cap = f.querySelector('span'), inp = f.querySelector('input');
+    if (cap && inp && !inp.getAttribute('aria-label')) inp.setAttribute('aria-label', cap.textContent.trim());
+  });
+  row.querySelector('.m-remove').setAttribute('aria-label', _t('Remove this meter', 'यह मीटर हटाएँ'));
+
   row.querySelectorAll('input').forEach(i => {
     i.addEventListener('input',  updateAdvancedMeter);
     i.addEventListener('change', updateAdvancedMeter);
@@ -794,6 +803,7 @@ export function addMeterRow(label = '') {
       unitsInput.readOnly = true;
       unitsLabel.textContent = _t('Total Units (Calculated)', 'कुल यूनिट (गणना)');
     }
+    unitsInput.setAttribute('aria-label', unitsLabel.textContent);   // keep SR name in sync
     // The required field swaps with the mode: readings when calculated, Units when overridden.
     row.querySelector('.m-prevread-label').classList.toggle('req', !chk.checked);
     row.querySelector('.m-currread-label').classList.toggle('req', !chk.checked);

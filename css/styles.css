@@ -690,7 +690,7 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
 }
 .header-nav a.nav-active:hover { color: var(--p-blue-400, #60a5fa); }
 .header-nav a:hover { background: rgba(255,255,255,.08); color: var(--text-inverse); text-decoration: none; }
-.header-nav a:focus-visible { outline: 2px solid var(--p-blue-400); outline-offset: 2px; }
+.header-nav a:focus-visible, .nav-dropdown-trigger:focus-visible { outline: 2px solid var(--p-blue-400); outline-offset: 2px; }
 /* Promoted top-bar shortcuts (Compare / Solar / EV / Blog): shown on wide screens only —
    below 1040px they collapse back into the Quick Links dropdown, which holds the same links. */
 .header-nav .nav-promoted { padding: 6px 12px; }
@@ -2091,13 +2091,13 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 
 /* Spark divider — centered section/page titles get a small blue→amber current
    bar, echoing the header's live wire. (One shared rule for all portal pages.) */
-.comparison-section h1::after, .comparison-section h2::after, .estimator-section h1::after, .estimator-section h2::after, .tariff-section h2::after,
+.comparison-section h1::after, .comparison-section h2::after, .estimator-section h1::after, .estimator-section h2::after, .tariff-section h1::after, .tariff-section h2::after,
 .billcheck-section h1::after, .billcheck-section h2::after, .svc-section h1::after, .svc-section h2::after, .solar-section h1::after, .solar-section h2::after {
   content: ''; display: block; width: 56px; height: 3px; margin: 12px auto 0;
   border-radius: var(--radius-full);
   background: linear-gradient(90deg, var(--p-blue-500), var(--p-amber-400));
 }
-.comparison-section h1, .comparison-section h2, .estimator-section h1, .estimator-section h2, .tariff-section h2,
+.comparison-section h1, .comparison-section h2, .estimator-section h1, .estimator-section h2, .tariff-section h1, .tariff-section h2,
 .billcheck-section h1, .billcheck-section h2, .svc-section h1, .svc-section h2, .solar-section h1, .solar-section h2 {
   font-family: var(--font-display);
 }
@@ -2482,7 +2482,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 /* ─── Electricity Tariff page (/tariffs/) ────────────────────────────────────── */
 .tariff-section { background: var(--surface-sunken); padding: 32px 24px 56px; border-top: 1px solid var(--border-default); }
 .tariff-section .container { max-width: 980px; margin: 0 auto; }
-.tariff-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px; text-align: center; }
+.tariff-section h1, .tariff-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; letter-spacing: -0.5px; text-align: center; }
 .tariff-intro { color: var(--text-secondary); margin: 0 auto 24px; line-height: 1.6; text-align: center; max-width: 700px; }
 .tx-muted { color: var(--text-tertiary); font-weight: 400; }
 

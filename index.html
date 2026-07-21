@@ -45,10 +45,11 @@
   <meta name="twitter:title" content="Electricity Bill Calculator India (2026) — 65+ DISCOMs, Free">
   <meta name="twitter:description" content="Free electricity bill calculator for every Indian DISCOM — slab-wise breakdown, FPPA, solar net metering. No sign-up.">
   <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-600-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
+  <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="css/styles.min.css">
   <!-- Module-graph preload: main.js sits at the end of <body> and its import graph is
        4 levels deep (main → ui → registry → 37 state files); without hints the browser
@@ -406,7 +407,7 @@
   </div><!-- /hero-glass -->
 </section>
 
-<div class="page-body">
+<div class="page-body" role="main">
 
 <!-- ── Calculator ───────────────────────────────────────────────────────────── -->
 <section id="calculator" class="calculator-section">

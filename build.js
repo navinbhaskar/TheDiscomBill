@@ -11,18 +11,19 @@ const dist = 'dist';
 if (!fs.existsSync(dist)) fs.mkdirSync(dist);
 
 const assets = [
-  'css', 'js',
+  'css', 'js', 'fonts',
   // Route pages (each is its own folder with an index.html) — must be copied or
   // the Quick Links destinations 404 in production. tariffs/ also contains the
   // generated per-state and per-DISCOM landing pages (copied recursively).
   'compare', 'electricity-cost-calculator', 'solar-calculator', 'tariffs', 'guides', 'glossary', 'methodology', 'services', 'bill-check', 'bill-review', 'expert', 'admin', 'login', 'my-bills', 'new-connection', 'complaint',
   // Hindi pre-rendered variants of tariffs/guides/glossary (generated into hi/ by generate-seo.js)
   'hi',
-  'index.html', 'editor.html',
+  'index.html', 'editor.html', '404.html',
   'sw.js', 'manifest.webmanifest',
   'icon.svg', 'icon-maskable.svg',
   'icon-192.png', 'icon-512.png',
-  'og-image.jpg',   // 1200×630 social share card (og:image / twitter:image)
+  'og-image.jpg',   // 1200×630 default social card (og:image / twitter:image)
+  'og',             // per-page social cards (scripts/og-images.mjs) — default is the fallback
   // SEO / hosting files — previously omitted, so they never reached production.
   'sitemap.xml', 'robots.txt', 'llms.txt', 'CNAME'
 ];

@@ -20,10 +20,11 @@
   <title>Electricity Tariff Rates – TheDiscomBill</title>
   <meta name="description" content="Browse current electricity tariff rates — energy slabs, fixed charges and duties — for every major Indian DISCOM by state and consumer category.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-600-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
+  <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="canonical" href="https://thediscombill.com/tariffs/">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
@@ -131,10 +132,10 @@
   </div>
 </header>
 
-<div class="page-body">
+<div class="page-body" role="main">
   <section class="tariff-section">
     <div class="container">
-      <h2 class="reveal">Electricity Tariff Rates</h2>
+      <h1 class="reveal">Electricity Tariff Rates</h1>
       <p class="tariff-intro reveal">Browse the current energy slabs, fixed charges and duties for any DISCOM in India. Pick your state and provider to see the full schedule by consumer category — the same rates that power our bill calculator.</p>
 
       <!-- Selector bar -->

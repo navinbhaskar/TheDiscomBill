@@ -150,6 +150,32 @@ const LANG_STATES = { hi: null, mr: ['Maharashtra'], ta: ['Tamil Nadu'] };
 const langServesState = (lang, state) => lang === 'en' || !LANG_STATES[lang] || LANG_STATES[lang].includes(state);
 const langUrl = (u, lang) => (lang === 'en' ? u : `/${lang}` + u);
 
+// ── vernacular link healing ───────────────────────────────────────────────────
+// Translated guide/hub bodies hardcode internal links with a /hi|/mr|/ta prefix, but not
+// every twin is emitted: Tamil/Marathi tariff pages are state-scoped, and many guides have
+// no vernacular twin — so some of those links 404. Rather than police the content by hand,
+// downgrade any prefixed link whose twin won't exist to the English page (which always does).
+// Applied to page BODIES only (layout), so head hreflang/canonical are never touched.
+let _slugToState = null;
+const slugToState = (slug) => {
+  if (!_slugToState) { _slugToState = {}; for (const s of getStates()) _slugToState[slugify(s)] = s; }
+  return _slugToState[slug];
+};
+function vernacularTwinEmitted(l, kind, rest) {
+  const first = rest.split('/')[0];
+  if (kind === 'guides') {
+    if (!first) return true;                              // /l/guides/ index — emitted every lang
+    const g = GUIDES.find(x => x.slug === first);
+    return g ? guideHasBody(g, l) : false;               // unknown slug → downgrade (best effort)
+  }
+  if (!first || first === 'states') return true;          // hubs (/l/tariffs/, /l/.../states/) exist
+  const state = slugToState(first);                       // tariffs + smart-meter are state-scoped
+  return state ? langServesState(l, state) : true;        // unknown state → leave as authored
+}
+const healVernacularLinks = (html) =>
+  html.replace(/\/(hi|mr|ta)\/(guides|tariffs|smart-meter-recharge)\/([a-z0-9/_-]*)/g,
+    (m, l, kind, rest) => vernacularTwinEmitted(l, kind, rest) ? m : `/${kind}/${rest}`);
+
 // Native state/UT names per language (used in vernacular titles, H1s and breadcrumbs —
 // "उत्तर प्रदेश बिजली बिल कैलकुलेटर" / "தமிழ்நாடு மின் கட்டண கணிப்பான்" is the query
 // shape those searchers actually type). Marathi and Tamil sets are complete so the
@@ -349,7 +375,12 @@ const OG_LOCALE = { en: 'en_IN', hi: 'hi_IN', mr: 'mr_IN', ta: 'ta_IN' };
 // the full hreflang set for every language twin that exists for this page is emitted;
 // `lang` picks which variant this is. `altLangs` restricts which vernacular twins exist
 // (defaults to all — pass a subset for state-scoped pages).
-function layout({ title, description, canonical, jsonld = [], body, lang = 'en', page = null, altLangs = VERNACULARS }) {
+function layout({ title, description, canonical, jsonld = [], body, lang = 'en', page = null, altLangs = VERNACULARS, ogImage = null }) {
+  // Per-page social card when one has been generated (scripts/og-images.mjs writes
+  // /og/<key>.jpg); otherwise the shared default. existsSync keeps it safe: a page
+  // referencing an image that hasn't been rendered yet falls back, never 404s a card.
+  const ogImg = (ogImage && fs.existsSync(path.join(ROOT, 'og', `${ogImage}.jpg`)))
+    ? `${SITE}/og/${ogImage}.jpg` : `${SITE}/og-image.jpg`;
   // Every generated page carries a WebPage node with freshness + publisher links —
   // GEO signal for AI crawlers (entity graph anchored to the #org / #website ids
   // declared on the homepage).
@@ -409,23 +440,24 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
   <meta property="og:title" content="${attr(title)}">
   <meta property="og:description" content="${attr(description)}">
   <meta property="og:url" content="${attr(canonical)}">
-  <meta property="og:image" content="${SITE}/og-image.jpg">
+  <meta property="og:image" content="${ogImg}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:image:alt" content="${attr(title)}">
   <meta property="og:locale" content="${OG_LOCALE[lang] || 'en_IN'}">
   ${lang !== 'en' ? '<meta property="og:locale:alternate" content="en_IN">' : '<meta property="og:locale:alternate" content="hi_IN">'}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${attr(title)}">
   <meta name="twitter:description" content="${attr(description)}">
-  <meta name="twitter:image" content="${SITE}/og-image.jpg">
+  <meta name="twitter:image" content="${ogImg}">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Fonts load async (non-render-blocking); display=swap shows fallback text immediately -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. Preload the weights that paint first. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-600-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
+  <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/css/styles.min.css">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
@@ -439,8 +471,8 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
 </head>
 <body>
 ${chrome}
-<div class="page-body">
-${body}
+<div class="page-body" role="main">
+${healVernacularLinks(body)}
 </div>
 ${footer}
 <script type="module" src="/js/main.js"></script>
@@ -1914,6 +1946,7 @@ function guidePage(guide, lang = 'en') {
     canonical: SITE + url,
     page: altLangs.length ? enUrl : null,   // only advertise a hreflang set when a twin exists
     lang: L, altLangs,
+    ogImage: L === 'en' ? `guide-${guide.slug}` : null,   // per-page card (English titles only)
     jsonld: [
       articleLd,
       breadcrumbJsonLd([{ name: bcHome, url: '/' }, { name: bcGuides, url: guidesBase }, { name: title }]),
@@ -2194,6 +2227,40 @@ function glossaryPage(lang = 'en') {
       definedTermSetJsonLd(url, lang),
       breadcrumbJsonLd([{ name: bcHome, url: '/' }, { name: crumbName, url }]),
     ],
+    body,
+  });
+}
+
+// ── 404 (/404.html) ───────────────────────────────────────────────────────────
+// GitHub Pages serves /404.html (with a 404 status) for any unmatched path. Without
+// one, visitors hitting a stale/mistyped URL — of which there are many as GSC indexes
+// more pages — get GitHub's bare default with no route back into the site. This branded
+// page reuses the shared chrome (so the header search works) and points at the main
+// tools. English-only: it must render for any path, so it can't assume a language prefix.
+function notFoundPage() {
+  const body = `
+  <section class="seo-page container">
+    <h1>404 — Page not found</h1>
+    <p class="seo-lead">That page has moved or never existed. The link may be out of date —
+      but everything on TheDiscomBill is a click away. Try the search in the header, or pick up
+      one of the main tools below.</p>
+    <section class="seo-section">
+      <h2>Popular destinations</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/#calculator"><strong>Bill Calculator</strong><span>Itemised electricity-bill estimate for any state and DISCOM</span></a>
+        <a class="seo-link-card" href="/tariffs/states/"><strong>Tariffs by State</strong><span>Live slab rates, fixed charges and FPPA for every DISCOM</span></a>
+        <a class="seo-link-card" href="/compare/"><strong>Compare Tariffs</strong><span>Put any two DISCOMs side by side at your usage</span></a>
+        <a class="seo-link-card" href="/guides/"><strong>Bill Guides</strong><span>Plain-language walkthroughs of bills, charges and connections</span></a>
+        <a class="seo-link-card" href="/solar-calculator/"><strong>Solar Savings Calculator</strong><span>Rooftop payback and net-metering savings</span></a>
+        <a class="seo-link-card" href="/glossary/"><strong>Glossary</strong><span>Every charge line on an Indian bill, defined</span></a>
+      </div>
+    </section>
+    <p class="seo-lang-link"><a href="/">← Back to home</a></p>
+  </section>`;
+  return layout({
+    title: '404 — Page Not Found · TheDiscomBill',
+    description: 'That page could not be found. Search TheDiscomBill or jump to the bill calculator, state tariffs, comparison tool and guides.',
+    canonical: SITE + '/404.html', page: null, lang: 'en',
     body,
   });
 }
@@ -2696,6 +2763,34 @@ function writeMinifiedCss() {
   return `${Math.round(min.length / 1024)} KB from ${Math.round(src.length / 1024)} KB`;
 }
 
+// ── service-worker cache version ──────────────────────────────────────────────
+// The SW precaches a fixed CORE asset list; when any of those bytes change, every
+// visitor must get the new version or they keep serving a stale app shell. Rather
+// than hand-bumping `const CACHE = 'discombill-YYYYMMDD-NNN'` on every deploy (easy
+// to forget → users stuck on old code), we stamp it here from a content hash of the
+// exact files CORE precaches. Same bytes → same hash → no needless cache churn;
+// any change → new hash → clean bust on the next visit. Run after writeMinifiedCss()
+// so the freshly minified stylesheet is included in the hash.
+function stampServiceWorker() {
+  const swPath = path.join(ROOT, 'sw.js');
+  const sw = fs.readFileSync(swPath, 'utf8');
+  // Pull the file paths out of the CORE = [ ... ] array (skip bare-directory entries).
+  const coreMatch = sw.match(/const CORE = \[([\s\S]*?)\];/);
+  const paths = [...coreMatch[1].matchAll(/'\.\/([^']+)'/g)].map(m => m[1])
+    .filter(p => /\.(css|js|mjs|woff2|webmanifest|svg|png|html)$/.test(p));
+  const hash = crypto.createHash('sha256');
+  let hashed = 0;
+  for (const rel of paths.sort()) {                 // sort → order-independent
+    const abs = path.join(ROOT, rel);
+    if (fs.existsSync(abs)) { hash.update(rel + '\0'); hash.update(fs.readFileSync(abs)); hashed++; }
+  }
+  const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+  const version = `discombill-${date}-${hash.digest('hex').slice(0, 8)}`;
+  const updated = sw.replace(/const CACHE = '[^']*';/, `const CACHE = '${version}';`);
+  if (updated !== sw) fs.writeFileSync(swPath, updated, 'utf8');
+  return { version, hashed };
+}
+
 // ── site search index ─────────────────────────────────────────────────────────
 // A compact, build-time index for the header search (js/search.js): every tool
 // page, guide, glossary term and tariff page in one small module the browser
@@ -2831,10 +2926,12 @@ export function generateSeo() {
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
   fs.writeFileSync(path.join(ROOT, 'robots.txt'), ROBOTS, 'utf8');
   fs.writeFileSync(path.join(ROOT, 'llms.txt'), buildLlmsTxt(states), 'utf8');
+  fs.writeFileSync(path.join(ROOT, '404.html'), notFoundPage(), 'utf8');
   const searchEntries = writeSearchIndex(states);
   const cssKb = writeMinifiedCss();
+  const sw = stampServiceWorker();
 
-  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb})`);
+  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + sw ${sw.version} (${sw.hashed} assets)`);
   return { pages, states: states.length };
 }
 

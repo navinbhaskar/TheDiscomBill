@@ -25,10 +25,11 @@
   <title>Smart Meter Recharge Calculator — How Long Will ₹500 Last?</title>
   <meta name="description" content="Free smart meter recharge calculator for every Indian DISCOM. See how many days a ₹200 / ₹500 / ₹1000 prepaid recharge lasts, your daily burn rate and the ideal monthly recharge — computed from real tariff rates.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"></noscript>
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-600-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
+  <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="canonical" href="https://thediscombill.com/recharge-calculator/">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
@@ -139,7 +140,7 @@
   </div>
 </header>
 
-<div class="page-body">
+<div class="page-body" role="main">
   <section class="seo-page container">
     <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol>
       <li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li>
