@@ -2104,8 +2104,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .comparison-section p { color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; text-align: center; max-width: 700px; margin-left: auto; margin-right: auto; }
 
 /* ── Custom head-to-head comparison ─────────────────────────────────────────── */
+/* Full container width — the head-to-head card, the main table and the three note
+   cards below all share the same 1000px frame so the page reads as one column. */
 .custom-compare {
-  max-width: 760px; margin: 0 auto 34px;
+  margin: 0 auto 34px;
   background: var(--surface-card); border: 1px solid var(--border-default);
   border-radius: var(--radius-xl); box-shadow: var(--shadow-sm);
   padding: 22px 22px 24px;
@@ -2237,8 +2239,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   box-shadow: var(--shadow-sm);
 }
 /* Exception — /compare/ only (.comparison-section appears on no other page): that table is
-   the page's centred hero content, not a figure sitting beside prose, so it stays centred. */
-.comparison-section .comparison-table-wrapper { margin-inline: auto; }
+   the page's centred hero content, not a figure sitting beside prose, so it fills the same
+   1000px frame as the head-to-head card and the note cards below it. */
+.comparison-section .comparison-table-wrapper { margin-inline: auto; width: 100%; }
+.comparison-section .comparison-table { width: 100%; }
 
 .comparison-table { width: auto; border-collapse: separate; border-spacing: 0; }
 .comparison-table th, .comparison-table td { padding: 8px 13px; text-align: left; border-bottom: 1px solid var(--border-subtle); transition: background var(--t-fast); }
@@ -3278,6 +3282,17 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 .solar-share:hover { background: #1fb457; transform: translateY(-1px); }
 .solar-share svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+/* Desktop: let the calculator two-column layout breathe. The 760px container-mid frame
+   squeezed the form column to ~400px and made these pages read narrower than the 980-1000px
+   tariff/compare pages. Wider frame + a larger sticky results column; the form keeps sane
+   input widths via its own column (~630px). */
+@media (min-width: 1024px) {
+  .solar-section .container-mid { max-width: 1060px; }
+  .solar-layout { grid-template-columns: minmax(0, 1fr) 400px; gap: 28px; }
+  .solar-inputs { padding: 24px; }
+  .svc-section .container-mid { max-width: 980px; }
+}
 
 @media (max-width: 820px) {
   .solar-layout { grid-template-columns: 1fr; }
