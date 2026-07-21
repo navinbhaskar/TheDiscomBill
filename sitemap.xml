@@ -959,6 +959,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/guides/how-to-read-tpcodl-odisha-bill/</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/glossary/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/glossary/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/glossary/"/>
@@ -1009,7 +1015,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/states/"/>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1020,7 +1026,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/states/"/>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1031,7 +1037,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/states/"/>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1042,7 +1048,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/states/"/>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1053,7 +1059,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/"/>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1064,7 +1070,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/"/>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1075,7 +1081,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/"/>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1086,7 +1092,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/"/>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -3129,7 +3135,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/"/>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -3138,124 +3144,16 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/"/>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://thediscombill.com/tariffs/odisha/tpnodl/</loc>
-    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpnodl/"/>
-    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpnodl/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpnodl/"/>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://thediscombill.com/hi/tariffs/odisha/tpnodl/</loc>
-    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpnodl/"/>
-    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpnodl/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpnodl/"/>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://thediscombill.com/smart-meter-recharge/odisha/tpnodl/</loc>
-    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpnodl/"/>
-    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpnodl/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpnodl/"/>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://thediscombill.com/hi/smart-meter-recharge/odisha/tpnodl/</loc>
-    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpnodl/"/>
-    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpnodl/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpnodl/"/>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://thediscombill.com/tariffs/odisha/tpsodl/</loc>
-    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpsodl/"/>
-    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpsodl/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpsodl/"/>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://thediscombill.com/hi/tariffs/odisha/tpsodl/</loc>
-    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpsodl/"/>
-    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpsodl/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpsodl/"/>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://thediscombill.com/smart-meter-recharge/odisha/tpsodl/</loc>
-    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpsodl/"/>
-    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpsodl/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpsodl/"/>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://thediscombill.com/hi/smart-meter-recharge/odisha/tpsodl/</loc>
-    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpsodl/"/>
-    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpsodl/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpsodl/"/>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://thediscombill.com/tariffs/odisha/tpwodl/</loc>
-    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpwodl/"/>
-    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpwodl/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpwodl/"/>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://thediscombill.com/hi/tariffs/odisha/tpwodl/</loc>
-    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpwodl/"/>
-    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpwodl/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpwodl/"/>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://thediscombill.com/smart-meter-recharge/odisha/tpwodl/</loc>
-    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpwodl/"/>
-    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpwodl/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpwodl/"/>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://thediscombill.com/hi/smart-meter-recharge/odisha/tpwodl/</loc>
-    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpwodl/"/>
-    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpwodl/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpwodl/"/>
-    <lastmod>2026-07-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/tariffs/odisha/tpcodl/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpcodl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpcodl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpcodl/"/>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3264,7 +3162,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpcodl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpcodl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpcodl/"/>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3273,7 +3171,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpcodl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpcodl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpcodl/"/>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3282,7 +3180,115 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpcodl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpcodl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpcodl/"/>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/tariffs/odisha/tpnodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpnodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpnodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpnodl/"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/tariffs/odisha/tpnodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpnodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpnodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpnodl/"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/odisha/tpnodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpnodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpnodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpnodl/"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/odisha/tpnodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpnodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpnodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpnodl/"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/tariffs/odisha/tpwodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpwodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpwodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpwodl/"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/tariffs/odisha/tpwodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpwodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpwodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpwodl/"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/odisha/tpwodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpwodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpwodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpwodl/"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/odisha/tpwodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpwodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpwodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpwodl/"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/tariffs/odisha/tpsodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpsodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpsodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpsodl/"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/tariffs/odisha/tpsodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/odisha/tpsodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/odisha/tpsodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/odisha/tpsodl/"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/smart-meter-recharge/odisha/tpsodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpsodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpsodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpsodl/"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/smart-meter-recharge/odisha/tpsodl/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/odisha/tpsodl/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/odisha/tpsodl/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/odisha/tpsodl/"/>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

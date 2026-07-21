@@ -55,6 +55,7 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [How to Get a New PSPCL Electricity Connection Online (Punjab)](https://thediscombill.com/guides/pspcl-new-connection-online/): Step-by-step guide to a new PSPCL electricity connection in Punjab: applying on the online NSC portal via pspcl
 - [How Much Does a 1.5 Ton AC Add to Your Electricity Bill?](https://thediscombill.com/guides/ac-1-5-ton-electricity-bill/): How many units a 1
 - [Tamil Nadu Electricity Tariff, July 2026: What Changed and What Hasn’t](https://thediscombill.com/guides/tamil-nadu-electricity-tariff-july-2026/): Where Tamil Nadu electricity tariffs stand in July 2026: the FY 2025-26 TNERC schedule still in force, the free-electricity expansion to 200 units bi-monthly for households up to 500 units, and the inflation-based revision that is due but not yet notified
+- [How to Read Your TPCODL / Odisha Electricity Bill](https://thediscombill.com/guides/how-to-read-tpcodl-odisha-bill/): Every line of an Odisha electricity bill (TPCODL, TPNODL, TPWODL, TPSODL) decoded: the telescopic ₹2
 
 ## Reference
 

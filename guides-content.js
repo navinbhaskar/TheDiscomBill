@@ -7877,4 +7877,114 @@ export const GUIDES = [
         a: 'ஆம் — TANGEDCO மறுசீரமைப்பைத் தொடர்ந்து தமிழ்நாட்டில் மின் விநியோகம் இப்போது தமிழ்நாடு மின் விநியோகக் கழகம் (TNPDCL) கீழ் உள்ளது. பில்கள், போர்ட்டல்கள், கட்டண ஆணைகளில் புதிய பெயர் அதிகரித்து வருகிறது; பெயர் மாற்றத்தால் கட்டணங்களில் எந்த மாற்றமும் இல்லை.' },
     ],
   },
+
+  {
+    slug: 'how-to-read-tpcodl-odisha-bill',
+    published: "2026-07-21",
+    states: ['Odisha'],
+    title: 'How to Read Your TPCODL / Odisha Electricity Bill',
+    metaTitle: 'How to Read a TPCODL Odisha Bill 2026 — Slabs, MMFC & Kutir Jyoti',
+    description: 'Every line of an Odisha electricity bill (TPCODL, TPNODL, TPWODL, TPSODL) decoded: the telescopic ₹2.90–₹6.10 slabs unchanged since 2024, the ₹20/kW MMFC, the flat-₹70 Kutir Jyoti tariff, prompt-payment and digital rebates — and how to verify the total yourself.',
+    minutes: 6,
+    intro: `Odisha is one of the simpler states to check an electricity bill in — one uniform OERC
+      tariff applies across all four Tata Power distribution companies (<strong>TPCODL</strong>
+      around Bhubaneswar–Cuttack, <strong>TPNODL</strong> in the north, <strong>TPWODL</strong> in
+      the west and <strong>TPSODL</strong> in the south), and the domestic rates have not changed
+      since <strong>April 2024</strong>. This guide decodes each line of the bill and shows how to
+      recompute the total yourself.`,
+    sections: `
+      <section class="seo-section">
+        <h2>One tariff, four DISCOMs</h2>
+        <p>The Odisha Electricity Regulatory Commission (OERC) sets a single retail tariff for the
+        whole state in its annual Retail Supply Tariff order. The FY 2026-27 order (24 March 2026)
+        <strong>retained</strong> the existing rates for the third year running, so whichever TP
+        company bills you, the schedule below applies. The current slab-by-slab detail for your
+        DISCOM is on our <a href="/tariffs/odisha/">Odisha tariff pages</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>The energy charge — telescopic slabs</h2>
+        <p>Domestic (LT) consumption is billed telescopically — each band's rate applies only to
+        the units inside that band:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Monthly consumption</th><th>Rate</th></tr></thead>
+          <tbody>
+            <tr><td>First 50 units</td><td>₹2.90/unit</td></tr>
+            <tr><td>51 – 200 units</td><td>₹4.70/unit</td></tr>
+            <tr><td>201 – 400 units</td><td>₹5.70/unit</td></tr>
+            <tr><td>Above 400 units</td><td>₹6.10/unit</td></tr>
+          </tbody>
+        </table></div>
+        <p>Example: 300 units = 50 × ₹2.90 + 150 × ₹4.70 + 100 × ₹5.70 = <strong>₹1,420</strong>.
+        These rates have been in force since 1 April 2024, when OERC cut every slab by 10 paise.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>MMFC — the fixed charge per kW</h2>
+        <p>The <strong>Monthly Minimum Fixed Charge</strong> for domestic connections is
+        <strong>₹20 for the first kW</strong> of connected load and ₹20 for each additional kW —
+        effectively ₹20/kW/month. A typical 2 kW household pays ₹40. Commercial (General Purpose)
+        connections pay ₹30/kW, with energy slabs of ₹5.90 / ₹7.00 / ₹7.60 at 100 and 300 units.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Kutir Jyoti — the flat ₹70 tariff</h2>
+        <p>BPL households under the <strong>Kutir Jyoti</strong> scheme who stay within
+        <strong>30 units a month</strong> pay a single flat charge of <strong>₹70/month</strong> —
+        no energy charge, no per-kW MMFC. If consumption exceeds 30 units, the regular domestic
+        schedule applies instead, which is why a small overshoot can change the bill's shape
+        entirely.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Rebates most people miss</h2>
+        <ul>
+          <li><strong>Prompt-payment rebate:</strong> 10 paise/unit for LT domestic and General
+          Purpose consumers who pay by the due date.</li>
+          <li><strong>Digital-payment rebate:</strong> 4% for LT domestic and single-phase GP
+          consumers paying electronically — one of the most generous digital rebates in India.</li>
+          <li><strong>Rural discount:</strong> a further 10 paise/unit for rural domestic
+          consumers billed on actual meter reading.</li>
+        </ul>
+        <p>On a ₹1,500 bill the digital rebate alone is worth about ₹60 a month — worth switching
+        payment mode for.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Other lines on the bill</h2>
+        <ul>
+          <li><strong>Electricity duty</strong> — a small state levy under the Odisha Electricity
+          (Duty) Act, charged over and above the OERC tariff; for domestic connections it is a few
+          paise per unit, far below the 5–16% seen in many states.</li>
+          <li><strong>Meter reading & status</strong> — check the reading is marked actual, not
+          estimated/provisional; estimated months are trued-up later and cause catch-up bills.</li>
+          <li><strong>Arrears / DPS</strong> — outstanding amounts from earlier bills; pay the
+          current month by the due date to keep the prompt-payment rebate.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>Verify the total yourself</h2>
+        <p>Enter your units and connected load in the
+        <a href="/?state=Odisha#calculator">Odisha bill calculator</a> — it applies the telescopic
+        slabs, the ₹20/kW MMFC and the Kutir Jyoti rule, and shows an itemised result to compare
+        with the printed bill. If the printed total is more than a few rupees higher (before duty
+        and arrears), check the slab arithmetic and whether the reading was estimated — our
+        <a href="/bill-review/">free Bill Review</a> can take a look.</p>
+      </section>`,
+    faqs: [
+      { q: 'What is the electricity rate per unit in Odisha in 2026?',
+        a: 'Domestic rates are telescopic: ₹2.90/unit for the first 50 units, ₹4.70 for 51–200, ₹5.70 for 201–400 and ₹6.10 above 400 units per month, plus a ₹20/kW monthly fixed charge. The FY 2026-27 OERC order retained these rates, unchanged since April 2024.' },
+      { q: 'Is the tariff the same for TPCODL, TPNODL, TPWODL and TPSODL?',
+        a: 'Yes. OERC sets one uniform retail supply tariff for all four Tata Power DISCOMs in Odisha, so the slab rates, fixed charges and rebates are identical statewide — only the operating company on the bill differs.' },
+      { q: 'What is Kutir Jyoti on an Odisha electricity bill?',
+        a: 'Kutir Jyoti is the BPL tariff: households consuming up to 30 units a month pay only a flat ₹70 monthly charge, with no separate energy charge. Above 30 units, the normal domestic slab schedule applies.' },
+      { q: 'What is MMFC on a TPCODL bill?',
+        a: 'MMFC is the Monthly Minimum Fixed Charge — ₹20 for the first kW of connected load and ₹20 per additional kW for domestic connections (₹30/kW for commercial). It is payable regardless of consumption.' },
+      { q: 'Did Odisha electricity rates increase in 2026?',
+        a: 'No. The OERC Retail Supply Tariff order for FY 2026-27 (24 March 2026) retained the existing rates for the third consecutive year — domestic slabs have been unchanged since the 10-paise cut of April 2024.' },
+      { q: 'How do I get the 4% rebate on my Odisha electricity bill?',
+        a: 'Pay the bill digitally (app, portal, UPI or other electronic mode). OERC allows a 4% rebate for LT domestic and single-phase General Purpose consumers on digital payment, on top of the 10 paise/unit prompt-payment rebate for paying by the due date.' },
+    ],
+  },
 ];
