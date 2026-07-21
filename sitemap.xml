@@ -1043,6 +1043,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/guides/msedcl-wss-portal/</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/glossary/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/glossary/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/glossary/"/>

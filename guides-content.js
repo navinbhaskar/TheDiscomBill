@@ -8361,4 +8361,116 @@ export const GUIDES = [
         a: 'Pay the bill digitally (app, portal, UPI or other electronic mode). OERC allows a 4% rebate for LT domestic and single-phase General Purpose consumers on digital payment, on top of the 10 paise/unit prompt-payment rebate for paying by the due date.' },
     ],
   },
+  {
+    slug: 'msedcl-wss-portal',
+    published: "2026-07-22",
+    states: ['Maharashtra'],
+    category: 'basics',
+    title: 'MSEDCL WSS Portal: View & Pay Your Bill on Web Self Service',
+    metaTitle: 'MSEDCL WSS Portal (wss.mahadiscom.in) — View, Pay & Download Your Bill',
+    description: 'What the MSEDCL Web Self Service (WSS) portal at wss.mahadiscom.in does: pay your Mahavitaran bill without login, register to manage multiple connections, download bills and payment history, and log service requests like name change, load change and new connections.',
+    minutes: 6,
+    howtoSteps: [
+      { name: 'Open the WSS portal', text: 'Go to wss.mahadiscom.in — the official MSEDCL (Mahavitaran) Web Self Service portal.' },
+      { name: 'Enter your consumer number', text: 'Use the "Pay Bill" / "View Current Bill" option and enter the 12-digit consumer number printed at the top of your electricity bill. No login is needed for a one-time payment.' },
+      { name: 'Check the bill details', text: 'Verify the billed units, billing period, due date and amount before paying so you catch any wrong reading or arrears.' },
+      { name: 'Pay online', text: 'Pay by UPI, net banking, debit/credit card or wallet. A quick-pay receipt with the transaction ID is generated on success.' },
+      { name: 'Save the receipt', text: 'Download or note the payment reference; settlement to the bill can take a few hours, so keep the receipt until the bill shows as paid.' },
+    ],
+    intro: `<strong>WSS</strong> stands for <strong>Web Self Service</strong> — the self-service portal your DISCOM
+      runs so you can view, pay and download your electricity bill and raise service requests without visiting an
+      office. The best-known one is <strong>MSEDCL's (Mahavitaran) portal at
+      <a href="https://wss.mahadiscom.in" target="_blank" rel="noopener nofollow">wss.mahadiscom.in</a></strong>,
+      but Kerala's KSEB, West Bengal's WBSEDCL and several other DISCOMs run the same kind of WSS. This guide walks
+      through what it does, how to pay with or without registering, and the service requests you can file on it.`,
+    sections: `
+      <section class="seo-section">
+        <h2>What is the WSS (Web Self Service) portal?</h2>
+        <p>Web Self Service is a DISCOM's consumer self-service website. Instead of standing in a queue at the
+        section office, you use your <strong>consumer number</strong> to view your current bill, pay it, download
+        past bills and receipts, and log requests such as a name change or load change. On MSEDCL it lives at
+        <strong>wss.mahadiscom.in</strong>; the same "WSS" branding is used by KSEB Kerala (wss.kseb.in) and
+        others, so the steps below apply broadly even though screens differ.</p>
+        <p>You do <em>not</em> need an account to pay a single bill — registration only helps if you want to
+        manage several connections or keep your payment history in one place.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Pay your bill without logging in (quick pay)</h2>
+        <p>This is what most people want, and it's the fastest route:</p>
+        <ol>
+          <li>Open <strong>wss.mahadiscom.in</strong> and choose <strong>"Pay Bill"</strong> or
+          <strong>"View Current Bill"</strong>.</li>
+          <li>Enter your <strong>12-digit consumer number</strong> (top-left of your bill) and, if asked, the
+          billing unit or a mobile OTP.</li>
+          <li>Check the <strong>units, billing period, due date and amount</strong>. If the reading looks wrong,
+          don't pay yet — see <a href="/guides/how-to-read-msedcl-bill/">how to read your MSEDCL bill</a> first.</li>
+          <li>Pay by <strong>UPI, net banking, card or wallet</strong> and save the receipt with its transaction
+          ID.</li>
+        </ol>
+        <p>Settlement can take a few hours to reflect on the bill, so keep the receipt until the status shows
+        <strong>paid</strong>. Paying by the due date usually earns a small prompt-payment rebate on the bill.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Registering an account — and when it's worth it</h2>
+        <p>Registration removes repeat data entry and lets you attach <strong>multiple consumer numbers</strong>
+        (home, shop, a parent's connection) under one login. To register on the MSEDCL WSS:</p>
+        <ol>
+          <li>Click <strong>"New User / Register"</strong> and enter a consumer number plus your registered
+          mobile number and email.</li>
+          <li>Verify with the <strong>OTP</strong> sent to that mobile/email and set a password.</li>
+          <li>Log in and <strong>add more consumer numbers</strong> to the same account if you manage several.</li>
+        </ol>
+        <p>If you only ever pay one bill, skip registration and use quick pay. Register if you want bill history,
+        auto-reminders, or to handle several meters.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Download bills and payment history</h2>
+        <p>Logged in, open <strong>"View / Download Bill"</strong> to save a PDF of the current or past bills —
+        useful for HRA claims, loan files or a rent agreement. <strong>"Payment History"</strong> lists every
+        payment against a consumer number with dates and transaction IDs, which is the quickest way to prove a
+        payment the bill hasn't yet credited. Unregistered users can still download the <em>current</em> bill from
+        the View Bill screen.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Service requests you can file on WSS</h2>
+        <p>Beyond paying, the WSS portal accepts most routine service requests, so you rarely need to visit an
+        office:</p>
+        <ul>
+          <li><strong>New connection</strong> — apply with premises and load details and upload documents. See our
+          <a href="/guides/msedcl-new-connection-online/">MSEDCL new-connection guide</a> for the full flow.</li>
+          <li><strong>Name change / transfer</strong> and <strong>billing-address correction</strong>.</li>
+          <li><strong>Load extension or reduction</strong> — changing your
+          <a href="/glossary/#sanctioned-load">sanctioned load</a> (which sets your
+          <a href="/glossary/#fixed-charge">fixed charge</a>).</li>
+          <li><strong>Disconnection and reconnection</strong> requests.</li>
+        </ul>
+        <p>Each request generates a reference number — note it to track status on the same portal.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Check your bill is correct before you pay</h2>
+        <p>The portal shows what MSEDCL billed — it can't tell you whether that figure is right. Before paying a
+        bill that looks high, run your units through the
+        <a href="/#calculator">bill calculator</a> on MSEDCL's real slabs, fixed charges,
+        <a href="/glossary/#fppa">FPPA</a> and electricity duty, and compare. If you're on a prepaid smart meter,
+        the <a href="/recharge-calculator/">recharge calculator</a> shows how long a top-up will last. For the tariff
+        itself, see the <a href="/tariffs/maharashtra/msedcl/">MSEDCL tariff page</a>.</p>
+      </section>`,
+    faqs: [
+      { q: 'What is the WSS portal in electricity?', a: 'WSS stands for Web Self Service — a DISCOM\'s online self-service portal where you view and pay your electricity bill, download bills and receipts, and file service requests like name change, load change or a new connection. MSEDCL\'s WSS is at wss.mahadiscom.in; KSEB, WBSEDCL and others run similar portals.' },
+      { q: 'What is the website for the MSEDCL WSS portal?', a: 'The official MSEDCL (Mahavitaran) Web Self Service portal is wss.mahadiscom.in. Use only the official site to pay bills — check the address bar before entering any details.' },
+      { q: 'Can I pay my MSEDCL bill without registering on WSS?', a: 'Yes. Use the "Pay Bill" or "View Current Bill" option, enter your 12-digit consumer number, verify the amount and pay by UPI, net banking, card or wallet. Registration is only needed if you want to manage multiple connections or keep your full payment history.' },
+      { q: 'Where do I find my consumer number for the WSS portal?', a: 'It is the 12-digit number printed near the top of your MSEDCL electricity bill, usually labelled "Consumer No." Enter it exactly as printed, without spaces.' },
+      { q: 'I paid on WSS but the bill still shows unpaid — what should I do?', a: 'Payment settlement can take a few hours to reflect. Keep the receipt and transaction ID; check "Payment History" on the portal, which records the payment even before the bill updates. If it isn\'t reflected within 2–3 working days, raise a complaint with that transaction ID.' },
+    ],
+    toolCta: {
+      href: '/#calculator',
+      title: { en: 'Is your MSEDCL bill correct? Check before you pay', hi: 'क्या आपका MSEDCL बिल सही है? भुगतान से पहले जाँचें' },
+      sub: { en: 'Run your units through MSEDCL\'s real slabs, fixed charges, FPPA and duty and compare with the WSS amount.', hi: 'अपनी यूनिट MSEDCL के असली स्लैब, फिक्स्ड चार्ज, FPPA व शुल्क पर चलाएँ और WSS राशि से तुलना करें।' },
+    },
+  },
 ];
