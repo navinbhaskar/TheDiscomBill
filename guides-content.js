@@ -8380,7 +8380,7 @@ export const GUIDES = [
     intro: `<strong>WSS</strong> stands for <strong>Web Self Service</strong> — the self-service portal your DISCOM
       runs so you can view, pay and download your electricity bill and raise service requests without visiting an
       office. The best-known one is <strong>MSEDCL's (Mahavitaran) portal at
-      <a href="https://wss.mahadiscom.in" target="_blank" rel="noopener nofollow">wss.mahadiscom.in</a></strong>,
+      <a href="https://wss.mahadiscom.in/wss/wss" target="_blank" rel="noopener nofollow">wss.mahadiscom.in</a></strong>,
       but Kerala's KSEB, West Bengal's WBSEDCL and several other DISCOMs run the same kind of WSS. This guide walks
       through what it does, how to pay with or without registering, and the service requests you can file on it.`,
     sections: `
