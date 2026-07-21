@@ -2474,6 +2474,9 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .sub-card-body p { margin: 0 0 8px; }
 .sub-card-body p:last-child { margin-bottom: 0; }
 .sub-links { font-size: 13.5px; font-weight: 500; }
+.ss-check { list-style: none; margin: 0 0 10px; padding: 0; }
+.ss-check li { position: relative; padding-left: 24px; margin-bottom: 6px; font-size: 14px; line-height: 1.5; color: var(--text-secondary); }
+.ss-check li::before { content: '✓'; position: absolute; left: 0; top: 0; color: #16a34a; font-weight: 700; }
 
 /* Summary column */
 .est-summary { position: sticky; top: 92px; display: flex; flex-direction: column; gap: 16px; }

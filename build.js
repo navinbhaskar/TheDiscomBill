@@ -15,7 +15,7 @@ const assets = [
   // Route pages (each is its own folder with an index.html) — must be copied or
   // the Quick Links destinations 404 in production. tariffs/ also contains the
   // generated per-state and per-DISCOM landing pages (copied recursively).
-  'compare', 'electricity-cost-calculator', 'solar-calculator', 'tariffs', 'guides', 'glossary', 'methodology', 'services', 'bill-check', 'bill-review', 'expert', 'admin', 'login', 'my-bills', 'new-connection', 'complaint', 'sanctioned-load-optimizer', 'subsidy-checker',
+  'compare', 'electricity-cost-calculator', 'solar-calculator', 'tariffs', 'guides', 'glossary', 'methodology', 'services', 'bill-check', 'bill-review', 'expert', 'admin', 'login', 'my-bills', 'new-connection', 'complaint', 'sanctioned-load-optimizer', 'solar-subsidy-checker',
   // Hindi pre-rendered variants of tariffs/guides/glossary (generated into hi/ by generate-seo.js)
   'hi',
   'index.html', 'editor.html', '404.html',

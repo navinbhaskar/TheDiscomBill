@@ -24,7 +24,7 @@ export default {
     'ql.solar': 'மேற்கூரை சோலார் சேமிப்பு',
     'ql.ev': 'EV சார்ஜிங் செலவு',
     'ql.loadOptimizer': 'அனுமதிக்கப்பட்ட சுமை மேம்படுத்தி',
-    'ql.subsidyChecker': 'மானிய சரிபார்ப்பு',
+    'nav.solarSubsidy': 'சோலார் மானிய சரிபார்ப்பு',
     'ql.tariffsByState': 'மாநிலம் & டிஸ்காம் வாரியான கட்டணங்கள்',
     'ql.discomServices': 'டிஸ்காம் சேவைகள்',
     'ql.smartMeter': 'ஸ்மார்ட் மீட்டர் ரீசார்ஜ்',

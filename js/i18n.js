@@ -30,7 +30,7 @@ export const STRINGS = {
     'ql.solar': 'Rooftop Solar Savings',
     'ql.ev': 'EV Charging Cost',
     'ql.loadOptimizer': 'Sanctioned Load Optimizer',
-    'ql.subsidyChecker': 'Subsidy Checker',
+    'nav.solarSubsidy': 'Solar Subsidy Checker',
     'ql.tariffsByState': 'Tariffs by State & DISCOM',
     'ql.discomServices': 'DISCOM Services',
     'ql.smartMeter': 'Smart Meter Recharge',

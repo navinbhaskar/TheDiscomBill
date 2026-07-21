@@ -24,7 +24,7 @@ export default {
     'ql.solar': 'रूफटॉप सोलर बचत',
     'ql.ev': 'EV चार्जिंग लागत',
     'ql.loadOptimizer': 'स्वीकृत भार ऑप्टिमाइज़र',
-    'ql.subsidyChecker': 'सब्सिडी चेकर',
+    'nav.solarSubsidy': 'सोलर सब्सिडी चेकर',
     'ql.tariffsByState': 'राज्य व डिस्कॉम अनुसार टैरिफ',
     'ql.discomServices': 'डिस्कॉम सेवाएँ',
     'ql.smartMeter': 'स्मार्ट मीटर रिचार्ज',
