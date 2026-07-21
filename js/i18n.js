@@ -29,6 +29,7 @@ export const STRINGS = {
     'ql.usage': 'Electricity Cost Calculator',
     'ql.solar': 'Rooftop Solar Savings',
     'ql.ev': 'EV Charging Cost',
+    'ql.loadOptimizer': 'Sanctioned Load Optimizer',
     'ql.tariffsByState': 'Tariffs by State & DISCOM',
     'ql.discomServices': 'DISCOM Services',
     'ql.smartMeter': 'Smart Meter Recharge',

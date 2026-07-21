@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <!-- Set the colour theme before first paint (no flash): stored choice, else OS preference. -->
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+  <title>Sanctioned Load Optimizer — Stop Overpaying Fixed Charges (2026)</title>
+  <meta name="description" content="Check if your sanctioned load is higher than you need. Enter your load and highest recorded demand — see the right load for your DISCOM, your new fixed charge and the yearly saving, from real tariff rates.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-600-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <link rel="canonical" href="https://thediscombill.com/sanctioned-load-optimizer/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="Sanctioned Load Optimizer — Stop Overpaying Fixed Charges (2026)">
+  <meta property="og:description" content="Most households never revisit the sanctioned load set at connection time. See the right load for your usage and the fixed charges you could stop paying — per DISCOM.">
+  <meta property="og:url" content="https://thediscombill.com/sanctioned-load-optimizer/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:locale" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sanctioned Load Optimizer — Stop Overpaying Fixed Charges (2026)">
+  <meta name="twitter:description" content="See the sanctioned load you actually need and the fixed charges you could stop paying — per DISCOM, from real tariff rates.">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="stylesheet" href="../css/styles.min.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Sanctioned Load Optimizer","url":"https://thediscombill.com/sanctioned-load-optimizer/","description":"Check whether your sanctioned load is higher than you need — see the right load for your recorded demand, the fixed charge at each load and the yearly saving, computed from your DISCOM's real tariff.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Sanctioned Load Optimizer","item":"https://thediscombill.com/sanctioned-load-optimizer/"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is sanctioned load and why does it matter?","acceptedAnswer":{"@type":"Answer","text":"Sanctioned load is the maximum demand (in kW) your connection is approved for. Your monthly fixed charge is billed on it whether you use it or not — so a load set higher than you need means paying for capacity you never draw."}},{"@type":"Question","name":"How do I know if my sanctioned load is too high?","acceptedAnswer":{"@type":"Answer","text":"Compare it with the highest MD (maximum demand) printed on your last 12 bills. If your sanctioned load is well above that peak plus about 20% headroom, you are paying fixed charges on capacity you don't use."}},{"@type":"Question","name":"Can reducing sanctioned load backfire?","acceptedAnswer":{"@type":"Answer","text":"Yes — if your recorded demand later exceeds the reduced load, many DISCOMs bill an excess-demand penalty or enhance the load on their own. The optimizer keeps headroom over your 12-month peak and flags loads where the modelled penalty already outweighs the saving."}},{"@type":"Question","name":"How do I actually reduce my sanctioned load?","acceptedAnswer":{"@type":"Answer","text":"Apply to your DISCOM (online portal or section office) for a load reduction. Most DISCOMs accept one revision per year; some charge a small processing fee. The change reflects in the fixed-charge line of your next bill."}}]}</script>
+</head>
+<body>
+
+<!-- ── Header ───────────────────────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline" data-i18n="tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <a href="/compare/" class="nav-promoted" data-i18n="nav.compare">Compare Rates</a>
+      <a href="/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <div class="nav-dropdown nav-solar-drop" id="solarDropdown">
+        <button type="button" class="nav-dropdown-trigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.solar">Solar</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="solarMenu" role="menu">
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.solarTools">Solar Tools</span>
+          <a href="/solar-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><span data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</span></a>
+          <a href="/solar-panel-size-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg><span data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</span></a>
+          <a href="/solar-battery-backup-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/><path d="M11 9l-2 3h3l-2 3"/></svg><span data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</span></a>
+        </div>
+      </div>
+      <div class="nav-dropdown" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/#calculator" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-i18n="nav.compare">Compare Rates</span></a>
+            <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+            <a href="/#about" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span data-i18n="nav.about">About</span></a>
+          </div>
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.tools">Tools</span>
+          <a href="/electricity-cost-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span data-i18n="ql.usage">Electricity Cost Calculator</span></a>
+          <a href="/ev-charging-calculator/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="13" height="10" rx="2"/><path d="M15 10h3l3 3v4h-6"/><path d="M9.5 9.5 7.5 12h3l-2 2.5"/></svg><span data-i18n="ql.ev">EV Charging Cost</span></a>
+          <a href="/sanctioned-load-optimizer/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21a9 9 0 1 1 9-9"/><path d="M12 12l4.5-4.5"/><path d="M17 21l2-2 2 2"/><path d="M19 14v5"/></svg><span data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</span></a>
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.services">Services</span>
+          <a href="/services/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg><span data-i18n="ql.discomServices">DISCOM Services</span></a>
+          <a href="/smart-meter-recharge/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="16" height="10" rx="2"/><line x1="22" y1="11" x2="22" y2="13"/><path d="M11 9l-2 3h3l-2 3"/></svg><span data-i18n="ql.smartMeter">Smart Meter Recharge</span></a>
+          <div class="nav-subgroup">
+          <button type="button" class="nav-dropdown-item nav-subgroup-trigger" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4"/><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg><span data-i18n="ql.billReviewGroup">Get Your Bill Reviewed</span><svg class="nav-subgroup-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+          <div class="nav-submenu" role="menu">
+            <a href="/#calculator" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span data-i18n="ql.ocrCheck">Instant Self-Check (OCR)</span></a>
+            <a href="/bill-review/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg><span data-i18n="ql.billReview">From an Expert</span></a>
+          </div>
+          </div>
+          <span class="nav-dropdown-label" role="presentation" data-i18n="ql.learn">Learn</span>
+          <a href="/glossary/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M12 7h5M12 11h5M7 7h.01M7 11h.01"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span data-i18n="ql.glossary">Bill Glossary</span></a>
+          <a href="/methodology/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 11l2 2 4-4"/></svg><span data-i18n="ql.methodology">Methodology &amp; Accuracy</span></a>
+        </div>
+      </div>
+      <a href="/#about" data-i18n="nav.about">About</a>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<div class="page-body" role="main">
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol>
+      <li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li>
+      <li class="crumb-sep" aria-hidden="true">›</li>
+      <li class="crumb"><span aria-current="page">Sanctioned Load Optimizer</span></li>
+    </ol></nav>
+
+    <h1>Sanctioned Load Optimizer</h1>
+    <p class="seo-lead">Your <strong>fixed charge</strong> is billed on your sanctioned load every single month —
+    used or not. Most households still carry the load set at connection time (or bumped for an AC long gone),
+    and quietly overpay for years. Enter your load and your highest recorded demand — we run your DISCOM's
+    <strong>real fixed-charge schedule</strong> and show the load you actually need, what it saves per year,
+    and where cutting too far starts costing you penalties.</p>
+
+    <div class="svc-controls">
+      <div class="svc-control">
+        <label for="slState">State / UT</label>
+        <select id="slState"></select>
+      </div>
+      <div class="svc-control">
+        <label for="slDiscom">Your DISCOM</label>
+        <select id="slDiscom"></select>
+      </div>
+      <div class="svc-control">
+        <label for="slLoad">Sanctioned load on your bill (kW)</label>
+        <input type="number" id="slLoad" value="5" min="0.5" max="50" step="0.5" inputmode="decimal">
+      </div>
+      <div class="svc-control">
+        <label for="slMd">Highest MD in last 12 months (kW)</label>
+        <input type="number" id="slMd" value="2.2" min="0.1" max="50" step="0.1" inputmode="decimal">
+      </div>
+      <div class="svc-control">
+        <label for="slUnits">Monthly usage (units)</label>
+        <input type="number" id="slUnits" value="250" min="1" max="5000" step="10" inputmode="numeric">
+      </div>
+    </div>
+
+    <div id="slResult"></div>
+
+    <section class="seo-section">
+      <h2>Where do I find my MD (maximum demand)?</h2>
+      <p>Look for <strong>"MD"</strong>, <strong>"Maximum Demand"</strong> or <strong>"Recorded Demand"</strong>
+      on your bill — most DISCOMs print it near the meter readings, in kW or kVA. Smart meters record it
+      automatically. Check your last 12 bills and take the <em>highest</em> value (your summer AC months will
+      set it). No MD on your bills? Estimate the biggest load you switch on at once: a 1.5&nbsp;ton inverter AC
+      draws ≈&nbsp;1.5&nbsp;kW, a geyser ≈&nbsp;2&nbsp;kW, and lights/fans/fridge together ≈&nbsp;0.5&nbsp;kW.</p>
+    </section>
+
+    <section class="seo-section">
+      <h2>How this optimizer works</h2>
+      <p>For every candidate load we price your bill with the same engine as our
+      <a href="/#calculator">bill calculator</a> — your DISCOM's <a href="/glossary/#fixed-charge">fixed
+      charge</a> schedule (per-kW, tiered or flat), slab rates and duty — with your recorded demand held at
+      your real MD. That's what makes the "too low" zone visible: below your MD, many tariffs bill an
+      <a href="/glossary/#excess-demand">excess-demand penalty</a> or re-base your load upward, which can wipe
+      out the saving. The sweet spot keeps sensible headroom above your MD, and nothing more.</p>
+    </section>
+
+    <section class="seo-section">
+      <h2>Reduce your load: the paperwork</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/guides/reduce-fixed-charges-sanctioned-load/"><strong>How to apply for a load reduction</strong><span>The application, documents, fees and what changes on your bill</span></a>
+        <a class="seo-link-card" href="/guides/uppcl-sanctioned-load-increased/"><strong>DISCOM raised your load on its own?</strong><span>Why smart meters trigger auto-enhancement and how to contest it</span></a>
+        <a class="seo-link-card" href="/guides/why-did-my-electricity-bill-increase/"><strong>Why did my bill increase?</strong><span>The usual suspects behind a sudden jump — including load changes</span></a>
+      </div>
+    </section>
+
+    <p class="seo-disclaimer">Savings are computed from your DISCOM's published domestic tariff and assume your
+    usage pattern holds. Load-reduction rules differ by DISCOM — most accept applications once per year, some
+    charge a small processing fee, and new appliances (an extra AC, an EV charger) can push your MD back up.
+    Verify against your DISCOM's tariff order before applying.</p>
+  </section>
+</div>
+
+<!-- ── Footer ────────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span>
+    &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a></p>
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:thediscombill@gmail.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- main.js wires the shared header; sanctioned-load.js runs the tool. -->
+<script type="module" src="../js/main.js"></script>
+<script type="module" src="../js/sanctioned-load.js"></script>
+
+</body>
+</html>

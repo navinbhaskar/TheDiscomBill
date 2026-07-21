@@ -1,1430 +1,1434 @@
 {
   "/": {
-    "hash": "e75fdd3012732653",
+    "hash": "c898d8177f50b187",
     "lastmod": "2026-07-21"
   },
   "/bill-review/": {
-    "hash": "3d5ddab41835608d",
+    "hash": "671e9cd4b187c95b",
     "lastmod": "2026-07-21"
   },
   "/bill-review/sample-report/": {
-    "hash": "755c62f31b5a4f92",
+    "hash": "55c17acc198c6818",
     "lastmod": "2026-07-21"
   },
   "/compare/": {
-    "hash": "e37a2c0f347c6e24",
+    "hash": "8ce0f930bfe5086b",
     "lastmod": "2026-07-21"
   },
   "/electricity-cost-calculator/": {
-    "hash": "eca7e87130513b7a",
+    "hash": "fb938de6600b7f46",
     "lastmod": "2026-07-21"
   },
   "/ev-charging-calculator/": {
-    "hash": "72c639c513ac1012",
+    "hash": "e6913cb5c72d41f1",
     "lastmod": "2026-07-21"
   },
   "/glossary/": {
-    "hash": "5b74d80b3d8050a4",
+    "hash": "58edc1958a8a7b4c",
     "lastmod": "2026-07-21"
   },
   "/guides/": {
-    "hash": "63922eb3ae0c74de",
+    "hash": "0078f294741df6f9",
     "lastmod": "2026-07-21"
   },
   "/guides/ac-1-5-ton-electricity-bill/": {
-    "hash": "adfaff94dffeff5a",
+    "hash": "7715528579fc12b3",
     "lastmod": "2026-07-21"
   },
   "/guides/bescom-new-connection-online/": {
-    "hash": "a7b32670e4b6d1b4",
+    "hash": "1a268cee045caae2",
     "lastmod": "2026-07-21"
   },
   "/guides/bses-delhi-new-connection/": {
-    "hash": "e7c7c4d35c8c47d0",
+    "hash": "e7132e7308355194",
     "lastmod": "2026-07-21"
   },
   "/guides/electricity-duty-explained/": {
-    "hash": "e1a35dd3deed2a39",
+    "hash": "0a5eba21bc713330",
     "lastmod": "2026-07-21"
   },
   "/guides/ev-home-vs-public-charging-cost/": {
-    "hash": "8469f47c0b24797f",
+    "hash": "f5b2ff637bce7587",
     "lastmod": "2026-07-21"
   },
   "/guides/haryana-new-connection-dhbvn-uhbvn/": {
-    "hash": "87f85d11a290be91",
+    "hash": "86c3c36c9207561e",
     "lastmod": "2026-07-21"
   },
   "/guides/how-fppa-fuel-surcharge-is-calculated/": {
-    "hash": "4a0d8de2b8ce61a7",
+    "hash": "56ab79327d0eb903",
     "lastmod": "2026-07-21"
   },
   "/guides/how-to-read-bescom-bill/": {
-    "hash": "9075c6a2d1f67102",
+    "hash": "b785e847cf1cdae1",
     "lastmod": "2026-07-21"
   },
   "/guides/how-to-read-bses-delhi-bill/": {
-    "hash": "c263a13345e26f46",
+    "hash": "c40c677843e73791",
     "lastmod": "2026-07-21"
   },
   "/guides/how-to-read-msedcl-bill/": {
-    "hash": "4134271dca3b53af",
+    "hash": "04449f5c3e226c2f",
     "lastmod": "2026-07-21"
   },
   "/guides/how-to-read-tneb-tangedco-bill/": {
-    "hash": "51a50aa69d6688b8",
+    "hash": "60eada6d367e12f1",
     "lastmod": "2026-07-21"
   },
   "/guides/how-to-read-tpcodl-odisha-bill/": {
-    "hash": "d3891b3627170e71",
+    "hash": "c8cc354411b89100",
     "lastmod": "2026-07-21"
   },
   "/guides/how-to-read-uppcl-bill/": {
-    "hash": "e80ec07fa82cfa43",
+    "hash": "984d4f6db6268dfd",
     "lastmod": "2026-07-21"
   },
   "/guides/kseb-new-connection-online/": {
-    "hash": "79f26af96fd854b4",
+    "hash": "5334ba275b1d4ac7",
     "lastmod": "2026-07-21"
   },
   "/guides/msedcl-fppa-charges-explained/": {
-    "hash": "05e57849f5d8297c",
+    "hash": "60803b2748366547",
     "lastmod": "2026-07-21"
   },
   "/guides/msedcl-new-connection-online/": {
-    "hash": "717556fe2dfb69bb",
+    "hash": "e42c49d638692adb",
     "lastmod": "2026-07-21"
   },
   "/guides/pm-surya-ghar-solar-subsidy/": {
-    "hash": "d17b316c58564b41",
+    "hash": "a5d91efa40974a15",
     "lastmod": "2026-07-21"
   },
   "/guides/power-factor-kvah-billing-explained/": {
-    "hash": "59fb2e975c1fef5f",
+    "hash": "9b3cc26649df7bfa",
     "lastmod": "2026-07-21"
   },
   "/guides/prepaid-vs-postpaid-smart-meter/": {
-    "hash": "e0692be8807b94ae",
+    "hash": "14c04bb0ceae78c7",
     "lastmod": "2026-07-21"
   },
   "/guides/pspcl-new-connection-online/": {
-    "hash": "f68fc09c32f8af9e",
+    "hash": "0d07c812fe63da76",
     "lastmod": "2026-07-21"
   },
   "/guides/reduce-fixed-charges-sanctioned-load/": {
-    "hash": "4cd7d41369c918b5",
+    "hash": "47c875ff18853bd5",
     "lastmod": "2026-07-21"
   },
   "/guides/smart-meter-balance-check/": {
-    "hash": "e12dd5ec86dae959",
+    "hash": "1a97cc68b7dd67d9",
     "lastmod": "2026-07-21"
   },
   "/guides/smart-meter-prepaid-disconnection/": {
-    "hash": "ea9a12e73291cdb7",
+    "hash": "228eed05e7a543d3",
     "lastmod": "2026-07-21"
   },
   "/guides/smart-meter-recharge-failed/": {
-    "hash": "fc80849a1690bf9c",
+    "hash": "1f019424d61b3a63",
     "lastmod": "2026-07-21"
   },
   "/guides/smart-meter-running-fast/": {
-    "hash": "a44dea487ee36524",
+    "hash": "8ec025d1e9dcb336",
     "lastmod": "2026-07-21"
   },
   "/guides/solar-net-metering-savings/": {
-    "hash": "47a93803b4b9d363",
+    "hash": "3ce26e3b9d6dcbcd",
     "lastmod": "2026-07-21"
   },
   "/guides/tamil-nadu-electricity-tariff-july-2026/": {
-    "hash": "dfdb646dca1dbb89",
+    "hash": "713f7823d47ee0d2",
     "lastmod": "2026-07-21"
   },
   "/guides/tata-power-ddl-new-connection/": {
-    "hash": "e784f0700d0a0852",
+    "hash": "3b84cbf3fb6054b3",
     "lastmod": "2026-07-21"
   },
   "/guides/tneb-tangedco-new-connection/": {
-    "hash": "82081b1c1fc63610",
+    "hash": "917972c2eebc313d",
     "lastmod": "2026-07-21"
   },
   "/guides/tod-billing-explained/": {
-    "hash": "1dcf2a5a49b44876",
+    "hash": "de257e0467151705",
     "lastmod": "2026-07-21"
   },
   "/guides/uppcl-new-connection-jhatpat/": {
-    "hash": "a01e8efe68ff7e24",
+    "hash": "d8c3f44b5a8adc67",
     "lastmod": "2026-07-21"
   },
   "/guides/uppcl-sanctioned-load-increased/": {
-    "hash": "fa38011b15b3078c",
+    "hash": "75de1aa0f5cd161c",
     "lastmod": "2026-07-21"
   },
   "/guides/uppcl-smart-meter-readings-explained/": {
-    "hash": "99005b7a8d142bd4",
+    "hash": "55c0c7813359a67c",
     "lastmod": "2026-07-21"
   },
   "/guides/wbsedcl-new-connection-online/": {
-    "hash": "1e2ed20e472363b4",
+    "hash": "4ea9a85ae3d09516",
     "lastmod": "2026-07-21"
   },
   "/guides/what-is-a-unit-of-electricity/": {
-    "hash": "706660c7f69a9b22",
+    "hash": "f48c752a09b2ea36",
     "lastmod": "2026-07-21"
   },
   "/guides/why-did-my-electricity-bill-increase/": {
-    "hash": "ca5c89f8ba194b97",
+    "hash": "f81321be7bfc144d",
     "lastmod": "2026-07-21"
   },
   "/hi/glossary/": {
-    "hash": "eb9ac987cb308666",
+    "hash": "c0ecac02db04776d",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/": {
-    "hash": "ff4fb8e5347f606e",
+    "hash": "f1afd9f89b8560be",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/ac-1-5-ton-electricity-bill/": {
-    "hash": "91d52c28d370100a",
+    "hash": "afaff1697eb92d36",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/bses-delhi-new-connection/": {
-    "hash": "10ecaedc601fe018",
+    "hash": "56fd04b3c67c5a1c",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/electricity-duty-explained/": {
-    "hash": "27fb99fe2dc6cf9b",
+    "hash": "ee42928d54dda163",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/haryana-new-connection-dhbvn-uhbvn/": {
-    "hash": "451a90ea3a9b4854",
+    "hash": "b5e2de0495914b2d",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/how-fppa-fuel-surcharge-is-calculated/": {
-    "hash": "f5177206725b434a",
+    "hash": "c2169ac901afbbc0",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/how-to-read-bescom-bill/": {
-    "hash": "1ca76e32404e66c3",
+    "hash": "12be7c8d1cc3aff4",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/how-to-read-bses-delhi-bill/": {
-    "hash": "7bc917ecf1a13c63",
+    "hash": "c24b35b1bb1f8afb",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/how-to-read-msedcl-bill/": {
-    "hash": "2260efef8b56b995",
+    "hash": "2f1d6df71d2de97c",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/how-to-read-tneb-tangedco-bill/": {
-    "hash": "c36f6e2b8fdd4e46",
+    "hash": "6c39389c2d78314c",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/how-to-read-uppcl-bill/": {
-    "hash": "c7cc549ba736458b",
+    "hash": "5e2b0f3881ccedd0",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/msedcl-new-connection-online/": {
-    "hash": "c3b35a2780e63e97",
+    "hash": "a73ebf4d6fd99afa",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/prepaid-vs-postpaid-smart-meter/": {
-    "hash": "cd963aea16725692",
+    "hash": "3964320841b1ec79",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/pspcl-new-connection-online/": {
-    "hash": "3f6de3200f5afd2c",
+    "hash": "7e59795849241374",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/reduce-fixed-charges-sanctioned-load/": {
-    "hash": "5fb07b3ef0a48560",
+    "hash": "ad385f714a98353f",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/smart-meter-balance-check/": {
-    "hash": "ea0720e8e3b3fb57",
+    "hash": "7b03a7f4ff16f89b",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/smart-meter-prepaid-disconnection/": {
-    "hash": "50e77966abb3b03d",
+    "hash": "f3335dca20817f54",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/smart-meter-recharge-failed/": {
-    "hash": "703ca2ba6c08e99e",
+    "hash": "a4d4e5d4ab034917",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/smart-meter-running-fast/": {
-    "hash": "d5beec94a9f062d7",
+    "hash": "41a797504524af15",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/solar-net-metering-savings/": {
-    "hash": "6f48135078dda6ac",
+    "hash": "c429f223a027ad16",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/tata-power-ddl-new-connection/": {
-    "hash": "f87d609d3777a31e",
+    "hash": "c88494d6e778d205",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/tneb-tangedco-new-connection/": {
-    "hash": "8b075e8523d9e067",
+    "hash": "e2f06bcbb776fe00",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/tod-billing-explained/": {
-    "hash": "2fbb5d79af2b379a",
+    "hash": "2091e0466fb45880",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/uppcl-new-connection-jhatpat/": {
-    "hash": "9ccfdaccb97e0dce",
+    "hash": "9458ca3e4b959fc4",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/uppcl-sanctioned-load-increased/": {
-    "hash": "29a45773c60d901b",
+    "hash": "63991f4dba5f776b",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/uppcl-smart-meter-readings-explained/": {
-    "hash": "bd475020bf3e0e1c",
+    "hash": "c3ec771af44e35a0",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/wbsedcl-new-connection-online/": {
-    "hash": "069f30d301b60e73",
+    "hash": "4f1a52b4fb563821",
     "lastmod": "2026-07-21"
   },
   "/hi/guides/why-did-my-electricity-bill-increase/": {
-    "hash": "b30ade6045e5c84e",
+    "hash": "5a6ba24d82429f81",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/": {
-    "hash": "2213105e4160044b",
+    "hash": "89f6882ae63aad04",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/andhra-pradesh/apepdcl/": {
-    "hash": "96ab323b813dfcb6",
+    "hash": "7f9ba4c89ce06639",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/andhra-pradesh/apspdcl/": {
-    "hash": "50909f51d5c75cf3",
+    "hash": "a0b9763db908fbf8",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/arunachal-pradesh/appdcl/": {
-    "hash": "28482edca8dc8fd1",
+    "hash": "7d504e1b3245a0a8",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/assam/apdcl/": {
-    "hash": "d13db69fc1f6bb77",
+    "hash": "55e9cbe2c8362083",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/bihar/nbpdcl/": {
-    "hash": "f317e961b753bad6",
+    "hash": "925b764c528ee9b7",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/bihar/sbpdcl/": {
-    "hash": "f31685d51efddd01",
+    "hash": "6de9340f5d04abec",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/chandigarh/chandigarh_ed/": {
-    "hash": "9e4cfe33aca0b47d",
+    "hash": "f057e8250e539d1f",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/chhattisgarh/cspdcl/": {
-    "hash": "cf09c332f62c7c50",
+    "hash": "f74cf5e8af1e0f25",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/": {
-    "hash": "89df8c1b039c9802",
+    "hash": "ed39f09e932de0c8",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/delhi/brpl/": {
-    "hash": "47773b01c33a3755",
+    "hash": "3f742b33c0e7b847",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/delhi/bypl/": {
-    "hash": "7e4a71844f8682ff",
+    "hash": "569a34398ce45cb4",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/delhi/ndmc_delhi/": {
-    "hash": "42521d142c6cc191",
+    "hash": "495099050a8da60e",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/delhi/tpddl/": {
-    "hash": "10c19e3ab36c9121",
+    "hash": "03ffb11abd990ef8",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/goa/ged/": {
-    "hash": "2369ed5dfe3268c4",
+    "hash": "f253d4dfb4d60c03",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/gujarat/dgvcl/": {
-    "hash": "45a0f21cf5d027e1",
+    "hash": "b31fe6e3083c90f1",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/gujarat/mgvcl/": {
-    "hash": "bf16ec3562e726ff",
+    "hash": "e0ceda3ce9f029f5",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/gujarat/pgvcl/": {
-    "hash": "2cac61db15c7c273",
+    "hash": "750e29d9b0134a2a",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/gujarat/ugvcl/": {
-    "hash": "8d1a5d1720bdf813",
+    "hash": "2387eacc8f0459d0",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/haryana/dhbvn/": {
-    "hash": "5496bda596bd94af",
+    "hash": "f76524bcb1f3b669",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/haryana/uhbvn/": {
-    "hash": "22404065f428539a",
+    "hash": "cdd9cc7c0ab21075",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/himachal-pradesh/hpsebl/": {
-    "hash": "103b664264b86fad",
+    "hash": "cd195cffa8524f2c",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/jammu-and-kashmir/jkpdd_jammu/": {
-    "hash": "1a5f11eb9d5da4ad",
+    "hash": "16a97e65054da307",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/jammu-and-kashmir/jkpdd_kashmir/": {
-    "hash": "4d8e3a4591531a42",
+    "hash": "b654c43f8f08aa1b",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/jharkhand/jbvnl/": {
-    "hash": "57811d79d5f2b25e",
+    "hash": "56b389e8362c1343",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/karnataka/bescom/": {
-    "hash": "6264b015324d141f",
+    "hash": "cdec216fced4778c",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/karnataka/cesc_karnataka/": {
-    "hash": "47ec83f747a6b85a",
+    "hash": "886f50010aa43520",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/karnataka/gescom/": {
-    "hash": "0d768da732f758d2",
+    "hash": "798749f4f42346cd",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/karnataka/hescom/": {
-    "hash": "0d20136203878ed8",
+    "hash": "59a44d35f8ce8ced",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/karnataka/mescom/": {
-    "hash": "f1d8abaedffcc304",
+    "hash": "b58f84d91c2b86fc",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/kerala/kseb/": {
-    "hash": "6df45767031f81aa",
+    "hash": "5af47cc3179eeda4",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/ladakh/lpdcl/": {
-    "hash": "5fb6e81080835172",
+    "hash": "f6fffad31d24d70f",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/madhya-pradesh/mpez/": {
-    "hash": "a70c401d3adf149d",
+    "hash": "2d85f77bdc38fd67",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/madhya-pradesh/mpmkvvcl/": {
-    "hash": "d2c0bc096346bdd8",
+    "hash": "ade6eb8ef25e0753",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/madhya-pradesh/mppkvvcl/": {
-    "hash": "4069c06abcb89d90",
+    "hash": "1287a3368219db04",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/maharashtra/adani_mumbai/": {
-    "hash": "0dc05a4a50110279",
+    "hash": "1bf49d6f6480c2ab",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/maharashtra/best_mumbai/": {
-    "hash": "311010a2371d5977",
+    "hash": "cf5c9ffa346a4014",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/maharashtra/msedcl/": {
-    "hash": "6925c3b3e275fbe8",
+    "hash": "0d3a964a6899687c",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/maharashtra/tata_power_mumbai/": {
-    "hash": "908aefa341ae3bfc",
+    "hash": "f7196154711075d7",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/manipur/mspdcl/": {
-    "hash": "2839424ebcddc31d",
+    "hash": "94fcd28f194fa367",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/meghalaya/mepdcl/": {
-    "hash": "68fcfdd8d4e8aa34",
+    "hash": "c81ca7cfbf9ac2df",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/mizoram/ped_mizoram/": {
-    "hash": "adf2edce0587709e",
+    "hash": "aca8031df5e3e93b",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/nagaland/doe_nagaland/": {
-    "hash": "5df8bdea8535e7f4",
+    "hash": "5bb256d400542b5c",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/odisha/tpcodl/": {
-    "hash": "2d23ad6d4dab2092",
+    "hash": "98b4dcdb95dcba57",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/odisha/tpnodl/": {
-    "hash": "132af2d93932bf72",
+    "hash": "ec302c956b01485c",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/odisha/tpsodl/": {
-    "hash": "5dd619ebaf1495e1",
+    "hash": "1a77c6ea80c83ffd",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/odisha/tpwodl/": {
-    "hash": "15c459acdb8925d2",
+    "hash": "9e582100820640e7",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/puducherry/pdicl/": {
-    "hash": "70259b43a9bf162a",
+    "hash": "747b4b9c3a95f659",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/punjab/pspcl/": {
-    "hash": "e2c97ebea82024a6",
+    "hash": "9970312ce0a90c71",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/rajasthan/avvnl/": {
-    "hash": "42f2cc8d2435fe89",
+    "hash": "1b4d3b9cd071b63c",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/rajasthan/jdvvnl/": {
-    "hash": "859fbab2a46fd4c2",
+    "hash": "b8e5e0ea74c253f0",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/rajasthan/jvvnl/": {
-    "hash": "8080fbc4992de7b2",
+    "hash": "fe26e9a8a41187c3",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/sikkim/energy_sikkim/": {
-    "hash": "c1cc28e56102255a",
+    "hash": "761cb7cdb851ca09",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/tamil-nadu/tangedco/": {
-    "hash": "78fca2bdd8ebfdb1",
+    "hash": "e06354ff9f5b9253",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/telangana/tsnpdcl/": {
-    "hash": "96edf95b6c0b32cf",
+    "hash": "075160722746ccd1",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/telangana/tsspdcl/": {
-    "hash": "0c53e8218aa91a00",
+    "hash": "961389919fdc5197",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/tripura/tsecl/": {
-    "hash": "3eaee380d4ac75be",
+    "hash": "6f4c8093f684482c",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/uttar-pradesh/dvvnl/": {
-    "hash": "34b56d4a1cf07604",
+    "hash": "9de613c8e7e43169",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/uttar-pradesh/kesco/": {
-    "hash": "cab11a9a6712086b",
+    "hash": "6904270b4f15b0f5",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/uttar-pradesh/mvvnl/": {
-    "hash": "e808da425f7ac022",
+    "hash": "5d4347e8d210b29d",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/uttar-pradesh/puvvnl/": {
-    "hash": "42eaf772ad36326a",
+    "hash": "702b8d2606ea161b",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/uttar-pradesh/pvvnl/": {
-    "hash": "b601e17b915c8193",
+    "hash": "e7d1b30f50d03e89",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/uttarakhand/upcl/": {
-    "hash": "a3c46384aa2864fb",
+    "hash": "f3c4054e9b1b4bb1",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/west-bengal/cesc_kolkata/": {
-    "hash": "7589addea0a7d8dd",
+    "hash": "adb55a82af7ccd6e",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/west-bengal/dpl/": {
-    "hash": "7584d4d984404950",
+    "hash": "ce3c77851a43b975",
     "lastmod": "2026-07-21"
   },
   "/hi/smart-meter-recharge/west-bengal/wbsedcl/": {
-    "hash": "5baf553d456938c6",
+    "hash": "1d189fa5a7a02141",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/andhra-pradesh/": {
-    "hash": "e6a45f1715a7310e",
+    "hash": "191c0ac6e6357449",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/andhra-pradesh/apepdcl/": {
-    "hash": "8091f77e598b0605",
+    "hash": "83a565e82c13dcfd",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/andhra-pradesh/apspdcl/": {
-    "hash": "cdce66acfc91c54b",
+    "hash": "b43db9fe115baef5",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/arunachal-pradesh/": {
-    "hash": "69201cbc38e3aa4b",
+    "hash": "ab3a5449756aaedb",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/arunachal-pradesh/appdcl/": {
-    "hash": "7607c1627e76e3f5",
+    "hash": "edf3b7b8aa5369ed",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/assam/": {
-    "hash": "eea4681893f9119e",
+    "hash": "f695e7533e984ed1",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/assam/apdcl/": {
-    "hash": "837bea6740534c25",
+    "hash": "3f17de2dedfa2f12",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/bihar/": {
-    "hash": "684136f5485ddc4b",
+    "hash": "17f8222fc0abb607",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/bihar/nbpdcl/": {
-    "hash": "79d7f56e1cda3856",
+    "hash": "cb9c81d0823291e1",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/bihar/sbpdcl/": {
-    "hash": "abdfe42d5e3bbe2b",
+    "hash": "c49538c52d795926",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/chandigarh/": {
-    "hash": "3a9256dcfba04706",
+    "hash": "525e052f63ab2dd1",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/chandigarh/chandigarh_ed/": {
-    "hash": "d2f149add887a8c1",
+    "hash": "82d82d3cc92a6e0a",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/chhattisgarh/": {
-    "hash": "9b8289c67eda961a",
+    "hash": "2907644ad0209896",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/chhattisgarh/cspdcl/": {
-    "hash": "5514f225aae5d98b",
+    "hash": "9a3a104e009533a7",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/": {
-    "hash": "1a17468e0707e98b",
+    "hash": "637e6465549874e8",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/": {
-    "hash": "0e487d65fe2a4761",
+    "hash": "4da209a45ac8f51a",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/delhi/": {
-    "hash": "75922ee57da0cccc",
+    "hash": "0a5007dc7066dd9f",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/delhi/brpl/": {
-    "hash": "d9c655b44dfb5683",
+    "hash": "156176aaab1f072d",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/delhi/bypl/": {
-    "hash": "8adec33c8ebf4283",
+    "hash": "47e06d1c12a2c527",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/delhi/ndmc_delhi/": {
-    "hash": "c764a5aa81922300",
+    "hash": "2e5217aa4d7d6e1f",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/delhi/tpddl/": {
-    "hash": "f773306a886a5345",
+    "hash": "6f69daf136170c89",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/goa/": {
-    "hash": "995d3e371f49cfbe",
+    "hash": "889b14ac942dbf2e",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/goa/ged/": {
-    "hash": "a0448b853aefee8e",
+    "hash": "7ef75f1a8eb1b360",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/gujarat/": {
-    "hash": "46d8636ebcb9859c",
+    "hash": "47d08a9fea349e92",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/gujarat/dgvcl/": {
-    "hash": "9f6effaf5a1dc10e",
+    "hash": "1b98d53c3796651a",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/gujarat/mgvcl/": {
-    "hash": "60f3b064f4fbd71c",
+    "hash": "a0a9145efd7cffe7",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/gujarat/pgvcl/": {
-    "hash": "7af4211c9fd1e198",
+    "hash": "8feb26530a3e6891",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/gujarat/ugvcl/": {
-    "hash": "b5ab1c800f927bf4",
+    "hash": "43dd3c66065ffad5",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/haryana/": {
-    "hash": "c90841d740350576",
+    "hash": "5ee8a7d9b46df4f4",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/haryana/dhbvn/": {
-    "hash": "d3d1118339176df1",
+    "hash": "1d12bc1e053e0c56",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/haryana/uhbvn/": {
-    "hash": "d064c9bbc0547cec",
+    "hash": "b5f23b434f4a10f9",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/himachal-pradesh/": {
-    "hash": "cdc49ce3133f6daa",
+    "hash": "6d5ea927849dd1bf",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/himachal-pradesh/hpsebl/": {
-    "hash": "6be22f0c691787f4",
+    "hash": "c271e0c7e6ff03cd",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/jammu-and-kashmir/": {
-    "hash": "82bc164251ed6508",
+    "hash": "106e00852233fbf3",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/jammu-and-kashmir/jkpdd_jammu/": {
-    "hash": "0921a566d3572868",
+    "hash": "d5d329a0bb380d9e",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/jammu-and-kashmir/jkpdd_kashmir/": {
-    "hash": "f73c461b5fb8ab10",
+    "hash": "fe7044837040d993",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/jharkhand/": {
-    "hash": "13d3efe1ae846644",
+    "hash": "748ad8473fb983f6",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/jharkhand/jbvnl/": {
-    "hash": "6f2ab2ed57c86d02",
+    "hash": "e3187996379a55ad",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/karnataka/": {
-    "hash": "d5f34cac5855efbf",
+    "hash": "0b8471e2d5a95105",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/karnataka/bescom/": {
-    "hash": "62731efcb7860c82",
+    "hash": "8a416d1695ed9206",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/karnataka/cesc_karnataka/": {
-    "hash": "99a11f257e4ee4a4",
+    "hash": "c76187b130ead997",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/karnataka/gescom/": {
-    "hash": "654419b5a2d64ea3",
+    "hash": "fc500353204f5248",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/karnataka/hescom/": {
-    "hash": "7172b25a64fe0d63",
+    "hash": "b17f03dd5aa4895b",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/karnataka/mescom/": {
-    "hash": "edbd178c905da323",
+    "hash": "07c61876d96dbbd4",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/kerala/": {
-    "hash": "032396d619f45a35",
+    "hash": "8a315fbd30c9c220",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/kerala/kseb/": {
-    "hash": "f5c97193b4c777d3",
+    "hash": "940e7ad0b47a2f03",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/ladakh/": {
-    "hash": "0e39704aaa525b08",
+    "hash": "c879a516a115fbf3",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/ladakh/lpdcl/": {
-    "hash": "ba85c9bc0b08bb62",
+    "hash": "2b39cf1706b9d4df",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/madhya-pradesh/": {
-    "hash": "0850d333e2d4d054",
+    "hash": "74d3088fc95e2ca9",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/madhya-pradesh/mpez/": {
-    "hash": "f56ade1c4614d043",
+    "hash": "20c3e8f09b4ae1bb",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/madhya-pradesh/mpmkvvcl/": {
-    "hash": "cc09c96bcdec49e3",
+    "hash": "35325a3f6e1f1641",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/madhya-pradesh/mppkvvcl/": {
-    "hash": "203396d7396b4ea6",
+    "hash": "147532d439aa4fb0",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/maharashtra/": {
-    "hash": "75fdceb2d634e59c",
+    "hash": "582a92fe37743f0b",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/maharashtra/adani_mumbai/": {
-    "hash": "daa98f66a29d8718",
+    "hash": "7a15f9bcd2629bb3",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/maharashtra/best_mumbai/": {
-    "hash": "5095e31f8048d742",
+    "hash": "72f5917fd5f03a83",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/maharashtra/msedcl/": {
-    "hash": "6aab1487d8d4e592",
+    "hash": "6dfdba1498a71de1",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/maharashtra/tata_power_mumbai/": {
-    "hash": "7cfeb22d4b753b44",
+    "hash": "f4d24b38b6ba49a0",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/manipur/": {
-    "hash": "f9f96ef522baec9c",
+    "hash": "28ebca45d5846b41",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/manipur/mspdcl/": {
-    "hash": "090c7cbd95ead428",
+    "hash": "23d8c9d7f091dadc",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/meghalaya/": {
-    "hash": "053ca76b66e999cd",
+    "hash": "6bb43dc8dfb16904",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/meghalaya/mepdcl/": {
-    "hash": "c05e1df6f5ff54de",
+    "hash": "0e346ba7c9c5de81",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/mizoram/": {
-    "hash": "39988c103d2530be",
+    "hash": "74874f0908f90f42",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/mizoram/ped_mizoram/": {
-    "hash": "72a516dc00860dec",
+    "hash": "5240f9d449c69415",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/nagaland/": {
-    "hash": "35e1921c738a7694",
+    "hash": "afe942fc1cca5362",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/nagaland/doe_nagaland/": {
-    "hash": "f11d4241f152ec6b",
+    "hash": "59841de463de8748",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/odisha/": {
-    "hash": "199eff02b5e738e2",
+    "hash": "cfc1768693168f1c",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/odisha/tpcodl/": {
-    "hash": "a0ddbd3412b0a5dd",
+    "hash": "8dc8727a9da5d856",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/odisha/tpnodl/": {
-    "hash": "e80ba68a50b21f2e",
+    "hash": "d62d56e4b24a127f",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/odisha/tpsodl/": {
-    "hash": "a927dc79ff498a07",
+    "hash": "c5503075744c1cb1",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/odisha/tpwodl/": {
-    "hash": "8aa1d122f864a1b7",
+    "hash": "70c5c73201a360eb",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/puducherry/": {
-    "hash": "fbca72444c14152b",
+    "hash": "b347177a7b9f6e4a",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/puducherry/pdicl/": {
-    "hash": "40aa487b427fe01d",
+    "hash": "e5669d4d2eeadd3f",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/punjab/": {
-    "hash": "e24d647ecd3a715f",
+    "hash": "28b2dae39020f826",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/punjab/pspcl/": {
-    "hash": "6dc5d37aa93c093e",
+    "hash": "cc1d19f31ba0c55b",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/rajasthan/": {
-    "hash": "4f8ed2ac90f7afcb",
+    "hash": "99eb6839a784094b",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/rajasthan/avvnl/": {
-    "hash": "a7a42d42538f5b9f",
+    "hash": "927c1ef924ea4fdf",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/rajasthan/jdvvnl/": {
-    "hash": "090dbc9672d33662",
+    "hash": "aa27ebae7e2f13fb",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/rajasthan/jvvnl/": {
-    "hash": "9740b77c6956435d",
+    "hash": "bb0f5b400b08f1ae",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/sikkim/": {
-    "hash": "e3070be2f38a733f",
+    "hash": "481cbaf729a3b468",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/sikkim/energy_sikkim/": {
-    "hash": "1366bdf1e601f0a2",
+    "hash": "b738e2ff3c865a76",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/states/": {
-    "hash": "c876cdd0c918b791",
+    "hash": "bfdd8a93ccfa6182",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/tamil-nadu/": {
-    "hash": "b6a5c9b486da2953",
+    "hash": "1dcd3f677d992171",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/tamil-nadu/tangedco/": {
-    "hash": "994ac8916a528e6c",
+    "hash": "6fe9342623a3f85f",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/telangana/": {
-    "hash": "44c9026de0629d3d",
+    "hash": "bbea878326339744",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/telangana/tsnpdcl/": {
-    "hash": "8fbca88e21bcfdca",
+    "hash": "c2467cfdcf44a489",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/telangana/tsspdcl/": {
-    "hash": "c109f1ad96580d54",
+    "hash": "83fad191c6122e34",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/tripura/": {
-    "hash": "5420790d6d68407f",
+    "hash": "f5afa0593534a146",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/tripura/tsecl/": {
-    "hash": "865265d56fbc769a",
+    "hash": "a1df424c42e800d0",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/uttar-pradesh/": {
-    "hash": "549ff20e0a488db9",
+    "hash": "b4e3397433a9131f",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/uttar-pradesh/dvvnl/": {
-    "hash": "2f59bb3e06d7141f",
+    "hash": "2670351cefc45bd2",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/uttar-pradesh/kesco/": {
-    "hash": "4704cc8f559e0083",
+    "hash": "faa9210a832f8c99",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/uttar-pradesh/mvvnl/": {
-    "hash": "c70956b5253d32fa",
+    "hash": "9c700b7c904d39ba",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/uttar-pradesh/puvvnl/": {
-    "hash": "a6783a2fd8c1ed73",
+    "hash": "73dec5a5ea825758",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/uttar-pradesh/pvvnl/": {
-    "hash": "9966884eff5d02bd",
+    "hash": "c9f3d1d76aa854c9",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/uttarakhand/": {
-    "hash": "51d06c00feb6d444",
+    "hash": "b0545e5cf597afd8",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/uttarakhand/upcl/": {
-    "hash": "77958635d9646bf2",
+    "hash": "ea1fa48f1c838778",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/west-bengal/": {
-    "hash": "e141af5da172af5e",
+    "hash": "11f4b6e1ae0656a6",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/west-bengal/cesc_kolkata/": {
-    "hash": "b8e5a33bca7347a6",
+    "hash": "11f790983494b455",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/west-bengal/dpl/": {
-    "hash": "41e1b37b4d3357ce",
+    "hash": "7ef611bec464de2a",
     "lastmod": "2026-07-21"
   },
   "/hi/tariffs/west-bengal/wbsedcl/": {
-    "hash": "23ad26ade567dede",
+    "hash": "cdd365403bda7249",
     "lastmod": "2026-07-21"
   },
   "/methodology/": {
-    "hash": "2cbed0340836d8da",
+    "hash": "ac5a1aceba46e70c",
     "lastmod": "2026-07-21"
   },
   "/mr/glossary/": {
-    "hash": "c9aa490d7e4256e0",
+    "hash": "bcfbdcc916449c4e",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/": {
-    "hash": "5732a6c215a41c7d",
+    "hash": "7766996e5dbeff04",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/electricity-duty-explained/": {
-    "hash": "86dfa25a6ee738a5",
+    "hash": "c3b3c664de7f4e04",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/how-fppa-fuel-surcharge-is-calculated/": {
-    "hash": "3460d25846dabffc",
+    "hash": "20b160d60e9e5014",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/how-to-read-bescom-bill/": {
-    "hash": "b43d4a42828d0234",
+    "hash": "cdd675e75153dcfe",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/how-to-read-bses-delhi-bill/": {
-    "hash": "37e89a94554f9ce6",
+    "hash": "c65a2ddf19983d14",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/how-to-read-msedcl-bill/": {
-    "hash": "93ec6557b24fa723",
+    "hash": "c02484ee7c28a574",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/how-to-read-tneb-tangedco-bill/": {
-    "hash": "2ffda1b3d46210c9",
+    "hash": "375ea43e80105a85",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/how-to-read-uppcl-bill/": {
-    "hash": "4420932809fb63e1",
+    "hash": "1de2d1da3b201df2",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/msedcl-fppa-charges-explained/": {
-    "hash": "62a1b4fb15d2324e",
+    "hash": "f0175f71a6eff9cd",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/msedcl-new-connection-online/": {
-    "hash": "56f578ea347c081f",
+    "hash": "a900ed7f6837ce70",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/power-factor-kvah-billing-explained/": {
-    "hash": "a50c14c3a9c23174",
+    "hash": "ad20b4e89818e612",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/prepaid-vs-postpaid-smart-meter/": {
-    "hash": "c653d96c1ad87579",
+    "hash": "b25af2483a0557b0",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/reduce-fixed-charges-sanctioned-load/": {
-    "hash": "0fffc36289e369a3",
+    "hash": "f7bf9b718664f83d",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/smart-meter-balance-check/": {
-    "hash": "20bc1780e8f285a8",
+    "hash": "19c9455643007412",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/smart-meter-prepaid-disconnection/": {
-    "hash": "6d85872e201b248a",
+    "hash": "34d4785ae893987e",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/smart-meter-recharge-failed/": {
-    "hash": "c2dbc10277790327",
+    "hash": "6df7ad49ed16b93a",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/smart-meter-running-fast/": {
-    "hash": "dc62c08db7e5caa6",
+    "hash": "9c7ac6bdf64293be",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/solar-net-metering-savings/": {
-    "hash": "32c5f967aeddc998",
+    "hash": "d9a408a15e711f69",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/tod-billing-explained/": {
-    "hash": "150980c7fa6210ec",
+    "hash": "dc01930ee3ed7b2a",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/uppcl-sanctioned-load-increased/": {
-    "hash": "2f0de89722ad0724",
+    "hash": "d8354e0684a5bafd",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/uppcl-smart-meter-readings-explained/": {
-    "hash": "6b157412cbc82566",
+    "hash": "c0096d9e8745aed0",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/what-is-a-unit-of-electricity/": {
-    "hash": "ba4a86646cfce59e",
+    "hash": "0a71ffc6d42b9105",
     "lastmod": "2026-07-21"
   },
   "/mr/guides/why-did-my-electricity-bill-increase/": {
-    "hash": "dcd130f580c9ab48",
+    "hash": "42c6eb77fd36639f",
     "lastmod": "2026-07-21"
   },
   "/mr/smart-meter-recharge/": {
-    "hash": "be0ecf2ac67341eb",
+    "hash": "612bd5406884ab77",
     "lastmod": "2026-07-21"
   },
   "/mr/smart-meter-recharge/maharashtra/adani_mumbai/": {
-    "hash": "3b57515d1046dbaa",
+    "hash": "46779aa8588212e2",
     "lastmod": "2026-07-21"
   },
   "/mr/smart-meter-recharge/maharashtra/best_mumbai/": {
-    "hash": "4211bae081e006f9",
+    "hash": "62328cd01b7f5eff",
     "lastmod": "2026-07-21"
   },
   "/mr/smart-meter-recharge/maharashtra/msedcl/": {
-    "hash": "cb8ff072af64d011",
+    "hash": "981b172226142528",
     "lastmod": "2026-07-21"
   },
   "/mr/smart-meter-recharge/maharashtra/tata_power_mumbai/": {
-    "hash": "9112a79a32aa4340",
+    "hash": "9392bad1dee9d981",
     "lastmod": "2026-07-21"
   },
   "/mr/tariffs/maharashtra/": {
-    "hash": "772b1f9fee62ee77",
+    "hash": "4560ef0e6e92d27b",
     "lastmod": "2026-07-21"
   },
   "/mr/tariffs/maharashtra/adani_mumbai/": {
-    "hash": "5ec67ff2c88986d3",
+    "hash": "dad7e82ff900d815",
     "lastmod": "2026-07-21"
   },
   "/mr/tariffs/maharashtra/best_mumbai/": {
-    "hash": "bdadd497596a76f2",
+    "hash": "cfca7fd41ce5185c",
     "lastmod": "2026-07-21"
   },
   "/mr/tariffs/maharashtra/msedcl/": {
-    "hash": "5d1d83efbbae7828",
+    "hash": "a5aa91542c981a7e",
     "lastmod": "2026-07-21"
   },
   "/mr/tariffs/maharashtra/tata_power_mumbai/": {
-    "hash": "f1a824ee46c4b3d0",
+    "hash": "a991fb40c0191880",
     "lastmod": "2026-07-21"
   },
   "/mr/tariffs/states/": {
-    "hash": "c4d4479245a31f03",
+    "hash": "de3e04c2d445a863",
     "lastmod": "2026-07-21"
   },
   "/recharge-calculator/": {
-    "hash": "0a80d4971444cc24",
+    "hash": "cc0737e73310ec7b",
+    "lastmod": "2026-07-21"
+  },
+  "/sanctioned-load-optimizer/": {
+    "hash": "64f4b1763a580374",
     "lastmod": "2026-07-21"
   },
   "/services/": {
-    "hash": "2a4d96360fc273f3",
+    "hash": "e4f09847ecc51ff2",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/": {
-    "hash": "2771db2bfb86c6e8",
+    "hash": "dd00d76ed2fdac53",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/andhra-pradesh/apepdcl/": {
-    "hash": "1a6592d20302f48f",
+    "hash": "c5c480378f78d8b0",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/andhra-pradesh/apspdcl/": {
-    "hash": "56440e960d696ef3",
+    "hash": "1e487e00bd287005",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/arunachal-pradesh/appdcl/": {
-    "hash": "a880aba5cd34e566",
+    "hash": "b2a9100aede777b7",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/assam/apdcl/": {
-    "hash": "c10072fe8b5d9dd2",
+    "hash": "ea8b88db765b5579",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/bihar/nbpdcl/": {
-    "hash": "5a934e86a8f8fd28",
+    "hash": "304bf350504f6d81",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/bihar/sbpdcl/": {
-    "hash": "f5792da082adda29",
+    "hash": "7b029fda004ceadb",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/chandigarh/chandigarh_ed/": {
-    "hash": "aaa07ea1b8f51d29",
+    "hash": "7f552833997bc97c",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/chhattisgarh/cspdcl/": {
-    "hash": "086f5e47af7b8d71",
+    "hash": "c7b482a8252672cc",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/": {
-    "hash": "b0e3010b67f8ff6f",
+    "hash": "0545290a717b0ada",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/delhi/brpl/": {
-    "hash": "53ea2a90a645098c",
+    "hash": "7283bf2f9dad8b9f",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/delhi/bypl/": {
-    "hash": "cb7620bee11cf296",
+    "hash": "0e5183e0269c49d9",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/delhi/ndmc_delhi/": {
-    "hash": "958d398c8bf3ffb0",
+    "hash": "6a6be15689d2a30a",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/delhi/tpddl/": {
-    "hash": "cdba076dc73582b9",
+    "hash": "fa32eb7b660bbf4d",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/goa/ged/": {
-    "hash": "c2c3f79c46d0d254",
+    "hash": "ba15483b04bbf1b2",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/gujarat/dgvcl/": {
-    "hash": "c871d066ce224579",
+    "hash": "5b97ad5f1fe77481",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/gujarat/mgvcl/": {
-    "hash": "002ef483e2e65663",
+    "hash": "2e55096cbb2f3648",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/gujarat/pgvcl/": {
-    "hash": "5ac08a30ae01ffe1",
+    "hash": "77e32fe1bef3f162",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/gujarat/ugvcl/": {
-    "hash": "18e39e0e2a1351ae",
+    "hash": "8a88eeee5250acb9",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/haryana/dhbvn/": {
-    "hash": "150ebad82e31f09a",
+    "hash": "c9261af1866c8c2a",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/haryana/uhbvn/": {
-    "hash": "e1fe180e748c3d9c",
+    "hash": "d10e8b6620e3785b",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/himachal-pradesh/hpsebl/": {
-    "hash": "08993338c89a5f70",
+    "hash": "a661223340ebaf89",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/jammu-and-kashmir/jkpdd_jammu/": {
-    "hash": "04f4c4f314ef4e9b",
+    "hash": "586f3d738dddfa63",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/jammu-and-kashmir/jkpdd_kashmir/": {
-    "hash": "e528b2f6cb36d3b6",
+    "hash": "4aaacb4c82ccee06",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/jharkhand/jbvnl/": {
-    "hash": "6681150e74b4cec9",
+    "hash": "99ac6eddd4c9e9e7",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/karnataka/bescom/": {
-    "hash": "2cf7cbec66b486b7",
+    "hash": "071b18e43d642aa7",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/karnataka/cesc_karnataka/": {
-    "hash": "f31be184d689fd64",
+    "hash": "68031f7ede0b75d6",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/karnataka/gescom/": {
-    "hash": "a632eca620b29077",
+    "hash": "5eefb6ed87239240",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/karnataka/hescom/": {
-    "hash": "9a794f003ef29b7d",
+    "hash": "f9e5e6fd903bfeef",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/karnataka/mescom/": {
-    "hash": "24b98b4e4a4e3086",
+    "hash": "8ab0006a24efce8b",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/kerala/kseb/": {
-    "hash": "572b4d2247cc7188",
+    "hash": "166cb7d50cff7827",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/ladakh/lpdcl/": {
-    "hash": "5e0cb0aef13a6975",
+    "hash": "ec0da7c34aeac648",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/madhya-pradesh/mpez/": {
-    "hash": "188c7b8ed1f0ebbe",
+    "hash": "2ae39b94b95f1a16",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/madhya-pradesh/mpmkvvcl/": {
-    "hash": "916f1d4b51e319a6",
+    "hash": "d1b7d3d800389e11",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/madhya-pradesh/mppkvvcl/": {
-    "hash": "970c7e6d5af7d6da",
+    "hash": "34c2aba95b507a43",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/maharashtra/adani_mumbai/": {
-    "hash": "6c59094c35ead3e1",
+    "hash": "281c1ea9bd46e3ca",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/maharashtra/best_mumbai/": {
-    "hash": "cbfa34e3c669341e",
+    "hash": "ada851afe76efccc",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/maharashtra/msedcl/": {
-    "hash": "1427a9df9bc5f629",
+    "hash": "4c4d5d45cc52cea1",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/maharashtra/tata_power_mumbai/": {
-    "hash": "dbabde14adfc857c",
+    "hash": "e0364779454d7463",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/manipur/mspdcl/": {
-    "hash": "a208c3528433e668",
+    "hash": "2570b1bf1725476b",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/meghalaya/mepdcl/": {
-    "hash": "f5e5c1a574e65a38",
+    "hash": "4e18fb8613c264a4",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/mizoram/ped_mizoram/": {
-    "hash": "d3cf4ac6ec7a6d2f",
+    "hash": "9450ee4e0f2964f3",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/nagaland/doe_nagaland/": {
-    "hash": "ba307fa917a480dc",
+    "hash": "fc529d04c3ae9f85",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/odisha/tpcodl/": {
-    "hash": "a673c965f1932b4d",
+    "hash": "b1b02a1d3da973ae",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/odisha/tpnodl/": {
-    "hash": "a49b6064b6804ee1",
+    "hash": "1d6da3250fb0c389",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/odisha/tpsodl/": {
-    "hash": "094c0a7b19918037",
+    "hash": "b0ff44b2e9cbe223",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/odisha/tpwodl/": {
-    "hash": "bc483497d4ab6d39",
+    "hash": "41da1308f0c2ba98",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/puducherry/pdicl/": {
-    "hash": "9f6377c7f1271542",
+    "hash": "241aee2d37746ca3",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/punjab/pspcl/": {
-    "hash": "cee426fd667e999b",
+    "hash": "e1ceb421bc8ae587",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/rajasthan/avvnl/": {
-    "hash": "daa6916fcdf3ceb8",
+    "hash": "465c0cf857301c51",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/rajasthan/jdvvnl/": {
-    "hash": "988c7a8cc2931be6",
+    "hash": "a04d3fbc77d64da3",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/rajasthan/jvvnl/": {
-    "hash": "4bcc31d62e1aa898",
+    "hash": "8649f6c7f2be4977",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/sikkim/energy_sikkim/": {
-    "hash": "e666fb3e2aa3d8f9",
+    "hash": "a2dd11cf0c16f93f",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/tamil-nadu/tangedco/": {
-    "hash": "c9e35764611e5719",
+    "hash": "4cd6543a902dd3ce",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/telangana/tsnpdcl/": {
-    "hash": "86744f0833a757fa",
+    "hash": "4c47673add36cdff",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/telangana/tsspdcl/": {
-    "hash": "9dbca4f4a397acfa",
+    "hash": "6a2d317e12acc7be",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/tripura/tsecl/": {
-    "hash": "6fb2ab36c4ee7a09",
+    "hash": "ec8530158fd1b3e5",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/uttar-pradesh/dvvnl/": {
-    "hash": "a0f13419f6f16829",
+    "hash": "83cecbae1979a81d",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/uttar-pradesh/kesco/": {
-    "hash": "9ce03574614a967f",
+    "hash": "61e54385c36ab040",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/uttar-pradesh/mvvnl/": {
-    "hash": "735bafbbf5d2a9ef",
+    "hash": "9ca5d5f7afe8fd3f",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/uttar-pradesh/puvvnl/": {
-    "hash": "84b4c538c8a0606e",
+    "hash": "44549931306f55d7",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/uttar-pradesh/pvvnl/": {
-    "hash": "ccf246d40a5aa2aa",
+    "hash": "0bac462c4f1a0fff",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/uttarakhand/upcl/": {
-    "hash": "409a9f28565ba1a3",
+    "hash": "60262b73253d3150",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/west-bengal/cesc_kolkata/": {
-    "hash": "dadb70fa7a030e8f",
+    "hash": "e9362c883854f047",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/west-bengal/dpl/": {
-    "hash": "0f4c19305347e1c7",
+    "hash": "216625584eb19cc7",
     "lastmod": "2026-07-21"
   },
   "/smart-meter-recharge/west-bengal/wbsedcl/": {
-    "hash": "0add182a679d6861",
+    "hash": "1927a0460b55a1ac",
     "lastmod": "2026-07-21"
   },
   "/solar-battery-backup-calculator/": {
-    "hash": "8179c1308ac3e19b",
+    "hash": "33f878abd548afcf",
     "lastmod": "2026-07-21"
   },
   "/solar-calculator/": {
-    "hash": "c5aece68242ef263",
+    "hash": "f11a06a9554e5b5c",
     "lastmod": "2026-07-21"
   },
   "/solar-panel-size-calculator/": {
-    "hash": "86937c518453741c",
+    "hash": "77efa3c81c86a6af",
     "lastmod": "2026-07-21"
   },
   "/ta/glossary/": {
-    "hash": "50d690023cd37a9d",
+    "hash": "c07a1a6049610a0d",
     "lastmod": "2026-07-21"
   },
   "/ta/guides/": {
-    "hash": "b7165e8258e59c7b",
+    "hash": "0083fb8c1a626e44",
     "lastmod": "2026-07-21"
   },
   "/ta/guides/how-to-read-msedcl-bill/": {
-    "hash": "9f95d7f3c50b865d",
+    "hash": "ac2d53ab23db7c8f",
     "lastmod": "2026-07-21"
   },
   "/ta/guides/how-to-read-tneb-tangedco-bill/": {
-    "hash": "3ef4839954e0fb20",
+    "hash": "140d7547869c342f",
     "lastmod": "2026-07-21"
   },
   "/ta/guides/tamil-nadu-electricity-tariff-july-2026/": {
-    "hash": "ec237dae5f0a2e92",
+    "hash": "4549cd68e9a2db99",
     "lastmod": "2026-07-21"
   },
   "/ta/guides/tneb-tangedco-new-connection/": {
-    "hash": "bd87531bca8a7286",
+    "hash": "feb267477df6ef4a",
     "lastmod": "2026-07-21"
   },
   "/ta/smart-meter-recharge/": {
-    "hash": "cca64593d57e77a5",
+    "hash": "22f292ba7339ec27",
     "lastmod": "2026-07-21"
   },
   "/ta/smart-meter-recharge/tamil-nadu/tangedco/": {
-    "hash": "5ce79b7a1ad8765c",
+    "hash": "493caafd856cb5ea",
     "lastmod": "2026-07-21"
   },
   "/ta/tariffs/states/": {
-    "hash": "f89c3074d51f5a23",
+    "hash": "7f9e65ebaf279798",
     "lastmod": "2026-07-21"
   },
   "/ta/tariffs/tamil-nadu/": {
-    "hash": "a26773b7f6013936",
+    "hash": "12116b615daa763c",
     "lastmod": "2026-07-21"
   },
   "/ta/tariffs/tamil-nadu/tangedco/": {
-    "hash": "05398f7c6cbbb8c3",
+    "hash": "9b980e5407ea2f7b",
     "lastmod": "2026-07-21"
   },
   "/tariffs/": {
@@ -1432,403 +1436,403 @@
     "lastmod": "2026-07-21"
   },
   "/tariffs/andhra-pradesh/": {
-    "hash": "dc3f4e460371a684",
+    "hash": "4d491917b8161222",
     "lastmod": "2026-07-21"
   },
   "/tariffs/andhra-pradesh/apepdcl/": {
-    "hash": "cb5a38d0aad3f95d",
+    "hash": "02176e844c9d94c1",
     "lastmod": "2026-07-21"
   },
   "/tariffs/andhra-pradesh/apspdcl/": {
-    "hash": "0f734351f8d08b32",
+    "hash": "0d12f50123d88220",
     "lastmod": "2026-07-21"
   },
   "/tariffs/arunachal-pradesh/": {
-    "hash": "87162c28d3bdf312",
+    "hash": "8fc49a4620be7de0",
     "lastmod": "2026-07-21"
   },
   "/tariffs/arunachal-pradesh/appdcl/": {
-    "hash": "340d14bf985d7930",
+    "hash": "7f751337e143f07a",
     "lastmod": "2026-07-21"
   },
   "/tariffs/assam/": {
-    "hash": "011fbffa180634f4",
+    "hash": "fdcaf2d1be88e3cb",
     "lastmod": "2026-07-21"
   },
   "/tariffs/assam/apdcl/": {
-    "hash": "60bd19a8b16aced6",
+    "hash": "09e3de8d9dd1313a",
     "lastmod": "2026-07-21"
   },
   "/tariffs/bihar/": {
-    "hash": "0f88fd4efee6f7b7",
+    "hash": "ed9a9f5a300db156",
     "lastmod": "2026-07-21"
   },
   "/tariffs/bihar/nbpdcl/": {
-    "hash": "97b2e1fecfe35201",
+    "hash": "aa05a5c3fde993b8",
     "lastmod": "2026-07-21"
   },
   "/tariffs/bihar/sbpdcl/": {
-    "hash": "b806813e48caca53",
+    "hash": "49795af280242301",
     "lastmod": "2026-07-21"
   },
   "/tariffs/chandigarh/": {
-    "hash": "a8b21224e8f48a94",
+    "hash": "63be6eb185d8da0e",
     "lastmod": "2026-07-21"
   },
   "/tariffs/chandigarh/chandigarh_ed/": {
-    "hash": "e82b4334cea459f8",
+    "hash": "7f71c61846b09ac4",
     "lastmod": "2026-07-21"
   },
   "/tariffs/chhattisgarh/": {
-    "hash": "7315dda27f0782d9",
+    "hash": "aff450c9e4bd9600",
     "lastmod": "2026-07-21"
   },
   "/tariffs/chhattisgarh/cspdcl/": {
-    "hash": "b9850a282bf58a0b",
+    "hash": "8903ae577bc6781b",
     "lastmod": "2026-07-21"
   },
   "/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/": {
-    "hash": "a762f5af6c36a0c2",
+    "hash": "d6c77fbd003212f3",
     "lastmod": "2026-07-21"
   },
   "/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/": {
-    "hash": "65a12c6f2dbf21f2",
+    "hash": "df7eb5315a55fc0c",
     "lastmod": "2026-07-21"
   },
   "/tariffs/delhi/": {
-    "hash": "80ab98da9292bb64",
+    "hash": "e3f8fe4662a5bc62",
     "lastmod": "2026-07-21"
   },
   "/tariffs/delhi/brpl/": {
-    "hash": "b2e4d8d34c5c0629",
+    "hash": "d2c4a68231f639fc",
     "lastmod": "2026-07-21"
   },
   "/tariffs/delhi/bypl/": {
-    "hash": "2849eebb8da16a76",
+    "hash": "6d6e8a7bb02b142e",
     "lastmod": "2026-07-21"
   },
   "/tariffs/delhi/ndmc_delhi/": {
-    "hash": "6ddaf17e75a6abe7",
+    "hash": "0d9ed855a339cb3a",
     "lastmod": "2026-07-21"
   },
   "/tariffs/delhi/tpddl/": {
-    "hash": "9273737c79fbff11",
+    "hash": "37fc42ae5ad9356b",
     "lastmod": "2026-07-21"
   },
   "/tariffs/goa/": {
-    "hash": "be7dd3116e793b48",
+    "hash": "153ae2a47e7af442",
     "lastmod": "2026-07-21"
   },
   "/tariffs/goa/ged/": {
-    "hash": "275840e192cf2ecf",
+    "hash": "c491799507b771a8",
     "lastmod": "2026-07-21"
   },
   "/tariffs/gujarat/": {
-    "hash": "f5bab676c05b9fab",
+    "hash": "bfa839632df29830",
     "lastmod": "2026-07-21"
   },
   "/tariffs/gujarat/dgvcl/": {
-    "hash": "5f65b82fa7d93767",
+    "hash": "78a8df4e9c30a976",
     "lastmod": "2026-07-21"
   },
   "/tariffs/gujarat/mgvcl/": {
-    "hash": "3a9c74431c388cf1",
+    "hash": "4e44f79631a412d5",
     "lastmod": "2026-07-21"
   },
   "/tariffs/gujarat/pgvcl/": {
-    "hash": "259186e9ed894193",
+    "hash": "012b85a5c386bea2",
     "lastmod": "2026-07-21"
   },
   "/tariffs/gujarat/ugvcl/": {
-    "hash": "b6ec4d655501979a",
+    "hash": "bdd2c941872d1ca0",
     "lastmod": "2026-07-21"
   },
   "/tariffs/haryana/": {
-    "hash": "6770074b741f0888",
+    "hash": "48afe4684317335a",
     "lastmod": "2026-07-21"
   },
   "/tariffs/haryana/dhbvn/": {
-    "hash": "a4c24783739864c1",
+    "hash": "01ba25748557ae37",
     "lastmod": "2026-07-21"
   },
   "/tariffs/haryana/uhbvn/": {
-    "hash": "ef6b8ec67caa811b",
+    "hash": "944a6a723d99e84f",
     "lastmod": "2026-07-21"
   },
   "/tariffs/himachal-pradesh/": {
-    "hash": "2a703d8c1da0b7f2",
+    "hash": "a4c88b99e3d3692b",
     "lastmod": "2026-07-21"
   },
   "/tariffs/himachal-pradesh/hpsebl/": {
-    "hash": "63dcc4231d67f1e8",
+    "hash": "90d863c6eb376ae5",
     "lastmod": "2026-07-21"
   },
   "/tariffs/jammu-and-kashmir/": {
-    "hash": "d510aae05f66c197",
+    "hash": "2f78e6b79e80e723",
     "lastmod": "2026-07-21"
   },
   "/tariffs/jammu-and-kashmir/jkpdd_jammu/": {
-    "hash": "ab5f214ca0746227",
+    "hash": "d3f544ad4ec2c379",
     "lastmod": "2026-07-21"
   },
   "/tariffs/jammu-and-kashmir/jkpdd_kashmir/": {
-    "hash": "32b55161ec1de125",
+    "hash": "136a55f7707377a3",
     "lastmod": "2026-07-21"
   },
   "/tariffs/jharkhand/": {
-    "hash": "ae5a1dacbed939e7",
+    "hash": "65ef0a137a8e9db3",
     "lastmod": "2026-07-21"
   },
   "/tariffs/jharkhand/jbvnl/": {
-    "hash": "09d2023043fba552",
+    "hash": "1b2c276305219f3b",
     "lastmod": "2026-07-21"
   },
   "/tariffs/karnataka/": {
-    "hash": "1ebbf2ad63d94e24",
+    "hash": "db7ace7607bdc4a4",
     "lastmod": "2026-07-21"
   },
   "/tariffs/karnataka/bescom/": {
-    "hash": "d124c1764b3bf5ff",
+    "hash": "30d1607cbafd0ed7",
     "lastmod": "2026-07-21"
   },
   "/tariffs/karnataka/cesc_karnataka/": {
-    "hash": "1730a647ea92f9d3",
+    "hash": "3422f068baabbb52",
     "lastmod": "2026-07-21"
   },
   "/tariffs/karnataka/gescom/": {
-    "hash": "894fa0c95b69e897",
+    "hash": "d045122beab634ac",
     "lastmod": "2026-07-21"
   },
   "/tariffs/karnataka/hescom/": {
-    "hash": "486986ffa8201b94",
+    "hash": "687a6fd03de00e18",
     "lastmod": "2026-07-21"
   },
   "/tariffs/karnataka/mescom/": {
-    "hash": "c1493300524ab265",
+    "hash": "83367fdf48c49458",
     "lastmod": "2026-07-21"
   },
   "/tariffs/kerala/": {
-    "hash": "a6c44c7d4b7b16a8",
+    "hash": "23f1e057a6ae646e",
     "lastmod": "2026-07-21"
   },
   "/tariffs/kerala/kseb/": {
-    "hash": "54674bb006050263",
+    "hash": "495e8c86a29e754b",
     "lastmod": "2026-07-21"
   },
   "/tariffs/ladakh/": {
-    "hash": "2009bde1bbc704f0",
+    "hash": "54e7c2f3b473355f",
     "lastmod": "2026-07-21"
   },
   "/tariffs/ladakh/lpdcl/": {
-    "hash": "74229b03d6262cb3",
+    "hash": "777fbefe2cab8fff",
     "lastmod": "2026-07-21"
   },
   "/tariffs/madhya-pradesh/": {
-    "hash": "d09db68cc2df1b9c",
+    "hash": "9542e26dd82b6f88",
     "lastmod": "2026-07-21"
   },
   "/tariffs/madhya-pradesh/mpez/": {
-    "hash": "25aeceb64452aa80",
+    "hash": "fd3a89dae419b552",
     "lastmod": "2026-07-21"
   },
   "/tariffs/madhya-pradesh/mpmkvvcl/": {
-    "hash": "71efe1d79c6b9230",
+    "hash": "2000462f0ac9f1c2",
     "lastmod": "2026-07-21"
   },
   "/tariffs/madhya-pradesh/mppkvvcl/": {
-    "hash": "4520f23c1ee18008",
+    "hash": "1c61ea5c44782649",
     "lastmod": "2026-07-21"
   },
   "/tariffs/maharashtra/": {
-    "hash": "e6bacdb7a5b0b236",
+    "hash": "cf70b1f5f5e5a694",
     "lastmod": "2026-07-21"
   },
   "/tariffs/maharashtra/adani_mumbai/": {
-    "hash": "b16c9a8bbe3cd260",
+    "hash": "4fe47047a9be9cf4",
     "lastmod": "2026-07-21"
   },
   "/tariffs/maharashtra/best_mumbai/": {
-    "hash": "cbed53878c8a5def",
+    "hash": "78c574f5a172b61c",
     "lastmod": "2026-07-21"
   },
   "/tariffs/maharashtra/msedcl/": {
-    "hash": "1f1d890ab99823bb",
+    "hash": "66203c121a164db4",
     "lastmod": "2026-07-21"
   },
   "/tariffs/maharashtra/tata_power_mumbai/": {
-    "hash": "3f0c188ae87e5180",
+    "hash": "69922f4fdfac3fce",
     "lastmod": "2026-07-21"
   },
   "/tariffs/manipur/": {
-    "hash": "232f887405765647",
+    "hash": "c1faa853daacbdd8",
     "lastmod": "2026-07-21"
   },
   "/tariffs/manipur/mspdcl/": {
-    "hash": "c5dd521482a16795",
+    "hash": "7713c557ef882e42",
     "lastmod": "2026-07-21"
   },
   "/tariffs/meghalaya/": {
-    "hash": "fa9297ceb396b102",
+    "hash": "c0f4c0500a6696a6",
     "lastmod": "2026-07-21"
   },
   "/tariffs/meghalaya/mepdcl/": {
-    "hash": "6d60b4d0c1e4fa13",
+    "hash": "0dd2aa30023f61fd",
     "lastmod": "2026-07-21"
   },
   "/tariffs/mizoram/": {
-    "hash": "9270e5f33f556cd1",
+    "hash": "d00d0101faab3731",
     "lastmod": "2026-07-21"
   },
   "/tariffs/mizoram/ped_mizoram/": {
-    "hash": "5a23d1639dd9071b",
+    "hash": "eab2877447201c2c",
     "lastmod": "2026-07-21"
   },
   "/tariffs/nagaland/": {
-    "hash": "4d00607f8feb28dd",
+    "hash": "c7b7fb632aebcbc3",
     "lastmod": "2026-07-21"
   },
   "/tariffs/nagaland/doe_nagaland/": {
-    "hash": "6b630b7a048dd121",
+    "hash": "5934ce3a6580fca8",
     "lastmod": "2026-07-21"
   },
   "/tariffs/odisha/": {
-    "hash": "f5d15525a4a32003",
+    "hash": "0a8c529830f75205",
     "lastmod": "2026-07-21"
   },
   "/tariffs/odisha/tpcodl/": {
-    "hash": "7aff073a3903cc77",
+    "hash": "d933691dc9ca22a7",
     "lastmod": "2026-07-21"
   },
   "/tariffs/odisha/tpnodl/": {
-    "hash": "f0a26edd048827a0",
+    "hash": "a13e5444397506d6",
     "lastmod": "2026-07-21"
   },
   "/tariffs/odisha/tpsodl/": {
-    "hash": "a56f9d53fe4e0048",
+    "hash": "b89f12f38beec0c4",
     "lastmod": "2026-07-21"
   },
   "/tariffs/odisha/tpwodl/": {
-    "hash": "4507fcd6829d8518",
+    "hash": "0227ba60887d1fe0",
     "lastmod": "2026-07-21"
   },
   "/tariffs/puducherry/": {
-    "hash": "100f6b59a00b5fa9",
+    "hash": "222a600b0736683e",
     "lastmod": "2026-07-21"
   },
   "/tariffs/puducherry/pdicl/": {
-    "hash": "f24a278471d9333e",
+    "hash": "ced8802b19f676f4",
     "lastmod": "2026-07-21"
   },
   "/tariffs/punjab/": {
-    "hash": "3cd63611c69c534b",
+    "hash": "409ad4b67c527b78",
     "lastmod": "2026-07-21"
   },
   "/tariffs/punjab/pspcl/": {
-    "hash": "3c0b4900f96a8576",
+    "hash": "5cd4356d13e22d17",
     "lastmod": "2026-07-21"
   },
   "/tariffs/rajasthan/": {
-    "hash": "1d0734e725b65463",
+    "hash": "c7d3aba4b3d460dd",
     "lastmod": "2026-07-21"
   },
   "/tariffs/rajasthan/avvnl/": {
-    "hash": "7d1613a66b38060d",
+    "hash": "3ad3f8706b7fbdd4",
     "lastmod": "2026-07-21"
   },
   "/tariffs/rajasthan/jdvvnl/": {
-    "hash": "01fec49edb0916aa",
+    "hash": "eb77f0ee0146bcc0",
     "lastmod": "2026-07-21"
   },
   "/tariffs/rajasthan/jvvnl/": {
-    "hash": "d4add5aa48f06f5c",
+    "hash": "a7c3d496aa62a7f5",
     "lastmod": "2026-07-21"
   },
   "/tariffs/sikkim/": {
-    "hash": "700e31207b938a54",
+    "hash": "072328704983790d",
     "lastmod": "2026-07-21"
   },
   "/tariffs/sikkim/energy_sikkim/": {
-    "hash": "6f5227929ad19b54",
+    "hash": "f89aec84e3e0e168",
     "lastmod": "2026-07-21"
   },
   "/tariffs/states/": {
-    "hash": "6526c690b1df51da",
+    "hash": "b1fc2057b54ff4f8",
     "lastmod": "2026-07-21"
   },
   "/tariffs/tamil-nadu/": {
-    "hash": "d27f3b7123348ac9",
+    "hash": "9b50570fbae47e8a",
     "lastmod": "2026-07-21"
   },
   "/tariffs/tamil-nadu/tangedco/": {
-    "hash": "8914978b0f98afc7",
+    "hash": "a2aa9f88c90d668c",
     "lastmod": "2026-07-21"
   },
   "/tariffs/telangana/": {
-    "hash": "e135122148f7baa4",
+    "hash": "e76205da5bf6514e",
     "lastmod": "2026-07-21"
   },
   "/tariffs/telangana/tsnpdcl/": {
-    "hash": "d3ebbe76d0ae44fd",
+    "hash": "d647a4ef80a05bd8",
     "lastmod": "2026-07-21"
   },
   "/tariffs/telangana/tsspdcl/": {
-    "hash": "b0f43eb0c95fadeb",
+    "hash": "dc9fedde183846e8",
     "lastmod": "2026-07-21"
   },
   "/tariffs/tripura/": {
-    "hash": "d0c85db1ef27f9db",
+    "hash": "c876924505319186",
     "lastmod": "2026-07-21"
   },
   "/tariffs/tripura/tsecl/": {
-    "hash": "3b8387b20399a370",
+    "hash": "76d0166f4ac12c4a",
     "lastmod": "2026-07-21"
   },
   "/tariffs/uttar-pradesh/": {
-    "hash": "97b1166e155f125e",
+    "hash": "741b4756d2c032fb",
     "lastmod": "2026-07-21"
   },
   "/tariffs/uttar-pradesh/dvvnl/": {
-    "hash": "983f3728503bb97b",
+    "hash": "ce83fd86aee74270",
     "lastmod": "2026-07-21"
   },
   "/tariffs/uttar-pradesh/kesco/": {
-    "hash": "b3f2912c3a64dc5e",
+    "hash": "c6d0a1937ea64175",
     "lastmod": "2026-07-21"
   },
   "/tariffs/uttar-pradesh/mvvnl/": {
-    "hash": "e0cd2b0108ef9e31",
+    "hash": "42fb4d23885b55ef",
     "lastmod": "2026-07-21"
   },
   "/tariffs/uttar-pradesh/puvvnl/": {
-    "hash": "b7b59180d529ed63",
+    "hash": "b7477281c49b2816",
     "lastmod": "2026-07-21"
   },
   "/tariffs/uttar-pradesh/pvvnl/": {
-    "hash": "f9ce0a9047856e57",
+    "hash": "202c2039a4a8c250",
     "lastmod": "2026-07-21"
   },
   "/tariffs/uttarakhand/": {
-    "hash": "099ad03fb036c55d",
+    "hash": "7df64391daa4d20f",
     "lastmod": "2026-07-21"
   },
   "/tariffs/uttarakhand/upcl/": {
-    "hash": "de7a10f961098bbd",
+    "hash": "58760ccfee8488ff",
     "lastmod": "2026-07-21"
   },
   "/tariffs/west-bengal/": {
-    "hash": "48ed0070f9285428",
+    "hash": "3f5736e79224bbdd",
     "lastmod": "2026-07-21"
   },
   "/tariffs/west-bengal/cesc_kolkata/": {
-    "hash": "de309fe27050472d",
+    "hash": "54385b2eac170493",
     "lastmod": "2026-07-21"
   },
   "/tariffs/west-bengal/dpl/": {
-    "hash": "bc9005d4950106d7",
+    "hash": "4f6d5cb9182e86fb",
     "lastmod": "2026-07-21"
   },
   "/tariffs/west-bengal/wbsedcl/": {
-    "hash": "05caa843d9f2c18a",
+    "hash": "bf166f85663d71b0",
     "lastmod": "2026-07-21"
   },
   "tariff:andhra-pradesh": {
