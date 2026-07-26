@@ -8,7 +8,7 @@ import {
 import { resolveFppaForDiscom } from './tariffs/fppa.js';
 import { DOMESTIC_SUBSIDY } from './tariffs/subsidy.js';
 import { calculateBill } from './engine.js';
-import { renderBill, renderRevisionBill, renderComparison } from './renderer.js';
+import { renderBill, renderSimpleBill, renderRevisionBill, renderComparison } from './renderer.js';
 import { attachDatePicker, fieldISO, setFieldDate } from './datepicker.js';
 import { round2, escHtml } from './utils.js';
 import { isConfigured, hasStoredSession, getSupabase } from './supabase-config.js';
@@ -1655,7 +1655,14 @@ export function doCalculate() {
   const meterRows = document.querySelectorAll('#advancedRows .meter-row');
   const oneMeter  = (getMeterMode() !== 'tod' && meterRows.length === 1) ? meterRows[0] : null;
 
-  const html = renderBill({
+  // Simple mode gets the mini bill: it collected five fields, so the full facsimile's
+  // Consumer Details block would be all em-dashes. setCalcMode owns the .simple-mode flag.
+  const simple = document.querySelector('.form-panel')?.classList.contains('simple-mode');
+  const html = simple ? renderSimpleBill({
+    result,
+    billingMonth: document.getElementById('billingMonth').value,
+    billingYear:  document.getElementById('billingYear').value,
+  }) : renderBill({
     result,
     consumerName: document.getElementById('consumerName').value.trim(),
     accountNo:    document.getElementById('accountNo').value.trim(),

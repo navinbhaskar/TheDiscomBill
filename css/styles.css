@@ -876,41 +876,49 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
   color: var(--brand-dark, #1d4ed8);
 }
 .hbc-hero-sub { display: block; margin-top: 5px; font-size: 12.5px; color: #64748b; font-weight: 500; }
-/* Mini bill: label left, amount right, on one shared column pair so every rupee figure
-   lands on the same edge. Amounts are tabular so the decimal points stack — the whole
-   point of showing paise is that the column reads as arithmetic you can check. */
-.hbc-lines { display: grid; gap: 8px; margin: 0; }
-.hbc-line {
+/* ─── Mini-bill line list (shared) ──────────────────────────────────────────────
+   Label left, amount right, on one shared column pair so every rupee figure lands on
+   the same edge. Amounts are tabular so decimal points stack — the whole point of
+   showing paise is that the column reads as arithmetic you can check.
+   Two users: the hero sample card (.hbc-*) and Simple mode's result (.sb-*). The
+   skeleton is shared; each context sets only its own type size. */
+.hbc-lines, .mini-lines { display: grid; gap: 8px; margin: 0; }
+.hbc-line, .mini-line {
   display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 10px;
-  font-size: 12px; color: var(--p-slate-600);
+  color: var(--p-slate-600);
 }
-.hbc-line dt { min-width: 0; }
-.hbc-line dd {
+.hbc-line { font-size: 12px; }
+.hbc-line dt, .mini-line dt { min-width: 0; }
+.hbc-line dd, .mini-line dd {
   margin: 0; font-weight: 600; color: var(--p-slate-900);
   font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 /* The rate that produced the amount, inline after the label — numerals only, so it needs
    no translation. slate-500, not 400: 400 on white is 2.55:1 and fails AA. */
-.hbc-line dt em {
-  font-style: normal; font-size: 11px; color: var(--p-slate-500);
+.hbc-line dt em, .mini-line dt em {
+  font-style: normal; font-size: .92em; color: var(--p-slate-500);
   white-space: nowrap;
 }
 /* Slab working, on its own line under Energy — the arithmetic a printed bill omits */
-.hbc-line dt small {
+.hbc-line dt small, .mini-line dt small {
   display: block; margin-top: 2px;
-  font-size: 10.5px; color: var(--p-slate-500);
+  font-size: .88em; color: var(--p-slate-500);
   font-variant-numeric: tabular-nums; letter-spacing: .1px;
 }
-.hbc-line-credit, .hbc-line-credit dd { color: #15803d; }
-.hbc-line-quiet, .hbc-line-quiet dd { color: var(--p-slate-500); font-weight: 500; }
-.hbc-line-total {
+.hbc-line-credit, .hbc-line-credit dd,
+.mini-line-credit, .mini-line-credit dd { color: #15803d; }
+.hbc-line-quiet, .hbc-line-quiet dd,
+.mini-line-quiet, .mini-line-quiet dd { color: var(--p-slate-500); font-weight: 500; }
+.hbc-line-total, .mini-line-total {
   margin-top: 3px; padding-top: 10px; border-top: 1px solid rgba(15,23,42,.10);
 }
-.hbc-line-total dt { font-weight: 700; color: var(--p-slate-900); font-size: 12.5px; }
-.hbc-line-total dd {
-  font-family: var(--font-display); font-size: 15px; font-weight: 800;
+.hbc-line-total dt, .mini-line-total dt { font-weight: 700; color: var(--p-slate-900); }
+.hbc-line-total dt { font-size: 12.5px; }
+.hbc-line-total dd, .mini-line-total dd {
+  font-family: var(--font-display); font-weight: 800;
   letter-spacing: -.2px; color: var(--brand-dark, #1d4ed8);
 }
+.hbc-line-total dd { font-size: 15px; }
 .hbc-foot {
   margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(15,23,42,.10);
   font-size: 10.5px; color: #64748b; letter-spacing: 0.3px;
@@ -3612,6 +3620,48 @@ html:not([lang="en"]) .footer-col-title {
 .footer-col a:hover { color: #fff; }
 @media (max-width: 600px) {
   .footer-map { gap: 22px; margin-bottom: 24px; padding-bottom: 22px; }
+}
+
+/* ─── Simple-mode result ───────────────────────────────────────────────────────
+   Simple mode collects five fields; this answers with those five and nothing else,
+   instead of the full facsimile's 28 rows and its em-dash Consumer Details block.
+   Sits inside .bill-wrap, so it inherits the paper-light token reset in dark mode. */
+.simple-bill { padding: 24px 26px 22px; }
+.sb-head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle);
+}
+.sb-discom { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--text-primary); line-height: 1.25; }
+.sb-cat { margin-top: 3px; font-size: 12.5px; color: var(--text-secondary); }
+.sb-chip {
+  flex-shrink: 0; font-size: 11px; font-weight: 700; white-space: nowrap;
+  color: var(--brand-dark); background: var(--brand-faint);
+  border: 1px solid var(--brand-border); padding: 4px 10px; border-radius: var(--radius-full);
+}
+.sb-total { margin: 20px 0 18px; }
+.sb-total-amount {
+  display: block; font-family: var(--font-display);
+  font-size: clamp(34px, 8vw, 44px); font-weight: 800; letter-spacing: -1.3px; line-height: 1;
+  color: var(--brand-dark);
+}
+.sb-total-sub { display: block; margin-top: 6px; font-size: 13px; font-weight: 500; color: var(--text-secondary); }
+.sb-lines { gap: 10px; }
+.sb-line { font-size: 13.5px; }
+.mini-line-total dd { font-size: 17px; }
+/* Escape hatch to the full 28-row bill — Detailed mode's output, one click away. */
+.sb-expand {
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 20px;
+  padding: 9px 15px; border-radius: var(--radius-full);
+  border: 1px solid var(--border-default); background: var(--surface-card);
+  font: inherit; font-size: 12.5px; font-weight: 600; color: var(--text-secondary);
+  cursor: pointer; transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast);
+}
+.sb-expand svg { width: 14px; height: 14px; }
+.sb-expand:hover { color: var(--brand-dark); border-color: var(--brand-border); background: var(--brand-faint); }
+.sb-expand:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+@media (max-width: 600px) {
+  .simple-bill { padding: 20px 16px 18px; }
+  .sb-head { flex-direction: column; gap: 8px; }
 }
 
 /* ─── Toast ──────────────────────────────────────────────────────────────────── */

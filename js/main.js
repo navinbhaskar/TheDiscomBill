@@ -748,6 +748,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const hasSharePayload = new URLSearchParams(location.search).has('q');
     setCalcMode(hasSharePayload ? 'detailed' : 'simple');
 
+    // "Show the full bill breakdown" on the Simple result: switch to Detailed and
+    // re-render the same inputs as the full facsimile, then scroll to it.
+    window.__showFullBill = () => {
+      setCalcMode('detailed');
+      doCalculate();
+    };
+
     const netChk = document.getElementById('netMeteringChk');
     netChk.addEventListener('change', () => {
       document.getElementById('netMeteringFields').style.display = netChk.checked ? 'block' : 'none';
