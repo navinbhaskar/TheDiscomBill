@@ -136,8 +136,8 @@
     "lastmod": "2026-07-21"
   },
   "/guides/solar-net-metering-savings/": {
-    "hash": "731155e594521551",
-    "lastmod": "2026-07-21"
+    "hash": "f2f36f9ea78426c2",
+    "lastmod": "2026-07-26"
   },
   "/guides/tamil-nadu-electricity-tariff-july-2026/": {
     "hash": "70a7776cae3b1c36",
@@ -152,8 +152,8 @@
     "lastmod": "2026-07-21"
   },
   "/guides/tod-billing-explained/": {
-    "hash": "e65c0a83ea8bc82d",
-    "lastmod": "2026-07-21"
+    "hash": "5531dbdd7145f048",
+    "lastmod": "2026-07-26"
   },
   "/guides/uppcl-new-connection-jhatpat/": {
     "hash": "cb9edeb287b6f8cf",
@@ -260,8 +260,8 @@
     "lastmod": "2026-07-21"
   },
   "/hi/guides/solar-net-metering-savings/": {
-    "hash": "074edff27d67ccaa",
-    "lastmod": "2026-07-21"
+    "hash": "d178f665c5bbb78c",
+    "lastmod": "2026-07-26"
   },
   "/hi/guides/tata-power-ddl-new-connection/": {
     "hash": "be8509fc5a91039c",
@@ -272,8 +272,8 @@
     "lastmod": "2026-07-21"
   },
   "/hi/guides/tod-billing-explained/": {
-    "hash": "e94c8d26bdb51851",
-    "lastmod": "2026-07-21"
+    "hash": "5d708962be010140",
+    "lastmod": "2026-07-26"
   },
   "/hi/guides/uppcl-new-connection-jhatpat/": {
     "hash": "e7d9d141419f5aea",
@@ -1040,12 +1040,12 @@
     "lastmod": "2026-07-21"
   },
   "/mr/guides/solar-net-metering-savings/": {
-    "hash": "b1a9710e0e5f8a6d",
-    "lastmod": "2026-07-21"
+    "hash": "53bb7c8e5b88a9c1",
+    "lastmod": "2026-07-26"
   },
   "/mr/guides/tod-billing-explained/": {
-    "hash": "74ec896a45cfc98c",
-    "lastmod": "2026-07-21"
+    "hash": "2d634040a94da552",
+    "lastmod": "2026-07-26"
   },
   "/mr/guides/uppcl-sanctioned-load-increased/": {
     "hash": "b1201b4996d4faf3",
@@ -1400,40 +1400,48 @@
     "lastmod": "2026-07-21"
   },
   "/ta/glossary/": {
-    "hash": "8bb752c9eaa371a8",
-    "lastmod": "2026-07-21"
+    "hash": "6993de46d39136cf",
+    "lastmod": "2026-07-26"
   },
   "/ta/guides/": {
-    "hash": "ba9ca9231ca49c97",
-    "lastmod": "2026-07-21"
+    "hash": "bbdce9b80273af62",
+    "lastmod": "2026-07-26"
   },
   "/ta/guides/ac-1-5-ton-electricity-bill/": {
-    "hash": "8841771416d0d4ca",
-    "lastmod": "2026-07-21"
+    "hash": "d3f94d62a7026911",
+    "lastmod": "2026-07-26"
   },
   "/ta/guides/electricity-duty-explained/": {
-    "hash": "5fdbd0f861d527b3",
-    "lastmod": "2026-07-21"
+    "hash": "090f0c1465379ea6",
+    "lastmod": "2026-07-26"
   },
   "/ta/guides/how-to-read-msedcl-bill/": {
-    "hash": "ddff321e36d0c06d",
-    "lastmod": "2026-07-21"
+    "hash": "5741fe6f0963b1bb",
+    "lastmod": "2026-07-26"
   },
   "/ta/guides/how-to-read-tneb-tangedco-bill/": {
-    "hash": "33d50ffcc3f58377",
-    "lastmod": "2026-07-21"
+    "hash": "7ecacfa656ee926c",
+    "lastmod": "2026-07-26"
+  },
+  "/ta/guides/solar-net-metering-savings/": {
+    "hash": "4e4f5e400e285de1",
+    "lastmod": "2026-07-26"
   },
   "/ta/guides/tamil-nadu-electricity-tariff-july-2026/": {
-    "hash": "cdd09486eac51f4e",
-    "lastmod": "2026-07-21"
+    "hash": "a8cbe45956aa2f9a",
+    "lastmod": "2026-07-26"
   },
   "/ta/guides/tneb-tangedco-new-connection/": {
-    "hash": "7db6e9ffb35b4a91",
-    "lastmod": "2026-07-21"
+    "hash": "fb85538c95601576",
+    "lastmod": "2026-07-26"
+  },
+  "/ta/guides/tod-billing-explained/": {
+    "hash": "d3e7f32f84615fa4",
+    "lastmod": "2026-07-26"
   },
   "/ta/guides/what-is-a-unit-of-electricity/": {
-    "hash": "b5b115aa8af17a07",
-    "lastmod": "2026-07-21"
+    "hash": "3b3e17c108377ad1",
+    "lastmod": "2026-07-26"
   },
   "/ta/smart-meter-recharge/": {
     "hash": "87054f4d36e7033b",
