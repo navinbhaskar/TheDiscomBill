@@ -203,7 +203,10 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
   </div>
 
   <div class="bill-wrap simple-bill">
+    <div class="bill-perf bill-perf-top" aria-hidden="true"></div>
+
     <div class="sb-head">
+      <div class="sb-mark" aria-hidden="true">⚡</div>
       <div class="sb-who">
         <div class="sb-discom">${discom.name}</div>
         <div class="sb-cat">${category.name}${supplyTypeName ? ` · ${supplyTypeName}` : ''}</div>
@@ -211,9 +214,11 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
       <span class="sb-chip">Provisional estimate</span>
     </div>
 
-    <div class="sb-total">
-      <span class="sb-total-amount">${formatINR(Math.max(0, grandTotal))}</span>
-      <span class="sb-total-sub">${periodBits}</span>
+    <div class="sb-amount">
+      <div class="sb-amount-label">Total payable</div>
+      <div class="sb-total-amount">${formatINR(Math.max(0, grandTotal))}</div>
+      <div class="sb-total-sub">${periodBits}</div>
+      <div class="sb-words">${numberToWords(Math.max(0, grandTotal))}</div>
     </div>
 
     <dl class="mini-lines sb-lines">
@@ -225,6 +230,8 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
         <dt>Total payable</dt><dd>${formatINR(Math.max(0, grandTotal))}</dd>
       </div>
     </dl>
+
+    <div class="bill-perf bill-perf-bottom" aria-hidden="true"></div>
 
     <button type="button" class="sb-expand" onclick="window.__showFullBill && window.__showFullBill()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M16 21h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>

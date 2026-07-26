@@ -1182,6 +1182,10 @@ html:not([lang="en"]) .hero-discoms-label {
   grid-template-columns: 460px 1fr;
   gap: 8px;
   align-items: start;
+  /* Same measure as .hero-glass (max-width 1180 with the identical clamp padding), so the
+     form + bill land on exactly the hero's content edges instead of running 165px wider. */
+  max-width: 1180px; margin-inline: auto;
+  padding-inline: clamp(18px, 4vw, 44px);
 }
 /* Let the grid tracks shrink below their content's min-size, so a wide child (e.g. the
    tab strip's "ADJUSTMENT" tab) can never blow the panel past the viewport on phones. */
@@ -2055,35 +2059,40 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
    are the only saturated surfaces. Everything between them is neutral, so the
    eye lands on the total instead of being pulled around by competing blue bands.
    The masthead is flat rather than a gradient — the same identity, less shout. */
+/* Masthead on the bill paper. Deliberately unfilled: a solid blue band read as web UI
+   pasted onto stationery, and it fought the dot-matrix paper the rest of the bill is
+   printed on. A rule under the block does the separating instead, the way a real bill's
+   letterhead does — so every child below is inked, not reversed out of white. */
 .bill-header {
-  background: var(--brand-dark);
-  color: #fff;
-  padding: 18px 24px 16px;
+  padding: 20px 4px 16px;
+  border-bottom: 2px solid var(--border-strong);
   display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
 }
 .bill-header-left { display: flex; gap: 14px; align-items: flex-start; }
 .bill-discom-icon { font-size: 36px; line-height: 1; margin-top: 2px; }
-.bill-discom-name { font-size: 20px; font-weight: 800; line-height: 1.2; letter-spacing: -0.3px; }
-.bill-discom-full { font-size: 12px; color: rgba(255,255,255,.78); margin-top: 3px; line-height: 1.4; max-width: 300px; }
-.bill-discom-area { font-size: 11px; color: rgba(255,255,255,.62); margin-top: 4px; }
+.bill-discom-name { font-size: 20px; font-weight: 800; line-height: 1.2; letter-spacing: -0.3px; color: var(--text-primary); }
+.bill-discom-full { font-size: 12px; color: var(--text-secondary); margin-top: 3px; line-height: 1.4; max-width: 300px; }
+/* Not --text-tertiary: slate-400 on the white bill paper is 2.56:1 and fails AA. It was
+   legible before only because it sat on the blue band as rgba(255,255,255,.62). */
+.bill-discom-area { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
 .bill-header-right { text-align: right; flex-shrink: 0; }
 .bill-title-main {
   font-size: 12px; font-weight: 800; letter-spacing: 1px;
-  border: 1.5px solid rgba(255,255,255,.45); padding: 4px 12px; border-radius: var(--radius-sm);
-  display: inline-block; margin-bottom: 6px;
+  border: 1.5px solid var(--border-strong); padding: 4px 12px; border-radius: var(--radius-sm);
+  display: inline-block; margin-bottom: 6px; color: var(--text-primary);
 }
-.bill-title-sub { font-size: 11px; color: rgba(255,255,255,.78); }
-.bill-tariff-year { font-size: 11px; color: rgba(255,255,255,.62); margin-top: 2px; }
+.bill-title-sub { font-size: 11px; color: var(--text-secondary); }
+.bill-tariff-year { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
 
-/* Confidence badge — soft translucent pill on the blue header, text only */
+/* Confidence badge — quiet outlined pill on the paper, text only */
 .conf-badge {
   display: inline-block; margin-top: 6px; padding: 2px 10px; border-radius: 999px;
   font-size: 10px; font-weight: 700; letter-spacing: .04em;
-  border: 1px solid rgba(255,255,255,.45); color: #fff;
-  background: rgba(255,255,255,.12);
+  border: 1px solid var(--border-default); color: var(--text-secondary);
+  background: var(--surface-sunken);
 }
-.conf-verified { border-color: rgba(255,255,255,.55); }
-.conf-estimate { border-color: rgba(255,255,255,.35); color: rgba(255,255,255,.85); }
+.conf-verified { border-color: var(--ok-text, #15803d); color: var(--ok-text, #15803d); }
+.conf-estimate { border-color: var(--border-strong); color: var(--text-secondary); }
 
 /* Section titles — quiet grey caps; the uppercase weight is enough of a marker */
 .bill-section-title {
@@ -3626,42 +3635,90 @@ html:not([lang="en"]) .footer-col-title {
    Simple mode collects five fields; this answers with those five and nothing else,
    instead of the full facsimile's 28 rows and its em-dash Consumer Details block.
    Sits inside .bill-wrap, so it inherits the paper-light token reset in dark mode. */
-.simple-bill { padding: 24px 26px 22px; }
+/* .bill-wrap:not(.comparison-wrap) sets `padding: 0 26px` at (0,2,0) and reserves those
+   26px for the sprocket-hole strips, so a bare `.simple-bill` (0,1,0) loses — which left
+   the header jammed flush against the torn top edge. Match the specificity and keep the
+   side padding exactly 26px so the ledger clears the sprockets. */
+/* Side padding must clear the 26px sprocket strips; 34px leaves 8px of paper beyond them
+   rather than setting the ledger flush against the perforation. */
+.bill-wrap.simple-bill { padding: 0 34px 30px; }
+
 .sb-head {
-  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
-  padding-bottom: 16px; border-bottom: 1px solid var(--border-subtle);
+  display: flex; align-items: center; gap: 12px;
+  padding: 26px 0 18px; border-bottom: 1px solid var(--border-subtle);
 }
+/* Same bolt tile as the full bill's .bill-discom-icon, at counterfoil scale */
+.sb-mark {
+  flex-shrink: 0; width: 34px; height: 34px; border-radius: 9px;
+  display: grid; place-items: center; font-size: 17px; line-height: 1;
+  background: var(--brand-faint); border: 1px solid var(--brand-border);
+}
+.sb-who { flex: 1; min-width: 0; }
 .sb-discom { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--text-primary); line-height: 1.25; }
-.sb-cat { margin-top: 3px; font-size: 12.5px; color: var(--text-secondary); }
+.sb-cat { margin-top: 2px; font-size: 12.5px; color: var(--text-secondary); }
 .sb-chip {
-  flex-shrink: 0; font-size: 11px; font-weight: 700; white-space: nowrap;
+  flex-shrink: 0; font-size: 10.5px; font-weight: 700; white-space: nowrap;
+  text-transform: uppercase; letter-spacing: .6px;
   color: var(--brand-dark); background: var(--brand-faint);
   border: 1px solid var(--brand-border); padding: 4px 10px; border-radius: var(--radius-full);
 }
-.sb-total { margin: 20px 0 18px; }
-.sb-total-amount {
-  display: block; font-family: var(--font-display);
-  font-size: clamp(34px, 8vw, 44px); font-weight: 800; letter-spacing: -1.3px; line-height: 1;
-  color: var(--brand-dark);
+html:not([lang="en"]) .sb-chip { text-transform: none; letter-spacing: .2px; }
+
+/* Amount panel — the answer, set apart from the ledger that justifies it. A tint plus a
+   hairline, not a heavy accent bar: the sprocket paper is already doing the visual work. */
+.sb-amount {
+  margin: 18px 0; padding: 16px 18px 15px;
+  background: var(--brand-faint); border: 1px solid var(--brand-border);
+  border-radius: var(--radius-lg, 14px);
 }
-.sb-total-sub { display: block; margin-top: 6px; font-size: 13px; font-weight: 500; color: var(--text-secondary); }
-.sb-lines { gap: 10px; }
-.sb-line { font-size: 13.5px; }
-.mini-line-total dd { font-size: 17px; }
-/* Escape hatch to the full 28-row bill — Detailed mode's output, one click away. */
+.sb-amount-label {
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.3px;
+  color: var(--text-secondary);
+}
+html:not([lang="en"]) .sb-amount-label { text-transform: none; letter-spacing: .2px; font-size: 11.5px; }
+.sb-total-amount {
+  display: block; margin-top: 7px; font-family: var(--font-display);
+  font-size: clamp(32px, 7vw, 40px); font-weight: 800; letter-spacing: -1.3px; line-height: 1;
+  color: var(--brand-dark); font-variant-numeric: tabular-nums;
+}
+.sb-total-sub { display: block; margin-top: 7px; font-size: 12.5px; font-weight: 500; color: var(--text-secondary); }
+/* Indian bills print the amount in words; the renderer already had numberToWords(). */
+.sb-words {
+  margin-top: 9px; padding-top: 9px; border-top: 1px dashed var(--border-default);
+  font-size: 11px; line-height: 1.45; color: var(--text-secondary); font-style: italic;
+}
+
+/* Ledger — hairline under each row, the way a printed bill rules its charge table */
+.sb-lines { gap: 0; }
+.sb-line { font-size: 13.5px; padding: 9px 0; border-bottom: 1px dashed var(--border-subtle); }
+.sb-line:last-child { border-bottom: 0; }
+.sb-line.mini-line-total {
+  margin-top: 0; padding-top: 12px; padding-bottom: 2px;
+  border-top: 2px solid var(--border-default); border-bottom: 0;
+}
+.sb-line.mini-line-total dd { font-size: 17px; }
+
+/* Escape hatch to the full 28-row bill — Detailed mode's output, one click away.
+   Full-width below the torn edge, so it reads as leaving the counterfoil, not as a
+   control belonging to the ledger. */
 .sb-expand {
-  display: inline-flex; align-items: center; gap: 7px; margin-top: 20px;
-  padding: 9px 15px; border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; margin: 16px 0 0; padding: 11px 15px;
+  border-radius: var(--radius-md, 10px);
   border: 1px solid var(--border-default); background: var(--surface-card);
   font: inherit; font-size: 12.5px; font-weight: 600; color: var(--text-secondary);
   cursor: pointer; transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast);
 }
-.sb-expand svg { width: 14px; height: 14px; }
+.sb-expand svg { width: 14px; height: 14px; flex-shrink: 0; }
 .sb-expand:hover { color: var(--brand-dark); border-color: var(--brand-border); background: var(--brand-faint); }
 .sb-expand:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 @media (max-width: 600px) {
-  .simple-bill { padding: 20px 16px 18px; }
-  .sb-head { flex-direction: column; gap: 8px; }
+  /* Sprocket strips shrink on narrow paper; keep the ledger clear of them. */
+  .bill-wrap.simple-bill { padding: 0 20px 22px; }
+  .sb-head { flex-wrap: wrap; padding-top: 16px; }
+  .sb-chip { order: 3; }
+  .sb-amount { padding: 14px 15px 13px; }
+  .sb-line { font-size: 13px; }
 }
 
 /* ─── Toast ──────────────────────────────────────────────────────────────────── */

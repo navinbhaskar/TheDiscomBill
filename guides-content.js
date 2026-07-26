@@ -6416,7 +6416,7 @@ export const GUIDES = [
     published: "2026-05-18",
     states: ['Delhi'],
     title: 'How to Get a New Tata Power DDL Connection (North Delhi)',
-    metaTitle: 'Tata Power DDL New Connection 2026 — 2 Documents, Charges & 7-Day Rule',
+    metaTitle: 'Tata Power DDL New Connection 2026: 2 Documents, 7 Days',
     howtoSteps: [
       { name: 'Apply online with two documents', text: 'Fill the Tata Power DDL new-connection application (north and north-west Delhi) with just identity proof and ownership/occupancy proof.' },
       { name: 'Field inspection', text: 'Tata Power DDL inspects the premises and verifies the requested load.' },
@@ -6424,7 +6424,7 @@ export const GUIDES = [
       { name: 'Charges arrive in the first bill', text: 'Unlike most DISCOMs, the demand-note charges and security deposit are billed in your first bill rather than upfront.' },
       { name: 'Escalate if it stalls', text: 'Chase a stalled application through the Tata Power DDL helpline and, if unresolved, the DERC consumer grievance forum.' },
     ],
-    description: 'Apply online with just two documents (ID + ownership/occupancy proof) → field inspection → charges arrive in your first bill, not upfront. North & north-west Delhi, 7-day metro timeline. Every step and the escalation path when it stalls.',
+    description: 'Apply online with just two documents. Nothing is payable upfront: the charges arrive in your first bill. North and north-west Delhi, 7-day timeline.',
     minutes: 7,
     intro: `Tata Power Delhi Distribution (TPDDL) serves north and north-west Delhi — Rohini,
       Pitampura, Model Town, Civil Lines, Narela and around — and runs one of the leanest
@@ -6671,7 +6671,7 @@ export const GUIDES = [
     published: "2026-05-30",
     states: ['Tamil Nadu'],
     title: 'How to Get a New TNEB (TANGEDCO) Electricity Connection Online',
-    metaTitle: 'TNEB New Connection Online 2026 — Documents, Deposit & 7-Day Timeline',
+    metaTitle: 'TNEB New Connection Online 2026: Documents, Deposit, 7 Days',
     howtoSteps: [
       { name: 'Register on the TNPDCL online portal', text: 'Create an account on the TANGEDCO/TNPDCL online services portal and start the new LT connection application with premises and load details.' },
       { name: 'Upload the documents', text: 'Upload identity and ownership proof — tenants and other non-owners attach Form 5 (owner consent) and Form 6 (indemnity bond) instead.' },
@@ -6679,7 +6679,7 @@ export const GUIDES = [
       { name: 'Inspection and meter installation', text: 'A field inspection follows and the meter is installed — due within 7 days where distribution lines exist and up to 30 days otherwise.' },
       { name: 'Escalate through Minnagam if it stalls', text: 'Chase a stalled application with your application number through TNPDCL\'s Minnagam consumer care route, then the section and division offices.' },
     ],
-    description: 'Apply on the TANGEDCO/TNPDCL portal → upload ownership proof (Form 5 consent + Form 6 indemnity if you rent) → pay the TNERC deposit. Connection is due in 7 days where lines exist, 30 days otherwise. Every document, charge and the Minnagam escalation route, step by step.',
+    description: 'Apply on the TNPDCL portal, upload ownership proof, pay the TNERC deposit. Your connection is due in 7 days where lines already exist, 30 days otherwise.',
     minutes: 8,
     intro: `Everyone in Tamil Nadu still says "EB connection", and the flow is now genuinely online:
       the new service connection portal
@@ -7450,8 +7450,8 @@ export const GUIDES = [
     published: "2026-07-15",
     states: ['Kerala'],
     title: 'How to Get a New KSEB Electricity Connection Online (WSS Portal)',
-    metaTitle: 'KSEB New Connection Online — WSS Portal: ₹50 Fee, Documents, 2-Day Package Connection',
-    description: 'Step-by-step guide to a new KSEB electricity connection through the Web Self Service portal (wss.kseb.in): the ₹50 LT application fee, exact document checklist, the two-working-day "package connection" for small loads, tenant NOC rules, deposits, and statutory timelines.',
+    metaTitle: 'KSEB New Connection at wss.kseb.in: ₹50 Fee, 2-Day Setup',
+    description: 'Apply on the KSEB WSS portal at wss.kseb.in: the ₹50 LT fee, the document checklist, tenant NOC rules, and the 2-working-day package connection.',
     minutes: 7,
     intro: `Kerala has one electricity distributor for the whole state, so every new domestic
       connection goes through KSEB — and almost all of it happens on one site: the
@@ -8893,13 +8893,106 @@ export const GUIDES = [
     ],
   },
   {
+    // Hub for the generic "wss portal" / "wss kseb" queries: navigational intent that the
+    // MSEDCL-specific page was absorbing and answering with the wrong utility. Kept
+    // deliberately narrow — this page routes, the two DISCOM guides do the depth — so it
+    // does not compete with /guides/msedcl-wss-portal/ for "msedcl wss".
+    slug: 'wss-portal',
+    published: "2026-07-26",
+    states: ['Maharashtra', 'Kerala'],
+    title: 'WSS Portal: Which Web Self Service Is Yours?',
+    metaTitle: 'WSS Portal: MSEDCL wss.mahadiscom.in & KSEB wss.kseb.in',
+    description: 'Two DISCOMs run a portal called WSS: MSEDCL at wss.mahadiscom.in and KSEB at wss.kseb.in. Here is which one is yours and what each lets you do.',
+    minutes: 4,
+    howtoSteps: [
+      { name: 'Work out which DISCOM bills you', text: 'Your electricity bill names the distributor at the top. Maharashtra is MSEDCL (Mahavitaran); Kerala is KSEB. They run different WSS portals with separate logins.' },
+      { name: 'Open the right WSS address', text: 'MSEDCL consumers use wss.mahadiscom.in. KSEB consumers use wss.kseb.in. The two accounts are unrelated, so a login on one will not work on the other.' },
+      { name: 'Find your consumer number', text: 'It is printed at the top of your bill. MSEDCL uses a 12-digit consumer number; KSEB identifies the connection by its own consumer number and electrical section.' },
+      { name: 'Pay or raise a request', text: 'MSEDCL lets you pay a single bill without registering. KSEB asks you to register with a mobile number and email before most services.' },
+    ],
+    intro: `<strong>WSS</strong> stands for <strong>Web Self Service</strong>, and it is the name two Indian
+      DISCOMs give their consumer portal: <strong>MSEDCL (Mahavitaran)</strong> in Maharashtra at
+      <a href="https://wss.mahadiscom.in/wss/wss" target="_blank" rel="noopener nofollow">wss.mahadiscom.in</a>,
+      and <strong>KSEB</strong> in Kerala at
+      <a href="https://wss.kseb.in/selfservices/" target="_blank" rel="noopener nofollow">wss.kseb.in</a>.
+      They are separate sites with separate logins, which is why searching for "WSS portal" on its own
+      tends to land you on the wrong one. This page sorts out which is yours in about a minute.`,
+    sections: `
+      <section class="seo-section">
+        <h2>Which WSS portal is yours?</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>DISCOM</th><th>Serves</th><th>WSS address</th><th>Login needed?</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><strong>MSEDCL</strong> (Mahavitaran)</td>
+              <td>Maharashtra, outside Mumbai city</td>
+              <td>wss.mahadiscom.in</td>
+              <td>No, for a one-off bill payment</td>
+            </tr>
+            <tr>
+              <td><strong>KSEB</strong></td>
+              <td>All of Kerala</td>
+              <td>wss.kseb.in</td>
+              <td>Yes, for most services</td>
+            </tr>
+          </tbody>
+        </table></div>
+        <p>If your bill names a different distributor, you are not looking for a WSS portal at all. Other
+        DISCOMs run the same kind of self-service site under their own branding, and you can find yours on our
+        <a href="/services/">DISCOM services directory</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>MSEDCL WSS: pay without an account</h2>
+        <p>Maharashtra's portal is the more permissive of the two. You can pay a bill without registering at
+        all: choose <em>Pay Bill</em>, type the <strong>12-digit consumer number</strong> printed at the top of
+        your Mahavitaran bill, check the units and due date, and pay by UPI, net banking or card. Registering is
+        only worth it if you manage several connections or want your billing history in one place.</p>
+        <p>The full walkthrough, including the service requests you can file there, is in our
+        <a href="/guides/msedcl-wss-portal/">MSEDCL WSS portal guide</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>KSEB WSS: one portal for the whole state</h2>
+        <p>Kerala has a single distributor, so one WSS covers everything: new connections, bills for an existing
+        consumer number, ownership transfers, load changes and tariff changes. Most of it sits behind a login, so
+        register with a mobile number and email first. A new LT connection costs a flat ₹50 to apply for, and
+        small loads that need nothing more than a service drop can be energised in as little as two working days
+        under KSEB's package connection.</p>
+        <p>See our <a href="/guides/kseb-new-connection-online/">KSEB new connection guide</a> for the document
+        checklist and timelines, or the <a href="/tariffs/kerala/kseb/">KSEB tariff page</a> for the slab rates
+        you will be billed at.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>What a WSS portal can and cannot do</h2>
+        <p>Both portals cover the same ground: view the current bill, pay it, download past bills and receipts,
+        and log service requests such as a name change or a load change. What neither will do is tell you whether
+        the bill is <em>correct</em>. The portal shows you the amount the DISCOM has computed; it does not show
+        the slab arithmetic behind it.</p>
+        <p>That is worth checking yourself when a bill jumps. Put your units into the
+        <a href="/#calculator">bill calculator</a> and compare the total, or read
+        <a href="/guides/why-did-my-electricity-bill-increase/">why an electricity bill suddenly increases</a>
+        for the usual causes.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Payments that do not show up straight away</h2>
+        <p>A WSS payment is not always reflected on the bill immediately. Settlement can take a few hours, and in
+        some cases until the next billing cycle, so keep the transaction reference until the portal shows the bill
+        as paid. Do not pay twice on the strength of a stale screen. If a payment has left your account but the
+        bill still reads unpaid after a working day, raise it with the DISCOM quoting the transaction ID rather
+        than paying again.</p>
+      </section>`,
+  },
+  {
     slug: 'msedcl-wss-portal',
     published: "2026-07-22",
     states: ['Maharashtra'],
     category: 'basics',
     title: 'MSEDCL WSS Portal: View & Pay Your Bill on Web Self Service',
-    metaTitle: 'MSEDCL WSS Portal (wss.mahadiscom.in) — View, Pay & Download Your Bill',
-    description: 'What the MSEDCL Web Self Service (WSS) portal at wss.mahadiscom.in does: pay your Mahavitaran bill without login, register to manage multiple connections, download bills and payment history, and log service requests like name change, load change and new connections.',
+    metaTitle: 'MSEDCL WSS Portal Login: Pay Your Bill at wss.mahadiscom.in',
+    description: 'Pay your Mahavitaran bill at wss.mahadiscom.in without logging in, or register to manage several connections, download past bills and raise requests.',
     minutes: 6,
     howtoSteps: [
       { name: 'Open the WSS portal', text: 'Go to wss.mahadiscom.in — the official MSEDCL (Mahavitaran) Web Self Service portal.' },
@@ -8912,7 +9005,8 @@ export const GUIDES = [
       runs so you can view, pay and download your electricity bill and raise service requests without visiting an
       office. The best-known one is <strong>MSEDCL's (Mahavitaran) portal at
       <a href="https://wss.mahadiscom.in/wss/wss" target="_blank" rel="noopener nofollow">wss.mahadiscom.in</a></strong>,
-      but Kerala's KSEB, West Bengal's WBSEDCL and several other DISCOMs run the same kind of WSS. This guide walks
+      but Kerala's KSEB, West Bengal's WBSEDCL and several other DISCOMs run the same kind of WSS
+      (<a href="/guides/wss-portal/">not sure which one is yours?</a>). This guide walks
       through what it does, how to pay with or without registering, and the service requests you can file on it.`,
     sections: `
       <section class="seo-section">
