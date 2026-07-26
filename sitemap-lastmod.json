@@ -108,8 +108,8 @@
     "lastmod": "2026-07-21"
   },
   "/guides/prepaid-vs-postpaid-smart-meter/": {
-    "hash": "16aa3e74ed8cb3a4",
-    "lastmod": "2026-07-21"
+    "hash": "3a1944bef378aedb",
+    "lastmod": "2026-07-26"
   },
   "/guides/pspcl-new-connection-online/": {
     "hash": "f053a7d2995663c6",
@@ -232,8 +232,8 @@
     "lastmod": "2026-07-21"
   },
   "/hi/guides/prepaid-vs-postpaid-smart-meter/": {
-    "hash": "9b88d4fcd980ea27",
-    "lastmod": "2026-07-21"
+    "hash": "c7120740264be546",
+    "lastmod": "2026-07-26"
   },
   "/hi/guides/pspcl-new-connection-online/": {
     "hash": "6148c2a82f1a05f8",
@@ -1016,8 +1016,8 @@
     "lastmod": "2026-07-21"
   },
   "/mr/guides/prepaid-vs-postpaid-smart-meter/": {
-    "hash": "1d52f22a8aaa8a5d",
-    "lastmod": "2026-07-21"
+    "hash": "872f49e0f7b4b8d8",
+    "lastmod": "2026-07-26"
   },
   "/mr/guides/reduce-fixed-charges-sanctioned-load/": {
     "hash": "d31d906b75afda79",
@@ -1404,63 +1404,67 @@
     "lastmod": "2026-07-26"
   },
   "/ta/guides/": {
-    "hash": "dc094d6c5f9a07ad",
+    "hash": "eb54ab6c0e9da4a1",
     "lastmod": "2026-07-26"
   },
   "/ta/guides/ac-1-5-ton-electricity-bill/": {
-    "hash": "bce51d8728ff7fed",
+    "hash": "a539fec406c31a81",
     "lastmod": "2026-07-26"
   },
   "/ta/guides/electricity-duty-explained/": {
-    "hash": "43fb53bf6068744c",
+    "hash": "83a10f30aa4f27fc",
     "lastmod": "2026-07-26"
   },
   "/ta/guides/how-to-read-msedcl-bill/": {
-    "hash": "2081f6b1607bb1a0",
+    "hash": "06a2f320f8f0bd79",
     "lastmod": "2026-07-26"
   },
   "/ta/guides/how-to-read-tneb-tangedco-bill/": {
-    "hash": "e2f4387ed2187c6c",
+    "hash": "f58d60b068bdec94",
+    "lastmod": "2026-07-26"
+  },
+  "/ta/guides/prepaid-vs-postpaid-smart-meter/": {
+    "hash": "5c3a998040c8f9b9",
     "lastmod": "2026-07-26"
   },
   "/ta/guides/smart-meter-balance-check/": {
-    "hash": "84281a5affce64ae",
+    "hash": "578ed430b326f06a",
     "lastmod": "2026-07-26"
   },
   "/ta/guides/smart-meter-prepaid-disconnection/": {
-    "hash": "d9883a46fae6c4fe",
+    "hash": "e35429bd5eea4100",
     "lastmod": "2026-07-26"
   },
   "/ta/guides/smart-meter-recharge-failed/": {
-    "hash": "85c04e62454ae822",
+    "hash": "35ee09f0028ebbaa",
     "lastmod": "2026-07-26"
   },
   "/ta/guides/smart-meter-running-fast/": {
-    "hash": "4c22a1b063c4638f",
+    "hash": "31c7f6f62a86df1a",
     "lastmod": "2026-07-26"
   },
   "/ta/guides/solar-net-metering-savings/": {
-    "hash": "d11641480045373d",
+    "hash": "cff7484a06159ad6",
     "lastmod": "2026-07-26"
   },
   "/ta/guides/tamil-nadu-electricity-tariff-july-2026/": {
-    "hash": "d61ba8b4fdc943c6",
+    "hash": "d3e2dfbdd9195282",
     "lastmod": "2026-07-26"
   },
   "/ta/guides/tneb-tangedco-new-connection/": {
-    "hash": "a2fb9e2a1606fedf",
+    "hash": "614c9b9580888edb",
     "lastmod": "2026-07-26"
   },
   "/ta/guides/tod-billing-explained/": {
-    "hash": "e8ccc6732a68bb34",
+    "hash": "6fae8fd5327b61f6",
     "lastmod": "2026-07-26"
   },
   "/ta/guides/what-is-a-unit-of-electricity/": {
-    "hash": "2b517f624ebe6c46",
+    "hash": "e2a3145667081ab4",
     "lastmod": "2026-07-26"
   },
   "/ta/smart-meter-recharge/": {
-    "hash": "a1370016a301b7b3",
+    "hash": "df314758667065bb",
     "lastmod": "2026-07-26"
   },
   "/ta/smart-meter-recharge/tamil-nadu/tangedco/": {
