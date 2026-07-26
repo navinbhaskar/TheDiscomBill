@@ -1,7 +1,8 @@
 // One-off: turn Google's gf.css into self-hosted woff2 + a local fonts.css.
 // Keeps only the `latin` and `latin-ext` subsets (English text + the ₹ sign,
-// which lives in latin-ext at U+20AD–20C0). Devanagari/Tamil were never loaded
-// from Google Fonts — they come from system fonts — so nothing changes there.
+// which lives in latin-ext at U+20AD–20C0). The Devanagari/Tamil faces are handled
+// separately by _localize-indic.mjs — they're only fetched when a visitor switches
+// the UI to that script.
 import fs from 'node:fs';
 import https from 'node:https';
 import path from 'node:path';

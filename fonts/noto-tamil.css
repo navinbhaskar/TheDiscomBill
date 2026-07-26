@@ -1,0 +1,4 @@
+/* Self-hosted Noto Sans Tamil (variable weight) — loaded on demand by
+   js/i18n.js when that script's UI language is activated.
+   Generated from Google Fonts by fonts/_localize-indic.mjs — do not hand-edit. */
+@font-face{font-family:'Noto Sans Tamil';font-style:normal;font-weight:400 700;font-display:swap;src:url(/fonts/noto-sans-tamil.woff2) format('woff2');unicode-range:U+0964-0965, U+0B82-0BFA, U+200C-200D, U+20B9, U+25CC}

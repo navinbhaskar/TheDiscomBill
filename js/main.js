@@ -447,6 +447,46 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// ── Hero sample-bill card ─────────────────────────────────────────────────────
+// Homepage only (main.js loads everywhere, so bail when the card is absent). One
+// card, two faces: the sample estimate and the same units priced across states.
+// Standard tablist semantics — arrows move between tabs, and the DISCOM chip is
+// hidden on the comparison face where "UPPCL · Lucknow" would be misleading.
+function initHeroBillCard() {
+  const card = document.getElementById('heroBillCard');
+  if (!card) return;
+  const tabs = [...card.querySelectorAll('.hbc-tab')];
+  const chip = document.getElementById('hbcChip');
+
+  const show = (tab, focus) => {
+    tabs.forEach(t => {
+      const on = t === tab;
+      const face = document.getElementById(t.getAttribute('aria-controls'));
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      // CSS handles visibility (see .hbc-face); `inert` is what actually keeps the
+      // off-screen face out of the tab order and the a11y tree — visibility:hidden
+      // alone still accepts programmatic focus.
+      if (face) { face.classList.toggle('active', on); face.inert = !on; }
+    });
+    // Slides the track's thumb, the same way setCalcMode drives .calc-mode.
+    tab.parentElement.dataset.active = tab.dataset.face;
+    if (chip) chip.classList.toggle('is-off', tab.dataset.face !== 'bill');
+    if (focus) tab.focus();
+  };
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => show(tab));
+    tab.addEventListener('keydown', (e) => {
+      const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!step) return;
+      e.preventDefault();
+      show(tabs[(i + step + tabs.length) % tabs.length], true);
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();   // Lenis momentum scrolling (skipped under prefers-reduced-motion)
   initScrollReveal();   // fade + rise elements as they enter the viewport
@@ -475,6 +515,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initComparisonTable(); // Render the dynamic tariff comparison table
   initLoginButton();     // top-right Login / My Account button
   initHeaderSearch();    // header magnifier + Ctrl+K / '/' site search
+  initHeroBillCard();    // homepage hero card: estimate ⇄ across-India faces
   initGatedLinks();      // Bill Review CTAs open the auth modal, then redirect in
   initNavActive();       // highlight the current page's link in the top nav
 
