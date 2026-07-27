@@ -1898,7 +1898,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   font-size: 12.5px; font-weight: 600; color: var(--text-primary) !important;
   text-transform: none; letter-spacing: normal; margin-bottom: 2px;
 }
-.simple-mode .meter-row .mf-units input { height: 32px; font-size: 13px; padding: 0 11px; }
+/* max-width:none clears the base `.mf-units input { max-width: calc(50% - 5px) }`, which
+   is there for the wide Detailed meter row. In Simple mode this field sits in its own
+   column beside Sanctioned Load, and the two should measure the same. */
+.simple-mode .meter-row .mf-units input { max-width: none; height: 32px; font-size: 13px; padding: 0 11px; }
 .simple-mode #advHint { display: none; }
 .simple-mode .meter-role-badge { display: none; }
 /* Units and Sanctioned Load side by side. They are separate children of #tab-meterread
@@ -3864,6 +3867,73 @@ html:not([lang="en"]) .sb-amount-label { text-transform: none; letter-spacing: .
   border-top: 2px solid var(--border-default); border-bottom: 0;
 }
 .sb-line.mini-line-total dd { font-size: 18px; }
+
+/* ── Slab-wise energy charge ────────────────────────────────────────────────────
+   Four columns: band, units, rate, amount. Each data row carries --fill, the share of
+   consumption that landed in that slab, drawn as a tinted band behind the row — so the
+   table also answers "where did most of my usage sit?" at a glance, which a plain grid
+   of numbers doesn't. */
+.sb-slabs { margin-top: 20px; }
+.sb-slabs-title {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .9px;
+  color: var(--p-slate-700); margin-bottom: 9px;
+}
+html:not([lang="en"]) .sb-slabs-title { text-transform: none; letter-spacing: .2px; font-size: 12px; }
+.sb-slab-grid {
+  border: 1px solid var(--border-subtle); border-radius: 10px; overflow: hidden;
+  background: var(--surface-card);
+}
+.sb-slab {
+  position: relative;
+  display: grid; grid-template-columns: minmax(0, 1fr) 62px 72px 96px;
+  align-items: center; gap: 10px;
+  padding: 10px 13px;
+  font-size: 13px; color: var(--p-slate-700);
+  border-top: 1px solid var(--border-subtle);
+}
+.sb-slab:first-child { border-top: 0; }
+/* The proportional band. Behind the text, inset from the row edges so it reads as a
+   measure rather than as a selected row. */
+.sb-slab[style*="--fill"]::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: var(--fill, 0%);
+  background: linear-gradient(90deg, rgba(37, 99, 235, .11), rgba(37, 99, 235, .045));
+  pointer-events: none;
+}
+.sb-slab > * { position: relative; }   /* above the band */
+.sb-slab-head {
+  background: var(--surface-sunken);
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .7px;
+  color: var(--p-slate-600);
+}
+.sb-slab-head::before { content: none; }
+html:not([lang="en"]) .sb-slab-head { text-transform: none; letter-spacing: .2px; font-size: 11.5px; }
+.ss-band { min-width: 0; font-weight: 600; color: var(--text-primary); }
+/* Tabular figures so the three numeric columns line up digit for digit down the table. */
+.ss-num { text-align: right; font-variant-numeric: tabular-nums; letter-spacing: .1px; }
+.ss-amt { font-weight: 700; color: var(--text-primary); }
+.sb-slab-foot {
+  background: var(--surface-sunken);
+  font-weight: 700; color: var(--text-primary);
+  border-top: 2px solid var(--border-default);
+}
+.sb-slab-foot::before { content: none; }
+/* The blended average is not a tariff rate anyone is charged — mark it as derived. */
+.ss-avg { font-weight: 500; color: var(--p-slate-600); }
+.ss-avg::before { content: '⌀ '; opacity: .7; }
+.sb-slabs-foot {
+  margin: 8px 0 0; font-size: 11px; line-height: 1.5; color: var(--p-slate-600);
+  text-wrap: pretty;
+}
+.sb-slabs-foot strong { color: var(--p-slate-700); font-weight: 650; }
+@media (max-width: 600px) {
+  .sb-slab { grid-template-columns: minmax(0, 1fr) 40px 52px 80px; gap: 7px; padding: 9px 10px; font-size: 12px; }
+  /* "Rate (₹)" / "Amount (₹)" wrapped to two lines and pushed the header row to 56px. The
+     amounts below carry their own ₹, so the suffix is redundant at this width. */
+  .ss-cur { display: none; }
+  .sb-slab-head { letter-spacing: .4px; }
+  .sb-slabs-foot { font-size: 10.5px; }
+}
 
 /* States the supply type Simple mode guessed on the visitor's behalf. Inside the ledger
    (above the torn edge) because it qualifies the figures, not the page. */

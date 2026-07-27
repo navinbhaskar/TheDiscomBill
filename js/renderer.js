@@ -153,14 +153,52 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
       </div>`;
   };
 
-  // "150 × ₹5.50 + 100 × ₹6.00" — the arithmetic a printed bill collapses into one line.
-  const working = (slabBreakdown || [])
-    .filter(s => s.units > 0)
-    .map(s => `${s.units} × ₹${Number(s.rate).toFixed(2)}`)
-    .join(' + ');
+  // Slab-wise energy charge, as its own table below the ledger. The inline
+  // "150 × ₹5.50 + 100 × ₹6.00" working it replaces got unreadable past two slabs.
+  const usedSlabs = (slabBreakdown || []).filter(s => s.units > 0);
+  const slabUnitsTotal = usedSlabs.reduce((a, s) => a + s.units, 0);
+  const eUnitLabel = energyUnit || 'units';
+  const slabTable = usedSlabs.length ? `
+    <div class="sb-slabs">
+      <div class="sb-slabs-title">Energy charge, slab by slab</div>
+      <div class="sb-slab-grid" role="table" aria-label="Slab-wise energy charge">
+        <div class="sb-slab sb-slab-head" role="row">
+          <span role="columnheader">Slab range</span>
+          <span role="columnheader">${escHtml(eUnitLabel)}</span>
+          <span role="columnheader">Rate<span class="ss-cur"> (₹)</span></span>
+          <span role="columnheader">Amount<span class="ss-cur"> (₹)</span></span>
+        </div>
+        ${usedSlabs.map(s => `
+        <div class="sb-slab" role="row" style="--fill:${slabUnitsTotal ? (s.units / slabUnitsTotal * 100).toFixed(1) : 0}%">
+          <span class="ss-band" role="cell">${escHtml(s.label)}</span>
+          <span class="ss-num" role="cell">${s.units}</span>
+          <span class="ss-num" role="cell">${Number(s.rate).toFixed(2)}</span>
+          <span class="ss-num ss-amt" role="cell">${formatINR(s.amount)}</span>
+        </div>`).join('')}
+        ${usedSlabs.length > 1 ? `
+        <div class="sb-slab sb-slab-foot" role="row">
+          <span role="cell">Total</span>
+          <span class="ss-num" role="cell">${slabUnitsTotal}</span>
+          <span class="ss-num ss-avg" role="cell">${(totalEnergy / slabUnitsTotal).toFixed(2)}</span>
+          <span class="ss-num ss-amt" role="cell">${formatINR(totalEnergy)}</span>
+        </div>` : ''}
+      </div>
+      ${usedSlabs.length > 1 ? `
+      <p class="sb-slabs-foot">Each block of ${escHtml(eUnitLabel)} is charged at its own rate — only the
+        ${escHtml(usedSlabs[usedSlabs.length - 1].label)} block costs
+        ₹${Number(usedSlabs[usedSlabs.length - 1].rate).toFixed(2)}. The <strong>Total</strong> rate is your
+        blended average, not a slab you can be billed at.</p>` : ''}
+    </div>` : '';
 
   const lines = [];
-  if (totalEnergy) lines.push(row('Energy charge', totalEnergy, { working }));
+  // Gutter note is the blended rate now that the per-slab arithmetic has its own table.
+  if (totalEnergy) {
+    // "avg" only when there is more than one slab to average across.
+    const avg = slabUnitsTotal
+      ? `${slabUnitsTotal} ${eUnitLabel} @ ₹${(totalEnergy / slabUnitsTotal).toFixed(2)}${usedSlabs.length > 1 ? ' avg' : ''}`
+      : '';
+    lines.push(row('Energy charge', totalEnergy, { detail: avg }));
+  }
   if (fixedCharge) {
     const load = billingDemand || connectedLoadKw;
     lines.push(row('Fixed charge', fixedCharge, { detail: load ? `${load} ${demandUnit || 'kW'}` : '' }));
@@ -248,6 +286,8 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
         <dt>Total payable</dt><dd>${formatINR(Math.max(0, grandTotal))}</dd>
       </div>
     </dl>
+
+    ${slabTable}
 
     ${assumption ? `<p class="sb-assume">${assumption}</p>` : ''}
 
