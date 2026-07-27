@@ -5758,7 +5758,10 @@ export const GUIDES = [
         </ul>
         <p>Note the boundary: Mumbai city proper is served by BEST, Adani Electricity and Tata
         Power — not MSEDCL. Check who serves your address on our
-        <a href="/tariffs/maharashtra/">Maharashtra tariff pages</a> before applying.</p>
+        <a href="/tariffs/maharashtra/">Maharashtra tariff pages</a> before applying, and if it is
+        Mumbai, read <a href="/guides/tata-power-new-connection/">how a Tata Power connection or
+        changeover works</a> instead — the city lets you choose between licensees, which nowhere
+        else in Maharashtra does.</p>
       </section>
 
       <section class="seo-section">
@@ -6444,6 +6447,11 @@ export const GUIDES = [
         <a href="/tariffs/delhi/">Delhi tariff pages</a>. The tariff itself is the same
         DERC-approved schedule across all three, subsidy included — the difference is process,
         and TPDDL's is the most automated.</p>
+        <p>One more boundary worth naming: <strong>Tata Power Mumbai is a different licensee</strong>,
+        not a branch of this one — separate tariff, separate regulator, separate application. If your
+        address is in Mumbai rather than Delhi, use the
+        <a href="/guides/tata-power-new-connection/">Tata Power Mumbai connection and changeover
+        guide</a>.</p>
       </section>
 
       <section class="seo-section">
@@ -9097,5 +9105,217 @@ export const GUIDES = [
       title: { en: 'Is your MSEDCL bill correct? Check before you pay', hi: 'क्या आपका MSEDCL बिल सही है? भुगतान से पहले जाँचें' },
       sub: { en: 'Run your units through MSEDCL\'s real slabs, fixed charges, FPPA and duty and compare with the WSS amount.', hi: 'अपनी यूनिट MSEDCL के असली स्लैब, फिक्स्ड चार्ज, FPPA व शुल्क पर चलाएँ और WSS राशि से तुलना करें।' },
     },
+  },
+  {
+    slug: 'tata-power-new-connection',
+    published: "2026-07-27",
+    states: ['Maharashtra', 'Delhi'],
+    title: 'Tata Power New Connection: Mumbai Changeover or Delhi Application',
+    metaTitle: 'Tata Power New Connection 2026: Mumbai & Delhi',
+    description: 'Tata Power runs two separate licences. In Mumbai you usually want a changeover, not a new connection — and it undercuts Adani below 423 units a month.',
+    minutes: 8,
+    howtoSteps: [
+      { name: 'Work out which Tata Power licence covers you', text: 'Tata Power Mumbai and Tata Power Delhi Distribution are separate licensees with separate tariffs, portals and application flows. Mumbai is regulated by MERC, Delhi by DERC.' },
+      { name: 'In Mumbai, decide between changeover and new connection', text: 'If the premises already has a working meter from Adani Electricity or BEST, you want a changeover of supplier over the existing wires — not a fresh service line.' },
+      { name: 'Check whether Tata Power is actually cheaper for your usage', text: 'Tata Power Mumbai undercuts Adani up to about 422 units a month and costs more above that, because its 301-500 unit slab is far steeper.' },
+      { name: 'Apply with identity and occupancy proof', text: 'Apply on the Tata Power portal or at a customer relations centre with photo ID, occupancy or ownership proof and the requested load.' },
+      { name: 'Pay the deposit and get metered', text: 'Pay the security deposit and any charges on the demand note, then the meter is installed and the supply energised.' },
+    ],
+    intro: `There are two Tata Power distribution licences in India and they have almost nothing in
+      common. <strong>Tata Power Mumbai</strong> supplies parts of Mumbai under MERC regulation and
+      competes head-on with Adani Electricity and BEST. <strong>Tata Power Delhi Distribution
+      (TPDDL)</strong> supplies north and north-west Delhi under DERC. Different tariffs, different
+      portals, different paperwork. This guide covers the Mumbai side in detail — including the
+      thing most people get wrong, which is that you usually want a <strong>changeover</strong>
+      rather than a new connection — and points Delhi readers to the guide written for them.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. Which Tata Power are you dealing with?</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th></th><th>Tata Power Mumbai</th><th>Tata Power-DDL (Delhi)</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Licensee</strong></td><td>Tata Power Company Ltd. &ndash; Mumbai Distribution</td><td>Tata Power Delhi Distribution Ltd.</td></tr>
+            <tr><td><strong>Area</strong></td><td>Parts of Mumbai &mdash; Dharavi, Wadala, parts of Kurla and Chembur, plus supply across much of the suburbs over other licensees' wires</td><td>North and north-west Delhi &mdash; Rohini, Pitampura, Model Town, Civil Lines, Narela</td></tr>
+            <tr><td><strong>Regulator</strong></td><td>MERC</td><td>DERC</td></tr>
+            <tr><td><strong>Competing supplier?</strong></td><td>Yes &mdash; Adani Electricity and BEST supply the same city</td><td>No &mdash; BRPL and BYPL have their own exclusive areas</td></tr>
+            <tr><td><strong>Guide</strong></td><td>This page</td><td><a href="/guides/tata-power-ddl-new-connection/">Tata Power DDL new connection</a></td></tr>
+          </tbody>
+        </table></div>
+        <p>If your address is in Delhi, stop here and read the
+        <a href="/guides/tata-power-ddl-new-connection/">TPDDL guide</a> instead &mdash; that flow needs
+        only two documents and bills the connection charges in your first bill. Everything below is
+        Mumbai.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. In Mumbai you probably want a changeover, not a new connection</h2>
+        <p>Mumbai is one of the few places in India where <strong>more than one distribution licensee
+        supplies the same streets</strong>. Tata Power, Adani Electricity and BEST all hold licences
+        over overlapping territory, and a consumer may choose between them where more than one is
+        available. That produces two very different requests, and asking for the wrong one is the
+        commonest reason a Tata Power application stalls:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th></th><th>New connection</th><th>Changeover</th></tr></thead>
+          <tbody>
+            <tr><td><strong>When it applies</strong></td><td>The premises has never been electrified &mdash; new construction, a newly subdivided flat, a fresh commercial unit</td><td>The premises already has a live meter from Adani or BEST and you want Tata Power to supply it instead</td></tr>
+            <tr><td><strong>What gets built</strong></td><td>A service line and a new meter</td><td>Nothing new is laid &mdash; the existing distribution wires carry Tata Power's supply, and you pay wheeling charges to whoever owns them</td></tr>
+            <tr><td><strong>Old account</strong></td><td>None</td><td>Must be cleared &mdash; outstanding dues on the existing connection will block the switch</td></tr>
+          </tbody>
+        </table></div>
+        <p>The wheeling charge is not a penalty for changing over; it is a standard component of the
+        Mumbai tariff and appears on the bill whichever licensee you pick. At Tata Power's FY 2026-27
+        rate of <strong>&#8377;2.40 per unit</strong> it is a large part of the bill &mdash; on 300 units it
+        is &#8377;720 against &#8377;1,130 of energy charge &mdash; so any comparison that quotes only the
+        slab rate is misleading.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. Is Tata Power actually cheaper? Only below about 423 units</h2>
+        <p>This is the part worth doing arithmetic on before you file anything. We ran identical
+        residential bills through the same engine that powers our
+        <a href="/#calculator">bill calculator</a>, on each licensee's FY 2026-27 schedule &mdash; 1 kW
+        sanctioned load, a 30-day cycle, fixed charge, wheeling and 16% electricity duty included:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Units / month</th><th>Tata Power</th><th>Adani Electricity</th><th>BEST</th><th>Tata vs Adani</th></tr></thead>
+          <tbody>
+            <tr><td>100</td><td>&#8377;550</td><td>&#8377;625</td><td>&#8377;506</td><td>&minus;&#8377;75</td></tr>
+            <tr><td>200</td><td>&#8377;1,381</td><td>&#8377;1,577</td><td>&#8377;1,354</td><td>&minus;&#8377;196</td></tr>
+            <tr><td>300</td><td>&#8377;2,166</td><td>&#8377;2,484</td><td>&#8377;2,157</td><td>&minus;&#8377;318</td></tr>
+            <tr><td>400</td><td>&#8377;3,478</td><td>&#8377;3,535</td><td>&#8377;3,503</td><td>&minus;&#8377;57</td></tr>
+            <tr><td>500</td><td>&#8377;4,789</td><td>&#8377;4,587</td><td>&#8377;4,850</td><td>+&#8377;202</td></tr>
+            <tr><td>600</td><td>&#8377;6,242</td><td>&#8377;5,808</td><td>&#8377;6,362</td><td>+&#8377;434</td></tr>
+          </tbody>
+        </table></div>
+        <p>The crossover sits at roughly <strong>423 units a month</strong>. Below it Tata Power is the
+        cheaper of the two, by as much as &#8377;318 a month around the 300-unit mark &mdash; close to
+        &#8377;3,800 a year. Above it the advantage reverses and grows quickly: at 600 units a month
+        Adani is &#8377;434 cheaper, or about &#8377;5,200 a year.</p>
+        <p>The reason is the third slab. Tata Power charges <strong>&#8377;9.24 a unit for 301&ndash;500
+        units</strong> where Adani charges &#8377;7.10, and that one band swamps Tata Power's advantage in
+        the cheaper slabs below it. So the honest answer to "is Tata Power cheaper in Mumbai" is: yes
+        for a typical flat, no for a large air-conditioned home.</p>
+        <p class="seo-note">Figures exclude the monthly fuel adjustment (FAC/FPPA), which every licensee
+        revises separately and which shifts the comparison a little either way. Put your own units
+        through the <a href="/#calculator">calculator</a> and switch the DISCOM to see the live
+        difference on your consumption, or read the
+        <a href="/compare/">DISCOM tariff comparison</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. What Tata Power Mumbai charges a residential consumer</h2>
+        <p>The FY 2026-27 residential schedule (LT-I(B)), approved by MERC in the multi-year tariff
+        order for Tata Power's distribution business, is telescopic &mdash; each block is charged at its
+        own rate rather than the whole bill jumping to the top rate:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Block</th><th>Energy rate</th><th>Fixed charge (set by total consumption)</th></tr></thead>
+          <tbody>
+            <tr><td>First 100 units</td><td>&#8377;1.90 / unit</td><td>&#8377;90 / month if the bill is 100 units or less</td></tr>
+            <tr><td>101 &ndash; 300 units</td><td>&#8377;4.70 / unit</td><td rowspan="2">&#8377;135 / month for 101 &ndash; 500 units</td></tr>
+            <tr><td>301 &ndash; 500 units</td><td>&#8377;9.24 / unit</td></tr>
+            <tr><td>Above 500 units</td><td>&#8377;10.24 / unit</td><td>&#8377;160 / month above 500 units</td></tr>
+            <tr><td><strong>Wheeling</strong></td><td colspan="2">&#8377;2.40 / unit on every unit</td></tr>
+            <tr><td><strong>Electricity duty</strong></td><td colspan="2">16% of energy charges (Maharashtra state levy, not the licensee's)</td></tr>
+          </tbody>
+        </table></div>
+        <p>Note how the fixed charge is set by <em>how much you use</em>, not by sanctioned load &mdash;
+        an unusual Mumbai arrangement that catches people out when a heavy month pushes them into a
+        higher fixed-charge band as well as a higher slab. The full schedule, including commercial
+        categories, is on our <a href="/tariffs/maharashtra/">Maharashtra tariff pages</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. Documents and the application</h2>
+        <p>Both the new connection and the changeover run through the same front door: the
+        <a href="https://www.tatapower.com/" rel="nofollow noopener" target="_blank">Tata Power</a>
+        consumer portal, or a customer relations centre. Take the current helpline number from the
+        website rather than from any list online — they change. Keep scans ready of:</p>
+        <ul>
+          <li><strong>Photo identity proof</strong> &mdash; Aadhaar, PAN, passport, voter ID or driving licence.</li>
+          <li><strong>Occupancy or ownership proof</strong> &mdash; sale agreement, index II, property-tax receipt, society share certificate or NOC, or a registered leave-and-licence agreement if you rent.</li>
+          <li><strong>The last bill of the existing connection</strong>, if you are changing over &mdash; it carries the consumer number Tata Power needs to take the account across, and proves the account is clear.</li>
+          <li><strong>Requested sanctioned load in kW</strong>, which sets the connection charges and, for commercial categories, the demand charge. Our <a href="/sanctioned-load-optimizer/">sanctioned load optimizer</a> helps you avoid over-declaring.</li>
+        </ul>
+        <p>A changeover application does not need a wiring test or a new service line, so it is the
+        faster of the two. A genuine new connection adds a site inspection and, where the premises is
+        not already near the network, a cost estimate for the service line.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. What you pay upfront</h2>
+        <p>Unlike Tata Power-DDL in Delhi, which bills connection charges in your first bill, a Mumbai
+        application follows the conventional pattern: Tata Power raises a <strong>demand note</strong>
+        after assessing the request, and supply follows payment. Expect three items:</p>
+        <ul>
+          <li><strong>Security deposit</strong> &mdash; held against the account, refundable when the
+          connection is closed, and reviewed periodically against your actual billing. It is not a
+          charge; it comes back.</li>
+          <li><strong>Service connection charges</strong> &mdash; for the physical work, where any is
+          needed. A changeover over existing wires usually has little or none.</li>
+          <li><strong>Processing / application fee</strong> &mdash; a small fixed amount.</li>
+        </ul>
+        <p>The exact amounts are set by the MERC-approved schedule of charges for the year and vary
+        with load and category, so take them from your own demand note rather than any figure quoted
+        online &mdash; including ours.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>7. How long it should take, and what to do when it doesn't</h2>
+        <p>Under the Electricity Act and the MERC supply code, a distribution licensee must energise a
+        complete application within a defined period once the premises is ready and payment is made
+        &mdash; <strong>seven days in municipal areas</strong>, which is all of Mumbai. A changeover, with
+        no construction involved, should comfortably sit inside that.</p>
+        <p>If it stalls, escalate in this order rather than repeating the same call:</p>
+        <ol>
+          <li>The Tata Power helpline or customer relations centre, quoting the application or service
+          request number &mdash; not your address.</li>
+          <li>The nodal officer for the division, in writing, so the complaint has a date on it.</li>
+          <li>The <strong>Consumer Grievance Redressal Forum (CGRF)</strong> for Tata Power's Mumbai
+          distribution business.</li>
+          <li>The <strong>Electricity Ombudsman (Mumbai)</strong>, if the forum's order does not settle
+          it.</li>
+        </ol>
+        <p>Each rung expects the one below it to have been tried, so keep the acknowledgement from
+        every step.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>8. After the connection: check the first bill</h2>
+        <p>Two things go wrong often enough to be worth a deliberate check on bill one. The first is
+        the <strong>category</strong>: a home run partly as an office can be billed commercial, which in
+        Mumbai is materially dearer. The second is the <strong>billing period</strong> &mdash; a first bill
+        covering more than a month puts your units through the slabs as if you had used them all in
+        one cycle, inflating the total.</p>
+        <p>Run the units from the bill through the <a href="/#calculator">calculator</a> against Tata
+        Power Mumbai and compare line by line. If they disagree,
+        <a href="/guides/how-to-read-msedcl-bill/">reading the bill's structure</a> and
+        <a href="/guides/why-did-my-electricity-bill-increase/">the usual causes of a jump</a> will
+        usually explain which of the two it is.</p>
+      </section>`,
+    faqs: [
+      {
+        q: 'Is Tata Power cheaper than Adani Electricity in Mumbai?',
+        a: 'Below roughly 423 units a month, yes. On FY 2026-27 rates a 300-unit residential bill is about &#8377;2,166 on Tata Power against &#8377;2,484 on Adani, a saving near &#8377;3,800 a year. Above the crossover it reverses, because Tata Power charges &#8377;9.24 a unit in the 301&ndash;500 band against Adani&rsquo;s &#8377;7.10 &mdash; at 600 units a month Adani is about &#8377;434 cheaper. Figures exclude the monthly fuel adjustment.'
+      },
+      {
+        q: 'Do I need a new connection or a changeover?',
+        a: 'If the premises already has a live meter from Adani Electricity or BEST, you want a changeover &mdash; Tata Power supplies you over the existing wires and no new service line is laid. A new connection is only for premises that have never been electrified. Asking for the wrong one is the commonest reason an application stalls.'
+      },
+      {
+        q: 'Can I switch to Tata Power if I have dues on my current connection?',
+        a: 'No. Outstanding dues on the existing account block a changeover. Clear the old bill first and keep the receipt, because the new licensee will want evidence the account is settled before taking the connection across.'
+      },
+      {
+        q: 'Is Tata Power Mumbai the same company as Tata Power-DDL in Delhi?',
+        a: 'They share a parent but are separate distribution licensees with separate tariffs, regulators and application processes. Mumbai is regulated by MERC, Delhi by DERC. A Delhi application follows the Tata Power-DDL flow, which needs only two documents and bills connection charges in your first bill.'
+      },
+      {
+        q: 'What is the wheeling charge on a Tata Power Mumbai bill?',
+        a: '&#8377;2.40 per unit on the FY 2026-27 residential schedule. It pays for use of the distribution wires carrying your supply and appears whichever Mumbai licensee you choose, so a comparison based on the slab rate alone will mislead you. On a 300-unit bill it comes to &#8377;720.'
+      },
+      {
+        q: 'How long does a Tata Power connection take in Mumbai?',
+        a: 'Seven days from a complete application in municipal areas, which covers all of Mumbai, once the premises is ready and the demand note is paid. A changeover should be quicker still since nothing is built. If it slips, escalate to the nodal officer, then the CGRF, then the Electricity Ombudsman.'
+      },
+    ],
   },
 ];
