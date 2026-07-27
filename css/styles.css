@@ -721,39 +721,88 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   overflow: hidden;
 }
-/* Gradient blobs behind the glass — these are what the backdrop blur "frosts" */
+/* Gradient mesh behind the glass — these are what the backdrop blur "frosts". Six stops
+   rather than four, with a cyan and a violet added off-axis so the wash reads as a mesh
+   instead of two blue corners. Oversized and inset negatively so no blob edge can land
+   inside the frame. */
 .hero::before {
+  content: '';
+  position: absolute; inset: -12% -8%;
+  background-image:
+    radial-gradient(ellipse 55% 65% at 10% 2%,  rgba(37, 99, 235, .30),  transparent 62%),
+    radial-gradient(ellipse 46% 56% at 92% 10%, rgba(96, 165, 250, .26), transparent 60%),
+    radial-gradient(ellipse 40% 46% at 72% 96%, rgba(29, 78, 216, .20),  transparent 65%),
+    radial-gradient(ellipse 34% 40% at 26% 84%, rgba(251, 191, 36, .13), transparent 70%),
+    radial-gradient(ellipse 30% 38% at 52% 30%, rgba(56, 189, 248, .14), transparent 68%),
+    radial-gradient(ellipse 26% 34% at 84% 62%, rgba(139, 92, 246, .12), transparent 70%);
+  pointer-events: none;
+  animation: heroDrift 26s ease-in-out infinite alternate;
+}
+/* A slow, tiny drift — enough to feel alive on a long page, far too slow to distract. */
+@keyframes heroDrift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(-1.6%, 1.2%, 0) scale(1.05); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero::before { animation: none; }
+}
+/* Fine grid, faded out toward the edges — technical texture under the glass. Sits above
+   ::before so the mesh reads through it, below .hero-glass (z-index 1 via position). */
+.hero::after {
   content: '';
   position: absolute; inset: 0;
   background-image:
-    radial-gradient(ellipse 60% 70% at 12% 0%,  rgba(37, 99, 235, .22),  transparent 62%),
-    radial-gradient(ellipse 50% 60% at 92% 12%, rgba(96, 165, 250, .20), transparent 60%),
-    radial-gradient(ellipse 46% 50% at 70% 95%, rgba(29, 78, 216, .14),  transparent 65%),
-    radial-gradient(ellipse 34% 40% at 30% 80%, rgba(251, 191, 36, .10), transparent 70%);
+    linear-gradient(to right, rgba(15, 23, 42, .045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, .045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 78%);
+          mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 78%);
   pointer-events: none;
 }
 :root[data-theme="dark"] .hero::before {
   background-image:
-    radial-gradient(ellipse 60% 70% at 12% 0%,  rgba(37, 99, 235, .30),  transparent 62%),
-    radial-gradient(ellipse 50% 60% at 92% 12%, rgba(59, 130, 246, .18), transparent 60%),
-    radial-gradient(ellipse 46% 50% at 70% 95%, rgba(29, 78, 216, .22),  transparent 65%);
+    radial-gradient(ellipse 55% 65% at 10% 2%,  rgba(37, 99, 235, .40),  transparent 62%),
+    radial-gradient(ellipse 46% 56% at 92% 10%, rgba(59, 130, 246, .26), transparent 60%),
+    radial-gradient(ellipse 40% 46% at 72% 96%, rgba(29, 78, 216, .30),  transparent 65%),
+    radial-gradient(ellipse 30% 38% at 52% 30%, rgba(56, 189, 248, .16), transparent 68%),
+    radial-gradient(ellipse 26% 34% at 84% 62%, rgba(139, 92, 246, .18), transparent 70%);
+}
+:root[data-theme="dark"] .hero::after {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, .05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, .05) 1px, transparent 1px);
 }
 /* Frosted-glass content panel */
 .hero-glass {
   position: relative;
   width: 100%; max-width: 1180px; margin: 0 auto;
   padding: 26px clamp(18px, 4vw, 44px) 24px;
-  background: rgba(255, 255, 255, .55);
+  /* Directional tint over the frost, so the panel picks up light from the top-left the way
+     the mesh behind it does — flat rgba(255,255,255,.55) read as a grey sheet over it. */
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, .74) 0%, rgba(255, 255, 255, .50) 46%, rgba(241, 245, 255, .58) 100%);
   border: 1px solid rgba(255, 255, 255, .70);
   border-radius: 24px;
   backdrop-filter: blur(22px) saturate(1.15);
   -webkit-backdrop-filter: blur(22px) saturate(1.15);
   box-shadow: 0 18px 50px rgba(15, 23, 42, .10), inset 0 1px 0 rgba(255, 255, 255, .85);
 }
+/* Gradient hairline along the top edge — catches the panel's lit corner and gives the
+   glass a defined lip instead of a uniform 1px border all the way round. */
+.hero-glass::before {
+  content: '';
+  position: absolute; left: 12%; right: 12%; top: -1px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(37, 99, 235, .55), rgba(255, 255, 255, .9), transparent);
+  pointer-events: none;
+}
 :root[data-theme="dark"] .hero-glass {
-  background: rgba(19, 28, 46, .55);
+  background:
+    linear-gradient(150deg, rgba(30, 41, 66, .66) 0%, rgba(19, 28, 46, .52) 46%, rgba(23, 33, 57, .60) 100%);
   border-color: rgba(255, 255, 255, .09);
   box-shadow: 0 18px 50px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+:root[data-theme="dark"] .hero-glass::before {
+  background: linear-gradient(90deg, transparent, rgba(96, 165, 250, .65), rgba(255, 255, 255, .35), transparent);
 }
 
 /* ── Split hero: content left, live sample-bill card right ───────────────────── */
@@ -1018,6 +1067,24 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
   line-height: 1.12;
   margin-bottom: 16px;
   color: var(--text-primary);
+  /* Both stops are dark (slate-900 -> blue-700), so the lightest pixel still measures
+     8.6:1 on the glass — a gradient headline that doesn't trade away legibility.
+     background-clip:text drops the colour above, so the fallback stays for old engines. */
+  background-image: linear-gradient(115deg, var(--p-slate-900) 12%, var(--p-blue-700) 62%, var(--p-blue-600) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+:root[data-theme="dark"] .hero h1 {
+  background-image: linear-gradient(115deg, #f1f5f9 12%, #bfdbfe 58%, #93c5fd 100%);
+}
+/* Without background-clip:text, a transparent fill renders the headline invisible rather
+   than merely unstyled — fall back to the solid colour set above. */
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hero h1 { -webkit-text-fill-color: currentColor; }
+}
+/* Printed pages have no gradient; keep the headline solid ink. */
+@media print {
+  .hero h1 { -webkit-text-fill-color: currentColor; background-image: none; }
 }
 .hero p { font-size: 16px; color: var(--text-secondary); max-width: 520px; margin: 0 auto; line-height: 1.6; }
 
@@ -1831,9 +1898,24 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   font-size: 12.5px; font-weight: 600; color: var(--text-primary) !important;
   text-transform: none; letter-spacing: normal; margin-bottom: 2px;
 }
-.simple-mode .meter-row .mf-units input { max-width: 50%; height: 32px; font-size: 13px; padding: 0 11px; }
+.simple-mode .meter-row .mf-units input { height: 32px; font-size: 13px; padding: 0 11px; }
 .simple-mode #advHint { display: none; }
 .simple-mode .meter-role-badge { display: none; }
+/* Units and Sanctioned Load side by side. They are separate children of #tab-meterread
+   (the units field lives inside the meter row), so the panel itself becomes the 2-up grid;
+   everything else in it is either adv-only or display:none in Simple mode. */
+.simple-mode #tab-meterread {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; align-items: start;
+}
+/* Full-width escapes for the two that can still appear: MD (commercial categories) and
+   the billing-period readout. */
+.simple-mode #tab-meterread > #billedDemandGroup { grid-column: 1 / -1; }
+/* .form-row-uneven is 1fr/1.55fr for the FPPA field beside it; that field is adv-only, so
+   in Simple mode the load input would otherwise sit in a 39%-wide track. */
+.simple-mode .form-row-uneven { grid-template-columns: 1fr; }
+/* Item removed on request: "Total: N units — period 0.00 months". Simple mode takes units
+   directly, so a total that only ever restates the one input was pure noise. */
+.simple-mode .units-display { display: none !important; }
 
 /* Home / Business chips stand in for the Consumer Category select in Simple mode. The two
    swap places, so exactly one of them is in the layout at any time. .simple-only is hidden
@@ -1849,6 +1931,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .purpose-chips { display: flex; gap: 8px; }
 .purpose-chip {
   flex: 1 1 0; min-width: 0;
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
   /* 40px, not the 28px of .load-chip: these are the primary control in Simple mode and the
      only tap target between the state dropdown and the units field (WCAG 2.5.8). */
   min-height: 40px; padding: 8px 10px;
@@ -1864,6 +1947,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   background: var(--brand-faint); border-color: var(--brand); color: var(--text-brand);
 }
 .purpose-chip:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+/* Line icons rather than emoji: emoji render at the OS's own colour and weight, which broke
+   the pair's visual match across platforms and ignored the chip's active/idle state. */
+.pc-ic { width: 17px; height: 17px; flex-shrink: 0; opacity: .85; }
+.purpose-chip.active .pc-ic { opacity: 1; }
 /* A DISCOM with no commercial tariff in the data (17 of 65) hides the chip rather than
    offering a choice that would resolve to nothing. */
 .purpose-chip[hidden] { display: none; }
@@ -3722,36 +3809,61 @@ html:not([lang="en"]) .sb-chip { text-transform: none; letter-spacing: .2px; }
 /* Amount panel — the answer, set apart from the ledger that justifies it. A tint plus a
    hairline, not a heavy accent bar: the sprocket paper is already doing the visual work. */
 .sb-amount {
-  margin: 18px 0; padding: 16px 18px 15px;
-  background: var(--brand-faint); border: 1px solid var(--brand-border);
+  /* label+period rail | figure, with the words spanning both underneath. Left-aligning the
+     figure under its own label wasted the whole right half of a ~700px panel. */
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center; column-gap: 18px;
+  margin: 18px 0; padding: 17px 20px 15px;
+  background:
+    radial-gradient(120% 150% at 100% 0%, rgba(37, 99, 235, .10), transparent 60%),
+    var(--brand-faint);
+  border: 1px solid var(--brand-border);
   border-radius: var(--radius-lg, 14px);
 }
 .sb-amount-label {
   font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.3px;
-  color: var(--text-secondary);
+  /* slate-700, not --text-secondary: on the brand-tinted panel that token is 4.37:1, and
+     this is 10.5px uppercase — the least forgiving text on the bill. */
+  color: var(--p-slate-700);
 }
 html:not([lang="en"]) .sb-amount-label { text-transform: none; letter-spacing: .2px; font-size: 11.5px; }
+.sb-amount-fig { justify-self: end; text-align: right; }
 .sb-total-amount {
-  display: block; margin-top: 7px; font-family: var(--font-display);
-  font-size: clamp(32px, 7vw, 40px); font-weight: 800; letter-spacing: -1.3px; line-height: 1;
+  display: block; font-family: var(--font-display);
+  font-size: clamp(30px, 4.4vw, 42px); font-weight: 800; letter-spacing: -1.4px; line-height: .95;
   color: var(--brand-dark); font-variant-numeric: tabular-nums;
 }
-.sb-total-sub { display: block; margin-top: 7px; font-size: 12.5px; font-weight: 500; color: var(--text-secondary); }
+/* slate-700 for the same reason as .sb-amount-label — every muted token measures 4.37:1
+   against this panel's brand tint. */
+.sb-total-sub { display: block; margin-top: 6px; font-size: 12.5px; font-weight: 500; color: var(--p-slate-700); }
 /* Indian bills print the amount in words; the renderer already had numberToWords(). */
 .sb-words {
-  margin-top: 9px; padding-top: 9px; border-top: 1px dashed var(--border-default);
-  font-size: 11px; line-height: 1.45; color: var(--text-secondary); font-style: italic;
+  grid-column: 1 / -1;
+  margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--brand-border);
+  /* Same 4.37:1 problem as .sb-amount-label on the tinted panel. */
+  font-size: 11px; line-height: 1.45; color: var(--p-slate-700); font-style: italic;
 }
 
-/* Ledger — hairline under each row, the way a printed bill rules its charge table */
+/* Ledger — hairline under each row, the way a printed bill rules its charge table.
+   dt is itself a flex row so the working ("150 × ₹5.50 + …") is pushed to the right,
+   landing beside the amount instead of leaving a void mid-row. */
 .sb-lines { gap: 0; }
-.sb-line { font-size: 13.5px; padding: 9px 0; border-bottom: 1px dashed var(--border-subtle); }
+.sb-line { font-size: 13.5px; padding: 10px 0; border-bottom: 1px dashed var(--border-subtle); }
 .sb-line:last-child { border-bottom: 0; }
+.sb-line dt {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 18px;
+}
+.sb-line dt .sb-label { flex-shrink: 0; }
+/* Overrides the shared `.mini-line dt small` block rule, which stacked it under the label. */
+.sb-line dt small {
+  display: inline; margin: 0; text-align: right; min-width: 0;
+  font-size: 12px; color: var(--p-slate-500);
+}
 .sb-line.mini-line-total {
-  margin-top: 0; padding-top: 12px; padding-bottom: 2px;
+  margin-top: 0; padding-top: 13px; padding-bottom: 2px;
   border-top: 2px solid var(--border-default); border-bottom: 0;
 }
-.sb-line.mini-line-total dd { font-size: 17px; }
+.sb-line.mini-line-total dd { font-size: 18px; }
 
 /* States the supply type Simple mode guessed on the visitor's behalf. Inside the ledger
    (above the torn edge) because it qualifies the figures, not the page. */
@@ -3767,18 +3879,18 @@ html:not([lang="en"]) .sb-amount-label { text-transform: none; letter-spacing: .
 }
 .sb-assume strong { color: var(--text-primary); font-weight: 650; }
 
-/* Escape hatch to the full 28-row bill — Detailed mode's output, one click away.
-   Full-width below the torn edge, so it reads as leaving the counterfoil, not as a
-   control belonging to the ledger. */
+/* Escape hatch to the full 28-row bill — Detailed mode's output, one click away. A small
+   centred pill, not a full-width bar: it's a secondary exit from the counterfoil, and at
+   full width it competed with the total for weight. */
 .sb-expand {
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  width: 100%; margin: 16px 0 0; padding: 11px 15px;
-  border-radius: var(--radius-md, 10px);
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  width: auto; margin: 14px auto 0; padding: 7px 14px;
+  border-radius: var(--radius-full, 999px);
   border: 1px solid var(--border-default); background: var(--surface-card);
-  font: inherit; font-size: 12.5px; font-weight: 600; color: var(--text-secondary);
+  font: inherit; font-size: 11.5px; font-weight: 600; color: var(--text-secondary);
   cursor: pointer; transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast);
 }
-.sb-expand svg { width: 14px; height: 14px; flex-shrink: 0; }
+.sb-expand svg { width: 12px; height: 12px; flex-shrink: 0; }
 .sb-expand:hover { color: var(--brand-dark); border-color: var(--brand-border); background: var(--brand-faint); }
 .sb-expand:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 @media (max-width: 600px) {
@@ -3786,8 +3898,17 @@ html:not([lang="en"]) .sb-amount-label { text-transform: none; letter-spacing: .
   .bill-wrap.simple-bill { padding: 0 20px 22px; }
   .sb-head { flex-wrap: wrap; padding-top: 16px; }
   .sb-chip { order: 3; }
-  .sb-amount { padding: 14px 15px 13px; }
+  /* Too little width for the label rail and the figure to share a line. */
+  .sb-amount { grid-template-columns: 1fr; row-gap: 6px; padding: 14px 15px 13px; }
+  .sb-amount-fig { justify-self: start; text-align: left; }
   .sb-line { font-size: 13px; }
+  /* The slab working is the first thing to drop — the amount is what matters on a phone. */
+  .sb-line dt { gap: 12px; }
+  .sb-line dt small { font-size: 11px; }
+}
+@media (max-width: 420px) {
+  .sb-line dt { display: block; }
+  .sb-line dt small { display: block; margin-top: 2px; text-align: left; }
 }
 
 /* ─── Toast ──────────────────────────────────────────────────────────────────── */

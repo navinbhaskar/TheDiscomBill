@@ -85,7 +85,7 @@ async function syncBillToCloud({ label, amount, params }) {
   } catch (e) { /* offline / stale token — local history still has the bill */ }
 }
 
-const HISTORY_PREVIEW = 4;          // collapsed view shows this many; "View all" reveals the rest
+const HISTORY_PREVIEW = 2;          // collapsed view shows this many; "View all" reveals the rest
 let historyExpanded = false;
 
 export function renderHistory() {

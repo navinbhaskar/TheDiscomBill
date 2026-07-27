@@ -138,12 +138,17 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
     arrears, payments, adjustments, totalPayable,
   } = result;
 
+  // Three visual columns: label — how it was worked out — amount. The middle one is what
+  // fills the dead band between a short label and a right-aligned figure; it lives inside
+  // <dt> (pushed right by flex) rather than as a third grid cell, because a <span> between
+  // <dt> and <dd> is not valid inside a <dl>.
   const row = (label, amount, opts = {}) => {
     const { detail = '', working = '', cls = '' } = opts;
     const sign = amount < 0 ? '−' : '';
+    const note = working || detail;
     return `
       <div class="mini-line sb-line ${cls}">
-        <dt>${label}${detail ? ` <em>${detail}</em>` : ''}${working ? `<small>${working}</small>` : ''}</dt>
+        <dt><span class="sb-label">${label}</span>${note ? `<small>${note}</small>` : ''}</dt>
         <dd>${sign}${formatINR(Math.abs(amount))}</dd>
       </div>`;
   };
@@ -221,10 +226,16 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
       <span class="sb-chip">Provisional estimate</span>
     </div>
 
+    <!-- Two columns so the figure sits on the right edge instead of leaving half the panel
+         empty: meta rail on the left, the amount itself hard right. Stacks under 520px. -->
     <div class="sb-amount">
-      <div class="sb-amount-label">Total payable</div>
-      <div class="sb-total-amount">${formatINR(Math.max(0, grandTotal))}</div>
-      <div class="sb-total-sub">${periodBits}</div>
+      <div class="sb-amount-meta">
+        <div class="sb-amount-label">Total payable</div>
+        <div class="sb-total-sub">${periodBits}</div>
+      </div>
+      <div class="sb-amount-fig">
+        <div class="sb-total-amount">${formatINR(Math.max(0, grandTotal))}</div>
+      </div>
       <div class="sb-words">${numberToWords(Math.max(0, grandTotal))}</div>
     </div>
 

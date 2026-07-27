@@ -483,8 +483,14 @@
         <div class="form-group simple-only" id="purposeGroup">
           <label class="req" data-i18n="label.purpose">What is the connection for?</label>
           <div class="purpose-chips" id="purposeChips" role="group" aria-label="Connection purpose">
-            <button type="button" class="purpose-chip active" data-kind="domestic" aria-pressed="true" data-i18n="purpose.home">🏠 Home</button>
-            <button type="button" class="purpose-chip" data-kind="commercial" aria-pressed="false" data-i18n="purpose.business">🏪 Shop / Business</button>
+            <button type="button" class="purpose-chip active" data-kind="domestic" aria-pressed="true">
+              <svg class="pc-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.4 12 3.2l9 7.2"/><path d="M5.5 9.6V19.8a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.6"/><path d="M9.8 20.8v-6h4.4v6"/></svg>
+              <span data-i18n="purpose.home">Home</span>
+            </button>
+            <button type="button" class="purpose-chip" data-kind="commercial" aria-pressed="false">
+              <svg class="pc-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.4 3.8h17.2l1.1 4.1a2.9 2.9 0 0 1-5.6 1.05 2.9 2.9 0 0 1-5.6 0 2.9 2.9 0 0 1-5.6 0 2.9 2.9 0 0 1-2.6-1.05Z"/><path d="M4.9 10.5v9.3a1 1 0 0 0 1 1h12.2a1 1 0 0 0 1-1v-9.3"/><path d="M9.6 20.8v-5.3h4.8v5.3"/></svg>
+              <span data-i18n="purpose.business">Shop / Business</span>
+            </button>
           </div>
           <small class="purpose-echo" id="purposeEcho"></small>
         </div>
