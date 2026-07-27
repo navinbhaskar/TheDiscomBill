@@ -3868,71 +3868,42 @@ html:not([lang="en"]) .sb-amount-label { text-transform: none; letter-spacing: .
 }
 .sb-line.mini-line-total dd { font-size: 18px; }
 
-/* ── Slab-wise energy charge ────────────────────────────────────────────────────
-   Four columns: band, units, rate, amount. Each data row carries --fill, the share of
-   consumption that landed in that slab, drawn as a tinted band behind the row — so the
-   table also answers "where did most of my usage sit?" at a glance, which a plain grid
-   of numbers doesn't. */
-.sb-slabs { margin-top: 20px; }
-.sb-slabs-title {
-  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .9px;
-  color: var(--p-slate-700); margin-bottom: 9px;
-}
-html:not([lang="en"]) .sb-slabs-title { text-transform: none; letter-spacing: .2px; font-size: 12px; }
-.sb-slab-grid {
-  border: 1px solid var(--border-subtle); border-radius: 10px; overflow: hidden;
-  background: var(--surface-card);
-}
-.sb-slab {
+/* ── Slab sub-rows under Energy charge ──────────────────────────────────────────
+   Indented children of the Energy charge line, not a table of their own: the figures
+   then appear once, in the place they explain, and every amount on the bill stays in
+   the same right-aligned column. Each row carries --fill, the share of consumption in
+   that slab, drawn as a tinted band so the group also shows where the usage sat. */
+.sb-line-parent { border-bottom: 0; padding-bottom: 6px; }
+.sb-subline {
   position: relative;
-  display: grid; grid-template-columns: minmax(0, 1fr) 62px 72px 96px;
-  align-items: center; gap: 10px;
-  padding: 10px 13px;
-  font-size: 13px; color: var(--p-slate-700);
-  border-top: 1px solid var(--border-subtle);
+  padding: 6px 0 6px 16px;
+  border-bottom: 0;
+  font-size: 12.5px; color: var(--p-slate-600);
 }
-.sb-slab:first-child { border-top: 0; }
-/* The proportional band. Behind the text, inset from the row edges so it reads as a
-   measure rather than as a selected row. */
-.sb-slab[style*="--fill"]::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
-  width: var(--fill, 0%);
-  background: linear-gradient(90deg, rgba(37, 99, 235, .11), rgba(37, 99, 235, .045));
+/* Bracket down the indent, tying the slab rows to the charge they break down. */
+.sb-subline::after {
+  content: ''; position: absolute; left: 5px; top: 0; bottom: 0;
+  border-left: 1px solid var(--border-default);
+}
+.sb-subline:last-of-type::after { bottom: 50%; }
+/* The proportional band, behind the text and clipped to the row. */
+.sb-subline::before {
+  content: ''; position: absolute; left: 16px; top: 3px; bottom: 3px;
+  width: calc(var(--fill, 0%) * .82);
+  background: linear-gradient(90deg, rgba(37, 99, 235, .13), rgba(37, 99, 235, .03));
+  border-radius: 2px;
   pointer-events: none;
 }
-.sb-slab > * { position: relative; }   /* above the band */
-.sb-slab-head {
-  background: var(--surface-sunken);
-  font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .7px;
-  color: var(--p-slate-600);
-}
-.sb-slab-head::before { content: none; }
-html:not([lang="en"]) .sb-slab-head { text-transform: none; letter-spacing: .2px; font-size: 11.5px; }
-.ss-band { min-width: 0; font-weight: 600; color: var(--text-primary); }
-/* Tabular figures so the three numeric columns line up digit for digit down the table. */
-.ss-num { text-align: right; font-variant-numeric: tabular-nums; letter-spacing: .1px; }
-.ss-amt { font-weight: 700; color: var(--text-primary); }
-.sb-slab-foot {
-  background: var(--surface-sunken);
-  font-weight: 700; color: var(--text-primary);
-  border-top: 2px solid var(--border-default);
-}
-.sb-slab-foot::before { content: none; }
-/* The blended average is not a tariff rate anyone is charged — mark it as derived. */
-.ss-avg { font-weight: 500; color: var(--p-slate-600); }
-.ss-avg::before { content: '⌀ '; opacity: .7; }
-.sb-slabs-foot {
-  margin: 8px 0 0; font-size: 11px; line-height: 1.5; color: var(--p-slate-600);
-  text-wrap: pretty;
-}
-.sb-slabs-foot strong { color: var(--p-slate-700); font-weight: 650; }
+.sb-subline > dt, .sb-subline > dd { position: relative; }   /* above the band */
+.sb-subline dt .sb-label { font-weight: 500; color: var(--p-slate-700); }
+.sb-subline dt small { font-size: 11.5px; }
+.sb-subline dd { font-weight: 600; color: var(--p-slate-700); }
+/* Closes the group: the row after the last slab gets its rule back. */
+.sb-subline + .sb-line:not(.sb-subline) { border-top: 1px dashed var(--border-subtle); }
 @media (max-width: 600px) {
-  .sb-slab { grid-template-columns: minmax(0, 1fr) 40px 52px 80px; gap: 7px; padding: 9px 10px; font-size: 12px; }
-  /* "Rate (₹)" / "Amount (₹)" wrapped to two lines and pushed the header row to 56px. The
-     amounts below carry their own ₹, so the suffix is redundant at this width. */
-  .ss-cur { display: none; }
-  .sb-slab-head { letter-spacing: .4px; }
-  .sb-slabs-foot { font-size: 10.5px; }
+  .sb-subline { font-size: 11.5px; padding-left: 13px; }
+  .sb-subline::before { left: 13px; }
+  .sb-subline dt small { font-size: 10.5px; }
 }
 
 /* States the supply type Simple mode guessed on the visitor's behalf. Inside the ledger
@@ -3979,6 +3950,10 @@ html:not([lang="en"]) .sb-slab-head { text-transform: none; letter-spacing: .2px
 @media (max-width: 420px) {
   .sb-line dt { display: block; }
   .sb-line dt small { display: block; margin-top: 2px; text-align: left; }
+  /* Slab rows are exempt: "150 × ₹5.50" is short enough to stay on the label's line, and
+     stacking three of them cost 60px of height for no gain in legibility. */
+  .sb-subline dt { display: flex; }
+  .sb-subline dt small { display: inline; margin: 0; text-align: right; }
 }
 
 /* ─── Toast ──────────────────────────────────────────────────────────────────── */

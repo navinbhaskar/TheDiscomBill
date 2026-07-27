@@ -153,51 +153,29 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
       </div>`;
   };
 
-  // Slab-wise energy charge, as its own table below the ledger. The inline
-  // "150 × ₹5.50 + 100 × ₹6.00" working it replaces got unreadable past two slabs.
   const usedSlabs = (slabBreakdown || []).filter(s => s.units > 0);
   const slabUnitsTotal = usedSlabs.reduce((a, s) => a + s.units, 0);
   const eUnitLabel = energyUnit || 'units';
-  const slabTable = usedSlabs.length ? `
-    <div class="sb-slabs">
-      <div class="sb-slabs-title">Energy charge, slab by slab</div>
-      <div class="sb-slab-grid" role="table" aria-label="Slab-wise energy charge">
-        <div class="sb-slab sb-slab-head" role="row">
-          <span role="columnheader">Slab range</span>
-          <span role="columnheader">${escHtml(eUnitLabel)}</span>
-          <span role="columnheader">Rate<span class="ss-cur"> (₹)</span></span>
-          <span role="columnheader">Amount<span class="ss-cur"> (₹)</span></span>
-        </div>
-        ${usedSlabs.map(s => `
-        <div class="sb-slab" role="row" style="--fill:${slabUnitsTotal ? (s.units / slabUnitsTotal * 100).toFixed(1) : 0}%">
-          <span class="ss-band" role="cell">${escHtml(s.label)}</span>
-          <span class="ss-num" role="cell">${s.units}</span>
-          <span class="ss-num" role="cell">${Number(s.rate).toFixed(2)}</span>
-          <span class="ss-num ss-amt" role="cell">${formatINR(s.amount)}</span>
-        </div>`).join('')}
-        ${usedSlabs.length > 1 ? `
-        <div class="sb-slab sb-slab-foot" role="row">
-          <span role="cell">Total</span>
-          <span class="ss-num" role="cell">${slabUnitsTotal}</span>
-          <span class="ss-num ss-avg" role="cell">${(totalEnergy / slabUnitsTotal).toFixed(2)}</span>
-          <span class="ss-num ss-amt" role="cell">${formatINR(totalEnergy)}</span>
-        </div>` : ''}
-      </div>
-      ${usedSlabs.length > 1 ? `
-      <p class="sb-slabs-foot">Each block of ${escHtml(eUnitLabel)} is charged at its own rate — only the
-        ${escHtml(usedSlabs[usedSlabs.length - 1].label)} block costs
-        ₹${Number(usedSlabs[usedSlabs.length - 1].rate).toFixed(2)}. The <strong>Total</strong> rate is your
-        blended average, not a slab you can be billed at.</p>` : ''}
-    </div>` : '';
+
+  // Slab rows hang off the Energy charge line inside the ledger, indented, rather than
+  // sitting in a table of their own further down — the figures then appear once, in the
+  // place they explain. Same dt/small/dd rhythm as every other row, so the amounts stay
+  // in one right-aligned column all the way down the bill.
+  const slabRows = usedSlabs.length > 1 ? usedSlabs.map(s => `
+      <div class="mini-line sb-line sb-subline" style="--fill:${(s.units / slabUnitsTotal * 100).toFixed(1)}%">
+        <dt><span class="sb-label">${escHtml(s.label)}</span><small>${s.units} × ₹${Number(s.rate).toFixed(2)}</small></dt>
+        <dd>${formatINR(s.amount)}</dd>
+      </div>`).join('') : '';
 
   const lines = [];
-  // Gutter note is the blended rate now that the per-slab arithmetic has its own table.
   if (totalEnergy) {
-    // "avg" only when there is more than one slab to average across.
+    // Gutter carries the blended rate; "avg" only when there is more than one slab to
+    // average across. The per-slab arithmetic is in the sub-rows below.
     const avg = slabUnitsTotal
       ? `${slabUnitsTotal} ${eUnitLabel} @ ₹${(totalEnergy / slabUnitsTotal).toFixed(2)}${usedSlabs.length > 1 ? ' avg' : ''}`
       : '';
-    lines.push(row('Energy charge', totalEnergy, { detail: avg }));
+    lines.push(row('Energy charge', totalEnergy, { detail: avg, cls: slabRows ? 'sb-line-parent' : '' }));
+    lines.push(slabRows);
   }
   if (fixedCharge) {
     const load = billingDemand || connectedLoadKw;
@@ -286,8 +264,6 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
         <dt>Total payable</dt><dd>${formatINR(Math.max(0, grandTotal))}</dd>
       </div>
     </dl>
-
-    ${slabTable}
 
     ${assumption ? `<p class="sb-assume">${assumption}</p>` : ''}
 
