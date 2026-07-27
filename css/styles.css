@@ -2208,35 +2208,69 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
    pasted onto stationery, and it fought the dot-matrix paper the rest of the bill is
    printed on. A rule under the block does the separating instead, the way a real bill's
    letterhead does — so every child below is inked, not reversed out of white. */
+/* Masthead: identity row, then the licence area full-bleed, then the rates badge on its
+   own foot rule. Stacking these lets the area text use the whole paper width instead of
+   the narrow column left over beside the title box. */
 .bill-header {
-  padding: 20px 4px 16px;
+  padding: 20px 4px 0;
   border-bottom: 2px solid var(--border-strong);
-  display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
 }
-.bill-header-left { display: flex; gap: 14px; align-items: flex-start; }
-.bill-discom-icon { font-size: 36px; line-height: 1; margin-top: 2px; }
-.bill-discom-name { font-size: 20px; font-weight: 800; line-height: 1.2; letter-spacing: -0.3px; color: var(--text-primary); }
-.bill-discom-full { font-size: 12px; color: var(--text-secondary); margin-top: 3px; line-height: 1.4; max-width: 300px; }
+.bill-header-top {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;
+}
+.bill-header-left { display: flex; gap: 13px; align-items: flex-start; min-width: 0; }
+.bill-discom-id { min-width: 0; }
+/* Tile rather than a bare 36px glyph — matches the counterfoil's .sb-mark and gives the
+   masthead a fixed optical anchor whatever the DISCOM's name length. */
+.bill-discom-icon {
+  flex-shrink: 0; width: 38px; height: 38px; border-radius: 10px;
+  display: grid; place-items: center; font-size: 19px; line-height: 1;
+  background: linear-gradient(160deg, var(--brand-faint), rgba(37, 99, 235, .14));
+  border: 1px solid var(--brand-border);
+}
+.bill-discom-name {
+  font-family: var(--font-display);
+  font-size: 21px; font-weight: 800; line-height: 1.15; letter-spacing: -0.4px;
+  color: var(--text-primary);
+}
+.bill-discom-full { font-size: 12px; color: var(--text-secondary); margin-top: 3px; line-height: 1.45; max-width: 46ch; }
 /* Not --text-tertiary: slate-400 on the white bill paper is 2.56:1 and fails AA. It was
    legible before only because it sat on the blue band as rgba(255,255,255,.62). */
-.bill-discom-area { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+.bill-discom-area {
+  margin: 12px 0 0;
+  font-size: 11.5px; line-height: 1.55; color: var(--text-secondary);
+  text-wrap: pretty;
+  /* Full width now, so a long licence-area list settles at 2–3 lines. The clamp is a
+     backstop for the few DISCOMs that enumerate 30+ districts. */
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden;
+}
 .bill-header-right { text-align: right; flex-shrink: 0; }
 .bill-title-main {
-  font-size: 12px; font-weight: 800; letter-spacing: 1px;
+  font-size: 11.5px; font-weight: 800; letter-spacing: 1px;
   border: 1.5px solid var(--border-strong); padding: 4px 12px; border-radius: var(--radius-sm);
   display: inline-block; margin-bottom: 6px; color: var(--text-primary);
+  white-space: nowrap;
 }
 .bill-title-sub { font-size: 11px; color: var(--text-secondary); }
 .bill-tariff-year { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+/* Foot rule under the masthead, carrying the provenance badge across the full width. */
+.bill-header-foot {
+  margin-top: 12px; padding: 9px 0 11px;
+  border-top: 1px dashed var(--border-default);
+}
 
 /* Confidence badge — quiet outlined pill on the paper, text only */
 .conf-badge {
-  display: inline-block; margin-top: 6px; padding: 2px 10px; border-radius: 999px;
-  font-size: 10px; font-weight: 700; letter-spacing: .04em;
+  display: inline-flex; align-items: center; padding: 3px 11px; border-radius: 999px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .04em; line-height: 1.5;
   border: 1px solid var(--border-default); color: var(--text-secondary);
   background: var(--surface-sunken);
+  max-width: 100%;
 }
-.conf-verified { border-color: var(--ok-text, #15803d); color: var(--ok-text, #15803d); }
+.conf-verified {
+  border-color: rgba(21, 128, 61, .35); color: var(--ok-text, #15803d);
+  background: rgba(22, 163, 74, .07);
+}
 .conf-estimate { border-color: var(--border-strong); color: var(--text-secondary); }
 
 /* Section titles — quiet grey caps; the uppercase weight is enough of a marker */
@@ -2321,12 +2355,33 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   font-size: 14px; padding: 8px 12px; font-weight: 700;
 }
 .net-amt { font-size: 17px !important; font-weight: 800 !important; }
+/* The final total, marked the way a ledger marks one: a heavy rule above and a double
+   rule below, on bare paper. The old solid blue band was the loudest object on a page
+   whose whole point is to look like a printed bill, and it fought the figure it framed —
+   here nothing competes with the number itself. */
 .bill-charges-table tfoot .total-payable-row td {
-  background: var(--brand-dark); color: #fff;
-  font-size: 15px; padding: 9px 12px; border-top: 1px solid rgba(255,255,255,.12);
-  font-weight: 700;
+  background: transparent; color: var(--text-primary);
+  font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.1px;
+  padding: 14px 12px 15px;
+  border-top: 2px solid var(--text-primary);
+  border-bottom: 3px double var(--text-primary);
+  vertical-align: middle;
 }
-.total-amt { font-size: 22px !important; font-weight: 800 !important; }
+html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
+  text-transform: none; letter-spacing: .2px; font-size: 12.5px;
+}
+/* Font-family deliberately left to the dot-matrix rule above — the grand total is the last
+   figure in the bill's monospace money column and should read as part of it, not as a
+   different typeface that happens to be bigger.
+   Selector carries the table scope: bare `.total-amt` (0,1,0) loses the colour to the
+   `…tfoot .total-payable-row td` rule (0,3,3) above, which is how the figure came out
+   slate-900 instead of brand blue. */
+.bill-charges-table tfoot .total-payable-row td.total-amt {
+  font-size: 26px; font-weight: 800;
+  letter-spacing: -.5px; line-height: 1;
+  color: var(--brand-dark);
+  text-transform: none;
+}
 
 /* Amount-in-words — neutral inset */
 .bill-words {
@@ -4013,6 +4068,8 @@ html:not([lang="en"]) .sb-amount-label { text-transform: none; letter-spacing: .
 .pdf-export .bill-charges-table td, .pdf-export .bill-charges-table th, .pdf-export .bill-reading-table td, .pdf-export .bill-reading-table th { padding: 3px 8px; }
 .pdf-export .net-amt { font-size: 13px !important; font-weight: 800 !important; }
 .pdf-export .total-amt { font-size: 17px !important; font-weight: 800 !important; }
+/* Same reasoning as the @media print rule: black ink for the exported PDF. */
+.pdf-export .bill-charges-table tfoot .total-payable-row td.total-amt { color: #000; }
 .pdf-export .bill-words { padding: 6px 12px; font-size: 10px; }
 .pdf-export .bill-category-note { padding: 6px 12px; font-size: 9px; line-height: 1.35; }
 .pdf-export .bill-disclaimer { padding: 6px 12px; font-size: 8.5px; line-height: 1.35; }
@@ -4084,6 +4141,9 @@ html:not([lang="en"]) .sb-amount-label { text-transform: none; letter-spacing: .
   .bill-charges-table .section-header-row td { font-weight: 700; letter-spacing: .04em; border-top: 1.5px solid #000; border-bottom: 1px solid #000; }
   .bill-charges-table tfoot .net-row td { font-weight: 800; border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; }
   .bill-charges-table tfoot .total-payable-row td { font-weight: 800; border-top: 2.5px solid #000; border-bottom: 3px double #000; }
+  /* Black ink: the screen style tints the grand total brand-blue, which prints as a weak
+     grey on a mono printer. The double rule already carries the emphasis on paper. */
+  .bill-charges-table tfoot .total-payable-row td.total-amt { color: #000; }
 
   /* Words / notes / disclaimer / estimated banner → bordered white blocks */
   .bill-words,

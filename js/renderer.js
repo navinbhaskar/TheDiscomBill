@@ -524,22 +524,26 @@ export function renderBill(params) {
     <div class="bill-stamp" aria-hidden="true"><span>Provisional</span><small>Estimate · Not a demand notice</small></div>
     ${estimatedBanner}
     <div class="bill-header">
-      <div class="bill-header-left">
-        <div class="bill-discom-icon">⚡</div>
-        <div>
-          <div class="bill-discom-name">${discom.name}</div>
-          <div class="bill-discom-full">${discom.fullName}</div>
-          <div class="bill-discom-area">${discom.area}</div>
+      <div class="bill-header-top">
+        <div class="bill-header-left">
+          <div class="bill-discom-icon" aria-hidden="true">⚡</div>
+          <div class="bill-discom-id">
+            <div class="bill-discom-name">${discom.name}</div>
+            <div class="bill-discom-full">${discom.fullName}</div>
+          </div>
+        </div>
+        <div class="bill-header-right">
+          <div class="bill-title-box">
+            <div class="bill-title-main">PROVISIONAL BILL</div>
+            <div class="bill-title-sub">Electricity Bill Estimate</div>
+            <div class="bill-tariff-year">Tariff Year: ${discom.tariffYear || '2024-25'}</div>
+          </div>
         </div>
       </div>
-      <div class="bill-header-right">
-        <div class="bill-title-box">
-          <div class="bill-title-main">PROVISIONAL BILL</div>
-          <div class="bill-title-sub">Electricity Bill Estimate</div>
-          <div class="bill-tariff-year">Tariff Year: ${discom.tariffYear || '2024-25'}</div>
-          ${confidenceBadge(tariffVerified, tariffAsOf)}
-        </div>
-      </div>
+      <!-- Licence area runs the full width of the bill rather than inside the left column,
+           where it was squeezed into a ~200px gutter and ran to ten lines. -->
+      <div class="bill-discom-area">${discom.area}</div>
+      <div class="bill-header-foot">${confidenceBadge(tariffVerified, tariffAsOf)}</div>
     </div>
 
     <div class="bill-details-row">
@@ -865,22 +869,26 @@ export function renderRevisionBill(params) {
     <div class="bill-perf bill-perf-top" aria-hidden="true"></div>
     <div class="bill-stamp" aria-hidden="true"><span>Provisional</span><small>Estimate · Not a demand notice</small></div>
     <div class="bill-header">
-      <div class="bill-header-left">
-        <div class="bill-discom-icon">⚡</div>
-        <div>
-          <div class="bill-discom-name">${discom.name}</div>
-          <div class="bill-discom-full">${discom.fullName}</div>
-          <div class="bill-discom-area">${discom.area}</div>
+      <div class="bill-header-top">
+        <div class="bill-header-left">
+          <div class="bill-discom-icon" aria-hidden="true">⚡</div>
+          <div class="bill-discom-id">
+            <div class="bill-discom-name">${discom.name}</div>
+            <div class="bill-discom-full">${discom.fullName}</div>
+          </div>
+        </div>
+        <div class="bill-header-right">
+          <div class="bill-title-box">
+            <div class="bill-title-main">Provisional Bill/Bill Revision</div>
+            <div class="bill-title-sub">Multi-Month Estimate</div>
+            <div class="bill-tariff-year">Tariff Year: ${discom.tariffYear || '2024-25'}</div>
+          </div>
         </div>
       </div>
-      <div class="bill-header-right">
-        <div class="bill-title-box">
-          <div class="bill-title-main">Provisional Bill/Bill Revision</div>
-          <div class="bill-title-sub">Multi-Month Estimate</div>
-          <div class="bill-tariff-year">Tariff Year: ${discom.tariffYear || '2024-25'}</div>
-          ${confidenceBadge(tariffVerified, tariffAsOf)}
-        </div>
-      </div>
+      <!-- Licence area runs the full width of the bill rather than inside the left column,
+           where it was squeezed into a ~200px gutter and ran to ten lines. -->
+      <div class="bill-discom-area">${discom.area}</div>
+      <div class="bill-header-foot">${confidenceBadge(tariffVerified, tariffAsOf)}</div>
     </div>
 
     <div class="bill-details-row">
