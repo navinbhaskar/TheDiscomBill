@@ -1171,21 +1171,29 @@ html:not([lang="en"]) .hero-discoms-label {
 /* ─── Calculator Section ──────────────────────────────────────────────────────── */
 .calculator-section {
   max-width: 1280px; margin: 0 auto 48px;
-  /* Even 12px gutter on top and sides. padding-top (not margin) is used because a top
-     margin here collapses through .page-body and creates no gap. */
-  padding: 12px 12px 0;
+  /* Side gutter matches .hero's 16px so the cards keep lining up with the hero panel below
+     1180px, where both stop being width-capped. padding-top (not margin) is used because a
+     top margin here collapses through .page-body and creates no gap. */
+  padding: 12px 16px 0;
   position: relative; z-index: 1;
   scroll-margin-top: 76px;   /* anchor jumps from the hero CTA clear the sticky header */
+}
+/* Phones: .hero drops to a 10px gutter, so this follows it. Declared here rather than in the
+   600px block further up the file — that block precedes this rule, and a `padding-inline`
+   there loses to the `padding` shorthand above regardless of the media query. */
+@media (max-width: 600px) {
+  .calculator-section { padding-inline: 10px; }
 }
 .calculator-grid {
   display: grid;
   grid-template-columns: 460px 1fr;
   gap: 8px;
   align-items: start;
-  /* Same measure as .hero-glass (max-width 1180 with the identical clamp padding), so the
-     form + bill land on exactly the hero's content edges instead of running 165px wider. */
+  /* Match .hero-glass's OUTER edge (max-width 1180, centred) so the form and bill cards
+     line up with the glass panel above them. No padding-inline: the hero's clamp padding
+     is what insets its *text* from the panel edge, and adding it here would hold these
+     cards 44px inside the edge the eye actually compares them against. */
   max-width: 1180px; margin-inline: auto;
-  padding-inline: clamp(18px, 4vw, 44px);
 }
 /* Let the grid tracks shrink below their content's min-size, so a wide child (e.g. the
    tab strip's "ADJUSTMENT" tab) can never blow the panel past the viewport on phones. */
