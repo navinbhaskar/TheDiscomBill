@@ -297,35 +297,44 @@
   </div>
   </div><!-- /hero-left -->
 
-  <!-- Right: one sample-bill card with two faces (tablist) — the estimate, and the same
-       units priced across states. Every figure is calculateBill() output for 250 units /
+  <!-- Right: one sample-bill card that rotates through five real DISCOM bills (5s apiece,
+       dots above the DISCOM chip). Every figure is calculateBill() output for 250 units /
        2 kW / 30 days on 2026-07-15, each DISCOM at its own documented surcharge from
-       tariffs/fppa.js (UP FPPAS −4.43%, BRPL PPAC 17.94%, BESCOM & MSEDCL none on record).
-       Supply type is MVVNL ST-10B (Urban Domestic, >1 kW) — NOT ST-10A, which is Urban
-       Life Line and caps at 1 kW / 100 units, so 250 units on it is an impossible bill.
-       Re-verify after any tariff order:
+       tariffs/fppa.js (UP FPPAS −4.43%, BRPL PPAC 17.94%; BESCOM, MSEDCL and TNPDCL have
+       none on record). MVVNL's supply type is ST-10B (Urban Domestic, >1 kW) — NOT ST-10A,
+       which is Urban Life Line and caps at 1 kW / 100 units, so 250 units on it is an
+       impossible bill. Re-verify every slide after any tariff order, e.g.
          calculateBill({ discomId:'mvvnl', categoryId:'domestic', supplyTypeId:'10B',
            units:250, connectedLoadKw:2, billingPeriodDays:30, billingDate:'2026-07-15',
-           facRate:-4.43, facMode:'percent' })  →  currentNet 1651 -->
+           facRate:-4.43, facMode:'percent' })  →  currentNet 1651
+       and the same call for brpl (1038), bescom (1750), msedcl (2567), tangedco (1389). -->
   <div class="hero-right reveal">
     <div class="hero-bill-card" id="heroBillCard">
       <div class="hbc-head">
-        <div class="hbc-tabs" role="tablist" aria-label="Sample bill views" data-active="bill">
-          <button type="button" class="hbc-tab active" role="tab" aria-selected="true"
-                  aria-controls="hbcFaceBill" id="hbcTabBill" data-face="bill" data-i18n="hero.card.tabBill">Estimated bill</button>
-          <button type="button" class="hbc-tab" role="tab" aria-selected="false" tabindex="-1"
-                  aria-controls="hbcFaceCompare" id="hbcTabCompare" data-face="compare" data-i18n="hero.card.tabCompare">Across India</button>
+        <!-- Dots sit above the DISCOM chip and double as the autoplay progress bar: the
+             active dot is a pill whose fill sweeps across over the 5s dwell. -->
+        <div class="hbc-dots" role="tablist" aria-label="Sample bills by DISCOM">
+          <button type="button" class="hbc-dot active" role="tab" aria-selected="true" id="hbcDot0"
+                  aria-controls="hbcSlide0"><span class="hbc-dot-fill" aria-hidden="true"></span><span class="sr-only">UPPCL · Lucknow</span></button>
+          <button type="button" class="hbc-dot" role="tab" aria-selected="false" tabindex="-1" id="hbcDot1"
+                  aria-controls="hbcSlide1"><span class="hbc-dot-fill" aria-hidden="true"></span><span class="sr-only">BSES Rajdhani · Delhi</span></button>
+          <button type="button" class="hbc-dot" role="tab" aria-selected="false" tabindex="-1" id="hbcDot2"
+                  aria-controls="hbcSlide2"><span class="hbc-dot-fill" aria-hidden="true"></span><span class="sr-only">BESCOM · Bengaluru</span></button>
+          <button type="button" class="hbc-dot" role="tab" aria-selected="false" tabindex="-1" id="hbcDot3"
+                  aria-controls="hbcSlide3"><span class="hbc-dot-fill" aria-hidden="true"></span><span class="sr-only">MSEDCL · Maharashtra</span></button>
+          <button type="button" class="hbc-dot" role="tab" aria-selected="false" tabindex="-1" id="hbcDot4"
+                  aria-controls="hbcSlide4"><span class="hbc-dot-fill" aria-hidden="true"></span><span class="sr-only">TNPDCL · Tamil Nadu</span></button>
         </div>
         <span class="hbc-chip" id="hbcChip">UPPCL · Lucknow</span>
       </div>
 
+      <!-- Every slide is the same shape: the answer up top, then the bill line by line. The
+           slab split under Energy is the working a real bill hides — most print one total. -->
       <div class="hbc-faces">
-        <!-- Face 1 — the answer up top, then the bill itself line by line. The slab split
-             under Energy is the working a real bill hides: most print one energy total. -->
-        <div class="hbc-face active" id="hbcFaceBill" role="tabpanel" aria-labelledby="hbcTabBill" tabindex="0">
+        <div class="hbc-face active" id="hbcSlide0" role="tabpanel" aria-labelledby="hbcDot0" tabindex="0" data-chip="UPPCL · Lucknow">
           <div class="hbc-hero">
             <span class="hbc-hero-amount">₹1,651</span>
-            <span class="hbc-hero-sub" data-i18n="hero.card.sub">250 units · 2 kW · LMV-1 domestic</span>
+            <span class="hbc-hero-sub" data-i18n="hero.card.sub0">250 units · 2 kW · LMV-1 domestic</span>
           </div>
           <dl class="hbc-lines">
             <div class="hbc-line">
@@ -354,40 +363,142 @@
               <dd>₹1,651.00</dd>
             </div>
           </dl>
+          <p class="hbc-note" data-i18n="hero.card.note0">UP's fuel surcharge is monthly — July 2026 was a credit.</p>
         </div>
 
-        <!-- Face 2 — same 250 units priced in four states, UP highlighted -->
-        <!-- No tabindex: this panel holds a focusable link, so it needs no tab stop of its own -->
-        <div class="hbc-face" id="hbcFaceCompare" role="tabpanel" aria-labelledby="hbcTabCompare" inert>
-          <div class="hbc-title" data-i18n="hero.card.cmpTitle">What 250 units costs across India</div>
-          <div class="hcc-chart" role="img" aria-label="Monthly bill for 250 units: Delhi ₹1,038, Uttar Pradesh ₹1,651, Karnataka ₹1,750, Maharashtra ₹2,567">
-            <div class="hcc-col">
-              <span class="hcc-amt">₹1,038</span>
-              <span class="hcc-track"><span class="hcc-bar" style="height:40%"></span></span>
-              <span class="hcc-state" data-i18n="hero.card.dl">Delhi</span>
-            </div>
-            <div class="hcc-col hcc-you">
-              <span class="hcc-amt">₹1,651</span>
-              <span class="hcc-track"><span class="hcc-bar" style="height:64%"></span></span>
-              <span class="hcc-state" data-i18n="hero.card.up">Uttar Pradesh</span>
-            </div>
-            <div class="hcc-col">
-              <span class="hcc-amt">₹1,750</span>
-              <span class="hcc-track"><span class="hcc-bar" style="height:68%"></span></span>
-              <span class="hcc-state" data-i18n="hero.card.ka">Karnataka</span>
-            </div>
-            <div class="hcc-col">
-              <span class="hcc-amt">₹2,567</span>
-              <span class="hcc-track"><span class="hcc-bar" style="height:100%"></span></span>
-              <span class="hcc-state" data-i18n="hero.card.mh">Maharashtra</span>
-            </div>
+        <div class="hbc-face" id="hbcSlide1" role="tabpanel" aria-labelledby="hbcDot1" tabindex="0" data-chip="BSES Rajdhani · Delhi" inert>
+          <div class="hbc-hero">
+            <span class="hbc-hero-amount">₹1,038</span>
+            <span class="hbc-hero-sub" data-i18n="hero.card.sub1">250 units · 2 kW · LT-I domestic</span>
           </div>
-          <p class="hbc-cmp-basis" data-i18n="hero.card.cmpBasis">Each state at its own current fuel surcharge</p>
-          <a class="hbc-cmp-link" href="/compare/"><span data-i18n="hero.card.cmpLink">Compare all DISCOM rates</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+          <dl class="hbc-lines">
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.energy">Energy charge</span>
+                <small>200 × ₹3.00 + 50 × ₹4.50</small></dt>
+              <dd>₹825.00</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.fixed">Fixed charge</span> <em>≤ 2 kW slab</em></dt>
+              <dd>₹20.00</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.ppac">Fuel surcharge (PPAC)</span> <em>+17.94%</em></dt>
+              <dd>₹151.59</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.duty">Electricity duty</span> <em>5%</em></dt>
+              <dd>₹41.25</dd>
+            </div>
+            <div class="hbc-line hbc-line-quiet">
+              <dt><span data-i18n="hero.card.rounding">Rounding</span></dt>
+              <dd>+₹0.16</dd>
+            </div>
+            <div class="hbc-line hbc-line-total">
+              <dt data-i18n="hero.card.totalPayable">Total payable</dt>
+              <dd>₹1,038.00</dd>
+            </div>
+          </dl>
+          <p class="hbc-note" data-i18n="hero.card.note1">Delhi's PPAC went monthly in June 2026 — BRPL's is 17.94%.</p>
+        </div>
+
+        <div class="hbc-face" id="hbcSlide2" role="tabpanel" aria-labelledby="hbcDot2" tabindex="0" data-chip="BESCOM · Bengaluru" inert>
+          <div class="hbc-hero">
+            <span class="hbc-hero-amount">₹1,750</span>
+            <span class="hbc-hero-sub" data-i18n="hero.card.sub2">250 units · 2 kW · LT-1 domestic</span>
+          </div>
+          <dl class="hbc-lines">
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.energy">Energy charge</span>
+                <small>250 × ₹5.80 — one flat slab</small></dt>
+              <dd>₹1,450.00</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.fixed">Fixed charge</span> <em>2 kW × ₹150</em></dt>
+              <dd>₹300.00</dd>
+            </div>
+            <div class="hbc-line hbc-line-quiet">
+              <dt><span data-i18n="hero.card.fac">Fuel surcharge (FAC)</span> <em data-i18n="hero.card.none">none notified</em></dt>
+              <dd>₹0.00</dd>
+            </div>
+            <div class="hbc-line hbc-line-total">
+              <dt data-i18n="hero.card.totalPayable">Total payable</dt>
+              <dd>₹1,750.00</dd>
+            </div>
+          </dl>
+          <p class="hbc-note" data-i18n="hero.card.note2">Karnataka has one flat domestic rate and no fuel line.</p>
+        </div>
+
+        <div class="hbc-face" id="hbcSlide3" role="tabpanel" aria-labelledby="hbcDot3" tabindex="0" data-chip="MSEDCL · Maharashtra" inert>
+          <div class="hbc-hero">
+            <span class="hbc-hero-amount">₹2,567</span>
+            <span class="hbc-hero-sub" data-i18n="hero.card.sub3">250 units · 2 kW · LT-I(B) residential</span>
+          </div>
+          <dl class="hbc-lines">
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.energy">Energy charge</span>
+                <small>100 × ₹4.32 + 150 × ₹9.40</small></dt>
+              <dd>₹1,842.00</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.fixed">Fixed charge</span> <em>1-phase ≤ 5 kW</em></dt>
+              <dd>₹130.00</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.wheeling">Wheeling charge</span> <em>250 × ₹1.20</em></dt>
+              <dd>₹300.00</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.duty">Electricity duty</span> <em>16%</em></dt>
+              <dd>₹294.72</dd>
+            </div>
+            <div class="hbc-line hbc-line-quiet">
+              <dt><span data-i18n="hero.card.rounding">Rounding</span></dt>
+              <dd>+₹0.28</dd>
+            </div>
+            <div class="hbc-line hbc-line-total">
+              <dt data-i18n="hero.card.totalPayable">Total payable</dt>
+              <dd>₹2,567.00</dd>
+            </div>
+          </dl>
+          <p class="hbc-note" data-i18n="hero.card.note3">16% duty plus a wheeling line — the steepest of the five.</p>
+        </div>
+
+        <div class="hbc-face" id="hbcSlide4" role="tabpanel" aria-labelledby="hbcDot4" tabindex="0" data-chip="TNPDCL · Tamil Nadu" inert>
+          <div class="hbc-hero">
+            <span class="hbc-hero-amount">₹1,389</span>
+            <span class="hbc-hero-sub" data-i18n="hero.card.sub4">250 units · 2 kW · LT-IA domestic</span>
+          </div>
+          <dl class="hbc-lines">
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.energy">Energy charge</span>
+                <small>200 × ₹4.95 + 50 × ₹6.65</small></dt>
+              <dd>₹1,322.50</dd>
+            </div>
+            <div class="hbc-line hbc-line-quiet">
+              <dt><span data-i18n="hero.card.fixed">Fixed charge</span> <em data-i18n="hero.card.noneLevied">none levied</em></dt>
+              <dd>₹0.00</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.duty">Electricity duty</span> <em>5%</em></dt>
+              <dd>₹66.13</dd>
+            </div>
+            <div class="hbc-line hbc-line-quiet">
+              <dt><span data-i18n="hero.card.rounding">Rounding</span></dt>
+              <dd>+₹0.37</dd>
+            </div>
+            <div class="hbc-line hbc-line-total">
+              <dt data-i18n="hero.card.totalPayable">Total payable</dt>
+              <dd>₹1,389.00</dd>
+            </div>
+          </dl>
+          <p class="hbc-note" data-i18n="hero.card.note4">Tamil Nadu levies no fixed charge on LT-IA homes.</p>
         </div>
       </div>
 
-      <div class="hbc-foot" data-i18n="hero.card.foot">Live engine · matched to the paisa on real UPPCL bills</div>
+      <div class="hbc-foot">
+        <span data-i18n="hero.card.foot">Live engine · straight from the tariff order</span>
+        <a class="hbc-cmp-link" href="/compare/"><span data-i18n="hero.card.cmpLink">Compare rates</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      </div>
     </div>
   </div>
   </div><!-- /hero-grid -->
@@ -659,12 +770,16 @@
           <div class="form-row form-row-uneven">
             <div class="form-group">
               <label for="connectedLoad"><span class="lbl-text req" data-i18n="label.sanctioned">Sanctioned Load (kW)</span><span class="gloss" tabindex="0" role="img" aria-label="Sanctioned / contract demand: the load you have contracted with the utility; fixed / demand charges and the excess-demand check are based on it." data-tip="Sanctioned Load / Contract Demand: the load you've contracted with the utility. Fixed / demand charges and the excess-demand check are based on it.">ⓘ</span></label>
-              <input type="number" id="connectedLoad" placeholder="e.g., 2" min="0.1" step="0.1" value="1">
-              <div class="load-chips" id="loadChips" role="group" aria-label="Common sanctioned loads">
-                <button type="button" class="load-chip active" data-kw="1">1 kW</button>
-                <button type="button" class="load-chip" data-kw="2">2 kW</button>
-                <button type="button" class="load-chip" data-kw="3">3 kW</button>
-                <button type="button" class="load-chip" data-kw="5">5 kW</button>
+              <!-- The field takes 2-3 characters, so it is sized for them and the quick
+                   picks sit beside it rather than under. -->
+              <div class="load-row">
+                <input type="number" id="connectedLoad" placeholder="e.g., 2" min="0.1" step="0.1" value="1">
+                <div class="load-chips" id="loadChips" role="group" aria-label="Common sanctioned loads">
+                  <button type="button" class="load-chip active" data-kw="1">1 kW</button>
+                  <button type="button" class="load-chip" data-kw="2">2 kW</button>
+                  <button type="button" class="load-chip" data-kw="3">3 kW</button>
+                  <button type="button" class="load-chip" data-kw="5">5 kW</button>
+                </div>
               </div>
             </div>
             <div class="form-group adv-only">

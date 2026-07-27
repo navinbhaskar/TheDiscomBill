@@ -23,6 +23,15 @@
   overflow: visible;
 }
 
+/* Label read by assistive tech only — for controls whose visual form carries no text
+   (the hero card's slide dots). Clipped rather than display:none, which drops it from
+   the a11y tree entirely. */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+
 /* ─── Design Tokens ──────────────────────────────────────────────────────────── */
 :root {
   /* Primitive palette — never used directly in components */
@@ -837,9 +846,11 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
 }
 /* margin-bottom lives here, not on each face's first child — a child top margin would
    collapse out through .hbc-faces and make the card 4px taller on one face than the other. */
+/* Dots left, DISCOM chip right, one row — the chip names whatever slide the dots landed on
+   and sits at the card's outer edge where the amount below it can't crowd it. */
 .hbc-head {
   display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 8px 10px; margin-bottom: 12px;   /* chip drops below the tabs on narrow cards */
+  gap: 8px; margin-bottom: 10px;
 }
 .hbc-title {
   font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
@@ -850,57 +861,57 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
   background: rgba(37,99,235,.09); border: 1px solid rgba(37,99,235,.28);
   padding: 3px 10px; border-radius: var(--radius-full); white-space: nowrap;
 }
-/* Hidden — not removed — on the comparison face, where "UPPCL · Lucknow" would be
-   misleading: taking it out of flow would resize the shared head and jog the card. */
-.hbc-chip.is-off { visibility: hidden; }
-@media (max-width: 420px) {
-  /* No room beside the tabs; wrapping it onto its own line costs 33px above the fold. */
-  .hbc-chip { display: none; }
+/* The chip used to be hidden below 420px to buy height. It can't be: the amount changes
+   every 5s, and without it nothing says whose bill you are looking at. It shares the dots'
+   row instead, so it costs no height — it only has to survive the narrowest card. */
+.hbc-chip { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* ─── Slide dots ────────────────────────────────────────────────────────────────
+   Five sample bills, one every 5s. The dots are the tablist, and the active one
+   doubles as the autoplay clock: it widens into a pill whose fill sweeps left to
+   right over exactly the dwell time, so the card never advances unannounced.
+   Hit target is 24px via padding — the painted dot is 7px, the button is not. The row
+   pulls its own padding back out of the flow: this card is the hero's tallest element and
+   every pixel here pushes the calculator further below the fold. */
+.hbc-dots {
+  display: flex; align-items: center; gap: 2px;
+  margin: -5px 0 -5px -5px;
 }
-/* Segmented control switching the card between its two faces (estimate / across India).
-   Same pattern as the calculator's .calc-mode control — sunken track, equal-width
-   segments, one glossy pill sliding between them — at card scale, so the two segmented
-   controls on the page read as the same component. `data-active` ships in the markup so
-   the thumb is positioned before JS runs; initHeroBillCard() updates it. Idle segments use
-   slate-600 rather than --text-tertiary: tertiary on the sunken track is only 2.3:1. */
-.hbc-tabs {
-  position: relative;
-  display: inline-grid; grid-auto-columns: 1fr; grid-auto-flow: column;
-  padding: 3px;
-  background: var(--surface-sunken); border: 1px solid var(--border-default);
-  border-radius: var(--radius-full);
-  box-shadow: inset 0 1px 2px rgba(15, 23, 42, .07);
-}
-.hbc-tabs::before {
-  content: ""; position: absolute; z-index: 0;
-  top: 3px; bottom: 3px; left: 3px; width: calc(50% - 3px);
-  border-radius: var(--radius-full);
-  /* One step darker than .calc-mode's 500→600 thumb: these labels are 11.5px, and white
-     on blue-500 is only 3.68:1. 600→700 keeps the same gloss at 5.17:1 and above. */
-  background: linear-gradient(180deg, var(--p-blue-600), var(--p-blue-700));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 1px 3px rgba(37, 99, 235, .35);
-  /* Overshoot easing copied verbatim from .calc-mode::before — this is the product's
-     established motion for segmented controls, so the two must match. */
-  transition: transform .28s cubic-bezier(.3, 1.4, .4, 1);
-}
-.hbc-tabs[data-active="compare"]::before { transform: translateX(100%); }
-.hbc-tab {
-  position: relative; z-index: 1;   /* text above the sliding thumb */
+.hbc-dot {
+  -webkit-appearance: none; appearance: none;
   border: 0; background: transparent; cursor: pointer;
-  padding: 6px 14px; border-radius: var(--radius-full);
-  font-family: inherit; font-size: 11.5px; font-weight: 700; letter-spacing: .2px;
-  color: var(--p-slate-600); white-space: nowrap;
-  transition: color var(--t-fast);
+  padding: 8px 5px; line-height: 0;
+  border-radius: var(--radius-full);
 }
-.hbc-tab:hover { color: var(--text-primary); }
-.hbc-tab.active { color: #fff; }
-.hbc-tab:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.hbc-dot-fill {
+  display: block; position: relative; overflow: hidden;
+  width: 7px; height: 7px; border-radius: var(--radius-full);
+  background: var(--p-slate-300, #cbd5e1);
+  transition: width .32s cubic-bezier(.3, 1.4, .4, 1), background var(--t-fast);
+}
+.hbc-dot:hover .hbc-dot-fill { background: var(--p-slate-400, #94a3b8); }
+.hbc-dot:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+.hbc-dot.active .hbc-dot-fill {
+  width: 26px;
+  background: rgba(37, 99, 235, .18);
+}
+/* The sweep. Painted on ::after so the pill's own background stays as the unfilled
+   track. Duration is bound to --hbc-dwell, which the slider sets once from JS so the
+   animation and the timer can never drift apart. */
+.hbc-dot.active .hbc-dot-fill::after {
+  content: ""; position: absolute; inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--p-blue-600), var(--p-blue-700));
+  transform-origin: left center;
+  animation: hbcDotSweep var(--hbc-dwell, 5s) linear forwards;
+}
+/* Paused while the pointer is over the card or focus is inside it — the sweep stops
+   with it, so a reader who lingers keeps the slide they were reading. */
+.hero-bill-card.is-paused .hbc-dot.active .hbc-dot-fill::after { animation-play-state: paused; }
+@keyframes hbcDotSweep { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @media (prefers-reduced-motion: reduce) {
-  .hbc-tabs::before { transition: none; }
-}
-@media (pointer: coarse) {
-  /* Touch: 26px-tall pills were the hero's smallest hit target; this takes them to 36px. */
-  .hbc-tab { padding: 11px 14px; }
+  /* No autoplay either (see initHeroBillCard) — a full pill, no sweep. */
+  .hbc-dot-fill { transition: none; }
+  .hbc-dot.active .hbc-dot-fill::after { animation: none; transform: none; }
 }
 /* Both faces share one grid cell, so the card is always as tall as the taller face —
    no magic min-height to re-tune per breakpoint or per language (Tamil/Marathi state
@@ -968,65 +979,33 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
   letter-spacing: -.2px; color: var(--brand-dark, #1d4ed8);
 }
 .hbc-line-total dd { font-size: 15px; }
+/* One line per slide on what makes this DISCOM's bill read the way it does — the reason
+   the card is worth watching rotate rather than a single frozen example. slate-500, not
+   400: 400 on this white card is 2.55:1 and fails AA. */
+.hero .hbc-note {
+  margin: 10px 0 0; max-width: none;
+  font-size: 10.5px; font-weight: 400; line-height: 1.45; letter-spacing: .15px;
+  color: var(--p-slate-500);
+  text-wrap: pretty;   /* no single-word orphan when a translation wraps */
+}
 .hbc-foot {
   margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(15,23,42,.10);
   font-size: 10.5px; color: #64748b; letter-spacing: 0.3px;
-  display: flex; align-items: center; gap: 6px;
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px;
 }
 .hbc-foot::before {
   content: ''; width: 6px; height: 6px; border-radius: 50%;
   background: #16a34a; box-shadow: 0 0 8px rgba(22,163,74,.55); flex-shrink: 0;
 }
+.hbc-foot .hbc-cmp-link { margin-left: auto; }
 
-/* Face 2 — column chart: same 250 units priced in four states, yours highlighted */
-.hcc-chart {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
-  margin-top: 10px; align-items: end;
-}
-.hcc-col { display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 0; }
-.hcc-track {
-  /* Sized to the taller face (the mini bill) so the shared grid row has no dead space —
-     re-check this if rows are added to or removed from .hbc-lines. */
-  height: 140px; width: 100%;
-  display: flex; align-items: flex-end; justify-content: center;
-}
-.hcc-bar {
-  display: block; width: min(100%, 40px); min-height: 8px;
-  border-radius: 7px 7px 3px 3px;
-  background: linear-gradient(180deg, #dbe3ee, #cbd5e1);
-}
-.hcc-amt {
-  font-size: 12px; color: #0f172a; font-weight: 700;
-  font-variant-numeric: tabular-nums; white-space: nowrap;
-}
-.hcc-state {
-  font-size: 10.5px; color: #64748b; font-weight: 500;
-  text-align: center; line-height: 1.2;
-}
-.hcc-you .hcc-bar {
-  background: linear-gradient(180deg, #3b82f6, #2563eb);
-  box-shadow: 0 6px 16px -6px rgba(37, 99, 235, .55);
-}
-.hcc-you .hcc-amt, .hcc-you .hcc-state { color: var(--brand-dark, #1d4ed8); }
-.hcc-you .hcc-state { font-weight: 700; }
-/* The four bars each carry their own state's surcharge (UP a credit, Delhi a 17.94% PPAC),
-   so the basis has to be stated or the comparison reads as like-for-like when it isn't.
-   Scoped under .hero to outrank `.hero p` (0,1,1), which otherwise wins over a bare class
-   and renders this footnote at 16px/1.6 in a centered 520px measure — the same collision
-   documented on .hero-trust above. Quietness comes from size and weight, not a paler ink:
-   slate-400 on this white card is 2.55:1 and fails AA, slate-500 is 4.76:1. */
-.hero .hbc-cmp-basis {
-  margin: 8px 0 0; max-width: none;
-  font-size: 10px; font-weight: 400; line-height: 1.4; letter-spacing: .15px;
-  color: var(--p-slate-500);
-  text-wrap: pretty;   /* no single-word orphan when a translation wraps */
-}
-/* The comparison face is now the hero's only pointer into /compare/ — make it a link */
+/* The card's foot is the hero's only pointer into /compare/ — make it a link */
 .hbc-cmp-link {
-  display: inline-flex; align-items: center; gap: 3px; margin-top: 6px;
-  font-size: 11.5px; font-weight: 700; color: var(--brand-dark, #1d4ed8); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 11px; font-weight: 700; color: var(--brand-dark, #1d4ed8); text-decoration: none;
+  letter-spacing: 0;
 }
-.hbc-cmp-link svg { width: 12px; height: 12px; }
+.hbc-cmp-link svg { width: 11px; height: 11px; }
 .hbc-cmp-link:hover { text-decoration: underline; }
 
 @media (max-width: 1000px) {
@@ -1160,6 +1139,11 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
 
 /* ─── Coverage & capability strip (below the calculator) ────────────────────── */
 .coverage-strip { padding: 30px 24px 6px; text-align: center; }
+/* There is no base `.container` rule in this sheet — each section sets its own width — so
+   this one had none and the DISCOM chips ran the full viewport while the About copy right
+   below them stopped at 900px. Same measure as .about-section .container: the chips and
+   the prose they introduce are one column, and the eye reads the ragged edge otherwise. */
+.coverage-strip .container { max-width: 900px; margin: 0 auto; }
 .coverage-strip .hero-features { margin-top: 0; }
 .coverage-strip .hero-discoms-list { margin-top: 0; }
 /* Eyebrow introducing the DISCOM chips. Deliberately a <div>, not a <p>: as a paragraph it
@@ -1311,14 +1295,39 @@ html:not([lang="en"]) .hero-discoms-label {
 }
 .form-group small { display: block; font-size: 11px; color: var(--text-tertiary); margin-top: 4px; line-height: 1.5; }
 
-/* Sanctioned Load quick-pick chips (replace the old helper text; full explanation lives in the ⓘ tooltip) */
-.load-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+/* Sanctioned Load: a 2-3 character field, so it is sized for that and the quick-pick chips
+   sit beside it (full explanation lives in the ⓘ tooltip). The chips are a 2×2 pad rather
+   than a line of four — that halves their width from ~226px to ~110px, which is what lets
+   the whole control fit one half-column beside Units. They stay inside this form-group so
+   it is never ambiguous which field they set. */
+.load-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.load-row > input { flex: 0 0 66px; width: 66px; text-align: center; }
+/* min-width is the floor that keeps "1 kW" on one line: in Detailed mode this group sits in
+   a ~153px track beside the FPPA field, and without it the pad squeezed each chip to 36px
+   and broke the label across two lines. At the floor the pad wraps under the input instead,
+   which is the right way to run out of room. */
+.load-chips {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px;
+  flex: 0 1 100px; min-width: 88px;
+}
+/* Height is load-bearing: two stacked chips plus the 4px row gap come to 36px, exactly the
+   height of the number field beside them, so the pad reads as one control the same size as
+   the input rather than a taller block bolted on. 16 + 4 + 16 = 36 — change one and the
+   other two have to move with it. */
 .load-chip {
-  padding: 4px 12px; font-size: 12px; font-weight: 600; line-height: 1.4;
+  height: 16px; padding: 0 8px; white-space: nowrap;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 10.5px; font-weight: 600; line-height: 1;
   border: 1px solid var(--border-default); border-radius: var(--radius-full);
   background: var(--surface-card); color: var(--text-secondary);
   cursor: pointer; transition: background .15s, border-color .15s, color .15s;
+  position: relative;
 }
+/* The painted chip is 16px; the thing you can hit is 20px tall and 4px wider, extending
+   into the gap. Insets are exactly half the gaps, so adjacent targets meet without
+   overlapping and no pixel between two chips is dead. The number field beside them is the
+   accessible equivalent for anyone who needs a full-size target (WCAG 2.5.8 exception). */
+.load-chip::after { content: ''; position: absolute; inset: -2px; }
 .load-chip:hover { background: var(--surface-hover); border-color: var(--brand-border); color: var(--text-brand); }
 .load-chip.active {
   background: var(--brand-faint); border-color: var(--brand);
@@ -1485,14 +1494,63 @@ select:focus, input:focus {
   outline: none;
   border-color: var(--brand);
   box-shadow: 0 0 0 3px var(--focus-ring);
-  background: var(--surface-card);
+  /* background-color, not the `background` shorthand: the shorthand resets background-image
+     too, so focusing a select wiped its chevron (and, below, its leading icon). */
+  background-color: var(--surface-card);
 }
+
+/* ─── The four tariff pickers ────────────────────────────────────────────────────
+   State → DISCOM → Category → Supply Type is the spine of the calculator: four
+   dropdowns that look identical and are answered in order. Each gets a leading icon
+   so the row is identifiable before its label is read, and the icon and border turn
+   brand once a real value is chosen — so at a glance you can see how far down the
+   chain you are. Scoped by id: the panel's other selects (month/year, billing basis)
+   are settings, not steps, and should stay plain. */
+#stateSelect       { --sel-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E");
+                     --sel-ic-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E"); }
+#discomSelect      { --sel-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 2 4 14h7l-1 8 9-12h-7z'/%3E%3C/svg%3E");
+                     --sel-ic-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 2 4 14h7l-1 8 9-12h-7z'/%3E%3C/svg%3E"); }
+#categorySelect    { --sel-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.6 13.4 12 22l-9-9V4a1 1 0 0 1 1-1h9z'/%3E%3Ccircle cx='7.6' cy='7.6' r='1.4'/%3E%3C/svg%3E");
+                     --sel-ic-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.6 13.4 12 22l-9-9V4a1 1 0 0 1 1-1h9z'/%3E%3Ccircle cx='7.6' cy='7.6' r='1.4'/%3E%3C/svg%3E"); }
+#supplyTypeSelect  { --sel-ic: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12 2 9 5-9 5-9-5z'/%3E%3Cpath d='m3 12 9 5 9-5'/%3E%3Cpath d='m3 17 9 5 9-5'/%3E%3C/svg%3E");
+                     --sel-ic-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12 2 9 5-9 5-9-5z'/%3E%3Cpath d='m3 12 9 5 9-5'/%3E%3Cpath d='m3 17 9 5 9-5'/%3E%3C/svg%3E"); }
+
+#stateSelect, #discomSelect, #categorySelect, #supplyTypeSelect {
+  height: 42px;                       /* 36px was below the 44px touch guidance; 42 + gap clears it */
+  padding-left: 40px; padding-right: 34px;
+  /* Two layers: the step's icon on the left, the shared chevron on the right. */
+  background-image: var(--sel-ic), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-position: left 13px center, right 13px center;
+  background-size: 17px 17px, 11px 7px;
+  background-repeat: no-repeat, no-repeat;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast), background-color var(--t-fast);
+}
+#stateSelect:hover:not(:disabled):not(:focus),
+#discomSelect:hover:not(:disabled):not(:focus),
+#categorySelect:hover:not(:disabled):not(:focus),
+#supplyTypeSelect:hover:not(:disabled):not(:focus) {
+  border-color: var(--brand); box-shadow: var(--shadow-xs);
+}
+/* Answered — a real option, not the "— Select State / UT —" hint. The :has() test mirrors
+   the placeholder rule above; browsers without :has() just keep the idle look. */
+#stateSelect:not(:disabled):not(:has(option[value=""]:checked)),
+#discomSelect:not(:disabled):not(:has(option[value=""]:checked)),
+#categorySelect:not(:disabled):not(:has(option[value=""]:checked)),
+#supplyTypeSelect:not(:disabled):not(:has(option[value=""]:checked)) {
+  border-color: var(--brand-border);
+  background-image: var(--sel-ic-on), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232563eb' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  font-weight: 600;
+}
+/* The disabled steps further down the chain read as "not yet", not as broken — keep the
+   icon, drop it back to the muted grey the sunken surface expects. */
+#discomSelect:disabled, #categorySelect:disabled, #supplyTypeSelect:disabled { opacity: .75; }
 select:hover:not(:disabled):not(:focus), input:hover:not(:disabled):not(:focus) {
   border-color: var(--border-strong);
   box-shadow: var(--shadow-xs);
 }
 select:disabled, input:disabled {
-  background: var(--surface-sunken);
+  /* background-color, not the shorthand — see the focus rule above. */
+  background-color: var(--surface-sunken);
   color: var(--text-tertiary);
   cursor: not-allowed;
   border-color: var(--border-default);
@@ -1910,12 +1968,22 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .simple-mode #tab-meterread {
   display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; align-items: start;
 }
+/* The 2-up needs ~196px a column for Sanctioned Load (66px field + 8 gap + 116px chip pad).
+   Below ~560px viewport the columns fall to 150px and the chips squeeze to 35px, which
+   clips "1 kW" — so the pair stacks and each takes the full width instead. */
+@media (max-width: 560px) {
+  .simple-mode #tab-meterread { grid-template-columns: 1fr; }
+}
 /* Full-width escapes for the two that can still appear: MD (commercial categories) and
    the billing-period readout. */
 .simple-mode #tab-meterread > #billedDemandGroup { grid-column: 1 / -1; }
 /* .form-row-uneven is 1fr/1.55fr for the FPPA field beside it; that field is adv-only, so
    in Simple mode the load input would otherwise sit in a 39%-wide track. */
 .simple-mode .form-row-uneven { grid-template-columns: 1fr; }
+/* Sanctioned Load stays in the 2-up beside Units: its input is 66px and the quick picks are
+   a 2×2 pad the same 36px tall as the input, so the whole control measures ~174px inside the
+   210px column and sits exactly level with the Units field. */
+.simple-mode #tab-meterread > .form-row-uneven { align-self: start; }
 /* Item removed on request: "Total: N units — period 0.00 months". Simple mode takes units
    directly, so a total that only ever restates the one input was pure noise. */
 .simple-mode .units-display { display: none !important; }

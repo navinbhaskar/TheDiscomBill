@@ -13,7 +13,7 @@ import {
   getMeterMode, setMeterMode, addMeterRow, updateAdvancedMeter,
   syncBillingMonthYear, applyDefaultBillingBasis, showToast, refreshRequiredValidation,
 } from './ui.js';
-import { getDiscoms, getDefaultCategory } from './tariffs/registry.js';
+import { getDefaultCategory } from './tariffs/registry.js';
 import { initDatePickers } from './datepicker.js';
 import { initI18n } from './i18n.js';
 import { initComparisonTable } from './compare.js';
@@ -449,43 +449,82 @@ if ('serviceWorker' in navigator) {
 }
 
 // ── Hero sample-bill card ─────────────────────────────────────────────────────
-// Homepage only (main.js loads everywhere, so bail when the card is absent). One
-// card, two faces: the sample estimate and the same units priced across states.
-// Standard tablist semantics — arrows move between tabs, and the DISCOM chip is
-// hidden on the comparison face where "UPPCL · Lucknow" would be misleading.
+// Homepage only (main.js loads everywhere, so bail when the card is absent). One card
+// rotating through five real DISCOM bills, 5s apiece, with dots above the DISCOM chip.
+// Standard tablist semantics — arrows move between dots — plus autoplay, which pauses
+// while the pointer is over the card, while focus is inside it, and while the tab is
+// hidden. Any manual pick stops autoplay for good: the reader has taken over.
+const HBC_DWELL_MS = 5000;
+
 function initHeroBillCard() {
   const card = document.getElementById('heroBillCard');
   if (!card) return;
-  const tabs = [...card.querySelectorAll('.hbc-tab')];
-  const chip = document.getElementById('hbcChip');
+  const dots   = [...card.querySelectorAll('.hbc-dot')];
+  const slides = dots.map(d => document.getElementById(d.getAttribute('aria-controls')));
+  const chip   = document.getElementById('hbcChip');
+  if (dots.length < 2) return;
 
-  const show = (tab, focus) => {
-    tabs.forEach(t => {
-      const on = t === tab;
-      const face = document.getElementById(t.getAttribute('aria-controls'));
-      t.classList.toggle('active', on);
-      t.setAttribute('aria-selected', on ? 'true' : 'false');
-      t.tabIndex = on ? 0 : -1;
+  // The CSS sweep reads its duration from this, so the animation and the timer below
+  // can never drift apart.
+  card.style.setProperty('--hbc-dwell', HBC_DWELL_MS + 'ms');
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let index = 0, timer = null, stopped = reduced;
+
+  const show = (i, focus) => {
+    index = (i + dots.length) % dots.length;
+    dots.forEach((d, n) => {
+      const on = n === index;
+      d.classList.toggle('active', on);
+      d.setAttribute('aria-selected', on ? 'true' : 'false');
+      d.tabIndex = on ? 0 : -1;
       // CSS handles visibility (see .hbc-face); `inert` is what actually keeps the
-      // off-screen face out of the tab order and the a11y tree — visibility:hidden
+      // off-screen slide out of the tab order and the a11y tree — visibility:hidden
       // alone still accepts programmatic focus.
-      if (face) { face.classList.toggle('active', on); face.inert = !on; }
+      const s = slides[n];
+      if (s) { s.classList.toggle('active', on); s.inert = !on; }
     });
-    // Slides the track's thumb, the same way setCalcMode drives .calc-mode.
-    tab.parentElement.dataset.active = tab.dataset.face;
-    if (chip) chip.classList.toggle('is-off', tab.dataset.face !== 'bill');
-    if (focus) tab.focus();
+    // Restart the dot's sweep from zero on every advance: re-adding the class alone
+    // would let the running animation continue, so the pill would look half-spent.
+    const fill = dots[index].querySelector('.hbc-dot-fill');
+    if (fill) { fill.style.animation = 'none'; void fill.offsetWidth; fill.style.animation = ''; }
+    if (chip) {
+      const name = slides[index] && slides[index].dataset.chip;
+      if (name) chip.textContent = name;
+    }
+    if (focus) dots[index].focus();
   };
 
-  tabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => show(tab));
-    tab.addEventListener('keydown', (e) => {
+  const tick  = () => { if (!stopped) timer = setTimeout(() => { show(index + 1); tick(); }, HBC_DWELL_MS); };
+  const pause = () => { clearTimeout(timer); timer = null; card.classList.add('is-paused'); };
+  const play  = () => {
+    if (stopped || timer) return;
+    card.classList.remove('is-paused');
+    tick();
+  };
+  // A manual pick means the reader is driving; autoplay would yank the slide back.
+  const stop  = () => { stopped = true; clearTimeout(timer); timer = null; card.classList.remove('is-paused'); };
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', () => { stop(); show(i); });
+    dot.addEventListener('keydown', (e) => {
       const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
       if (!step) return;
       e.preventDefault();
-      show(tabs[(i + step + tabs.length) % tabs.length], true);
+      stop();
+      show(index + step, true);
     });
   });
+
+  card.addEventListener('mouseenter', pause);
+  card.addEventListener('mouseleave', play);
+  card.addEventListener('focusin',  pause);
+  card.addEventListener('focusout', (e) => { if (!card.contains(e.relatedTarget)) play(); });
+  // A background tab burns no timers, and the sweep would otherwise finish unseen.
+  document.addEventListener('visibilitychange', () => { document.hidden ? pause() : play(); });
+
+  show(0);
+  play();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -641,32 +680,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Remember the last state + DISCOM so a returning visitor doesn't re-answer them. Only
-  // these two: everything downstream (category, supply type, units) is re-derived, and
-  // stale units would be worse than no units. Never overrides a ?state=/?discom= link.
-  const SEL_KEY = 'discombill.lastSelection';
-  function rememberSelection() {
-    if (!stateEl.value) return;
-    try {
-      localStorage.setItem(SEL_KEY, JSON.stringify({ state: stateEl.value, discom: discomEl.value }));
-    } catch (e) {}
-  }
-  function restoreSelection() {
-    const p = new URLSearchParams(location.search);
-    if (p.has('state') || p.has('discom') || p.has('q')) return;
-    let saved = null;
-    try { saved = JSON.parse(localStorage.getItem(SEL_KEY) || 'null'); } catch (e) {}
-    if (!saved || !saved.state) return;
-    if (![...stateEl.options].some(o => o.value === saved.state)) return;
-    stateEl.value = saved.state;
-    stateEl.dispatchEvent(new Event('change'));
-    // Multi-DISCOM states: the cascade above left the DISCOM unset, so re-apply the saved one.
-    if (saved.discom && getDiscoms(saved.state).some(d => d.id === saved.discom)
-        && discomEl.value !== saved.discom) {
-      discomEl.value = saved.discom;
-      discomEl.dispatchEvent(new Event('change'));
-    }
-  }
+  // The form used to reopen on a returning visitor's last state + DISCOM, remembered in
+  // localStorage. Removed on request: the calculator should start empty and let the visitor
+  // choose, so a stale pick can never be mistaken for one they just made. A ?state=/?discom=
+  // link still fills the form — that is an explicit request, not a remembered guess.
+  // Any key left over from the old behaviour is cleared so it does not linger in storage.
+  try { localStorage.removeItem('discombill.lastSelection'); } catch (e) {}
 
   if (stateEl) {
     stateEl.addEventListener('change', () => {
@@ -681,7 +700,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCalcButton();
         refreshSubsidyToggle();
       }
-      rememberSelection();
     });
 
     discomEl.addEventListener('change', () => {
@@ -705,7 +723,6 @@ document.addEventListener('DOMContentLoaded', () => {
       history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
       if (cat) categoryEl.dispatchEvent(new Event('change'));
       syncPurposeChips();
-      rememberSelection();
     });
 
     categoryEl.addEventListener('change', () => {
@@ -883,8 +900,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     loadFromUrl();
-    // After loadFromUrl so a ?state=/?discom= link always wins over the remembered pick.
-    restoreSelection();
     syncPurposeChips();
     initLoadChips();   // after loadFromUrl so the active chip reflects a URL-provided load
   }
