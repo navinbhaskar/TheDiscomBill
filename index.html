@@ -470,12 +470,23 @@
       </div>
 
       <div class="form-row">
-        <!-- Step 3: Category -->
-        <div class="form-group">
+        <!-- Step 3: Category. Simple mode swaps the select for the Home / Business chips
+             below — every DISCOM has exactly one domestic and (mostly) one commercial
+             category, so the tariff-code select is jargon wrapped around a binary. -->
+        <div class="form-group" id="categoryGroup">
           <label for="categorySelect" class="req" data-i18n="label.category">Consumer Category</label>
           <select id="categorySelect" disabled aria-required="true">
             <option value="" data-i18n="opt.selectDiscomFirst">— Select DISCOM First —</option>
           </select>
+        </div>
+
+        <div class="form-group simple-only" id="purposeGroup">
+          <label class="req" data-i18n="label.purpose">What is the connection for?</label>
+          <div class="purpose-chips" id="purposeChips" role="group" aria-label="Connection purpose">
+            <button type="button" class="purpose-chip active" data-kind="domestic" aria-pressed="true" data-i18n="purpose.home">🏠 Home</button>
+            <button type="button" class="purpose-chip" data-kind="commercial" aria-pressed="false" data-i18n="purpose.business">🏪 Shop / Business</button>
+          </div>
+          <small class="purpose-echo" id="purposeEcho"></small>
         </div>
 
         <!-- Step 4: Supply Type (shown only when applicable) -->

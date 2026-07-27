@@ -118,6 +118,77 @@ export function getSupplyTypes(discomId, categoryId) {
   return (cat && cat.supplyTypes) ? cat.supplyTypes : [];
 }
 
+/* ── Sensible defaults ─────────────────────────────────────────────────────────
+   The form used to make the visitor answer every dropdown before showing a number,
+   even though the data usually leaves them no real choice: 20 of 34 states have a
+   single DISCOM, and all 65 DISCOMs have exactly one domestic category. These
+   helpers pick the option a household visitor almost certainly wants, so Simple
+   mode can pre-fill it and ask only for state + units.                          */
+
+const DOMESTIC_RE   = /domestic|residential|lmv-?1\b/i;
+const COMMERCIAL_RE = /commercial|non-?domestic|non-?residential|lmv-?2\b/i;
+
+/**
+ * The category a household visitor wants.
+ * @param {string} discomId
+ * @param {'domestic'|'commercial'} [kind='domestic']
+ * @returns {Object|null} A category object, or null if the DISCOM is unknown.
+ */
+export function getDefaultCategory(discomId, kind = 'domestic') {
+  const cats = getCategories(discomId);
+  if (!cats.length) return null;
+  if (kind === 'commercial') return cats.find(c => COMMERCIAL_RE.test(c.name)) || null;
+  // Commercial names usually contain "Non-Domestic", which DOMESTIC_RE also matches, so a
+  // domestic lookup has to rule the commercial pattern out first.
+  const doms = cats.filter(c => DOMESTIC_RE.test(c.name) && !COMMERCIAL_RE.test(c.name));
+  if (!doms.length) return cats[0];
+  // KSEB is the one DISCOM that splits domestic in two, and lists the sub-500W band first —
+  // taking [0] there would put an ordinary household on a band it doesn't qualify for.
+  return doms.map((c, i) => ({ c, i, rank: categoryRank(c) }))
+             .sort((a, b) => a.rank - b.rank || a.i - b.i)[0].c;
+}
+
+/* Ids follow a convention across the tariff files: the mainstream band is plain `domestic` /
+   `residential`, and restricted bands carry a qualifier (`domestic_low`). Fall back to the
+   name for files that don't follow it. */
+const SMALL_BAND_RE = /life\s*-?\s*line|kutir|\bbpl\b|_low\b|\blow\b|<\s*\d|below\s*\d/i;
+
+function categoryRank(c) {
+  if (/^(domestic|residential)$/i.test(c.id)) return 0;
+  if (SMALL_BAND_RE.test(`${c.id} ${c.name}`)) return 2;
+  return 1;
+}
+
+/* Supply types are listed in tariff-order sequence, which puts the *subsidised* variant
+   first — Bihar's DS list opens with Kutir Jyoti (BPL) and UP's LMV-1 list opens with
+   ST-10A Urban Life Line (≤1 kW, ≤100 units). Blindly taking [0] therefore defaulted
+   most visitors onto a tariff they are not eligible for. Rank instead: anything
+   means-tested, unmetered or rural loses to the mainstream urban variant. */
+const NICHE_SUPPLY_RE = /life\s*-?\s*line|kutir|\bbpl\b|unmetered|un-?metered/i;
+const RURAL_SUPPLY_RE = /\brural\b/i;
+
+function supplyTypeRank(st) {
+  const s = `${st.id} ${st.name}`;
+  if (NICHE_SUPPLY_RE.test(s)) return 2;   // means-tested / unmetered — never a safe guess
+  if (RURAL_SUPPLY_RE.test(s)) return 1;   // plausible, but urban is the commoner case
+  return 0;
+}
+
+/**
+ * The supply type to pre-select within a category. Falls back to the first entry when
+ * every option is equally niche, so this never returns null for a non-empty list.
+ * @param {string} discomId
+ * @param {string} categoryId
+ * @returns {Object|null}
+ */
+export function getDefaultSupplyType(discomId, categoryId) {
+  const types = getSupplyTypes(discomId, categoryId);
+  if (!types.length) return null;
+  // Stable: ties keep tariff-order sequence, so only the niche entries actually move.
+  return types.map((st, i) => ({ st, i, rank: supplyTypeRank(st) }))
+              .sort((a, b) => a.rank - b.rank || a.i - b.i)[0].st;
+}
+
 /**
  * Resolve the effective tariff object for a DISCOM + category + optional supply type.
  * If supply types exist, merges the selected supply type onto the category.

@@ -13,6 +13,7 @@ import {
   getMeterMode, setMeterMode, addMeterRow, updateAdvancedMeter,
   syncBillingMonthYear, applyDefaultBillingBasis, showToast, refreshRequiredValidation,
 } from './ui.js';
+import { getDiscoms, getDefaultCategory } from './tariffs/registry.js';
 import { initDatePickers } from './datepicker.js';
 import { initI18n } from './i18n.js';
 import { initComparisonTable } from './compare.js';
@@ -586,17 +587,107 @@ document.addEventListener('DOMContentLoaded', () => {
   const categoryEl   = document.getElementById('categorySelect');
   const supplyTypeEl = document.getElementById('supplyTypeSelect');
 
+  // ── Purpose chips + remembered selection ────────────────────────────────────
+  // Simple mode asks "Home or Shop?" instead of showing a Consumer Category select full of
+  // tariff codes. The chips are a view over #categorySelect — that select stays the single
+  // source of truth for calculation, sharing, history and OCR autofill.
+  const purposeChips = document.getElementById('purposeChips');
+  const purposeEcho  = document.getElementById('purposeEcho');
+  let purposeKind = 'domestic';
+
+  const currentPurpose = () => purposeKind;
+
+  // Mirrors whatever #categorySelect actually holds back onto the chips, and names the
+  // resolved tariff underneath so a pre-filled choice is never invisible. Called after
+  // every cascade, including ones the user didn't drive (share links, OCR, sample bill).
+  function syncPurposeChips() {
+    if (!purposeChips) return;
+    const discomId = discomEl.value;
+    const commercial = discomId ? getDefaultCategory(discomId, 'commercial') : null;
+    // Derive from the select, don't just replay the last chip click: Detailed mode, a share
+    // link and OCR autofill all write the category directly, and the chips must not claim
+    // "Home" while the form is calculating a commercial tariff.
+    if (categoryEl.value && commercial && categoryEl.value === commercial.id) purposeKind = 'commercial';
+    else if (categoryEl.value) purposeKind = 'domestic';
+    purposeChips.querySelectorAll('.purpose-chip').forEach(b => {
+      // 17 of 65 DISCOMs carry no commercial tariff — offer no choice rather than a dead one.
+      if (b.dataset.kind === 'commercial') b.hidden = !!discomId && !commercial;
+      const on = b.dataset.kind === purposeKind;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    if (purposeEcho) {
+      const catName = categoryEl.options[categoryEl.selectedIndex]?.textContent.trim();
+      const stName  = supplyTypeEl.value && supplyTypeGroupVisible()
+        ? supplyTypeEl.options[supplyTypeEl.selectedIndex]?.textContent.trim() : '';
+      purposeEcho.textContent = catName && categoryEl.value
+        ? (stName ? `${catName} · ${stName}` : catName)
+        : '';
+    }
+  }
+  // Declaration, not a const arrow: syncPurposeChips above calls it, and a const would be
+  // in its temporal dead zone on the first cascade fired during init.
+  function supplyTypeGroupVisible() {
+    return document.getElementById('supplyTypeGroup')?.style.display !== 'none';
+  }
+
+  purposeChips?.querySelectorAll('.purpose-chip').forEach(b => {
+    b.addEventListener('click', () => {
+      if (purposeKind === b.dataset.kind) return;
+      purposeKind = b.dataset.kind;
+      const def = discomEl.value ? getDefaultCategory(discomEl.value, purposeKind) : null;
+      if (def) { categoryEl.value = def.id; categoryEl.dispatchEvent(new Event('change')); }
+      syncPurposeChips();
+    });
+  });
+
+  // Remember the last state + DISCOM so a returning visitor doesn't re-answer them. Only
+  // these two: everything downstream (category, supply type, units) is re-derived, and
+  // stale units would be worse than no units. Never overrides a ?state=/?discom= link.
+  const SEL_KEY = 'discombill.lastSelection';
+  function rememberSelection() {
+    if (!stateEl.value) return;
+    try {
+      localStorage.setItem(SEL_KEY, JSON.stringify({ state: stateEl.value, discom: discomEl.value }));
+    } catch (e) {}
+  }
+  function restoreSelection() {
+    const p = new URLSearchParams(location.search);
+    if (p.has('state') || p.has('discom') || p.has('q')) return;
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem(SEL_KEY) || 'null'); } catch (e) {}
+    if (!saved || !saved.state) return;
+    if (![...stateEl.options].some(o => o.value === saved.state)) return;
+    stateEl.value = saved.state;
+    stateEl.dispatchEvent(new Event('change'));
+    // Multi-DISCOM states: the cascade above left the DISCOM unset, so re-apply the saved one.
+    if (saved.discom && getDiscoms(saved.state).some(d => d.id === saved.discom)
+        && discomEl.value !== saved.discom) {
+      discomEl.value = saved.discom;
+      discomEl.dispatchEvent(new Event('change'));
+    }
+  }
+
   if (stateEl) {
     stateEl.addEventListener('change', () => {
-      populateDiscoms(stateEl.value);
-      populateCategories('');
-      populateSupplyTypes('', '');
-      updateCalcButton();
-      refreshSubsidyToggle();
+      // 20 of 34 states have one DISCOM; when so, populateDiscoms picks it and we replay the
+      // normal `change` cascade rather than duplicating it here.
+      const auto = populateDiscoms(stateEl.value);
+      if (auto) {
+        discomEl.dispatchEvent(new Event('change'));
+      } else {
+        populateCategories('');
+        populateSupplyTypes('', '');
+        updateCalcButton();
+        refreshSubsidyToggle();
+      }
+      rememberSelection();
     });
 
     discomEl.addEventListener('change', () => {
-      populateCategories(discomEl.value);
+      // Pre-selects the domestic category (or commercial, if the Business chip is on) and
+      // replays the category cascade below, so supply type / FPPA / load all follow.
+      const cat = populateCategories(discomEl.value, currentPurpose());
       populateSupplyTypes('', '');
       updateCalcButton();
       refreshSubsidyToggle();
@@ -612,6 +703,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       const qs = params.toString();
       history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
+      if (cat) categoryEl.dispatchEvent(new Event('change'));
+      syncPurposeChips();
+      rememberSelection();
     });
 
     categoryEl.addEventListener('change', () => {
@@ -621,6 +715,7 @@ document.addEventListener('DOMContentLoaded', () => {
       updateTariffPeriodHint();
       updateCalcButton();
       refreshSubsidyToggle();
+      syncPurposeChips();
     });
 
     document.querySelectorAll('input[name="billingBasis"]').forEach(r => {
@@ -633,6 +728,7 @@ document.addEventListener('DOMContentLoaded', () => {
       applyLifelineDefaultLoad(discomEl.value, categoryEl.value, supplyTypeEl.value);
       refreshSupplyTypeDependent();
       checkLifelineLimits();
+      syncPurposeChips();
     });
 
     document.getElementById('fromDate').addEventListener('change', () => {
@@ -787,6 +883,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     loadFromUrl();
+    // After loadFromUrl so a ?state=/?discom= link always wins over the remembered pick.
+    restoreSelection();
+    syncPurposeChips();
     initLoadChips();   // after loadFromUrl so the active chip reflects a URL-provided load
   }
 });

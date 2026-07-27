@@ -2,6 +2,7 @@
 
 import {
   getStates, getDiscoms, getCategories, getSupplyTypes,
+  getDefaultCategory, getDefaultSupplyType,
   findDiscom, getEffectiveTariff,
   findStateMetaByDiscom, resolveDatedTariff, fyStart,
 } from './tariffs/registry.js';
@@ -402,29 +403,41 @@ export function populateStates() {
   });
 }
 
+// Returns the auto-selected DISCOM id, or '' — 20 of the 34 states are served by a single
+// DISCOM, so leaving that dropdown unanswered was a click with no decision behind it. The
+// caller fires `change` on the select so the normal cascade runs unchanged.
 export function populateDiscoms(state) {
   const sel = document.getElementById('discomSelect');
   sel.innerHTML = '<option value="">-- Select DISCOM --</option>';
   sel.disabled = !state;
-  if (!state) return;
-  getDiscoms(state).forEach(d => {
+  if (!state) return '';
+  const list = getDiscoms(state);
+  list.forEach(d => {
     const opt = document.createElement('option');
     opt.value = d.id;
     opt.textContent = d.name + ' — ' + d.fullName;
     sel.appendChild(opt);
   });
+  if (list.length === 1) { sel.value = list[0].id; return list[0].id; }
+  return '';
 }
 
-export function populateCategories(discomId) {
+// Every DISCOM has exactly one domestic category, so a household visitor is never making a
+// real choice here — pre-select it and let the Simple-mode Home/Business chips flip it.
+// Returns the selected category id, or ''.
+export function populateCategories(discomId, preferredKind = 'domestic') {
   const sel = document.getElementById('categorySelect');
   sel.innerHTML = '<option value="">-- Select Category --</option>';
   sel.disabled = !discomId;
-  if (!discomId) return;
+  if (!discomId) return '';
   getCategories(discomId).forEach(c => {
     const opt = document.createElement('option');
     opt.value = c.id; opt.textContent = c.name;
     sel.appendChild(opt);
   });
+  const def = getDefaultCategory(discomId, preferredKind) || getDefaultCategory(discomId);
+  if (def) { sel.value = def.id; return def.id; }
+  return '';
 }
 
 export function populateSupplyTypes(discomId, categoryId) {
@@ -446,11 +459,15 @@ export function populateSupplyTypes(discomId, categoryId) {
     sel.appendChild(opt);
   });
 
-  sel.value = types[0].id;
-  desc.textContent = types[0].description || '';
+  // Not types[0]: the list is in tariff-order sequence, which opens with the means-tested
+  // variant (Bihar → Kutir Jyoti BPL, UP → ST-10A Urban Life Line ≤1 kW/≤100 units). That
+  // silently defaulted most visitors onto a tariff they're not eligible for.
+  const def = getDefaultSupplyType(discomId, categoryId) || types[0];
+  sel.value = def.id;
+  desc.textContent = def.description || '';
   group.style.display = 'block';
-  prefillFac(discomId, categoryId, types[0].id);
-  applyLifelineDefaultLoad(discomId, categoryId, types[0].id);
+  prefillFac(discomId, categoryId, def.id);
+  applyLifelineDefaultLoad(discomId, categoryId, def.id);
   checkLifelineLimits();
 }
 

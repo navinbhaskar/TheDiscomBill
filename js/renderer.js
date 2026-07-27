@@ -1,6 +1,6 @@
 // js/renderer.js — Bill HTML renderer (pure string output, no DOM dependencies)
 
-import { displayDate } from './utils.js';
+import { displayDate, escHtml } from './utils.js';
 export { displayDate };
 
 /**
@@ -188,6 +188,13 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
   if (paid) extras.push(row('Payments received', -paid, { cls: 'mini-line-credit' }));
   for (const a of (adjustments || [])) if (a.amount) extras.push(row(a.label || 'Adjustment', Number(a.amount)));
 
+  // Simple mode pre-selects the mainstream supply type rather than blocking on it, so where a
+  // real alternative exists (rural vs urban, Kutir Jyoti / life-line) the guess is stated
+  // outright — those variants change the total materially and the visitor never chose one.
+  const assumption = (category.supplyTypes || []).length > 1 && supplyTypeName
+    ? `Assumed <strong>${escHtml(supplyTypeName)}</strong>. Not right? Change “Supply Type / Area” in the form.`
+    : '';
+
   const grandTotal = extras.length ? totalPayable : currentNet;
   const periodBits = [
     [MONTH_NAMES[+billingMonth - 1] || billingMonth, billingYear].filter(Boolean).join(' '),
@@ -230,6 +237,8 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
         <dt>Total payable</dt><dd>${formatINR(Math.max(0, grandTotal))}</dd>
       </div>
     </dl>
+
+    ${assumption ? `<p class="sb-assume">${assumption}</p>` : ''}
 
     <div class="bill-perf bill-perf-bottom" aria-hidden="true"></div>
 

@@ -309,5 +309,48 @@ group('UP DVVNL domestic bill', () => {
   check('net > 0', r.currentNet > 0, true);
 });
 
+// ── Form defaults (Simple mode pre-fill) ─────────────────────────────────────
+// These back the "state + units and nothing else" path: if a default ever resolves to a
+// means-tested or ineligible tariff, the visitor sees a wrong number without being asked.
+import { getStates, getDiscoms, getCategories, getDefaultCategory, getDefaultSupplyType }
+  from '../js/tariffs/registry.js';
+group('form defaults', () => {
+  const allDiscoms = getStates().flatMap(s => getDiscoms(s));
+  check('65 DISCOMs in registry', allDiscoms.length, 65);
+
+  // Every DISCOM must resolve to a genuinely domestic category — "Non-Domestic" must not match.
+  const badDomestic = allDiscoms.filter(d => {
+    const c = getDefaultCategory(d.id);
+    return !c || !/domestic|residential|lmv-?1\b/i.test(c.name)
+             || /commercial|non-?domestic|non-?residential/i.test(c.name);
+  }).map(d => d.id);
+  check('every DISCOM has a domestic default', badDomestic.join(',') || 'none', 'none');
+
+  // A default supply type must never be the means-tested / unmetered variant.
+  const badSupply = [];
+  for (const d of allDiscoms) {
+    for (const c of getCategories(d.id)) {
+      const st = getDefaultSupplyType(d.id, c.id);
+      if (st && /life\s*-?\s*line|\bbpl\b|unmetered|un-?metered/i.test(`${st.id} ${st.name}`)) {
+        badSupply.push(`${d.id}/${c.id}=${st.id}`);
+      }
+    }
+  }
+  check('no default lands on a life-line/BPL tariff', badSupply.join(',') || 'none', 'none');
+
+  // The two lists whose tariff-order sequence opens with a subsidised variant.
+  check('UP LMV-1 defaults to 10B not 10A', getDefaultSupplyType('mvvnl', 'domestic').id, '10B');
+  check('Bihar DS defaults to urban not Kutir Jyoti', getDefaultSupplyType('nbpdcl', 'domestic').id, 'ds2');
+  // Odisha's list already leads with the right one — the ranking must not reorder it.
+  check('Odisha keeps its general default', getDefaultSupplyType('tpcodl', 'domestic').id, 'general');
+
+  // KSEB is the only DISCOM that splits domestic, and lists the sub-500W band first.
+  check('KSEB skips the sub-500W band', getDefaultCategory('kseb').id, 'domestic');
+
+  check('commercial lookup finds LMV-2', getDefaultCategory('mvvnl', 'commercial').id, 'commercial');
+  check('no supply types → null', getDefaultSupplyType('mvvnl', 'nosuch'), null);
+  check('unknown DISCOM → null', getDefaultCategory('nosuch'), null);
+});
+
 console.log(`\n${failed === 0 ? '✓ ALL PASSED' : '✗ FAILURES'} — ${passed} passed, ${failed} failed\n`);
 process.exit(failed === 0 ? 0 : 1);
