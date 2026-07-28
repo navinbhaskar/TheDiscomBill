@@ -713,18 +713,22 @@
           <div class="form-row form-row-uneven">
             <div class="form-group">
               <label for="connectedLoad"><span class="lbl-text req" data-i18n="label.sanctioned">Sanctioned Load (kW)</span><span class="gloss" tabindex="0" role="img" aria-label="Sanctioned / contract demand: the load you have contracted with the utility; fixed / demand charges and the excess-demand check are based on it." data-tip="Sanctioned Load / Contract Demand: the load you've contracted with the utility. Fixed / demand charges and the excess-demand check are based on it.">ⓘ</span></label>
-              <!-- The field takes 2-3 characters, so it is sized for them and the quick
-                   picks sit beside it rather than under. -->
-              <div class="load-row">
-                <input type="number" id="connectedLoad" placeholder="e.g., 2" min="0.1" step="0.1" value="1">
-                <div class="load-chips" id="loadChips" role="group" aria-label="Common sanctioned loads">
-                  <button type="button" class="load-chip active" data-kw="1">1 kW</button>
-                  <button type="button" class="load-chip" data-kw="2">2 kW</button>
-                  <button type="button" class="load-chip" data-kw="3">3 kW</button>
-                  <button type="button" class="load-chip" data-kw="5">5 kW</button>
+              <!-- Stepper, not quick-pick chips. The chips only covered 1/2/3/5 kW, so anyone
+                   on 4, 6 or any other load ignored them and typed anyway; the ± buttons move
+                   by 1 kW and cover every value. Fractional loads are still typeable directly. -->
+              <div class="stepper" id="loadStepper">
+                <input type="number" id="connectedLoad" placeholder="e.g., 2" min="0.1" max="500" step="1" value="1"
+                       inputmode="decimal" aria-describedby="loadHint">
+                <div class="stepper-btns">
+                  <button type="button" class="stepper-btn" data-step="-1" aria-label="Decrease sanctioned load" tabindex="-1">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                  </button>
+                  <button type="button" class="stepper-btn" data-step="1" aria-label="Increase sanctioned load" tabindex="-1">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                  </button>
                 </div>
               </div>
-              <small class="load-hint" data-i18n-html="small.sanctioned">💡 Check the top right of your old bill for <strong>“Connected / Sanctioned Load”</strong>. Exceeding this limit triggers excess-demand penalties in states like UP, Delhi and Maharashtra.</small>
+              <small class="load-hint" id="loadHint" data-i18n-html="small.sanctioned">💡 Check the top right of your old bill for <strong>“Connected / Sanctioned Load”</strong>. Exceeding this limit triggers excess-demand penalties in states like UP, Delhi and Maharashtra.</small>
             </div>
             <div class="form-group adv-only">
               <label for="facRate" id="facRateLabel"><span class="lbl-text">FPPA / FAC Surcharge (₹/unit)</span><span class="gloss" tabindex="0" role="img" aria-label="FPPA: Fuel and Power Purchase Adjustment — a periodic surcharge passing the utility's varying fuel and power-purchase cost on to consumers. Per unit: (actual minus base power cost) times units, or a percentage of supply plus demand charges (UP MYT 2025)." data-tip="FPPA — Fuel &amp; Power Purchase Adjustment: a periodic surcharge passing the utility's varying fuel / power-purchase cost on to consumers. ₹/unit = (actual − base power cost) × units, or % of supply+demand charges (UP MYT 2025).">ⓘ</span></label>

@@ -342,20 +342,44 @@ export function initAdvPanel() {
 
 // Sanctioned Load quick-pick chips: one tap sets the load; the active chip
 // tracks whatever value is in the field (typed or tapped).
+// Sanctioned Load stepper. Replaced the 1/2/3/5 kW quick-pick chips, which covered four
+// values and left everyone else typing. Name kept so the calculator-init call site and any
+// share-link ordering stay put.
 export function initLoadChips() {
-  const wrap = document.getElementById('loadChips');
+  const wrap = document.getElementById('loadStepper');
   const loadEl = document.getElementById('connectedLoad');
   if (!wrap || !loadEl) return;
+
+  const step = parseFloat(loadEl.step) || 0.5;
+  const min = loadEl.min !== '' ? parseFloat(loadEl.min) : -Infinity;
+  const max = loadEl.max !== '' ? parseFloat(loadEl.max) : Infinity;
+
+  // Snap to the step grid so repeated taps from a typed 1.3 give 1.5/2.0, not 1.8/2.3.
+  const nudge = (dir) => {
+    const cur = parseFloat(loadEl.value);
+    const base = isNaN(cur) ? (min > 0 && isFinite(min) ? min : step) : cur;
+    let next = dir > 0 ? Math.floor(base / step + 1e-9) * step + step
+                       : Math.ceil(base / step - 1e-9) * step - step;
+    next = Math.min(max, Math.max(min, next));
+    // Kill float dust (0.1 + 0.2) without hard-coding a precision.
+    const dp = (String(step).split('.')[1] || '').length;
+    loadEl.value = dp ? next.toFixed(dp).replace(/\.0+$/, '') : String(next);
+    loadEl.dispatchEvent(new Event('input', { bubbles: true }));
+    loadEl.dispatchEvent(new Event('change', { bubbles: true }));
+  };
+
   const sync = () => {
     const v = parseFloat(loadEl.value);
-    wrap.querySelectorAll('.load-chip').forEach(b => b.classList.toggle('active', +b.dataset.kw === v));
+    wrap.querySelectorAll('.stepper-btn').forEach((b) => {
+      const dir = +b.dataset.step;
+      b.disabled = !isNaN(v) && (dir > 0 ? v >= max : v <= min);
+    });
   };
-  wrap.addEventListener('click', e => {
-    const btn = e.target.closest('.load-chip');
-    if (!btn) return;
-    loadEl.value = btn.dataset.kw;
-    loadEl.dispatchEvent(new Event('input',  { bubbles: true }));
-    loadEl.dispatchEvent(new Event('change', { bubbles: true }));
+
+  wrap.addEventListener('click', (e) => {
+    const btn = e.target.closest('.stepper-btn');
+    if (!btn || btn.disabled) return;
+    nudge(+btn.dataset.step);
   });
   loadEl.addEventListener('input', sync);
   sync();
