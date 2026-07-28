@@ -54,7 +54,25 @@
   <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/css/styles.min.css">
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -62,7 +80,7 @@
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/guides/wbsedcl-new-connection-online/","name":"WBSEDCL नया कनेक्शन ऑनलाइन — तुरंत कोटेशन, दस्तावेज़, विद्युत सहयोगी ऐप","description":"WBSEDCL के नए बिजली कनेक्शन की स्टेप-बाय-स्टेप गाइड: wbsedcl.in या विद्युत सहयोगी ऐप से आवेदन, तुरंत मिलने वाला प्रोविज़नल कोटेशन और 10-अंकों का आवेदन नंबर, दस्तावेज़, सिक्योरिटी डिपॉज़िट, निरीक्षण की समय-सीमाएँ और शिकायत का तरीका। कोलकाता शहर में CESC अलग कंपनी है।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-07-28"}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"WBSEDCL का नया बिजली कनेक्शन ऑनलाइन कैसे लें (पश्चिम बंगाल)","description":"WBSEDCL के नए बिजली कनेक्शन की स्टेप-बाय-स्टेप गाइड: wbsedcl.in या विद्युत सहयोगी ऐप से आवेदन, तुरंत मिलने वाला प्रोविज़नल कोटेशन और 10-अंकों का आवेदन नंबर, दस्तावेज़, सिक्योरिटी डिपॉज़िट, निरीक्षण की समय-सीमाएँ और शिकायत का तरीका। कोलकाता शहर में CESC अलग कंपनी है।","mainEntityOfPage":"https://thediscombill.com/hi/guides/wbsedcl-new-connection-online/","datePublished":"2026-07-08","dateModified":"2026-07-28","inLanguage":"hi-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"WBSEDCL का नया बिजली कनेक्शन ऑनलाइन कैसे लें (पश्चिम बंगाल)","description":"WBSEDCL के नए बिजली कनेक्शन की स्टेप-बाय-स्टेप गाइड: wbsedcl.in या विद्युत सहयोगी ऐप से आवेदन, तुरंत मिलने वाला प्रोविज़नल कोटेशन और 10-अंकों का आवेदन नंबर, दस्तावेज़, सिक्योरिटी डिपॉज़िट, निरीक्षण की समय-सीमाएँ और शिकायत का तरीका। कोलकाता शहर में CESC अलग कंपनी है।","image":"https://thediscombill.com/og/guide-wbsedcl-new-connection-online.jpg","mainEntityOfPage":"https://thediscombill.com/hi/guides/wbsedcl-new-connection-online/","datePublished":"2026-07-08","dateModified":"2026-07-28","inLanguage":"hi-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"गाइड","item":"https://thediscombill.com/hi/guides/"},{"@type":"ListItem","position":3,"name":"WBSEDCL का नया बिजली कनेक्शन ऑनलाइन कैसे लें (पश्चिम बंगाल)"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"WBSEDCL का नया कनेक्शन कहाँ से लें?","acceptedAnswer":{"@type":"Answer","text":"wbsedcl.in पर (Online Application → New Connection) या विद्युत सहयोगी मोबाइल ऐप से। कोलकाता शहर के परिसर CESC (अलग कंपनी) के हैं — वहाँ आवेदन CESC में होता है।"}},{"@type":"Question","name":"WBSEDCL का तुरंत प्रोविज़नल कोटेशन क्या है?","acceptedAnswer":{"@type":"Answer","text":"आवेदन सबमिट करते ही सिस्टम सर्विस-कनेक्शन शुल्क + सिक्योरिटी डिपॉज़िट का कोटेशन और 10 अंकों का आवेदन नंबर बना देता है। इसे ऑनलाइन या कस्टमर केयर सेंटर पर भरते ही निरीक्षण का चरण शुरू होता है।"}},{"@type":"Question","name":"WBSEDCL को कौन-से दस्तावेज़ चाहिए?","acceptedAnswer":{"@type":"Answer","text":"कोई सरकारी फोटो ID (आधार, वोटर ID, पासपोर्ट, PAN), स्वामित्व/कब्ज़ा प्रमाण (सेल/लीज़/रेंट डीड, नगरपालिका टैक्स रसीद) और एक पासपोर्ट-साइज़ फोटो। किरायेदार रेंट डीड या किराया रसीद दे सकते हैं।"}},{"@type":"Question","name":"WBSEDCL का नया कनेक्शन कितने दिन में मिलता है?","acceptedAnswer":{"@type":"Answer","text":"कोटेशन भरने के लगभग 3–7 दिन में निरीक्षण, और औपचारिकताओं के बाद लगभग 7 दिन में कनेक्शन का काम — चार्टर का वादा। 2020 उपभोक्ता अधिकार नियम पूरी प्रक्रिया 7/15/30 दिन (महानगर/नगरीय/ग्रामीण) में बाँधते हैं।"}},{"@type":"Question","name":"आवेदन अटक जाए तो किससे संपर्क करें?","acceptedAnswer":{"@type":"Answer","text":"10 अंकों के आवेदन नंबर के साथ 19121 पर कॉल करें, फिर अपने सप्लाई ऑफ़िस के स्टेशन मैनेजर से। औपचारिक रास्ता WBSEDCL ग्रीवांस सेल और CGRF है — 2020 नियमों और WBERC SoP का हवाला दें।"}}]}</script>
 </head>
@@ -243,7 +261,7 @@
     
     <section class="seo-section">
       <h2>TheDiscomBill पर संबंधित पेज</h2>
-      <div class="seo-link-grid"><a class="seo-link-card" href="/hi/tariffs/west-bengal/"><strong>पश्चिम बंगाल बिजली टैरिफ व बिल कैलकुलेटर</strong><span>वर्तमान स्लैब दरें, हर डिस्कॉम, मदवार बिल</span></a><a class="seo-link-card" href="/new-connection/"><strong>नया कनेक्शन हेल्पर</strong><span>आपके डिस्कॉम के दस्तावेज़, शुल्क और आवेदन के स्टेप</span></a></div>
+      <div class="seo-link-grid"><a class="seo-link-card" href="/hi/tariffs/west-bengal/"><strong>पश्चिम बंगाल बिजली टैरिफ व बिल कैलकुलेटर</strong><span>वर्तमान स्लैब दरें, हर डिस्कॉम, मदवार बिल</span></a><a class="seo-link-card" href="/services/#new-connection"><strong>नया कनेक्शन हेल्पर</strong><span>आपके डिस्कॉम के दस्तावेज़, शुल्क और आवेदन के स्टेप</span></a></div>
     </section>
     <section class="seo-section guide-more">
       <h2>और गाइड</h2>

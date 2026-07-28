@@ -56,7 +56,25 @@
   <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/css/styles.min.css">
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -64,7 +82,7 @@
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/guides/smart-meter-prepaid-disconnection/","name":"स्मार्ट प्रीपेड मीटर कट गया? रिचार्ज, बिजली लौटने का समय और आपके अधिकार","description":"स्मार्ट प्रीपेड बिजली मीटर बैलेंस कैसे काटता है, रिमोट डिस्कनेक्शन को बिजली कटौती या फॉल्ट से कैसे अलग पहचानें, डिस्कॉम कब आपको काट नहीं सकता, रिचार्ज के बाद बिजली कितनी जल्दी लौटती है, और पुराना बकाया कैसे वसूला जाता है।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-07-28"}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"स्मार्ट प्रीपेड मीटर: रिचार्ज, कम बैलेंस और रिमोट डिस्कनेक्शन","description":"स्मार्ट प्रीपेड बिजली मीटर बैलेंस कैसे काटता है, रिमोट डिस्कनेक्शन को बिजली कटौती या फॉल्ट से कैसे अलग पहचानें, डिस्कॉम कब आपको काट नहीं सकता, रिचार्ज के बाद बिजली कितनी जल्दी लौटती है, और पुराना बकाया कैसे वसूला जाता है।","mainEntityOfPage":"https://thediscombill.com/hi/guides/smart-meter-prepaid-disconnection/","datePublished":"2026-01-06","dateModified":"2026-07-28","inLanguage":"hi-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"स्मार्ट प्रीपेड मीटर: रिचार्ज, कम बैलेंस और रिमोट डिस्कनेक्शन","description":"स्मार्ट प्रीपेड बिजली मीटर बैलेंस कैसे काटता है, रिमोट डिस्कनेक्शन को बिजली कटौती या फॉल्ट से कैसे अलग पहचानें, डिस्कॉम कब आपको काट नहीं सकता, रिचार्ज के बाद बिजली कितनी जल्दी लौटती है, और पुराना बकाया कैसे वसूला जाता है।","image":"https://thediscombill.com/og/guide-smart-meter-prepaid-disconnection.jpg","mainEntityOfPage":"https://thediscombill.com/hi/guides/smart-meter-prepaid-disconnection/","datePublished":"2026-01-06","dateModified":"2026-07-28","inLanguage":"hi-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"गाइड","item":"https://thediscombill.com/hi/guides/"},{"@type":"ListItem","position":3,"name":"स्मार्ट प्रीपेड मीटर: रिचार्ज, कम बैलेंस और रिमोट डिस्कनेक्शन"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"कैसे पता चले कि मेरा स्मार्ट मीटर कम बैलेंस पर काटा गया है?","acceptedAnswer":{"@type":"Answer","text":"मीटर का डिस्प्ले चालू रहता है और डिस्कनेक्ट/रिले चिह्न या \"OFF\" दिखाता है, डिस्कॉम ऐप में समय-मुहर के साथ कटौती दर्ज होती है, और पहले कम-बैलेंस SMS अलर्ट आए होंगे। बिल्कुल बुझा डिस्प्ले या पूरी अंधेरी गली कटौती या फॉल्ट का संकेत है।"}},{"@type":"Question","name":"रिचार्ज के कितनी देर बाद बिजली लौटती है?","acceptedAnswer":{"@type":"Answer","text":"भुगतान दर्ज होने के कुछ मिनटों से कुछ घंटों में पुनर्संयोजन आमतौर पर स्वतः होता है। कुछ मीटर मॉडल सुरक्षा के लिए मीटर का पुश बटन दबाने की भी माँग करते हैं। कुछ घंटों में आपूर्ति न लौटे, तो रिचार्ज रसीद के साथ शिकायत करें — कमज़ोर नेटवर्क वाले मीटर तक रीकनेक्ट कमांड नहीं पहुँचा हो सकता।"}},{"@type":"Question","name":"क्या प्रीपेड स्मार्ट मीटर रात या अवकाश पर बिजली काट सकता है?","acceptedAnswer":{"@type":"Answer","text":"राज्य आपूर्ति संहिताएँ आमतौर पर रात और रविवार/सार्वजनिक अवकाश पर रिमोट कटौती रोकती हैं, और पहले कम-बैलेंस अलर्ट अनिवार्य करती हैं। कई डिस्कॉम आपात क्रेडिट या फ्रेंडली ऑवर्स भी देते हैं ताकि रिचार्ज तक आपूर्ति चले। इन नियमों के विरुद्ध कटौती शिकायत का आधार है।"}},{"@type":"Question","name":"बिजली इस्तेमाल न करने पर भी मेरा प्रीपेड बैलेंस क्यों घटता है?","acceptedAnswer":{"@type":"Answer","text":"फिक्स्ड चार्ज हर दिन कटता है (मासिक फिक्स्ड चार्ज ÷ महीने के दिन), खपत चाहे शून्य हो, साथ में लागू मदों पर शुल्क — और फ्रिज, राउटर जैसे हरदम चलते लोड खपत करते रहते हैं। ऐप का दैनिक कटौती खाता ठीक-ठीक दिखाता है कि क्या कटा।"}},{"@type":"Question","name":"प्रीपेड मीटर पर मेरे पुराने बकाया बिलों का क्या होगा?","acceptedAnswer":{"@type":"Answer","text":"पोस्टपेड अवधि का बकाया आमतौर पर हर रिचार्ज के एक तय प्रतिशत के रूप में वसूला जाता है जब तक चुकता न हो, जो रिचार्ज रसीद में बँटवारे के रूप में दिखता है। बकाया चुकने तक आपका उपयोगी बैलेंस धीमा बढ़ता है; आँकड़ा गलत लगे तो रिचार्ज खाते को सबूत बनाकर आपत्ति करें।"}}]}</script>
 </head>

@@ -56,7 +56,25 @@
   <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/css/styles.min.css">
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -64,7 +82,7 @@
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/guides/ac-1-5-ton-electricity-bill/","name":"1.5 Ton AC Electricity Bill Per Month — Units, Cost & the Slab Trap","description":"How many units a 1.5 ton AC consumes per hour and per month by star rating, why AC units are billed at your highest slab rate, a realistic monthly cost table, and five ways to cut the bill without sweating.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-07-28"}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How Much Does a 1.5 Ton AC Add to Your Electricity Bill?","description":"How many units a 1.5 ton AC consumes per hour and per month by star rating, why AC units are billed at your highest slab rate, a realistic monthly cost table, and five ways to cut the bill without sweating.","mainEntityOfPage":"https://thediscombill.com/guides/ac-1-5-ton-electricity-bill/","datePublished":"2026-07-21","dateModified":"2026-07-28","inLanguage":"en-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How Much Does a 1.5 Ton AC Add to Your Electricity Bill?","description":"How many units a 1.5 ton AC consumes per hour and per month by star rating, why AC units are billed at your highest slab rate, a realistic monthly cost table, and five ways to cut the bill without sweating.","image":"https://thediscombill.com/og/guide-ac-1-5-ton-electricity-bill.jpg","mainEntityOfPage":"https://thediscombill.com/guides/ac-1-5-ton-electricity-bill/","datePublished":"2026-07-21","dateModified":"2026-07-28","inLanguage":"en-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://thediscombill.com/guides/"},{"@type":"ListItem","position":3,"name":"How Much Does a 1.5 Ton AC Add to Your Electricity Bill?"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How many units does a 1.5 ton AC consume in one hour?","acceptedAnswer":{"@type":"Answer","text":"Roughly 1 unit per hour for a current 5-star inverter model, about 1.3 units for a 3-star inverter, and 1.5–1.7 units for an old fixed-speed AC — seasonal averages computed as cooling watts (≈5,100 for 1.5 ton) divided by the ISEER on the BEE label."}},{"@type":"Question","name":"What is the monthly electricity bill for a 1.5 ton AC running 8 hours a day?","acceptedAnswer":{"@type":"Answer","text":"Around 245–410 units a month depending on star rating and age. At marginal domestic rates of ₹6–10 per unit that is roughly ₹1,500–₹4,000 per month, plus fuel surcharge and electricity duty. The exact figure depends on your state slabs — the AC units are billed at your highest applicable slab rate."}},{"@type":"Question","name":"Does an inverter AC really reduce the electricity bill?","acceptedAnswer":{"@type":"Answer","text":"Yes, for anyone running the AC several hours daily. An inverter compressor modulates instead of stop-starting, so a 5-star inverter averages ~1 unit/hour against ~1.6 for an old fixed-speed unit — about 35–40% fewer units for the same cooling."}},{"@type":"Question","name":"What AC temperature setting saves the most electricity?","acceptedAnswer":{"@type":"Answer","text":"24–26 °C. Consumption rises roughly 6% for every degree below that, so 18 °C costs about a third more than 24 °C. Pairing 24–25 °C with a ceiling fan gives the same comfort as a much colder setting."}},{"@type":"Question","name":"Why did my bill double after buying an AC?","acceptedAnswer":{"@type":"Answer","text":"Two effects stack: the AC adds 250–400 units, and those units land in your highest tariff slabs — in some states they also push you past a subsidy or slab threshold that re-prices existing usage. Compare your pre-AC and post-AC units in a bill calculator to separate the two effects."}}]}</script>
 </head>

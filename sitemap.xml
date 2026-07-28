@@ -97,6 +97,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/community/</loc>
+    <lastmod>2026-07-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/guides/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/"/>

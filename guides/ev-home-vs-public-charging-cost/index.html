@@ -22,25 +22,25 @@
       
     })();
   </script>
-  <title>EV Charging Cost in India — Home vs Public DC, Per-km Maths &amp; Petrol/Diesel Comparison</title>
-  <meta name="description" content="The real cost of charging an electric car or scooter in India: the formula with charging losses, a per-EV cost table (Nexon, Tiago, Ather, Atto 3…), why home charging beats public DC 3× over, a monthly petrol-vs-diesel-vs-EV showdown, and how ToD night rates and solar cut it further.">
+  <title>EV Charging Cost India 2026 — Home vs Public DC, Per km</title>
+  <meta name="description" content="What charging an EV actually costs in India — home vs public DC, cost per km for Nexon, Tiago, Ather and Atto 3, and how it compares with petrol.">
   <link rel="canonical" href="https://thediscombill.com/guides/ev-home-vs-public-charging-cost/">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="TheDiscomBill">
-  <meta property="og:title" content="EV Charging Cost in India — Home vs Public DC, Per-km Maths &amp; Petrol/Diesel Comparison">
-  <meta property="og:description" content="The real cost of charging an electric car or scooter in India: the formula with charging losses, a per-EV cost table (Nexon, Tiago, Ather, Atto 3…), why home charging beats public DC 3× over, a monthly petrol-vs-diesel-vs-EV showdown, and how ToD night rates and solar cut it further.">
+  <meta property="og:title" content="EV Charging Cost India 2026 — Home vs Public DC, Per km">
+  <meta property="og:description" content="What charging an EV actually costs in India — home vs public DC, cost per km for Nexon, Tiago, Ather and Atto 3, and how it compares with petrol.">
   <meta property="og:url" content="https://thediscombill.com/guides/ev-home-vs-public-charging-cost/">
   <meta property="og:image" content="https://thediscombill.com/og/guide-ev-home-vs-public-charging-cost.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:alt" content="EV Charging Cost in India — Home vs Public DC, Per-km Maths &amp; Petrol/Diesel Comparison">
+  <meta property="og:image:alt" content="EV Charging Cost India 2026 — Home vs Public DC, Per km">
   <meta property="og:locale" content="en_IN">
   <meta property="og:locale:alternate" content="hi_IN">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="EV Charging Cost in India — Home vs Public DC, Per-km Maths &amp; Petrol/Diesel Comparison">
-  <meta name="twitter:description" content="The real cost of charging an electric car or scooter in India: the formula with charging losses, a per-EV cost table (Nexon, Tiago, Ather, Atto 3…), why home charging beats public DC 3× over, a monthly petrol-vs-diesel-vs-EV showdown, and how ToD night rates and solar cut it further.">
+  <meta name="twitter:title" content="EV Charging Cost India 2026 — Home vs Public DC, Per km">
+  <meta name="twitter:description" content="What charging an EV actually costs in India — home vs public DC, cost per km for Nexon, Tiago, Ather and Atto 3, and how it compares with petrol.">
   <meta name="twitter:image" content="https://thediscombill.com/og/guide-ev-home-vs-public-charging-cost.jpg">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
@@ -51,15 +51,33 @@
   <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/css/styles.min.css">
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/guides/ev-home-vs-public-charging-cost/","name":"EV Charging Cost in India — Home vs Public DC, Per-km Maths & Petrol/Diesel Comparison","description":"The real cost of charging an electric car or scooter in India: the formula with charging losses, a per-EV cost table (Nexon, Tiago, Ather, Atto 3…), why home charging beats public DC 3× over, a monthly petrol-vs-diesel-vs-EV showdown, and how ToD night rates and solar cut it further.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-07-28"}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"What Charging an EV Really Costs in India: Home Socket vs Public Fast Charger","description":"The real cost of charging an electric car or scooter in India: the formula with charging losses, a per-EV cost table (Nexon, Tiago, Ather, Atto 3…), why home charging beats public DC 3× over, a monthly petrol-vs-diesel-vs-EV showdown, and how ToD night rates and solar cut it further.","mainEntityOfPage":"https://thediscombill.com/guides/ev-home-vs-public-charging-cost/","datePublished":"2026-06-11","dateModified":"2026-07-28","inLanguage":"en-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/guides/ev-home-vs-public-charging-cost/","name":"EV Charging Cost India 2026 — Home vs Public DC, Per km","description":"What charging an EV actually costs in India — home vs public DC, cost per km for Nexon, Tiago, Ather and Atto 3, and how it compares with petrol.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-07-28"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"What Charging an EV Really Costs in India: Home Socket vs Public Fast Charger","description":"What charging an EV actually costs in India — home vs public DC, cost per km for Nexon, Tiago, Ather and Atto 3, and how it compares with petrol.","image":"https://thediscombill.com/og/guide-ev-home-vs-public-charging-cost.jpg","mainEntityOfPage":"https://thediscombill.com/guides/ev-home-vs-public-charging-cost/","datePublished":"2026-06-11","dateModified":"2026-07-28","inLanguage":"en-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://thediscombill.com/guides/"},{"@type":"ListItem","position":3,"name":"What Charging an EV Really Costs in India: Home Socket vs Public Fast Charger"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does it cost to charge an electric car at home in India?","acceptedAnswer":{"@type":"Answer","text":"Battery size × your domestic per-unit rate × about 1.1 for charging losses. A 40 kWh battery at a ₹7/unit slab rate costs roughly ₹310 for a full charge — but the exact figure depends on your DISCOM’s slab ladder, since EV units land on top of household usage."}},{"@type":"Question","name":"Why is public DC fast charging so much more expensive than home charging?","acceptedAnswer":{"@type":"Answer","text":"Operators pay commercial tariffs, then add equipment, land and margin plus GST, landing at roughly ₹18–25 per unit against a domestic slab rate. You are buying speed: 30–60 minutes to 80% instead of an overnight charge."}},{"@type":"Question","name":"Do I need to increase my sanctioned load for EV charging?","acceptedAnswer":{"@type":"Answer","text":"Not for a 15A socket (3.3 kW) in most homes. A 7.2 kW wallbox usually does need a sanctioned-load increase from your DISCOM — without it, the extra draw can trigger excess-demand penalties that undo the fuel savings."}},{"@type":"Question","name":"Is an EV cheaper per km than petrol in India?","acceptedAnswer":{"@type":"Answer","text":"Substantially. Home-charged EVs typically run at ₹1–1.5 per km for cars and under 30 paise for scooters, versus ₹7–9 per km for a comparable petrol car — an 80–90% reduction. Even on public DC charging the EV usually stays 50%+ cheaper."}},{"@type":"Question","name":"How much can an EV save per month compared to petrol?","acceptedAnswer":{"@type":"Answer","text":"For a mid-size car driven 1,000 km a month, home charging costs about ₹970 versus roughly ₹7,000 for petrol — a saving of around ₹6,000 a month, or ₹72,000 a year. A diesel car at about ₹5,000 a month still costs 5× more to run than the home-charged EV. Your exact saving depends on your slab rate and how far you drive."}}]}</script>
 </head>

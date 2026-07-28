@@ -54,7 +54,25 @@
   <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/css/styles.min.css">
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -154,7 +172,7 @@
     <section class="seo-section">
       <h2>More Madhya Pradesh electricity tools</h2>
       <div class="seo-link-grid">
-        <a class="seo-link-card" href="/compare/"><strong>Compare Madhya Pradesh rates with other states</strong><span>Same units, every state — see where power is cheapest</span></a><a class="seo-link-card" href="/smart-meter-recharge/"><strong>Madhya Pradesh smart meter recharge</strong><span>Recharge steps, units-per-recharge and low-balance rules</span></a><a class="seo-link-card" href="/solar-calculator/"><strong>Rooftop solar savings calculator</strong><span>How much a rooftop system would cut a Madhya Pradesh bill</span></a><a class="seo-link-card" href="/new-connection/"><strong>New electricity connection in Madhya Pradesh</strong><span>Documents, charges and the step-by-step apply process</span></a>
+        <a class="seo-link-card" href="/compare/"><strong>Compare Madhya Pradesh rates with other states</strong><span>Same units, every state — see where power is cheapest</span></a><a class="seo-link-card" href="/smart-meter-recharge/"><strong>Madhya Pradesh smart meter recharge</strong><span>Recharge steps, units-per-recharge and low-balance rules</span></a><a class="seo-link-card" href="/solar-calculator/"><strong>Rooftop solar savings calculator</strong><span>How much a rooftop system would cut a Madhya Pradesh bill</span></a><a class="seo-link-card" href="/services/#new-connection"><strong>New electricity connection in Madhya Pradesh</strong><span>Documents, charges and the step-by-step apply process</span></a>
       </div>
     </section>
     

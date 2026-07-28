@@ -1,22 +1,6 @@
 // js/main.js — Entry point. Imports all modules and wires up the UI.
 
-import {
-  populateStates, populateDiscoms, populateCategories, populateSupplyTypes,
-  populateMonthYear, prefillFac, prefillLpsc, updateBilledDemandVisibility,
-  initTabs, initLoadChips, initAdvPanel, addPaymentRow, addAdjustmentRow,
-  updateArrearTotal, updateUnitsDisplay, updateCalcButton, updateBillingPeriod,
-  updateTodDisplay, updateFacUnitLabel, updateTariffPeriodHint,
-  onFppaAutoToggle, markFppaManual,
-  doCalculate, refreshSubsidyToggle,
-  shareBill, shareBillWhatsApp, resetCalculator, loadFromUrl, loadSample, initHistory,
-  refreshSupplyTypeDependent, applyLifelineDefaultLoad, checkLifelineLimits,
-  getMeterMode, setMeterMode, addMeterRow, updateAdvancedMeter,
-  syncBillingMonthYear, applyDefaultBillingBasis, showToast, refreshRequiredValidation,
-} from './ui.js';
-import { getDefaultCategory } from './tariffs/registry.js';
-import { initDatePickers } from './datepicker.js';
 import { initI18n } from './i18n.js';
-import { initComparisonTable } from './compare.js';
 import { isConfigured, getStoredUser, getSupabase, clearStoredSession } from './supabase-config.js';
 import { initRemoteRates } from './rates.js';
 import { initHeaderSearch } from './search.js';
@@ -432,10 +416,6 @@ function initScrollReveal() {
 // otherwise restore the previous scroll position on reload/back-navigation).
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
-// Expose helpers called from onclick in the rendered bill HTML
-window.__shareBill = shareBill;
-window.__shareBillWa = shareBillWhatsApp;
-window.__resetCalculator = resetCalculator;
 
 // Register the service worker for offline support (no-op on unsupported / insecure contexts).
 // Deferred to idle time after load: SW install pre-caches ~60 URLs, and starting that
@@ -534,25 +514,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('blogGrid')) {
     import('./blog-index.js').then(m => m.initBlogIndex()).catch(() => {});
   }
-  if (document.getElementById('stateSelect')) {
-    populateStates();
-    populateMonthYear();
-    initTabs();
-  }
   // Remote FPPA rates (Supabase, cached + offline-safe). When fresh rows land after the
   // form has rendered, re-run the auto prefill so the visible rate updates too.
   initRemoteRates();
-  window.addEventListener('fppa-rates-updated', () => {
-    const discomEl = document.getElementById('discomSelect');
-    const autoEl   = document.getElementById('fppaAuto');
-    if (discomEl && discomEl.value && autoEl && autoEl.checked) {
-      prefillFac(discomEl.value,
-        document.getElementById('categorySelect')?.value,
-        document.getElementById('supplyTypeSelect')?.value);
-    }
-  });
   initI18n();   // apply saved/default language + wire the EN/हिंदी switcher
-  initComparisonTable(); // Render the dynamic tariff comparison table
+  // /compare/ and the homepage only — initComparisonTable() no-ops without #compTableBody,
+  // but the import alone pulled the whole tariff registry onto every page.
+  if (document.getElementById('compTableBody')) {
+    import('./compare.js').then(m => m.initComparisonTable()).catch(() => {});
+  }
   initLoginButton();     // top-right Login / My Account button
   initHeaderSearch();    // header magnifier + Ctrl+K / '/' site search
   initHeroBillCard();    // homepage hero card: estimate ⇄ across-India faces
@@ -621,288 +591,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const stateEl      = document.getElementById('stateSelect');
-  const discomEl     = document.getElementById('discomSelect');
-  const categoryEl   = document.getElementById('categorySelect');
-  const supplyTypeEl = document.getElementById('supplyTypeSelect');
-
-  // ── Purpose chips + remembered selection ────────────────────────────────────
-  // Simple mode asks "Home or Shop?" instead of showing a Consumer Category select full of
-  // tariff codes. The chips are a view over #categorySelect — that select stays the single
-  // source of truth for calculation, sharing, history and OCR autofill.
-  const purposeChips = document.getElementById('purposeChips');
-  const purposeEcho  = document.getElementById('purposeEcho');
-  let purposeKind = 'domestic';
-
-  const currentPurpose = () => purposeKind;
-
-  // Mirrors whatever #categorySelect actually holds back onto the chips, and names the
-  // resolved tariff underneath so a pre-filled choice is never invisible. Called after
-  // every cascade, including ones the user didn't drive (share links, OCR, sample bill).
-  function syncPurposeChips() {
-    if (!purposeChips) return;
-    const discomId = discomEl.value;
-    const commercial = discomId ? getDefaultCategory(discomId, 'commercial') : null;
-    // Derive from the select, don't just replay the last chip click: Detailed mode, a share
-    // link and OCR autofill all write the category directly, and the chips must not claim
-    // "Home" while the form is calculating a commercial tariff.
-    if (categoryEl.value && commercial && categoryEl.value === commercial.id) purposeKind = 'commercial';
-    else if (categoryEl.value) purposeKind = 'domestic';
-    purposeChips.querySelectorAll('.purpose-chip').forEach(b => {
-      // 17 of 65 DISCOMs carry no commercial tariff — offer no choice rather than a dead one.
-      if (b.dataset.kind === 'commercial') b.hidden = !!discomId && !commercial;
-      const on = b.dataset.kind === purposeKind;
-      b.classList.toggle('active', on);
-      b.setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
-    if (purposeEcho) {
-      const catName = categoryEl.options[categoryEl.selectedIndex]?.textContent.trim();
-      const stName  = supplyTypeEl.value && supplyTypeGroupVisible()
-        ? supplyTypeEl.options[supplyTypeEl.selectedIndex]?.textContent.trim() : '';
-      purposeEcho.textContent = catName && categoryEl.value
-        ? (stName ? `${catName} · ${stName}` : catName)
-        : '';
-    }
-  }
-  // Declaration, not a const arrow: syncPurposeChips above calls it, and a const would be
-  // in its temporal dead zone on the first cascade fired during init.
-  function supplyTypeGroupVisible() {
-    return document.getElementById('supplyTypeGroup')?.style.display !== 'none';
-  }
-
-  purposeChips?.querySelectorAll('.purpose-chip').forEach(b => {
-    b.addEventListener('click', () => {
-      if (purposeKind === b.dataset.kind) return;
-      purposeKind = b.dataset.kind;
-      const def = discomEl.value ? getDefaultCategory(discomEl.value, purposeKind) : null;
-      if (def) { categoryEl.value = def.id; categoryEl.dispatchEvent(new Event('change')); }
-      syncPurposeChips();
-    });
-  });
-
-  // The form used to reopen on a returning visitor's last state + DISCOM, remembered in
-  // localStorage. Removed on request: the calculator should start empty and let the visitor
-  // choose, so a stale pick can never be mistaken for one they just made. A ?state=/?discom=
-  // link still fills the form — that is an explicit request, not a remembered guess.
-  // Any key left over from the old behaviour is cleared so it does not linger in storage.
-  try { localStorage.removeItem('discombill.lastSelection'); } catch (e) {}
-
-  if (stateEl) {
-    stateEl.addEventListener('change', () => {
-      // 20 of 34 states have one DISCOM; when so, populateDiscoms picks it and we replay the
-      // normal `change` cascade rather than duplicating it here.
-      const auto = populateDiscoms(stateEl.value);
-      if (auto) {
-        discomEl.dispatchEvent(new Event('change'));
-      } else {
-        populateCategories('');
-        populateSupplyTypes('', '');
-        updateCalcButton();
-        refreshSubsidyToggle();
-      }
-    });
-
-    discomEl.addEventListener('change', () => {
-      // Pre-selects the domestic category (or commercial, if the Business chip is on) and
-      // replays the category cascade below, so supply type / FPPA / load all follow.
-      const cat = populateCategories(discomEl.value, currentPurpose());
-      populateSupplyTypes('', '');
-      updateCalcButton();
-      refreshSubsidyToggle();
-      prefillLpsc(discomEl.value);
-      // Reflect the chosen DISCOM (and its state) in the URL without reloading, so the
-      // selection can be bookmarked / shared. Other existing query params are preserved.
-      const params = new URLSearchParams(location.search);
-      if (discomEl.value) {
-        params.set('state', stateEl.value);
-        params.set('discom', discomEl.value);
-      } else {
-        params.delete('discom');
-      }
-      const qs = params.toString();
-      history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
-      if (cat) categoryEl.dispatchEvent(new Event('change'));
-      syncPurposeChips();
-    });
-
-    categoryEl.addEventListener('change', () => {
-      populateSupplyTypes(discomEl.value, categoryEl.value);
-      applyDefaultBillingBasis();
-      updateBilledDemandVisibility(discomEl.value, categoryEl.value, supplyTypeEl.value);
-      updateTariffPeriodHint();
-      updateCalcButton();
-      refreshSubsidyToggle();
-      syncPurposeChips();
-    });
-
-    document.querySelectorAll('input[name="billingBasis"]').forEach(r => {
-      r.addEventListener('change', () => {
-        updateBilledDemandVisibility(discomEl.value, categoryEl.value, supplyTypeEl.value);
-      });
-    });
-
-    supplyTypeEl.addEventListener('change', () => {
-      applyLifelineDefaultLoad(discomEl.value, categoryEl.value, supplyTypeEl.value);
-      refreshSupplyTypeDependent();
-      checkLifelineLimits();
-      syncPurposeChips();
-    });
-
-    document.getElementById('fromDate').addEventListener('change', () => {
-      updateBillingPeriod();
-      prefillFac(discomEl.value, categoryEl.value, supplyTypeEl.value);
-      updateTariffPeriodHint();
-      checkLifelineLimits();
-    });
-    document.getElementById('toDate').addEventListener('change', () => {
-      updateBillingPeriod();
-      prefillFac(discomEl.value, categoryEl.value, supplyTypeEl.value);
-      updateTariffPeriodHint();
-      checkLifelineLimits();
-    });
-    document.getElementById('connectedLoad').addEventListener('input', () => {
-      updateCalcButton();
-      checkLifelineLimits();
-    });
-    document.getElementById('billedDemand').addEventListener('input', checkLifelineLimits);
-
-    ['billingMonth', 'billingYear'].forEach(id => {
-      document.getElementById(id).addEventListener('change', () => {
-        prefillFac(discomEl.value, categoryEl.value, supplyTypeEl.value);
-        updateTariffPeriodHint();
-      });
-    });
-    document.getElementById('billingMonthYear').addEventListener('change', syncBillingMonthYear);
-
-    document.getElementById('facMode').addEventListener('change', () => {
-      updateFacUnitLabel();
-      markFppaManual();
-    });
-    // Segmented ₹/unit ⇄ % pill mirrors the hidden #facMode select (the JS source of truth)
-    document.querySelectorAll('input[name="facModeSeg"]').forEach(r => {
-      r.addEventListener('change', () => {
-        const sel = document.getElementById('facMode');
-        if (sel && sel.value !== r.value) { sel.value = r.value; sel.dispatchEvent(new Event('change')); }
-      });
-    });
-    document.getElementById('fppaAuto').addEventListener('change', () => {
-      onFppaAutoToggle(discomEl.value, categoryEl.value, supplyTypeEl.value);
-    });
-    document.getElementById('facRate').addEventListener('input', markFppaManual);
-
-    document.getElementById('todSplitChk').addEventListener('change', () => setMeterMode(getMeterMode()));
-    document.getElementById('addMeterRowBtn').addEventListener('click', () => { addMeterRow(''); updateAdvancedMeter(); });
-    setMeterMode(getMeterMode());
-
-    ['todPeak', 'todNormal', 'todOffPeak'].forEach(id => {
-      document.getElementById(id).addEventListener('input', () => { updateTodDisplay(); checkLifelineLimits(); });
-    });
-    document.getElementById('arrears').addEventListener('input', updateArrearTotal);
-    document.getElementById('arrearLpsc').addEventListener('input', updateArrearTotal);
-
-    const lpscChk = document.getElementById('lpscApplicable');
-    const toggleLpscFields = () => {
-      const on = lpscChk.checked;
-      document.getElementById('lpscRate').disabled = !on;
-      document.getElementById('currentLpscMonths').disabled = !on;
-      document.getElementById('lpscFields').classList.toggle('fields-disabled', !on);
-    };
-    lpscChk.addEventListener('change', toggleLpscFields);
-    toggleLpscFields();
-
-    document.getElementById('addPaymentBtn').addEventListener('click', addPaymentRow);
-    document.getElementById('addAdjustmentBtn').addEventListener('click', addAdjustmentRow);
-
-    const formPanel = document.querySelector('.form-panel');
-    if (formPanel) {
-      formPanel.addEventListener('input', refreshRequiredValidation);
-      formPanel.addEventListener('change', refreshRequiredValidation);
-    }
-
-    document.getElementById('calculateBtn').addEventListener('click', doCalculate);
-    document.getElementById('resetBtn')?.addEventListener('click', resetCalculator);
-    document.getElementById('sampleBtnPanel')?.addEventListener('click', loadSample);
-    initHistory();
-
-    // ── Simple / Detailed mode ────────────────────────────────────────────────
-    // Simple mode strips the form to state → DISCOM → category → units → load. It reuses the
-    // existing meter row in direct-units mode, so validation, sharing and history are untouched.
-    const setCalcMode = (mode) => {
-      const simple = mode === 'simple';
-      formPanel.classList.toggle('simple-mode', simple);
-      // Drives the segmented control's sliding thumb (CSS keys off this attribute)
-      document.getElementById('calcMode')?.setAttribute('data-active', mode);
-      document.querySelectorAll('#calcMode .calc-mode-btn').forEach(b => {
-        const on = b.dataset.mode === mode;
-        b.classList.toggle('active', on);
-        b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      });
-      const hint = document.getElementById('calcModeHint');
-      if (hint) hint.style.display = simple ? '' : 'none';
-      if (simple) {
-        // Force the plain "type your units" path: TOD split off + direct-units override.
-        const todChk = document.getElementById('todSplitChk');
-        if (todChk && todChk.checked) { todChk.checked = false; todChk.dispatchEvent(new Event('change')); }
-        const row = document.querySelector('#advancedRows .meter-row');
-        const chk = row?.querySelector('.m-override-chk');
-        if (chk && !chk.checked) { chk.checked = true; chk.dispatchEvent(new Event('change')); }
-        const lbl = row?.querySelector('.m-units-label');
-        if (lbl) lbl.textContent = (localStorage.getItem('lang') === 'hi')
-          ? 'इस महीने की खपत (यूनिट)' : 'Units consumed this month';
-      }
-    };
-    document.querySelectorAll('#calcMode .calc-mode-btn').forEach(b => {
-      b.addEventListener('click', () => setCalcMode(b.dataset.mode));
-    });
-    // Always open in Simple — the calculator's default face is the stripped-down state → DISCOM →
-    // category → units → load form. Switching to Detailed is per-session only (not remembered), so
-    // every fresh load and every "Calculate new bill" reset lands back in Simple. The one exception
-    // is a legacy ?q= share link, which opens Detailed so every field it carries (arrears, TOD,
-    // dates…) stays visible.
-    const hasSharePayload = new URLSearchParams(location.search).has('q');
-    setCalcMode(hasSharePayload ? 'detailed' : 'simple');
-
-    // "Show the full bill breakdown" on the Simple result: switch to Detailed and
-    // re-render the same inputs as the full facsimile, then scroll to it.
-    window.__showFullBill = () => {
-      setCalcMode('detailed');
-      doCalculate();
-    };
-
-    const netChk = document.getElementById('netMeteringChk');
-    netChk.addEventListener('change', () => {
-      document.getElementById('netMeteringFields').style.display = netChk.checked ? 'block' : 'none';
-    });
-
-    initDatePickers();
-
-    document.getElementById('billPanel').addEventListener('click', (e) => {
-      const header = e.target.closest('.accordion-header');
-      if (!header) return;
-      const item = header.parentElement;
-      const isOpen = item.classList.toggle('open');
-      header.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-
-    document.getElementById('advancedRows').addEventListener('keydown', e => {
-      if (e.key === 'Enter' && e.target.matches('input')) { e.preventDefault(); doCalculate(); }
-    });
-
-    // A browser refresh should start fresh — the same clean slate as the "Calculate new bill"
-    // button — instead of restoring the bill from the share params still in the address bar after
-    // a calculation. Detect a reload (vs a first visit or an opened share link, which should still
-    // restore) and reset to the clean URL. The clean reload then has no params, so no loop.
-    const navEntry = performance.getEntriesByType('navigation')[0];
-    const isReload = navEntry ? navEntry.type === 'reload'
-                              : (performance.navigation && performance.navigation.type === 1);
-    if (isReload && location.search.length > 1) {
-      location.replace(location.pathname + '#calculator');
-      return;
-    }
-
-    loadFromUrl();
-    syncPurposeChips();
-    initLoadChips();   // after loadFromUrl so the active chip reflects a URL-provided load
-    initAdvPanel();    // ditto — a share link's ToD / solar / LPSC switches open the panel
+  // Calculator pages only. This one import used to be static and cost every page on the
+  // site 514KB of JS (ui.js -> renderer/engine + the registry's 37 state modules +
+  // datepicker) for code a guide or tariff page never runs. See js/calculator-init.js.
+  if (document.getElementById('stateSelect')) {
+    import('./calculator-init.js').then(m => m.initCalculator()).catch(() => {});
   }
 });

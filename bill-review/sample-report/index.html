@@ -43,7 +43,25 @@
   <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
   <link rel="stylesheet" href="/css/styles.min.css">
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -110,7 +128,8 @@
 <div class="page-body" role="main">
   <section class="svc-section">
     <div class="container container-mid">
-      <h2 class="reveal">Sample Audit Report</h2>
+      <!-- H1, not H2: this was the only page of 477 with no H1 at all. -->
+      <h1 class="reveal">Sample Audit Report</h1>
       <p class="svc-intro reveal">This is what you get back from a <a href="/bill-review/">free expert bill review</a> —
       a line-by-line recheck of your bill against the official tariff order, every discrepancy in rupees, a clear
       verdict, and what to do next.</p>

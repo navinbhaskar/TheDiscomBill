@@ -9,7 +9,11 @@
 //   from/to: inclusive date window (YYYY-MM-DD). Omit `to` for an open-ended (current) rate.
 // Entries are matched top-to-bottom, so list specific dated windows BEFORE open-ended ones.
 
-import { findStateMetaByDiscom } from './registry.js';
+// Deliberately NO registry.js import. rates.js needs only the FPPA_BY_* data here, and it is
+// loaded by main.js on every page — importing the registry pulled all 37 state tariff modules
+// (163KB) onto guide and tariff pages that never touch them. The one function that did need
+// the registry (resolveFppaForDiscom) now lives in ./fppa-resolve.js, which only the
+// calculator imports.
 
 // DISCOM-specific values (take priority over the state-wide table).
 export const FPPA_BY_DISCOM = {
@@ -60,7 +64,7 @@ export const FPPA_BY_STATE = {
   ].map(e => ({ ...e, source: "UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)" })),
 };
 
-function pick(list, billingDate) {
+export function pick(list, billingDate) {
   if (!list || !list.length) return null;
   const bd = billingDate ? new Date(billingDate) : new Date();
   if (isNaN(bd)) return null;
@@ -72,17 +76,4 @@ function pick(list, billingDate) {
   return null;
 }
 
-/**
- * Resolve the verified FPPA/FPPAS/PPAC entry for a DISCOM at a given billing date.
- * Checks DISCOM-specific entries first, then falls back to state-wide entries.
- * @param {string} discomId - DISCOM identifier.
- * @param {string|Date} billingDate - Billing date (ISO string or Date). Uses today if omitted.
- * @returns {{from:string, to?:string, mode:string, rate:number, label:string, source:string}|null}
- */
-export function resolveFppaForDiscom(discomId, billingDate) {
-  const byDiscom = pick(FPPA_BY_DISCOM[discomId], billingDate);
-  if (byDiscom) return byDiscom;
-  const meta = findStateMetaByDiscom(discomId);
-  if (meta) return pick(FPPA_BY_STATE[meta.state], billingDate);
-  return null;
-}
+// resolveFppaForDiscom moved to ./fppa-resolve.js — see the note at the top of this file.

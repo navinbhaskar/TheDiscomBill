@@ -6,7 +6,7 @@ import {
   findDiscom, getEffectiveTariff,
   findStateMetaByDiscom, resolveDatedTariff, fyStart,
 } from './tariffs/registry.js';
-import { resolveFppaForDiscom } from './tariffs/fppa.js';
+import { resolveFppaForDiscom } from './tariffs/fppa-resolve.js';
 import { DOMESTIC_SUBSIDY } from './tariffs/subsidy.js';
 import { calculateBill } from './engine.js';
 import { renderBill, renderSimpleBill, renderRevisionBill, renderComparison } from './renderer.js';

@@ -7080,8 +7080,8 @@ export const GUIDES = [
     slug: 'ev-home-vs-public-charging-cost',
     published: "2026-06-11",
     title: 'What Charging an EV Really Costs in India: Home Socket vs Public Fast Charger',
-    metaTitle: 'EV Charging Cost in India — Home vs Public DC, Per-km Maths & Petrol/Diesel Comparison',
-    description: 'The real cost of charging an electric car or scooter in India: the formula with charging losses, a per-EV cost table (Nexon, Tiago, Ather, Atto 3…), why home charging beats public DC 3× over, a monthly petrol-vs-diesel-vs-EV showdown, and how ToD night rates and solar cut it further.',
+    metaTitle: 'EV Charging Cost India 2026 — Home vs Public DC, Per km',
+    description: 'What charging an EV actually costs in India — home vs public DC, cost per km for Nexon, Tiago, Ather and Atto 3, and how it compares with petrol.',
     minutes: 8,
     intro: `Charging an EV at home costs a fraction of what petrol does — but the number on EV
       brochures is usually wrong in both directions. It ignores <strong>charging losses</strong>
@@ -7331,7 +7331,7 @@ export const GUIDES = [
     states: ['Karnataka'],
     title: 'How to Get a New BESCOM Electricity Connection Online (Bengaluru)',
     metaTitle: 'BESCOM New Connection Online — Portal, Documents, Charges, Timeline',
-    description: 'Step-by-step guide to a new BESCOM electricity connection in Bengaluru and surrounding districts: which portal actually takes the application (bescom.co.in, not just Seva Sindhu), the document checklist including the wiring test report, deposits and charges, statutory timelines, and how to chase a stalled application.',
+    description: 'A new BESCOM connection in Bengaluru: which portal actually takes it (bescom.co.in, not Seva Sindhu), the documents including the wiring test report, and charges.',
     minutes: 8,
     intro: `A new domestic connection in BESCOM territory — Bengaluru and seven surrounding
       districts — is applied for online, but the right portal depends on where the premises is.
@@ -7575,8 +7575,8 @@ export const GUIDES = [
     published: "2026-07-11",
     states: ['Haryana'],
     title: 'How to Get a New Electricity Connection in Haryana (DHBVN / UHBVN eConnection)',
-    metaTitle: 'DHBVN & UHBVN New Connection Online — eConnection Portal, Documents, 7-Day Payment Rule',
-    description: 'Step-by-step guide to a new DHBVN or UHBVN electricity connection in Haryana through the dedicated eConnection portals: which DISCOM serves your district, the document checklist, the ₹20 processing fee, the 7-day payment deadline that cancels applications, and statutory timelines.',
+    metaTitle: 'DHBVN & UHBVN New Connection 2026 — Portal, Documents',
+    description: 'A new DHBVN or UHBVN connection in Haryana: which DISCOM serves your district, the documents, the ₹20 fee, and the 7-day deadline that cancels applications.',
     minutes: 7,
     intro: `Haryana's two DISCOMs take new-connection applications on dedicated
       <strong>eConnection portals</strong> — <a href="https://econnection.dhbvn.org.in/" rel="nofollow noopener" target="_blank">econnection.dhbvn.org.in</a>
@@ -7793,8 +7793,8 @@ export const GUIDES = [
     published: "2026-07-08",
     states: ['West Bengal'],
     title: 'How to Get a New WBSEDCL Electricity Connection Online (West Bengal)',
-    metaTitle: 'WBSEDCL New Connection Online — Instant Quotation, Documents, Vidyut Sahayogi App',
-    description: 'Step-by-step guide to a new WBSEDCL electricity connection: applying on wbsedcl.in or the Vidyut Sahayogi app, the instant provisional quotation and 10-digit application number, documents, security deposit, inspection timelines, and what to do when it stalls. Kolkata city readers: CESC is a separate utility.',
+    metaTitle: 'WBSEDCL New Connection 2026 — Documents, Quotation, App',
+    description: 'A new WBSEDCL connection step by step: the Vidyut Sahayogi app, instant quotation, documents and deposit. Kolkata city is CESC, a separate utility.',
     minutes: 7,
     intro: `WBSEDCL serves nearly all of West Bengal outside Kolkata city (Kolkata proper is
       <a href="/tariffs/west-bengal/cesc_kolkata/">CESC territory</a> — a different company with
@@ -8007,8 +8007,8 @@ export const GUIDES = [
     published: "2026-07-04",
     states: ['Punjab'],
     title: 'How to Get a New PSPCL Electricity Connection Online (Punjab)',
-    metaTitle: 'PSPCL New Connection Online — NSC Portal, A&A Form, Documents, 30-Day Rule',
-    description: 'Step-by-step guide to a new PSPCL electricity connection in Punjab: applying on the online NSC portal via pspcl.in, the A&A (Application & Agreement) form, documents, processing fee, ACD and meter security, the 30-day auto-cancellation rule, demand notice download, and statutory timelines.',
+    metaTitle: 'PSPCL New Connection 2026 — NSC Portal, A&A Form, Docs',
+    description: 'A new PSPCL connection in Punjab: the online NSC portal, the A&A form, documents, ACD and meter security, and the 30-day auto-cancellation rule.',
     minutes: 7,
     intro: `Punjab has a single DISCOM — PSPCL — and since 2021 every new-connection application
       is registered online, through the <strong>New Service Connection (NSC) flow</strong> reached
@@ -9324,7 +9324,7 @@ export const GUIDES = [
     states: ['Delhi', 'Uttar Pradesh', 'Karnataka'],
     title: 'Landlord Charging ₹10 a Unit? What the DISCOM Rate Actually Is',
     metaTitle: 'Landlord Charging ₹10/Unit? The Legal Rate in Delhi, UP & Karnataka',
-    description: 'A flat ₹10 a unit is a markup almost everywhere — but not always. Worked from real tariff data: a Delhi tenant on a shared connection pays about ₹6.58 a unit, a Bengaluru tenant ₹7.47, a UP tenant ₹7.85. On a commercial connection in UP the true cost is ₹12.65, above the ₹10 being charged.',
+    description: 'Worked from real tariff data: a Delhi tenant on a shared connection pays about ₹6.58 a unit, a Bengaluru tenant ₹7.47, a UP tenant ₹7.85. So is ₹10 fair?',
     minutes: 8,
     intro: `A landlord with one electricity connection, a private sub-meter per tenant and a flat
       <strong>&#8377;10 a unit</strong> is the standard arrangement in rented housing across Delhi,

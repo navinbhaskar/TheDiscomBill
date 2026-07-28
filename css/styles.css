@@ -876,10 +876,14 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
   display: flex; align-items: center; gap: 2px;
   margin: -5px 0 -5px -5px;
 }
+/* 7px dot + 8.5px padding all round = a 24×24 target, the WCAG 2.5.8 minimum. Unlike the
+   load chips (whose 16px height is pinned to the field beside them), nothing here constrains
+   the padding — and .hbc-dots pulls it back out of the flow with a negative margin, so the
+   hero card does not grow. */
 .hbc-dot {
   -webkit-appearance: none; appearance: none;
   border: 0; background: transparent; cursor: pointer;
-  padding: 8px 5px; line-height: 0;
+  padding: 8.5px; line-height: 0;
   border-radius: var(--radius-full);
 }
 .hbc-dot-fill {

@@ -54,7 +54,25 @@
   <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/css/styles.min.css">
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -62,7 +80,7 @@
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/mr/guides/msedcl-fppa-charges-explained/","name":"MSEDCL FPPCA / FAC आकार — इंधन समायोजन कसे मोजले जाते","description":"MSEDCL बिलावरील FPPCA (इंधन व वीज खरेदी खर्च समायोजन) ओळ म्हणजे काय, मासिक ₹/युनिट दर कसा ठरतो, तुमच्या स्वतःच्या युनिटांवरून आकार कसा पुन्हा मोजावा, आणि तो अचानक उसळल्यास काय तपासावे.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-07-28"}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"MSEDCL FPPCA (इंधन समायोजन) आकार कसा मोजावा","description":"MSEDCL बिलावरील FPPCA (इंधन व वीज खरेदी खर्च समायोजन) ओळ म्हणजे काय, मासिक ₹/युनिट दर कसा ठरतो, तुमच्या स्वतःच्या युनिटांवरून आकार कसा पुन्हा मोजावा, आणि तो अचानक उसळल्यास काय तपासावे.","mainEntityOfPage":"https://thediscombill.com/mr/guides/msedcl-fppa-charges-explained/","datePublished":"2026-02-23","dateModified":"2026-07-28","inLanguage":"mr-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"MSEDCL FPPCA (इंधन समायोजन) आकार कसा मोजावा","description":"MSEDCL बिलावरील FPPCA (इंधन व वीज खरेदी खर्च समायोजन) ओळ म्हणजे काय, मासिक ₹/युनिट दर कसा ठरतो, तुमच्या स्वतःच्या युनिटांवरून आकार कसा पुन्हा मोजावा, आणि तो अचानक उसळल्यास काय तपासावे.","image":"https://thediscombill.com/og/guide-msedcl-fppa-charges-explained.jpg","mainEntityOfPage":"https://thediscombill.com/mr/guides/msedcl-fppa-charges-explained/","datePublished":"2026-02-23","dateModified":"2026-07-28","inLanguage":"mr-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"मार्गदर्शक","item":"https://thediscombill.com/mr/guides/"},{"@type":"ListItem","position":3,"name":"MSEDCL FPPCA (इंधन समायोजन) आकार कसा मोजावा"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"MSEDCL वीज बिलावर FPPCA म्हणजे काय?","acceptedAnswer":{"@type":"Answer","text":"FPPCA (इंधन व वीज खरेदी खर्च समायोजन) हा एक मासिक ₹-प्रति-युनिट अधिभार आहे जो MSEDCL च्या प्रत्यक्ष वीज-खरेदी खर्चातील बदल ग्राहकांपर्यंत पोहोचवतो. तो जुन्या FAC ओळीची जागा घेतो, दर महिन्याला श्रेणी व स्लॅबनुसार ठरतो, आणि धन (आकार) किंवा ऋण (क्रेडिट) असू शकतो."}},{"@type":"Question","name":"माझ्या MSEDCL बिलावरील FPPCA आकार कसा मोजावा?","acceptedAnswer":{"@type":"Answer","text":"महिन्याची तुमची बिल केलेली युनिटे बिलावर छापलेल्या FPPCA दराने गुणा (पैसे वि. रुपये लक्षात ठेवा). स्लॅब-दराच्या श्रेणींसाठी दर स्लॅब-निहाय लागतो, जसे ऊर्जा आकार स्लॅबमध्ये असतात. गुणाकार FPPCA ओळीशी गोलाईपर्यंत जुळावा."}},{"@type":"Question","name":"MSEDCL FPPCA दर महिन्याला का बदलतो?","acceptedAnswer":{"@type":"Answer","text":"हे समायोजन MERC टॅरिफमध्ये मंजूर वीज-खरेदी खर्च आणि MSEDCL ने प्रत्यक्षात दिलेल्या रकमेतील मासिक तफावतीचा मागोवा घेते, सामान्यतः सुमारे दोन महिन्यांच्या विलंबाने. म्हणून कोळसा व बाजार-वीज किमतीतील हालचाली काही महिन्यांनी बिलांवर दिसतात."}},{"@type":"Question","name":"MSEDCL बिलावर FPPCA ऋण असू शकतो का?","acceptedAnswer":{"@type":"Answer","text":"होय. ज्या महिन्यांत प्रत्यक्ष वीज-खरेदी खर्च टॅरिफमध्ये गृहीत धरलेल्या पातळीपेक्षा कमी असतो, त्या महिन्यांत समायोजन ऋण असते आणि तुमचे बिल कमी करणाऱ्या प्रति-युनिट क्रेडिटच्या रूपात दिसते."}},{"@type":"Question","name":"महाराष्ट्रात FPPCA वर वीज शुल्क लागते का?","acceptedAnswer":{"@type":"Answer","text":"होय — वीज शुल्क FPPCA जोडल्यानंतर मोजले जाते, म्हणून शुल्क आधारात इंधन समायोजन समाविष्ट असते. जास्त-FPPCA असलेला महिना शुल्क ओळ प्रमाणात वाढवतो; तो विहित क्रम आहे, दुहेरी आकार नव्हे."}}]}</script>
 </head>

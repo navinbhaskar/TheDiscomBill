@@ -22,8 +22,8 @@
       } catch (e) {}
     })();
   </script>
-  <title>Tenant Sub-Meter Calculator — Is Your Landlord Overcharging for Electricity? (2026)</title>
-  <meta name="description" content="Landlord charging ₹10–12 a unit on a private sub-meter? Work out what your units actually cost at your DISCOM's tariff, your fair share of the fixed charge, and exactly how much extra you pay each month. Free printable comparison report.">
+  <title>Tenant Sub-Meter Calculator — Landlord Overcharging? (2026)</title>
+  <meta name="description" content="Landlord charging ₹10–12 a unit? Work out what your units really cost at your DISCOM tariff, your fair share of the fixed charge, and the monthly gap.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
@@ -49,7 +49,25 @@
   <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
   <link rel="stylesheet" href="../css/styles.min.css">
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}

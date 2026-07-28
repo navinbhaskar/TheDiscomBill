@@ -473,7 +473,25 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
   <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/css/styles.min.css">
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -964,7 +982,7 @@ function stateToolLinksHtml(state, lang = 'en') {
     ['/solar-calculator/',
       T(lang, { en: 'Rooftop solar savings calculator', hi: 'रूफटॉप सोलर बचत कैलकुलेटर', mr: 'रूफटॉप सोलर बचत कॅल्क्युलेटर', ta: 'கூரை சோலார் சேமிப்பு கணிப்பான்' }),
       T(lang, { en: `How much a rooftop system would cut a ${sl} bill`, hi: `रूफटॉप सिस्टम से ${sl} का बिल कितना घटेगा`, mr: `रूफटॉप सिस्टिमने ${sl} चे बिल किती कमी होईल`, ta: `கூரை அமைப்பு ஒரு ${sl} பில்லை எவ்வளவு குறைக்கும்` })],
-    ['/new-connection/',
+    ['/services/#new-connection',
       T(lang, { en: `New electricity connection in ${sl}`, hi: `${sl} में नया बिजली कनेक्शन`, mr: `${sl} मध्ये नवीन वीज जोडणी`, ta: `${sl} இல் புதிய மின் இணைப்பு` }),
       T(lang, { en: 'Documents, charges and the step-by-step apply process', hi: 'दस्तावेज़, शुल्क और आवेदन की चरण-दर-चरण प्रक्रिया', mr: 'कागदपत्रे, शुल्क आणि टप्प्याटप्प्याने अर्ज प्रक्रिया', ta: 'ஆவணங்கள், கட்டணங்கள் மற்றும் படிப்படியான விண்ணப்ப செயல்முறை' })],
   ];
@@ -1818,11 +1836,19 @@ function directoryPage(states, lang = 'en') {
 
 // ── guides (/guides/) — evergreen explainers, content in guides-content.js ────
 function articleJsonLd(guide, url) {
+  // `image` is a required Article property. The per-guide social card is already rendered by
+  // scripts/og-images.mjs, so this reuses it rather than adding a second asset — same
+  // existsSync guard as layout(), so a guide whose card hasn't been rendered yet falls back
+  // to the shared default instead of pointing at a 404.
+  const card = `guide-${guide.slug}`;
+  const image = fs.existsSync(path.join(ROOT, 'og', `${card}.jpg`))
+    ? `${SITE}/og/${card}.jpg` : `${SITE}/og-image.jpg`;
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: guide.title,
     description: guide.description,
+    image,
     mainEntityOfPage: SITE + url,
     datePublished: guide.published || LASTMOD_ISO,
     dateModified: LASTMOD_ISO,
@@ -1842,7 +1868,7 @@ const GUIDE_TOOL_LINK = {
     { en: 'Per-km cost of charging at home on your tariff', hi: 'अपने टैरिफ पर घर पर चार्जिंग की प्रति-किमी लागत', mr: 'तुमच्या टॅरिफवर घरी चार्जिंगचा प्रति-किमी खर्च', ta: 'உங்கள் கட்டணத்தில் வீட்டில் சார்ஜ் செய்யும் கி.மீ.-க்கான செலவு' }],
   smartMeter: ['/recharge-calculator/', { en: 'Smart meter recharge calculator', hi: 'स्मार्ट मीटर रिचार्ज कैलकुलेटर', mr: 'स्मार्ट मीटर रिचार्ज कॅल्क्युलेटर', ta: 'ஸ்மார்ட் மீட்டர் ரீசார்ஜ் கணிப்பான்' },
     { en: 'How many days a recharge lasts at your DISCOM\'s real rates', hi: 'आपके डिस्कॉम की असली दरों पर रिचार्ज कितने दिन चलेगा', mr: 'तुमच्या डिस्कॉमच्या खऱ्या दरांवर रिचार्ज किती दिवस पुरेल', ta: 'உங்கள் DISCOM-இன் உண்மையான விகிதங்களில் ரீசார்ஜ் எத்தனை நாள் நீடிக்கும்' }],
-  newConn:    ['/new-connection/', { en: 'New connection helper', hi: 'नया कनेक्शन हेल्पर', mr: 'नवीन जोडणी मदतनीस', ta: 'புதிய இணைப்பு உதவியாளர்' },
+  newConn:    ['/services/#new-connection', { en: 'New connection helper', hi: 'नया कनेक्शन हेल्पर', mr: 'नवीन जोडणी मदतनीस', ta: 'புதிய இணைப்பு உதவியாளர்' },
     { en: 'Documents, charges and apply steps for your DISCOM', hi: 'आपके डिस्कॉम के दस्तावेज़, शुल्क और आवेदन के स्टेप', mr: 'तुमच्या डिस्कॉमसाठी कागदपत्रे, शुल्क आणि अर्जाचे टप्पे', ta: 'உங்கள் DISCOM-க்கான ஆவணங்கள், கட்டணங்கள் மற்றும் விண்ணப்ப படிகள்' }],
   charges:    ['/glossary/', { en: 'Electricity bill glossary', hi: 'बिजली बिल शब्दावली', mr: 'वीज बिल शब्दावली', ta: 'மின் கட்டண சொற்களஞ்சியம்' },
     { en: 'Every charge line on an Indian bill, in plain language', hi: 'भारतीय बिल की हर शुल्क लाइन, आसान भाषा में', mr: 'भारतीय बिलावरील प्रत्येक शुल्क ओळ, सोप्या भाषेत', ta: 'இந்திய பில்லில் உள்ள ஒவ்வொரு கட்டண வரியும், எளிய மொழியில்' }],
@@ -1961,15 +1987,11 @@ function guidePage(guide, lang = 'en') {
 
   const articleLd = articleJsonLd(L !== 'en' ? { ...guide, title, description: guideField(guide, 'description', L) || guide.description } : guide, url);
   articleLd.inLanguage = LANG_LOCALE[L];
-  // Step-by-step guides (new connection etc.) declare howtoSteps for a HowTo rich result.
-  // English-only: emitting English step text on a vernacular twin would mismatch its page language.
-  const howToLd = (L === 'en' && guide.howtoSteps && guide.howtoSteps.length) ? {
-    '@context': 'https://schema.org',
-    '@type': 'HowTo',
-    name: guide.title,
-    description: guide.description,
-    step: guide.howtoSteps.map((s, i) => ({ '@type': 'HowToStep', position: i + 1, name: s.name, text: s.text })),
-  } : null;
+  // HowTo rich results were deprecated by Google in September 2023 — the markup no longer
+  // produces any SERP surface, so emitting it is dead weight on 8 guides. `howtoSteps` is kept
+  // in guides-content.js: it is genuinely useful prose structure, and if a consuming surface
+  // ever returns, re-emitting is a one-line change.
+  const howToLd = null;
   return layout({
     title: guideField(guide, 'metaTitle', L) || title,
     description: guideField(guide, 'description', L) || guide.description,
@@ -2355,8 +2377,12 @@ function smartMeterDiscomPage(state, discom, lang = 'en') {
 
   const title = fitTitle(
     T(lang, { hi: `${cname} स्मार्ट मीटर रिचार्ज कैसे करें — ऑनलाइन`, mr: `${cname} स्मार्ट मीटर रिचार्ज कसे करावे — ऑनलाइन`, ta: `${cname} ஸ்மார்ட் மீட்டர் ரீசார்ஜ் எப்படி — ஆன்லைன்`, en: `${cname} Smart Meter Recharge Online — Steps & Rates` }),
-    [T(lang, { hi: `${cname} स्मार्ट मीटर रिचार्ज`, mr: `${cname} स्मार्ट मीटर रिचार्ज`, ta: `${cname} ஸ்மார்ட் மீட்டர் ரீசார்ஜ்`, en: `${cname} Smart Meter Recharge Online` }),
-     T(lang, { hi: `${discom.name} स्मार्ट मीटर रिचार्ज`, mr: `${discom.name} स्मार्ट मीटर रिचार्ज`, ta: `${discom.name} ஸ்மார்ட் மீட்டர் ரீசார்ஜ்`, en: `${cname} Smart Meter Recharge` })]);
+    // The Marathi fallbacks carry "ऑनलाइन" where the Hindi ones don't. Without it the two are
+    // byte-identical — "स्मार्ट मीटर रिचार्ज" is the same phrase in both languages — and a long
+    // DISCOM name (Adani Electricity Mumbai) pushes both past fitTitle's 60-char preferred
+    // form onto this fallback, colliding the /hi/ and /mr/ titles.
+    [T(lang, { hi: `${cname} स्मार्ट मीटर रिचार्ज`, mr: `${cname} स्मार्ट मीटर ऑनलाइन रिचार्ज`, ta: `${cname} ஸ்மார்ட் மீட்டர் ரீசார்ஜ்`, en: `${cname} Smart Meter Recharge Online` }),
+     T(lang, { hi: `${discom.name} स्मार्ट मीटर रिचार्ज`, mr: `${discom.name} स्मार्ट मीटर ऑनलाइन रिचार्ज`, ta: `${discom.name} ஸ்மார்ட் மீட்டர் ரீசார்ஜ்`, en: `${cname} Smart Meter Recharge` })]);
   const description = T(lang, {
     hi: `${discom.name} (${long}) प्रीपेड स्मार्ट मीटर ऑनलाइन रिचार्ज करें — आधिकारिक पोर्टल, UPI/BBPS के तरीक़े${dr ? `, और ₹500 में लगभग कितनी यूनिट मिलती हैं (${rupee(dr.min)}–${rupee(dr.max)}/यूनिट दर पर)` : ''}। कम बैलेंस व कटौती के नियम भी।`,
     mr: `${discom.name} (${long}) प्रीपेड स्मार्ट मीटर ऑनलाइन रिचार्ज करा — अधिकृत पोर्टल, UPI/BBPS पद्धती${dr ? `, आणि ₹500 मध्ये अंदाजे किती युनिट मिळतात (${rupee(dr.min)}–${rupee(dr.max)}/युनिट दराने)` : ''}. कमी बॅलन्स व खंडित होण्याचे नियमही.`,
@@ -2648,6 +2674,10 @@ const STATIC_ROUTES = [
   { loc: '/bill-review/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/bill-review/sample-report/', priority: '0.5', changefreq: 'yearly' },
   { loc: '/methodology/', priority: '0.7', changefreq: 'monthly' },
+  // index,follow + self-canonical + linked from the account nav, so it was already crawlable —
+  // it was just never declared. Every other undeclared route (admin/, expert/, login/,
+  // my-bills/, profile/, solar/, ev/, usage/) carries noindex or a cross-canonical on purpose.
+  { loc: '/community/', priority: '0.5', changefreq: 'weekly' },
 ];
 
 // lastmod for a hand-written static route: hash the source file so the date bumps only
@@ -2750,7 +2780,7 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [EV Charging Cost Calculator](${SITE}/ev/): cost per charge, per km and monthly charging bill for any EV, with petrol comparison
 - [Bill Check](${SITE}/bill-check/): direct links to every DISCOM's official view/pay-bill portal
 - [Bill Review by Experts](${SITE}/bill-review/): upload a bill and have a human expert review it (free account)
-- [New Connection](${SITE}/new-connection/): charges, documents and process per DISCOM
+- [New Connection](${SITE}/services/#new-connection): charges, documents and process per DISCOM
 - [Complaint](${SITE}/complaint/): DISCOM complaint portals and the 1912 national helpline
 - [Smart Meter Recharge](${SITE}/smart-meter-recharge/): per-DISCOM guides to recharging a prepaid smart meter online, with units-per-recharge estimates from real tariff rates
 - [Smart Meter Recharge Calculator](${SITE}/recharge-calculator/): how many days a ₹200–₹2000 prepaid recharge lasts on any DISCOM — daily burn rate and ideal monthly recharge from real tariff rates
@@ -2850,7 +2880,7 @@ function writeSearchIndex(states) {
     ['Electricity Cost Calculator', 'बिजली लागत कैलकुलेटर', '/electricity-cost-calculator/', 'appliance electricity cost usage estimator units consumption kwh'],
     ['Bill Check', 'बिल जांच', '/bill-check/', 'verify bill overcharge audit'],
     ['Expert Bill Review', 'विशेषज्ञ बिल समीक्षा', '/services/', 'services expert review complaint help'],
-    ['New Connection Guide', 'नया कनेक्शन गाइड', '/new-connection/', 'apply new electricity connection documents'],
+    ['New Connection Guide', 'नया कनेक्शन गाइड', '/services/#new-connection', 'apply new electricity connection documents'],
     ['Complaint Letter Generator', 'शिकायत पत्र जनरेटर', '/complaint/', 'complaint letter discom forum grievance'],
     ['All Guides', 'सभी गाइड', '/guides/', 'guides articles help'],
     ['Billing Glossary', 'बिलिंग शब्दावली', '/glossary/', 'terms definitions glossary'],

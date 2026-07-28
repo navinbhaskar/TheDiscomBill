@@ -51,60 +51,12 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
   <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="css/styles.min.css">
-  <!-- Module-graph preload: main.js sits at the end of <body> and its import graph is
-       4 levels deep (main → ui → registry → 37 state files); without hints the browser
-       discovers each level only after downloading the previous one. These start the
-       whole graph in parallel with the HTML/CSS instead of after them. -->
+  <!-- Only main.js is preloaded now. Its graph used to be 4 levels deep (main → ui →
+       registry → 37 state files) and every level was hinted here, so ~490KB of calculator
+       code downloaded AND compiled on the main thread before first paint. main.js now
+       imports that chain dynamically (js/calculator-init.js), so hinting it eagerly would
+       put back the cost the split just removed. -->
   <link rel="modulepreload" href="js/main.js">
-  <link rel="modulepreload" href="js/ui.js">
-  <link rel="modulepreload" href="js/i18n.js">
-  <link rel="modulepreload" href="js/engine.js">
-  <link rel="modulepreload" href="js/renderer.js">
-  <link rel="modulepreload" href="js/datepicker.js">
-  <link rel="modulepreload" href="js/utils.js">
-  <link rel="modulepreload" href="js/compare.js">
-  <link rel="modulepreload" href="js/search.js">
-  <link rel="modulepreload" href="js/rates.js">
-  <link rel="modulepreload" href="js/supabase-config.js">
-  <link rel="modulepreload" href="js/vendor/lenis.mjs">
-  <link rel="modulepreload" href="js/bill-ocr.js">
-  <link rel="modulepreload" href="js/tariffs/registry.js">
-  <link rel="modulepreload" href="js/tariffs/fppa.js">
-  <link rel="modulepreload" href="js/tariffs/subsidy.js">
-  <link rel="modulepreload" href="js/tariffs/andhra-pradesh.js">
-  <link rel="modulepreload" href="js/tariffs/arunachal-pradesh.js">
-  <link rel="modulepreload" href="js/tariffs/assam.js">
-  <link rel="modulepreload" href="js/tariffs/bihar.js">
-  <link rel="modulepreload" href="js/tariffs/chandigarh.js">
-  <link rel="modulepreload" href="js/tariffs/chhattisgarh.js">
-  <link rel="modulepreload" href="js/tariffs/dadra-and-nagar-haveli-and-daman-and-diu.js">
-  <link rel="modulepreload" href="js/tariffs/delhi.js">
-  <link rel="modulepreload" href="js/tariffs/goa.js">
-  <link rel="modulepreload" href="js/tariffs/gujarat.js">
-  <link rel="modulepreload" href="js/tariffs/haryana.js">
-  <link rel="modulepreload" href="js/tariffs/himachal-pradesh.js">
-  <link rel="modulepreload" href="js/tariffs/jammu-and-kashmir.js">
-  <link rel="modulepreload" href="js/tariffs/jharkhand.js">
-  <link rel="modulepreload" href="js/tariffs/karnataka.js">
-  <link rel="modulepreload" href="js/tariffs/kerala.js">
-  <link rel="modulepreload" href="js/tariffs/ladakh.js">
-  <link rel="modulepreload" href="js/tariffs/madhya-pradesh.js">
-  <link rel="modulepreload" href="js/tariffs/maharashtra.js">
-  <link rel="modulepreload" href="js/tariffs/manipur.js">
-  <link rel="modulepreload" href="js/tariffs/meghalaya.js">
-  <link rel="modulepreload" href="js/tariffs/mizoram.js">
-  <link rel="modulepreload" href="js/tariffs/nagaland.js">
-  <link rel="modulepreload" href="js/tariffs/odisha.js">
-  <link rel="modulepreload" href="js/tariffs/puducherry.js">
-  <link rel="modulepreload" href="js/tariffs/punjab.js">
-  <link rel="modulepreload" href="js/tariffs/rajasthan.js">
-  <link rel="modulepreload" href="js/tariffs/sikkim.js">
-  <link rel="modulepreload" href="js/tariffs/tamil-nadu.js">
-  <link rel="modulepreload" href="js/tariffs/telangana.js">
-  <link rel="modulepreload" href="js/tariffs/tripura.js">
-  <link rel="modulepreload" href="js/tariffs/uttar-pradesh.js">
-  <link rel="modulepreload" href="js/tariffs/uttarakhand.js">
-  <link rel="modulepreload" href="js/tariffs/west-bengal.js">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -120,6 +72,10 @@
           "width": 512, "height": 512
         },
         "description": "Independent, free electricity bill tools for Indian consumers: a provisional bill calculator covering 65+ DISCOMs, tariff references, solar savings estimates and expert bill review. Not affiliated with any DISCOM, SERC or government body.",
+        "sameAs": [
+          "https://www.instagram.com/thediscombill/",
+          "https://x.com/thediscombill"
+        ],
         "knowsAbout": ["electricity tariffs in India", "DISCOM billing", "slab-wise tariff calculation", "FPPA fuel surcharge", "solar net metering", "Time-of-Day billing"]
       },
       {
@@ -192,7 +148,25 @@
   }
   </script>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
