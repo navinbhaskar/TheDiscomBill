@@ -27,8 +27,10 @@ import {
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const rs = (n) => '₹' + Math.round(n).toLocaleString('en-IN');
-const rs2 = (n) => '₹' + Number(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+// Sign goes OUTSIDE the symbol — "−₹89.62", not "₹-89.62". Credits are common here
+// (a negative fuel-surcharge adjustment, a rebate), so this is not a rare path.
+const rs = (n) => (n < 0 ? '−' : '') + '₹' + Math.abs(Math.round(n)).toLocaleString('en-IN');
+const rs2 = (n) => (n < 0 ? '−' : '') + '₹' + Math.abs(Number(n)).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 // ── stage plumbing ───────────────────────────────────────────────────────────
 function show(stage) {
@@ -287,13 +289,20 @@ function recompute() {
             .toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })
         : 'not read from the bill');
 
-  const cell = (r) => r.read ? rs2(r.theirs) : '<span class="bca-unread">not read</span>';
-  const ourCell = (r) => r.modelled ? rs2(r.ours || 0) : '<span class="bca-unread">not modelled</span>';
+  const cell = (r) => r.read ? rs2(r.theirs) : '<span class="audit-unread">not read</span>';
+  const ourCell = (r) => r.modelled ? rs2(r.ours || 0) : '<span class="audit-unread">not modelled</span>';
+  // Returns the whole <td> so it can carry .audit-bad / .audit-good, matching the
+  // difference column on /bill-review/sample-report/.
   const diffCell = (r) => {
-    if (!r.comparable) return '<span class="bca-unread">—</span>';
-    if (Math.abs(r.diff) <= TOL) return '<span class="bca-ok">matches</span>';
-    return `<strong class="${r.diff > 0 ? 'bca-over' : 'bca-under'}">${r.diff > 0 ? '+' : '−'}${rs2(Math.abs(r.diff)).slice(1)}</strong>`;
+    if (!r.comparable) return '<td class="num"><span class="audit-unread">—</span></td>';
+    if (Math.abs(r.diff) <= TOL) return '<td class="num audit-good">matches</td>';
+    const sign = r.diff > 0 ? '+' : '−';
+    return `<td class="num ${r.diff > 0 ? 'audit-bad' : 'audit-good'}">${sign}${rs2(Math.abs(r.diff))}</td>`;
   };
+  const totalGap = haveBill ? billAmount - ours : 0;
+  const totalDiffCell = Math.abs(totalGap) <= TOL
+    ? '<td class="num audit-good">matches</td>'
+    : `<td class="num ${totalGap > 0 ? 'audit-bad' : 'audit-good'}">${totalGap > 0 ? '+' : '−'}${rs2(Math.abs(totalGap))}</td>`;
 
   const verdictLine = !comparable.length
     ? 'No charge lines could be read from this bill, so there is nothing to compare line by line.'
@@ -308,90 +317,84 @@ function recompute() {
     : unders.length ? { cls: 'sub-good', icon: 'ℹ️', t: `${rs2(Math.abs(scored))} below the tariff` }
     : { cls: 'sub-good', icon: '✅', t: 'Your bill checks out' };
 
+  // Rendered with the same .audit-* vocabulary as /bill-review/sample-report/ so the two read
+  // as one document family. Every difference is deliberate and all in the direction of
+  // claiming less: an amber "this is software" banner in place of the analyst byline, no case
+  // number or turnaround, and "not read" wherever OCR came up empty.
   $('bcResultBody').innerHTML = `
-  <div class="bca-report">
-    <div class="bca-head">
-      <div>
-        <strong>Electricity Bill Audit Report</strong>
-        <span>Automated recomputation by TheDiscomBill's tariff engine · ${new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+  <p class="audit-banner"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+  Produced by software, not by a person — it recomputes your bill from published tariff data and compares every line it could read. A starting point for a conversation with your DISCOM, not a certified audit.</p>
+
+  <article class="audit-doc" aria-label="Automated bill audit report">
+    <div class="audit-head">
+      <h3 class="audit-title">Electricity Bill Audit Report
+        <small>Automated recomputation by TheDiscomBill&rsquo;s tariff engine</small>
+      </h3>
+      <div class="audit-case">
+        <strong>${new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</strong><br>
+        ${comparable.length} of ${rows.length} lines compared<br>
+        ${billMeta && billMeta.cloud ? 'Read via cloud OCR' : 'Read on your device'}
       </div>
-      <span class="bca-src">thediscombill.com</span>
     </div>
 
-    <p class="bca-machine">This report was produced by software, not by a person. It recomputes your bill
-    from published tariff data and compares each line it could read. It is a starting point for a
-    conversation with your DISCOM, not a certified audit.</p>
+    <p class="audit-h">Case summary</p>
+    <table class="audit-table">
+      <tbody>
+        <tr><td>DISCOM &amp; tariff</td><td>${esc(bill.discom.name)} &mdash; ${esc(bill.category ? bill.category.name : '')}${bill.supplyTypeName ? ', ' + esc(bill.supplyTypeName) : ''}</td></tr>
+        <tr><td>Sanctioned load</td><td>${load} kW</td></tr>
+        <tr><td>Billing period</td><td>${period} &middot; ${units} units</td></tr>
+        <tr><td>Rates applied</td><td>${esc(bill.tariffPeriodLabel || '')}${bill.tariffVerified ? ' &mdash; checked against the published tariff order' : ' &mdash; representative estimate, not a verified order'}</td></tr>
+        <tr><td>Charge lines read</td><td>${readCount} of ${rows.length} off your bill</td></tr>
+      </tbody>
+    </table>
 
-    <section class="bca-block">
-      <h3>Case summary</h3>
-      <div class="tsm-table-wrap"><table class="tsm-table bca-summary">
-        <tbody>
-          <tr><td>DISCOM &amp; tariff</td><td>${esc(bill.discom.name)} — ${esc(bill.category ? bill.category.name : '')}${bill.supplyTypeName ? ', ' + esc(bill.supplyTypeName) : ''}</td></tr>
-          <tr><td>Sanctioned load</td><td>${load} kW</td></tr>
-          <tr><td>Billing period</td><td>${period} · ${units} units</td></tr>
-          <tr><td>Rates applied</td><td>${esc(bill.tariffPeriodLabel || '')}${bill.tariffVerified ? ' — checked against the published tariff order' : ' — representative estimate, not a verified order'}</td></tr>
-          <tr><td>Read from your bill</td><td>${readCount} of ${rows.length} charge lines${billMeta && billMeta.cloud ? ' (cloud OCR)' : ' (read on your device)'}</td></tr>
-        </tbody>
-      </table></div>
-    </section>
+    <p class="audit-h">Line-by-line recomputation</p>
+    <div class="audit-table-wrap"><table class="audit-table">
+      <thead>
+        <tr><th>Charge line</th><th class="num">On your bill</th><th class="num">Recomputed*</th><th class="num">Difference</th></tr>
+      </thead>
+      <tbody>
+        ${rows.map((r) => `<tr><td>${esc(r.label)}</td><td class="num">${cell(r)}</td><td class="num">${ourCell(r)}</td>${diffCell(r)}</tr>`).join('')}
+      </tbody>
+      <tfoot>
+        <tr><td>Total${haveBill ? '' : ' (recomputed)'}</td>
+            <td class="num">${haveBill ? rs2(billAmount) : '<span class="audit-unread">not read</span>'}</td>
+            <td class="num">${rs2(ours)}</td>
+            ${haveBill ? totalDiffCell : '<td class="num">&mdash;</td>'}</tr>
+      </tfoot>
+    </table></div>
+    <p class="tariff-card-note">*Recomputed against the ${esc(bill.tariffPeriodLabel || 'current')} ${esc(bill.discom.name)} rate schedule${fppa ? `, including the verified ${fppa.rate}${fppa.mode === 'percent' ? '%' : '/unit'} fuel surcharge` : ''}.${readCount < rows.length ? ' Lines marked &ldquo;not read&rdquo; could not be picked out of your bill by OCR &mdash; they are left out of the findings and the verdict rather than assumed to be zero.' : ''}</p>
 
-    <section class="bca-block">
-      <h3>Line-by-line recomputation</h3>
-      <div class="tsm-table-wrap"><table class="tsm-table">
-        <thead><tr><th>Charge line</th><th class="num">On your bill</th><th class="num">Recomputed</th><th class="num">Difference</th></tr></thead>
-        <tbody>
-          ${rows.map((r) => `<tr><td>${esc(r.label)}</td><td class="num">${cell(r)}</td><td class="num">${ourCell(r)}</td><td class="num">${diffCell(r)}</td></tr>`).join('')}
-        </tbody>
-        <tfoot>
-          <tr><td>Total${haveBill ? '' : ' (recomputed)'}</td>
-              <td class="num">${haveBill ? rs2(billAmount) : '<span class="bca-unread">not read</span>'}</td>
-              <td class="num"><strong>${rs2(ours)}</strong></td>
-              <td class="num">${haveBill ? `<strong>${billAmount - ours >= 0 ? '+' : '−'}${rs2(Math.abs(billAmount - ours)).slice(1)}</strong>` : '—'}</td></tr>
-        </tfoot>
-      </table></div>
-      ${readCount < rows.length ? '<p class="rc-note"><strong>Lines marked "not read"</strong> could not be picked out of your bill by OCR. They are excluded from the findings and the verdict — a line we could not read is never assumed to be zero.</p>' : ''}
-    </section>
+    ${findings.length ? `<p class="audit-h">Findings</p>
+    ${findings.map((f, i) => `<div class="audit-finding">
+      <strong>${i + 1}. ${f.title}</strong>
+      <p>${f.body}</p>
+    </div>`).join('')}` : ''}
 
-    ${findings.length ? `<section class="bca-block">
-      <h3>Findings</h3>
-      <ol class="bca-findings">
-        ${findings.map((f) => `<li class="${f.over === null ? '' : f.over ? 'is-over' : 'is-under'}">
-          <strong>${f.title}</strong>
-          <p>${f.body}</p></li>`).join('')}
-      </ol>
-    </section>` : ''}
-
-    <section class="bca-block">
-      <h3>Verdict</h3>
-      <div class="sub-card ${verdictHead.cls}">
-        <div class="sub-card-head"><span class="sub-icon">${verdictHead.icon}</span>
-          <div><strong>${verdictHead.t}</strong><span class="sub-verdict">${comparable.length} of ${rows.length} lines compared</span></div></div>
-        <div class="sub-card-body"><p>${verdictLine}</p>
-        ${haveBill && comparable.length ? `<p class="rc-note">The totals differ by ${rs2(Math.abs(billAmount - ours))}, of which ${rs2(Math.abs(scored))} is attributable to the lines above. The remainder sits in lines we could not read or do not model ${'—'} including anything carried over from a previous bill.</p>` : ''}</div>
-      </div>
-    </section>
-
-    ${overs.length ? `<section class="bca-block">
-      <h3>Recommended next steps</h3>
-      <ol class="tsm-steps">
-        <li><strong>Check the disputed line against your bill</strong> — start with the fixed charge and the sanctioned load, which account for most discrepancies.</li>
-        <li><strong>Raise a billing complaint</strong> with ${esc(bill.discom.name)} quoting the specific line and amount, not "my bill is too high". The <a href="/complaint/">complaint helper</a> has the portal and the 1912 helpline for your state.</li>
-        <li><strong>Ask for a revised bill</strong>, not an adjustment promise, and note the complaint number.</li>
-        <li><strong>Pay the undisputed amount</strong> before the due date so no late-payment surcharge accrues while the complaint is open.</li>
-        <li><strong>If there is no revision in 30 days</strong>, escalate to the Consumer Grievance Redressal Forum with the complaint number and this recomputation.</li>
-      </ol>
-    </section>` : ''}
-
-    <p class="bca-foot">Generated from published ${esc(bill.discom.name)} tariff data. OCR can misread a printed
-    figure and tariffs change through the year — verify against the bill before relying on this. Not a legal document.</p>
-
-    <div class="bc-actions no-print">
-      <button type="button" class="btn-calculate" id="bcPrint">🖨️ Print / Save as PDF</button>
-      <a class="btn-clear" href="/bill-review/">Get a human expert review</a>
-      <button type="button" class="btn-clear" id="bcRestart">Check another bill</button>
+    <p class="audit-h">Verdict</p>
+    <div class="audit-verdict">
+      <span class="audit-verdict-amt${overs.length ? ' audit-verdict-bad' : ''}">${comparable.length ? rs2(Math.abs(scored)) : '&mdash;'}</span>
+      <p>${verdictLine}${haveBill && comparable.length ? ` The two totals differ by <strong>${rs2(Math.abs(billAmount - ours))}</strong>, of which <strong>${rs2(Math.abs(scored))}</strong> is attributable to the lines above; the rest sits in lines we could not read or do not model, including anything carried over from a previous bill.` : ''}</p>
     </div>
+
+    ${overs.length ? `<p class="audit-h">Recommended next steps</p>
+    <ol class="audit-next">
+      <li><strong>Check the disputed lines against the bill in your hand</strong> &mdash; start with the fixed charge and the sanctioned load, which account for most discrepancies.</li>
+      <li><strong>Raise a billing complaint</strong> with ${esc(bill.discom.name)} quoting the specific line and amount rather than &ldquo;my bill is too high&rdquo;. The <a href="/complaint/">complaint helper</a> has the portal and the 1912 helpline for your state.</li>
+      <li><strong>Ask for a revised bill</strong>, not an adjustment promise, and note the complaint number.</li>
+      <li><strong>Pay the undisputed amount</strong> before the due date so no late-payment surcharge accrues while the complaint is open.</li>
+      <li><strong>If there is no revision within 30 days</strong>, escalate to the Consumer Grievance Redressal Forum with the complaint number and this recomputation.</li>
+    </ol>` : ''}
+
+    <p class="audit-foot">Generated from published ${esc(bill.discom.name)} tariff data. OCR can misread a printed figure and
+    tariffs change through the year &mdash; verify against your bill before relying on this. Not a legal document.</p>
+  </article>
+
+  <div class="bc-actions no-print">
+    <button type="button" class="btn-calculate" id="bcPrint">🖨️ Print / Save as PDF</button>
+    <a class="btn-clear" href="/bill-review/">Get a human expert review</a>
+    <button type="button" class="btn-clear" id="bcRestart">Check another bill</button>
   </div>`;
-
   $('bcPrint')?.addEventListener('click', () => window.print());
 
   $('bcRestart')?.addEventListener('click', () => show('upload'));
