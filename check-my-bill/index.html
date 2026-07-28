@@ -23,7 +23,7 @@
     })();
   </script>
   <title>Check My Electricity Bill — Upload &amp; Recompute It (2026)</title>
-  <meta name="description" content="Upload a photo or PDF of your electricity bill. We read the figures, let you correct them, then recompute the bill against your DISCOM's published tariff and show the difference.">
+  <meta name="description" content="Upload a photo or PDF of your electricity bill and get a line-by-line audit: energy charge, fixed charge, fuel surcharge and duty, each shown as printed next to what the published tariff produces.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
   <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
@@ -35,7 +35,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="TheDiscomBill">
   <meta property="og:title" content="Check My Electricity Bill — Upload &amp; Recompute It (2026)">
-  <meta property="og:description" content="Upload your bill, correct what we read, and see it recomputed against your DISCOM's published tariff.">
+  <meta property="og:description" content="Upload your bill and get a line-by-line audit against your DISCOM's published tariff.">
   <meta property="og:url" content="https://thediscombill.com/check-my-bill/">
   <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -45,7 +45,7 @@
   <meta property="og:locale" content="en_IN">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Check My Electricity Bill — Upload &amp; Recompute It (2026)">
-  <meta name="twitter:description" content="Upload your bill, correct what we read, see it recomputed against the published tariff.">
+  <meta name="twitter:description" content="Upload your bill and get a line-by-line audit against the published tariff.">
   <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
   <link rel="stylesheet" href="../css/styles.min.css">
   <!-- Google tag (gtag.js) -->
@@ -76,7 +76,7 @@
   </script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Check My Electricity Bill","url":"https://thediscombill.com/check-my-bill/","description":"Upload a photo or PDF of an Indian electricity bill, confirm the figures read from it, and recompute the bill against the DISCOM's published tariff to see the difference.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Check My Bill","item":"https://thediscombill.com/check-my-bill/"}]}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can I check my electricity bill by uploading it?","acceptedAnswer":{"@type":"Answer","text":"Yes. Upload a photo or PDF of the bill and the page reads the DISCOM, units, sanctioned load and total from it. You confirm or correct those figures, then it recomputes the bill against the published tariff for your DISCOM and shows the difference against the amount printed on your bill."}},{"@type":"Question","name":"Is my electricity bill uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"A digital PDF is read entirely in your browser and never leaves your device. A photo or scanned PDF reads far better through cloud OCR, so the page asks first — the image is passed through for reading and not stored, and you can decline and keep it on-device instead."}},{"@type":"Question","name":"Why does the recomputed amount differ from my bill?","acceptedAnswer":{"@type":"Answer","text":"Most often the sanctioned load, which sets the fixed charge; then a fuel surcharge, arrears carried over from last month, the tariff category, or a billing period longer than about 30 days. The page ranks these and asks you to check each against your bill, because a total-versus-total comparison cannot attribute a gap to a specific line."}},{"@type":"Question","name":"Does this replace an expert bill review?","acceptedAnswer":{"@type":"Answer","text":"No. This compares your bill total against a recomputation of the same inputs, so it tells you the size of any gap but not which charge line caused it. A human review rechecks every line against the tariff order in force for your billing period and states each discrepancy in rupees."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can I check my electricity bill by uploading it?","acceptedAnswer":{"@type":"Answer","text":"Yes. Upload a photo or PDF of the bill and the page reads the DISCOM, units, sanctioned load and total from it. You confirm or correct those figures, then it recomputes the bill against the published tariff for your DISCOM and shows the difference against the amount printed on your bill."}},{"@type":"Question","name":"Is my electricity bill uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"A digital PDF is read entirely in your browser and never leaves your device. A photo or scanned PDF reads far better through cloud OCR, so the page asks first — the image is passed through for reading and not stored, and you can decline and keep it on-device instead."}},{"@type":"Question","name":"Why does the recomputed amount differ from my bill?","acceptedAnswer":{"@type":"Answer","text":"The report shows you exactly which line. Most often it is the fixed charge, levied on a different sanctioned load than the one on your meter, or a fuel surcharge at a stale monthly rate. Each line is shown as printed on your bill next to what the published tariff produces, with the difference and the likeliest cause."}},{"@type":"Question","name":"Does this replace an expert bill review?","acceptedAnswer":{"@type":"Answer","text":"No. It recomputes each charge line it can read off your bill and shows the difference, which catches the mechanical errors — a fixed charge levied on the wrong sanctioned load, a stale fuel-surcharge rate. It cannot judge what needs a second document or human context, such as a late-payment surcharge on a bill you actually paid on time, and it only scores the lines OCR managed to read."}}]}</script>
 </head>
 <body>
 
@@ -143,8 +143,9 @@
 
     <h1>Check My Electricity Bill</h1>
     <p class="seo-lead">Upload your bill, correct anything we misread, and see it
-    <strong>recomputed against your DISCOM's published tariff</strong> — slab by slab, next to the
-    amount actually printed on it. Works for every state and DISCOM in India.</p>
+    <strong>audited line by line against your DISCOM's published tariff</strong> — energy charge, fixed
+    charge, fuel surcharge and duty, each next to what the tariff actually produces. Works for every
+    state and DISCOM in India.</p>
 
     <ol class="bc-steps" aria-label="Progress">
       <li class="bc-step is-active"><span class="bc-step-n">1</span> Upload</li>
@@ -178,15 +179,19 @@
 
       <section class="seo-section">
         <h2>What this does, and what it doesn't</h2>
-        <p>It reads your bill, lets you fix anything misread, then recomputes the charges from the
-        published tariff for your DISCOM — the same engine behind the
-        <a href="/#calculator">bill calculator</a> — and compares the total against the one printed on
-        your bill.</p>
-        <p><strong>It compares totals, not individual lines.</strong> If there is a gap, this tells you
-        how big it is and ranks the usual causes to check; it cannot yet tell you which charge line is
-        wrong, because it does not read your bill's own energy, fixed, surcharge and duty lines
-        separately. For that, a person does it: see a
-        <a href="/bill-review/sample-report/">sample expert report</a>.</p>
+        <p>It reads your bill — including its individual charge lines — lets you fix anything misread,
+        then recomputes each line from the published tariff for your DISCOM using the same engine
+        behind the <a href="/#calculator">bill calculator</a>. You get a
+        <strong>line-by-line comparison</strong>: energy charge, fixed charge, fuel surcharge and duty,
+        each shown as printed on your bill next to what the tariff produces, with the difference.</p>
+        <p><strong>It only scores lines it can actually read.</strong> OCR does not get every line off
+        every bill layout. Anything it could not read is marked "not read" and left out of both the
+        findings and the verdict — a line we could not read is never assumed to be zero, because that
+        would invent a discrepancy the size of the whole line.</p>
+        <p><strong>It is software, not a person.</strong> It will not spot the things that need
+        judgement or a second document — an LPSC charged on a bill you actually paid on time, a
+        meter that is running fast, a category that is wrong for how you use the premises. For that,
+        a human reviews it: see a <a href="/bill-review/sample-report/">sample expert report</a>.</p>
       </section>
     </section>
 

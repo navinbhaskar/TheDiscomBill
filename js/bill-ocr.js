@@ -532,6 +532,68 @@ function parseBillText(raw) {
     }
   }
 
+  // ── Individual charge lines ────────────────────────────────────────────────
+  // Everything above reads the bill's INPUTS (units, load, dates) plus its final total.
+  // These read the bill's own CHARGE LINES, which is what makes a line-by-line audit
+  // possible rather than a total-vs-total comparison: without them we can recompute a
+  // bill but cannot say which line the difference sits in.
+  //
+  // Amounts may be negative (a fuel-adjustment credit, a rebate), so SIGNED allows a
+  // leading minus and a trailing "CR" — UPPCL and MSEDCL both print credits that way.
+  // NOT line-anchored, deliberately. pdf.js's text layer — the primary path for digital
+  // DISCOM e-bills, and the most accurate input we get — flattens the entire page onto a
+  // single line, so anchoring to line starts silently failed on exactly the bills we read
+  // best. Instead the search window runs from the label to the NEXT charge label, and only
+  // money-shaped numbers count.
+  //
+  // Money-shaped means printed paise ("1872.00"), thousands grouping ("1,215.50") or a
+  // ₹/Rs prefix. That is what kills prose: "your energy charge is calculated on 312 units"
+  // offers only a bare integer, which is never accepted as an amount.
+  //
+  // Within the window the LAST such number wins, because a charges row routinely carries
+  // its own working first — "FPPAS @ -4.43%  -82.93", "312 units @ 6.00 = 1872.00".
+  // Percentages and unit counts are dropped so a rate can never be read as an amount.
+  const ALL_LABELS = 'energy\\s*charges?|consumption\\s*charges?|fixed\\s*(?:\\/\\s*demand\\s*)?charges?|demand\\s*charges?|FPPCA|FPPAS|FPPA|PPAC|\\bFAC\\b|fuel\\s*surcharge|fuel\\s*adjustment|electricity\\s*duty|\\bLPSC\\b|late\\s*payment\\s*surcharge|meter\\s*rent|meter\\s*charges?|wheeling\\s*charges?|rebate|net\\s*amount|total\\s*payable|amount\\s*payable';
+  const MONEY = /(?:₹|Rs\.?\s*)?(-?\d{1,3}(?:,\d{2,3})+(?:\.\d+)?|-?\d+\.\d{1,2})\s*(%|CR\b|units?\b|kWh\b)?/gi;
+
+  const chargeLine = (labelRe) => {
+    const lab = spaced.match(new RegExp(`(?:${labelRe})`, 'i'));
+    if (!lab) return null;
+    const from = lab.index + lab[0].length;
+    // Stop at the next charge label so a distant amount can't be pulled in.
+    const after = spaced.slice(from);
+    const next = after.match(new RegExp(`(?:${ALL_LABELS})`, 'i'));
+    const window = after.slice(0, next ? next.index : Math.min(after.length, 60));
+
+    let last = null;
+    for (const t of window.matchAll(MONEY)) {
+      if (t[2] && /^(%|units?|kWh)$/i.test(t[2])) continue;   // a rate or a unit count
+      let v = num(t[1]);
+      if (v == null || isNaN(v)) continue;
+      if (t[2] && /^CR$/i.test(t[2])) v = -Math.abs(v);       // "35.00 CR" is a credit
+      last = v;
+    }
+    return last;
+  };
+
+  const charges = {};
+  const CHARGE_LABELS = [
+    ['energy',    'energy\\s*charges?|consumption\\s*charges?|current\\s*energy\\s*charges?|\\bEC\\b'],
+    ['fixed',     'fixed\\s*(?:\\/\\s*demand\\s*)?charges?|demand\\s*charges?|\\bFC\\b'],
+    ['fppa',      'FPPCA|FPPAS|FPPA|PPAC|\\bFAC\\b|fuel\\s*(?:&|and)?\\s*power\\s*purchase[^0-9\\n]{0,30}|fuel\\s*surcharge|fuel\\s*adjustment'],
+    ['duty',      'electricity\\s*duty|\\bE\\.?D\\.?\\s*(?:@|charge)|govt\\.?\\s*duty'],
+    ['lpsc',      'LPSC|late\\s*payment\\s*surcharge|\\bDPC\\b'],
+    ['meterRent', 'meter\\s*rent|meter\\s*charges?'],
+    ['wheeling',  'wheeling\\s*charges?'],
+    ['rebate',    'rebate'],
+    ['tax',       'tax\\s*on\\s*sale|sale\\s*of\\s*electricity'],
+  ];
+  for (const [key, labelRe] of CHARGE_LABELS) {
+    const v = chargeLine(labelRe);
+    if (v != null) charges[key] = v;
+  }
+  if (Object.keys(charges).length) f.charges = charges;
+
   return f;
 }
 

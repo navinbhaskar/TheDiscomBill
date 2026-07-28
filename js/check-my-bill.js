@@ -11,10 +11,11 @@
 //                 stage is what the old homepage autofill never had.
 //   3. result   — engine recomputation vs the total printed on the bill
 //
-// Scope note: this compares TOTAL vs TOTAL. parseBillText does not extract per-line charges
-// (energy / fixed / FPPA / duty are not in its output), so a line-by-line audit like
-// /bill-review/sample-report/ is not honestly derivable here yet. The copy says so plainly
-// rather than implying otherwise, and points at the human review for that.
+// Scope: parseBillText now extracts the bill's own charge lines (CHARGE_LABELS in
+// bill-ocr.js), so stage 3 is a genuine line-by-line audit rather than a total-vs-total
+// comparison. The honesty constraint moved rather than disappeared: only lines OCR actually
+// read are scored, the verdict sums those lines rather than quoting the total gap, and the
+// report never dresses itself as human work.
 
 import { extractBillFields } from './bill-ocr.js';
 import { calculateBill } from './engine.js';
@@ -96,7 +97,15 @@ function mark(id, got) {
   if (wrap) wrap.classList.toggle('bc-missing', !got);
 }
 
+// The bill's own charge lines, kept from extraction so stage 3 can put them in the
+// "On your bill" column. Not editable in stage 2: these are what the bill SAYS, and a
+// user correcting them would defeat the point of comparing against them.
+let billCharges = null;
+let billMeta = null;
+
 function renderConfirm(f, meta) {
+  billCharges = f.charges || null;
+  billMeta = { ...meta, billMonth: f.billMonth, billYear: f.billYear, fromDate: f.fromDate, toDate: f.toDate, consumerName: f.consumerName };
   const states = getStates();
   const stSel = $('bcState');
   stSel.innerHTML = states.map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join('');
@@ -145,7 +154,88 @@ function renderConfirm(f, meta) {
   show('confirm');
 }
 
-// ── stage 3: recompute ───────────────────────────────────────────────────────
+// ── stage 3: line-by-line audit report ───────────────────────────────────────
+// Mirrors the structure of /bill-review/sample-report/ — case summary, line-by-line
+// recomputation, findings with amounts, verdict, next steps — but is explicitly an
+// AUTOMATED recomputation. It carries no case number, no analyst byline and no
+// turnaround, because those represent human work this page does not do.
+//
+// The "On your bill" column comes from parseBillText's `charges` (CHARGE_LABELS in
+// bill-ocr.js). Any line OCR could not read is shown as "not read" and excluded from both
+// the findings and the verdict — a blank is never treated as a zero, which would invent a
+// discrepancy the size of the whole line.
+
+// `modelled: false` means the engine does not compute that line at all (meter rent,
+// rebates, LPSC), so its presence on the bill is reported but never scored.
+function auditLines(bill, charges, fppa) {
+  const ed = (bill.extraCharges || []).find((e) => /duty/i.test(e.name));
+  const rows = [
+    { key: 'energy',    label: 'Energy charge',          ours: bill.totalEnergy,  modelled: true },
+    { key: 'fixed',     label: 'Fixed / demand charge',  ours: bill.fixedCharge,  modelled: true },
+    { key: 'fppa',      label: fppa ? `Fuel surcharge (${fppa.rate}${fppa.mode === 'percent' ? '%' : '/unit'}, verified)` : 'Fuel surcharge', ours: bill.facAmount, modelled: true },
+    { key: 'duty',      label: ed ? ed.name : 'Electricity duty', ours: ed ? ed.amount : 0, modelled: true },
+    { key: 'wheeling',  label: bill.wheelingLabel || 'Wheeling charges', ours: bill.wheelingCharge, modelled: !!bill.wheelingCharge },
+    { key: 'meterRent', label: 'Meter rent',             ours: null, modelled: false },
+    { key: 'lpsc',      label: 'Late payment surcharge', ours: null, modelled: false },
+    { key: 'rebate',    label: 'Rebate',                 ours: null, modelled: false },
+  ];
+  return rows
+    .map((r) => {
+      const theirs = charges && charges[r.key] != null ? charges[r.key] : null;
+      const read = theirs !== null;
+      const comparable = read && r.modelled;
+      return { ...r, theirs, read, comparable, diff: comparable ? theirs - r.ours : null };
+    })
+    // Drop rows neither on the bill nor in our recomputation — an empty row for every
+    // charge type a bill *might* carry is noise, not transparency.
+    .filter((r) => r.read || (r.modelled && Math.abs(r.ours || 0) > 0.005));
+}
+
+// Each finding states what differs, by how much, and the likeliest mechanical cause.
+// None is emitted without both numbers in hand.
+function auditFindings(rows, ctx) {
+  const out = [];
+  const TOL = 1;   // a rupee of rounding is not a finding
+  for (const r of rows) {
+    if (!r.comparable || Math.abs(r.diff) <= TOL) continue;
+    const amt = rs2(Math.abs(r.diff));
+    const over = r.diff > 0;
+
+    if (r.key === 'fixed') {
+      // Back out the load the bill's own fixed charge implies. Far more actionable than a
+      // per-kW rate — "your bill is charging as if you had 4 kW" is a sentence you can put
+      // to the DISCOM, and it is a straight ratio because the charge is linear within a band.
+      const perKw = ctx.load > 0 ? r.ours / ctx.load : 0;
+      const impliedLoad = perKw > 0 ? r.theirs / perKw : null;
+      const hint = impliedLoad && Math.abs(impliedLoad - ctx.load) > 0.05
+        ? ` At that rate your bill is charging as if the sanctioned load were about <strong>${(Math.round(impliedLoad * 10) / 10)} kW</strong>, not ${ctx.load} kW.`
+        : '';
+      out.push({ title: `Fixed charge differs by ${amt}`, over, body:
+        `Your bill shows <strong>${rs2(r.theirs)}</strong>; on a <strong>${ctx.load} kW</strong> sanctioned load the tariff gives <strong>${rs2(r.ours)}</strong>. The fixed charge is set by the load band, so a gap here usually means the bill is levying it on a different load than the one you entered — check the "Sanctioned / Connected Load" printed on the bill.${hint}` });
+    } else if (r.key === 'fppa') {
+      out.push({ title: `Fuel surcharge differs by ${amt}`, over, body:
+        `Your bill shows <strong>${rs2(r.theirs)}</strong>; the rate we hold${ctx.fppa ? ` for this DISCOM (<strong>${ctx.fppa.rate}${ctx.fppa.mode === 'percent' ? '%' : ' per unit'}</strong>)` : ''} gives <strong>${rs2(r.ours)}</strong>. This surcharge is revised monthly, so the commonest explanation is that your bill used a different month's rate — check which period the bill states before treating it as an error.` });
+    } else if (r.key === 'energy') {
+      out.push({ title: `Energy charge differs by ${amt}`, over, body:
+        `Your bill shows <strong>${rs2(r.theirs)}</strong> for <strong>${ctx.units} units</strong>; the published slabs give <strong>${rs2(r.ours)}</strong>. This is the slab calculation itself, so a gap points at the units billed, the tariff category, or a billing period longer than a month pushing units into higher slabs.` });
+    } else if (r.key === 'duty') {
+      out.push({ title: `Electricity duty differs by ${amt}`, over, body:
+        `Duty is a percentage, so it moves with the lines above it. If the energy or fixed charge is wrong, this follows automatically — correct those first, then re-check this one.` });
+    } else {
+      out.push({ title: `${r.label} differs by ${amt}`, over, body:
+        `Your bill shows <strong>${rs2(r.theirs)}</strong> against our <strong>${rs2(r.ours)}</strong>.` });
+    }
+  }
+  // On the bill but not modelled by us — reported, never scored.
+  for (const r of rows.filter((x) => x.read && !x.modelled && Math.abs(x.theirs) > 0.005)) {
+    out.push({ title: `${r.label}: ${rs2(r.theirs)} on your bill`, over: null, body:
+      r.key === 'lpsc'
+        ? 'A late-payment surcharge is only due if the previous bill was actually paid late. If you paid on time and it still appears, ask for a reversal and keep the receipt — this is one of the commonest recoverable charges.'
+        : 'We do not recompute this line, so it is listed for completeness rather than checked.' });
+  }
+  return out;
+}
+
 function recompute() {
   const discomId = $('bcDiscom').value;
   const categoryId = $('bcCategory').value;
@@ -178,110 +268,131 @@ function recompute() {
 
   const ours = bill.totalPayable;
   const haveBill = billAmount > 0;
-  const diff = haveBill ? billAmount - ours : null;
-  // A couple of percent is rounding, a stale surcharge or a part-month — not a finding.
-  const tol = Math.max(50, ours * 0.02);
-  const verdict = !haveBill ? 'none' : Math.abs(diff) <= tol ? 'match' : diff > 0 ? 'higher' : 'lower';
+  const rows = auditLines(bill, billCharges, fppa);
+  const findings = auditFindings(rows, { load, units, fppa });
+  const readCount = rows.filter((r) => r.read).length;
+  const comparable = rows.filter((r) => r.comparable);
+  // The verdict is the sum of the lines we could actually compare — NOT the difference of
+  // the two totals. Those differ whenever a line was unreadable, and quoting the total gap
+  // as if it were attributable would be the exact overreach this report is built to avoid.
+  const scored = comparable.reduce((s, r) => s + r.diff, 0);
+  const TOL = 1;
+  const overs = comparable.filter((r) => r.diff > TOL);
+  const unders = comparable.filter((r) => r.diff < -TOL);
 
-  const slabRows = (bill.slabBreakdown || [])
-    .map((s) => `<tr><td>${esc(s.label)}</td><td class="num">${s.units} × ${rs2(s.rate)}</td><td class="num">${rs2(s.amount)}</td></tr>`)
-    .join('');
-  const extras = [];
-  if (bill.fixedCharge) extras.push([`Fixed / demand charge (${load} kW)`, bill.fixedCharge]);
-  if (bill.facAmount) extras.push([`FPPA / fuel surcharge — ${fppa.rate}${fppa.mode === 'percent' ? '%' : ' /unit'}, verified`, bill.facAmount]);
-  for (const e of bill.extraCharges || []) if (e.amount) extras.push([esc(e.name), e.amount]);
-  if (bill.subsidyAmount) extras.push([esc(bill.subsidyLabel || 'Subsidy'), -bill.subsidyAmount]);
-  if (arrears) extras.push(['Previous dues (as entered)', arrears]);
+  const period = billMeta && billMeta.fromDate && billMeta.toDate
+    ? `${esc(billMeta.fromDate.display)} – ${esc(billMeta.toDate.display)}`
+    : (billMeta && billMeta.billMonth
+        ? new Date(billMeta.billYear || new Date().getFullYear(), billMeta.billMonth - 1, 1)
+            .toLocaleDateString('en-IN', { month: 'long', year: 'numeric' })
+        : 'not read from the bill');
 
-  const head = verdict === 'match'
-    ? { cls: 'sub-good', icon: '✅', title: 'Your bill matches the tariff', sub: `within ${rs(Math.abs(diff))} of our recomputation` }
-    : verdict === 'higher'
-      ? { cls: 'sub-bad', icon: '🔎', title: `Your bill is ${rs(diff)} above our recomputation`, sub: 'worth checking — see what usually explains this' }
-      : verdict === 'lower'
-        ? { cls: 'sub-good', icon: '🔎', title: `Your bill is ${rs(Math.abs(diff))} below our recomputation`, sub: 'usually a subsidy or rebate we have not applied' }
-        : { cls: '', icon: '🧮', title: 'Recomputed from the tariff', sub: 'add your bill total above to compare' };
+  const cell = (r) => r.read ? rs2(r.theirs) : '<span class="bca-unread">not read</span>';
+  const ourCell = (r) => r.modelled ? rs2(r.ours || 0) : '<span class="bca-unread">not modelled</span>';
+  const diffCell = (r) => {
+    if (!r.comparable) return '<span class="bca-unread">—</span>';
+    if (Math.abs(r.diff) <= TOL) return '<span class="bca-ok">matches</span>';
+    return `<strong class="${r.diff > 0 ? 'bca-over' : 'bca-under'}">${r.diff > 0 ? '+' : '−'}${rs2(Math.abs(r.diff)).slice(1)}</strong>`;
+  };
 
-  // Ranked causes. These are things to CHECK, not defects we claim to have found — with only
-  // the printed total we cannot attribute a gap to any single line, and saying otherwise
-  // would be the exact overreach this page is designed to avoid.
-  const causes = [];
-  if (verdict === 'higher') {
-    causes.push(['Sanctioned load', `We billed the fixed charge on <strong>${load} kW</strong>. If your bill shows a higher load, its fixed charge is higher too — the commonest single cause of a gap.`]);
-    if (!fppa) causes.push(['Fuel surcharge', 'We hold no verified FPPA/PPAC for this DISCOM, so none was applied. Your bill almost certainly carries one, and it would account for part of this gap.']);
-    causes.push(['Arrears and late-payment surcharge', 'Anything carried over from last month appears on the bill but not here unless you entered it above.']);
-    causes.push(['Tariff category', `We used <strong>${esc(bill.category ? bill.category.name : categoryId)}</strong>. A commercial or non-domestic category costs materially more — check the code printed on your bill.`]);
-    causes.push(['Billing period', 'A cycle longer than about 30 days pushes more units into the higher slabs.']);
-  } else if (verdict === 'lower') {
-    causes.push(['Government subsidy', 'A state subsidy or rebate applied on your bill may not be modelled here.']);
-    causes.push(['Payments and adjustments', 'Credits posted during the period reduce the printed total.']);
-  }
+  const verdictLine = !comparable.length
+    ? 'No charge lines could be read from this bill, so there is nothing to compare line by line.'
+    : overs.length
+      ? `<strong>${rs2(scored)}</strong> more than the published tariff produces across the ${comparable.length} line${comparable.length > 1 ? 's' : ''} we could check.`
+      : unders.length
+        ? `<strong>${rs2(Math.abs(scored))}</strong> less than the tariff produces — usually a subsidy or rebate we do not model.`
+        : `Every charge line we could read matches the published tariff.`;
+
+  const verdictHead = !comparable.length ? { cls: '', icon: '🧾', t: 'Nothing to compare' }
+    : overs.length ? { cls: 'sub-bad', icon: '🚩', t: `${rs2(scored)} above the tariff` }
+    : unders.length ? { cls: 'sub-good', icon: 'ℹ️', t: `${rs2(Math.abs(scored))} below the tariff` }
+    : { cls: 'sub-good', icon: '✅', t: 'Your bill checks out' };
 
   $('bcResultBody').innerHTML = `
-    <div class="sub-cards">
-      <div class="sub-card ${head.cls}">
-        <div class="sub-card-head"><span class="sub-icon">${head.icon}</span>
-          <div><strong>${head.title}</strong><span class="sub-verdict">${head.sub}</span></div></div>
-        <div class="sub-card-body">
-          <div class="rc-stats">
-            <div class="rc-stat"><span class="rc-stat-label">Printed on your bill</span>
-              <span class="rc-stat-value">${haveBill ? rs(billAmount) : '—'}</span></div>
-            <div class="rc-stat"><span class="rc-stat-label">Our recomputation</span>
-              <span class="rc-stat-value">${rs(ours)}</span></div>
-            ${haveBill ? `<div class="rc-stat rc-stat-hero"><span class="rc-stat-label">Difference</span>
-              <span class="rc-stat-value">${diff >= 0 ? '+' : '−'}${rs(Math.abs(diff)).slice(1)}</span></div>` : ''}
-          </div>
-          <p class="rc-note">${esc(bill.discom.name)} · ${esc(bill.category ? bill.category.name : '')} · ${units} units · ${load} kW ·
-          ${esc(bill.tariffPeriodLabel || '')} rates.
-          ${bill.tariffVerified
-            ? 'These rates are checked against the published tariff order.'
-            : 'These rates are a representative estimate rather than a verified tariff order — treat the comparison as indicative.'}</p>
-        </div>
+  <div class="bca-report">
+    <div class="bca-head">
+      <div>
+        <strong>Electricity Bill Audit Report</strong>
+        <span>Automated recomputation by TheDiscomBill's tariff engine · ${new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
       </div>
+      <span class="bca-src">thediscombill.com</span>
+    </div>
 
-      <div class="sub-card">
-        <div class="sub-card-head"><span class="sub-icon">🧾</span>
-          <div><strong>How we got ${rs(ours)}</strong><span class="sub-verdict">slab by slab</span></div></div>
-        <div class="sub-card-body">
-          <div class="tsm-table-wrap"><table class="tsm-table">
-            <thead><tr><th>Line</th><th class="num">Working</th><th class="num">Amount</th></tr></thead>
-            <tbody>
-              ${slabRows}
-              ${extras.map(([l, a]) => `<tr><td>${l}</td><td class="num">—</td><td class="num">${rs2(a)}</td></tr>`).join('')}
-            </tbody>
-            <tfoot><tr><td>Total</td><td class="num">—</td><td class="num"><strong>${rs2(ours)}</strong></td></tr></tfoot>
-          </table></div>
-        </div>
+    <p class="bca-machine">This report was produced by software, not by a person. It recomputes your bill
+    from published tariff data and compares each line it could read. It is a starting point for a
+    conversation with your DISCOM, not a certified audit.</p>
+
+    <section class="bca-block">
+      <h3>Case summary</h3>
+      <div class="tsm-table-wrap"><table class="tsm-table bca-summary">
+        <tbody>
+          <tr><td>DISCOM &amp; tariff</td><td>${esc(bill.discom.name)} — ${esc(bill.category ? bill.category.name : '')}${bill.supplyTypeName ? ', ' + esc(bill.supplyTypeName) : ''}</td></tr>
+          <tr><td>Sanctioned load</td><td>${load} kW</td></tr>
+          <tr><td>Billing period</td><td>${period} · ${units} units</td></tr>
+          <tr><td>Rates applied</td><td>${esc(bill.tariffPeriodLabel || '')}${bill.tariffVerified ? ' — checked against the published tariff order' : ' — representative estimate, not a verified order'}</td></tr>
+          <tr><td>Read from your bill</td><td>${readCount} of ${rows.length} charge lines${billMeta && billMeta.cloud ? ' (cloud OCR)' : ' (read on your device)'}</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="bca-block">
+      <h3>Line-by-line recomputation</h3>
+      <div class="tsm-table-wrap"><table class="tsm-table">
+        <thead><tr><th>Charge line</th><th class="num">On your bill</th><th class="num">Recomputed</th><th class="num">Difference</th></tr></thead>
+        <tbody>
+          ${rows.map((r) => `<tr><td>${esc(r.label)}</td><td class="num">${cell(r)}</td><td class="num">${ourCell(r)}</td><td class="num">${diffCell(r)}</td></tr>`).join('')}
+        </tbody>
+        <tfoot>
+          <tr><td>Total${haveBill ? '' : ' (recomputed)'}</td>
+              <td class="num">${haveBill ? rs2(billAmount) : '<span class="bca-unread">not read</span>'}</td>
+              <td class="num"><strong>${rs2(ours)}</strong></td>
+              <td class="num">${haveBill ? `<strong>${billAmount - ours >= 0 ? '+' : '−'}${rs2(Math.abs(billAmount - ours)).slice(1)}</strong>` : '—'}</td></tr>
+        </tfoot>
+      </table></div>
+      ${readCount < rows.length ? '<p class="rc-note"><strong>Lines marked "not read"</strong> could not be picked out of your bill by OCR. They are excluded from the findings and the verdict — a line we could not read is never assumed to be zero.</p>' : ''}
+    </section>
+
+    ${findings.length ? `<section class="bca-block">
+      <h3>Findings</h3>
+      <ol class="bca-findings">
+        ${findings.map((f) => `<li class="${f.over === null ? '' : f.over ? 'is-over' : 'is-under'}">
+          <strong>${f.title}</strong>
+          <p>${f.body}</p></li>`).join('')}
+      </ol>
+    </section>` : ''}
+
+    <section class="bca-block">
+      <h3>Verdict</h3>
+      <div class="sub-card ${verdictHead.cls}">
+        <div class="sub-card-head"><span class="sub-icon">${verdictHead.icon}</span>
+          <div><strong>${verdictHead.t}</strong><span class="sub-verdict">${comparable.length} of ${rows.length} lines compared</span></div></div>
+        <div class="sub-card-body"><p>${verdictLine}</p>
+        ${haveBill && comparable.length ? `<p class="rc-note">The totals differ by ${rs2(Math.abs(billAmount - ours))}, of which ${rs2(Math.abs(scored))} is attributable to the lines above. The remainder sits in lines we could not read or do not model ${'—'} including anything carried over from a previous bill.</p>` : ''}</div>
       </div>
+    </section>
 
-      ${causes.length ? `<div class="sub-card">
-        <div class="sub-card-head"><span class="sub-icon">📋</span>
-          <div><strong>What usually explains a gap this size</strong>
-          <span class="sub-verdict">check these against your bill, in this order</span></div></div>
-        <div class="sub-card-body">
-          <ol class="tsm-steps">
-            ${causes.map(([t, d]) => `<li><strong>${t}.</strong> ${d}</li>`).join('')}
-          </ol>
-        </div>
-      </div>` : ''}
+    ${overs.length ? `<section class="bca-block">
+      <h3>Recommended next steps</h3>
+      <ol class="tsm-steps">
+        <li><strong>Check the disputed line against your bill</strong> — start with the fixed charge and the sanctioned load, which account for most discrepancies.</li>
+        <li><strong>Raise a billing complaint</strong> with ${esc(bill.discom.name)} quoting the specific line and amount, not "my bill is too high". The <a href="/complaint/">complaint helper</a> has the portal and the 1912 helpline for your state.</li>
+        <li><strong>Ask for a revised bill</strong>, not an adjustment promise, and note the complaint number.</li>
+        <li><strong>Pay the undisputed amount</strong> before the due date so no late-payment surcharge accrues while the complaint is open.</li>
+        <li><strong>If there is no revision in 30 days</strong>, escalate to the Consumer Grievance Redressal Forum with the complaint number and this recomputation.</li>
+      </ol>
+    </section>` : ''}
 
-      <div class="sub-card">
-        <div class="sub-card-head"><span class="sub-icon">👤</span>
-          <div><strong>This compared totals, not lines</strong><span class="sub-verdict">what a human review adds</span></div></div>
-        <div class="sub-card-body">
-          <p>This page reads the amount printed on your bill and recomputes what the published tariff
-          produces for the same inputs. It does <strong>not</strong> yet read your bill's own energy,
-          fixed, surcharge and duty lines separately — so where there is a gap, it can tell you the
-          size but not which line caused it.</p>
-          <p>A TheDiscomBill analyst rechecks every charge line against the tariff order in force for
-          your billing period, states each discrepancy in rupees, and gives you a verdict and next
-          steps. <a href="/bill-review/sample-report/">See a sample report →</a></p>
-          <p class="bc-actions">
-            <a class="btn-calculate" href="/bill-review/">Get a free expert review</a>
-            <button type="button" class="btn-clear" id="bcRestart">Check another bill</button>
-          </p>
-        </div>
-      </div>
-    </div>`;
+    <p class="bca-foot">Generated from published ${esc(bill.discom.name)} tariff data. OCR can misread a printed
+    figure and tariffs change through the year — verify against the bill before relying on this. Not a legal document.</p>
+
+    <div class="bc-actions no-print">
+      <button type="button" class="btn-calculate" id="bcPrint">🖨️ Print / Save as PDF</button>
+      <a class="btn-clear" href="/bill-review/">Get a human expert review</a>
+      <button type="button" class="btn-clear" id="bcRestart">Check another bill</button>
+    </div>
+  </div>`;
+
+  $('bcPrint')?.addEventListener('click', () => window.print());
 
   $('bcRestart')?.addEventListener('click', () => show('upload'));
   show('result');

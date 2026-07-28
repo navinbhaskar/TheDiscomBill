@@ -128,6 +128,52 @@ group('reading pairs — implausible spans rejected', () => {
   check('meter running backwards ignored', parseBillText(backwards).prevRead, undefined);
 });
 
+// ── Individual charge lines (drives the line-by-line audit on /check-my-bill/) ─
+// The amount is the LAST number on a charges row, because rows routinely carry their
+// own working first ("FPPAS @ -4.43%  -82.93"). Reading the first number instead would
+// report a percentage rate as a rupee amount — and then attribute a phantom discrepancy
+// to that line, which is the worst failure this feature has.
+group('charge lines — amount is the last number, not the rate', () => {
+  const ch = (t) => parseBillText(t).charges || {};
+  check('plain row',                 ch('Energy Charge 1872.00').energy, 1872);
+  check('rate before amount',        ch('FPPAS @ -4.43% -82.93').fppa, -82.93);
+  check('duty percentage skipped',   ch('Electricity Duty @ 5% 93.60').duty, 93.6);
+  check('inline units + rate',       ch('Energy Charge 312 units @ 6.00 = 1872.00').energy, 1872);
+  check('thousands separator',       ch('Energy Charges 1,215.50').energy, 1215.5);
+  check('CR suffix is a credit',     ch('Rebate 35.00 CR').rebate, -35);
+  check('negative amount kept',      ch('FPPA -82.93').fppa, -82.93);
+  check('fixed charge',              ch('Fixed Charges 250.00').fixed, 250);
+  check('PPAC alias',                ch('PPAC 217.94').fppa, 217.94);
+  check('meter rent',                ch('Meter Rent 20.00').meterRent, 20);
+  check('LPSC',                      ch('LPSC 214.00').lpsc, 214);
+  check('wheeling',                  ch('Wheeling Charges 720.00').wheeling, 720);
+});
+
+// pdf.js's text layer returns the WHOLE PAGE on one line. Digital e-bills are the most
+// accurate input we get, so a line-anchored parser silently failed on exactly the bills it
+// should handle best. This fixture is the real pdf.js output shape.
+group('charge lines — flattened pdf.js text layer (no newlines)', () => {
+  const flat = 'MVVNL Tariff / Category : LMV-1 Supply Type : 10 Sanction Load 2KW '
+             + 'Units Consumed : 312 Energy Charge 1872.00 Fixed Charge 440.00 '
+             + 'FPPAS @ 3.50% 65.52 Electricity Duty 93.60 LPSC 214.00 Net Amount Payable : 2645.00';
+  const c = parseBillText(flat).charges || {};
+  check('energy off a flat page', c.energy, 1872);
+  check('fixed off a flat page',  c.fixed, 440);
+  check('fppa amount not rate',   c.fppa, 65.52);
+  check('duty off a flat page',   c.duty, 93.6);
+  check('lpsc off a flat page',   c.lpsc, 214);
+  // The window must stop at the next label — energy must not swallow the fixed amount.
+  check('window stops at next label', c.energy !== 440, true);
+});
+
+group('charge lines — must not fire on prose or absent lines', () => {
+  const ch = (t) => parseBillText(t).charges;
+  check('prose mentioning a charge', ch('Note: your energy charge is calculated on 312 units.'), undefined);
+  check('no charge table at all',    ch('Consumer Name : RAMESH KUMAR'), undefined);
+  // A label mid-sentence must not be picked up as a row; only line-anchored labels count.
+  check('label mid-line ignored',    (ch('Paid 500 towards energy charges 100') || {}).energy, undefined);
+});
+
 console.log(failed ? `\n✗ FAILURES — ${passed} passed, ${failed} failed`
                    : `\n✓ ALL PASSED — ${passed} passed, 0 failed`);
 process.exit(failed ? 1 : 0);
