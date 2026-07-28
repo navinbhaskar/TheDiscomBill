@@ -9318,4 +9318,354 @@ export const GUIDES = [
       },
     ],
   },
+  {
+    slug: 'landlord-charging-10-rupees-per-unit',
+    published: "2026-07-28",
+    states: ['Delhi', 'Uttar Pradesh', 'Karnataka'],
+    title: 'Landlord Charging ₹10 a Unit? What the DISCOM Rate Actually Is',
+    metaTitle: 'Landlord Charging ₹10/Unit? The Legal Rate in Delhi, UP & Karnataka',
+    description: 'A flat ₹10 a unit is a markup almost everywhere — but not always. Worked from real tariff data: a Delhi tenant on a shared connection pays about ₹6.58 a unit, a Bengaluru tenant ₹7.47, a UP tenant ₹7.85. On a commercial connection in UP the true cost is ₹12.65, above the ₹10 being charged.',
+    minutes: 8,
+    intro: `A landlord with one electricity connection, a private sub-meter per tenant and a flat
+      <strong>&#8377;10 a unit</strong> is the standard arrangement in rented housing across Delhi,
+      Noida, Gurgaon, Bengaluru and Pune. The number is almost never explained, and tenants have no
+      way to check it, because a real tariff is not one rate &mdash; it is a ladder of slabs plus a
+      fixed charge levied once on the whole building. This guide works out what those units actually
+      cost on current tariff data in <strong>Delhi, Uttar Pradesh and Karnataka</strong>, and is
+      honest about the case where &#8377;10 turns out to be <em>below</em> cost.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. The short answer</h2>
+        <p>Take a common arrangement: one connection with a 10 kW sanctioned load, five sub-metered
+        tenants, <strong>900 units</strong> across the building in a month, and <strong>your</strong>
+        sub-meter reading <strong>180 units</strong>. Your fair share is your unit share of the energy
+        charges plus an equal share of the fixed charge. On current tariff data that comes to:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Where</th><th>If the connection is domestic</th><th>If it is commercial</th><th>Your bill at &#8377;10</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Delhi</strong> (Tata Power-DDL / BSES)</td><td>&#8377;6.58 a unit &mdash; &#8377;1,185</td><td>&#8377;8.52 a unit &mdash; &#8377;1,534</td><td>&#8377;1,800</td></tr>
+            <tr><td><strong>Uttar Pradesh</strong> (DVVNL / PVVNL)</td><td>&#8377;7.85 a unit &mdash; &#8377;1,412</td><td><strong>&#8377;12.65 a unit &mdash; &#8377;2,277</strong></td><td>&#8377;1,800</td></tr>
+            <tr><td><strong>Karnataka</strong> (BESCOM)</td><td>&#8377;7.47 a unit &mdash; &#8377;1,344</td><td>&#8377;9.19 a unit &mdash; &#8377;1,654</td><td>&#8377;1,800</td></tr>
+          </tbody>
+        </table></div>
+        <p>So in five of those six cases &#8377;10 is a markup &mdash; ranging from a modest
+        <strong>&#8377;146 a month</strong> in Bengaluru on a commercial connection to
+        <strong>&#8377;615 a month</strong> in Delhi on a domestic one. In the sixth,
+        <strong>a UP tenant on a commercial connection is being undercharged by &#8377;477</strong>.
+        Which of these you are in depends almost entirely on one thing, covered in section 5.</p>
+        <p>Delhi figures include the monthly PPAC at its current 16%. The UP and Karnataka figures
+        exclude their monthly fuel surcharge, which is not modelled here &mdash; that surcharge would
+        raise the legal cost slightly and <em>narrow</em> the gap, so those two rows understate the
+        landlord's case rather than overstate it.</p>
+        <p><a href="/tenant-submeter-calculator/">Run these numbers for your own DISCOM, units and
+        rate &rarr;</a></p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. Why a single per-unit rate is the wrong shape</h2>
+        <p>Domestic tariffs in India are <strong>telescopic</strong>. You do not pay one rate on
+        everything; you pay a low rate on the first block of units, a higher rate on the next, and so
+        on. Delhi's domestic schedule runs &#8377;3.00 a unit up to 200, &#8377;4.50 to 400,
+        &#8377;6.50 to 800, &#8377;7.00 to 1200 and &#8377;8.00 above that. Only a household burning
+        well over a thousand units a month ever touches the top rate.</p>
+        <p>On top of the energy charge sits a <strong>fixed charge</strong>, levied once on the
+        connection according to its sanctioned load &mdash; not once per tenant &mdash; plus
+        electricity duty and a fuel-cost adjustment as percentages. Add it all up and divide by the
+        units and you get the connection's <em>effective</em> rate, which is the only number that can
+        fairly be compared against a flat &#8377;10.</p>
+        <p>Flat rates are usually set once, to cover the worst case, and then never revisited. That is
+        why they tend to sit near the top slab while the connection's real effective rate sits far
+        below it. It is habit far more often than it is malice, which matters for how you raise it.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. Delhi &mdash; the widest gap, and a subsidy that is not yours</h2>
+        <p>Delhi has the cheapest domestic power of the three and therefore the biggest gap. A 900-unit
+        domestic connection costs about <strong>&#8377;6.58 a unit</strong> all-in, so &#8377;10 is
+        roughly a <strong>52% markup</strong> &mdash; about &#8377;7,380 a year on a 180-unit tenant.</p>
+        <p>There is a second thing worth understanding. The GNCTD subsidy makes the first 200 units
+        free and gives 50% off the first 200 for consumers between 201 and 400 units. It applies to a
+        <em>consumer</em>, once, on their own connection. A landlord's single connection carrying five
+        flats sails past 400 units, so nobody in the building gets it &mdash; whereas five separate
+        domestic connections might each have qualified. If you are being charged &#8377;10 a unit
+        <em>and</em> the building has lost the subsidy because everyone is behind one meter, both
+        halves of that are worth raising.</p>
+        <p>See the current <a href="/tariffs/delhi/">Delhi tariff schedule</a>, or the
+        <a href="/guides/tata-power-ddl-bill/">Tata Power-DDL bill guide</a> for how PPAC and the
+        subsidy cliffs work on a real Delhi bill.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. Uttar Pradesh and Karnataka &mdash; a much narrower gap</h2>
+        <p>The &#8377;10 story is genuinely weaker outside Delhi, and any guide that tells you
+        otherwise is not doing the arithmetic.</p>
+        <p>In <strong>Uttar Pradesh</strong>, a domestic connection at this size works out near
+        <strong>&#8377;7.85 a unit</strong>, so &#8377;10 is about a 27% markup &mdash; &#8377;388 a
+        month on our example tenant. UP's fixed charges are heavy relative to Delhi's, and heavy fixed
+        charges push the effective rate up, which narrows the gap.</p>
+        <p>In <strong>Karnataka</strong>, BESCOM's domestic schedule lands around
+        <strong>&#8377;7.47 a unit</strong> at 900 units, a 34% markup. Bengaluru is where the
+        &#8377;10&ndash;&#8377;12 flat rate is most entrenched and least justified by the underlying
+        tariff, but the gap is still half what it is in Delhi.</p>
+        <p>Both states levy a monthly fuel-cost surcharge on top, which closes the gap a little
+        further. Check the live figures on the <a href="/tariffs/uttar-pradesh/">UP</a> and
+        <a href="/tariffs/karnataka/">Karnataka</a> tariff pages.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. The one question that changes everything: which category?</h2>
+        <p>This is the variable that decides whether you have a case at all. If the landlord's meter is
+        on a <strong>commercial / non-domestic</strong> schedule &mdash; which several DISCOMs require
+        once a property is let out &mdash; the legal rate jumps sharply:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Where</th><th>Domestic</th><th>Commercial</th><th>Difference</th></tr></thead>
+          <tbody>
+            <tr><td>Delhi (TPDDL)</td><td>&#8377;6.58/unit</td><td>&#8377;8.52/unit</td><td>+30%</td></tr>
+            <tr><td>Karnataka (BESCOM)</td><td>&#8377;7.47/unit</td><td>&#8377;9.19/unit</td><td>+23%</td></tr>
+            <tr><td>Uttar Pradesh (DVVNL)</td><td>&#8377;7.85/unit</td><td><strong>&#8377;12.65/unit</strong></td><td><strong>+61%</strong></td></tr>
+          </tbody>
+        </table></div>
+        <p>Read the UP row again. On a commercial connection in Uttar Pradesh the true cost of those
+        units is <strong>&#8377;12.65</strong> &mdash; a landlord charging &#8377;10 there is absorbing
+        about &#8377;477 a month of your electricity, not overcharging you for it. Delhi and Karnataka
+        still leave a gap on commercial rates, but a much smaller one.</p>
+        <p>So before raising anything, <strong>ask which category the connection is on</strong>. It is
+        printed on the bill &mdash; LT-I versus LT-II in Delhi, LMV-1 versus LMV-2 in UP, LT-1 versus
+        LT-3(a) in Karnataka. That single line decides the entire conversation.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. How to work out your own number</h2>
+        <p>You need three things: your sub-meter reading, the main-meter units for the same month, and
+        the connection's category. Then:</p>
+        <ol>
+          <li><strong>Compute the whole connection's bill</strong> at the DISCOM's real slabs for the
+          total units &mdash; not for your units alone.</li>
+          <li><strong>Take your share of the energy charges in proportion to your units.</strong>
+          Pro-rata is the even-handed method here, and the reason is worth stating: on a telescopic
+          tariff the cheap opening slabs belong to the connection as a whole. Re-running the slabs on
+          your 180 units in isolation would let whoever is metered "first" claim the &#8377;3 band
+          while a neighbour absorbs the &#8377;8 one.</li>
+          <li><strong>Add an equal share of the fixed charge.</strong> It exists whether or not you
+          switch anything on, so splitting it per sub-meter is the usual fair arrangement.</li>
+        </ol>
+        <p>The <a href="/tenant-submeter-calculator/">tenant sub-meter calculator</a> does all three
+        from live tariff data for any DISCOM and prints a comparison you can hand over. If you do not
+        know the main-meter reading, it will bill your units as though they were the whole connection
+        &mdash; that understates the real per-unit cost, so whatever gap it reports is a floor.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>7. Raising it without starting a fight</h2>
+        <p>Lead with the number, not the accusation. Most flat rates were set years ago and never
+        revisited, and a tariff-backed figure usually settles it on its own.</p>
+        <ul>
+          <li><strong>Ask for the main-meter bill</strong> for the same month. You are paying a share
+          of it, so it is a reasonable thing to ask for &mdash; and it settles the category question
+          at the same time.</li>
+          <li><strong>Propose a method, not a rate.</strong> "My units at the connection's effective
+          rate, plus an equal share of the fixed charge" survives every tariff revision. A fixed
+          &#8377;/unit goes stale the moment the DISCOM revises anything.</li>
+          <li><strong>Allow for real costs.</strong> Common-area lighting, lifts, pumps and a working
+          sub-meter are genuine expenses. The objection is to a margin on the power itself, not to a
+          landlord recovering what the connection actually costs.</li>
+          <li><strong>If it stays unresolved</strong>, reselling electricity above the applicable
+          tariff is restricted in most states, and your DISCOM's consumer grievance forum will accept
+          a complaint. The <a href="/complaint/">complaint helper</a> has the forum and the 1912
+          national helpline for your state.</li>
+        </ul>
+        <p>Sub-metering rules, permitted service charges and what a landlord may add above cost are set
+        by each <strong>State Electricity Regulatory Commission</strong>, not nationally, and they
+        differ meaningfully between states. This guide tells you what the units cost under the tariff;
+        it is not legal advice and does not decide what your tenancy agreement permits.</p>
+      </section>`,
+    faqs: [
+      {
+        q: 'Is it legal for a landlord to charge ₹10 per unit for electricity?',
+        a: 'Reselling electricity above the applicable tariff is restricted in most states, but the rules are set by each State Electricity Regulatory Commission rather than nationally. The practical question is whether &#8377;10 is above what the units cost: on a domestic connection it usually is &mdash; about &#8377;6.58 a unit in Delhi, &#8377;7.47 in Karnataka, &#8377;7.85 in UP. On a commercial connection in UP the real cost is &#8377;12.65, so &#8377;10 would be below cost.'
+      },
+      {
+        q: 'What is the actual electricity rate per unit in Delhi?',
+        a: 'Delhi domestic slabs run &#8377;3.00 a unit up to 200 units, &#8377;4.50 to 400, &#8377;6.50 to 800, &#8377;7.00 to 1200 and &#8377;8.00 above. Because the tariff is telescopic, the effective rate on a 900-unit connection is about &#8377;6.58 a unit including fixed charge, electricity duty and the current 16% PPAC &mdash; well below the top slab.'
+      },
+      {
+        q: 'How do I calculate my fair share of a shared electricity connection?',
+        a: 'Compute the full bill for the main meter, take your share of the energy charges in proportion to your units, and add an equal share of the fixed charge. Pro-rata on energy is the fair method because the cheap opening slabs belong to the whole connection &mdash; re-running the slabs on your units alone would let one tenant claim them at another tenant&rsquo;s expense.'
+      },
+      {
+        q: "Why is my landlord's rate higher than the DISCOM slab rate?",
+        a: 'Flat rates are usually set once to cover the worst case and then never revised, so they sit near the top slab. A household connection spends most of its units in the cheaper lower slabs, so its true effective rate is far below the top rate. That gap is where the markup lives.'
+      },
+      {
+        q: 'Can I get the Delhi 200-free-units subsidy as a tenant on a sub-meter?',
+        a: 'Not through the landlord&rsquo;s meter. The GNCTD subsidy applies to a consumer on their own connection, and a single connection serving several flats passes 400 units easily, so the whole building loses it. Five separate domestic connections might each have qualified &mdash; worth raising alongside the rate itself.'
+      },
+      {
+        q: 'What should I do if my landlord is overcharging for electricity?',
+        a: 'Start with the numbers: print the comparison, ask for the main-meter bill for the same month, and propose a method rather than a rate &mdash; your units at the connection&rsquo;s effective rate plus an equal share of the fixed charge. If it is not resolved, your DISCOM&rsquo;s consumer grievance redressal forum accepts complaints and the national helpline is 1912.'
+      },
+    ],
+  },
+  {
+    slug: 'tata-power-ddl-bill',
+    published: "2026-07-28",
+    states: ['Delhi'],
+    title: 'Your Tata Power-DDL Bill Explained',
+    metaTitle: 'Tata Power DDL Bill 2026: Tariff Slabs, PPAC & the 400-Unit Cliff',
+    description: 'Every line of a TPDDL bill decoded: the DERC domestic slabs, the flat fixed charge, 5% electricity duty and the 16% PPAC that changes monthly. Plus the two subsidy cliffs — one unit over 200 costs ₹455, one unit over 400 costs ₹308.',
+    minutes: 7,
+    intro: `<strong>Tata Power Delhi Distribution (TPDDL)</strong> supplies north and north-west Delhi
+      &mdash; Rohini, Pitampura, Model Town, Civil Lines, Narela and around &mdash; to roughly 2
+      million connections. Its bill is short but four separate things drive the total, and two of them
+      move without warning: the <strong>PPAC</strong>, revised monthly, and the
+      <strong>GNCTD subsidy</strong>, which switches off entirely at 200 and again at 400 units. This
+      guide decodes every line and shows exactly where those cliffs sit.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. What a TPDDL bill is actually made of</h2>
+        <p>Four components, in the order they are computed:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Line</th><th>How it is worked out</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Energy charge</strong></td><td>Your units walked through the DERC telescopic slabs &mdash; the largest line on almost every bill.</td></tr>
+            <tr><td><strong>Fixed charge</strong></td><td>A flat monthly amount set by your sanctioned load band, <em>not</em> a per-kW multiplication: &#8377;20 up to 2 kW, &#8377;50 for 2&ndash;5 kW, &#8377;100 above 5 kW.</td></tr>
+            <tr><td><strong>PPAC</strong></td><td>Power Purchase Adjustment Charge &mdash; a percentage of your supply and demand charges, revised <strong>monthly</strong> since June 2026. Currently <strong>16%</strong> for TPDDL.</td></tr>
+            <tr><td><strong>Electricity duty</strong></td><td>5% of the energy charge, levied by the Delhi government.</td></tr>
+          </tbody>
+        </table></div>
+        <p>A &#8377;0.10 per unit Pension Trust Surcharge also applies to all Delhi consumers. Then the
+        GNCTD subsidy, if you qualify, is deducted from the total.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. The domestic slabs</h2>
+        <p>TPDDL, BRPL and BYPL all bill the same DERC domestic schedule &mdash; the licensees differ on
+        PPAC and service, not on slab rates:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Units in the month</th><th>Rate</th></tr></thead>
+          <tbody>
+            <tr><td>0 &ndash; 200</td><td>&#8377;3.00 a unit</td></tr>
+            <tr><td>201 &ndash; 400</td><td>&#8377;4.50 a unit</td></tr>
+            <tr><td>401 &ndash; 800</td><td>&#8377;6.50 a unit</td></tr>
+            <tr><td>801 &ndash; 1200</td><td>&#8377;7.00 a unit</td></tr>
+            <tr><td>Above 1200</td><td>&#8377;8.00 a unit</td></tr>
+          </tbody>
+        </table></div>
+        <p>The slabs are <strong>telescopic</strong>: at 500 units you do not pay &#8377;6.50 on all
+        500. You pay &#8377;3.00 on the first 200, &#8377;4.50 on the next 200 and &#8377;6.50 on the
+        last 100. This is why the rate on your bill never matches any single number in the table.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. The two cliffs that explain most shock bills</h2>
+        <p>The GNCTD subsidy makes the first 200 units free, and gives 50% off the first 200 units for
+        consumers landing between 201 and 400. Above 400 it stops completely. Because the subsidy is
+        all-or-nothing at those thresholds, a single extra unit can cost you hundreds of rupees:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Units</th><th>Bill before subsidy</th><th>Subsidy</th><th>You pay</th></tr></thead>
+          <tbody>
+            <tr><td>200</td><td>&#8377;749</td><td>&#8377;749</td><td><strong>&#8377;0</strong></td></tr>
+            <tr><td>201</td><td>&#8377;755</td><td>&#8377;300</td><td><strong>&#8377;455</strong></td></tr>
+            <tr><td>400</td><td>&#8377;1,838</td><td>&#8377;300</td><td>&#8377;1,538</td></tr>
+            <tr><td>401</td><td>&#8377;1,846</td><td>&#8377;0</td><td><strong>&#8377;1,846</strong></td></tr>
+          </tbody>
+        </table></div>
+        <p>Read the first two rows. <strong>One unit over 200 costs &#8377;455</strong>, because it
+        drops you from a nil bill to a half-subsidy. <strong>One unit over 400 costs &#8377;308</strong>,
+        because it removes the subsidy altogether. If your bill "suddenly doubled" and your usage barely
+        moved, this is the first thing to check &mdash; not the meter.</p>
+        <p>The practical consequence: if you habitually land in the 190s or 390s, a single warm week is
+        expensive in a way no other tariff structure in India replicates. Figures above are on a 2 kW
+        load at the current 16% PPAC.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. PPAC &mdash; the number that moves every month</h2>
+        <p>PPAC passes the licensee's varying power-purchase cost through to you as a percentage of
+        supply and demand charges. Since June 2026 DERC has revised it monthly, and it differs by
+        licensee &mdash; which is the one place the three Delhi discoms genuinely diverge:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Licensee</th><th>Current PPAC</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Tata Power-DDL</strong></td><td><strong>16.00%</strong></td></tr>
+            <tr><td>BYPL (BSES Yamuna)</td><td>17.43%</td></tr>
+            <tr><td>BRPL (BSES Rajdhani)</td><td>17.94%</td></tr>
+          </tbody>
+        </table></div>
+        <p>TPDDL currently carries the lowest PPAC of the three. On a 500-unit bill that is about
+        &#8377;42 a month less than a BRPL consumer with identical usage &mdash; not life-changing, but
+        it is the reason two neighbours on opposite sides of a licence boundary see different totals for
+        the same units. You cannot choose your licensee in Delhi; the areas are exclusive.</p>
+        <p>PPAC also compounds a shock bill. It is a percentage, so when your units push you into a
+        higher slab the PPAC rises with the energy charge rather than staying flat. The
+        <a href="/guides/how-fppa-fuel-surcharge-is-calculated/">fuel surcharge guide</a> covers the
+        mechanics in full.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. Checking your own bill</h2>
+        <p>Four fields explain nearly every wrong TPDDL bill. Check them in this order:</p>
+        <ol>
+          <li><strong>Category.</strong> LT-I is domestic; LT-II is commercial and runs materially
+          dearer. A domestic premises billed as LT-II is the single most expensive error on a Delhi
+          bill.</li>
+          <li><strong>Sanctioned load.</strong> It sets your fixed-charge band, and DERC allows a
+          surcharge of 30% of the corresponding fixed charge if you draw beyond it. If your load is
+          higher than you need, <a href="/sanctioned-load-optimizer/">reducing it</a> lowers the fixed
+          charge permanently.</li>
+          <li><strong>Reading status.</strong> An estimated reading means a catch-up adjustment is
+          coming when a real one is taken &mdash; and a catch-up can push you over a subsidy cliff in a
+          month you did not actually use more.</li>
+          <li><strong>Billing period.</strong> A cycle longer than about 30 days pushes more units into
+          higher slabs, which on Delhi's structure is expensive twice over.</li>
+        </ol>
+        <p>Put your own units into the <a href="/?discom=tpddl#calculator">bill calculator with TPDDL
+        preloaded</a> and compare the line items against your paper bill. If they differ, the
+        difference is almost always one of the four above.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. Paying, complaints and new connections</h2>
+        <p>TPDDL bills are payable on the <a href="https://www.tatapower-ddl.com" target="_blank" rel="noopener nofollow">Tata Power-DDL portal</a>
+        and app, and through the usual UPI and bank channels. For a no-supply complaint or a billing
+        dispute, the escalation ladder is the same across Delhi: the licensee's own helpline first,
+        then the <strong>CGRF</strong> (Consumer Grievance Redressal Forum), then the
+        <strong>Electricity Ombudsman</strong>. The <a href="/complaint/">complaint helper</a> has the
+        current numbers and forum details.</p>
+        <p>If you are applying for a fresh connection rather than checking an existing bill, TPDDL runs
+        one of the leanest flows in the country &mdash; two documents, no upfront payment, charges
+        billed in your first bill. That is covered in the
+        <a href="/guides/tata-power-ddl-new-connection/">TPDDL new connection guide</a>.</p>
+        <p>Renting, and being billed by a landlord's sub-meter rather than by TPDDL directly? A Delhi
+        landlord's connection works out near &#8377;6.58 a unit all-in &mdash; see
+        <a href="/guides/landlord-charging-10-rupees-per-unit/">what a flat &#8377;10 a unit really
+        costs you</a>.</p>
+      </section>`,
+    faqs: [
+      {
+        q: 'What is the Tata Power DDL electricity rate per unit in Delhi?',
+        a: 'TPDDL bills the DERC domestic schedule: &#8377;3.00 a unit up to 200 units, &#8377;4.50 to 400, &#8377;6.50 to 800, &#8377;7.00 to 1200 and &#8377;8.00 above. The slabs are telescopic, so at 500 units you pay &#8377;3.00 on the first 200, &#8377;4.50 on the next 200 and &#8377;6.50 only on the last 100. Fixed charge, 5% electricity duty and the current 16% PPAC are added on top.'
+      },
+      {
+        q: 'Why did my Tata Power DDL bill suddenly double?',
+        a: 'Most often a subsidy cliff. The GNCTD subsidy makes the first 200 units free and halves the first 200 for consumers between 201 and 400, then stops above 400. One unit over 200 takes you from a nil bill to about &#8377;455; one unit over 400 costs about &#8377;308. An estimated reading followed by a catch-up can push you over a cliff in a month you did not actually use more.'
+      },
+      {
+        q: 'What is PPAC on a Tata Power DDL bill?',
+        a: 'Power Purchase Adjustment Charge &mdash; a percentage of your supply and demand charges that passes the licensee&rsquo;s varying power-purchase cost through to you. DERC has revised it monthly since June 2026. TPDDL currently sits at 16%, against 17.43% for BYPL and 17.94% for BRPL, so TPDDL carries the lowest of the three.'
+      },
+      {
+        q: 'Is Tata Power DDL cheaper than BSES?',
+        a: 'Marginally, and only because of PPAC. All three Delhi licensees bill the identical DERC slab schedule; they differ on the monthly PPAC, where TPDDL is currently 16% against BRPL&rsquo;s 17.94%. On a 500-unit bill that is roughly &#8377;42 a month. You cannot choose in any case &mdash; Delhi&rsquo;s distribution areas are exclusive.'
+      },
+      {
+        q: 'What is the fixed charge on a Tata Power DDL bill?',
+        a: 'A flat monthly amount set by your sanctioned load band, not a per-kW multiplication: &#8377;20 up to 2 kW, &#8377;50 for 2&ndash;5 kW and &#8377;100 above 5 kW. Drawing beyond your sanctioned load attracts a DERC surcharge of 30% of the corresponding fixed charge.'
+      },
+      {
+        q: 'Which areas of Delhi does Tata Power DDL cover?',
+        a: 'North and north-west Delhi &mdash; Rohini, Pitampura, Model Town, Civil Lines, Narela and the surrounding areas. South and west Delhi are BRPL, east and central Delhi are BYPL, and the NDMC area has its own licensee. The areas are exclusive, so your address determines your supplier.'
+      },
+    ],
+  },
 ];

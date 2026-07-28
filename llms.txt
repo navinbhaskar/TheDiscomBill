@@ -62,6 +62,8 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [WSS Portal: Which Web Self Service Is Yours?](https://thediscombill.com/guides/wss-portal/): Two DISCOMs run a portal called WSS: MSEDCL at wss.mahadiscom.in and KSEB at wss.kseb.in
 - [MSEDCL WSS Portal: View & Pay Your Bill on Web Self Service](https://thediscombill.com/guides/msedcl-wss-portal/): Pay your Mahavitaran bill at wss.mahadiscom.in without logging in, or register to manage several connections, download past bills and raise requests
 - [Tata Power New Connection: Mumbai Changeover or Delhi Application](https://thediscombill.com/guides/tata-power-new-connection/): Tata Power runs two separate licences
+- [Landlord Charging ₹10 a Unit? What the DISCOM Rate Actually Is](https://thediscombill.com/guides/landlord-charging-10-rupees-per-unit/): A flat ₹10 a unit is a markup almost everywhere — but not always
+- [Your Tata Power-DDL Bill Explained](https://thediscombill.com/guides/tata-power-ddl-bill/): Every line of a TPDDL bill decoded: the DERC domestic slabs, the flat fixed charge, 5% electricity duty and the 16% PPAC that changes monthly
 
 ## Reference
 
