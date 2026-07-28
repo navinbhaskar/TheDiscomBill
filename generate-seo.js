@@ -322,6 +322,7 @@ const FOOTER_SITEMAP = `
       <div class="footer-col">
         <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
         <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+        <a href="/check-my-bill/" data-i18n="ql.checkBill">Check My Bill (upload)</a>
         <a href="/compare/" data-i18n="nav.compare">Compare Rates</a>
         <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
         <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
@@ -2671,6 +2672,7 @@ const STATIC_ROUTES = [
   { loc: '/sanctioned-load-optimizer/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/solar-subsidy-checker/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/tenant-submeter-calculator/', priority: '0.8', changefreq: 'monthly' },
+  { loc: '/check-my-bill/', priority: '0.9', changefreq: 'monthly' },
   { loc: '/bill-review/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/bill-review/sample-report/', priority: '0.5', changefreq: 'yearly' },
   { loc: '/methodology/', priority: '0.7', changefreq: 'monthly' },
@@ -2784,6 +2786,7 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [Complaint](${SITE}/complaint/): DISCOM complaint portals and the 1912 national helpline
 - [Smart Meter Recharge](${SITE}/smart-meter-recharge/): per-DISCOM guides to recharging a prepaid smart meter online, with units-per-recharge estimates from real tariff rates
 - [Smart Meter Recharge Calculator](${SITE}/recharge-calculator/): how many days a ₹200–₹2000 prepaid recharge lasts on any DISCOM — daily burn rate and ideal monthly recharge from real tariff rates
+- [Check My Bill](${SITE}/check-my-bill/): upload a bill photo or PDF, correct what OCR read, and recompute it against the published DISCOM tariff — shows the gap against the printed total and ranks the usual causes
 - [Sanctioned Load Optimizer](${SITE}/sanctioned-load-optimizer/): whether your sanctioned load is higher than your recorded demand needs — the right load, the fixed charge at each step and the yearly saving, per DISCOM
 - [Tenant Sub-Meter Calculator](${SITE}/tenant-submeter-calculator/): what a landlord's flat per-unit sub-meter rate really costs against the DISCOM tariff — your pro-rata share of the energy charges, your share of the fixed charge, and the monthly and yearly overcharge, with a printable comparison report
 - [Solar Subsidy Checker](${SITE}/solar-subsidy-checker/): your PM Surya Ghar rooftop-solar subsidy sized to your bill — the right system size, the exact central subsidy (up to ₹78,000), net cost after subsidy, and estimated yearly savings and payback for your state and DISCOM
@@ -2887,6 +2890,7 @@ function writeSearchIndex(states) {
     ['All States & DISCOMs', 'सभी राज्य और डिस्कॉम', '/tariffs/states/', 'tariff directory states list'],
     ['Smart Meter Recharge', 'स्मार्ट मीटर रिचार्ज', '/smart-meter-recharge/', 'prepaid smart meter recharge online balance'],
     ['Smart Meter Recharge Calculator', 'स्मार्ट मीटर रिचार्ज कैलकुलेटर', '/recharge-calculator/', 'recharge days last how long 500 prepaid balance calculator'],
+    ['Check My Bill', 'मेरा बिल जांचें', '/check-my-bill/', 'upload bill photo pdf ocr scan check verify recompute overcharge audit'],
     ['Sanctioned Load Optimizer', 'स्वीकृत भार ऑप्टिमाइज़र', '/sanctioned-load-optimizer/', 'sanctioned load reduce fixed charge kw contracted demand md maximum demand optimizer'],
     ['Solar Subsidy Checker', 'सोलर सब्सिडी चेकर (PM सूर्य घर)', '/solar-subsidy-checker/', 'pm surya ghar rooftop solar subsidy muft bijli yojana system size payback kw 78000 eligibility'],
     ['Tenant Sub-Meter Calculator', 'किरायेदार सब-मीटर कैलकुलेटर', '/tenant-submeter-calculator/', 'tenant landlord submeter sub meter overcharging flat rate per unit pg rent electricity split share'],

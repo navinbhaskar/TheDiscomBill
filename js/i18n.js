@@ -31,6 +31,7 @@ export const STRINGS = {
     'ql.ev': 'EV Charging Cost',
     'ql.loadOptimizer': 'Sanctioned Load Optimizer',
     'ql.tenantMeter': 'Tenant Sub-Meter Calculator',
+    'ql.checkBill': 'Check My Bill (upload)',
     'nav.solarSubsidy': 'Solar Subsidy Checker',
     'ql.tariffsByState': 'Tariffs by State & DISCOM',
     'ql.discomServices': 'DISCOM Services',

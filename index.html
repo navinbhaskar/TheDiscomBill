@@ -249,11 +249,14 @@
       <button type="button" class="hero-cta hero-cta-secondary" id="reviewChooserBtn" aria-haspopup="true" aria-expanded="false"><span data-i18n="hero.cta2">Get my bill reviewed</span> <svg class="rc-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
       <div class="review-chooser" id="reviewChooser" hidden>
         <p class="rc-title" data-i18n="review.title">How would you like your bill checked?</p>
-        <button type="button" class="review-chooser-item" id="reviewViaOcr">
+        <!-- Goes to /check-my-bill/ rather than opening a file picker here. The old flow
+             silently filled the form below and never showed the user what it had read;
+             the dedicated page confirms every extracted field before it computes anything. -->
+        <a class="review-chooser-item" href="/check-my-bill/">
           <span class="rc-badge rc-badge-ocr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
-          <span class="rc-text"><span class="rc-head"><b data-i18n="review.ocr">Instant self-check (OCR)</b><span class="rc-beta">Beta</span></span><small data-i18n="review.ocrSub">Upload a bill photo/PDF — the calculator fills itself</small></span>
+          <span class="rc-text"><span class="rc-head"><b data-i18n="review.ocr">Instant self-check (OCR)</b><span class="rc-beta">Beta</span></span><small data-i18n="review.ocrSub">Upload a bill photo/PDF — we read it and recompute it</small></span>
           <svg class="rc-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-        </button>
+        </a>
         <a class="review-chooser-item" href="/bill-review/">
           <span class="rc-badge rc-badge-expert" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M16 11l2 2 4-4"/></svg></span>
           <span class="rc-text"><b data-i18n="review.expert">From an expert</b><small data-i18n="review.expertSub">Free human review of your uploaded bill</small></span>
@@ -518,20 +521,6 @@
           <button type="button" class="calc-mode-btn" data-mode="detailed" aria-pressed="false" data-i18n="mode.detailed">Detailed</button>
         </div>
         <span class="calc-mode-hint" id="calcModeHint" data-i18n="mode.simpleHint">Just your DISCOM and units — we handle the rest.</span>
-      </div>
-
-      <!-- OCR auto-fill workspace (progress + review screen). Hidden until a scan
-           starts — the entry point is the "Get your bill reviewed" chooser (hero /
-           Quick Links), which is sign-in gated. -->
-      <div class="ocr-upload" id="ocrUpload" hidden>
-        <input type="file" id="ocrFile" accept="image/*,application/pdf" hidden>
-        <span class="ocr-privacy">Digital PDFs are read right in your browser; photos &amp; scans use our secure cloud OCR — only with your consent, never stored.</span>
-        <div class="ocr-progress" id="ocrProgress" hidden>
-          <span class="ocr-spinner" aria-hidden="true"></span>
-          <div class="ocr-progress-track"><div class="ocr-progress-bar" id="ocrProgressBar"></div></div>
-          <span class="ocr-status" id="ocrStatus" role="status"></span>
-        </div>
-        <div class="ocr-result" id="ocrResult" hidden></div>
       </div>
 
       <p class="req-legend" data-i18n="legend.required">Marks a required field</p>
@@ -1147,6 +1136,7 @@
       <div class="footer-col">
         <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
         <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+        <a href="/check-my-bill/" data-i18n="ql.checkBill">Check My Bill (upload)</a>
         <a href="/compare/" data-i18n="nav.compare">Compare Rates</a>
         <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
         <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>

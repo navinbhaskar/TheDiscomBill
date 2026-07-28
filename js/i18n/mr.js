@@ -25,6 +25,7 @@ export default {
     'ql.ev': 'EV चार्जिंग खर्च',
     'ql.loadOptimizer': 'मंजूर भार ऑप्टिमायझर',
     'ql.tenantMeter': 'भाडेकरू सब-मीटर कॅल्क्युलेटर',
+    'ql.checkBill': 'माझे बिल तपासा (अपलोड)',
     'nav.solarSubsidy': 'सोलर सबसिडी चेकर',
     'ql.tariffsByState': 'राज्य व डिस्कॉमनुसार टॅरिफ',
     'ql.discomServices': 'डिस्कॉम सेवा',

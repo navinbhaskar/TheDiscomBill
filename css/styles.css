@@ -5544,3 +5544,90 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
 .solar-summary { margin: 12px 0 0; padding: 12px 14px; border: 1px solid var(--border-subtle); border-left: 3px solid var(--brand); border-radius: var(--radius-md); background: var(--brand-faint); font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); }
 .solar-summary strong { color: var(--text-primary); font-weight: 700; }
 .solar-summary:empty { display: none; }
+
+/* ─── Check My Bill (/check-my-bill/) ────────────────────────────────────────── */
+/* Three-stage flow: upload → confirm what OCR read → recomputation. Reuses the
+   .sub-card / .rc-stat / .tsm-table shells for the result; only the stepper, the
+   dropzone and the editable confirm grid are new. */
+
+.bc-steps {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  list-style: none; margin: 0 0 20px; padding: 0;
+  font-size: 13px; font-weight: 600;
+}
+.bc-step {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 13px 7px 8px; border-radius: var(--radius-full);
+  background: var(--surface-sunken); color: var(--text-tertiary);
+  border: 1px solid var(--border-subtle);
+}
+.bc-step-n {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--border-default); color: var(--surface-card);
+  font-size: 11px; font-weight: 700; flex: none;
+}
+.bc-step.is-active { background: var(--brand-faint); border-color: var(--brand); color: var(--text-brand); }
+.bc-step.is-active .bc-step-n { background: var(--brand); color: #fff; }
+.bc-step.is-done { color: var(--text-secondary); }
+.bc-step.is-done .bc-step-n { background: #16a34a; color: #fff; }
+
+/* Dropzone. Dashed rather than solid so it reads as a target, not a card. */
+.bc-drop {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 34px 20px; text-align: center; cursor: pointer;
+  border: 2px dashed var(--border-default); border-radius: var(--radius-lg);
+  background: var(--surface-default); color: var(--text-secondary);
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+.bc-drop:hover, .bc-drop.is-over { border-color: var(--brand); background: var(--brand-faint); }
+.bc-drop:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.bc-drop strong { font-size: 15px; color: var(--text-primary); }
+.bc-drop span { font-size: 12.5px; color: var(--text-tertiary); }
+.bc-drop-ic { width: 30px; height: 30px; color: var(--brand); margin-bottom: 2px; }
+
+.bc-progress { margin-top: 16px; }
+.bc-progress-track { height: 6px; border-radius: var(--radius-full); background: var(--surface-sunken); overflow: hidden; }
+.bc-progress-bar { height: 100%; width: 0; border-radius: var(--radius-full); background: var(--brand); transition: width .25s ease; }
+.bc-status { margin: 8px 0 0; font-size: 13px; color: var(--text-secondary); }
+
+.bc-privacy {
+  margin-top: 16px; padding: 12px 14px;
+  font-size: 12.5px; line-height: 1.55; color: var(--text-secondary);
+  background: var(--surface-sunken); border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+/* Consent prompt — same visual weight as an error, because it is a decision point. */
+.bc-consent { padding: 14px 16px; border: 1px solid var(--brand-border); border-radius: var(--radius-lg); background: var(--brand-faint); }
+.bc-consent strong { display: block; margin-bottom: 6px; font-family: var(--font-display); font-size: 15px; color: var(--text-primary); }
+.bc-consent p { margin: 0 0 10px; font-size: 13.5px; line-height: 1.55; color: var(--text-secondary); }
+
+.bc-readbar {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 14px;
+  padding-bottom: 10px; margin-bottom: 12px; border-bottom: 1px solid var(--border-subtle);
+}
+.bc-readbar p { margin: 0; font-size: 14px; color: var(--text-secondary); }
+.bc-readbar small { font-size: 12px; color: var(--text-tertiary); }
+
+.bc-note { margin: 0 0 12px; padding: 10px 13px; border-radius: var(--radius-md); font-size: 13px; line-height: 1.5; background: var(--surface-sunken); color: var(--text-secondary); }
+.bc-note-warn { background: var(--p-amber-50, #fffbeb); border: 1px solid var(--p-amber-200, #fde68a); color: var(--p-amber-700, #b45309); }
+.bc-intro { font-size: 14px; line-height: 1.6; color: var(--text-secondary); margin: 0 0 16px; max-width: 62ch; }
+
+.bc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-bottom: 18px; }
+.bc-field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.bc-field[hidden] { display: none; }
+.bc-field label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; color: var(--text-tertiary); }
+.bc-field select, .bc-field input {
+  height: 36px; padding: 0 12px; font-size: 14px;
+  border: 1px solid var(--border-default); border-radius: var(--radius-md);
+  background: var(--surface-card); color: var(--text-primary); width: 100%; box-sizing: border-box;
+}
+.bc-field select:focus, .bc-field input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-faint); }
+/* Amber, not red: a field OCR could not read is not an error the user made — it is a
+   prompt to fill something in, and it must be visually louder than a filled field. */
+.bc-field.bc-missing label { color: var(--p-amber-700, #b45309); }
+.bc-field.bc-missing select, .bc-field.bc-missing input { border-color: var(--p-amber-400, #fbbf24); background: var(--p-amber-50, #fffbeb); }
+
+.bc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 16px 0 0; }
+.bc-actions .btn-calculate { margin: 0; width: auto; text-decoration: none; display: inline-flex; align-items: center; }

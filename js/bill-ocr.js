@@ -709,6 +709,117 @@ function applyFields(f) {
 
 // ── UI ────────────────────────────────────────────────────────────────────────
 
+// ── Cloud OCR (Supabase Edge Function → OCR.space) — the primary engine ──────
+// Privacy contract: NOTHING is uploaded until the caller's askCloudConsent hook
+// resolves true. The Edge Function passes the image through transiently (no
+// storage); the provider key never reaches the client.
+// Module scope rather than inside initBillOcr(): /check-my-bill/ runs the same
+// pipeline with its own consent UI, so only the consent prompt is injected.
+const CLOUD_MAX_BYTES = 1024 * 1024; // OCR.space free-tier file cap
+
+const fileToDataUrl = (blob) => new Promise((resolve, reject) => {
+  const r = new FileReader();
+  r.onload = () => resolve(r.result);
+  r.onerror = () => reject(new Error('Could not read the file'));
+  r.readAsDataURL(blob);
+});
+
+// Images over the cap are downscaled to a JPEG that fits; PDFs can't be shrunk
+// here. Accepts a File, an extracted-JPEG Blob (no .name), or a rasterized canvas.
+async function cloudPayload(source) {
+  if (source instanceof HTMLCanvasElement) {
+    const dataUrl = source.toDataURL('image/jpeg', 0.85);
+    if (dataUrl.length > CLOUD_MAX_BYTES * 1.4) throw new Error('This page is too large for cloud OCR — try a screenshot of the bill.');
+    return { image: dataUrl, filetype: 'JPG' };
+  }
+  const isPdf = source.type === 'application/pdf' || /\.pdf$/i.test(source.name || '');
+  if (source.size <= CLOUD_MAX_BYTES) {
+    return { image: await fileToDataUrl(source), filetype: isPdf ? 'PDF' : undefined };
+  }
+  if (isPdf) throw new Error('This PDF is over the 1 MB cloud limit — upload a screenshot of the bill instead.');
+  const bmp = await createImageBitmap(source);
+  for (const maxDim of [2000, 1600, 1200]) {
+    const scale = Math.min(1, maxDim / Math.max(bmp.width, bmp.height));
+    const c = document.createElement('canvas');
+    c.width = Math.round(bmp.width * scale);
+    c.height = Math.round(bmp.height * scale);
+    c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+    const dataUrl = c.toDataURL('image/jpeg', 0.85);
+    if (dataUrl.length <= CLOUD_MAX_BYTES * 1.4) return { image: dataUrl, filetype: 'JPG' };
+  }
+  throw new Error('This photo is too large for cloud OCR even after resizing — try a screenshot.');
+}
+
+async function cloudOcrText(source, setStatus, setProgress) {
+  setStatus('Reading your bill with cloud OCR…');
+  setProgress(0.2);
+  const sb = await getSupabase();
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) throw new Error('Please sign in first.');
+  const payload = await cloudPayload(source);
+  setProgress(0.5);
+  const res = await fetch(`${SUPABASE_URL}/functions/v1/ocr`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${session.access_token}`,
+    },
+    body: JSON.stringify(payload),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || `Cloud OCR failed (HTTP ${res.status}).`);
+  setProgress(1);
+  return data.text;
+}
+
+/**
+ * Read a bill file and return the parsed fields. The whole pipeline with no DOM
+ * coupling — callers supply their own status/progress/consent UI.
+ *
+ * Digital PDFs take the local text-layer path (instant, exact, nothing uploaded).
+ * Scans and photos go to cloud OCR when the caller consents, else Tesseract on-device.
+ *
+ * @param {File} file
+ * @param {{setStatus?:Function, setProgress?:Function, askCloudConsent?:() => Promise<boolean>}} hooks
+ * @returns {Promise<{fields:Object, text:string, cloud:boolean, note:string|null}>}
+ */
+export async function extractBillFields(file, hooks = {}) {
+  const setStatus   = hooks.setStatus   || (() => {});
+  const setProgress = hooks.setProgress || (() => {});
+  const askConsent  = hooks.askCloudConsent || (() => Promise.resolve(false));
+
+  const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+  let text = null, images = null, cloud = false, note = null;
+
+  if (isPdf) {
+    const got = await extractFromPdf(file, setStatus);
+    if (got.text != null) text = got.text;
+    else images = got.images;
+  } else {
+    images = [file];
+  }
+
+  if (text == null) {
+    if (isConfigured() && await askConsent()) {
+      try {
+        const source = isPdf && file.size <= CLOUD_MAX_BYTES ? file : images[0];
+        text = await cloudOcrText(source, setStatus, setProgress);
+        cloud = true;
+      } catch (err) {
+        note = '☁ Cloud OCR unavailable (' + (err && err.message ? err.message : 'unknown error') +
+               ') — this bill was read on-device instead, which can be less accurate.';
+        text = await ocrImages(images, setStatus, setProgress);
+      }
+    } else {
+      text = await ocrImages(images, setStatus, setProgress);
+    }
+  }
+
+  window.__lastOcrText = text;   // debugging hook: inspect what OCR actually saw
+  return { fields: parseBillText(text), text, cloud, note };
+}
+
 function initBillOcr() {
   const box = document.getElementById('ocrUpload');
   const fileInput = document.getElementById('ocrFile');
@@ -731,64 +842,7 @@ function initBillOcr() {
   // Privacy contract: NOTHING is uploaded until the user confirms the consent
   // notice (once per session). The Edge Function passes the image through
   // transiently (no storage); the provider key never reaches the client.
-  const CLOUD_MAX_BYTES = 1024 * 1024; // OCR.space free-tier file cap
   const CONSENT_KEY = 'ocrCloudConsent';
-
-  const fileToDataUrl = (blob) => new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => resolve(r.result);
-    r.onerror = () => reject(new Error('Could not read the file'));
-    r.readAsDataURL(blob);
-  });
-
-  // Images over the cap are downscaled to a JPEG that fits; PDFs can't be shrunk
-  // here. Accepts a File, an extracted-JPEG Blob (no .name), or a rasterized canvas.
-  async function cloudPayload(source) {
-    if (source instanceof HTMLCanvasElement) {
-      const dataUrl = source.toDataURL('image/jpeg', 0.85);
-      if (dataUrl.length > CLOUD_MAX_BYTES * 1.4) throw new Error('This page is too large for cloud OCR — try a screenshot of the bill.');
-      return { image: dataUrl, filetype: 'JPG' };
-    }
-    const isPdf = source.type === 'application/pdf' || /\.pdf$/i.test(source.name || '');
-    if (source.size <= CLOUD_MAX_BYTES) {
-      return { image: await fileToDataUrl(source), filetype: isPdf ? 'PDF' : undefined };
-    }
-    if (isPdf) throw new Error('This PDF is over the 1 MB cloud limit — upload a screenshot of the bill instead.');
-    const bmp = await createImageBitmap(source);
-    for (const maxDim of [2000, 1600, 1200]) {
-      const scale = Math.min(1, maxDim / Math.max(bmp.width, bmp.height));
-      const c = document.createElement('canvas');
-      c.width = Math.round(bmp.width * scale);
-      c.height = Math.round(bmp.height * scale);
-      c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
-      const dataUrl = c.toDataURL('image/jpeg', 0.85);
-      if (dataUrl.length <= CLOUD_MAX_BYTES * 1.4) return { image: dataUrl, filetype: 'JPG' };
-    }
-    throw new Error('This photo is too large for cloud OCR even after resizing — try a screenshot.');
-  }
-
-  async function cloudOcrText(source, setStatus, setProgress) {
-    setStatus('Reading your bill with cloud OCR…');
-    setProgress(0.2);
-    const sb = await getSupabase();
-    const { data: { session } } = await sb.auth.getSession();
-    if (!session) throw new Error('Please sign in first.');
-    const payload = await cloudPayload(source);
-    setProgress(0.5);
-    const res = await fetch(`${SUPABASE_URL}/functions/v1/ocr`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        apikey: SUPABASE_ANON_KEY,
-        Authorization: `Bearer ${session.access_token}`,
-      },
-      body: JSON.stringify(payload),
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(data.error || `Cloud OCR failed (HTTP ${res.status}).`);
-    setProgress(1);
-    return data.text;
-  }
 
   // One-time (per session) consent before anything is uploaded. Resolves true
   // (scan in the cloud) or false (user chose to stay on-device).
@@ -951,41 +1005,11 @@ function initBillOcr() {
     setStatus('Preparing…');
 
     try {
-      const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
-      let text = null;
-      let images = null;
-      let cloud = false;
-      let note = null;
-
-      if (isPdf) {
-        // Digital PDFs keep the free, instant, exact local path — no upload.
-        const got = await extractFromPdf(file, setStatus);
-        if (got.text != null) text = got.text;
-        else images = got.images;
-      } else {
-        images = [file];
-      }
-
-      if (text == null) {
-        // Scan/photo → cloud OCR is the primary engine (needs consent);
-        // Tesseract on-device is the fallback.
-        if (isConfigured() && await askCloudConsent()) {
-          try {
-            // A small-enough PDF goes up whole; otherwise the extracted page image.
-            const source = isPdf && file.size <= CLOUD_MAX_BYTES ? file : images[0];
-            text = await cloudOcrText(source, setStatus, setProgress);
-            cloud = true;
-          } catch (err) {
-            note = '☁ Cloud OCR unavailable (' + (err && err.message ? err.message : 'unknown error') + ') — this bill was read on-device instead, which can be less accurate.';
-            text = await ocrImages(images, setStatus, setProgress);
-          }
-        } else {
-          text = await ocrImages(images, setStatus, setProgress);
-        }
-      }
-
-      window.__lastOcrText = text; // debugging hook: inspect what OCR actually saw
-      const fields = parseBillText(text);
+      // Shared pipeline (see extractBillFields above) — /check-my-bill/ runs the same
+      // one with its own consent UI. Only the consent prompt differs.
+      const { fields, cloud, note } = await extractBillFields(file, {
+        setStatus, setProgress, askCloudConsent,
+      });
       progressWrap.hidden = true;
       renderReview(fields, { cloud, note });
     } catch (err) {
@@ -1048,23 +1072,11 @@ function initReviewChooser() {
     if (!menu.hidden && !menu.contains(e.target) && e.target !== btn) close();
   });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-  document.getElementById('reviewViaOcr')?.addEventListener('click', () => {
-    close();
-    // A file picker can only open from a user gesture, so post-sign-in we reopen
-    // the chooser instead — one tap on OCR then goes straight to the picker.
-    if (!requireSignIn(btn, () => btn.click())) return;
-    document.getElementById('ocrFile')?.click(); // same user gesture — picker is allowed
-  });
-
-  // Quick Links "Scan Bill" item: on the calculator page run the same gated OCR
-  // flow instead of a plain anchor jump (other pages navigate to /#calculator).
-  document.addEventListener('click', (e) => {
-    const a = e.target.closest('#quickLinksMenu a[href="/#calculator"]');
-    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
-    e.preventDefault();
-    if (!requireSignIn(a, () => btn.click())) return;
-    document.getElementById('ocrFile')?.click();
-  });
+  // Both OCR entry points used to open a file picker here and silently fill the form
+  // below. They now go to /check-my-bill/, which confirms every extracted field before
+  // computing anything — so the chooser item is a plain link and needs no handler, and
+  // the Quick Links interceptor (which hijacked the Calculator link into a file picker,
+  // surprising anyone who just wanted the calculator) is gone with it.
 }
 
 function initAll() {

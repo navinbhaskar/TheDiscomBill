@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <!-- Set the colour theme before first paint (no flash): stored choice, else OS preference. -->
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+  <title>Check My Electricity Bill — Upload &amp; Recompute It (2026)</title>
+  <meta name="description" content="Upload a photo or PDF of your electricity bill. We read the figures, let you correct them, then recompute the bill against your DISCOM's published tariff and show the difference.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-600-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <link rel="canonical" href="https://thediscombill.com/check-my-bill/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="Check My Electricity Bill — Upload &amp; Recompute It (2026)">
+  <meta property="og:description" content="Upload your bill, correct what we read, and see it recomputed against your DISCOM's published tariff.">
+  <meta property="og:url" content="https://thediscombill.com/check-my-bill/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:locale" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Check My Electricity Bill — Upload &amp; Recompute It (2026)">
+  <meta name="twitter:description" content="Upload your bill, correct what we read, see it recomputed against the published tariff.">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="stylesheet" href="../css/styles.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Check My Electricity Bill","url":"https://thediscombill.com/check-my-bill/","description":"Upload a photo or PDF of an Indian electricity bill, confirm the figures read from it, and recompute the bill against the DISCOM's published tariff to see the difference.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Check My Bill","item":"https://thediscombill.com/check-my-bill/"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can I check my electricity bill by uploading it?","acceptedAnswer":{"@type":"Answer","text":"Yes. Upload a photo or PDF of the bill and the page reads the DISCOM, units, sanctioned load and total from it. You confirm or correct those figures, then it recomputes the bill against the published tariff for your DISCOM and shows the difference against the amount printed on your bill."}},{"@type":"Question","name":"Is my electricity bill uploaded anywhere?","acceptedAnswer":{"@type":"Answer","text":"A digital PDF is read entirely in your browser and never leaves your device. A photo or scanned PDF reads far better through cloud OCR, so the page asks first — the image is passed through for reading and not stored, and you can decline and keep it on-device instead."}},{"@type":"Question","name":"Why does the recomputed amount differ from my bill?","acceptedAnswer":{"@type":"Answer","text":"Most often the sanctioned load, which sets the fixed charge; then a fuel surcharge, arrears carried over from last month, the tariff category, or a billing period longer than about 30 days. The page ranks these and asks you to check each against your bill, because a total-versus-total comparison cannot attribute a gap to a specific line."}},{"@type":"Question","name":"Does this replace an expert bill review?","acceptedAnswer":{"@type":"Answer","text":"No. This compares your bill total against a recomputation of the same inputs, so it tells you the size of any gap but not which charge line caused it. A human review rechecks every line against the tariff order in force for your billing period and states each discrepancy in rupees."}}]}</script>
+</head>
+<body>
+
+<!-- ── Header ───────────────────────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline" data-i18n="tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <a href="/compare/" class="nav-promoted" data-i18n="nav.compare">Compare Rates</a>
+      <a href="/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           the footer is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/#calculator" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-i18n="nav.compare">Compare Rates</span></a>
+            <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+            <a href="/#about" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span data-i18n="nav.about">About</span></a>
+          </div>
+        </div>
+      </div>
+      <a href="/#about" data-i18n="nav.about">About</a>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<div class="page-body" role="main">
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol>
+      <li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li>
+      <li class="crumb-sep" aria-hidden="true">›</li>
+      <li class="crumb"><span aria-current="page">Check My Bill</span></li>
+    </ol></nav>
+
+    <h1>Check My Electricity Bill</h1>
+    <p class="seo-lead">Upload your bill, correct anything we misread, and see it
+    <strong>recomputed against your DISCOM's published tariff</strong> — slab by slab, next to the
+    amount actually printed on it. Works for every state and DISCOM in India.</p>
+
+    <ol class="bc-steps" aria-label="Progress">
+      <li class="bc-step is-active"><span class="bc-step-n">1</span> Upload</li>
+      <li class="bc-step"><span class="bc-step-n">2</span> Check what we read</li>
+      <li class="bc-step"><span class="bc-step-n">3</span> Recomputation</li>
+    </ol>
+
+    <!-- ── Stage 1: upload ─────────────────────────────────────────────────── -->
+    <section id="bcUpload">
+      <div class="bc-drop" id="bcDrop" role="button" tabindex="0"
+           aria-label="Upload a bill — choose a photo or PDF">
+        <svg class="bc-drop-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5"/><path d="M12 3v13"/>
+        </svg>
+        <strong>Drop your bill here, or tap to choose</strong>
+        <span>PDF or photo · JPG, PNG</span>
+      </div>
+      <input type="file" id="bcFile" accept="image/*,application/pdf" hidden>
+
+      <div class="bc-progress" id="bcProgress" hidden>
+        <div class="bc-progress-track"><div class="bc-progress-bar" id="bcProgressBar"></div></div>
+        <p class="bc-status" id="bcStatus"></p>
+      </div>
+      <div id="bcFail" hidden></div>
+
+      <p class="bc-privacy">
+        <strong>A digital PDF never leaves your device</strong> — it is read in your browser. A photo or
+        scanned PDF reads far more accurately through cloud OCR, so we ask before sending anything, and
+        the image is passed through for reading rather than stored.
+      </p>
+
+      <section class="seo-section">
+        <h2>What this does, and what it doesn't</h2>
+        <p>It reads your bill, lets you fix anything misread, then recomputes the charges from the
+        published tariff for your DISCOM — the same engine behind the
+        <a href="/#calculator">bill calculator</a> — and compares the total against the one printed on
+        your bill.</p>
+        <p><strong>It compares totals, not individual lines.</strong> If there is a gap, this tells you
+        how big it is and ranks the usual causes to check; it cannot yet tell you which charge line is
+        wrong, because it does not read your bill's own energy, fixed, surcharge and duty lines
+        separately. For that, a person does it: see a
+        <a href="/bill-review/sample-report/">sample expert report</a>.</p>
+      </section>
+    </section>
+
+    <!-- ── Stage 2: confirm ────────────────────────────────────────────────── -->
+    <section id="bcConfirm" hidden>
+      <div class="bc-readbar">
+        <p id="bcReadSummary"></p>
+        <small id="bcEngineNote"></small>
+      </div>
+      <p class="bc-note bc-note-warn" id="bcMissingNote" hidden></p>
+      <p class="bc-note" id="bcCloudNote" hidden></p>
+
+      <p class="bc-intro">Everything below came off your bill and <strong>every field is editable</strong>.
+      Check them against the paper before you continue — OCR misreads happen, and the recomputation is
+      only as good as these figures.</p>
+
+      <div class="bc-grid">
+        <div class="bc-field">
+          <label for="bcState">State / UT</label>
+          <select id="bcState"></select>
+        </div>
+        <div class="bc-field">
+          <label for="bcDiscom">DISCOM</label>
+          <select id="bcDiscom"></select>
+        </div>
+        <div class="bc-field">
+          <label for="bcCategory">Tariff category</label>
+          <select id="bcCategory"></select>
+        </div>
+        <div class="bc-field">
+          <label for="bcSupply">Supply type</label>
+          <select id="bcSupply"></select>
+        </div>
+        <div class="bc-field">
+          <label for="bcUnits">Units consumed</label>
+          <input type="number" id="bcUnits" min="0" step="1" inputmode="numeric">
+        </div>
+        <div class="bc-field">
+          <label for="bcLoad">Sanctioned load (kW)</label>
+          <input type="number" id="bcLoad" min="0.1" step="0.1" inputmode="decimal">
+        </div>
+        <div class="bc-field">
+          <label for="bcBillAmount">Total on your bill (₹)</label>
+          <input type="number" id="bcBillAmount" min="0" step="1" inputmode="numeric">
+        </div>
+        <div class="bc-field">
+          <label for="bcArrears">Previous dues / arrears (₹)</label>
+          <input type="number" id="bcArrears" min="0" step="1" inputmode="numeric" value="0">
+        </div>
+      </div>
+
+      <p class="bc-actions">
+        <button type="button" class="btn-calculate" id="bcRecompute">Recompute my bill</button>
+        <button type="button" class="btn-clear" id="bcBack">Upload a different bill</button>
+      </p>
+    </section>
+
+    <!-- ── Stage 3: result ─────────────────────────────────────────────────── -->
+    <section id="bcResult" hidden>
+      <div id="bcResultBody"></div>
+    </section>
+
+    <p class="seo-disclaimer">This is a provisional recomputation from published tariff data, not a
+    certified audit. Rates, fuel surcharge and duty change through the year, and OCR can misread a
+    printed figure — check the inputs above against your bill before relying on the comparison. See
+    <a href="/methodology/">how our rates are sourced and verified</a>.</p>
+  </section>
+</div>
+
+<!-- ── Footer ────────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+        <a href="/check-my-bill/" data-i18n="ql.checkBill">Check My Bill (upload)</a>
+        <a href="/compare/" data-i18n="nav.compare">Compare Rates</a>
+        <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</a>
+        <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Bill review from an expert</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span>
+    &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a></p>
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:thediscombill@gmail.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- main.js wires the shared header; check-my-bill.js runs the three-stage flow. -->
+<script type="module" src="../js/main.js"></script>
+<script type="module" src="../js/check-my-bill.js"></script>
+
+</body>
+</html>
