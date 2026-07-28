@@ -15,6 +15,17 @@ const $ = (id) => document.getElementById(id);
 const rs  = (n) => '₹' + Math.round(n).toLocaleString('en-IN');
 const num = (n, d = 0) => Number(n).toLocaleString('en-IN', { minimumFractionDigits: d, maximumFractionDigits: d });
 
+// The bill figure the summary sentence should quote. A system is sized in 0.5 kW steps with a
+// 1 kW floor, so it routinely generates MORE than the household uses — quoting the savings
+// there would tell someone with a ₹600 bill that we'll wipe out their "₹840 bill". When
+// generation covers consumption, quote what they actually pay (monthly units × tariff);
+// otherwise the saving IS the honest number, because the bill doesn't go to zero.
+function summaryBill(r) {
+  const cover = r.monthlyGen >= r.monthly * 0.95;
+  const ownBill = r.monthlyGen > 0 ? (r.monthly / r.monthlyGen) * r.monthlySavings : 0;
+  return { cover, bill: cover ? ownBill : r.monthlySavings };
+}
+
 // Dynamic result strings in both languages (static labels are handled by i18n data-i18n).
 const lang = () => { try { return localStorage.getItem('lang') === 'hi' ? 'hi' : 'en'; } catch { return 'en'; } };
 const SOL_STR = {
@@ -27,6 +38,18 @@ const SOL_STR = {
     billConv: (u) => `≈ ${u} units at your tariff — filled in above.`,
     upNote: 'UPNEDA top-up: ₹15,000/kW up to ₹30,000 — limited to the first 1,00,000 installations.',
     asNote: 'Assam state top-up: ₹15,000/kW, capped at ₹45,000 (3 kW and above).',
+    // The one-sentence version of the whole result card. Deliberately concrete: size, what it
+    // does to the bill, the cash subsidy, the payback — in that order, because that is the
+    // order people ask the questions in.
+    summary: (r) => {
+      const { cover, bill } = summaryBill(r);
+      return `A <strong>${num(r.size, r.size % 1 ? 1 : 0)} kW</strong> system would `
+        + (cover ? `<strong>wipe out</strong> your ${rs(bill)} monthly bill`
+                 : `cut about <strong>${rs(bill)}</strong> off your monthly bill`)
+        + `, earn <strong>${rs(r.central + r.stateSub)}</strong> in upfront subsidy`
+        + (isFinite(r.paybackYears) ? `, and pay for itself in <strong>${num(r.paybackYears, 1)} years</strong>` : '')
+        + `.`;
+    },
     breakEven: (y) => `Break-even in year ${y}`,
     chartCost: 'system cost', chartYr: 'yr',
     projYear: (y) => `Year ${y}`, projProfit: 'Profit', projRecovering: 'Recovering',
@@ -41,6 +64,14 @@ const SOL_STR = {
     billConv: (u) => `≈ ${u} यूनिट आपके टैरिफ पर — ऊपर भर दिया गया।`,
     upNote: 'UPNEDA टॉप-अप: ₹15,000/kW, अधिकतम ₹30,000 — पहले 1,00,000 इंस्टॉलेशन तक सीमित।',
     asNote: 'असम राज्य टॉप-अप: ₹15,000/kW, अधिकतम ₹45,000 (3 kW और ऊपर)।',
+    summary: (r) => {
+      const { cover, bill } = summaryBill(r);
+      return `<strong>${num(r.size, r.size % 1 ? 1 : 0)} kW</strong> का सिस्टम आपका ${rs(bill)} मासिक बिल `
+        + (cover ? `<strong>पूरी तरह ख़त्म</strong> कर देगा` : `लगभग <strong>${rs(bill)}</strong> कम कर देगा`)
+        + `, <strong>${rs(r.central + r.stateSub)}</strong> की सब्सिडी दिलाएगा`
+        + (isFinite(r.paybackYears) ? `, और <strong>${num(r.paybackYears, 1)} वर्ष</strong> में अपनी लागत वसूल कर लेगा` : '')
+        + `।`;
+    },
     breakEven: (y) => `वर्ष ${y} में लागत वसूल`,
     chartCost: 'सिस्टम लागत', chartYr: 'वर्ष',
     projYear: (y) => `वर्ष ${y}`, projProfit: 'मुनाफ़ा', projRecovering: 'लागत वसूली जारी',
@@ -227,6 +258,9 @@ function render() {
   $('solMonthlySave').textContent = rs(r.monthlySavings) + S.perMo;
   $('solLifetime').textContent = rs(r.lifetimeSavings);
   $('solCo2').textContent = num(r.co2Tonnes, 1) + S.tPerYr;
+
+  const sum = $('solSummary');
+  if (sum) sum.innerHTML = S.summary(r);
 }
 
 function init() {
@@ -274,7 +308,18 @@ function init() {
       $('solMonthly').value = units;
       if (hint) hint.textContent = SOL_STR[lang()].billConv(units);
     }
+    // Keep the slider under the thumb the user isn't holding. Clamped, because someone can
+    // type ₹40,000 into the number field and the track only runs to ₹10,000.
+    const sl = $('solBillSlider');
+    if (sl) sl.value = Math.min(amt, Number(sl.max));
     render();
+  });
+
+  // Slider → number field, then hand off to the handler above so the ₹→units conversion,
+  // the hint and the re-render all happen in exactly one place.
+  $('solBillSlider')?.addEventListener('input', (e) => {
+    $('solBillAmt').value = e.target.value;
+    $('solBillAmt').dispatchEvent(new Event('input', { bubbles: true }));
   });
 
   // State-subsidy dropdown: presets fill the ₹ field (size-aware); typing a

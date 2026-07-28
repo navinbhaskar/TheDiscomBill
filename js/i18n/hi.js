@@ -24,6 +24,7 @@ export default {
     'ql.solar': 'रूफटॉप सोलर बचत',
     'ql.ev': 'EV चार्जिंग लागत',
     'ql.loadOptimizer': 'स्वीकृत भार ऑप्टिमाइज़र',
+    'ql.tenantMeter': 'किरायेदार सब-मीटर कैलकुलेटर',
     'nav.solarSubsidy': 'सोलर सब्सिडी चेकर',
     'ql.tariffsByState': 'राज्य व डिस्कॉम अनुसार टैरिफ',
     'ql.discomServices': 'डिस्कॉम सेवाएँ',
@@ -107,7 +108,7 @@ export default {
     'small.fromDate': 'बिलिंग अवधि की आरंभ तिथि',
     'small.toDate': 'बिलिंग अवधि की अंतिम तिथि',
     'label.sanctioned': 'स्वीकृत भार (kW)',
-    'small.sanctioned': 'अनुबंधित / स्वीकृत भार। फिक्स्ड शुल्क और अतिरिक्त मांग जाँच के लिए।',
+    'small.sanctioned': '💡 अपने पुराने बिल में ऊपर दाईं ओर <strong>“Connected / Sanctioned Load”</strong> देखें। इस सीमा से अधिक भार पर यूपी, दिल्ली और महाराष्ट्र जैसे राज्यों में अतिरिक्त-भार जुर्माना लगता है।',
     'small.fppa': 'मैन्युअल दर्ज करने हेतु ऊपर अनचेक करें (या मान टाइप करें) · ऋणात्मक (क्रेडिट) हो सकता है।',
     // Tabs
     'tab.meterread': 'मीटर रीडिंग',
@@ -115,6 +116,8 @@ export default {
     'tab.payment': 'भुगतान',
     'tab.adjustment': 'समायोजन',
     'mode.todSplit': 'टीओडी विभाजन (पीक / सामान्य / ऑफ-पीक यूनिट)',
+    'adv.title': 'उन्नत बिलिंग विकल्प',
+    'adv.sub': 'सोलर नेट-मीटरिंग, ToD, बकाया और जुर्माना',
     'label.billedAmount': 'आपके असली बिल की राशि (₹) — वैकल्पिक',
     'small.billedAmount': 'हम इसे अपनी गणना से मिलाकर बताएँगे कि आपका बिल सही लगता है या नहीं।',
 
@@ -238,6 +241,7 @@ export default {
     // Buttons
     'btn.addMeter': '+ मीटर जोड़ें',
     'btn.calculate': '⚡ अनुमानित बिल गणना करें',
+    'btn.clear': '<svg class="br-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg> साफ़ करें और रीसेट',
     'btn.sample': 'नमूना बिल देखें',
     'btn.sampleHero': 'एक क्लिक में नमूना बिल देखें',
     'mode.simple': '⚡ आसान',

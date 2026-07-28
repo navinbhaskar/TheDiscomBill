@@ -30,6 +30,7 @@ export const STRINGS = {
     'ql.solar': 'Rooftop Solar Savings',
     'ql.ev': 'EV Charging Cost',
     'ql.loadOptimizer': 'Sanctioned Load Optimizer',
+    'ql.tenantMeter': 'Tenant Sub-Meter Calculator',
     'nav.solarSubsidy': 'Solar Subsidy Checker',
     'ql.tariffsByState': 'Tariffs by State & DISCOM',
     'ql.discomServices': 'DISCOM Services',
@@ -114,7 +115,7 @@ export const STRINGS = {
     'small.fromDate': 'Billing period start date',
     'small.toDate': 'Billing period end date',
     'label.sanctioned': 'Sanctioned Load (kW)',
-    'small.sanctioned': 'Contracted / sanctioned load. Used for fixed charge and excess demand check.',
+    'small.sanctioned': '💡 Check the top right of your old bill for <strong>“Connected / Sanctioned Load”</strong>. Exceeding this limit triggers excess-demand penalties in states like UP, Delhi and Maharashtra.',
     'small.fppa': 'Uncheck above (or type a value) to enter manually · can be negative (credit).',
     // Tabs
     'tab.meterread': 'Meter Read',
@@ -122,6 +123,8 @@ export const STRINGS = {
     'tab.payment': 'Payment',
     'tab.adjustment': 'Adjustment',
     'mode.todSplit': 'TOD split (peak / normal / off-peak units)',
+    'adv.title': 'Advanced Billing Options',
+    'adv.sub': 'Solar net-metering, ToD, arrears & penalties',
     'label.billedAmount': 'Amount on your actual bill (₹) — optional',
     'small.billedAmount': "We'll compare it with our calculation and tell you if your bill looks right.",
 
@@ -245,6 +248,7 @@ export const STRINGS = {
     // Buttons
     'btn.addMeter': '+ Add meter',
     'btn.calculate': '⚡ Calculate Provisional Bill',
+    'btn.clear': '<svg class="br-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg> Clear & Reset',
     'btn.sample': 'Try a sample bill',
     'btn.sampleHero': 'See a sample bill in one click',
     'mode.simple': '⚡ Simple',

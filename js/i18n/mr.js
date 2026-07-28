@@ -24,6 +24,7 @@ export default {
     'ql.solar': 'रूफटॉप सोलर बचत',
     'ql.ev': 'EV चार्जिंग खर्च',
     'ql.loadOptimizer': 'मंजूर भार ऑप्टिमायझर',
+    'ql.tenantMeter': 'भाडेकरू सब-मीटर कॅल्क्युलेटर',
     'nav.solarSubsidy': 'सोलर सबसिडी चेकर',
     'ql.tariffsByState': 'राज्य व डिस्कॉमनुसार टॅरिफ',
     'ql.discomServices': 'डिस्कॉम सेवा',
@@ -107,7 +108,7 @@ export default {
     'small.fromDate': 'बिलिंग कालावधीची सुरुवात',
     'small.toDate': 'बिलिंग कालावधीचा शेवट',
     'label.sanctioned': 'मंजूर भार (kW)',
-    'small.sanctioned': 'करारित / मंजूर भार. फिक्स्ड शुल्क व जादा मागणी तपासणीसाठी वापरला जातो.',
+    'small.sanctioned': '💡 तुमच्या जुन्या बिलाच्या वरच्या उजव्या कोपऱ्यात <strong>“Connected / Sanctioned Load”</strong> पहा. ही मर्यादा ओलांडल्यास यूपी, दिल्ली आणि महाराष्ट्रासारख्या राज्यांत जादा-मागणी दंड लागतो.',
     'small.fppa': 'स्वतः भरण्यासाठी वर अनचेक करा (किंवा मूल्य टाका) · ऋण (क्रेडिट) असू शकतो.',
     // Tabs
     'tab.meterread': 'मीटर रीडिंग',
@@ -115,6 +116,8 @@ export default {
     'tab.payment': 'भरणा',
     'tab.adjustment': 'समायोजन',
     'mode.todSplit': 'टीओडी विभागणी (पीक / सामान्य / ऑफ-पीक युनिट)',
+    'adv.title': 'प्रगत बिलिंग पर्याय',
+    'adv.sub': 'सोलर नेट-मीटरिंग, ToD, थकबाकी आणि दंड',
     'label.billedAmount': 'तुमच्या प्रत्यक्ष बिलावरील रक्कम (₹) — ऐच्छिक',
     'small.billedAmount': 'आम्ही ती आमच्या गणनेशी पडताळून तुमचे बिल बरोबर वाटते का ते सांगू.',
 
@@ -201,6 +204,7 @@ export default {
     // Buttons
     'btn.addMeter': '+ मीटर जोडा',
     'btn.calculate': '⚡ अंदाजित बिल काढा',
+    'btn.clear': '<svg class="br-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg> साफ करा आणि रीसेट',
     'btn.sample': 'नमुना बिल पाहा',
     'btn.sampleHero': 'एका क्लिकमध्ये नमुना बिल पाहा',
     'mode.simple': '⚡ सोपे',

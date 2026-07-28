@@ -305,6 +305,41 @@ export function initTabs() {
   });
 }
 
+// ─── Advanced Billing Options panel ───────────────────────────────────────────
+// ToD, kVAh basis, net metering and LPSC live folded inside a <details> so the default
+// form is state → DISCOM → category → units → load. Two rules keep a folded switch from
+// quietly changing someone's bill:
+//   · the summary carries a badge naming every setting that is not at its default, so the
+//     panel never looks inert while it is doing something;
+//   · anything the visitor (or a share link) actually switched on springs the panel open.
+//     The kVAh basis is excluded from that — we set it ourselves from the tariff, so it
+//     would pop the panel open on every commercial/HT category. It still shows in the badge.
+let _advSync = null;
+
+export function initAdvPanel() {
+  const panel = document.getElementById('advOptions');
+  if (!panel) return;
+  const badge  = document.getElementById('advOptionsBadge');
+  const todChk = document.getElementById('todSplitChk');
+  const netChk = document.getElementById('netMeteringChk');
+  const lpsc   = document.getElementById('lpscApplicable');
+
+  _advSync = () => {
+    const chosen = [];                       // switched on by the visitor / a share link
+    if (todChk && todChk.checked) chosen.push('ToD');
+    if (netChk && netChk.checked) chosen.push('Solar');
+    if (lpsc && !lpsc.checked)    chosen.push('No LPSC');
+
+    const shown = chosen.slice();
+    if (getBillingBasis() === 'kvah') shown.splice(1, 0, 'kVAh');   // after ToD, tariff-derived
+
+    if (badge) { badge.textContent = shown.join(' · '); badge.hidden = shown.length === 0; }
+    if (chosen.length) panel.open = true;
+  };
+  panel.addEventListener('change', _advSync);
+  _advSync();
+}
+
 // Sanctioned Load quick-pick chips: one tap sets the load; the active chip
 // tracks whatever value is in the field (typed or tapped).
 export function initLoadChips() {
@@ -1214,6 +1249,8 @@ function defaultBillingBasis() {
 export function applyDefaultBillingBasis() {
   const r = document.querySelector(`input[name="billingBasis"][value="${defaultBillingBasis()}"]`);
   if (r) r.checked = true;
+  // Set programmatically, so no change event fires — nudge the advanced panel's badge by hand.
+  if (_advSync) _advSync();
 }
 
 // Demand is labelled/charged in kVA for the kVA-based (kVAh) basis; in kW for the active (kWh) basis.

@@ -3,7 +3,7 @@
 import {
   populateStates, populateDiscoms, populateCategories, populateSupplyTypes,
   populateMonthYear, prefillFac, prefillLpsc, updateBilledDemandVisibility,
-  initTabs, initLoadChips, addPaymentRow, addAdjustmentRow,
+  initTabs, initLoadChips, initAdvPanel, addPaymentRow, addAdjustmentRow,
   updateArrearTotal, updateUnitsDisplay, updateCalcButton, updateBillingPeriod,
   updateTodDisplay, updateFacUnitLabel, updateTariffPeriodHint,
   onFppaAutoToggle, markFppaManual,
@@ -820,6 +820,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.getElementById('calculateBtn').addEventListener('click', doCalculate);
+    document.getElementById('resetBtn')?.addEventListener('click', resetCalculator);
     document.getElementById('sampleBtnPanel')?.addEventListener('click', loadSample);
     initHistory();
 
@@ -902,5 +903,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadFromUrl();
     syncPurposeChips();
     initLoadChips();   // after loadFromUrl so the active chip reflects a URL-provided load
+    initAdvPanel();    // ditto — a share link's ToD / solar / LPSC switches open the panel
   }
 });

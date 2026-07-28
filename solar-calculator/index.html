@@ -142,6 +142,11 @@
           <div class="solar-field">
             <label for="solBillAmt" data-i18n="sol.billAmt">Monthly bill amount (₹)</label>
             <input id="solBillAmt" type="number" min="0" step="50" placeholder="e.g., 2450" data-i18n-ph="sol.phBillAmt" inputmode="numeric">
+            <!-- The slider and the number field are two views of the same value: dragging is how
+                 most people explore "what if my bill were bigger", typing is how they enter the
+                 one they actually have. Both write solBillAmt and fire its existing handler. -->
+            <input id="solBillSlider" class="solar-slider" type="range" min="0" max="10000" step="50" value="0" aria-label="Monthly bill amount (₹)">
+            <div class="solar-slider-scale" aria-hidden="true"><span>₹0</span><span>₹5,000</span><span>₹10,000</span></div>
             <span class="solar-hint" id="solBillHint" data-i18n="sol.billAmtHint">We'll convert it to units using your tariff below.</span>
           </div>
           <div class="solar-field">
@@ -198,6 +203,9 @@
               <div class="solar-size-note" id="solSizeNote"></div>
               <div class="solar-payback-pill"><span data-i18n="sol.paysFor">Pays for itself in</span> <strong id="solPayback">—</strong></div>
             </div>
+            <!-- The numbers below are all correct and all separate; this reassembles them into
+                 the one sentence a first-time visitor is actually looking for. -->
+            <p class="solar-summary" id="solSummary"></p>
             <div class="solar-breakdown">
               <div class="solar-bd-row"><span data-i18n="sol.gen">Estimated generation</span><strong id="solGen">—</strong></div>
               <div class="solar-bd-row"><span data-i18n="sol.grossCost">System cost (before subsidy)</span><strong id="solGross">—</strong></div>
@@ -269,6 +277,7 @@
         <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
         <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
         <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
       </div>
       <div class="footer-col">
         <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>

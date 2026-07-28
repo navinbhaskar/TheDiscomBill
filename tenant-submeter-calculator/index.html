@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <!-- Set the colour theme before first paint (no flash): stored choice, else OS preference. -->
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+  <title>Tenant Sub-Meter Calculator — Is Your Landlord Overcharging for Electricity? (2026)</title>
+  <meta name="description" content="Landlord charging ₹10–12 a unit on a private sub-meter? Work out what your units actually cost at your DISCOM's tariff, your fair share of the fixed charge, and exactly how much extra you pay each month. Free printable comparison report.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-600-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <link rel="canonical" href="https://thediscombill.com/tenant-submeter-calculator/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="Tenant Sub-Meter Calculator — Is Your Landlord Overcharging? (2026)">
+  <meta property="og:description" content="Compare what your landlord charges per unit against your DISCOM's real tariff, and print the comparison.">
+  <meta property="og:url" content="https://thediscombill.com/tenant-submeter-calculator/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:locale" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tenant Sub-Meter Calculator — Is Your Landlord Overcharging? (2026)">
+  <meta name="twitter:description" content="What your sub-meter units really cost at DISCOM tariff, versus your landlord's flat rate.">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="stylesheet" href="../css/styles.min.css">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Tenant Sub-Meter Calculator","url":"https://thediscombill.com/tenant-submeter-calculator/","description":"Compare what a landlord charges per unit on a private sub-meter against the actual DISCOM tariff cost of the same units, including a fair share of the fixed charge, with a printable comparison report.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Tenant Sub-Meter Calculator","item":"https://thediscombill.com/tenant-submeter-calculator/"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can a landlord charge more than the electricity tariff on a sub-meter?","acceptedAnswer":{"@type":"Answer","text":"Reselling electricity above the applicable tariff is restricted in most states — the rules are set by each State Electricity Regulatory Commission rather than nationally, and a landlord recovering only the actual cost plus genuinely incurred charges is on much firmer ground than one applying a flat markup. Work out the tariff cost of your units first, then raise the difference with your landlord or, if unresolved, the DISCOM's consumer grievance forum."}},{"@type":"Question","name":"How do I work out what my sub-meter units actually cost?","acceptedAnswer":{"@type":"Answer","text":"You cannot simply multiply your units by a single rate, because domestic tariffs are telescopic — the first slab is cheap and later slabs cost more, and the fixed charge applies once to the whole connection. The fair method is to compute the full bill for the main meter, then take your share of the energy charges in proportion to your units and an equal share of the fixed charge. This calculator does exactly that from published tariff rates."}},{"@type":"Question","name":"Why is my landlord's flat rate higher than the DISCOM slab rate?","acceptedAnswer":{"@type":"Answer","text":"Flat rates are usually set to the highest slab the connection reaches, or simply by local convention, and then never revised. Because a household connection spends most of its units in the cheaper lower slabs, the true effective rate is almost always well below the top slab rate — which is why a flat ₹10–12 per unit typically overstates the real cost of domestic power."}},{"@type":"Question","name":"What should I do if I am being overcharged on a sub-meter?","acceptedAnswer":{"@type":"Answer","text":"Start with the numbers rather than a dispute: print the comparison, ask to see the main-meter bill for the same month, and propose a method — your units at the connection's effective rate plus an equal share of the fixed charge — instead of a fixed per-unit rate. If it is not resolved, your DISCOM's consumer grievance redressal forum will accept a complaint, and the national helpline is 1912."}}]}</script>
+</head>
+<body>
+
+<!-- ── Header ───────────────────────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline" data-i18n="tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <a href="/compare/" class="nav-promoted" data-i18n="nav.compare">Compare Rates</a>
+      <a href="/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           the footer is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/#calculator" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-i18n="nav.compare">Compare Rates</span></a>
+            <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+            <a href="/#about" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span data-i18n="nav.about">About</span></a>
+          </div>
+        </div>
+      </div>
+      <a href="/#about" data-i18n="nav.about">About</a>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<div class="page-body" role="main">
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol>
+      <li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li>
+      <li class="crumb-sep" aria-hidden="true">›</li>
+      <li class="crumb"><span aria-current="page">Tenant Sub-Meter Calculator</span></li>
+    </ol></nav>
+
+    <h1>Tenant Sub-Meter Calculator</h1>
+    <p class="seo-lead">If your landlord reads a private sub-meter and charges a flat
+    <strong>₹10–₹12 a unit</strong>, there is no way to tell from that number what the power actually cost.
+    Real tariffs are <strong>telescopic</strong> — the first slabs are cheap, the fixed charge lands once on the
+    whole building, and the effective rate on a domestic connection is usually far below the top slab. Enter your
+    sub-meter reading and your landlord's rate, and this works out <strong>your share of the real DISCOM bill</strong>
+    and the exact gap, with a report you can print and hand over.</p>
+
+    <div class="svc-controls">
+      <div class="svc-control">
+        <label for="tsState">State / UT</label>
+        <select id="tsState"></select>
+      </div>
+      <div class="svc-control">
+        <label for="tsDiscom">Your landlord's DISCOM</label>
+        <select id="tsDiscom"></select>
+      </div>
+      <div class="svc-control">
+        <label for="tsCategory">Connection category</label>
+        <select id="tsCategory"></select>
+      </div>
+      <div class="svc-control">
+        <label for="tsSupply">Supply type</label>
+        <select id="tsSupply"></select>
+      </div>
+      <div class="svc-control">
+        <label for="tsMyUnits">Your sub-meter units</label>
+        <input type="number" id="tsMyUnits" value="180" min="0" max="20000" step="10" inputmode="numeric">
+      </div>
+      <div class="svc-control">
+        <label for="tsRate">Landlord's rate (₹ per unit)</label>
+        <input type="number" id="tsRate" value="11" min="0" max="100" step="0.5" inputmode="decimal">
+      </div>
+      <div class="svc-control">
+        <label for="tsTotalUnits">Main-meter units (building)</label>
+        <input type="number" id="tsTotalUnits" placeholder="optional — see note" min="0" max="200000" step="10" inputmode="numeric">
+      </div>
+      <div class="svc-control">
+        <label for="tsTenants">Sub-meters sharing it</label>
+        <input type="number" id="tsTenants" value="4" min="1" max="100" step="1" inputmode="numeric">
+      </div>
+      <div class="svc-control">
+        <label for="tsLoad">Sanctioned load (kW)</label>
+        <input type="number" id="tsLoad" value="5" min="1" max="200" step="1" inputmode="numeric">
+      </div>
+      <div class="svc-control">
+        <label for="tsFixed">Landlord's fixed charge (₹)</label>
+        <input type="number" id="tsFixed" value="0" min="0" max="100000" step="50" inputmode="numeric">
+      </div>
+      <div class="svc-control">
+        <label for="tsSplit">Split the fixed charge</label>
+        <select id="tsSplit">
+          <option value="equal">Equally per sub-meter</option>
+          <option value="prorata">In proportion to units</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="tsResult"></div>
+
+    <section class="seo-section">
+      <h2>Why a flat per-unit rate almost always overcharges</h2>
+      <p>A domestic tariff is not one rate. It is a ladder: the first 100 or 200 units are billed at a low rate,
+      the next block a little higher, and only heavy consumption reaches the top slab. On top of that sits a
+      <strong>fixed charge</strong> that is levied once on the connection — per kW of sanctioned load, not per
+      tenant — plus fuel surcharge and electricity duty as percentages.</p>
+      <p>Landlords generally pick a single number that covers the worst case and stop thinking about it. Because
+      most of a building's units are consumed in the cheaper slabs, that number is usually well above the
+      connection's real <em>effective</em> rate. A 5 kW domestic connection drawing 700 units a month often works
+      out to ₹7–₹8 a unit all-in — so a flat ₹11 is a 40%+ markup on power the landlord is only passing through.</p>
+    </section>
+
+    <section class="seo-section">
+      <h2>How your fair share is calculated</h2>
+      <p>Energy and every per-unit or percentage charge are apportioned <strong>pro-rata on units</strong>. That
+      is the even-handed method precisely because the tariff is telescopic — the cheap opening slabs belong to
+      the connection as a whole, so no tenant gets to claim them while a neighbour absorbs the expensive ones.
+      Re-running the slabs on your units alone would let whoever is metered "first" pay a fraction of the true
+      cost.</p>
+      <p>The <strong>fixed and demand charges</strong> are different: they exist whether or not you switch
+      anything on, so the default here splits them equally across the sub-meters on the connection. If your
+      arrangement shares them by consumption instead, switch the last dropdown. Everything else — fuel surcharge,
+      electricity duty, minimum charge top-ups — is computed by the same engine behind the
+      <a href="/#calculator">main bill calculator</a> and carried into your share proportionally.</p>
+    </section>
+
+    <section class="seo-section">
+      <h2>If you do not know the main-meter reading</h2>
+      <p>Leave that field blank and the tool bills your units as though they were the entire connection. That
+      deliberately <em>understates</em> the real cost per unit, because you are no longer sharing the cheap first
+      slabs with anyone — so the overcharge it reports becomes a floor rather than an estimate. If the number is
+      already uncomfortable on that basis, it is worse in reality. Asking your landlord for the main bill for the
+      same month is a reasonable request: you are paying a share of it.</p>
+    </section>
+
+    <section class="seo-section">
+      <h2>Where you stand</h2>
+      <p>Sub-metering, permitted service charges and whether a landlord may add anything above cost are governed
+      by your <strong>State Electricity Regulatory Commission</strong>, not by a single national rule, and the
+      position differs meaningfully between states. What is consistent is that reselling power at a profit is
+      restricted almost everywhere, and that a landlord recovering the actual cost plus genuinely incurred
+      expenses is on far firmer ground than one applying a habitual markup.</p>
+      <p>In practice the numbers settle most of these conversations without anyone invoking a regulation. If they
+      do not, your DISCOM's consumer grievance redressal forum will take a complaint — the
+      <a href="/complaint/">complaint helper</a> has the forum and the 1912 national helpline for your state.</p>
+    </section>
+
+    <p class="seo-disclaimer">This tool computes the tariff cost of your units from published DISCOM rates and
+    apportions it by a stated method. It is an estimate for discussion, <strong>not legal advice</strong>, and it
+    does not determine what your tenancy agreement or your state's regulations permit. Tariffs, fuel surcharge and
+    duty change through the year; verify against the current tariff order and the main-meter bill before relying
+    on the figures. See <a href="/methodology/">how our rates are sourced and verified</a>.</p>
+  </section>
+</div>
+
+<!-- ── Footer ────────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+        <a href="/compare/" data-i18n="nav.compare">Compare Rates</a>
+        <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</a>
+        <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Bill review from an expert</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span>
+    &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a></p>
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:thediscombill@gmail.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- main.js wires the shared header; tenant-submeter.js runs the tool. -->
+<script type="module" src="../js/main.js"></script>
+<script type="module" src="../js/tenant-submeter.js"></script>
+
+</body>
+</html>

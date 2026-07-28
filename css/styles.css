@@ -1334,6 +1334,10 @@ html:not([lang="en"]) .hero-discoms-label {
   color: var(--text-brand-dark); font-weight: 700;
 }
 .load-chip:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+/* Where to find the number on a paper bill, and why it matters. Wider than the 174px
+   control above it, so it spans the whole group rather than tracking the input's width. */
+.load-hint { margin-top: 7px; max-width: 46ch; }
+.load-hint strong { color: var(--text-secondary); font-weight: 600; }
 
 /* Billing Basis — shorter width, secondary feel (rarely changed once set) */
 #billingBasisGroup { margin-bottom: 8px; }
@@ -1387,6 +1391,62 @@ html:not([lang="en"]) .hero-discoms-label {
 .tod-split-label .switch-text { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
 .tod-split-label:hover .switch-text { color: var(--text-primary); }
 .tod-split-label input:checked ~ .switch-text { color: var(--text-brand); font-weight: 600; }
+
+/* ─── Advanced Billing Options panel ─────────────────────────────────────────── */
+/* A native <details> so keyboard, screen-reader and find-in-page behaviour come free.
+   Sunken and hairlined rather than card-raised: it should read as a drawer in the form,
+   not another section competing with the inputs above it. */
+.adv-panel {
+  margin: 14px 0 4px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+.adv-panel[open] { background: var(--surface-card); }
+.adv-panel-sum {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  cursor: pointer; user-select: none;
+  list-style: none;
+  transition: background var(--t-fast);
+}
+.adv-panel-sum::-webkit-details-marker { display: none; }
+.adv-panel-sum:hover { background: var(--surface-hover); }
+.adv-panel-sum:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+.adv-panel-ic { flex: none; font-size: 15px; line-height: 1; }
+.adv-panel-txt { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.adv-panel-title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.adv-panel-sub   { font-size: 11px; color: var(--text-tertiary); line-height: 1.4; }
+/* Names whatever inside is off its default, so a folded panel never looks inert
+   while it is quietly changing the bill. */
+.adv-panel-badge {
+  flex: none; margin-left: auto;
+  padding: 2px 8px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .2px;
+  color: var(--text-brand-dark);
+  background: var(--brand-faint);
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-full);
+  white-space: nowrap;
+}
+.adv-panel-badge[hidden] { display: none; }
+.adv-panel-caret {
+  flex: none; width: 16px; height: 16px; margin-left: auto;
+  color: var(--text-tertiary);
+  transition: transform var(--t-base);
+}
+.adv-panel-badge:not([hidden]) ~ .adv-panel-caret { margin-left: 0; }
+.adv-panel[open] .adv-panel-caret { transform: rotate(180deg); }
+.adv-panel-body {
+  padding: 12px;
+  border-top: 1px solid var(--border-subtle, var(--border-default));
+}
+.adv-panel-body > .form-group:last-child { margin-bottom: 0; }
+.adv-panel-body .tod-split-label { margin-bottom: 12px; }
+@media (prefers-reduced-motion: reduce) {
+  .adv-panel-caret { transition: none; }
+}
 
 .form-row {
   display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
@@ -1516,12 +1576,14 @@ select:focus, input:focus {
                      --sel-ic-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12 2 9 5-9 5-9-5z'/%3E%3Cpath d='m3 12 9 5 9-5'/%3E%3Cpath d='m3 17 9 5 9-5'/%3E%3C/svg%3E"); }
 
 #stateSelect, #discomSelect, #categorySelect, #supplyTypeSelect {
-  height: 42px;                       /* 36px was below the 44px touch guidance; 42 + gap clears it */
-  padding-left: 40px; padding-right: 34px;
+  /* Same 36px as every other field — these were 42px for touch comfort, but standing a head
+     taller than the inputs below made them read as a different kind of control. WCAG 2.5.8's
+     floor is 24px, so 36 clears it; 44px was only ever platform guidance. */
+  padding-left: 34px; padding-right: 28px;
   /* Two layers: the step's icon on the left, the shared chevron on the right. */
   background-image: var(--sel-ic), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-position: left 13px center, right 13px center;
-  background-size: 17px 17px, 11px 7px;
+  background-position: left 11px center, right 11px center;
+  background-size: 16px 16px, 11px 7px;
   background-repeat: no-repeat, no-repeat;
   transition: border-color var(--t-fast), box-shadow var(--t-fast), background-color var(--t-fast);
 }
@@ -1887,6 +1949,24 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   background: var(--border-strong); color: var(--text-tertiary);
   cursor: not-allowed; box-shadow: none;
 }
+/* Calculate + Clear & Reset. Clear stays a quiet text button — it discards everything the
+   visitor typed, so it must never compete with the primary for a stray tap. */
+.calc-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+/* .btn-calculate carries margin-right:auto for its standalone use; inside the pair that
+   would fling Clear to the far edge, so the two sit together here. */
+.calc-actions .btn-calculate { margin-right: 0; }
+.btn-clear {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 6px; padding: 8px 12px;
+  background: transparent; color: var(--text-secondary);
+  border: 1px solid transparent; border-radius: var(--radius-md);
+  font-size: 13px; font-weight: 600; font-family: inherit;
+  cursor: pointer; white-space: nowrap;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+.btn-clear .br-ic { width: 15px; height: 15px; flex: none; }
+.btn-clear:hover { background: var(--surface-hover); border-color: var(--border-default); color: var(--text-primary); }
+.btn-clear:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 .btn-sample {
   width: 100%; margin-top: 8px; padding: 8px;
   background: transparent; color: var(--text-brand);
@@ -1958,8 +2038,10 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 /* max-width:none clears the base `.mf-units input { max-width: calc(50% - 5px) }`, which
    is there for the wide Detailed meter row. In Simple mode this field sits in its own
-   column beside Sanctioned Load, and the two should measure the same. */
-.simple-mode .meter-row .mf-units input { max-width: none; height: 32px; font-size: 13px; padding: 0 11px; }
+   column beside Sanctioned Load, and the two should measure the same — so these mirror the
+   shared `select, input[…]` metrics rather than restating .mf-field's compact 32px. The
+   selector has to win against `.mf-field input` (0,1,1), which is why it repeats them. */
+.simple-mode .meter-row .mf-units input { max-width: none; height: 36px; font-size: 13.5px; padding: 0 12px; }
 .simple-mode #advHint { display: none; }
 .simple-mode .meter-role-badge { display: none; }
 /* Units and Sanctioned Load side by side. They are separate children of #tab-meterread
@@ -1999,28 +2081,46 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
    Business" chip wrapped to two lines and threw the pair to 60px tall. Supply type (present
    for only a fifth of tariffs) drops to the row below. */
 .simple-mode #purposeGroup { grid-column: 1 / -1; }
-.purpose-chips { display: flex; gap: 8px; }
+/* One segmented track rather than two free-standing buttons — same construction as
+   .basis-seg (sunken rail, raised pill on the selected segment). Two equally-weighted
+   bordered boxes read as two independent actions; a segmented control reads as one
+   either/or, which is what this is. */
+.purpose-chips {
+  display: flex; gap: 3px; padding: 3px;
+  /* Pinned rather than left to add up from padding + border: a 1px border resolves to
+     0.67px under fractional scaling, which left the rail 0.7px short of the 36px fields
+     beside it. The segments stretch to fill. */
+  min-height: 36px; box-sizing: border-box;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+}
 .purpose-chip {
   flex: 1 1 0; min-width: 0;
-  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
-  /* 40px, not the 28px of .load-chip: these are the primary control in Simple mode and the
-     only tap target between the state dropdown and the units field (WCAG 2.5.8). */
-  min-height: 40px; padding: 8px 10px;
-  font: inherit; font-size: 13px; font-weight: 600;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  /* 28 + 6 padding + 2 border = 36px, the same as every field around it. The pair used to
+     stand at 40px on a WCAG 2.5.8 argument, but 2.5.8's floor is 24px — the segment clears
+     it on its own and the rail is a full 36. */
+  min-height: 28px; padding: 4px 10px;
+  font: inherit; font-size: 12.5px; font-weight: 600;
   color: var(--text-secondary);
-  background: var(--surface-default);
-  border: 1.5px solid var(--border-default); border-radius: 9px;
+  background: transparent;
+  border: 0; border-radius: 7px;
   cursor: pointer; text-align: center;
-  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+  transition: background var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
 }
-.purpose-chip:hover { background: var(--surface-hover); border-color: var(--brand-border); color: var(--text-brand); }
+.purpose-chip:hover:not(.active) { color: var(--text-primary); }
 .purpose-chip.active {
-  background: var(--brand-faint); border-color: var(--brand); color: var(--text-brand);
+  background: var(--surface-card); color: var(--text-brand);
+  /* Inset ring rather than a real border: in dark mode --surface-card and --surface-sunken
+     sit close enough that the raised pill alone reads as unselected, and a border would
+     shift the segment by 2px on every toggle. */
+  box-shadow: var(--shadow-xs), inset 0 0 0 1px var(--brand-border);
 }
-.purpose-chip:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px; }
+.purpose-chip:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
 /* Line icons rather than emoji: emoji render at the OS's own colour and weight, which broke
    the pair's visual match across platforms and ignored the chip's active/idle state. */
-.pc-ic { width: 17px; height: 17px; flex-shrink: 0; opacity: .85; }
+.pc-ic { width: 15px; height: 15px; flex-shrink: 0; opacity: .75; }
 .purpose-chip.active .pc-ic { opacity: 1; }
 /* A DISCOM with no commercial tariff in the data (17 of 65) hides the chip rather than
    offering a choice that would resolve to nothing. */
@@ -3435,11 +3535,20 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 
 /* Selectors */
 .svc-controls { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 18px; }
-.svc-control { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 200px; }
+/* justify-content pins the field to the bottom of the column, so a label that wraps to two
+   lines pushes its own text up instead of shoving its input out of line with the rest of
+   the row. Without it a single long label leaves the whole grid visibly ragged. */
+.svc-control { display: flex; flex-direction: column; justify-content: flex-end; gap: 5px; flex: 1; min-width: 200px; }
 .svc-control[hidden] { display: none; }
 .svc-control label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; color: var(--text-tertiary); }
-.svc-control select { height: 42px; padding: 0 12px; font-size: 14px; border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--surface-card); color: var(--text-primary); cursor: pointer; }
-.svc-control select:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-faint); }
+/* 36px, not 42 — the generic input rule puts <input> at 36, and a control row that mixes
+   the two (the sub-meter calculator has five of each) read as two different kinds of field.
+   WCAG 2.5.8's target floor is 24px, so 36 clears it; 44 was only platform guidance. */
+.svc-control select,
+.svc-control input { height: 36px; padding: 0 12px; font-size: 14px; border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--surface-card); color: var(--text-primary); }
+.svc-control select { cursor: pointer; }
+.svc-control select:focus,
+.svc-control input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-faint); }
 
 /* Result card + official-portal CTA (shared with the bill-check look) */
 .svc-card { background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-sm); margin-bottom: 18px; }
@@ -5358,3 +5467,76 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
 .ocr-chips .ocr-chip:nth-child(4) { animation-delay: .12s; } .ocr-chips .ocr-chip:nth-child(5) { animation-delay: .16s; }
 .ocr-chips .ocr-chip:nth-child(n+6) { animation-delay: .2s; }
 @media (prefers-reduced-motion: reduce) { .ocr-result:not([hidden]), .ocr-upload:not([hidden]), .ocr-chips .ocr-chip { animation: none; } .ocr-spinner { animation-duration: 1.4s; } }
+
+/* ─── Tenant Sub-Meter Calculator ────────────────────────────────────────────── */
+/* Reuses the subsidy-checker card shell (.sub-cards / .sub-card / .rc-stats); only the
+   comparison tables, the report chrome and the "you're being overcharged" tone are new. */
+.sub-card.sub-bad { border-color: color-mix(in srgb, #dc2626 40%, transparent); background: linear-gradient(90deg, color-mix(in srgb, #dc2626 8%, transparent), transparent); }
+.sub-card.sub-bad .sub-verdict { color: var(--p-red-600); }
+
+/* Tables can out-run a phone; they scroll inside their own box rather than the page.
+   .sub-cards is a grid, and a grid item's default min-width:auto refuses to shrink below
+   its content — without these the card stretches to the table's min-content width (449px
+   on a 375px phone) and overflow-x never engages. */
+.sub-cards > .sub-card { min-width: 0; }
+.tsm-table-wrap { overflow-x: auto; min-width: 0; margin: 4px 0 10px; }
+.tsm-table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.tsm-table th,
+.tsm-table td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border-subtle); white-space: nowrap; }
+.tsm-table th { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; color: var(--text-tertiary); }
+.tsm-table td:first-child { white-space: normal; color: var(--text-secondary); }
+.tsm-table .num { text-align: right; }
+.tsm-table tfoot td { border-top: 1px solid var(--border-default); border-bottom: 0; color: var(--text-primary); }
+.tsm-table tfoot .tsm-row-diff td { border-top: 2px solid var(--border-default); color: var(--p-red-600); }
+
+.tsm-steps { margin: 0 0 10px; padding-left: 20px; }
+.tsm-steps li { margin-bottom: 7px; line-height: 1.55; }
+
+/* Report chrome — masthead + provenance line. On screen it frames the cards as a
+   document; on paper it is the only thing that identifies where the numbers came from. */
+.tsm-report-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; padding-bottom: 10px; margin-bottom: 14px; border-bottom: 2px solid var(--border-default); }
+.tsm-report-head strong { display: block; font-family: var(--font-display); font-size: 17px; color: var(--text-primary); }
+.tsm-report-head span { display: block; font-size: 12.5px; color: var(--text-tertiary); margin-top: 2px; }
+.tsm-report-src { font-size: 12px; font-weight: 600; color: var(--brand); }
+.tsm-report-foot { margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--border-subtle); font-size: 11.5px; line-height: 1.5; color: var(--text-tertiary); }
+.tsm-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.tsm-actions .btn-calculate { margin: 0; width: auto; }
+
+/* Print: same "keep only the report" approach as the bill, scoped to this page's wrapper
+   so the blocklist above can't rot it. Everything that neither contains, is, nor sits
+   inside .tsm-report is dropped at every depth. */
+@media print {
+  body:has(.tsm-report) *:not(:has(.tsm-report)):not(.tsm-report):not(.tsm-report *) { display: none !important; }
+  .tsm-report, .tsm-report * {
+    color: #000 !important; background: #fff !important; background-image: none !important;
+    box-shadow: none !important; text-shadow: none !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .tsm-report .no-print { display: none !important; }
+  .tsm-report a { color: #000 !important; text-decoration: underline; }
+  .tsm-report { font-size: 10.5px; line-height: 1.4; }
+  .sub-card { page-break-inside: avoid; border: 1px solid #000 !important; padding: 10px 12px; }
+  .sub-cards { gap: 10px; }
+  .tsm-table th, .tsm-table td { border-bottom: 1px solid #c9c9c9 !important; padding: 3px 8px; }
+  .tsm-table tfoot td { border-top: 1.5px solid #000 !important; font-weight: 700; }
+  .tsm-table tfoot .tsm-row-diff td { border-top: 2.5px solid #000 !important; }
+  .rc-stat { border: 1px solid #000 !important; }
+  .tsm-report-head { border-bottom: 2px solid #000 !important; }
+  .tsm-report-foot { border-top: 1px solid #000 !important; }
+}
+
+/* ─── Solar: bill-amount slider + one-line summary ───────────────────────────── */
+/* Paired with #solBillAmt — the slider is for exploring, the number field for the bill
+   you actually hold. Track colours come from the palette so both themes work unstyled. */
+/* Selector carries .solar-field so it outranks `.solar-field input`, which otherwise paints
+   the range track as a 40px bordered box. */
+.solar-field input.solar-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; margin: 12px 0 4px; padding: 0; border: 0; border-radius: var(--radius-full); background: var(--border-default); cursor: pointer; }
+.solar-field input.solar-slider:focus { box-shadow: none; }
+.solar-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--brand); border: 2px solid var(--surface-card); box-shadow: var(--shadow-sm); cursor: grab; }
+.solar-slider::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--brand); border: 2px solid var(--surface-card); box-shadow: var(--shadow-sm); cursor: grab; }
+.solar-slider:focus-visible { outline: 2px solid var(--brand); outline-offset: 4px; }
+.solar-slider-scale { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; margin-bottom: 6px; }
+
+.solar-summary { margin: 12px 0 0; padding: 12px 14px; border: 1px solid var(--border-subtle); border-left: 3px solid var(--brand); border-radius: var(--radius-md); background: var(--brand-faint); font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); }
+.solar-summary strong { color: var(--text-primary); font-weight: 700; }
+.solar-summary:empty { display: none; }

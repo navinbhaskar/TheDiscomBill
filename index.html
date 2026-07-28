@@ -660,26 +660,6 @@
 
         <!-- ── Meter Read ── -->
         <div class="bill-tab-panel active" id="tab-meterread" role="tabpanel" aria-labelledby="bt-meterread">
-          <!-- TOD split — replaces the old Meter Reading / TOD second tab row with one switch -->
-          <label class="tod-split-label adv-only">
-            <input type="checkbox" id="todSplitChk">
-            <span class="switch" aria-hidden="true"></span>
-            <span class="switch-text" data-i18n="mode.todSplit">TOD split (peak / normal / off-peak units)</span>
-          </label>
-
-          <!-- Billing Basis — segmented kWh/kVAh toggle; sets reading & demand units (kWh/kW vs kVAh/kVA).
-               Auto-set from the tariff (kVA tariffs default to kVAh), so it stays advanced-only. -->
-          <div class="form-group adv-only" id="billingBasisGroup" style="display:none">
-            <div class="basis-row">
-              <span class="basis-label" id="billingBasisLabel" data-i18n="label.billingBasis">Billing basis</span>
-              <div class="basis-seg" role="radiogroup" aria-labelledby="billingBasisLabel">
-                <label class="basis-opt"><input type="radio" name="billingBasis" value="kwh" checked><span>kWh</span></label>
-                <label class="basis-opt"><input type="radio" name="billingBasis" value="kvah"><span>kVAh</span></label>
-              </div>
-              <span class="gloss" tabindex="0" role="img" aria-label="kWh: meter read in kWh, demand in kW. kVAh: apparent energy equal to kWh divided by power factor, demand billed in kVA — a poor power factor raises the bill directly, so there is no separate PF penalty. Auto-set for kVA tariffs." data-tip="kWh: meter read in kWh, demand in kW (the usual case). kVAh: apparent energy = kWh ÷ power factor, demand billed in kVA — a poor power factor already shows up as more kVAh, so there is no separate PF penalty. Auto-set for kVA (HT/large-LT) tariffs — override as needed.">ⓘ</span>
-            </div>
-          </div>
-
           <!-- Billing period dates (Simple & TOD; auto-filled from the meter table in Advanced) -->
           <div id="meterDatesRow" class="adv-only">
             <div class="form-row">
@@ -781,6 +761,7 @@
                   <button type="button" class="load-chip" data-kw="5">5 kW</button>
                 </div>
               </div>
+              <small class="load-hint" data-i18n-html="small.sanctioned">💡 Check the top right of your old bill for <strong>“Connected / Sanctioned Load”</strong>. Exceeding this limit triggers excess-demand penalties in states like UP, Delhi and Maharashtra.</small>
             </div>
             <div class="form-group adv-only">
               <label for="facRate" id="facRateLabel"><span class="lbl-text">FPPA / FAC Surcharge (₹/unit)</span><span class="gloss" tabindex="0" role="img" aria-label="FPPA: Fuel and Power Purchase Adjustment — a periodic surcharge passing the utility's varying fuel and power-purchase cost on to consumers. Per unit: (actual minus base power cost) times units, or a percentage of supply plus demand charges (UP MYT 2025)." data-tip="FPPA — Fuel &amp; Power Purchase Adjustment: a periodic surcharge passing the utility's varying fuel / power-purchase cost on to consumers. ₹/unit = (actual − base power cost) × units, or % of supply+demand charges (UP MYT 2025).">ⓘ</span></label>
@@ -805,37 +786,6 @@
             </div>
           </div>
 
-          <!-- Rooftop solar / net metering -->
-          <div class="form-group adv-only" id="netMeteringGroup">
-            <label class="checkbox-label">
-              <input type="checkbox" id="netMeteringChk">
-              <span data-i18n-html="chk.netMetering"><strong>Rooftop solar / net metering</strong> — bill on net import</span>
-              <span class="gloss" tabindex="0" role="img" aria-label="Net metering: energy is billed on net import = imported units minus exported units minus any banked credit; surplus is banked for next month." data-tip="Net metering: energy billed on net import = imported − exported − banked credit. Surplus export is banked as a unit credit for next month. Fixed/demand charges still apply.">ⓘ</span>
-            </label>
-            <div id="netMeteringFields" style="display:none">
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="exportUnits" data-i18n="label.exportUnits">Exported Units (kWh)</label>
-                  <input type="number" id="exportUnits" placeholder="e.g., 120" min="0" step="1">
-                </div>
-                <div class="form-group">
-                  <label for="openingCredit" data-i18n="label.openingCredit">Opening Banked Credit (kWh)</label>
-                  <input type="number" id="openingCredit" placeholder="e.g., 0" min="0" step="1">
-                </div>
-              </div>
-              <small data-i18n-html="small.netMetering">The units consumed above are your <strong>import</strong> from the grid. Net billed = import − exported − opening credit; any surplus is banked and carried forward (across months in a multi-month revision too).</small>
-            </div>
-          </div>
-
-          <div class="form-group adv-only" id="lpscApplicableGroup">
-            <label class="checkbox-label lpsc-applicable-label">
-              <input type="checkbox" id="lpscApplicable" checked>
-              <span data-i18n-html="chk.lpsc"><strong>LPSC Applicable</strong> — apply late-payment surcharge on the current bill</span>
-              <span class="gloss" tabindex="0" role="img" aria-label="LPSC: Late Payment Surcharge — a percentage added for each month a bill remains unpaid." data-tip="LPSC — Late Payment Surcharge: a percentage added for each month a bill stays unpaid (it compounds on the running balance in a multi-month revision).">ⓘ</span>
-            </label>
-            <small data-i18n="small.lpscApplicable">Rate &amp; months-late are set in the Arrear tab. Uncheck if late-payment surcharge does not apply for this consumer / period.</small>
-          </div>
-
           <div class="form-group" id="delhiSubsidyGroup" style="display:none">
             <label data-i18n="label.subsidy">Government Domestic Subsidy</label>
             <label class="checkbox-label">
@@ -844,6 +794,78 @@
             </label>
             <small id="subsidySmall">Applied on the domestic energy charge.</small>
           </div>
+
+          <!-- ── Advanced billing options ──────────────────────────────────────────
+               ToD, kVAh basis, net metering and LPSC are engineering-grade switches most
+               domestic visitors never touch, so they fold away behind one summary. Native
+               <details> keeps the keyboard, screen-reader and find-in-page behaviour for free.
+               The badge lists whatever is non-default, and initAdvPanel() springs the panel
+               open when anything inside it is on — a folded switch must never silently change
+               the bill (the ToD toggle in particular drives the units area above it). -->
+          <details class="adv-panel adv-only" id="advOptions">
+            <summary class="adv-panel-sum">
+              <span class="adv-panel-ic" aria-hidden="true">⚙️</span>
+              <span class="adv-panel-txt">
+                <span class="adv-panel-title" data-i18n="adv.title">Advanced Billing Options</span>
+                <span class="adv-panel-sub" data-i18n="adv.sub">Solar net-metering, ToD, arrears &amp; penalties</span>
+              </span>
+              <span class="adv-panel-badge" id="advOptionsBadge" hidden></span>
+              <svg class="adv-panel-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+
+            <div class="adv-panel-body">
+              <!-- TOD split — replaces the old Meter Reading / TOD second tab row with one switch -->
+              <label class="tod-split-label">
+                <input type="checkbox" id="todSplitChk">
+                <span class="switch" aria-hidden="true"></span>
+                <span class="switch-text" data-i18n="mode.todSplit">TOD split (peak / normal / off-peak units)</span>
+              </label>
+
+              <!-- Billing Basis — segmented kWh/kVAh toggle; sets reading & demand units (kWh/kW vs kVAh/kVA).
+                   Auto-set from the tariff (kVA tariffs default to kVAh), so it stays advanced-only. -->
+              <div class="form-group" id="billingBasisGroup" style="display:none">
+                <div class="basis-row">
+                  <span class="basis-label" id="billingBasisLabel" data-i18n="label.billingBasis">Billing basis</span>
+                  <div class="basis-seg" role="radiogroup" aria-labelledby="billingBasisLabel">
+                    <label class="basis-opt"><input type="radio" name="billingBasis" value="kwh" checked><span>kWh</span></label>
+                    <label class="basis-opt"><input type="radio" name="billingBasis" value="kvah"><span>kVAh</span></label>
+                  </div>
+                  <span class="gloss" tabindex="0" role="img" aria-label="kWh: meter read in kWh, demand in kW. kVAh: apparent energy equal to kWh divided by power factor, demand billed in kVA — a poor power factor raises the bill directly, so there is no separate PF penalty. Auto-set for kVA tariffs." data-tip="kWh: meter read in kWh, demand in kW (the usual case). kVAh: apparent energy = kWh ÷ power factor, demand billed in kVA — a poor power factor already shows up as more kVAh, so there is no separate PF penalty. Auto-set for kVA (HT/large-LT) tariffs — override as needed.">ⓘ</span>
+                </div>
+              </div>
+
+              <!-- Rooftop solar / net metering -->
+              <div class="form-group" id="netMeteringGroup">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="netMeteringChk">
+                  <span data-i18n-html="chk.netMetering"><strong>Rooftop solar / net metering</strong> — bill on net import</span>
+                  <span class="gloss" tabindex="0" role="img" aria-label="Net metering: energy is billed on net import = imported units minus exported units minus any banked credit; surplus is banked for next month." data-tip="Net metering: energy billed on net import = imported − exported − banked credit. Surplus export is banked as a unit credit for next month. Fixed/demand charges still apply.">ⓘ</span>
+                </label>
+                <div id="netMeteringFields" style="display:none">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="exportUnits" data-i18n="label.exportUnits">Exported Units (kWh)</label>
+                      <input type="number" id="exportUnits" placeholder="e.g., 120" min="0" step="1">
+                    </div>
+                    <div class="form-group">
+                      <label for="openingCredit" data-i18n="label.openingCredit">Opening Banked Credit (kWh)</label>
+                      <input type="number" id="openingCredit" placeholder="e.g., 0" min="0" step="1">
+                    </div>
+                  </div>
+                  <small data-i18n-html="small.netMetering">The units consumed above are your <strong>import</strong> from the grid. Net billed = import − exported − opening credit; any surplus is banked and carried forward (across months in a multi-month revision too).</small>
+                </div>
+              </div>
+
+              <div class="form-group" id="lpscApplicableGroup">
+                <label class="checkbox-label lpsc-applicable-label">
+                  <input type="checkbox" id="lpscApplicable" checked>
+                  <span data-i18n-html="chk.lpsc"><strong>LPSC Applicable</strong> — apply late-payment surcharge on the current bill</span>
+                  <span class="gloss" tabindex="0" role="img" aria-label="LPSC: Late Payment Surcharge — a percentage added for each month a bill remains unpaid." data-tip="LPSC — Late Payment Surcharge: a percentage added for each month a bill stays unpaid (it compounds on the running balance in a multi-month revision).">ⓘ</span>
+                </label>
+                <small data-i18n="small.lpscApplicable">Rate &amp; months-late are set in the Arrear tab. Uncheck if late-payment surcharge does not apply for this consumer / period.</small>
+              </div>
+            </div>
+          </details>
         </div><!-- /#tab-meterread -->
 
         <!-- ── Arrear ── -->
@@ -921,9 +943,16 @@
         <small data-i18n="small.billedAmount">We'll compare it with our calculation and tell you if your bill looks right.</small>
       </div>
 
-      <button id="calculateBtn" class="btn-calculate" data-i18n="btn.calculate">
-        ⚡ Calculate Provisional Bill
-      </button>
+      <!-- Calculate is the loud primary; Clear & Reset sits beside it as a quiet text button so
+           trying another consumption scenario doesn't mean backspacing every field. -->
+      <div class="calc-actions">
+        <button id="calculateBtn" class="btn-calculate" data-i18n="btn.calculate">
+          ⚡ Calculate Provisional Bill
+        </button>
+        <button id="resetBtn" class="btn-clear" type="button" data-i18n-html="btn.clear">
+          <svg class="br-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg> Clear &amp; Reset
+        </button>
+      </div>
       <div id="historyPanel" class="history-panel" style="display:none"></div>
     </div>
 
@@ -1148,6 +1177,7 @@
         <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
         <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
         <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
       </div>
       <div class="footer-col">
         <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
