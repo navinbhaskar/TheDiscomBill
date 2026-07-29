@@ -1615,7 +1615,9 @@ select:focus, input:focus {
 #supplyTypeSelect:not(:disabled):not(:has(option[value=""]:checked)) {
   border-color: var(--brand-border);
   background-image: var(--sel-ic-on), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232563eb' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  font-weight: 600;
+  /* No font-weight bump. These four were the only fields whose value text went semibold once
+     answered, so they read as a different class of control from every other input. The tinted
+     border, blue icon and blue chevron already carry the answered state. */
 }
 /* The disabled steps further down the chain read as "not yet", not as broken — keep the
    icon, drop it back to the muted grey the sunken surface expects. */
@@ -2046,9 +2048,17 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .simple-mode .bill-tabs-container { margin-top: 0; border: 0; border-radius: 0; background: transparent; }
 .simple-mode .bill-tab-panel { padding: 0; }
 .simple-mode .meter-row { background: transparent; border: 0; border-radius: 0; padding: 0; margin: 0; }
+/* .mf-field is a flex column with gap:2px, which stacked on top of the label's 5px margin
+   below and dropped this input 2px under the Sanctioned Load stepper. The margin carries
+   the gap here so the two columns start at the same y. */
+.simple-mode .meter-row .mf-units { gap: 0; }
+/* Mirrors `.form-group label` exactly (12px / 600 / .015em / 5px below). It used to run
+   12.5px with a 2px gap, which pushed this input 3px lower than the Sanctioned Load stepper
+   sitting beside it in the Simple-mode 2-up and read as a slightly heavier label than every
+   other field. Keep these numbers in sync with .form-group label. */
 .simple-mode .meter-row .mf-units > span {
-  font-size: 12.5px; font-weight: 600; color: var(--text-primary) !important;
-  text-transform: none; letter-spacing: normal; margin-bottom: 2px;
+  font-size: 12px; font-weight: 600; color: var(--text-primary) !important;
+  text-transform: none; letter-spacing: .015em; line-height: 1.4; margin-bottom: 5px;
 }
 /* max-width:none clears the base `.mf-units input { max-width: calc(50% - 5px) }`, which
    is there for the wide Detailed meter row. In Simple mode this field sits in its own
