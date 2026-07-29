@@ -472,5 +472,41 @@ group('Rajasthan DS/LT-1 — from the 2025 RERC schedule', () => {
   check('Rajasthan is not bill-verified', bill('jvvnl', 250, 2).tariffVerified, false);
 });
 
+// West Bengal WBSEDCL — WBERC tariff order FY2025-26, effective 01-04-2025.
+// WBSEDCL publishes QUARTERLY slabs (102/78/120/300/300/above 900 kWh); they are stored as
+// monthly equivalents and the engine scales them back up for longer billing periods.
+group('WBSEDCL — quarterly slabs stored monthly', () => {
+  const bill = (supplyTypeId, units, kw, days = 30) => calculateBill({
+    discomId: 'wbsedcl', categoryId: 'domestic', supplyTypeId, units,
+    connectedLoadKw: kw, billingPeriodDays: days, billingDate: '2026-07-15' });
+
+  // 34x5.04 + 26x6.33 + 40x7.12 + 100x7.52 + 50x7.69 = 1757.24
+  check('urban 250u telescopic', bill('urban', 250, 2).totalEnergy, 1757.24);
+  // Rural is a separate, slightly cheaper schedule.
+  check('rural 250u is cheaper', bill('rural', 250, 2).totalEnergy, 1732.34);
+
+  // The fixed charge is Rs 30 per kVA per month, not a flat amount - so it MUST move
+  // with sanctioned load. The previous data had a flat Rs 35.
+  check('fixed at 2 kVA', bill('urban', 250, 2).fixedCharge, 60);
+  check('fixed at 5 kVA', bill('urban', 250, 5).fixedCharge, 150);
+
+  // The whole point of the monthly-equivalent convention: over a full quarter the limits
+  // scale back to the published bands, so 102 units sits entirely in the first slab.
+  check('102u over a quarter stays in slab 1', bill('urban', 102, 2, 91).totalEnergy, 514.08);
+  // One month later it would have spilled into three slabs instead.
+  check('102u in one month spills', bill('urban', 102, 2, 30).totalEnergy > 514.08, true);
+
+  // Lifeline is 368 paise gross before the State subsidy zeroes it.
+  check('lifeline gross rate', bill('lifeline', 25, 1).totalEnergy, 92);
+  check('lifeline fixed is Rs 10/kVA', bill('lifeline', 25, 1).fixedCharge, 10);
+
+  // Only WBSEDCL was rebuilt; CESC and DPL are separate licensees still on old data and
+  // must keep warning. If this ever fails, someone bumped their year without an order.
+  const cesc = calculateBill({ discomId: 'cesc_kolkata', categoryId: 'domestic', units: 250,
+    connectedLoadKw: 2, billingPeriodDays: 30, billingDate: '2026-07-15' });
+  check('WBSEDCL reads as one FY behind', bill('urban', 250, 2).tariffYearsBehind, 1);
+  check('CESC still reads as stale', cesc.tariffYearsBehind, 2);
+});
+
 console.log(`\n${failed === 0 ? '✓ ALL PASSED' : '✗ FAILURES'} — ${passed} passed, ${failed} failed\n`);
 process.exit(failed === 0 ? 0 : 1);
