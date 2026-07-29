@@ -37,6 +37,23 @@ export const FPPA_BY_DISCOM = {
     { from: "2025-05-09", to: "2025-06-30", mode: "percent", rate: 19.22, label: "TPDDL summer PPAC (9 May – 30 Jun 2025)", source: "DERC differential PPAC order, May 2025" },
     { from: "2025-07-01", to: "2026-05-31", mode: "percent", rate: 10.47, label: "TPDDL PPAC (Jul 2025 – May 2026)", source: "DERC-approved TPDDL PPAC 10.47%" },
   ],
+
+  // Rajasthan — Regulatory Surcharge, §32 of the Tariff for Supply of Electricity-2025.
+  //
+  // This belongs here rather than in additionalCharges because the order defines it AS the
+  // fuel-surcharge mechanism: "The above Regulatory Surcharge shall be a combination of Fuel
+  // and Power Purchase Adjustment Surcharge (FPPAS) to be levied as per Regulation 87 of the
+  // RERC Tariff Regulations 2025." Its own worked examples make the ceiling explicit — FPPAS
+  // ₹0.20 leaves a ₹0.80 Regulatory Surcharge, FPPAS ₹0.40 leaves ₹0.60 — so the two always
+  // sum to ₹1.00 and charging FPPAS on top of the surcharge would double-count it.
+  //
+  // Modelled at the ₹1.00 ceiling, which is what "balance domestic and other category
+  // consumers" pay. Households consuming up to 100 units a month pay ₹0.70; a per-unit
+  // surcharge cannot branch on consumption, so lifeline users see ₹0.30/unit too much (at most
+  // ₹30 on a 100-unit bill). Flagged in the category notes.
+  jvvnl:  [{ from: "2025-10-01", mode: "per_unit", rate: 1.00, label: "Regulatory Surcharge (incl. FPPAS)", source: "Tariff for Supply of Electricity-2025 §32 (RERC Petitions 2303–2305/2025)" }],
+  avvnl:  [{ from: "2025-10-01", mode: "per_unit", rate: 1.00, label: "Regulatory Surcharge (incl. FPPAS)", source: "Tariff for Supply of Electricity-2025 §32 (RERC Petitions 2303–2305/2025)" }],
+  jdvvnl: [{ from: "2025-10-01", mode: "per_unit", rate: 1.00, label: "Regulatory Surcharge (incl. FPPAS)", source: "Tariff for Supply of Electricity-2025 §32 (RERC Petitions 2303–2305/2025)" }],
 };
 
 // State-wide values (apply to every DISCOM in the state unless overridden above).

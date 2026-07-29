@@ -426,5 +426,51 @@ group('Gujarat RGP — from the FY2026-27 GERC order', () => {
   check('Gujarat is not bill-verified', urban.tariffVerified, false);
 });
 
+import { resolveFppaForDiscom } from '../js/tariffs/fppa-resolve.js';
+
+// Rajasthan — Tariff for Supply of Electricity-2025 (RERC 2303-2305/2025, from 01-10-2025).
+// Every expected figure below is hand-computed from the order, not copied from engine output.
+group('Rajasthan DS/LT-1 — from the 2025 RERC schedule', () => {
+  const fppa = resolveFppaForDiscom('jvvnl', '2026-07-15');
+  const bill = (discomId, units, kw, categoryId = 'domestic', supplyTypeId = null) => calculateBill({
+    discomId, categoryId, supplyTypeId, units, connectedLoadKw: kw,
+    billingPeriodDays: 30, billingDate: '2026-07-15',
+    facRate: fppa.rate, facMode: fppa.mode });
+
+  // The Regulatory Surcharge IS the fuel surcharge here, capped at Rs 1.00/unit.
+  check('surcharge is per-unit', fppa.mode, 'per_unit');
+  check('surcharge is the Rs 1.00 ceiling', fppa.rate, 1.00);
+
+  // 50x4.75 + 100x6.00 + 100x7.00 = 1537.50
+  check('250u energy is telescopic', bill('jvvnl', 250, 2).totalEnergy, 1537.50);
+  // 250 units lands in the "up to 300" band: Rs 300. NOT load-based.
+  check('250u fixed is consumption-banded', bill('jvvnl', 250, 2).fixedCharge, 300);
+  // Sanctioned load must not move the fixed charge - that was the old modelling error.
+  check('fixed ignores connected load', bill('jvvnl', 250, 10).fixedCharge, 300);
+  check('600u crosses into the Rs 800 band', bill('jvvnl', 600, 2).fixedCharge, 800);
+  check('50u sits in the lowest band', bill('jvvnl', 50, 2).fixedCharge, 150);
+
+  // 237.50 + 600 + 2450 + 750 = 4037.50 across all four slabs.
+  check('600u energy uses the top slab', bill('jvvnl', 600, 2).totalEnergy, 4037.50);
+
+  // ED is 5% of fixed + energy + surcharge: (300 + 1537.50 + 250) x 0.05 = 104.38
+  check('250u total incl. surcharge and ED', bill('jvvnl', 250, 2).totalPayable, 2192);
+
+  // One RERC tariff serves all three discoms.
+  const totals = ['jvvnl', 'avvnl', 'jdvvnl'].map(d => bill(d, 250, 2).totalPayable);
+  check('all three discoms agree', new Set(totals).size, 1);
+
+  // NDS: 100x7.00 + 200x8.50 = 2400; 300 units sits in the Rs 450 band.
+  const nds = bill('jvvnl', 300, 4, 'commercial', 'upto5kw');
+  check('NDS <=5kW energy', nds.totalEnergy, 2400);
+  check('NDS <=5kW consumption-banded fixed', nds.fixedCharge, 450);
+  // Above 5 kW the fixed charge IS per kW: 160 x 10.
+  check('NDS >5kW fixed is per kW', bill('jvvnl', 800, 10, 'commercial', 'above5kw').fixedCharge, 1600);
+
+  // In force but set in FY2025-26, so it reads as one year behind, not verified.
+  check('Rajasthan is one FY behind', bill('jvvnl', 250, 2).tariffYearsBehind, 1);
+  check('Rajasthan is not bill-verified', bill('jvvnl', 250, 2).tariffVerified, false);
+});
+
 console.log(`\n${failed === 0 ? '✓ ALL PASSED' : '✗ FAILURES'} — ${passed} passed, ${failed} failed\n`);
 process.exit(failed === 0 ? 0 : 1);
