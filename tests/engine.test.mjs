@@ -375,5 +375,56 @@ group('tariffAge — how far behind the current FY', () => {
   check('unparseable year -> null', tariffAge('unknown', '2026-07-29').yearsBehind, null);
 });
 
+group('resolveFixedCharge — slab_per_kw (marginal bands)', () => {
+  // GERC Non-RGP: 50/kW on the first 10 kW, 85/kW on the next 30.
+  const fc = { type: 'slab_per_kw', slabs: [{ maxLoad: 10, rate: 50 }, { maxLoad: 40, rate: 85 }] };
+  check('inside the first band', resolveFixedCharge(fc, 5), 250);
+  check('exactly at the band edge', resolveFixedCharge(fc, 10), 500);
+  // The whole point: 15 kW is 10x50 + 5x85, NOT 15x85 (which `tiered` would give).
+  check('straddles two bands', resolveFixedCharge(fc, 15), 925);
+  check('fills both bands', resolveFixedCharge(fc, 40), 3050);
+  // Above the top band the last rate keeps applying rather than the charge flat-lining.
+  check('beyond the top band', resolveFixedCharge(fc, 50), 3900);
+  check('zero load costs nothing', resolveFixedCharge(fc, 0), 0);
+  check('fractional load prorates', resolveFixedCharge(fc, 2.5), 125);
+});
+
+// Gujarat — GERC orders dt. 25-03-2026, all four GUVNL discoms on one schedule.
+// Hand-computed from the order: 50x3.05 + 50x3.50 + 150x4.15 = 950 energy; 2 kW sits in the
+// first fixed band (15); ED is percent_energy so 20% of 950 = 190. Total 1155.
+group('Gujarat RGP — from the FY2026-27 GERC order', () => {
+  const bill = (discomId, supplyTypeId, units, kw) => calculateBill({
+    discomId, categoryId: 'domestic', supplyTypeId, units, connectedLoadKw: kw,
+    billingPeriodDays: 30, billingDate: '2026-07-15' });
+  const urban = bill('ugvcl', 'urban', 250, 2);
+  check('RGP urban 250u energy', urban.totalEnergy, 950);
+  check('RGP urban fixed at 2 kW', urban.fixedCharge, 15);
+  check('RGP urban total', urban.totalPayable, 1155);
+
+  // Rural is a genuinely cheaper schedule, not a discount on the urban one.
+  check('RGP rural 250u energy', bill('ugvcl', 'rural', 250, 2).totalEnergy, 850);
+
+  // Fixed-charge bands are flat per band, not per kW: 5 kW pays 45, not 5x45.
+  check('RGP fixed in the 4-6 kW band', bill('ugvcl', 'urban', 250, 5).fixedCharge, 45);
+  check('RGP fixed above 6 kW', bill('ugvcl', 'urban', 250, 8).fixedCharge, 70);
+
+  // All four discoms share one schedule — a divergence means an order was misread.
+  const totals = ['ugvcl', 'mgvcl', 'pgvcl', 'dgvcl'].map(d => bill(d, 'urban', 250, 2).totalPayable);
+  check('all four GUVNL discoms agree', new Set(totals).size, 1);
+
+  // Non-RGP is non-telescopic and branches on contracted load.
+  const comm = (supplyTypeId, units, kw) => calculateBill({ discomId: 'dgvcl',
+    categoryId: 'commercial', supplyTypeId, units, connectedLoadKw: kw,
+    billingPeriodDays: 30, billingDate: '2026-07-15' });
+  check('Non-RGP <=10kW energy', comm('upto10kw', 800, 5).totalEnergy, 3480);
+  check('Non-RGP <=10kW fixed', comm('upto10kw', 800, 5).fixedCharge, 250);
+  check('Non-RGP >10kW energy', comm('above10kw', 1000, 15).totalEnergy, 4650);
+  check('Non-RGP >10kW marginal fixed', comm('above10kw', 1000, 15).fixedCharge, 925);
+
+  // Freshness: Gujarat is now current, and must NOT claim bill-verification.
+  check('Gujarat reads as current', urban.tariffYearsBehind, 0);
+  check('Gujarat is not bill-verified', urban.tariffVerified, false);
+});
+
 console.log(`\n${failed === 0 ? '✓ ALL PASSED' : '✗ FAILURES'} — ${passed} passed, ${failed} failed\n`);
 process.exit(failed === 0 ? 0 : 1);

@@ -43,6 +43,14 @@ function fixedChargeHtml(fc) {
     }).join('');
     return `<table class="tariff-slab-table"><tbody>${rows}</tbody></table>`;
   }
+  // slab_per_kw — marginal per-kW bands (GERC Non-RGP).
+  if (fc.type === 'slab_per_kw' && Array.isArray(fc.slabs)) {
+    const rows = fc.slabs.map(s => {
+      const label = s.label || (s.maxLoad === Infinity ? 'Above top band' : `Up to ${s.maxLoad} kW`);
+      return `<tr><td>${esc(label)}</td><td class="num">${rupee(s.rate)}<span class="tx-muted">/kW/mo</span></td></tr>`;
+    }).join('');
+    return `<table class="tariff-slab-table"><tbody>${rows}</tbody></table>`;
+  }
   // by_consumption — fixed charge set by the consumption slab (Mumbai licensees).
   if (fc.type === 'by_consumption' && Array.isArray(fc.slabs)) {
     const rows = fc.slabs.map(s => {

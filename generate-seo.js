@@ -618,6 +618,18 @@ function fixedChargeHtml(fc, lang = 'en') {
     }).join('');
     return `<table class="tariff-slab-table"><tbody>${rows}</tbody></table>`;
   }
+  // slab_per_kw — marginal per-kW bands (GERC Non-RGP). The rate applies only to the load
+  // inside each band, so the unit suffix has to read /kW/mo, not the flat perMo used above.
+  if (fc.type === 'slab_per_kw' && Array.isArray(fc.slabs)) {
+    const perKwMo = T(lang, { en: '/kW/mo', hi: '/kW/माह', mr: '/kW/महिना', ta: '/kW/மாதம்' });
+    const rows = fc.slabs.map(s => {
+      const label = s.label || (s.maxLoad === Infinity
+        ? T(lang, { en: 'Above top band', hi: 'सर्वोच्च बैंड से ऊपर', mr: 'सर्वोच्च बँडवर', ta: 'மேல் பட்டைக்கு மேல்' })
+        : T(lang, { en: `Up to ${s.maxLoad} kW`, hi: `${s.maxLoad} kW तक`, mr: `${s.maxLoad} kW पर्यंत`, ta: `${s.maxLoad} kW வரை` }));
+      return `<tr><td>${esc(label)}</td><td class="num">${rupee(s.rate)}<span class="tx-muted">${perKwMo}</span></td></tr>`;
+    }).join('');
+    return `<table class="tariff-slab-table"><tbody>${rows}</tbody></table>`;
+  }
   // by_consumption — fixed charge set by the consumption slab (Mumbai licensees).
   if (fc.type === 'by_consumption' && Array.isArray(fc.slabs)) {
     const rows = fc.slabs.map(s => {

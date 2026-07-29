@@ -87,6 +87,14 @@ function fixedChargeDesc(config, demandKw, unit = 'kW') {
       return `${band}: ₹ ${s.rate}`;
     }).join(' · ');
   }
+  // slab_per_kw — marginal per-kW bands (GERC Non-RGP): each band's rate applies only to the
+  // load falling inside it, so the label must say /kW or it reads as a flat monthly amount.
+  if (config.type === 'slab_per_kw') {
+    return config.slabs.map(s => {
+      const band = s.label || (s.maxLoad === Infinity ? 'above top band' : `up to ${s.maxLoad} ${unit}`);
+      return `${band}: ₹ ${s.rate}/${unit}`;
+    }).join(' · ');
+  }
   // by_consumption — the monthly fixed charge is set by the consumption slab (Mumbai licensees).
   if (config.type === 'by_consumption') {
     return config.slabs.map(s => {

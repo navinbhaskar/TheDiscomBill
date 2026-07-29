@@ -52,6 +52,23 @@ export function resolveFixedCharge(fixedCharge, connectedLoadKw, units = 0) {
     }
     return fixedCharge.slabs[fixedCharge.slabs.length - 1].rate;
   }
+  // slab_per_kw — MARGINAL per-kW bands, unlike `tiered` which picks one flat amount for the
+  // whole load. GERC's Non-RGP charges ₹50/kW on the first 10 kW and ₹85/kW on the next 30, so
+  // a 15 kW connection pays 10×50 + 5×85 = ₹925, not 15×85. Reading these as `tiered` would
+  // overcharge every load above the first band.
+  if (fixedCharge.type === 'slab_per_kw') {
+    let remaining = connectedLoadKw, prev = 0, total = 0;
+    for (const slab of fixedCharge.slabs) {
+      if (remaining <= 0) break;
+      const band = Math.min(remaining, slab.maxLoad - prev);
+      total += band * slab.rate;
+      remaining -= band;
+      prev = slab.maxLoad;
+    }
+    // Load above the top band keeps charging at the last rate.
+    if (remaining > 0) total += remaining * fixedCharge.slabs[fixedCharge.slabs.length - 1].rate;
+    return round2(total);
+  }
   // by_consumption — the monthly fixed charge is set by the consumption slab the bill falls into,
   // not by load. Used by the Mumbai licensees (Adani/BEST/Tata Power) whose MERC orders levy
   // ₹90 up to 100 units, ₹135 up to 500, ₹160 above. Slabs are monthly thresholds; `units` is the
