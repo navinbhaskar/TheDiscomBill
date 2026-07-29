@@ -3184,6 +3184,10 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 
 /* Guides (/guides/) */
 .guide-meta { font-size: 12.5px; color: var(--text-tertiary); margin: -6px 0 16px; }
+/* The byline's sourcing link. Underlined rather than colour-only — it sits in tertiary text
+   where a hue shift alone is a weak affordance and fails on colour-blind readers. */
+.guide-meta a { color: var(--text-secondary); text-decoration: underline; text-underline-offset: 2px; }
+.guide-meta a:hover { color: var(--brand); }
 /* Inline "jump into the tool" CTA under a guide's intro (guide.toolCta). A branded card
    that reads as an action, not a related-link — high on the page where intent is strongest. */
 .guide-tool-cta { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 16px;

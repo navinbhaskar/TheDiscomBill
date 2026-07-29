@@ -1946,9 +1946,22 @@ function guidePage(guide, lang = 'en') {
     { name: title, url: null },
   ];
   const updated = LASTMOD_TOKEN[L];               // resolved to the content-derived date by emitPage()
+  // Visible attribution, not just the Article/@author node in JSON-LD: schema alone is a
+  // claim to a crawler, whereas a reader deciding whether to trust a rupee figure needs to
+  // see who stands behind it and how the rates were sourced. The site publishes as a brand
+  // rather than a named person, so the accountability link is the methodology page.
+  // One English methodology page serves every locale — there are no /hi/ /mr/ /ta/ twins of
+  // it, and the footer already links it unlocalised. Point a locale at its own path only
+  // once that page actually exists.
+  const methodHref = '/methodology/';
+  const byline = T(L, {
+    hi: `TheDiscomBill संपादकीय · <a href="${methodHref}">दरें कहाँ से आती हैं</a>`,
+    mr: `TheDiscomBill संपादकीय · <a href="${methodHref}">दर कुठून येतात</a>`,
+    ta: `TheDiscomBill ஆசிரியர் குழு · <a href="${methodHref}">விகிதங்கள் எங்கிருந்து வருகின்றன</a>`,
+    en: `TheDiscomBill Editorial · <a href="${methodHref}">How we source our rates</a>` });
   const meta = T(L, {
-    hi: `${guide.minutes} मिनट · अपडेट: ${updated}`, mr: `${guide.minutes} मिनिटे · अपडेट: ${updated}`,
-    ta: `${guide.minutes} நிமிட வாசிப்பு · புதுப்பிக்கப்பட்டது: ${updated}`, en: `${guide.minutes} min read · Updated ${updated}` });
+    hi: `${guide.minutes} मिनट · अपडेट: ${updated} · ${byline}`, mr: `${guide.minutes} मिनिटे · अपडेट: ${updated} · ${byline}`,
+    ta: `${guide.minutes} நிமிட வாசிப்பு · புதுப்பிக்கப்பட்டது: ${updated} · ${byline}`, en: `${guide.minutes} min read · Updated ${updated} · ${byline}` });
   const ctaH2 = T(L, { hi: 'अब अपना असली बिल जाँचें', mr: 'आता तुमचे स्वतःचे बिल तपासा', ta: 'இப்போது உங்கள் சொந்த பில்லைச் சரிபார்க்கவும்', en: 'Now check your own bill' });
   const ctaP = T(L, {
     hi: 'पढ़ना काफ़ी नहीं — अपने डिस्कॉम की असली स्लैब दरों, फिक्स्ड चार्ज और FPPA के साथ अपना मदवार बिल सेकंडों में निकालें। मुफ़्त, बिना साइन-अप।',
