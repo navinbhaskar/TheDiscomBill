@@ -99,7 +99,7 @@ function fixedChargeDesc(config, demandKw, unit = 'kW') {
   if (config.type === 'by_consumption') {
     return config.slabs.map(s => {
       const band = s.label || (s.maxUnits === Infinity ? 'above top slab' : `up to ${s.maxUnits} units`);
-      return `${band}: ₹ ${s.rate}`;
+      return `${band}: ₹ ${s.rate}${config.perKw ? '/' + unit : ''}`;
     }).join(' · ');
   }
   return '—';

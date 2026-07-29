@@ -73,11 +73,13 @@ export function resolveFixedCharge(fixedCharge, connectedLoadKw, units = 0) {
   // not by load. Used by the Mumbai licensees (Adani/BEST/Tata Power) whose MERC orders levy
   // ₹90 up to 100 units, ₹135 up to 500, ₹160 above. Slabs are monthly thresholds; `units` is the
   // metered consumption for the period (the calculator bills 1 month, so no scaling is applied).
+  // `perKw: true` multiplies the banded rate by the load — Telangana's LT-I is ₹10 per kW per
+  // month up to 800 units and ₹50 per kW above, so the band picks the RATE and the load still
+  // scales it. Without the flag the band gives a flat monthly amount (the Mumbai case).
   if (fixedCharge.type === 'by_consumption') {
-    for (const slab of fixedCharge.slabs) {
-      if (units <= slab.maxUnits) return slab.rate;
-    }
-    return fixedCharge.slabs[fixedCharge.slabs.length - 1].rate;
+    const band = fixedCharge.slabs.find(s => units <= s.maxUnits)
+      || fixedCharge.slabs[fixedCharge.slabs.length - 1];
+    return fixedCharge.perKw ? round2(band.rate * connectedLoadKw) : band.rate;
   }
   return 0;
 }
@@ -237,7 +239,22 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
   const netUnits      = netMetering ? Math.max(0, +(importUnits - availCredit).toFixed(2)) : units;
   const closingCredit = netMetering ? Math.max(0, +(availCredit - importUnits).toFixed(2)) : 0;
 
-  const slabBreakdown = calculateEnergySlabs(eff.energySlabs, netUnits, billingMonths);
+  // ── Consumption-selected slab ladders ──────────────────────────────────────
+  // Some tariffs do not have one telescopic ladder; they have SEVERAL, and the consumer's
+  // total monthly consumption decides which whole ladder applies. Telangana's LT-I is the
+  // clearest case: a household on 150 units/month is billed 100 units at ₹3.40 + 50 at ₹4.80,
+  // NOT the ≤100 ladder's ₹1.95/₹3.10 with a third slab bolted on. Crossing 100 units re-rates
+  // everything from the first unit, so the ladders are alternatives, not extensions.
+  //
+  // Selection is on the MONTHLY consumption, so a multi-month bill picks the ladder by its
+  // per-month average — the same basis the tariff itself uses.
+  const perMonthUnits = billingMonths > 0 ? netUnits / billingMonths : netUnits;
+  const energySlabs = Array.isArray(eff.energySlabsByConsumption)
+    ? (eff.energySlabsByConsumption.find(s => perMonthUnits <= s.maxUnits)
+       || eff.energySlabsByConsumption[eff.energySlabsByConsumption.length - 1]).slabs
+    : eff.energySlabs;
+
+  const slabBreakdown = calculateEnergySlabs(energySlabs, netUnits, billingMonths);
   const totalEnergy   = slabBreakdown.reduce((s, r) => s + r.amount, 0);
 
   // ── Excess (exceeding) demand penalty ──────────────────────────────────────
@@ -373,7 +390,7 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
       const perMonth = tapered ? (subsidyScheme.reducedUnits || 0) : (subsidyScheme.units || 0);
       const freeUnits = Math.max(0, perMonth * fixedChargeMonths);
       const subsidisedUnits = Math.min(freeUnits, netUnits);
-      const freeEnergy = calculateEnergySlabs(eff.energySlabs, subsidisedUnits, billingMonths)
+      const freeEnergy = calculateEnergySlabs(energySlabs, subsidisedUnits, billingMonths)
         .reduce((s, r) => s + r.amount, 0);
       subsidyAmount = Math.min(freeEnergy, totalEnergy);
       subsidyLabel  = (tapered && subsidyScheme.reducedLabel) ||
@@ -475,7 +492,9 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
     // Resolved rate schedule behind this bill (for the Tariff Details panel)
     tariffRates: {
       fixedCharge:       eff.fixedCharge,
-      energySlabs:       eff.energySlabs,
+      // The ladder actually applied, not the raw config — for energySlabsByConsumption
+      // tariffs the two differ, and the Tariff Details panel must show what was billed.
+      energySlabs:       energySlabs,
       additionalCharges: eff.additionalCharges || [],
       excessDemandRate:  eff.excessDemandRate || 0,
     },

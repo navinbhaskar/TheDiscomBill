@@ -636,7 +636,10 @@ function fixedChargeHtml(fc, lang = 'en') {
       const label = s.label || (s.maxUnits === Infinity
         ? T(lang, { en: 'Above top slab', hi: 'सर्वोच्च स्लैब से ऊपर', mr: 'सर्वोच्च स्लॅबवर', ta: 'மேல் அடுக்கிற்கு மேல்' })
         : T(lang, { en: `Up to ${s.maxUnits} units`, hi: `${s.maxUnits} यूनिट तक`, mr: `${s.maxUnits} युनिटपर्यंत`, ta: `${s.maxUnits} யூனிட் வரை` }));
-      return `<tr><td>${esc(label)}</td><td class="num">${rupee(s.rate)}<span class="tx-muted">${perMo}</span></td></tr>`;
+      // perKw means the band picks a RATE that load still scales (Telangana), not a flat
+      // monthly amount (the Mumbai licensees). Saying "/mo" for the former understates it.
+      const unit = fc.perKw ? T(lang, { en: '/kW/mo', hi: '/kW/माह', mr: '/kW/महिना', ta: '/kW/மாதம்' }) : perMo;
+      return `<tr><td>${esc(label)}</td><td class="num">${rupee(s.rate)}<span class="tx-muted">${unit}</span></td></tr>`;
     }).join('');
     return `<table class="tariff-slab-table"><tbody>${rows}</tbody></table>`;
   }
@@ -781,7 +784,13 @@ function domesticRates(discom) {
   const rates = [];
   let fixed = null;
   for (const b of blocks) {
-    for (const s of (b.energySlabs || [])) if (typeof s.rate === 'number') rates.push(s.rate);
+    // energySlabsByConsumption tariffs (Telangana) carry several alternative ladders and
+    // energySlabs holds only a fallback one. Spanning every ladder keeps the headline
+    // range honest — quoting 5.10-10.00 would hide the 1.95 a small household really pays.
+    const ladders = Array.isArray(b.energySlabsByConsumption)
+      ? b.energySlabsByConsumption.map(l => l.slabs)
+      : [b.energySlabs || []];
+    for (const set of ladders) for (const s of set) if (typeof s.rate === 'number') rates.push(s.rate);
     if (fixed == null && b.fixedCharge != null) fixed = b.fixedCharge;
   }
   if (!rates.length) return null;

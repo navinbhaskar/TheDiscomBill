@@ -508,5 +508,52 @@ group('WBSEDCL — quarterly slabs stored monthly', () => {
   check('CESC still reads as stale', cesc.tariffYearsBehind, 2);
 });
 
+// Telangana — TGERC retail schedule, retained for FY2026-27 by the order of 30-03-2026.
+// The defining feature: consumption picks a whole LADDER, and crossing a threshold re-rates
+// the bill from the first unit. Every figure below is hand-computed from the schedule.
+group('Telangana LT-I — consumption-selected slab ladders', () => {
+  const bill = (units, kw = 2, categoryId = 'domestic') => calculateBill({
+    discomId: 'tsspdcl', categoryId, units, connectedLoadKw: kw,
+    billingPeriodDays: 30, billingDate: '2026-07-15' });
+
+  // Ladder A (<=100): 50x1.95 + 50x3.10 = 252.50
+  check('100u uses ladder A', bill(100).totalEnergy, 252.50);
+  // Ladder B(i) (101-200): 100x3.40 + 1x4.80 = 344.80 - NOT ladder A plus a slab.
+  check('101u jumps to ladder B(i)', bill(101).totalEnergy, 344.80);
+  // The cliff is real and intended: one more unit costs ~Rs 97 more overall.
+  check('crossing 100 units costs more in total', bill(101).totalPayable > bill(100).totalPayable, true);
+
+  // Ladder B(ii) (>200): 200x5.10 + 50x7.70 = 1405
+  check('250u uses ladder B(ii)', bill(250).totalEnergy, 1405);
+  // Full ladder: 1020 + 770 + 900 + 3800 + 1000 = 7490
+  check('900u walks every slab', bill(900).totalEnergy, 7490);
+
+  // Fixed charge is per kW AND banded by consumption: Rs 10/kW to 800 units, Rs 50/kW above.
+  check('fixed is per kW', bill(250, 2).fixedCharge, 20);
+  check('fixed scales with load', bill(250, 5).fixedCharge, 50);
+  check('fixed steps above 800 units', bill(900, 2).fixedCharge, 100);
+
+  // Domestic has no customer charge; commercial does.
+  check('250u total', bill(250).totalPayable, 1509);
+
+  // LT-II: crossing 50 units swaps Rs 7.00 flat for the Rs 8.50 ladder.
+  check('50u commercial', bill(50, 3, 'commercial').totalEnergy, 350);
+  check('51u commercial re-rates', bill(51, 3, 'commercial').totalEnergy, 433.50);
+  check('commercial fixed steps too', bill(51, 3, 'commercial').fixedCharge, 210);
+
+  // One TGERC schedule serves both discoms.
+  const both = ['tsspdcl', 'tsnpdcl'].map(d => calculateBill({ discomId: d,
+    categoryId: 'domestic', units: 250, connectedLoadKw: 2, billingPeriodDays: 30,
+    billingDate: '2026-07-15' }).totalPayable);
+  check('both discoms agree', new Set(both).size, 1);
+
+  // The Tariff Details panel must show the ladder that was BILLED, not the raw fallback.
+  check('resolved ladder is reported', bill(100).tariffRates.energySlabs[0].rate, 1.95);
+  check('resolved ladder differs by usage', bill(250).tariffRates.energySlabs[0].rate, 5.10);
+
+  check('Telangana reads as current', bill(250).tariffYearsBehind, 0);
+  check('Telangana is not bill-verified', bill(250).tariffVerified, false);
+});
+
 console.log(`\n${failed === 0 ? '✓ ALL PASSED' : '✗ FAILURES'} — ${passed} passed, ${failed} failed\n`);
 process.exit(failed === 0 ? 0 : 1);
