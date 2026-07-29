@@ -1456,7 +1456,7 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
   let totalNet = 0;   // net (billed) units summed over the months — used for the net-metering summary
   const slabAgg = {};   // aggregated energy slabs keyed by rate → { rate, units, amount }
   let fixedPerMonth = 0, edRate = 0, demandUnit = 'kW';
-  let tariffVerified = false, tariffAsOf = null;
+  let tariffVerified = false, tariffAsOf = null, tariffYear = null, tariffYearsBehind = null;
   let discom = null, category = null, supplyTypeName = null;
 
   months.forEach(d => {
@@ -1498,6 +1498,7 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
       discom = mb.discom; category = mb.category; supplyTypeName = mb.supplyTypeName;
       fixedPerMonth = mb.fixedPerMonth; demandUnit = mb.demandUnit || 'kW';
       tariffVerified = mb.tariffVerified; tariffAsOf = mb.tariffAsOf;
+      tariffYear = mb.tariffYear; tariffYearsBehind = mb.tariffYearsBehind;
       const edc = (mb.extraCharges || []).find(c => c.type === 'percent_total' || c.type === 'percent_energy');
       if (edc) edRate = edc.rate;
     }
@@ -1534,6 +1535,7 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
     energySlabs: Object.values(slabAgg).sort((a, b) => a.rate - b.rate)
       .map(s => ({ rate: s.rate, units: round2(s.units), amount: round2(s.amount) })),
     fixedPerMonth: round2(fixedPerMonth), edRate, demandUnit, tariffVerified, tariffAsOf,
+    tariffYear, tariffYearsBehind,
     totalCharges: round2(totalCharges), totalLpsc: round2(totalLpsc),
     totalPay: round2(totalPay), totalAdj: round2(totalAdj),
     totalPayable: Math.round(balance),

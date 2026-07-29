@@ -2464,6 +2464,12 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
   background: rgba(22, 163, 74, .07);
 }
 .conf-estimate { border-color: var(--border-strong); color: var(--text-secondary); }
+/* Amber, not red: two-FY-old data is unaudited, not known-wrong. It should catch the eye
+   without telling the reader the number in front of them is false. */
+.conf-stale {
+  border-color: rgba(180, 83, 9, .38); color: var(--warn-text);
+  background: var(--warn-bg);
+}
 
 /* Section titles — quiet grey caps; the uppercase weight is enough of a marker */
 .bill-section-title {
@@ -4181,6 +4187,8 @@ html:not([lang="en"]) .sb-amount-label { text-transform: none; letter-spacing: .
   text-wrap: pretty;
 }
 .sb-assume strong { color: var(--text-primary); font-weight: 650; }
+/* Rate provenance sits with the caveats, under the figure it qualifies. */
+.sb-conf { margin-top: 12px; }
 
 /* Escape hatch to the full 28-row bill — Detailed mode's output, one click away. A small
    centred pill, not a full-width bar: it's a secondary exit from the counterfoil, and at

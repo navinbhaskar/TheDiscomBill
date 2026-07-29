@@ -17,6 +17,7 @@ import {
   findStateMetaByDiscom,
   resolveDatedTariff,
   fyStart,
+  tariffAge,
 } from './tariffs/registry.js';
 import { round2 } from './utils.js';
 
@@ -447,6 +448,11 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
                    : (discom.verified != null) ? !!discom.verified
                    : !!(stateMeta && stateMeta.verified),
     tariffAsOf:      eff.asOf || discom.ratesAsOf || (stateMeta && stateMeta.ratesAsOf) || null,
+    tariffYear:      discom.tariffYear || null,
+    // Measured against the BILL's own date, not today: 2024-25 rates are the current rates for
+    // a June-2024 bill, and flagging them stale there would be wrong.
+    // null = no parseable tariffYear; callers must not read that as "current".
+    tariffYearsBehind: tariffAge(discom.tariffYear, billingDate || undefined).yearsBehind,
     tariffSourceUrl: eff.sourceUrl || discom.sourceUrl || discom.website || (stateMeta && stateMeta.sourceUrl) || null,
     billingDate: billingDate || null,
     // Resolved rate schedule behind this bill (for the Tariff Details panel)

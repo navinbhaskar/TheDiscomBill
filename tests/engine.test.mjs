@@ -352,5 +352,28 @@ group('form defaults', () => {
   check('unknown DISCOM → null', getDefaultCategory('nosuch'), null);
 });
 
+import { tariffAge } from '../js/tariffs/registry.js';
+
+// Freshness disclosure. onDate is injected everywhere so these do not start failing in April.
+group('tariffAge — how far behind the current FY', () => {
+  // Indian FY starts 1 April.
+  check('July 2026 is FY 2026-27', tariffAge('2026-27', '2026-07-29').currentFy, '2026-27');
+  check('March 2026 still belongs to FY 2025-26', tariffAge('2025-26', '2026-03-31').currentFy, '2025-26');
+  check('1 April flips the FY', tariffAge('2026-27', '2026-04-01').currentFy, '2026-27');
+  check('short year is zero-padded', tariffAge('2009-10', '2009-06-01').currentFy, '2009-10');
+
+  check('current-year data is 0 behind', tariffAge('2026-27', '2026-07-29').yearsBehind, 0);
+  check('one year behind', tariffAge('2025-26', '2026-07-29').yearsBehind, 1);
+  check('two years behind — the stale threshold', tariffAge('2024-25', '2026-07-29').yearsBehind, 2);
+
+  // A 2024 bill computed on 2024-25 rates is current FOR THAT BILL, not stale.
+  check('historical bill is not stale', tariffAge('2024-25', '2024-06-15').yearsBehind, 0);
+
+  // Missing or unparseable years must not read as fresh — callers branch on >= 2, and a
+  // silent 0 would suppress the warning on exactly the data we know least about.
+  check('missing year -> null', tariffAge(null, '2026-07-29').yearsBehind, null);
+  check('unparseable year -> null', tariffAge('unknown', '2026-07-29').yearsBehind, null);
+});
+
 console.log(`\n${failed === 0 ? '✓ ALL PASSED' : '✗ FAILURES'} — ${passed} passed, ${failed} failed\n`);
 process.exit(failed === 0 ? 0 : 1);

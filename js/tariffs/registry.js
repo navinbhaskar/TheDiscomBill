@@ -234,6 +234,29 @@ export function fyStart(tariffYear) {
   return m ? `${m[1]}-04-01` : null;
 }
 
+/**
+ * How far behind the current Indian financial year a tariffYear sits.
+ *
+ * Note what this does and does NOT claim. Many SERCs RETAIN rates — UPERC's July 2026 order
+ * left every UP rate unchanged — so "behind" never means "wrong". It means we have not read
+ * an order for the current FY, which is the only thing we can honestly assert. The audits
+ * that have been done, though, found stale entries that matched no published order at all
+ * (Tamil Nadu and Odisha both), so two years behind is worth saying out loud.
+ *
+ * @param {string} tariffYear - e.g. "2026-27".
+ * @param {Date|string} [onDate] - Defaults to now; injectable so tests do not drift over time.
+ * @returns {{fy: string|null, currentFy: string, yearsBehind: number|null}}
+ */
+export function tariffAge(tariffYear, onDate) {
+  const d = onDate ? new Date(onDate) : new Date();
+  // Indian FY starts 1 April: Jan-Mar still belongs to the FY that began the previous April.
+  const startYear = d.getMonth() >= 3 ? d.getFullYear() : d.getFullYear() - 1;
+  const currentFy = `${startYear}-${String((startYear + 1) % 100).padStart(2, '0')}`;
+  const m = String(tariffYear || '').match(/^(\d{4})/);
+  if (!m) return { fy: null, currentFy, yearsBehind: null };
+  return { fy: String(tariffYear), currentFy, yearsBehind: startYear - Number(m[1]) };
+}
+
 const DEFAULT_CURRENT_FROM = '2024-04-01';
 
 /**

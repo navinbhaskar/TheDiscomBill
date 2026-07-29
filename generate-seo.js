@@ -20,7 +20,7 @@ import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
 
-import { TARIFF_DB, STATE_META, getStates, getDiscoms } from './js/tariffs/registry.js';
+import { TARIFF_DB, STATE_META, getStates, getDiscoms, tariffAge } from './js/tariffs/registry.js';
 import { calculateBill } from './js/engine.js';
 import { GUIDES } from './guides-content.js';
 import { GLOSSARY } from './glossary-content.js';
@@ -829,11 +829,21 @@ function keyFactsHtml(state, discom, fy, lang = 'en') {
         hi: `✅ असली बिलों से सत्यापित — ${esc(meta.ratesAsOf || fy)}`,
         mr: `✅ खऱ्या बिलांवरून पडताळलेले — ${esc(meta.ratesAsOf || fy)}`,
         ta: `✅ உண்மையான பில்களுடன் சரிபார்க்கப்பட்டது — ${esc(meta.ratesAsOf || fy)}` })
-    : T(lang, {
-        en: `Based on the ${esc(fy)} tariff order (latest published data we have)`,
-        hi: `${esc(fyLabel(fy, 'hi'))} टैरिफ आदेश पर आधारित (हमारे पास उपलब्ध नवीनतम प्रकाशित डेटा)`,
-        mr: `${esc(fyLabel(fy, 'mr'))} टॅरिफ आदेशावर आधारित (आमच्याकडील नवीनतम प्रकाशित डेटा)`,
-        ta: `${esc(fyLabel(fy, 'ta'))} கட்டண ஆணையை அடிப்படையாகக் கொண்டது (எங்களிடம் உள்ள சமீபத்திய வெளியிடப்பட்ட தரவு)` })]);
+    : (tariffAge(fy).yearsBehind >= 2
+      // Two or more FYs behind: say plainly that we have not read a newer order. Retained
+      // rates are common, so this is "unchecked", never "wrong" — but the state audits done
+      // so far did turn up stale entries matching no published order, and a reader deciding
+      // whether to trust a rupee figure should be told which of the two they are looking at.
+      ? T(lang, {
+          en: `⚠️ Based on the ${esc(fy)} tariff order — we have not yet audited a newer one, so confirm against ${esc(discom.name)}'s official order before relying on these rates`,
+          hi: `⚠️ ${esc(fyLabel(fy, 'hi'))} टैरिफ आदेश पर आधारित — इससे नया आदेश हमने अभी जाँचा नहीं है, इसलिए इन दरों पर निर्भर होने से पहले ${esc(discom.name)} के आधिकारिक आदेश से पुष्टि करें`,
+          mr: `⚠️ ${esc(fyLabel(fy, 'mr'))} टॅरिफ आदेशावर आधारित — यापेक्षा नवीन आदेश आम्ही अद्याप तपासलेला नाही, त्यामुळे या दरांवर विसंबण्यापूर्वी ${esc(discom.name)} च्या अधिकृत आदेशाशी खात्री करा`,
+          ta: `⚠️ ${esc(fyLabel(fy, 'ta'))} கட்டண ஆணையை அடிப்படையாகக் கொண்டது — இதைவிட புதிய ஆணையை நாங்கள் இன்னும் சரிபார்க்கவில்லை, எனவே இந்த விகிதங்களை நம்புவதற்கு முன் ${esc(discom.name)} இன் அதிகாரப்பூர்வ ஆணையுடன் உறுதிப்படுத்தவும்` })
+      : T(lang, {
+          en: `Based on the ${esc(fy)} tariff order (latest published data we have)`,
+          hi: `${esc(fyLabel(fy, 'hi'))} टैरिफ आदेश पर आधारित (हमारे पास उपलब्ध नवीनतम प्रकाशित डेटा)`,
+          mr: `${esc(fyLabel(fy, 'mr'))} टॅरिफ आदेशावर आधारित (आमच्याकडील नवीनतम प्रकाशित डेटा)`,
+          ta: `${esc(fyLabel(fy, 'ta'))} கட்டண ஆணையை அடிப்படையாகக் கொண்டது (எங்களிடம் உள்ள சமீபத்திய வெளியிடப்பட்ட தரவு)` }))]);
   // Flat-rate states (e.g. Bihar's single ₹7.42 slab) collapse to one figure, not "x – x".
   if (dr) rows.push([T(lang, { en: 'Domestic energy rate', hi: 'घरेलू ऊर्जा दर', mr: 'घरगुती ऊर्जा दर', ta: 'வீட்டு மின் கட்டணம்' }), `${dr.min === dr.max ? rupeeRate(dr.min) : `${rupeeRate(dr.min)} – ${rupeeRate(dr.max)}`} ${T(lang, { en: 'per unit', hi: 'प्रति यूनिट', mr: 'प्रति युनिट', ta: 'ஒரு யூனிட்டுக்கு' })}`]);
   if (discom.lpscRate != null) rows.push([T(lang, { en: 'Late payment surcharge (LPSC)', hi: 'विलंब भुगतान अधिभार (LPSC)', mr: 'विलंब भरणा अधिभार (LPSC)', ta: 'தாமத கட்டண மிகைக்கட்டணம் (LPSC)' }), `${discom.lpscRate}% ${T(lang, { en: 'per month', hi: 'प्रति माह', mr: 'दरमहा', ta: 'ஒரு மாதத்திற்கு' })}`]);

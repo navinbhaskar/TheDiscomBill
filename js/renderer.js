@@ -56,10 +56,21 @@ export function numberToWords(amount) {
 
 // Data-confidence badge shown on the bill: distinguishes rates checked against an official tariff
 // order ("verified") from representative estimates the user should double-check.
-function confidenceBadge(verified, asOf) {
-  return verified
-    ? `<div class="conf-badge conf-verified" title="Rates checked against the official tariff order">✓ Verified rates${asOf ? ` · ${asOf}` : ''}</div>`
-    : `<div class="conf-badge conf-estimate" title="Representative rates — confirm against the DISCOM's official tariff order">≈ Representative rates</div>`;
+// The unverified badge used to read a bare "≈ Representative rates", which told the reader
+// nothing about WHICH year those rates came from — the tariff year sat in a separate line
+// above and it was on them to join the two. It now names the year, and when the data is two
+// or more financial years behind the bill it says so: SERCs often retain rates, so behind is
+// never "wrong", but the state audits so far turned up stale entries matching no published
+// order at all, which the reader deserves to know before trusting a figure.
+function confidenceBadge(verified, asOf, tariffYear, yearsBehind) {
+  if (verified) {
+    return `<div class="conf-badge conf-verified" title="Rates checked against the official tariff order">✓ Verified rates${asOf ? ` · ${asOf}` : ''}</div>`;
+  }
+  const fy = tariffYear ? ` · FY ${tariffYear} order` : '';
+  if (yearsBehind != null && yearsBehind >= 2) {
+    return `<div class="conf-badge conf-stale" title="We have not yet audited a tariff order newer than FY ${tariffYear} for this DISCOM. The rates may have been revised since — confirm against the DISCOM's official order before relying on this figure.">⚠ Rates not yet re-checked${fy}</div>`;
+  }
+  return `<div class="conf-badge conf-estimate" title="Representative rates — confirm against the DISCOM's official tariff order">≈ Representative rates${fy}</div>`;
 }
 
 // ─── Tariff / charge breakdown panel helpers ───────────────────────────────────
@@ -136,6 +147,7 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
     extraCharges, facAmount, facRate, facMode,
     subsidyAmount, subsidyLabel, currentGross, currentNet,
     arrears, payments, adjustments, totalPayable,
+    tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind,
   } = result;
 
   // Three visual columns: label — how it was worked out — amount. The middle one is what
@@ -267,6 +279,11 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
 
     ${assumption ? `<p class="sb-assume">${assumption}</p>` : ''}
 
+    <!-- Simple mode is what the homepage renders by default, so it carried no rate-provenance
+         signal at all while the full bill and the tariff pages both did — the readers least
+         likely to go checking an order were the ones told least about it. -->
+    <div class="sb-conf">${confidenceBadge(tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind)}</div>
+
     <div class="bill-perf bill-perf-bottom" aria-hidden="true"></div>
 
     <button type="button" class="sb-expand" onclick="window.__showFullBill && window.__showFullBill()">
@@ -299,6 +316,7 @@ export function renderBill(params) {
           todUnits, todPeakSurcharge, todOffPeakRebate,
           extraCharges, facAmount, facRate, facMode,
           tariffPeriodLabel, tariffEstimated, tariffVerified, tariffAsOf, tariffSourceUrl, tariffRates,
+          tariffYear, tariffYearsBehind,
           currentGross, subsidyAmount, subsidyLabel, currentNet,
           arrears, arrearLpsc, lpscRate, currentLpscMonths, currentLpsc, lpscApplicable,
           payments, totalPayments,
@@ -543,7 +561,7 @@ export function renderBill(params) {
       <!-- Licence area runs the full width of the bill rather than inside the left column,
            where it was squeezed into a ~200px gutter and ran to ten lines. -->
       <div class="bill-discom-area">${discom.area}</div>
-      <div class="bill-header-foot">${confidenceBadge(tariffVerified, tariffAsOf)}</div>
+      <div class="bill-header-foot">${confidenceBadge(tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind)}</div>
     </div>
 
     <div class="bill-details-row">
@@ -724,7 +742,7 @@ export function renderRevisionBill(params) {
   const { ledger, consumerName, accountNo, address, meterNo, fromDate, toDate } = params;
   const { rows, monthsCount, totalUnits, unitsPerMonth, startArrear, lpscRate,
           totalEnergy, totalDemand, totalED, totalExcess, totalFppa, totalSubsidy, energySlabs,
-          fixedPerMonth, edRate, tariffVerified, tariffAsOf,
+          fixedPerMonth, edRate, tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind,
           arrear, previousLpsc, totalCharges, totalLpsc, totalPay, totalAdj, totalPayable,
           netMetering, totalImport, totalExport, totalNet, finalCredit,
           discom, category, supplyTypeName, connectedLoadKw, billedDemandKw, demandUnit } = ledger;
@@ -888,7 +906,7 @@ export function renderRevisionBill(params) {
       <!-- Licence area runs the full width of the bill rather than inside the left column,
            where it was squeezed into a ~200px gutter and ran to ten lines. -->
       <div class="bill-discom-area">${discom.area}</div>
-      <div class="bill-header-foot">${confidenceBadge(tariffVerified, tariffAsOf)}</div>
+      <div class="bill-header-foot">${confidenceBadge(tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind)}</div>
     </div>
 
     <div class="bill-details-row">
