@@ -327,6 +327,7 @@ const FOOTER_SITEMAP = `
         <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
         <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
         <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
       </div>
       <div class="footer-col">
         <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
@@ -349,10 +350,13 @@ const FOOTER_SITEMAP = `
         <a href="/guides/" data-i18n="nav.blog">Blog</a>
         <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.company">Company</span>
+        <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
         <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a>
-        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
-        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a>
       </div>
     </nav>`;
 
@@ -362,7 +366,7 @@ const FOOTER = `
     <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a></p>
     <!-- Facebook returns here once the account exists -->
     <div class="soc-links" aria-label="Social media">
-      <a class="soc-link" href="mailto:thediscombill@gmail.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
       <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
       <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
     </div>
@@ -436,7 +440,6 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1d4ed8">
   <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="apple-touch-icon" href="/icon-192.png">
   <script>
     (function () {
       document.documentElement.classList.add('js');
@@ -468,7 +471,9 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
   <meta name="twitter:title" content="${attr(title)}">
   <meta name="twitter:description" content="${attr(description)}">
   <meta name="twitter:image" content="${ogImg}">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
        display=swap shows fallback text immediately. Preload the weights that paint first. -->
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
@@ -2755,6 +2760,7 @@ const STATIC_ROUTES = [
   { loc: '/methodology/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/contact/', priority: '0.6', changefreq: 'yearly' },
   { loc: '/privacy/', priority: '0.4', changefreq: 'yearly' },
+  { loc: '/cookies/', priority: '0.3', changefreq: 'yearly' },
   { loc: '/install/', priority: '0.6', changefreq: 'yearly' },
   // index,follow + self-canonical + linked from the account nav, so it was already crawlable —
   // it was just never declared. Every other undeclared route (admin/, expert/, login/,
@@ -2975,6 +2981,7 @@ function writeSearchIndex(states) {
     ['Solar Subsidy Checker', 'सोलर सब्सिडी चेकर (PM सूर्य घर)', '/solar-subsidy-checker/', 'pm surya ghar rooftop solar subsidy muft bijli yojana system size payback kw 78000 eligibility'],
     ['Tenant Sub-Meter Calculator', 'किरायेदार सब-मीटर कैलकुलेटर', '/tenant-submeter-calculator/', 'tenant landlord submeter sub meter overcharging flat rate per unit pg rent electricity split share'],
     ['Methodology', 'कार्यप्रणाली', '/methodology/', 'how rates verified sources'],
+    ['Cookie Policy', 'कुकी नीति', '/cookies/', 'cookies cookie policy tracking analytics ga consent local storage banner'],
     ['Privacy Policy', 'गोपनीयता नीति', '/privacy/', 'privacy policy data dpdp personal information cookies analytics delete my data gdpr'],
     ['Contact', 'संपर्क करें', '/contact/', 'contact email get in touch report wrong tariff rate correction feedback partnership press support help'],
     ['Install offline app', 'ऑफ़लाइन ऐप इंस्टॉल करें', '/install/', 'install app pwa offline home screen android ios iphone desktop add to home screen download apk play store'],

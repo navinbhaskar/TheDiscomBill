@@ -448,8 +448,13 @@ function initHeroBillCard() {
   // can never drift apart.
   card.style.setProperty('--hbc-dwell', HBC_DWELL_MS + 'ms');
 
+  // Reduced motion kills the SWEEP, not the rotation. Stopping autoplay entirely left
+  // iPhone users (Reduce Motion is a common iOS setting) staring at slide 1 forever, with
+  // nothing to suggest four more existed. WCAG 2.2.2 wants a way to pause auto-updating
+  // content, and the dots are exactly that — so rotation continues, just without the
+  // animated fill (see .hbc-dot-fill under prefers-reduced-motion in styles.css).
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let index = 0, timer = null, stopped = reduced;
+  let index = 0, timer = null, stopped = false;
 
   const show = (i, focus) => {
     index = (i + dots.length) % dots.length;
@@ -496,12 +501,23 @@ function initHeroBillCard() {
     });
   });
 
-  card.addEventListener('mouseenter', pause);
-  card.addEventListener('mouseleave', play);
+  // Hover-pause, but only for an actual MOUSE. iOS Safari fires a synthetic mouseenter on
+  // tap and never fires the matching mouseleave, so on iPhone a single tap anywhere on the
+  // card paused rotation permanently — which is exactly what it looked like: a slider that
+  // "doesn't change".
+  //
+  // Checking pointerType per event rather than a `(hover: hover)` media query on purpose:
+  // hybrid devices (iPad with a trackpad, Surface, a touchscreen laptop) report hover:hover
+  // and would still have been frozen by a tap.
+  card.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') pause(); });
+  card.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') play(); });
   card.addEventListener('focusin',  pause);
   card.addEventListener('focusout', (e) => { if (!card.contains(e.relatedTarget)) play(); });
   // A background tab burns no timers, and the sweep would otherwise finish unseen.
   document.addEventListener('visibilitychange', () => { document.hidden ? pause() : play(); });
+  // iOS restores pages from bfcache without firing visibilitychange, so a back-navigation
+  // came back to a card whose timer had been cleared and never restarted.
+  window.addEventListener('pageshow', () => { if (!document.hidden) play(); });
 
   show(0);
   play();

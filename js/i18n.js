@@ -25,6 +25,7 @@ export const STRINGS = {
     'ql.tariffs': 'Tariffs',
     'ql.services': 'Services',
     'ql.learn': 'Learn',
+    'ql.company': 'Company',
     'ql.compare': 'Compare DISCOM Tariffs',
     'ql.usage': 'Electricity Cost Calculator',
     'ql.solar': 'Rooftop Solar Savings',
@@ -44,6 +45,7 @@ export const STRINGS = {
     'ql.methodology': 'Methodology & Accuracy',
     'ql.contact': 'Contact',
     'ql.privacy': 'Privacy Policy',
+    'ql.cookies': 'Cookie Policy',
     'ql.install': 'Install Offline App',
     // Shared footer links (generated pages + key pages)
     'footer.rights': '© 2026 TheDiscomBill. All rights reserved.',
@@ -119,7 +121,7 @@ export const STRINGS = {
     'small.fromDate': 'Billing period start date',
     'small.toDate': 'Billing period end date',
     'label.sanctioned': 'Sanctioned Load (kW)',
-    'small.sanctioned': '💡 Check the top right of your old bill for <strong>“Connected / Sanctioned Load”</strong>. Exceeding this limit triggers excess-demand penalties in states like UP, Delhi and Maharashtra.',
+    'small.sanctioned': 'Check the top right of your old bill for <strong>“Connected / Sanctioned Load”</strong>. Exceeding this limit triggers excess-demand penalties in states like UP, Delhi and Maharashtra.',
     'small.fppa': 'Uncheck above (or type a value) to enter manually · can be negative (credit).',
     // Tabs
     'tab.meterread': 'Meter Read',

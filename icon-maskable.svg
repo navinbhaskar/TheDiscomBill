@@ -1,7 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="TheDiscomBill">
-  <rect width="512" height="512" fill="#1d4ed8"/>
-  <g transform="translate(256,256) scale(0.8) translate(-256,-256)">
-    <path d="M298 96 156 300c-7 10 0 24 13 24h66l-20 92c-3 14 15 22 24 11l141-204c7-10 0-24-13-24h-66l20-92c3-14-15-22-24-11Z"
-          fill="#ffffff" stroke="#ffffff" stroke-width="6" stroke-linejoin="round"/>
+  <!-- Maskable variant: full-bleed square (Android crops it to whatever shape the launcher
+       uses), with the bolt held inside the 80% safe zone so no crop clips it. Same navy/gold
+       palette as favicon.svg and icon.svg so the installed app icon matches the browser tab
+       — but deliberately NOT a copy of them: those carry rounded corners AND an inset rim,
+       both of which would be clipped or double-rounded once the launcher applies its mask. -->
+  <defs>
+    <linearGradient id="mbg" x1="0.15" y1="0" x2="0.85" y2="1">
+      <stop offset="0" stop-color="#1e3a8a"/>
+      <stop offset="0.55" stop-color="#122c66"/>
+      <stop offset="1" stop-color="#0b1e46"/>
+    </linearGradient>
+    <linearGradient id="mbolt" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#fde047"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#mbg)"/>
+  <g transform="translate(256 256) scale(0.8) translate(-256 -256)">
+    <path d="M300 74 138 306c-8 11 0 26 14 26h74l-22 100c-4 15 16 24 26 12l162-232c8-11 0-26-14-26h-74l22-100c4-15-16-24-26-12Z"
+          fill="url(#mbolt)"/>
   </g>
 </svg>

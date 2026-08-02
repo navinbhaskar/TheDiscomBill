@@ -19,6 +19,7 @@ export default {
     'ql.tariffs': 'टैरिफ',
     'ql.services': 'सेवाएँ',
     'ql.learn': 'जानें',
+    'ql.company': 'कंपनी',
     'ql.compare': 'डिस्कॉम टैरिफ तुलना',
     'ql.usage': 'बिजली लागत कैलकुलेटर',
     'ql.solar': 'रूफटॉप सोलर बचत',
@@ -38,6 +39,7 @@ export default {
     'ql.methodology': 'कार्यप्रणाली व सटीकता',
     'ql.contact': 'संपर्क करें',
     'ql.privacy': 'गोपनीयता नीति',
+    'ql.cookies': 'कुकी नीति',
     'ql.install': 'ऑफ़लाइन ऐप इंस्टॉल करें',
     // Shared footer links (generated pages + key pages)
     'footer.rights': '© 2026 TheDiscomBill. सर्वाधिकार सुरक्षित।',
@@ -112,7 +114,7 @@ export default {
     'small.fromDate': 'बिलिंग अवधि की आरंभ तिथि',
     'small.toDate': 'बिलिंग अवधि की अंतिम तिथि',
     'label.sanctioned': 'स्वीकृत भार (kW)',
-    'small.sanctioned': '💡 अपने पुराने बिल में ऊपर दाईं ओर <strong>“Connected / Sanctioned Load”</strong> देखें। इस सीमा से अधिक भार पर यूपी, दिल्ली और महाराष्ट्र जैसे राज्यों में अतिरिक्त-भार जुर्माना लगता है।',
+    'small.sanctioned': 'अपने पुराने बिल में ऊपर दाईं ओर <strong>“Connected / Sanctioned Load”</strong> देखें। इस सीमा से अधिक भार पर यूपी, दिल्ली और महाराष्ट्र जैसे राज्यों में अतिरिक्त-भार जुर्माना लगता है।',
     'small.fppa': 'मैन्युअल दर्ज करने हेतु ऊपर अनचेक करें (या मान टाइप करें) · ऋणात्मक (क्रेडिट) हो सकता है।',
     // Tabs
     'tab.meterread': 'मीटर रीडिंग',

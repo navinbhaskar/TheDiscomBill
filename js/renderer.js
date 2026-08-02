@@ -350,9 +350,13 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
  */
 export function renderBill(params) {
   _accId = 0;
+  // compact = Simple mode. Same document, fewer rows: the identity and meter-reading blocks
+  // are omitted because Simple mode never collects them. Everything else — header, charges
+  // table, totals, rates badge, disclaimer — is byte-identical to the full bill, which is
+  // the point: the two previews should not look like two different products.
   const { result, consumerName, accountNo, address, meterNo,
           billingMonth, billingYear, prevReading, currReading,
-          fromDate, toDate, fppaSource } = params;
+          fromDate, toDate, fppaSource, compact = false } = params;
 
   const { discom, category, supplyTypeName,
           units, billingBasis, energyUnit,
@@ -476,8 +480,10 @@ export function renderBill(params) {
   const hasPayments = totalPayments > 0;
   const adjItems    = adjustments.filter(a => a.amount !== 0);
 
-  // Previous Arrear is always shown (₹0.00 when none); the LPSC lines stay conditional.
-  const arrearsSection = `
+  // Previous Arrear is always shown (₹0.00 when none) in Detailed; the LPSC lines stay
+  // conditional. In compact (Simple) mode the whole block goes: that mode has no arrears
+  // input, so it could only ever render a zero row.
+  const arrearsSection = compact ? '' : `
     <tr class="section-header-row"><td colspan="4">Arrears &amp; Late Payment Charges</td></tr>
     <tr class="arrears-row">
       <td>Previous Arrear</td><td></td><td></td>
@@ -502,8 +508,9 @@ export function renderBill(params) {
       <td class="num amt">− ${formatINR(p.amount)}</td>
     </tr>`).join('')}` : '';
 
-  // Adjustments (miscellaneous charges) are always shown — itemised when present, else a zero row.
-  const adjSection = `
+  // Adjustments (miscellaneous charges): itemised when present, else a zero row — but
+  // omitted entirely in compact mode, where 'No adjustments' is pure noise.
+  const adjSection = compact ? '' : `
     <tr class="section-header-row"><td colspan="4">Adjustments (Miscellaneous Charges)</td></tr>
     ${adjItems.length ? adjItems.map(a => `
     <tr class="adjustment-bill-row">
@@ -571,7 +578,9 @@ export function renderBill(params) {
       : `<div class="acc-note acc-muted">No verified FPPA on record for this period — defaulted to ${facMode === 'percent' ? facRate + '%' : '₹' + facRate}. Enter the value from your bill if it differs.</div>`}
     <div class="acc-note acc-muted">FPPA / FPPAS is notified each billing cycle (often a ~3-month lag) to recover the gap between actual and approved power-purchase cost. Some states cap it (e.g. UP: 10%/cycle, excess carried forward).</div>`;
 
-  const billExtras = `
+  // The rates/LPSC/FPPA accordions are the Detailed mode's depth. Simple mode keeps the
+  // rates badge (provenance) but drops the drill-downs.
+  const billExtras = compact ? '' : `
     <div class="bill-extras no-print">
       <div class="bill-extras-title">Rates &amp; Surcharge Details</div>
       ${accordionItem('Tariff Details', 'Applicable rates and full calculation breakdown', tariffBody)}
@@ -614,6 +623,29 @@ export function renderBill(params) {
       <div class="bill-header-foot">${confidenceBadge(tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind, tariffSourceUrl)}</div>
     </div>
 
+    ${compact ? `
+    <!-- Compact (Simple mode): the identity rows are dropped because Simple mode never
+         asks for them — rendering "Name: —, Account No.: —, Address: —, Meter No.: —" is
+         worse than rendering nothing. What survives is everything Simple mode DOES know:
+         the supply particulars and the billing period. Same markup and styling as the full
+         bill, so the two previews read as one document with fewer rows. -->
+    <div class="bill-details-row">
+      <div class="bill-details-box">
+        <div class="bill-section-title">Supply Details</div>
+        <table class="bill-info-table">
+          <tr><td>Category</td><td>: ${categoryLabel}</td></tr>
+          <tr><td>${dU === 'kVA' ? 'Contract Demand' : 'Conn. Load'}</td><td>: ${connectedLoadKw} ${dU}</td></tr>
+        </table>
+      </div>
+      <div class="bill-details-box">
+        <div class="bill-section-title">Billing Details</div>
+        <table class="bill-info-table">
+          <tr><td>Bill Month</td><td>: <strong>${MONTHS[+billingMonth - 1]} ${billingYear}</strong></td></tr>
+          <tr><td>Units Consumed</td><td>: <strong>${units} ${energyUnit || 'kWh'}</strong></td></tr>
+          <tr><td>Tariff Period</td><td>: ${tariffPeriodLabel || 'Current'}${tariffEstimated ? ' <span class="tariff-est-tag">(est.)</span>' : ''}</td></tr>
+        </table>
+      </div>
+    </div>` : `
     <div class="bill-details-row">
       <div class="bill-details-box">
         <div class="bill-section-title">Consumer Details</div>
@@ -636,8 +668,9 @@ export function renderBill(params) {
           <tr><td>Tariff Period</td><td>: ${tariffPeriodLabel || 'Current'}${tariffEstimated ? ' <span class="tariff-est-tag">(est.)</span>' : ''}</td></tr>
         </table>
       </div>
-    </div>
+    </div>`}
 
+    ${compact ? '' : `
     <div class="bill-reading-row">
       <div class="bill-section-title">Meter Reading Details</div>
       <table class="bill-reading-table">
@@ -671,7 +704,7 @@ export function renderBill(params) {
       </table>
       <div class="acc-note acc-muted">Net metering: energy billed on net import = imported − (exported + opening credit). ${closingCredit > 0 ? `Surplus of <strong>${closingCredit.toLocaleString('en-IN')} kWh</strong> is banked and carried to the next bill.` : ''} Fixed/demand charges still apply.</div>
       ` : ''}
-    </div>
+    </div>`}
 
     <div class="bill-charges-section">
       <div class="bill-section-title">Charge Breakdown</div>
@@ -705,15 +738,21 @@ export function renderBill(params) {
           ${extraRows}
         </tbody>
         <tfoot>
+          ${/* In compact mode Gross, Net and Total collapse to the same figure — there are no
+                arrears, payments or adjustments to separate them — so three identical rows say
+                one thing three times. Gross survives only when rounding or a subsidy actually
+                moved the number; Net always folds into TOTAL AMOUNT PAYABLE below. */
+            (compact && Math.round(currentGross) === Math.round(currentNet)) ? '' : `
           <tr class="gross-row">
             <td colspan="3"><strong>Current Bill Gross</strong></td>
             <td class="num amt"><strong>${formatINR(currentGross)}</strong></td>
-          </tr>
+          </tr>`}
           ${subsidyRow}
+          ${compact ? '' : `
           <tr class="net-row">
             <td colspan="3"><strong>Current Net Bill (Rounded)</strong></td>
             <td class="num net-amt"><strong>₹ ${currentNet.toLocaleString('en-IN')}</strong></td>
-          </tr>
+          </tr>`}
           ${arrearsSection}
           ${paymentsSection}
           ${adjSection}
@@ -752,6 +791,16 @@ export function renderBill(params) {
     </div>
     <div class="bill-perf bill-perf-bottom" aria-hidden="true"></div>
   </div>
+  ${compact ? `
+  <!-- Route out of Simple: switches the form to Detailed and re-renders these same inputs
+       as the full facsimile (window.__showFullBill in calculator-init.js). Sits above the
+       review handoff because it is the cheaper next step — more detail on a bill you
+       already have, versus uploading a real one. -->
+  <button type="button" class="sb-expand" onclick="window.__showFullBill && window.__showFullBill()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M16 21h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+    View the detailed bill — meter readings, arrears, rates &amp; surcharges
+  </button>
+  ${resultHandoff(totalPayable)}` : ''}
   ${billExtras}`;
 }
 
