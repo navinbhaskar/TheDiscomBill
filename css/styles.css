@@ -4139,9 +4139,11 @@ footer a:hover { color: #fff; text-decoration: none; }
    scan than centred text, even though the footer's legal lines below stay centred. */
 .footer-map {
   display: grid; gap: 26px 32px;
-  /* 170px not 190px: the footer went from four columns to five (Learn was split into
-     Learn + Company), and at 190px the fifth wrapped to a lonely second row. */
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  /* Back to 190px now that Company is gone and the footer is four columns again:
+     About + Contact moved into Learn, Privacy + Cookies down to the legal line. At
+     170px the four columns left dead gutter; 190px gives each ~226px, which is what
+     stops "Electricity Cost Calculator" and "Sanctioned Load Optimizer" wrapping. */
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   max-width: 1000px; margin: 0 auto 32px;
   padding-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,.09);
   text-align: left;

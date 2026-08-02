@@ -1,29 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="TheDiscomBill">
-  <!-- Mark: deep-navy squircle, lighter blue rim, gold bolt. Built to the reference art.
-       Small-size decisions (this is rendered at 16px in a tab strip, not just as an app icon):
-         • the bolt is GOLD on navy rather than white on blue — it is the highest-contrast
-           pairing available here and survives downsampling better than white-on-mid-blue
-         • the rim is a real inset stroke, not a drop shadow: it keeps the tile's edge visible
-           against BOTH light and dark tab strips, which a shadow does not
-         • no outer glow — at 16px it reads as a smudge, and favicons are composited on
-           unpredictable backgrounds where a glow just looks like a rendering artefact
-         • the bolt is scaled up, because app-icon padding is too generous for a favicon -->
+  <!-- Mark: royal-blue squircle, amber bolt. Colours taken from the brand art.
+       Notes on what differs from that art, and why — this file is rendered at 16px in a
+       tab strip, not only as a 1024px app icon:
+         • the tile gradient is RADIAL, not linear: the reference lightens around the
+           upper-centre and falls off toward every corner, which a linear ramp cannot do.
+         • no rim stroke. The earlier navy tile needed one to hold its edge against a dark
+           tab strip; this mid royal blue is light enough to separate on its own, and the
+           reference has no rim.
+         • the bolt has no drop shadow. The reference carries one, but at 16px a shadow
+           renders as a grey smudge along the bolt's lower edge rather than as depth.
+         • the bolt is scaled up, because app-icon padding is too generous for a favicon. -->
   <defs>
-    <linearGradient id="fbg" x1="0.15" y1="0" x2="0.85" y2="1">
-      <stop offset="0" stop-color="#1e3a8a"/>
-      <stop offset="0.55" stop-color="#122c66"/>
-      <stop offset="1" stop-color="#0b1e46"/>
-    </linearGradient>
+    <radialGradient id="fbg" cx="0.42" cy="0.34" r="0.88">
+      <stop offset="0" stop-color="#5c76ca"/>
+      <stop offset="0.55" stop-color="#4160b5"/>
+      <stop offset="1" stop-color="#26418f"/>
+    </radialGradient>
     <linearGradient id="fbolt" x1="0.2" y1="0" x2="0.8" y2="1">
-      <stop offset="0" stop-color="#fde047"/>
-      <stop offset="1" stop-color="#f59e0b"/>
+      <stop offset="0" stop-color="#f7c34e"/>
+      <stop offset="1" stop-color="#ee9a26"/>
     </linearGradient>
   </defs>
   <rect width="512" height="512" rx="118" fill="url(#fbg)"/>
-  <!-- Inset rim. Drawn at half the stroke width in from the edge so the stroke sits fully
-       inside the 512 box — a centred stroke would be clipped along the outside. -->
-  <rect x="7" y="7" width="498" height="498" rx="111"
-        fill="none" stroke="#3b6fd4" stroke-opacity="0.55" stroke-width="14"/>
   <g transform="translate(256 256) scale(1.18) translate(-256 -256)">
     <path d="M300 74 138 306c-8 11 0 26 14 26h74l-22 100c-4 15 16 24 26 12l162-232c8-11 0-26-14-26h-74l22-100c4-15-16-24-26-12Z"
           fill="url(#fbolt)"/>

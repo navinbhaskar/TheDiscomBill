@@ -1,18 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="TheDiscomBill">
   <!-- Maskable variant: full-bleed square (Android crops it to whatever shape the launcher
-       uses), with the bolt held inside the 80% safe zone so no crop clips it. Same navy/gold
-       palette as favicon.svg and icon.svg so the installed app icon matches the browser tab
-       — but deliberately NOT a copy of them: those carry rounded corners AND an inset rim,
-       both of which would be clipped or double-rounded once the launcher applies its mask. -->
+       uses), with the bolt held inside the 80% safe zone so no crop clips it. Same royal-blue
+       and amber palette as favicon.svg and icon.svg so the installed app icon matches the
+       browser tab — but deliberately NOT a copy of them: those carry rounded corners, which
+       would be double-rounded once the launcher applies its own mask. The gradient centre is
+       nudged toward the true middle here, since a launcher may crop this to a circle. -->
   <defs>
-    <linearGradient id="mbg" x1="0.15" y1="0" x2="0.85" y2="1">
-      <stop offset="0" stop-color="#1e3a8a"/>
-      <stop offset="0.55" stop-color="#122c66"/>
-      <stop offset="1" stop-color="#0b1e46"/>
-    </linearGradient>
+    <radialGradient id="mbg" cx="0.5" cy="0.4" r="0.85">
+      <stop offset="0" stop-color="#5c76ca"/>
+      <stop offset="0.55" stop-color="#4160b5"/>
+      <stop offset="1" stop-color="#26418f"/>
+    </radialGradient>
     <linearGradient id="mbolt" x1="0.2" y1="0" x2="0.8" y2="1">
-      <stop offset="0" stop-color="#fde047"/>
-      <stop offset="1" stop-color="#f59e0b"/>
+      <stop offset="0" stop-color="#f7c34e"/>
+      <stop offset="1" stop-color="#ee9a26"/>
     </linearGradient>
   </defs>
   <rect width="512" height="512" fill="url(#mbg)"/>

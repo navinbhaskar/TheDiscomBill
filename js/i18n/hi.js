@@ -19,7 +19,6 @@ export default {
     'ql.tariffs': 'टैरिफ',
     'ql.services': 'सेवाएँ',
     'ql.learn': 'जानें',
-    'ql.company': 'कंपनी',
     'ql.compare': 'डिस्कॉम टैरिफ तुलना',
     'ql.usage': 'बिजली लागत कैलकुलेटर',
     'ql.solar': 'रूफटॉप सोलर बचत',

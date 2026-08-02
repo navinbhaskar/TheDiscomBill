@@ -25,7 +25,6 @@ export const STRINGS = {
     'ql.tariffs': 'Tariffs',
     'ql.services': 'Services',
     'ql.learn': 'Learn',
-    'ql.company': 'Company',
     'ql.compare': 'Compare DISCOM Tariffs',
     'ql.usage': 'Electricity Cost Calculator',
     'ql.solar': 'Rooftop Solar Savings',
@@ -435,7 +434,7 @@ export const STRINGS = {
     'gloss.disclaimer': 'General definitions based on common Indian tariff practice; the exact treatment of any charge varies by state, DISCOM and consumer category. Verify against your DISCOM\'s tariff order or your printed bill.',
     // Footer
     'footer.l1': '&copy; 2026 TheDiscomBill &nbsp;·&nbsp; Free Electricity Bill Calculator for India',
-    'footer.l2': 'Tariff data is approximate and based on publicly available information (2025-26). Not affiliated with any DISCOM, SERC, or government body. &nbsp;|&nbsp; <a href="#about">Disclaimer</a>',
+    'footer.l2': 'Tariff data is approximate and based on publicly available information (2025-26). Not affiliated with any DISCOM, SERC, or government body. &nbsp;|&nbsp; <a href="#about">Disclaimer</a> &nbsp;|&nbsp; <a href="/privacy/">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/">Cookie Policy</a>',
   },
 };
 
