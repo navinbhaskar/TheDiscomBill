@@ -21,6 +21,7 @@ import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
 
 import { TARIFF_DB, STATE_META, getStates, getDiscoms, tariffAge } from './js/tariffs/registry.js';
+import { FPPA_BY_STATE, FPPA_BY_DISCOM, pick as pickFppa } from './js/tariffs/fppa.js';
 import { calculateBill } from './js/engine.js';
 import { GUIDES } from './guides-content.js';
 import { GLOSSARY } from './glossary-content.js';
@@ -350,6 +351,7 @@ const FOOTER_SITEMAP = `
         <a href="/guides/" data-i18n="nav.blog">Blog</a>
         <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/fuel-surcharge/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
       </div>
@@ -2361,6 +2363,244 @@ function glossaryPage(lang = 'en') {
   });
 }
 
+// ── Fuel-surcharge tracker (/fuel-surcharge/) ─────────────────────────────────
+// The FPPA layer is the freshest data on this site — notified MONTHLY, where tariff
+// orders move once a year — and until now it was only ever visible as a single line
+// inside a calculated bill. This page surfaces the series itself.
+//
+// Pre-rendered from js/tariffs/fppa.js at build time rather than fetched in the browser:
+// the entire point is that a crawler can read the current rate, and a JS-rendered table
+// gives it nothing on first pass. Re-run `npm run seo` after every FPPA notice.
+//
+// English-only, deliberately. Vernacular twins are scoped per-state via langServesState(),
+// and this page is pan-India in framing but three-state in data — a combination the
+// existing hreflang logic has no honest answer for. Revisit when coverage is national.
+const fsMonth = (iso) => new Date(iso + 'T00:00:00Z')
+  .toLocaleDateString('en-IN', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+const fsMonthLong = (iso) => new Date(iso + 'T00:00:00Z')
+  .toLocaleDateString('en-IN', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+// "+10.00%" / "-4.43%" / "₹1.00/unit" — the sign is load-bearing here, because a negative
+// FPPA is a CREDIT on the bill, not a charge, and readers consistently misread that.
+const fsRate = (e) => !e ? '—'
+  : e.mode === 'percent' ? `${e.rate > 0 ? '+' : ''}${e.rate.toFixed(2)}%`
+  : `${rupeeRate(e.rate)}/unit`;
+
+// Bar chart of a monthly percent series. Inline SVG with no script and no library: it has
+// to survive being read by a crawler and by someone with JS off, and it is the one visual
+// that makes "this moves every month" obvious at a glance. Colours come from CSS classes
+// so the chart follows the light/dark theme.
+function fsChart(series) {
+  const W = 720, H = 210, PAD_L = 38, PAD_T = 14, PAD_B = 30;
+  const plotW = W - PAD_L - 10, plotH = H - PAD_T - PAD_B;
+  const max = Math.max(10, ...series.map(e => Math.abs(e.rate)));
+  const zeroY = PAD_T + plotH / 2;
+  const unit = (plotH / 2) / max;
+  const step = plotW / series.length;
+  const bw = Math.max(6, step * 0.55);
+
+  const bars = series.map((e, i) => {
+    const cx = PAD_L + step * i + step / 2;
+    const h = Math.abs(e.rate) * unit;
+    const y = e.rate >= 0 ? zeroY - h : zeroY;
+    const cls = e.rate >= 0 ? 'fs-bar fs-bar-pos' : 'fs-bar fs-bar-neg';
+    // Label every third month, else the axis is unreadable below ~600px.
+    const lbl = i % 3 === 0
+      ? `<text class="fs-axis" x="${cx.toFixed(1)}" y="${H - 10}" text-anchor="middle">${esc(fsMonth(e.from).replace(' ', ' '))}</text>`
+      : '';
+    return `<rect class="${cls}" x="${(cx - bw / 2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(1, h).toFixed(1)}" rx="2"><title>${esc(fsMonth(e.from))}: ${esc(fsRate(e))}</title></rect>${lbl}`;
+  }).join('');
+
+  const gridLines = [max, max / 2, 0, -max / 2, -max].map(v => {
+    const y = zeroY - v * unit;
+    const isZero = Math.abs(v) < 0.001;
+    return `<line class="fs-grid${isZero ? ' fs-grid-zero' : ''}" x1="${PAD_L}" y1="${y.toFixed(1)}" x2="${W - 10}" y2="${y.toFixed(1)}"/>`
+      + `<text class="fs-axis" x="${PAD_L - 6}" y="${(y + 3.5).toFixed(1)}" text-anchor="end">${v > 0 ? '+' : ''}${v.toFixed(0)}%</text>`;
+  }).join('');
+
+  const first = fsMonth(series[0].from), last = fsMonth(series[series.length - 1].from);
+  return `<figure class="fs-chart-wrap">
+      <svg class="fs-chart" viewBox="0 0 ${W} ${H}" role="img"
+           aria-label="Monthly UPPCL fuel surcharge from ${esc(first)} to ${esc(last)}. Bars above the zero line are charges, bars below are credits.">
+        ${gridLines}${bars}
+      </svg>
+      <figcaption>Bars above the line are a <strong>charge</strong>; bars below are a
+      <strong>credit</strong> back to you. The two spikes at +10% are the regulation's
+      monthly ceiling — the excess is carried into later months, not written off.</figcaption>
+    </figure>`;
+}
+
+function fuelSurchargePage() {
+  const url = '/fuel-surcharge/';
+  const title = 'Electricity Fuel Surcharge Tracker — Current FPPA / PPAC Rates by State';
+  const description = 'Live fuel-surcharge rates (FPPA, FPPAS, PPAC) for Uttar Pradesh, Delhi and Rajasthan, '
+    + 'with the full month-by-month history, what each rate adds to your bill, and the tariff regulation it is levied under.';
+
+  // DISCOM id → display name + state, so the per-DISCOM tables can name their state.
+  const meta = {};
+  for (const st of getStates()) for (const d of getDiscoms(st)) meta[d.id] = { name: d.name, state: st };
+
+  // ── current standing rates ──────────────────────────────────────────────────
+  // pick() resolves against today's date, which is what makes this a tracker rather than
+  // an archive. A state whose current month has no notice yet resolves to null — that is
+  // reported as "not yet notified", never silently as zero, because zero is a claim.
+  const nowMonth = fsMonthLong(TODAY.slice(0, 8) + '01');
+  const rows = [];
+  for (const [state, list] of Object.entries(FPPA_BY_STATE)) {
+    rows.push({ who: state, scope: 'All DISCOMs', state, cur: pickFppa(list, TODAY), list });
+  }
+  for (const [id, list] of Object.entries(FPPA_BY_DISCOM)) {
+    const m = meta[id];
+    if (!m) continue;
+    rows.push({ who: m.name, code: id.toUpperCase(), scope: m.state, state: m.state, cur: pickFppa(list, TODAY), list });
+  }
+  rows.sort((a, b) => a.state.localeCompare(b.state) || a.who.localeCompare(b.who));
+
+  const currentRows = rows.map(r => {
+    const latest = r.list[0];
+    const cur = r.cur;
+    const val = cur ? `<strong class="${cur.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(cur))}</strong>` : '<span class="fs-pending">Not yet notified</span>';
+    // Labels are authored for the bill line ("BRPL PPAC (from Jun 2026…)"), where the DISCOM
+    // is not otherwise stated. Here column one already names it, so the prefix is dead weight
+    // in a column that is the first to get squeezed on a phone.
+    const note = cur
+      ? esc(r.code && cur.label.startsWith(r.code + ' ') ? cur.label.slice(r.code.length + 1) : cur.label)
+      : `Last notified: ${esc(fsMonth(latest.from))} at ${esc(fsRate(latest))}`;
+    return `<tr><td>${esc(r.who)}</td><td>${esc(r.scope)}</td><td>${val}</td><td>${note}</td></tr>`;
+  }).join('');
+
+  // ── UP monthly series (the only state with a true month-by-month history) ────
+  const upSeries = [...FPPA_BY_STATE['Uttar Pradesh']].sort((a, b) => a.from.localeCompare(b.from));
+  const upChart = fsChart(upSeries);
+  const upRows = [...upSeries].reverse().map(e =>
+    `<tr><td>${esc(fsMonth(e.from))}</td><td class="${e.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(e))}</td><td>${e.rate >= 0 ? 'Charge' : 'Credit'}</td></tr>`).join('');
+  const upCharges = upSeries.filter(e => e.rate > 0).length;
+  const upCredits = upSeries.length - upCharges;
+  const upAvg = upSeries.reduce((s, e) => s + e.rate, 0) / upSeries.length;
+
+  // Worked example — deliberately static text, not a JS widget, because this is the passage
+  // most likely to be pulled into an AI answer or a featured snippet, and neither reads JS.
+  const exBase = 1500, exPct = 10, exAmt = exBase * exPct / 100;
+
+  const delhiRows = rows.filter(r => r.state === 'Delhi').map(r =>
+    `<tr><td>${esc(r.who)}</td><td class="fs-pos">${esc(fsRate(r.cur))}</td><td>${esc(r.cur ? r.cur.label : '—')}</td></tr>`).join('');
+
+  const body = `
+  <section class="seo-page container">
+    ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Fuel Surcharge', url: null }])}
+    <h1>Electricity Fuel Surcharge Tracker</h1>
+    <p class="seo-lead">Your tariff is fixed for the year. Your <strong>fuel surcharge is not</strong> —
+    it is renotified every month, it can double-digit your bill without any tariff hike, and it is the
+    single most common reason a bill jumps with no change in your usage. This page tracks the
+    published rate for every state we have verified data for.</p>
+    <p class="privacy-updated">Last updated ${LASTMOD_TOKEN.en} &middot; Rates as notified by the
+    state regulator or DISCOM &middot; See also <a href="/guides/how-fppa-fuel-surcharge-is-calculated/">how
+    the fuel surcharge is calculated</a></p>
+
+    <section class="seo-section">
+      <h2>Current rates — ${esc(nowMonth)}</h2>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>State / DISCOM</th><th>Applies to</th><th>Current rate</th><th>Notice</th></tr></thead>
+          <tbody>${currentRows}</tbody>
+        </table>
+      </div>
+      <p class="fs-legend"><strong>A negative rate is a credit</strong>, not a charge — when fuel
+      costs fall below what the tariff assumed, the difference comes back to you. Where a month
+      shows "not yet notified", the regulator has not published that month's figure at the time
+      of writing; we leave it blank rather than assume zero.</p>
+    </section>
+
+    <section class="seo-section">
+      <h2>Uttar Pradesh: 16 months of FPPAS</h2>
+      <p>UPPCL notifies a Fuel and Power Purchase Adjustment Surcharge every month as a
+      <strong>percentage of your fixed + energy charges</strong>, under
+      <a href="/guides/how-fppa-fuel-surcharge-is-calculated/">UPERC MYT Regulations 2025</a>.
+      Of the ${upSeries.length} months we have verified, ${upCharges} were a charge and
+      ${upCredits} were a credit, averaging ${upAvg > 0 ? '+' : ''}${upAvg.toFixed(2)}%.</p>
+      ${upChart}
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>Month</th><th>FPPAS</th><th>Effect</th></tr></thead>
+          <tbody>${upRows}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="seo-section">
+      <h2>What does 10% actually cost you?</h2>
+      <p>The surcharge is applied to your <strong>fixed charges plus energy charges</strong> —
+      not to the bill total, and not after taxes. So on a bill where those come to
+      ${rupee(exBase)}, a ${exPct}% surcharge adds <strong>${rupee(exAmt)}</strong>, and
+      electricity duty is then charged on the larger figure.</p>
+      <p>That ordering matters and is frequently got wrong: duty applies <em>after</em> the
+      surcharge, so a 10% fuel surcharge costs slightly more than 10%. Our
+      <a href="/#calculator">bill calculator</a> applies the correct rate for your DISCOM and
+      billing month automatically — you do not need to look it up here first.</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Calculate my bill with this month's surcharge</a></p>
+    </section>
+
+    <section class="seo-section">
+      <h2>Delhi: PPAC, revised monthly since June 2026</h2>
+      <p>Delhi calls it PPAC (Power Purchase Adjustment Cost) and sets it <strong>per DISCOM</strong>,
+      so two neighbours on different networks pay different surcharges on identical usage. DERC
+      moved from periodic to monthly revisions in June 2026 and sanctioned sharply higher rates.</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>DISCOM</th><th>Current PPAC</th><th>Notice</th></tr></thead>
+          <tbody>${delhiRows}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="seo-section">
+      <h2>Why it changes every month</h2>
+      <p>A tariff order fixes what you pay per unit for a year, based on an assumption about what
+      power will cost the DISCOM to buy. Fuel prices do not respect that assumption. The fuel
+      surcharge is the true-up: when actual power-purchase cost runs above the assumed figure,
+      the gap is passed through to you; when it runs below, you get a credit.</p>
+      <p>Most states cap how much can be recovered in one cycle — Uttar Pradesh at 10% — and carry
+      the excess forward. That is why you can see two consecutive months pinned at exactly the
+      ceiling: the underlying gap was larger than the cap allowed.</p>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/guides/how-fppa-fuel-surcharge-is-calculated/"><strong>How FPPA is calculated</strong><span>The formula, both methods, and where it lands on your bill</span></a>
+        <a class="seo-link-card" href="/guides/msedcl-fppa-charges-explained/"><strong>FPPA on an MSEDCL bill</strong><span>Maharashtra's version, line by line</span></a>
+        <a class="seo-link-card" href="/guides/why-did-my-electricity-bill-increase/"><strong>Why did my bill go up?</strong><span>Fuel surcharge is one of nine common causes</span></a>
+      </div>
+    </section>
+
+    <section class="seo-section">
+      <h2>Coverage and sources</h2>
+      <p>We publish a rate only where we have the regulator's or DISCOM's own notice. That
+      currently means <strong>Uttar Pradesh, Delhi and Rajasthan</strong>. For every other state
+      the calculator defaults the surcharge to zero and lets you type in the figure printed on
+      your own bill — an honest blank rather than a plausible guess.</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>State</th><th>Mechanism</th><th>Basis</th><th>Source</th></tr></thead>
+          <tbody>
+            <tr><td>Uttar Pradesh</td><td>FPPAS</td><td>% of fixed + energy charges, capped at 10%/cycle</td><td>UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</td></tr>
+            <tr><td>Delhi</td><td>PPAC</td><td>% of fixed + energy charges, set per DISCOM</td><td>DERC PPAC approvals</td></tr>
+            <tr><td>Rajasthan</td><td>Regulatory Surcharge (incl. FPPAS)</td><td>Flat per-unit</td><td>Tariff for Supply of Electricity-2025 §32 (RERC)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Spotted a rate that does not match your bill? That is a bug worth fixing —
+      <a href="/contact/">tell us</a> and include the month and DISCOM.</p>
+    </section>
+
+    <p class="seo-disclaimer">Fuel-surcharge rates are published by state regulators and DISCOMs and
+    change monthly. Figures here are transcribed from those notices and are indicative, not a
+    substitute for your printed bill. Not affiliated with any DISCOM, SERC or government body.</p>
+  </section>`;
+
+  return layout({
+    title, description, canonical: SITE + url, page: url, altLangs: [],
+    jsonld: [breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Fuel Surcharge', url }])],
+    body,
+  });
+}
+
 // ── 404 (/404.html) ───────────────────────────────────────────────────────────
 // GitHub Pages serves /404.html (with a 404 status) for any unmatched path. Without
 // one, visitors hitting a stale/mistyped URL — of which there are many as GSC indexes
@@ -2785,6 +3025,9 @@ function buildSitemap(states) {
     urls.push({ loc: `/guides/${g.slug}/`, priority: '0.7', changefreq: 'monthly', langs: VERNACULARS.filter(l => guideHasBody(g, l)) });
   }
   urls.push({ loc: '/glossary/', priority: '0.7', changefreq: 'monthly', langs: [...VERNACULARS] });
+  // No `langs`: the tracker has no vernacular twin. changefreq monthly is literal here —
+  // the underlying FPPA notices are published month by month.
+  urls.push({ loc: '/fuel-surcharge/', priority: '0.8', changefreq: 'monthly' });
   urls.push({ loc: '/tariffs/states/', priority: '0.8', changefreq: 'monthly', langs: [...VERNACULARS] });
   urls.push({ loc: '/smart-meter-recharge/', priority: '0.8', changefreq: 'monthly', langs: [...VERNACULARS] });
   for (const state of states) {
@@ -2975,6 +3218,7 @@ function writeSearchIndex(states) {
     ['Sanctioned Load Optimizer', 'स्वीकृत भार ऑप्टिमाइज़र', '/sanctioned-load-optimizer/', 'sanctioned load reduce fixed charge kw contracted demand md maximum demand optimizer'],
     ['Solar Subsidy Checker', 'सोलर सब्सिडी चेकर (PM सूर्य घर)', '/solar-subsidy-checker/', 'pm surya ghar rooftop solar subsidy muft bijli yojana system size payback kw 78000 eligibility'],
     ['Tenant Sub-Meter Calculator', 'किरायेदार सब-मीटर कैलकुलेटर', '/tenant-submeter-calculator/', 'tenant landlord submeter sub meter overcharging flat rate per unit pg rent electricity split share'],
+    ['Fuel Surcharge Tracker', 'ईंधन अधिभार ट्रैकर', '/fuel-surcharge/', 'fppa fppas ppac fuel surcharge fuel power purchase adjustment current rate this month uppcl derc delhi rajasthan monthly history bill increase'],
     ['Methodology', 'कार्यप्रणाली', '/methodology/', 'how rates verified sources'],
     ['Cookie Policy', 'कुकी नीति', '/cookies/', 'cookies cookie policy tracking analytics ga consent local storage banner'],
     ['Privacy Policy', 'गोपनीयता नीति', '/privacy/', 'privacy policy data dpdp personal information cookies analytics delete my data gdpr'],
@@ -3063,6 +3307,9 @@ export function generateSeo() {
 
     emitPage(`${p}smart-meter-recharge`, smartMeterHubPage(states, lang));
     pages++;
+
+    // English-only (see the note on fuelSurchargePage) — emitted once, not per language.
+    if (lang === 'en') { emitPage('fuel-surcharge', fuelSurchargePage()); pages++; }
 
     for (const state of states) {
       if (!langServesState(lang, state)) continue;   // vernacular tariff twins are state-scoped

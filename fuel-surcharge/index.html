@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      
+    })();
+  </script>
+  <title>Electricity Fuel Surcharge Tracker — Current FPPA / PPAC Rates by State</title>
+  <meta name="description" content="Live fuel-surcharge rates (FPPA, FPPAS, PPAC) for Uttar Pradesh, Delhi and Rajasthan, with the full month-by-month history, what each rate adds to your bill, and the tariff regulation it is levied under.">
+  <link rel="canonical" href="https://thediscombill.com/fuel-surcharge/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fuel-surcharge/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fuel-surcharge/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="Electricity Fuel Surcharge Tracker — Current FPPA / PPAC Rates by State">
+  <meta property="og:description" content="Live fuel-surcharge rates (FPPA, FPPAS, PPAC) for Uttar Pradesh, Delhi and Rajasthan, with the full month-by-month history, what each rate adds to your bill, and the tariff regulation it is levied under.">
+  <meta property="og:url" content="https://thediscombill.com/fuel-surcharge/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="Electricity Fuel Surcharge Tracker — Current FPPA / PPAC Rates by State">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:locale:alternate" content="hi_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Electricity Fuel Surcharge Tracker — Current FPPA / PPAC Rates by State">
+  <meta name="twitter:description" content="Live fuel-surcharge rates (FPPA, FPPAS, PPAC) for Uttar Pradesh, Delhi and Rajasthan, with the full month-by-month history, what each rate adds to your bill, and the tariff regulation it is levied under.">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. Preload the weights that paint first. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-600-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <link rel="stylesheet" href="/css/styles.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/fuel-surcharge/","name":"Electricity Fuel Surcharge Tracker — Current FPPA / PPAC Rates by State","description":"Live fuel-surcharge rates (FPPA, FPPAS, PPAC) for Uttar Pradesh, Delhi and Rajasthan, with the full month-by-month history, what each rate adds to your bill, and the tariff regulation it is levied under.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-02"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Fuel Surcharge","item":"https://thediscombill.com/fuel-surcharge/"}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <a href="/compare/" class="nav-promoted" data-i18n="nav.compare">Compare Rates</a>
+      <a href="/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/#calculator" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-i18n="nav.compare">Compare Rates</span></a>
+            <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+            <a href="/#about" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span data-i18n="nav.about">About</span></a>
+          </div>
+        </div>
+      </div>
+      <a href="/#about" data-i18n="nav.about">About</a>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body" role="main">
+
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">Fuel Surcharge</span></li></ol></nav>
+    <h1>Electricity Fuel Surcharge Tracker</h1>
+    <p class="seo-lead">Your tariff is fixed for the year. Your <strong>fuel surcharge is not</strong> —
+    it is renotified every month, it can double-digit your bill without any tariff hike, and it is the
+    single most common reason a bill jumps with no change in your usage. This page tracks the
+    published rate for every state we have verified data for.</p>
+    <p class="privacy-updated">Last updated 2 August 2026 &middot; Rates as notified by the
+    state regulator or DISCOM &middot; See also <a href="/guides/how-fppa-fuel-surcharge-is-calculated/">how
+    the fuel surcharge is calculated</a></p>
+
+    <section class="seo-section">
+      <h2>Current rates — August 2026</h2>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>State / DISCOM</th><th>Applies to</th><th>Current rate</th><th>Notice</th></tr></thead>
+          <tbody><tr><td>BRPL (BSES Rajdhani)</td><td>Delhi</td><td><strong class="fs-pos">+17.94%</strong></td><td>PPAC (from Jun 2026, monthly revisions)</td></tr><tr><td>BYPL (BSES Yamuna)</td><td>Delhi</td><td><strong class="fs-pos">+17.43%</strong></td><td>PPAC (from Jun 2026, monthly revisions)</td></tr><tr><td>Tata Power-DDL (TPDDL)</td><td>Delhi</td><td><strong class="fs-pos">+16.00%</strong></td><td>PPAC (from Jun 2026, monthly revisions)</td></tr><tr><td>AVVNL</td><td>Rajasthan</td><td><strong class="fs-pos">₹1.00/unit</strong></td><td>Regulatory Surcharge (incl. FPPAS)</td></tr><tr><td>JdVVNL</td><td>Rajasthan</td><td><strong class="fs-pos">₹1.00/unit</strong></td><td>Regulatory Surcharge (incl. FPPAS)</td></tr><tr><td>JVVNL</td><td>Rajasthan</td><td><strong class="fs-pos">₹1.00/unit</strong></td><td>Regulatory Surcharge (incl. FPPAS)</td></tr><tr><td>Uttar Pradesh</td><td>All DISCOMs</td><td><span class="fs-pending">Not yet notified</span></td><td>Last notified: Jul 2026 at -4.43%</td></tr></tbody>
+        </table>
+      </div>
+      <p class="fs-legend"><strong>A negative rate is a credit</strong>, not a charge — when fuel
+      costs fall below what the tariff assumed, the difference comes back to you. Where a month
+      shows "not yet notified", the regulator has not published that month's figure at the time
+      of writing; we leave it blank rather than assume zero.</p>
+    </section>
+
+    <section class="seo-section">
+      <h2>Uttar Pradesh: 16 months of FPPAS</h2>
+      <p>UPPCL notifies a Fuel and Power Purchase Adjustment Surcharge every month as a
+      <strong>percentage of your fixed + energy charges</strong>, under
+      <a href="/guides/how-fppa-fuel-surcharge-is-calculated/">UPERC MYT Regulations 2025</a>.
+      Of the 16 months we have verified, 10 were a charge and
+      6 were a credit, averaging +1.52%.</p>
+      <figure class="fs-chart-wrap">
+      <svg class="fs-chart" viewBox="0 0 720 210" role="img"
+           aria-label="Monthly UPPCL fuel surcharge from Apr 2025 to Jul 2026. Bars above the zero line are charges, bars below are credits.">
+        <line class="fs-grid" x1="38" y1="14.0" x2="710" y2="14.0"/><text class="fs-axis" x="32" y="17.5" text-anchor="end">+10%</text><line class="fs-grid" x1="38" y1="55.5" x2="710" y2="55.5"/><text class="fs-axis" x="32" y="59.0" text-anchor="end">+5%</text><line class="fs-grid fs-grid-zero" x1="38" y1="97.0" x2="710" y2="97.0"/><text class="fs-axis" x="32" y="100.5" text-anchor="end">0%</text><line class="fs-grid" x1="38" y1="138.5" x2="710" y2="138.5"/><text class="fs-axis" x="32" y="142.0" text-anchor="end">-5%</text><line class="fs-grid" x1="38" y1="180.0" x2="710" y2="180.0"/><text class="fs-axis" x="32" y="183.5" text-anchor="end">-10%</text><rect class="fs-bar fs-bar-pos" x="47.5" y="86.7" width="23.1" height="10.3" rx="2"><title>Apr 2025: +1.24%</title></rect><text class="fs-axis" x="59.0" y="200" text-anchor="middle">Apr 2025</text><rect class="fs-bar fs-bar-neg" x="89.5" y="97.0" width="23.1" height="16.6" rx="2"><title>May 2025: -2.00%</title></rect><rect class="fs-bar fs-bar-pos" x="131.4" y="61.6" width="23.1" height="35.4" rx="2"><title>Jun 2025: +4.27%</title></rect><rect class="fs-bar fs-bar-pos" x="173.4" y="80.6" width="23.1" height="16.4" rx="2"><title>Jul 2025: +1.97%</title></rect><text class="fs-axis" x="185.0" y="200" text-anchor="middle">Jul 2025</text><rect class="fs-bar fs-bar-pos" x="215.4" y="95.0" width="23.1" height="2.0" rx="2"><title>Aug 2025: +0.24%</title></rect><rect class="fs-bar fs-bar-pos" x="257.4" y="77.6" width="23.1" height="19.4" rx="2"><title>Sept 2025: +2.34%</title></rect><rect class="fs-bar fs-bar-neg" x="299.4" y="97.0" width="23.1" height="13.5" rx="2"><title>Oct 2025: -1.63%</title></rect><text class="fs-axis" x="311.0" y="200" text-anchor="middle">Oct 2025</text><rect class="fs-bar fs-bar-pos" x="341.4" y="81.8" width="23.1" height="15.2" rx="2"><title>Nov 2025: +1.83%</title></rect><rect class="fs-bar fs-bar-pos" x="383.4" y="50.9" width="23.1" height="46.1" rx="2"><title>Dec 2025: +5.56%</title></rect><rect class="fs-bar fs-bar-neg" x="425.4" y="97.0" width="23.1" height="19.3" rx="2"><title>Jan 2026: -2.33%</title></rect><text class="fs-axis" x="437.0" y="200" text-anchor="middle">Jan 2026</text><rect class="fs-bar fs-bar-pos" x="467.4" y="14.0" width="23.1" height="83.0" rx="2"><title>Feb 2026: +10.00%</title></rect><rect class="fs-bar fs-bar-neg" x="509.4" y="97.0" width="23.1" height="20.1" rx="2"><title>Mar 2026: -2.42%</title></rect><rect class="fs-bar fs-bar-pos" x="551.5" y="86.7" width="23.1" height="10.3" rx="2"><title>Apr 2026: +1.24%</title></rect><text class="fs-axis" x="563.0" y="200" text-anchor="middle">Apr 2026</text><rect class="fs-bar fs-bar-neg" x="593.5" y="97.0" width="23.1" height="12.6" rx="2"><title>May 2026: -1.52%</title></rect><rect class="fs-bar fs-bar-pos" x="635.5" y="14.0" width="23.1" height="83.0" rx="2"><title>Jun 2026: +10.00%</title></rect><rect class="fs-bar fs-bar-neg" x="677.5" y="97.0" width="23.1" height="36.8" rx="2"><title>Jul 2026: -4.43%</title></rect><text class="fs-axis" x="689.0" y="200" text-anchor="middle">Jul 2026</text>
+      </svg>
+      <figcaption>Bars above the line are a <strong>charge</strong>; bars below are a
+      <strong>credit</strong> back to you. The two spikes at +10% are the regulation's
+      monthly ceiling — the excess is carried into later months, not written off.</figcaption>
+    </figure>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>Month</th><th>FPPAS</th><th>Effect</th></tr></thead>
+          <tbody><tr><td>Jul 2026</td><td class="fs-neg">-4.43%</td><td>Credit</td></tr><tr><td>Jun 2026</td><td class="fs-pos">+10.00%</td><td>Charge</td></tr><tr><td>May 2026</td><td class="fs-neg">-1.52%</td><td>Credit</td></tr><tr><td>Apr 2026</td><td class="fs-pos">+1.24%</td><td>Charge</td></tr><tr><td>Mar 2026</td><td class="fs-neg">-2.42%</td><td>Credit</td></tr><tr><td>Feb 2026</td><td class="fs-pos">+10.00%</td><td>Charge</td></tr><tr><td>Jan 2026</td><td class="fs-neg">-2.33%</td><td>Credit</td></tr><tr><td>Dec 2025</td><td class="fs-pos">+5.56%</td><td>Charge</td></tr><tr><td>Nov 2025</td><td class="fs-pos">+1.83%</td><td>Charge</td></tr><tr><td>Oct 2025</td><td class="fs-neg">-1.63%</td><td>Credit</td></tr><tr><td>Sept 2025</td><td class="fs-pos">+2.34%</td><td>Charge</td></tr><tr><td>Aug 2025</td><td class="fs-pos">+0.24%</td><td>Charge</td></tr><tr><td>Jul 2025</td><td class="fs-pos">+1.97%</td><td>Charge</td></tr><tr><td>Jun 2025</td><td class="fs-pos">+4.27%</td><td>Charge</td></tr><tr><td>May 2025</td><td class="fs-neg">-2.00%</td><td>Credit</td></tr><tr><td>Apr 2025</td><td class="fs-pos">+1.24%</td><td>Charge</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="seo-section">
+      <h2>What does 10% actually cost you?</h2>
+      <p>The surcharge is applied to your <strong>fixed charges plus energy charges</strong> —
+      not to the bill total, and not after taxes. So on a bill where those come to
+      ₹1,500, a 10% surcharge adds <strong>₹150</strong>, and
+      electricity duty is then charged on the larger figure.</p>
+      <p>That ordering matters and is frequently got wrong: duty applies <em>after</em> the
+      surcharge, so a 10% fuel surcharge costs slightly more than 10%. Our
+      <a href="/#calculator">bill calculator</a> applies the correct rate for your DISCOM and
+      billing month automatically — you do not need to look it up here first.</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Calculate my bill with this month's surcharge</a></p>
+    </section>
+
+    <section class="seo-section">
+      <h2>Delhi: PPAC, revised monthly since June 2026</h2>
+      <p>Delhi calls it PPAC (Power Purchase Adjustment Cost) and sets it <strong>per DISCOM</strong>,
+      so two neighbours on different networks pay different surcharges on identical usage. DERC
+      moved from periodic to monthly revisions in June 2026 and sanctioned sharply higher rates.</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>DISCOM</th><th>Current PPAC</th><th>Notice</th></tr></thead>
+          <tbody><tr><td>BRPL (BSES Rajdhani)</td><td class="fs-pos">+17.94%</td><td>BRPL PPAC (from Jun 2026, monthly revisions)</td></tr><tr><td>BYPL (BSES Yamuna)</td><td class="fs-pos">+17.43%</td><td>BYPL PPAC (from Jun 2026, monthly revisions)</td></tr><tr><td>Tata Power-DDL (TPDDL)</td><td class="fs-pos">+16.00%</td><td>TPDDL PPAC (from Jun 2026, monthly revisions)</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="seo-section">
+      <h2>Why it changes every month</h2>
+      <p>A tariff order fixes what you pay per unit for a year, based on an assumption about what
+      power will cost the DISCOM to buy. Fuel prices do not respect that assumption. The fuel
+      surcharge is the true-up: when actual power-purchase cost runs above the assumed figure,
+      the gap is passed through to you; when it runs below, you get a credit.</p>
+      <p>Most states cap how much can be recovered in one cycle — Uttar Pradesh at 10% — and carry
+      the excess forward. That is why you can see two consecutive months pinned at exactly the
+      ceiling: the underlying gap was larger than the cap allowed.</p>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/guides/how-fppa-fuel-surcharge-is-calculated/"><strong>How FPPA is calculated</strong><span>The formula, both methods, and where it lands on your bill</span></a>
+        <a class="seo-link-card" href="/guides/msedcl-fppa-charges-explained/"><strong>FPPA on an MSEDCL bill</strong><span>Maharashtra's version, line by line</span></a>
+        <a class="seo-link-card" href="/guides/why-did-my-electricity-bill-increase/"><strong>Why did my bill go up?</strong><span>Fuel surcharge is one of nine common causes</span></a>
+      </div>
+    </section>
+
+    <section class="seo-section">
+      <h2>Coverage and sources</h2>
+      <p>We publish a rate only where we have the regulator's or DISCOM's own notice. That
+      currently means <strong>Uttar Pradesh, Delhi and Rajasthan</strong>. For every other state
+      the calculator defaults the surcharge to zero and lets you type in the figure printed on
+      your own bill — an honest blank rather than a plausible guess.</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>State</th><th>Mechanism</th><th>Basis</th><th>Source</th></tr></thead>
+          <tbody>
+            <tr><td>Uttar Pradesh</td><td>FPPAS</td><td>% of fixed + energy charges, capped at 10%/cycle</td><td>UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</td></tr>
+            <tr><td>Delhi</td><td>PPAC</td><td>% of fixed + energy charges, set per DISCOM</td><td>DERC PPAC approvals</td></tr>
+            <tr><td>Rajasthan</td><td>Regulatory Surcharge (incl. FPPAS)</td><td>Flat per-unit</td><td>Tariff for Supply of Electricity-2025 §32 (RERC)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Spotted a rate that does not match your bill? That is a bug worth fixing —
+      <a href="/contact/">tell us</a> and include the month and DISCOM.</p>
+    </section>
+
+    <p class="seo-disclaimer">Fuel-surcharge rates are published by state regulators and DISCOMs and
+    change monthly. Figures here are transcribed from those notices and are indicative, not a
+    substitute for your printed bill. Not affiliated with any DISCOM, SERC or government body.</p>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+        <a href="/compare/" data-i18n="nav.compare">Compare Rates</a>
+        <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</a>
+        <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/fuel-surcharge/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/contact/" data-i18n="ql.contact">Contact</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

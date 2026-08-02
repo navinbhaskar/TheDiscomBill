@@ -3361,6 +3361,49 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 .seo-breadcrumbs .crumb span { color: var(--text-tertiary); }
 .seo-breadcrumbs .crumb-sep { color: var(--text-tertiary); list-style: none; }
 
+/* ─── Dateline under an H1 ──────────────────────────────────────────────────────
+   Used by /privacy/, /cookies/ and /fuel-surcharge/. It shipped unstyled on the first
+   two — it is a bare <p>, so it inherited body copy and read as a first paragraph
+   rather than as metadata, which is exactly the opposite of what a dateline is for. */
+.privacy-updated {
+  font-size: 13.5px; line-height: 1.6; color: var(--text-tertiary);
+  margin: -6px 0 26px;
+}
+.privacy-updated a { color: var(--text-secondary); text-decoration: underline;
+  text-underline-offset: 2px; }
+.privacy-updated a:hover { color: var(--text-brand); }
+
+/* ─── Fuel-surcharge tracker (/fuel-surcharge/) ─────────────────────────────────
+   The chart is inline SVG with no script: it must render for a crawler and with JS off,
+   since it is the page's whole argument ("this number moves every month"). Colours are
+   semantic tokens, so charge/credit stay legible when the theme flips. */
+.fs-chart-wrap { margin: 22px 0 8px; }
+.fs-chart { display: block; width: 100%; height: auto; overflow: visible; }
+.fs-chart-wrap figcaption {
+  font-size: 13px; line-height: 1.6; color: var(--text-secondary); margin-top: 10px;
+}
+/* A charge costs you money, a credit gives it back — same red/green convention the
+   bill renderer already uses for .bg-credit, so the two views agree. */
+.fs-bar-pos { fill: var(--err-text); }
+.fs-bar-neg { fill: var(--ok-text); }
+.fs-grid { stroke: var(--border-default); stroke-width: 1; }
+.fs-grid-zero { stroke: var(--border-strong); stroke-width: 1.5; }
+/* Axis text is inside a 720-unit viewBox that scales to the container, so its RENDERED
+   size is font-size × (containerWidth / 720). At 375px that turns 11px into ~5.7px, which
+   is unreadable. These steps keep the effective size near 11px instead of the declared one. */
+.fs-axis { font-size: 11px; fill: var(--text-tertiary); }
+@media (max-width: 760px) { .fs-axis { font-size: 14px; } }
+@media (max-width: 600px) { .fs-axis { font-size: 18px; } }
+@media (max-width: 430px) { .fs-axis { font-size: 24px; } }
+.fs-pos { color: var(--err-text); }
+.fs-neg { color: var(--ok-text); }
+/* "Not yet notified" is a deliberate blank, not a zero — style it as absence, not as data. */
+.fs-pending { color: var(--text-tertiary); font-style: italic; }
+.fs-legend {
+  font-size: 14px; line-height: 1.7; color: var(--text-secondary);
+  border-left: 3px solid var(--border-default); padding-left: 14px; margin-top: 16px;
+}
+
 /* Primary CTA into the calculator */
 .seo-cta-row { margin: 18px 0; }
 /* Written for <a>, but it is also used on <button> (the /install/ prompt). A button does

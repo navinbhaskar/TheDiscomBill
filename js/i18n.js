@@ -42,6 +42,7 @@ export const STRINGS = {
     'ql.guides': 'Blogs & Articles',
     'ql.glossary': 'Bill Glossary',
     'ql.methodology': 'Methodology & Accuracy',
+    'ql.fuelSurcharge': 'Fuel Surcharge Tracker',
     'ql.contact': 'Contact',
     'ql.privacy': 'Privacy Policy',
     'ql.cookies': 'Cookie Policy',
