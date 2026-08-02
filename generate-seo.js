@@ -349,6 +349,8 @@ const FOOTER_SITEMAP = `
         <a href="/guides/" data-i18n="nav.blog">Blog</a>
         <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/contact/" data-i18n="ql.contact">Contact</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
         <a href="/#about" data-i18n="nav.about">About</a>
       </div>
     </nav>`;
@@ -1946,6 +1948,32 @@ function guideRelatedPagesHtml(guide, lang = 'en') {
     </section>`;
 }
 
+// Pick the N guides most related to `guide`. Every guide used to link to all 40 others,
+// which made the footer a wall and flattened internal linking — when everything links to
+// everything, no page is signalled as more important than any other.
+//
+// Shared state outranks shared topic deliberately: someone reading an MSEDCL guide is far
+// more likely to want another Maharashtra guide than a same-category guide about Kerala.
+// Ties break on GUIDES order so the output is deterministic across builds (a shuffling
+// footer would churn the diff on every `npm run seo`).
+function relatedGuides(guide, limit = 4) {
+  const myStates = new Set(guide.states || []);
+  const myCat = guideCategoryId(guide);
+  return GUIDES
+    .filter(g => g.slug !== guide.slug)
+    .map((g, i) => {
+      let score = 0;
+      for (const s of (g.states || [])) if (myStates.has(s)) score += 10;
+      if (guideCategoryId(g) === myCat) score += 4;
+      return { g, score, i };
+    })
+    // Keep a floor of `limit` cards even for a guide that matches nothing — an empty
+    // "More guides" heading looks broken. Unrelated-but-present beats absent here.
+    .sort((a, b) => b.score - a.score || a.i - b.i)
+    .slice(0, limit)
+    .map(r => r.g);
+}
+
 function guidePage(guide, lang = 'en') {
   // A guide only renders in a vernacular when its body is translated in the data file;
   // otherwise fall back to English (the driver also guards emission, so this is belt-and-braces).
@@ -1990,7 +2018,10 @@ function guidePage(guide, lang = 'en') {
     ta: 'படிப்பது பாதி வேலைதான் — உங்கள் DISCOM-இன் உண்மையான அடுக்கு விகிதங்கள், நிலையான கட்டணம் மற்றும் FPPA மூலம் உங்கள் யூனிட்களை இயக்கி விவரமான பில்லை சில நொடிகளில் பெறுங்கள். இலவசம், பதிவு தேவையில்லை.',
     en: 'Reading is half the job — run your own units through your DISCOM\'s real slab rates, fixed charges and FPPA and get an itemised bill in seconds. Free, no sign-up.' });
   const ctaBtn = T(L, { hi: 'बिजली बिल कैलकुलेटर खोलें →', mr: 'वीज बिल कॅल्क्युलेटर उघडा →', ta: 'மின் பில் கணிப்பானைத் திறக்கவும் →', en: 'Open the electricity bill calculator →' });
-  const moreH2 = T(L, { hi: 'और गाइड', mr: 'आणखी मार्गदर्शक', ta: 'மேலும் வழிகாட்டிகள்', en: 'More guides' });
+  const moreH2 = T(L, { hi: 'संबंधित गाइड', mr: 'संबंधित मार्गदर्शक', ta: 'தொடர்புடைய வழிகாட்டிகள்', en: 'Related guides' });
+  // The footer now shows 4 guides instead of all 40, so the index needs an explicit route —
+  // otherwise the other 36 lose their only inbound link from this page.
+  const allGuidesLabel = T(L, { hi: 'सभी गाइड देखें →', mr: 'सर्व मार्गदर्शक पहा →', ta: 'அனைத்து வழிகாட்டிகளையும் காண்க →', en: 'Browse all guides →' });
   const disclaimer = T(L, {
     hi: 'सार्वजनिक रूप से उपलब्ध टैरिफ आदेशों और विनियमों पर आधारित सामान्य मार्गदर्शन; विवरण राज्य, डिस्कॉम और उपभोक्ता श्रेणी के अनुसार बदलते हैं। अपने डिस्कॉम की आधिकारिक अनुसूची या छपे बिल से मिलान करें।',
     mr: 'सार्वजनिकरित्या उपलब्ध टॅरिफ आदेश आणि नियमांवर आधारित सामान्य मार्गदर्शन; तपशील राज्य, डिस्कॉम आणि ग्राहक श्रेणीनुसार बदलतात. तुमच्या डिस्कॉमच्या अधिकृत अनुसूचीशी किंवा छापील बिलाशी ताळमेळ करा.',
@@ -2016,7 +2047,7 @@ function guidePage(guide, lang = 'en') {
     ${guideRelatedPagesHtml(guide, L)}
     <section class="seo-section guide-more">
       <h2>${moreH2}</h2>
-      <div class="seo-link-grid">${GUIDES.filter(g => g.slug !== guide.slug).map(g => {
+      <div class="seo-link-grid">${relatedGuides(guide, 4).map(g => {
         const gt = guideField(g, 'title', L) || g.title;
         const gHref = (L !== 'en' && guideHasBody(g, L)) ? `/${L}/guides/${g.slug}/` : `/guides/${g.slug}/`;
         const gm = T(L, { hi: `${g.minutes} मिनट`, mr: `${g.minutes} मिनिटे`, ta: `${g.minutes} நிமிடம்`, en: `${g.minutes} min read` });
@@ -2026,6 +2057,7 @@ function guidePage(guide, lang = 'en') {
           <small>${gm}</small>
         </a>`; }).join('')}
       </div>
+      <p class="guide-more-all"><a href="${guidesBase}">${allGuidesLabel}</a></p>
     </section>
     <p class="seo-disclaimer">${disclaimer}</p>
   </section>`;
@@ -2720,6 +2752,8 @@ const STATIC_ROUTES = [
   { loc: '/bill-review/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/bill-review/sample-report/', priority: '0.5', changefreq: 'yearly' },
   { loc: '/methodology/', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/contact/', priority: '0.6', changefreq: 'yearly' },
+  { loc: '/install/', priority: '0.6', changefreq: 'yearly' },
   // index,follow + self-canonical + linked from the account nav, so it was already crawlable —
   // it was just never declared. Every other undeclared route (admin/, expert/, login/,
   // my-bills/, profile/, solar/, ev/, usage/) carries noindex or a cross-canonical on purpose.
@@ -2939,6 +2973,8 @@ function writeSearchIndex(states) {
     ['Solar Subsidy Checker', 'सोलर सब्सिडी चेकर (PM सूर्य घर)', '/solar-subsidy-checker/', 'pm surya ghar rooftop solar subsidy muft bijli yojana system size payback kw 78000 eligibility'],
     ['Tenant Sub-Meter Calculator', 'किरायेदार सब-मीटर कैलकुलेटर', '/tenant-submeter-calculator/', 'tenant landlord submeter sub meter overcharging flat rate per unit pg rent electricity split share'],
     ['Methodology', 'कार्यप्रणाली', '/methodology/', 'how rates verified sources'],
+    ['Contact', 'संपर्क करें', '/contact/', 'contact email get in touch report wrong tariff rate correction feedback partnership press support help'],
+    ['Install offline app', 'ऑफ़लाइन ऐप इंस्टॉल करें', '/install/', 'install app pwa offline home screen android ios iphone desktop add to home screen download apk play store'],
   ].forEach(([t, h, u, k]) => entries.push({ t, h, u, k, g: 'tool' }));
 
   for (const guide of GUIDES) {

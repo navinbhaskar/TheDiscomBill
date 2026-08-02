@@ -36,6 +36,8 @@ export default {
     'ql.guides': 'ब्लॉग और लेख',
     'ql.glossary': 'बिल शब्दावली',
     'ql.methodology': 'कार्यप्रणाली व सटीकता',
+    'ql.contact': 'संपर्क करें',
+    'ql.install': 'ऑफ़लाइन ऐप इंस्टॉल करें',
     // Shared footer links (generated pages + key pages)
     'footer.rights': '© 2026 TheDiscomBill. सर्वाधिकार सुरक्षित।',
     'footer.disclaimer': 'अस्वीकरण',

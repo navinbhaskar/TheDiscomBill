@@ -36,6 +36,8 @@ export default {
     'ql.guides': 'வலைப்பதிவுகள் & கட்டுரைகள்',
     'ql.glossary': 'பில் சொற்களஞ்சியம்',
     'ql.methodology': 'முறையியல் & துல்லியம்',
+    'ql.contact': 'தொடர்பு கொள்ள',
+    'ql.install': 'ஆஃப்லைன் ஆப்பை நிறுவுக',
     // Shared footer links (generated pages + key pages)
     'footer.rights': '© 2026 TheDiscomBill. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.',
     'footer.disclaimer': 'பொறுப்புத் துறப்பு',

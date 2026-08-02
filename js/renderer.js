@@ -62,15 +62,28 @@ export function numberToWords(amount) {
 // or more financial years behind the bill it says so: SERCs often retain rates, so behind is
 // never "wrong", but the state audits so far turned up stale entries matching no published
 // order at all, which the reader deserves to know before trusting a figure.
-function confidenceBadge(verified, asOf, tariffYear, yearsBehind) {
+// The badge tells you how much to trust the figure; the source link lets you check it
+// yourself. Telling someone "confirm against the official order" without saying where that
+// order is puts the work on them — so where a state carries a sourceUrl we link it right
+// here, next to the number it justifies, rather than only on the tariff landing pages.
+function sourceLink(url) {
+  if (!url) return '';
+  const pdf = /\.pdf($|[?#])/i.test(url);
+  const label = pdf ? 'View tariff order (PDF)' : 'View tariff source';
+  return ` <a class="conf-src" href="${url}" target="_blank" rel="noopener noreferrer"
+    title="Opens the DISCOM or regulator source in a new tab">${label} ↗</a>`;
+}
+
+function confidenceBadge(verified, asOf, tariffYear, yearsBehind, sourceUrl) {
+  const src = sourceLink(sourceUrl);
   if (verified) {
-    return `<div class="conf-badge conf-verified" title="Rates checked against the official tariff order">✓ Verified rates${asOf ? ` · ${asOf}` : ''}</div>`;
+    return `<div class="conf-badge conf-verified" title="Rates checked against the official tariff order">✓ Verified rates${asOf ? ` · ${asOf}` : ''}${src}</div>`;
   }
   const fy = tariffYear ? ` · FY ${tariffYear} order` : '';
   if (yearsBehind != null && yearsBehind >= 2) {
-    return `<div class="conf-badge conf-stale" title="We have not yet audited a tariff order newer than FY ${tariffYear} for this DISCOM. The rates may have been revised since — confirm against the DISCOM's official order before relying on this figure.">⚠ Rates not yet re-checked${fy}</div>`;
+    return `<div class="conf-badge conf-stale" title="We have not yet audited a tariff order newer than FY ${tariffYear} for this DISCOM. The rates may have been revised since — confirm against the DISCOM's official order before relying on this figure.">⚠ Rates not yet re-checked${fy}${src}</div>`;
   }
-  return `<div class="conf-badge conf-estimate" title="Representative rates — confirm against the DISCOM's official tariff order">≈ Representative rates${fy}</div>`;
+  return `<div class="conf-badge conf-estimate" title="Representative rates — confirm against the DISCOM's official tariff order">≈ Representative rates${fy}${src}</div>`;
 }
 
 // ─── Tariff / charge breakdown panel helpers ───────────────────────────────────
@@ -155,7 +168,7 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
     extraCharges, facAmount, facRate, facMode,
     subsidyAmount, subsidyLabel, currentGross, currentNet,
     arrears, payments, adjustments, totalPayable,
-    tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind,
+    tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind, tariffSourceUrl,
   } = result;
 
   // Three visual columns: label — how it was worked out — amount. The middle one is what
@@ -290,7 +303,7 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
     <!-- Simple mode is what the homepage renders by default, so it carried no rate-provenance
          signal at all while the full bill and the tariff pages both did — the readers least
          likely to go checking an order were the ones told least about it. -->
-    <div class="sb-conf">${confidenceBadge(tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind)}</div>
+    <div class="sb-conf">${confidenceBadge(tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind, tariffSourceUrl)}</div>
 
     <div class="bill-perf bill-perf-bottom" aria-hidden="true"></div>
 
@@ -569,7 +582,7 @@ export function renderBill(params) {
       <!-- Licence area runs the full width of the bill rather than inside the left column,
            where it was squeezed into a ~200px gutter and ran to ten lines. -->
       <div class="bill-discom-area">${discom.area}</div>
-      <div class="bill-header-foot">${confidenceBadge(tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind)}</div>
+      <div class="bill-header-foot">${confidenceBadge(tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind, tariffSourceUrl)}</div>
     </div>
 
     <div class="bill-details-row">
@@ -914,7 +927,7 @@ export function renderRevisionBill(params) {
       <!-- Licence area runs the full width of the bill rather than inside the left column,
            where it was squeezed into a ~200px gutter and ran to ten lines. -->
       <div class="bill-discom-area">${discom.area}</div>
-      <div class="bill-header-foot">${confidenceBadge(tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind)}</div>
+      <div class="bill-header-foot">${confidenceBadge(tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind, tariffSourceUrl)}</div>
     </div>
 
     <div class="bill-details-row">

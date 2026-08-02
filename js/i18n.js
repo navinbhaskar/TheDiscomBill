@@ -42,6 +42,8 @@ export const STRINGS = {
     'ql.guides': 'Blogs & Articles',
     'ql.glossary': 'Bill Glossary',
     'ql.methodology': 'Methodology & Accuracy',
+    'ql.contact': 'Contact',
+    'ql.install': 'Install Offline App',
     // Shared footer links (generated pages + key pages)
     'footer.rights': '© 2026 TheDiscomBill. All rights reserved.',
     'footer.disclaimer': 'Disclaimer',
