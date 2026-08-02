@@ -1119,8 +1119,9 @@ function initReviewChooser() {
   window.__popups?.register('reviewChooser', close);
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
-    // Sign in first; once done, the chooser reopens by itself so the flow continues
-    if (menu.hidden && !requireSignIn(btn, () => btn.click())) return;
+    // No sign-in gate here. Opening the chooser is just asking a question, and one of
+    // the two answers (OCR self-check) needs no account at all — gating the button made
+    // the free path look paywalled. The gate now sits on the expert item only.
     const willOpen = menu.hidden;
     if (willOpen) window.__popups?.closeOthers('reviewChooser');   // only one popup open at a time
     menu.hidden = !menu.hidden;
@@ -1139,6 +1140,17 @@ function initReviewChooser() {
   // computing anything — so the chooser item is a plain link and needs no handler, and
   // the Quick Links interceptor (which hijacked the Calculator link into a file picker,
   // surprising anyone who just wanted the calculator) is gone with it.
+
+  // Expert review is the only path that needs an account (a case has an owner, and the
+  // uploaded documents are private to that consumer and their expert). Prompt here rather
+  // than after the navigation so the user isn't bounced to a page that immediately asks
+  // them to leave it. /bill-review/ still gates itself, so a direct visit is safe too.
+  const expertLink = menu.querySelector('a[href="/bill-review/"]');
+  expertLink?.addEventListener('click', (e) => {
+    if (requireSignIn(expertLink, () => { location.href = '/bill-review/'; })) return;
+    e.preventDefault();
+    close();
+  });
 }
 
 function initAll() {
