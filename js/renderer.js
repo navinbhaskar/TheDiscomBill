@@ -86,6 +86,33 @@ function confidenceBadge(verified, asOf, tariffYear, yearsBehind, sourceUrl) {
   return `<div class="conf-badge conf-estimate" title="Representative rates — confirm against the DISCOM's official tariff order">≈ Representative rates${fy}${src}</div>`;
 }
 
+// The handoff into bill review. This sits at the one moment on the site where "is my bill
+// wrong?" is a live, specific question rather than an abstract one: the reader is holding
+// our figure and their real bill at the same time. A hero CTA addresses someone with no
+// context; this addresses someone who just watched us compute their bill.
+//
+// Deliberately a quiet inline row, not a modal or a banner — the user asked for a number and
+// got one, and interrupting that with a hard sell would undercut the trust the figure just
+// earned. It names our total so the comparison is concrete.
+function resultHandoff(total) {
+  // Not formatINR: that renders "₹ 1,727.00", and paise mid-sentence reads like a quote
+  // rather than a rough comparison. Rounded is what the reader is eyeballing anyway.
+  const amount = Number.isFinite(total)
+    ? '₹' + Math.round(Math.max(0, total)).toLocaleString('en-IN')
+    : 'this';
+  return `
+    <div class="result-handoff">
+      <span class="result-handoff-ic" aria-hidden="true">🔍</span>
+      <span class="result-handoff-txt">
+        <strong>Is your actual bill higher than ${amount}?</strong>
+        <span>Upload it and we'll recompute it line by line — wrong category, estimated
+        reading, or a charge that shouldn't be there.</span>
+      </span>
+      <a class="result-handoff-cta" href="/check-my-bill/"
+         onclick="window.gtag&&window.gtag('event','result_handoff_click')">Check my bill →</a>
+    </div>`;
+}
+
 // ─── Tariff / charge breakdown panel helpers ───────────────────────────────────
 
 function fixedChargeDesc(config, demandKw, unit = 'kW') {
@@ -304,6 +331,8 @@ export function renderSimpleBill({ result, billingMonth, billingYear }) {
          signal at all while the full bill and the tariff pages both did — the readers least
          likely to go checking an order were the ones told least about it. -->
     <div class="sb-conf">${confidenceBadge(tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind, tariffSourceUrl)}</div>
+
+    ${resultHandoff(totalPayable)}
 
     <div class="bill-perf bill-perf-bottom" aria-hidden="true"></div>
 

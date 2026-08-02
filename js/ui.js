@@ -1135,6 +1135,9 @@ function setReqBannerText(missing) {
 
 function showRequiredWarning(missing) {
   _reqWarnActive = true;
+  // Which field people get stuck on is the one usability signal we cannot get any other way.
+  // Field labels only — never their values.
+  window.gtag?.('event', 'calculate_blocked', { missing: missing.map(m => m.label).join(',').slice(0, 100) });
   document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
   missing.forEach(m => m.els.forEach(el => el && el.classList.add('input-error')));
   setReqBannerText(missing);
@@ -1728,6 +1731,16 @@ export function doCalculate() {
     subsidy, todUnits, netMetering, exportUnits, openingCreditUnits
   });
   if (!result || result.error) { showToast(result?.message || 'Calculation failed.'); return; }
+
+  // The site had zero gtag events, so nothing about actual usage was measurable — which
+  // state/DISCOM combinations people run, or whether the review funnel converts. Dimensions
+  // only: no bill figures, no readings, nothing identifying. See /privacy/.
+  window.gtag?.('event', 'calculate', {
+    state: document.getElementById('stateSelect')?.value || null,
+    discom: discomId || null,
+    category: categoryId || null,
+    mode: document.querySelector('.form-panel')?.classList.contains('simple-mode') ? 'simple' : 'advanced',
+  });
 
   const verifiedFppa = resolveFppaForDiscom(discomId, billingDate);
 

@@ -43,6 +43,7 @@ export const STRINGS = {
     'ql.glossary': 'Bill Glossary',
     'ql.methodology': 'Methodology & Accuracy',
     'ql.contact': 'Contact',
+    'ql.privacy': 'Privacy Policy',
     'ql.install': 'Install Offline App',
     // Shared footer links (generated pages + key pages)
     'footer.rights': '© 2026 TheDiscomBill. All rights reserved.',
@@ -56,7 +57,7 @@ export const STRINGS = {
     'hero.title': 'Electricity Bill Calculator for Every DISCOM in India',
     'hero.sub': 'Get an instant provisional bill with slab-wise breakdown for any state electricity utility.',
     'hero.cta': 'Calculate my bill',
-    'hero.cta2': 'Get my bill reviewed',
+    'hero.cta2': 'Check my bill for errors',
     'review.title': 'How would you like your bill checked?',
     'review.ocr': 'Instant self-check (OCR)',
     'review.ocrSub': 'Upload a bill photo/PDF — the calculator fills itself',

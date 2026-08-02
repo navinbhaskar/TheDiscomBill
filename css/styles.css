@@ -356,6 +356,13 @@
   font: inherit; font-size: 15px; color: var(--text-primary);
 }
 .site-search-input::-webkit-search-cancel-button { display: none; }
+/* The global `select:focus, input:focus` rule paints a 3px ring + border + card background
+   on every input. Inside the palette the WRAPPER already carries the focus state (the brand
+   underline on :focus-within), so the global rule drew a second, boxy indicator around the
+   field. The wrapper wins; the input stays invisible. */
+.site-search-input:focus {
+  border-color: transparent; box-shadow: none; background-color: transparent;
+}
 .site-search-close {
   border: 1px solid var(--border-default); background: none; cursor: pointer;
   border-radius: 6px; padding: 2px 7px;
@@ -399,6 +406,13 @@
 }
 .site-search-item.active .ssi-ic { background: var(--brand); color: #fff; }
 .site-search-item.active .ssi-go { opacity: 1; }
+/* On the active row the title is already brand-coloured on a brand-faint background, so a
+   brand-faint <mark> vanished — the highlight disappeared on exactly the row being read.
+   Underline it instead of tinting it. */
+.site-search-item.active mark {
+  background: none; color: inherit;
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px;
+}
 
 .site-search-empty { padding: 26px 12px; text-align: center; color: var(--text-tertiary); }
 .site-search-empty svg { opacity: .5; margin-bottom: 8px; }
@@ -5467,46 +5481,15 @@ a.mb-cta { display: inline-flex; align-items: center; text-decoration: none; }
 :root[data-theme="dark"] .ocr-chip { background: rgba(255,255,255,0.04); }
 @media (max-width: 560px) { .ocr-upload { padding: 10px 12px; } .ocr-privacy { font-size: 0.75rem; } }
 
-/* ── Hero "Get your bill reviewed" chooser ───────────────────────────────── */
+/* ── Hero secondary CTA ──────────────────────────────────────────────────── */
+/* The dropdown chooser that lived here is gone — one OCR-first funnel replaced it, so
+   every .review-chooser / .rc-badge / .rc-text rule went with it. .review-chooser-wrap
+   and .rc-caret stay: the wrap still positions the CTA and the caret is now a plain
+   right-arrow on the link. button.hero-cta stays too — hero-cta is used on <button>
+   elsewhere and buttons do not inherit font-family. */
 .review-chooser-wrap { position: relative; display: inline-block; }
 button.hero-cta { font-family: inherit; cursor: pointer; }
-.rc-caret { width: 16px; height: 16px; flex-shrink: 0; transition: transform .22s cubic-bezier(.16,1,.3,1); }
-#reviewChooserBtn[aria-expanded="true"] .rc-caret { transform: rotate(180deg); }
-.review-chooser {
-  min-width: 288px; max-width: 320px; padding: 7px; border-radius: 14px;
-  border: 1px solid color-mix(in srgb, var(--brand) 14%, var(--border, #e2e8f0));
-  background: color-mix(in srgb, var(--panel, #fff) 88%, transparent);
-  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-  box-shadow: 0 2px 6px rgba(15,23,42,.08), 0 18px 44px rgba(15,23,42,.20);
-  transform-origin: top center;
-}
-.review-chooser:not([hidden]) { animation: rcPop .2s cubic-bezier(.16,1,.3,1); }
-@keyframes rcPop { from { opacity: 0; transform: translateY(-6px) scale(.97); } to { opacity: 1; transform: none; } }
-.rc-title { margin: 1px 6px 5px; font-size: .68rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted, #64748b); }
-.review-chooser-item {
-  display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 9px;
-  border: none; border-radius: 10px; background: none; text-align: left;
-  text-decoration: none; color: inherit; cursor: pointer; font: inherit;
-  transition: background .16s ease, transform .16s ease;
-}
-.review-chooser-item + .review-chooser-item { margin-top: 2px; }
-.review-chooser-item:hover { background: color-mix(in srgb, var(--brand) 8%, transparent); transform: translateX(2px); text-decoration: none; }
-.rc-badge { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0; color: #fff; }
-.rc-badge svg { width: 17px; height: 17px; }
-.rc-badge-ocr { background: linear-gradient(135deg, #2563eb, #38bdf8); box-shadow: 0 4px 12px rgba(37,99,235,.35); }
-.rc-badge-expert { background: linear-gradient(135deg, #059669, #34d399); box-shadow: 0 4px 12px rgba(5,150,105,.35); }
-.rc-text { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; }
-.rc-head { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-.rc-beta { font-size: .58rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
-  color: #fff; background: linear-gradient(135deg, #2563eb, #38bdf8); padding: 1px 6px;
-  border-radius: 999px; line-height: 1.55; flex-shrink: 0; }
-.rc-text b { font-size: .86rem; font-weight: 650; }
-.rc-text small { font-size: .72rem; color: var(--muted, #64748b); line-height: 1.3; }
-.rc-go { width: 16px; height: 16px; flex-shrink: 0; color: var(--muted, #94a3b8); opacity: 0; transform: translateX(-4px); transition: opacity .16s ease, transform .16s ease; }
-.review-chooser-item:hover .rc-go { opacity: 1; transform: none; }
-:root[data-theme="dark"] .review-chooser { background: color-mix(in srgb, var(--panel, #0f172a) 85%, transparent); box-shadow: 0 2px 6px rgba(0,0,0,.4), 0 18px 44px rgba(0,0,0,.55); }
-@media (max-width: 560px) { .review-chooser { min-width: 264px; max-width: 300px; } }
-@media (prefers-reduced-motion: reduce) { .review-chooser:not([hidden]) { animation: none; } .review-chooser-item, .rc-go, .rc-caret { transition: none; } }
+.rc-caret { width: 16px; height: 16px; flex-shrink: 0; }
 
 /* ── OCR review screen (confirm values before they hit the form) ─────────── */
 .ocr-rev-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; margin: 10px 0; }
@@ -5767,6 +5750,11 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
 /* Empty until beforeinstallprompt fires (Chromium) or we detect standalone; on iOS and
    Firefox it stays empty on purpose and the written steps below are the answer. */
 .install-action:empty { display: none; }
+/* The shared .seo-link-grid auto-fills 3 across at desktop width, which left the 4th
+   benefit card orphaned on its own row. Four cards want 2x2. */
+@media (min-width: 860px) {
+  .install-why .seo-link-grid { grid-template-columns: repeat(2, 1fr); }
+}
 .install-action { margin: 18px 0 6px; }
 .install-state { margin: 8px 0 0; font-size: 13.5px; color: var(--text-tertiary); }
 .install-state-done { color: var(--ok-text, #15803d); font-weight: 600; }
@@ -5815,3 +5803,55 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
   .conf-badge { flex-wrap: wrap; }
   .conf-badge .conf-src { margin-left: 0; padding-left: 0; border-left: 0; flex-basis: 100%; }
 }
+
+/* ── Escalation to a human reviewer (/check-my-bill/ result stage) ──────────── */
+.bc-escalate { margin: 22px 0 6px; }
+.bc-esc-inner {
+  display: flex; align-items: center; gap: 16px;
+  padding: 20px 22px; border-radius: var(--radius-xl);
+  border: 1px solid var(--brand-border); background: var(--brand-faint);
+}
+.bc-esc-ic {
+  flex: none; display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 13px; background: var(--brand); color: #fff;
+}
+.bc-esc-ic svg { width: 22px; height: 22px; }
+.bc-esc-text { flex: 1; min-width: 0; }
+.bc-esc-text h2 { margin: 0 0 4px; font-size: 18px; }
+.bc-esc-text p { margin: 0; font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+.bc-escalate .seo-cta { flex: none; }
+@media (max-width: 640px) {
+  .bc-esc-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .bc-escalate .seo-cta { width: 100%; justify-content: center; }
+}
+
+/* ── Post-result handoff (calculator results panel) ─────────────────────────── */
+/* The highest-intent moment on the site: the user is holding our figure and their real
+   bill. Asking here converts far better than any hero can. */
+.result-handoff {
+  display: flex; align-items: center; gap: 14px;
+  margin-top: 16px; padding: 16px 18px;
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--brand-border); background: var(--brand-faint);
+}
+.result-handoff-ic { flex: none; font-size: 20px; line-height: 1; }
+.result-handoff-txt { flex: 1; min-width: 0; }
+.result-handoff-txt strong { display: block; font-size: 14.5px; margin-bottom: 2px; }
+.result-handoff-txt span { font-size: 13px; color: var(--text-secondary); line-height: 1.45; }
+.result-handoff-cta {
+  flex: none; font-size: 13.5px; font-weight: 600; color: var(--brand);
+  text-decoration: none; white-space: nowrap;
+}
+.result-handoff-cta:hover { text-decoration: underline; }
+@media (max-width: 620px) {
+  .result-handoff { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+
+/* A CTA directly under a table card was sitting almost flush against it — .seo-cta-row's
+   18px top margin reads as nothing next to a bordered, shadowed card edge. Give the pair
+   real separation so the button belongs to the section, not to the table. */
+/* Same for the privacy/third-parties table, which is followed by prose rather than a CTA.
+   :not(.seo-cta-row) matters — a CTA row IS a <p>, so without it this rule (equal
+   specificity, declared later) silently overrode the 26px below. */
+.seo-section .comparison-table-wrapper + p:not(.seo-cta-row) { margin-top: 16px; }
+.comparison-table-wrapper + .seo-cta-row { margin-top: 26px; }

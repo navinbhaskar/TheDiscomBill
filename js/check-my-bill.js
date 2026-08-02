@@ -38,6 +38,11 @@ function show(stage) {
     const el = $('bc' + s);
     if (el) el.hidden = (s.toLowerCase() !== stage);
   }
+  // The escalation to a human reviewer rides with the result stage: offering it before the
+  // user has a recomputation in hand would just be the old two-parallel-choices problem in
+  // a new place. It is a rung above the self-check, not an alternative to it.
+  const esc = $('bcEscalate');
+  if (esc) esc.hidden = (stage !== 'result');
   const order = { upload: 0, confirm: 1, result: 2 };
   document.querySelectorAll('.bc-step').forEach((el, i) => {
     el.classList.toggle('is-active', i === order[stage]);
@@ -152,6 +157,14 @@ function renderConfirm(f, meta) {
     : 'Read on this device — nothing was uploaded.';
   const cn = $('bcCloudNote');
   if (meta.note) { cn.hidden = false; cn.textContent = meta.note; } else cn.hidden = true;
+
+  // OCR is Beta and its real-world hit rate is unknown. Recording which engine ran and how
+  // many fields came back is the only way to find out whether it is fit to be the site's
+  // primary funnel. Counts and the engine name only — never the extracted values.
+  window.gtag?.('event', 'ocr_read', {
+    engine: meta.cloud ? 'cloud' : 'device',
+    fields_found: [f.discom, f.units, f.sanctionedLoad, f.billAmount].filter(v => v != null).length,
+  });
 
   show('confirm');
 }

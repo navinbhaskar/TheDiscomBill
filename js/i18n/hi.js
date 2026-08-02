@@ -37,6 +37,7 @@ export default {
     'ql.glossary': 'बिल शब्दावली',
     'ql.methodology': 'कार्यप्रणाली व सटीकता',
     'ql.contact': 'संपर्क करें',
+    'ql.privacy': 'गोपनीयता नीति',
     'ql.install': 'ऑफ़लाइन ऐप इंस्टॉल करें',
     // Shared footer links (generated pages + key pages)
     'footer.rights': '© 2026 TheDiscomBill. सर्वाधिकार सुरक्षित।',
@@ -50,7 +51,7 @@ export default {
     'hero.title': 'भारत के हर डिस्कॉम के लिए बिजली बिल कैलकुलेटर',
     'hero.sub': 'किसी भी राज्य की बिजली कंपनी के लिए स्लैब-वार विवरण के साथ तुरंत अनुमानित बिल पाएं।',
     'hero.cta': 'मेरा बिल जानें',
-    'hero.cta2': 'मेरे बिल की जाँच कराएँ',
+    'hero.cta2': 'मेरे बिल में गलती जाँचें',
     'review.title': 'अपने बिल की जाँच कैसे कराना चाहेंगे?',
     'review.ocr': 'तुरंत स्व-जाँच (OCR)',
     'review.ocrSub': 'बिल की फोटो/PDF अपलोड करें — कैलकुलेटर अपने आप भर जाएगा',

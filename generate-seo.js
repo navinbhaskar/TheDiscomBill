@@ -350,6 +350,7 @@ const FOOTER_SITEMAP = `
         <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
+        <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a>
         <a href="/install/" data-i18n="ql.install">Install Offline App</a>
         <a href="/#about" data-i18n="nav.about">About</a>
       </div>
@@ -2753,6 +2754,7 @@ const STATIC_ROUTES = [
   { loc: '/bill-review/sample-report/', priority: '0.5', changefreq: 'yearly' },
   { loc: '/methodology/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/contact/', priority: '0.6', changefreq: 'yearly' },
+  { loc: '/privacy/', priority: '0.4', changefreq: 'yearly' },
   { loc: '/install/', priority: '0.6', changefreq: 'yearly' },
   // index,follow + self-canonical + linked from the account nav, so it was already crawlable —
   // it was just never declared. Every other undeclared route (admin/, expert/, login/,
@@ -2973,6 +2975,7 @@ function writeSearchIndex(states) {
     ['Solar Subsidy Checker', 'सोलर सब्सिडी चेकर (PM सूर्य घर)', '/solar-subsidy-checker/', 'pm surya ghar rooftop solar subsidy muft bijli yojana system size payback kw 78000 eligibility'],
     ['Tenant Sub-Meter Calculator', 'किरायेदार सब-मीटर कैलकुलेटर', '/tenant-submeter-calculator/', 'tenant landlord submeter sub meter overcharging flat rate per unit pg rent electricity split share'],
     ['Methodology', 'कार्यप्रणाली', '/methodology/', 'how rates verified sources'],
+    ['Privacy Policy', 'गोपनीयता नीति', '/privacy/', 'privacy policy data dpdp personal information cookies analytics delete my data gdpr'],
     ['Contact', 'संपर्क करें', '/contact/', 'contact email get in touch report wrong tariff rate correction feedback partnership press support help'],
     ['Install offline app', 'ऑफ़लाइन ऐप इंस्टॉल करें', '/install/', 'install app pwa offline home screen android ios iphone desktop add to home screen download apk play store'],
   ].forEach(([t, h, u, k]) => entries.push({ t, h, u, k, g: 'tool' }));

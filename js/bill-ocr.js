@@ -1095,67 +1095,24 @@ function requireSignIn(triggerEl, afterSignIn) {
   return false;
 }
 
-// Hero "Get your bill reviewed" chooser: OCR self-check vs expert review.
-function initReviewChooser() {
-  const btn = document.getElementById('reviewChooserBtn');
-  const menu = document.getElementById('reviewChooser');
-  if (!btn || !menu) return;
-  // The hero section is overflow:hidden + z-index:0 (page-curtain effect), which
-  // clips and buries an absolutely-positioned menu inside it. Portal the menu to
-  // <body> and position it fixed under the button instead.
-  document.body.appendChild(menu);
-  menu.style.position = 'fixed';
-  menu.style.zIndex = '1000';
-  const place = () => {
-    const r = btn.getBoundingClientRect();
-    menu.style.top = Math.min(r.bottom + 8, window.innerHeight - 40) + 'px';
-    const w = menu.offsetWidth || 300;
-    menu.style.left = Math.max(8, Math.min(r.left, window.innerWidth - w - 8)) + 'px';
-  };
-  const close = () => { menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); };
-  // Register with the shared popup coordinator (main.js) so this chooser and the
-  // header popups (account, Quick Links, language) never stack — opening one closes
-  // the rest. Optional-chained: main.js loads first on every page and creates it.
-  window.__popups?.register('reviewChooser', close);
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    // No sign-in gate here. Opening the chooser is just asking a question, and one of
-    // the two answers (OCR self-check) needs no account at all — gating the button made
-    // the free path look paywalled. The gate now sits on the expert item only.
-    const willOpen = menu.hidden;
-    if (willOpen) window.__popups?.closeOthers('reviewChooser');   // only one popup open at a time
-    menu.hidden = !menu.hidden;
-    if (!menu.hidden) place();
-    btn.setAttribute('aria-expanded', String(!menu.hidden));
-  });
-  window.addEventListener('scroll', () => { if (!menu.hidden) close(); }, { passive: true });
-  // Static hero element, never re-rendered — a plain always-on outside-close
-  // listener is safe here (unlike the header account dropdown).
-  document.addEventListener('click', (e) => {
-    if (!menu.hidden && !menu.contains(e.target) && e.target !== btn) close();
-  });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-  // Both OCR entry points used to open a file picker here and silently fill the form
-  // below. They now go to /check-my-bill/, which confirms every extracted field before
-  // computing anything — so the chooser item is a plain link and needs no handler, and
-  // the Quick Links interceptor (which hijacked the Calculator link into a file picker,
-  // surprising anyone who just wanted the calculator) is gone with it.
-
-  // Expert review is the only path that needs an account (a case has an owner, and the
-  // uploaded documents are private to that consumer and their expert). Prompt here rather
-  // than after the navigation so the user isn't bounced to a page that immediately asks
-  // them to leave it. /bill-review/ still gates itself, so a direct visit is safe too.
-  const expertLink = menu.querySelector('a[href="/bill-review/"]');
-  expertLink?.addEventListener('click', (e) => {
-    if (requireSignIn(expertLink, () => { location.href = '/bill-review/'; })) return;
+// Sign-in gate for the escalation to a human reviewer. Lives on /check-my-bill/ now: the
+// hero chooser it used to guard is gone, replaced by one OCR-first funnel. Expert review is
+// the only path needing an account (a case has an owner and private documents), so the gate
+// fires on that link only — prompting before navigation, so nobody lands on a page that
+// immediately asks them to leave it. /bill-review/ still gates itself for direct visits.
+function initEscalationGate() {
+  const link = document.getElementById('bcEscalateCta');
+  if (!link) return;
+  link.addEventListener('click', (e) => {
+    window.gtag?.('event', 'review_escalate_click');
+    if (requireSignIn(link, () => { location.href = '/bill-review/'; })) return;
     e.preventDefault();
-    close();
   });
 }
 
 function initAll() {
   initBillOcr();
-  initReviewChooser();
+  initEscalationGate();
 }
 
 if (typeof document !== 'undefined') {
