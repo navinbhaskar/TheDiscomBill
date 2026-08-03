@@ -100,7 +100,7 @@ function generateComparisonRows(categoryTarget) {
     .map(d => {
       const bills = UNIT_TIERS.map(u => billFor(d.id, categoryTarget, u, d.state));
       return {
-        state: d.state, discom: d.discom,
+        id: d.id, state: d.state, discom: d.discom,
         facts: tariffFacts(d.id, categoryTarget, d.state),
         amounts: bills.map(b => b ? b.totalPayable : null),
         // Fixed charge shown for the like-for-like 1 kW / 1 month basis used everywhere here.
@@ -128,12 +128,73 @@ function generateComparisonRows(categoryTarget) {
       const tick = isBest ? '<span class="comp-tick" title="Lowest at this usage">✓</span>' : '';
       return `<td class="num${isBest ? ' comp-best' : ''}">${tick}${fmt(amt)}</td>`;
     }).join('');
+    // The checkbox is what joins the table to the head-to-head tool below it: the table
+    // answers "who is cheapest at 200/500/1000 units", and the moment you want a different
+    // number the answer is two rows down the page. Ticking two rows carries them straight
+    // into the tool instead of making you find the same DISCOMs again in two dropdowns.
     return `<tr>
-      <td class="comp-name"><span class="comp-state">${r.state}</span><span class="comp-code">${r.discom}</span></td>
+      <td class="comp-name">
+        <label class="comp-pick">
+          <input type="checkbox" class="comp-pick-box" value="${escHtml(r.id)}"
+                 aria-label="Compare ${escHtml(r.discom)} in detail">
+          <span><span class="comp-state">${r.state}</span><span class="comp-code">${r.discom}</span></span>
+        </label>
+      </td>
       ${factCells}
       ${cells}
     </tr>`;
   }).join('');
+}
+
+// ── Table → tool handoff ──────────────────────────────────────────────────────
+// Two ticks is the whole interaction. A third replaces the oldest rather than refusing,
+// because a checkbox that silently does nothing reads as broken.
+function initRowPicker() {
+  const tbody = document.getElementById('compTableBody');
+  const bar = document.getElementById('compPickBar');
+  if (!tbody || !bar) return;
+  const label = document.getElementById('compPickLabel');
+  const go = document.getElementById('compPickGo');
+  let picked = [];
+
+  const nameOf = (id) => {
+    const box = tbody.querySelector(`.comp-pick-box[value="${CSS.escape(id)}"]`);
+    return box ? box.closest('.comp-pick').querySelector('.comp-code').textContent : id;
+  };
+
+  function sync() {
+    tbody.querySelectorAll('.comp-pick-box').forEach(b => { b.checked = picked.includes(b.value); });
+    bar.hidden = picked.length === 0;
+    label.textContent = picked.length === 1
+      ? `${nameOf(picked[0])} — pick one more to compare`
+      : picked.length === 2 ? `${nameOf(picked[0])} vs ${nameOf(picked[1])}` : '';
+    go.disabled = picked.length !== 2;
+  }
+
+  tbody.addEventListener('change', (e) => {
+    const box = e.target.closest('.comp-pick-box');
+    if (!box) return;
+    picked = box.checked ? [...picked, box.value].slice(-2) : picked.filter(v => v !== box.value);
+    sync();
+  });
+
+  go.addEventListener('click', () => {
+    const [a, b] = picked;
+    const selA = document.getElementById('ccDiscomA'), selB = document.getElementById('ccDiscomB');
+    if (!selA || !selB) return;
+    selA.value = a; selB.value = b;
+    selA.dispatchEvent(new Event('change', { bubbles: true }));
+    selB.dispatchEvent(new Event('change', { bubbles: true }));
+    const form = document.getElementById('ccForm');
+    if (form) form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit', { cancelable: true }));
+    document.querySelector('.custom-compare').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // Re-rendering the table on a tab switch throws the ticks away with the rows.
+  document.querySelectorAll('.comp-tab').forEach(t =>
+    t.addEventListener('click', () => { picked = []; sync(); }));
+
+  sync();
 }
 
 export function initComparisonTable() {
@@ -157,6 +218,7 @@ export function initComparisonTable() {
   });
 
   initCustomCompare();   // head-to-head "pick any two DISCOMs + your own units" tool
+  initRowPicker();       // ticking two table rows hands them to that tool
 }
 
 // ── Custom head-to-head comparison ────────────────────────────────────────────

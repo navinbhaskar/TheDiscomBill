@@ -3047,6 +3047,24 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 .comp-name { line-height: 1.2; }
 .comp-state { display: block; font-size: 13px; font-weight: 600; color: var(--text-primary); }
 .comp-code { display: block; font-size: 11px; font-weight: 400; color: var(--text-tertiary); margin-top: 0; }
+/* Row selector. The whole name cell is the label, so the hit target is the DISCOM name
+   rather than a 16px box — this table is read on phones more than anywhere else. */
+.comp-pick { display: flex; align-items: center; gap: 9px; cursor: pointer; min-width: 0; }
+.comp-pick-box { flex: none; width: 15px; height: 15px; accent-color: var(--brand); cursor: pointer; }
+.comp-pick > span { min-width: 0; }
+/* Sticky so the handoff stays reachable while you scroll a 20-row table looking for the
+   second DISCOM — the whole point is not having to remember and re-find them below. */
+.comp-pick-bar {
+  position: sticky; top: 64px; z-index: 5;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+  margin: 0 0 12px; padding: 11px 16px; border-radius: var(--radius-lg);
+  border: 1px solid var(--brand-border); background: var(--brand-faint);
+  font-size: 13.5px; font-weight: 600; color: var(--text-brand-dark, var(--brand-dark));
+  box-shadow: var(--shadow-sm);
+}
+.comp-pick-bar[hidden] { display: none; }   /* author display beats the UA [hidden] rule */
+.comp-pick-go { margin: 0; padding: 8px 16px; font-size: 13px; }
+.comp-pick-go:disabled { opacity: .55; cursor: not-allowed; }
 .comp-na { color: var(--text-tertiary); font-weight: 400; }
 /* Tariff-fact columns (slab rates, fixed charge, free units) — quieter than the bill amounts */
 .comparison-table td.comp-fact { color: var(--text-secondary); font-size: 12.5px; }
