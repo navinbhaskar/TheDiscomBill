@@ -3857,6 +3857,15 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .svc-control select:focus,
 .svc-control input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-faint); }
 
+/* A note about one field in the row above. It sits outside .svc-control on purpose: that
+   flex column is justify-content:flex-end so every input in the row bottom-aligns, and a
+   hint added below an input would push that one field out of line with its neighbours. */
+.svc-hint {
+  margin: 10px 0 0; max-width: 78ch;
+  font-size: 12.5px; line-height: 1.55; color: var(--text-tertiary);
+}
+.svc-hint strong { color: var(--text-secondary); font-weight: 650; }
+
 /* Result card + official-portal CTA (shared with the bill-check look) */
 .svc-card { background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow-sm); margin-bottom: 18px; }
 .svc-discom { display: flex; gap: 12px; align-items: center; margin-bottom: 16px; }
