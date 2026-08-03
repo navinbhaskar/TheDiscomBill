@@ -109,9 +109,34 @@ POST https://<project-ref>.supabase.co/functions/v1/calc
 ```
 
 Errors: `400` bad/missing params, `404` unknown discom/category, `405` wrong method,
-`401` missing/invalid anon key (while JWT verification is on).
+`413` body over 16 KB, `429` rate limited, `401` missing/invalid API key (see below), or
+missing/invalid anon key while JWT verification is on.
 All responses are JSON with CORS `*`.
 
-Note: Supabase Edge Functions have no built-in rate limiting — free-tier invocation
-caps (500K/month) are the backstop. If the endpoint gets popular, add a limiter before
-publicising it.
+## Limits
+
+| Limit | Value | Response |
+| --- | --- | --- |
+| Requests per IP | 60 per minute | `429` with a `Retry-After` header |
+| Request body | 16 KB | `413` |
+
+The rate limiter is in-memory and therefore **per instance**. Edge functions are ephemeral
+and run in several regions, so a caller spread across regions can exceed 60/min. This is a
+speed bump against runaway scripts and accidental loops, not a billing control — a real
+quota needs Postgres or Upstash keyed centrally. Supabase's free-tier invocation cap
+(500K/month) remains the hard backstop.
+
+### Closing the endpoint
+
+The endpoint is open by default. To require a key, set the `CALC_API_KEYS` env var on the
+function to a comma-separated list:
+
+```bash
+supabase secrets set CALC_API_KEYS=key-for-partner-a,key-for-partner-b
+```
+
+Callers then send `x-api-key: key-for-partner-a`; everyone else gets `401`. Unset the
+variable to reopen. No code change or redeploy of logic is needed either way — this is the
+lever to pull if the endpoint is abused.
+
+The `GET` catalogue is cached per instance and sent with `Cache-Control: public, max-age=3600`.
