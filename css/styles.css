@@ -3270,9 +3270,43 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 .seo-page h1 { font-size: 27px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.6px; line-height: 1.2; margin: 6px 0 12px; }
 .seo-lead { font-size: 16px; color: var(--text-secondary); line-height: 1.65; max-width: 760px; margin: 0 0 18px; }
 /* Cross-link between the English and Hindi variants of a page */
-.seo-lang-link { font-size: 13px; margin: -2px 0 10px; }
-.seo-lang-link a { color: var(--brand); text-decoration: none; font-weight: 600; }
-.seo-lang-link a:hover { text-decoration: underline; }
+/* ─── Translation availability capsules ────────────────────────────────────────
+   Sits under the breadcrumbs. The header's language switcher offers every language;
+   this row answers the different question of which twins exist for THIS page, so it
+   renders nothing when a page has no translations rather than offering dead choices. */
+.seo-lang-pills {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  font-size: 13px; margin: -2px 0 14px;
+}
+/* --text-secondary, not --text-tertiary: tertiary (#94a3b8) on the page background measures
+   2.45:1, and this is 12px normal-weight-equivalent text that WCAG wants at 4.5:1. Secondary
+   measures 4.8:1 light / 8.9:1 dark. */
+.seo-lang-label {
+  color: var(--text-secondary); font-size: 12px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .6px;
+}
+/* Devanagari and Tamil have no capital forms and tracking detaches matras — same
+   treatment the footer column titles already use. */
+html:not([lang="en"]) .seo-lang-label { text-transform: none; letter-spacing: .2px; font-size: 12.5px; }
+.seo-lang-pill {
+  display: inline-flex; align-items: center; padding: 3px 11px;
+  border-radius: 999px; background: var(--brand-faint);
+  box-shadow: inset 0 0 0 1px var(--brand-border);
+  color: var(--text-brand-dark); font-size: 13px; font-weight: 600;
+  text-decoration: none; line-height: 1.55;
+  transition: background .15s ease, color .15s ease;
+}
+a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
+  background: var(--brand); color: #fff;
+  box-shadow: inset 0 0 0 1px var(--brand);
+}
+/* The language you are already reading. Filled rather than outlined so the row reads as
+   "you are here, and these others exist" at a glance — and it is a <span>, so it must not
+   pick up any of the hover affordances above. */
+.seo-lang-pill.is-current {
+  background: var(--brand); color: #fff;
+  box-shadow: inset 0 0 0 1px var(--brand); cursor: default;
+}
 .seo-section { margin-top: 34px; }
 .seo-section > h2 { font-size: 20px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.3px; margin: 0 0 14px; }
 .seo-section p { color: var(--text-secondary); line-height: 1.65; margin: 0 0 14px; max-width: 760px; }

@@ -295,11 +295,9 @@ const HEADER = `
             <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-i18n="nav.compare">Compare Rates</span></a>
             <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
             <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
-            <a href="/#about" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span data-i18n="nav.about">About</span></a>
           </div>
         </div>
       </div>
-      <a href="/#about" data-i18n="nav.about">About</a>
       <div class="lang-switch" id="langSwitch">
         <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
           <span class="lang-trigger-text" id="langTriggerText">EN</span>
@@ -518,22 +516,35 @@ ${footer}
 `;
 }
 
-// Visible, crawlable link(s) between language variants (shown under the breadcrumbs). On a
-// vernacular page it links back to English; on the English page it links to each vernacular
-// twin that exists for this page.
-const READ_IN = {
-  en: 'Read this page in English →',
-  hi: 'यह पेज हिंदी में पढ़ें →',
-  mr: 'हे पेज मराठीत वाचा →',
-  ta: 'இந்தப் பக்கத்தைத் தமிழில் படிக்கவும் →',
-};
+// Visible, crawlable link(s) between language variants (shown under the breadcrumbs).
+//
+// These used to be full sentences ("यह पेज हिंदी में पढ़ें →" · "हे पेज मराठीत वाचा →" · …),
+// which on an English page with all three twins was a wall of three scripts before the reader
+// reached the article. The header already carries a language switcher, so the job left for
+// this row is narrower: signal WHICH translations exist for THIS page — the switcher cannot
+// say that, because coverage is per-page.
+//
+// So: capsules, not sentences. Each is labelled in its own script, which is how a Hindi
+// reader recognises it fastest, and stays a real crawlable <a> so the twins remain linked
+// in the HTML and not only via <head> hreflang.
+//
+// The row lists EVERY language this page exists in, including the one you are reading and
+// including English. That is deliberate: the question a reader has is "what is this article
+// available in?", and a list that silently omits the current language answers a different,
+// more confusing question. An English-only article therefore shows a single English capsule
+// rather than nothing — absence would be indistinguishable from a page that forgot to render
+// the row. The current language is a <span>, not an <a>: linking a page to itself is noise.
+const LANG_NATIVE = { en: 'English', hi: 'हिंदी', mr: 'मराठी', ta: 'தமிழ்' };
 function langSwitchLink(page, lang, altLangs = VERNACULARS) {
-  if (lang !== 'en') {
-    return `<p class="seo-lang-link"><a href="${attr(page)}" hreflang="en-IN" lang="en">Read this page in English →</a></p>`;
-  }
-  const links = altLangs.map(l =>
-    `<a href="${attr(langUrl(page, l))}" hreflang="${LANG_LOCALE[l]}" lang="${l}">${READ_IN[l]}</a>`).join(' &nbsp;·&nbsp; ');
-  return links ? `<p class="seo-lang-link">${links}</p>` : '';
+  const all = ['en', ...altLangs.filter(l => l !== 'en')];
+  const pills = all.map(l => {
+    if (l === lang) {
+      return `<span class="seo-lang-pill is-current" lang="${l}" aria-current="page">${LANG_NATIVE[l]}</span>`;
+    }
+    const href = l === 'en' ? page : langUrl(page, l);
+    return `<a class="seo-lang-pill" href="${attr(href)}" hreflang="${LANG_LOCALE[l]}" lang="${l}">${LANG_NATIVE[l]}</a>`;
+  }).join('');
+  return `<p class="seo-lang-pills"><span class="seo-lang-label">Available in</span>${pills}</p>`;
 }
 
 function breadcrumbs(trail) {
@@ -2035,7 +2046,7 @@ function guidePage(guide, lang = 'en') {
   const body = `
   <section class="seo-page container">
     ${breadcrumbs(trail)}
-    ${L !== 'en' ? langSwitchLink(enUrl, L, altLangs) : (altLangs.length ? langSwitchLink(enUrl, 'en', altLangs) : '')}
+    ${langSwitchLink(enUrl, L, altLangs)}
     <h1>${esc(title)}</h1>
     <p class="guide-meta">${meta}</p>
     <p class="seo-lead">${intro}</p>
@@ -2189,7 +2200,6 @@ function guidesIndexPage(lang = 'en') {
   const body = `
   <section class="seo-page container">
     ${breadcrumbs([{ name: bcHome, url: '/' }, { name: bcGuides, url: null }])}
-    ${langSwitchLink(enUrl, lang)}
     <h1>${h1}</h1>
     <p class="seo-lead">${lead}</p>
     ${filterBar}
