@@ -1,6 +1,10 @@
-// West Bengal — Electricity Tariff Data (2024-25)
-// Source: Publicly available tariff orders from the respective SERC.
-// To update rates: edit energySlabs, fixedCharge, or additionalCharges below.
+// West Bengal — Electricity Tariff Data (FY 2025-26, continuing till further order)
+// Three separate schedules, each with its own WBERC order and its own ratesAsOf below:
+//   wbsedcl      — WBERC order dt. 28-03-2025. Published QUARTERLY; stored as monthly bands.
+//   cesc_kolkata — WBERC order dt. 25-03-2025. Published monthly.
+//   dpl          — WBERC order dt. 20-03-2025. Not a licensee since 01-01-2019; WBSEDCL bills
+//                  these consumers on a schedule frozen at its 31-12-2018 level.
+// Every WB bill also carries an MVCA that WBERC revises and trues up; it is not modelled.
 // See TARIFF_GUIDE.md for the complete field schema and step-by-step instructions.
 
 export default {
@@ -116,89 +120,197 @@ export default {
       name: "CESC (Kolkata)",
       fullName: "CESC Ltd. (Calcutta Electric Supply Corporation)",
       area: "Kolkata city, Howrah, Hooghly (parts)",
-      tariffYear: "2024-25",
-      website: "https://www.cesc.co.in",
+      tariffYear: "2025-26",
+      // Note 13 of the schedule: the rates are effective from 1 April 2025 "and onwards",
+      // and continue till further order of the Commission — so they remain in force.
+      ratesAsOf: "WBERC order dt. 25-Mar-2025, w.e.f. 1 April 2025 (continues till further order)",
+      sourceUrl: "https://www.cesc.co.in/tariff",
       categories: [
         {
           id: "domestic",
-          name: "LT Domestic (Residential)",
-          fixedCharge: 15,
+          name: "Rate G — LT Domestic",
+          // Rs/kVA/month. Note to the schedule: a Fixed Charge applies below 50 kVA of
+          // contract demand and a Demand Charge at 50 kVA and above.
+          fixedCharge: { type: "per_kva", rate: 15 },
+          // Published as First 25 / Next 35 / Next 40 / Next 50 / Next 50 / Next 100 /
+          // Above 300, in paise per kWh. Kept as separate bands even where two carry the
+          // same rate (151-200 and 201-300 are both 762p), to mirror the schedule.
           energySlabs: [
-            {
-              limit: 25,
-              rate: 4.61
-            },
-            {
-              limit: 75,
-              rate: 5.83
-            },
-            {
-              limit: 200,
-              rate: 7.41
-            },
-            {
-              limit: 300,
-              rate: 7.99
-            },
-            {
-              limit: Infinity,
-              rate: 8.84
-            }
+            { limit: 25,       rate: 5.18 },
+            { limit: 60,       rate: 5.69 },
+            { limit: 100,      rate: 6.70 },
+            { limit: 150,      rate: 7.45 },
+            { limit: 200,      rate: 7.62 },
+            { limit: 300,      rate: 7.62 },
+            { limit: Infinity, rate: 9.21 },
           ],
-          additionalCharges: [
+          supplyTypes: [
             {
-              name: "Electricity Duty (ED)",
-              type: "percent_energy",
-              rate: 4
+              id: "urban",
+              name: "Domestic (Urban) — Rate G",
+              description: "The ordinary CESC household tariff: seven telescopic bands from ₹5.18 to ₹9.21, on a ₹15/kVA/month fixed charge.",
+              fixedCharge: { type: "per_kva", rate: 15 },
+              energySlabs: [
+                { limit: 25,       rate: 5.18 },
+                { limit: 60,       rate: 5.69 },
+                { limit: 100,      rate: 6.70 },
+                { limit: 150,      rate: 7.45 },
+                { limit: 200,      rate: 7.62 },
+                { limit: 300,      rate: 7.62 },
+                { limit: Infinity, rate: 9.21 },
+              ],
             },
             {
-              name: "Meter Rent",
-              type: "flat",
-              rate: 15
-            }
-          ]
-        }
-      ]
+              id: "lifeline",
+              name: "Life Line (Domestic) — Rate G(LL)",
+              description: "For eligible low-consumption households only, capped at 25 units a month: ₹4.07/unit on a ₹5 fixed charge.",
+              fixedCharge: { type: "per_kva", rate: 5 },
+              energySlabs: [{ limit: Infinity, rate: 4.07 }],
+            },
+          ],
+          notes: "CESC's domestic tariff is telescopic across seven published bands. The fixed charge is ₹15 per kVA per month — CESC states it in Rs/kVA, and it becomes a demand charge once contract demand reaches 50 kVA. Bills also carry a Monthly Variable Cost Adjustment (MVCA), which WBERC trues up and which is not modelled here, and statutory levies such as electricity duty which note 12 of the schedule places outside the tariff.",
+        },
+        {
+          id: "commercial",
+          name: "Rate M — LT Commercial & others",
+          fixedCharge: { type: "per_kva", rate: 24 },
+          energySlabs: [
+            { limit: 60,       rate: 6.57 },
+            { limit: 100,      rate: 7.24 },
+            { limit: 150,      rate: 7.93 },
+            { limit: 300,      rate: 8.49 },
+            { limit: Infinity, rate: 9.26 },
+          ],
+          supplyTypes: [
+            {
+              id: "commercial",
+              name: "Commercial (Urban) — Rate M(i)",
+              description: "Shops and offices: five telescopic bands from ₹6.57 to ₹9.26 on ₹24/kVA/month. An optional Time-of-Day scheme is available at the same fixed charge.",
+              fixedCharge: { type: "per_kva", rate: 24 },
+              energySlabs: [
+                { limit: 60,       rate: 6.57 },
+                { limit: 100,      rate: 7.24 },
+                { limit: 150,      rate: 7.93 },
+                { limit: 300,      rate: 8.49 },
+                { limit: Infinity, rate: 9.26 },
+              ],
+            },
+            {
+              id: "cottage",
+              name: "Cottage industry / artisan / weavers — Rate M(ii)",
+              description: "Small production units not run by electricity as motive power: ₹5.82 for the first 100 units, ₹7.01 for the next 100, ₹8.46 above 200.",
+              fixedCharge: { type: "per_kva", rate: 24 },
+              energySlabs: [
+                { limit: 100,      rate: 5.82 },
+                { limit: 200,      rate: 7.01 },
+                { limit: Infinity, rate: 8.46 },
+              ],
+            },
+            {
+              id: "schools",
+              name: "Government / Government-aided schools — Rate P1",
+              description: "₹5.24 on all units at a ₹12/kVA/month fixed charge — the cheapest non-lifeline rate CESC publishes.",
+              fixedCharge: { type: "per_kva", rate: 12 },
+              energySlabs: [{ limit: Infinity, rate: 5.24 }],
+            },
+            {
+              id: "education_hospital",
+              name: "Private educational institutions and hospitals — Rate L",
+              description: "₹7.32 on all units at ₹42/kVA/month.",
+              fixedCharge: { type: "per_kva", rate: 42 },
+              energySlabs: [{ limit: Infinity, rate: 7.32 }],
+            },
+            {
+              id: "industry",
+              name: "Industries (Urban) — Rate K",
+              description: "₹6.77 for the first 500 units, ₹7.47 for the next 1500, ₹7.87 for the next 1500 and ₹8.07 above 3500, on ₹50/kVA/month.",
+              fixedCharge: { type: "per_kva", rate: 50 },
+              energySlabs: [
+                { limit: 500,      rate: 6.77 },
+                { limit: 2000,     rate: 7.47 },
+                { limit: 3500,     rate: 7.87 },
+                { limit: Infinity, rate: 8.07 },
+              ],
+            },
+          ],
+          notes: "CESC publishes a long list of LT categories; the ones modelled here are selectable above. Most non-domestic categories also offer an optional Time-of-Day or prepaid scheme at the same fixed charge, which is not modelled. MVCA and statutory levies are extra.",
+        },
+      ],
     },
     {
+      // DPL stopped being a distribution licensee on 01-01-2019, when its distribution
+      // business transferred to WBSEDCL; DPL's own WBERC orders are now GENERATION tariffs
+      // (capacity and energy charge per generating unit). WBERC nonetheless maintains a
+      // separate, frozen retail schedule for erstwhile-DPL consumers — "similar to that as
+      // on 31.12.2018" — which is materially cheaper than either CESC or WBSEDCL proper.
+      // The `dpl` id is kept for URL continuity, the same reasoning as Telangana's tsspdcl.
       id: "dpl",
-      name: "DPL",
-      fullName: "CESC DPL (Durgapur Projects Ltd.)",
-      area: "Durgapur industrial and urban area",
-      tariffYear: "2024-25",
-      website: "https://www.dpl.co.in",
+      name: "Erstwhile DPL area",
+      fullName: "Erstwhile Durgapur Projects Ltd. area — supplied by WBSEDCL",
+      area: "Durgapur industrial and urban area (billed by WBSEDCL on the frozen erstwhile-DPL schedule)",
+      tariffYear: "2025-26",
+      ratesAsOf: "WBERC order dt. 20-Mar-2025 for FY 2025-26 (schedule maintained at its 31-12-2018 level)",
+      sourceUrl: "https://www.wbsedcl.in/irj/go/km/docs/internet/new_website/pdf/Tariff_Volumn/Gist%20of%20Tariff%20Order%202025-26_28_03.pdf",
       categories: [
         {
           id: "domestic",
-          name: "LT Domestic",
-          fixedCharge: 35,
+          name: "Rate C(3) — Domestic",
+          fixedCharge: { type: "per_kva", rate: 15 },
+          // Published monthly (unlike WBSEDCL's own quarterly bands): First 25 / Next 25 /
+          // Next 50 / Next 100 / Next 100 / Above 300, in paise per kWh.
           energySlabs: [
-            {
-              limit: 25,
-              rate: 4.5
-            },
-            {
-              limit: 75,
-              rate: 5.5
-            },
-            {
-              limit: 200,
-              rate: 7
-            },
-            {
-              limit: Infinity,
-              rate: 8.5
-            }
+            { limit: 25,       rate: 3.45 },
+            { limit: 50,       rate: 4.20 },
+            { limit: 100,      rate: 4.35 },
+            { limit: 200,      rate: 4.67 },
+            { limit: 300,      rate: 4.86 },
+            { limit: Infinity, rate: 4.99 },
           ],
-          additionalCharges: [
+          supplyTypes: [
             {
-              name: "Electricity Duty (ED)",
-              type: "percent_energy",
-              rate: 4
-            }
-          ]
-        }
-      ]
-    }
-  ]
+              id: "normal",
+              name: "Domestic (Rural or Urban) — Rate C(3)",
+              description: "Six telescopic bands from ₹3.45 to ₹4.99 on a ₹15/kVA/month fixed charge — frozen at 2018 levels, and about a third cheaper than a CESC household pays at the same consumption.",
+              fixedCharge: { type: "per_kva", rate: 15 },
+              energySlabs: [
+                { limit: 25,       rate: 3.45 },
+                { limit: 50,       rate: 4.20 },
+                { limit: 100,      rate: 4.35 },
+                { limit: 200,      rate: 4.67 },
+                { limit: 300,      rate: 4.86 },
+                { limit: Infinity, rate: 4.99 },
+              ],
+            },
+            {
+              id: "prepaid",
+              name: "Domestic prepaid — Rate C(3)pp",
+              description: "A single ₹4.18/unit on all units for prepaid domestic consumers, at the same ₹15/kVA fixed charge. Better than the standard schedule above about 100 units a month.",
+              fixedCharge: { type: "per_kva", rate: 15 },
+              energySlabs: [{ limit: Infinity, rate: 4.18 }],
+            },
+            {
+              id: "lifeline",
+              name: "Life Line (Domestic) — Rate C(3-LL)",
+              description: "Up to 25 units a month at ₹2.50/unit on a ₹5 fixed charge. The State's Hasir Alo subsidy applies to this category.",
+              fixedCharge: { type: "per_kva", rate: 5 },
+              energySlabs: [{ limit: Infinity, rate: 2.50 }],
+            },
+          ],
+          notes: "Durgapur Projects Ltd. stopped distributing electricity on 1 January 2019, when its distribution business passed to WBSEDCL. WBERC has since held the retail schedule for erstwhile-DPL consumers at its 31 December 2018 level, so these rates are markedly lower than either CESC's or WBSEDCL's own — 300 units costs about ₹1,392 here against roughly ₹2,142 on CESC's domestic schedule. Bills are issued by WBSEDCL. Unlike WBSEDCL's main schedule, these bands are monthly, not quarterly. MVCA and statutory levies are extra.",
+        },
+        {
+          id: "commercial",
+          name: "Rate C(4) — Commercial",
+          fixedCharge: { type: "per_kva", rate: 30 },
+          energySlabs: [
+            { limit: 60,       rate: 4.31 },
+            { limit: 100,      rate: 4.72 },
+            { limit: 300,      rate: 4.92 },
+            { limit: Infinity, rate: 5.05 },
+          ],
+          notes: "Four telescopic monthly bands from ₹4.31 to ₹5.05 on a ₹30/kVA/month fixed charge, frozen at the 31-12-2018 level. Optional Time-of-Day and prepaid schemes exist and are not modelled. MVCA and statutory levies are extra.",
+        },
+      ],
+    },
+  ],
 };

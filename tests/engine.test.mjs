@@ -529,12 +529,33 @@ group('WBSEDCL — quarterly slabs stored monthly', () => {
   check('lifeline gross rate', bill('lifeline', 25, 1).totalEnergy, 92);
   check('lifeline fixed is Rs 10/kVA', bill('lifeline', 25, 1).fixedCharge, 10);
 
-  // Only WBSEDCL was rebuilt; CESC and DPL are separate licensees still on old data and
-  // must keep warning. If this ever fails, someone bumped their year without an order.
-  const cesc = calculateBill({ discomId: 'cesc_kolkata', categoryId: 'domestic', units: 250,
-    connectedLoadKw: 2, billingPeriodDays: 30, billingDate: '2026-07-15' });
+  // All three WB licensees now sit on their own FY2025-26 WBERC order, each of which says
+  // the rates continue "till further order" — so they read one FY behind, not stale. If any
+  // of these ever reads 2+, a newer order has issued and the file was not updated.
+  const behind = (discomId) => calculateBill({ discomId, categoryId: 'domestic', units: 250,
+    connectedLoadKw: 2, billingPeriodDays: 30, billingDate: '2026-07-15' }).tariffYearsBehind;
   check('WBSEDCL reads as one FY behind', bill('urban', 250, 2).tariffYearsBehind, 1);
-  check('CESC still reads as stale', cesc.tariffYearsBehind, 2);
+  check('CESC reads as one FY behind', behind('cesc_kolkata'), 1);
+  check('erstwhile DPL reads as one FY behind', behind('dpl'), 1);
+});
+
+// CESC — WBERC order dt. 25-03-2025, and the erstwhile-DPL schedule WBERC froze at its
+// 31-12-2018 level. Both are published as MONTHLY bands, unlike WBSEDCL's quarterly ones.
+group('CESC and erstwhile-DPL — monthly bands', () => {
+  const bill = (discomId, categoryId, supplyTypeId, units, kva) => calculateBill({
+    discomId, categoryId, supplyTypeId, units, connectedLoadKw: kva,
+    billingPeriodDays: 30, billingDate: '2026-07-15' });
+
+  // 100 units: 25×5.18 + 35×5.69 + 40×6.70 — telescopic across the first three bands.
+  check('CESC 100u telescopic', bill('cesc_kolkata', 'domestic', 'urban', 100, 2).totalEnergy, 596.65);
+  // 300 units crosses into the two 762-paise bands, which are published separately.
+  check('CESC 300u', bill('cesc_kolkata', 'domestic', 'urban', 300, 2).totalEnergy, 2112.15);
+  check('CESC fixed is Rs 15/kVA', bill('cesc_kolkata', 'domestic', 'urban', 300, 2).fixedCharge, 30);
+
+  // The frozen 2018 schedule is materially cheaper at the same consumption.
+  check('erstwhile DPL 300u', bill('dpl', 'domestic', 'normal', 300, 2).totalEnergy, 1361.75);
+  // Prepaid is a single rate on all units, which beats the ladder above ~100 units.
+  check('erstwhile DPL prepaid 300u', bill('dpl', 'domestic', 'prepaid', 300, 2).totalEnergy, 1254);
 });
 
 // Telangana — TGERC retail schedule, retained for FY2026-27 by the order of 30-03-2026.
