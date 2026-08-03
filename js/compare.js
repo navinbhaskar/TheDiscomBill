@@ -8,22 +8,24 @@ import { calculateBill } from './engine.js';
 
 // Featured DISCOMs — one representative per major state, ordered roughly North → South.
 // (UP's five DISCOMs share the UPERC schedule, so MVVNL stands in; its rates are bill-verified.)
+// The fifteen largest states by domestic consumer base, one representative DISCOM each,
+// in rough north-to-south order. Twenty rows made the table taller than the screen and
+// turned a scannable answer into a scroll — and the rows that went (Uttarakhand,
+// Chhattisgarh, Jharkhand, Odisha, Assam) were the five smallest by consumer base, so the
+// table still covers the overwhelming majority of anyone who lands on it. Nothing is lost:
+// every one of the 65 DISCOMs is still reachable from the head-to-head tool below and from
+// /tariffs/, both of which read the full registry rather than this list.
 const MAJOR_DISCOMS = [
   { id: 'mvvnl',    state: 'Uttar Pradesh',  discom: 'MVVNL' },
   { id: 'tpddl',    state: 'Delhi',          discom: 'Tata Power-DDL' },
   { id: 'pspcl',    state: 'Punjab',         discom: 'PSPCL' },
   { id: 'dhbvn',    state: 'Haryana',        discom: 'DHBVN' },
   { id: 'jvvnl',    state: 'Rajasthan',      discom: 'JVVNL' },
-  { id: 'upcl',     state: 'Uttarakhand',    discom: 'UPCL' },
   { id: 'ugvcl',    state: 'Gujarat',        discom: 'UGVCL' },
   { id: 'msedcl',   state: 'Maharashtra',    discom: 'MSEDCL' },
   { id: 'mppkvvcl', state: 'Madhya Pradesh', discom: 'MPPKVVCL' },
-  { id: 'cspdcl',   state: 'Chhattisgarh',   discom: 'CSPDCL' },
   { id: 'nbpdcl',   state: 'Bihar',          discom: 'NBPDCL' },
-  { id: 'jbvnl',    state: 'Jharkhand',      discom: 'JBVNL' },
   { id: 'wbsedcl',  state: 'West Bengal',    discom: 'WBSEDCL' },
-  { id: 'tpnodl',   state: 'Odisha',         discom: 'TPNODL' },
-  { id: 'apdcl',    state: 'Assam',          discom: 'APDCL' },
   { id: 'tsspdcl',  state: 'Telangana',      discom: 'TSSPDCL' },
   { id: 'apspdcl',  state: 'Andhra Pradesh', discom: 'APSPDCL' },
   { id: 'bescom',   state: 'Karnataka',      discom: 'BESCOM' },

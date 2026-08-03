@@ -2989,6 +2989,9 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
    1000px frame as the head-to-head card and the note cards below it. */
 .comparison-section .comparison-table-wrapper { margin-inline: auto; width: 100%; }
 .comparison-section .comparison-table { width: 100%; }
+/* The head-to-head card follows the table directly and neither carried a margin, so the
+   two cards sat edge to edge and read as one broken container. */
+.comparison-section .comparison-table-wrapper + .custom-compare { margin-top: 34px; }
 
 .comparison-table { width: auto; border-collapse: separate; border-spacing: 0; }
 .comparison-table th, .comparison-table td { padding: 8px 13px; text-align: left; border-bottom: 1px solid var(--border-subtle); transition: background var(--t-fast); }
@@ -3041,6 +3044,12 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
   /* overflow:visible no longer clips the corners — round the thead itself */
   .comparison-table thead th:first-child { border-top-left-radius: var(--radius-lg); }
   .comparison-table thead th:last-child { border-top-right-radius: var(--radius-lg); }
+  /* …and the bottom two, which this block forgot. It shows on the LEFT specifically: the
+     sticky first column paints an opaque --surface-card over the wrapper's rounded border,
+     so that corner reads square while the last cell — which has no background of its own —
+     still shows the border's curve. */
+  .comparison-table tbody tr:last-child td:first-child { border-bottom-left-radius: var(--radius-lg); }
+  .comparison-table tbody tr:last-child td:last-child { border-bottom-right-radius: var(--radius-lg); }
 }
 
 /* DISCOM cell — state name over the DISCOM code. */

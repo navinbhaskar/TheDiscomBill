@@ -133,6 +133,13 @@
   <!-- ── Comparison Table ──────────────────────────────────────────────────────── -->
   <section id="comparison" class="comparison-section" style="min-height: calc(100vh - 150px);">
     <div class="container">
+      <!-- The BreadcrumbList JSON-LD in <head> already described this trail; the visible
+           nav every other page carries was simply never added here. -->
+      <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol>
+        <li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li>
+        <li class="crumb-sep" aria-hidden="true">›</li>
+        <li class="crumb"><span aria-current="page" data-i18n="bc.compare">Compare Rates</span></li>
+      </ol></nav>
       <h1 class="reveal" data-i18n="cmp.h2">Electricity Rate Comparison 2026 (Major Providers)</h1>
       <p class="reveal" data-i18n-html="cmp.intro">See how major electricity providers stack up against each other for a typical month at a <strong>1&nbsp;kW sanctioned load</strong>. Calculated dynamically based on current FY 2025-26 tariffs.</p>
 
@@ -176,7 +183,7 @@
            it reads as the follow-up step rather than the entry point. -->
       <section class="custom-compare reveal" aria-labelledby="ccHeading">
         <div class="cc-head">
-          <h3 id="ccHeading" data-i18n="cmp.cc.title">Now with your actual usage</h3>
+          <h3 id="ccHeading" data-i18n="cmp.cc.title">Compare any two DISCOMs</h3>
           <p data-i18n="cmp.cc.sub">The table above assumes a typical month at 1 kW. Pick any two providers — not just the majors — and enter your own units and load for a like-for-like bill estimate, with a full breakdown.</p>
         </div>
         <form class="cc-form" id="ccForm">

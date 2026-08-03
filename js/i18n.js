@@ -349,6 +349,7 @@ export const STRINGS = {
     'about.disclaimer': '<strong>⚠ Disclaimer:</strong> This is a <strong>provisional bill calculator</strong> for reference and educational purposes only. The tariff rates used here are approximate, based on publicly available tariff orders, and may not reflect the latest revisions or local surcharges. Actual bills from your DISCOM may differ. Always contact your DISCOM or visit their official website for accurate and official billing information. TheDiscomBill is not affiliated with any electricity utility or government body.',
     // Breadcrumb (shared)
     'bc.home': 'Home',
+    'bc.compare': 'Compare Rates',
     // DISCOM Services page (/services/)
     'svc.h2': 'DISCOM Services',
     'svc.intro': 'Everything you need from your electricity provider in one place. Pick a service, choose your state and DISCOM, and we\'ll take you straight to its <strong>official portal</strong> — plus the 24×7 power helpline.',
@@ -373,7 +374,7 @@ export const STRINGS = {
     // Compare page (/compare/)
     'cmp.h2': 'Electricity Rate Comparison {year} (Major Providers)',
     'cmp.intro': 'See how major electricity providers stack up against each other for a typical month at a <strong>1&nbsp;kW sanctioned load</strong>. Calculated dynamically based on current FY 2025-26 tariffs.',
-    'cmp.cc.title': 'Now with your actual usage',
+    'cmp.cc.title': 'Compare any two DISCOMs',
     'cmp.cc.sub': 'The table above assumes a typical month at 1 kW. Pick any two providers — not just the majors — and enter your own units and load for a like-for-like bill estimate, with a full breakdown.',
     'cmp.cc.discomA': 'DISCOM A',
     'cmp.cc.discomB': 'DISCOM B',
