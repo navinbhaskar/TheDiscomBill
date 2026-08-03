@@ -242,34 +242,57 @@ function render() {
 }
 
 // ── Appliance-based MD estimator ──────────────────────────────────────────────
-// For users who can't find MD on their bills. Same catalog idea as the Electricity
-// Cost Calculator but with no run-hours: MD is about what draws power AT ONCE, not
-// for how long. Model: everything in the "runs together on a hot evening" group
-// counts in full (fans, lights, fridge, AC, TV…), plus only the single LARGEST
-// heat appliance — geysers, irons and induction tops are short-burst loads that
-// rarely coincide with each other, and counting them all would inflate the MD
-// into exactly the oversized sanctioned load this tool exists to fix.
-const HEAT_IDS = new Set(['geyser', 'iron', 'induction', 'micro', 'washer', 'pump', 'mixer']);
-const MD_CATALOG = [
-  { id: 'fan',       name: { en: 'Ceiling Fan',            hi: 'सीलिंग फैन' },        w: 75 },
-  { id: 'led',       name: { en: 'LED Bulb',               hi: 'LED बल्ब' },           w: 9 },
-  { id: 'tube',      name: { en: 'Tube Light',             hi: 'ट्यूब लाइट' },         w: 20 },
-  { id: 'tv',        name: { en: 'LED TV',                 hi: 'LED टीवी' },           w: 90 },
-  { id: 'fridge',    name: { en: 'Refrigerator',           hi: 'रेफ्रिजरेटर' },        w: 150 },
-  { id: 'ac',        name: { en: 'Air Conditioner (1.5T)', hi: 'एयर कंडीशनर (1.5T)' },  w: 1500 },
-  { id: 'cooler',    name: { en: 'Air Cooler',             hi: 'एयर कूलर' },           w: 180 },
-  { id: 'washer',    name: { en: 'Washing Machine',        hi: 'वॉशिंग मशीन' },        w: 500 },
-  { id: 'geyser',    name: { en: 'Geyser / Water Heater',  hi: 'गीज़र / वॉटर हीटर' },   w: 2000 },
-  { id: 'micro',     name: { en: 'Microwave Oven',         hi: 'माइक्रोवेव ओवन' },      w: 1200 },
-  { id: 'mixer',     name: { en: 'Mixer / Grinder',        hi: 'मिक्सर / ग्राइंडर' },   w: 500 },
-  { id: 'laptop',    name: { en: 'Laptop',                 hi: 'लैपटॉप' },             w: 60 },
-  { id: 'desktop',   name: { en: 'Desktop PC',             hi: 'डेस्कटॉप PC' },         w: 150 },
-  { id: 'iron',      name: { en: 'Electric Iron',          hi: 'इलेक्ट्रिक आयरन' },     w: 1000 },
-  { id: 'induction', name: { en: 'Induction Cooktop',      hi: 'इंडक्शन कुकटॉप' },      w: 1800 },
-  { id: 'pump',      name: { en: 'Water Pump / Motor',     hi: 'वॉटर पंप / मोटर' },     w: 750 },
-  { id: 'router',    name: { en: 'Wi-Fi Router',           hi: 'वाई-फाई राउटर' },       w: 10 },
-  { id: 'custom',    name: { en: 'Custom Appliance',       hi: 'कस्टम उपकरण' },         w: 100 },
+// For users who can't find MD on their bills. MD is about what draws power AT ONCE, so
+// there are no run-hours here — but three things decide the answer, and getting any of
+// them wrong produces the oversized load this page exists to fix:
+//
+//  1. SEASON. A geyser and an AC never peak in the same week. Summing the whole house is
+//     what makes naive estimates absurd. Each appliance declares the seasons it is used
+//     in; we compute a peak per season and take the worst one.
+//  2. COINCIDENCE. Things that are simply on — lights, fans, TV, the AC once it is hot —
+//     really are on together, so they count in full. Things you operate — geyser, iron,
+//     microwave, pump — rarely overlap with each other, so only the largest of them counts.
+//  3. THE 30-MINUTE WINDOW. MD is a half-hour AVERAGE, not an instantaneous peak. A 2 kW
+//     geyser that heats for 15 minutes contributes ~1 kW to the window; a mixer run for
+//     three minutes contributes almost nothing. This is the single biggest reason a
+//     measured MD comes in far below what people expect, and the reason the old model
+//     (full nameplate for the largest heat appliance) read high.
+//
+// `duty` is the fraction of a 30-minute window the appliance is actually drawing when in
+// use. `cycles: true` marks loads that thermostat-cycle rather than run flat out.
+const SEASONS = [
+  { id: 'summer',  label: 'Summer' },
+  { id: 'monsoon', label: 'Monsoon' },
+  { id: 'winter',  label: 'Winter' },
 ];
+const ALL_SEASONS = ['summer', 'monsoon', 'winter'];
+
+const MD_CATALOG = [
+  // id            name                                       W     duty  seasons                    operated?
+  { id: 'fan',       name: { en: 'Ceiling Fan',            hi: 'सीलिंग फैन' },        w: 75,   duty: 1,   seasons: ['summer', 'monsoon'] },
+  { id: 'led',       name: { en: 'LED Bulb',               hi: 'LED बल्ब' },           w: 9,    duty: 1,   seasons: ALL_SEASONS },
+  { id: 'tube',      name: { en: 'Tube Light',             hi: 'ट्यूब लाइट' },         w: 20,   duty: 1,   seasons: ALL_SEASONS },
+  { id: 'tv',        name: { en: 'LED TV',                 hi: 'LED टीवी' },           w: 90,   duty: 1,   seasons: ALL_SEASONS },
+  // A fridge's compressor runs roughly half of any half-hour, harder in summer.
+  { id: 'fridge',    name: { en: 'Refrigerator',           hi: 'रेफ्रिजरेटर' },        w: 150,  duty: 0.6, seasons: ALL_SEASONS, cycles: true },
+  // An AC compressor cycles once the room is cold; on the hottest evening it barely does.
+  { id: 'ac',        name: { en: 'Air Conditioner (1.5T)', hi: 'एयर कंडीशनर (1.5T)' },  w: 1500, duty: 0.9, seasons: ['summer', 'monsoon'], cycles: true },
+  { id: 'cooler',    name: { en: 'Air Cooler',             hi: 'एयर कूलर' },           w: 180,  duty: 1,   seasons: ['summer'] },
+  { id: 'laptop',    name: { en: 'Laptop',                 hi: 'लैपटॉप' },             w: 60,   duty: 1,   seasons: ALL_SEASONS },
+  { id: 'desktop',   name: { en: 'Desktop PC',             hi: 'डेस्कटॉप PC' },         w: 150,  duty: 1,   seasons: ALL_SEASONS },
+  { id: 'router',    name: { en: 'Wi-Fi Router',           hi: 'वाई-फाई राउटर' },       w: 10,   duty: 1,   seasons: ALL_SEASONS },
+  // ── Operated loads: only the largest counts, and only for the slice of the half-hour
+  //    it actually draws. Geysers are winter-and-monsoon; the rest are year-round.
+  { id: 'geyser',    name: { en: 'Geyser / Water Heater',  hi: 'गीज़र / वॉटर हीटर' },   w: 2000, duty: 0.5, seasons: ['winter', 'monsoon'], operated: true },
+  { id: 'induction', name: { en: 'Induction Cooktop',      hi: 'इंडक्शन कुकटॉप' },      w: 1800, duty: 0.7, seasons: ALL_SEASONS, operated: true },
+  { id: 'micro',     name: { en: 'Microwave Oven',         hi: 'माइक्रोवेव ओवन' },      w: 1200, duty: 0.25, seasons: ALL_SEASONS, operated: true },
+  { id: 'iron',      name: { en: 'Electric Iron',          hi: 'इलेक्ट्रिक आयरन' },     w: 1000, duty: 0.45, seasons: ALL_SEASONS, operated: true, cycles: true },
+  { id: 'washer',    name: { en: 'Washing Machine',        hi: 'वॉशिंग मशीन' },        w: 500,  duty: 0.5, seasons: ALL_SEASONS, operated: true },
+  { id: 'pump',      name: { en: 'Water Pump / Motor',     hi: 'वॉटर पंप / मोटर' },     w: 750,  duty: 0.4, seasons: ALL_SEASONS, operated: true },
+  { id: 'mixer',     name: { en: 'Mixer / Grinder',        hi: 'मिक्सर / ग्राइंडर' },   w: 500,  duty: 0.1, seasons: ALL_SEASONS, operated: true },
+  { id: 'custom',    name: { en: 'Custom Appliance',       hi: 'कस्टम उपकरण' },         w: 100,  duty: 1,   seasons: ALL_SEASONS },
+];
+const mdSpec = (id) => MD_CATALOG.find(x => x.id === id) || MD_CATALOG[MD_CATALOG.length - 1];
 const estLang = () => { try { return localStorage.getItem('lang') === 'hi' ? 'hi' : 'en'; } catch (e) { return 'en'; } };
 const mdName = (id) => { const c = MD_CATALOG.find(x => x.id === id); return c ? c.name[estLang()] : id; };
 
@@ -279,28 +302,66 @@ let estRows = [
   { id: 'tv', w: 90, qty: 1 }, { id: 'ac', w: 1500, qty: 1 }, { id: 'geyser', w: 2000, qty: 1 },
 ];
 
-function estimateMdKw() {
-  let together = 0;
-  let biggestHeat = 0;
+// Peak half-hour demand in one season: everything that is simply ON, in full and at its
+// duty, plus the LARGEST single operated load (they rarely overlap with each other).
+function seasonKw(season) {
+  let together = 0, biggestOperated = 0;
   for (const r of estRows) {
-    const kw = (Number(r.w) || 0) * (Number(r.qty) || 0);
-    if (HEAT_IDS.has(r.id)) biggestHeat = Math.max(biggestHeat, (Number(r.w) || 0)); // one at a time
-    else together += kw;
+    const spec = mdSpec(r.id);
+    if (!spec.seasons.includes(season)) continue;
+    const w = Number(r.w) || 0, qty = Number(r.qty) || 0;
+    const contribution = w * spec.duty;
+    if (spec.operated) biggestOperated = Math.max(biggestOperated, qty > 0 ? contribution : 0);
+    else together += contribution * qty;
   }
-  return Math.ceil((together + biggestHeat) / 100) / 10;   // kW, rounded UP to 0.1
+  return (together + biggestOperated) / 1000;
+}
+
+// The year's MD is the worst season, not the sum of all of them.
+function estimateSeasons() {
+  return SEASONS.map(s => ({ ...s, kw: Math.ceil(seasonKw(s.id) * 10) / 10 }));
+}
+function estimateMdKw() {
+  return estimateSeasons().reduce((m, s) => Math.max(m, s.kw), 0);
 }
 
 function renderEst() {
   const wrap = $('slEstRows');
   if (!wrap) return;
-  wrap.innerHTML = estRows.map((r, i) => `
+  wrap.innerHTML = estRows.map((r, i) => {
+    const spec = mdSpec(r.id);
+    // Two things the number depends on that the row would otherwise hide: whether this
+    // appliance is one of the "only the biggest counts" group, and which seasons it is in.
+    const tags = [
+      spec.operated ? '<small class="sl-est-heat">largest only</small>' : '',
+      spec.seasons.length < 3
+        ? `<small class="sl-est-season">${spec.seasons.map(s => s[0].toUpperCase() + s.slice(1)).join(' / ')}</small>`
+        : '',
+      spec.duty < 1 ? `<small class="sl-est-duty" title="Share of a 30-minute window this actually draws">×${spec.duty}</small>` : '',
+    ].filter(Boolean).join(' ');
+    return `
     <div class="est-row" data-i="${i}">
-      <span class="est-row-name">${esc(mdName(r.id))}${HEAT_IDS.has(r.id) ? ' <small class="sl-est-heat">short-burst</small>' : ''}</span>
+      <span class="est-row-name">${esc(mdName(r.id))} ${tags}</span>
       <input class="est-in" data-f="w" data-i="${i}" type="number" min="1" step="10" value="${r.w}" inputmode="numeric" aria-label="Wattage (W)">
       <input class="est-in" data-f="qty" data-i="${i}" type="number" min="0" step="1" value="${r.qty}" inputmode="numeric" aria-label="Quantity">
       <button type="button" class="est-row-remove" data-i="${i}" title="Remove" aria-label="Remove ${esc(mdName(r.id))}">×</button>
-    </div>`).join('') || '<p class="est-empty">Add appliances below to estimate your MD.</p>';
+    </div>`;
+  }).join('') || '<p class="est-empty">Add appliances below to estimate your MD.</p>';
+  updateEstOut();
+}
+
+// Readout: the per-season split plus the figure we would apply. Shown as three numbers
+// because the whole point is that the seasons differ — a single number hides the reason.
+function updateEstOut() {
+  const seasons = estimateSeasons();
   const kw = estimateMdKw();
+  const split = $('slEstSplit');
+  if (split) {
+    split.innerHTML = seasons.map(s => `
+      <span class="sl-est-chip${s.kw === kw && kw > 0 ? ' is-peak' : ''}">
+        ${s.label}<strong>${s.kw > 0 ? s.kw + ' kW' : '—'}</strong>
+      </span>`).join('');
+  }
   $('slEstVal').textContent = kw > 0 ? `≈ ${kw} kW` : '—';
   $('slEstApply').disabled = !(kw > 0);
 }
@@ -370,9 +431,7 @@ function initEstimator() {
     const f = e.target.dataset.f, i = Number(e.target.dataset.i);
     if (!f || !(i >= 0) || !estRows[i]) return;
     estRows[i][f] = Number(e.target.value) || 0;
-    const kw = estimateMdKw();          // update the readout without rebuilding (keeps focus)
-    $('slEstVal').textContent = kw > 0 ? `≈ ${kw} kW` : '—';
-    $('slEstApply').disabled = !(kw > 0);
+    updateEstOut();                     // readout only — rebuilding the rows would drop focus
   });
   $('slEstRows').addEventListener('click', (e) => {
     const btn = e.target.closest('.est-row-remove');

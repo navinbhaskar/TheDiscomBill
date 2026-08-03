@@ -194,11 +194,16 @@
 
     <details class="sl-est" id="slEstPanel">
       <summary>Not sure about your highest MD? Estimate it from your appliances</summary>
-      <p class="sl-est-note">List what's in the house — wattage and how many, no run-hours needed. The estimate
-      counts everything that typically runs together on a hot evening (fans, lights, fridge, AC, TV…) plus your
-      single biggest heat appliance (geyser, induction, iron — they rarely run at the same time as each other).</p>
+      <p class="sl-est-note">List what's in the house — wattage and how many, no run-hours needed. We work out
+      the peak <strong>separately for each season</strong> and take the worst one, because a geyser and an AC
+      never peak in the same week and adding the whole house together is what makes these estimates absurd.
+      Things that are simply on (lights, fans, TV, AC) count together; things you operate (geyser, induction,
+      iron, pump) rarely overlap, so only the largest counts. Every figure is then scaled to the
+      <strong>30-minute window</strong> MD is actually averaged over — a 2&nbsp;kW geyser that heats for
+      15&nbsp;minutes puts ≈&nbsp;1&nbsp;kW into that window, not 2.</p>
       <div class="est-rows" id="slEstRows" aria-live="polite"></div>
       <select id="slEstAdd" class="est-in sl-est-add" aria-label="Add an appliance"></select>
+      <div class="sl-est-split" id="slEstSplit" aria-label="Peak demand by season"></div>
       <div class="sl-est-out">
         <span>Estimated maximum demand: <strong id="slEstVal">—</strong></span>
         <button type="button" id="slEstApply" class="btn-add-appliance sl-est-apply">Use this as my MD ↑</button>

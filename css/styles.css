@@ -3199,7 +3199,23 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 .sl-est .est-rows { padding: 0 16px; }
 .sl-est .est-row { grid-template-columns: 1fr 76px 56px 30px; padding: 4px 0; }
 .sl-est .est-row-name { font-size: 13.5px; color: var(--text-primary); display: flex; align-items: center; gap: 6px; }
-.sl-est-heat { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .02em; color: var(--text-tertiary); background: var(--surface-default); border: 1px solid var(--border-subtle); border-radius: var(--radius-full); padding: 1px 6px; }
+.sl-est-heat, .sl-est-season, .sl-est-duty { font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .02em; color: var(--text-tertiary); background: var(--surface-default); border: 1px solid var(--border-subtle); border-radius: var(--radius-full); padding: 1px 6px; white-space: nowrap; }
+/* The two things the estimate depends on that the row would otherwise hide: which seasons
+   the appliance counts in, and how much of a 30-minute window it actually draws for. */
+.sl-est-season { color: var(--text-brand, var(--brand)); border-color: var(--brand-border); background: var(--brand-faint); }
+.sl-est-duty { font-variant-numeric: tabular-nums; text-transform: none; cursor: help; }
+/* Per-season peaks. Three numbers, not one, because the point of the model is that they
+   differ — a single figure hides which season set it and therefore why. */
+.sl-est-split { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 16px 0; }
+.sl-est-chip {
+  display: inline-flex; align-items: baseline; gap: 7px;
+  padding: 5px 12px; border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle); background: var(--surface-card);
+  font-size: 12px; font-weight: 600; color: var(--text-secondary);
+}
+.sl-est-chip strong { font-size: 14px; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.sl-est-chip.is-peak { border-color: var(--brand); background: var(--brand-faint); color: var(--brand); }
+.sl-est-chip.is-peak strong { color: var(--brand); }
 .sl-est-add { margin: 12px 16px 0; width: calc(100% - 32px); height: 36px; cursor: pointer; }
 .sl-est-out { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; margin-top: 8px; border-top: 1px solid var(--border-subtle); font-size: 14px; color: var(--text-secondary); }
 .sl-est-out strong { color: var(--brand); font-size: 16px; font-variant-numeric: tabular-nums; }
