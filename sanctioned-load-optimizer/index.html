@@ -176,6 +176,22 @@
     by load, so the same load costs different households different amounts. It does not change the load we
     recommend: that follows your maximum demand.</p>
 
+    <!-- Opt-in: sizing to the single worst month is what leaves people over-sanctioned, but
+         twelve numbers is a lot to ask and most people have one figure to hand. Empty or
+         near-empty, the tool falls back to the single peak above. -->
+    <details class="sl-est" id="slYearPanel">
+      <summary>Know your MD month by month? Size to the whole year instead</summary>
+      <p class="sl-est-note">A peak you hit for three summer months still costs you the higher fixed
+      charge in all twelve. Enter what each bill recorded — in kW, financial-year order — and we re-price
+      the entire year at every candidate load. Leave months blank if you don't have them; two or more is
+      enough to switch. <strong>This replaces the single MD figure above.</strong></p>
+      <div class="sl-year-grid" id="slYearGrid"></div>
+      <div class="sl-est-out">
+        <span id="slYearState">Using the single peak above.</span>
+        <button type="button" id="slYearClear" class="btn-add-appliance sl-est-apply">Clear all</button>
+      </div>
+    </details>
+
     <details class="sl-est" id="slEstPanel">
       <summary>Not sure about your highest MD? Estimate it from your appliances</summary>
       <p class="sl-est-note">List what's in the house — wattage and how many, no run-hours needed. The estimate

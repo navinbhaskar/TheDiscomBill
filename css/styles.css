@@ -3206,6 +3206,49 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 .sl-est-apply { margin-top: 0; width: auto; padding: 9px 16px; }
 .sl-est-apply:disabled { opacity: .5; cursor: not-allowed; }
 
+/* 12-month MD grid. auto-fit rather than a fixed 12 or 6 columns: twelve cells wide is
+   unreadable on a phone and six is wasteful on a desktop, and the FY order has to survive
+   whatever the wrap lands on — so the cells stay in source order and only the count moves. */
+.sl-year-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+  gap: 8px; padding: 12px 16px 4px;
+}
+.sl-year-cell { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.sl-year-cell > span {
+  font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em;
+  color: var(--text-tertiary);
+}
+.sl-year-cell input {
+  width: 100%; height: 34px; padding: 0 8px; font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid var(--border-default); border-radius: var(--radius-md);
+  background: var(--surface-card); color: var(--text-primary);
+}
+.sl-year-cell input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-faint); }
+/* The single-MD field goes read-only while the grid drives the answer; it keeps showing the
+   peak so the two inputs on screen never disagree. */
+.svc-control input:disabled { opacity: .6; cursor: not-allowed; }
+
+/* The cost-optimal load, when it is cheaper than the one we recommend. Amber, not green:
+   it wins on arithmetic and loses on risk, and the copy inside says so. */
+.sl-gamble {
+  margin: 4px 0 16px; padding: 14px 16px; border-radius: var(--radius-lg);
+  border: 1px solid var(--warn-border, color-mix(in srgb, var(--p-amber-500) 38%, transparent));
+  background: color-mix(in srgb, var(--p-amber-500) 9%, transparent);
+}
+.sl-gamble strong { display: block; font-size: 14.5px; color: var(--warn-text); margin-bottom: 5px; }
+.sl-gamble p { margin: 0; font-size: 13px; line-height: 1.6; color: var(--text-secondary); }
+/* Row tag in the candidate-load table. The class was already on the "current" and
+   "recommended" tags but had no rule anywhere, so both rendered as bare inline text with
+   no way to tell them from the load beside them. */
+.rc-beta {
+  display: inline-block; margin-left: 6px; padding: 1px 7px; vertical-align: 1px;
+  border-radius: var(--radius-full);
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em;
+  background: var(--brand-faint); color: var(--brand);
+}
+.rc-beta-warn { background: color-mix(in srgb, var(--p-amber-500) 18%, transparent); color: var(--warn-text); }
+
 /* Subsidy Eligibility Checker — result cards, one per scheme. */
 .sub-cards { display: grid; gap: 14px; margin-top: 4px; }
 .sub-card { border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 18px 20px; background: var(--surface-default); }
