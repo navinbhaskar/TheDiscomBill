@@ -3333,8 +3333,10 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .guide-meta a:hover { color: var(--brand); }
 /* Inline "jump into the tool" CTA under a guide's intro (guide.toolCta). A branded card
    that reads as an action, not a related-link — high on the page where intent is strongest. */
+/* Capped to the .seo-lead measure it sits directly under — at full container width the
+   card ran ~200px past the intro paragraph, leaving dead space to the right of the arrow. */
 .guide-tool-cta { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1px 14px;
-  margin: 18px 0 22px; padding: 13px 16px; text-decoration: none;
+  max-width: 760px; margin: 18px 0 22px; padding: 13px 16px; text-decoration: none;
   border: 1px solid color-mix(in srgb, var(--brand) 35%, transparent); border-radius: var(--radius-lg);
   background: linear-gradient(120deg, var(--brand-faint), color-mix(in srgb, var(--p-amber-400) 8%, transparent));
   transition: border-color var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast); }
