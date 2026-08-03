@@ -190,8 +190,8 @@
 /* ─── Dark theme ─────────────────────────────────────────────────────────────────
    Applied when <html data-theme="dark"> (set by an inline no-FOUC script + the header
    toggle, defaulting to the OS preference). Only semantic/legacy tokens are re-pointed,
-   so every component follows automatically. The rendered bill is kept paper-light below
-   so it still reads like a document; @media print already forces white. */
+   so every component follows automatically — including the rendered bill and the hero
+   sample card, which get their own sheet tokens below; @media print still forces white. */
 :root[data-theme="dark"] {
   color-scheme: dark;
   --surface-page:   #0b1220;
@@ -232,28 +232,66 @@
   --white: #131c2e;
   --blue-pale: #14233c;
 }
-/* The hero sample-bill card is a deliberate white island in both themes (see
-   .hero-bill-card), so the semantic tokens inside it must stay light — same technique as
-   .bill-wrap below. Without this the segmented control's sunken track goes navy-on-white
-   and its idle label drops to 2.35:1. */
-:root[data-theme="dark"] .hero-bill-card {
-  --surface-sunken: #f1f5f9;
-  --border-default: #e2e8f0;
-  --text-primary: #0f172a;
-}
-/* Keep the printed bill paper-light even in dark mode (reset tokens within the bill only) */
+/* The hero sample card and the rendered bill were both deliberate white islands in dark
+   mode — the reasoning being that a bill is a document and should read like paper. On a
+   dark page they were the only two surfaces that never dimmed, so they glared. Both now
+   follow the theme. The paper argument still holds where it actually matters: @media print
+   forces the bill to black-on-white with !important, independent of the screen theme.
+
+   The bill keeps its OWN sheet tokens rather than inheriting the page's: the sheet has to
+   sit a step darker than the .bill-panel it lies on (or it dissolves into it), and the
+   banded charge rows a step lighter than the sheet (or the banding disappears). That is
+   the same figure/ground relationship the light theme gets from white-on-slate-50. */
 :root[data-theme="dark"] .bill-wrap {
-  --surface-page: #ffffff; --surface-card: #ffffff; --surface-sunken: #f1f5f9;
-  --surface-overlay: rgba(15,23,42,.04);
-  --text-primary: #0f172a; --text-secondary: #475569; --text-tertiary: #94a3b8;
-  --border-subtle: #f1f5f9; --border-default: #e2e8f0; --border-strong: #cbd5e1;
-  --ok-bg: #f0fdf4; --ok-text: #15803d; --warn-bg: #fffbeb; --warn-text: #b45309;
-  /* brand tints used by table sub-total / faint fills — must be light so text stays readable */
-  --brand-faint: #eff6ff; --brand-subtle: #dbeafe; --brand-border: #bfdbfe;
-  --gray-50: #f8fafc; --gray-100: #f1f5f9; --gray-200: #e2e8f0; --gray-300: #cbd5e1;
-  --gray-900: #1e293b; --white: #ffffff; --blue-pale: #eff6ff;
-  background: #fff; color: #0f172a; border-radius: var(--radius-lg);
+  --surface-card:   #0d1524;   /* the sheet — darker than .bill-panel's #131c2e */
+  --surface-sunken: #18233a;   /* banded rows: fixed charge, FPPA, arrears, subtotals */
+  --surface-overlay: rgba(255,255,255,.045);
+  /* --brand-dark is blue-900 and is NOT re-pointed globally in dark mode, because on the
+     page it is mostly a fill with white text on it. Inside the bill it is only ever ink —
+     the grand total, the Simple-mode figures — and blue-900 on this sheet is 1.4:1. */
+  --brand-dark: var(--text-brand-dark);
+  /* The global tertiary (#6b7c93) is a 4.0:1 grey — fine for the page's 13px+ body copy,
+     short of AA on the bill's 10–11px rate annotations and quiet rows. 5.6:1 here, still
+     clearly a step quieter than --text-secondary. */
+  --text-tertiary: #8595ad;
+  background: var(--surface-card); color: var(--text-primary);
+  border-radius: var(--radius-lg);
 }
+/* Stationery dressing is painted with dark ink on the assumption of white paper. Invert it:
+   sprocket holes and perforations become light punch-outs, the barcode light bars. */
+:root[data-theme="dark"] .bill-wrap:not(.comparison-wrap)::before,
+:root[data-theme="dark"] .bill-wrap:not(.comparison-wrap)::after {
+  background-image: radial-gradient(circle at 50% 12px, rgba(255,255,255,.16) 0 3px, rgba(255,255,255,.05) 3.5px, transparent 4.5px);
+}
+:root[data-theme="dark"] .bill-perf {
+  background-image: radial-gradient(circle at 12px 50%, rgba(255,255,255,.14) 0 2.5px, transparent 3px);
+}
+:root[data-theme="dark"] .bill-barcode-bars {
+  background:
+    repeating-linear-gradient(90deg, var(--p-slate-300) 0 2px, transparent 2px 5px),
+    repeating-linear-gradient(90deg, var(--p-slate-300) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(90deg, var(--p-slate-300) 0 3px, transparent 3px 13px);
+}
+/* multiply is how ink darkens paper; on a dark sheet it drives the stamp to black and it
+   vanishes. screen is the dark-room equivalent — the stamp lightens what it sits on. */
+:root[data-theme="dark"] .bill-stamp {
+  border-color: #8fb3ff; color: #8fb3ff;
+  opacity: .20; mix-blend-mode: screen;
+}
+/* The hero sample card: same surface as any other dark card, deeper shadow because it
+   floats over the hero's glass panel rather than the page. */
+:root[data-theme="dark"] .hero-bill-card {
+  background: var(--surface-card);
+  border-color: var(--border-default);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, .55);
+  --brand-dark: var(--text-brand-dark);   /* same reasoning as the bill sheet above */
+  --text-tertiary: #8595ad;               /* ditto — the 10.5px rate annotations */
+}
+/* Links inside the bill are brand-600 ink, which is 3.0:1 on the dark sheet and worse on a
+   banded row. --brand itself is left alone: elsewhere it is a fill with white text on it. */
+:root[data-theme="dark"] .bill-disclaimer a,
+:root[data-theme="dark"] .bill-fullpage-link a,
+:root[data-theme="dark"] .bill-wrap a { color: var(--text-brand); }
 
 /* Glossary tooltip — a small focusable "ⓘ" that reveals a definition on hover/focus (CSS-only) */
 .gloss {
@@ -1092,6 +1130,46 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
 }
 .hbc-cmp-link svg { width: 11px; height: 11px; }
 .hbc-cmp-link:hover { text-decoration: underline; }
+
+/* ─── Dark theme: sample card + mini-bill lines ─────────────────────────────────
+   Everything above paints with palette PRIMITIVES (--p-slate-*, raw hex) rather than
+   semantic tokens, because both surfaces used to be white in either theme. Primitives
+   don't flip, so each is re-pointed here instead of rewriting the rules above — the
+   light theme stays byte-for-byte what it was. .mini-* rides along: its only renderer
+   (renderSimpleBill) is currently unreferenced, but it draws inside .bill-wrap, so it
+   would land on the dark sheet the moment anything calls it again. */
+:root[data-theme="dark"] .hbc-title,
+:root[data-theme="dark"] .hbc-hero-sub,
+:root[data-theme="dark"] .hbc-foot,
+:root[data-theme="dark"] .hero .hbc-note { color: var(--text-secondary); }
+:root[data-theme="dark"] .hbc-line,
+:root[data-theme="dark"] .mini-line { color: var(--text-secondary); }
+:root[data-theme="dark"] .hbc-line dd,
+:root[data-theme="dark"] .mini-line dd,
+:root[data-theme="dark"] .hbc-line-total dt,
+:root[data-theme="dark"] .mini-line-total dt { color: var(--text-primary); }
+:root[data-theme="dark"] .hbc-line dt em, :root[data-theme="dark"] .mini-line dt em,
+:root[data-theme="dark"] .hbc-line dt small, :root[data-theme="dark"] .mini-line dt small,
+:root[data-theme="dark"] .hbc-line-quiet, :root[data-theme="dark"] .hbc-line-quiet dd,
+:root[data-theme="dark"] .mini-line-quiet, :root[data-theme="dark"] .mini-line-quiet dd { color: var(--text-tertiary); }
+/* #15803d is 2.3:1 on the dark sheet — a credit has to stay legibly green, not just green. */
+:root[data-theme="dark"] .hbc-line-credit, :root[data-theme="dark"] .hbc-line-credit dd,
+:root[data-theme="dark"] .mini-line-credit, :root[data-theme="dark"] .mini-line-credit dd { color: #4ade80; }
+/* The blue figures (hero amount, totals, the compare link) come from --brand-dark, which
+   both surfaces re-point to --text-brand-dark; nothing to override here. */
+:root[data-theme="dark"] .hbc-line-total,
+:root[data-theme="dark"] .mini-line-total,
+:root[data-theme="dark"] .hbc-foot { border-top-color: var(--border-default); }
+:root[data-theme="dark"] .hbc-chip {
+  color: var(--text-brand-dark);
+  background: rgba(127,178,255,.12); border-color: rgba(127,178,255,.30);
+}
+:root[data-theme="dark"] .hbc-dot-fill { background: var(--border-strong); }
+:root[data-theme="dark"] .hbc-dot:hover .hbc-dot-fill { background: var(--text-tertiary); }
+:root[data-theme="dark"] .hbc-dot.active .hbc-dot-fill { background: rgba(127,178,255,.20); }
+:root[data-theme="dark"] .hbc-dot.active .hbc-dot-fill::after {
+  background: linear-gradient(90deg, var(--p-blue-400, #60a5fa), var(--p-blue-500, #3b82f6));
+}
 
 @media (max-width: 1000px) {
   .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 34px; }
@@ -2423,7 +2501,8 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 /* Color rule: ONE hue — the brand blue — used as the single accent. The body of  */
 /* the bill stays light (white + soft blue-50 / slate-50 tints); deep blue is      */
 /* reserved for the header and the final total rows. No greens, ambers, purples,   */
-/* oranges, or pinks. Tokens keep it correct in dark mode (bill stays paper-light). */
+/* oranges, or pinks. Tokens keep it correct in dark mode (the sheet inverts; see the  */
+/* :root[data-theme="dark"] .bill-wrap block near the top). Printing is always white.  */
 
 .bill-wrap { padding: 0; }
 
@@ -4248,7 +4327,7 @@ html:not([lang="en"]) .footer-col-title {
 /* ─── Simple-mode result ───────────────────────────────────────────────────────
    Simple mode collects five fields; this answers with those five and nothing else,
    instead of the full facsimile's 28 rows and its em-dash Consumer Details block.
-   Sits inside .bill-wrap, so it inherits the paper-light token reset in dark mode. */
+   Sits inside .bill-wrap, so it inherits that sheet's token reset in either theme. */
 /* .bill-wrap:not(.comparison-wrap) sets `padding: 0 26px` at (0,2,0) and reserves those
    26px for the sprocket-hole strips, so a bare `.simple-bill` (0,1,0) loses — which left
    the header jammed flush against the torn top edge. Match the specificity and keep the
@@ -4458,6 +4537,9 @@ html:not([lang="en"]) .sb-amount-label { text-transform: none; letter-spacing: .
   box-shadow: none !important;
   text-shadow: none !important;
 }
+/* Same reason as the @media print rule: the exported PDF is white paper regardless of the
+   screen theme, and the dark theme's `screen` blend would erase the stamp on it. */
+.pdf-export .bill-stamp { mix-blend-mode: multiply !important; border-color: #000 !important; }
 .pdf-export { page-break-inside: avoid; border: 1.5px solid #000; line-height: 1.3; font-size: 10.5px; width: 100%; max-width: none; margin: 0; padding: 0; box-sizing: border-box; }
 .pdf-export a { color: #000 !important; text-decoration: underline; }
 .pdf-export .bill-header { border-bottom: 2px solid #000; padding: 8px 12px; }
@@ -4531,7 +4613,10 @@ html:not([lang="en"]) .sb-amount-label { text-transform: none; letter-spacing: .
      on paper, they'd overlap content). The PROVISIONAL ink stamp stays — it's real
      text and SHOULD appear on printed/PDF copies. */
   .bill-wrap::before, .bill-wrap::after, .bill-perf, .bill-barcode { display: none !important; }
-  .bill-stamp { opacity: .18; }
+  /* Paper is white whatever the screen theme is, so the stamp goes back to ink-on-paper.
+     Without the blend/border reset, printing from dark mode screens black over white and
+     the stamp disappears entirely (the colour is already forced to #000 above). */
+  .bill-stamp { opacity: .18; mix-blend-mode: multiply !important; border-color: #000 !important; }
 
   /* Header — white with a heavy rule instead of the blue gradient */
   .bill-header { border-bottom: 2px solid #000; padding: 14px 16px; }
