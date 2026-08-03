@@ -373,8 +373,8 @@ export const STRINGS = {
     // Compare page (/compare/)
     'cmp.h2': 'Electricity Rate Comparison {year} (Major Providers)',
     'cmp.intro': 'See how major electricity providers stack up against each other for a typical month at a <strong>1&nbsp;kW sanctioned load</strong>. Calculated dynamically based on current FY 2025-26 tariffs.',
-    'cmp.cc.title': 'Compare any two DISCOMs',
-    'cmp.cc.sub': 'Not just the majors — pick any two providers and enter your own monthly usage for a like-for-like bill estimate, with a full breakdown.',
+    'cmp.cc.title': 'Now with your actual usage',
+    'cmp.cc.sub': 'The table above assumes a typical month at 1 kW. Pick any two providers — not just the majors — and enter your own units and load for a like-for-like bill estimate, with a full breakdown.',
     'cmp.cc.discomA': 'DISCOM A',
     'cmp.cc.discomB': 'DISCOM B',
     'cmp.cc.units': 'Monthly units (kWh)',
