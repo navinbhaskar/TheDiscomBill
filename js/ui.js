@@ -1748,12 +1748,11 @@ export function doCalculate() {
   const meterRows = document.querySelectorAll('#advancedRows .meter-row');
   const oneMeter  = (getMeterMode() !== 'tod' && meterRows.length === 1) ? meterRows[0] : null;
 
-  // Simple mode gets the mini bill: it collected five fields, so the full facsimile's
-  // Consumer Details block would be all em-dashes. setCalcMode owns the .simple-mode flag.
+  // setCalcMode owns the .simple-mode flag.
   const simple = document.querySelector('.form-panel')?.classList.contains('simple-mode');
-  // Simple mode now renders the SAME bill facsimile as Detailed, just with the rows it
-  // cannot fill (name, account, address, meter no, meter readings) omitted — previously it
-  // used renderSimpleBill(), a separate mini-ledger that looked like a different product.
+  // Simple mode renders the SAME bill facsimile as Detailed, just with the rows it cannot
+  // fill (name, account, address, meter no, meter readings) omitted. It used to have its
+  // own mini-ledger renderer, which made the two modes look like two different products.
   const html = simple ? renderBill({
     result,
     compact: true,

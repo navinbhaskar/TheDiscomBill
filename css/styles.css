@@ -1059,49 +1059,47 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
   color: var(--brand-dark, #1d4ed8);
 }
 .hbc-hero-sub { display: block; margin-top: 5px; font-size: 12.5px; color: #64748b; font-weight: 500; }
-/* ─── Mini-bill line list (shared) ──────────────────────────────────────────────
+/* ─── Mini-bill line list ───────────────────────────────────────────────────────
    Label left, amount right, on one shared column pair so every rupee figure lands on
    the same edge. Amounts are tabular so decimal points stack — the whole point of
    showing paise is that the column reads as arithmetic you can check.
-   Two users: the hero sample card (.hbc-*) and Simple mode's result (.sb-*). The
-   skeleton is shared; each context sets only its own type size. */
-.hbc-lines, .mini-lines { display: grid; gap: 8px; margin: 0; }
-.hbc-line, .mini-line {
+   This was a two-user skeleton — .hbc-* here, and .mini-* in Simple mode's own
+   mini-ledger. Simple mode now renders the full bill facsimile instead, so the hero
+   sample card is the only user left and the selector groups were collapsed to it. */
+.hbc-lines { display: grid; gap: 8px; margin: 0; }
+.hbc-line {
   display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 10px;
   color: var(--p-slate-600);
+  font-size: 12px;
 }
-.hbc-line { font-size: 12px; }
-.hbc-line dt, .mini-line dt { min-width: 0; }
-.hbc-line dd, .mini-line dd {
+.hbc-line dt { min-width: 0; }
+.hbc-line dd {
   margin: 0; font-weight: 600; color: var(--p-slate-900);
   font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 /* The rate that produced the amount, inline after the label — numerals only, so it needs
    no translation. slate-500, not 400: 400 on white is 2.55:1 and fails AA. */
-.hbc-line dt em, .mini-line dt em {
+.hbc-line dt em {
   font-style: normal; font-size: .92em; color: var(--p-slate-500);
   white-space: nowrap;
 }
 /* Slab working, on its own line under Energy — the arithmetic a printed bill omits */
-.hbc-line dt small, .mini-line dt small {
+.hbc-line dt small {
   display: block; margin-top: 2px;
   font-size: .88em; color: var(--p-slate-500);
   font-variant-numeric: tabular-nums; letter-spacing: .1px;
 }
-.hbc-line-credit, .hbc-line-credit dd,
-.mini-line-credit, .mini-line-credit dd { color: #15803d; }
-.hbc-line-quiet, .hbc-line-quiet dd,
-.mini-line-quiet, .mini-line-quiet dd { color: var(--p-slate-500); font-weight: 500; }
-.hbc-line-total, .mini-line-total {
+.hbc-line-credit, .hbc-line-credit dd { color: #15803d; }
+.hbc-line-quiet, .hbc-line-quiet dd { color: var(--p-slate-500); font-weight: 500; }
+.hbc-line-total {
   margin-top: 3px; padding-top: 10px; border-top: 1px solid rgba(15,23,42,.10);
 }
-.hbc-line-total dt, .mini-line-total dt { font-weight: 700; color: var(--p-slate-900); }
-.hbc-line-total dt { font-size: 12.5px; }
-.hbc-line-total dd, .mini-line-total dd {
+.hbc-line-total dt { font-weight: 700; color: var(--p-slate-900); font-size: 12.5px; }
+.hbc-line-total dd {
   font-family: var(--font-display); font-weight: 800;
   letter-spacing: -.2px; color: var(--brand-dark, #1d4ed8);
+  font-size: 15px;
 }
-.hbc-line-total dd { font-size: 15px; }
 /* One line per slide on what makes this DISCOM's bill read the way it does — the reason
    the card is worth watching rotate rather than a single frozen example. slate-500, not
    400: 400 on this white card is 2.55:1 and fails AA. */
@@ -1131,34 +1129,32 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
 .hbc-cmp-link svg { width: 11px; height: 11px; }
 .hbc-cmp-link:hover { text-decoration: underline; }
 
-/* ─── Dark theme: sample card + mini-bill lines ─────────────────────────────────
+/* ─── Dark theme: the hero sample card ──────────────────────────────────────────
    Everything above paints with palette PRIMITIVES (--p-slate-*, raw hex) rather than
-   semantic tokens, because both surfaces used to be white in either theme. Primitives
-   don't flip, so each is re-pointed here instead of rewriting the rules above — the
-   light theme stays byte-for-byte what it was. .mini-* rides along: its only renderer
-   (renderSimpleBill) is currently unreferenced, but it draws inside .bill-wrap, so it
-   would land on the dark sheet the moment anything calls it again. */
+   semantic tokens, because the card used to be white in either theme. Primitives don't
+   flip, so each is re-pointed here instead of rewriting the rules above — the light
+   theme stays byte-for-byte what it was. */
 :root[data-theme="dark"] .hbc-title,
 :root[data-theme="dark"] .hbc-hero-sub,
 :root[data-theme="dark"] .hbc-foot,
-:root[data-theme="dark"] .hero .hbc-note { color: var(--text-secondary); }
-:root[data-theme="dark"] .hbc-line,
-:root[data-theme="dark"] .mini-line { color: var(--text-secondary); }
+:root[data-theme="dark"] .hero .hbc-note,
+:root[data-theme="dark"] .hbc-line { color: var(--text-secondary); }
 :root[data-theme="dark"] .hbc-line dd,
-:root[data-theme="dark"] .mini-line dd,
-:root[data-theme="dark"] .hbc-line-total dt,
-:root[data-theme="dark"] .mini-line-total dt { color: var(--text-primary); }
-:root[data-theme="dark"] .hbc-line dt em, :root[data-theme="dark"] .mini-line dt em,
-:root[data-theme="dark"] .hbc-line dt small, :root[data-theme="dark"] .mini-line dt small,
-:root[data-theme="dark"] .hbc-line-quiet, :root[data-theme="dark"] .hbc-line-quiet dd,
-:root[data-theme="dark"] .mini-line-quiet, :root[data-theme="dark"] .mini-line-quiet dd { color: var(--text-tertiary); }
-/* #15803d is 2.3:1 on the dark sheet — a credit has to stay legibly green, not just green. */
-:root[data-theme="dark"] .hbc-line-credit, :root[data-theme="dark"] .hbc-line-credit dd,
-:root[data-theme="dark"] .mini-line-credit, :root[data-theme="dark"] .mini-line-credit dd { color: #4ade80; }
-/* The blue figures (hero amount, totals, the compare link) come from --brand-dark, which
-   both surfaces re-point to --text-brand-dark; nothing to override here. */
+:root[data-theme="dark"] .hbc-line-total dt { color: var(--text-primary); }
+:root[data-theme="dark"] .hbc-line dt em,
+:root[data-theme="dark"] .hbc-line dt small,
+:root[data-theme="dark"] .hbc-line-quiet,
+:root[data-theme="dark"] .hbc-line-quiet dd { color: var(--text-tertiary); }
+/* #15803d is 2.3:1 on the dark card — a credit has to stay legibly green, not just green. */
+:root[data-theme="dark"] .hbc-line-credit,
+:root[data-theme="dark"] .hbc-line-credit dd { color: #4ade80; }
+/* The hero amount and the compare link take --brand-dark, which the card re-points to
+   --text-brand-dark, so those need nothing here. The TOTAL's figure does: .hbc-line-total
+   is also a .hbc-line, so the `.hbc-line dd` rule above (0,3,1) outranks the base
+   `.hbc-line-total dd` (0,1,1) and would paint the one blue figure in the list plain
+   white. Restated at equal specificity, later in the file. */
+:root[data-theme="dark"] .hbc-line-total dd { color: var(--brand-dark); }
 :root[data-theme="dark"] .hbc-line-total,
-:root[data-theme="dark"] .mini-line-total,
 :root[data-theme="dark"] .hbc-foot { border-top-color: var(--border-default); }
 :root[data-theme="dark"] .hbc-chip {
   color: var(--text-brand-dark);
@@ -2600,8 +2596,8 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 .bill-header-left { display: flex; gap: 13px; align-items: flex-start; min-width: 0; }
 .bill-discom-id { min-width: 0; }
-/* Tile rather than a bare 36px glyph — matches the counterfoil's .sb-mark and gives the
-   masthead a fixed optical anchor whatever the DISCOM's name length. */
+/* Tile rather than a bare 36px glyph — gives the masthead a fixed optical anchor
+   whatever the DISCOM's name length. */
 .bill-discom-icon {
   flex-shrink: 0; width: 38px; height: 38px; border-radius: 10px;
   display: grid; place-items: center; font-size: 19px; line-height: 1;
@@ -4324,155 +4320,11 @@ html:not([lang="en"]) .footer-col-title {
   .footer-map { gap: 22px; margin-bottom: 24px; padding-bottom: 22px; }
 }
 
-/* ─── Simple-mode result ───────────────────────────────────────────────────────
-   Simple mode collects five fields; this answers with those five and nothing else,
-   instead of the full facsimile's 28 rows and its em-dash Consumer Details block.
-   Sits inside .bill-wrap, so it inherits that sheet's token reset in either theme. */
-/* .bill-wrap:not(.comparison-wrap) sets `padding: 0 26px` at (0,2,0) and reserves those
-   26px for the sprocket-hole strips, so a bare `.simple-bill` (0,1,0) loses — which left
-   the header jammed flush against the torn top edge. Match the specificity and keep the
-   side padding exactly 26px so the ledger clears the sprockets. */
-/* Side padding must clear the 26px sprocket strips; 34px leaves 8px of paper beyond them
-   rather than setting the ledger flush against the perforation. */
-.bill-wrap.simple-bill { padding: 0 34px 30px; }
-
-.sb-head {
-  display: flex; align-items: center; gap: 12px;
-  padding: 26px 0 18px; border-bottom: 1px solid var(--border-subtle);
-}
-/* Same bolt tile as the full bill's .bill-discom-icon, at counterfoil scale */
-.sb-mark {
-  flex-shrink: 0; width: 34px; height: 34px; border-radius: 9px;
-  display: grid; place-items: center; font-size: 17px; line-height: 1;
-  background: var(--brand-faint); border: 1px solid var(--brand-border);
-}
-.sb-who { flex: 1; min-width: 0; }
-.sb-discom { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--text-primary); line-height: 1.25; }
-.sb-cat { margin-top: 2px; font-size: 12.5px; color: var(--text-secondary); }
-.sb-chip {
-  flex-shrink: 0; font-size: 10.5px; font-weight: 700; white-space: nowrap;
-  text-transform: uppercase; letter-spacing: .6px;
-  color: var(--brand-dark); background: var(--brand-faint);
-  border: 1px solid var(--brand-border); padding: 4px 10px; border-radius: var(--radius-full);
-}
-html:not([lang="en"]) .sb-chip { text-transform: none; letter-spacing: .2px; }
-
-/* Amount panel — the answer, set apart from the ledger that justifies it. A tint plus a
-   hairline, not a heavy accent bar: the sprocket paper is already doing the visual work. */
-.sb-amount {
-  /* label+period rail | figure, with the words spanning both underneath. Left-aligning the
-     figure under its own label wasted the whole right half of a ~700px panel. */
-  display: grid; grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center; column-gap: 18px;
-  margin: 18px 0; padding: 17px 20px 15px;
-  background:
-    radial-gradient(120% 150% at 100% 0%, rgba(37, 99, 235, .10), transparent 60%),
-    var(--brand-faint);
-  border: 1px solid var(--brand-border);
-  border-radius: var(--radius-lg, 14px);
-}
-.sb-amount-label {
-  font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.3px;
-  /* slate-700, not --text-secondary: on the brand-tinted panel that token is 4.37:1, and
-     this is 10.5px uppercase — the least forgiving text on the bill. */
-  color: var(--p-slate-700);
-}
-html:not([lang="en"]) .sb-amount-label { text-transform: none; letter-spacing: .2px; font-size: 11.5px; }
-.sb-amount-fig { justify-self: end; text-align: right; }
-.sb-total-amount {
-  display: block; font-family: var(--font-display);
-  font-size: clamp(30px, 4.4vw, 42px); font-weight: 800; letter-spacing: -1.4px; line-height: .95;
-  color: var(--brand-dark); font-variant-numeric: tabular-nums;
-}
-/* slate-700 for the same reason as .sb-amount-label — every muted token measures 4.37:1
-   against this panel's brand tint. */
-.sb-total-sub { display: block; margin-top: 6px; font-size: 12.5px; font-weight: 500; color: var(--p-slate-700); }
-/* Indian bills print the amount in words; the renderer already had numberToWords(). */
-.sb-words {
-  grid-column: 1 / -1;
-  margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--brand-border);
-  /* Same 4.37:1 problem as .sb-amount-label on the tinted panel. */
-  font-size: 11px; line-height: 1.45; color: var(--p-slate-700); font-style: italic;
-}
-
-/* Ledger — hairline under each row, the way a printed bill rules its charge table.
-   dt is itself a flex row so the working ("150 × ₹5.50 + …") is pushed to the right,
-   landing beside the amount instead of leaving a void mid-row. */
-.sb-lines { gap: 0; }
-.sb-line { font-size: 13.5px; padding: 10px 0; border-bottom: 1px dashed var(--border-subtle); }
-.sb-line:last-child { border-bottom: 0; }
-.sb-line dt {
-  display: flex; align-items: baseline; justify-content: space-between; gap: 18px;
-}
-.sb-line dt .sb-label { flex-shrink: 0; }
-/* Overrides the shared `.mini-line dt small` block rule, which stacked it under the label. */
-.sb-line dt small {
-  display: inline; margin: 0; text-align: right; min-width: 0;
-  font-size: 12px; color: var(--p-slate-500);
-}
-.sb-line.mini-line-total {
-  margin-top: 0; padding-top: 13px; padding-bottom: 2px;
-  border-top: 2px solid var(--border-default); border-bottom: 0;
-}
-.sb-line.mini-line-total dd { font-size: 18px; }
-
-/* ── Slab sub-rows under Energy charge ──────────────────────────────────────────
-   Indented children of the Energy charge line, not a table of their own: the figures
-   then appear once, in the place they explain, and every amount on the bill stays in
-   the same right-aligned column. Each row carries --fill, the share of consumption in
-   that slab, drawn as a tinted band so the group also shows where the usage sat. */
-.sb-line-parent { border-bottom: 0; padding-bottom: 6px; }
-.sb-subline {
-  position: relative;
-  padding: 6px 0 6px 16px;
-  border-bottom: 0;
-  font-size: 12.5px; color: var(--p-slate-600);
-}
-/* Bracket down the indent, tying the slab rows to the charge they break down. */
-.sb-subline::after {
-  content: ''; position: absolute; left: 5px; top: 0; bottom: 0;
-  border-left: 1px solid var(--border-default);
-}
-.sb-subline:last-of-type::after { bottom: 50%; }
-/* The proportional band, behind the text and clipped to the row. */
-.sb-subline::before {
-  content: ''; position: absolute; left: 16px; top: 3px; bottom: 3px;
-  width: calc(var(--fill, 0%) * .82);
-  background: linear-gradient(90deg, rgba(37, 99, 235, .13), rgba(37, 99, 235, .03));
-  border-radius: 2px;
-  pointer-events: none;
-}
-.sb-subline > dt, .sb-subline > dd { position: relative; }   /* above the band */
-.sb-subline dt .sb-label { font-weight: 500; color: var(--p-slate-700); }
-.sb-subline dt small { font-size: 11.5px; }
-.sb-subline dd { font-weight: 600; color: var(--p-slate-700); }
-/* Closes the group: the row after the last slab gets its rule back. */
-.sb-subline + .sb-line:not(.sb-subline) { border-top: 1px dashed var(--border-subtle); }
-@media (max-width: 600px) {
-  .sb-subline { font-size: 11.5px; padding-left: 13px; }
-  .sb-subline::before { left: 13px; }
-  .sb-subline dt small { font-size: 10.5px; }
-}
-
-/* States the supply type Simple mode guessed on the visitor's behalf. Inside the ledger
-   (above the torn edge) because it qualifies the figures, not the page. */
-.sb-assume {
-  margin: 14px 0 0; padding: 9px 11px;
-  /* slate-700 rather than --text-secondary: on the sunken panel that token lands at 4.34:1,
-     just under the 4.5:1 floor. */
-  font-size: 12px; line-height: 1.5; color: var(--p-slate-700);
-  background: var(--surface-sunken);
-  border-left: 3px solid var(--border-strong);
-  border-radius: 0 6px 6px 0;
-  text-wrap: pretty;
-}
-.sb-assume strong { color: var(--text-primary); font-weight: 650; }
-/* Rate provenance sits with the caveats, under the figure it qualifies. */
-.sb-conf { margin-top: 12px; }
-
-/* Escape hatch to the full 28-row bill — Detailed mode's output, one click away. A small
-   centred pill, not a full-width bar: it's a secondary exit from the counterfoil, and at
-   full width it competed with the total for weight. */
+/* ─── "View the detailed bill" pill ────────────────────────────────────────────
+   Simple mode renders the same facsimile as Detailed, minus the rows it cannot fill;
+   this is the escape hatch to the full 28-row version (renderBill emits it in compact
+   mode). A small centred pill, not a full-width bar: it is a secondary exit from the
+   bill, and at full width it competed with the total for weight. */
 .sb-expand {
   display: flex; align-items: center; justify-content: center; gap: 7px;
   width: auto; margin: 14px auto 0; padding: 7px 14px;
@@ -4484,27 +4336,6 @@ html:not([lang="en"]) .sb-amount-label { text-transform: none; letter-spacing: .
 .sb-expand svg { width: 12px; height: 12px; flex-shrink: 0; }
 .sb-expand:hover { color: var(--brand-dark); border-color: var(--brand-border); background: var(--brand-faint); }
 .sb-expand:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-@media (max-width: 600px) {
-  /* Sprocket strips shrink on narrow paper; keep the ledger clear of them. */
-  .bill-wrap.simple-bill { padding: 0 20px 22px; }
-  .sb-head { flex-wrap: wrap; padding-top: 16px; }
-  .sb-chip { order: 3; }
-  /* Too little width for the label rail and the figure to share a line. */
-  .sb-amount { grid-template-columns: 1fr; row-gap: 6px; padding: 14px 15px 13px; }
-  .sb-amount-fig { justify-self: start; text-align: left; }
-  .sb-line { font-size: 13px; }
-  /* The slab working is the first thing to drop — the amount is what matters on a phone. */
-  .sb-line dt { gap: 12px; }
-  .sb-line dt small { font-size: 11px; }
-}
-@media (max-width: 420px) {
-  .sb-line dt { display: block; }
-  .sb-line dt small { display: block; margin-top: 2px; text-align: left; }
-  /* Slab rows are exempt: "150 × ₹5.50" is short enough to stay on the label's line, and
-     stacking three of them cost 60px of height for no gain in legibility. */
-  .sb-subline dt { display: flex; }
-  .sb-subline dt small { display: inline; margin: 0; text-align: right; }
-}
 
 /* ─── Toast ──────────────────────────────────────────────────────────────────── */
 #toast {
