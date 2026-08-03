@@ -76,9 +76,14 @@ export function resolveFixedCharge(fixedCharge, connectedLoadKw, units = 0) {
   // `perKw: true` multiplies the banded rate by the load — Telangana's LT-I is ₹10 per kW per
   // month up to 800 units and ₹50 per kW above, so the band picks the RATE and the load still
   // scales it. Without the flag the band gives a flat monthly amount (the Mumbai case).
+  // `unitsPerStep` on a band DERIVES the load from consumption instead of using the sanctioned
+  // load. MPERC bills domestic connections above 150 units at ₹30 per 0.1 kW, where every 15
+  // units (or part) of monthly consumption counts as 0.1 kW — the order's own worked example is
+  // 155 units → 1.1 kW → ₹330. The step count is rounded UP, so 151 units already bills 11 steps.
   if (fixedCharge.type === 'by_consumption') {
     const band = fixedCharge.slabs.find(s => units <= s.maxUnits)
       || fixedCharge.slabs[fixedCharge.slabs.length - 1];
+    if (band.unitsPerStep) return round2(Math.ceil(units / band.unitsPerStep) * band.rate);
     return fixedCharge.perKw ? round2(band.rate * connectedLoadKw) : band.rate;
   }
   return 0;

@@ -389,6 +389,27 @@ group('resolveFixedCharge — slab_per_kw (marginal bands)', () => {
   check('fractional load prorates', resolveFixedCharge(fc, 2.5), 125);
 });
 
+group('resolveFixedCharge — by_consumption with a consumption-derived load', () => {
+  // MPERC LV-1.2 urban: flat 81 up to 50 units, 134 up to 150, then 30 per 0.1 kW where every
+  // 15 units (or part) counts as 0.1 kW. The sanctioned load is irrelevant in the top band.
+  const fc = { type: 'by_consumption', slabs: [
+    { maxUnits: 50, rate: 81 },
+    { maxUnits: 150, rate: 134 },
+    { maxUnits: Infinity, unitsPerStep: 15, rate: 30 },
+  ] };
+  check('flat band, low', resolveFixedCharge(fc, 2, 40), 81);
+  check('flat band, edge', resolveFixedCharge(fc, 2, 50), 81);
+  check('flat band, mid', resolveFixedCharge(fc, 2, 150), 134);
+  // The order's own worked example: 155 units -> 1.1 kW -> 11 steps x 30.
+  check("MPERC's 155-unit example", resolveFixedCharge(fc, 2, 155), 330);
+  // Rounds UP, so one unit past the boundary already buys a whole step.
+  check('151 units rounds up to 11 steps', resolveFixedCharge(fc, 2, 151), 330);
+  // The order's second example: 350 units -> 2.4 kW.
+  check("MPERC's 350-unit example", resolveFixedCharge(fc, 2, 350), 720);
+  // Derived load ignores the sanctioned load entirely.
+  check('sanctioned load does not change it', resolveFixedCharge(fc, 25, 155), 330);
+});
+
 // Gujarat — GERC orders dt. 25-03-2026, all four GUVNL discoms on one schedule.
 // Hand-computed from the order: 50x3.05 + 50x3.50 + 150x4.15 = 950 energy; 2 kW sits in the
 // first fixed band (15); ED is percent_energy so 20% of 950 = 190. Total 1155.
