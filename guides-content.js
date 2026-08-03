@@ -4331,12 +4331,30 @@ export const GUIDES = [
 
       <section class="seo-section">
         <h2>Can you choose or switch?</h2>
-        <p>Under the national smart-metering push (RDSS), most DISCOMs are installing meters
-        <strong>prepaid-first for domestic consumers</strong>, and in several states prepaid is the
-        default for new domestic connections. Where both modes are offered, you can apply at the
-        sub-division office or portal to switch; the meter itself doesn't change — only the billing mode.
-        If you are converted to prepaid, check that your old security deposit (with interest, where the
-        supply code provides it) is adjusted into your recharge balance — it is your money.</p>
+        <p><strong>Yes — and the rule changed in 2026.</strong> The Central Electricity Authority's
+        2026 amendment to the Installation and Operation of Meters Regulations removed the condition
+        that smart meters must run in prepaid mode. Prepayment stays a required <em>capability</em> of
+        the metering system, but it is no longer a required <em>billing mode</em> for the consumer.</p>
+        <p>On 2 April 2026, answering in the Lok Sabha, Union Power Minister Manohar Lal put it
+        plainly: prepaid smart meters are <strong>optional, not compulsory</strong>, and are "not
+        being imposed forcefully on any consumers". There is no provision in the Electricity Act,
+        2003 that makes prepaid billing mandatory for an ordinary consumer.</p>
+        <p>Two things that are still true, and are often confused with the above:</p>
+        <ul class="seo-list">
+          <li><strong>The meter itself is a different question.</strong> Replacing your old meter with
+          a smart meter is a licensed activity under the national rollout (RDSS); that is not the part
+          you get to opt out of. What you can decline is running it in prepaid mode.</li>
+          <li><strong>Persistent defaulters are the stated exception.</strong> The Minister was
+          explicit that consumers who habitually do not pay can be required to move to prepaid.
+          The choice protects paying consumers, not arrears.</li>
+        </ul>
+        <p>Practically: most DISCOMs still install <strong>prepaid-first for domestic consumers</strong>
+        under RDSS, and in several states prepaid remains the default for new connections — a default
+        is not an obligation. Ask your DISCOM <strong>in writing</strong> which modes it offers and
+        request the one you want; a written request creates a record if you later need to escalate.
+        And if you are converted to prepaid, check that your old security deposit (with interest, where
+        the supply code provides it) is adjusted into your recharge balance — it is your money, and the
+        adjustment is a common miss.</p>
       </section>`,
     faqs: [
       { q: 'Is electricity cheaper on a prepaid smart meter?',
@@ -4346,7 +4364,7 @@ export const GUIDES = [
       { q: 'Which is better for tenants and landlords?',
         a: 'Prepaid, usually. There is no end-of-tenancy disputed bill: consumption stops when the balance isn’t topped up, and the meter’s ledger shows exactly who consumed what and when. Landlords avoid inheriting arrears; tenants avoid paying someone else’s dues.' },
       { q: 'Can I refuse a prepaid smart meter?',
-        a: 'The meter installation itself is a licensed activity you generally can’t refuse, but the billing MODE varies by state — some run smart meters in postpaid mode, and some offer a choice. Ask your DISCOM in writing what modes it offers; where prepaid is the notified default for your category, conversion requests are decided per the state’s supply code.' },
+        a: 'You can refuse prepaid BILLING; you generally cannot refuse the meter. The CEA’s 2026 amendment to the Installation and Operation of Meters Regulations dropped the mandatory-prepaid condition, and on 2 April 2026 the Union Power Minister told the Lok Sabha that prepaid smart meters are optional and are not being imposed on consumers — nothing in the Electricity Act, 2003 makes prepaid billing compulsory. Installing the smart meter itself is part of the licensed RDSS rollout and is not optional. Ask your DISCOM in writing for postpaid mode; the stated exception is persistent defaulters, who can be required to move to prepaid.' },
     ],
 
     titleHi: 'प्रीपेड बनाम पोस्टपेड स्मार्ट मीटर: आपके लिए कौन बेहतर?',
@@ -4398,12 +4416,25 @@ export const GUIDES = [
 
       <section class="seo-section">
         <h2>क्या चुनना या बदलना संभव है?</h2>
-        <p>राष्ट्रीय स्मार्ट-मीटरिंग अभियान (RDSS) के तहत अधिकांश डिस्कॉम घरेलू उपभोक्ताओं के लिए मीटर
-        <strong>प्रीपेड-प्रथम</strong> लगा रहे हैं, और कई राज्यों में नए घरेलू कनेक्शनों के लिए प्रीपेड ही
-        डिफ़ॉल्ट है। जहाँ दोनों मोड मिलते हैं, उपखंड कार्यालय या पोर्टल पर आवेदन से बदलाव हो सकता है; मीटर
-        वही रहता है — सिर्फ़ बिलिंग मोड बदलता है। प्रीपेड में बदले गए हों, तो देखें कि पुरानी जमानत राशि
-        (जहाँ आपूर्ति संहिता ब्याज देती है, ब्याज सहित) आपके रिचार्ज बैलेंस में समायोजित हुई — वह आपका
-        पैसा है।</p>
+        <p><strong>हाँ — और 2026 में नियम बदल गया।</strong> CEA के 2026 संशोधन ने मीटर विनियमों से
+        यह शर्त हटा दी कि स्मार्ट मीटर प्रीपेड मोड में ही चलेंगे। प्रीपेड सुविधा मीटरिंग सिस्टम में
+        होनी ज़रूरी है, पर उपभोक्ता के लिए प्रीपेड <em>बिलिंग मोड</em> अब अनिवार्य नहीं।</p>
+        <p>2 अप्रैल 2026 को लोकसभा में केंद्रीय ऊर्जा मंत्री मनोहर लाल ने साफ़ कहा: प्रीपेड स्मार्ट मीटर
+        <strong>वैकल्पिक हैं, अनिवार्य नहीं</strong>, और किसी उपभोक्ता पर जबरन नहीं थोपे जा रहे। विद्युत
+        अधिनियम, 2003 में प्रीपेड बिलिंग को अनिवार्य बनाने वाला कोई प्रावधान नहीं है।</p>
+        <p>दो बातें फिर भी सही हैं, जिन्हें अक्सर इसी के साथ मिला दिया जाता है:</p>
+        <ul class="seo-list">
+          <li><strong>मीटर लगना अलग सवाल है।</strong> पुराने मीटर की जगह स्मार्ट मीटर लगाना RDSS रोलआउट
+          के तहत लाइसेंसी गतिविधि है; उससे इनकार नहीं किया जा सकता। इनकार आप प्रीपेड मोड से कर सकते हैं।</li>
+          <li><strong>लगातार बकाएदार बताया गया अपवाद हैं।</strong> मंत्री ने स्पष्ट कहा कि जो आदतन भुगतान
+          नहीं करते, उन्हें प्रीपेड में जाने को कहा जा सकता है। यह विकल्प भुगतान करने वालों के लिए है।</li>
+        </ul>
+        <p>व्यवहार में अधिकांश डिस्कॉम अब भी घरेलू उपभोक्ताओं के लिए <strong>प्रीपेड-प्रथम</strong> मीटर
+        लगा रहे हैं, और कई राज्यों में नए कनेक्शनों के लिए प्रीपेड ही डिफ़ॉल्ट है — पर डिफ़ॉल्ट होना
+        बाध्यता नहीं है। डिस्कॉम से <strong>लिखित में</strong> पूछें कि कौन-से मोड उपलब्ध हैं और जो चाहिए
+        उसकी माँग करें; लिखित आवेदन आगे शिकायत करनी पड़े तो रिकॉर्ड बनाता है। और प्रीपेड में बदले गए हों,
+        तो देखें कि पुरानी जमानत राशि (जहाँ आपूर्ति संहिता ब्याज देती है, ब्याज सहित) आपके रिचार्ज बैलेंस
+        में समायोजित हुई — वह आपका पैसा है, और यह अक्सर छूट जाता है।</p>
       </section>`,
     faqsHi: [
       { q: 'क्या प्रीपेड स्मार्ट मीटर पर बिजली सस्ती है?',
@@ -4413,7 +4444,7 @@ export const GUIDES = [
       { q: 'किरायेदार-मकान मालिक के लिए कौन बेहतर?',
         a: 'आमतौर पर प्रीपेड। किरायेदारी ख़त्म होने पर विवादित बिल नहीं बनता: बैलेंस टॉप-अप न हो तो खपत रुक जाती है, और मीटर का खाता दिखाता है कि किसने कब कितना खर्च किया। मकान मालिक को बकाया विरासत में नहीं मिलता; किरायेदार को दूसरे का बकाया नहीं भरना पड़ता।' },
       { q: 'क्या मैं प्रीपेड स्मार्ट मीटर लेने से मना कर सकता हूँ?',
-        a: 'मीटर लगना लाइसेंसी गतिविधि है जिससे आमतौर पर मना नहीं किया जा सकता, पर बिलिंग मोड राज्य-दर-राज्य अलग है — कुछ जगह स्मार्ट मीटर पोस्टपेड मोड में चलते हैं, कुछ विकल्प देते हैं। डिस्कॉम से लिखित पूछें कि कौन-से मोड उपलब्ध हैं; जहाँ आपकी श्रेणी के लिए प्रीपेड अधिसूचित डिफ़ॉल्ट है, वहाँ रूपांतरण आवेदन राज्य की आपूर्ति संहिता के अनुसार तय होते हैं।' },
+        a: 'प्रीपेड बिलिंग से मना कर सकते हैं; मीटर से आमतौर पर नहीं। CEA के 2026 संशोधन ने मीटर विनियमों से अनिवार्य प्रीपेड शर्त हटा दी, और 2 अप्रैल 2026 को केंद्रीय ऊर्जा मंत्री ने लोकसभा में कहा कि प्रीपेड स्मार्ट मीटर वैकल्पिक हैं और किसी उपभोक्ता पर जबरन नहीं थोपे जा रहे — विद्युत अधिनियम, 2003 में प्रीपेड बिलिंग को अनिवार्य बनाने वाला कोई प्रावधान नहीं है। स्मार्ट मीटर लगना RDSS रोलआउट का हिस्सा है और वैकल्पिक नहीं है। डिस्कॉम से पोस्टपेड मोड के लिए लिखित में कहें; बताया गया अपवाद लगातार बकाएदार हैं, जिन्हें प्रीपेड में जाने को कहा जा सकता है।' },
     ],
 
     titleMr: 'प्रीपेड वि. पोस्टपेड स्मार्ट मीटर: तुमच्यासाठी कोणते चांगले?',
@@ -4466,11 +4497,25 @@ export const GUIDES = [
 
       <section class="seo-section">
         <h2>निवडणे किंवा बदलणे शक्य आहे का?</h2>
-        <p>राष्ट्रीय स्मार्ट-मीटरिंग मोहिमेअंतर्गत (RDSS) बहुतेक डिस्कॉम घरगुती ग्राहकांसाठी मीटर
-        <strong>प्रीपेड-प्रथम</strong> बसवत आहेत, आणि अनेक राज्यांत नव्या घरगुती जोडण्यांसाठी प्रीपेडच डीफॉल्ट
-        आहे. जिथे दोन्ही मोड मिळतात, तिथे उपविभाग कार्यालयात किंवा पोर्टलवर अर्ज करून बदल करता येतो; मीटर तेच
-        राहते — फक्त बिलिंग मोड बदलतो. प्रीपेडमध्ये बदलले असल्यास, तुमची जुनी अनामत रक्कम (जिथे पुरवठा संहिता
-        व्याज देते तिथे व्याजासह) तुमच्या रिचार्ज बॅलन्समध्ये समायोजित झाली का ते पहा — तो तुमचा पैसा आहे.</p>
+        <p><strong>होय — आणि 2026 मध्ये नियम बदलला.</strong> CEA च्या 2026 सुधारणेने मीटर नियमांमधून
+        स्मार्ट मीटर प्रीपेड मोडमध्येच चालले पाहिजेत ही अट काढून टाकली. प्रीपेड सुविधा मीटरिंग प्रणालीत
+        असणे आवश्यक आहे, पण ग्राहकासाठी प्रीपेड <em>बिलिंग मोड</em> आता सक्तीचा नाही.</p>
+        <p>2 एप्रिल 2026 रोजी लोकसभेत केंद्रीय ऊर्जा मंत्री मनोहर लाल यांनी स्पष्ट सांगितले: प्रीपेड स्मार्ट
+        मीटर <strong>ऐच्छिक आहेत, सक्तीचे नाहीत</strong>, आणि कोणत्याही ग्राहकावर जबरदस्तीने लादले जात
+        नाहीत. वीज कायदा, 2003 मध्ये प्रीपेड बिलिंग सक्तीचे करणारी कोणतीही तरतूद नाही.</p>
+        <p>तरीही दोन गोष्टी खऱ्या आहेत, ज्यांची अनेकदा गल्लत होते:</p>
+        <ul class="seo-list">
+          <li><strong>मीटर बसवणे हा वेगळा प्रश्न आहे.</strong> जुन्या मीटरच्या जागी स्मार्ट मीटर बसवणे ही
+          RDSS अंतर्गत परवानाधारक क्रिया आहे; ती नाकारता येत नाही. नाकारता येते ती प्रीपेड मोड.</li>
+          <li><strong>सतत थकबाकीदार हा सांगितलेला अपवाद आहे.</strong> जे नेहमीच पैसे भरत नाहीत त्यांना
+          प्रीपेडमध्ये जाण्यास सांगितले जाऊ शकते, असे मंत्र्यांनी स्पष्ट केले.</li>
+        </ul>
+        <p>व्यवहारात बहुतेक डिस्कॉम अजूनही घरगुती ग्राहकांसाठी <strong>प्रीपेड-प्रथम</strong> मीटर बसवत
+        आहेत, आणि अनेक राज्यांत नव्या जोडण्यांसाठी प्रीपेडच डीफॉल्ट आहे — पण डीफॉल्ट म्हणजे बंधन नव्हे.
+        डिस्कॉमकडे <strong>लेखी</strong> विचारा की कोणते मोड उपलब्ध आहेत आणि हवा तो मागा; लेखी अर्जाची
+        नोंद पुढे तक्रार करावी लागल्यास उपयोगी पडते. प्रीपेडमध्ये बदलले असल्यास, तुमची जुनी अनामत रक्कम
+        (जिथे पुरवठा संहिता व्याज देते तिथे व्याजासह) तुमच्या रिचार्ज बॅलन्समध्ये समायोजित झाली का ते
+        पहा — तो तुमचा पैसा आहे, आणि हे अनेकदा राहून जाते.</p>
       </section>`,
     faqsMr: [
       { q: 'प्रीपेड स्मार्ट मीटरवर वीज स्वस्त आहे का?',
@@ -4480,7 +4525,7 @@ export const GUIDES = [
       { q: 'भाडेकरू व घरमालकांसाठी कोणते चांगले?',
         a: 'सहसा प्रीपेड. भाडेकरार संपल्यावर वादग्रस्त बिल नसते: बॅलन्स टॉप-अप न झाल्यास वापर थांबतो, आणि मीटरचे खतावणी कोणी कधी किती वापरले ते नेमके दाखवते. घरमालकांना थकबाकी वारशाने मिळत नाही; भाडेकरूंना दुसऱ्याची देणी भरावी लागत नाहीत.' },
       { q: 'मी प्रीपेड स्मार्ट मीटर नाकारू शकतो का?',
-        a: 'मीटर बसवणे ही परवानाधारक क्रिया आहे जी सहसा नाकारता येत नाही, पण बिलिंग मोड राज्यानुसार बदलतो — काही ठिकाणी स्मार्ट मीटर पोस्टपेड मोडमध्ये चालतात, काही पर्याय देतात. डिस्कॉमला लेखी विचारा की कोणते मोड उपलब्ध आहेत; जिथे तुमच्या श्रेणीसाठी प्रीपेड अधिसूचित डीफॉल्ट आहे, तिथे रूपांतरण अर्ज राज्याच्या पुरवठा संहितेनुसार ठरतात.' },
+        a: 'प्रीपेड बिलिंग नाकारू शकता; मीटर सहसा नाही. CEA च्या 2026 सुधारणेने मीटर नियमांमधून सक्तीच्या प्रीपेडची अट काढून टाकली, आणि 2 एप्रिल 2026 रोजी केंद्रीय ऊर्जा मंत्र्यांनी लोकसभेत सांगितले की प्रीपेड स्मार्ट मीटर ऐच्छिक आहेत आणि कोणत्याही ग्राहकावर जबरदस्तीने लादले जात नाहीत — वीज कायदा, 2003 मध्ये प्रीपेड बिलिंग सक्तीचे करणारी कोणतीही तरतूद नाही. स्मार्ट मीटर बसवणे हा RDSS रोलआउटचा भाग आहे आणि तो ऐच्छिक नाही. डिस्कॉमकडे पोस्टपेड मोडसाठी लेखी मागणी करा; सांगितलेला अपवाद म्हणजे सतत थकबाकीदार, ज्यांना प्रीपेडमध्ये जाण्यास सांगितले जाऊ शकते.' },
     ],
     titleTa: 'ப்ரீபெய்ட் vs போஸ்ட்பெய்ட் ஸ்மார்ட் மீட்டர்: உங்களுக்கு எது சிறந்தது?',
     metaTitleTa: 'ப்ரீபெய்ட் vs போஸ்ட்பெய்ட் ஸ்மார்ட் மீட்டர் — செலவு, தள்ளுபடி, டெபாசிட் & எதைத் தேர்வு செய்வது',
@@ -4532,19 +4577,36 @@ export const GUIDES = [
       </section>
       <section class="seo-section">
         <h2>நீங்கள் தேர்வு செய்யலாமா அல்லது மாறலாமா?</h2>
-        <p>தேசிய ஸ்மார்ட்-மீட்டரிங் முன்னெடுப்பின் (RDSS) கீழ், பெரும்பாலான DISCOM-கள் வீட்டு நுகர்வோருக்கு
-        <strong>ப்ரீபெய்ட்-முதன்மையாக</strong> மீட்டர்களைப் பொருத்துகின்றன, மேலும் பல மாநிலங்களில் புதிய வீட்டு
-        இணைப்புகளுக்கு ப்ரீபெய்ட் இயல்புநிலையாகும். இரண்டு பயன்முறைகளும் வழங்கப்படும் இடங்களில், மாற
-        துணைப் பிரிவு அலுவலகத்தில் அல்லது போர்ட்டலில் விண்ணப்பிக்கலாம்; மீட்டரே மாறாது — பில்லிங் பயன்முறை
-        மட்டுமே மாறும். நீங்கள் ப்ரீபெய்ட்டுக்கு மாற்றப்பட்டால், உங்கள் பழைய பாதுகாப்பு டெபாசிட் (வழங்கல்
-        நெறிமுறை வட்டி வழங்கும் இடத்தில் வட்டியுடன்) உங்கள் ரீசார்ஜ் இருப்பில் சரிசெய்யப்பட்டதா எனச்
-        சரிபார்க்கவும் — அது உங்கள் பணம்.</p>
+        <p><strong>ஆம் — 2026-இல் விதி மாறியது.</strong> CEA-வின் 2026 திருத்தம், ஸ்மார்ட் மீட்டர்கள்
+        ப்ரீபெய்ட் பயன்முறையிலேயே இயங்க வேண்டும் என்ற நிபந்தனையை மீட்டர் ஒழுங்குமுறைகளிலிருந்து நீக்கியது.
+        ப்ரீபெய்ட் வசதி மீட்டரிங் அமைப்பில் இருக்க வேண்டும்; ஆனால் நுகர்வோருக்கு ப்ரீபெய்ட்
+        <em>பில்லிங் பயன்முறை</em> இனி கட்டாயம் அல்ல.</p>
+        <p>2 ஏப்ரல் 2026 அன்று லோக்சபாவில் மத்திய மின்துறை அமைச்சர் மனோகர் லால் தெளிவாகக் கூறினார்:
+        ப்ரீபெய்ட் ஸ்மார்ட் மீட்டர்கள் <strong>விருப்பத்தேர்வு, கட்டாயம் அல்ல</strong>; எந்த நுகர்வோர்
+        மீதும் வலுக்கட்டாயமாகத் திணிக்கப்படவில்லை. மின்சாரச் சட்டம், 2003-இல் ப்ரீபெய்ட் பில்லிங்கைக்
+        கட்டாயமாக்கும் விதி எதுவும் இல்லை.</p>
+        <p>இருப்பினும் இரண்டு விஷயங்கள் உண்மை, அவை அடிக்கடி குழப்பப்படுகின்றன:</p>
+        <ul class="seo-list">
+          <li><strong>மீட்டர் பொருத்துவது வேறு கேள்வி.</strong> பழைய மீட்டருக்குப் பதிலாக ஸ்மார்ட் மீட்டர்
+          பொருத்துவது RDSS-இன் கீழ் உரிமம் பெற்ற செயல்பாடு; அதை மறுக்க முடியாது. மறுக்கக்கூடியது
+          ப்ரீபெய்ட் பயன்முறையை மட்டுமே.</li>
+          <li><strong>தொடர்ந்து பாக்கி வைப்பவர்கள் குறிப்பிடப்பட்ட விதிவிலக்கு.</strong> வழக்கமாகக் கட்டணம்
+          செலுத்தாதவர்களை ப்ரீபெய்ட்-க்கு மாறச் சொல்லலாம் என்பதை அமைச்சர் தெளிவாகக் குறிப்பிட்டார்.</li>
+        </ul>
+        <p>நடைமுறையில் பெரும்பாலான DISCOM-கள் இன்னும் வீட்டு நுகர்வோருக்கு
+        <strong>ப்ரீபெய்ட்-முதன்மையாக</strong> மீட்டர்களைப் பொருத்துகின்றன, பல மாநிலங்களில் புதிய
+        இணைப்புகளுக்கு ப்ரீபெய்ட் இயல்புநிலையாகவே உள்ளது — ஆனால் இயல்புநிலை என்பது கட்டாயம் அல்ல. உங்கள்
+        DISCOM-இடம் <strong>எழுத்துப்பூர்வமாக</strong> எந்தப் பயன்முறைகள் உள்ளன எனக் கேட்டு, வேண்டியதைக்
+        கோருங்கள்; எழுத்துப்பூர்வ விண்ணப்பம் பின்னர் புகார் அளிக்க வேண்டியிருந்தால் ஆவணமாகும். நீங்கள்
+        ப்ரீபெய்ட்டுக்கு மாற்றப்பட்டால், உங்கள் பழைய பாதுகாப்பு டெபாசிட் (வழங்கல் நெறிமுறை வட்டி வழங்கும்
+        இடத்தில் வட்டியுடன்) உங்கள் ரீசார்ஜ் இருப்பில் சரிசெய்யப்பட்டதா எனச் சரிபார்க்கவும் — அது உங்கள்
+        பணம், இது அடிக்கடி விடுபடுகிறது.</p>
       </section>`,
     faqsTa: [
       { q: 'ப்ரீபெய்ட் ஸ்மார்ட் மீட்டரில் மின்சாரம் மலிவானதா?', a: 'கட்டண விகிதங்கள் ஒரே மாதிரியானவை — அதே அடுக்குகள், நிலையான கட்டணங்கள், FPPA மற்றும் வரி. நடைமுறையில் ப்ரீபெய்ட் சிறிது மலிவாக இருக்கலாம்: பல மாநிலங்களின் கட்டண ஆணைகள் ஒரு சிறிய ப்ரீபெய்ட் தள்ளுபடியை (பொதுவாக 1–2%) வழங்குகின்றன, தாமத-கட்டண கூடுதல் தொகை ஒருபோதும் ஏற்படாது, எந்த பாதுகாப்பு டெபாசிட்டும் பூட்டப்படுவதில்லை.' },
       { q: 'நான் ப்ரீபெய்டுக்கு மாறினால் எனது பாதுகாப்பு டெபாசிட் திரும்பக் கிடைக்குமா?', a: 'ஆம் — ப்ரீபெய்ட் இணைப்புகளுக்கு பாதுகாப்பு டெபாசிட் தேவையில்லை, எனவே இருக்கும் டெபாசிட் உங்கள் இருப்பில் சரிசெய்யப்படும் அல்லது மாற்றத்தில் திரும்பத் தரப்படும், மாநிலத்தின் வழங்கல் நெறிமுறை வழங்கும் இடத்தில் வட்டியுடன். சரிசெய்தல் உண்மையில் தோன்றுகிறதா எனச் சரிபார்க்கவும்; இது பொதுவாகத் தவறவிடப்படுகிறது.' },
       { q: 'குத்தகைதாரர்கள் மற்றும் வீட்டு உரிமையாளர்களுக்கு எது சிறந்தது?', a: 'பொதுவாக, ப்ரீபெய்ட். குத்தகை முடிவில் சர்ச்சைக்குரிய பில் இல்லை: இருப்பு டாப் அப் செய்யப்படாவிட்டால் நுகர்வு நிற்கிறது, மீட்டரின் லெட்ஜர் யார் எப்போது எவ்வளவு நுகர்ந்தார் என்பதைத் துல்லியமாகக் காட்டுகிறது. வீட்டு உரிமையாளர்கள் நிலுவைத் தொகைகளைப் பெறுவதைத் தவிர்க்கிறார்கள்; குத்தகைதாரர்கள் வேறொருவரின் கடன்களைச் செலுத்துவதைத் தவிர்க்கிறார்கள்.' },
-      { q: 'நான் ஒரு ப்ரீபெய்ட் ஸ்மார்ட் மீட்டரை மறுக்க முடியுமா?', a: 'மீட்டர் நிறுவுதல் என்பது நீங்கள் பொதுவாக மறுக்க முடியாத ஒரு உரிமம் பெற்ற செயல்பாடு, ஆனால் பில்லிங் பயன்முறை மாநிலத்திற்கு மாநிலம் மாறுபடும் — சில ஸ்மார்ட் மீட்டர்களை போஸ்ட்பெய்ட் பயன்முறையில் இயக்குகின்றன, சில ஒரு தேர்வை வழங்குகின்றன. உங்கள் DISCOM என்ன பயன்முறைகளை வழங்குகிறது என்பதை எழுத்துப்பூர்வமாகக் கேளுங்கள்; ப்ரீபெய்ட் உங்கள் வகைக்கு அறிவிக்கப்பட்ட இயல்புநிலையாக இருக்கும் இடத்தில், மாற்ற கோரிக்கைகள் மாநிலத்தின் வழங்கல் நெறிமுறையின்படி முடிவு செய்யப்படும்.' },
+      { q: 'நான் ஒரு ப்ரீபெய்ட் ஸ்மார்ட் மீட்டரை மறுக்க முடியுமா?', a: 'ப்ரீபெய்ட் பில்லிங்கை மறுக்கலாம்; மீட்டரை பொதுவாக மறுக்க முடியாது. CEA-வின் 2026 திருத்தம் மீட்டர் ஒழுங்குமுறைகளிலிருந்து கட்டாய ப்ரீபெய்ட் நிபந்தனையை நீக்கியது; 2 ஏப்ரல் 2026 அன்று மத்திய மின்துறை அமைச்சர் லோக்சபாவில், ப்ரீபெய்ட் ஸ்மார்ட் மீட்டர்கள் விருப்பத்தேர்வு என்றும் எந்த நுகர்வோர் மீதும் வலுக்கட்டாயமாகத் திணிக்கப்படவில்லை என்றும் தெரிவித்தார் — மின்சாரச் சட்டம், 2003-இல் ப்ரீபெய்ட் பில்லிங்கைக் கட்டாயமாக்கும் விதி எதுவும் இல்லை. ஸ்மார்ட் மீட்டர் நிறுவுதல் RDSS திட்டத்தின் பகுதி; அது விருப்பத்தேர்வு அல்ல. உங்கள் DISCOM-இடம் போஸ்ட்பெய்ட் பயன்முறைக்கு எழுத்துப்பூர்வமாகக் கோருங்கள்; குறிப்பிடப்பட்ட விதிவிலக்கு தொடர்ந்து பாக்கி வைப்பவர்கள் மட்டுமே.' },
     ],
   },
 
@@ -9666,6 +9728,119 @@ export const GUIDES = [
         q: 'Which areas of Delhi does Tata Power DDL cover?',
         a: 'North and north-west Delhi &mdash; Rohini, Pitampura, Model Town, Civil Lines, Narela and the surrounding areas. South and west Delhi are BRPL, east and central Delhi are BYPL, and the NDMC area has its own licensee. The areas are exclusive, so your address determines your supplier.'
       },
+    ],
+  },
+  {
+    slug: 'up-electricity-bill-10-percent-fppa-surcharge',
+    published: "2026-08-02",
+    states: ['Uttar Pradesh'],
+    title: "UP's 10% Fuel Surcharge: What It Actually Costs on Your Bill",
+    metaTitle: 'UP 10% Fuel Surcharge (FPPAS) — What It Costs on Your Bill',
+    description: 'UPPCL levied a 10% fuel surcharge on the June 2026 billing cycle. What it applies to, what it adds in rupees at 150, 300 and 500 units, why the cap means the story is not over, and how to check the line on your own bill.',
+    minutes: 6,
+    intro: `In May 2026 UPPCL notified a <strong>10% Fuel and Power Purchase Adjustment Surcharge</strong>,
+      charged in the June 2026 billing cycle. Every headline reported the percentage. Almost none of them
+      answered the question people actually had, which is what it costs on a real bill — because that
+      depends on what the surcharge applies to, and it is not your bill total. Here are the rupees.`,
+    sections: `
+      <section class="seo-section">
+        <h2>What was actually notified</h2>
+        <p>UPPCL approved an FPPAS of <strong>10% for the month of March 2026</strong>, recovered in the
+        <strong>June 2026 billing cycle</strong>. It applies to every distribution company in the state and
+        to every consumer category — domestic, commercial and industrial alike. The legal basis is the
+        Uttar Pradesh Electricity Regulatory Commission's Multi-Year Tariff Regulations, 2025.</p>
+        <p>Two details that got lost in the coverage. First, this is <strong>not a tariff hike</strong>:
+        your per-unit rates did not change, and this needed no new tariff order. Second, the surcharge is
+        for a specific past month, billed later — which is why a March figure lands on a June bill.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>What the 10% applies to</h2>
+        <p>This is where most estimates go wrong. The surcharge is a percentage of your
+        <strong>fixed charges plus energy charges</strong> — not of the bill total, and not of the
+        amount after taxes. Electricity duty is then charged on the larger figure, so the duty rides on
+        the surcharge as well.</p>
+        <p>Worked through our bill engine for a DVVNL urban domestic connection (ST-10B, 2&nbsp;kW
+        sanctioned load, 30-day cycle, FY 2026-27 rates), the June 2026 surcharge lands like this:</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>Units</th><th>Bill without FPPAS</th><th>With 10% FPPAS</th><th>You pay extra</th></tr></thead>
+            <tbody>
+              <tr><td>150</td><td>&#8377;1,097</td><td>&#8377;1,207</td><td>&#8377;110</td></tr>
+              <tr><td>300</td><td>&#8377;2,042</td><td>&#8377;2,246</td><td>&#8377;204</td></tr>
+              <tr><td>500</td><td>&#8377;3,407</td><td>&#8377;3,748</td><td>&#8377;341</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Look closely at the 300-unit row. Fixed plus energy charges come to &#8377;1,945, so the
+        surcharge line on the bill reads <strong>&#8377;194.50</strong>. But the bill goes up by
+        <strong>&#8377;204</strong>. The missing &#8377;10 is the 5% electricity duty charged on the
+        surcharge itself. The line you can see is not the whole cost.</p>
+        <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Work out your own bill with this surcharge</a></p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Why exactly 10%, and why that is not good news</h2>
+        <p>Ten per cent is not a coincidence — it is the <strong>ceiling</strong>. The UPERC
+        regulations cap how much fuel-cost variation can be recovered in a single billing cycle, and the
+        gap being recovered for March 2026 was larger than the cap allowed.</p>
+        <p>The excess is not written off. It is <strong>carried forward</strong> into later months. So a
+        month pinned at exactly the cap is a signal that pressure remains in the system, not that the
+        recovery is finished. February 2026 hit the same 10% ceiling.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>It goes down as well as up</h2>
+        <p>The surcharge is a true-up in both directions. When power-purchase costs run below what the
+        tariff assumed, FPPAS goes <strong>negative</strong> and you get a credit. In the sixteen months
+        we have verified, ten were charges and six were credits.</p>
+        <p>July 2026, the month straight after the 10% spike, was a credit of
+        <strong>&minus;4.43%</strong>. May 2026 was &minus;1.52%. Anyone who concluded from the June
+        headlines that UP bills had permanently risen 10% drew the wrong conclusion.</p>
+        <p>Our <a href="/fuel-surcharge/">fuel surcharge tracker</a> carries the full month-by-month
+        series for UP, plus current rates for Delhi and Rajasthan.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>How to find it on your own bill</h2>
+        <p>Look for a line named <strong>FPPAS</strong>, <strong>FPPCA</strong>, <strong>Fuel Surcharge</strong>
+        or <strong>Fuel &amp; Power Purchase Adjustment</strong>, usually printed below energy charges and
+        above electricity duty. If it sits above the duty line, duty is being charged on it — which is
+        correct.</p>
+        <p>To verify the amount: add your fixed charge and your energy charge, take 10% of that, and compare.
+        If it does not match, the likely reasons are a different rate for your billing month, a partial-month
+        proration, or a genuine error. UPPCL is required to publish the detailed working on its website.</p>
+        <p>If the number still looks wrong after that,
+        <a href="/check-my-bill/">upload the bill for an instant self-check</a> — it recomputes every
+        line against the notified rates and shows you where the difference is.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>What you can and cannot do about it</h2>
+        <p>You cannot opt out of a fuel surcharge; it is a regulator-approved pass-through, not a
+        discretionary DISCOM charge. What you can do is reduce the base it applies to, because a percentage
+        surcharge multiplies whatever your fixed and energy charges already are.</p>
+        <ul class="seo-list">
+          <li><strong>Check your sanctioned load.</strong> Fixed charges in UP are billed per kW. Load you
+          do not use still attracts a fixed charge, and the surcharge then applies on top of it — see
+          <a href="/guides/reduce-fixed-charges-sanctioned-load/">reducing fixed charges</a>.</li>
+          <li><strong>Watch the slab boundary.</strong> Energy charges are the larger half of the base for
+          most households, and UP's domestic slabs are telescopic.</li>
+          <li><strong>Do not pay late.</strong> Late-payment surcharge is calculated on the bill total,
+          which now includes the fuel surcharge and the duty charged on it.</li>
+        </ul>
+      </section>`,
+    faqs: [
+      { q: 'Is the 10% fuel surcharge a tariff hike?',
+        a: 'No. Your per-unit rates and fixed charges did not change, and no new tariff order was issued. FPPAS is a separate monthly pass-through of fuel and power-purchase cost variation, levied under UPERC MYT Regulations 2025. That is why it can be 10% one month and a credit the next.' },
+      { q: 'What does 10% FPPAS add to a 300-unit UP bill?',
+        a: 'About ₹204 on a DVVNL urban domestic connection at 2 kW. The surcharge line itself is ₹194.50 — 10% of the ₹1,945 of fixed plus energy charges — and the remaining ₹10 is the 5% electricity duty charged on the surcharge. The bill goes from about ₹2,042 to ₹2,246.' },
+      { q: 'Is the surcharge charged on my total bill?',
+        a: 'No, and this is the most common mistake. It applies to fixed charges plus energy charges only, before taxes. It is not applied to electricity duty, arrears or previous balances — but duty IS then charged on the surcharge.' },
+      { q: 'Will the 10% continue every month?',
+        a: 'It has not. July 2026 was a credit of −4.43% and May 2026 was −1.52%. Ten per cent is the regulatory ceiling per cycle, not the normal level, and the excess above the cap is carried into later months rather than written off.' },
+      { q: 'Can I refuse to pay the fuel surcharge?',
+        a: 'No. It is approved by the state regulator and forms part of the lawful bill, so non-payment is treated as non-payment of the bill. If you believe the amount is wrongly computed, that is a billing dispute — raise it with your DISCOM in writing and ask for the FPPAS working, which UPPCL is required to publish.' },
     ],
   },
 ];

@@ -2534,7 +2534,9 @@ function fuelSurchargePage() {
       ${rupee(exBase)}, a ${exPct}% surcharge adds <strong>${rupee(exAmt)}</strong>, and
       electricity duty is then charged on the larger figure.</p>
       <p>That ordering matters and is frequently got wrong: duty applies <em>after</em> the
-      surcharge, so a 10% fuel surcharge costs slightly more than 10%. Our
+      surcharge, so the money leaving your pocket is more than the surcharge line itself. On a real
+      UP domestic bill of 300 units at 2&nbsp;kW, the surcharge line reads ₹194.50 — but the bill
+      rises by ₹204, because 5% electricity duty is charged on the surcharge too. Our
       <a href="/#calculator">bill calculator</a> applies the correct rate for your DISCOM and
       billing month automatically — you do not need to look it up here first.</p>
       <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Calculate my bill with this month's surcharge</a></p>
