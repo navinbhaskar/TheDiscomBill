@@ -653,11 +653,12 @@ export function initI18n() {
     document.addEventListener('click', (e) => { if (!sw.contains(e.target)) closeMenu(); });
   }
 
-  // The in-body "यह पेज हिंदी में पढ़ें / Read in English" link navigates to the
-  // twin like the dropdown does, but being a plain <a> it wouldn't persist the
-  // choice — leaving the destination page's chrome in the old language. Persist
-  // the target language (from the link's lang attribute) so both paths stay in sync.
-  document.querySelectorAll('.seo-lang-link a[lang]').forEach(a => {
+  // The in-body language capsules navigate to the twin like the dropdown does,
+  // but being plain <a>s they wouldn't persist the choice. Without this, clicking
+  // "English" from a Marathi article lands on the English URL, initI18n reads the
+  // still-saved 'mr' and location.replace()s straight back — the capsule looks dead.
+  // Persist the target language (from the link's lang attribute) so both paths stay in sync.
+  document.querySelectorAll('.seo-lang-pills a[lang], .seo-lang-link a[lang]').forEach(a => {
     a.addEventListener('click', () => {
       const target = a.getAttribute('lang');
       if (isLang(target)) { try { localStorage.setItem('lang', target); } catch (e) {} }
