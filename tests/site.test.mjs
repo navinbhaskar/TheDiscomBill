@@ -9,7 +9,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const IGNORE = new Set(['node_modules', '.git', 'dist', '.wrangler', 'graphify-out', 'supabase']);
@@ -76,6 +76,55 @@ for (const page of htmlPages) {
   if (probs.length) { seoBad++; fail(`${page}: ${probs.join(', ')}`); }
 }
 if (!seoBad) { passed++; console.log(`  ✓ title / single-H1 / canonical present (${seoChecked} SEO pages)`); }
+
+// ── 3. /fuel-surcharge/ is in step with js/tariffs/fppa.js ────────────────────
+// The tracker is pre-rendered at build time, so a new FPPA notice added to fppa.js does not
+// reach the page until `npm run seo` runs again — and nothing about the site looks broken in
+// the meantime. It just quietly shows last month's figure. This is the one page whose data
+// changes monthly, so it is the one most likely to rot unnoticed.
+//
+// The check is content-derived, not mtime-based: mtimes are meaningless after a fresh clone.
+// It recomputes what the current data says and asserts the page actually says it.
+console.log('\n• /fuel-surcharge/ matches fppa.js');
+{
+  const page = path.join(ROOT, 'fuel-surcharge', 'index.html');
+  if (!fs.existsSync(page)) {
+    fail('fuel-surcharge/index.html missing — run `npm run seo`');
+  } else {
+    const html = fs.readFileSync(page, 'utf8');
+    const { FPPA_BY_STATE, FPPA_BY_DISCOM, pick } =
+      await import(pathToFileURL(path.join(ROOT, 'js', 'tariffs', 'fppa.js')).href);
+
+    // Mirror generate-seo.js's fsRate() exactly — if that formatting changes, this must too.
+    const rupee = (n) => '₹' + Number(n).toLocaleString('en-IN',
+      { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const fsRate = (e) => e.mode === 'percent'
+      ? `${e.rate > 0 ? '+' : ''}${e.rate.toFixed(2)}%`
+      : `${rupee(e.rate)}/unit`;
+
+    const today = new Date().toISOString().slice(0, 10);
+    let stale = 0;
+    for (const [name, list] of [...Object.entries(FPPA_BY_STATE), ...Object.entries(FPPA_BY_DISCOM)]) {
+      const cur = pick(list, today);
+      if (!cur) continue;                       // nothing in force today → page shows a fallback
+      if (!html.includes(fsRate(cur))) {
+        stale++;
+        fail(`${name}: current rate ${fsRate(cur)} is not on the page — run \`npm run seo\``);
+      }
+    }
+
+    // Every UP month must have a bar. Catches a month appended to the series without a regen,
+    // which the rate check alone would miss when the newest month is not yet in force.
+    const bars = (html.match(/class="fs-bar fs-bar-(?:pos|neg)"/g) || []).length;
+    const upMonths = FPPA_BY_STATE['Uttar Pradesh'].length;
+    if (bars !== upMonths) {
+      stale++;
+      fail(`UP chart has ${bars} bars for ${upMonths} months — run \`npm run seo\``);
+    }
+
+    if (!stale) { passed++; console.log(`  ✓ current rates and the ${bars}-month UP chart are in step`); }
+  }
+}
 
 // ── summary ───────────────────────────────────────────────────────────────────
 console.log(`\n${failed ? '✗' : '✓'} site checks — ${passed} groups passed, ${failed} failures\n`);
