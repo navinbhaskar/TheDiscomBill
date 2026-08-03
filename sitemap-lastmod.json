@@ -336,7 +336,7 @@
     "lastmod": "2026-08-03"
   },
   "/hi/smart-meter-recharge/": {
-    "hash": "e85fc912b11bb280",
+    "hash": "a50262cb9d5ede3a",
     "lastmod": "2026-08-03"
   },
   "/hi/smart-meter-recharge/andhra-pradesh/apepdcl/": {
@@ -424,11 +424,11 @@
     "lastmod": "2026-08-03"
   },
   "/hi/smart-meter-recharge/jammu-and-kashmir/jkpdd_jammu/": {
-    "hash": "7016bda352d5a0ed",
+    "hash": "35b16f37d9d9970c",
     "lastmod": "2026-08-03"
   },
   "/hi/smart-meter-recharge/jammu-and-kashmir/jkpdd_kashmir/": {
-    "hash": "f4dca665c948bfab",
+    "hash": "41f8f4c6a2be160c",
     "lastmod": "2026-08-03"
   },
   "/hi/smart-meter-recharge/jharkhand/jbvnl/": {
@@ -732,15 +732,15 @@
     "lastmod": "2026-08-03"
   },
   "/hi/tariffs/jammu-and-kashmir/": {
-    "hash": "ea11efffbd867efb",
+    "hash": "46391d3efaaaede8",
     "lastmod": "2026-08-03"
   },
   "/hi/tariffs/jammu-and-kashmir/jkpdd_jammu/": {
-    "hash": "62a155a4b1893c71",
+    "hash": "4aff1965e9c73c6c",
     "lastmod": "2026-08-03"
   },
   "/hi/tariffs/jammu-and-kashmir/jkpdd_kashmir/": {
-    "hash": "f2cf2239cd081185",
+    "hash": "8a557e380559e834",
     "lastmod": "2026-08-03"
   },
   "/hi/tariffs/jharkhand/": {
@@ -920,7 +920,7 @@
     "lastmod": "2026-08-03"
   },
   "/hi/tariffs/states/": {
-    "hash": "0a0cac22a72a7282",
+    "hash": "8c6d4e31ff2caa73",
     "lastmod": "2026-08-03"
   },
   "/hi/tariffs/tamil-nadu/": {
@@ -1108,7 +1108,7 @@
     "lastmod": "2026-08-03"
   },
   "/mr/smart-meter-recharge/": {
-    "hash": "edd9b850177c75b7",
+    "hash": "44c0b83264821c6b",
     "lastmod": "2026-08-03"
   },
   "/mr/smart-meter-recharge/maharashtra/adani_mumbai/": {
@@ -1148,7 +1148,7 @@
     "lastmod": "2026-08-03"
   },
   "/mr/tariffs/states/": {
-    "hash": "d73aff1f885b3936",
+    "hash": "6b65d209a8728d77",
     "lastmod": "2026-08-03"
   },
   "/privacy/": {
@@ -1168,7 +1168,7 @@
     "lastmod": "2026-08-03"
   },
   "/smart-meter-recharge/": {
-    "hash": "c25308ea7b920619",
+    "hash": "0ce57eb3378c2f10",
     "lastmod": "2026-08-03"
   },
   "/smart-meter-recharge/andhra-pradesh/apepdcl/": {
@@ -1256,11 +1256,11 @@
     "lastmod": "2026-08-03"
   },
   "/smart-meter-recharge/jammu-and-kashmir/jkpdd_jammu/": {
-    "hash": "5101cba8b83e5765",
+    "hash": "6516b659e7f509b4",
     "lastmod": "2026-08-03"
   },
   "/smart-meter-recharge/jammu-and-kashmir/jkpdd_kashmir/": {
-    "hash": "93738c420e772d42",
+    "hash": "8c9cce8288b6a116",
     "lastmod": "2026-08-03"
   },
   "/smart-meter-recharge/jharkhand/jbvnl/": {
@@ -1512,7 +1512,7 @@
     "lastmod": "2026-08-03"
   },
   "/ta/smart-meter-recharge/": {
-    "hash": "9a8970a7e1a57af1",
+    "hash": "67c80bb353d58130",
     "lastmod": "2026-08-03"
   },
   "/ta/smart-meter-recharge/tamil-nadu/tangedco/": {
@@ -1520,7 +1520,7 @@
     "lastmod": "2026-08-03"
   },
   "/ta/tariffs/states/": {
-    "hash": "e4ea6fe7f4f43ac3",
+    "hash": "2036fbfbe80246f7",
     "lastmod": "2026-08-03"
   },
   "/ta/tariffs/tamil-nadu/": {
@@ -1668,15 +1668,15 @@
     "lastmod": "2026-08-03"
   },
   "/tariffs/jammu-and-kashmir/": {
-    "hash": "5e29269e461e89ea",
+    "hash": "2940334114b4a094",
     "lastmod": "2026-08-03"
   },
   "/tariffs/jammu-and-kashmir/jkpdd_jammu/": {
-    "hash": "c4574e394482fa2a",
+    "hash": "4554ce3ae80376b5",
     "lastmod": "2026-08-03"
   },
   "/tariffs/jammu-and-kashmir/jkpdd_kashmir/": {
-    "hash": "69463e8eb8d46c8b",
+    "hash": "64f0f5f26dff23ef",
     "lastmod": "2026-08-03"
   },
   "/tariffs/jharkhand/": {
@@ -1856,7 +1856,7 @@
     "lastmod": "2026-08-03"
   },
   "/tariffs/states/": {
-    "hash": "c9930aa15242f2d4",
+    "hash": "e530ba0af9a54a1e",
     "lastmod": "2026-08-03"
   },
   "/tariffs/tamil-nadu/": {
@@ -1988,8 +1988,8 @@
     "lastmod": "2026-08-03"
   },
   "tariff:jammu-and-kashmir": {
-    "hash": "02dbc83010d57433",
-    "lastmod": "2026-06-17"
+    "hash": "30af12d77f909708",
+    "lastmod": "2026-08-03"
   },
   "tariff:jharkhand": {
     "hash": "dcea4818d5aac73a",
