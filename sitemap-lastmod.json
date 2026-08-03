@@ -340,11 +340,11 @@
     "lastmod": "2026-08-03"
   },
   "/hi/smart-meter-recharge/andhra-pradesh/apepdcl/": {
-    "hash": "9f4325a33dddf45f",
+    "hash": "eb859caf95055a2a",
     "lastmod": "2026-08-03"
   },
   "/hi/smart-meter-recharge/andhra-pradesh/apspdcl/": {
-    "hash": "39aabdc0b5c7a2cb",
+    "hash": "17e4df4f73408156",
     "lastmod": "2026-08-03"
   },
   "/hi/smart-meter-recharge/arunachal-pradesh/appdcl/": {
@@ -600,15 +600,15 @@
     "lastmod": "2026-08-03"
   },
   "/hi/tariffs/andhra-pradesh/": {
-    "hash": "054fd0624894e1bf",
+    "hash": "cf946d82b07e0574",
     "lastmod": "2026-08-03"
   },
   "/hi/tariffs/andhra-pradesh/apepdcl/": {
-    "hash": "93ca2c7b7b8abc89",
+    "hash": "9cc22ff1b97b80ba",
     "lastmod": "2026-08-03"
   },
   "/hi/tariffs/andhra-pradesh/apspdcl/": {
-    "hash": "72254d3fe642e1fd",
+    "hash": "6a180749dcddd103",
     "lastmod": "2026-08-03"
   },
   "/hi/tariffs/arunachal-pradesh/": {
@@ -920,7 +920,7 @@
     "lastmod": "2026-08-03"
   },
   "/hi/tariffs/states/": {
-    "hash": "7bc5b76891c56d4f",
+    "hash": "6680d21c1950fd25",
     "lastmod": "2026-08-03"
   },
   "/hi/tariffs/tamil-nadu/": {
@@ -1148,7 +1148,7 @@
     "lastmod": "2026-08-03"
   },
   "/mr/tariffs/states/": {
-    "hash": "007797534090c65b",
+    "hash": "f94d0b9fe506bc82",
     "lastmod": "2026-08-03"
   },
   "/privacy/": {
@@ -1172,11 +1172,11 @@
     "lastmod": "2026-08-03"
   },
   "/smart-meter-recharge/andhra-pradesh/apepdcl/": {
-    "hash": "bb2c9cb273296507",
+    "hash": "b28368d099da6cf3",
     "lastmod": "2026-08-03"
   },
   "/smart-meter-recharge/andhra-pradesh/apspdcl/": {
-    "hash": "e0dc20fc8b11aa18",
+    "hash": "1de1afa586cd0ac6",
     "lastmod": "2026-08-03"
   },
   "/smart-meter-recharge/arunachal-pradesh/appdcl/": {
@@ -1520,7 +1520,7 @@
     "lastmod": "2026-08-03"
   },
   "/ta/tariffs/states/": {
-    "hash": "4613d88e8349636f",
+    "hash": "d4a05823738559ef",
     "lastmod": "2026-08-03"
   },
   "/ta/tariffs/tamil-nadu/": {
@@ -1536,15 +1536,15 @@
     "lastmod": "2026-08-03"
   },
   "/tariffs/andhra-pradesh/": {
-    "hash": "4ae81ec2608753d9",
+    "hash": "f4fce0a9b6044d71",
     "lastmod": "2026-08-03"
   },
   "/tariffs/andhra-pradesh/apepdcl/": {
-    "hash": "875a378a7a34608d",
+    "hash": "53bc3320fe5a89e3",
     "lastmod": "2026-08-03"
   },
   "/tariffs/andhra-pradesh/apspdcl/": {
-    "hash": "fd9ddd0658bfcb27",
+    "hash": "3b8b2e59ccace428",
     "lastmod": "2026-08-03"
   },
   "/tariffs/arunachal-pradesh/": {
@@ -1856,7 +1856,7 @@
     "lastmod": "2026-08-03"
   },
   "/tariffs/states/": {
-    "hash": "37934405c689304c",
+    "hash": "16d3a0aabbba3fb8",
     "lastmod": "2026-08-03"
   },
   "/tariffs/tamil-nadu/": {
@@ -1940,8 +1940,8 @@
     "lastmod": "2026-08-03"
   },
   "tariff:andhra-pradesh": {
-    "hash": "5265847c27afc665",
-    "lastmod": "2026-07-18"
+    "hash": "19628ecc65a27c3c",
+    "lastmod": "2026-08-03"
   },
   "tariff:arunachal-pradesh": {
     "hash": "9df75c02a2269374",

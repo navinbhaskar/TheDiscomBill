@@ -122,12 +122,20 @@ group('minimum charge top-up', () => {
 });
 
 // ── Wheeling charge — opt-in `wheelingCharge` primitive (MSEDCL-style) ────────
-// Uses APSPDCL (a percent_energy-duty tariff that does NOT ship a wheeling charge) so the
-// "inert by default" baseline holds — MSEDCL now declares a real wheelingCharge of its own.
+// Uses APSPDCL, which does NOT ship a wheeling charge, so the "inert by default" baseline
+// holds — MSEDCL now declares a real wheelingCharge of its own.
+// The percent_energy duty this block asserts against is INJECTED rather than borrowed from
+// the tariff: no shipped tariff carries a percent_energy charge any more, because each
+// rebuilt schedule either excludes duty (the SERC notifies it separately) or levies it
+// per-unit. Injecting keeps the primitive under test regardless of what the data does.
 group('wheeling charge', () => {
   const base = { discomId: 'apspdcl', categoryId: 'domestic',
     units: 100, connectedLoadKw: 1, billingPeriodDays: 30, billingDate: DATE,
     facRate: 0, facMode: 'per_unit', lpscApplicable: false };
+
+  const cat = getCategory('apspdcl', 'domestic');
+  const savedCharges = cat.additionalCharges;
+  cat.additionalCharges = [{ name: 'Electricity Duty', type: 'percent_energy', rate: 6 }];
 
   // Inert unless the tariff declares wheelingCharge: the bill is unchanged.
   const off = calculateBill(base);
@@ -135,7 +143,6 @@ group('wheeling charge', () => {
   const baseGross = off.currentGross;
   const baseED = off.extraCharges.find(c => /Duty/.test(c.name)).amount;
 
-  const cat = getCategory('apspdcl', 'domestic');
   try {
     // per_unit form: 100 units × ₹1.28 = ₹128 added to gross.
     cat.wheelingCharge = { type: 'per_unit', rate: 1.28, label: 'Wheeling Charges' };
@@ -155,7 +162,8 @@ group('wheeling charge', () => {
     check('per_kw × 1kW × 1mo', calculateBill(base).wheelingCharge, 50);
     check('per_kw prorated × 2mo', calculateBill({ ...base, billingPeriodDays: 60 }).wheelingCharge, 100);
   } finally {
-    delete cat.wheelingCharge;   // don't leak into other tests
+    delete cat.wheelingCharge;        // don't leak into other tests
+    cat.additionalCharges = savedCharges;
   }
 
   // MSEDCL ships a real wheeling charge from the MERC MYT order — regression guard for the wired
