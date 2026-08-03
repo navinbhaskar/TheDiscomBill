@@ -22,20 +22,34 @@ function isHindi() {
 
 const norm = (s) => String(s || '').toLowerCase().normalize('NFC');
 
-// Score an entry against the query: every query token must match somewhere;
-// title-prefix hits rank above title-substring hits, which rank above
-// keyword-only hits. 0 = no match.
+// A query this short is an abbreviation, not a fragment of a longer word. Matching it as a
+// bare substring is almost all noise: "up" hit Backup and Rupee, "mp" hit Complaint and
+// Compare. Below this length a token must begin a word.
+const SHORT_TOKEN = 2;
+const words = (s) => s.split(/[^a-z0-9ऀ-ॿ]+/i).filter(Boolean);
+const hasWordStarting = (text, tok) => words(text).some(w => w.startsWith(tok));
+
+// Score an entry against the query: every query token must match somewhere. An exact hit on
+// the entry's abbreviation (`a` — the state code) ranks first, because someone typing "UP"
+// wants Uttar Pradesh, not the alphabetically lucky UPCL. Then title-prefix, then
+// title-substring, then keyword-only. 0 = no match.
 function score(entry, tokens, hi) {
   const title = norm(hi && entry.h ? entry.h : entry.t);
   const alt = norm(hi && entry.h ? entry.t : entry.h);   // the other language still matches
   const kw = norm(entry.k);
+  const abbr = norm(entry.a);
   let s = 0;
   for (const tok of tokens) {
-    if (title.startsWith(tok)) s += 30;
+    // Short tokens match only at word starts; longer ones may match anywhere.
+    const inTitle = tok.length <= SHORT_TOKEN ? hasWordStarting(title, tok) : title.includes(tok);
+    const inAlt = tok.length <= SHORT_TOKEN ? hasWordStarting(alt, tok) : alt.includes(tok);
+    const inKw = tok.length <= SHORT_TOKEN ? hasWordStarting(kw, tok) : kw.includes(tok);
+    if (abbr && abbr === tok) s += 40;
+    else if (title.startsWith(tok)) s += 30;
     else if (title.split(/[\s(—-]+/).some(w => w.startsWith(tok))) s += 20;
-    else if (title.includes(tok)) s += 12;
-    else if (alt.includes(tok)) s += 8;
-    else if (kw.includes(tok)) s += 5;
+    else if (inTitle) s += 12;
+    else if (inAlt) s += 8;
+    else if (inKw) s += 5;
     else return 0;
   }
   return s;

@@ -1653,6 +1653,24 @@ const STATE_CODE = {
 };
 const stateCode = (s) => STATE_CODE[s] || s.replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase();
 
+// Names people still search that are not the state's current official name, plus the
+// unpunctuated spellings a search box will actually receive. Search keywords only —
+// nothing user-visible renders from this.
+const STATE_ALIASES = {
+  'Odisha': ['Orissa'],
+  'Puducherry': ['Pondicherry', 'Pondy'],
+  'Jammu & Kashmir': ['Jammu and Kashmir', 'Jammu Kashmir', 'J&K', 'JK'],
+  'Dadra & Nagar Haveli and Daman & Diu': ['Dadra Nagar Haveli', 'Daman Diu', 'DNH'],
+  'Delhi': ['New Delhi', 'NCR', 'NCT'],
+  'Uttar Pradesh': ['UPPCL'],
+  'Uttarakhand': ['Uttaranchal'],
+  'Tamil Nadu': ['Tamilnadu', 'TNEB'],
+  'Karnataka': ['Bangalore', 'Bengaluru'],
+  'Maharashtra': ['MSEDCL', 'Mahavitaran'],
+  'West Bengal': ['Bengal'],
+  'Telangana': ['TG'],
+};
+
 // Aggregate domestic-rate stats for one state across all its DISCOMs — feeds the
 // directory's per-state stat lines and the comparison table. Derived purely from
 // the tariff DB, so every figure is real and regenerated with the data.
@@ -3266,9 +3284,18 @@ function writeSearchIndex(states) {
 
   for (const state of states) {
     const stateSlug = slugify(state);
+    // State pages shipped with NO keywords, so the abbreviation everyone actually types
+    // could not reach them: "UP" returned Uttarakhand's UPCL and four UPPCL guides but
+    // never Uttar Pradesh, and "MP"/"TN"/"WB" never returned their state page at all.
+    // `a` is the abbreviation, scored as an exact match so it outranks a title that merely
+    // starts with the same two letters. The DISCOM names ride along in `k` so searching a
+    // utility ("MVVNL") also offers the state it belongs to.
     entries.push({
       t: `${state} Electricity Tariff`, h: `${hiState(state)} बिजली टैरिफ`,
       u: `/tariffs/${stateSlug}/`, hu: `/hi/tariffs/${stateSlug}/`,
+      a: stateCode(state),
+      k: [stateCode(state), ...(STATE_ALIASES[state] || []), ...getDiscoms(state).map(d => d.name)]
+        .filter(Boolean).join(' '),
       g: 'tariff',
     });
     for (const discom of getDiscoms(state)) {

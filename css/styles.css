@@ -3575,6 +3575,11 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 
 /* Load more */
 .blog-more-wrap { display: flex; justify-content: center; margin-top: 26px; }
+/* An author `display` rule outranks the UA's `[hidden] { display: none }`, so without
+   these the attribute blog-index.js sets is inert: the "Load more" button stayed on
+   screen (label intact, counter blank) after the last card was revealed, and the filter
+   bar flashed before JS ran. Same trap as .ocr-progress below. */
+.blog-more-wrap[hidden], .blog-filters[hidden] { display: none; }
 .blog-more {
   padding: 11px 26px; border-radius: var(--radius-full); cursor: pointer;
   font-family: inherit; font-size: 13.5px; font-weight: 600;
