@@ -46,11 +46,17 @@ export function resolveFixedCharge(fixedCharge, connectedLoadKw, units = 0) {
   // per_kw and per_kva are computed identically (rate × demand); the demand's unit is carried
   // by the tariff's `demandUnit` and only affects labelling, not the arithmetic.
   if (fixedCharge.type === 'per_kw' || fixedCharge.type === 'per_kva') return fixedCharge.rate * connectedLoadKw;
+  // tiered — the connected load picks ONE band, whose rate is the whole monthly charge.
+  // `perKw: true` makes the band pick the RATE instead, which the load then scales — UERC's
+  // RTS-1 charges ₹75/kW up to 1 kW, ₹85/kW above 1 and up to 4, ₹100/kW above 4, so a 3 kW
+  // connection pays 3 × 85 = ₹255. This is NOT slab_per_kw: the bands are not marginal, the
+  // whole load is billed at the one rate its band selects (slab_per_kw would give ₹245).
   if (fixedCharge.type === 'tiered') {
+    const scale = fixedCharge.perKw ? connectedLoadKw : 1;
     for (const slab of fixedCharge.slabs) {
-      if (connectedLoadKw <= slab.maxLoad) return slab.rate;
+      if (connectedLoadKw <= slab.maxLoad) return round2(slab.rate * scale);
     }
-    return fixedCharge.slabs[fixedCharge.slabs.length - 1].rate;
+    return round2(fixedCharge.slabs[fixedCharge.slabs.length - 1].rate * scale);
   }
   // slab_per_kw — MARGINAL per-kW bands, unlike `tiered` which picks one flat amount for the
   // whole load. GERC's Non-RGP charges ₹50/kW on the first 10 kW and ₹85/kW on the next 30, so

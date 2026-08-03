@@ -35,6 +35,18 @@ group('resolveFixedCharge', () => {
   check('tiered low',  resolveFixedCharge(tiered, 1.5), 90);
   check('tiered mid',  resolveFixedCharge(tiered, 5), 130);
   check('tiered high', resolveFixedCharge(tiered, 9), 190);
+
+  // tiered + perKw — the band picks the RATE and the whole load is billed at it. UERC's
+  // RTS-1: 75/85/100 per kW. A 3 kW connection pays 3 × 85 = 255. Contrast slab_per_kw,
+  // whose bands are marginal and would give 1×75 + 2×85 = 245 for the same load.
+  const banded = { type: 'tiered', perKw: true, slabs: [
+    { maxLoad: 1, rate: 75 }, { maxLoad: 4, rate: 85 }, { maxLoad: Infinity, rate: 100 } ] };
+  check('tiered perKw low',  resolveFixedCharge(banded, 1), 75);
+  check('tiered perKw mid',  resolveFixedCharge(banded, 3), 255);
+  check('tiered perKw high', resolveFixedCharge(banded, 6), 600);
+  const marginal = { type: 'slab_per_kw', slabs: [
+    { maxLoad: 1, rate: 75 }, { maxLoad: 4, rate: 85 }, { maxLoad: Infinity, rate: 100 } ] };
+  check('slab_per_kw differs from tiered perKw', resolveFixedCharge(marginal, 3), 245);
 });
 
 group('calculateEnergySlabs — telescopic', () => {
