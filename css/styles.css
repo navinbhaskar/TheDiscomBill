@@ -3275,25 +3275,24 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
    this row answers the different question of which twins exist for THIS page, so it
    renders nothing when a page has no translations rather than offering dead choices. */
 .seo-lang-pills {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
-  font-size: 13px; margin: -2px 0 14px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 5px;
+  font-size: 12px; margin: -2px 0 14px;
 }
-/* --text-secondary, not --text-tertiary: tertiary (#94a3b8) on the page background measures
-   2.45:1, and this is 12px normal-weight-equivalent text that WCAG wants at 4.5:1. Secondary
-   measures 4.8:1 light / 8.9:1 dark. */
-.seo-lang-label {
-  color: var(--text-secondary); font-size: 12px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: .6px;
+/* The written label ("AVAILABLE IN") was wider than the capsules it introduced. A globe
+   carries the same meaning at a fraction of the width; the wording survives in an .sr-only
+   span, so nothing is lost to a screen reader. */
+/* --text-secondary, not tertiary: the globe replaced a text label, so it carries the row's
+   meaning and WCAG 1.4.11 wants 3:1 for that. Tertiary measured 2.45:1; secondary is 4.55:1. */
+.seo-lang-globe {
+  width: 14px; height: 14px; flex: none; margin-right: 2px;
+  color: var(--text-secondary);
 }
-/* Devanagari and Tamil have no capital forms and tracking detaches matras — same
-   treatment the footer column titles already use. */
-html:not([lang="en"]) .seo-lang-label { text-transform: none; letter-spacing: .2px; font-size: 12.5px; }
 .seo-lang-pill {
-  display: inline-flex; align-items: center; padding: 3px 11px;
+  display: inline-flex; align-items: center; padding: 1px 9px;
   border-radius: 999px; background: var(--brand-faint);
   box-shadow: inset 0 0 0 1px var(--brand-border);
-  color: var(--text-brand-dark); font-size: 13px; font-weight: 600;
-  text-decoration: none; line-height: 1.55;
+  color: var(--text-brand-dark); font-size: 12px; font-weight: 600;
+  text-decoration: none; line-height: 1.65;
   transition: background .15s ease, color .15s ease;
 }
 a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {

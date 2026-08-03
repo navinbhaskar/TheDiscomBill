@@ -534,7 +534,20 @@ ${footer}
 // more confusing question. An English-only article therefore shows a single English capsule
 // rather than nothing — absence would be indistinguishable from a page that forgot to render
 // the row. The current language is a <span>, not an <a>: linking a page to itself is noise.
+//
+// GUIDE ARTICLES ONLY. Every other page type used to carry this row too; it was removed
+// because a capsule set describes one article's translation coverage, and on tariff, glossary,
+// smart-meter and directory pages that coverage is a property of the whole state-scoped
+// section rather than of the page you are looking at. The header switcher still reaches every
+// language from anywhere, and <head> hreflang still links the twins for crawlers.
+//
+// Compact form: the visible "AVAILABLE IN" label cost more width than the capsules it
+// introduced, so it is now a globe glyph with the wording kept for screen readers only.
 const LANG_NATIVE = { en: 'English', hi: 'हिंदी', mr: 'मराठी', ta: 'தமிழ்' };
+const LANG_GLOBE = '<svg class="seo-lang-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+  + 'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+  + '<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>'
+  + '<path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
 function langSwitchLink(page, lang, altLangs = VERNACULARS) {
   const all = ['en', ...altLangs.filter(l => l !== 'en')];
   const pills = all.map(l => {
@@ -544,7 +557,7 @@ function langSwitchLink(page, lang, altLangs = VERNACULARS) {
     const href = l === 'en' ? page : langUrl(page, l);
     return `<a class="seo-lang-pill" href="${attr(href)}" hreflang="${LANG_LOCALE[l]}" lang="${l}">${LANG_NATIVE[l]}</a>`;
   }).join('');
-  return `<p class="seo-lang-pills"><span class="seo-lang-label">Available in</span>${pills}</p>`;
+  return `<p class="seo-lang-pills">${LANG_GLOBE}<span class="sr-only">Available in</span>${pills}</p>`;
 }
 
 function breadcrumbs(trail) {
@@ -1174,7 +1187,6 @@ function discomPage(state, discom, lang = 'en') {
       { name: state, url: `/tariffs/${stateSlug}/` },
       { name: discom.name, url: null },
     ])}
-    ${langSwitchLink(enUrl, 'en', altLangs)}
     <h1>${h1}</h1>
     <p class="seo-lead">${lead}</p>
     <div class="tariff-discom-headrow seo-discom-head">
@@ -1351,7 +1363,6 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
       { name: sl, url: `${pfx}/tariffs/${stateSlug}/` },
       { name: discom.name, url: null },
     ])}
-    ${langSwitchLink(enUrl, lang)}
     <h1>${h1}</h1>
     <p class="seo-lead">${lead}</p>
     <div class="tariff-discom-headrow seo-discom-head">
@@ -1512,7 +1523,6 @@ function statePage(state, lang = 'en') {
       { name: bcTariffs, url: `${pfx}/tariffs/states/` },
       { name: sl, url: null },
     ])}
-    ${langSwitchLink(enUrl, lang, altLangs)}
     <h1>${h1}</h1>
     <p class="guide-meta">${updated}</p>
     <p class="seo-lead">${lead}</p>
@@ -1587,7 +1597,6 @@ function statePage(state, lang = 'en') {
       { name: 'Tariffs', url: '/tariffs/states/' },
       { name: state, url: null },
     ])}
-    ${langSwitchLink(enUrl, 'en', altLangs)}
     <h1>${esc(state)} Electricity Bill Calculator ${TITLE_YEAR} &amp; DISCOM Tariffs (${esc(fy)})</h1>
     <p class="guide-meta">Tariffs last updated: ${tariffUpdated(state, 'en')}${meta.verified ? ' · ✓ verified against real bills' : ''}</p>
     <p class="seo-lead">Calculate your provisional electricity bill for any of ${esc(state)}'s ${discoms.length} distribution compan${discoms.length > 1 ? 'ies' : 'y'} — ${esc(names)} — with a full slab-wise breakdown for ${esc(fy)}${cityLine ? `, covering ${esc(cityLine)} and more` : ''}.</p>
@@ -1845,7 +1854,6 @@ function directoryPage(states, lang = 'en') {
       { name: bcHome, url: '/' },
       { name: crumbDir, url: null },
     ])}
-    ${langSwitchLink(enUrl, lang)}
     <div class="seo-dir-hero">
       <h1>${dirH1}</h1>
       <p class="seo-lead">${dirLead}</p>
@@ -2347,7 +2355,6 @@ function glossaryPage(lang = 'en') {
   const body = `${glossaryDict}
   <section class="seo-page container">
     ${breadcrumbs([{ name: bcHome, url: '/' }, { name: crumbName, url: null, i18n: 'gloss.crumb' }])}
-    ${langSwitchLink(enUrl, lang)}
     <h1 data-i18n="gloss.h1">${h1}</h1>
     <p class="seo-lead" data-i18n-html="gloss.lead">${lead}</p>
     <nav class="glossary-index" id="glossary-index" aria-label="Glossary terms">${index}</nav>
@@ -2860,7 +2867,6 @@ function smartMeterDiscomPage(state, discom, lang = 'en') {
   const body = `
   <section class="seo-page container">
     ${breadcrumbs(trail)}
-    ${langSwitchLink(enUrl, lang, altLangs)}
     <h1>${h1}</h1>
     <p class="seo-lead">${lead}</p>
     ${site ? `<p class="seo-cta-row"><a class="seo-cta" href="${attr(site)}" target="_blank" rel="noopener">${T(lang, { hi: `आधिकारिक ${nm} पोर्टल पर रिचार्ज करें ↗`, mr: `अधिकृत ${nm} पोर्टलवर रिचार्ज करा ↗`, ta: `அதிகாரப்பூர்வ ${nm} போர்ட்டலில் ரீசார்ஜ் செய்யுங்கள் ↗`, en: `Recharge on the official ${nm} portal ↗` })}</a></p>` : ''}
@@ -2961,7 +2967,6 @@ function smartMeterHubPage(states, lang = 'en') {
   const body = `
   <section class="seo-page container">
     ${breadcrumbs(trail)}
-    ${langSwitchLink(enUrl, lang)}
     <h1>${T(lang, { hi: 'स्मार्ट मीटर रिचार्ज — हर डिस्कॉम की ऑनलाइन गाइड', mr: 'स्मार्ट मीटर रिचार्ज — प्रत्येक डिस्कॉमची ऑनलाइन गाइड', ta: 'ஸ்மார்ட் மீட்டர் ரீசார்ஜ் — ஒவ்வொரு DISCOM-க்கும் ஆன்லைன் வழிகாட்டி', en: 'Smart Meter Recharge — Online Guide for Every DISCOM' })}</h1>
     <p class="seo-lead">${T(lang, {
       hi: 'भारत में प्रीपेड स्मार्ट मीटर तेज़ी से लग रहे हैं। अपना डिस्कॉम चुनें — आधिकारिक रिचार्ज पोर्टल, स्टेप-बाय-स्टेप तरीक़ा, और असली टैरिफ दरों से निकाला गया अनुमान कि हर रिचार्ज में कितनी यूनिट मिलती हैं।',
