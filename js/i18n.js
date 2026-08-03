@@ -47,6 +47,14 @@ export const STRINGS = {
     'ql.privacy': 'Privacy Policy',
     'ql.cookies': 'Cookie Policy',
     'ql.install': 'Install Offline App',
+    // /tariffs/ — the state + DISCOM picker. This page has no pre-rendered vernacular twin
+    // because its body is a JS-driven selector, not static prose; it translates at runtime
+    // instead, the same way the calculator and tools pages do.
+    'tariffs.h1': 'Electricity Tariff Rates',
+    'tariffs.intro': 'Browse the current energy slabs, fixed charges and duties for any DISCOM in India. Pick your state and provider to see the full schedule by consumer category — the same rates that power our bill calculator.',
+    'tariffs.state': 'State / UT',
+    'tariffs.discom': 'DISCOM',
+    'tariffs.note': 'Rates are compiled from publicly available SERC / DISCOM tariff orders and are provided for reference only. Slabs, fixed charges, electricity duty and fuel surcharges (FPPA) change with each tariff order and may vary by sub-category, phase and city. Always confirm against your official bill or DISCOM website, then use the <a href="/#calculator">bill calculator</a> for an exact amount.',
     // Shared footer links (generated pages + key pages)
     'footer.rights': '© 2026 TheDiscomBill. All rights reserved.',
     'footer.disclaimer': 'Disclaimer',

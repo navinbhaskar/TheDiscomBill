@@ -139,17 +139,17 @@
 <div class="page-body" role="main">
   <section class="tariff-section">
     <div class="container">
-      <h1 class="reveal">Electricity Tariff Rates</h1>
-      <p class="tariff-intro reveal">Browse the current energy slabs, fixed charges and duties for any DISCOM in India. Pick your state and provider to see the full schedule by consumer category — the same rates that power our bill calculator.</p>
+      <h1 class="reveal" data-i18n="tariffs.h1">Electricity Tariff Rates</h1>
+      <p class="tariff-intro reveal" data-i18n="tariffs.intro">Browse the current energy slabs, fixed charges and duties for any DISCOM in India. Pick your state and provider to see the full schedule by consumer category — the same rates that power our bill calculator.</p>
 
       <!-- Selector bar -->
       <div class="tariff-controls reveal">
         <div class="tariff-control">
-          <label for="tariffState">State / UT</label>
+          <label for="tariffState" data-i18n="tariffs.state">State / UT</label>
           <select id="tariffState"></select>
         </div>
         <div class="tariff-control">
-          <label for="tariffDiscom">DISCOM</label>
+          <label for="tariffDiscom" data-i18n="tariffs.discom">DISCOM</label>
           <select id="tariffDiscom"></select>
         </div>
       </div>
@@ -160,7 +160,7 @@
       <!-- Category cards -->
       <div class="tariff-cards" id="tariffCards"></div>
 
-      <p class="comparison-note reveal">
+      <p class="comparison-note reveal" data-i18n-html="tariffs.note">
         Rates are compiled from publicly available SERC / DISCOM tariff orders and are provided for
         reference only. Slabs, fixed charges, electricity duty and fuel surcharges (FPPA) change with
         each tariff order and may vary by sub-category, phase and city. Always confirm against your
