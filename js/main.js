@@ -613,4 +613,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('stateSelect')) {
     import('./calculator-init.js').then(m => m.initCalculator()).catch(() => {});
   }
+
+  // Guide articles only — the Share control. Loaded the same way and for the same reason:
+  // the other ~440 generated pages have no share button, and should not pay a request for it.
+  // The button renders `hidden`; share-article.js is what reveals it, so if this import fails
+  // the reader sees no button rather than a dead one.
+  if (document.querySelector('[data-share-article]')) {
+    import('./share-article.js').catch(() => {});
+  }
 });

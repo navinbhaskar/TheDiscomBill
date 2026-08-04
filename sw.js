@@ -1,7 +1,7 @@
 // sw.js — Service Worker (network-first, cache fallback)
 // CACHE is stamped automatically by generate-seo.js (stampServiceWorker) from a
 // content hash of the CORE assets below — do not hand-edit it; run `npm run seo`.
-const CACHE = 'discombill-20260804-5ca98676';
+const CACHE = 'discombill-20260804-f134ca83';
 
 const CORE = [
   './', './index.html', './compare/', './compare/index.html',
@@ -38,6 +38,8 @@ const CORE = [
   './js/portal-page.js', './js/new-connection.js', './js/complaint.js', './js/services.js', './js/solar.js',
   './js/recharge-calculator.js', './js/ev.js', './js/blog-index.js', './js/sanctioned-load.js', './js/solar-subsidy.js',
   './js/solar-panel-size.js', './js/solar-battery.js',
+  // Guide-article Share control — dynamically imported by main.js when the button is present.
+  './js/share-article.js',
   // Bill Review portal — bill-review.js statically imports these two, so they
   // must be cached together or the page fails to parse offline.
   './js/bill-review.js', './js/support-common.js', './js/supabase-config.js', './js/login.js', './js/my-bills.js',

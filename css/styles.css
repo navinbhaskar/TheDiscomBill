@@ -3467,10 +3467,46 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
    Sits under the breadcrumbs. The header's language switcher offers every language;
    this row answers the different question of which twins exist for THIS page, so it
    renders nothing when a page has no translations rather than offering dead choices. */
+/* Row holding the capsules and the Share button. The two are different kinds of thing —
+   one navigates, one acts — so Share is pushed to the far end rather than sitting in the
+   capsule run, where it would read as a fourth language. */
+.seo-article-tools {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  /* Was -2px, which tucked the capsules under the breadcrumb and made the two read as one
+     clump. They are separate controls and now get the space to say so. */
+  margin: 12px 0 14px;
+}
 .seo-lang-pills {
   display: flex; flex-wrap: wrap; align-items: center; gap: 5px;
-  font-size: 12px; margin: -2px 0 14px;
+  font-size: 12px; margin: 0;
 }
+/* Sits directly after the capsules rather than being pushed to the far edge of the column.
+   `margin-left: auto` flung it against the 1000px boundary, which detached it from the row
+   it belongs to and left a wide dead gap on every article. */
+.seo-share-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: var(--radius-full);
+  background: transparent; box-shadow: inset 0 0 0 1px var(--border-subtle);
+  color: var(--text-secondary); font: inherit; font-size: 12px; font-weight: 600;
+  line-height: 1.65; cursor: pointer; border: 0;
+  transition: background .15s ease, color .15s ease, box-shadow .15s ease;
+}
+.seo-share-btn svg { width: 13px; height: 13px; flex: none; }
+/* The capsule is 28px tall, which reads correctly next to 12px language pills but is a small
+   target for a thumb. On touch devices an invisible overlay extends the hit area to ~44px
+   without inflating the button visually — the row would look top-heavy if the control grew
+   to match its own tap target. */
+@media (hover: none) {
+  .seo-share-btn { position: relative; }
+  .seo-share-btn::after { content: ''; position: absolute; inset: -8px -6px; }
+}
+.seo-share-btn:hover { color: var(--text-brand-dark); box-shadow: inset 0 0 0 1px var(--brand-border); background: var(--brand-faint); }
+.seo-share-btn:focus-visible { outline: 2px solid var(--text-brand); outline-offset: 2px; }
+/* Confirmation state after a copy. Holds the same footprint so the row does not reflow. */
+.seo-share-btn.is-done { color: var(--text-brand-dark); background: var(--brand-faint); box-shadow: inset 0 0 0 1px var(--brand-border); }
+@media (prefers-reduced-motion: reduce) { .seo-share-btn { transition: none; } }
+/* On a narrow phone the capsule run plus the button can exceed one line; the flex-wrap on
+   .seo-article-tools lets Share drop to its own line rather than shrinking the tap target. */
 /* The written label ("AVAILABLE IN") was wider than the capsules it introduced. A globe
    carries the same meaning at a fraction of the width; the wording survives in an .sr-only
    span, so nothing is lost to a screen reader. */
@@ -3864,8 +3900,10 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .seo-disclaimer { font-size: 12px; color: var(--text-tertiary); line-height: 1.6; margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border-subtle); max-width: 760px; }
 
 /* ── Guide figures: mock bill receipt (guides pages) ─────────────────────── */
-.guide-fig { margin: 18px auto 22px; max-width: 460px; }
-.guide-fig figcaption { font-size: 12.5px; color: var(--text-tertiary); line-height: 1.55; margin-top: 10px; text-align: center; }
+/* Left-aligned, not centred: the figure sits inside a left-aligned column of prose, and a
+   centred card broke that edge for no gain. `margin-inline: 0` rather than `auto`. */
+.guide-fig { margin: 18px 0 22px; max-width: 460px; }
+.guide-fig figcaption { font-size: 12.5px; color: var(--text-tertiary); line-height: 1.55; margin-top: 10px; text-align: left; }
 .gbill { background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: 0 8px 24px color-mix(in srgb, #0f172a 8%, transparent); overflow: hidden; font-variant-numeric: tabular-nums; }
 .gbill-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 12px 16px; background: var(--surface-sunken); border-bottom: 1px solid var(--border-subtle); font-weight: 700; font-size: 13px; letter-spacing: 0.4px; color: var(--text-primary); }
 .gbill-head span { font-weight: 500; font-size: 12px; color: var(--text-tertiary); letter-spacing: 0; }

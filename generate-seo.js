@@ -571,6 +571,15 @@ const LANG_GLOBE = '<svg class="seo-lang-globe" viewBox="0 0 24 24" fill="none" 
   + 'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
   + '<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>'
   + '<path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>';
+// Share control, shown at the end of the same row as the capsules. Progressive enhancement:
+// the button is inert without JS, so it is rendered hidden and js/share-article.js reveals it
+// — a dead button is worse than no button. On mobile it opens the OS share sheet; on desktop,
+// where navigator.share is usually absent, it copies the URL and says so.
+const SHARE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
+  + 'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+  + '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>'
+  + '<path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
+
 function langSwitchLink(page, lang, altLangs = VERNACULARS) {
   const all = ['en', ...altLangs.filter(l => l !== 'en')];
   const pills = all.map(l => {
@@ -580,7 +589,12 @@ function langSwitchLink(page, lang, altLangs = VERNACULARS) {
     const href = l === 'en' ? page : langUrl(page, l);
     return `<a class="seo-lang-pill" href="${attr(href)}" hreflang="${LANG_LOCALE[l]}" lang="${l}">${LANG_NATIVE[l]}</a>`;
   }).join('');
-  return `<p class="seo-lang-pills">${LANG_GLOBE}<span class="sr-only">Available in</span>${pills}</p>`;
+  const share = `<button type="button" class="seo-share-btn" data-share-article hidden>`
+    + `${SHARE_ICON}<span class="seo-share-label" data-share-label>Share</span></button>`;
+  return `<div class="seo-article-tools">`
+    + `<p class="seo-lang-pills">${LANG_GLOBE}<span class="sr-only">Available in</span>${pills}</p>`
+    + share
+    + `</div>`;
 }
 
 function breadcrumbs(trail) {
