@@ -1969,8 +1969,24 @@ function directoryPage(states, lang = 'en') {
     const displayName = stateName(state, lang);
     const b = sbase(state);
     const links = discoms.map(d => `<a href="${b}${stateSlug}/${d.id}/">${esc(d.name)}</a>`).join('');
-    // data-search carries every script's name + discom names so the filter box matches everything
-    const searchBlob = [state, stateName(state, 'hi'), stateName(state, 'mr'), stateName(state, 'ta'), ...discoms.map(d => d.name)].join(' ').toLowerCase();
+    // data-search carries every script's name + discom names so the filter box matches everything.
+    //
+    // It must also carry the state CODE and the aliases, and for a long time it did not — so
+    // typing "UP" (or "UK", or "UPPCL") hid the Uttar Pradesh card, even though the placeholder
+    // says "e.g. UP" and the card renders a big "UP" badge. The blob held only the state's four
+    // script names plus DISCOM names, and none of "uttar pradesh dvvnl mvvnl pvvnl puvvnl kesco"
+    // contains the substring "up". MP and HP appeared to work purely by luck, matching inside
+    // "mppkvvcl" and "hpsebl".
+    //
+    // Both sources already existed and are what the site-wide search indexes (see the `k` field
+    // built further down) — the directory filter simply was not using them. Sharing them is the
+    // point: the two searches can no longer disagree about what "UP" means.
+    const searchBlob = [
+      state, stateName(state, 'hi'), stateName(state, 'mr'), stateName(state, 'ta'),
+      stateCode(state),                    // the code already printed on the card's badge
+      ...(STATE_ALIASES[state] || []),     // UPPCL, TNEB, MSEDCL, Orissa, Pondicherry, …
+      ...discoms.map(d => d.name),
+    ].join(' ').toLowerCase();
     const nDiscoms = `${discoms.length} ${T(lang, { hi: 'डिस्कॉम', mr: 'डिस्कॉम', ta: 'DISCOM', en: (discoms.length === 1 ? 'DISCOM' : 'DISCOMs') })}`;
     // Unique per-state stat line: real domestic rate span pulled from the tariff DB
     // (plus the verified badge), so no two state cards read the same.
@@ -2075,7 +2091,17 @@ function directoryPage(states, lang = 'en') {
     var empty=document.getElementById('dirEmpty');
     q.addEventListener('input',function(){
       var t=q.value.trim().toLowerCase(), shown=0;
-      cards.forEach(function(c){var hit=!t||c.getAttribute('data-search').indexOf(t)>-1;c.hidden=!hit;if(hit)shown++;});
+      // Two-letter queries are state codes, not fragments — match them at word starts only.
+      // Now that every blob carries its code, a bare substring test would let "dl" pull in any
+      // state whose DISCOM names happen to contain those letters. Same rule the site-wide
+      // search applies, for the same reason.
+      cards.forEach(function(c){
+        var blob=c.getAttribute('data-search'), hit;
+        if(!t) hit=true;
+        else if(t.length<=2) hit=blob.split(/[^a-z0-9]+/).some(function(w){return w.indexOf(t)===0;});
+        else hit=blob.indexOf(t)>-1;
+        c.hidden=!hit; if(hit)shown++;
+      });
       regions.forEach(function(r){r.hidden=!r.querySelector('.seo-dir-state:not([hidden])');});
       if(empty)empty.hidden=shown>0;
     });
