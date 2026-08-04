@@ -328,6 +328,78 @@ function initLoginButton() {
   syncAccountRole(role);
 }
 
+/* ── Returning from Google sign-in ──────────────────────────────────────────────
+   Google OAuth is a full-page redirect back to `redirectTo` (the page the auth modal
+   was opened from — see signInWithGoogle in support-common.js). The modal is gone by
+   then, so its onSignedIn callback never runs; the header is rendered fresh instead by
+   initLoginButton().
+
+   That reads the session SYNCHRONOUSLY from localStorage via getStoredUser(). On this
+   particular load the session is not there yet — it is still sitting in the URL, and
+   only supabase-js can exchange it. So the header renders "Login" for someone who has
+   just signed in successfully.
+
+   It then gets worse: with no stored user, initLoginButton() returns early and never
+   reaches syncAccountRole(), which is the only thing on a plain page load that calls
+   getSupabase(). Nothing constructs the client, so nothing exchanges the URL token —
+   the visitor stays stuck on "Login" until something else happens to load the SDK
+   (hovering the Login button warms it) and they reload by hand. That is exactly the
+   "log in, still shows Login, refresh, now I'm in" behaviour.
+
+   Fix: notice the OAuth response in the URL, load the SDK, wait for the exchange, and
+   re-render the header. */
+const OAUTH_URL_KEYS = [
+  'code', 'access_token', 'refresh_token', 'expires_in', 'expires_at', 'token_type',
+  'provider_token', 'provider_refresh_token', 'state', 'error', 'error_code',
+  'error_description',
+];
+
+function oauthParamsInUrl() {
+  const q = new URLSearchParams(location.search);
+  const h = new URLSearchParams(location.hash.replace(/^#/, ''));
+  // `code` and `access_token` are the two success shapes (PKCE and implicit); the error
+  // keys matter too, so a declined consent screen also gets the URL cleaned up.
+  return ['code', 'access_token', 'error', 'error_description'].some(k => q.has(k) || h.has(k));
+}
+
+// Take the credential out of the address bar. supabase-js clears the hash itself, but a
+// PKCE `?code=` can survive — and an auth code has no business sitting in browser history,
+// a bookmark, or a Referer header on the next outbound click.
+function stripOAuthParamsFromUrl() {
+  try {
+    const url = new URL(location.href);
+    let touched = false;
+    for (const k of OAUTH_URL_KEYS) {
+      if (url.searchParams.has(k)) { url.searchParams.delete(k); touched = true; }
+    }
+    if (/(^|[#&])(access_token|refresh_token|provider_token)=/.test(url.hash)) {
+      url.hash = ''; touched = true;
+    }
+    if (touched) history.replaceState(null, '', url.pathname + url.search + url.hash);
+  } catch (e) { /* URL parsing failed — leaving the address bar as-is is harmless */ }
+}
+
+async function completeOAuthRedirect() {
+  if (!isConfigured() || !oauthParamsInUrl()) return;
+  try {
+    const sb = await getSupabase();
+    if (!sb) return;
+    // Subscribe BEFORE awaiting, so the SIGNED_IN event is caught whenever the exchange
+    // completes rather than relying on getSession() resolving after it. This also keeps
+    // the header honest for the rest of the page's life — a token refresh or a sign-out
+    // in another tab re-renders it too. initLoginButton() is re-runnable by design.
+    sb.auth.onAuthStateChange(() => initLoginButton());
+    // Constructing the client starts detectSessionInUrl; getSession() awaits that
+    // initialisation, so once it resolves the session is persisted (or we know it failed).
+    await sb.auth.getSession();
+    initLoginButton();
+  } catch (e) {
+    /* SDK blocked or offline: the header stays on "Login", which is at least not a lie. */
+  } finally {
+    stripOAuthParamsFromUrl();
+  }
+}
+
 let roleSyncedOnce = false;
 async function syncAccountRole(currentRole) {
   // At most one confirm-and-re-render per page load. The loop was previously broken
@@ -540,6 +612,7 @@ document.addEventListener('DOMContentLoaded', () => {
     import('./compare.js').then(m => m.initComparisonTable()).catch(() => {});
   }
   initLoginButton();     // top-right Login / My Account button
+  completeOAuthRedirect();   // ...then correct it if we just came back from Google
   initHeaderSearch();    // header magnifier + Ctrl+K / '/' site search
   initHeroBillCard();    // homepage hero card: estimate ⇄ across-India faces
   initGatedLinks();      // Bill Review CTAs open the auth modal, then redirect in
