@@ -74,13 +74,13 @@
   </url>
   <url>
     <loc>https://thediscombill.com/tenant-submeter-calculator/</loc>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/check-my-bill/</loc>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -877,30 +877,44 @@
   <url>
     <loc>https://thediscombill.com/guides/what-is-a-unit-of-electricity/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/what-is-a-unit-of-electricity/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/what-is-a-unit-of-electricity/"/>
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/what-is-a-unit-of-electricity/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/what-is-a-unit-of-electricity/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/what-is-a-unit-of-electricity/"/>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/guides/what-is-a-unit-of-electricity/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/what-is-a-unit-of-electricity/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/what-is-a-unit-of-electricity/"/>
+    <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/what-is-a-unit-of-electricity/"/>
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/what-is-a-unit-of-electricity/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/what-is-a-unit-of-electricity/"/>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/mr/guides/what-is-a-unit-of-electricity/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/what-is-a-unit-of-electricity/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/what-is-a-unit-of-electricity/"/>
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/what-is-a-unit-of-electricity/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/what-is-a-unit-of-electricity/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/what-is-a-unit-of-electricity/"/>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/ta/guides/what-is-a-unit-of-electricity/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/what-is-a-unit-of-electricity/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/what-is-a-unit-of-electricity/"/>
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/what-is-a-unit-of-electricity/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/what-is-a-unit-of-electricity/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/what-is-a-unit-of-electricity/"/>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
