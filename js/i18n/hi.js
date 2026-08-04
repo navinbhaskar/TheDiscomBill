@@ -6,7 +6,7 @@ export default {
     // Header / nav
     'tagline': 'बिजली बिल कैलकुलेटर · पूरे भारत के लिए',
     'nav.calculator': 'कैलकुलेटर',
-    'nav.compare': 'दरों की तुलना',
+    'nav.compare': 'तुलना',
     'nav.tariffs': 'टैरिफ',
     'nav.solar': 'सोलर',
     'nav.ev': 'EV लागत',

@@ -5652,6 +5652,167 @@ export const GUIDES = [
     ],
   },
   {
+    slug: 'uppcl-new-connection-estimate-2026',
+    published: "2026-08-04",
+    states: ['Uttar Pradesh'],
+    category: 'newConn',
+    title: 'UPPCL New Connection Estimate 2026: SAC and Meter Charges',
+    metaTitle: 'UPPCL New Connection Estimate 2026: SAC Charges',
+    description: 'UPPCL new-connection estimates in 2026: fixed SAC slabs by load and distance, metering charges, smart-meter recovery, and when an actual estimate still applies.',
+    minutes: 7,
+    toolCta: {
+      href: '/sanctioned-load-optimizer/',
+      title: { en: 'Applying? Check the load you actually need first', hi: 'आवेदन कर रहे हैं? पहले जाँचें कि वास्तव में कितना भार चाहिए' },
+      sub: { en: 'Load decides both your SAC slab and the fixed charge you pay every month afterwards. See the right kW before you file.', hi: 'भार से ही आपका SAC स्लैब और बाद का मासिक फिक्स्ड चार्ज तय होता है। आवेदन से पहले सही kW देखें।' },
+    },
+    intro: `UPPCL new-connection estimates changed in 2026 because the Cost Data Book now uses
+      fixed <strong>Supply Affording Charge (SAC)</strong> slabs for most non-PTW connections up
+      to 150 kW in electrified areas. Instead of a custom line estimate for every nearby applicant,
+      the amount is picked from a table using your sanctioned load and the wire-route distance from
+      the nearest distribution main. This article explains the table, why your estimate now looks
+      different, and which cases still need an actual estimate.`,
+    sections: `
+      <section class="seo-section">
+        <h2>1. Why the 2026 estimate looks different</h2>
+        <p>The old estimate format often depended on a site visit, measured line length, poles,
+        cable, labour and a manually prepared junior-engineer estimate. Two consumers in the same
+        area could see different amounts and neither could easily verify the calculation.</p>
+        <p>The 2026 Cost Data Book moves most small and medium new connections to a simpler rule:
+        <strong>metering charge + fixed SAC slab</strong>. The SAC is not a monthly bill charge.
+        It is a one-time amount for making supply available up to your premises.</p>
+        <ul>
+          <li><strong>Distance slab:</strong> up to 100 metre, above 100 metre up to 300 metre, and
+          more than 300 metre.</li>
+          <li><strong>Load slab:</strong> separate rows for single-phase LT, three-phase LT and
+          HT loads up to 150 kW.</li>
+          <li><strong>Beyond 300 metre:</strong> UPPCL prepares an actual estimate and recovers
+          whichever is higher: the table amount or the actual estimate.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>2. Metering charge and SAC table from Chapter 5A</h2>
+        <p>This is the consumer-facing table for <strong>non-PTW loads up to 150 kW in electrified
+        areas</strong>, as printed in Chapter 5A of the 2026 Cost Data Book, "Metering Charge and
+        Supply Affording Charge". In the last column, the table amount is the <em>floor</em>: UPPCL
+        prepares an actual estimate and recovers whichever is higher.</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Load</th>
+              <th>Metering charge</th>
+              <th>Meter recovery</th>
+              <th>SAC ≤100 m</th>
+              <th>SAC 100–300 m</th>
+              <th>SAC &gt;300 m</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Single-phase 1 kW</strong><br>Lifeline consumers only</td><td>₹1,425</td><td>₹84 for 24 months</td><td>₹1,000</td><td>₹3,500</td><td>₹3,500</td></tr>
+            <tr><td><strong>Single-phase 1 kW to 2 kW</strong><br>Other than lifeline</td><td>₹1,855</td><td>₹84 for 24 months</td><td>₹1,500</td><td>₹3,500</td><td>₹3,500</td></tr>
+            <tr><td><strong>Single-phase 3 kW to 4 kW</strong></td><td>₹1,908</td><td>₹84 for 24 months</td><td>₹3,500</td><td>₹6,500</td><td>₹6,500</td></tr>
+            <tr><td><strong>Three-phase 3 kW to 4 kW</strong></td><td>₹5,278</td><td>Nil</td><td>₹6,500</td><td>₹13,000</td><td>₹13,000</td></tr>
+            <tr><td><strong>Three-phase 5 kW to 10 kW</strong></td><td>₹6,358</td><td>Nil</td><td>₹10,000</td><td>₹20,000</td><td>₹20,000</td></tr>
+            <tr><td><strong>Three-phase 11 kW to 15 kW</strong></td><td>₹6,358</td><td>Nil</td><td>₹20,000</td><td>₹40,000</td><td>₹40,000</td></tr>
+            <tr><td><strong>Three-phase 16 kW to 20 kW</strong></td><td>₹6,358</td><td>Nil</td><td>₹25,000</td><td>₹50,000</td><td>₹50,000</td></tr>
+            <tr><td><strong>Three-phase 21 kW to 24 kW</strong></td><td>₹6,358</td><td>Nil</td><td>₹35,000</td><td>₹70,000</td><td>₹70,000</td></tr>
+            <tr><td><strong>Three-phase 25 kW</strong></td><td>₹12,418 overhead<br>₹14,706 underground</td><td>Nil</td><td>₹35,000</td><td>₹70,000</td><td>₹70,000</td></tr>
+            <tr><td><strong>Three-phase 26 kW to 35 kW</strong></td><td>₹12,418 overhead<br>₹14,706 underground</td><td>Nil</td><td>₹50,000</td><td>₹1,00,000</td><td>₹1,00,000</td></tr>
+            <tr><td><strong>Three-phase 36 kW to 50 kW</strong></td><td>₹12,418 overhead<br>₹14,706 underground</td><td>Nil</td><td>₹80,000</td><td>₹1,60,000</td><td>₹1,60,000</td></tr>
+            <tr><td><strong>HT 51 kW to 150 kW</strong><br>166 kVA</td><td>₹2,48,280 overhead<br>₹2,65,110 underground</td><td>Nil</td><td>₹1,22,000</td><td>₹2,22,000</td><td>₹2,22,000</td></tr>
+          </tbody>
+        </table></div>
+        <p><strong>How to read it:</strong> a 2 kW domestic applicant within 100 m does not get a
+        custom line estimate at all. The Chapter 5A part is ₹1,855 metering charge plus ₹1,500 SAC
+        — ₹3,355 — with the smart-meter recovery billed separately, as described below.
+        Registration fee, security deposit and any category-specific amounts are additional and
+        appear as their own lines in the portal estimate.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>3. The smart-meter recovery line</h2>
+        <p>For single-phase connections, the table shows <strong>₹84 per month for 24 months</strong>
+        as the monthly recurring meter charge. That is why a small domestic applicant can see both
+        an upfront metering charge and a later monthly recovery line. Three-phase LT and HT rows in
+        this Chapter 5A table show the monthly recurring charge as <strong>Nil</strong>.</p>
+        <p>Do not confuse this with your monthly fixed charge after the connection is live. Fixed
+        charge is part of the electricity bill tariff; metering charge is part of the new-connection
+        cost schedule.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>4. When SAC does not settle the whole estimate</h2>
+        <p>The fixed SAC table is broad, but not universal. Expect a different treatment in these
+        cases:</p>
+        <ul>
+          <li><strong>More than 300 metre from the distribution main:</strong> actual estimate applies,
+          with the table amount acting as the floor.</li>
+          <li><strong>Private tube-well / PTW connections:</strong> PTW has its own package and
+          transformer rules; do not apply this Chapter 5A non-PTW table to a kisan pump.</li>
+          <li><strong>Unelectrified colonies and multi-storey multi-point cases:</strong> the
+          infrastructure recovery can be handled through development or building-level charges, so
+          the applicant may pay only the metering charge under this head.</li>
+          <li><strong>HT loads above 150 kW:</strong> those fall outside this table and need the
+          relevant HT estimate provisions.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>5. 3 kW and 4 kW applicants now have a phase choice</h2>
+        <p>The table is especially useful for small workshops and homes with three-phase equipment:
+        <strong>3 kW to 4 kW</strong> appears in both single-phase and three-phase rows. The cost
+        difference is real. Single-phase 3–4 kW carries a ₹1,908 metering charge and the ₹3,500 SAC slab; three-phase
+        carries a ₹5,278 metering charge and ₹6,500 SAC — roughly ₹6,400 more before anything
+        else is counted. Choose three-phase
+        because your equipment needs it, not because it sounds more powerful.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>6. What to check before paying the estimate</h2>
+        <ol>
+          <li><strong>Load:</strong> confirm the kW entered on Jhatpat is what you actually need.
+          Oversizing raises the new-connection estimate and later fixed charges. Use our
+          <a href="/guides/reduce-fixed-charges-sanctioned-load/">sanctioned-load guide</a> if you
+          are unsure.</li>
+          <li><strong>Distance band:</strong> check whether UPPCL has placed you within 100 m,
+          100-300 m, or beyond 300 m. The distance should be the practical wire-route distance, not
+          merely a rough map guess.</li>
+          <li><strong>Phase:</strong> for 3-4 kW, confirm whether the estimate is single-phase or
+          three-phase.</li>
+          <li><strong>Separate charges:</strong> do not mix registration fee, metering charge, SAC
+          and security deposit into one unexplained number. The portal estimate should let you
+          identify each head.</li>
+        </ol>
+        <p>For the application process itself, including documents and escalation steps, read the
+        companion <a href="/guides/uppcl-new-connection-jhatpat/">UPPCL Jhatpat new-connection
+        guide</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Source and how to verify it</h2>
+        <p>The amounts above are reproduced from Chapter 5A, "Metering Charge and Supply Affording
+        Charge", of the UPPCL Cost Data Book 2026. We have not seen a revision published after that
+        edition, but cost data books are amended more often than tariff orders, so treat this page
+        as a guide to the <em>structure</em> of the estimate rather than as the payable figure.</p>
+        <p><strong>The amount UPPCL shows on your Jhatpat estimate is the one you pay.</strong> If it
+        differs from the table, the portal is right and this page is out of date — please
+        <a href="/contact/">tell us</a> so we can correct it. Our
+        <a href="/methodology/">methodology note</a> explains how we source and check figures.</p>
+      </section>`,
+    faqs: [
+      { q: 'What is SAC in a UPPCL new connection estimate?',
+        a: 'SAC means Supply Affording Charge. It is a one-time charge for making supply available to the applicant, fixed by load and distance slab under the 2026 Cost Data Book for most non-PTW connections up to 150 kW in electrified areas.' },
+      { q: 'How much SAC applies for a 2 kW UPPCL domestic connection?',
+        a: 'For a single-phase 1 kW to 2 kW non-lifeline connection, Chapter 5A shows SAC of ₹1,500 up to 100 m and ₹3,500 for more than 100 m up to 300 m. Beyond 300 m an actual estimate applies, with ₹3,500 as the floor.' },
+      { q: 'Is the UPPCL metering charge the same as monthly fixed charge?',
+        a: 'No. Metering charge is part of the new-connection cost schedule. Monthly fixed charge is part of the electricity tariff after the connection is live and is billed every month based on sanctioned load.' },
+      { q: 'Do PTW or private tube-well connections use this SAC table?',
+        a: 'No. The Chapter 5A table is for non-PTW loads up to 150 kW in electrified areas. Private tube-well connections follow their own package and transformer provisions.' },
+      { q: 'What happens if my house is more than 300 m from the nearest line?',
+        a: 'UPPCL prepares an actual estimate. You pay whichever is higher: the Chapter 5A floor amount for your load row or the actual estimate prepared for the work.' },
+    ],
+  },
+  {
     slug: 'uppcl-new-connection-jhatpat',
     published: "2026-04-12",
     states: ['Uttar Pradesh'],

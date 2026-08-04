@@ -6,7 +6,7 @@ export default {
     // Header / nav
     'tagline': 'वीज बिल कॅल्क्युलेटर · संपूर्ण भारतासाठी',
     'nav.calculator': 'कॅल्क्युलेटर',
-    'nav.compare': 'दर तुलना',
+    'nav.compare': 'तुलना',
     'nav.tariffs': 'टॅरिफ',
     'nav.solar': 'सोलर',
     'nav.ev': 'EV खर्च',
