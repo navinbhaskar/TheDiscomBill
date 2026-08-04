@@ -5486,7 +5486,7 @@ export const GUIDES = [
     published: "2026-04-12",
     states: ['Uttar Pradesh'],
     title: 'How to Get a New UPPCL Electricity Connection (Jhatpat Portal)',
-    metaTitle: 'UPPCL New Connection 2026 — Jhatpat Portal: ₹10–₹100 Fee, Documents, Timeline',
+    metaTitle: 'UPPCL Jhatpat Fee Is ₹10–₹100 — Not the Estimate You Fear',
     howtoSteps: [
       { name: 'Register on the Jhatpat portal', text: 'Create an account on UPPCL\'s Jhatpat online portal with your mobile number and fill the new-connection application with premises and load details.' },
       { name: 'Upload documents and pay the registration fee', text: 'Upload identity, address and ownership/occupancy proof, then pay the registration fee online — ₹10 for BPL applicants, ₹100 for others.' },
@@ -5494,7 +5494,7 @@ export const GUIDES = [
       { name: 'Inspection and meter installation', text: 'A field inspection follows and the meter is installed — the Rights of Consumers Rules set the timeline at roughly 7 to 30 days depending on area.' },
       { name: 'Escalate if the application stalls', text: 'Chase a stalled application through 1912 with your application number, then the sub-division office and the division XEN.' },
     ],
-    description: 'Apply on UPPCL\'s Jhatpat portal for ₹10 (BPL) or ₹100 → upload Aadhaar + address proof → pay the Cost Data Book estimate online. Connection is due in 7–30 days under the Rights of Consumers Rules. Every document, charge and the fix when the application stalls.',
+    description: 'The Jhatpat application costs ₹10 (BPL) or ₹100 — the Cost Data Book estimate comes later. Aadhaar plus address proof, 7–30 days under the Rights of Consumers Rules, and the fix when it stalls.',
     minutes: 8,
     intro: `A new domestic electricity connection in Uttar Pradesh no longer needs a trip to the
       sub-division office. UPPCL's <strong>Jhatpat portal</strong>
@@ -5788,7 +5788,7 @@ export const GUIDES = [
     published: "2026-04-24",
     states: ['Maharashtra'],
     title: 'How to Get a New MSEDCL (Mahavitaran) Electricity Connection Online',
-    metaTitle: 'MSEDCL New Connection Online 2026 — WSS Portal, Documents & 7-Day Rule',
+    metaTitle: 'MSEDCL New Connection Stuck? The 7-Day Rule You Can Claim',
     howtoSteps: [
       { name: 'Register on the WSS portal', text: 'Create an account on Mahavitaran\'s Web Self Service portal and start the new-connection application with premises and load details.' },
       { name: 'Upload the documents', text: 'Upload identity, address and ownership/occupancy proof — agricultural connections also need the 7/12 land extract.' },
@@ -5796,7 +5796,7 @@ export const GUIDES = [
       { name: 'Inspection and meter installation', text: 'A field inspection follows and the meter is installed — due within 7 days in metro areas and up to 30 days elsewhere under the statutory timelines.' },
       { name: 'Escalate if it stalls', text: 'Chase a stalled application through the portal status page and 1912, then the sub-division office and the consumer grievance ladder.' },
     ],
-    description: 'Apply on Mahavitaran\'s WSS portal → upload the document checklist (7/12 extract for agricultural) → pay the firm quotation and security deposit. Connection is due in 7 days in metro areas, up to 30 elsewhere. Every step, charge and the escalation ladder when it stalls.',
+    description: 'Your MSEDCL connection is due in 7 days in metro areas and 30 elsewhere — and there is an escalation ladder when it stalls. The WSS steps, the 7/12 extract rule for agricultural, the firm quotation and every charge.',
     minutes: 8,
     intro: `Mahavitaran (MSEDCL) serves nearly all of Maharashtra outside Mumbai city, and a new
       connection no longer needs the A-1 form queue at the section office. The
@@ -6481,7 +6481,7 @@ export const GUIDES = [
     published: "2026-05-18",
     states: ['Delhi'],
     title: 'How to Get a New Tata Power DDL Connection (North Delhi)',
-    metaTitle: 'Tata Power DDL New Connection 2026: 2 Documents, 7 Days',
+    metaTitle: 'Tata Power DDL New Connection: Nothing to Pay Upfront',
     howtoSteps: [
       { name: 'Apply online with two documents', text: 'Fill the Tata Power DDL new-connection application (north and north-west Delhi) with just identity proof and ownership/occupancy proof.' },
       { name: 'Field inspection', text: 'Tata Power DDL inspects the premises and verifies the requested load.' },
@@ -6489,7 +6489,7 @@ export const GUIDES = [
       { name: 'Charges arrive in the first bill', text: 'Unlike most DISCOMs, the demand-note charges and security deposit are billed in your first bill rather than upfront.' },
       { name: 'Escalate if it stalls', text: 'Chase a stalled application through the Tata Power DDL helpline and, if unresolved, the DERC consumer grievance forum.' },
     ],
-    description: 'Apply online with just two documents. Nothing is payable upfront: the charges arrive in your first bill. North and north-west Delhi, 7-day timeline.',
+    description: 'Nothing is payable upfront — the charges arrive in your first bill. Two documents, a 7-day timeline, and what the connection actually costs. North and north-west Delhi.',
     minutes: 7,
     intro: `Tata Power Delhi Distribution (TPDDL) serves north and north-west Delhi — Rohini,
       Pitampura, Model Town, Civil Lines, Narela and around — and runs one of the leanest
@@ -6741,7 +6741,7 @@ export const GUIDES = [
     published: "2026-05-30",
     states: ['Tamil Nadu'],
     title: 'How to Get a New TNEB (TANGEDCO) Electricity Connection Online',
-    metaTitle: 'TNEB New Connection Online 2026: Documents, Deposit, 7 Days',
+    metaTitle: 'TNEB New Connection: Why 7 Days Becomes 30 — and the Deposit',
     howtoSteps: [
       { name: 'Register on the TNPDCL online portal', text: 'Create an account on the TANGEDCO/TNPDCL online services portal and start the new LT connection application with premises and load details.' },
       { name: 'Upload the documents', text: 'Upload identity and ownership proof — tenants and other non-owners attach Form 5 (owner consent) and Form 6 (indemnity bond) instead.' },
@@ -6749,7 +6749,7 @@ export const GUIDES = [
       { name: 'Inspection and meter installation', text: 'A field inspection follows and the meter is installed — due within 7 days where distribution lines exist and up to 30 days otherwise.' },
       { name: 'Escalate through Minnagam if it stalls', text: 'Chase a stalled application with your application number through TNPDCL\'s Minnagam consumer care route, then the section and division offices.' },
     ],
-    description: 'Apply on the TNPDCL portal, upload ownership proof, pay the TNERC deposit. Your connection is due in 7 days where lines already exist, 30 days otherwise.',
+    description: 'Seven days only where lines already exist — otherwise 30. What the TNERC deposit comes to, the ownership proof that holds applications up, and the TNPDCL portal steps in order.',
     minutes: 8,
     intro: `Everyone in Tamil Nadu still says "EB connection", and the flow is now genuinely online:
       the new service connection portal
@@ -7392,8 +7392,8 @@ export const GUIDES = [
     published: "2026-07-18",
     states: ['Karnataka'],
     title: 'How to Get a New BESCOM Electricity Connection Online (Bengaluru)',
-    metaTitle: 'BESCOM New Connection Online — Portal, Documents, Charges, Timeline',
-    description: 'A new BESCOM connection in Bengaluru: which portal actually takes it (bescom.co.in, not Seva Sindhu), the documents including the wiring test report, and charges.',
+    metaTitle: 'BESCOM New Connection: Not Seva Sindhu — the Right Portal',
+    description: 'Applications go through bescom.co.in, not Seva Sindhu — the wrong portal costs you weeks. The documents including the wiring test report, the charges and the timeline.',
     minutes: 8,
     intro: `A new domestic connection in BESCOM territory — Bengaluru and seven surrounding
       districts — is applied for online, but the right portal depends on where the premises is.
@@ -7520,8 +7520,8 @@ export const GUIDES = [
     published: "2026-07-15",
     states: ['Kerala'],
     title: 'How to Get a New KSEB Electricity Connection Online (WSS Portal)',
-    metaTitle: 'KSEB New Connection at wss.kseb.in: ₹50 Fee, 2-Day Setup',
-    description: 'Apply on the KSEB WSS portal at wss.kseb.in: the ₹50 LT fee, the document checklist, tenant NOC rules, and the 2-working-day package connection.',
+    metaTitle: 'KSEB New Connection: ₹50 Fee, Supply in 2 Working Days',
+    description: 'The LT application fee is ₹50 and a package connection is due in 2 working days. The document checklist, the tenant NOC rule that trips renters up, and the WSS steps.',
     minutes: 7,
     intro: `Kerala has one electricity distributor for the whole state, so every new domestic
       connection goes through KSEB — and almost all of it happens on one site: the
@@ -7637,8 +7637,8 @@ export const GUIDES = [
     published: "2026-07-11",
     states: ['Haryana'],
     title: 'How to Get a New Electricity Connection in Haryana (DHBVN / UHBVN eConnection)',
-    metaTitle: 'DHBVN & UHBVN New Connection 2026 — Portal, Documents',
-    description: 'A new DHBVN or UHBVN connection in Haryana: which DISCOM serves your district, the documents, the ₹20 fee, and the 7-day deadline that cancels applications.',
+    metaTitle: 'DHBVN & UHBVN New Connection: the 7-Day Cancellation Trap',
+    description: 'Miss the 7-day deadline and Haryana cancels the application outright. Which of DHBVN or UHBVN serves your district, the documents, and the ₹20 fee.',
     minutes: 7,
     intro: `Haryana's two DISCOMs take new-connection applications on dedicated
       <strong>eConnection portals</strong> — <a href="https://econnection.dhbvn.org.in/" rel="nofollow noopener" target="_blank">econnection.dhbvn.org.in</a>
