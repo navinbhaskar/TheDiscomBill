@@ -414,6 +414,15 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
   };
   const ld = [webPage, ...jsonld].filter(Boolean)
     .map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n  ');
+  // SERP-facing copy is clamped HERE rather than at each of the ~30 call sites, so a new page
+  // template cannot ship an over-long title by forgetting to call fitTitle().
+  //
+  // Only <title> and <meta name="description"> are clamped. og:/twitter: descriptions and the
+  // WebPage schema node above deliberately keep the full text: social cards allow far more
+  // room than a SERP snippet, and structured data is not truncated at all — so nothing is
+  // lost, the long copy simply stops being the thing Google cuts off mid-word.
+  const serpTitle = fitText(title, TITLE_WIDTH);
+  const serpDesc = HOLD_SNIPPET.has(canonical) ? description : fitText(description, DESC_WIDTH);
   // hreflang set: Google needs it on EVERY variant, and x-default points at English.
   const alternates = page ? `
   <link rel="alternate" hreflang="en-IN" href="${SITE}${page}">${altLangs.map(l =>
@@ -447,8 +456,8 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
       ${langBoot}
     })();
   </script>
-  <title>${esc(title)}</title>
-  <meta name="description" content="${attr(description)}">
+  <title>${esc(serpTitle)}</title>
+  <meta name="description" content="${attr(serpDesc)}">
   ${noCanonical ? '' : `<link rel="canonical" href="${attr(canonical)}">`}${alternates}
   <meta name="robots" content="${robots}">
   <meta property="og:type" content="website">
@@ -796,11 +805,207 @@ function indicativeBillsHtml(state, discom, lang = 'en') {
 function hashStr(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
 function variant(seed, arr) { return arr[hashStr(seed) % arr.length]; }
 
-// Keep <title> within Google's ~60-char truncation width: use the preferred title if it fits,
-// otherwise step through progressively shorter fallbacks (last one wins even if still long).
-function fitTitle(preferred, fallbacks, max = 60) {
-  for (const t of [preferred, ...fallbacks]) if (t.length <= max) return t;
-  return fallbacks[fallbacks.length - 1];
+// ── SERP width model ──────────────────────────────────────────────────────────
+// Google truncates titles and snippets by PIXEL width, not character count, so a plain
+// `.length <= 60` check is wrong in both directions on this site: a title of DISCOM
+// acronyms ("UPPCL MSEDCL TANGEDCO") blows past the box well before 60 characters, while
+// a Hindi title of 60 characters still fits comfortably.
+//
+// These ratios were measured, not guessed — canvas measureText in Arial (Google's desktop
+// SERP face), averaged over representative strings from this site's own corpus and
+// normalised so one Latin lowercase character = 1.0 unit:
+//
+//     Latin lowercase 1.000   Devanagari 0.951
+//     Latin uppercase 1.501   Tamil      1.378
+//     digits          1.227   space      0.454
+//
+// Note Devanagari is slightly NARROWER per codepoint than Latin lowercase. The wide scripts
+// here are Tamil and — by a distance — Latin uppercase and digits, which is what this
+// corpus is actually full of.
+//
+// Budgets are expressed in the same units, anchored so that ordinary Latin prose reproduces
+// the familiar conventions: 60 units ≈ the classic 60-character title, 155 ≈ a safe snippet.
+const TITLE_WIDTH = 60;
+const DESC_WIDTH = 155;
+
+// A CTR experiment is running on the new-connection guides: their titles were rewritten on
+// 2026-08-03 and a GSC baseline is being measured through 2026-09-15. CTR responds to the
+// whole SERP result, so re-cutting these snippets mid-experiment would confound the readout
+// of the title change. Their descriptions are held at full length until the baseline reports;
+// their titles already fit, so the title clamp is a no-op on them either way.
+//
+// DELETE THIS SET (and the guard in layout()) once the experiment closes on 2026-09-15 —
+// the width test will then flag these seven pages and they get trimmed with everything else.
+const HOLD_SNIPPET_UNTIL = '2026-09-15';
+const HOLD_SNIPPET = new Set(
+  new Date().toISOString().slice(0, 10) >= HOLD_SNIPPET_UNTIL ? [] : [
+    'tneb-tangedco-new-connection', 'haryana-new-connection-dhbvn-uhbvn',
+    'bescom-new-connection-online', 'kseb-new-connection-online',
+    'tata-power-ddl-new-connection', 'uppcl-new-connection-jhatpat',
+    'msedcl-new-connection-online',
+  ].map((slug) => `${SITE}/guides/${slug}/`));
+
+function charWidth(cp) {
+  if (cp === 32) return 0.454;                       // space
+  if (cp >= 0x41 && cp <= 0x5a) return 1.501;        // A-Z
+  if (cp >= 0x30 && cp <= 0x39) return 1.227;        // 0-9
+  if (cp >= 0x900 && cp <= 0x97f) return 0.951;      // Devanagari (hi, mr)
+  if (cp >= 0xb80 && cp <= 0xbff) return 1.378;      // Tamil
+  // Combining marks in Indic scripts stack on the base glyph and add no advance width.
+  if (cp >= 0x300 && cp <= 0x36f) return 0;
+  return 1.0;                                        // Latin lowercase, punctuation, ₹, …
+}
+
+// Width of `s` in en units. Takes DECODED text — callers must unescape entities first,
+// or "&amp;" counts as five characters instead of one.
+function textWidth(s) {
+  let w = 0;
+  for (const ch of String(s)) w += charWidth(ch.codePointAt(0));
+  return w;
+}
+
+// Words whose trailing full stop is an abbreviation, not a sentence end. Without this the
+// sentence splitter below cuts "MSEDCL (Maharashtra State Electricity Distribution Co. Ltd.)"
+// after "Co." and emits a description ending mid-parenthetical.
+const ABBREV = /(?:^|\s)(?:Co|Ltd|Pvt|Corp|Dept|Nigam|Inc|Ors|No|vs|approx|Est|St|Mt|Dr|Mr|Mrs|Ms|Jr|Sr|वि|इ|उदा|क्र|सं|आदि)\.$/i;
+
+// Trailing words that must never end a snippet — a truncated title reading "Pay Your Bill at"
+// is worse than a shorter one that ends cleanly.
+// Includes the vernacular conjunctions and the possessives that commonly precede the object
+// they modify — a Marathi title ending "… आणि तुमचे" ("and your") is as broken as one
+// ending "and your" in English, and the cut has to take both words, not just the last.
+const DANGLING = new RegExp(
+  '(?:\\s+(?:' + [
+    'and', 'or', 'the', 'a', 'an', 'of', 'for', 'with', 'at', 'in', 'to', 'on', 'from', 'by', 'vs', '&',
+    'और', 'तथा', 'एवं', 'व', 'तुम्हारे', 'आपके', 'अपने', 'उनके', 'इसके',        // Hindi
+    'आणि', 'तुमचे', 'तुमच्या', 'आपले', 'आपल्या', 'त्यांचे',                      // Marathi
+    'மற்றும்', 'உங்கள்', 'அதன்', 'இதன்',                                        // Tamil
+  ].join('|') + '))+$', 'i');
+
+const stripTail = (s) => String(s).replace(/[\s—–:;,.|/&-]+$/, '');
+
+// Trim punctuation and connectives left hanging by a cut, and repair a bracket the cut opened.
+function tidyCut(s, budget) {
+  let out = stripTail(s).replace(DANGLING, '');
+
+  // Position of the last UNMATCHED "(" — not simply the last one. Delhi's DISCOM list nests
+  // ("4 डिस्कॉम (BRPL (BSES Rajdhani), BYPL …"), and repairing at the innermost bracket there
+  // closes one that was already balanced while leaving the real orphan open.
+  let depth = 0, i = -1;
+  for (let k = 0; k < out.length; k++) {
+    if (out[k] === '(') { if (depth === 0) i = k; depth++; }
+    else if (out[k] === ')') depth = Math.max(0, depth - 1);
+  }
+  if (depth > 0 && i >= 0) {
+    const inner = out.slice(i + 1);
+    // Most orphaned brackets on this site are service-area lists — "(Ajmer, Bhilwara,
+    // Nagaur, Sirohi, …)". Closing them after the last complete item keeps a truthful
+    // subset of the list; dropping the whole bracket would throw away a third of the
+    // snippet and the local intent that makes these pages distinct.
+    const lastItem = inner.lastIndexOf(',');
+    const closed = lastItem > 0 ? `${out.slice(0, i + 1)}${stripTail(inner.slice(0, lastItem))})` : '';
+    const balanced = closed && (closed.match(/\(/g) || []).length === (closed.match(/\)/g) || []).length;
+    out = (balanced && (!budget || textWidth(closed) <= budget)) ? closed : out.slice(0, i);
+  }
+  out = stripTail(out).trim();
+
+  // A cut that lands just past an em dash leaves a stub qualifier — "How to Read a UPPCL
+  // Bill 2026 — LMV-1" — which reads as though the title were damaged. Dropping the whole
+  // clause gives a shorter but complete title. Only reached from the truncation paths, so
+  // a title that already fits is never touched.
+  const tail = out.lastIndexOf(' — ');
+  if (tail > 0 && textWidth(out.slice(tail + 3)) < 12) out = stripTail(out.slice(0, tail)).trim();
+
+  return out;
+}
+
+// Shorten `s` to fit `budget` en units, cutting at the most natural boundary available.
+// Order matters: drop whole trailing sentences first (the tail of a 3-sentence description
+// is the most expendable part), then fall back to a clause boundary, then a word boundary.
+// No ellipsis is appended — Google adds its own, and the character would eat the budget.
+//
+// Every path is subject to the same floor: a cut that keeps less than 60% of the budget
+// throws away more than truncation would have cost, so it is rejected in favour of the next
+// strategy. That floor is what stops a stray abbreviation or an early comma from collapsing
+// a 155-unit snippet to 30.
+function fitText(s, budget) {
+  const text = String(s).replace(/\s+/g, ' ').trim();
+  if (textWidth(text) <= budget) return text;
+  const floor = budget * 0.6;
+  // A whole sentence is self-contained, so it earns a lower floor than a mid-clause cut:
+  // Delhi's "…निकालें। 4 डिस्कॉम (BRPL (BSES Rajdhani), BYPL …" reads far better stopped at
+  // the danda than carved out of the DISCOM list, even though the sentence is shorter.
+  const sentenceFloor = budget * 0.45;
+
+  // 1. Whole sentences. Handles Latin "." / "?" / "!" and the Devanagari danda "।".
+  const parts = text.split(/(?<=[.?!।])\s+/);
+  if (parts.length > 1) {
+    let acc = '';
+    for (const part of parts) {
+      const next = acc ? `${acc} ${part}` : part;
+      if (textWidth(next) > budget) break;
+      acc = next;
+    }
+    if (acc && textWidth(acc) >= sentenceFloor && !ABBREV.test(acc)) return tidyCut(acc, budget);
+  }
+
+  // Longest prefix that fits, as the basis for the remaining strategies.
+  let cut = '';
+  for (const ch of text) {
+    const next = cut + ch;
+    if (textWidth(next) > budget) break;
+    cut = next;
+  }
+
+  // 2. Clause boundary — em dash, colon, semicolon or comma.
+  const clause = Math.max(cut.lastIndexOf(' — '), cut.lastIndexOf(': '),
+    cut.lastIndexOf('; '), cut.lastIndexOf(', '));
+  if (clause > 0 && textWidth(cut.slice(0, clause)) >= floor) {
+    const tidy = tidyCut(cut.slice(0, clause), budget);
+    if (textWidth(tidy) >= floor) return tidy;
+  }
+
+  // 3. Word boundary, never mid-word.
+  const sp = cut.lastIndexOf(' ');
+  return tidyCut(sp > 0 ? cut.slice(0, sp) : cut, budget);
+}
+
+// Keep <title> within Google's truncation width: use the preferred title if it fits,
+// otherwise step through progressively shorter fallbacks. If even the last fallback is
+// too wide it is trimmed rather than emitted long — layout() enforces this regardless,
+// but stepping down here picks a better-composed title than a raw cut would.
+function fitTitle(preferred, fallbacks, max = TITLE_WIDTH) {
+  for (const t of [preferred, ...fallbacks]) if (textWidth(t) <= max) return t;
+  return fitText(fallbacks[fallbacks.length - 1], max);
+}
+
+// A parenthetical gloss of the DISCOM's legal name — " (Madhyanchal Vidyut Vitran Nigam Ltd.)"
+// after "MVVNL" — is genuinely useful when the short name is an acronym, and pure noise when
+// it merely restates what was just said. Left unguarded it produced strings like
+// "Adani Electricity Mumbai (Adani Electricity Mumbai Ltd. (formerly Reliance Infrastructure))"
+// — the name echoed, with nested brackets — and pushed those descriptions past 260 characters.
+//
+// Two suppression rules, both aimed at redundancy rather than length:
+//   1. the long name simply extends the short one ("Adani Electricity Mumbai" → "… Ltd."), or
+//   2. most of the long name's words are already in the short name (LPDCL's
+//      "LPDCL / Ladakh Power Dept." vs "Ladakh Power Development Corp. / Power Development
+//      Dept., Ladakh" — same words, rearranged).
+// An acronym shares no words with its expansion, so the useful case always survives.
+function nameGloss(name, fullName) {
+  if (!fullName) return '';
+  const norm = (s) => String(s).toLowerCase().replace(/[^a-z0-9ऀ-ॿ஀-௿ ]+/g, ' ')
+    .replace(/\s+/g, ' ').trim();
+  const a = norm(name), b = norm(fullName);
+  if (!b || a === b || b.startsWith(a) || a.includes(b)) return '';
+
+  const short = new Set(a.split(' ').filter(Boolean));
+  const words = b.split(' ').filter((w) => w.length > 2);   // ignore "of", "&", "ltd"-like noise
+  if (words.length) {
+    const shared = words.filter((w) => short.has(w)).length;
+    if (shared / words.length >= 0.6) return '';
+  }
+  // Nested brackets read badly inside a parenthetical; flatten them when the gloss is kept.
+  return ` (${String(fullName).replace(/\s*\((.*?)\)\s*/g, ', $1').replace(/\s+,/g, ',').trim()})`;
 }
 
 // Split an `area` string like "South UP (Agra, Mathura, Aligarh)" into a region label + city list.
@@ -1107,8 +1312,16 @@ function discomPage(state, discom, lang = 'en') {
   const dr = domesticRates(discom);
   const shared = sharesScheduleInState(state, discom);
   const cityPhrase = cities.length ? cities.slice(0, 3).join(', ') : region;
+  // The parenthetical legal name, suppressed when it only echoes the short name.
+  const gloss = nameGloss(discom.name, discom.fullName);
+  // A wider label for "… and across X". Only meaningful when the DISCOM publishes a region
+  // label separate from its city list: when `area` has no bracketed cities, parseArea puts
+  // the whole string in `region`, cityPhrase becomes that same string, and the old template
+  // rendered "for <10 districts> and across <the same 10 districts>" verbatim.
+  const widerArea = (cities.length && region && region !== cityPhrase) ? region
+    : (cities.length ? state : '');
 
-  if (lang !== 'en') return discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, long, region, cities, dr, shared, cityPhrase, lang });
+  if (lang !== 'en') return discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, long, gloss, region, cities, dr, shared, cityPhrase, lang });
 
   // Which vernacular twins exist for this state (Hindi always; Marathi/Tamil only for their state).
   const altLangs = VERNACULARS.filter(l => langServesState(l, state));
@@ -1131,9 +1344,9 @@ function discomPage(state, discom, lang = 'en') {
     `${cname} Bill Calculator`,
   ]);
   const description = variant(seed + 'd', [
-    `Calculate your ${discom.name} (${long}) electricity bill for ${fy}${cityPhrase ? ` in ${cityPhrase}` : ''}. Slab-wise rates, fixed charges, FPPA & duties.${dr ? ` Domestic from ${rupeeRate(dr.min)}/unit.` : ''} Free, no sign-up.`,
+    `Calculate your ${discom.name}${gloss} electricity bill for ${fy}${cityPhrase ? ` in ${cityPhrase}` : ''}. Slab-wise rates, fixed charges, FPPA & duties.${dr ? ` Domestic from ${rupeeRate(dr.min)}/unit.` : ''} Free, no sign-up.`,
     `${discom.name} electricity bill calculator for ${state}${cityPhrase ? ` (${cityPhrase})` : ''}. ${fy} domestic & commercial slab rates, fixed/demand charges and an instant itemised estimate.`,
-    `Free ${discom.name} bill estimate (${fy})${cityPhrase ? ` for ${cityPhrase} and across ${region || state}` : ''}. See the full tariff schedule, indicative monthly bills and pay-bill portal.`,
+    `Free ${discom.name} bill estimate (${fy})${cityPhrase ? ` for ${cityPhrase}${widerArea ? ` and across ${widerArea}` : ''}` : ''}. See the full tariff schedule, indicative monthly bills and pay-bill portal.`,
   ]);
   // H1 also leads with the searched "<name> Bill Calculator <year>" phrase (matching the title),
   // then varies the tail — region or the full legal name — for on-page uniqueness.
@@ -1243,11 +1456,15 @@ function discomPage(state, discom, lang = 'en') {
 // Vernacular twin of discomPage (hi/mr/ta) — same data, native copy, links stay inside the
 // language prefix where a twin exists. No phrasing variants needed: uniqueness comes from the
 // data itself. Only emitted for languages scoped to this state (Marathi→MH, Tamil→TN, Hindi→all).
-function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, long, region, cities, dr, shared, cityPhrase, lang }) {
+function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, long, gloss, region, cities, dr, shared, cityPhrase, lang }) {
   const sl = stateName(state, lang);
   const fyL = fyLabel(fy, lang);
   const nm = esc(discom.name);
   const cname = consumerName(discom);   // TNEB (TANGEDCO) / MVVNL (UPPCL) — leads title + H1
+  // consumerName already carries a bracketed alias for some DISCOMs, so the gloss is
+  // recomputed against it: appending the legal name to "TNEB (TANGEDCO)" would otherwise
+  // produce two parentheticals in a row.
+  const cgloss = nameGloss(cname, discom.fullName);
   const yr = yearLabel(fy);
   const pfx = `/${lang}`;
   const cityList3 = esc(cities.slice(0, 3).join(', '));
@@ -1260,9 +1477,9 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
       T(lang, { hi: `${cname} बिल कैलकुलेटर ${TITLE_YEAR}`, mr: `${cname} बिल कॅल्क्युलेटर ${TITLE_YEAR}`, ta: `${cname} கட்டண கணிப்பான் ${TITLE_YEAR}`, en: `${cname} Bill Calculator` }),
     ]);
   const description = T(lang, {
-    hi: `${cname} (${long}) का बिजली बिल ${fyL} के लिए निकालें${cityPhrase ? ` — ${cityPhrase}` : ''}। स्लैब दरें, फिक्स्ड चार्ज, FPPA व शुल्क।${dr ? ` घरेलू दर ${rupee(dr.min)}/यूनिट से।` : ''} मुफ़्त, बिना साइन-अप।`,
-    mr: `${cname} (${long}) चे वीज बिल ${fyL} साठी काढा${cityPhrase ? ` — ${cityPhrase}` : ''}. स्लॅब दर, फिक्स्ड चार्ज, FPPA व शुल्क.${dr ? ` घरगुती दर ${rupee(dr.min)}/युनिट पासून.` : ''} मोफत, साइन-अप शिवाय.`,
-    ta: `${cname} (${long}) மின் கட்டணத்தை ${fyL}-க்கு கணக்கிடுங்கள்${cityPhrase ? ` — ${cityPhrase}` : ''}. அடுக்கு விகிதங்கள், நிலையான கட்டணம், FPPA மற்றும் வரிகள்.${dr ? ` வீட்டு கட்டணம் ${rupee(dr.min)}/யூனிட் முதல்.` : ''} இலவசம், பதிவு தேவையில்லை.`,
+    hi: `${cname}${cgloss} का बिजली बिल ${fyL} के लिए निकालें${cityPhrase ? ` — ${cityPhrase}` : ''}। स्लैब दरें, फिक्स्ड चार्ज, FPPA व शुल्क।${dr ? ` घरेलू दर ${rupee(dr.min)}/यूनिट से।` : ''} मुफ़्त, बिना साइन-अप।`,
+    mr: `${cname}${cgloss} चे वीज बिल ${fyL} साठी काढा${cityPhrase ? ` — ${cityPhrase}` : ''}. स्लॅब दर, फिक्स्ड चार्ज, FPPA व शुल्क.${dr ? ` घरगुती दर ${rupee(dr.min)}/युनिट पासून.` : ''} मोफत, साइन-अप शिवाय.`,
+    ta: `${cname}${cgloss} மின் கட்டணத்தை ${fyL}-க்கு கணக்கிடுங்கள்${cityPhrase ? ` — ${cityPhrase}` : ''}. அடுக்கு விகிதங்கள், நிலையான கட்டணம், FPPA மற்றும் வரிகள்.${dr ? ` வீட்டு கட்டணம் ${rupee(dr.min)}/யூனிட் முதல்.` : ''} இலவசம், பதிவு தேவையில்லை.`,
     en: `Calculate your ${discom.name} bill for ${fy}.` });
   const h1 = T(lang, {
     hi: `${esc(cname)} बिजली बिल कैलकुलेटर व टैरिफ (${esc(fyL)})`,
@@ -2730,6 +2947,7 @@ function smartMeterDiscomPage(state, discom, lang = 'en') {
   const url = langUrl(enUrl, lang);
   const sl = stateName(state, lang);
   const long = discom.fullName || discom.name;
+  const gloss = nameGloss(discom.name, discom.fullName);
   const cname = consumerName(discom);
   const nm = esc(discom.name);
   const { region, cities } = parseArea(discom.area);
@@ -2754,10 +2972,10 @@ function smartMeterDiscomPage(state, discom, lang = 'en') {
     [T(lang, { hi: `${cname} स्मार्ट मीटर रिचार्ज`, mr: `${cname} स्मार्ट मीटर ऑनलाइन रिचार्ज`, ta: `${cname} ஸ்மார்ட் மீட்டர் ரீசார்ஜ்`, en: `${cname} Smart Meter Recharge Online` }),
      T(lang, { hi: `${discom.name} स्मार्ट मीटर रिचार्ज`, mr: `${discom.name} स्मार्ट मीटर ऑनलाइन रिचार्ज`, ta: `${discom.name} ஸ்மார்ட் மீட்டர் ரீசார்ஜ்`, en: `${cname} Smart Meter Recharge` })]);
   const description = T(lang, {
-    hi: `${discom.name} (${long}) प्रीपेड स्मार्ट मीटर ऑनलाइन रिचार्ज करें — आधिकारिक पोर्टल, UPI/BBPS के तरीक़े${dr ? `, और ₹500 में लगभग कितनी यूनिट मिलती हैं (${rupee(dr.min)}–${rupee(dr.max)}/यूनिट दर पर)` : ''}। कम बैलेंस व कटौती के नियम भी।`,
-    mr: `${discom.name} (${long}) प्रीपेड स्मार्ट मीटर ऑनलाइन रिचार्ज करा — अधिकृत पोर्टल, UPI/BBPS पद्धती${dr ? `, आणि ₹500 मध्ये अंदाजे किती युनिट मिळतात (${rupee(dr.min)}–${rupee(dr.max)}/युनिट दराने)` : ''}. कमी बॅलन्स व खंडित होण्याचे नियमही.`,
-    ta: `${discom.name} (${long}) ப்ரீபெய்டு ஸ்மார்ட் மீட்டரை ஆன்லைனில் ரீசார்ஜ் செய்யுங்கள் — அதிகாரப்பூர்வ போர்ட்டல், UPI/BBPS விருப்பங்கள்${dr ? `, மேலும் ₹500-க்கு தோராயமாக எத்தனை யூனிட் (${rupee(dr.min)}–${rupee(dr.max)}/யூனிட் விகிதத்தில்)` : ''}. குறைந்த பேலன்ஸ் & துண்டிப்பு விதிகளும்.`,
-    en: `Recharge your ${discom.name} (${long}) prepaid smart meter online — official portal, UPI/BBPS options${dr ? `, and roughly how many units ₹500 buys at ${rupee(dr.min)}–${rupee(dr.max)}/unit` : ''}. Plus low-balance and disconnection rules.` });
+    hi: `${discom.name}${gloss} प्रीपेड स्मार्ट मीटर ऑनलाइन रिचार्ज करें — आधिकारिक पोर्टल, UPI/BBPS के तरीक़े${dr ? `, और ₹500 में लगभग कितनी यूनिट मिलती हैं (${rupee(dr.min)}–${rupee(dr.max)}/यूनिट दर पर)` : ''}। कम बैलेंस व कटौती के नियम भी।`,
+    mr: `${discom.name}${gloss} प्रीपेड स्मार्ट मीटर ऑनलाइन रिचार्ज करा — अधिकृत पोर्टल, UPI/BBPS पद्धती${dr ? `, आणि ₹500 मध्ये अंदाजे किती युनिट मिळतात (${rupee(dr.min)}–${rupee(dr.max)}/युनिट दराने)` : ''}. कमी बॅलन्स व खंडित होण्याचे नियमही.`,
+    ta: `${discom.name}${gloss} ப்ரீபெய்டு ஸ்மார்ட் மீட்டரை ஆன்லைனில் ரீசார்ஜ் செய்யுங்கள் — அதிகாரப்பூர்வ போர்ட்டல், UPI/BBPS விருப்பங்கள்${dr ? `, மேலும் ₹500-க்கு தோராயமாக எத்தனை யூனிட் (${rupee(dr.min)}–${rupee(dr.max)}/யூனிட் விகிதத்தில்)` : ''}. குறைந்த பேலன்ஸ் & துண்டிப்பு விதிகளும்.`,
+    en: `Recharge your ${discom.name}${gloss} prepaid smart meter online — official portal, UPI/BBPS options${dr ? `, and roughly how many units ₹500 buys at ${rupee(dr.min)}–${rupee(dr.max)}/unit` : ''}. Plus low-balance and disconnection rules.` });
 
   const h1 = T(lang, {
     hi: `${esc(cname)} स्मार्ट मीटर रिचार्ज — ऑनलाइन तरीक़ा`, mr: `${esc(cname)} स्मार्ट मीटर रिचार्ज — ऑनलाइन पद्धत`,

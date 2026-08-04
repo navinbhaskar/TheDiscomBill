@@ -222,6 +222,74 @@ console.log('\n• content.min.css matches its sources');
   }
 }
 
+// ── 6. SERP width budget for titles and meta descriptions ────────────────────
+// Google truncates by pixel width, so this measures width rather than character count:
+// 1 unit = one Latin lowercase character, with uppercase (1.5) and digits (1.23) costing
+// more and Devanagari (0.95) slightly less. A corpus full of "UPPCL MSEDCL TANGEDCO 2026"
+// blows the title box well before 60 characters, which a .length check would wave through.
+//
+// The model is re-implemented here rather than imported from generate-seo.js on purpose:
+// a test that calls the same function it is checking agrees with it by construction and
+// proves nothing. If these two drift, that disagreement is itself the signal.
+console.log('\n• title / description fit the SERP width budget');
+{
+  const TITLE_W = 60, DESC_W = 155;
+  const cw = (c) => {
+    const o = c.codePointAt(0);
+    if (o === 32) return 0.454;
+    if (o >= 0x41 && o <= 0x5a) return 1.501;
+    if (o >= 0x30 && o <= 0x39) return 1.227;
+    if (o >= 0x900 && o <= 0x97f) return 0.951;
+    if (o >= 0xb80 && o <= 0xbff) return 1.378;
+    if (o >= 0x300 && o <= 0x36f) return 0;
+    return 1;
+  };
+  const width = (s) => [...s].reduce((a, c) => a + cw(c), 0);
+  const unesc = (s) => s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"').replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n))
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)));
+
+  // A CTR experiment holds these seven snippets at full length until 2026-09-15; see the
+  // HOLD_SNIPPET note in generate-seo.js. Once that date passes the guard there stops
+  // applying and these pages must satisfy the budget like everything else.
+  const HELD = new Set([
+    'guides/tneb-tangedco-new-connection', 'guides/haryana-new-connection-dhbvn-uhbvn',
+    'guides/bescom-new-connection-online', 'guides/kseb-new-connection-online',
+    'guides/tata-power-ddl-new-connection', 'guides/uppcl-new-connection-jhatpat',
+    'guides/msedcl-new-connection-online',
+  ]);
+  const holdActive = new Date().toISOString().slice(0, 10) < '2026-09-15';
+
+  let over = 0, checked = 0, worstT = 0, worstD = 0;
+  for (const page of htmlPages) {
+    const html = fs.readFileSync(path.join(ROOT, page), 'utf8');
+    // Only pages that ask to be indexed — noindex stubs never reach a SERP.
+    const rob = html.match(/<meta name="robots" content="([^"]*)"/i);
+    if (rob && /noindex/i.test(rob[1])) continue;
+    checked++;
+
+    const t = html.match(/<title>([^<]*)<\/title>/i);
+    if (t) {
+      const w = width(unesc(t[1].trim()));
+      worstT = Math.max(worstT, w);
+      if (w > TITLE_W + 0.01) { over++; fail(`${page}: title ${w.toFixed(1)} > ${TITLE_W} units — ${t[1].trim()}`); }
+    }
+
+    const d = html.match(/<meta name="description" content="([^"]*)"/i);
+    if (d) {
+      const slug = page.replace(/\/index\.html$/, '').replace(/\.html$/, '');
+      if (holdActive && HELD.has(slug)) continue;
+      const w = width(unesc(d[1].trim()));
+      worstD = Math.max(worstD, w);
+      if (w > DESC_W + 0.01) { over++; fail(`${page}: description ${w.toFixed(1)} > ${DESC_W} units`); }
+    }
+  }
+  if (!over) {
+    passed++;
+    console.log(`  ✓ ${checked} indexable pages within budget (worst title ${worstT.toFixed(1)}/${TITLE_W}, description ${worstD.toFixed(1)}/${DESC_W})`);
+  }
+}
+
 // ── summary ───────────────────────────────────────────────────────────────────
 console.log(`\n${failed ? '✗' : '✓'} site checks — ${passed} groups passed, ${failed} failures\n`);
 process.exit(failed ? 1 : 0);
