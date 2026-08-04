@@ -391,7 +391,7 @@ const OG_LOCALE = { en: 'en_IN', hi: 'hi_IN', mr: 'mr_IN', ta: 'ta_IN' };
 // the full hreflang set for every language twin that exists for this page is emitted;
 // `lang` picks which variant this is. `altLangs` restricts which vernacular twins exist
 // (defaults to all — pass a subset for state-scoped pages).
-function layout({ title, description, canonical, jsonld = [], body, lang = 'en', page = null, altLangs = VERNACULARS, ogImage = null }) {
+function layout({ title, description, canonical, jsonld = [], body, lang = 'en', page = null, altLangs = VERNACULARS, ogImage = null, robots = 'index, follow, max-image-preview:large', noCanonical = false }) {
   // Per-page social card when one has been generated (scripts/og-images.mjs writes
   // /og/<key>.jpg); otherwise the shared default. existsSync keeps it safe: a page
   // referencing an image that hasn't been rendered yet falls back, never 404s a card.
@@ -448,8 +448,8 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
   </script>
   <title>${esc(title)}</title>
   <meta name="description" content="${attr(description)}">
-  <link rel="canonical" href="${attr(canonical)}">${alternates}
-  <meta name="robots" content="index, follow, max-image-preview:large">
+  ${noCanonical ? '' : `<link rel="canonical" href="${attr(canonical)}">`}${alternates}
+  <meta name="robots" content="${robots}">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="TheDiscomBill">
   <meta property="og:title" content="${attr(title)}">
@@ -2667,7 +2667,12 @@ function notFoundPage() {
   return layout({
     title: '404 — Page Not Found · TheDiscomBill',
     description: 'That page could not be found. Search TheDiscomBill or jump to the bill calculator, state tariffs, comparison tool and guides.',
-    canonical: SITE + '/404.html', page: null, lang: 'en',
+    // A 404 is served at whatever path the visitor mistyped, so there is no honest
+    // canonical to point at — and self-canonicalising an error page while telling
+    // crawlers to ignore it is a contradiction. Emit neither; noindex does the work.
+    canonical: SITE + '/404.html', noCanonical: true,
+    robots: 'noindex, follow',
+    page: null, lang: 'en',
     body,
   });
 }
