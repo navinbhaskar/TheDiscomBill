@@ -176,6 +176,52 @@ console.log('\n• footer link parity');
   }
 }
 
+// ── 5. content.min.css is in step with styles.css and the pages it serves ─────
+// The 467 generated content pages link a slim sheet built from their own markup by
+// scripts/split-css.mjs. Two ways that rots silently, neither of which looks broken until
+// someone loads a page: a rule is added to styles.css and the slim sheet is never rebuilt,
+// or a page starts using a component whose rules were dropped. Both leave the site looking
+// fine on the pages you happen to check.
+//
+// Content-derived like the FPPA check above, not mtime-based: it rebuilds the sheet from
+// the current sources and asserts the file on disk is what that produces.
+console.log('\n• content.min.css matches its sources');
+{
+  const slim = path.join(ROOT, 'css', 'content.min.css');
+  if (!fs.existsSync(slim)) {
+    fail('css/content.min.css missing — run `npm run seo`');
+  } else {
+    const onDisk = fs.readFileSync(slim, 'utf8');
+    const { buildContentCss } = await import(pathToFileURL(path.join(ROOT, 'scripts', 'split-css.mjs')).href);
+
+    // buildContentCss writes as a side effect, so snapshot and restore: a test must not
+    // leave the tree different from how it found it.
+    const rebuilt = (() => {
+      const before = onDisk;
+      try { buildContentCss({ quiet: true }); return fs.readFileSync(slim, 'utf8'); }
+      finally { fs.writeFileSync(slim, before, 'utf8'); }
+    })();
+
+    if (rebuilt !== onDisk) {
+      fail(`css/content.min.css is stale (${onDisk.length} B on disk, ${rebuilt.length} B rebuilt) — run \`npm run seo\``);
+    } else {
+      // Every page must be on exactly one sheet. A page on neither loses all styling; a page
+      // on both downloads the slim sheet for nothing.
+      let bad = 0;
+      for (const page of htmlPages) {
+        const html = fs.readFileSync(path.join(ROOT, page), 'utf8');
+        const c = html.includes('css/content.min.css'), f = html.includes('css/styles.min.css');
+        if (c && f) { bad++; fail(`${page}: links both stylesheets`); }
+      }
+      if (!bad) {
+        passed++;
+        const pct = Math.round(100 - (onDisk.length / fs.statSync(path.join(ROOT, 'css', 'styles.min.css')).size) * 100);
+        console.log(`  ✓ rebuilt byte-for-byte; ${pct}% smaller than the full sheet`);
+      }
+    }
+  }
+}
+
 // ── summary ───────────────────────────────────────────────────────────────────
 console.log(`\n${failed ? '✗' : '✓'} site checks — ${passed} groups passed, ${failed} failures\n`);
 process.exit(failed ? 1 : 0);

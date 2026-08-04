@@ -50,12 +50,17 @@
   <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
-       display=swap shows fallback text immediately. Preload the weights that paint first. -->
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-600-latin.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
   <link rel="stylesheet" href="/fonts/fonts.css">
-  <link rel="stylesheet" href="/css/styles.min.css">
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
@@ -82,7 +87,7 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/ta/smart-meter-recharge/","name":"ஸ்மார்ட் மீட்டர் ரீசார்ஜ் — ஒவ்வொரு DISCOM-க்கும் வழிகாட்டி","description":"ப்ரீபெய்டு ஸ்மார்ட் மீட்டரை ஆன்லைனில் ரீசார்ஜ் செய்யும் DISCOM-வாரி வழிகாட்டி: அதிகாரப்பூர்வ போர்ட்டல்கள், UPI/BBPS, ரீசார்ஜுக்கான யூனிட்கள் மற்றும் குறைந்த-பேலன்ஸ் விதிகள் — அனைத்து மாநிலங்களுக்கும்.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN","dateModified":"2026-08-03"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/ta/smart-meter-recharge/","name":"ஸ்மார்ட் மீட்டர் ரீசார்ஜ் — ஒவ்வொரு DISCOM-க்கும் வழிகாட்டி","description":"ப்ரீபெய்டு ஸ்மார்ட் மீட்டரை ஆன்லைனில் ரீசார்ஜ் செய்யும் DISCOM-வாரி வழிகாட்டி: அதிகாரப்பூர்வ போர்ட்டல்கள், UPI/BBPS, ரீசார்ஜுக்கான யூனிட்கள் மற்றும் குறைந்த-பேலன்ஸ் விதிகள் — அனைத்து மாநிலங்களுக்கும்.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN","dateModified":"2026-08-04"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"முகப்பு","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"ஸ்மார்ட் மீட்டர் ரீசார்ஜ்","item":"https://thediscombill.com/ta/smart-meter-recharge/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ஸ்மார்ட் மீட்டர் ரீசார்ஜ் எப்படி வேலை செய்கிறது?","acceptedAnswer":{"@type":"Answer","text":"உங்கள் DISCOM-இன் அதிகாரப்பூர்வ போர்ட்டல்/ஆப் அல்லது BBPS-இயக்கப்பட்ட UPI ஆப்பில் (PhonePe, Google Pay, Paytm) நுகர்வோர்/மீட்டர் எண்ணை உள்ளிட்டு தொகையைத் தேர்ந்து செலுத்துங்கள். பேலன்ஸ் பொதுவாக சில நிமிடங்களில் புதுப்பிக்கப்படும். மேலே உங்கள் DISCOM-ஐத் தேர்ந்தெடுங்கள் — ஒவ்வொரு பக்கத்திலும் சரியான முறை உள்ளது."}},{"@type":"Question","name":"ப்ரீபெய்டு ஸ்மார்ட் மீட்டரில் பேலன்ஸ் தீர்ந்தால் மின்சாரம் உடனே துண்டிக்கப்படுமா?","acceptedAnswer":{"@type":"Answer","text":"எதிர்மறை பேலன்ஸில் இணைப்பு தானாகவே துண்டிக்கப்படலாம், ஆனால் பெரும்பாலான DISCOM-கள் இரவில், ஞாயிறு மற்றும் விடுமுறையில் துண்டிப்பதில்லை. ரீசார்ஜ் செய்தவுடன் இணைப்பு பொதுவாக தானாகவே மீட்டமைக்கப்படும்."}},{"@type":"Question","name":"ஸ்மார்ட் மீட்டர் சாதாரண மீட்டரை விட அதிக பில் போடுமா?","acceptedAnswer":{"@type":"Answer","text":"இல்லை — விகிதங்கள் கட்டண ஆணையின்படியே இருக்கும். ரீடிங் அதிகரிப்பதற்கான உண்மையான காரணங்களை (பழைய மீட்டர் குறைவாகப் பதிவு செய்தல், நிலுவை சரிசெய்தல் போன்றவை) எங்கள் <a href=\"/ta/guides/smart-meter-running-fast/\">வழிகாட்டியில்</a> பாருங்கள்."}}]}</script>
 </head>
@@ -147,238 +152,272 @@
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">AP</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">ஆந்திரப் பிரதேசம்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">ஆந்திரப் பிரதேசம்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/andhra-pradesh/apspdcl/">APSPDCL</a><a href="/smart-meter-recharge/andhra-pradesh/apepdcl/">APEPDCL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">AR</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">அருணாசலப் பிரதேசம்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">அருணாசலப் பிரதேசம்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/arunachal-pradesh/appdcl/">APPDCL / Dept. of Power</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">AS</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">அஸ்ஸாம்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">அஸ்ஸாம்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/assam/apdcl/">APDCL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">BR</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">பீகார்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">பீகார்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/bihar/nbpdcl/">NBPDCL</a><a href="/smart-meter-recharge/bihar/sbpdcl/">SBPDCL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">CH</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">சண்டிகர்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">சண்டிகர்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/chandigarh/chandigarh_ed/">CPDL (Chandigarh)</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">CG</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">சத்தீஸ்கர்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">சத்தீஸ்கர்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/chhattisgarh/cspdcl/">CSPDCL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">DD</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">Dadra &amp; Nagar Haveli and Daman &amp; Diu</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">Dadra &amp; Nagar Haveli and Daman &amp; Diu</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/">DNHPDCL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">DL</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">டெல்லி</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">டெல்லி</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/delhi/brpl/">BRPL (BSES Rajdhani)</a><a href="/smart-meter-recharge/delhi/bypl/">BYPL (BSES Yamuna)</a><a href="/smart-meter-recharge/delhi/tpddl/">Tata Power-DDL (TPDDL)</a><a href="/smart-meter-recharge/delhi/ndmc_delhi/">NDMC</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">GA</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">கோவா</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">கோவா</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/goa/ged/">Goa Electricity Dept.</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">GJ</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">குஜராத்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">குஜராத்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/gujarat/ugvcl/">UGVCL</a><a href="/smart-meter-recharge/gujarat/mgvcl/">MGVCL</a><a href="/smart-meter-recharge/gujarat/pgvcl/">PGVCL</a><a href="/smart-meter-recharge/gujarat/dgvcl/">DGVCL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">HR</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">ஹரியானா</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">ஹரியானா</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/haryana/dhbvn/">DHBVN</a><a href="/smart-meter-recharge/haryana/uhbvn/">UHBVN</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">HP</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">இமாசலப் பிரதேசம்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">இமாசலப் பிரதேசம்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/himachal-pradesh/hpsebl/">HPSEBL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">JK</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">Jammu &amp; Kashmir</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">Jammu &amp; Kashmir</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/jammu-and-kashmir/jkpdd_jammu/">JPDCL (Jammu Region)</a><a href="/smart-meter-recharge/jammu-and-kashmir/jkpdd_kashmir/">KPDCL (Kashmir Region)</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">JH</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">ஜார்க்கண்ட்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">ஜார்க்கண்ட்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/jharkhand/jbvnl/">JBVNL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">KA</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">கர்நாடகா</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">கர்நாடகா</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/karnataka/bescom/">BESCOM</a><a href="/smart-meter-recharge/karnataka/mescom/">MESCOM</a><a href="/smart-meter-recharge/karnataka/cesc_karnataka/">CESC Mysuru</a><a href="/smart-meter-recharge/karnataka/gescom/">GESCOM</a><a href="/smart-meter-recharge/karnataka/hescom/">HESCOM</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">KL</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">கேரளா</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">கேரளா</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/kerala/kseb/">KSEB</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">LA</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">லடாக்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">லடாக்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/ladakh/lpdcl/">LPDCL / Ladakh Power Dept.</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">MP</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">மத்தியப் பிரதேசம்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">மத்தியப் பிரதேசம்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/madhya-pradesh/mppkvvcl/">MPPKVVCL</a><a href="/smart-meter-recharge/madhya-pradesh/mpmkvvcl/">MPMKVVCL</a><a href="/smart-meter-recharge/madhya-pradesh/mpez/">MPEZ</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">MH</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">மகாராஷ்டிரா</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">மகாராஷ்டிரா</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/maharashtra/msedcl/">MSEDCL</a><a href="/smart-meter-recharge/maharashtra/adani_mumbai/">Adani Electricity Mumbai</a><a href="/smart-meter-recharge/maharashtra/best_mumbai/">BEST Mumbai</a><a href="/smart-meter-recharge/maharashtra/tata_power_mumbai/">Tata Power Mumbai</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">MN</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">மணிப்பூர்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">மணிப்பூர்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/manipur/mspdcl/">MSPDCL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">ML</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">மேகாலயா</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">மேகாலயா</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/meghalaya/mepdcl/">MePDCL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">MZ</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">மிசோரம்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">மிசோரம்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/mizoram/ped_mizoram/">P&amp;E Dept., Mizoram</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">NL</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">நாகாலாந்து</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">நாகாலாந்து</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/nagaland/doe_nagaland/">DoE Nagaland</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">OD</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">ஒடிசா</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">ஒடிசா</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/odisha/tpcodl/">TPCODL</a><a href="/smart-meter-recharge/odisha/tpnodl/">TPNODL</a><a href="/smart-meter-recharge/odisha/tpwodl/">TPWODL</a><a href="/smart-meter-recharge/odisha/tpsodl/">TPSODL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">PY</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">புதுச்சேரி</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">புதுச்சேரி</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/puducherry/pdicl/">PDICL / Electricity Dept.</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">PB</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">பஞ்சாப்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">பஞ்சாப்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/punjab/pspcl/">PSPCL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">RJ</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">ராஜஸ்தான்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">ராஜஸ்தான்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/rajasthan/jvvnl/">JVVNL</a><a href="/smart-meter-recharge/rajasthan/avvnl/">AVVNL</a><a href="/smart-meter-recharge/rajasthan/jdvvnl/">JdVVNL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">SK</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">சிக்கிம்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">சிக்கிம்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/sikkim/energy_sikkim/">Energy &amp; Power Dept., Sikkim</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">TN</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">தமிழ்நாடு</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">தமிழ்நாடு</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/ta/smart-meter-recharge/tamil-nadu/tangedco/">TNPDCL (TANGEDCO)</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">TS</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">தெலங்கானா</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">தெலங்கானா</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/telangana/tsspdcl/">TGSPDCL</a><a href="/smart-meter-recharge/telangana/tsnpdcl/">TGNPDCL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">TR</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">திரிபுரா</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">திரிபுரா</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/tripura/tsecl/">TSECL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">UP</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">உத்தரப் பிரதேசம்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">உத்தரப் பிரதேசம்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/uttar-pradesh/dvvnl/">DVVNL</a><a href="/smart-meter-recharge/uttar-pradesh/mvvnl/">MVVNL</a><a href="/smart-meter-recharge/uttar-pradesh/pvvnl/">PVVNL</a><a href="/smart-meter-recharge/uttar-pradesh/puvvnl/">PuVVNL</a><a href="/smart-meter-recharge/uttar-pradesh/kesco/">KESCO</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">UK</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">உத்தராகண்ட்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">உத்தராகண்ட்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/uttarakhand/upcl/">UPCL</a></div>
       </div>
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">WB</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">மேற்கு வங்காளம்</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">மேற்கு வங்காளம்</span></span>
         </div>
         <div class="seo-dir-discoms"><a href="/smart-meter-recharge/west-bengal/wbsedcl/">WBSEDCL</a><a href="/smart-meter-recharge/west-bengal/cesc_kolkata/">CESC (Kolkata)</a><a href="/smart-meter-recharge/west-bengal/dpl/">Erstwhile DPL area</a></div>
       </div></div>

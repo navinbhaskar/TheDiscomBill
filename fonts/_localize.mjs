@@ -15,23 +15,39 @@ const re = /\/\* ([a-z0-9-]+) \*\/\s*@font-face \{([^}]*)\}/g;
 const KEEP = new Set(['latin', 'latin-ext']);
 const get = (block, prop) => (block.match(new RegExp(prop + ':\\s*([^;]+);')) || [])[1]?.trim();
 
+// Google serves these families as VARIABLE fonts: `font-weight: 100 900` in the block, and
+// one file covering the whole axis. Naming the file after a single weight (as this script
+// once did) writes N @font-face rules pointing at N byte-identical copies, and a page using
+// five weights then downloads the same font five times. Key the file on family+subset only,
+// carry the weight RANGE through to the @font-face, and dedupe by URL.
 const jobs = [];
-let out = '/* Self-hosted subset of Inter / Sora / Space Grotesk (latin + latin-ext).\n' +
+const byUrl = new Map();
+let out = '/* Self-hosted Inter / Sora / Space Grotesk — variable weight axis, latin + the ₹ sign.\n' +
   '   Generated from Google Fonts by fonts/_localize.mjs — do not hand-edit. */\n';
 let m;
 while ((m = re.exec(css))) {
   const [, subset, block] = m;
   if (!KEEP.has(subset)) continue;
   const family = get(block, 'font-family').replace(/['"]/g, '');
-  const weight = get(block, 'font-weight');
+  const weight = get(block, 'font-weight');       // e.g. "100 900" for a variable axis
   const range = get(block, 'unicode-range');
   const url = (block.match(/url\(([^)]+)\)/) || [])[1];
   const slug = family.toLowerCase().replace(/\s+/g, '-');
-  const sub = subset === 'latin-ext' ? 'latinext' : 'latin';
-  const file = `${slug}-${weight}-${sub}.woff2`;
+  // latin-ext is kept only for ₹ (U+20B9), so it is named for what it is actually for.
+  const sub = subset === 'latin-ext' ? 'rupee' : 'latin';
+  const file = `${slug}-var-${sub}.woff2`;
+  if (byUrl.has(file)) {
+    if (byUrl.get(file) !== url) throw new Error(`two different URLs want ${file}`);
+    continue;                                     // same face already emitted
+  }
+  byUrl.set(file, url);
   jobs.push({ url, file });
   out += `@font-face{font-family:'${family}';font-style:normal;font-weight:${weight};` +
     `font-display:swap;src:url(/fonts/${file}) format('woff2');unicode-range:${range}}\n`;
+}
+if (!/font-weight:\d+ \d+;/.test(out)) {
+  console.warn('WARNING: no variable weight ranges found — gf.css may be a static-weight export,\n' +
+    '         which is what caused the duplicate-download bug. Check the Google Fonts URL.');
 }
 
 function download({ url, file }) {

@@ -1,7 +1,7 @@
 // sw.js — Service Worker (network-first, cache fallback)
 // CACHE is stamped automatically by generate-seo.js (stampServiceWorker) from a
 // content hash of the CORE assets below — do not hand-edit it; run `npm run seo`.
-const CACHE = 'discombill-20260804-407a71b2';
+const CACHE = 'discombill-20260804-559ed82f';
 
 const CORE = [
   './', './index.html', './compare/', './compare/index.html',
@@ -24,13 +24,13 @@ const CORE = [
   './recharge-calculator/', './recharge-calculator/index.html',
   './sanctioned-load-optimizer/', './sanctioned-load-optimizer/index.html',
   './solar-subsidy-checker/', './solar-subsidy-checker/index.html',
-  // Styles + self-hosted fonts. Only the @font-face manifest and the weights we
-  // preload are precached; the rest of the woff2 files are cached on demand by the
-  // fetch handler (unicode-range means most pages never request them).
+  // Styles + self-hosted fonts. The faces are variable, so one file per family covers
+  // every weight: precaching the two Latin faces plus the ₹ subset covers the whole UI.
+  // Sora (logo + hero heading) is cached on demand by the fetch handler.
   './css/styles.min.css',
   './fonts/fonts.css',
-  './fonts/inter-400-latin.woff2', './fonts/inter-600-latin.woff2',
-  './fonts/space-grotesk-700-latin.woff2', './fonts/inter-400-latinext.woff2',
+  './fonts/inter-var-latin.woff2', './fonts/space-grotesk-var-latin.woff2',
+  './fonts/inter-var-rupee.woff2',
   // Application JS
   './js/utils.js', './js/engine.js', './js/i18n.js',
   './js/ui.js', './js/datepicker.js', './js/renderer.js', './js/main.js', './js/compare.js',

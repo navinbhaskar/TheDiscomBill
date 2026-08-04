@@ -48,12 +48,17 @@
   <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
-       display=swap shows fallback text immediately. Preload the weights that paint first. -->
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-600-latin.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
   <link rel="stylesheet" href="/fonts/fonts.css">
-  <link rel="stylesheet" href="/css/styles.min.css">
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
@@ -80,7 +85,7 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/tariffs/west-bengal/","name":"पश्चिम बंगाल बिजली बिल कैलकुलेटर 2026","description":"पश्चिम बंगाल की 2025-26 स्लैब दरें देखें और 30 सेकंड में अपना सटीक बिजली बिल निकालें। 3 डिस्कॉम (WBSEDCL, CESC (Kolkata), Erstwhile DPL area) — फिक्स्ड चार्ज व FPPA सहित। घरेलू दर ₹2.5/यूनिट से। मुफ़्त, बिना साइन-अप।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-03"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/tariffs/west-bengal/","name":"पश्चिम बंगाल बिजली बिल कैलकुलेटर 2026","description":"पश्चिम बंगाल की 2025-26 स्लैब दरें देखें और 30 सेकंड में अपना सटीक बिजली बिल निकालें। 3 डिस्कॉम (WBSEDCL, CESC (Kolkata), Erstwhile DPL area) — फिक्स्ड चार्ज व FPPA सहित। घरेलू दर ₹2.5/यूनिट से। मुफ़्त, बिना साइन-अप।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-04"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"टैरिफ","item":"https://thediscombill.com/hi/tariffs/states/"},{"@type":"ListItem","position":3,"name":"पश्चिम बंगाल","item":"https://thediscombill.com/hi/tariffs/west-bengal/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"पश्चिम बंगाल में बिजली बिल कैसे निकाला जाता है?","acceptedAnswer":{"@type":"Answer","text":"पश्चिम बंगाल के बिल में स्लैब-वार ऊर्जा शुल्क, प्रति kW (या kVA) फिक्स्ड/डिमांड चार्ज, ईंधन व विद्युत क्रय समायोजन (FPPA) और बिजली शुल्क जुड़ते हैं। अपने डिस्कॉम का मदवार अनुमानित बिल पाने के लिए हमारा <a href=\"/#calculator\">मुफ़्त कैलकुलेटर</a> इस्तेमाल करें।"}},{"@type":"Question","name":"पश्चिम बंगाल में मेरे इलाक़े में कौन-सी बिजली वितरण कंपनी है?","acceptedAnswer":{"@type":"Answer","text":"पश्चिम बंगाल में 3 डिस्कॉम हैं: <strong>WBSEDCL</strong> (All of West Bengal outside the CESC and DPL licence areas); <strong>CESC (Kolkata)</strong> (Kolkata city, Howrah, Hooghly — parts); <strong>Erstwhile DPL area</strong> (Durgapur industrial and urban area — billed by WBSEDCL on the frozen erstwhile-DPL schedule)। पूरी टैरिफ और अनुमानित बिल के लिए ऊपर अपना डिस्कॉम खोलें।"}},{"@type":"Question","name":"पश्चिम बंगाल में सबसे सस्ती घरेलू बिजली दर क्या है?","acceptedAnswer":{"@type":"Answer","text":"पश्चिम बंगाल के डिस्कॉम में सबसे कम घरेलू ऊर्जा शुल्क लगभग ₹2.5 प्रति यूनिट (सबसे निचला स्लैब) से शुरू होता है — फिक्स्ड चार्ज, FPPA और शुल्क अलग। सटीक दरें आपके डिस्कॉम और खपत स्लैब पर निर्भर हैं।"}},{"@type":"Question","name":"पश्चिम बंगाल का वर्तमान बिजली टैरिफ वर्ष क्या है?","acceptedAnswer":{"@type":"Answer","text":"दिखाई गई दरें 2025-26 की हैं (नवीनतम उपलब्ध)।"}}]}</script>
 </head>

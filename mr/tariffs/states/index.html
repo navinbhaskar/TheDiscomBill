@@ -50,12 +50,17 @@
   <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
-       display=swap shows fallback text immediately. Preload the weights that paint first. -->
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-600-latin.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
   <link rel="stylesheet" href="/fonts/fonts.css">
-  <link rel="stylesheet" href="/css/styles.min.css">
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
@@ -82,7 +87,7 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/mr/tariffs/states/","name":"सर्व भारतीय वीज डिस्कॉम व राज्यनिहाय टॅरिफ","description":"प्रत्येक भारतीय राज्य आणि केंद्रशासित प्रदेशाचे वीज टॅरिफ व बिल कॅल्क्युलेटर पाहा. 65+ डिस्कॉम, स्लॅब-निहाय दर, फिक्स्ड चार्ज आणि FPPA — एकाच डिरेक्टरीमध्ये.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-03"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/mr/tariffs/states/","name":"सर्व भारतीय वीज डिस्कॉम व राज्यनिहाय टॅरिफ","description":"प्रत्येक भारतीय राज्य आणि केंद्रशासित प्रदेशाचे वीज टॅरिफ व बिल कॅल्क्युलेटर पाहा. 65+ डिस्कॉम, स्लॅब-निहाय दर, फिक्स्ड चार्ज आणि FPPA — एकाच डिरेक्टरीमध्ये.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-04"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"टॅरिफ डिरेक्टरी","item":"https://thediscombill.com/mr/tariffs/states/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"सर्व भारतीय वीज डिस्कॉम व राज्यनिहाय टॅरिफ","numberOfItems":34,"itemListElement":[{"@type":"ListItem","position":1,"name":"आंध्र प्रदेश","url":"https://thediscombill.com/tariffs/andhra-pradesh/"},{"@type":"ListItem","position":2,"name":"अरुणाचल प्रदेश","url":"https://thediscombill.com/tariffs/arunachal-pradesh/"},{"@type":"ListItem","position":3,"name":"आसाम","url":"https://thediscombill.com/tariffs/assam/"},{"@type":"ListItem","position":4,"name":"बिहार","url":"https://thediscombill.com/tariffs/bihar/"},{"@type":"ListItem","position":5,"name":"चंदीगड","url":"https://thediscombill.com/tariffs/chandigarh/"},{"@type":"ListItem","position":6,"name":"छत्तीसगड","url":"https://thediscombill.com/tariffs/chhattisgarh/"},{"@type":"ListItem","position":7,"name":"Dadra & Nagar Haveli and Daman & Diu","url":"https://thediscombill.com/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/"},{"@type":"ListItem","position":8,"name":"दिल्ली","url":"https://thediscombill.com/tariffs/delhi/"},{"@type":"ListItem","position":9,"name":"गोवा","url":"https://thediscombill.com/tariffs/goa/"},{"@type":"ListItem","position":10,"name":"गुजरात","url":"https://thediscombill.com/tariffs/gujarat/"},{"@type":"ListItem","position":11,"name":"हरियाणा","url":"https://thediscombill.com/tariffs/haryana/"},{"@type":"ListItem","position":12,"name":"हिमाचल प्रदेश","url":"https://thediscombill.com/tariffs/himachal-pradesh/"},{"@type":"ListItem","position":13,"name":"Jammu & Kashmir","url":"https://thediscombill.com/tariffs/jammu-and-kashmir/"},{"@type":"ListItem","position":14,"name":"झारखंड","url":"https://thediscombill.com/tariffs/jharkhand/"},{"@type":"ListItem","position":15,"name":"कर्नाटक","url":"https://thediscombill.com/tariffs/karnataka/"},{"@type":"ListItem","position":16,"name":"केरळ","url":"https://thediscombill.com/tariffs/kerala/"},{"@type":"ListItem","position":17,"name":"लडाख","url":"https://thediscombill.com/tariffs/ladakh/"},{"@type":"ListItem","position":18,"name":"मध्य प्रदेश","url":"https://thediscombill.com/tariffs/madhya-pradesh/"},{"@type":"ListItem","position":19,"name":"महाराष्ट्र","url":"https://thediscombill.com/mr/tariffs/maharashtra/"},{"@type":"ListItem","position":20,"name":"मणिपूर","url":"https://thediscombill.com/tariffs/manipur/"},{"@type":"ListItem","position":21,"name":"मेघालय","url":"https://thediscombill.com/tariffs/meghalaya/"},{"@type":"ListItem","position":22,"name":"मिझोराम","url":"https://thediscombill.com/tariffs/mizoram/"},{"@type":"ListItem","position":23,"name":"नागालँड","url":"https://thediscombill.com/tariffs/nagaland/"},{"@type":"ListItem","position":24,"name":"ओडिशा","url":"https://thediscombill.com/tariffs/odisha/"},{"@type":"ListItem","position":25,"name":"पुद्दुचेरी","url":"https://thediscombill.com/tariffs/puducherry/"},{"@type":"ListItem","position":26,"name":"पंजाब","url":"https://thediscombill.com/tariffs/punjab/"},{"@type":"ListItem","position":27,"name":"राजस्थान","url":"https://thediscombill.com/tariffs/rajasthan/"},{"@type":"ListItem","position":28,"name":"सिक्कीम","url":"https://thediscombill.com/tariffs/sikkim/"},{"@type":"ListItem","position":29,"name":"तमिळनाडू","url":"https://thediscombill.com/tariffs/tamil-nadu/"},{"@type":"ListItem","position":30,"name":"तेलंगणा","url":"https://thediscombill.com/tariffs/telangana/"},{"@type":"ListItem","position":31,"name":"त्रिपुरा","url":"https://thediscombill.com/tariffs/tripura/"},{"@type":"ListItem","position":32,"name":"उत्तर प्रदेश","url":"https://thediscombill.com/tariffs/uttar-pradesh/"},{"@type":"ListItem","position":33,"name":"उत्तराखंड","url":"https://thediscombill.com/tariffs/uttarakhand/"},{"@type":"ListItem","position":34,"name":"पश्चिम बंगाल","url":"https://thediscombill.com/tariffs/west-bengal/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"डिस्कॉम (DISCOM) म्हणजे काय?","acceptedAnswer":{"@type":"Answer","text":"डिस्कॉम म्हणजे Distribution Company — जी कंपनी तुमच्या भागात वीज पुरवते आणि बिल देते. टॅरिफ राज्याचा वीज नियामक आयोग (SERC) ठरवतो, डिस्कॉम नाही."}},{"@type":"Question","name":"भारतात घरगुती वीज सर्वात स्वस्त कुठे आहे?","acceptedAnswer":{"@type":"Answer","text":"आमच्या टॅरिफ डेटामध्ये सर्वात कमी घरगुती स्लॅब दर लडाख मध्ये ₹0.5/युनिट पासून सुरू होते, तर सर्वात जास्त स्लॅब दर बिहार सारख्या राज्यांत ₹7.42/युनिट पर्यंत जातात. प्रत्यक्ष बिल फिक्स्ड चार्ज, FPPA आणि शुल्कावरही अवलंबून असते."}},{"@type":"Question","name":"माझा डिस्कॉम कोणता, कसे कळेल?","acceptedAnswer":{"@type":"Answer","text":"तुमच्या वीज बिलाचा वरचा भाग पाहा — कंपनीचे नाव/लोगो तिथेच छापलेले असते. किंवा वरील डिरेक्टरीत तुमचे राज्य उघडा: प्रत्येक डिस्कॉमसोबत त्याचे सेवा क्षेत्र लिहिलेले आहे."}},{"@type":"Question","name":"एकाच राज्यात वेगवेगळ्या डिस्कॉमचे दर वेगळे असतात का?","acceptedAnswer":{"@type":"Answer","text":"कुठे हो, कुठे नाही. अनेक राज्यांत (जसे यूपी) नियामक एकच राज्यव्यापी अनुसूची सर्व डिस्कॉमवर लागू करतो; दिल्ली, महाराष्ट्र, ओडिशासारख्या राज्यांत प्रत्येक डिस्कॉमचे स्वतःचे दर असतात. प्रत्येक डिस्कॉम पेजवर हे स्पष्ट लिहिलेले आहे."}}]}</script>
@@ -163,8 +168,12 @@
       <div class="seo-dir-state" data-search="delhi दिल्ली दिल्ली டெல்லி brpl (bses rajdhani) bypl (bses yamuna) tata power-ddl (tpddl) ndmc">
         <a class="seo-dir-state-head" href="/tariffs/delhi/">
           <span class="seo-dir-badge" aria-hidden="true">DL</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">दिल्ली<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">दिल्ली<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">4 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹3–₹8/युनिट</span></span>
           </span>
         </a>
@@ -173,8 +182,12 @@
       <div class="seo-dir-state" data-search="haryana हरियाणा हरियाणा ஹரியானா dhbvn uhbvn">
         <a class="seo-dir-state-head" href="/tariffs/haryana/">
           <span class="seo-dir-badge" aria-hidden="true">HR</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">हरियाणा<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">हरियाणा<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">2 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹2.2–₹7.5/युनिट</span></span>
           </span>
         </a>
@@ -183,8 +196,12 @@
       <div class="seo-dir-state" data-search="himachal pradesh हिमाचल प्रदेश हिमाचल प्रदेश இமாசலப் பிரதேசம் hpsebl">
         <a class="seo-dir-state-head" href="/tariffs/himachal-pradesh/">
           <span class="seo-dir-badge" aria-hidden="true">HP</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">हिमाचल प्रदेश<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">हिमाचल प्रदेश<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹4.71–₹5.89/युनिट</span></span>
           </span>
         </a>
@@ -193,8 +210,12 @@
       <div class="seo-dir-state" data-search="jammu &amp; kashmir jammu &amp; kashmir jammu &amp; kashmir jammu &amp; kashmir jpdcl (jammu region) kpdcl (kashmir region)">
         <a class="seo-dir-state-head" href="/tariffs/jammu-and-kashmir/">
           <span class="seo-dir-badge" aria-hidden="true">JK</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">Jammu &amp; Kashmir<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">Jammu &amp; Kashmir<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">2 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹1.4–₹4.35/युनिट</span></span>
           </span>
         </a>
@@ -203,8 +224,12 @@
       <div class="seo-dir-state" data-search="ladakh लद्दाख लडाख லடாக் lpdcl / ladakh power dept.">
         <a class="seo-dir-state-head" href="/tariffs/ladakh/">
           <span class="seo-dir-badge" aria-hidden="true">LA</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">लडाख<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">लडाख<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹0.5–₹2.5/युनिट</span></span>
           </span>
         </a>
@@ -213,8 +238,12 @@
       <div class="seo-dir-state" data-search="punjab पंजाब पंजाब பஞ்சாப் pspcl">
         <a class="seo-dir-state-head" href="/tariffs/punjab/">
           <span class="seo-dir-badge" aria-hidden="true">PB</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">पंजाब<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">पंजाब<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹3.85–₹7.05/युनिट</span></span>
           </span>
         </a>
@@ -223,8 +252,12 @@
       <div class="seo-dir-state" data-search="chandigarh चंडीगढ़ चंदीगड சண்டிகர் cpdl (chandigarh)">
         <a class="seo-dir-state-head" href="/tariffs/chandigarh/">
           <span class="seo-dir-badge" aria-hidden="true">CH</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">चंदीगड<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">चंदीगड<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹2.9–₹5.45/युनिट</span></span>
           </span>
         </a>
@@ -233,8 +266,12 @@
       <div class="seo-dir-state" data-search="rajasthan राजस्थान राजस्थान ராஜஸ்தான் jvvnl avvnl jdvvnl">
         <a class="seo-dir-state-head" href="/tariffs/rajasthan/">
           <span class="seo-dir-badge" aria-hidden="true">RJ</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">राजस्थान<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">राजस्थान<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">3 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹4.75–₹7.5/युनिट</span></span>
           </span>
         </a>
@@ -243,8 +280,12 @@
       <div class="seo-dir-state" data-search="uttar pradesh उत्तर प्रदेश उत्तर प्रदेश உத்தரப் பிரதேசம் dvvnl mvvnl pvvnl puvvnl kesco">
         <a class="seo-dir-state-head" href="/tariffs/uttar-pradesh/">
           <span class="seo-dir-badge" aria-hidden="true">UP</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">उत्तर प्रदेश<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">उत्तर प्रदेश<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">5 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹2.75–₹6.5/युनिट</span><span class="seo-dir-verified" title="Verified against real bills">✓</span></span>
           </span>
         </a>
@@ -253,8 +294,12 @@
       <div class="seo-dir-state" data-search="uttarakhand उत्तराखंड उत्तराखंड உத்தராகண்ட் upcl">
         <a class="seo-dir-state-head" href="/tariffs/uttarakhand/">
           <span class="seo-dir-badge" aria-hidden="true">UK</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">उत्तराखंड<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">उत्तराखंड<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹1.85–₹7.8/युनिट</span></span>
           </span>
         </a>
@@ -267,8 +312,12 @@
       <div class="seo-dir-state" data-search="andhra pradesh आंध्र प्रदेश आंध्र प्रदेश ஆந்திரப் பிரதேசம் apspdcl apepdcl">
         <a class="seo-dir-state-head" href="/tariffs/andhra-pradesh/">
           <span class="seo-dir-badge" aria-hidden="true">AP</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">आंध्र प्रदेश<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">आंध्र प्रदेश<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">2 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹1.9–₹9.75/युनिट</span></span>
           </span>
         </a>
@@ -277,8 +326,12 @@
       <div class="seo-dir-state" data-search="karnataka कर्नाटक कर्नाटक கர்நாடகா bescom mescom cesc mysuru gescom hescom">
         <a class="seo-dir-state-head" href="/tariffs/karnataka/">
           <span class="seo-dir-badge" aria-hidden="true">KA</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">कर्नाटक<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">कर्नाटक<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">5 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹5.8–₹5.8/युनिट</span></span>
           </span>
         </a>
@@ -287,8 +340,12 @@
       <div class="seo-dir-state" data-search="kerala केरल केरळ கேரளா kseb">
         <a class="seo-dir-state-head" href="/tariffs/kerala/">
           <span class="seo-dir-badge" aria-hidden="true">KL</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">केरळ<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">केरळ<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹1.5–₹8.5/युनिट</span></span>
           </span>
         </a>
@@ -297,8 +354,12 @@
       <div class="seo-dir-state" data-search="puducherry पुदुचेरी पुद्दुचेरी புதுச்சேரி pdicl / electricity dept.">
         <a class="seo-dir-state-head" href="/tariffs/puducherry/">
           <span class="seo-dir-badge" aria-hidden="true">PY</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">पुद्दुचेरी<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">पुद्दुचेरी<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹2.65–₹7.95/युनिट</span></span>
           </span>
         </a>
@@ -307,8 +368,12 @@
       <div class="seo-dir-state" data-search="tamil nadu तमिलनाडु तमिळनाडू தமிழ்நாடு tnpdcl (tangedco)">
         <a class="seo-dir-state-head" href="/tariffs/tamil-nadu/">
           <span class="seo-dir-badge" aria-hidden="true">TN</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">तमिळनाडू<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">तमिळनाडू<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹4.95–₹12.15/युनिट</span></span>
           </span>
         </a>
@@ -317,8 +382,12 @@
       <div class="seo-dir-state" data-search="telangana तेलंगाना तेलंगणा தெலங்கானா tgspdcl tgnpdcl">
         <a class="seo-dir-state-head" href="/tariffs/telangana/">
           <span class="seo-dir-badge" aria-hidden="true">TS</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">तेलंगणा<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">तेलंगणा<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">2 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹5.1–₹10/युनिट</span></span>
           </span>
         </a>
@@ -331,8 +400,12 @@
       <div class="seo-dir-state" data-search="dadra &amp; nagar haveli and daman &amp; diu dadra &amp; nagar haveli and daman &amp; diu dadra &amp; nagar haveli and daman &amp; diu dadra &amp; nagar haveli and daman &amp; diu dnhpdcl">
         <a class="seo-dir-state-head" href="/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/">
           <span class="seo-dir-badge" aria-hidden="true">DD</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">Dadra &amp; Nagar Haveli and Daman &amp; Diu<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">Dadra &amp; Nagar Haveli and Daman &amp; Diu<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹1.5–₹4.5/युनिट</span></span>
           </span>
         </a>
@@ -341,8 +414,12 @@
       <div class="seo-dir-state" data-search="goa गोवा गोवा கோவா goa electricity dept.">
         <a class="seo-dir-state-head" href="/tariffs/goa/">
           <span class="seo-dir-badge" aria-hidden="true">GA</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">गोवा<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">गोवा<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹1.5–₹6.7/युनिट</span></span>
           </span>
         </a>
@@ -351,8 +428,12 @@
       <div class="seo-dir-state" data-search="gujarat गुजरात गुजरात குஜராத் ugvcl mgvcl pgvcl dgvcl">
         <a class="seo-dir-state-head" href="/tariffs/gujarat/">
           <span class="seo-dir-badge" aria-hidden="true">GJ</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">गुजरात<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">गुजरात<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">4 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹2.65–₹5.2/युनिट</span></span>
           </span>
         </a>
@@ -361,8 +442,12 @@
       <div class="seo-dir-state" data-search="maharashtra महाराष्ट्र महाराष्ट्र மகாராஷ்டிரா msedcl adani electricity mumbai best mumbai tata power mumbai">
         <a class="seo-dir-state-head" href="/mr/tariffs/maharashtra/">
           <span class="seo-dir-badge" aria-hidden="true">MH</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">महाराष्ट्र<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">महाराष्ट्र<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">4 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹1.9–₹13.97/युनिट</span></span>
           </span>
         </a>
@@ -375,8 +460,12 @@
       <div class="seo-dir-state" data-search="chhattisgarh छत्तीसगढ़ छत्तीसगड சத்தீஸ்கர் cspdcl">
         <a class="seo-dir-state-head" href="/tariffs/chhattisgarh/">
           <span class="seo-dir-badge" aria-hidden="true">CG</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">छत्तीसगड<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">छत्तीसगड<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹4.4–₹8.8/युनिट</span></span>
           </span>
         </a>
@@ -385,8 +474,12 @@
       <div class="seo-dir-state" data-search="madhya pradesh मध्य प्रदेश मध्य प्रदेश மத்தியப் பிரதேசம் mppkvvcl mpmkvvcl mpez">
         <a class="seo-dir-state-head" href="/tariffs/madhya-pradesh/">
           <span class="seo-dir-badge" aria-hidden="true">MP</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">मध्य प्रदेश<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">मध्य प्रदेश<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">3 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹3.72–₹7.24/युनिट</span></span>
           </span>
         </a>
@@ -399,8 +492,12 @@
       <div class="seo-dir-state" data-search="bihar बिहार बिहार பீகார் nbpdcl sbpdcl">
         <a class="seo-dir-state-head" href="/tariffs/bihar/">
           <span class="seo-dir-badge" aria-hidden="true">BR</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">बिहार<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">बिहार<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">2 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹7.42–₹7.42/युनिट</span></span>
           </span>
         </a>
@@ -409,8 +506,12 @@
       <div class="seo-dir-state" data-search="jharkhand झारखंड झारखंड ஜார்க்கண்ட் jbvnl">
         <a class="seo-dir-state-head" href="/tariffs/jharkhand/">
           <span class="seo-dir-badge" aria-hidden="true">JH</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">झारखंड<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">झारखंड<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹7.2–₹7.4/युनिट</span></span>
           </span>
         </a>
@@ -419,8 +520,12 @@
       <div class="seo-dir-state" data-search="odisha ओडिशा ओडिशा ஒடிசா tpcodl tpnodl tpwodl tpsodl">
         <a class="seo-dir-state-head" href="/tariffs/odisha/">
           <span class="seo-dir-badge" aria-hidden="true">OD</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">ओडिशा<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">ओडिशा<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">4 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹2.9–₹6.1/युनिट</span></span>
           </span>
         </a>
@@ -429,8 +534,12 @@
       <div class="seo-dir-state" data-search="sikkim सिक्किम सिक्कीम சிக்கிம் energy &amp; power dept., sikkim">
         <a class="seo-dir-state-head" href="/tariffs/sikkim/">
           <span class="seo-dir-badge" aria-hidden="true">SK</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">सिक्कीम<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">सिक्कीम<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹1.6–₹4.6/युनिट</span></span>
           </span>
         </a>
@@ -439,8 +548,12 @@
       <div class="seo-dir-state" data-search="west bengal पश्चिम बंगाल पश्चिम बंगाल மேற்கு வங்காளம் wbsedcl cesc (kolkata) erstwhile dpl area">
         <a class="seo-dir-state-head" href="/tariffs/west-bengal/">
           <span class="seo-dir-badge" aria-hidden="true">WB</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">पश्चिम बंगाल<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">पश्चिम बंगाल<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">3 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹2.5–₹9.22/युनिट</span></span>
           </span>
         </a>
@@ -453,8 +566,12 @@
       <div class="seo-dir-state" data-search="arunachal pradesh अरुणाचल प्रदेश अरुणाचल प्रदेश அருணாசலப் பிரதேசம் appdcl / dept. of power">
         <a class="seo-dir-state-head" href="/tariffs/arunachal-pradesh/">
           <span class="seo-dir-badge" aria-hidden="true">AR</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">अरुणाचल प्रदेश<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">अरुणाचल प्रदेश<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹2–₹5/युनिट</span></span>
           </span>
         </a>
@@ -463,8 +580,12 @@
       <div class="seo-dir-state" data-search="assam असम आसाम அஸ்ஸாம் apdcl">
         <a class="seo-dir-state-head" href="/tariffs/assam/">
           <span class="seo-dir-badge" aria-hidden="true">AS</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">आसाम<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">आसाम<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹3.35–₹8.19/युनिट</span></span>
           </span>
         </a>
@@ -473,8 +594,12 @@
       <div class="seo-dir-state" data-search="manipur मणिपुर मणिपूर மணிப்பூர் mspdcl">
         <a class="seo-dir-state-head" href="/tariffs/manipur/">
           <span class="seo-dir-badge" aria-hidden="true">MN</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">मणिपूर<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">मणिपूर<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹2.35–₹5.95/युनिट</span></span>
           </span>
         </a>
@@ -483,8 +608,12 @@
       <div class="seo-dir-state" data-search="meghalaya मेघालय मेघालय மேகாலயா mepdcl">
         <a class="seo-dir-state-head" href="/tariffs/meghalaya/">
           <span class="seo-dir-badge" aria-hidden="true">ML</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">मेघालय<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">मेघालय<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹4.57–₹5.1/युनिट</span></span>
           </span>
         </a>
@@ -493,8 +622,12 @@
       <div class="seo-dir-state" data-search="mizoram मिज़ोरम मिझोराम மிசோரம் p&amp;e dept., mizoram">
         <a class="seo-dir-state-head" href="/tariffs/mizoram/">
           <span class="seo-dir-badge" aria-hidden="true">MZ</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">मिझोराम<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">मिझोराम<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹2.5–₹6/युनिट</span></span>
           </span>
         </a>
@@ -503,8 +636,12 @@
       <div class="seo-dir-state" data-search="nagaland नागालैंड नागालँड நாகாலாந்து doe nagaland">
         <a class="seo-dir-state-head" href="/tariffs/nagaland/">
           <span class="seo-dir-badge" aria-hidden="true">NL</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">नागालँड<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">नागालँड<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹2.5–₹6/युनिट</span></span>
           </span>
         </a>
@@ -513,8 +650,12 @@
       <div class="seo-dir-state" data-search="tripura त्रिपुरा त्रिपुरा திரிபுரா tsecl">
         <a class="seo-dir-state-head" href="/tariffs/tripura/">
           <span class="seo-dir-badge" aria-hidden="true">TR</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">त्रिपुरा<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">त्रिपुरा<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">1 डिस्कॉम · <span class="seo-dir-rate">घरगुती ₹2.31–₹8.52/युनिट</span></span>
           </span>
         </a>

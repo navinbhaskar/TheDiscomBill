@@ -2869,7 +2869,12 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
   padding: 22px 22px 24px;
 }
 .cc-head { text-align: center; margin-bottom: 18px; }
-.cc-head h3 { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--text-primary); margin: 0 0 6px; }
+/* Scoped past `.comparison-section h1, .comparison-section h2` (0,1,1), which is the centered
+   23px page-title treatment plus a spark divider. This is the head-to-head tool's own heading —
+   an h2 for outline reasons, left-aligned and its own size. Same story for the note cards below. */
+.comparison-section .cc-head h2 { font-family: var(--font-display); font-size: 18px; font-weight: 700;
+  color: var(--text-primary); margin: 0 0 6px; text-align: left; }
+.comparison-section .cc-head h2::after { content: none; }
 .cc-head p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.55; margin: 0 auto; max-width: 560px; }
 .cc-form { display: flex; flex-direction: column; gap: 14px; }
 .cc-pickers { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 12px; }
@@ -3115,13 +3120,19 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
   padding: 16px 18px;
   text-align: left;
 }
-.comparison-note-card h3 {
+/* h2 rather than h3: these three note cards are peer sections under the page H1, and an
+   h3 here skipped a level. The size is deliberately small — heading level is document
+   structure, not type scale. Scoped past `.comparison-section h2` for the same reason as
+   .cc-head h2 above: otherwise these inherit the centered page title and its spark divider. */
+.comparison-section .comparison-note-card h2 {
+  text-align: left;
   margin: 0 0 8px;
   font-size: 13px;
   font-weight: 600;
   color: var(--text-primary);
   letter-spacing: -0.2px;
 }
+.comparison-section .comparison-note-card h2::after { content: none; }
 .comparison-note-card p {
   margin: 0;
   max-width: none;
@@ -4019,7 +4030,13 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 /* New Connection: info grid (process steps + documents) */
 .svc-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
 .svc-info-card { background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 18px; box-shadow: var(--shadow-sm); }
-.svc-info-title { font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 0 0 14px; }
+/* This is a card heading, and it is an h2 so the document outline doesn't skip a level under
+   the page H1 — but `.svc-section h1, .svc-section h2` above is the centered 23px portal-title
+   treatment, complete with a spark divider, and at (0,1,1) it outranks a bare class. Scoping
+   to (0,2,0) hands the card back its own styling. */
+.svc-section .svc-info-title { font-size: 14px; font-weight: 700; font-family: var(--font-body); text-align: left; }
+.svc-section .svc-info-title::after { content: none; }
+.svc-info-title { color: var(--text-primary); margin: 0 0 14px; }
 .svc-steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
 .svc-steps li { display: flex; gap: 11px; margin-bottom: 13px; }
 .svc-steps li:last-child { margin-bottom: 0; }

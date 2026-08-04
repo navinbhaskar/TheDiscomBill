@@ -9,12 +9,12 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [Bill Calculator](https://thediscombill.com/): instant provisional electricity bill for any Indian DISCOM with a full slab-wise breakdown
 - [Tariff Comparison](https://thediscombill.com/compare/): major DISCOMs compared at 200/400/600/1000 units for domestic and commercial
 - [Electricity Cost Calculator](https://thediscombill.com/electricity-cost-calculator/): estimate monthly kWh and cost from household appliances
-- [Rooftop Solar Savings](https://thediscombill.com/solar/): system sizing, payback and net-metering savings
-- [EV Charging Cost Calculator](https://thediscombill.com/ev/): cost per charge, per km and monthly charging bill for any EV, with petrol comparison
-- [Bill Check](https://thediscombill.com/bill-check/): direct links to every DISCOM's official view/pay-bill portal
+- [Rooftop Solar Savings](https://thediscombill.com/solar-calculator/): system sizing, payback and net-metering savings
+- [EV Charging Cost Calculator](https://thediscombill.com/ev-charging-calculator/): cost per charge, per km and monthly charging bill for any EV, with petrol comparison
+- [Bill Check](https://thediscombill.com/services/#pay): direct links to every DISCOM's official view/pay-bill portal
 - [Bill Review by Experts](https://thediscombill.com/bill-review/): upload a bill and have a human expert review it (free account)
 - [New Connection](https://thediscombill.com/services/#new-connection): charges, documents and process per DISCOM
-- [Complaint](https://thediscombill.com/complaint/): DISCOM complaint portals and the 1912 national helpline
+- [Complaint](https://thediscombill.com/services/#complaint): DISCOM complaint portals and the 1912 national helpline
 - [Smart Meter Recharge](https://thediscombill.com/smart-meter-recharge/): per-DISCOM guides to recharging a prepaid smart meter online, with units-per-recharge estimates from real tariff rates
 - [Smart Meter Recharge Calculator](https://thediscombill.com/recharge-calculator/): how many days a ₹200–₹2000 prepaid recharge lasts on any DISCOM — daily burn rate and ideal monthly recharge from real tariff rates
 - [Check My Bill](https://thediscombill.com/check-my-bill/): upload a bill photo or PDF, correct what OCR read, and recompute it against the published DISCOM tariff — shows the gap against the printed total and ranks the usual causes

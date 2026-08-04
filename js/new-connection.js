@@ -46,11 +46,11 @@ function renderResult(box, state, discom) {
 
     <div class="svc-info-grid">
       <div class="svc-info-card">
-        <h3 class="svc-info-title">How the process works</h3>
+        <h2 class="svc-info-title">How the process works</h2>
         <ol class="svc-steps">${steps}</ol>
       </div>
       <div class="svc-info-card">
-        <h3 class="svc-info-title">Documents you'll need</h3>
+        <h2 class="svc-info-title">Documents you'll need</h2>
         <ul class="svc-docs">${docs}</ul>
         <p class="svc-charge-note">💡 Charges (security deposit, processing fee, meter cost) vary by load,
         category and state. See indicative <a href="/tariffs/">fixed charges &amp; tariffs</a>; the exact

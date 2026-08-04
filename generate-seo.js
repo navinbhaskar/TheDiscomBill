@@ -18,6 +18,7 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import { fileURLToPath } from 'url';
+import { buildContentCss } from './scripts/split-css.mjs';
 import { execSync } from 'child_process';
 
 import { TARIFF_DB, STATE_META, getStates, getDiscoms, tariffAge } from './js/tariffs/registry.js';
@@ -470,12 +471,17 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
   <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
-       display=swap shows fallback text immediately. Preload the weights that paint first. -->
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-600-latin.woff2">
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
   <link rel="stylesheet" href="/fonts/fonts.css">
-  <link rel="stylesheet" href="/css/styles.min.css">
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
@@ -1737,8 +1743,12 @@ function directoryPage(states, lang = 'en') {
       <div class="seo-dir-state" data-search="${esc(searchBlob)}">
         <a class="seo-dir-state-head" href="${b}${stateSlug}/">
           <span class="seo-dir-badge" aria-hidden="true">${esc(stateCode(state))}</span>
+          <!-- The state name is a span, not a heading. 35 state names in a directory grid are
+               link labels, not 35 document sections — as an h3 they skipped a level under the
+               page H1 and, sitting inside this span, were invalid nesting the parser had to
+               repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
-            <h3 class="seo-dir-state-name">${esc(displayName)}<span class="seo-dir-arrow" aria-hidden="true">→</span></h3>
+            <span class="seo-dir-state-name">${esc(displayName)}<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
             <span class="seo-dir-count">${nDiscoms}${statLine}</span>
           </span>
         </a>
@@ -2948,7 +2958,8 @@ function smartMeterHubPage(states, lang = 'en') {
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">${esc(stateCode(state))}</span>
-          <span class="seo-dir-state-meta"><h3 class="seo-dir-state-name">${esc(stateName(state, lang))}</h3></span>
+          <!-- span, not a heading — same reasoning as the tariff state directory above. -->
+          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">${esc(stateName(state, lang))}</span></span>
         </div>
         <div class="seo-dir-discoms">${links}</div>
       </div>`;
@@ -3142,12 +3153,12 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [Bill Calculator](${SITE}/): instant provisional electricity bill for any Indian DISCOM with a full slab-wise breakdown
 - [Tariff Comparison](${SITE}/compare/): major DISCOMs compared at 200/400/600/1000 units for domestic and commercial
 - [Electricity Cost Calculator](${SITE}/electricity-cost-calculator/): estimate monthly kWh and cost from household appliances
-- [Rooftop Solar Savings](${SITE}/solar/): system sizing, payback and net-metering savings
-- [EV Charging Cost Calculator](${SITE}/ev/): cost per charge, per km and monthly charging bill for any EV, with petrol comparison
-- [Bill Check](${SITE}/bill-check/): direct links to every DISCOM's official view/pay-bill portal
+- [Rooftop Solar Savings](${SITE}/solar-calculator/): system sizing, payback and net-metering savings
+- [EV Charging Cost Calculator](${SITE}/ev-charging-calculator/): cost per charge, per km and monthly charging bill for any EV, with petrol comparison
+- [Bill Check](${SITE}/services/#pay): direct links to every DISCOM's official view/pay-bill portal
 - [Bill Review by Experts](${SITE}/bill-review/): upload a bill and have a human expert review it (free account)
 - [New Connection](${SITE}/services/#new-connection): charges, documents and process per DISCOM
-- [Complaint](${SITE}/complaint/): DISCOM complaint portals and the 1912 national helpline
+- [Complaint](${SITE}/services/#complaint): DISCOM complaint portals and the 1912 national helpline
 - [Smart Meter Recharge](${SITE}/smart-meter-recharge/): per-DISCOM guides to recharging a prepaid smart meter online, with units-per-recharge estimates from real tariff rates
 - [Smart Meter Recharge Calculator](${SITE}/recharge-calculator/): how many days a ₹200–₹2000 prepaid recharge lasts on any DISCOM — daily burn rate and ideal monthly recharge from real tariff rates
 - [Check My Bill](${SITE}/check-my-bill/): upload a bill photo or PDF, correct what OCR read, and recompute it against the published DISCOM tariff — shows the gap against the printed total and ranks the usual causes
@@ -3383,9 +3394,11 @@ export function generateSeo() {
   fs.writeFileSync(path.join(ROOT, '404.html'), notFoundPage(), 'utf8');
   const searchEntries = writeSearchIndex(states);
   const cssKb = writeMinifiedCss();
+  // Must run after the pages are on disk: it reads their markup to decide what to keep.
+  const content = buildContentCss({ quiet: true });
   const sw = stampServiceWorker();
 
-  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + sw ${sw.version} (${sw.hashed} assets)`);
+  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + content.min.css (${(content.bytes/1024).toFixed(0)} KB) + sw ${sw.version} (${sw.hashed} assets)`);
   return { pages, states: states.length };
 }
 
