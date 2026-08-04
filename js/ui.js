@@ -5,6 +5,7 @@ import {
   getDefaultCategory, getDefaultSupplyType,
   findDiscom, getEffectiveTariff,
   findStateMetaByDiscom, resolveDatedTariff, fyStart,
+  ensureState,
 } from './tariffs/registry.js';
 import { resolveFppaForDiscom } from './tariffs/fppa-resolve.js';
 import { DOMESTIC_SUBSIDY } from './tariffs/subsidy.js';
@@ -1577,6 +1578,7 @@ function awaitOption(selectId, value, timeout = 2000) {
 // dependent dropdowns the same way a shared link does.
 export async function loadSample() {
   const stateEl = document.getElementById('stateSelect');
+  await ensureState('Uttar Pradesh').catch(() => {});
   stateEl.value = 'Uttar Pradesh';
   stateEl.dispatchEvent(new Event('change'));
   try {
@@ -1818,6 +1820,11 @@ export async function loadFromUrl(paramsSource) {
   if (!p.get('state')) return;
 
   const stateEl = document.getElementById('stateSelect');
+  // Load the state's tariff tables before dispatching. The change handler awaits this too,
+  // but doing it here makes the DISCOM options deterministically present for awaitOption
+  // below rather than leaving it to race its 2-second MutationObserver timeout on a slow
+  // connection — a share link that silently half-fills is worse than one that takes longer.
+  await ensureState(p.get('state')).catch(() => {});
   stateEl.value = p.get('state');
   stateEl.dispatchEvent(new Event('change'));
 

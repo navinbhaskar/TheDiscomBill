@@ -7,7 +7,12 @@
 // files; if a rate genuinely changes, update the expectation here in the same commit.
 
 import { calculateBill, calculateEnergySlabs, resolveFixedCharge } from '../js/engine.js';
-import { getCategory } from '../js/tariffs/registry.js';
+import { getCategory, ensureAll } from '../js/tariffs/registry.js';
+
+// The registry loads state tariff tables on demand now, so the whole corpus has to be pulled
+// in before any of these assertions run. Node evaluates this top-level await before the rest
+// of the module body, which is exactly the ordering the tests need.
+await ensureAll();
 
 let passed = 0, failed = 0;
 const fmt = n => (typeof n === 'number' ? n.toFixed(2) : String(n));

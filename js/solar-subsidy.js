@@ -5,7 +5,7 @@
 // real marginal rate, net cost after subsidy and a rough payback. Deep-links to the full
 // /solar-calculator/ for detailed net-metering maths.
 
-import { getStates, getDiscoms } from './tariffs/registry.js';
+import { getStates, getDiscoms, ensureState } from './tariffs/registry.js';
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -135,7 +135,11 @@ function render() {
     </div>`;
 }
 
-function populateDiscoms(preselect) {
+// render() below reads discom.categories, so the state's tariff tables have to be in
+// memory first. The registry serves DISCOM names from its index without this await;
+// only the rates need the fetch.
+async function populateDiscoms(preselect) {
+  if ($('ssState').value) await ensureState($('ssState').value);
   const sel = $('ssDiscom');
   const discoms = getDiscoms($('ssState').value);
   sel.innerHTML = discoms.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join('');

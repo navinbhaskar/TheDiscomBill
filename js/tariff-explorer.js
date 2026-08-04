@@ -2,7 +2,12 @@
 // Lets the user browse the real tariff schedule (energy slabs, fixed charge, duties) for any
 // State → DISCOM → consumer category, straight from the same data the calculator uses.
 
-import { TARIFF_DB, STATE_META, getStates, getDiscoms } from './tariffs/registry.js';
+import { TARIFF_DB, STATE_META, getStates, getDiscoms, ensureAll } from './tariffs/registry.js';
+
+// This page genuinely spans the whole country, so it pulls every state's tariff tables
+// up front. Top-level await means the module is not considered loaded until they are
+// in memory, so nothing below has to know the registry is lazy.
+await ensureAll();
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));

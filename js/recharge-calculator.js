@@ -4,7 +4,7 @@
 // FPPA, duty) run for the user's monthly units, then converts that month's cost into a
 // daily burn rate and recharge-lasting estimates.
 
-import { TARIFF_DB, getStates, getDiscoms } from './tariffs/registry.js';
+import { TARIFF_DB, getStates, getDiscoms, ensureState } from './tariffs/registry.js';
 import { calculateBill } from './engine.js';
 import { discomFactsHtml } from './portal-page.js';
 
@@ -114,7 +114,11 @@ function render() {
     </div>`;
 }
 
-function populateDiscoms(preselect) {
+// render() below reads discom.categories, so the state's tariff tables have to be in
+// memory first. The registry serves DISCOM names from its index without this await;
+// only the rates need the fetch.
+async function populateDiscoms(preselect) {
+  if ($('rcState').value) await ensureState($('rcState').value);
   const sel = $('rcDiscom');
   const discoms = getDiscoms($('rcState').value);
   sel.innerHTML = discoms.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join('');

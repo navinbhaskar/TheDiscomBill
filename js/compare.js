@@ -2,9 +2,14 @@
 // For each consumption tier (200/400/600/1000 kWh) it runs the real bill engine against
 // each featured DISCOM's Domestic / Commercial tariff and shows the monthly payable amount.
 
-import { TARIFF_DB } from './tariffs/registry.js';
+import { TARIFF_DB, ensureAll } from './tariffs/registry.js';
 import { DOMESTIC_SUBSIDY } from './tariffs/subsidy.js';
 import { calculateBill } from './engine.js';
+
+// This page genuinely spans the whole country, so it pulls every state's tariff tables
+// up front. Top-level await means the module is not considered loaded until they are
+// in memory, so nothing below has to know the registry is lazy.
+await ensureAll();
 
 // Featured DISCOMs — one representative per major state, ordered roughly North → South.
 // (UP's five DISCOMs share the UPERC schedule, so MVVNL stands in; its rates are bill-verified.)

@@ -20,7 +20,7 @@ import {
   getMeterMode, setMeterMode, addMeterRow, updateAdvancedMeter,
   syncBillingMonthYear, applyDefaultBillingBasis, showToast, refreshRequiredValidation,
 } from './ui.js';
-import { getDefaultCategory } from './tariffs/registry.js';
+import { getDefaultCategory, ensureState, ensureDiscom } from './tariffs/registry.js';
 import { initDatePickers } from './datepicker.js';
 
 // Called from main.js's DOMContentLoaded handler once the calculator DOM is confirmed present.
@@ -116,7 +116,11 @@ export function initCalculator() {
   try { localStorage.removeItem('discombill.lastSelection'); } catch (e) {}
 
   if (stateEl) {
-    stateEl.addEventListener('change', () => {
+    stateEl.addEventListener('change', async () => {
+      // Picking a state is the moment we know WHICH tariff tables to fetch, and it happens
+      // before anything reads a rate — so this is the one place the on-demand load belongs.
+      // Everything downstream (categories, supply types, the engine) stays synchronous.
+      if (stateEl.value) await ensureState(stateEl.value);
       // 20 of 34 states have one DISCOM; when so, populateDiscoms picks it and we replay the
       // normal `change` cascade rather than duplicating it here.
       const auto = populateDiscoms(stateEl.value);

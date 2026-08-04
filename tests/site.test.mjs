@@ -290,6 +290,74 @@ console.log('\n• title / description fit the SERP width budget');
   }
 }
 
+// ── 7. the tariff index is in step, and the homepage stays off the tariff data ──
+// Two failure modes, both silent:
+//   a) js/tariffs/index.js is generated from the 34 state files. Edit a state file without
+//      running `npm run seo` and the index still lists the old DISCOMs — dropdowns and page
+//      titles then disagree with the rates behind them.
+//   b) The whole point of the split is that a visitor who has not chosen a state downloads
+//      no tariff tables. A single stray `import './tariffs/<state>.js'` — or re-adding the
+//      bill-ocr script tag to index.html — quietly puts all 34 back on the critical path.
+console.log('\n• tariff index fresh, and off the homepage critical path');
+{
+  const idxPath = path.join(ROOT, 'js', 'tariffs', 'index.js');
+  if (!fs.existsSync(idxPath)) {
+    fail('js/tariffs/index.js missing — run `npm run seo`');
+  } else {
+    const onDisk = fs.readFileSync(idxPath, 'utf8');
+    const { buildTariffIndex } = await import(pathToFileURL(path.join(ROOT, 'scripts', 'build-tariff-index.mjs')).href);
+    // buildTariffIndex writes as a side effect; snapshot and restore so the test leaves the
+    // tree exactly as it found it.
+    let rebuilt;
+    try { await buildTariffIndex({ quiet: true }); rebuilt = fs.readFileSync(idxPath, 'utf8'); }
+    finally { fs.writeFileSync(idxPath, onDisk, 'utf8'); }
+
+    let bad = 0;
+    if (rebuilt !== onDisk) {
+      bad++;
+      fail(`js/tariffs/index.js is stale (${onDisk.length} B on disk, ${rebuilt.length} B rebuilt) — run \`npm run seo\``);
+    }
+
+    // Walk the static import graph from every <script type="module"> on the homepage and
+    // assert no per-state tariff module is reachable without a dynamic import().
+    const stateFiles = new Set(fs.readdirSync(path.join(ROOT, 'js', 'tariffs'))
+      .filter((f) => f.endsWith('.js') &&
+        !['registry.js', 'index.js', 'fppa.js', 'fppa-resolve.js', 'subsidy.js'].includes(f))
+      .map((f) => `tariffs/${f}`));
+
+    const home = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+    const entries = [...home.matchAll(/<script[^>]+type="module"[^>]+src="([^"]+)"/g)]
+      .map((m) => m[1].replace(/^\.?\//, '').replace(/^js\//, ''));
+
+    const seen = new Set();
+    const reached = [];
+    const walk = (rel, trail) => {
+      if (seen.has(rel)) return;
+      seen.add(rel);
+      if (stateFiles.has(rel)) { reached.push([...trail, rel].join(' → ')); return; }
+      const abs = path.join(ROOT, 'js', rel);
+      if (!fs.existsSync(abs)) return;
+      const src = fs.readFileSync(abs, 'utf8');
+      // STATIC edges only — `import(...)` is exactly what we want people to use. The
+      // alternation has to include the bare side-effect form (`import './x.js';`, no
+      // `from`), which is the easiest way to pull a module in by accident.
+      for (const m of src.matchAll(/(?:^|[\n;}])\s*(?:import\s[^\n]*?from|export\s[^\n]*?from|import)\s*['"](\.{1,2}\/[^'"]+)['"]/g)) {
+        walk(path.posix.normalize(path.posix.join(path.posix.dirname(rel), m[1])), [...trail, rel]);
+      }
+    };
+    for (const e of entries) walk(e, []);
+
+    if (reached.length) {
+      bad++;
+      for (const chain of reached) fail(`homepage statically reaches tariff data: ${chain}`);
+    }
+    if (!bad) {
+      passed++;
+      console.log(`  ✓ index rebuilt byte-for-byte; ${entries.length} homepage module entr${entries.length === 1 ? 'y' : 'ies'} reach 0 of ${stateFiles.size} state files`);
+    }
+  }
+}
+
 // ── summary ───────────────────────────────────────────────────────────────────
 console.log(`\n${failed ? '✗' : '✓'} site checks — ${passed} groups passed, ${failed} failures\n`);
 process.exit(failed ? 1 : 0);

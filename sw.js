@@ -1,7 +1,7 @@
 // sw.js — Service Worker (network-first, cache fallback)
 // CACHE is stamped automatically by generate-seo.js (stampServiceWorker) from a
 // content hash of the CORE assets below — do not hand-edit it; run `npm run seo`.
-const CACHE = 'discombill-20260804-5acae947';
+const CACHE = 'discombill-20260804-5ca98676';
 
 const CORE = [
   './', './index.html', './compare/', './compare/index.html',
@@ -46,7 +46,13 @@ const CORE = [
   // the cache offline the whole entry point fails to parse (and the state list never loads).
   './js/vendor/lenis.mjs',
   // Tariff registry + FPPA
-  './js/tariffs/registry.js', './js/tariffs/fppa.js', './js/tariffs/subsidy.js',
+  // registry.js now ships an index and fetches per-state tariff tables on demand, so index.js
+  // must be precached alongside it — without it the registry cannot even name a DISCOM offline.
+  // The 34 per-state files below stay in CORE deliberately: they are no longer on the critical
+  // path (nothing downloads them until a state is picked), but precaching them in the
+  // background is what keeps the calculator working offline for any state.
+  './js/tariffs/registry.js', './js/tariffs/index.js',
+  './js/tariffs/fppa.js', './js/tariffs/subsidy.js',
   // Per-state tariff data
   './js/tariffs/andhra-pradesh.js', './js/tariffs/arunachal-pradesh.js',
   './js/tariffs/assam.js', './js/tariffs/bihar.js', './js/tariffs/chandigarh.js',

@@ -10,6 +10,10 @@
 // Libraries are lazy-loaded from jsDelivr only when actually needed, so normal
 // page loads carry zero extra weight.
 
+// The registry is imported for one thing only — detectDiscom() below, which scans every
+// DISCOM name to identify the utility printed on an uploaded bill. That runs after a file is
+// chosen, so the tariff tables are fetched then rather than at page load. Only the names are
+// needed, which the registry serves from its index; ensureAll() is not required.
 import { getStates, getDiscoms } from './tariffs/registry.js';
 import { isConfigured, getStoredUser, getSupabase, SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase-config.js';
 

@@ -2,7 +2,7 @@
 // portal" pages (New Connection, Register Complaint). Each page supplies its own renderResult()
 // that builds the result card; this module owns the dropdowns and the official-URL helper.
 
-import { getStates, getDiscoms } from './tariffs/registry.js';
+import { getStates, getDiscoms, ensureState } from './tariffs/registry.js';
 
 export const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
@@ -90,7 +90,10 @@ export function initPortalPage({ stateId, discomId, resultId, renderResult, defa
       const discom = discoms.find(d => d.id === discomSel.value) || discoms[0];
       renderResult(box, stateSel.value, discom);
     };
-    const populate = (preselectDiscom) => {
+// draw()/fillCategories() below read discom.categories, so the state's tariff tables must
+// be loaded first. DISCOM names come from the registry index and need no await.
+    const populate = async (preselectDiscom) => {
+      if (stateSel.value) await ensureState(stateSel.value);
       const discoms = getDiscoms(stateSel.value);
       discomSel.innerHTML = discoms.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join('');
       if (preselectDiscom && discoms.some(d => d.id === preselectDiscom)) discomSel.value = preselectDiscom;

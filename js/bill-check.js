@@ -3,7 +3,7 @@
 // OFFICIAL website (its bill-view / quick-pay portal) so they can check or pay their bill
 // on the authoritative source. We never collect any consumer/account details here.
 
-import { TARIFF_DB, getStates, getDiscoms } from './tariffs/registry.js';
+import { getStates, getDiscoms } from './tariffs/registry.js';
 import { discomFactsHtml } from './portal-page.js';
 
 const $ = (id) => document.getElementById(id);

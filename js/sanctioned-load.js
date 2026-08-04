@@ -6,7 +6,7 @@
 // and flat fixed-charge schedules all come out right — and loads below the MD surface
 // the excess-demand penalty instead of pretending the saving is free.
 
-import { getStates, getDiscoms } from './tariffs/registry.js';
+import { getStates, getDiscoms, ensureState } from './tariffs/registry.js';
 import { calculateBill } from './engine.js';
 
 const $ = (id) => document.getElementById(id);
@@ -458,7 +458,11 @@ function initEstimator() {
   renderEst();
 }
 
-function populateDiscoms(preselect) {
+// render() below reads discom.categories, so the state's tariff tables have to be in
+// memory first. The registry serves DISCOM names from its index without this await;
+// only the rates need the fetch.
+async function populateDiscoms(preselect) {
+  if ($('slState').value) await ensureState($('slState').value);
   const sel = $('slDiscom');
   const discoms = getDiscoms($('slState').value);
   sel.innerHTML = discoms.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join('');

@@ -22,8 +22,7 @@ import { calculateBill } from './engine.js';
 import { resolveFppaForDiscom } from './tariffs/fppa-resolve.js';
 import {
   getStates, getDiscoms, getCategories, getDefaultCategory,
-  getSupplyTypes, getDefaultSupplyType,
-} from './tariffs/registry.js';
+  getSupplyTypes, getDefaultSupplyType, ensureState } from './tariffs/registry.js';
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -52,7 +51,10 @@ function show(stage) {
 }
 
 // ── stage 2: confirm ─────────────────────────────────────────────────────────
-function fillDiscoms(state, want) {
+// draw()/fillCategories() below read discom.categories, so the state's tariff tables must
+// be loaded first. DISCOM names come from the registry index and need no await.
+async function fillDiscoms(state, want) {
+  if (state) await ensureState(state);
   const sel = $('bcDiscom');
   const list = getDiscoms(state) || [];
   sel.innerHTML = list.map((d) => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join('');
@@ -110,7 +112,10 @@ function mark(id, got) {
 let billCharges = null;
 let billMeta = null;
 
-function renderConfirm(f, meta) {
+// Async because fillDiscoms now fetches the detected state's tariff tables, and the two
+// calls straight after it read those tables. Awaiting is not optional here: without it
+// fillCategories() runs against an unloaded state and the registry throws.
+async function renderConfirm(f, meta) {
   billCharges = f.charges || null;
   billMeta = { ...meta, billMonth: f.billMonth, billYear: f.billYear, fromDate: f.fromDate, toDate: f.toDate, consumerName: f.consumerName };
   const states = getStates();
@@ -119,7 +124,7 @@ function renderConfirm(f, meta) {
 
   const gotDiscom = !!(f.discom && states.includes(f.discom.state));
   stSel.value = gotDiscom ? f.discom.state : (states.includes('Uttar Pradesh') ? 'Uttar Pradesh' : states[0]);
-  fillDiscoms(stSel.value, gotDiscom ? f.discom.id : null);
+  await fillDiscoms(stSel.value, gotDiscom ? f.discom.id : null);
   const gotCat = fillCategories(f.category);
   fillSupplyTypes(f.supplyType);
 
@@ -460,7 +465,7 @@ function initUpload() {
     try {
       const { fields, cloud, note } = await extractBillFields(file, { setStatus, setProgress, askCloudConsent });
       prog.hidden = true;
-      renderConfirm(fields, { cloud, note });
+      await renderConfirm(fields, { cloud, note });
     } catch (err) {
       console.error('Bill check failed:', err);
       prog.hidden = true;

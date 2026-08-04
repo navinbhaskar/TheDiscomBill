@@ -17,7 +17,7 @@
 
 import { calculateBill } from './engine.js';
 import { getStates, getDiscoms, getCategories, getDefaultCategory,
-         getSupplyTypes, getDefaultSupplyType } from './tariffs/registry.js';
+         getSupplyTypes, getDefaultSupplyType, ensureState } from './tariffs/registry.js';
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -307,7 +307,10 @@ function fillCategories() {
   fillSupplyTypes();
 }
 
-function fillDiscoms(preselect) {
+// draw()/fillCategories() below read discom.categories, so the state's tariff tables must
+// be loaded first. DISCOM names come from the registry index and need no await.
+async function fillDiscoms(preselect) {
+  if ($('tsState').value) await ensureState($('tsState').value);
   const sel = $('tsDiscom');
   const discoms = getDiscoms($('tsState').value) || [];
   sel.innerHTML = discoms.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join('');
@@ -326,16 +329,18 @@ function init() {
   const wantState = params.get('state');
   stateSel.value = (wantState && states.includes(wantState)) ? wantState
                  : states.includes('Delhi') ? 'Delhi' : states[0];
-  fillDiscoms(params.get('discom'));
+  // fillDiscoms is async now (it fetches the state's tariff tables), so the first render
+  // has to wait for it rather than running against a state with no rates loaded.
+  fillDiscoms(params.get('discom')).then(render);
 
-  stateSel.addEventListener('change', () => { fillDiscoms(); render(); });
+  stateSel.addEventListener('change', async () => { await fillDiscoms(); render(); });
   $('tsDiscom').addEventListener('change', () => { fillCategories(); render(); });
   $('tsCategory').addEventListener('change', () => { fillSupplyTypes(); render(); });
   ['tsSupply', 'tsSplit'].forEach(id => $(id).addEventListener('change', render));
   ['tsMyUnits', 'tsTotalUnits', 'tsTenants', 'tsLoad', 'tsRate', 'tsFixed']
     .forEach(id => $(id).addEventListener('input', render));
-
-  render();
+  // No bare render() here — the initial one is chained off fillDiscoms above, because the
+  // rates it needs are fetched rather than already in memory.
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

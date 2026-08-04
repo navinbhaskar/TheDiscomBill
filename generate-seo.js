@@ -21,7 +21,15 @@ import { fileURLToPath } from 'url';
 import { buildContentCss } from './scripts/split-css.mjs';
 import { execSync } from 'child_process';
 
-import { TARIFF_DB, STATE_META, getStates, getDiscoms, tariffAge } from './js/tariffs/registry.js';
+import { TARIFF_DB, STATE_META, getStates, getDiscoms, tariffAge, ensureAll } from './js/tariffs/registry.js';
+import { buildTariffIndex } from './scripts/build-tariff-index.mjs';
+
+// The registry serves an index up front and loads tariff tables per state in the browser.
+// A whole-site pre-render needs all of them, so pull the lot before anything reads a rate.
+// Rebuilding the index first means a state file edited without regenerating cannot leave the
+// generated pages describing DISCOMs the index no longer lists.
+await buildTariffIndex({ quiet: true });
+await ensureAll();
 import { FPPA_BY_STATE, FPPA_BY_DISCOM, pick as pickFppa } from './js/tariffs/fppa.js';
 import { calculateBill } from './js/engine.js';
 import { GUIDES } from './guides-content.js';

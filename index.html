@@ -56,6 +56,17 @@
        imports that chain dynamically (js/calculator-init.js), so hinting it eagerly would
        put back the cost the split just removed. -->
   <link rel="modulepreload" href="js/main.js">
+  <!-- The calculator's module chain is discovered one hop at a time — main.js dynamically
+       imports calculator-init.js, which pulls ui.js, which pulls the registry and its index.
+       Each hop costs a round trip, which is invisible on a fast link and very visible on
+       mobile. These four are ALWAYS needed on this page (it is the page with #stateSelect),
+       so naming them up front lets the browser fetch them in parallel with main.js instead
+       of waiting to find out about them. Do not copy this to the guide/tariff pages: they
+       have no calculator, and there the preloads would be pure waste. -->
+  <link rel="modulepreload" href="js/calculator-init.js">
+  <link rel="modulepreload" href="js/ui.js">
+  <link rel="modulepreload" href="js/tariffs/registry.js">
+  <link rel="modulepreload" href="js/tariffs/index.js">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -1185,6 +1196,11 @@
 </div><!-- /.page-body -->
 
 <script type="module" src="js/main.js"></script>
-<script type="module" src="js/bill-ocr.js"></script>
+<!-- js/bill-ocr.js is deliberately NOT loaded here. The bill-upload UI it initialises
+     (#ocrUpload / #ocrFile) lives on /check-my-bill/, which loads it through its own
+     entry point; on this page both initialisers found nothing and returned. The tag was
+     left behind when the upload block moved, and it cost 19 KB plus — because bill-ocr
+     statically imported the tariff registry — all 34 state modules on every homepage
+     visit. Do not re-add it without the markup. -->
 </body>
 </html>
