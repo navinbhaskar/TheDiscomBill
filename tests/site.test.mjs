@@ -126,6 +126,56 @@ console.log('\n• /fuel-surcharge/ matches fppa.js');
   }
 }
 
+// ── 4. footer link parity ─────────────────────────────────────────────────────
+// Most pages get their footer from generate-seo.js, but a handful are hand-written and
+// keep their own copy. Those copies drift: a link added to the shared footer never
+// reaches them, and nothing looks broken — the column is just quietly shorter.
+//
+// No hardcoded list here, because that would need updating every time the footer does.
+// Instead the standard is derived from the pages themselves: any link carried by the
+// large majority of footers is expected in all of them. A genuinely new link is below
+// the threshold until it is on most pages, so adding one does not fail the suite.
+console.log('\n• footer link parity');
+{
+  const QUORUM = 0.9;
+  const footers = new Map();   // page → Set of hrefs in its <footer>
+  for (const page of htmlPages) {
+    const html = fs.readFileSync(path.join(ROOT, page), 'utf8');
+    const m = html.match(/<footer[\s\S]*?<\/footer>/i);
+    if (!m) continue;
+    // The account pages (/login/, /profile/, /my-bills/) carry a deliberately minimal
+    // footer — copyright and social only, no link columns. That is a design choice, not
+    // drift, so only footers that actually have the columns are held to the standard.
+    if (!m[0].includes('footer-col')) continue;
+    const hrefs = new Set();
+    for (const a of m[0].matchAll(/<a\b[^>]*\bhref="([^"]+)"/gi)) {
+      const href = a[1];
+      // Root-absolute internal links only: relative paths and the social/mailto links
+      // legitimately differ per page.
+      if (href.startsWith('/') && !href.startsWith('//')) hrefs.add(href.split('#')[0]);
+    }
+    // Vernacular twins link to /hi/... equivalents, so they are a separate population
+    // and would drag every English href below quorum. Compare English pages only.
+    if (!/^(hi|mr|ta)\//.test(page) && hrefs.size) footers.set(page, hrefs);
+  }
+
+  const count = new Map();
+  for (const hrefs of footers.values()) for (const h of hrefs) count.set(h, (count.get(h) || 0) + 1);
+  const standard = [...count.entries()]
+    .filter(([, n]) => n >= footers.size * QUORUM)
+    .map(([h]) => h);
+
+  let drifted = 0;
+  for (const [page, hrefs] of footers) {
+    const missing = standard.filter((h) => !hrefs.has(h));
+    if (missing.length) { drifted++; fail(`${page}: footer missing ${missing.join(', ')}`); }
+  }
+  if (!drifted) {
+    passed++;
+    console.log(`  ✓ ${standard.length} standard links present in all ${footers.size} footers`);
+  }
+}
+
 // ── summary ───────────────────────────────────────────────────────────────────
 console.log(`\n${failed ? '✗' : '✓'} site checks — ${passed} groups passed, ${failed} failures\n`);
 process.exit(failed ? 1 : 0);
