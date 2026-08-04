@@ -573,16 +573,52 @@ function initHeroBillCard() {
     });
   });
 
-  // Hover-pause, but only for an actual MOUSE. iOS Safari fires a synthetic mouseenter on
-  // tap and never fires the matching mouseleave, so on iPhone a single tap anywhere on the
-  // card paused rotation permanently — which is exactly what it looked like: a slider that
-  // "doesn't change".
+  // Hover-pause, but only for an actual MOUSE.
   //
   // Checking pointerType per event rather than a `(hover: hover)` media query on purpose:
   // hybrid devices (iPad with a trackpad, Surface, a touchscreen laptop) report hover:hover
   // and would still have been frozen by a tap.
-  card.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') pause(); });
-  card.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') play(); });
+  //
+  // That check alone was NOT enough, and this is what kept breaking on iPhone. After a tap,
+  // iOS Safari emits synthetic mouse-COMPATIBILITY pointer events: a pointerenter whose
+  // pointerType is literally "mouse", with no matching pointerleave, ever. Filtering *for*
+  // pointerType === 'mouse' is exactly what lets those through, so one tap anywhere on the
+  // card paused rotation for good. Reproduced by dispatching pointerenter{pointerType:'mouse'}
+  // with no leave: the card freezes and never recovers on its own.
+  //
+  // Two layers, because the first is a guess about one browser and the second is not:
+  //   1. once this card has seen a real touch, drop hover-pause entirely — a finger has no
+  //      hover state, so there is nothing legitimate to pause for;
+  //   2. a hover-pause may never be permanent. If the matching leave never arrives, resume.
+  //      The watchdog re-arms while the card is genuinely :hover, so a real mouse still holds
+  //      the slide as long as the reader is actually over it.
+  let touchDevice = false;
+  card.addEventListener('touchstart', () => {
+    touchDevice = true;
+    play();          // undo a pause a synthetic hover may already have caused
+  }, { passive: true });
+
+  let hoverWatchdog = null;
+  const clearWatchdog = () => { clearTimeout(hoverWatchdog); hoverWatchdog = null; };
+  const armWatchdog = () => {
+    clearWatchdog();
+    hoverWatchdog = setTimeout(function check() {
+      if (card.matches(':hover')) { hoverWatchdog = setTimeout(check, HBC_DWELL_MS); return; }
+      hoverWatchdog = null;
+      play();
+    }, HBC_DWELL_MS * 2);
+  };
+
+  card.addEventListener('pointerenter', (e) => {
+    if (touchDevice || e.pointerType !== 'mouse') return;
+    pause();
+    armWatchdog();
+  });
+  card.addEventListener('pointerleave', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    clearWatchdog();
+    play();
+  });
   card.addEventListener('focusin',  pause);
   card.addEventListener('focusout', (e) => { if (!card.contains(e.relatedTarget)) play(); });
   // A background tab burns no timers, and the sweep would otherwise finish unseen.
