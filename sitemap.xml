@@ -296,7 +296,7 @@
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/how-fppa-fuel-surcharge-is-calculated/"/>
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/how-fppa-fuel-surcharge-is-calculated/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/how-fppa-fuel-surcharge-is-calculated/"/>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -358,7 +358,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/electricity-duty-explained/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/electricity-duty-explained/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/electricity-duty-explained/"/>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -432,7 +432,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/how-to-read-msedcl-bill/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/how-to-read-msedcl-bill/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/how-to-read-msedcl-bill/"/>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -829,18 +829,30 @@
   <url>
     <loc>https://thediscombill.com/guides/msedcl-fppa-charges-explained/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/msedcl-fppa-charges-explained/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/msedcl-fppa-charges-explained/"/>
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/msedcl-fppa-charges-explained/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/msedcl-fppa-charges-explained/"/>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/guides/msedcl-fppa-charges-explained/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/msedcl-fppa-charges-explained/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/msedcl-fppa-charges-explained/"/>
+    <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/msedcl-fppa-charges-explained/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/msedcl-fppa-charges-explained/"/>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/mr/guides/msedcl-fppa-charges-explained/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/msedcl-fppa-charges-explained/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/msedcl-fppa-charges-explained/"/>
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/msedcl-fppa-charges-explained/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/msedcl-fppa-charges-explained/"/>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -970,7 +982,7 @@
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/msedcl-new-connection-online/"/>
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/msedcl-new-connection-online/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/msedcl-new-connection-online/"/>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1228,7 +1240,19 @@
   </url>
   <url>
     <loc>https://thediscombill.com/guides/up-electricity-bill-10-percent-fppa-surcharge/</loc>
-    <lastmod>2026-08-03</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/up-electricity-bill-10-percent-fppa-surcharge/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/up-electricity-bill-10-percent-fppa-surcharge/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/up-electricity-bill-10-percent-fppa-surcharge/"/>
+    <lastmod>2026-08-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/guides/up-electricity-bill-10-percent-fppa-surcharge/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/up-electricity-bill-10-percent-fppa-surcharge/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/up-electricity-bill-10-percent-fppa-surcharge/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/up-electricity-bill-10-percent-fppa-surcharge/"/>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -2934,7 +2958,7 @@
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/maharashtra/"/>
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/tariffs/maharashtra/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/maharashtra/"/>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -2964,7 +2988,7 @@
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/maharashtra/msedcl/"/>
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/tariffs/maharashtra/msedcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/maharashtra/msedcl/"/>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3024,7 +3048,7 @@
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/maharashtra/adani_mumbai/"/>
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/tariffs/maharashtra/adani_mumbai/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/maharashtra/adani_mumbai/"/>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3084,7 +3108,7 @@
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/maharashtra/best_mumbai/"/>
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/tariffs/maharashtra/best_mumbai/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/maharashtra/best_mumbai/"/>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3144,7 +3168,7 @@
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/maharashtra/tata_power_mumbai/"/>
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/tariffs/maharashtra/tata_power_mumbai/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/maharashtra/tata_power_mumbai/"/>
-    <lastmod>2026-08-03</lastmod>
+    <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

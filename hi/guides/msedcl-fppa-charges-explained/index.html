@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      try { localStorage.setItem('lang', 'hi'); } catch (e) {}
+    })();
+  </script>
+  <title>MSEDCL FPPCA / FAC शुल्क — ईंधन समायोजन का पूरा हिसाब</title>
+  <meta name="description" content="MSEDCL बिल पर FPPCA लाइन का मतलब क्या है, हर महीने ₹/यूनिट दर कैसे तय होती है, अपनी यूनिट से यह शुल्क ख़ुद कैसे जाँचें, और अचानक बढ़ जाए तो क्या देखें।">
+  <link rel="canonical" href="https://thediscombill.com/hi/guides/msedcl-fppa-charges-explained/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/msedcl-fppa-charges-explained/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/msedcl-fppa-charges-explained/">
+  <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/msedcl-fppa-charges-explained/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/msedcl-fppa-charges-explained/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="MSEDCL FPPCA / FAC शुल्क — ईंधन समायोजन का पूरा हिसाब">
+  <meta property="og:description" content="MSEDCL बिल पर FPPCA लाइन का मतलब क्या है, हर महीने ₹/यूनिट दर कैसे तय होती है, अपनी यूनिट से यह शुल्क ख़ुद कैसे जाँचें, और अचानक बढ़ जाए तो क्या देखें।">
+  <meta property="og:url" content="https://thediscombill.com/hi/guides/msedcl-fppa-charges-explained/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="MSEDCL FPPCA / FAC शुल्क — ईंधन समायोजन का पूरा हिसाब">
+  <meta property="og:locale" content="hi_IN">
+  <meta property="og:locale:alternate" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MSEDCL FPPCA / FAC शुल्क — ईंधन समायोजन का पूरा हिसाब">
+  <meta name="twitter:description" content="MSEDCL बिल पर FPPCA लाइन का मतलब क्या है, हर महीने ₹/यूनिट दर कैसे तय होती है, अपनी यूनिट से यह शुल्क ख़ुद कैसे जाँचें, और अचानक बढ़ जाए तो क्या देखें।">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. Preload the weights that paint first. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-400-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-600-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-700-latin.woff2">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <link rel="stylesheet" href="/css/styles.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/guides/msedcl-fppa-charges-explained/","name":"MSEDCL FPPCA / FAC शुल्क — ईंधन समायोजन का पूरा हिसाब","description":"MSEDCL बिल पर FPPCA लाइन का मतलब क्या है, हर महीने ₹/यूनिट दर कैसे तय होती है, अपनी यूनिट से यह शुल्क ख़ुद कैसे जाँचें, और अचानक बढ़ जाए तो क्या देखें।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-04"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"MSEDCL FPPCA (ईंधन समायोजन) शुल्क कैसे निकालें","description":"MSEDCL बिल पर FPPCA लाइन का मतलब क्या है, हर महीने ₹/यूनिट दर कैसे तय होती है, अपनी यूनिट से यह शुल्क ख़ुद कैसे जाँचें, और अचानक बढ़ जाए तो क्या देखें।","image":"https://thediscombill.com/og/guide-msedcl-fppa-charges-explained.jpg","mainEntityOfPage":"https://thediscombill.com/hi/guides/msedcl-fppa-charges-explained/","datePublished":"2026-02-23","dateModified":"2026-08-04","inLanguage":"hi-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"गाइड","item":"https://thediscombill.com/hi/guides/"},{"@type":"ListItem","position":3,"name":"MSEDCL FPPCA (ईंधन समायोजन) शुल्क कैसे निकालें"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"MSEDCL बिजली बिल पर FPPCA क्या होता है?","acceptedAnswer":{"@type":"Answer","text":"FPPCA (ईंधन एवं विद्युत क्रय लागत समायोजन) प्रति यूनिट लगने वाला एक मासिक अधिभार है, जो MSEDCL की असल बिजली-ख़रीद लागत में हुए बदलाव को उपभोक्ता तक पहुँचाता है। यह पुरानी FAC लाइन की जगह आया है, हर महीने श्रेणी और स्लैब के हिसाब से तय होता है, और धनात्मक (शुल्क) या ऋणात्मक (क्रेडिट) दोनों हो सकता है।"}},{"@type":"Question","name":"अपने MSEDCL बिल पर FPPCA शुल्क कैसे निकालूँ?","acceptedAnswer":{"@type":"Answer","text":"महीने की बिल की गई यूनिट को बिल पर छपी FPPCA दर से गुणा कीजिए (पैसे और रुपये का ध्यान रखिए)। स्लैब वाली श्रेणियों में दर स्लैब-वार लगती है, ठीक जैसे ऊर्जा प्रभार लगते हैं। गुणनफल FPPCA लाइन से गोलाई तक मेल खाना चाहिए।"}},{"@type":"Question","name":"MSEDCL का FPPCA हर महीने क्यों बदलता है?","acceptedAnswer":{"@type":"Answer","text":"यह समायोजन MERC टैरिफ़ में स्वीकृत बिजली-ख़रीद लागत और MSEDCL द्वारा असल में चुकाई गई लागत के मासिक अंतर का पीछा करता है, आमतौर पर लगभग दो महीने की देरी से। इसीलिए कोयले और बाज़ार-बिजली के दामों की हलचल बिलों पर दो-एक महीने बाद दिखती है।"}},{"@type":"Question","name":"क्या MSEDCL बिल पर FPPCA ऋणात्मक हो सकता है?","acceptedAnswer":{"@type":"Answer","text":"हाँ। जिन महीनों में असल बिजली-ख़रीद लागत टैरिफ़ में मानी गई लागत से कम रहती है, समायोजन ऋणात्मक होता है और प्रति-यूनिट क्रेडिट के रूप में दिखकर बिल घटाता है।"}},{"@type":"Question","name":"क्या महाराष्ट्र में FPPCA पर बिजली शुल्क लगता है?","acceptedAnswer":{"@type":"Answer","text":"हाँ — बिजली शुल्क की गणना FPPCA जुड़ने के बाद होती है, इसलिए ड्यूटी का आधार ईंधन समायोजन को भी समेटे रहता है। ज़्यादा FPPCA वाले महीने में ड्यूटी की लाइन उसी अनुपात में बढ़ती है; यही निर्धारित क्रम है, दोहरा शुल्क नहीं।"}}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <a href="/compare/" class="nav-promoted" data-i18n="nav.compare">Compare Rates</a>
+      <a href="/hi/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/hi/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/#calculator" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/compare/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><span data-i18n="nav.compare">Compare Rates</span></a>
+            <a href="/hi/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/hi/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body" role="main">
+
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/">होम</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><a href="/hi/guides/">गाइड</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">MSEDCL FPPCA (ईंधन समायोजन) शुल्क कैसे निकालें</span></li></ol></nav>
+    <p class="seo-lang-pills"><svg class="seo-lang-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span class="sr-only">Available in</span><a class="seo-lang-pill" href="/guides/msedcl-fppa-charges-explained/" hreflang="en-IN" lang="en">English</a><span class="seo-lang-pill is-current" lang="hi" aria-current="page">हिंदी</span><a class="seo-lang-pill" href="/mr/guides/msedcl-fppa-charges-explained/" hreflang="mr-IN" lang="mr">मराठी</a></p>
+    <h1>MSEDCL FPPCA (ईंधन समायोजन) शुल्क कैसे निकालें</h1>
+    <p class="guide-meta">6 मिनट · अपडेट: 4 अगस्त 2026 · TheDiscomBill संपादकीय · <a href="/methodology/">दरें कहाँ से आती हैं</a></p>
+    <p class="seo-lead">MSEDCL बिल पर <strong>FPPCA</strong> लाइन का मतलब है ईंधन एवं विद्युत क्रय लागत समायोजन
+      (Fuel and Power Purchase Cost Adjustment) — प्रति यूनिट लगने वाला एक मासिक अधिभार (धनात्मक या
+      ऋणात्मक), जो MSEDCL की असल बिजली-ख़रीद लागत में हुए बदलाव को उपभोक्ता तक पहुँचाता है। इसे जाँचने
+      के लिए बिल पर छपी FPPCA दर को महीने की बिल की गई यूनिट से गुणा करें:
+      <strong>FPPCA शुल्क = FPPCA दर (₹/यूनिट) × खपत यूनिट</strong>। यह गाइड बताती है कि वह दर आती
+      कहाँ से है, हर महीने क्यों बदलती है, और आप इस लाइन को ख़ुद कैसे जाँच सकते हैं।</p>
+    
+    
+      <section class="seo-section">
+        <h2>FPPCA है क्या — और क्यों है</h2>
+        <p>MSEDCL की मूल ऊर्जा दरें साल भर के लिए MERC (महाराष्ट्र विद्युत नियामक आयोग) टैरिफ़ आदेश में
+        तय कर देता है। लेकिन MSEDCL बिजली के लिए असल में जो कीमत चुकाती है — कोयले की लागत, गैस के दाम,
+        कमी के दौरान बाज़ार से ख़रीद — वह हर महीने बदलती रहती है। हर बार टैरिफ़ दोबारा खोलने के बजाय
+        नियामक एक स्वतः पास-थ्रू की अनुमति देता है:</p>
+        <ul>
+          <li>जब असल बिजली-ख़रीद लागत टैरिफ़ की मानी गई लागत से <strong>ऊपर</strong> जाती है, तो FPPCA
+          <strong>धनात्मक</strong> होता है और बिल में जुड़ता है।</li>
+          <li>जब यह उस अनुमान से <strong>नीचे</strong> रहती है (सस्ता कोयला, अच्छे पनबिजली महीने), तो
+          FPPCA <strong>ऋणात्मक</strong> हो जाता है और क्रेडिट के रूप में दिखता है।</li>
+        </ul>
+        <p>पुराने MSEDCL बिलों में इसी लाइन को <strong>FAC</strong> (Fuel Adjustment Charge) कहा जाता था।
+        मौजूदा MERC ढाँचे में FPPCA वही व्यवस्था है — खपत यूनिट पर गणना किया जाने वाला मासिक,
+        फ़ॉर्मूला-आधारित समायोजन।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>हर महीने की ₹/यूनिट दर कैसे तय होती है</h2>
+        <p>हर महीने MSEDCL टैरिफ़ में <em>स्वीकृत</em> बिजली-ख़रीद लागत और <em>असल में हुई</em> लागत के
+        बीच का अंतर निकालती है (आमतौर पर दो महीने की देरी के साथ, इसलिए गर्मियों में लागत का उछाल
+        बिलों पर दो-एक महीने बाद दिखता है)। यह अंतर बेची गई यूनिटों में बाँटने पर प्रति-यूनिट समायोजन
+        मिलता है। आपके बिल के लिए दो बातें मायने रखती हैं:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>विशेषता</th><th>आपके लिए इसका मतलब</th></tr></thead>
+          <tbody>
+            <tr><td><strong>यह श्रेणी और स्लैब के हिसाब से बदलती है</strong></td><td>MSEDCL महीने का
+            FPPCA ₹/यूनिट दरों की एक सूची के रूप में प्रकाशित करती है — घरेलू स्लैब, व्यावसायिक,
+            औद्योगिक और कृषि कनेक्शनों की अपनी-अपनी दर होती है। आपके बिल पर <em>आपकी</em> श्रेणी और
+            खपत स्लैब वाली दर लगती है।</td></tr>
+            <tr><td><strong>यह हर महीने बदलती है</strong></td><td>इस महीने के FPPCA की पिछले महीने से
+            तुलना कर लेने पर "बिल क्यों बढ़ गया?" के कई मामले वैसे ही सुलझ जाते हैं, जबकि खपत बिल्कुल
+            उतनी ही रही हो। दर ख़ुद बिल पर FPPCA लाइन के बगल में छपी होती है।</td></tr>
+          </tbody>
+        </table></div>
+        <p>चूँकि दर हर महीने संशोधित होती है, पिछले महीने का आँकड़ा कभी मत मान लीजिए — दर हमेशा मौजूदा
+        बिल से पढ़िए, या उस बिलिंग महीने के लिए MSEDCL की प्रकाशित FPPCA सूची से।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>FPPCA लाइन ख़ुद दोबारा जोड़कर देखिए</h2>
+        <p>यह जाँच एक मिनट से भी कम लेती है:</p>
+        <ol>
+          <li>महीने की अपनी <strong>बिल की गई यूनिट</strong> देखिए (मीटर वाले हिस्से में वर्तमान −
+          पिछली रीडिंग × MF दिखता है)।</li>
+          <li>बिल पर छपी <strong>FPPCA दर</strong> देखिए (₹/यूनिट, कभी-कभी पैसे में लिखी होती है —
+          65 पैसे = ₹0.65)।</li>
+          <li>गुणा कीजिए: <strong>यूनिट × दर</strong>। नतीजा FPPCA राशि से एक पैसे की गोलाई तक मेल
+          खाना चाहिए।</li>
+        </ol>
+        <p>स्लैब वाली श्रेणियों में MSEDCL हर स्लैब में आने वाली यूनिटों पर उसी स्लैब का FPPCA लगाती है —
+        ठीक उसी तरह जैसे ऊर्जा प्रभार स्लैब-वार लगते हैं। हमारा
+        <a href="/?state=Maharashtra#calculator">महाराष्ट्र बिल कैलकुलेटर</a> यह अधिभार इसी प्रति-यूनिट
+        तर्क से लगाता है: अपनी यूनिट और बिल वाली FPPCA दर डालिए और पूरा कुल मिलान कर लीजिए। MSEDCL की
+        मौजूदा मूल दरें <a href="/hi/tariffs/maharashtra/">महाराष्ट्र टैरिफ़ पन्नों</a> पर हैं।</p>
+        <p>क्रम का एक नियम जान लेना ज़रूरी है: <strong>बिजली शुल्क (ड्यूटी) की गणना FPPCA जुड़ने के बाद
+        होती है</strong>। इसलिए ज़्यादा FPPCA वाले महीने में ड्यूटी की लाइन भी थोड़ी ऊपर जाती है — दोनों
+        लाइनें साथ चलती हैं, यह सामान्य है, दोहरा शुल्क नहीं।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>जब FPPCA लाइन ग़लत लगे</h2>
+        <ul>
+          <li><strong>गुणा मेल नहीं खा रहा।</strong> देखिए कि दर पैसे में छपी थी और आपने रुपये मानकर
+          गुणा तो नहीं किया, और कहीं बिल अवधि दो महीनों में तो नहीं फैली (तब यूनिट दो अलग मासिक दरों
+          में बँट सकती हैं)।</li>
+          <li><strong>दर असामान्य रूप से ऊँची लग रही है।</strong> उस महीने और अपनी श्रेणी के लिए MSEDCL
+          की प्रकाशित FPPCA सूची से मिलाइए। घरेलू कनेक्शन पर व्यावसायिक दर लग जाना श्रेणी की ग़लती है,
+          जिस पर आपत्ति बनती है।</li>
+          <li><strong>अनुमानित बिल पर FPPCA आ गया।</strong> अगर महीने का बिल अनुमानित रीडिंग पर बना है,
+          तो FPPCA भी अनुमानित यूनिट पर ही चलता है — असल रीडिंग लेने पर यह ऊर्जा प्रभार के साथ अपने आप
+          ठीक हो जाता है।</li>
+        </ul>
+        <p>अगर फिर भी आँकड़े नहीं मिल रहे, तो बिल हमारी मुफ़्त
+        <a href="/bill-review/">विशेषज्ञ बिल समीक्षा</a> पर अपलोड कर दीजिए — FPPCA लगाने की ग़लतियाँ
+        समीक्षकों को सबसे ज़्यादा मिलने वाली चीज़ों में से हैं।</p>
+      </section>
+    <section class="seo-section"><h2>अक्सर पूछे जाने वाले सवाल</h2>
+    <details class="seo-faq-item">
+      <summary>MSEDCL बिजली बिल पर FPPCA क्या होता है?</summary>
+      <div class="seo-faq-a">FPPCA (ईंधन एवं विद्युत क्रय लागत समायोजन) प्रति यूनिट लगने वाला एक मासिक अधिभार है, जो MSEDCL की असल बिजली-ख़रीद लागत में हुए बदलाव को उपभोक्ता तक पहुँचाता है। यह पुरानी FAC लाइन की जगह आया है, हर महीने श्रेणी और स्लैब के हिसाब से तय होता है, और धनात्मक (शुल्क) या ऋणात्मक (क्रेडिट) दोनों हो सकता है।</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>अपने MSEDCL बिल पर FPPCA शुल्क कैसे निकालूँ?</summary>
+      <div class="seo-faq-a">महीने की बिल की गई यूनिट को बिल पर छपी FPPCA दर से गुणा कीजिए (पैसे और रुपये का ध्यान रखिए)। स्लैब वाली श्रेणियों में दर स्लैब-वार लगती है, ठीक जैसे ऊर्जा प्रभार लगते हैं। गुणनफल FPPCA लाइन से गोलाई तक मेल खाना चाहिए।</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>MSEDCL का FPPCA हर महीने क्यों बदलता है?</summary>
+      <div class="seo-faq-a">यह समायोजन MERC टैरिफ़ में स्वीकृत बिजली-ख़रीद लागत और MSEDCL द्वारा असल में चुकाई गई लागत के मासिक अंतर का पीछा करता है, आमतौर पर लगभग दो महीने की देरी से। इसीलिए कोयले और बाज़ार-बिजली के दामों की हलचल बिलों पर दो-एक महीने बाद दिखती है।</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>क्या MSEDCL बिल पर FPPCA ऋणात्मक हो सकता है?</summary>
+      <div class="seo-faq-a">हाँ। जिन महीनों में असल बिजली-ख़रीद लागत टैरिफ़ में मानी गई लागत से कम रहती है, समायोजन ऋणात्मक होता है और प्रति-यूनिट क्रेडिट के रूप में दिखकर बिल घटाता है।</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>क्या महाराष्ट्र में FPPCA पर बिजली शुल्क लगता है?</summary>
+      <div class="seo-faq-a">हाँ — बिजली शुल्क की गणना FPPCA जुड़ने के बाद होती है, इसलिए ड्यूटी का आधार ईंधन समायोजन को भी समेटे रहता है। ज़्यादा FPPCA वाले महीने में ड्यूटी की लाइन उसी अनुपात में बढ़ती है; यही निर्धारित क्रम है, दोहरा शुल्क नहीं।</div>
+    </details></section>
+    <section class="seo-section guide-calc-cta">
+      <h2>अब अपना असली बिल जाँचें</h2>
+      <p>पढ़ना काफ़ी नहीं — अपने डिस्कॉम की असली स्लैब दरों, फिक्स्ड चार्ज और FPPA के साथ अपना मदवार बिल सेकंडों में निकालें। मुफ़्त, बिना साइन-अप।</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">बिजली बिल कैलकुलेटर खोलें →</a></p>
+    </section>
+    
+    <section class="seo-section">
+      <h2>TheDiscomBill पर संबंधित पेज</h2>
+      <div class="seo-link-grid"><a class="seo-link-card" href="/hi/tariffs/maharashtra/"><strong>महाराष्ट्र बिजली टैरिफ व बिल कैलकुलेटर</strong><span>वर्तमान स्लैब दरें, हर डिस्कॉम, मदवार बिल</span></a><a class="seo-link-card" href="/glossary/"><strong>बिजली बिल शब्दावली</strong><span>भारतीय बिल की हर शुल्क लाइन, आसान भाषा में</span></a></div>
+    </section>
+    <section class="seo-section guide-more">
+      <h2>संबंधित गाइड</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/hi/guides/how-to-read-msedcl-bill/">
+          <strong>अपना MSEDCL (महावितरण) बिजली बिल कैसे पढ़ें</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/msedcl-new-connection-online/">
+          <strong>MSEDCL (Mahavitaran) में नया बिजली कनेक्शन ऑनलाइन कैसे लें</strong>
+          <small>8 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/guides/wss-portal/">
+          <strong>WSS Portal: Which Web Self Service Is Yours?</strong>
+          <small>4 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/guides/msedcl-wss-portal/">
+          <strong>MSEDCL WSS Portal: View &amp; Pay Your Bill on Web Self Service</strong>
+          <small>6 मिनट</small>
+        </a>
+      </div>
+      <p class="guide-more-all"><a href="/hi/guides/">सभी गाइड देखें →</a></p>
+    </section>
+    <p class="seo-disclaimer">सार्वजनिक रूप से उपलब्ध टैरिफ आदेशों और विनियमों पर आधारित सामान्य मार्गदर्शन; विवरण राज्य, डिस्कॉम और उपभोक्ता श्रेणी के अनुसार बदलते हैं। अपने डिस्कॉम की आधिकारिक अनुसूची या छपे बिल से मिलान करें।</p>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+        <a href="/compare/" data-i18n="nav.compare">Compare Rates</a>
+        <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</a>
+        <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/hi/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/hi/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/hi/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/hi/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/fuel-surcharge/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/contact/" data-i18n="ql.contact">Contact</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>
