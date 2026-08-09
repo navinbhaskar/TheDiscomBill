@@ -1079,7 +1079,65 @@ function domesticRates(discom) {
     if (fixed == null && b.fixedCharge != null) fixed = b.fixedCharge;
   }
   if (!rates.length) return null;
-  return { min: Math.min(...rates), max: Math.max(...rates), fixed, catName: cat.name };
+  // A 0 in a slab ladder is a data marker, not a price — Odisha's LT Domestic ends [.., 6.10, 0]
+  // where the 0 stands for the subsidised/free block. Taking it as the floor produced "rates
+  // from ₹0/unit" in the live Odisha snippet and would put "₹0.00–6.10/unit" in the title,
+  // which is both wrong about what a household pays and reads as a broken template. The floor
+  // is the lowest rate anyone is actually charged; if every rate is 0 there is nothing to quote.
+  const paid = rates.filter(r => r > 0);
+  if (!paid.length) return null;
+  return { min: Math.min(...paid), max: Math.max(...paid), fixed, catName: cat.name };
+}
+
+// ── rate signals for tariff-page titles and snippets ─────────────────────────
+// The Aug 2026 GSC export made the case: /tariffs/ carried 37,124 impressions at 0.66% CTR
+// against 0.94% on /guides/, and every one of the 289 pages shared a description that ended
+// "…and get your exact bill in seconds. Free, no sign-up." At position 9–11 that reads as
+// templated boilerplate and gets skipped. Somebody searching a tariff wants a NUMBER; putting
+// the real slab range in the title is the one thing the SERP can hand them that a generic
+// aggregator cannot, and it is the difference between a result worth opening and one to scroll past.
+//
+// "₹4.75–10.00/unit" — one rupee sign, en dash, no space. A flat tariff collapses to "₹7.74/unit"
+// rather than quoting an empty range.
+function rateTag(dr, lang = 'en') {
+  if (!dr) return null;
+  const unit = T(lang, { en: '/unit', hi: '/यूनिट', mr: '/युनिट', ta: '/யூனிட்' });
+  const span = dr.min === dr.max ? rupeeRate(dr.min) : `${rupeeRate(dr.min)}–${Number(dr.max).toFixed(2)}`;
+  return span + unit;
+}
+
+// The domestic slab range spanning every DISCOM in a state, for the state hub's title. Min of
+// the mins and max of the maxes: both ends are rates a household in the state genuinely pays,
+// so the span is honest even though no single DISCOM covers all of it.
+function stateRateRange(discoms) {
+  const drs = discoms.map(domesticRates).filter(Boolean);
+  if (!drs.length) return null;
+  return { min: Math.min(...drs.map(x => x.min)), max: Math.max(...drs.map(x => x.max)) };
+}
+
+// "in force from 1 April 2026" — the freshness signal that separates us from the stale scraped
+// tariff pages we share a SERP with. Only 6 of 34 states carry `currentRatesFrom` today, and
+// this deliberately returns null for the rest rather than inferring a date from the financial
+// year: FY 2026-27 rates usually start on 1 April, but Rajasthan's start on 1 October, and a
+// guessed effective date on a tariff site is worse than no date at all.
+// Short form ("1 Oct 2025", not "1 October 2025"): this goes in a 155-unit snippet where every
+// unit spent on the month name is one not spent on the DISCOM names and the rate.
+//
+// The phrasing has to track whether the date falls inside the stated financial year, because
+// regulators routinely carry a tariff forward untouched. Odisha's rates are labelled FY 2026-27
+// and took effect on 1 Apr 2024; "2026-27 tariff (in force from 1 Apr 2024)" reads like a typo
+// and costs exactly the trust the date was added to earn. "Rates unchanged since 1 Apr 2024" is
+// the same fact stated so that it informs instead of contradicting — and it answers the question
+// a tariff searcher is really asking, which is whether anything has moved.
+function ratesPhrase(meta, fy) {
+  if (!meta || !meta.currentRatesFrom) return null;
+  const when = new Date(meta.currentRatesFrom + 'T00:00:00Z')
+    .toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+  // Indian tariff years run April–March, so "2026-27" starts 1 Apr 2026. A tariff whose rates
+  // predate its own FY start is a carried-forward order.
+  const fyStart = /(\d{4})\s*[-–/]/.exec(String(fy || ''));
+  const carried = fyStart && meta.currentRatesFrom < `${fyStart[1]}-04-01`;
+  return { when, carried, label: carried ? `unchanged since ${when}` : `in force from ${when}` };
 }
 
 // Does any sibling DISCOM in the state apply the identical tariff schedule? (Honest disclosure.)
@@ -1380,18 +1438,35 @@ function discomPage(state, discom, lang = 'en') {
   // "<name> Bill Calculator <year>" — the exact query shape ("TNEB bill calculator 2024-25",
   // "MVVNL bill calculator 2025-26") — with only the suffix varied. No brand suffix (Google
   // shows the site name separately). Long names step down via fitTitle().
-  const title = fitTitle(variant(seed, [
-    `${cname} Bill Calculator ${TITLE_YEAR} — Tariff & Rates`,
-    `${cname} Bill Calculator ${TITLE_YEAR} — ${state} Tariff`,
-    `${cname} Electricity Bill Calculator ${TITLE_YEAR}`,
-  ]), [
+  // The slab range leads when we have it: "MVVNL Bill Calculator 2026 — ₹3.35–6.50/unit" tells
+  // a searcher at position 9 something no competing result does, where "— Tariff & Rates"
+  // restates the query back at them. fitTitle() steps down to the old rotation for the long
+  // DISCOM names ("Adani Electricity Mumbai") where the rate tag will not fit.
+  const rt = rateTag(dr);
+  const title = fitTitle(rt
+    ? `${cname} Bill Calculator ${TITLE_YEAR} — ${rt}`
+    : variant(seed, [
+      `${cname} Bill Calculator ${TITLE_YEAR} — Tariff & Rates`,
+      `${cname} Bill Calculator ${TITLE_YEAR} — ${state} Tariff`,
+      `${cname} Electricity Bill Calculator ${TITLE_YEAR}`,
+    ]), [
+    variant(seed, [
+      `${cname} Bill Calculator ${TITLE_YEAR} — Tariff & Rates`,
+      `${cname} Bill Calculator ${TITLE_YEAR} — ${state} Tariff`,
+      `${cname} Electricity Bill Calculator ${TITLE_YEAR}`,
+    ]),
     `${cname} Bill Calculator ${TITLE_YEAR}`,
     `${cname} Bill Calculator`,
   ]);
+  // "In force from 1 October 2025" replaces the "Free, no sign-up." sign-off wherever we know
+  // the date. Tariff searches are freshness-sensitive and the SERP is full of pages quoting
+  // rates from two orders ago — a date is the strongest differentiator we have, and a stronger
+  // one than restating that a free calculator is free.
+  const rp = ratesPhrase(meta, fy);
   const description = variant(seed + 'd', [
-    `Calculate your ${discom.name}${gloss} electricity bill for ${fy}${cityPhrase ? ` in ${cityPhrase}` : ''}. Slab-wise rates, fixed charges, FPPA & duties.${dr ? ` Domestic from ${rupeeRate(dr.min)}/unit.` : ''} Free, no sign-up.`,
-    `${discom.name} electricity bill calculator for ${state}${cityPhrase ? ` (${cityPhrase})` : ''}. ${fy} domestic & commercial slab rates, fixed/demand charges and an instant itemised estimate.`,
-    `Free ${discom.name} bill estimate (${fy})${cityPhrase ? ` for ${cityPhrase}${widerArea ? ` and across ${widerArea}` : ''}` : ''}. See the full tariff schedule, indicative monthly bills and pay-bill portal.`,
+    `Calculate your ${discom.name}${gloss} electricity bill for ${fy}${rp ? `, ${rp.label}` : ''}${cityPhrase ? `, in ${cityPhrase}` : ''}. Slab-wise rates, fixed charges, FPPA & duties.${dr ? ` Domestic from ${rupeeRate(dr.min)}/unit.` : ''}`,
+    `${discom.name} electricity bill calculator for ${state}${cityPhrase ? ` (${cityPhrase})` : ''}. ${fy} domestic & commercial slab rates${rp ? ` (${rp.label})` : ''}, fixed/demand charges and an instant itemised estimate.`,
+    `Free ${discom.name} bill estimate (${fy})${cityPhrase ? ` for ${cityPhrase}${widerArea ? ` and across ${widerArea}` : ''}` : ''}.${rp ? ` Rates ${rp.label}.` : ''} See the full tariff schedule and indicative monthly bills.`,
   ]);
   // H1 also leads with the searched "<name> Bill Calculator <year>" phrase (matching the title),
   // then varies the tail — region or the full legal name — for on-page uniqueness.
@@ -1515,9 +1590,15 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
   const cityList3 = esc(cities.slice(0, 3).join(', '));
   const rgn = region || sl;
 
+  // The rate tag is script-neutral — "₹2.20–7.50/unit" carries the same meaning in a Hindi SERP
+  // as an English one, and Devanagari costs 0.951/char so it fits more often here than in English.
+  const rt = rateTag(dr, lang);
   const title = fitTitle(
-    T(lang, { hi: `${cname} बिजली बिल कैलकुलेटर ${TITLE_YEAR} — टैरिफ`, mr: `${cname} वीज बिल कॅल्क्युलेटर ${TITLE_YEAR} — टॅरिफ`, ta: `${cname} மின் கட்டண கணிப்பான் ${TITLE_YEAR} — கட்டணம்`, en: `${cname} Bill Calculator ${TITLE_YEAR}` }),
+    rt
+      ? T(lang, { hi: `${cname} बिजली बिल कैलकुलेटर ${TITLE_YEAR} — ${rt}`, mr: `${cname} वीज बिल कॅल्क्युलेटर ${TITLE_YEAR} — ${rt}`, ta: `${cname} மின் கட்டண கணிப்பான் ${TITLE_YEAR} — ${rt}`, en: `${cname} Bill Calculator ${TITLE_YEAR} — ${rt}` })
+      : T(lang, { hi: `${cname} बिजली बिल कैलकुलेटर ${TITLE_YEAR} — टैरिफ`, mr: `${cname} वीज बिल कॅल्क्युलेटर ${TITLE_YEAR} — टॅरिफ`, ta: `${cname} மின் கட்டண கணிப்பான் ${TITLE_YEAR} — கட்டணம்`, en: `${cname} Bill Calculator ${TITLE_YEAR}` }),
     [
+      T(lang, { hi: `${cname} बिजली बिल कैलकुलेटर ${TITLE_YEAR} — टैरिफ`, mr: `${cname} वीज बिल कॅल्क्युलेटर ${TITLE_YEAR} — टॅरिफ`, ta: `${cname} மின் கட்டண கணிப்பான் ${TITLE_YEAR} — கட்டணம்`, en: `${cname} Bill Calculator ${TITLE_YEAR}` }),
       T(lang, { hi: `${cname} बिजली बिल कैलकुलेटर ${TITLE_YEAR}`, mr: `${cname} वीज बिल कॅल्क्युलेटर ${TITLE_YEAR}`, ta: `${cname} மின் கட்டண கணிப்பான் ${TITLE_YEAR}`, en: `${cname} Bill Calculator ${TITLE_YEAR}` }),
       T(lang, { hi: `${cname} बिल कैलकुलेटर ${TITLE_YEAR}`, mr: `${cname} बिल कॅल्क्युलेटर ${TITLE_YEAR}`, ta: `${cname} கட்டண கணிப்பான் ${TITLE_YEAR}`, en: `${cname} Bill Calculator` }),
     ]);
@@ -1703,8 +1784,12 @@ function statePage(state, lang = 'en') {
     const nd = discoms.length;
     const many = nd > 1;
     const pfx = `/${lang}`;
+    const vRt = rateTag(stateRateRange(discoms), lang);
     const title = fitTitle(
-      T(lang, { hi: `${sl} बिजली बिल कैलकुलेटर ${TITLE_YEAR}`, mr: `${sl} वीज बिल कॅल्क्युलेटर ${TITLE_YEAR}`, ta: `${sl} மின் கட்டண கணிப்பான் ${TITLE_YEAR}`, en: '' }), [
+      vRt
+        ? T(lang, { hi: `${sl} बिजली टैरिफ ${yr} — ${vRt}`, mr: `${sl} वीज टॅरिफ ${yr} — ${vRt}`, ta: `${sl} மின் கட்டணம் ${yr} — ${vRt}`, en: '' })
+        : T(lang, { hi: `${sl} बिजली बिल कैलकुलेटर ${TITLE_YEAR}`, mr: `${sl} वीज बिल कॅल्क्युलेटर ${TITLE_YEAR}`, ta: `${sl} மின் கட்டண கணிப்பான் ${TITLE_YEAR}`, en: '' }), [
+      T(lang, { hi: `${sl} बिजली बिल कैलकुलेटर ${TITLE_YEAR}`, mr: `${sl} वीज बिल कॅल्क्युलेटर ${TITLE_YEAR}`, ta: `${sl} மின் கட்டண கணிப்பான் ${TITLE_YEAR}`, en: '' }),
       T(lang, { hi: `${sl} बिजली टैरिफ ${yr}`, mr: `${sl} वीज टॅरिफ ${yr}`, ta: `${sl} மின் கட்டணம் ${yr}`, en: '' }),
       T(lang, { hi: `${sl} बिजली टैरिफ`, mr: `${sl} वीज टॅरिफ`, ta: `${sl} மின் கட்டணம்`, en: '' }),
     ]);
@@ -1824,18 +1909,37 @@ function statePage(state, lang = 'en') {
   }
 
   // ≤ ~60 chars, keyword-first, no brand suffix (see the note above the DISCOM-page title).
-  const title = fitTitle(variant(seed, [
-    `${state} Electricity Bill Calculator ${TITLE_YEAR}`,
-    `${state} Electricity Tariff ${fy} — Bill Calculator`,
-    `${state} DISCOM Tariffs & Bill Calculator ${TITLE_YEAR}`,
-  ]), [
+  // Rate-first, same reasoning as the DISCOM page. The tariff-order FY pairs with "Tariff" and
+  // the calendar year with "Bill Calculator" — that split is deliberate and matches how the two
+  // phrasings are actually searched, so the fallbacks keep each year with its own noun.
+  const srr = stateRateRange(discoms);
+  const stateRt = rateTag(srr);
+  const title = fitTitle(stateRt
+    ? `${state} Electricity Tariff ${fy} — ${stateRt}`
+    : variant(seed, [
+      `${state} Electricity Bill Calculator ${TITLE_YEAR}`,
+      `${state} Electricity Tariff ${fy} — Bill Calculator`,
+      `${state} DISCOM Tariffs & Bill Calculator ${TITLE_YEAR}`,
+    ]), [
+    ...(stateRt ? [`${state} Tariff ${fy} — ${stateRt}`] : []),
+    variant(seed, [
+      `${state} Electricity Bill Calculator ${TITLE_YEAR}`,
+      `${state} Electricity Tariff ${fy} — Bill Calculator`,
+      `${state} DISCOM Tariffs & Bill Calculator ${TITLE_YEAR}`,
+    ]),
     `${state} Electricity Tariff ${fy}`,
     `${state} Tariff ${fy}`,
   ]);
+  // The effective date rides immediately after the tariff year, not as a sign-off. Trailed at
+  // the end it was the first thing the 155-unit clamp threw away — Rajasthan's snippet lost
+  // "In force from 1 October 2025" entirely — which is exactly backwards, since the date is the
+  // most differentiating clause in the sentence and "Free, no sign-up" is the most expendable.
+  const rp = ratesPhrase(meta, fy);
+  const rpParen = rp ? ` (${rp.label})` : '';
   const description = variant(seed + 'd', [
-    `Check ${state}'s ${fy} slab rates & calculate your exact electricity bill in 30 seconds. ${discoms.length} DISCOM${discoms.length > 1 ? 's' : ''} with fixed charges & FPPA${stateMin != null ? `, domestic from ${rupee(stateMin)}/unit` : ''}. Free, no sign-up.`,
-    `See what electricity costs in ${state} (${fy})${cityLine ? ` — ${cityLine} & more` : ''}. Pick your DISCOM for its full slab table and an instant itemised bill. Free, no sign-up.`,
-    `${state} electricity tariff ${fy}: compare ${names}${stateMin != null ? `, rates from ${rupee(stateMin)}/unit,` : ''} and get your exact bill in seconds. Free, no sign-up.`,
+    `Check ${state}'s ${fy} slab rates${rpParen} & calculate your exact electricity bill in 30 seconds. ${discoms.length} DISCOM${discoms.length > 1 ? 's' : ''} with fixed charges & FPPA${stateMin != null ? `, domestic from ${rupee(stateMin)}/unit` : ''}.`,
+    `See what electricity costs in ${state} (${fy}${rp ? `, ${rp.label}` : ''})${cityLine ? ` — ${cityLine} & more` : ''}. Pick your DISCOM for its full slab table and an instant itemised bill.`,
+    `${state} electricity tariff ${fy}${rpParen}: compare ${names}${stateMin != null ? `, rates from ${rupee(stateMin)}/unit,` : ''} and get your exact bill in seconds.`,
   ]);
 
   const discomCards = discoms.map(d => {
