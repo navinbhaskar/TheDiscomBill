@@ -36,6 +36,7 @@ export const STRINGS = {
     'ql.tariffsByState': 'Tariffs by State & DISCOM',
     'ql.discomServices': 'DISCOM Services',
     'ql.smartMeter': 'Smart Meter Recharge',
+    'ql.meterDisplay': 'Smart Meter Guide',
     'ql.billReviewGroup': 'Get Your Bill Reviewed',
     'ql.ocrCheck': 'Instant Bill Self-Check (OCR)',
     'ql.billReview': 'Expert Bill Review',

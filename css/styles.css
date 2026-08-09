@@ -6257,3 +6257,134 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
 }
 .seo-section-caution > h2::before { background: var(--warn-text) !important; }
 .seo-section-caution > h2 { color: var(--warn-text); }
+
+/* ── Smart meter diagram (/smart-meter/) ──────────────────────────────────────
+   The meter face is drawn rather than photographed. A diagram carries no rights
+   problem, re-colours for dark mode, stays sharp at any zoom, and can show every
+   indicator lit at once — which no real meter ever does, since the alerts are
+   mutually exclusive in practice. Colours come from tokens so the LCD stays
+   legible in both themes; the two LED hues are deliberately literal (red pulse,
+   amber alarm) because that is what the reader is looking at on the wall. */
+.meter-figure { margin: 0 0 20px; }
+.meter-svg {
+  display: block; width: 100%; max-width: 640px; height: auto; margin: 0 auto;
+  font-family: var(--font-body, system-ui, sans-serif);
+}
+/* The casing keeps real-meter colours in both themes. A photo of a meter does not invert
+   when the page does, and re-tinting the white polycarbonate to match a dark page is what
+   made the first version read as a diagram of a meter rather than as a meter. */
+.m-flange { fill: #e3e0d8; stroke: #c2beb4; stroke-width: 1.2; }
+.m-flange-hole { fill: #b9b5ab; }
+.m-case-top { fill: url(#mBodyTop); stroke: #c2beb4; stroke-width: 1.3; }
+.m-case { fill: url(#mBody); stroke: #c2beb4; stroke-width: 1.3; }
+.m-screw-sm { fill: url(#mScrew); stroke: #97948c; stroke-width: 1; }
+.m-mark { fill: #2f3237; }
+.m-mark-cut { fill: #f6f4ef; }
+.m-maker { fill: #2f3237; font-size: 15px; font-weight: 800; letter-spacing: 2.2px; }
+.m-lamp-lbl { fill: #4b4f55; font-size: 9px; font-weight: 700; letter-spacing: .6px; text-anchor: middle; }
+.m-lamp-tick { stroke: #6b6f75; stroke-width: 1.1; }
+.m-lamp-on { fill: url(#mLedOn); }
+.m-lamp-off { fill: url(#mLedOff); stroke: #b0ada5; stroke-width: .8; }
+.m-spec { fill: #43474d; font-size: 9px; font-weight: 600; }
+.m-title { fill: #2f3237; font-size: 11.5px; font-weight: 800; letter-spacing: .7px; text-anchor: middle; }
+.m-symbols { fill: none; stroke: #43474d; stroke-width: 1.3; }
+.m-bars rect { fill: #2f3237; }
+.m-serial { fill: #2f3237; font-size: 10.5px; font-weight: 700; }
+.m-lcd-frame { fill: #6d7a55; stroke: #545f42; stroke-width: 1.2; }
+.m-lcd { fill: url(#mLcd); }
+.m-gloss { fill: url(#mGloss); pointer-events: none; }
+/* Segment digits sit on a backlit green panel, so they are near-black, and the unlit
+   segments stay faintly visible behind them — that ghost is most of what makes a real
+   display read as a display rather than as printed text. */
+.m-read { fill: #10240a; font-size: 27px; font-weight: 700; text-anchor: middle; letter-spacing: 1.4px; }
+.m-ghost { fill: #10240a; font-size: 27px; font-weight: 700; text-anchor: middle; letter-spacing: 1.4px; opacity: 0.11; }
+.m-code, .m-unit { fill: #14300a; font-size: 12px; font-weight: 700; }
+.m-unit { text-anchor: end; }
+.m-ico { fill: #14300a; stroke: #14300a; }
+.m-ico-warn { fill: #6d1f08; stroke: #6d1f08; }
+.m-led-pulse { fill: url(#mLedOn); }
+.m-print { fill: #43474d; font-size: 9.5px; font-weight: 600; }
+.m-print-sm { font-size: 8.5px; }
+.m-label { fill: #5a5e64; font-size: 9px; font-weight: 600; text-anchor: middle; }
+.m-btn-rim { fill: #cfccc4; }
+.m-btn { fill: #26282c; }
+.m-port-metal { fill: url(#mPortMetal); stroke: #8f959c; stroke-width: 1.2; }
+.m-port-ring { fill: none; stroke: #8f959c; stroke-width: 1.4; }
+.m-port-slot { fill: #1c1e22; }
+.m-port-notch { fill: none; stroke: #9aa0a7; stroke-width: 2; stroke-linecap: round; }
+.m-term { fill: url(#mTerm); }
+.m-term-slot rect { fill: #1e1e1e; }
+.m-brass circle { fill: url(#mBrass); stroke: #6b551f; stroke-width: .8; }
+.m-term-seal { fill: none; stroke: #7a7a7a; stroke-width: 1.4; }
+/* Leaders and numbers are page furniture, not part of the device, so these stay themed. */
+.m-lead { stroke: var(--border-strong); stroke-width: 1.3; fill: none; stroke-dasharray: 3 3; }
+.m-num circle { fill: var(--brand); }
+.m-num text { fill: #fff; font-size: 14px; font-weight: 700; text-anchor: middle; }
+.meter-figure figcaption {
+  font-size: 12.5px; color: var(--text-tertiary); line-height: 1.55;
+  text-align: center; max-width: 560px; margin: 10px auto 0;
+}
+.meter-legend { list-style: none; counter-reset: mleg; padding: 0; margin: 22px 0 0; }
+.meter-legend li {
+  counter-increment: mleg; position: relative;
+  padding: 0 0 14px 42px; margin: 0 0 14px;
+  border-bottom: 1px solid var(--border-subtle);
+  line-height: 1.65; color: var(--text-secondary);
+}
+.meter-legend li:last-child { border-bottom: 0; margin-bottom: 0; }
+.meter-legend li::before {
+  content: counter(mleg); position: absolute; left: 0; top: 1px;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--brand); color: #fff;
+  font-size: 13.5px; font-weight: 700; line-height: 28px; text-align: center;
+}
+.meter-legend strong { color: var(--text-primary); }
+/* There is no global <code> rule on the site, so unstyled inline codes read as plain
+   text at these sizes. Scope a chip treatment to this page's register codes and units. */
+.meter-legend code, .seo-page .comparison-table code {
+  font-size: 0.92em; background: var(--surface-sunken);
+  border: 1px solid var(--border-default); border-radius: var(--radius-xs);
+  padding: 1px 5px; color: var(--text-primary); white-space: nowrap;
+}
+@media (max-width: 560px) {
+  .meter-legend li { padding-left: 36px; }
+  .meter-legend li::before { width: 24px; height: 24px; line-height: 24px; font-size: 12.5px; }
+}
+
+/* AMISP award table. The status pill is not decoration — the table mixes confirmed awards
+   with "reported active" and one cancelled tender, and a reader who cannot see that
+   distinction at a glance will treat every row as equally firm. Colour plus wording, never
+   colour alone. */
+.amisp-table th[scope="rowgroup"], .amisp-table th[scope="row"] {
+  text-align: left; vertical-align: top; font-weight: 700;
+  color: var(--text-primary); white-space: nowrap;
+  border-right: 1px solid var(--border-default);
+}
+.amisp-table td { vertical-align: top; }
+.amisp-ok, .amisp-soft, .amisp-no {
+  display: inline-block; font-size: 11.5px; font-weight: 700;
+  padding: 2px 8px; border-radius: 999px; margin-right: 4px; white-space: nowrap;
+}
+.amisp-ok { background: var(--ok-bg); color: var(--ok-text); }
+.amisp-soft { background: var(--warn-bg); color: var(--warn-text); }
+.amisp-no { background: var(--err-bg); color: var(--err-text); }
+
+.m-print-end { text-anchor: end; }
+
+/* Smart Meter Guide: one measure for everything on the page.
+   Site-wide, body copy is capped at 760px because that is a comfortable line length, while
+   tables size to their content — so this page showed three different edges (text 760, the
+   register table 795, the AMISP table at the full 952). Here the page is deliberately
+   edge-aligned instead: every block runs the full content width, so the diagram, both
+   tables and the prose share one left and right rule. */
+.smart-meter-page .seo-lead,
+.smart-meter-page .seo-section p,
+.smart-meter-page .seo-note,
+.smart-meter-page .seo-disclaimer,
+.smart-meter-page .meter-legend li { max-width: none; }
+.smart-meter-page .meter-legend { max-width: none; }
+/* .seo-page sets the wrapper to fit-content, so a table at width:100% was still resolving
+   against a shrink-wrapped box. The wrapper has to span first; the table then fills it, and
+   on narrow screens the overflow scroll still happens inside the wrapper as before. */
+.smart-meter-page .comparison-table-wrapper { width: 100%; }
+.smart-meter-page .comparison-table { width: 100%; }

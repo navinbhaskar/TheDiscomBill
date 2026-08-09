@@ -374,6 +374,7 @@ const FOOTER_SITEMAP = `
         <span class="footer-col-title" data-i18n="ql.services">Services</span>
         <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
         <a href="/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/smart-meter/" data-i18n="ql.meterDisplay">Smart Meter Guide</a>
         <a href="/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
         <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
         <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
@@ -3547,6 +3548,8 @@ function buildSitemap(states) {
   urls.push({ loc: '/fuel-surcharge/', priority: '0.8', changefreq: 'monthly' });
   urls.push({ loc: '/tariffs/states/', priority: '0.8', changefreq: 'monthly', langs: [...VERNACULARS] });
   urls.push({ loc: '/smart-meter-recharge/', priority: '0.8', changefreq: 'monthly', langs: [...VERNACULARS] });
+  // Hand-authored (smart-meter/index.html), English-only for now — same as the other tool pages.
+  urls.push({ loc: '/smart-meter/', priority: '0.7', changefreq: 'yearly' });
   for (const state of states) {
     const stateSlug = slugify(state);
     const sLangs = VERNACULARS.filter(l => langServesState(l, state));

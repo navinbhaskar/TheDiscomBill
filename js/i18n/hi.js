@@ -39,6 +39,7 @@ export default {
     'ql.tariffsByState': 'राज्य व डिस्कॉम अनुसार टैरिफ',
     'ql.discomServices': 'डिस्कॉम सेवाएँ',
     'ql.smartMeter': 'स्मार्ट मीटर रिचार्ज',
+    'ql.meterDisplay': 'स्मार्ट मीटर गाइड',
     'ql.billReviewGroup': 'अपने बिल की जाँच कराएँ',
     'ql.ocrCheck': 'तुरंत बिल स्व-जाँच (OCR)',
     'ql.billReview': 'विशेषज्ञ बिल समीक्षा',

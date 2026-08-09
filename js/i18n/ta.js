@@ -39,6 +39,7 @@ export default {
     'ql.tariffsByState': 'மாநிலம் & டிஸ்காம் வாரியான கட்டணங்கள்',
     'ql.discomServices': 'டிஸ்காம் சேவைகள்',
     'ql.smartMeter': 'ஸ்மார்ட் மீட்டர் ரீசார்ஜ்',
+    'ql.meterDisplay': 'ஸ்மார்ட் மீட்டர் வழிகாட்டி',
     'ql.billReviewGroup': 'உங்கள் பில்லை ஆய்வு செய்யுங்கள்',
     'ql.ocrCheck': 'உடனடி பில் சுய சரிபார்ப்பு (OCR)',
     'ql.billReview': 'நிபுணர் பில் மதிப்பாய்வு',
