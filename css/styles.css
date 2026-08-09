@@ -4408,6 +4408,30 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 /* margin-top removed: this section changes background and draws a top border, so a margin
    above it left a band of page colour before the rule — reading as a gap the border was
    already providing. The border alone is the separator now. */
+/* ── More tools ──────────────────────────────────────────────────────────────
+   Link columns, not cards. A card per tool would put fourteen same-sized boxes on the page
+   and make the section compete with the calculator directly above it; grouped text links
+   stay quiet, scan in one pass, and let the group headings carry the meaning. */
+.tools-section { padding: 30px 24px 26px; position: relative; }
+.tools-section .container { max-width: 900px; margin: 0 auto; }
+.tools-section h2 {
+  font-size: 21px; font-weight: 600; color: var(--text-primary);
+  letter-spacing: -0.4px; margin: 0 0 6px;
+}
+.tools-lead { color: var(--text-secondary); margin: 0 0 20px; line-height: 1.6; max-width: 620px; }
+.tools-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 22px 28px; }
+.tools-group { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.tools-group h3 {
+  font-size: 12px; font-weight: 700; color: var(--text-tertiary);
+  letter-spacing: .6px; text-transform: uppercase;
+  margin: 0 0 3px;
+}
+.tools-group a {
+  font-size: 13.5px; color: var(--text-secondary); text-decoration: none;
+  line-height: 1.45; transition: color var(--t-fast);
+}
+.tools-group a:hover { color: var(--text-brand); text-decoration: underline; }
+
 /* Below the hero the page was a stack of flat slabs, so every section boundary read as a
    seam rather than a change of altitude. These two get the hero's own devices instead: a
    brand-tinted radial that fades toward the fold, and the gradient hairline .hero-glass

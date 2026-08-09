@@ -254,7 +254,7 @@
   <div class="hero-left">
   <div class="hero-badge reveal" data-i18n="hero.badge">Free &middot; All DISCOMs &middot; Instant Estimate</div>
   <h1 class="reveal" data-i18n="hero.title">Electricity Bill Calculator for Every DISCOM in India</h1>
-  <p class="reveal" data-i18n="hero.sub">Get an instant provisional bill with slab-wise breakdown for any state electricity utility.</p>
+  <p class="reveal" data-i18n="hero.sub">See what your bill should be, what every charge on it means, and whether yours adds up.</p>
 
   <!-- Primary call to action (smooth-scrolls to the form via the Lenis anchor handler)
        + secondary CTA to the expert Bill Review service -->
@@ -991,6 +991,45 @@
       <span>PSPCL</span><span>TSSPDCL</span><span>APSPDCL</span><span>BSES Rajdhani</span>
       <span>Tata Power-DDL</span><span>Adani Electricity</span><span>CESC</span><span>Torrent Power</span>
       <span>KSEB</span><span>WBSEDCL</span><span>JVVNL</span><span>MPPKVVCL</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── More tools ────────────────────────────────────────────────────────────────
+     The footer has listed all of this for a long time; the body never did, so a visitor
+     who came for the calculator had no way to learn the site does anything else. Grouped
+     by the JOB the reader is doing, not by our internal categories — plain link columns
+     rather than a wall of icon-heading-text cards, which is what a directory this size
+     actually wants. Every label reuses the footer's existing i18n key, so nothing here
+     needs translating twice or can drift out of step with it. -->
+<section id="tools" class="tools-section">
+  <div class="container">
+    <h2 data-i18n="tools.title">More than a bill calculator</h2>
+    <p class="tools-lead" data-i18n="tools.sub">Every tool here runs on the same verified tariff data — pick whichever matches what you are trying to work out.</p>
+    <div class="tools-groups">
+      <div class="tools-group">
+        <h3 data-i18n="tools.group.check">Check a bill</h3>
+        <a href="/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
+        <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/fuel-surcharge/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+      </div>
+      <div class="tools-group">
+        <h3 data-i18n="tools.group.plan">Plan and save</h3>
+        <a href="/compare/" data-i18n="nav.compare">Compare</a>
+        <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+      </div>
+      <div class="tools-group">
+        <h3 data-i18n="tools.group.solar">Solar &amp; EV</h3>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</a>
+        <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+        <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+      </div>
     </div>
   </div>
 </section>

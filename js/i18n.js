@@ -43,6 +43,13 @@ export const STRINGS = {
     'ql.glossary': 'Bill Glossary',
     'ql.methodology': 'Methodology & Accuracy',
     'ql.fuelSurcharge': 'Fuel Surcharge Tracker',
+    // Homepage "More tools" section. Only the headings live here — every tool LABEL in that
+    // section reuses the footer's existing ql.*/nav.* keys, so the two can never disagree.
+    'tools.title': 'More than a bill calculator',
+    'tools.sub': 'Every tool here runs on the same verified tariff data — pick whichever matches what you are trying to work out.',
+    'tools.group.check': 'Check a bill',
+    'tools.group.plan': 'Plan and save',
+    'tools.group.solar': 'Solar & EV',
     'ql.contact': 'Contact',
     'ql.privacy': 'Privacy Policy',
     'ql.cookies': 'Cookie Policy',
@@ -65,7 +72,11 @@ export const STRINGS = {
     // Hero
     'hero.badge': 'Free · All DISCOMs · Instant Estimate',
     'hero.title': 'Electricity Bill Calculator for Every DISCOM in India',
-    'hero.sub': 'Get an instant provisional bill with slab-wise breakdown for any state electricity utility.',
+    // Three clauses for the three jobs the site actually does — the calculator, the guides,
+    // the bill check — in the reader's words rather than the industry's. The old line spent
+    // itself on mechanism ("provisional bill", "slab-wise breakdown", "state electricity
+    // utility") and on coverage the stats row two elements below already proves.
+    'hero.sub': 'See what your bill should be, what every charge on it means, and whether yours adds up.',
     'hero.cta': 'Calculate my bill',
     'hero.cta2': 'Check my bill for errors',
     'review.title': 'How would you like your bill checked?',
