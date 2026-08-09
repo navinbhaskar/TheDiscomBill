@@ -9,7 +9,12 @@
            reference has no rim.
          • the bolt has no drop shadow. The reference carries one, but at 16px a shadow
            renders as a grey smudge along the bolt's lower edge rather than as depth.
-         • the bolt is scaled up, because app-icon padding is too generous for a favicon. -->
+         • the bolt is sized to MATCH THE HEADER MARK, not to fill the tile. .logo-icon-wrap
+           is a 38px tile holding a 22px glyph box, and the bolt's own bounding box is 19.8
+           of that box's 24 units — so it stands 47.8% of the tile's height. The bolt path
+           here measures 381.1 units tall, hence scale 0.642 (381.1 × 0.642 / 512 = 47.8%).
+           An earlier 1.18 filled 87.8% of the tile, which read as a different, heavier mark
+           than the one in the header. Recompute this factor if either path ever changes. -->
   <defs>
     <radialGradient id="fbg" cx="0.42" cy="0.34" r="0.88">
       <stop offset="0" stop-color="#5c76ca"/>
@@ -22,7 +27,10 @@
     </linearGradient>
   </defs>
   <rect width="512" height="512" rx="118" fill="url(#fbg)"/>
-  <g transform="translate(256 256) scale(1.18) translate(-256 -256)">
+  <!-- Centred on the GLYPH's bounding box (265.0, 258.95), not on the viewBox: the bolt is
+       drawn slightly right of and below centre, so scaling about 256,256 would leave it
+       visibly off-centre once the padding around it grew. -->
+  <g transform="translate(85.87 89.75) scale(0.642)">
     <path d="M300 74 138 306c-8 11 0 26 14 26h74l-22 100c-4 15 16 24 26 12l162-232c8-11 0-26-14-26h-74l22-100c4-15-16-24-26-12Z"
           fill="url(#fbolt)"/>
   </g>

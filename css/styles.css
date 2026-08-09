@@ -879,19 +879,13 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
 @media (prefers-reduced-motion: reduce) {
   .hero::before { animation: none; }
 }
-/* Fine grid, faded out toward the edges — technical texture under the glass. Sits above
-   ::before so the mesh reads through it, below .hero-glass (z-index 1 via position). */
-.hero::after {
-  content: '';
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(to right, rgba(15, 23, 42, .045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 23, 42, .045) 1px, transparent 1px);
-  background-size: 44px 44px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 78%);
-          mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 78%);
-  pointer-events: none;
-}
+/* The hero used to carry a 44px graph-paper grid here, masked to an ellipse over the middle
+   of the section. Because .hero-glass is frosted rather than opaque, the grid read straight
+   through the panel and across the sample bill card sitting on it — so the card that is
+   meant to look like a clean bill looked like it was printed on squared paper.
+   The mesh gradients in ::before already supply the hero's depth; the grid was texture on
+   top of texture. Removed rather than made solid: keeping the frost and dropping the grid
+   costs nothing, where making the panel opaque would have flattened the hero's signature. */
 :root[data-theme="dark"] .hero::before {
   background-image:
     radial-gradient(ellipse 55% 65% at 10% 2%,  rgba(37, 99, 235, .40),  transparent 62%),
@@ -899,11 +893,6 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
     radial-gradient(ellipse 40% 46% at 72% 96%, rgba(29, 78, 216, .30),  transparent 65%),
     radial-gradient(ellipse 30% 38% at 52% 30%, rgba(56, 189, 248, .16), transparent 68%),
     radial-gradient(ellipse 26% 34% at 84% 62%, rgba(139, 92, 246, .18), transparent 70%);
-}
-:root[data-theme="dark"] .hero::after {
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, .05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, .05) 1px, transparent 1px);
 }
 /* Frosted-glass content panel */
 .hero-glass {

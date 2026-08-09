@@ -10,7 +10,8 @@
     "test": "node tests/engine.test.mjs && node tests/bill-ocr.test.mjs && node tests/site.test.mjs",
     "api:bundle": "node scripts/sync-calc-api.mjs",
     "serve": "npx http-server . -p 3456",
-    "og": "node scripts/og-images.mjs"
+    "og": "node scripts/og-images.mjs",
+    "icons": "node scripts/icons.mjs"
   },
   "license": "MIT",
   "repository": {
