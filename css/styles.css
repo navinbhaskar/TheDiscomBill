@@ -101,6 +101,11 @@
   --surface-sunken: var(--p-slate-100);
   --surface-hover:  #eef3fb;             /* cool-tinted hover wash for chips/rows */
   --surface-overlay:rgba(15,23,42,.04);
+  /* Lit-from-top-left card face. Same 150deg the hero panel already uses, so a card and the
+     hero read as the same material catching the same light — the alternative, a flat fill,
+     is why everything below the hero looked like paper slabs. Kept to a 4-6% delta end to
+     end: enough to give an edge somewhere to land, not enough to notice as a gradient. */
+  --surface-card-grad: linear-gradient(150deg, #ffffff 0%, #f5f8ff 100%);
 
   /* Brand */
   --brand:          var(--p-blue-600);
@@ -209,6 +214,10 @@
   --surface-sunken: #0f1828;
   --surface-hover:  #1a2740;
   --surface-overlay: rgba(255,255,255,.05);
+  /* Dark needs a wider swing than light to read at all — a 4% delta disappears below #131c2e.
+     Three stops, not two: the mid stop holds the base card colour so the face does not drift
+     lighter overall, it only picks up an edge. */
+  --surface-card-grad: linear-gradient(150deg, #1b2740 0%, #131c2e 58%, #101827 100%);
 
   --brand-faint:   #14233c;
   --brand-subtle:  #1b335c;
@@ -1300,6 +1309,9 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
    About copy; at the old values it stacked with .calculator-section's bottom margin above
    (78px of dead space) and .about-section's margin+padding below (94px), so it read as
    three disconnected pages rather than one column. */
+:root[data-theme="dark"] .calculator-section {
+  background-image: radial-gradient(ellipse 65% 55% at 50% -5%, rgba(59, 130, 246, .13), transparent 70%);
+}
 .coverage-strip { padding: 18px 24px 18px; text-align: center; }
 /* There is no base `.container` rule in this sheet — each section sets its own width — so
    this one had none and the DISCOM chips ran the full viewport while the About copy right
@@ -1383,6 +1395,11 @@ html:not([lang="en"]) .hero-discoms-label {
 
 /* ─── Calculator Section ──────────────────────────────────────────────────────── */
 .calculator-section {
+  /* The calculator is the product, and it sat on bare page colour directly under a lit hero
+     panel — so the page's most important block was also its flattest. A single brand radial
+     rising from the top edge carries the hero's light down into it. `at 50% -5%` puts the
+     centre just off-canvas so what shows is the falloff, never the hot spot. */
+  background-image: radial-gradient(ellipse 65% 55% at 50% -5%, rgba(37, 99, 235, .09), transparent 70%);
   /* 24px, not 48: the coverage strip below adds its own 18px, and the pair read as a
      page break rather than a section change. */
   max-width: 1280px; margin: 0 auto 24px;
@@ -1419,7 +1436,9 @@ html:not([lang="en"]) .hero-discoms-label {
 
 /* ─── Form Panel ─────────────────────────────────────────────────────────────── */
 .form-panel {
-  background: var(--surface-card);
+  /* The two panels below the hero are the largest surfaces on the page; left flat they made
+     the whole fold read as paper cut-outs under a lit hero. */
+  background: var(--surface-card-grad);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--border-subtle);
@@ -2393,7 +2412,7 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 
 /* ─── Bill Panel ─────────────────────────────────────────────────────────────── */
 .bill-panel {
-  background: var(--surface-card);
+  background: var(--surface-card-grad);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--border-subtle);
@@ -3781,7 +3800,7 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 }
 
 /* FAQ */
-.seo-faq-item { background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 4px 16px; margin-bottom: 10px; }
+.seo-faq-item { background: var(--surface-card-grad); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 4px 16px; margin-bottom: 10px; }
 .seo-faq-item summary { cursor: pointer; font-weight: 600; font-size: 14.5px; color: var(--text-primary); padding: 12px 0; list-style: none; }
 .seo-faq-item summary::-webkit-details-marker { display: none; }
 .seo-faq-item summary::before { content: '＋'; color: var(--text-brand); font-weight: 700; margin-right: 9px; }
@@ -3913,7 +3932,14 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .method-example small { color: var(--text-tertiary); display: block; margin-bottom: 3px; font-size: 11.5px; }
 
 /* Homepage "browse by state" internal-link section */
-.states-section { padding: 24px 24px 8px; }
+.states-section {
+  padding: 32px 24px 8px;
+  position: relative;
+  background-image: radial-gradient(ellipse 80% 55% at 50% 0%, rgba(37, 99, 235, .06), transparent 66%);
+}
+:root[data-theme="dark"] .states-section {
+  background-image: radial-gradient(ellipse 80% 55% at 50% 0%, rgba(59, 130, 246, .10), transparent 66%);
+}
 .states-section .container { max-width: 1000px; margin: 0 auto; }
 .states-section h2 { font-size: 21px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.4px; text-align: center; margin: 0 0 8px; }
 .states-section > .container > p { color: var(--text-secondary); text-align: center; margin: 0 auto 22px; max-width: 620px; line-height: 1.6; }
@@ -3921,7 +3947,7 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .states-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
 .states-grid a {
   display: block; font-size: 13.5px; font-weight: 400; color: var(--text-secondary);
-  background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+  background: var(--surface-card-grad); border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
   padding: 10px 14px; transition: border-color var(--t-fast), transform var(--t-fast), color var(--t-fast);
 }
 .states-grid a:hover { border-color: var(--brand); color: var(--text-brand); transform: translateY(-1px); }
@@ -4380,10 +4406,27 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 /* margin-top removed: this section changes background and draws a top border, so a margin
    above it left a band of page colour before the rule — reading as a gap the border was
    already providing. The border alone is the separator now. */
+/* Below the hero the page was a stack of flat slabs, so every section boundary read as a
+   seam rather than a change of altitude. These two get the hero's own devices instead: a
+   brand-tinted radial that fades toward the fold, and the gradient hairline .hero-glass
+   already uses on its top edge. Same vocabulary, a fifth of the intensity — the hero stays
+   the loudest thing on the page, which is the point. */
 .about-section {
-  background: var(--surface-card);
+  background-color: var(--surface-card);
+  background-image: radial-gradient(ellipse 90% 60% at 50% 0%, rgba(37, 99, 235, .07), transparent 68%);
   padding: 34px 24px 32px;
   border-top: 1px solid var(--border-default);
+  position: relative;
+}
+.about-section::before,
+.states-section::before {
+  content: '';
+  position: absolute; left: 14%; right: 14%; top: -1px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(37, 99, 235, .5), rgba(148, 178, 255, .55), transparent);
+  pointer-events: none;
+}
+:root[data-theme="dark"] .about-section {
+  background-image: radial-gradient(ellipse 90% 60% at 50% 0%, rgba(59, 130, 246, .12), transparent 68%);
 }
 .about-section .container { max-width: 900px; margin: 0 auto; }
 .about-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 14px; letter-spacing: -0.5px; }
@@ -4404,7 +4447,7 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   gap: 16px; margin: 28px 0;
 }
 .stat-card {
-  background: var(--surface-card);
+  background: var(--surface-card-grad);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   padding: 22px 20px; text-align: center;
@@ -5069,13 +5112,20 @@ html:not([lang="en"]) .footer-col-title {
   border-radius: var(--radius-xs); padding: 1px 5px; }
 
 /* Buttons */
+/* The primary action carries the SAME 145deg ramp as the logo tile (.logo-icon-wrap), so the
+   thing the visitor is meant to press is visibly cut from the same material as the mark in
+   the corner. A flat --brand fill read as a default button on a page whose own logo is lit.
+   background-image, not background: the flat --brand stays underneath as the fallback and
+   keeps the hover/disabled rules working on one property. */
 .btn-primary { height: 40px; padding: 0 18px; font-size: 14px; font-weight: 600; color: #fff;
   background: var(--brand);
+  background-image: linear-gradient(145deg, var(--p-blue-500) 0%, var(--p-blue-700) 70%, var(--p-blue-800) 100%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 8px 24px -8px rgba(29,78,216,.55);
   border: none; border-radius: 12px; cursor: pointer;
   transition: background var(--t-fast), transform var(--t-fast), box-shadow var(--t-fast); }
 .btn-primary:hover:not(:disabled) {
   background: var(--brand-hover);
+  background-image: linear-gradient(145deg, var(--p-blue-400) 0%, var(--p-blue-600) 70%, var(--p-blue-700) 100%);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 12px 28px -8px rgba(29,78,216,.65);
   transform: translateY(-1px); }
 .btn-primary:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
