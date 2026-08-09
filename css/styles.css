@@ -802,6 +802,10 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
   display: flex; align-items: center; gap: 10px;
   text-decoration: none; color: var(--text-inverse);
 }
+/* The base rule above is not enough: `a:hover` (0,1,1) outranks `.logo` (0,1,0), so the
+   global underline came back on hover and struck through the wordmark and its tagline.
+   The logo already answers the hover with the tile's lift and glow. */
+.logo:hover { text-decoration: none; }
 .logo-icon-wrap {
   width: 38px; height: 38px;
   background: linear-gradient(145deg, var(--p-blue-500) 0%, var(--p-blue-700) 70%, var(--p-blue-800) 100%);
@@ -4409,28 +4413,50 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
    above it left a band of page colour before the rule — reading as a gap the border was
    already providing. The border alone is the separator now. */
 /* ── More tools ──────────────────────────────────────────────────────────────
-   Link columns, not cards. A card per tool would put fourteen same-sized boxes on the page
-   and make the section compete with the calculator directly above it; grouped text links
-   stay quiet, scan in one pass, and let the group headings carry the meaning. */
-.tools-section { padding: 30px 24px 26px; position: relative; }
-.tools-section .container { max-width: 900px; margin: 0 auto; }
+   THREE panels, not fourteen cards and not three bare link columns.
+   The first version was three columns of plain links under tracked uppercase labels, which
+   failed twice: it was the same shape as the footer sitting 200px below it, so it read as a
+   duplicate rather than a feature; and it made the tool NAMES carry the meaning, when
+   "Sanctioned Load Optimizer" and "Tenant Sub-Meter Calculator" are internal labels that tell
+   a newcomer nothing.
+   Each panel is now headed by the question the reader arrived with. That is the site's own
+   proven register — the best-performing guide on the whole site is titled "UPPCL Increased
+   Your Sanctioned Load in 2026?" at 2.26% CTR — and it lets the tool names go back to being
+   destinations instead of propositions.
+   Three panels rather than one per tool: a card each would put a wall of equal boxes directly
+   under the calculator and flatten the page it is meant to add depth to. */
+.tools-section { padding: 34px 24px 30px; position: relative; }
+.tools-section .container { max-width: 1000px; margin: 0 auto; }
 .tools-section h2 {
   font-size: 21px; font-weight: 600; color: var(--text-primary);
   letter-spacing: -0.4px; margin: 0 0 6px;
 }
-.tools-lead { color: var(--text-secondary); margin: 0 0 20px; line-height: 1.6; max-width: 620px; }
-.tools-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 22px 28px; }
-.tools-group { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.tools-lead { color: var(--text-secondary); margin: 0 0 22px; line-height: 1.6; max-width: 620px; }
+.tools-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.tools-group {
+  display: flex; flex-direction: column; min-width: 0;
+  background: var(--surface-card-grad);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px 16px;
+  box-shadow: var(--shadow-sm);
+}
+/* Sentence case, and a real question — not a tracked uppercase eyebrow over every column. */
 .tools-group h3 {
-  font-size: 12px; font-weight: 700; color: var(--text-tertiary);
-  letter-spacing: .6px; text-transform: uppercase;
-  margin: 0 0 3px;
+  font-size: 16px; font-weight: 650; color: var(--text-primary);
+  letter-spacing: -0.2px; margin: 0 0 5px;
+}
+.tools-group > p {
+  font-size: 12.5px; color: var(--text-secondary); line-height: 1.5;
+  margin: 0 0 13px; padding-bottom: 13px;
+  border-bottom: 1px solid var(--border-subtle);
 }
 .tools-group a {
   font-size: 13.5px; color: var(--text-secondary); text-decoration: none;
-  line-height: 1.45; transition: color var(--t-fast);
+  line-height: 1.45; padding: 3px 0;
+  transition: color var(--t-fast), padding-left var(--t-fast);
 }
-.tools-group a:hover { color: var(--text-brand); text-decoration: underline; }
+.tools-group a:hover { color: var(--text-brand); padding-left: 3px; }
 
 /* Below the hero the page was a stack of flat slabs, so every section boundary read as a
    seam rather than a change of altitude. These two get the hero's own devices instead: a

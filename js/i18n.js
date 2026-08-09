@@ -47,9 +47,14 @@ export const STRINGS = {
     // section reuses the footer's existing ql.*/nav.* keys, so the two can never disagree.
     'tools.title': 'More than a bill calculator',
     'tools.sub': 'Every tool here runs on the same verified tariff data — pick whichever matches what you are trying to work out.',
-    'tools.group.check': 'Check a bill',
-    'tools.group.plan': 'Plan and save',
-    'tools.group.solar': 'Solar & EV',
+    // Questions, not category labels: the reader arrives with one of these three, and the
+    // tool names below each are destinations rather than propositions.
+    'tools.g1.title': 'Is my bill right?',
+    'tools.g1.sub': 'Upload it for an instant check, or look up any charge you don\'t recognise.',
+    'tools.g2.title': 'What will it cost?',
+    'tools.g2.sub': 'Work out a bill before it arrives — by appliance, by tariff, or per tenant.',
+    'tools.g3.title': 'Is solar worth it?',
+    'tools.g3.sub': 'Size a system, check the subsidy, and see the payback on your own bill.',
     'ql.contact': 'Contact',
     'ql.privacy': 'Privacy Policy',
     'ql.cookies': 'Cookie Policy',
