@@ -3800,7 +3800,9 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 }
 
 /* FAQ */
-.seo-faq-item { background: var(--surface-card-grad); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 4px 16px; margin-bottom: 10px; }
+/* Flat on purpose. The card gradient reads as depth on a panel you look AT; on a stack of
+   collapsed rows you scan DOWN, it just made every row look slightly domed. */
+.seo-faq-item { background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 4px 16px; margin-bottom: 10px; }
 .seo-faq-item summary { cursor: pointer; font-weight: 600; font-size: 14.5px; color: var(--text-primary); padding: 12px 0; list-style: none; }
 .seo-faq-item summary::-webkit-details-marker { display: none; }
 .seo-faq-item summary::before { content: '＋'; color: var(--text-brand); font-weight: 700; margin-right: 9px; }
