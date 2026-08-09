@@ -589,8 +589,15 @@ function langSwitchLink(page, lang, altLangs = VERNACULARS) {
     const href = l === 'en' ? page : langUrl(page, l);
     return `<a class="seo-lang-pill" href="${attr(href)}" hreflang="${LANG_LOCALE[l]}" lang="${l}">${LANG_NATIVE[l]}</a>`;
   }).join('');
-  const share = `<button type="button" class="seo-share-btn" data-share-article hidden>`
-    + `${SHARE_ICON}<span class="seo-share-label" data-share-label>Share</span></button>`;
+  // The button's three strings are rendered per-language here rather than looked up at
+  // runtime: share-article.js has no i18n dependency, and the page already knows its language.
+  // Without this the control read "Share" in the middle of a Devanagari or Tamil article.
+  const shareLabel = T(lang, { hi: 'शेयर', mr: 'शेअर', ta: 'பகிர்', en: 'Share' });
+  const shareCopied = T(lang, { hi: 'लिंक कॉपी हुआ', mr: 'लिंक कॉपी झाली', ta: 'இணைப்பு நகலெடுக்கப்பட்டது', en: 'Link copied' });
+  const shareFailed = T(lang, { hi: 'कॉपी नहीं हुआ', mr: 'कॉपी झाली नाही', ta: 'நகலெடுக்க முடியவில்லை', en: 'Copy failed' });
+  const share = `<button type="button" class="seo-share-btn" data-share-article hidden`
+    + ` data-copied="${attr(shareCopied)}" data-failed="${attr(shareFailed)}">`
+    + `${SHARE_ICON}<span class="seo-share-label" data-share-label>${esc(shareLabel)}</span></button>`;
   return `<div class="seo-article-tools">`
     + `<p class="seo-lang-pills">${LANG_GLOBE}<span class="sr-only">Available in</span>${pills}</p>`
     + share

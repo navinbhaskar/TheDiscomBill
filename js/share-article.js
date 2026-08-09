@@ -66,7 +66,11 @@ async function onShare(btn) {
     }
   }
 
-  flash(btn, await copyUrl(url) ? 'Link copied' : 'Copy failed');
+  // Confirmation wording is rendered per-language onto the button by generate-seo.js, so this
+  // module stays free of any i18n dependency. English is the fallback for hand-written pages.
+  flash(btn, await copyUrl(url)
+    ? (btn.dataset.copied || 'Link copied')
+    : (btn.dataset.failed || 'Copy failed'));
 }
 
 export function initShareArticle() {
