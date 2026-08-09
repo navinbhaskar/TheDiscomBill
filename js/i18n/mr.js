@@ -7,6 +7,7 @@ export default {
     'tagline': 'वीज बिल कॅल्क्युलेटर · संपूर्ण भारतासाठी',
     'nav.calculator': 'कॅल्क्युलेटर',
     'nav.compare': 'तुलना',
+    'nav.smartMeter': 'स्मार्ट मीटर',
     'nav.tariffs': 'टॅरिफ',
     'nav.solar': 'सोलर',
     'nav.ev': 'EV खर्च',

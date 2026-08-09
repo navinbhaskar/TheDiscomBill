@@ -7,6 +7,7 @@ export default {
     'tagline': 'மின்சாரக் கட்டணக் கால்குலேட்டர் · இந்தியா முழுவதும்',
     'nav.calculator': 'கால்குலேட்டர்',
     'nav.compare': 'ஒப்பீடு',
+    'nav.smartMeter': 'ஸ்மார்ட் மீட்டர்',
     'nav.tariffs': 'கட்டணங்கள்',
     'nav.solar': 'சோலார்',
     'nav.ev': 'EV செலவு',

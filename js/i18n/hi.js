@@ -7,6 +7,7 @@ export default {
     'tagline': 'बिजली बिल कैलकुलेटर · पूरे भारत के लिए',
     'nav.calculator': 'कैलकुलेटर',
     'nav.compare': 'तुलना',
+    'nav.smartMeter': 'स्मार्ट मीटर',
     'nav.tariffs': 'टैरिफ',
     'nav.solar': 'सोलर',
     'nav.ev': 'EV लागत',

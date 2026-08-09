@@ -13,6 +13,7 @@ export const STRINGS = {
     'tagline': 'Electricity Bill Calculator · All India',
     'nav.calculator': 'Calculator',
     'nav.compare': 'Compare',
+    'nav.smartMeter': 'Smart Meter',
     'nav.tariffs': 'Tariffs',
     'nav.solar': 'Solar',
     'nav.ev': 'EV Cost',
