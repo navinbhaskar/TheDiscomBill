@@ -231,9 +231,13 @@ console.log('\n• content.min.css matches its sources');
 // The model is re-implemented here rather than imported from generate-seo.js on purpose:
 // a test that calls the same function it is checking agrees with it by construction and
 // proves nothing. If these two drift, that disagreement is itself the signal.
+//
+// TITLE_W is 72, matching TITLE_WIDTH in generate-seo.js — see the note there for why the
+// title budget is the mobile two-line allowance and not the classic desktop 60. Keep the two
+// in step: this constant is duplicated deliberately, not accidentally.
 console.log('\n• title / description fit the SERP width budget');
 {
-  const TITLE_W = 60, DESC_W = 155;
+  const TITLE_W = 72, DESC_W = 155;
   const cw = (c) => {
     const o = c.codePointAt(0);
     if (o === 32) return 0.454;

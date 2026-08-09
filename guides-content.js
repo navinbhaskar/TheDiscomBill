@@ -3291,7 +3291,10 @@ export const GUIDES = [
     slug: 'smart-meter-prepaid-disconnection',
     published: "2026-01-06",
     title: 'Smart Prepaid Meter: Recharge, Low Balance and Remote Disconnection',
-    metaTitle: 'Smart Prepaid Meter Disconnected? Recharge, Reconnection Time & Your Rights',
+    // 74.6 units against the 72 budget — 3% over, but a clause-boundary cut then took the
+    // title down to "Smart Prepaid Meter Disconnected?" and lost the answer entirely.
+    // Dropping "& Your Rights" (covered in the body, rarely the search phrasing) fits it whole.
+    metaTitle: 'Smart Prepaid Meter Disconnected? Recharge & Reconnection Time',
     description: 'How smart prepaid electricity meters deduct balance, how to tell a remote disconnection from a power cut or fault, when DISCOMs are not allowed to disconnect you, how fast supply returns after a recharge, and how old arrears are recovered.',
     minutes: 5,
     intro: `A smart prepaid meter turns your electricity connection into a recharge-and-consume account:
@@ -3396,7 +3399,10 @@ export const GUIDES = [
 
     titleHi: 'स्मार्ट प्रीपेड मीटर: रिचार्ज, कम बैलेंस और रिमोट डिस्कनेक्शन',
     metaTitleHi: 'स्मार्ट प्रीपेड मीटर कट गया? रिचार्ज, बिजली लौटने का समय और आपके अधिकार',
-    descriptionHi: 'स्मार्ट प्रीपेड बिजली मीटर बैलेंस कैसे काटता है, रिमोट डिस्कनेक्शन को बिजली कटौती या फॉल्ट से कैसे अलग पहचानें, डिस्कॉम कब आपको काट नहीं सकता, रिचार्ज के बाद बिजली कितनी जल्दी लौटती है, और पुराना बकाया कैसे वसूला जाता है।',
+    // 2,217 impressions at 0.23% — the worst CTR of any high-volume page on the site, and 3x
+    // worse than its English twin at a similar position. The prose is fine; the snippet was
+    // 235 units against a 155 budget, so Google cut it mid-clause. Shortened to fit whole.
+    descriptionHi: 'स्मार्ट प्रीपेड मीटर बैलेंस कैसे काटता है, रिमोट डिस्कनेक्शन और बिजली कटौती में फर्क कैसे पहचानें, रिचार्ज के बाद बिजली कब लौटती है, और डिस्कॉम कब आपको काट नहीं सकता।',
     introHi: `स्मार्ट प्रीपेड मीटर आपके बिजली कनेक्शन को रिचार्ज-और-खपत खाते में बदल देता है: मीटर रोज़ाना
       बैलेंस काटता है, कम होने पर चेताता है, और शून्य पर पहुँचते ही <strong>आपूर्ति दूर से काट</strong> सकता
       है। बिजली अभी-अभी गई है, तो यह गाइड बताती है कि बैलेंस कटौती को आम कटौती या फॉल्ट से कैसे अलग
@@ -3696,8 +3702,12 @@ export const GUIDES = [
     slug: 'smart-meter-recharge-failed',
     published: "2026-01-18",
     title: 'Smart Meter Recharge Failed or Balance Not Updated? What to Do',
-    metaTitle: 'Smart Meter Recharge Failed 2026 — Money Deducted, Balance Not Updated: Fix',
-    description: 'Money gone but balance unchanged? Settlement lag self-resolves within hours; a failed transaction auto-refunds in 3–7 working days; a wrong consumer number needs a written DISCOM complaint. Keep the UTR number — the exact escalation path for each case, with 1912 and app steps.',
+    // Dropped the year and the trailing ": Fix" so the whole title survives the SERP: the two
+    // phrases people actually type are "money deducted" and "balance not updated", and both
+    // were being cut off. The description was 273 units against a 155 budget — Google was
+    // showing the first sentence and nothing else, so the refund timeline never appeared.
+    metaTitle: 'Smart Meter Recharge Failed? Money Gone, Balance Not Updated',
+    description: 'Money left your account but the meter balance did not move? Settlement lag clears within hours and a failed payment auto-refunds in 3–7 working days. Keep the UTR.',
     minutes: 5,
     intro: `A prepaid recharge normally reflects on the meter within minutes — so when money leaves your
       account and the balance doesn't move, it feels alarming. In almost every case the money is not
@@ -4012,7 +4022,7 @@ export const GUIDES = [
     slug: 'smart-meter-balance-check',
     published: "2026-01-30",
     title: 'How to Check Your Smart Meter Balance (Display, App, SMS)',
-    metaTitle: 'Smart Meter Balance Check — Meter Display, DISCOM App & Daily Deductions',
+    metaTitle: 'Smart Meter Balance Check — Meter Display, App & SMS Alerts',
     description: 'Three ways to check a prepaid smart meter balance — the meter’s push-button display, the DISCOM app/portal, and SMS alerts — plus how to read the daily deduction ledger so you know exactly where the balance goes.',
     minutes: 4,
     intro: `A prepaid smart meter shows its balance in three places: <strong>on the meter itself</strong>,
@@ -5253,7 +5263,7 @@ export const GUIDES = [
 
     published: "2026-03-19",
     title: 'What Is a Unit of Electricity? kWh Explained with Appliance Math',
-    metaTitle: 'What Is a Unit of Electricity (kWh)? — Appliance Consumption Math Explained',
+    metaTitle: 'What Is a Unit of Electricity (kWh)? The Appliance Maths',
     titleTa: 'ஒரு யூனிட் மின்சாரம் என்றால் என்ன? சாதன கணக்குடன் kWh விளக்கம்',
     metaTitleTa: 'ஒரு யூனிட் மின்சாரம் (kWh) என்றால் என்ன? — சாதன நுகர்வு கணக்கு விளக்கம்',
     descriptionTa: 'ஒரு யூனிட் மின்சாரம் = 1 கிலோவாட்-மணி (kWh): 1,000-வாட் சாதனம் ஒரு மணி நேரம் இயங்குவது. உங்கள் மீட்டர் யூனிட்களை எப்படி எண்ணுகிறது, எந்த சாதனத்தின் மாதாந்திர நுகர்வையும் எப்படி மதிப்பிடுவது, ஏன் "யூனிட்கள்" உங்கள் பில்லின் ஒவ்வொரு வரியையும் இயக்குகின்றன.',
@@ -6679,7 +6689,9 @@ export const GUIDES = [
     published: "2026-05-06",
     states: ['Delhi'],
     title: 'How to Get a New BSES Electricity Connection in Delhi (BRPL / BYPL)',
-    metaTitle: 'BSES Delhi New Connection Online 2026 — Documents, Charges & 7-Day Rule',
+    // Trimmed to fit whole: at 72 the cut landed on "… Charges & 7-Day", and a title ending
+    // on half a compound reads as damaged rather than merely short.
+    metaTitle: 'BSES Delhi New Connection 2026 — Documents, Charges, 7-Day Rule',
     howtoSteps: [
       { name: 'Identify your DISCOM', text: 'Check whether your area falls under BSES Rajdhani (BRPL, south and west Delhi) or BSES Yamuna (BYPL, east and central Delhi) and open the new-connection flow on bsesdelhi.com.' },
       { name: 'Apply online with the DERC checklist', text: 'Fill the application and upload the DERC document checklist — identity, address and ownership or occupancy proof; tenants can also apply.' },
@@ -9054,8 +9066,11 @@ export const GUIDES = [
     ],
 
     titleHi: '1.5 टन AC से बिजली बिल कितना बढ़ता है?',
-    metaTitleHi: '1.5 टन AC का मासिक बिजली बिल — यूनिट, खर्च और स्लैब का गणित',
-    descriptionHi: 'स्टार रेटिंग के हिसाब से 1.5 टन AC प्रति घंटे और प्रति माह कितनी यूनिट खाता है, AC की यूनिटें आपके सबसे महंगे स्लैब पर क्यों लगती हैं, असली मासिक खर्च की तालिका और बिल घटाने के 5 कारगर तरीके।',
+    // 791 impressions, zero clicks, position 8.4 — a page ranking well and being ignored
+    // outright. Reframed as the question the searcher is asking ("कितना?") rather than a
+    // topic label, and the 200-unit snippet trimmed so the cost answer survives the cut.
+    metaTitleHi: '1.5 टन AC का महीने का बिजली बिल कितना आता है? यूनिट और खर्च',
+    descriptionHi: '1.5 टन AC हर घंटे कितनी यूनिट खाता है (स्टार रेटिंग के हिसाब से), महीने का असली खर्च, और AC की यूनिटें आपके सबसे महंगे स्लैब पर क्यों लगती हैं।',
     introHi: `रोज़ 8 घंटे चलने वाला 1.5 टन AC महीने में करीब <strong>250–370 यूनिट</strong> मीटर पर
       चढ़ाता है — स्टार रेटिंग और उम्र के हिसाब से। और चूँकि घरेलू टैरिफ टेलीस्कोपिक स्लैब में होता है,
       ये सारी यूनिटें आपके <em>सबसे महंगे</em> लागू स्लैब पर बिल होती हैं, औसत दर पर नहीं। इस गाइड में
@@ -9443,8 +9458,11 @@ export const GUIDES = [
     published: "2026-07-26",
     states: ['Maharashtra', 'Kerala'],
     title: 'WSS Portal: Which Web Self Service Is Yours?',
-    metaTitle: 'WSS Portal: MSEDCL wss.mahadiscom.in & KSEB wss.kseb.in',
-    description: 'Two DISCOMs run a portal called WSS: MSEDCL at wss.mahadiscom.in and KSEB at wss.kseb.in. Here is which one is yours and what each lets you do.',
+    // The disambiguation IS the value here — "wss kseb" alone took 377 impressions and zero
+    // clicks in the Aug 2026 export, because a generic WSS result does not look like it knows
+    // which portal the searcher means. Naming both DISCOMs in the title answers that in the SERP.
+    metaTitle: 'WSS Portal Login: Is Yours MSEDCL or KSEB? Both Links Here',
+    description: 'Two DISCOMs run a portal called WSS — MSEDCL at wss.mahadiscom.in and KSEB at wss.kseb.in. Which one bills you, the direct login links, and what each can do.',
     minutes: 4,
     howtoSteps: [
       { name: 'Work out which DISCOM bills you', text: 'Your electricity bill names the distributor at the top. Maharashtra is MSEDCL (Mahavitaran); Kerala is KSEB. They run different WSS portals with separate logins.' },
@@ -9533,8 +9551,13 @@ export const GUIDES = [
     states: ['Maharashtra'],
     category: 'basics',
     title: 'MSEDCL WSS Portal: View & Pay Your Bill on Web Self Service',
-    metaTitle: 'MSEDCL WSS Portal Login: Pay Your Bill at wss.mahadiscom.in',
-    description: 'Pay your Mahavitaran bill at wss.mahadiscom.in without logging in, or register to manage several connections, download past bills and raise requests.',
+    // "wss portal" and its variants are this site's largest query cluster (~7,000 impressions
+    // in the Aug 2026 GSC export) and its worst-converting: 0.39% CTR at position 7.8. They are
+    // navigational — the searcher wants wss.mahadiscom.in itself, and the official domain will
+    // always take that click. So the title does not compete for the portal; it competes for the
+    // subset who are stuck ON the portal, which is the only slice we can actually win.
+    metaTitle: 'wss.mahadiscom.in Not Working? Pay Your MSEDCL Bill Without Login',
+    description: 'Pay your Mahavitaran bill with just the 12-digit consumer number — no login needed. Plus what to do when the WSS portal will not open or a payment has not shown up.',
     minutes: 6,
     howtoSteps: [
       { name: 'Open the WSS portal', text: 'Go to wss.mahadiscom.in — the official MSEDCL (Mahavitaran) Web Self Service portal.' },

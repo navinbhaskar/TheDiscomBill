@@ -854,7 +854,23 @@ function variant(seed, arr) { return arr[hashStr(seed) % arr.length]; }
 //
 // Budgets are expressed in the same units, anchored so that ordinary Latin prose reproduces
 // the familiar conventions: 60 units ≈ the classic 60-character title, 155 ≈ a safe snippet.
-const TITLE_WIDTH = 60;
+//
+// The title budget is 72, not the classic 60. 60 is the DESKTOP single-line limit, and this
+// site is not a desktop site: the Aug 2026 GSC export puts 68% of impressions and 78% of
+// clicks on mobile, where Google wraps the title to two lines and the real allowance is far
+// above one line's worth. Clamping the whole corpus to the desktop limit was costing the
+// majority device its keyword payload to protect the minority one.
+//
+// 60 also sat just under the editorial median (English metaTitles measure 66 units at the
+// median), so the typical title was cut by default rather than by exception — and because
+// fitText() prefers a clause boundary and tidyCut() drops a stub em-dash tail, a title 6
+// units over budget routinely lost 20+ characters. "Smart Prepaid Meter Disconnected?
+// Recharge, Reconnection Time & Your Rights" was reaching the SERP as "Smart Prepaid Meter
+// Disconnected?" — 75 characters authored, 33 emitted.
+//
+// 72 sits above the median so the common case is not cut at all, and the ~10 English titles
+// that still overflow are genuinely long and should be edited rather than padded around.
+const TITLE_WIDTH = 72;
 const DESC_WIDTH = 155;
 
 // A CTR experiment is running on the new-connection guides: their titles were rewritten on
