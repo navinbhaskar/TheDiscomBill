@@ -1140,6 +1140,25 @@ function ratesPhrase(meta, fy) {
   return { when, carried, label: carried ? `unchanged since ${when}` : `in force from ${when}` };
 }
 
+// "Electricity Tariff" unless the DISCOM's own name already says "Electricity", in which case
+// the qualifier is dropped rather than echoed back. Vernacular headings take the same guard:
+// "Adani Electricity Mumbai बिजली टैरिफ" repeats the word across two scripts, which is no less
+// redundant for being harder to spot.
+const tariffNoun = (name) => (/electricity/i.test(name) ? 'Tariff' : 'Electricity Tariff');
+
+// The H1 tail: a service-region LABEL if the data has one, otherwise the state.
+//
+// parseArea() only splits a region from its cities when the source string brackets them —
+// "North Haryana (Panchkula, Ambala, …)". Where it does not, `region` comes back as the whole
+// district list, and the unguarded heading ran to 164 characters:
+//   "AVVNL Electricity Tariff 2025-26 — Ajmer, Bhilwara, Nagaur, Sirohi, Jhalawar, Baran, …"
+// 22 of 65 DISCOM pages were over 70. A comma is the tell — a genuine region reads as one
+// phrase ("West Odisha", "Mumbai suburbs"), a list does not — with a length cap behind it for
+// any long single-phrase region. The districts are not lost: they have their own section and
+// sit in the at-a-glance table.
+const h1Tail = (region, state) =>
+  (region && !region.includes(',') && region.length <= 28) ? region : state;
+
 // Does any sibling DISCOM in the state apply the identical tariff schedule? (Honest disclosure.)
 function sharesScheduleInState(state, discom) {
   const sig = JSON.stringify(discom.categories);
@@ -1433,7 +1452,6 @@ function discomPage(state, discom, lang = 'en') {
   // repeated template across 65 pages — each one is differently worded but factually identical.
   const seed = discom.id + state;
   const cname = consumerName(discom);   // leads titles/H1 with the term people actually search
-  const yr = yearLabel(fy);             // tariff-order year — a freshness signal in the title
   // Titles stay ≤ ~60 chars (Google's truncation width) and ALWAYS lead with
   // "<name> Bill Calculator <year>" — the exact query shape ("TNEB bill calculator 2024-25",
   // "MVVNL bill calculator 2025-26") — with only the suffix varied. No brand suffix (Google
@@ -1468,13 +1486,31 @@ function discomPage(state, discom, lang = 'en') {
     `${discom.name} electricity bill calculator for ${state}${cityPhrase ? ` (${cityPhrase})` : ''}. ${fy} domestic & commercial slab rates${rp ? ` (${rp.label})` : ''}, fixed/demand charges and an instant itemised estimate.`,
     `Free ${discom.name} bill estimate (${fy})${cityPhrase ? ` for ${cityPhrase}${widerArea ? ` and across ${widerArea}` : ''}` : ''}.${rp ? ` Rates ${rp.label}.` : ''} See the full tariff schedule and indicative monthly bills.`,
   ]);
-  // H1 also leads with the searched "<name> Bill Calculator <year>" phrase (matching the title),
-  // then varies the tail — region or the full legal name — for on-page uniqueness.
-  const h1 = variant(seed + 'h', [
-    `${esc(cname)} Bill Calculator ${TITLE_YEAR}${region ? ` — ${esc(region)}` : ''}`,
-    `${esc(cname)} Bill Calculator ${TITLE_YEAR} — ${esc(yr)} Tariff`,
-    `${esc(cname)} Electricity Bill Calculator ${TITLE_YEAR} — ${esc(long)}`,
-  ]);
+  // The H1 names what the page IS: a tariff reference. It used to lead with "Bill Calculator",
+  // which was wrong on three counts. There is no calculator on this page — the CTA links out to
+  // /#calculator, so the heading promised a tool the page does not contain. The Aug 2026 GSC
+  // export puts rate-intent queries ("uhbvn per unit rate 2026", "dhbvn electricity rate") at
+  // 2,359 impressions against 543 for calculator-intent, and most of those rate queries sat at
+  // 0.00% CTR from page one. And one rotation slot produced "Bill Calculator 2026 — 2026-27
+  // Tariff", a calendar year and a financial year side by side, which reads as a rendering bug.
+  //
+  // Only the tariff-order FY appears now. That follows the year convention rather than breaking
+  // it: the calendar year belongs with "Bill Calculator", so it leaves when that noun does.
+  //
+  // Deliberately ONE pattern, not the old three-way rotation. Rotation guards against templated
+  // sameness in a SERP, where results sit next to each other — no visitor ever sees two of these
+  // headings together. Across a 65-page directory the predictable shape is worth more than the
+  // variety, and the DISCOM name already makes each one unique. The region (falling back to the
+  // state) is the natural on-page differentiator.
+  //
+  // The rate range is NOT in the H1 on purpose: "<DISCOM> at a glance" repeats it a few lines
+  // down, and a heading carrying a price reads like a SERP title pasted onto the page.
+  //
+  // Three DISCOMs carry "Electricity" in the name they are known by — Adani Electricity Mumbai,
+  // Goa Electricity Dept., PDICL / Electricity Dept. — and the unguarded template gave them
+  // "Adani Electricity Mumbai Electricity Tariff". Same class of redundancy nameGloss() already
+  // guards against for the legal-name parenthetical.
+  const h1 = `${esc(cname)} ${tariffNoun(cname)} ${esc(fy)} — ${esc(h1Tail(region, state))}`;
   const lead = variant(seed + 'l', [
     `Estimate your <strong>${esc(long)}</strong> bill in seconds and browse the full ${esc(fy)} tariff schedule — energy slabs, fixed/demand charges, fuel surcharge (FPPA) and electricity duty${cities.length ? ` for ${esc(cities.slice(0, 3).join(', '))} and the rest of ${esc(region || state)}` : ` across ${esc(region || state)}`}.`,
     `Get an instant, itemised <strong>${esc(discom.name)}</strong> electricity bill for ${esc(region || state)}. Below you'll find ${esc(discom.name)}'s ${esc(fy)} slab rates, fixed charges, an indicative monthly bill and a quick link to pay on the official portal.`,
@@ -1607,11 +1643,20 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
     mr: `${cname}${cgloss} चे वीज बिल ${fyL} साठी काढा${cityPhrase ? ` — ${cityPhrase}` : ''}. स्लॅब दर, फिक्स्ड चार्ज, FPPA व शुल्क.${dr ? ` घरगुती दर ${rupee(dr.min)}/युनिट पासून.` : ''} मोफत, साइन-अप शिवाय.`,
     ta: `${cname}${cgloss} மின் கட்டணத்தை ${fyL}-க்கு கணக்கிடுங்கள்${cityPhrase ? ` — ${cityPhrase}` : ''}. அடுக்கு விகிதங்கள், நிலையான கட்டணம், FPPA மற்றும் வரிகள்.${dr ? ` வீட்டு கட்டணம் ${rupee(dr.min)}/யூனிட் முதல்.` : ''} இலவசம், பதிவு தேவையில்லை.`,
     en: `Calculate your ${discom.name} bill for ${fy}.` });
+  // Tariff-led, matching the English twin — see the H1 note in discomPage(). Leaving these on
+  // the calculator wording would have the Hindi and English versions of one page disagree about
+  // what the page is.
+  //
+  // The tail is the LOCALISED STATE name, not `rgn`. Service regions come out of the tariff data
+  // as raw English ("South Haryana", "Mumbai suburbs") and are never translated, so using them
+  // here produced "DHBVN बिजली टैरिफ 2026-27 — South Haryana" — a Devanagari heading ending in
+  // English. The DISCOM name already makes each page unique; the state is the part worth saying.
+  const vElec = /electricity/i.test(cname);
   const h1 = T(lang, {
-    hi: `${esc(cname)} बिजली बिल कैलकुलेटर व टैरिफ (${esc(fyL)})`,
-    mr: `${esc(cname)} वीज बिल कॅल्क्युलेटर व टॅरिफ (${esc(fyL)})`,
-    ta: `${esc(cname)} மின் கட்டண கணிப்பான் & கட்டணம் (${esc(fyL)})`,
-    en: `${esc(cname)} Bill Calculator (${esc(fyL)})` });
+    hi: `${esc(cname)} ${vElec ? 'टैरिफ' : 'बिजली टैरिफ'} ${esc(fyL)} — ${esc(sl)}`,
+    mr: `${esc(cname)} ${vElec ? 'टॅरिफ' : 'वीज टॅरिफ'} ${esc(fyL)} — ${esc(sl)}`,
+    ta: `${esc(cname)} ${vElec ? 'கட்டணம்' : 'மின் கட்டணம்'} ${esc(fyL)} — ${esc(sl)}`,
+    en: `${esc(cname)} ${tariffNoun(cname)} ${esc(fyL)} — ${esc(sl)}` });
   const leadTail = cities.length
     ? T(lang, { hi: `, ${cityList3} और पूरे ${esc(rgn)} के लिए`, mr: `, ${cityList3} आणि संपूर्ण ${esc(rgn)} साठी`, ta: `, ${cityList3} மற்றும் முழு ${esc(rgn)}-க்காக`, en: '' })
     : T(lang, { hi: ` — पूरे ${esc(rgn)} के लिए`, mr: ` — संपूर्ण ${esc(rgn)} साठी`, ta: ` — முழு ${esc(rgn)}-க்காக`, en: '' });
@@ -1840,7 +1885,7 @@ function statePage(state, lang = 'en') {
 
     const bcHome = T(lang, { hi: 'होम', mr: 'होम', ta: 'முகப்பு', en: 'Home' });
     const bcTariffs = T(lang, { hi: 'टैरिफ', mr: 'टॅरिफ', ta: 'கட்டணங்கள்', en: 'Tariffs' });
-    const h1 = T(lang, { hi: `${esc(sl)} बिजली बिल कैलकुलेटर व डिस्कॉम टैरिफ (${esc(fyL)})`, mr: `${esc(sl)} वीज बिल कॅल्क्युलेटर व डिस्कॉम टॅरिफ (${esc(fyL)})`, ta: `${esc(sl)} மின் கட்டண கணிப்பான் & DISCOM கட்டணம் (${esc(fyL)})`, en: '' });
+    const h1 = T(lang, { hi: `${esc(sl)} बिजली टैरिफ ${esc(fyL)} — डिस्कॉम के अनुसार स्लैब दरें`, mr: `${esc(sl)} वीज टॅरिफ ${esc(fyL)} — डिस्कॉमनुसार स्लॅब दर`, ta: `${esc(sl)} மின் கட்டணம் ${esc(fyL)} — DISCOM வாரியாக அடுக்கு விகிதங்கள்`, en: '' });
     const updated = T(lang, {
       hi: `टैरिफ अंतिम अपडेट: ${tariffUpdated(state, 'hi')}${meta.verified ? ' · ✓ असली बिलों से सत्यापित' : ''}`,
       mr: `टॅरिफ शेवटचे अपडेट: ${tariffUpdated(state, 'mr')}${meta.verified ? ' · ✓ खऱ्या बिलांवरून पडताळलेले' : ''}`,
@@ -1969,7 +2014,9 @@ function statePage(state, lang = 'en') {
       { name: 'Tariffs', url: '/tariffs/states/' },
       { name: state, url: null },
     ])}
-    <h1>${esc(state)} Electricity Bill Calculator ${TITLE_YEAR} &amp; DISCOM Tariffs (${esc(fy)})</h1>
+    <!-- Tariff-led, FY only — see the H1 note in discomPage() for why the calculator framing
+         left these headings and why the calendar year went with it. -->
+    <h1>${esc(state)} Electricity Tariff ${esc(fy)} — Slab Rates by DISCOM</h1>
     <p class="guide-meta">Tariffs last updated: ${tariffUpdated(state, 'en')}${meta.verified ? ' · ✓ verified against real bills' : ''}</p>
     <p class="seo-lead">Calculate your provisional electricity bill for any of ${esc(state)}'s ${discoms.length} distribution compan${discoms.length > 1 ? 'ies' : 'y'} — ${esc(names)} — with a full slab-wise breakdown for ${esc(fy)}${cityLine ? `, covering ${esc(cityLine)} and more` : ''}.</p>
     <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Open the ${esc(state)} bill calculator →</a></p>
