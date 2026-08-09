@@ -261,6 +261,32 @@ const CONSUMER_NAME = {
   puvvnl: 'PuVVNL (UPPCL)', kesco: 'KESCO (UPPCL)',
 };
 const consumerName = (discom) => CONSUMER_NAME[discom.id] || discom.name;
+
+// Brands worth MATCHING in site search but not worth putting in a title. Mahavitaran is
+// 285 impressions in the Aug 2026 GSC export against MSEDCL's 978, so it earns a keyword
+// rather than a rename. (The 1,662 for "mahadiscom" is almost all `wss mahadiscom` portal
+// navigation, which belongs to the official site and is not ours to win.)
+const SEARCH_ALIAS = { msedcl: ['Mahavitaran'] };
+
+// Alternate names to match this DISCOM on in site search: the SEARCH_ALIAS entries above,
+// plus any part of its consumer-facing name that its own name does not already contain
+// ("MVVNL (UPPCL)" minus "MVVNL" leaves "UPPCL").
+//
+// The CONSUMER_NAME aliases were never fed into the search index, so the site failed to find
+// pages under the very term their own titles lead with — typing "tneb" or "uppcl" into the
+// header search returned nothing, while those are 2,363 and 814 impressions respectively in
+// Google, against 504 for tangedco/tnpdcl and 119 for the four VVNLs combined. Deriving the
+// list from CONSUMER_NAME rather than restating it keeps the two from drifting apart.
+function discomAliases(discom) {
+  const out = [...(SEARCH_ALIAS[discom.id] || [])];
+  const cn = CONSUMER_NAME[discom.id];
+  if (cn) {
+    for (const part of cn.split(/[()]/).map(s => s.trim()).filter(Boolean)) {
+      if (!discom.name.toLowerCase().includes(part.toLowerCase())) out.push(part);
+    }
+  }
+  return out;
+}
 // Bare year for titles: "FY 2025-26" / "2025-26" → "2025-26".
 const yearLabel = (fy) => String(fy).replace(/^FY\s*/i, '');
 // The year for the "…Bill Calculator <year>" slot: the plain calendar year people type
@@ -3750,7 +3776,8 @@ function writeSearchIndex(states) {
       t: `${state} Electricity Tariff`, h: `${hiState(state)} बिजली टैरिफ`,
       u: `/tariffs/${stateSlug}/`, hu: `/hi/tariffs/${stateSlug}/`,
       a: stateCode(state),
-      k: [stateCode(state), ...(STATE_ALIASES[state] || []), ...getDiscoms(state).map(d => d.name)]
+      k: [stateCode(state), ...(STATE_ALIASES[state] || []),
+        ...getDiscoms(state).flatMap(d => [d.name, ...discomAliases(d)])]
         .filter(Boolean).join(' '),
       g: 'tariff',
     });
@@ -3758,13 +3785,13 @@ function writeSearchIndex(states) {
       entries.push({
         t: `${discom.name} Tariff`,
         u: `/tariffs/${stateSlug}/${discom.id}/`, hu: `/hi/tariffs/${stateSlug}/${discom.id}/`,
-        k: [discom.fullName, discom.area, state].filter(Boolean).join(' '),
+        k: [discom.fullName, discom.area, state, ...discomAliases(discom)].filter(Boolean).join(' '),
         g: 'tariff',
       });
       entries.push({
         t: `${discom.name} Smart Meter Recharge`,
         u: `/smart-meter-recharge/${stateSlug}/${discom.id}/`, hu: `/hi/smart-meter-recharge/${stateSlug}/${discom.id}/`,
-        k: [discom.fullName, state, 'prepaid recharge online'].filter(Boolean).join(' '),
+        k: [discom.fullName, state, 'prepaid recharge online', ...discomAliases(discom)].filter(Boolean).join(' '),
         g: 'recharge',
       });
     }
