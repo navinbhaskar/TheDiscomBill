@@ -100,6 +100,7 @@
   --surface-card:   var(--p-slate-0);
   --surface-sunken: var(--p-slate-100);
   --surface-hover:  #eef3fb;             /* cool-tinted hover wash for chips/rows */
+  --surface-brand-subtle: #e6efff;       /* resting tint behind small brand-coloured icons */
   --surface-overlay:rgba(15,23,42,.04);
   /* Lit-from-top-left card face. Same 150deg the hero panel already uses, so a card and the
      hero read as the same material catching the same light — the alternative, a flat fill,
@@ -213,6 +214,7 @@
   --surface-card:   #131c2e;
   --surface-sunken: #0f1828;
   --surface-hover:  #1a2740;
+  --surface-brand-subtle: #1e2e4c;
   --surface-overlay: rgba(255,255,255,.05);
   /* Dark needs a wider swing than light to read at all — a 4% delta disappears below #131c2e.
      Three stops, not two: the mid stop holds the base card colour so the face does not drift
@@ -4451,12 +4453,48 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   margin: 0 0 13px; padding-bottom: 13px;
   border-bottom: 1px solid var(--border-subtle);
 }
+/* The links were plain text in a column, which reads as prose, not as targets. Each is now a
+   row with a leading icon tile and a trailing chevron: three separate signals that it is a
+   destination, none of which depend on hover to be seen. The icon also does the work the tool
+   name cannot — "Sanctioned Load Optimizer" means nothing cold, a gauge means "a measurement".
+   The negative margin lets the hover wash bleed to the card's inner edge without the resting
+   text losing its alignment with the heading above it. */
+.tools-sprite { display: none; }
 .tools-group a {
+  display: grid; grid-template-columns: 26px 1fr 7px; align-items: center; gap: 10px;
+  margin: 0 -8px;
   font-size: 13.5px; color: var(--text-secondary); text-decoration: none;
-  line-height: 1.45; padding: 3px 0;
-  transition: color var(--t-fast), padding-left var(--t-fast);
+  line-height: 1.35; padding: 7px 8px; border-radius: var(--radius-sm);
+  transition: color var(--t-fast), background-color var(--t-fast);
 }
-.tools-group a:hover { color: var(--text-brand); padding-left: 3px; }
+.tool-ico {
+  width: 26px; height: 26px; padding: 4px; border-radius: 7px;
+  color: var(--text-brand);
+  background: var(--surface-brand-subtle);
+  fill: none; stroke: currentColor; stroke-width: 1.7;
+  stroke-linecap: round; stroke-linejoin: round;
+  transition: background-color var(--t-fast), color var(--t-fast);
+}
+/* Chevron drawn from borders rather than a 15th sprite entry — it is a shape, not an icon. */
+.tools-group a::after {
+  content: ''; width: 5px; height: 5px; justify-self: end;
+  border-right: 1.6px solid currentColor; border-top: 1.6px solid currentColor;
+  transform: rotate(45deg); opacity: 0.4;
+  transition: transform var(--t-fast), opacity var(--t-fast);
+}
+.tools-group a:hover, .tools-group a:focus-visible {
+  color: var(--text-primary); background: var(--surface-hover);
+}
+.tools-group a:hover .tool-ico, .tools-group a:focus-visible .tool-ico {
+  background: var(--p-blue-500); color: #fff;
+}
+.tools-group a:hover::after, .tools-group a:focus-visible::after {
+  opacity: 0.9; transform: rotate(45deg) translate(1.5px, -1.5px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tools-group a::after { transition: opacity var(--t-fast); }
+  .tools-group a:hover::after, .tools-group a:focus-visible::after { transform: rotate(45deg); }
+}
 
 /* Below the hero the page was a stack of flat slabs, so every section boundary read as a
    seam rather than a change of altitude. These two get the hero's own devices instead: a
