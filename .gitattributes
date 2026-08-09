@@ -1,0 +1,30 @@
+# Line endings.
+#
+# stampServiceWorker() in generate-seo.js hashes the RAW BYTES of every asset listed in sw.js's
+# CORE array to produce the cache version. With core.autocrlf=true and no rules here, git handed
+# the working tree CRLF on checkout while the build itself writes LF — so the same commit hashed
+# one way in a working tree that had just been built, another way after a fresh Windows checkout,
+# and a third way on Linux CI, where checkout leaves LF alone. The stamp drifted for reasons that
+# had nothing to do with content, which is precisely what the CI no-drift check exists to catch.
+#
+# `eol=lf` is the part that fixes it, not `text=auto` on its own: text=auto still lets
+# core.autocrlf smudge to CRLF on checkout. Pinning the working tree to LF makes the byte stream
+# identical on every platform, so the stamp depends only on what the files actually say.
+#
+# This also settles the "LF will be replaced by CRLF the next time Git touches it" warnings that
+# every `git add` on Windows was printing.
+* text=auto eol=lf
+
+# Windows PowerShell is the only thing that reads this, and CRLF is its native form. Nothing
+# here is hashed by stampServiceWorker(), so it is free to differ from everything else.
+*.ps1 text eol=crlf
+
+# Binary: never eol-converted, never diffed as text. The icon rasters matter most — they ARE
+# hashed into the service-worker stamp, and a stray conversion would corrupt them outright.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.ico   binary
+*.woff2 binary
+*.pdf   binary
+*.xlsx  binary
