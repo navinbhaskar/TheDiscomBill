@@ -3507,6 +3507,10 @@ const STATIC_ROUTES = [
   { loc: '/sanctioned-load-optimizer/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/solar-subsidy-checker/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/tenant-submeter-calculator/', priority: '0.8', changefreq: 'monthly' },
+  // Hand-authored (smart-meter/index.html), English-only. It belongs here rather than in a
+  // urls.push() below: only STATIC_ROUTES get isStatic, and without it the lastmod falls
+  // through to TODAY on every run, since nothing emits the page into the manifest.
+  { loc: '/smart-meter/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/check-my-bill/', priority: '0.9', changefreq: 'monthly' },
   { loc: '/bill-review/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/bill-review/sample-report/', priority: '0.5', changefreq: 'yearly' },
@@ -3548,8 +3552,6 @@ function buildSitemap(states) {
   urls.push({ loc: '/fuel-surcharge/', priority: '0.8', changefreq: 'monthly' });
   urls.push({ loc: '/tariffs/states/', priority: '0.8', changefreq: 'monthly', langs: [...VERNACULARS] });
   urls.push({ loc: '/smart-meter-recharge/', priority: '0.8', changefreq: 'monthly', langs: [...VERNACULARS] });
-  // Hand-authored (smart-meter/index.html), English-only for now — same as the other tool pages.
-  urls.push({ loc: '/smart-meter/', priority: '0.7', changefreq: 'yearly' });
   for (const state of states) {
     const stateSlug = slugify(state);
     const sLangs = VERNACULARS.filter(l => langServesState(l, state));

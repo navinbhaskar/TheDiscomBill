@@ -6371,20 +6371,14 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
 
 .m-print-end { text-anchor: end; }
 
-/* Smart Meter Guide: one measure for everything on the page.
-   Site-wide, body copy is capped at 760px because that is a comfortable line length, while
-   tables size to their content — so this page showed three different edges (text 760, the
-   register table 795, the AMISP table at the full 952). Here the page is deliberately
-   edge-aligned instead: every block runs the full content width, so the diagram, both
-   tables and the prose share one left and right rule. */
-.smart-meter-page .seo-lead,
-.smart-meter-page .seo-section p,
-.smart-meter-page .seo-note,
-.smart-meter-page .seo-disclaimer,
-.smart-meter-page .meter-legend li { max-width: none; }
-.smart-meter-page .meter-legend { max-width: none; }
-/* .seo-page sets the wrapper to fit-content, so a table at width:100% was still resolving
-   against a shrink-wrapped box. The wrapper has to span first; the table then fills it, and
-   on narrow screens the overflow scroll still happens inside the wrapper as before. */
-.smart-meter-page .comparison-table-wrapper { width: 100%; }
+/* Smart Meter Guide: prose keeps the site's standard 760px measure, the same as the guide
+   pages — an earlier pass stretched it to the full 952 to edge-align with the tables, which
+   put body copy at roughly 130 characters a line. Headings, the diagram and the link grids
+   still span the full container, exactly as they do on a guide page.
+   Both tables are pinned to the same 760px measure as the prose, so the register table and
+   the AMISP table share one edge with the body copy instead of each sizing to its own
+   content. .seo-page sets the wrapper to fit-content, so the wrapper has to be given the
+   width first — a table at width:100% inside a shrink-wrapped box just resolves against the
+   shrink. Narrow screens still scroll the table inside that wrapper. */
+.smart-meter-page .comparison-table-wrapper { width: 100%; max-width: 760px; }
 .smart-meter-page .comparison-table { width: 100%; }
