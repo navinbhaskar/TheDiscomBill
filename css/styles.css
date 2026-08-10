@@ -4026,6 +4026,9 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
    the row. Without it a single long label leaves the whole grid visibly ragged. */
 .svc-control { display: flex; flex-direction: column; justify-content: flex-end; gap: 5px; flex: 1; min-width: 200px; }
 .svc-control[hidden] { display: none; }
+/* A short numeric entry has no business stretching to fill a wrapped row — flex:1 on five
+   controls leaves the last one alone on its line at full container width. */
+.svc-control-narrow { flex: 0 1 220px; max-width: 220px; }
 .svc-control label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; color: var(--text-tertiary); }
 /* 36px, not 42 — the generic input rule puts <input> at 36, and a control row that mixes
    the two (the sub-meter calculator has five of each) read as two different kinds of field.
