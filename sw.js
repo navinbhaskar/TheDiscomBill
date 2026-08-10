@@ -1,7 +1,7 @@
 // sw.js — Service Worker (network-first, cache fallback)
 // CACHE is stamped automatically by generate-seo.js (stampServiceWorker) from a
 // content hash of the CORE assets below — do not hand-edit it; run `npm run seo`.
-const CACHE = 'discombill-20260810-4aa76461';
+const CACHE = 'discombill-20260810-0bca6aff';
 
 const CORE = [
   './', './index.html', './compare/', './compare/index.html',

@@ -10,7 +10,7 @@
 import {
   populateStates, populateDiscoms, populateCategories, populateSupplyTypes,
   populateMonthYear, prefillFac, prefillLpsc, updateBilledDemandVisibility,
-  initTabs, initLoadChips, initAdvPanel, addPaymentRow, addAdjustmentRow,
+  initTabs, initLoadFloor, initAdvPanel, addPaymentRow, addAdjustmentRow,
   updateArrearTotal, updateUnitsDisplay, updateCalcButton, updateBillingPeriod,
   updateTodDisplay, updateFacUnitLabel, updateTariffPeriodHint,
   onFppaAutoToggle, markFppaManual,
@@ -334,7 +334,7 @@ export function initCalculator() {
 
     loadFromUrl();
     syncPurposeChips();
-    initLoadChips();   // after loadFromUrl so the active chip reflects a URL-provided load
+    initLoadFloor();   // after loadFromUrl so a share link's load is floored too
     initAdvPanel();    // ditto — a share link's ToD / solar / LPSC switches open the panel
   }
 }

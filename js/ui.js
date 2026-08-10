@@ -341,49 +341,30 @@ export function initAdvPanel() {
   _advSync();
 }
 
-// Sanctioned Load quick-pick chips: one tap sets the load; the active chip
-// tracks whatever value is in the field (typed or tapped).
-// Sanctioned Load stepper. Replaced the 1/2/3/5 kW quick-pick chips, which covered four
-// values and left everyone else typing. Name kept so the calculator-init call site and any
-// share-link ordering stay put.
-export function initLoadChips() {
-  const wrap = document.getElementById('loadStepper');
-  const loadEl = document.getElementById('connectedLoad');
-  if (!wrap || !loadEl) return;
+// Sanctioned Load used to carry quick-pick chips, then a custom ± stepper. Both are gone:
+// the field is now a plain number input matching Maximum Demand beside it, and the browser's
+// own spinner does the stepping (step="1" in the markup).
+//
+// The one thing the markup cannot express is the floor. A sanctioned load of 0 kW is not a
+// thing, so the real minimum is 0.5 — but HTML anchors the step grid to `min`, so writing
+// min="0.5" would put the arrows on 0.5 / 1.5 / 2.5 and stepping up from 2 would give 2.5.
+// So min="0" keeps the grid on whole numbers and the floor is enforced here instead.
+//
+// On 'change', not 'input': raising the value mid-typing would fight anyone typing "0.75"
+// by rewriting the field the moment they got to "0". change fires on blur and after a
+// spinner click, which is exactly when the value is final.
+const LOAD_FLOOR = 0.5;
 
-  const step = parseFloat(loadEl.step) || 0.5;
-  const min = loadEl.min !== '' ? parseFloat(loadEl.min) : -Infinity;
-  const max = loadEl.max !== '' ? parseFloat(loadEl.max) : Infinity;
-
-  // Snap to the step grid so repeated taps from a typed 1.3 give 1.5/2.0, not 1.8/2.3.
-  const nudge = (dir) => {
-    const cur = parseFloat(loadEl.value);
-    const base = isNaN(cur) ? (min > 0 && isFinite(min) ? min : step) : cur;
-    let next = dir > 0 ? Math.floor(base / step + 1e-9) * step + step
-                       : Math.ceil(base / step - 1e-9) * step - step;
-    next = Math.min(max, Math.max(min, next));
-    // Kill float dust (0.1 + 0.2) without hard-coding a precision.
-    const dp = (String(step).split('.')[1] || '').length;
-    loadEl.value = dp ? next.toFixed(dp).replace(/\.0+$/, '') : String(next);
-    loadEl.dispatchEvent(new Event('input', { bubbles: true }));
-    loadEl.dispatchEvent(new Event('change', { bubbles: true }));
-  };
-
-  const sync = () => {
-    const v = parseFloat(loadEl.value);
-    wrap.querySelectorAll('.stepper-btn').forEach((b) => {
-      const dir = +b.dataset.step;
-      b.disabled = !isNaN(v) && (dir > 0 ? v >= max : v <= min);
-    });
-  };
-
-  wrap.addEventListener('click', (e) => {
-    const btn = e.target.closest('.stepper-btn');
-    if (!btn || btn.disabled) return;
-    nudge(+btn.dataset.step);
+export function initLoadFloor() {
+  const el = document.getElementById('connectedLoad');
+  if (!el) return;
+  el.addEventListener('change', () => {
+    if (el.value === '') return;            // empty is the user clearing it, not a zero
+    const v = parseFloat(el.value);
+    if (isNaN(v) || v >= LOAD_FLOOR) return;
+    el.value = String(LOAD_FLOOR);
+    el.dispatchEvent(new Event('input', { bubbles: true }));
   });
-  loadEl.addEventListener('input', sync);
-  sync();
 }
 
 // ─── Dynamic Rows ─────────────────────────────────────────────────────────────

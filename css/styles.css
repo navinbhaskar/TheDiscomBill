@@ -1484,49 +1484,9 @@ html:not([lang="en"]) .hero-discoms-label {
 }
 .form-group small { display: block; font-size: 11px; color: var(--text-tertiary); margin-top: 4px; line-height: 1.5; }
 
-/* Sanctioned Load — a stepper, not quick-pick chips.
-   The chips only offered 1/2/3/5 kW, so anyone on 4, 6 or a fractional load ignored them
-   and typed anyway. The +/- buttons serve every value, and dropping them also releases the
-   16px chip height that was pinned to the input (WCAG 2.5.8 target size stops being a
-   compromise once the buttons are full-height).
-   One bordered shell; the input inside it is borderless so the whole thing reads as a
-   single control, and focus lights the shell rather than a box inside a box. */
-.stepper {
-  display: inline-flex; align-items: stretch;
-  height: 36px; width: 100%; max-width: 174px;
-  border: 1px solid var(--border-default); border-radius: var(--radius-md);
-  background: var(--surface-card);
-  transition: border-color var(--t-fast), box-shadow var(--t-fast);
-}
-.stepper:focus-within { border-color: var(--brand); box-shadow: 0 0 0 2px var(--brand-faint); }
-.stepper > input[type="number"] {
-  flex: 1 1 auto; min-width: 0; width: auto; height: 100%;
-  border: 0; background: transparent; box-shadow: none;
-  padding: 0 10px; text-align: left; font-size: 14px;
-  border-radius: var(--radius-md) 0 0 var(--radius-md);
-}
-.stepper > input[type="number"]:focus { outline: none; border: 0; box-shadow: none; }
-/* The native spinners duplicate the buttons and are far too small to hit. */
-.stepper > input[type="number"]::-webkit-outer-spin-button,
-.stepper > input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-.stepper > input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
-
-.stepper-btns { display: flex; flex: none; }
-.stepper-btn {
-  width: 36px; flex: none;
-  display: inline-flex; align-items: center; justify-content: center;
-  border: 0; border-left: 1px solid var(--border-default);
-  background: transparent; color: var(--text-secondary);
-  cursor: pointer; padding: 0;
-  transition: background var(--t-fast), color var(--t-fast);
-}
-.stepper-btn:hover { background: var(--surface-hover); color: var(--text-brand); }
-.stepper-btn:active { background: var(--brand-faint); }
-.stepper-btn:disabled { opacity: .4; cursor: not-allowed; background: transparent; color: var(--text-tertiary); }
-.stepper-btn:last-child { border-radius: 0 var(--radius-md) var(--radius-md) 0; }
-.stepper-btn svg { width: 15px; height: 15px; }
-.stepper[aria-disabled="true"], .stepper:has(input:disabled) { background: var(--surface-sunken); }
-.stepper:has(input:disabled) .stepper-btn { pointer-events: none; opacity: .4; }
+/* Sanctioned Load is a plain number input now, matching Maximum Demand beside it, so the
+   custom ± stepper shell and its buttons are gone. The field inherits the standard
+   input styling; the browser draws the spinner. */
 /* Where to find the number on a paper bill, and why it matters. Wider than the 174px
    control above it, so it spans the whole group rather than tracking the input's width. */
 /* Simple mode collects five fields and promises "we handle the rest"; a three-line aside
@@ -2256,11 +2216,11 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 .simple-mode .bill-tab-panel { padding: 0; }
 .simple-mode .meter-row { background: transparent; border: 0; border-radius: 0; padding: 0; margin: 0; }
 /* .mf-field is a flex column with gap:2px, which stacked on top of the label's 5px margin
-   below and dropped this input 2px under the Sanctioned Load stepper. The margin carries
+   below and dropped this input 2px under the Sanctioned Load field. The margin carries
    the gap here so the two columns start at the same y. */
 .simple-mode .meter-row .mf-units { gap: 0; }
 /* Mirrors `.form-group label` exactly (12px / 600 / .015em / 5px below). It used to run
-   12.5px with a 2px gap, which pushed this input 3px lower than the Sanctioned Load stepper
+   12.5px with a 2px gap, which pushed this input 3px lower than the Sanctioned Load field
    sitting beside it in the Simple-mode 2-up and read as a slightly heavier label than every
    other field. Keep these numbers in sync with .form-group label. */
 .simple-mode .meter-row .mf-units > span {
