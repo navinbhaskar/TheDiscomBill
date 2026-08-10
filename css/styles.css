@@ -6421,3 +6421,77 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
 @media (max-width: 520px) {
   .inline-cta .btn-primary { width: 100%; text-align: center; }
 }
+
+/* ── Interactive meter (/smart-meter/) ────────────────────────────────────────
+   The drawn Scroll button is a real control. It gets a pointer cursor, a hover
+   state and a visible focus ring, because an SVG <g role="button"> gives you
+   none of those for free — and without them nothing signals that the meter can
+   be pressed at all. */
+.m-btn-hit { cursor: pointer; }
+.m-btn-target { fill: transparent; }
+.m-btn-hit .m-btn { transition: fill var(--t-fast); }
+.m-btn-hit:hover .m-btn { fill: #3d4148; }
+.m-btn-hit:active .m-btn { fill: #16181b; }
+.m-btn-hit:focus { outline: none; }
+.m-btn-hit:focus-visible .m-btn-target {
+  fill: rgba(59, 130, 246, .16);
+  stroke: var(--p-blue-500); stroke-width: 2.5;
+}
+.m-btn-hit:hover .m-label, .m-btn-hit:focus-visible .m-label { fill: var(--p-blue-600, #2563eb); }
+
+/* An LCD switches in a single frame — it does not cross-fade. A brief lift in the
+   glass brightness reads as "that just changed" without inventing an animation
+   the hardware does not have. */
+@keyframes mLcdSwitch {
+  0%   { opacity: .55; }
+  100% { opacity: 1; }
+}
+.meter-svg.is-switching .m-lcd { animation: mLcdSwitch 140ms ease-out; }
+@keyframes mComBlink {
+  0%, 100% { opacity: 1; }
+  35%      { opacity: .25; }
+}
+.m-lamp-on.is-blink { animation: mComBlink 320ms ease-in-out 2; }
+
+.meter-readout {
+  max-width: 760px; margin: 14px auto 0; padding: 14px 16px;
+  background: var(--surface-card-grad);
+  border: 1px solid var(--border-default); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.meter-readout-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
+.meter-readout-step {
+  font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+  color: var(--text-tertiary); background: var(--surface-sunken);
+  border-radius: 999px; padding: 3px 9px; white-space: nowrap;
+}
+.meter-readout-head strong { font-size: 15px; color: var(--text-primary); }
+.meter-readout p {
+  font-size: 13.5px; color: var(--text-secondary); line-height: 1.6; margin: 8px 0 0;
+  min-height: 3.2em;   /* holds height across screens so the page does not jump on press */
+}
+.meter-readout-btn {
+  margin: 12px 0 0; padding: 7px 14px; font: inherit; font-size: 13px; font-weight: 600;
+  color: var(--text-brand); background: var(--brand-faint);
+  border: 1px solid var(--border-default); border-radius: 999px; cursor: pointer;
+  transition: background-color var(--t-fast), border-color var(--t-fast);
+}
+.meter-readout-btn:hover { border-color: var(--brand); background: var(--surface-hover); }
+@media (prefers-reduced-motion: reduce) {
+  .meter-svg.is-switching .m-lcd, .m-lamp-on.is-blink { animation: none; }
+}
+
+/* Primary CTA with a direction cue. The button had been a bare text label; the arrow states
+   that it goes somewhere, and the label now matches the hero's proven wording rather than
+   inventing a second phrase for the same action. Height is lifted above the 40px default —
+   this is the one conversion point in a long page, so it should not read as a form control. */
+.cta-arrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 46px; padding: 0 22px; font-size: 14.5px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 6px 16px -6px rgba(29, 78, 216, .55);
+}
+.cta-arrow svg { width: 17px; height: 17px; flex-shrink: 0; transition: transform var(--t-fast); }
+.cta-arrow:hover svg { transform: translateX(3px); }
+.cta-arrow:hover { box-shadow: 0 10px 22px -8px rgba(29, 78, 216, .7); }
+@media (prefers-reduced-motion: reduce) { .cta-arrow:hover svg { transform: none; } }
