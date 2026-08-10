@@ -6382,3 +6382,42 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
    shrink. Narrow screens still scroll the table inside that wrapper. */
 .smart-meter-page .comparison-table-wrapper { width: 100%; max-width: 760px; }
 .smart-meter-page .comparison-table { width: 100%; }
+
+/* On-page jump links. The guide covers three distinct jobs — read the symbols, decode the
+   register codes, find your AMISP — and someone arriving from "what does the tamper icon
+   mean" should not have to scroll past a rollout-contractor table to reach it. */
+.page-toc {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  margin: 0 0 22px; padding: 12px 14px;
+  background: var(--surface-sunken); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg); max-width: 760px;
+}
+.page-toc-label {
+  font-size: 11.5px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase;
+  color: var(--text-tertiary); margin-right: 2px;
+}
+.page-toc a {
+  font-size: 13px; font-weight: 550; color: var(--text-secondary); text-decoration: none;
+  padding: 4px 10px; border-radius: 999px;
+  background: var(--surface-card); border: 1px solid var(--border-default);
+  transition: color var(--t-fast), border-color var(--t-fast), background-color var(--t-fast);
+}
+.page-toc a:hover { color: var(--text-brand); border-color: var(--brand); background: var(--brand-faint); }
+/* Anchor targets sit under the sticky header without this. */
+.smart-meter-page .seo-section[id] { scroll-margin-top: 84px; }
+
+/* Mid-page CTA, placed where the reader has just taken a reading off their own meter. */
+.inline-cta {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 14px; margin: 18px 0 0; padding: 16px 18px; max-width: 760px;
+  background: var(--surface-card-grad);
+  border: 1px solid var(--border-default); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.inline-cta > div { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1 1 300px; }
+.inline-cta strong { color: var(--text-primary); font-size: 14.5px; }
+.inline-cta span { color: var(--text-secondary); font-size: 13px; line-height: 1.55; }
+.inline-cta .btn-primary { flex: 0 0 auto; text-decoration: none; white-space: nowrap; }
+@media (max-width: 520px) {
+  .inline-cta .btn-primary { width: 100%; text-align: center; }
+}

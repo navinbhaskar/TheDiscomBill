@@ -41,8 +41,9 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
   <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="/css/styles.min.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/smart-meter/","name":"Smart Meter Guide: Display Symbols, Register Codes & AMISP List","description":"What every symbol on an Indian prepaid smart meter means — signal, tamper, relay and low-balance icons, OBIS register codes and the pulse LED.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-09"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/smart-meter/","name":"Smart Meter Guide: Display Symbols, Register Codes & AMISP List","description":"What every symbol on an Indian prepaid smart meter means — signal, tamper, relay and low-balance icons, OBIS register codes and the pulse LED.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-10"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Smart Meter Guide","item":"https://thediscombill.com/smart-meter/"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why is the red light on my smart meter blinking?","acceptedAnswer":{"@type":"Answer","text":"That is normal — it is the pulse LED, and it flashes once per unit of energy measured (usually 1000 or 3200 flashes per kWh, printed next to it). It is a live load indicator, not a fault light: the more you are drawing right now, the faster it blinks. Switch everything off and it should slow almost to a stop. If it keeps racing with all loads off, that is worth checking properly."}},{"@type":"Question","name":"I recharged but my smart meter balance has not updated — is my money lost?","acceptedAnswer":{"@type":"Answer","text":"Almost never. The payment reaches the DISCOM instantly, but the token has to travel to the meter over the network, and a weak signal delays that — minutes usually, occasionally hours. Your balance keeps depleting normally in the meantime, so the credit is not missing, just not yet delivered. Keep the transaction ID."}},{"@type":"Question","name":"My supply was cut but the meter still shows a balance. Why?","acceptedAnswer":{"@type":"Answer","text":"Usually a load-limit trip rather than a credit problem: drawing more than your sanctioned load opens the relay even with money on the meter. Reduce the load and most meters reconnect on their own or after a button press. It can also be a remote disconnection for a separate arrear."}},{"@type":"Question","name":"Which number on the display is my actual meter reading?","acceptedAnswer":{"@type":"Answer","text":"The one shown against register code 1.8.0 — total active energy imported, in kWh. The display cycles through several values, so the largest number is not always the reading; check the small code beside it. Note 1.8.0 on the same date each month and the difference between two readings is your consumption for that period."}},{"@type":"Question","name":"What does the magnet or tamper symbol mean?","acceptedAnswer":{"@type":"Answer","text":"The meter has detected a strong external magnetic field, a removed terminal cover, or a reversed connection, and has logged it with a timestamp and reported it to the DISCOM. It does not clear by itself. If it appeared without anyone touching the meter, raise a complaint straight away — the timestamped log is the evidence, and it is far easier to contest early than after a penalty is raised."}},{"@type":"Question","name":"Is my smart meter running faster than my old meter?","acceptedAnswer":{"@type":"Answer","text":"Usually it is not the meter. Old electromechanical meters commonly under-recorded as they aged, so an accurate new meter reads higher for the same usage, and prepaid billing makes the cost visible daily rather than monthly. Smart meters are tested to IS 16444 Class 1.0, meaning ±1% accuracy. You can verify yours against a known load before paying for a meter test — here is the method."}}]}</script>
 
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
@@ -127,16 +128,30 @@
   <section class="seo-page container smart-meter-page">
     <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">Smart Meter Guide</span></li></ol></nav>
     <h1>Smart Meter Guide: What Every Symbol Means</h1>
+    <!-- Date and standards in one line: this page carries time-sensitive AMISP data, and the
+         standards it is checked against are the whole basis for the symbol meanings. No human
+         byline — naming a reviewer who did not review it would be worse than naming nobody. -->
+    <p class="guide-meta">Updated 10 August 2026 · Checked against <strong>IS 16444</strong> and
+    <strong>IEC 62056-61</strong> · <a href="/methodology/">How we source and verify</a></p>
     <p class="seo-lead">Your prepaid smart meter cycles through a dozen numbers and a row of small
     symbols, and almost none of them are labelled. This page maps every element on a typical Indian
     single-phase smart meter — what each icon means, which reading is your actual consumption, and
     which ones mean you should act. Diagram and legend below; scroll on for what to do about a
     blinking alert.</p>
 
+    <nav class="page-toc" aria-label="On this page">
+      <span class="page-toc-label">On this page</span>
+      <a href="#symbols">Symbols on the display</a>
+      <a href="#register-codes">Register codes</a>
+      <a href="#three-phase">Three-phase meters</a>
+      <a href="#amisp">Who installed my meter</a>
+      <a href="#faq">Common questions</a>
+    </nav>
+
     <!-- The meter face is drawn, not photographed: an original diagram carries no rights problem,
          re-colours itself for dark mode, stays crisp at any zoom, and — unlike a photo of one
          particular unit — can show every indicator lit at once, which no real meter ever does. -->
-    <section class="seo-section">
+    <section class="seo-section" id="symbols">
       <h2>The meter face, labelled</h2>
       <p>Numbers on the diagram match the legend underneath. Not every meter shows every symbol, and
       the order the readings cycle in varies by manufacturer — but the elements themselves are
@@ -402,7 +417,7 @@
       </ol>
     </section>
 
-    <section class="seo-section">
+    <section class="seo-section" id="register-codes">
       <h2>Register codes: which number is which</h2>
       <p>The codes are <strong>OBIS codes</strong> (IEC 62056-61), the same scheme across every
       compliant meter regardless of who made it. Once you can read these, the display stops being a
@@ -422,9 +437,51 @@
       <p class="seo-note">Prepaid balance and emergency-credit registers are not fixed by the OBIS
       standard in the same way — different makes label them differently (<code>Bal</code>,
       <code>Cr</code>, or a plain ₹ figure). Read the value with the ₹ sign, not the code.</p>
+
+      <!-- Mid-page CTA. Someone who has just read 1.8.0 off their own meter is holding a
+           number and wondering what it should have cost — that is the moment to offer the
+           calculator, not the bottom of a long page. -->
+      <aside class="inline-cta">
+        <div>
+          <strong>Got your <code>1.8.0</code> reading?</strong>
+          <span>Subtract last month's, and put the difference in — you'll get an itemised,
+          slab-wise estimate on your own DISCOM's rates.</span>
+        </div>
+        <a class="btn-primary" href="/#calculator">Work out what it should cost</a>
+      </aside>
     </section>
 
-    <section class="seo-section">
+    <section class="seo-section" id="three-phase">
+      <h2>Three-phase meters: what changes</h2>
+      <p>Everything above describes a single-phase meter, which is what most homes have. Larger
+      homes, shops and small industrial connections run <strong>three-phase</strong>. The good news
+      is that the part that confuses people does not change: <strong>the register codes are
+      identical</strong>. <code>1.8.0</code> is still total imported energy, <code>1.6.0</code> is
+      still maximum demand, and the status icons mean the same things.</p>
+      <p>What differs:</p>
+      <ul>
+        <li><strong>More terminals.</strong> Three phases plus neutral, so the terminal block is
+        wider — usually eight ways rather than five. Nothing you should ever open; the cover is
+        sealed and breaking that seal is itself a tamper event.</li>
+        <li><strong>Per-phase registers.</strong> The display cycle adds per-phase voltage and
+        current, often shown as <code>L1</code>, <code>L2</code>, <code>L3</code>. A phase reading
+        zero volts when the others are live means you have lost a phase — that is a supply fault to
+        report, not a meter fault.</li>
+        <li><strong>kVAh and demand matter more.</strong> Three-phase connections are far more
+        likely to be billed on <a href="/glossary/#kvah">kVAh</a> and to carry a
+        <a href="/glossary/#maximum-demand">maximum demand</a> charge, so <code>9.8.0</code> and
+        <code>1.6.0</code> are the registers to watch — a poor power factor costs you real money
+        here in a way it usually does not on a domestic single-phase supply.</li>
+        <li><strong>Load limit is per connection, not per phase.</strong> Tripping is assessed on
+        total sanctioned load, so an unbalanced load across the three phases can trip you while each
+        individual phase still looks modest.</li>
+      </ul>
+      <p>If demand charges are what you are trying to control, the
+      <a href="/sanctioned-load-optimizer/">sanctioned load optimizer</a> works from the same tariff
+      data as the calculator.</p>
+    </section>
+
+    <section class="seo-section" id="amisp">
       <h2>Who installed your meter: AMISPs by state and DISCOM</h2>
       <p>Under <strong>RDSS</strong>, DISCOMs do not usually install smart meters themselves. They
       appoint an <strong>AMISP</strong> — an Advanced Metering Infrastructure Service Provider — which
@@ -530,6 +587,60 @@
         <a class="seo-link-card" href="/guides/smart-meter-balance-check/"><strong>Checking balance without the meter</strong><span>App, SMS and portal routes when the display is unreachable or unreadable</span></a>
         <a class="seo-link-card" href="/guides/uppcl-smart-meter-readings-explained/"><strong>UPPCL: readings and the billing cycle</strong><span>Why a UP smart-meter bill runs first-to-last of the previous month, unlike an ordinary meter</span></a>
       </div>
+    </section>
+
+    <!-- Answers are deliberately short and hand off to the full guide. Those guides already rank
+         for these queries; a long answer here would compete with them instead of feeding them. -->
+    <section class="seo-section" id="faq">
+      <h2>Common questions</h2>
+      <details class="seo-faq-item">
+        <summary>Why is the red light on my smart meter blinking?</summary>
+        <div class="seo-faq-a">That is normal — it is the pulse LED, and it flashes once per unit of
+        energy measured (usually 1000 or 3200 flashes per kWh, printed next to it). It is a live
+        load indicator, not a fault light: the more you are drawing right now, the faster it blinks.
+        Switch everything off and it should slow almost to a stop. If it keeps racing with all loads
+        off, that is worth <a href="/guides/smart-meter-running-fast/">checking properly</a>.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>I recharged but my smart meter balance has not updated — is my money lost?</summary>
+        <div class="seo-faq-a">Almost never. The payment reaches the DISCOM instantly, but the token
+        has to travel to the meter over the network, and a weak signal delays that — minutes
+        usually, occasionally hours. Your balance keeps depleting normally in the meantime, so the
+        credit is not missing, just not yet delivered. Keep the transaction ID.
+        <a href="/guides/smart-meter-recharge-failed/">What to do if it still has not landed →</a></div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>My supply was cut but the meter still shows a balance. Why?</summary>
+        <div class="seo-faq-a">Usually a load-limit trip rather than a credit problem: drawing more
+        than your sanctioned load opens the relay even with money on the meter. Reduce the load and
+        most meters reconnect on their own or after a button press. It can also be a remote
+        disconnection for a separate arrear.
+        <a href="/guides/smart-meter-prepaid-disconnection/">Night-hour and holiday protections →</a></div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>Which number on the display is my actual meter reading?</summary>
+        <div class="seo-faq-a">The one shown against register code <code>1.8.0</code> — total active
+        energy imported, in kWh. The display cycles through several values, so the largest number is
+        not always the reading; check the small code beside it. Note <code>1.8.0</code> on the same
+        date each month and the difference between two readings is your consumption for that
+        period.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>What does the magnet or tamper symbol mean?</summary>
+        <div class="seo-faq-a">The meter has detected a strong external magnetic field, a removed
+        terminal cover, or a reversed connection, and has logged it with a timestamp and reported it
+        to the DISCOM. It does not clear by itself. If it appeared without anyone touching the
+        meter, raise a complaint straight away — the timestamped log is the evidence, and it is far
+        easier to contest early than after a penalty is raised.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>Is my smart meter running faster than my old meter?</summary>
+        <div class="seo-faq-a">Usually it is not the meter. Old electromechanical meters commonly
+        under-recorded as they aged, so an accurate new meter reads higher for the same usage, and
+        prepaid billing makes the cost visible daily rather than monthly. Smart meters are tested to
+        IS 16444 Class 1.0, meaning ±1% accuracy. You can verify yours against a known load before
+        paying for a meter test — <a href="/guides/smart-meter-running-fast/">here is the method</a>.</div>
+      </details>
     </section>
 
     <p class="seo-disclaimer">Symbol meanings above follow IS 16444 and the OBIS register scheme of
