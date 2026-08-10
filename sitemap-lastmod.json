@@ -619,6 +619,10 @@
     "hash": "fd96ce9618d27c79",
     "lastmod": "2026-08-09"
   },
+  "/hi/smart-meter/": {
+    "hash": "ee726e640f073e08",
+    "lastmod": "2026-08-10"
+  },
   "/hi/tariffs/andhra-pradesh/": {
     "hash": "32ebda4346000710",
     "lastmod": "2026-08-09"
@@ -1147,6 +1151,10 @@
     "hash": "0fdff25e26471f9f",
     "lastmod": "2026-08-09"
   },
+  "/mr/smart-meter/": {
+    "hash": "458901dc68ef22af",
+    "lastmod": "2026-08-10"
+  },
   "/mr/tariffs/maharashtra/": {
     "hash": "3f96f24c52d06d9d",
     "lastmod": "2026-08-09"
@@ -1452,7 +1460,7 @@
     "lastmod": "2026-08-09"
   },
   "/smart-meter/": {
-    "hash": "8290c3750ee647e4",
+    "hash": "9b27650ee05cadc5",
     "lastmod": "2026-08-10"
   },
   "/smart-meter/amisp-list/": {
@@ -1546,6 +1554,10 @@
   "/ta/smart-meter-recharge/tamil-nadu/tangedco/": {
     "hash": "37d3467cbee858f3",
     "lastmod": "2026-08-09"
+  },
+  "/ta/smart-meter/": {
+    "hash": "abe92d499f23e37a",
+    "lastmod": "2026-08-10"
   },
   "/ta/tariffs/states/": {
     "hash": "15ee21c92d94f2a6",

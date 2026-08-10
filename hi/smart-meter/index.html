@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      try { localStorage.setItem('lang', 'hi'); } catch (e) {}
+    })();
+  </script>
+  <title>स्मार्ट मीटर गाइड: डिस्प्ले के चिह्न, रजिस्टर कोड और AMISP सूची</title>
+  <meta name="description" content="प्रीपेड स्मार्ट मीटर के हर चिह्न का मतलब — सिग्नल, टैम्पर, रिले और कम-बैलेंस के आइकन, OBIS रजिस्टर कोड और पल्स LED।">
+  <link rel="canonical" href="https://thediscombill.com/hi/smart-meter/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter/">
+  <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/smart-meter/">
+  <link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/smart-meter/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="स्मार्ट मीटर गाइड: डिस्प्ले के चिह्न, रजिस्टर कोड और AMISP सूची">
+  <meta property="og:description" content="प्रीपेड स्मार्ट मीटर के हर चिह्न का मतलब — सिग्नल, टैम्पर, रिले और कम-बैलेंस के आइकन, OBIS रजिस्टर कोड और पल्स LED।">
+  <meta property="og:url" content="https://thediscombill.com/hi/smart-meter/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="स्मार्ट मीटर गाइड: डिस्प्ले के चिह्न, रजिस्टर कोड और AMISP सूची">
+  <meta property="og:locale" content="hi_IN">
+  <meta property="og:locale:alternate" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="स्मार्ट मीटर गाइड: डिस्प्ले के चिह्न, रजिस्टर कोड और AMISP सूची">
+  <meta name="twitter:description" content="प्रीपेड स्मार्ट मीटर के हर चिह्न का मतलब — सिग्नल, टैम्पर, रिले और कम-बैलेंस के आइकन, OBIS रजिस्टर कोड और पल्स LED।">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/smart-meter/","name":"स्मार्ट मीटर गाइड: डिस्प्ले के चिह्न, रजिस्टर कोड और AMISP सूची","description":"प्रीपेड स्मार्ट मीटर के हर चिह्न का मतलब — सिग्नल, टैम्पर, रिले और कम-बैलेंस के आइकन, OBIS रजिस्टर कोड और पल्स LED।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-10"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"मेरे स्मार्ट मीटर की लाल बत्ती क्यों जल-बुझ रही है?","acceptedAnswer":{"@type":"Answer","text":"यह सामान्य है — यह पल्स LED है, जो मापी गई हर इकाई ऊर्जा पर एक बार चमकती है (आम तौर पर 1000 या 3200 फ्लैश प्रति kWh, जो उसके पास लिखा होता है)। यह खराबी की बत्ती नहीं, सीधे लोड बताती है: अभी जितनी बिजली खिंच रही है, उतनी तेज़ चमकेगी। सब बंद कर दीजिए तो यह लगभग रुक जाएगी।"}},{"@type":"Question","name":"रिचार्ज कर दिया पर स्मार्ट मीटर का बैलेंस नहीं बढ़ा — क्या पैसे डूब गए?","acceptedAnswer":{"@type":"Answer","text":"लगभग कभी नहीं। भुगतान डिस्कॉम तक तुरंत पहुँच जाता है, लेकिन टोकन को नेटवर्क से होकर मीटर तक जाना होता है, और सिग्नल कमज़ोर हो तो देर लगती है — आम तौर पर कुछ मिनट, कभी-कभी घंटे। इस बीच आपका बैलेंस सामान्य रूप से घटता रहता है, यानी क्रेडिट गया नहीं, बस अभी पहुँचा नहीं। ट्रांज़ैक्शन ID संभालकर रखिए।"}},{"@type":"Question","name":"बैलेंस दिख रहा है फिर भी बिजली कट गई। क्यों?","acceptedAnswer":{"@type":"Answer","text":"आम तौर पर यह बैलेंस की नहीं, लोड-लिमिट की बात होती है: स्वीकृत लोड से ज़्यादा खींचने पर मीटर में पैसे होते हुए भी रिले खुल जाता है। लोड घटाइए — ज़्यादातर मीटर खुद या बटन दबाने पर वापस जुड़ जाते हैं। यह किसी अलग बकाया के कारण दूर से की गई कटौती भी हो सकती है।"}},{"@type":"Question","name":"डिस्प्ले पर कौन-सी संख्या मेरी असली मीटर रीडिंग है?","acceptedAnswer":{"@type":"Answer","text":"वह जो रजिस्टर कोड 1.8.0 के साथ दिखे — कुल ली गई सक्रिय ऊर्जा, kWh में। डिस्प्ले कई मान बारी-बारी दिखाता है, इसलिए सबसे बड़ी संख्या हमेशा रीडिंग नहीं होती; उसके पास लिखा छोटा कोड देखिए।"}},{"@type":"Question","name":"मैग्नेट या टैम्पर वाले चिह्न का क्या मतलब है?","acceptedAnswer":{"@type":"Answer","text":"मीटर ने बाहर से तेज़ चुंबकीय क्षेत्र, हटा हुआ टर्मिनल कवर, या उल्टा कनेक्शन पकड़ा है, और उसे समय के साथ दर्ज करके डिस्कॉम को भेज दिया है। यह अपने आप नहीं हटता। किसी ने मीटर छुआ न हो और यह दिखे, तो तुरंत शिकायत कीजिए — समय के साथ दर्ज वही रिकॉर्ड सबूत है।"}},{"@type":"Question","name":"क्या मेरा स्मार्ट मीटर पुराने मीटर से तेज़ चल रहा है?","acceptedAnswer":{"@type":"Answer","text":"आम तौर पर गलती मीटर की नहीं होती। पुराने इलेक्ट्रोमैकेनिकल मीटर उम्र के साथ कम दर्ज करने लगते थे, इसलिए उतनी ही खपत पर सही नया मीटर ज़्यादा दिखाता है; और प्रीपेड बिलिंग में खर्च महीने के बजाय रोज़ दिखता है। स्मार्ट मीटर IS 16444 क्लास 1.0 पर जाँचे जाते हैं, यानी ±1% सटीकता।"}}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <a href="/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">Smart Meter</a>
+      <a href="/hi/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/hi/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/#calculator" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">Smart Meter</span></a>
+            <a href="/hi/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/hi/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body" role="main">
+
+  <section class="seo-page container smart-meter-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">होम</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">स्मार्ट मीटर गाइड</span></li></ol></nav>
+    <h1>स्मार्ट मीटर गाइड: हर चिह्न का क्या मतलब है</h1>
+    <p class="guide-meta">अपडेट 10 अगस्त 2026 · <strong>IS 16444</strong> और <strong>IEC 62056-61</strong> के अनुसार जाँचा गया · <a href="/methodology/">हमारी पद्धति</a></p>
+    <p class="seo-lead">आपका प्रीपेड स्मार्ट मीटर एक के बाद एक कई संख्याएँ और छोटे-छोटे चिह्न दिखाता रहता है, और उनमें से लगभग किसी पर कोई लेबल नहीं होता। यह पेज एक सामान्य भारतीय सिंगल-फेज़ स्मार्ट मीटर के हर हिस्से को समझाता है — हर आइकन का मतलब, कौन-सी रीडिंग असल में आपकी खपत है, और कौन-से चिह्न देखकर आपको कदम उठाना चाहिए।</p>
+
+    <nav class="page-toc" aria-label="इस पेज पर">
+      <span class="page-toc-label">इस पेज पर</span>
+      <a href="#symbols">डिस्प्ले के चिह्न</a>
+        <a href="#register-codes">रजिस्टर कोड</a>
+        <a href="#three-phase">थ्री-फेज़ मीटर</a>
+        <a href="#amisp">मीटर किसने लगाया</a>
+        <a href="#faq">आम सवाल</a>
+    </nav>
+
+    <section class="seo-section" id="symbols">
+      <h2>मीटर का चेहरा, लेबल के साथ</h2>
+      <p>चित्र पर दिए नंबर नीचे दी गई सूची से मेल खाते हैं। हर मीटर पर हर चिह्न नहीं होता, और रीडिंग किस क्रम में बदलती है यह कंपनी पर निर्भर करता है — लेकिन ये सभी हिस्से <strong>IS 16444</strong> (प्रीपेड स्मार्ट मीटर का भारतीय मानक) के अनुसार बने हर मीटर में समान होते हैं।</p>
+      <p class="meter-hint">
+        <span class="meter-hint-tag">इंटरैक्टिव</span>
+        <span>मीटर पर <strong>Scroll</strong> बटन दबाइए — या डिस्प्ले पर टैप कीजिए — और रीडिंग एक-एक करके बदलती देखिए, ठीक जैसे असली मीटर में होता है।</span>
+      </p>
+      <figure class="meter-figure">
+<svg class="meter-svg" viewBox="0 0 700 560" role="img"
+     aria-labelledby="meter-dia-title meter-dia-desc">
+  <title id="meter-dia-title">Labelled diagram of an Indian single-phase prepaid smart meter</title>
+  <desc id="meter-dia-desc">A single-phase AC static watthour smart meter seen face on. The
+  upper casing carries a maker's mark, COM and ON indicator lamps and the communication
+  module details. The lower face carries a green backlit LCD in the centre showing a status
+  icon row, the main reading, a register code and a unit label; a pulse LED and standard
+  markings below it; a serial barcode and printed specification block on the left; and a
+  scroll button with a circular optical port on the right. A dark terminal block with brass
+  screws runs along the bottom. Ten numbered callouts key each element to the legend below.</desc>
+
+  <defs>
+    <linearGradient id="mBody" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#fbfaf6"/><stop offset="0.5" stop-color="#f1efe8"/>
+      <stop offset="1" stop-color="#dedbd2"/>
+    </linearGradient>
+    <linearGradient id="mBodyTop" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0" stop-color="#fdfdfa"/><stop offset="1" stop-color="#e7e4dc"/>
+    </linearGradient>
+    <linearGradient id="mLcd" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#b6e86a"/><stop offset="0.55" stop-color="#8ed23a"/>
+      <stop offset="1" stop-color="#6fb823"/>
+    </linearGradient>
+    <linearGradient id="mGloss" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.4"/>
+      <stop offset="0.55" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="mPortMetal" cx="0.32" cy="0.26" r="0.9">
+      <stop offset="0" stop-color="#ffffff"/><stop offset="0.35" stop-color="#d6d9dd"/>
+      <stop offset="0.7" stop-color="#9aa0a7"/><stop offset="1" stop-color="#c9ced4"/>
+    </radialGradient>
+    <linearGradient id="mTerm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a4a4a"/><stop offset="0.5" stop-color="#2e2e2e"/>
+      <stop offset="1" stop-color="#3d3d3d"/>
+    </linearGradient>
+    <radialGradient id="mBrass" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#e8d089"/><stop offset="0.6" stop-color="#b8963f"/>
+      <stop offset="1" stop-color="#7d6427"/>
+    </radialGradient>
+    <radialGradient id="mLedOn" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#ff9a9a"/><stop offset="0.45" stop-color="#e01b1b"/>
+      <stop offset="1" stop-color="#7a1010"/>
+    </radialGradient>
+    <radialGradient id="mLedOff" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#f2f1ee"/><stop offset="1" stop-color="#c3c1ba"/>
+    </radialGradient>
+    <radialGradient id="mScrew" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#f0eee9"/><stop offset="1" stop-color="#a9a69e"/>
+    </radialGradient>
+    <filter id="mShadow" x="-15%" y="-10%" width="130%" height="128%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0b1020" flood-opacity="0.3"/>
+    </filter>
+    <filter id="mGlowLcd" x="-25%" y="-40%" width="150%" height="180%">
+      <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#8ed23a" flood-opacity="0.5"/>
+    </filter>
+    <filter id="mGlowLed" x="-160%" y="-160%" width="420%" height="420%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.6" flood-color="#ff2d2d" flood-opacity="0.9"/>
+    </filter>
+    <clipPath id="mLcdClip"><rect x="292" y="220" width="168" height="78" rx="3"/></clipPath>
+  </defs>
+
+  <g filter="url(#mShadow)">
+    <!-- mounting flanges behind the casing, top and bottom -->
+    <path class="m-flange" d="M148 62h404v32H148zM148 424h404v30H148z"/>
+    <circle class="m-flange-hole" cx="164" cy="78" r="5"/>
+    <circle class="m-flange-hole" cx="536" cy="78" r="5"/>
+
+    <!-- upper casing -->
+    <rect class="m-case-top" x="172" y="40" width="356" height="146" rx="10"/>
+    <g class="m-screw-sm">
+      <circle cx="190" cy="58" r="6"/><circle cx="510" cy="58" r="6"/>
+      <circle cx="190" cy="168" r="6"/><circle cx="510" cy="168" r="6"/>
+    </g>
+    <!-- neutral maker's mark: this is a dummy device, so it carries no real brand -->
+    <g class="m-mark" transform="translate(200 92)">
+      <path d="M0 0h14a14 14 0 0 1 0 28H7v12H0z"/>
+      <path class="m-mark-cut" d="M7 7h7a7 7 0 0 1 0 14H7z"/>
+    </g>
+    <text class="m-maker" x="200" y="164">SMART METER</text>
+    <!-- COM / ON lamps -->
+    <text class="m-lamp-lbl" x="356" y="88">COM</text>
+    <text class="m-lamp-lbl" x="414" y="88">ON</text>
+    <path class="m-lamp-tick" d="M356 92v7M414 92v7"/>
+    <circle class="m-lamp-on" id="mLampCom" cx="349" cy="110" r="6"/>
+    <circle class="m-lamp-off" cx="371" cy="110" r="6"/>
+    <circle class="m-lamp-on" cx="407" cy="110" r="6"/>
+    <circle class="m-lamp-off" cx="429" cy="110" r="6"/>
+    <text class="m-spec" x="342" y="142">Comm. Tech.: NAN (865-867 MHz)</text>
+    <text class="m-spec" x="342" y="156">Communication Module: Plug-in</text>
+
+    <!-- lower casing -->
+    <rect class="m-case" x="172" y="186" width="356" height="254" rx="10"/>
+    <text class="m-title" x="350" y="203">AC STATIC WATTHOUR SMART METER</text>
+
+    <!-- LCD -->
+    <rect class="m-lcd-frame" x="286" y="214" width="180" height="90" rx="5"/>
+    <rect class="m-lcd" x="292" y="220" width="168" height="78" rx="3" filter="url(#mGlowLcd)"/>
+    <g clip-path="url(#mLcdClip)">
+      <g class="m-ico">
+        <g transform="translate(300 226)">
+          <rect x="0" y="7" width="2.4" height="4"/><rect x="3.6" y="4.8" width="2.4" height="6.2"/>
+          <rect x="7.2" y="2.4" width="2.4" height="8.6"/><rect x="10.8" y="0" width="2.4" height="11"/>
+        </g>
+        <g transform="translate(332 226)" class="m-ico-warn">
+          <path d="M1.6 10.4V4.8a4.8 4.8 0 0 1 9.6 0v5.6" fill="none" stroke-width="2.4"/>
+          <rect x="0.4" y="9.6" width="4" height="2.4"/><rect x="8.4" y="9.6" width="4" height="2.4"/>
+        </g>
+        <g transform="translate(364 226)">
+          <circle cx="6.4" cy="6" r="5.6" fill="none" stroke-width="1.9"/>
+          <path d="M6.4 1.2v5.6" fill="none" stroke-width="1.9" stroke-linecap="round"/>
+        </g>
+        <g transform="translate(396 225)" class="m-ico-warn">
+          <path d="M7.2 0 14.4 12.8H0z" fill="none" stroke-width="1.9" stroke-linejoin="round"/>
+          <path d="M7.2 4.8v4" stroke-width="1.9" stroke-linecap="round"/>
+          <circle cx="7.2" cy="10.7" r="1" stroke="none"/>
+        </g>
+      </g>
+      <!-- the unlit segments of an LCD stay faintly visible; that ghost is most of what
+           makes a real display read as a display rather than as printed text -->
+      <!-- Seven-segment digits. Markup is stamped by scripts/meter-digits.mjs from the
+           same segmentsFor() the runtime uses, so a no-JS visitor sees a real display too.
+           Regenerate with: node scripts/meter-digits.mjs -->
+      <g class="m-seg" id="mSeg"><polygon class="sg-on" points="323.4,246 333.6,246 335.3,247.7 333.6,249.39999999999998 323.4,249.39999999999998 321.7,247.7"/><polygon class="sg-off" points="323.4,259.3 333.6,259.3 335.3,261 333.6,262.7 323.4,262.7 321.7,261"/><polygon class="sg-on" points="323.4,272.6 333.6,272.6 335.3,274.3 333.6,276 323.4,276 321.7,274.3"/><polygon class="sg-on" points="320,249.39999999999998 321.7,247.7 323.4,249.39999999999998 323.4,259.3 321.7,261 320,259.3"/><polygon class="sg-on" points="333.6,249.39999999999998 335.3,247.7 337,249.39999999999998 337,259.3 335.3,261 333.6,259.3"/><polygon class="sg-on" points="320,262.7 321.7,261 323.4,262.7 323.4,272.6 321.7,274.3 320,272.6"/><polygon class="sg-on" points="333.6,262.7 335.3,261 337,262.7 337,272.6 335.3,274.3 333.6,272.6"/><polygon class="sg-off" points="343.9,246 354.1,246 355.8,247.7 354.1,249.39999999999998 343.9,249.39999999999998 342.2,247.7"/><polygon class="sg-on" points="343.9,259.3 354.1,259.3 355.8,261 354.1,262.7 343.9,262.7 342.2,261"/><polygon class="sg-off" points="343.9,272.6 354.1,272.6 355.8,274.3 354.1,276 343.9,276 342.2,274.3"/><polygon class="sg-on" points="340.5,249.39999999999998 342.2,247.7 343.9,249.39999999999998 343.9,259.3 342.2,261 340.5,259.3"/><polygon class="sg-on" points="354.1,249.39999999999998 355.8,247.7 357.5,249.39999999999998 357.5,259.3 355.8,261 354.1,259.3"/><polygon class="sg-off" points="340.5,262.7 342.2,261 343.9,262.7 343.9,272.6 342.2,274.3 340.5,272.6"/><polygon class="sg-on" points="354.1,262.7 355.8,261 357.5,262.7 357.5,272.6 355.8,274.3 354.1,272.6"/><polygon class="sg-on" points="364.4,246 374.6,246 376.3,247.7 374.6,249.39999999999998 364.4,249.39999999999998 362.7,247.7"/><polygon class="sg-on" points="364.4,259.3 374.6,259.3 376.3,261 374.6,262.7 364.4,262.7 362.7,261"/><polygon class="sg-on" points="364.4,272.6 374.6,272.6 376.3,274.3 374.6,276 364.4,276 362.7,274.3"/><polygon class="sg-on" points="361,249.39999999999998 362.7,247.7 364.4,249.39999999999998 364.4,259.3 362.7,261 361,259.3"/><polygon class="sg-on" points="374.6,249.39999999999998 376.3,247.7 378,249.39999999999998 378,259.3 376.3,261 374.6,259.3"/><polygon class="sg-off" points="361,262.7 362.7,261 364.4,262.7 364.4,272.6 362.7,274.3 361,272.6"/><polygon class="sg-on" points="374.6,262.7 376.3,261 378,262.7 378,272.6 376.3,274.3 374.6,272.6"/><polygon class="sg-off" points="384.9,246 395.1,246 396.8,247.7 395.1,249.39999999999998 384.9,249.39999999999998 383.2,247.7"/><polygon class="sg-off" points="384.9,259.3 395.1,259.3 396.8,261 395.1,262.7 384.9,262.7 383.2,261"/><polygon class="sg-off" points="384.9,272.6 395.1,272.6 396.8,274.3 395.1,276 384.9,276 383.2,274.3"/><polygon class="sg-off" points="381.5,249.39999999999998 383.2,247.7 384.9,249.39999999999998 384.9,259.3 383.2,261 381.5,259.3"/><polygon class="sg-on" points="395.1,249.39999999999998 396.8,247.7 398.5,249.39999999999998 398.5,259.3 396.8,261 395.1,259.3"/><polygon class="sg-off" points="381.5,262.7 383.2,261 384.9,262.7 384.9,272.6 383.2,274.3 381.5,272.6"/><polygon class="sg-on" points="395.1,262.7 396.8,261 398.5,262.7 398.5,272.6 396.8,274.3 395.1,272.6"/><polygon class="sg-on" points="405.4,246 415.6,246 417.3,247.7 415.6,249.39999999999998 405.4,249.39999999999998 403.7,247.7"/><polygon class="sg-on" points="405.4,259.3 415.6,259.3 417.3,261 415.6,262.7 405.4,262.7 403.7,261"/><polygon class="sg-on" points="405.4,272.6 415.6,272.6 417.3,274.3 415.6,276 405.4,276 403.7,274.3"/><polygon class="sg-off" points="402,249.39999999999998 403.7,247.7 405.4,249.39999999999998 405.4,259.3 403.7,261 402,259.3"/><polygon class="sg-on" points="415.6,249.39999999999998 417.3,247.7 419,249.39999999999998 419,259.3 417.3,261 415.6,259.3"/><polygon class="sg-on" points="402,262.7 403.7,261 405.4,262.7 405.4,272.6 403.7,274.3 402,272.6"/><polygon class="sg-off" points="415.6,262.7 417.3,261 419,262.7 419,272.6 417.3,274.3 415.6,272.6"/><rect class="sg-on" x="423.5" y="272.6" width="3.4" height="3.4"/><polygon class="sg-on" points="438.4,246 448.6,246 450.3,247.7 448.6,249.39999999999998 438.4,249.39999999999998 436.7,247.7"/><polygon class="sg-on" points="438.4,259.3 448.6,259.3 450.3,261 448.6,262.7 438.4,262.7 436.7,261"/><polygon class="sg-on" points="438.4,272.6 448.6,272.6 450.3,274.3 448.6,276 438.4,276 436.7,274.3"/><polygon class="sg-on" points="435,249.39999999999998 436.7,247.7 438.4,249.39999999999998 438.4,259.3 436.7,261 435,259.3"/><polygon class="sg-off" points="448.6,249.39999999999998 450.3,247.7 452,249.39999999999998 452,259.3 450.3,261 448.6,259.3"/><polygon class="sg-on" points="435,262.7 436.7,261 438.4,262.7 438.4,272.6 436.7,274.3 435,272.6"/><polygon class="sg-on" points="448.6,262.7 450.3,261 452,262.7 452,272.6 450.3,274.3 448.6,272.6"/></g>
+      <text class="m-code" id="mCode" x="300" y="292">1.8.0</text>
+      <text class="m-unit" id="mUnit" x="452" y="292">kWh</text>
+    </g>
+    <path class="m-gloss" d="M292 220h168v28l-168 32z"/>
+
+    <!-- pulse LED and standard markings -->
+    <circle class="m-led-pulse" cx="298" cy="326" r="5.5" filter="url(#mGlowLed)"/>
+    <text class="m-print" x="310" y="330">kWh — 3200 Imp/Unit</text>
+    <text class="m-print" x="292" y="352">IS 16444 (Part 1)</text>
+    <text class="m-print m-print-sm" x="292" y="364">CM/L-8400169811</text>
+
+    <!-- serial barcode + printed specification block -->
+    <g class="m-bars" transform="translate(186 340)">
+      <rect x="0" y="0" width="2.2" height="22"/><rect x="4.4" y="0" width="1.1" height="22"/>
+      <rect x="7.7" y="0" width="3.3" height="22"/><rect x="13.2" y="0" width="1.1" height="22"/>
+      <rect x="16.5" y="0" width="2.2" height="22"/><rect x="22" y="0" width="1.1" height="22"/>
+      <rect x="25.3" y="0" width="1.1" height="22"/><rect x="28.6" y="0" width="3.3" height="22"/>
+      <rect x="34.1" y="0" width="1.1" height="22"/><rect x="37.4" y="0" width="2.2" height="22"/>
+      <rect x="42.9" y="0" width="3.3" height="22"/><rect x="48.4" y="0" width="1.1" height="22"/>
+      <rect x="51.7" y="0" width="2.2" height="22"/><rect x="57.2" y="0" width="1.1" height="22"/>
+      <rect x="60.5" y="0" width="3.3" height="22"/><rect x="66" y="0" width="1.1" height="22"/>
+      <rect x="69.3" y="0" width="2.2" height="22"/><rect x="74.8" y="0" width="1.1" height="22"/>
+    </g>
+    <text class="m-serial" x="186" y="378">Sr. No. RND00001</text>
+    <g class="m-spec">
+      <text x="186" y="396">1P, 2W, 240V, 5-60A, 50 Hz, Class 1.0</text>
+      <text x="186" y="408">DLMS Meter Type: 6 · Cat.: D1, 27&#176;C</text>
+      <text x="186" y="420">Type: GPSM 03 · MM/YYYY: 08/2026</text>
+      <text x="186" y="432">Illustration only — not a real meter</text>
+    </g>
+
+    <!-- right column -->
+    <text class="m-print m-print-sm m-print-end" x="518" y="332">MTCTE : 283603039</text>
+    <!-- Real control, not decoration: focusable, keyboard-operable, and with a hit area
+         larger than the drawn button so it clears the 24px minimum on touch. -->
+    <!-- "Press here" tag. Brand blue and pill-shaped so it reads as annotation laid over
+         the device rather than as something printed on it. Decorative to assistive tech —
+         the button below already carries its own label — and it retires on first press
+         along with the pulse, since by then it has said what it had to say. -->
+    <g class="m-hint-tag" aria-hidden="true">
+      <rect x="384" y="348" width="86" height="21" rx="10.5"/>
+      <text x="424" y="363">यहाँ दबाएँ</text>
+      <path d="M472 352.5 481 358.5 472 364.5 Z"/>
+    </g>
+    <g class="m-btn-hit" id="mBtn" role="button" tabindex="0"
+       aria-label="Press the meter's scroll button to show the next reading"
+       aria-describedby="mReadout">
+      <circle class="m-btn-target" cx="500" cy="358" r="26"/>
+      <!-- Resting affordance. Hover cannot carry this — it does not exist on touch —
+           so an expanding ring runs until the first press, then stops for good. -->
+      <circle class="m-btn-pulse" cx="500" cy="358" r="15"/>
+      <circle class="m-btn-ring" cx="500" cy="358" r="20"/>
+      <circle class="m-btn-rim" cx="500" cy="358" r="15"/>
+      <circle class="m-btn" cx="500" cy="358" r="11.5"/>
+      <text class="m-label" x="500" y="382">Scroll</text>
+    </g>
+    <circle class="m-port-metal" cx="486" cy="410" r="24"/>
+    <circle class="m-port-ring" cx="486" cy="410" r="17.5"/>
+    <ellipse class="m-port-slot" cx="486" cy="410" rx="11" ry="5.5"/>
+
+    <!-- terminal block -->
+    <rect class="m-term" x="196" y="440" width="308" height="50" rx="4"/>
+    <g class="m-term-slot">
+      <rect x="214" y="446" width="38" height="28" rx="2"/>
+      <rect x="271" y="446" width="38" height="28" rx="2"/>
+      <rect x="328" y="446" width="38" height="28" rx="2"/>
+      <rect x="385" y="446" width="38" height="28" rx="2"/>
+      <rect x="442" y="446" width="38" height="28" rx="2"/>
+    </g>
+    <g class="m-brass">
+      <circle cx="233" cy="458" r="6.5"/><circle cx="290" cy="458" r="6.5"/>
+      <circle cx="347" cy="458" r="6.5"/><circle cx="404" cy="458" r="6.5"/>
+      <circle cx="461" cy="458" r="6.5"/>
+    </g>
+    <circle class="m-term-seal" cx="350" cy="481" r="4.5"/>
+  </g>
+
+  <!-- callout leaders: every run is routed through a corridor with no printed detail in it -->
+  <!-- Numbered top-to-bottom down the device, so the two casing lamps take 1 and 2 and
+       everything on the LCD follows. The legend uses a CSS counter, so its numbering
+       tracks this automatically. COM approaches from below the ON pair to avoid
+       crossing it; every other run sits in a corridor with no printed detail in it. -->
+  <g class="m-lead">
+    <path d="M576 100h-120l-28-24h-68"/>
+    <path d="M576 134h-140l-6-16"/>
+    <path d="M124 214h156l26 16"/>
+    <path d="M124 248h156l58-16"/>
+    <path d="M576 214h-172l-34 16"/>
+    <path d="M576 248h-130l-43-16"/>
+    <path d="M124 282h150l12-18"/>
+    <path d="M124 316h150l14-22"/>
+    <path d="M576 292h-114"/>
+    <path d="M124 350h150l26-22"/>
+    <path d="M576 358h-58"/>
+    <path d="M124 380h56"/>
+  </g>
+  <g class="m-num">
+    <circle cx="588" cy="100" r="12"/><text x="588" y="104.5">1</text>
+    <circle cx="588" cy="134" r="12"/><text x="588" y="138.5">2</text>
+    <circle cx="112" cy="214" r="12"/><text x="112" y="218.5">3</text>
+    <circle cx="112" cy="248" r="12"/><text x="112" y="252.5">4</text>
+    <circle cx="588" cy="214" r="12"/><text x="588" y="218.5">5</text>
+    <circle cx="588" cy="248" r="12"/><text x="588" y="252.5">6</text>
+    <circle cx="112" cy="282" r="12"/><text x="112" y="286.5">7</text>
+    <circle cx="112" cy="316" r="12"/><text x="112" y="320.5">8</text>
+    <circle cx="588" cy="292" r="12"/><text x="588" y="296.5">9</text>
+    <circle cx="112" cy="350" r="12"/><text x="112" y="354.5">10</text>
+    <circle cx="588" cy="358" r="12"/><text x="588" y="362.5">11</text>
+    <circle cx="112" cy="380" r="12"/><text x="112" y="384.5">12</text>
+  </g>        </svg>
+        <div class="meter-readout" id="mReadout" aria-live="polite">
+          <div class="meter-readout-head">
+            <span class="meter-readout-step" id="mStep"></span>
+            <strong id="mTitle"></strong>
+          </div>
+          <p id="mWhy"></p>
+          <button type="button" class="meter-readout-btn" id="mNext">यहाँ दबाएँ →</button>
+        </div>
+        <figcaption>यह एक संयुक्त चित्र है — मीटर पर <strong>Scroll</strong> (या ऊपर दिया बटन) दबाकर डिस्प्ले का पूरा चक्र देखिए। असली मीटर में सारे संकेत एक साथ कभी नहीं जलते; बनावट और आइकन कंपनी के अनुसार बदलते हैं, अर्थ नहीं बदलते।</figcaption>
+      </figure>
+      <ol class="meter-legend">
+        <li><strong>COM लैंप</strong> — संचार गतिविधि। जब मीटर बिजली कंपनी के नेटवर्क से बात करता है तब यह जलता है — लगातार नहीं, बल्कि थोड़े-थोड़े अंतराल पर: ज़्यादातर मीटर हर 15 से 30 मिनट में डेटा भेजते हैं। अगर COM लैंप कभी जलता ही नहीं, तो शायद कम्युनिकेशन मॉड्यूल नेटवर्क तक नहीं पहुँच रहा — रिचार्ज देर से पहुँचने की यही सबसे आम वजह है। इसका आपकी बिजली सप्लाई से कोई संबंध नहीं।</li>
+        <li><strong>ON लैंप</strong> — मीटर के टर्मिनल तक बिजली पहुँच रही है। लगातार जलता रहे तो बिजली आ रही है। यह पता लगाने का सबसे तेज़ तरीका है कि दिक्कत आपके घर की है या नेटवर्क की: अगर ON लैंप जल रहा है फिर भी बिजली नहीं है, तो खराबी मीटर के बाद आपकी तरफ है — MCB, वायरिंग या बोर्ड में — डिस्कॉम की कटौती नहीं।</li>
+        <li><strong>नेटवर्क सिग्नल</strong> — बिजली कंपनी से मीटर का संपर्क (RF मेश या सेल्युलर/NIC मॉड्यूल)। सिग्नल कमज़ोर या खाली हो तो रीडिंग और रिचार्ज मीटर तक देर से पहुँचते हैं। आपका बैलेंस सामान्य रूप से घटता रहता है; देर सिर्फ़ <em>रिपोर्टिंग</em> में होती है — इसी वजह से भरा हुआ रिचार्ज गायब लगता है।</li>
+        <li><strong>टैम्पर / मैग्नेट संकेत</strong> — तब चालू होता है जब मीटर को बाहर से तेज़ चुंबकीय क्षेत्र, टर्मिनल कवर हटाया जाना, या उल्टा कनेक्शन मिलता है। यह समय के साथ दर्ज होकर डिस्कॉम तक पहुँचता है। अगर किसी ने मीटर को छुआ भी न हो और यह दिखे, तो तुरंत शिकायत कीजिए — यही रिकॉर्ड सबूत है, और शुरू में चुनौती देना आसान होता है।</li>
+        <li><strong>सप्लाई / रिले स्थिति</strong> — अंदर लगा डिस्कनेक्ट स्विच बंद है (सप्लाई चालू) या खुला। मीटर में बैलेंस होते हुए भी रिले खुला हो, तो आम तौर पर यह दूर से की गई कटौती या लोड-लिमिट ट्रिप है, कोई खराबी नहीं।</li>
+        <li><strong>कम-बैलेंस चेतावनी</strong> — जब प्रीपेड बैलेंस डिस्कॉम की तय सीमा से नीचे चला जाता है तब यह जलता है। ज़्यादातर भारतीय डिस्कॉम इसके बाद थोड़ी मोहलत या इमरजेंसी क्रेडिट देते हैं, और अधिसूचित रात के घंटों या छुट्टी के दिन कनेक्शन नहीं काटते।</li>
+        <li><strong>मुख्य रीडिंग</strong> — इस समय दिख रहा मान। प्रीपेड मीटर में डिस्प्ले बारी-बारी से आपका बचा हुआ <strong>₹ बैलेंस</strong> और कुल यूनिट वाले रजिस्टर दिखाता है, इसलिए बड़ी संख्या हर बार एक ही चीज़ नहीं होती।</li>
+        <li><strong>रजिस्टर कोड</strong> — वह छोटा कोड जो बताता है कि बड़ी संख्या <em>किस</em> चीज़ की है। मीटर पर यही सबसे काम की जानकारी है, और यही किसी को बताई नहीं जाती। ये कोड मानकीकृत हैं; नीचे दी तालिका देखिए।</li>
+        <li><strong>यूनिट लेबल</strong> — ऊर्जा के लिए <code>kWh</code>, आभासी ऊर्जा के लिए <code>kVAh</code>, डिमांड के लिए <code>kW</code>/<code>kVA</code>, और प्रीपेड बैलेंस के लिए <code>₹</code>। अगर आपका बिल kVAh पर बनता है, तो पावर फैक्टर खराब होने पर kWh वही रहने के बावजूद बिल बढ़ जाता है।</li>
+        <li><strong>पल्स LED</strong> — हर यूनिट खपत पर तय संख्या में चमकती है — यह संख्या उसके पास लिखी होती है (आम तौर पर 1000 imp/kWh, यानी हर वाट-घंटे पर एक फ्लैश)। यह सीधे लोड बताती है: <strong>जितनी तेज़ चमक, उतना ज़्यादा लोड अभी</strong>। सब कुछ बंद कर दीजिए तो यह लगभग रुक जानी चाहिए।</li>
+        <li><strong>डिस्प्ले बटन</strong> — (इस पर <em>Scroll</em> या <em>Push</em> लिखा होता है) — अपने आप बदलने का इंतज़ार किए बिना रजिस्टर की सूची एक-एक करके देखने के लिए। ज़्यादातर मीटरों में देर तक दबाने पर दूसरी, और विस्तृत सूची खुलती है (बिलिंग इतिहास, टैम्पर लॉग)।</li>
+        <li><strong>नेमप्लेट</strong> — मीटर का सीरियल नंबर, मानक चिह्न, सटीकता श्रेणी और करंट रेटिंग। <strong>यहाँ लिखा सीरियल नंबर आपके बिल पर लिखे नंबर से मिलना चाहिए।</strong> यही एक जाँच किसी और का मीटर आपके नाम जुड़ जाने वाली गलती पकड़ लेती है — यह गलती आम है और बाद में सुलझाना सबसे महँगा पड़ता है।</li>
+      </ol>
+    </section>
+
+    <section class="seo-section" id="register-codes">
+      <h2>रजिस्टर कोड: कौन-सी संख्या किसकी है</h2>
+      <p>ये <strong>OBIS कोड</strong> हैं (IEC 62056-61) — हर मानक मीटर में एक जैसे, चाहे उसे किसी ने भी बनाया हो। ये पढ़ना आ जाए तो डिस्प्ले बेतरतीब संख्याओं का सिलसिला नहीं रह जाता।</p>
+      <div class="comparison-table-wrapper"><table class="comparison-table">
+        <thead><tr><th>कोड</th><th>संख्या किसकी है</th><th>यह क्यों काम की है</th></tr></thead>
+        <tbody>
+            <tr><td><code>1.8.0</code></td><td>कुल ली गई सक्रिय ऊर्जा (kWh)</td><td>आपकी असली कुल खपत — बिल इसी से बनता है</td></tr>
+            <tr><td><code>1.8.1</code> / <code>1.8.2</code></td><td>ToD ज़ोन 1 / ज़ोन 2 की ऊर्जा</td><td>टाइम-ऑफ-डे टैरिफ में खपत को समय-बैंड के हिसाब से बाँटता है</td></tr>
+            <tr><td><code>9.8.0</code></td><td>कुल आभासी ऊर्जा (kVAh)</td><td>जहाँ डिस्कॉम kVAh पर बिल बनाता है, वहाँ यही मात्रा बिल में लगती है</td></tr>
+            <tr><td><code>1.6.0</code></td><td>अधिकतम डिमांड (kW या kVA)</td><td>वह उच्चतम स्तर जो डिमांड चार्ज तय करता है और लोड ज़्यादा होने पर संकेत देता है</td></tr>
+            <tr><td><code>0.9.1</code> / <code>0.9.2</code></td><td>मीटर का समय / तारीख</td><td>घड़ी आगे-पीछे हो तो ToD की खपत गलत बैंड में चली जाती है</td></tr>
+            <tr><td><code>2.8.0</code></td><td>कुल भेजी गई सक्रिय ऊर्जा (kWh)</td><td>नेट-मीटरिंग में आपके रूफटॉप सोलर से ग्रिड को भेजी गई यूनिट</td></tr>
+        </tbody>
+      </table></div>
+      <p class="seo-note">प्रीपेड बैलेंस और इमरजेंसी क्रेडिट के रजिस्टर OBIS मानक में उस तरह तय नहीं हैं — अलग-अलग कंपनियाँ उन्हें अलग नाम देती हैं (<code>Bal</code>, <code>Cr</code>, या सिर्फ़ ₹ वाली संख्या)। ₹ चिह्न वाली संख्या देखिए, कोड नहीं।</p>
+      <aside class="inline-cta">
+        <div>
+          <strong><code>1.8.0</code> रीडिंग मिल गई?</strong>
+          <span>पिछले महीने की रीडिंग घटाइए और अंतर डालिए — आपको अपने डिस्कॉम की असली दरों पर स्लैब-वार, मद-वार अनुमान मिलेगा।</span>
+        </div>
+        <a class="btn-primary cta-arrow" href="/#calculator">
+          <span>मेरा बिल जोड़ें</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </aside>
+    </section>
+
+    <section class="seo-section" id="three-phase">
+      <h2>थ्री-फेज़ मीटर: क्या बदलता है</h2>
+      <p>ऊपर बताया सब कुछ सिंगल-फेज़ मीटर के बारे में है, जो ज़्यादातर घरों में लगा होता है। बड़े घर, दुकानें और छोटे उद्योग <strong>थ्री-फेज़</strong> पर चलते हैं। अच्छी बात यह है कि जो हिस्सा लोगों को उलझाता है वह बदलता नहीं: <strong>रजिस्टर कोड बिल्कुल वही रहते हैं</strong>। <code>1.8.0</code> अब भी कुल ली गई ऊर्जा है, <code>1.6.0</code> अब भी अधिकतम डिमांड, और स्थिति के आइकन का मतलब भी वही।</p>
+      <p>क्या अलग होता है:</p>
+      <ul>
+        <li><strong>ज़्यादा टर्मिनल।</strong> तीन फेज़ और एक न्यूट्रल, इसलिए टर्मिनल ब्लॉक चौड़ा होता है — आम तौर पर पाँच के बजाय आठ। इसे कभी खोलना नहीं चाहिए; कवर सील होता है और सील तोड़ना खुद एक टैम्पर घटना है।</li>
+        <li><strong>हर फेज़ के रजिस्टर।</strong> डिस्प्ले में हर फेज़ का वोल्टेज और करंट भी जुड़ जाता है, जो अक्सर <code>L1</code>, <code>L2</code>, <code>L3</code> के रूप में दिखता है। बाकी फेज़ चालू हों और कोई एक शून्य वोल्ट दिखाए, तो वह फेज़ चला गया है — यह सप्लाई की खराबी है, मीटर की नहीं; इसकी शिकायत कीजिए।</li>
+        <li><strong>kVAh और डिमांड ज़्यादा मायने रखते हैं।</strong> थ्री-फेज़ कनेक्शन पर बिल kVAh पर बनने और अधिकतम डिमांड चार्ज लगने की संभावना कहीं ज़्यादा होती है, इसलिए <code>9.8.0</code> और <code>1.6.0</code> पर नज़र रखिए — यहाँ खराब पावर फैक्टर सीधे पैसे का नुकसान करता है, जो घरेलू सिंगल-फेज़ में आम तौर पर नहीं होता।</li>
+        <li><strong>लोड सीमा पूरे कनेक्शन पर, हर फेज़ पर नहीं।</strong> ट्रिप कुल स्वीकृत लोड पर तय होता है, इसलिए तीनों फेज़ पर लोड असंतुलित हो तो हर फेज़ अलग-अलग कम दिखने के बावजूद कनेक्शन ट्रिप हो सकता है।</li>
+      </ul>
+      <p>अगर आप डिमांड चार्ज घटाना चाहते हैं, तो <a href="/sanctioned-load-optimizer/">सैंक्शन्ड लोड ऑप्टिमाइज़र</a> उसी टैरिफ डेटा पर काम करता है जिस पर कैलकुलेटर।</p>
+    </section>
+
+    <section class="seo-section" id="amisp">
+      <h2>आपका मीटर किसने लगाया</h2>
+      <p><strong>RDSS</strong> के तहत ज़्यादातर डिस्कॉम खुद स्मार्ट मीटर नहीं लगाते। वे एक <strong>AMISP</strong> नियुक्त करते हैं — एक ठेकेदार जो मीटर देता है, लगाता है और फिर पूरी मीटरिंग व्यवस्था चलाता है, जिसे आठ से दस साल तक हर मीटर पर हर महीने भुगतान मिलता है, शुरू में एकमुश्त नहीं।</p>
+      <p>यह सिर्फ़ एक स्थिति में मायने रखता है: जब विवाद <em>इंस्टॉलेशन या डिवाइस</em> का हो — मीटर गलत जगह लग गया हो, सीरियल नंबर बिल से न मिलता हो, या मीटर कुछ ही हफ़्तों में खराब हो गया हो। आपका करार फिर भी डिस्कॉम से है और शिकायत वहीं जाएगी, लेकिन देखने के लिए AMISP को ही भेजा जाता है।</p>
+      <p class="seo-note"><strong>इससे यह पता नहीं चलता कि आपका डिस्प्ले क्या दिखाएगा।</strong> एक AMISP अपने अलग-अलग सर्किलों में कई कंपनियों के मीटर लगाता है, इसलिए चिह्न मीटर के मेक और IS 16444 से आते हैं — जो इस पेज का बाकी हिस्सा समझाता है।</p>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/smart-meter/amisp-list/"><strong>राज्य और डिस्कॉम के अनुसार AMISP सूची →</strong><span>हर वह AMISP जिसकी पुष्टि हम कर सके — हर पुष्ट पंक्ति पर स्रोत लिंक और अनुबंधित मीटर संख्या के साथ</span></a>
+      </div>
+    </section>
+
+    <section class="seo-section">
+      <h2>खुद रीडिंग लीजिए, फिर बिल जाँचिए</h2>
+      <p>हर महीने एक ही तारीख को <code>1.8.0</code> का आँकड़ा लिख लीजिए। दो रीडिंग का अंतर ही उस अवधि की आपकी खपत है — बस इतना ही, और बिल इसी संख्या पर बनना चाहिए।</p>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/#calculator"><strong>इसकी कीमत कितनी बनती है</strong><span>यूनिट और लोड डालिए और अपने डिस्कॉम की असली दरों पर स्लैब-वार, मद-वार अनुमान पाइए</span></a>
+        <a class="seo-link-card" href="/check-my-bill/"><strong>आपको मिला बिल जाँचिए</strong><span>अपलोड कीजिए और हर चार्ज को टैरिफ ऑर्डर से मिलाकर जँचवाइए</span></a>
+        <a class="seo-link-card" href="/hi/smart-meter-recharge/"><strong>रिचार्ज और बैलेंस, डिस्कॉम के अनुसार</strong><span>आधिकारिक तरीका, और आपके टैरिफ पर रिचार्ज से लगभग कितनी यूनिट मिलती हैं</span></a>
+      </div>
+    </section>
+
+    <section class="seo-section">
+      <h2>जब डिस्प्ले बता रहा हो कि कुछ गड़बड़ है</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/hi/guides/smart-meter-running-fast/"><strong>लगता है मीटर तेज़ चल रहा है</strong><span>मीटर टेस्टिंग के लिए पैसे देने से पहले ज्ञात लोड पर इसे कैसे जाँचें</span></a>
+        <a class="seo-link-card" href="/hi/guides/smart-meter-recharge-failed/"><strong>रिचार्ज किया, पर बैलेंस अपडेट नहीं हुआ</strong><span>पैसा लगभग कभी नहीं डूबता — और मीटर को सिंक होने में असल में कितना समय लगता है</span></a>
+        <a class="seo-link-card" href="/hi/guides/smart-meter-prepaid-disconnection/"><strong>बैलेंस दिखते हुए भी सप्लाई कट गई</strong><span>लोड-लिमिट ट्रिप, रात के घंटों की सुरक्षा और नियम असल में क्या कहते हैं</span></a>
+        <a class="seo-link-card" href="/hi/guides/smart-meter-balance-check/"><strong>मीटर के बिना बैलेंस देखना</strong><span>जब डिस्प्ले तक पहुँच न हो या पढ़ा न जा सके — ऐप, SMS और पोर्टल के रास्ते</span></a>
+      </div>
+    </section>
+
+    <section class="seo-section" id="faq">
+      <h2>आम सवाल</h2>
+      <details class="seo-faq-item">
+        <summary>मेरे स्मार्ट मीटर की लाल बत्ती क्यों जल-बुझ रही है?</summary>
+        <div class="seo-faq-a">यह सामान्य है — यह पल्स LED है, जो मापी गई हर इकाई ऊर्जा पर एक बार चमकती है (आम तौर पर 1000 या 3200 फ्लैश प्रति kWh, जो उसके पास लिखा होता है)। यह खराबी की बत्ती नहीं, सीधे लोड बताती है: अभी जितनी बिजली खिंच रही है, उतनी तेज़ चमकेगी। सब बंद कर दीजिए तो यह लगभग रुक जाएगी।</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>रिचार्ज कर दिया पर स्मार्ट मीटर का बैलेंस नहीं बढ़ा — क्या पैसे डूब गए?</summary>
+        <div class="seo-faq-a">लगभग कभी नहीं। भुगतान डिस्कॉम तक तुरंत पहुँच जाता है, लेकिन टोकन को नेटवर्क से होकर मीटर तक जाना होता है, और सिग्नल कमज़ोर हो तो देर लगती है — आम तौर पर कुछ मिनट, कभी-कभी घंटे। इस बीच आपका बैलेंस सामान्य रूप से घटता रहता है, यानी क्रेडिट गया नहीं, बस अभी पहुँचा नहीं। ट्रांज़ैक्शन ID संभालकर रखिए।</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>बैलेंस दिख रहा है फिर भी बिजली कट गई। क्यों?</summary>
+        <div class="seo-faq-a">आम तौर पर यह बैलेंस की नहीं, लोड-लिमिट की बात होती है: स्वीकृत लोड से ज़्यादा खींचने पर मीटर में पैसे होते हुए भी रिले खुल जाता है। लोड घटाइए — ज़्यादातर मीटर खुद या बटन दबाने पर वापस जुड़ जाते हैं। यह किसी अलग बकाया के कारण दूर से की गई कटौती भी हो सकती है।</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>डिस्प्ले पर कौन-सी संख्या मेरी असली मीटर रीडिंग है?</summary>
+        <div class="seo-faq-a">वह जो रजिस्टर कोड <code>1.8.0</code> के साथ दिखे — कुल ली गई सक्रिय ऊर्जा, kWh में। डिस्प्ले कई मान बारी-बारी दिखाता है, इसलिए सबसे बड़ी संख्या हमेशा रीडिंग नहीं होती; उसके पास लिखा छोटा कोड देखिए।</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>मैग्नेट या टैम्पर वाले चिह्न का क्या मतलब है?</summary>
+        <div class="seo-faq-a">मीटर ने बाहर से तेज़ चुंबकीय क्षेत्र, हटा हुआ टर्मिनल कवर, या उल्टा कनेक्शन पकड़ा है, और उसे समय के साथ दर्ज करके डिस्कॉम को भेज दिया है। यह अपने आप नहीं हटता। किसी ने मीटर छुआ न हो और यह दिखे, तो तुरंत शिकायत कीजिए — समय के साथ दर्ज वही रिकॉर्ड सबूत है।</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>क्या मेरा स्मार्ट मीटर पुराने मीटर से तेज़ चल रहा है?</summary>
+        <div class="seo-faq-a">आम तौर पर गलती मीटर की नहीं होती। पुराने इलेक्ट्रोमैकेनिकल मीटर उम्र के साथ कम दर्ज करने लगते थे, इसलिए उतनी ही खपत पर सही नया मीटर ज़्यादा दिखाता है; और प्रीपेड बिलिंग में खर्च महीने के बजाय रोज़ दिखता है। स्मार्ट मीटर IS 16444 क्लास 1.0 पर जाँचे जाते हैं, यानी ±1% सटीकता।</div>
+      </details>
+    </section>
+
+    <p class="seo-disclaimer">ऊपर दिए चिह्नों के अर्थ IS 16444 और IEC 62056-61 की OBIS रजिस्टर व्यवस्था के अनुसार हैं, जिन पर भारतीय स्मार्ट मीटर बनते हैं। आइकन की बनावट, डिस्प्ले का क्रम और प्रीपेड बैलेंस के लेबल कंपनी के अनुसार बदलते हैं — आपके मीटर का कोई चिह्न चित्र से मेल न खाए तो मीटर के साथ मिली पुस्तिका देखिए। विवाद की स्थिति में रीडिंग को हमेशा अपने छपे बिल और डिस्कॉम के टैरिफ ऑर्डर से मिलाइए।</p>
+  </section>
+  <script type="module">
+    import { initSmartMeter } from "/js/smart-meter.js";
+    initSmartMeter();
+  </script>
+</div>
+
+<footer>
+  <div class="container">
+    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+        <a href="/compare/" data-i18n="nav.compare">Compare</a>
+        <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</a>
+        <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/hi/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/smart-meter/" data-i18n="ql.meterDisplay">Smart Meter Guide</a>
+        <a href="/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/hi/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/hi/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/hi/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/fuel-surcharge/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/contact/" data-i18n="ql.contact">Contact</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

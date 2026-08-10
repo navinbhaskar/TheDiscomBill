@@ -1,7 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-i18n-twins-only>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#1d4ed8">
   <link rel="manifest" href="/manifest.webmanifest">
@@ -13,11 +18,17 @@
         if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         document.documentElement.dataset.theme = t;
       } catch (e) {}
+      
     })();
   </script>
   <title>Smart Meter Guide: Display Symbols, Register Codes &amp; AMISP List</title>
   <meta name="description" content="What every symbol on an Indian prepaid smart meter means — signal, tamper, relay and low-balance icons, OBIS register codes and the pulse LED.">
   <link rel="canonical" href="https://thediscombill.com/smart-meter/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter/">
+  <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/smart-meter/">
+  <link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/smart-meter/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter/">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="TheDiscomBill">
@@ -28,8 +39,9 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:image:alt" content="Smart Meter Guide: Display Symbols, Register Codes &amp; AMISP List">
   <meta property="og:locale" content="en_IN">
+  <meta property="og:locale:alternate" content="hi_IN">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Smart Meter Guide: Display Symbols, Register Codes &amp; AMISP List">
   <meta name="twitter:description" content="What every symbol on an Indian prepaid smart meter means — signal, tamper, relay and low-balance icons, OBIS register codes and the pulse LED.">
@@ -37,14 +49,18 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
   <link rel="stylesheet" href="/fonts/fonts.css">
-  <link rel="stylesheet" href="/css/styles.min.css">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/smart-meter/","name":"Smart Meter Guide: Display Symbols, Register Codes & AMISP List","description":"What every symbol on an Indian prepaid smart meter means — signal, tamper, relay and low-balance icons, OBIS register codes and the pulse LED.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-10"}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Smart Meter Guide","item":"https://thediscombill.com/smart-meter/"}]}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why is the red light on my smart meter blinking?","acceptedAnswer":{"@type":"Answer","text":"That is normal — it is the pulse LED, and it flashes once per unit of energy measured (usually 1000 or 3200 flashes per kWh, printed next to it). It is a live load indicator, not a fault light: the more you are drawing right now, the faster it blinks. Switch everything off and it should slow almost to a stop. If it keeps racing with all loads off, that is worth checking properly."}},{"@type":"Question","name":"I recharged but my smart meter balance has not updated — is my money lost?","acceptedAnswer":{"@type":"Answer","text":"Almost never. The payment reaches the DISCOM instantly, but the token has to travel to the meter over the network, and a weak signal delays that — minutes usually, occasionally hours. Your balance keeps depleting normally in the meantime, so the credit is not missing, just not yet delivered. Keep the transaction ID."}},{"@type":"Question","name":"My supply was cut but the meter still shows a balance. Why?","acceptedAnswer":{"@type":"Answer","text":"Usually a load-limit trip rather than a credit problem: drawing more than your sanctioned load opens the relay even with money on the meter. Reduce the load and most meters reconnect on their own or after a button press. It can also be a remote disconnection for a separate arrear."}},{"@type":"Question","name":"Which number on the display is my actual meter reading?","acceptedAnswer":{"@type":"Answer","text":"The one shown against register code 1.8.0 — total active energy imported, in kWh. The display cycles through several values, so the largest number is not always the reading; check the small code beside it. Note 1.8.0 on the same date each month and the difference between two readings is your consumption for that period."}},{"@type":"Question","name":"What does the magnet or tamper symbol mean?","acceptedAnswer":{"@type":"Answer","text":"The meter has detected a strong external magnetic field, a removed terminal cover, or a reversed connection, and has logged it with a timestamp and reported it to the DISCOM. It does not clear by itself. If it appeared without anyone touching the meter, raise a complaint straight away — the timestamped log is the evidence, and it is far easier to contest early than after a penalty is raised."}},{"@type":"Question","name":"Is my smart meter running faster than my old meter?","acceptedAnswer":{"@type":"Answer","text":"Usually it is not the meter. Old electromechanical meters commonly under-recorded as they aged, so an accurate new meter reads higher for the same usage, and prepaid billing makes the cost visible daily rather than monthly. Smart meters are tested to IS 16444 Class 1.0, meaning ±1% accuracy. You can verify yours against a known load before paying for a meter test — here is the method."}}]}</script>
-
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
@@ -71,6 +87,8 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/smart-meter/","name":"Smart Meter Guide: Display Symbols, Register Codes & AMISP List","description":"What every symbol on an Indian prepaid smart meter means — signal, tamper, relay and low-balance icons, OBIS register codes and the pulse LED.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-10"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why is the red light on my smart meter blinking?","acceptedAnswer":{"@type":"Answer","text":"That is normal — it is the pulse LED, and it flashes once per unit of energy measured (usually 1000 or 3200 flashes per kWh, printed next to it). It is a live load indicator, not a fault light: the more you are drawing right now, the faster it blinks. Switch everything off and it should slow almost to a stop."}},{"@type":"Question","name":"I recharged but my smart meter balance has not updated — is my money lost?","acceptedAnswer":{"@type":"Answer","text":"Almost never. The payment reaches the DISCOM instantly, but the token has to travel to the meter over the network, and a weak signal delays that — minutes usually, occasionally hours. Your balance keeps depleting normally in the meantime, so the credit is not missing, just not yet delivered. Keep the transaction ID."}},{"@type":"Question","name":"My supply was cut but the meter still shows a balance. Why?","acceptedAnswer":{"@type":"Answer","text":"Usually a load-limit trip rather than a credit problem: drawing more than your sanctioned load opens the relay even with money on the meter. Reduce the load and most meters reconnect on their own or after a button press. It can also be a remote disconnection for a separate arrear."}},{"@type":"Question","name":"Which number on the display is my actual meter reading?","acceptedAnswer":{"@type":"Answer","text":"The one shown against register code 1.8.0 — total active energy imported, in kWh. The display cycles through several values, so the largest number is not always the reading; check the small code beside it."}},{"@type":"Question","name":"What does the magnet or tamper symbol mean?","acceptedAnswer":{"@type":"Answer","text":"The meter has detected a strong external magnetic field, a removed terminal cover, or a reversed connection, and has logged it with a timestamp and reported it to the DISCOM. It does not clear by itself. If it appeared without anyone touching the meter, raise a complaint straight away — the timestamped log is the evidence."}},{"@type":"Question","name":"Is my smart meter running faster than my old meter?","acceptedAnswer":{"@type":"Answer","text":"Usually it is not the meter. Old electromechanical meters commonly under-recorded as they aged, so an accurate new meter reads higher for the same usage, and prepaid billing makes the cost visible daily rather than monthly. Smart meters are tested to IS 16444 Class 1.0, meaning ±1% accuracy."}}]}</script>
 </head>
 <body>
 
@@ -94,7 +112,7 @@
       <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
       <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
            to the footer sitemap. The header now carries only the four primary destinations —
-           the footer is shared chrome on every page, so nothing lost a link. -->
+           see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
       <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
         <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
           <span data-i18n="nav.quickLinks">More</span>
@@ -128,385 +146,305 @@
   <section class="seo-page container smart-meter-page">
     <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">Smart Meter Guide</span></li></ol></nav>
     <h1>Smart Meter Guide: What Every Symbol Means</h1>
-    <!-- Date and standards in one line: this page carries time-sensitive AMISP data, and the
-         standards it is checked against are the whole basis for the symbol meanings. No human
-         byline — naming a reviewer who did not review it would be worse than naming nobody. -->
-    <p class="guide-meta">Updated 10 August 2026 · Checked against <strong>IS 16444</strong> and
-    <strong>IEC 62056-61</strong> · <a href="/methodology/">How we source and verify</a></p>
-    <p class="seo-lead">Your prepaid smart meter cycles through a dozen numbers and a row of small
-    symbols, and almost none of them are labelled. This page maps every element on a typical Indian
-    single-phase smart meter — what each icon means, which reading is your actual consumption, and
-    which ones mean you should act. Diagram and legend below; scroll on for what to do about a
-    blinking alert.</p>
+    <p class="guide-meta">Updated 10 August 2026 · Checked against <strong>IS 16444</strong> and <strong>IEC 62056-61</strong> · <a href="/methodology/">How we source and verify</a></p>
+    <p class="seo-lead">Your prepaid smart meter cycles through a dozen numbers and a row of small symbols, and almost none of them are labelled. This page maps every element on a typical Indian single-phase smart meter — what each icon means, which reading is your actual consumption, and which ones mean you should act.</p>
 
     <nav class="page-toc" aria-label="On this page">
       <span class="page-toc-label">On this page</span>
       <a href="#symbols">Symbols on the display</a>
-      <a href="#register-codes">Register codes</a>
-      <a href="#three-phase">Three-phase meters</a>
-      <a href="#amisp">Who installed my meter</a>
-      <a href="#faq">Common questions</a>
+        <a href="#register-codes">Register codes</a>
+        <a href="#three-phase">Three-phase meters</a>
+        <a href="#amisp">Who installed my meter</a>
+        <a href="#faq">Common questions</a>
     </nav>
 
-    <!-- The meter face is drawn, not photographed: an original diagram carries no rights problem,
-         re-colours itself for dark mode, stays crisp at any zoom, and — unlike a photo of one
-         particular unit — can show every indicator lit at once, which no real meter ever does. -->
     <section class="seo-section" id="symbols">
       <h2>The meter face, labelled</h2>
-      <p>Numbers on the diagram match the legend underneath. Not every meter shows every symbol, and
-      the order the readings cycle in varies by manufacturer — but the elements themselves are
-      common to meters built to <strong>IS 16444</strong>, the Indian standard for prepaid smart
-      meters.</p>
-
-      <!-- The instruction has to sit ABOVE the diagram. It was in the figcaption underneath,
-           which is past the point where anyone has already decided the image is static. -->
+      <p>Numbers on the diagram match the legend underneath. Not every meter shows every symbol, and the order the readings cycle in varies by manufacturer — but the elements themselves are common to meters built to <strong>IS 16444</strong>, the Indian standard for prepaid smart meters.</p>
       <p class="meter-hint">
         <span class="meter-hint-tag">Interactive</span>
-        <span>Press the <strong>Scroll</strong> button on the meter — or tap the display — to step
-        through the readings, exactly as the real one does.</span>
+        <span>Press the <strong>Scroll</strong> button on the meter — or tap the display — to step through the readings, exactly as the real one does.</span>
       </p>
       <figure class="meter-figure">
-        <svg class="meter-svg" viewBox="0 0 700 560" role="img"
-             aria-labelledby="meter-dia-title meter-dia-desc">
-          <title id="meter-dia-title">Labelled diagram of an Indian single-phase prepaid smart meter</title>
-          <desc id="meter-dia-desc">A single-phase AC static watthour smart meter seen face on. The
-          upper casing carries a maker's mark, COM and ON indicator lamps and the communication
-          module details. The lower face carries a green backlit LCD in the centre showing a status
-          icon row, the main reading, a register code and a unit label; a pulse LED and standard
-          markings below it; a serial barcode and printed specification block on the left; and a
-          scroll button with a circular optical port on the right. A dark terminal block with brass
-          screws runs along the bottom. Ten numbered callouts key each element to the legend below.</desc>
+<svg class="meter-svg" viewBox="0 0 700 560" role="img"
+     aria-labelledby="meter-dia-title meter-dia-desc">
+  <title id="meter-dia-title">Labelled diagram of an Indian single-phase prepaid smart meter</title>
+  <desc id="meter-dia-desc">A single-phase AC static watthour smart meter seen face on. The
+  upper casing carries a maker's mark, COM and ON indicator lamps and the communication
+  module details. The lower face carries a green backlit LCD in the centre showing a status
+  icon row, the main reading, a register code and a unit label; a pulse LED and standard
+  markings below it; a serial barcode and printed specification block on the left; and a
+  scroll button with a circular optical port on the right. A dark terminal block with brass
+  screws runs along the bottom. Ten numbered callouts key each element to the legend below.</desc>
 
-          <defs>
-            <linearGradient id="mBody" x1="0" y1="0" x2="0.3" y2="1">
-              <stop offset="0" stop-color="#fbfaf6"/><stop offset="0.5" stop-color="#f1efe8"/>
-              <stop offset="1" stop-color="#dedbd2"/>
-            </linearGradient>
-            <linearGradient id="mBodyTop" x1="0" y1="0" x2="0.25" y2="1">
-              <stop offset="0" stop-color="#fdfdfa"/><stop offset="1" stop-color="#e7e4dc"/>
-            </linearGradient>
-            <linearGradient id="mLcd" x1="0" y1="0" x2="0.3" y2="1">
-              <stop offset="0" stop-color="#b6e86a"/><stop offset="0.55" stop-color="#8ed23a"/>
-              <stop offset="1" stop-color="#6fb823"/>
-            </linearGradient>
-            <linearGradient id="mGloss" x1="0" y1="0" x2="0.5" y2="1">
-              <stop offset="0" stop-color="#ffffff" stop-opacity="0.4"/>
-              <stop offset="0.55" stop-color="#ffffff" stop-opacity="0.05"/>
-              <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
-            </linearGradient>
-            <radialGradient id="mPortMetal" cx="0.32" cy="0.26" r="0.9">
-              <stop offset="0" stop-color="#ffffff"/><stop offset="0.35" stop-color="#d6d9dd"/>
-              <stop offset="0.7" stop-color="#9aa0a7"/><stop offset="1" stop-color="#c9ced4"/>
-            </radialGradient>
-            <linearGradient id="mTerm" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#4a4a4a"/><stop offset="0.5" stop-color="#2e2e2e"/>
-              <stop offset="1" stop-color="#3d3d3d"/>
-            </linearGradient>
-            <radialGradient id="mBrass" cx="0.35" cy="0.3" r="0.85">
-              <stop offset="0" stop-color="#e8d089"/><stop offset="0.6" stop-color="#b8963f"/>
-              <stop offset="1" stop-color="#7d6427"/>
-            </radialGradient>
-            <radialGradient id="mLedOn" cx="0.35" cy="0.3" r="0.85">
-              <stop offset="0" stop-color="#ff9a9a"/><stop offset="0.45" stop-color="#e01b1b"/>
-              <stop offset="1" stop-color="#7a1010"/>
-            </radialGradient>
-            <radialGradient id="mLedOff" cx="0.35" cy="0.3" r="0.85">
-              <stop offset="0" stop-color="#f2f1ee"/><stop offset="1" stop-color="#c3c1ba"/>
-            </radialGradient>
-            <radialGradient id="mScrew" cx="0.35" cy="0.3" r="0.85">
-              <stop offset="0" stop-color="#f0eee9"/><stop offset="1" stop-color="#a9a69e"/>
-            </radialGradient>
-            <filter id="mShadow" x="-15%" y="-10%" width="130%" height="128%">
-              <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0b1020" flood-opacity="0.3"/>
-            </filter>
-            <filter id="mGlowLcd" x="-25%" y="-40%" width="150%" height="180%">
-              <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#8ed23a" flood-opacity="0.5"/>
-            </filter>
-            <filter id="mGlowLed" x="-160%" y="-160%" width="420%" height="420%">
-              <feDropShadow dx="0" dy="0" stdDeviation="3.6" flood-color="#ff2d2d" flood-opacity="0.9"/>
-            </filter>
-            <clipPath id="mLcdClip"><rect x="292" y="220" width="168" height="78" rx="3"/></clipPath>
-          </defs>
+  <defs>
+    <linearGradient id="mBody" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#fbfaf6"/><stop offset="0.5" stop-color="#f1efe8"/>
+      <stop offset="1" stop-color="#dedbd2"/>
+    </linearGradient>
+    <linearGradient id="mBodyTop" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0" stop-color="#fdfdfa"/><stop offset="1" stop-color="#e7e4dc"/>
+    </linearGradient>
+    <linearGradient id="mLcd" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#b6e86a"/><stop offset="0.55" stop-color="#8ed23a"/>
+      <stop offset="1" stop-color="#6fb823"/>
+    </linearGradient>
+    <linearGradient id="mGloss" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.4"/>
+      <stop offset="0.55" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="mPortMetal" cx="0.32" cy="0.26" r="0.9">
+      <stop offset="0" stop-color="#ffffff"/><stop offset="0.35" stop-color="#d6d9dd"/>
+      <stop offset="0.7" stop-color="#9aa0a7"/><stop offset="1" stop-color="#c9ced4"/>
+    </radialGradient>
+    <linearGradient id="mTerm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a4a4a"/><stop offset="0.5" stop-color="#2e2e2e"/>
+      <stop offset="1" stop-color="#3d3d3d"/>
+    </linearGradient>
+    <radialGradient id="mBrass" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#e8d089"/><stop offset="0.6" stop-color="#b8963f"/>
+      <stop offset="1" stop-color="#7d6427"/>
+    </radialGradient>
+    <radialGradient id="mLedOn" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#ff9a9a"/><stop offset="0.45" stop-color="#e01b1b"/>
+      <stop offset="1" stop-color="#7a1010"/>
+    </radialGradient>
+    <radialGradient id="mLedOff" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#f2f1ee"/><stop offset="1" stop-color="#c3c1ba"/>
+    </radialGradient>
+    <radialGradient id="mScrew" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#f0eee9"/><stop offset="1" stop-color="#a9a69e"/>
+    </radialGradient>
+    <filter id="mShadow" x="-15%" y="-10%" width="130%" height="128%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0b1020" flood-opacity="0.3"/>
+    </filter>
+    <filter id="mGlowLcd" x="-25%" y="-40%" width="150%" height="180%">
+      <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#8ed23a" flood-opacity="0.5"/>
+    </filter>
+    <filter id="mGlowLed" x="-160%" y="-160%" width="420%" height="420%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.6" flood-color="#ff2d2d" flood-opacity="0.9"/>
+    </filter>
+    <clipPath id="mLcdClip"><rect x="292" y="220" width="168" height="78" rx="3"/></clipPath>
+  </defs>
 
-          <g filter="url(#mShadow)">
-            <!-- mounting flanges behind the casing, top and bottom -->
-            <path class="m-flange" d="M148 62h404v32H148zM148 424h404v30H148z"/>
-            <circle class="m-flange-hole" cx="164" cy="78" r="5"/>
-            <circle class="m-flange-hole" cx="536" cy="78" r="5"/>
+  <g filter="url(#mShadow)">
+    <!-- mounting flanges behind the casing, top and bottom -->
+    <path class="m-flange" d="M148 62h404v32H148zM148 424h404v30H148z"/>
+    <circle class="m-flange-hole" cx="164" cy="78" r="5"/>
+    <circle class="m-flange-hole" cx="536" cy="78" r="5"/>
 
-            <!-- upper casing -->
-            <rect class="m-case-top" x="172" y="40" width="356" height="146" rx="10"/>
-            <g class="m-screw-sm">
-              <circle cx="190" cy="58" r="6"/><circle cx="510" cy="58" r="6"/>
-              <circle cx="190" cy="168" r="6"/><circle cx="510" cy="168" r="6"/>
-            </g>
-            <!-- neutral maker's mark: this is a dummy device, so it carries no real brand -->
-            <g class="m-mark" transform="translate(200 92)">
-              <path d="M0 0h14a14 14 0 0 1 0 28H7v12H0z"/>
-              <path class="m-mark-cut" d="M7 7h7a7 7 0 0 1 0 14H7z"/>
-            </g>
-            <text class="m-maker" x="200" y="164">SMART METER</text>
-            <!-- COM / ON lamps -->
-            <text class="m-lamp-lbl" x="356" y="88">COM</text>
-            <text class="m-lamp-lbl" x="414" y="88">ON</text>
-            <path class="m-lamp-tick" d="M356 92v7M414 92v7"/>
-            <circle class="m-lamp-on" id="mLampCom" cx="349" cy="110" r="6"/>
-            <circle class="m-lamp-off" cx="371" cy="110" r="6"/>
-            <circle class="m-lamp-on" cx="407" cy="110" r="6"/>
-            <circle class="m-lamp-off" cx="429" cy="110" r="6"/>
-            <text class="m-spec" x="342" y="142">Comm. Tech.: NAN (865-867 MHz)</text>
-            <text class="m-spec" x="342" y="156">Communication Module: Plug-in</text>
+    <!-- upper casing -->
+    <rect class="m-case-top" x="172" y="40" width="356" height="146" rx="10"/>
+    <g class="m-screw-sm">
+      <circle cx="190" cy="58" r="6"/><circle cx="510" cy="58" r="6"/>
+      <circle cx="190" cy="168" r="6"/><circle cx="510" cy="168" r="6"/>
+    </g>
+    <!-- neutral maker's mark: this is a dummy device, so it carries no real brand -->
+    <g class="m-mark" transform="translate(200 92)">
+      <path d="M0 0h14a14 14 0 0 1 0 28H7v12H0z"/>
+      <path class="m-mark-cut" d="M7 7h7a7 7 0 0 1 0 14H7z"/>
+    </g>
+    <text class="m-maker" x="200" y="164">SMART METER</text>
+    <!-- COM / ON lamps -->
+    <text class="m-lamp-lbl" x="356" y="88">COM</text>
+    <text class="m-lamp-lbl" x="414" y="88">ON</text>
+    <path class="m-lamp-tick" d="M356 92v7M414 92v7"/>
+    <circle class="m-lamp-on" id="mLampCom" cx="349" cy="110" r="6"/>
+    <circle class="m-lamp-off" cx="371" cy="110" r="6"/>
+    <circle class="m-lamp-on" cx="407" cy="110" r="6"/>
+    <circle class="m-lamp-off" cx="429" cy="110" r="6"/>
+    <text class="m-spec" x="342" y="142">Comm. Tech.: NAN (865-867 MHz)</text>
+    <text class="m-spec" x="342" y="156">Communication Module: Plug-in</text>
 
-            <!-- lower casing -->
-            <rect class="m-case" x="172" y="186" width="356" height="254" rx="10"/>
-            <text class="m-title" x="350" y="203">AC STATIC WATTHOUR SMART METER</text>
+    <!-- lower casing -->
+    <rect class="m-case" x="172" y="186" width="356" height="254" rx="10"/>
+    <text class="m-title" x="350" y="203">AC STATIC WATTHOUR SMART METER</text>
 
-            <!-- LCD -->
-            <rect class="m-lcd-frame" x="286" y="214" width="180" height="90" rx="5"/>
-            <rect class="m-lcd" x="292" y="220" width="168" height="78" rx="3" filter="url(#mGlowLcd)"/>
-            <g clip-path="url(#mLcdClip)">
-              <g class="m-ico">
-                <g transform="translate(300 226)">
-                  <rect x="0" y="7" width="2.4" height="4"/><rect x="3.6" y="4.8" width="2.4" height="6.2"/>
-                  <rect x="7.2" y="2.4" width="2.4" height="8.6"/><rect x="10.8" y="0" width="2.4" height="11"/>
-                </g>
-                <g transform="translate(332 226)" class="m-ico-warn">
-                  <path d="M1.6 10.4V4.8a4.8 4.8 0 0 1 9.6 0v5.6" fill="none" stroke-width="2.4"/>
-                  <rect x="0.4" y="9.6" width="4" height="2.4"/><rect x="8.4" y="9.6" width="4" height="2.4"/>
-                </g>
-                <g transform="translate(364 226)">
-                  <circle cx="6.4" cy="6" r="5.6" fill="none" stroke-width="1.9"/>
-                  <path d="M6.4 1.2v5.6" fill="none" stroke-width="1.9" stroke-linecap="round"/>
-                </g>
-                <g transform="translate(396 225)" class="m-ico-warn">
-                  <path d="M7.2 0 14.4 12.8H0z" fill="none" stroke-width="1.9" stroke-linejoin="round"/>
-                  <path d="M7.2 4.8v4" stroke-width="1.9" stroke-linecap="round"/>
-                  <circle cx="7.2" cy="10.7" r="1" stroke="none"/>
-                </g>
-              </g>
-              <!-- the unlit segments of an LCD stay faintly visible; that ghost is most of what
-                   makes a real display read as a display rather than as printed text -->
-              <!-- Seven-segment digits. Markup is stamped by scripts/meter-digits.mjs from the
-                   same segmentsFor() the runtime uses, so a no-JS visitor sees a real display too.
-                   Regenerate with: node scripts/meter-digits.mjs -->
-              <g class="m-seg" id="mSeg"><polygon class="sg-on" points="323.4,246 333.6,246 335.3,247.7 333.6,249.39999999999998 323.4,249.39999999999998 321.7,247.7"/><polygon class="sg-off" points="323.4,259.3 333.6,259.3 335.3,261 333.6,262.7 323.4,262.7 321.7,261"/><polygon class="sg-on" points="323.4,272.6 333.6,272.6 335.3,274.3 333.6,276 323.4,276 321.7,274.3"/><polygon class="sg-on" points="320,249.39999999999998 321.7,247.7 323.4,249.39999999999998 323.4,259.3 321.7,261 320,259.3"/><polygon class="sg-on" points="333.6,249.39999999999998 335.3,247.7 337,249.39999999999998 337,259.3 335.3,261 333.6,259.3"/><polygon class="sg-on" points="320,262.7 321.7,261 323.4,262.7 323.4,272.6 321.7,274.3 320,272.6"/><polygon class="sg-on" points="333.6,262.7 335.3,261 337,262.7 337,272.6 335.3,274.3 333.6,272.6"/><polygon class="sg-off" points="343.9,246 354.1,246 355.8,247.7 354.1,249.39999999999998 343.9,249.39999999999998 342.2,247.7"/><polygon class="sg-on" points="343.9,259.3 354.1,259.3 355.8,261 354.1,262.7 343.9,262.7 342.2,261"/><polygon class="sg-off" points="343.9,272.6 354.1,272.6 355.8,274.3 354.1,276 343.9,276 342.2,274.3"/><polygon class="sg-on" points="340.5,249.39999999999998 342.2,247.7 343.9,249.39999999999998 343.9,259.3 342.2,261 340.5,259.3"/><polygon class="sg-on" points="354.1,249.39999999999998 355.8,247.7 357.5,249.39999999999998 357.5,259.3 355.8,261 354.1,259.3"/><polygon class="sg-off" points="340.5,262.7 342.2,261 343.9,262.7 343.9,272.6 342.2,274.3 340.5,272.6"/><polygon class="sg-on" points="354.1,262.7 355.8,261 357.5,262.7 357.5,272.6 355.8,274.3 354.1,272.6"/><polygon class="sg-on" points="364.4,246 374.6,246 376.3,247.7 374.6,249.39999999999998 364.4,249.39999999999998 362.7,247.7"/><polygon class="sg-on" points="364.4,259.3 374.6,259.3 376.3,261 374.6,262.7 364.4,262.7 362.7,261"/><polygon class="sg-on" points="364.4,272.6 374.6,272.6 376.3,274.3 374.6,276 364.4,276 362.7,274.3"/><polygon class="sg-on" points="361,249.39999999999998 362.7,247.7 364.4,249.39999999999998 364.4,259.3 362.7,261 361,259.3"/><polygon class="sg-on" points="374.6,249.39999999999998 376.3,247.7 378,249.39999999999998 378,259.3 376.3,261 374.6,259.3"/><polygon class="sg-off" points="361,262.7 362.7,261 364.4,262.7 364.4,272.6 362.7,274.3 361,272.6"/><polygon class="sg-on" points="374.6,262.7 376.3,261 378,262.7 378,272.6 376.3,274.3 374.6,272.6"/><polygon class="sg-off" points="384.9,246 395.1,246 396.8,247.7 395.1,249.39999999999998 384.9,249.39999999999998 383.2,247.7"/><polygon class="sg-off" points="384.9,259.3 395.1,259.3 396.8,261 395.1,262.7 384.9,262.7 383.2,261"/><polygon class="sg-off" points="384.9,272.6 395.1,272.6 396.8,274.3 395.1,276 384.9,276 383.2,274.3"/><polygon class="sg-off" points="381.5,249.39999999999998 383.2,247.7 384.9,249.39999999999998 384.9,259.3 383.2,261 381.5,259.3"/><polygon class="sg-on" points="395.1,249.39999999999998 396.8,247.7 398.5,249.39999999999998 398.5,259.3 396.8,261 395.1,259.3"/><polygon class="sg-off" points="381.5,262.7 383.2,261 384.9,262.7 384.9,272.6 383.2,274.3 381.5,272.6"/><polygon class="sg-on" points="395.1,262.7 396.8,261 398.5,262.7 398.5,272.6 396.8,274.3 395.1,272.6"/><polygon class="sg-on" points="405.4,246 415.6,246 417.3,247.7 415.6,249.39999999999998 405.4,249.39999999999998 403.7,247.7"/><polygon class="sg-on" points="405.4,259.3 415.6,259.3 417.3,261 415.6,262.7 405.4,262.7 403.7,261"/><polygon class="sg-on" points="405.4,272.6 415.6,272.6 417.3,274.3 415.6,276 405.4,276 403.7,274.3"/><polygon class="sg-off" points="402,249.39999999999998 403.7,247.7 405.4,249.39999999999998 405.4,259.3 403.7,261 402,259.3"/><polygon class="sg-on" points="415.6,249.39999999999998 417.3,247.7 419,249.39999999999998 419,259.3 417.3,261 415.6,259.3"/><polygon class="sg-on" points="402,262.7 403.7,261 405.4,262.7 405.4,272.6 403.7,274.3 402,272.6"/><polygon class="sg-off" points="415.6,262.7 417.3,261 419,262.7 419,272.6 417.3,274.3 415.6,272.6"/><rect class="sg-on" x="423.5" y="272.6" width="3.4" height="3.4"/><polygon class="sg-on" points="438.4,246 448.6,246 450.3,247.7 448.6,249.39999999999998 438.4,249.39999999999998 436.7,247.7"/><polygon class="sg-on" points="438.4,259.3 448.6,259.3 450.3,261 448.6,262.7 438.4,262.7 436.7,261"/><polygon class="sg-on" points="438.4,272.6 448.6,272.6 450.3,274.3 448.6,276 438.4,276 436.7,274.3"/><polygon class="sg-on" points="435,249.39999999999998 436.7,247.7 438.4,249.39999999999998 438.4,259.3 436.7,261 435,259.3"/><polygon class="sg-off" points="448.6,249.39999999999998 450.3,247.7 452,249.39999999999998 452,259.3 450.3,261 448.6,259.3"/><polygon class="sg-on" points="435,262.7 436.7,261 438.4,262.7 438.4,272.6 436.7,274.3 435,272.6"/><polygon class="sg-on" points="448.6,262.7 450.3,261 452,262.7 452,272.6 450.3,274.3 448.6,272.6"/></g>
-              <text class="m-code" id="mCode" x="300" y="292">1.8.0</text>
-              <text class="m-unit" id="mUnit" x="452" y="292">kWh</text>
-            </g>
-            <path class="m-gloss" d="M292 220h168v28l-168 32z"/>
+    <!-- LCD -->
+    <rect class="m-lcd-frame" x="286" y="214" width="180" height="90" rx="5"/>
+    <rect class="m-lcd" x="292" y="220" width="168" height="78" rx="3" filter="url(#mGlowLcd)"/>
+    <g clip-path="url(#mLcdClip)">
+      <g class="m-ico">
+        <g transform="translate(300 226)">
+          <rect x="0" y="7" width="2.4" height="4"/><rect x="3.6" y="4.8" width="2.4" height="6.2"/>
+          <rect x="7.2" y="2.4" width="2.4" height="8.6"/><rect x="10.8" y="0" width="2.4" height="11"/>
+        </g>
+        <g transform="translate(332 226)" class="m-ico-warn">
+          <path d="M1.6 10.4V4.8a4.8 4.8 0 0 1 9.6 0v5.6" fill="none" stroke-width="2.4"/>
+          <rect x="0.4" y="9.6" width="4" height="2.4"/><rect x="8.4" y="9.6" width="4" height="2.4"/>
+        </g>
+        <g transform="translate(364 226)">
+          <circle cx="6.4" cy="6" r="5.6" fill="none" stroke-width="1.9"/>
+          <path d="M6.4 1.2v5.6" fill="none" stroke-width="1.9" stroke-linecap="round"/>
+        </g>
+        <g transform="translate(396 225)" class="m-ico-warn">
+          <path d="M7.2 0 14.4 12.8H0z" fill="none" stroke-width="1.9" stroke-linejoin="round"/>
+          <path d="M7.2 4.8v4" stroke-width="1.9" stroke-linecap="round"/>
+          <circle cx="7.2" cy="10.7" r="1" stroke="none"/>
+        </g>
+      </g>
+      <!-- the unlit segments of an LCD stay faintly visible; that ghost is most of what
+           makes a real display read as a display rather than as printed text -->
+      <!-- Seven-segment digits. Markup is stamped by scripts/meter-digits.mjs from the
+           same segmentsFor() the runtime uses, so a no-JS visitor sees a real display too.
+           Regenerate with: node scripts/meter-digits.mjs -->
+      <g class="m-seg" id="mSeg"><polygon class="sg-on" points="323.4,246 333.6,246 335.3,247.7 333.6,249.39999999999998 323.4,249.39999999999998 321.7,247.7"/><polygon class="sg-off" points="323.4,259.3 333.6,259.3 335.3,261 333.6,262.7 323.4,262.7 321.7,261"/><polygon class="sg-on" points="323.4,272.6 333.6,272.6 335.3,274.3 333.6,276 323.4,276 321.7,274.3"/><polygon class="sg-on" points="320,249.39999999999998 321.7,247.7 323.4,249.39999999999998 323.4,259.3 321.7,261 320,259.3"/><polygon class="sg-on" points="333.6,249.39999999999998 335.3,247.7 337,249.39999999999998 337,259.3 335.3,261 333.6,259.3"/><polygon class="sg-on" points="320,262.7 321.7,261 323.4,262.7 323.4,272.6 321.7,274.3 320,272.6"/><polygon class="sg-on" points="333.6,262.7 335.3,261 337,262.7 337,272.6 335.3,274.3 333.6,272.6"/><polygon class="sg-off" points="343.9,246 354.1,246 355.8,247.7 354.1,249.39999999999998 343.9,249.39999999999998 342.2,247.7"/><polygon class="sg-on" points="343.9,259.3 354.1,259.3 355.8,261 354.1,262.7 343.9,262.7 342.2,261"/><polygon class="sg-off" points="343.9,272.6 354.1,272.6 355.8,274.3 354.1,276 343.9,276 342.2,274.3"/><polygon class="sg-on" points="340.5,249.39999999999998 342.2,247.7 343.9,249.39999999999998 343.9,259.3 342.2,261 340.5,259.3"/><polygon class="sg-on" points="354.1,249.39999999999998 355.8,247.7 357.5,249.39999999999998 357.5,259.3 355.8,261 354.1,259.3"/><polygon class="sg-off" points="340.5,262.7 342.2,261 343.9,262.7 343.9,272.6 342.2,274.3 340.5,272.6"/><polygon class="sg-on" points="354.1,262.7 355.8,261 357.5,262.7 357.5,272.6 355.8,274.3 354.1,272.6"/><polygon class="sg-on" points="364.4,246 374.6,246 376.3,247.7 374.6,249.39999999999998 364.4,249.39999999999998 362.7,247.7"/><polygon class="sg-on" points="364.4,259.3 374.6,259.3 376.3,261 374.6,262.7 364.4,262.7 362.7,261"/><polygon class="sg-on" points="364.4,272.6 374.6,272.6 376.3,274.3 374.6,276 364.4,276 362.7,274.3"/><polygon class="sg-on" points="361,249.39999999999998 362.7,247.7 364.4,249.39999999999998 364.4,259.3 362.7,261 361,259.3"/><polygon class="sg-on" points="374.6,249.39999999999998 376.3,247.7 378,249.39999999999998 378,259.3 376.3,261 374.6,259.3"/><polygon class="sg-off" points="361,262.7 362.7,261 364.4,262.7 364.4,272.6 362.7,274.3 361,272.6"/><polygon class="sg-on" points="374.6,262.7 376.3,261 378,262.7 378,272.6 376.3,274.3 374.6,272.6"/><polygon class="sg-off" points="384.9,246 395.1,246 396.8,247.7 395.1,249.39999999999998 384.9,249.39999999999998 383.2,247.7"/><polygon class="sg-off" points="384.9,259.3 395.1,259.3 396.8,261 395.1,262.7 384.9,262.7 383.2,261"/><polygon class="sg-off" points="384.9,272.6 395.1,272.6 396.8,274.3 395.1,276 384.9,276 383.2,274.3"/><polygon class="sg-off" points="381.5,249.39999999999998 383.2,247.7 384.9,249.39999999999998 384.9,259.3 383.2,261 381.5,259.3"/><polygon class="sg-on" points="395.1,249.39999999999998 396.8,247.7 398.5,249.39999999999998 398.5,259.3 396.8,261 395.1,259.3"/><polygon class="sg-off" points="381.5,262.7 383.2,261 384.9,262.7 384.9,272.6 383.2,274.3 381.5,272.6"/><polygon class="sg-on" points="395.1,262.7 396.8,261 398.5,262.7 398.5,272.6 396.8,274.3 395.1,272.6"/><polygon class="sg-on" points="405.4,246 415.6,246 417.3,247.7 415.6,249.39999999999998 405.4,249.39999999999998 403.7,247.7"/><polygon class="sg-on" points="405.4,259.3 415.6,259.3 417.3,261 415.6,262.7 405.4,262.7 403.7,261"/><polygon class="sg-on" points="405.4,272.6 415.6,272.6 417.3,274.3 415.6,276 405.4,276 403.7,274.3"/><polygon class="sg-off" points="402,249.39999999999998 403.7,247.7 405.4,249.39999999999998 405.4,259.3 403.7,261 402,259.3"/><polygon class="sg-on" points="415.6,249.39999999999998 417.3,247.7 419,249.39999999999998 419,259.3 417.3,261 415.6,259.3"/><polygon class="sg-on" points="402,262.7 403.7,261 405.4,262.7 405.4,272.6 403.7,274.3 402,272.6"/><polygon class="sg-off" points="415.6,262.7 417.3,261 419,262.7 419,272.6 417.3,274.3 415.6,272.6"/><rect class="sg-on" x="423.5" y="272.6" width="3.4" height="3.4"/><polygon class="sg-on" points="438.4,246 448.6,246 450.3,247.7 448.6,249.39999999999998 438.4,249.39999999999998 436.7,247.7"/><polygon class="sg-on" points="438.4,259.3 448.6,259.3 450.3,261 448.6,262.7 438.4,262.7 436.7,261"/><polygon class="sg-on" points="438.4,272.6 448.6,272.6 450.3,274.3 448.6,276 438.4,276 436.7,274.3"/><polygon class="sg-on" points="435,249.39999999999998 436.7,247.7 438.4,249.39999999999998 438.4,259.3 436.7,261 435,259.3"/><polygon class="sg-off" points="448.6,249.39999999999998 450.3,247.7 452,249.39999999999998 452,259.3 450.3,261 448.6,259.3"/><polygon class="sg-on" points="435,262.7 436.7,261 438.4,262.7 438.4,272.6 436.7,274.3 435,272.6"/><polygon class="sg-on" points="448.6,262.7 450.3,261 452,262.7 452,272.6 450.3,274.3 448.6,272.6"/></g>
+      <text class="m-code" id="mCode" x="300" y="292">1.8.0</text>
+      <text class="m-unit" id="mUnit" x="452" y="292">kWh</text>
+    </g>
+    <path class="m-gloss" d="M292 220h168v28l-168 32z"/>
 
-            <!-- pulse LED and standard markings -->
-            <circle class="m-led-pulse" cx="298" cy="326" r="5.5" filter="url(#mGlowLed)"/>
-            <text class="m-print" x="310" y="330">kWh — 3200 Imp/Unit</text>
-            <text class="m-print" x="292" y="352">IS 16444 (Part 1)</text>
-            <text class="m-print m-print-sm" x="292" y="364">CM/L-8400169811</text>
+    <!-- pulse LED and standard markings -->
+    <circle class="m-led-pulse" cx="298" cy="326" r="5.5" filter="url(#mGlowLed)"/>
+    <text class="m-print" x="310" y="330">kWh — 3200 Imp/Unit</text>
+    <text class="m-print" x="292" y="352">IS 16444 (Part 1)</text>
+    <text class="m-print m-print-sm" x="292" y="364">CM/L-8400169811</text>
 
-            <!-- serial barcode + printed specification block -->
-            <g class="m-bars" transform="translate(186 340)">
-              <rect x="0" y="0" width="2.2" height="22"/><rect x="4.4" y="0" width="1.1" height="22"/>
-              <rect x="7.7" y="0" width="3.3" height="22"/><rect x="13.2" y="0" width="1.1" height="22"/>
-              <rect x="16.5" y="0" width="2.2" height="22"/><rect x="22" y="0" width="1.1" height="22"/>
-              <rect x="25.3" y="0" width="1.1" height="22"/><rect x="28.6" y="0" width="3.3" height="22"/>
-              <rect x="34.1" y="0" width="1.1" height="22"/><rect x="37.4" y="0" width="2.2" height="22"/>
-              <rect x="42.9" y="0" width="3.3" height="22"/><rect x="48.4" y="0" width="1.1" height="22"/>
-              <rect x="51.7" y="0" width="2.2" height="22"/><rect x="57.2" y="0" width="1.1" height="22"/>
-              <rect x="60.5" y="0" width="3.3" height="22"/><rect x="66" y="0" width="1.1" height="22"/>
-              <rect x="69.3" y="0" width="2.2" height="22"/><rect x="74.8" y="0" width="1.1" height="22"/>
-            </g>
-            <text class="m-serial" x="186" y="378">Sr. No. RND00001</text>
-            <g class="m-spec">
-              <text x="186" y="396">1P, 2W, 240V, 5-60A, 50 Hz, Class 1.0</text>
-              <text x="186" y="408">DLMS Meter Type: 6 · Cat.: D1, 27&#176;C</text>
-              <text x="186" y="420">Type: GPSM 03 · MM/YYYY: 08/2026</text>
-              <text x="186" y="432">Illustration only — not a real meter</text>
-            </g>
+    <!-- serial barcode + printed specification block -->
+    <g class="m-bars" transform="translate(186 340)">
+      <rect x="0" y="0" width="2.2" height="22"/><rect x="4.4" y="0" width="1.1" height="22"/>
+      <rect x="7.7" y="0" width="3.3" height="22"/><rect x="13.2" y="0" width="1.1" height="22"/>
+      <rect x="16.5" y="0" width="2.2" height="22"/><rect x="22" y="0" width="1.1" height="22"/>
+      <rect x="25.3" y="0" width="1.1" height="22"/><rect x="28.6" y="0" width="3.3" height="22"/>
+      <rect x="34.1" y="0" width="1.1" height="22"/><rect x="37.4" y="0" width="2.2" height="22"/>
+      <rect x="42.9" y="0" width="3.3" height="22"/><rect x="48.4" y="0" width="1.1" height="22"/>
+      <rect x="51.7" y="0" width="2.2" height="22"/><rect x="57.2" y="0" width="1.1" height="22"/>
+      <rect x="60.5" y="0" width="3.3" height="22"/><rect x="66" y="0" width="1.1" height="22"/>
+      <rect x="69.3" y="0" width="2.2" height="22"/><rect x="74.8" y="0" width="1.1" height="22"/>
+    </g>
+    <text class="m-serial" x="186" y="378">Sr. No. RND00001</text>
+    <g class="m-spec">
+      <text x="186" y="396">1P, 2W, 240V, 5-60A, 50 Hz, Class 1.0</text>
+      <text x="186" y="408">DLMS Meter Type: 6 · Cat.: D1, 27&#176;C</text>
+      <text x="186" y="420">Type: GPSM 03 · MM/YYYY: 08/2026</text>
+      <text x="186" y="432">Illustration only — not a real meter</text>
+    </g>
 
-            <!-- right column -->
-            <text class="m-print m-print-sm m-print-end" x="518" y="332">MTCTE : 283603039</text>
-            <!-- Real control, not decoration: focusable, keyboard-operable, and with a hit area
-                 larger than the drawn button so it clears the 24px minimum on touch. -->
-            <!-- "Press here" tag. Brand blue and pill-shaped so it reads as annotation laid over
-                 the device rather than as something printed on it. Decorative to assistive tech —
-                 the button below already carries its own label — and it retires on first press
-                 along with the pulse, since by then it has said what it had to say. -->
-            <g class="m-hint-tag" aria-hidden="true">
-              <rect x="384" y="348" width="86" height="21" rx="10.5"/>
-              <text x="424" y="363">Press here</text>
-              <path d="M472 352.5 481 358.5 472 364.5 Z"/>
-            </g>
-            <g class="m-btn-hit" id="mBtn" role="button" tabindex="0"
-               aria-label="Press the meter's scroll button to show the next reading"
-               aria-describedby="mReadout">
-              <circle class="m-btn-target" cx="500" cy="358" r="26"/>
-              <!-- Resting affordance. Hover cannot carry this — it does not exist on touch —
-                   so an expanding ring runs until the first press, then stops for good. -->
-              <circle class="m-btn-pulse" cx="500" cy="358" r="15"/>
-              <circle class="m-btn-ring" cx="500" cy="358" r="20"/>
-              <circle class="m-btn-rim" cx="500" cy="358" r="15"/>
-              <circle class="m-btn" cx="500" cy="358" r="11.5"/>
-              <text class="m-label" x="500" y="382">Scroll</text>
-            </g>
-            <circle class="m-port-metal" cx="486" cy="410" r="24"/>
-            <circle class="m-port-ring" cx="486" cy="410" r="17.5"/>
-            <ellipse class="m-port-slot" cx="486" cy="410" rx="11" ry="5.5"/>
+    <!-- right column -->
+    <text class="m-print m-print-sm m-print-end" x="518" y="332">MTCTE : 283603039</text>
+    <!-- Real control, not decoration: focusable, keyboard-operable, and with a hit area
+         larger than the drawn button so it clears the 24px minimum on touch. -->
+    <!-- "Press here" tag. Brand blue and pill-shaped so it reads as annotation laid over
+         the device rather than as something printed on it. Decorative to assistive tech —
+         the button below already carries its own label — and it retires on first press
+         along with the pulse, since by then it has said what it had to say. -->
+    <g class="m-hint-tag" aria-hidden="true">
+      <rect x="384" y="348" width="86" height="21" rx="10.5"/>
+      <text x="424" y="363">Press here</text>
+      <path d="M472 352.5 481 358.5 472 364.5 Z"/>
+    </g>
+    <g class="m-btn-hit" id="mBtn" role="button" tabindex="0"
+       aria-label="Press the meter's scroll button to show the next reading"
+       aria-describedby="mReadout">
+      <circle class="m-btn-target" cx="500" cy="358" r="26"/>
+      <!-- Resting affordance. Hover cannot carry this — it does not exist on touch —
+           so an expanding ring runs until the first press, then stops for good. -->
+      <circle class="m-btn-pulse" cx="500" cy="358" r="15"/>
+      <circle class="m-btn-ring" cx="500" cy="358" r="20"/>
+      <circle class="m-btn-rim" cx="500" cy="358" r="15"/>
+      <circle class="m-btn" cx="500" cy="358" r="11.5"/>
+      <text class="m-label" x="500" y="382">Scroll</text>
+    </g>
+    <circle class="m-port-metal" cx="486" cy="410" r="24"/>
+    <circle class="m-port-ring" cx="486" cy="410" r="17.5"/>
+    <ellipse class="m-port-slot" cx="486" cy="410" rx="11" ry="5.5"/>
 
-            <!-- terminal block -->
-            <rect class="m-term" x="196" y="440" width="308" height="50" rx="4"/>
-            <g class="m-term-slot">
-              <rect x="214" y="446" width="38" height="28" rx="2"/>
-              <rect x="271" y="446" width="38" height="28" rx="2"/>
-              <rect x="328" y="446" width="38" height="28" rx="2"/>
-              <rect x="385" y="446" width="38" height="28" rx="2"/>
-              <rect x="442" y="446" width="38" height="28" rx="2"/>
-            </g>
-            <g class="m-brass">
-              <circle cx="233" cy="458" r="6.5"/><circle cx="290" cy="458" r="6.5"/>
-              <circle cx="347" cy="458" r="6.5"/><circle cx="404" cy="458" r="6.5"/>
-              <circle cx="461" cy="458" r="6.5"/>
-            </g>
-            <circle class="m-term-seal" cx="350" cy="481" r="4.5"/>
-          </g>
+    <!-- terminal block -->
+    <rect class="m-term" x="196" y="440" width="308" height="50" rx="4"/>
+    <g class="m-term-slot">
+      <rect x="214" y="446" width="38" height="28" rx="2"/>
+      <rect x="271" y="446" width="38" height="28" rx="2"/>
+      <rect x="328" y="446" width="38" height="28" rx="2"/>
+      <rect x="385" y="446" width="38" height="28" rx="2"/>
+      <rect x="442" y="446" width="38" height="28" rx="2"/>
+    </g>
+    <g class="m-brass">
+      <circle cx="233" cy="458" r="6.5"/><circle cx="290" cy="458" r="6.5"/>
+      <circle cx="347" cy="458" r="6.5"/><circle cx="404" cy="458" r="6.5"/>
+      <circle cx="461" cy="458" r="6.5"/>
+    </g>
+    <circle class="m-term-seal" cx="350" cy="481" r="4.5"/>
+  </g>
 
-          <!-- callout leaders: every run is routed through a corridor with no printed detail in it -->
-          <!-- Numbered top-to-bottom down the device, so the two casing lamps take 1 and 2 and
-               everything on the LCD follows. The legend uses a CSS counter, so its numbering
-               tracks this automatically. COM approaches from below the ON pair to avoid
-               crossing it; every other run sits in a corridor with no printed detail in it. -->
-          <g class="m-lead">
-            <path d="M576 100h-120l-28-24h-68"/>
-            <path d="M576 134h-140l-6-16"/>
-            <path d="M124 214h156l26 16"/>
-            <path d="M124 248h156l58-16"/>
-            <path d="M576 214h-172l-34 16"/>
-            <path d="M576 248h-130l-43-16"/>
-            <path d="M124 282h150l12-18"/>
-            <path d="M124 316h150l14-22"/>
-            <path d="M576 292h-114"/>
-            <path d="M124 350h150l26-22"/>
-            <path d="M576 358h-58"/>
-            <path d="M124 380h56"/>
-          </g>
-          <g class="m-num">
-            <circle cx="588" cy="100" r="12"/><text x="588" y="104.5">1</text>
-            <circle cx="588" cy="134" r="12"/><text x="588" y="138.5">2</text>
-            <circle cx="112" cy="214" r="12"/><text x="112" y="218.5">3</text>
-            <circle cx="112" cy="248" r="12"/><text x="112" y="252.5">4</text>
-            <circle cx="588" cy="214" r="12"/><text x="588" y="218.5">5</text>
-            <circle cx="588" cy="248" r="12"/><text x="588" y="252.5">6</text>
-            <circle cx="112" cy="282" r="12"/><text x="112" y="286.5">7</text>
-            <circle cx="112" cy="316" r="12"/><text x="112" y="320.5">8</text>
-            <circle cx="588" cy="292" r="12"/><text x="588" y="296.5">9</text>
-            <circle cx="112" cy="350" r="12"/><text x="112" y="354.5">10</text>
-            <circle cx="588" cy="358" r="12"/><text x="588" y="362.5">11</text>
-            <circle cx="112" cy="380" r="12"/><text x="112" y="384.5">12</text>
-          </g>        </svg>
-        <!-- The readout is the point of the interaction: pressing Scroll on a real meter changes
-             a number with no explanation anywhere on the device. aria-live announces each screen
-             for anyone driving this from the keyboard. -->
+  <!-- callout leaders: every run is routed through a corridor with no printed detail in it -->
+  <!-- Numbered top-to-bottom down the device, so the two casing lamps take 1 and 2 and
+       everything on the LCD follows. The legend uses a CSS counter, so its numbering
+       tracks this automatically. COM approaches from below the ON pair to avoid
+       crossing it; every other run sits in a corridor with no printed detail in it. -->
+  <g class="m-lead">
+    <path d="M576 100h-120l-28-24h-68"/>
+    <path d="M576 134h-140l-6-16"/>
+    <path d="M124 214h156l26 16"/>
+    <path d="M124 248h156l58-16"/>
+    <path d="M576 214h-172l-34 16"/>
+    <path d="M576 248h-130l-43-16"/>
+    <path d="M124 282h150l12-18"/>
+    <path d="M124 316h150l14-22"/>
+    <path d="M576 292h-114"/>
+    <path d="M124 350h150l26-22"/>
+    <path d="M576 358h-58"/>
+    <path d="M124 380h56"/>
+  </g>
+  <g class="m-num">
+    <circle cx="588" cy="100" r="12"/><text x="588" y="104.5">1</text>
+    <circle cx="588" cy="134" r="12"/><text x="588" y="138.5">2</text>
+    <circle cx="112" cy="214" r="12"/><text x="112" y="218.5">3</text>
+    <circle cx="112" cy="248" r="12"/><text x="112" y="252.5">4</text>
+    <circle cx="588" cy="214" r="12"/><text x="588" y="218.5">5</text>
+    <circle cx="588" cy="248" r="12"/><text x="588" y="252.5">6</text>
+    <circle cx="112" cy="282" r="12"/><text x="112" y="286.5">7</text>
+    <circle cx="112" cy="316" r="12"/><text x="112" y="320.5">8</text>
+    <circle cx="588" cy="292" r="12"/><text x="588" y="296.5">9</text>
+    <circle cx="112" cy="350" r="12"/><text x="112" y="354.5">10</text>
+    <circle cx="588" cy="358" r="12"/><text x="588" y="362.5">11</text>
+    <circle cx="112" cy="380" r="12"/><text x="112" y="384.5">12</text>
+  </g>        </svg>
         <div class="meter-readout" id="mReadout" aria-live="polite">
           <div class="meter-readout-head">
-            <span class="meter-readout-step" id="mStep">Screen 1 of 8</span>
-            <strong id="mTitle">Total active energy imported</strong>
+            <span class="meter-readout-step" id="mStep"></span>
+            <strong id="mTitle"></strong>
           </div>
-          <p id="mWhy">The cumulative units your connection has drawn since the meter was installed.
-          This is the figure your bill is built from — note it on the same date each month and the
-          difference between two readings is that month's consumption.</p>
-          <button type="button" class="meter-readout-btn" id="mNext">Press Scroll →</button>
+          <p id="mWhy"></p>
+          <button type="button" class="meter-readout-btn" id="mNext">Press here →</button>
         </div>
-        <figcaption>An interactive composite — press <strong>Scroll</strong> on the meter (or the
-        button above) to step through the display cycle. A real meter never lights every indicator
-        at once; layout and icon shapes vary by manufacturer, the meanings do not.</figcaption>
+        <figcaption>An interactive composite — press <strong>Scroll</strong> on the meter (or the button above) to step through the display cycle. A real meter never lights every indicator at once; layout and icon shapes vary by manufacturer, the meanings do not.</figcaption>
       </figure>
-
       <ol class="meter-legend">
-        <li><strong>COM lamp</strong> — communication activity. It blinks when the meter talks to
-        the utility's network, which is occasional rather than constant: most meters report in
-        bursts every 15 to 30 minutes, not continuously. A COM lamp that never lights at all
-        suggests the communication module is not reaching the network, which is what delays a
-        recharge from landing. It is not related to your supply.</li>
-
-        <li><strong>ON lamp</strong> — supply present at the meter's terminals. Steady means power
-        is reaching you. This is the fastest way to tell a local problem from a network one: if the
-        ON lamp is lit but you have no power, the fault is on your side of the meter — your MCB,
-        your wiring, your board — and not a DISCOM outage.</li>
-
-        <li><strong>Network signal</strong> — the meter's link to the utility (RF mesh, or a
-        cellular/NIC module). Weak or empty bars mean readings and recharges reach the meter late.
-        Your balance still decrements normally; it is the <em>reporting</em> that lags, which is the
-        usual reason a paid recharge appears to vanish.</li>
-
-        <li><strong>Tamper / magnet flag</strong> — set when the meter detects a strong external
-        magnetic field, a removed terminal cover, or a reversed connection. It is logged with a
-        timestamp and reported to the DISCOM. If it appears without anyone touching the meter,
-        raise a complaint quickly — the log is the evidence, and it is easier to contest early.</li>
-
-        <li><strong>Supply / relay status</strong> — whether the internal disconnect switch is
-        closed (supply on) or open. An open relay with credit still on the meter usually means a
-        remote disconnection or a load-limit trip, not a fault.</li>
-
-        <li><strong>Low-balance alert</strong> — lights once your prepaid balance falls under the
-        DISCOM's threshold. Most Indian DISCOMs then allow a short grace or emergency credit before
-        the relay opens, and will not disconnect during notified night hours or on holidays.</li>
-
-        <li><strong>Main reading</strong> — the value currently being displayed. On a prepaid meter
-        the display cycles between your remaining <strong>₹ balance</strong> and the cumulative
-        energy registers, so the big number is not always the same quantity.</li>
-
-        <li><strong>Register code</strong> — the small code that tells you <em>which</em> quantity
-        the big number is. This is the single most useful thing on the face, and the one nobody is
-        told about. The codes are standardised; see the table below.</li>
-
-        <li><strong>Unit label</strong> — <code>kWh</code> for energy, <code>kVAh</code> for
-        apparent energy, <code>kW</code>/<code>kVA</code> for demand, <code>₹</code> for prepaid
-        balance. If your meter bills on kVAh, a poor power factor raises the bill even when kWh
-        stays flat.</li>
-
-        <li><strong>Pulse LED</strong> — flashes a fixed number of times per unit consumed, printed
-        beside it (commonly 1000 imp/kWh, i.e. one flash per watt-hour). It is a direct load
-        indicator: <strong>faster flashing means more load right now</strong>. Switch everything off
-        and it should slow to almost nothing — if it keeps racing with all loads off, that is worth
-        investigating.</li>
-
-        <li><strong>Display button</strong> (marked <em>Scroll</em> or <em>Push</em>) — steps the display through the register list
-        manually instead of waiting for the auto-scroll. A long press usually opens a second, deeper
-        list (billing history, tamper log) on most makes.</li>
-
-        <li><strong>Nameplate</strong> — meter serial number, standard mark, accuracy class and
-        current rating. <strong>The serial number here must match the one on your bill.</strong>
-        That single check catches the mis-assigned-meter billing error, which is one of the more
-        common and most expensive to unwind after the fact.</li>
+        <li><strong>COM lamp</strong> — communication activity. It blinks when the meter talks to the utility's network, which is occasional rather than constant: most meters report in bursts every 15 to 30 minutes, not continuously. A COM lamp that never lights at all suggests the communication module is not reaching the network, which is what delays a recharge from landing. It is not related to your supply.</li>
+        <li><strong>ON lamp</strong> — supply present at the meter's terminals. Steady means power is reaching you. This is the fastest way to tell a local problem from a network one: if the ON lamp is lit but you have no power, the fault is on your side of the meter — your MCB, your wiring, your board — and not a DISCOM outage.</li>
+        <li><strong>Network signal</strong> — the meter's link to the utility (RF mesh, or a cellular/NIC module). Weak or empty bars mean readings and recharges reach the meter late. Your balance still decrements normally; it is the <em>reporting</em> that lags, which is the usual reason a paid recharge appears to vanish.</li>
+        <li><strong>Tamper / magnet flag</strong> — set when the meter detects a strong external magnetic field, a removed terminal cover, or a reversed connection. It is logged with a timestamp and reported to the DISCOM. If it appears without anyone touching the meter, raise a complaint quickly — the log is the evidence, and it is easier to contest early.</li>
+        <li><strong>Supply / relay status</strong> — whether the internal disconnect switch is closed (supply on) or open. An open relay with credit still on the meter usually means a remote disconnection or a load-limit trip, not a fault.</li>
+        <li><strong>Low-balance alert</strong> — lights once your prepaid balance falls under the DISCOM's threshold. Most Indian DISCOMs then allow a short grace or emergency credit before the relay opens, and will not disconnect during notified night hours or on holidays.</li>
+        <li><strong>Main reading</strong> — the value currently being displayed. On a prepaid meter the display cycles between your remaining <strong>₹ balance</strong> and the cumulative energy registers, so the big number is not always the same quantity.</li>
+        <li><strong>Register code</strong> — the small code that tells you <em>which</em> quantity the big number is. This is the single most useful thing on the face, and the one nobody is told about. The codes are standardised; see the table below.</li>
+        <li><strong>Unit label</strong> — <code>kWh</code> for energy, <code>kVAh</code> for apparent energy, <code>kW</code>/<code>kVA</code> for demand, <code>₹</code> for prepaid balance. If your meter bills on kVAh, a poor power factor raises the bill even when kWh stays flat.</li>
+        <li><strong>Pulse LED</strong> — flashes a fixed number of times per unit consumed, printed beside it (commonly 1000 imp/kWh, i.e. one flash per watt-hour). It is a direct load indicator: <strong>faster flashing means more load right now</strong>. Switch everything off and it should slow to almost nothing.</li>
+        <li><strong>Display button</strong> — (marked <em>Scroll</em> or <em>Push</em>) — steps the display through the register list manually instead of waiting for the auto-scroll. A long press usually opens a second, deeper list (billing history, tamper log) on most makes.</li>
+        <li><strong>Nameplate</strong> — meter serial number, standard mark, accuracy class and current rating. <strong>The serial number here must match the one on your bill.</strong> That single check catches the mis-assigned-meter billing error, which is one of the more common and most expensive to unwind after the fact.</li>
       </ol>
     </section>
 
     <section class="seo-section" id="register-codes">
       <h2>Register codes: which number is which</h2>
-      <p>The codes are <strong>OBIS codes</strong> (IEC 62056-61), the same scheme across every
-      compliant meter regardless of who made it. Once you can read these, the display stops being a
-      random sequence of numbers.</p>
+      <p>The codes are <strong>OBIS codes</strong> (IEC 62056-61), the same scheme across every compliant meter regardless of who made it. Once you can read these, the display stops being a random sequence of numbers.</p>
       <div class="comparison-table-wrapper"><table class="comparison-table">
-          <thead><tr><th>Code</th><th>What the number is</th><th>Why you'd want it</th></tr></thead>
-          <tbody>
+        <thead><tr><th>Code</th><th>What the number is</th><th>Why you would want it</th></tr></thead>
+        <tbody>
             <tr><td><code>1.8.0</code></td><td>Total active energy imported (kWh)</td><td>Your actual cumulative consumption — the figure that drives the bill</td></tr>
             <tr><td><code>1.8.1</code> / <code>1.8.2</code></td><td>Energy in ToD zone 1 / zone 2</td><td>Splits consumption by time band on a time-of-day tariff</td></tr>
             <tr><td><code>9.8.0</code></td><td>Total apparent energy (kVAh)</td><td>The billed quantity where the DISCOM bills on kVAh</td></tr>
             <tr><td><code>1.6.0</code></td><td>Maximum demand (kW or kVA)</td><td>The peak that sets your demand charge and flags load excess</td></tr>
             <tr><td><code>0.9.1</code> / <code>0.9.2</code></td><td>Meter time / date</td><td>A drifting clock mis-sorts ToD consumption into the wrong band</td></tr>
             <tr><td><code>2.8.0</code></td><td>Total active energy exported (kWh)</td><td>Units your rooftop solar sent to the grid, on a net-metered connection</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="seo-note">Prepaid balance and emergency-credit registers are not fixed by the OBIS
-      standard in the same way — different makes label them differently (<code>Bal</code>,
-      <code>Cr</code>, or a plain ₹ figure). Read the value with the ₹ sign, not the code.</p>
-
-      <!-- Mid-page CTA. Someone who has just read 1.8.0 off their own meter is holding a
-           number and wondering what it should have cost — that is the moment to offer the
-           calculator, not the bottom of a long page. -->
+        </tbody>
+      </table></div>
+      <p class="seo-note">Prepaid balance and emergency-credit registers are not fixed by the OBIS standard in the same way — different makes label them differently (<code>Bal</code>, <code>Cr</code>, or a plain ₹ figure). Read the value with the ₹ sign, not the code.</p>
       <aside class="inline-cta">
         <div>
           <strong>Got your <code>1.8.0</code> reading?</strong>
-          <span>Subtract last month's, and put the difference in — you'll get an itemised,
-          slab-wise estimate on your own DISCOM's rates.</span>
+          <span>Subtract last month's, and put the difference in — you'll get an itemised, slab-wise estimate on your own DISCOM's rates.</span>
         </div>
         <a class="btn-primary cta-arrow" href="/#calculator">
           <span>Calculate my bill</span>
@@ -517,46 +455,22 @@
 
     <section class="seo-section" id="three-phase">
       <h2>Three-phase meters: what changes</h2>
-      <p>Everything above describes a single-phase meter, which is what most homes have. Larger
-      homes, shops and small industrial connections run <strong>three-phase</strong>. The good news
-      is that the part that confuses people does not change: <strong>the register codes are
-      identical</strong>. <code>1.8.0</code> is still total imported energy, <code>1.6.0</code> is
-      still maximum demand, and the status icons mean the same things.</p>
+      <p>Everything above describes a single-phase meter, which is what most homes have. Larger homes, shops and small industrial connections run <strong>three-phase</strong>. The good news is that the part that confuses people does not change: <strong>the register codes are identical</strong>. <code>1.8.0</code> is still total imported energy, <code>1.6.0</code> is still maximum demand, and the status icons mean the same things.</p>
       <p>What differs:</p>
       <ul>
-        <li><strong>More terminals.</strong> Three phases plus neutral, so the terminal block is
-        wider — usually eight ways rather than five. Nothing you should ever open; the cover is
-        sealed and breaking that seal is itself a tamper event.</li>
-        <li><strong>Per-phase registers.</strong> The display cycle adds per-phase voltage and
-        current, often shown as <code>L1</code>, <code>L2</code>, <code>L3</code>. A phase reading
-        zero volts when the others are live means you have lost a phase — that is a supply fault to
-        report, not a meter fault.</li>
-        <li><strong>kVAh and demand matter more.</strong> Three-phase connections are far more
-        likely to be billed on <a href="/glossary/#kvah">kVAh</a> and to carry a
-        <a href="/glossary/#maximum-demand">maximum demand</a> charge, so <code>9.8.0</code> and
-        <code>1.6.0</code> are the registers to watch — a poor power factor costs you real money
-        here in a way it usually does not on a domestic single-phase supply.</li>
-        <li><strong>Load limit is per connection, not per phase.</strong> Tripping is assessed on
-        total sanctioned load, so an unbalanced load across the three phases can trip you while each
-        individual phase still looks modest.</li>
+        <li><strong>More terminals.</strong> Three phases plus neutral, so the terminal block is wider — usually eight ways rather than five. Nothing you should ever open; the cover is sealed and breaking that seal is itself a tamper event.</li>
+        <li><strong>Per-phase registers.</strong> The display cycle adds per-phase voltage and current, often shown as <code>L1</code>, <code>L2</code>, <code>L3</code>. A phase reading zero volts when the others are live means you have lost a phase — that is a supply fault to report, not a meter fault.</li>
+        <li><strong>kVAh and demand matter more.</strong> Three-phase connections are far more likely to be billed on kVAh and to carry a maximum demand charge, so <code>9.8.0</code> and <code>1.6.0</code> are the registers to watch — a poor power factor costs you real money here in a way it usually does not on a domestic single-phase supply.</li>
+        <li><strong>Load limit is per connection, not per phase.</strong> Tripping is assessed on total sanctioned load, so an unbalanced load across the three phases can trip you while each individual phase still looks modest.</li>
       </ul>
-      <p>If demand charges are what you are trying to control, the
-      <a href="/sanctioned-load-optimizer/">sanctioned load optimizer</a> works from the same tariff
-      data as the calculator.</p>
+      <p>If demand charges are what you are trying to control, the <a href="/sanctioned-load-optimizer/">sanctioned load optimizer</a> works from the same tariff data as the calculator.</p>
     </section>
 
     <section class="seo-section" id="amisp">
       <h2>Who installed your meter</h2>
-      <p>Under <strong>RDSS</strong>, DISCOMs mostly do not install smart meters themselves. They
-      appoint an <strong>AMISP</strong> — a contractor that supplies, installs and then operates the
-      metering system, paid per meter per month over eight to ten years rather than up front.</p>
-      <p>It matters in one narrow case: a dispute about the <em>installation or the device</em> — a
-      meter fitted at the wrong premises, a serial number that does not match your bill, a unit that
-      failed within weeks. Your contract is still with the DISCOM and that is where the complaint
-      goes, but the AMISP is who gets sent to look at it.</p>
-      <p class="seo-note"><strong>It does not tell you what your display will show.</strong> An
-      AMISP fits meters from several manufacturers across its circles, so the symbols come from the
-      meter's make and from IS 16444 — which is what the rest of this page covers.</p>
+      <p>Under <strong>RDSS</strong>, DISCOMs mostly do not install smart meters themselves. They appoint an <strong>AMISP</strong> — a contractor that supplies, installs and then operates the metering system, paid per meter per month over eight to ten years rather than up front.</p>
+      <p>It matters in one narrow case: a dispute about the <em>installation or the device</em> — a meter fitted at the wrong premises, a serial number that does not match your bill, a unit that failed within weeks. Your contract is still with the DISCOM and that is where the complaint goes, but the AMISP is who gets sent to look at it.</p>
+      <p class="seo-note"><strong>It does not tell you what your display will show.</strong> An AMISP fits meters from several manufacturers across its circles, so the symbols come from the meter's make and from IS 16444 — which is what the rest of this page covers.</p>
       <div class="seo-link-grid">
         <a class="seo-link-card" href="/smart-meter/amisp-list/"><strong>AMISP list by state and DISCOM →</strong><span>Every appointed AMISP we could establish, with a source link on each confirmed row and contracted meter counts</span></a>
       </div>
@@ -564,9 +478,7 @@
 
     <section class="seo-section">
       <h2>Take the reading yourself, then check the bill</h2>
-      <p>Note the <code>1.8.0</code> figure on the same date each month. The difference between two
-      readings is your consumption for that period — that is the whole of it, and it is the number
-      your bill should be built from.</p>
+      <p>Note the <code>1.8.0</code> figure on the same date each month. The difference between two readings is your consumption for that period — that is the whole of it, and it is the number your bill should be built from.</p>
       <div class="seo-link-grid">
         <a class="seo-link-card" href="/#calculator"><strong>Work out what that should cost</strong><span>Enter the units and your load for an itemised, slab-wise estimate on your DISCOM's real rates</span></a>
         <a class="seo-link-card" href="/check-my-bill/"><strong>Check the bill you were sent</strong><span>Upload it and have every charge line checked against the tariff order</span></a>
@@ -581,75 +493,48 @@
         <a class="seo-link-card" href="/guides/smart-meter-recharge-failed/"><strong>Recharged, but the balance did not update</strong><span>Why the money is almost never lost, and how long the meter really takes to sync</span></a>
         <a class="seo-link-card" href="/guides/smart-meter-prepaid-disconnection/"><strong>Supply cut with balance still showing</strong><span>Load-limit trips, night-hour protections and what the rules actually require</span></a>
         <a class="seo-link-card" href="/guides/smart-meter-balance-check/"><strong>Checking balance without the meter</strong><span>App, SMS and portal routes when the display is unreachable or unreadable</span></a>
-        <a class="seo-link-card" href="/guides/uppcl-smart-meter-readings-explained/"><strong>UPPCL: readings and the billing cycle</strong><span>Why a UP smart-meter bill runs first-to-last of the previous month, unlike an ordinary meter</span></a>
       </div>
     </section>
 
-    <!-- Answers are deliberately short and hand off to the full guide. Those guides already rank
-         for these queries; a long answer here would compete with them instead of feeding them. -->
     <section class="seo-section" id="faq">
       <h2>Common questions</h2>
       <details class="seo-faq-item">
         <summary>Why is the red light on my smart meter blinking?</summary>
-        <div class="seo-faq-a">That is normal — it is the pulse LED, and it flashes once per unit of
-        energy measured (usually 1000 or 3200 flashes per kWh, printed next to it). It is a live
-        load indicator, not a fault light: the more you are drawing right now, the faster it blinks.
-        Switch everything off and it should slow almost to a stop. If it keeps racing with all loads
-        off, that is worth <a href="/guides/smart-meter-running-fast/">checking properly</a>.</div>
+        <div class="seo-faq-a">That is normal — it is the pulse LED, and it flashes once per unit of energy measured (usually 1000 or 3200 flashes per kWh, printed next to it). It is a live load indicator, not a fault light: the more you are drawing right now, the faster it blinks. Switch everything off and it should slow almost to a stop.</div>
       </details>
       <details class="seo-faq-item">
         <summary>I recharged but my smart meter balance has not updated — is my money lost?</summary>
-        <div class="seo-faq-a">Almost never. The payment reaches the DISCOM instantly, but the token
-        has to travel to the meter over the network, and a weak signal delays that — minutes
-        usually, occasionally hours. Your balance keeps depleting normally in the meantime, so the
-        credit is not missing, just not yet delivered. Keep the transaction ID.
-        <a href="/guides/smart-meter-recharge-failed/">What to do if it still has not landed →</a></div>
+        <div class="seo-faq-a">Almost never. The payment reaches the DISCOM instantly, but the token has to travel to the meter over the network, and a weak signal delays that — minutes usually, occasionally hours. Your balance keeps depleting normally in the meantime, so the credit is not missing, just not yet delivered. Keep the transaction ID.</div>
       </details>
       <details class="seo-faq-item">
         <summary>My supply was cut but the meter still shows a balance. Why?</summary>
-        <div class="seo-faq-a">Usually a load-limit trip rather than a credit problem: drawing more
-        than your sanctioned load opens the relay even with money on the meter. Reduce the load and
-        most meters reconnect on their own or after a button press. It can also be a remote
-        disconnection for a separate arrear.
-        <a href="/guides/smart-meter-prepaid-disconnection/">Night-hour and holiday protections →</a></div>
+        <div class="seo-faq-a">Usually a load-limit trip rather than a credit problem: drawing more than your sanctioned load opens the relay even with money on the meter. Reduce the load and most meters reconnect on their own or after a button press. It can also be a remote disconnection for a separate arrear.</div>
       </details>
       <details class="seo-faq-item">
         <summary>Which number on the display is my actual meter reading?</summary>
-        <div class="seo-faq-a">The one shown against register code <code>1.8.0</code> — total active
-        energy imported, in kWh. The display cycles through several values, so the largest number is
-        not always the reading; check the small code beside it. Note <code>1.8.0</code> on the same
-        date each month and the difference between two readings is your consumption for that
-        period.</div>
+        <div class="seo-faq-a">The one shown against register code <code>1.8.0</code> — total active energy imported, in kWh. The display cycles through several values, so the largest number is not always the reading; check the small code beside it.</div>
       </details>
       <details class="seo-faq-item">
         <summary>What does the magnet or tamper symbol mean?</summary>
-        <div class="seo-faq-a">The meter has detected a strong external magnetic field, a removed
-        terminal cover, or a reversed connection, and has logged it with a timestamp and reported it
-        to the DISCOM. It does not clear by itself. If it appeared without anyone touching the
-        meter, raise a complaint straight away — the timestamped log is the evidence, and it is far
-        easier to contest early than after a penalty is raised.</div>
+        <div class="seo-faq-a">The meter has detected a strong external magnetic field, a removed terminal cover, or a reversed connection, and has logged it with a timestamp and reported it to the DISCOM. It does not clear by itself. If it appeared without anyone touching the meter, raise a complaint straight away — the timestamped log is the evidence.</div>
       </details>
       <details class="seo-faq-item">
         <summary>Is my smart meter running faster than my old meter?</summary>
-        <div class="seo-faq-a">Usually it is not the meter. Old electromechanical meters commonly
-        under-recorded as they aged, so an accurate new meter reads higher for the same usage, and
-        prepaid billing makes the cost visible daily rather than monthly. Smart meters are tested to
-        IS 16444 Class 1.0, meaning ±1% accuracy. You can verify yours against a known load before
-        paying for a meter test — <a href="/guides/smart-meter-running-fast/">here is the method</a>.</div>
+        <div class="seo-faq-a">Usually it is not the meter. Old electromechanical meters commonly under-recorded as they aged, so an accurate new meter reads higher for the same usage, and prepaid billing makes the cost visible daily rather than monthly. Smart meters are tested to IS 16444 Class 1.0, meaning ±1% accuracy.</div>
       </details>
     </section>
 
-    <p class="seo-disclaimer">Symbol meanings above follow IS 16444 and the OBIS register scheme of
-    IEC 62056-61, which Indian smart meters are built to. Icon shapes, display order and the labels
-    used for prepaid balance vary between manufacturers — check the leaflet supplied with your meter
-    where a symbol on your unit does not match the diagram. Always verify a disputed reading against
-    your printed bill and your DISCOM's tariff order.</p>
+    <p class="seo-disclaimer">Symbol meanings above follow IS 16444 and the OBIS register scheme of IEC 62056-61, which Indian smart meters are built to. Icon shapes, display order and the labels used for prepaid balance vary between manufacturers — check the leaflet supplied with your meter where a symbol on your unit does not match the diagram. Always verify a disputed reading against your printed bill and your DISCOM's tariff order.</p>
   </section>
+  <script type="module">
+    import { initSmartMeter } from "/js/smart-meter.js";
+    initSmartMeter();
+  </script>
 </div>
 
-
 <footer>
-  <div class="container">    <nav class="footer-map" aria-label="All pages">
+  <div class="container">
+    <nav class="footer-map" aria-label="All pages">
       <div class="footer-col">
         <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
         <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
@@ -671,7 +556,7 @@
         <span class="footer-col-title" data-i18n="ql.services">Services</span>
         <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
         <a href="/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
-        <a href="/smart-meter/" data-i18n="ql.meterDisplay">Smart Meter Display Guide</a>
+        <a href="/smart-meter/" data-i18n="ql.meterDisplay">Smart Meter Guide</a>
         <a href="/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
         <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
         <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
@@ -687,8 +572,8 @@
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
       </div>
     </nav>
-    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a> &nbsp;|&nbsp; <a href="/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a> &nbsp;|&nbsp; <a href="/glossary/" data-i18n="footer.glossary">Bill Glossary</a></p>
-    <!-- Social profiles — hrefs are placeholders until the accounts exist -->
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
+    <!-- Facebook returns here once the account exists -->
     <div class="soc-links" aria-label="Social media">
       <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
       <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
@@ -697,9 +582,5 @@
   </div>
 </footer>
 <script type="module" src="/js/main.js"></script>
-<script type="module">
-  import { initSmartMeter } from "/js/smart-meter.js";
-  initSmartMeter();
-</script>
 </body>
 </html>

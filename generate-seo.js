@@ -24,6 +24,9 @@ import { execSync } from 'child_process';
 import { TARIFF_DB, STATE_META, getStates, getDiscoms, tariffAge, ensureAll } from './js/tariffs/registry.js';
 import { buildTariffIndex } from './scripts/build-tariff-index.mjs';
 
+import { SMG } from './smart-meter-content.js';
+import { METER_SVG } from './smart-meter-svg.js';
+
 // The registry serves an index up front and loads tariff tables per state in the browser.
 // A whole-site pre-render needs all of them, so pull the lot before anything reads a rate.
 // Rebuilding the index first means a state file edited without regenerating cannot leave the
@@ -3153,6 +3156,179 @@ function notFoundPage() {
   });
 }
 
+// ── smart meter guide (/smart-meter/) ─────────────────────────────────────────
+// Was a hand-authored English page. Generated now so the hi/mr/ta twins come from one
+// source: copy in smart-meter-content.js, diagram in smart-meter-svg.js, and the chrome,
+// hreflang, sitemap entries and lastmod tracking all fall out of layout()/emitPage()
+// exactly as they do for every other page.
+function smartMeterGuidePage(lang = 'en') {
+  const enUrl = '/smart-meter/';
+  const url = langUrl(enUrl, lang);
+  const pfx = lang === 'en' ? '' : `/${lang}`;
+  const guides = `${pfx}/guides/`;
+  const S = SMG;
+  // %PFX% marks a link whose target has NO vernacular twin — the homepage, /methodology/,
+  // /sanctioned-load-optimizer/. Those stay root-absolute English on every twin, because a
+  // /hi/methodology/ does not exist. %GUIDES% is the opposite: guides DO have twins.
+  const t = (node) => T(lang, node)
+    .replace(/%PFX%/g, '')
+    .replace(/%GUIDES%/g, guides)
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const toc = [
+    ['#symbols', S.toc.symbols], ['#register-codes', S.toc.codes],
+    ['#three-phase', S.toc.three], ['#amisp', S.toc.amisp], ['#faq', S.toc.faq],
+  ].map(([href, node]) => `<a href="${href}">${esc(T(lang, node))}</a>`).join('\n        ');
+
+  const legend = S.legend.map(it =>
+    `<li><strong>${esc(T(lang, it.t))}</strong> — ${t(it.d)}</li>`).join('\n        ');
+
+  const codeRows = S.codes.map(r =>
+    `<tr><td><code>${r.c.replace(' / ', '</code> / <code>')}</code></td><td>${esc(T(lang, r.w))}</td><td>${esc(T(lang, r.y))}</td></tr>`
+  ).join('\n            ');
+
+  const threePoints = S.threePoints.map(p =>
+    `<li><strong>${esc(T(lang, p.t))}</strong> ${t(p.d)}</li>`).join('\n        ');
+
+  const card = (href, node) =>
+    `<a class="seo-link-card" href="${href}"><strong>${esc(T(lang, node.t))}</strong><span>${esc(T(lang, node.d))}</span></a>`;
+
+  const wrongCards = S.wrongCards.map(c =>
+    card(c.href.replace('%GUIDES%', guides), c)).join('\n        ');
+
+  const faqItems = S.faq.map(f =>
+    `<details class="seo-faq-item">
+        <summary>${esc(T(lang, f.q))}</summary>
+        <div class="seo-faq-a">${t(f.a)}</div>
+      </details>`).join('\n      ');
+
+  // FAQPage is built from the same strings the page renders, so the two cannot drift.
+  const faqLd = {
+    '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: S.faq.map(f => ({
+      '@type': 'Question', name: T(lang, f.q),
+      acceptedAnswer: { '@type': 'Answer', text: t(f.a).replace(/<[^>]+>/g, '') },
+    })),
+  };
+
+  const body = `
+  <section class="seo-page container smart-meter-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">${esc(T(lang, { en: 'Home', hi: 'होम', mr: 'होम', ta: 'முகப்பு' }))}</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">${esc(T(lang, S.crumb))}</span></li></ol></nav>
+    <h1>${esc(T(lang, S.h1))}</h1>
+    <p class="guide-meta">${T(lang, S.meta).replace('%DATE%', LASTMOD_TOKEN[lang]).replace(/%PFX%/g, '')}</p>
+    <p class="seo-lead">${t(S.lead)}</p>
+
+    <nav class="page-toc" aria-label="${esc(T(lang, S.toc.label))}">
+      <span class="page-toc-label">${esc(T(lang, S.toc.label))}</span>
+      ${toc}
+    </nav>
+
+    <section class="seo-section" id="symbols">
+      <h2>${esc(T(lang, S.symbolsH2))}</h2>
+      <p>${t(S.symbolsIntro)}</p>
+      <p class="meter-hint">
+        <span class="meter-hint-tag">${esc(T(lang, S.hintTag))}</span>
+        <span>${t(S.hint)}</span>
+      </p>
+      <figure class="meter-figure">
+${METER_SVG.replace('>Press here<', `>${esc(T(lang, S.pressHere))}<`)}
+        <div class="meter-readout" id="mReadout" aria-live="polite">
+          <div class="meter-readout-head">
+            <span class="meter-readout-step" id="mStep"></span>
+            <strong id="mTitle"></strong>
+          </div>
+          <p id="mWhy"></p>
+          <button type="button" class="meter-readout-btn" id="mNext">${esc(T(lang, S.pressHere))} →</button>
+        </div>
+        <figcaption>${t(S.figcaption)}</figcaption>
+      </figure>
+      <ol class="meter-legend">
+        ${legend}
+      </ol>
+    </section>
+
+    <section class="seo-section" id="register-codes">
+      <h2>${esc(T(lang, S.codesH2))}</h2>
+      <p>${t(S.codesIntro)}</p>
+      <div class="comparison-table-wrapper"><table class="comparison-table">
+        <thead><tr><th>${esc(T(lang, S.codesTh.code))}</th><th>${esc(T(lang, S.codesTh.what))}</th><th>${esc(T(lang, S.codesTh.why))}</th></tr></thead>
+        <tbody>
+            ${codeRows}
+        </tbody>
+      </table></div>
+      <p class="seo-note">${t(S.codesNote)}</p>
+      <aside class="inline-cta">
+        <div>
+          <strong>${T(lang, S.ctaTitle)}</strong>
+          <span>${t(S.ctaBody)}</span>
+        </div>
+        <a class="btn-primary cta-arrow" href="/#calculator">
+          <span>${esc(T(lang, S.ctaBtn))}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </aside>
+    </section>
+
+    <section class="seo-section" id="three-phase">
+      <h2>${esc(T(lang, S.threeH2))}</h2>
+      <p>${t(S.threeIntro)}</p>
+      <p>${esc(T(lang, S.threeLead))}</p>
+      <ul>
+        ${threePoints}
+      </ul>
+      <p>${t(S.threeOutro)}</p>
+    </section>
+
+    <section class="seo-section" id="amisp">
+      <h2>${esc(T(lang, S.amispH2))}</h2>
+      <p>${t(S.amispP1)}</p>
+      <p>${t(S.amispP2)}</p>
+      <p class="seo-note">${t(S.amispNote)}</p>
+      <div class="seo-link-grid">
+        ${card('/smart-meter/amisp-list/', S.amispCard)}
+      </div>
+    </section>
+
+    <section class="seo-section">
+      <h2>${esc(T(lang, S.readingH2))}</h2>
+      <p>${t(S.readingP)}</p>
+      <div class="seo-link-grid">
+        ${card('/#calculator', S.cards.calc)}
+        ${card('/check-my-bill/', S.cards.check)}
+        ${card(`${pfx}/smart-meter-recharge/`, S.cards.recharge)}
+      </div>
+    </section>
+
+    <section class="seo-section">
+      <h2>${esc(T(lang, S.wrongH2))}</h2>
+      <div class="seo-link-grid">
+        ${wrongCards}
+      </div>
+    </section>
+
+    <section class="seo-section" id="faq">
+      <h2>${esc(T(lang, S.faqH2))}</h2>
+      ${faqItems}
+    </section>
+
+    <p class="seo-disclaimer">${t(S.disclaimer)}</p>
+  </section>
+  <script type="module">
+    import { initSmartMeter } from "/js/smart-meter.js";
+    initSmartMeter();
+  </script>`;
+
+  return layout({
+    title: T(lang, S.title),
+    description: T(lang, S.description),
+    canonical: `${SITE}${url}`,
+    lang, page: enUrl, altLangs: VERNACULARS,
+    jsonld: [faqLd],
+    body,
+  });
+}
+
 // ── smart meter recharge (/smart-meter-recharge/) ─────────────────────────────
 // Prepaid smart meters are being mass-installed under RDSS, and "<DISCOM> smart meter
 // recharge" is a high-volume, low-competition query family. One page per DISCOM (EN + HI),
@@ -3507,10 +3683,6 @@ const STATIC_ROUTES = [
   { loc: '/sanctioned-load-optimizer/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/solar-subsidy-checker/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/tenant-submeter-calculator/', priority: '0.8', changefreq: 'monthly' },
-  // Hand-authored (smart-meter/index.html), English-only. It belongs here rather than in a
-  // urls.push() below: only STATIC_ROUTES get isStatic, and without it the lastmod falls
-  // through to TODAY on every run, since nothing emits the page into the manifest.
-  { loc: '/smart-meter/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/smart-meter/amisp-list/', priority: '0.6', changefreq: 'monthly' },
   { loc: '/check-my-bill/', priority: '0.9', changefreq: 'monthly' },
   { loc: '/bill-review/', priority: '0.7', changefreq: 'monthly' },
@@ -3552,6 +3724,7 @@ function buildSitemap(states) {
   // the underlying FPPA notices are published month by month.
   urls.push({ loc: '/fuel-surcharge/', priority: '0.8', changefreq: 'monthly' });
   urls.push({ loc: '/tariffs/states/', priority: '0.8', changefreq: 'monthly', langs: [...VERNACULARS] });
+  urls.push({ loc: '/smart-meter/', priority: '0.7', changefreq: 'monthly', langs: [...VERNACULARS] });
   urls.push({ loc: '/smart-meter-recharge/', priority: '0.8', changefreq: 'monthly', langs: [...VERNACULARS] });
   for (const state of states) {
     const stateSlug = slugify(state);
@@ -3838,6 +4011,7 @@ export function generateSeo() {
     emitPage(`${p}glossary`, glossaryPage(lang));
     pages++;
 
+    emitPage(`${p}smart-meter`, smartMeterGuidePage(lang));
     emitPage(`${p}smart-meter-recharge`, smartMeterHubPage(states, lang));
     pages++;
 
