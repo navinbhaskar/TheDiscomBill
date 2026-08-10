@@ -3494,6 +3494,10 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
   display: flex; flex-wrap: wrap; align-items: center; gap: 5px;
   font-size: 12px; margin: 0;
 }
+/* The Smart Meter Guide carries the capsules on their own, with no .seo-article-tools wrapper
+   to supply the vertical rhythm — without this the row sits flush against the H1 above and
+   collides with the dateline below. Same 12/14 as the wrapper, so the two read identically. */
+.smart-meter-page > .seo-lang-pills { margin: 12px 0 14px; }
 /* Sits directly after the capsules rather than being pushed to the far edge of the column.
    `margin-left: auto` flung it against the 1000px boundary, which detached it from the row
    it belongs to and left a wide dead gap on every article. */

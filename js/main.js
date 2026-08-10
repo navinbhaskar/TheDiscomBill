@@ -494,7 +494,11 @@ if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 // download burst during initial render steals bandwidth from what the user is looking at.
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    const register = () => navigator.serviceWorker.register('sw.js').catch(() => {});
+    // Root-absolute, not 'sw.js'. A relative path resolves against the current directory,
+    // so it only ever found the worker on '/' and 404'd on every interior page — which is
+    // where organic visitors actually land. Scope is pinned to '/' so one worker serves
+    // the whole site rather than one per directory.
+    const register = () => navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {});
     if ('requestIdleCallback' in window) requestIdleCallback(register, { timeout: 8000 });
     else setTimeout(register, 4000);
   });

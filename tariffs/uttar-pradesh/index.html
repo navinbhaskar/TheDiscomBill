@@ -85,7 +85,7 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/tariffs/uttar-pradesh/","name":"Uttar Pradesh Electricity Tariff 2026-27 — ₹2.75–6.50/unit","description":"Check Uttar Pradesh's 2026-27 slab rates (unchanged since 1 Oct 2024) & calculate your exact electricity bill in 30 seconds. 5 DISCOMs with fixed charges & FPPA, domestic from ₹2.75/unit.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-09"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/tariffs/uttar-pradesh/","name":"Uttar Pradesh Electricity Tariff 2026-27 — ₹2.75–6.50/unit","description":"Check Uttar Pradesh's 2026-27 slab rates (unchanged since 1 Oct 2024) & calculate your exact electricity bill in 30 seconds. 5 DISCOMs with fixed charges & FPPA, domestic from ₹2.75/unit.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-10"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Tariffs","item":"https://thediscombill.com/tariffs/states/"},{"@type":"ListItem","position":3,"name":"Uttar Pradesh","item":"https://thediscombill.com/tariffs/uttar-pradesh/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How is the electricity bill calculated in Uttar Pradesh?","acceptedAnswer":{"@type":"Answer","text":"Uttar Pradesh bills combine slab-wise energy charges, a fixed/demand charge per kW (or kVA), a fuel & power purchase adjustment (FPPA) and electricity duty. Use our <a href=\"/#calculator\">free calculator</a> to get an itemised provisional bill for your DISCOM."}},{"@type":"Question","name":"Which electricity distribution company serves my area in Uttar Pradesh?","acceptedAnswer":{"@type":"Answer","text":"Uttar Pradesh is served by 5 DISCOMs: <strong>DVVNL</strong> (South UP — Agra, Mathura, Aligarh); <strong>MVVNL</strong> (Central UP — Lucknow, Sitapur, Hardoi); <strong>PVVNL</strong> (West UP — Meerut, Ghaziabad, Noida); <strong>PuVVNL</strong> (East UP — Varanasi, Prayagraj, Gorakhpur); <strong>KESCO</strong> (Kanpur city and district). Open your DISCOM above for its full tariff and an indicative bill."}},{"@type":"Question","name":"What is the cheapest domestic electricity rate in Uttar Pradesh?","acceptedAnswer":{"@type":"Answer","text":"The lowest domestic energy charge across Uttar Pradesh DISCOMs starts at about ₹2.75 per unit (lowest slab), before fixed charges, FPPA and duty. Exact rates depend on your DISCOM and consumption slab."}},{"@type":"Question","name":"What is the current electricity tariff year for Uttar Pradesh?","acceptedAnswer":{"@type":"Answer","text":"The rates shown are for 2026-27, verified against the published tariff order."}}]}</script>
 </head>
@@ -127,8 +127,13 @@
         </div>
       </div>
       <div class="lang-switch" id="langSwitch">
-        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+        <!-- aria-labelledby, not aria-label: the accessible name has to CONTAIN the visible
+             text ("EN"), or speech input cannot activate the button and a screen reader never
+             announces which language is active (WCAG 2.5.3). Referencing the live span also
+             keeps the name in step when syncLangUI() rewrites the badge. -->
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
           <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
           <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">

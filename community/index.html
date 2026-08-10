@@ -15,10 +15,14 @@
       } catch (e) {}
     })();
   </script>
+  <!-- noindex until this page has content. It is 29 words with a single H1, and an indexable
+       page with nothing on it drags the site's overall quality signal down for no return.
+       Remove this line and restore the /community/ entry in generate-seo.js's STATIC_ROUTES
+       at the same time — the two must not disagree. -->
+  <meta name="robots" content="noindex, follow">
   <title>Community – TheDiscomBill</title>
   <meta name="description" content="Ask questions and share tips about electricity bills, tariffs, smart meters and DISCOMs with other consumers across India.">
   <link rel="canonical" href="https://thediscombill.com/community/">
-  <meta name="robots" content="index, follow">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -73,8 +77,9 @@
       <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
       <a href="/guides/" data-i18n="nav.blog">Blog</a>
       <div class="lang-switch" id="langSwitch">
-        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
           <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
           <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">

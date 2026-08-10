@@ -337,8 +337,13 @@ const HEADER = `
         </div>
       </div>
       <div class="lang-switch" id="langSwitch">
-        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+        <!-- aria-labelledby, not aria-label: the accessible name has to CONTAIN the visible
+             text ("EN"), or speech input cannot activate the button and a screen reader never
+             announces which language is active (WCAG 2.5.3). Referencing the live span also
+             keeps the name in step when syncLangUI() rewrites the badge. -->
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
           <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
           <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
@@ -610,7 +615,10 @@ const SHARE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
   + '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>'
   + '<path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>';
 
-function langSwitchLink(page, lang, altLangs = VERNACULARS) {
+// Just the capsules, with no article tooling around them. Split out of langSwitchLink so the
+// Smart Meter Guide can carry the row without also inheriting the Share button, which belongs
+// to /guides/ articles and depends on share-article.js being loaded.
+function langPills(page, lang, altLangs = VERNACULARS) {
   const all = ['en', ...altLangs.filter(l => l !== 'en')];
   const pills = all.map(l => {
     if (l === lang) {
@@ -619,6 +627,11 @@ function langSwitchLink(page, lang, altLangs = VERNACULARS) {
     const href = l === 'en' ? page : langUrl(page, l);
     return `<a class="seo-lang-pill" href="${attr(href)}" hreflang="${LANG_LOCALE[l]}" lang="${l}">${LANG_NATIVE[l]}</a>`;
   }).join('');
+  return `<p class="seo-lang-pills">${LANG_GLOBE}<span class="sr-only">Available in</span>${pills}</p>`;
+}
+
+function langSwitchLink(page, lang, altLangs = VERNACULARS) {
+  const pills = langPills(page, lang, altLangs);
   // The button's three strings are rendered per-language here rather than looked up at
   // runtime: share-article.js has no i18n dependency, and the page already knows its language.
   // Without this the control read "Share" in the middle of a Devanagari or Tamil article.
@@ -628,10 +641,7 @@ function langSwitchLink(page, lang, altLangs = VERNACULARS) {
   const share = `<button type="button" class="seo-share-btn" data-share-article hidden`
     + ` data-copied="${attr(shareCopied)}" data-failed="${attr(shareFailed)}">`
     + `${SHARE_ICON}<span class="seo-share-label" data-share-label>${esc(shareLabel)}</span></button>`;
-  return `<div class="seo-article-tools">`
-    + `<p class="seo-lang-pills">${LANG_GLOBE}<span class="sr-only">Available in</span>${pills}</p>`
-    + share
-    + `</div>`;
+  return `<div class="seo-article-tools">${pills}${share}</div>`;
 }
 
 function breadcrumbs(trail) {
@@ -3216,6 +3226,14 @@ function smartMeterGuidePage(lang = 'en') {
   <section class="seo-page container smart-meter-page">
     <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">${esc(T(lang, { en: 'Home', hi: 'होम', mr: 'होम', ta: 'முகப்பு' }))}</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">${esc(T(lang, S.crumb))}</span></li></ol></nav>
     <h1>${esc(T(lang, S.h1))}</h1>
+    <!-- The header switcher is a <li data-lang> list driven by JS, so it emits no crawlable
+         link to any twin. Without this row /hi/, /mr/ and /ta/smart-meter/ were the only three
+         indexable pages on the site with zero inbound internal links — in the sitemap and
+         linked by <head> hreflang, but with no crawl path and no internal link equity.
+         This page is one article with exactly three twins, so per-page capsules describe its
+         coverage exactly; that is why the row belongs here and not on the state-scoped
+         smart-meter-recharge family. -->
+    ${langPills(enUrl, lang)}
     <p class="guide-meta">${T(lang, S.meta).replace('%DATE%', LASTMOD_TOKEN[lang]).replace(/%PFX%/g, '')}</p>
     <p class="seo-lead">${t(S.lead)}</p>
 
@@ -3695,7 +3713,9 @@ const STATIC_ROUTES = [
   // index,follow + self-canonical + linked from the account nav, so it was already crawlable —
   // it was just never declared. Every other undeclared route (admin/, expert/, login/,
   // my-bills/, profile/, solar/, ev/, usage/) carries noindex or a cross-canonical on purpose.
-  { loc: '/community/', priority: '0.5', changefreq: 'weekly' },
+  // /community/ is deliberately absent: it carries <meta name="robots" content="noindex">
+  // until it has content. Listing a noindex URL in the sitemap sends Google two contradictory
+  // instructions. Restore this entry and drop the robots tag together, not separately.
 ];
 
 // lastmod for a hand-written static route: hash the source file so the date bumps only

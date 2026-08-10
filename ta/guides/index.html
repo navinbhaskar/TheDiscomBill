@@ -87,7 +87,7 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/ta/guides/","name":"மின் பில் வழிகாட்டிகள் — உங்கள் பில்லைப் புரிந்து குறைக்கவும்","description":"இந்திய மின் பில்லிங் குறித்த எளிய மொழி வழிகாட்டிகள்: பில்லை எப்படிப் படிப்பது, பில்கள் ஏன் திடீரெனக் கூடுகின்றன, டைம்-ஆஃப்-டே பில்லிங், FPPA மற்றும் பல.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN","dateModified":"2026-08-09"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/ta/guides/","name":"மின் பில் வழிகாட்டிகள் — உங்கள் பில்லைப் புரிந்து குறைக்கவும்","description":"இந்திய மின் பில்லிங் குறித்த எளிய மொழி வழிகாட்டிகள்: பில்லை எப்படிப் படிப்பது, பில்கள் ஏன் திடீரெனக் கூடுகின்றன, டைம்-ஆஃப்-டே பில்லிங், FPPA மற்றும் பல.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN","dateModified":"2026-08-10"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"முகப்பு","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"வழிகாட்டிகள்","item":"https://thediscombill.com/ta/guides/"}]}</script>
 </head>
 <body>
@@ -128,8 +128,13 @@
         </div>
       </div>
       <div class="lang-switch" id="langSwitch">
-        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+        <!-- aria-labelledby, not aria-label: the accessible name has to CONTAIN the visible
+             text ("EN"), or speech input cannot activate the button and a screen reader never
+             announces which language is active (WCAG 2.5.3). Referencing the live span also
+             keeps the name in step when syncLangUI() rewrites the badge. -->
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
           <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
           <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">

@@ -128,8 +128,13 @@
         </div>
       </div>
       <div class="lang-switch" id="langSwitch">
-        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Language / भाषा">
+        <!-- aria-labelledby, not aria-label: the accessible name has to CONTAIN the visible
+             text ("EN"), or speech input cannot activate the button and a screen reader never
+             announces which language is active (WCAG 2.5.3). Referencing the live span also
+             keeps the name in step when syncLangUI() rewrites the badge. -->
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
           <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
           <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
@@ -146,6 +151,14 @@
   <section class="seo-page container smart-meter-page">
     <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">होम</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">स्मार्ट मीटर मार्गदर्शक</span></li></ol></nav>
     <h1>स्मार्ट मीटर मार्गदर्शक: प्रत्येक चिन्हाचा अर्थ काय</h1>
+    <!-- The header switcher is a <li data-lang> list driven by JS, so it emits no crawlable
+         link to any twin. Without this row /hi/, /mr/ and /ta/smart-meter/ were the only three
+         indexable pages on the site with zero inbound internal links — in the sitemap and
+         linked by <head> hreflang, but with no crawl path and no internal link equity.
+         This page is one article with exactly three twins, so per-page capsules describe its
+         coverage exactly; that is why the row belongs here and not on the state-scoped
+         smart-meter-recharge family. -->
+    <p class="seo-lang-pills"><svg class="seo-lang-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span class="sr-only">Available in</span><a class="seo-lang-pill" href="/smart-meter/" hreflang="en-IN" lang="en">English</a><a class="seo-lang-pill" href="/hi/smart-meter/" hreflang="hi-IN" lang="hi">हिंदी</a><span class="seo-lang-pill is-current" lang="mr" aria-current="page">मराठी</span><a class="seo-lang-pill" href="/ta/smart-meter/" hreflang="ta-IN" lang="ta">தமிழ்</a></p>
     <p class="guide-meta">अद्ययावत १० ऑगस्ट, २०२६ · <strong>IS 16444</strong> आणि <strong>IEC 62056-61</strong> नुसार तपासले · <a href="/methodology/">आमची कार्यपद्धती</a></p>
     <p class="seo-lead">तुमचा प्रीपेड स्मार्ट मीटर एकापाठोपाठ अनेक आकडे आणि छोटी चिन्हे दाखवत राहतो, आणि त्यांपैकी जवळपास कशावरही लेबल नसते. हे पान एका सामान्य भारतीय सिंगल-फेज स्मार्ट मीटरवरील प्रत्येक घटक समजावते — प्रत्येक आयकॉनचा अर्थ, कोणते रीडिंग खरोखर तुमचा वापर आहे, आणि कोणती चिन्हे दिसल्यावर तुम्ही कृती करायला हवी.</p>
 
