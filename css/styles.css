@@ -6453,8 +6453,10 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
 }
 .m-lamp-on.is-blink { animation: mComBlink 320ms ease-in-out 2; }
 
+/* Left-aligned, not centred: the prose above it is capped at 760px inside a 952px container,
+   so `auto` margins pushed this box 96px to the right of everything else on the page. */
 .meter-readout {
-  max-width: 760px; margin: 14px auto 0; padding: 14px 16px;
+  max-width: 760px; margin: 14px 0 0; padding: 14px 16px;
   background: var(--surface-card-grad);
   border: 1px solid var(--border-default); border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
@@ -6540,3 +6542,21 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
   /* Keep the ring — it is the affordance — but stop it moving. */
   .m-btn-pulse { animation: none; opacity: .5; }
 }
+
+/* "Press here" tag beside the Scroll button. It nudges toward the button rather than pulsing
+   in place, so the motion itself points at the target. Retires on first press with the ring. */
+.m-hint-tag rect { fill: var(--brand); }
+.m-hint-tag path { fill: var(--brand); }
+.m-hint-tag text {
+  fill: #fff; font-size: 11.5px; font-weight: 700; letter-spacing: .3px; text-anchor: middle;
+}
+.m-hint-tag {
+  animation: mHintNudge 1.6s ease-in-out infinite;
+  transition: opacity var(--t-fast);
+}
+@keyframes mHintNudge {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(4px); }
+}
+.meter-svg.has-pressed .m-hint-tag { animation: none; opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .m-hint-tag { animation: none; } }

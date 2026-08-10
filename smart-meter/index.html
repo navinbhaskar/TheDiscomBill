@@ -325,6 +325,15 @@
             <text class="m-print m-print-sm m-print-end" x="518" y="332">MTCTE : 283603039</text>
             <!-- Real control, not decoration: focusable, keyboard-operable, and with a hit area
                  larger than the drawn button so it clears the 24px minimum on touch. -->
+            <!-- "Press here" tag. Brand blue and pill-shaped so it reads as annotation laid over
+                 the device rather than as something printed on it. Decorative to assistive tech —
+                 the button below already carries its own label — and it retires on first press
+                 along with the pulse, since by then it has said what it had to say. -->
+            <g class="m-hint-tag" aria-hidden="true">
+              <rect x="384" y="348" width="86" height="21" rx="10.5"/>
+              <text x="424" y="363">Press here</text>
+              <path d="M472 352.5 481 358.5 472 364.5 Z"/>
+            </g>
             <g class="m-btn-hit" id="mBtn" role="button" tabindex="0"
                aria-label="Press the meter's scroll button to show the next reading"
                aria-describedby="mReadout">
