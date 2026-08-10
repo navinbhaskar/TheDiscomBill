@@ -66,12 +66,75 @@ const SCREENS = [
   },
 ];
 
+// ── seven-segment renderer ────────────────────────────────────────────────────
+// A segment LCD does not draw glyphs, it lights bars — which is why a bold sans
+// font never quite passes as a meter display. Each character is drawn from the
+// same seven mitred bars a real one has, and the unlit bars stay faintly visible
+// underneath, because on a real LCD they do.
+//
+// Geometry lives here alone. scripts/meter-digits.mjs imports this same function
+// to stamp the initial screen into the page, so the static markup and the live
+// re-render can never drift apart.
+const SEG = {
+  '0': 'abcdef', '1': 'bc', '2': 'abged', '3': 'abgcd', '4': 'fgbc',
+  '5': 'afgcd', '6': 'afgedc', '7': 'abc', '8': 'abcdefg', '9': 'abcdfg',
+  '-': 'g', ' ': '',
+};
+const CELL_W = 17, CELL_H = 30, GAP = 3.5, T = 3.4, NARROW = 9;
+
+// Mitred bars: the angled ends are what make a segment display look like one.
+function hBar(x1, x2, y) {
+  const h = T / 2;
+  return `${x1 + h},${y - h} ${x2 - h},${y - h} ${x2},${y} ${x2 - h},${y + h} ${x1 + h},${y + h} ${x1},${y}`;
+}
+function vBar(x, y1, y2) {
+  const h = T / 2;
+  return `${x - h},${y1 + h} ${x},${y1} ${x + h},${y1 + h} ${x + h},${y2 - h} ${x},${y2} ${x - h},${y2 - h}`;
+}
+
+function cellPolys(ch, ox, oy) {
+  const L = ox + T / 2, R = ox + CELL_W - T / 2;
+  const TOP = oy + T / 2, MID = oy + CELL_H / 2, BOT = oy + CELL_H - T / 2;
+  const bars = {
+    a: hBar(L, R, TOP), g: hBar(L, R, MID), d: hBar(L, R, BOT),
+    f: vBar(L, TOP, MID), b: vBar(R, TOP, MID),
+    e: vBar(L, MID, BOT), c: vBar(R, MID, BOT),
+  };
+  const on = SEG[ch] ?? '';
+  return Object.entries(bars).map(([k, pts]) =>
+    `<polygon class="${on.includes(k) ? 'sg-on' : 'sg-off'}" points="${pts}"/>`).join('');
+}
+
+// Advance width per character: separators are narrow, as they are on real glass.
+const isNarrow = (ch) => ch === '.' || ch === ':';
+const advance = (ch) => (isNarrow(ch) ? NARROW : CELL_W) + GAP;
+
+/** Render `text` as seven-segment SVG, right-aligned to `right`, baseline top at `top`. */
+export function segmentsFor(text, { right = 452, top = 246 } = {}) {
+  const chars = [...String(text)];
+  const width = chars.reduce((w, ch) => w + advance(ch), 0) - GAP;
+  let x = right - width;
+  let out = '';
+  for (const ch of chars) {
+    if (ch === '.') {
+      out += `<rect class="sg-on" x="${(x + 1).toFixed(1)}" y="${(top + CELL_H - T).toFixed(1)}" width="${T}" height="${T}"/>`;
+    } else if (ch === ':') {
+      out += `<rect class="sg-on" x="${(x + 1).toFixed(1)}" y="${(top + CELL_H * 0.3).toFixed(1)}" width="${T}" height="${T}"/>`
+           + `<rect class="sg-on" x="${(x + 1).toFixed(1)}" y="${(top + CELL_H * 0.68).toFixed(1)}" width="${T}" height="${T}"/>`;
+    } else {
+      out += cellPolys(ch, x, top);
+    }
+    x += advance(ch);
+  }
+  return out;
+}
+
 export function initSmartMeter() {
   const svg = document.querySelector('.meter-svg');
   const btn = document.getElementById('mBtn');
   if (!svg || !btn) return;
 
-  const val = document.getElementById('mVal');
+  const val = document.getElementById('mSeg');
   const code = document.getElementById('mCode');
   const unit = document.getElementById('mUnit');
   const step = document.getElementById('mStep');
@@ -86,7 +149,7 @@ export function initSmartMeter() {
 
   function render() {
     const s = SCREENS[i];
-    val.textContent = s.value;
+    val.innerHTML = segmentsFor(s.value);
     code.textContent = s.code;
     unit.textContent = s.unit;
     step.textContent = `Screen ${i + 1} of ${SCREENS.length}`;
@@ -111,10 +174,16 @@ export function initSmartMeter() {
 
   function advance() {
     i = (i + 1) % SCREENS.length;
+    // The attention ring has done its job the moment it is used once.
+    svg.classList.add('has-pressed');
     render();
   }
 
   btn.addEventListener('click', advance);
+  // The glass is where the eye already is, so it advances too. Pointer-only: the button
+  // above carries the semantics and the keyboard path, and a second focusable control
+  // announcing the same action would just be noise on a screen reader.
+  svg.querySelectorAll('.m-lcd, .m-lcd-frame').forEach((el) => el.addEventListener('click', advance));
   btn.addEventListener('keydown', (e) => {
     // A real <button> fires click on both keys; an SVG <g> with role=button does not.
     if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); advance(); }

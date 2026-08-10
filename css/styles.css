@@ -6495,3 +6495,48 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
 .cta-arrow:hover svg { transform: translateX(3px); }
 .cta-arrow:hover { box-shadow: 0 10px 22px -8px rgba(29, 78, 216, .7); }
 @media (prefers-reduced-motion: reduce) { .cta-arrow:hover svg { transform: none; } }
+
+/* Seven-segment display. Unlit bars stay faintly visible, which is the thing that makes a
+   real LCD read as an LCD rather than as printed text. */
+.m-seg .sg-on  { fill: #10240a; }
+.m-seg .sg-off { fill: #10240a; opacity: .10; }
+
+/* Resting affordance for the Scroll button. Hover cannot do this job — it does not exist on
+   touch, and this is a drawn control with none of a real button's built-in signals — so the
+   ring runs on its own until the first press, then is switched off for good. */
+.m-btn-ring {
+  fill: none; stroke: var(--p-blue-500); stroke-width: 2; opacity: .9;
+}
+.m-btn-pulse {
+  fill: none; stroke: var(--p-blue-500); stroke-width: 2.5;
+  transform-origin: 500px 358px; transform-box: view-box;
+  animation: mBtnPulse 2s ease-out infinite;
+}
+@keyframes mBtnPulse {
+  0%   { transform: scale(1);    opacity: .75; }
+  70%  { transform: scale(1.85); opacity: 0; }
+  100% { transform: scale(1.85); opacity: 0; }
+}
+/* Once pressed, the meter has taught the interaction; the cue stops competing with content. */
+.meter-svg.has-pressed .m-btn-pulse { animation: none; opacity: 0; }
+.meter-svg.has-pressed .m-btn-ring { opacity: .35; }
+.m-lcd-frame, .m-lcd { cursor: pointer; }
+
+.meter-hint {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px;
+  max-width: 760px; margin: 0 0 4px; padding: 10px 14px;
+  background: var(--brand-faint); border: 1px solid var(--border-default);
+  border-left: 3px solid var(--brand); border-radius: var(--radius-md);
+  font-size: 13.5px; color: var(--text-secondary); line-height: 1.55;
+}
+.meter-hint > span:last-child { flex: 1 1 240px; min-width: 0; }
+.meter-hint strong { color: var(--text-primary); }
+.meter-hint-tag {
+  font-size: 10.5px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase;
+  color: #fff; background: var(--brand); border-radius: 999px; padding: 3px 9px;
+  white-space: nowrap;
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Keep the ring — it is the affordance — but stop it moving. */
+  .m-btn-pulse { animation: none; opacity: .5; }
+}
