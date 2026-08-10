@@ -3511,6 +3511,7 @@ const STATIC_ROUTES = [
   // urls.push() below: only STATIC_ROUTES get isStatic, and without it the lastmod falls
   // through to TODAY on every run, since nothing emits the page into the manifest.
   { loc: '/smart-meter/', priority: '0.7', changefreq: 'monthly' },
+  { loc: '/smart-meter/amisp-list/', priority: '0.6', changefreq: 'monthly' },
   { loc: '/check-my-bill/', priority: '0.9', changefreq: 'monthly' },
   { loc: '/bill-review/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/bill-review/sample-report/', priority: '0.5', changefreq: 'yearly' },

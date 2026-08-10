@@ -1452,7 +1452,11 @@
     "lastmod": "2026-08-09"
   },
   "/smart-meter/": {
-    "hash": "8bf6c5186b4a4dbf",
+    "hash": "7b24f37b1fc8dacb",
+    "lastmod": "2026-08-10"
+  },
+  "/smart-meter/amisp-list/": {
+    "hash": "f4e8aa85ac77909a",
     "lastmod": "2026-08-10"
   },
   "/solar-battery-backup-calculator/": {
