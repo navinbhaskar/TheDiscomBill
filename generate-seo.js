@@ -27,7 +27,7 @@ import { buildTariffIndex } from './scripts/build-tariff-index.mjs';
 import { SMG } from './smart-meter-content.js';
 import { METER_SVG } from './smart-meter-svg.js';
 import { SCENARIO_COPY, LINES, UB } from './understand-bill-content.js';
-import { SCENARIOS, DEFAULT_SCENARIO, billInput, readout, billHtml } from './js/bill-anatomy.js';
+import { SCENARIOS, DEFAULT_SCENARIO, billInput, readout, billHtml, liveHtml } from './js/bill-anatomy.js';
 
 // The registry serves an index up front and loads tariff tables per state in the browser.
 // A whole-site pre-render needs all of them, so pull the lot before anything reads a rate.
@@ -3499,8 +3499,8 @@ function understandBillPage(lang = 'en') {
     return `<article class="ub-explain" id="explain-${l.id}" data-line="${attr(l.id)}" data-live="${attr(l.live || '')}"${n ? '' : ' data-absent'}>
         <h3><span class="ub-num"${n ? '' : ' hidden'}>${n || ''}</span>${esc(T(lang, l.title))}</h3>
         <p>${t(l.body)}</p>
-        <p class="ub-live"${live ? '' : ' hidden'}><span class="ub-live-tag">${esc(T(lang, U.onThisBill))}</span>
-          <span class="ub-live-text">${esc(live || '')}</span></p>
+        <div class="ub-live"${live ? '' : ' hidden'}><span class="ub-live-tag">${esc(T(lang, U.onThisBill))}</span>
+          <div class="ub-live-body">${liveHtml(live)}</div></div>
         <p class="ub-live is-absent"${live ? ' hidden' : ''}>${esc(T(lang, U.notOnThisBill))}</p>
       </article>`;
   }).join('\n      ');
@@ -3582,8 +3582,13 @@ function understandBillPage(lang = 'en') {
         <span>${t(U.illustrativeBody)}</span>
       </p>
 
-      <div class="bill-doc" id="billDoc" aria-live="polite">${billMarkup}
-      </div>
+      <!-- The gutter that the numbered markers hang in lives on .bill-figure, outside the
+           document's own border — the same arrangement as the meter diagram on
+           /smart-meter/, where the callouts sit beside the device rather than on it. -->
+      <figure class="bill-figure">
+        <div class="bill-doc" id="billDoc" aria-live="polite">${billMarkup}
+        </div>
+      </figure>
       <p class="seo-note" id="ubError" hidden></p>
     </section>
 ${section('who', 'header')}

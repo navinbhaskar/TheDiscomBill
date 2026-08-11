@@ -6550,22 +6550,27 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
    rather than left lying. The diagram and legend carry the page on their own. */
 html:not(.js) .meter-hint, html:not(.js) .m-hint-tag, html:not(.js) .m-btn-pulse,
 html:not(.js) .m-btn-ring { display: none; }
+/* ── /understand-your-bill/ ────────────────────────────────────────────────────
+   The annotated bill. Three rules drive everything below:
 
-/* â”€â”€ /understand-your-bill/ â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-   The annotated bill. Two design rules drive everything below:
+   1. It reads as a DOCUMENT, not as another card in the page. A bill is paper, so this gets
+      a paper face, hairline rules and tabular figures — enough that the reader recognises
+      the object before reading a word of it.
+   2. The markers hang OUTSIDE the document, in a gutter, joined by leader lines — the same
+      arrangement as the meter diagram on /smart-meter/, where the callouts sit beside the
+      device rather than on it. Nothing is written on the bill that a real bill would not
+      have printed.
+   3. It never claims to be real. The "Sample" stamp and the illustrative banner are
+      load-bearing, not decoration.
 
-   1. It must read as a DOCUMENT, not as another card in the page. A bill is paper, so this
-      gets a paper face, hairline rules, tabular figures and a corner stamp â€” enough that the
-      reader recognises the object before reading a word of it.
-   2. It must never claim to be a real bill. The "Sample" stamp and the illustrative banner
-      are load-bearing, not decoration; they are why a schematic layout is honest.
-
-   No backdrop-filter anywhere here â€” this is body content, not chrome. */
+   The whole document is one narrow column of rows, which is what makes rule 2 possible with
+   pure CSS: every marked row is a grid row, so the marker can be pulled into the gutter with
+   a negative offset and it stays aligned when the row's text wraps. No measuring, no JS. */
 
 .ub-controls {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 14px 18px; align-items: end;
-  padding: 18px; margin: 20px 0 12px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px 16px; align-items: end;
+  padding: 16px; margin: 20px 0 12px;
   background: var(--surface-sunken); border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
 }
@@ -6573,7 +6578,7 @@ html:not(.js) .m-btn-ring { display: none; }
 .ub-field-wide { grid-column: span 2; }
 .ub-field > label { font-size: 12.5px; font-weight: 600; color: var(--text-secondary); }
 .ub-field select, .ub-field input[type="number"] {
-  width: 100%; padding: 9px 11px; font: inherit; font-size: 14px;
+  width: 100%; padding: 8px 10px; font: inherit; font-size: 14px;
   color: var(--text-primary); background: var(--surface-card);
   border: 1px solid var(--border-default); border-radius: var(--radius);
 }
@@ -6588,17 +6593,17 @@ html:not(.js) .m-btn-ring { display: none; }
 .ub-hint { font-size: 12px; color: var(--text-tertiary); padding-left: 25px; }
 .ub-reset {
   align-self: end; justify-self: start;
-  padding: 9px 16px; font-size: 13px; font-weight: 600;
+  padding: 8px 15px; font-size: 13px; font-weight: 600;
   color: var(--text-secondary); background: none;
   border: 1px solid var(--border-default); border-radius: var(--radius); cursor: pointer;
 }
 .ub-reset:hover { color: var(--text-brand); border-color: var(--brand-border); background: var(--brand-faint); }
-.ub-note { font-size: 13px; color: var(--text-secondary); margin: 0 0 18px; }
+.ub-note { font-size: 13px; color: var(--text-secondary); margin: 0 0 16px; }
 
 .ub-illustrative {
-  display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap;
-  padding: 12px 14px; margin: 0 0 14px;
-  font-size: 13px; line-height: 1.55; color: var(--text-secondary);
+  display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap;
+  padding: 10px 12px; margin: 0 0 18px;
+  font-size: 12.5px; line-height: 1.55; color: var(--text-secondary);
   background: var(--warn-bg); border-radius: var(--radius);
 }
 .ub-illustrative-tag {
@@ -6609,138 +6614,182 @@ html:not(.js) .m-btn-ring { display: none; }
   color: var(--warn-text); background: var(--surface-card);
 }
 
-/* The bill itself */
+/* ── the document ─────────────────────────────────────────────────────────── */
+/* --gut is the distance from a row's left edge out to the marker: the document's own
+   horizontal padding plus the gutter. Both the offset and the leader line are derived from
+   it, so changing the padding at a breakpoint moves everything together. */
+.bill-figure {
+  --bill-pad: 16px;
+  --gut: calc(var(--bill-pad) + 30px);
+  margin: 0 0 8px; padding-left: var(--gut);
+}
 .bill-doc {
-  position: relative; overflow: hidden;
+  max-width: 420px;
   background: var(--surface-card); border: 1px solid var(--border-default);
   border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
+  /* visible, not hidden: the markers deliberately escape the box. */
+  overflow: visible;
 }
 .bill-doc-head {
-  display: flex; align-items: center; justify-content: space-between; gap: 14px;
-  padding: 16px 20px; border-bottom: 2px solid var(--brand);
-  background: var(--brand-faint);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px var(--bill-pad); border-bottom: 2px solid var(--brand);
+  background: var(--brand-faint); border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
-.bill-doc-title { display: block; font-size: 15px; line-height: 1.3; color: var(--text-brand-dark); }
-.bill-doc-sub { display: block; margin-top: 3px; font-size: 12px; color: var(--text-secondary); }
+.bill-doc-id { min-width: 0; }
+.bill-doc-title {
+  display: block; font-size: 13px; line-height: 1.3; color: var(--text-brand-dark);
+  overflow-wrap: anywhere;
+}
+.bill-doc-sub { display: block; margin-top: 2px; font-size: 11px; color: var(--text-secondary); }
 .bill-doc-stamp {
-  flex: none; padding: 5px 12px; border: 2px solid var(--text-tertiary); border-radius: var(--radius-sm);
-  font-size: 11.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--text-tertiary); transform: rotate(-4deg); opacity: .75;
+  flex: none; padding: 3px 9px; border: 2px solid var(--text-tertiary); border-radius: var(--radius-sm);
+  font-size: 10px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--text-tertiary); transform: rotate(-4deg); opacity: .7;
 }
-.bill-grid { display: grid; grid-template-columns: 1fr 1fr; }
-.bill-grid > .bill-block + .bill-block { border-left: 1px solid var(--border-subtle); }
-.bill-block { padding: 16px 20px; border-top: 1px solid var(--border-subtle); }
-.bill-grid > .bill-block { border-top: 0; }
+.bill-dates {
+  display: flex; flex-wrap: wrap; gap: 4px 14px;
+  padding: 8px var(--bill-pad); font-size: 11px; color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.bill-dates b { font-weight: 700; color: var(--text-tertiary); }
+
+.bill-block { padding: 12px var(--bill-pad); border-top: 1px solid var(--border-subtle); }
+.bill-block:first-of-type { border-top: 0; }
 .bill-block h4 {
-  margin: 0 0 10px; font-size: 11px; font-weight: 700; letter-spacing: .7px;
+  margin: 0 0 8px; font-size: 10px; font-weight: 700; letter-spacing: .7px;
   text-transform: uppercase; color: var(--text-tertiary);
 }
 
-.bill-fields { margin: 0; display: grid; gap: 7px; }
-.bill-field { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: baseline; }
-.bill-field dt { font-size: 12.5px; color: var(--text-secondary); }
-.bill-field dd {
-  margin: 0; font-size: 13px; font-weight: 600; color: var(--text-primary);
-  text-align: right; overflow-wrap: anywhere;
+.bill-rows { display: grid; }
+.bill-row {
+  position: relative;                 /* the marker's positioning context */
+  display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: baseline;
+  padding: 5px 0; font-size: 12.5px;
 }
-
-.bill-scroll { overflow-x: auto; }
-.bill-reading, .bill-slabs, .bill-lines { width: 100%; border-collapse: collapse; }
-.bill-reading th, .bill-slabs th {
-  padding: 6px 10px 6px 0; text-align: left; white-space: nowrap;
-  font-size: 11px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase;
-  color: var(--text-tertiary); border-bottom: 1px solid var(--border-subtle);
+.bill-row + .bill-row { border-top: 1px solid var(--border-subtle); }
+.bill-row-k { color: var(--text-secondary); }
+.bill-row-v {
+  font-weight: 600; color: var(--text-primary); text-align: right;
+  font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; overflow-wrap: anywhere;
 }
-.bill-reading td, .bill-slabs td {
-  padding: 8px 10px 8px 0; font-size: 13px; color: var(--text-primary); white-space: nowrap;
-}
-.bill-slabs tbody tr + tr td { border-top: 1px solid var(--border-subtle); }
-.bill-reading .num, .bill-slabs .num, .bill-lines .num {
-  font-variant-numeric: tabular-nums; font-feature-settings: "tnum";
-}
-.bill-reading th:not(:first-child), .bill-slabs th:not(:first-child) { text-align: right; }
-.bill-reading td.num, .bill-slabs td.num { text-align: right; }
-.bill-reading td:first-child, .bill-slabs td:first-child { text-align: left; }
-
-.bill-lines tr th {
-  padding: 9px 0; text-align: left; font-size: 13.5px; font-weight: 500;
-  color: var(--text-primary);
-}
-.bill-lines tr td { padding: 9px 0; text-align: right; font-size: 13.5px; font-weight: 600; }
-.bill-lines tr + tr th, .bill-lines tr + tr td { border-top: 1px solid var(--border-subtle); }
-.bill-lines .is-credit th, .bill-lines .is-credit td { color: var(--ok-text); }
-.bill-lines .is-grand th, .bill-lines .is-grand td {
-  padding-top: 12px; font-size: 16px; font-weight: 800; color: var(--text-brand-dark);
-  border-top: 2px solid var(--brand);
-}
+.bill-block-charges .bill-row-k, .bill-block-total .bill-row-k { color: var(--text-primary); }
 .bill-block-total { background: var(--surface-sunken); }
+.bill-row.is-credit .bill-row-k, .bill-row.is-credit .bill-row-v { color: var(--ok-text); }
+.bill-row.is-grand {
+  margin-top: 4px; padding-top: 9px; border-top: 2px solid var(--brand);
+}
+.bill-row.is-grand .bill-row-k, .bill-row.is-grand .bill-row-v {
+  font-size: 15px; font-weight: 800; color: var(--text-brand-dark);
+}
 
-/* The numbered markers. A link, not a button: it targets an explanation further down the
-   page, so it should behave like every other in-page anchor â€” including middle-click. */
+/* The markers, hanging in the gutter. A link, not a button: it targets an explanation
+   further down the page, so it behaves like every other in-page anchor, middle-click
+   included. The leader line is drawn from the marker across to the document edge. */
 .bill-mark {
+  position: absolute; left: calc(-1 * var(--gut)); top: 50%;
   display: inline-flex; align-items: center; justify-content: center;
-  width: 18px; height: 18px; margin-left: 6px; vertical-align: 2px;
+  width: 19px; height: 19px; margin-top: -9.5px;
   font-size: 10.5px; font-weight: 800; line-height: 1;
   color: #fff; background: var(--brand); border-radius: var(--radius-full);
   text-decoration: none; transition: transform var(--t-fast), background var(--t-fast);
 }
+.bill-mark::after {
+  content: ""; position: absolute; left: 100%; top: 50%;
+  width: calc(var(--gut) - 19px); height: 1px;
+  background: var(--brand-border);
+}
 .bill-mark:hover, .bill-mark:focus-visible { background: var(--brand-hover); transform: scale(1.15); }
-.bill-field.is-lit { background: var(--brand-faint); }
-.bill-lines tr.is-lit th, .bill-lines tr.is-lit td { background: var(--brand-faint); }
-.bill-reading td.is-lit { background: var(--brand-faint); }
+.bill-row.is-lit { background: var(--brand-faint); box-shadow: 0 0 0 4px var(--brand-faint); border-radius: var(--radius-xs); }
+.bill-row.is-lit .bill-mark::after { background: var(--brand); }
+
+.bill-block-slabs { background: var(--surface-sunken); }
+.bill-scroll { overflow-x: auto; }
+.bill-slabs { width: 100%; border-collapse: collapse; }
+.bill-slabs th {
+  padding: 4px 8px 4px 0; text-align: right; white-space: nowrap;
+  font-size: 10px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase;
+  color: var(--text-tertiary); border-bottom: 1px solid var(--border-subtle);
+}
+.bill-slabs td {
+  padding: 6px 8px 6px 0; font-size: 12px; color: var(--text-primary); white-space: nowrap;
+  text-align: right; font-variant-numeric: tabular-nums; font-feature-settings: "tnum";
+}
+.bill-slabs th:first-child, .bill-slabs td:first-child { text-align: left; }
+.bill-slabs th:last-child, .bill-slabs td:last-child { padding-right: 0; }
+.bill-slabs tbody tr + tr td { border-top: 1px solid var(--border-subtle); }
 
 .bill-source {
-  margin: 0; padding: 12px 20px; border-top: 1px solid var(--border-subtle);
-  font-size: 12px; color: var(--text-tertiary); background: var(--surface-sunken);
+  margin: 0; padding: 9px var(--bill-pad); border-top: 1px solid var(--border-subtle);
+  font-size: 11px; line-height: 1.5; color: var(--text-tertiary);
+  background: var(--surface-sunken); border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
 .bill-badge {
-  display: inline-block; padding: 2px 8px; border-radius: var(--radius-full);
-  font-size: 11px; font-weight: 600; color: var(--text-secondary); background: var(--surface-overlay);
+  display: inline-block; padding: 1px 7px; border-radius: var(--radius-full);
+  font-size: 10.5px; font-weight: 600; color: var(--text-secondary); background: var(--surface-overlay);
 }
 .bill-badge.is-ok { color: var(--ok-text); background: var(--ok-bg); }
 
-/* Explanations */
+/* ── explanations ─────────────────────────────────────────────────────────── */
 .ub-explain {
   padding: 16px 0; border-top: 1px solid var(--border-subtle); scroll-margin-top: 90px;
 }
-.ub-explain h3 {
-  display: flex; align-items: center; gap: 10px;
-  margin: 0 0 8px; font-size: 17px;
-}
+.ub-explain h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 8px; font-size: 17px; }
 .ub-num {
   flex: none; display: inline-flex; align-items: center; justify-content: center;
   width: 22px; height: 22px; font-size: 12px; font-weight: 800;
   color: #fff; background: var(--brand); border-radius: var(--radius-full);
 }
-/* A line that is not on the bill currently shown is still real content â€” it is what someone
+/* A line that is not on the bill currently shown is still real content — it is what someone
    searching "what is FPPA" arrives for. It is dimmed, never hidden. */
 .ub-explain[data-absent] { opacity: .72; }
 .ub-live {
   margin: 10px 0 0; padding: 10px 12px;
-  font-size: 13.5px; line-height: 1.6; color: var(--text-primary);
   background: var(--brand-faint); border-left: 3px solid var(--brand);
   border-radius: 0 var(--radius) var(--radius) 0;
 }
 .ub-live-tag {
-  display: block; margin-bottom: 3px;
+  display: block; margin-bottom: 5px;
   font-size: 10.5px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
   color: var(--text-brand);
 }
 .ub-live.is-absent {
+  font-size: 13.5px; line-height: 1.6;
   color: var(--text-tertiary); background: var(--surface-sunken); border-left-color: var(--border-strong);
 }
+.ub-live-note {
+  margin: 8px 0 0; font-size: 13px; line-height: 1.6; color: var(--text-secondary);
+}
 
-@media (max-width: 700px) {
-  /* A bill is a wide, dense document and most readers are on a phone. The two header blocks
-     stack and the charge tables stay two-column (label / amount), which is the one shape that
-     survives a narrow screen intact. Only the reading and slab ladders scroll. */
-  .bill-grid { grid-template-columns: 1fr; }
-  .bill-grid > .bill-block + .bill-block { border-left: 0; border-top: 1px solid var(--border-subtle); }
-  .bill-block { padding: 14px 15px; }
-  .bill-doc-head { padding: 13px 15px; }
-  .bill-source { padding: 11px 15px; }
+/* The formula, the working and the answer. Tabular figures and a monospace-ish rhythm, so
+   the substituted numbers line up under the rule they came from. */
+.ub-calc { display: grid; gap: 4px; }
+.ub-calc-formula {
+  font-size: 12.5px; font-weight: 700; color: var(--text-brand-dark);
+  padding-bottom: 5px; border-bottom: 1px dashed var(--brand-border);
+}
+.ub-calc-work { display: grid; gap: 2px; padding-top: 3px; }
+.ub-calc-step {
+  font-size: 13px; color: var(--text-primary);
+  font-variant-numeric: tabular-nums; font-feature-settings: "tnum";
+}
+.ub-calc-result {
+  display: flex; align-items: baseline; gap: 7px; padding-top: 3px;
+  font-size: 15px; font-weight: 800; color: var(--text-brand-dark);
+  font-variant-numeric: tabular-nums; font-feature-settings: "tnum";
+}
+.ub-calc-eq { font-weight: 500; color: var(--text-tertiary); }
+
+@media (max-width: 620px) {
+  /* Below this the gutter costs more width than the callouts are worth, so the markers come
+     back inside and sit against their row label. The leader line retires with them — it has
+     nothing left to span. */
+  .bill-figure { --bill-pad: 13px; padding-left: 0; }
+  .bill-doc { max-width: none; }
+  .bill-mark { position: static; margin: 0 0 0 6px; vertical-align: 1px; }
+  .bill-mark::after { display: none; }
+  .bill-row { grid-template-columns: 1fr auto; }
+  .bill-row.is-lit { box-shadow: none; }
   .ub-field-wide { grid-column: 1 / -1; }
-  .bill-lines tr th { font-size: 13px; }
   .bill-doc-stamp { display: none; }
 }
 
@@ -6748,4 +6797,3 @@ html:not(.js) .m-btn-ring { display: none; }
   .bill-mark { transition: none; }
   .bill-mark:hover, .bill-mark:focus-visible { transform: none; }
 }
-

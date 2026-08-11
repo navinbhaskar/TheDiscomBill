@@ -8,7 +8,7 @@
 // The tariff registry loads state tables on demand, which is why render() is async and why
 // the scenario's state is fetched before the engine is asked for a bill.
 
-import { SCENARIOS, DEFAULT_SCENARIO, billInput, readout, billHtml } from '/js/bill-anatomy.js';
+import { SCENARIOS, DEFAULT_SCENARIO, billInput, readout, billHtml, liveHtml } from '/js/bill-anatomy.js';
 
 const NOT_ON_BILL = 'Not charged on the bill shown — pick another DISCOM or category above and it appears.';
 
@@ -92,11 +92,14 @@ export async function initUnderstandBill() {
         numEl.textContent = n || '';
         numEl.hidden = !n;
       }
-      const live = el.dataset.live ? r.live[el.dataset.live] : '';
+      const live = el.dataset.live ? r.live[el.dataset.live] : null;
       const liveEl = el.querySelector('.ub-live:not(.is-absent)');
       const absentEl = el.querySelector('.ub-live.is-absent');
       if (liveEl) {
-        liveEl.querySelector('.ub-live-text').textContent = live || '';
+        // liveHtml() is the same function the build called, and every value inside it is a
+        // formatted number or a string this module owns — nothing from the page or the URL
+        // reaches it, so there is no untrusted input to escape beyond what it already does.
+        liveEl.querySelector('.ub-live-body').innerHTML = liveHtml(live);
         liveEl.hidden = !live;
       }
       if (absentEl) {

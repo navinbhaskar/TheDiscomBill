@@ -203,36 +203,37 @@
         <span>This is not a real bill and not a copy of any DISCOM's stationery. Bills differ in layout, field names and ordering from one utility to the next; what is common between them is the set of charges shown here. The consumer number, meter number and address are invented.</span>
       </p>
 
-      <div class="bill-doc" id="billDoc" aria-live="polite">
-      <div class="bill-doc-head">
-        <div>
-          <strong class="bill-doc-title">Madhyanchal Vidyut Vitaran Nigam Ltd.</strong>
-          <span class="bill-doc-sub">Electricity bill · this is an illustration, not a real bill</span>
+      <!-- The gutter that the numbered markers hang in lives on .bill-figure, outside the
+           document's own border — the same arrangement as the meter diagram on
+           /smart-meter/, where the callouts sit beside the device rather than on it. -->
+      <figure class="bill-figure">
+        <div class="bill-doc" id="billDoc" aria-live="polite">
+        <div class="bill-doc-head">
+          <div class="bill-doc-id">
+            <strong class="bill-doc-title">Madhyanchal Vidyut Vitaran Nigam Ltd.</strong>
+            <span class="bill-doc-sub">Illustration · not a real bill</span>
+          </div>
+          <span class="bill-doc-stamp">Sample</span>
         </div>
-        <span class="bill-doc-stamp">Sample</span>
-      </div>
-      <div class="bill-grid">
-        <section class="bill-block"><h4>Consumer details</h4><dl class="bill-fields"><div class="bill-field" data-line="consumer-no"><dt>Consumer number <a class="bill-mark" href="#explain-consumer-no" id="mark-consumer-no" aria-label="What is Consumer number?">1</a></dt><dd>1234 5678 9012</dd></div><div class="bill-field"><dt>Consumer name</dt><dd>A. Kumar</dd></div><div class="bill-field"><dt>Address</dt><dd>14, MG Road (address is invented)</dd></div><div class="bill-field" data-line="tariff-category"><dt>Tariff category <a class="bill-mark" href="#explain-tariff-category" id="mark-tariff-category" aria-label="What is Tariff category?">2</a></dt><dd>LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW)</dd></div><div class="bill-field" data-line="sanctioned-load"><dt>Sanctioned load <a class="bill-mark" href="#explain-sanctioned-load" id="mark-sanctioned-load" aria-label="What is Sanctioned load?">3</a></dt><dd>2 kW</dd></div><div class="bill-field"><dt>Meter number</dt><dd>MV 4471 2208</dd></div><div class="bill-field"><dt>Connection</dt><dd>Single phase</dd></div></dl></section>
-        <section class="bill-block"><h4>Bill summary</h4><dl class="bill-fields"><div class="bill-field"><dt>Bill date</dt><dd>05-08-2026</dd></div><div class="bill-field"><dt>Due date</dt><dd>20-08-2026</dd></div><div class="bill-field"><dt>Billing period</dt><dd>01-07-2026 to 31-07-2026</dd></div><div class="bill-field"><dt>Bill number</dt><dd>ILLUSTRATIVE / NOT A BILL</dd></div></dl></section>
-      </div>
-      <section class="bill-block">
-        <h4>Meter reading</h4>
-        <div class="bill-scroll"><table class="bill-reading">
-          <thead><tr><th scope="col">Previous</th><th scope="col">Present</th><th scope="col">Multiplying factor</th><th scope="col">Units consumed</th></tr></thead>
-          <tbody><tr><td class="num">14,570</td><td class="num">14,820</td><td class="num">1</td><td data-line="units-consumed" class="num is-marked">250 kWh <a class="bill-mark" href="#explain-units-consumed" id="mark-units-consumed" aria-label="What is Units consumed?">4</a></td></tr></tbody>
-        </table></div>
-      </section>
-      <section class="bill-block">
-        <h4>How the energy charge was built</h4>
-        <div class="bill-scroll"><table class="bill-slabs">
-          <thead><tr><th scope="col">Slab</th><th scope="col">Units</th><th scope="col">Rate</th><th scope="col">Amount</th></tr></thead>
-          <tbody><tr><td>1 – 150 units</td><td class="num">150</td><td class="num">₹5.50</td><td class="num">₹825</td></tr><tr><td>151 – 250 units</td><td class="num">100</td><td class="num">₹6.00</td><td class="num">₹600</td></tr></tbody>
-        </table></div>
-      </section>
-      <section class="bill-block bill-block-charges"><h4>Charges</h4><table class="bill-lines"><tbody><tr data-line="energy-charge"><th scope="row">Energy charge <a class="bill-mark" href="#explain-energy-charge" id="mark-energy-charge" aria-label="What is Energy charge?">5</a></th><td class="num">₹1,425</td></tr><tr data-line="fixed-charge"><th scope="row">Fixed charge <a class="bill-mark" href="#explain-fixed-charge" id="mark-fixed-charge" aria-label="What is Fixed charge?">6</a></th><td class="num">₹220</td></tr><tr data-line="electricity-duty"><th scope="row">Electricity Duty <a class="bill-mark" href="#explain-electricity-duty" id="mark-electricity-duty" aria-label="What is Electricity Duty?">7</a></th><td class="num">₹82.25</td></tr></tbody></table></section>
-      <section class="bill-block bill-block-total"><h4>Amount payable</h4><table class="bill-lines"><tbody><tr data-line="current-bill"><th scope="row">Current bill amount <a class="bill-mark" href="#explain-current-bill" id="mark-current-bill" aria-label="What is Current bill amount?">8</a></th><td class="num">₹1,727</td></tr><tr class="is-grand" data-line="net-payable"><th scope="row">Net payable <a class="bill-mark" href="#explain-net-payable" id="mark-net-payable" aria-label="What is Net payable?">9</a></th><td class="num">₹1,727</td></tr></tbody></table></section>
-      <p class="bill-source">Madhyanchal Vidyut Vitaran Nigam Ltd. · FY 2026-27 (UPERC order dt. 02-Jul-2026, rates retained) <span class="bill-badge is-ok">Verified against the tariff order</span> · <a href="https://www.mvvnl.in" target="_blank" rel="noopener">Source</a></p>
-      </div>
+        <div class="bill-dates">
+          <span><b>Bill date</b> 05-08-2026</span>
+          <span><b>Due date</b> 20-08-2026</span>
+          <span><b>Period</b> 01-07-2026 – 31-07-2026</span>
+        </div>
+        <section class="bill-block"><h4>Account</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="consumer-no"><a class="bill-mark" href="#explain-consumer-no" id="mark-consumer-no" aria-label="What is Consumer number?">1</a><span class="bill-row-k">Consumer number</span><span class="bill-row-v">1234 5678 9012</span></div><div class="bill-row"><span class="bill-row-k">Consumer name</span><span class="bill-row-v">A. Kumar</span></div><div class="bill-row is-marked" data-line="tariff-category"><a class="bill-mark" href="#explain-tariff-category" id="mark-tariff-category" aria-label="What is Tariff category?">2</a><span class="bill-row-k">Tariff category</span><span class="bill-row-v">LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW)</span></div><div class="bill-row is-marked" data-line="sanctioned-load"><a class="bill-mark" href="#explain-sanctioned-load" id="mark-sanctioned-load" aria-label="What is Sanctioned load?">3</a><span class="bill-row-k">Sanctioned load</span><span class="bill-row-v">2 kW</span></div><div class="bill-row"><span class="bill-row-k">Meter number</span><span class="bill-row-v">MV 4471 2208 · Single phase</span></div></div></section>
+        <section class="bill-block bill-block-reading"><h4>Meter reading</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">Previous reading</span><span class="bill-row-v">14,570</span></div><div class="bill-row"><span class="bill-row-k">Present reading</span><span class="bill-row-v">14,820</span></div><div class="bill-row is-marked" data-line="units-consumed"><a class="bill-mark" href="#explain-units-consumed" id="mark-units-consumed" aria-label="What is Units consumed?">4</a><span class="bill-row-k">Units consumed</span><span class="bill-row-v">250 kWh</span></div></div></section>
+        <section class="bill-block bill-block-slabs">
+          <h4>Slab ladder behind the energy charge</h4>
+          <div class="bill-scroll"><table class="bill-slabs">
+            <thead><tr><th scope="col">Slab</th><th scope="col">Units</th><th scope="col">Rate</th><th scope="col">Amount</th></tr></thead>
+            <tbody><tr><td>1 – 150 units</td><td class="num">150</td><td class="num">₹5.50</td><td class="num">₹825</td></tr><tr><td>151 – 250 units</td><td class="num">100</td><td class="num">₹6.00</td><td class="num">₹600</td></tr></tbody>
+          </table></div>
+        </section>
+        <section class="bill-block bill-block-charges"><h4>Charges</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="energy-charge"><a class="bill-mark" href="#explain-energy-charge" id="mark-energy-charge" aria-label="What is Energy charge?">5</a><span class="bill-row-k">Energy charge</span><span class="bill-row-v">₹1,425</span></div><div class="bill-row is-marked" data-line="fixed-charge"><a class="bill-mark" href="#explain-fixed-charge" id="mark-fixed-charge" aria-label="What is Fixed charge?">6</a><span class="bill-row-k">Fixed charge</span><span class="bill-row-v">₹220</span></div><div class="bill-row is-marked" data-line="electricity-duty"><a class="bill-mark" href="#explain-electricity-duty" id="mark-electricity-duty" aria-label="What is Electricity Duty?">7</a><span class="bill-row-k">Electricity Duty</span><span class="bill-row-v">₹82.25</span></div></div></section>
+        <section class="bill-block bill-block-total"><h4>Amount payable</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="current-bill"><a class="bill-mark" href="#explain-current-bill" id="mark-current-bill" aria-label="What is Current bill?">8</a><span class="bill-row-k">Current bill</span><span class="bill-row-v">₹1,727</span></div><div class="bill-row is-marked is-grand" data-line="net-payable"><a class="bill-mark" href="#explain-net-payable" id="mark-net-payable" aria-label="What is Net payable?">9</a><span class="bill-row-k">Net payable</span><span class="bill-row-v">₹1,727</span></div></div></section>
+        <p class="bill-source">FY 2026-27 (UPERC order dt. 02-Jul-2026, rates retained) <span class="bill-badge is-ok">Verified against the order</span> · <a href="https://www.mvvnl.in" target="_blank" rel="noopener">Source</a></p>
+        </div>
+      </figure>
       <p class="seo-note" id="ubError" hidden></p>
     </section>
 
@@ -242,22 +243,22 @@
       <article class="ub-explain" id="explain-consumer-no" data-line="consumer-no" data-live="">
         <h3><span class="ub-num">1</span>Consumer number</h3>
         <p>The account the connection is billed to, not the meter. It survives a meter replacement, and it is the number every portal, payment app and complaint form asks for. Names vary by state — <strong>Account ID</strong>, <strong>K Number</strong>, <strong>CA Number</strong>, <strong>Service Number</strong> — but they are all this field. Copy it exactly, including leading zeroes.</p>
-        <p class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
-          <span class="ub-live-text"></span></p>
+        <div class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"></div></div>
         <p class="ub-live is-absent">Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
       </article>
       <article class="ub-explain" id="explain-tariff-category" data-line="tariff-category" data-live="tariffCategory">
         <h3><span class="ub-num">2</span>Tariff category</h3>
         <p>Which rate schedule your connection is billed under. This one code decides your slab rates, your fixed charge and whether a demand penalty can apply, so it is the single most consequential field on the bill — and the one most often wrong. A home billed under a commercial code pays roughly double. If yours does not match how the premises are actually used, that is a correction worth chasing.</p>
-        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
-          <span class="ub-live-text">LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW). Every rate on this bill follows from that one code.</span></p>
+        <div class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"><p class="ub-live-note">This bill is on LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW). Every rate below — the slabs, the fixed charge, whether a demand penalty can apply at all — follows from that one code and nothing else.</p></div></div>
         <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
       </article>
       <article class="ub-explain" id="explain-sanctioned-load" data-line="sanctioned-load" data-live="sanctionedLoad">
         <h3><span class="ub-num">3</span>Sanctioned load</h3>
         <p>The capacity the DISCOM has contracted to supply you, in kW — not what you used. On a domestic bill it usually sets the fixed charge directly. Raising it costs a one-time fee and a higher monthly fixed charge; leaving it too low risks a penalty if your recorded demand overshoots it. It is a genuine trade-off, not a number to minimise.</p>
-        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
-          <span class="ub-live-text">2 kW, which is what the ₹220 fixed charge below is levied on — ₹110.00 per kW a month.</span></p>
+        <div class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">Fixed charge = rate per kW × sanctioned load</div><div class="ub-calc-work"><span class="ub-calc-step">₹110.00 × 2 kW</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹220</div></div><p class="ub-live-note">The sanctioned load is the only thing this charge depends on. Set the units to zero above and it is all that remains on the bill.</p></div></div>
         <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
       </article>
     </section>
@@ -268,8 +269,8 @@
       <article class="ub-explain" id="explain-units-consumed" data-line="units-consumed" data-live="unitsConsumed">
         <h3><span class="ub-num">4</span>Units consumed</h3>
         <p>Present reading minus previous reading, multiplied by the meter constant (the multiplying factor, almost always 1 on a domestic connection). One unit is one kilowatt-hour. If the bill is marked <strong>Average</strong>, <strong>Provisional</strong> or <strong>RNT</strong>, nobody read the meter — the figure is an estimate and will be trued up later, so check it against the meter yourself.</p>
-        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
-          <span class="ub-live-text">250 units over 30 days — about 8.3 units a day. 14,820 − 14,570 = 250, times a meter constant of 1.</span></p>
+        <div class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">Units = (Present reading − Previous reading) × Meter constant</div><div class="ub-calc-work"><span class="ub-calc-step">(14,820 − 14,570) × 1</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>250 kWh</div></div><p class="ub-live-note">About 8.3 units a day over 30 days. The meter constant is 1 on almost every domestic connection; where it is not, it is printed on the meter and multiplies the difference.</p></div></div>
         <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
       </article>
     </section>
@@ -280,50 +281,50 @@
       <article class="ub-explain" id="explain-energy-charge" data-line="energy-charge" data-live="energyCharge">
         <h3><span class="ub-num">5</span>Energy charge</h3>
         <p>What the units themselves cost. Almost every Indian domestic tariff is <em>telescopic</em>: the slabs stack rather than replace each other, so crossing into a higher slab raises the price of the extra units only, never of the units below. Your bill prints one total; the table above shows the ladder it came from.</p>
-        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
-          <span class="ub-live-text">₹1,425 for 250 units, across 2 slabs. The last unit cost ₹6.00, but the average across the whole bill is ₹5.70 — that gap is the telescopic ladder at work.</span></p>
+        <div class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">Energy charge = Σ (units falling in each slab × that slab’s rate)</div><div class="ub-calc-work"><span class="ub-calc-step">150 × ₹5.50 = ₹825</span><span class="ub-calc-step">100 × ₹6.00 = ₹600</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,425</div></div><p class="ub-live-note">The slabs STACK — crossing into a higher one raises the price of the extra units only. The last unit cost ₹6.00, but the average across the bill is ₹1,425 ÷ 250 = ₹5.70 a unit.</p></div></div>
         <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
       </article>
       <article class="ub-explain" id="explain-fixed-charge" data-line="fixed-charge" data-live="fixedCharge">
         <h3><span class="ub-num">6</span>Fixed charge</h3>
         <p>Payable whether you use a single unit or none. It funds the wires, the meter and the crew, and it is why a locked, empty house still gets a bill. On a domestic connection it is levied per kW of <em>sanctioned load</em>; on a commercial or industrial one it is levied on the <em>recorded maximum demand</em>, which is why the same rate produces very different amounts on the two bills.</p>
-        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
-          <span class="ub-live-text">₹220 — ₹110.00 per kW on 2 kW of sanctioned load. Set the units to zero above and this line is all that remains.</span></p>
+        <div class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">Fixed charge = rate per kW × sanctioned load</div><div class="ub-calc-work"><span class="ub-calc-step">₹110.00 × 2 kW</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹220</div></div><p class="ub-live-note">Consumption does not enter this formula anywhere. That is why a locked, empty house still receives a bill.</p></div></div>
         <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
       </article>
       <article class="ub-explain" id="explain-excess-demand" data-line="excess-demand" data-live="excessDemand" data-absent>
         <h3><span class="ub-num" hidden></span>Excess demand penalty</h3>
         <p>Charged when the maximum demand the meter recorded during the month exceeded your sanctioned load. The meter logs the highest half-hour average, so a few minutes of everything running at once is enough to trigger it — and it recurs every month you overshoot. Two fixes: stagger the heavy loads, or apply to raise the sanctioned load. Which one is cheaper depends on how far over you are running.</p>
-        <p class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
-          <span class="ub-live-text"></span></p>
+        <div class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"></div></div>
         <p class="ub-live is-absent">Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
       </article>
       <article class="ub-explain" id="explain-fppa" data-line="fppa" data-live="fppa" data-absent>
         <h3><span class="ub-num" hidden></span>Fuel surcharge (FPPA / FCA)</h3>
         <p>The one line that changes month to month for reasons nothing to do with you. When the DISCOM's actual cost of buying power differs from what the regulator assumed when it set your tariff, the gap is passed through here. Some states publish it as paise per unit, others as a percentage of the energy charge. It is legitimate, it is capped, and the notified rate is public — a bill that shows this line without a rate is worth questioning.</p>
-        <p class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
-          <span class="ub-live-text"></span></p>
+        <div class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"></div></div>
         <p class="ub-live is-absent">Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
       </article>
       <article class="ub-explain" id="explain-wheeling" data-line="wheeling" data-live="wheeling" data-absent>
         <h3><span class="ub-num" hidden></span>Wheeling charge</h3>
         <p>The cost of moving the electricity across the distribution network to your premises, unbundled from the cost of the electricity itself. States that separate the two — Maharashtra most visibly — print it as its own line. States that do not have folded the same cost into the energy rate. You are not paying it twice.</p>
-        <p class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
-          <span class="ub-live-text"></span></p>
+        <div class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"></div></div>
         <p class="ub-live is-absent">Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
       </article>
       <article class="ub-explain" id="explain-electricity-duty" data-line="electricity-duty" data-live="electricityDuty">
         <h3><span class="ub-num">7</span>Electricity duty</h3>
         <p>A state tax, collected by the DISCOM on the government's behalf. Whether it lands on the energy charge alone or on the whole bill is a state-by-state decision, and it is the reason two bills with identical consumption can differ by a few hundred rupees across a state border. There is no GST on domestic electricity supply — if you see one, look again.</p>
-        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
-          <span class="ub-live-text">₹82.25 at 5% on the whole bill, fixed charge included. Switch DISCOM above and the base changes with it — that is a state-by-state decision, not a rate difference.</span></p>
+        <div class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">Duty = (energy + fixed + penalties + wheeling + FPPA) × duty rate %</div><div class="ub-calc-work"><span class="ub-calc-step">Base = ₹1,645</span><span class="ub-calc-step">₹1,645 × 5%</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹82.25</div></div><p class="ub-live-note">Here the duty sits on the WHOLE bill, fixed charge included. Which base a state uses is a state-by-state decision, and it is why two identical households across a border pay different totals.</p></div></div>
         <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
       </article>
       <article class="ub-explain" id="explain-subsidy" data-line="subsidy" data-live="subsidy" data-absent>
         <h3><span class="ub-num" hidden></span>Subsidy</h3>
         <p>A state government rebate, shown as a deduction. The DISCOM bills the full tariff and the state reimburses it, which is why the gross figure stays high and the credit appears separately. Most schemes are conditional — on consumption staying under a cap, on the category, sometimes on a registration you have to renew.</p>
-        <p class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
-          <span class="ub-live-text"></span></p>
+        <div class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"></div></div>
         <p class="ub-live is-absent">Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
       </article>
     </section>
@@ -334,29 +335,29 @@
       <article class="ub-explain" id="explain-current-bill" data-line="current-bill" data-live="currentBill">
         <h3><span class="ub-num">8</span>Current bill amount</h3>
         <p>Everything above, for this month alone. This is the figure to compare against last month — not the net payable at the bottom, which mixes in old dues and would tell you the wrong story about your consumption.</p>
-        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
-          <span class="ub-live-text">₹1,727 for this month alone. Across 250 units that works out to ₹6.91 all-in per unit — the number worth comparing month to month, and always above the slab rate.</span></p>
+        <div class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">Current bill = energy charge + fixed charge + electricity duty</div><div class="ub-calc-work"><span class="ub-calc-step">₹1,425 + ₹220 + ₹82.25</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,727</div></div><p class="ub-live-note">Across 250 units that is ₹1,727 ÷ 250 = ₹6.91 all-in per unit — always above the slab rate, and the figure worth comparing month to month.</p></div></div>
         <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
       </article>
       <article class="ub-explain" id="explain-arrears" data-line="arrears" data-live="arrears" data-absent>
         <h3><span class="ub-num" hidden></span>Arrears</h3>
         <p>Unpaid amounts carried forward. An arrear that appears on a bill you believe you paid is usually a payment posted after the bill was generated — check the payment date against the bill date before raising it. A stubborn one that survives two cycles is worth a written complaint with the transaction reference.</p>
-        <p class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
-          <span class="ub-live-text"></span></p>
+        <div class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"></div></div>
         <p class="ub-live is-absent">Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
       </article>
       <article class="ub-explain" id="explain-lpsc" data-line="lpsc" data-live="lpsc" data-absent>
         <h3><span class="ub-num" hidden></span>Late payment surcharge (LPSC)</h3>
         <p>Interest on what you did not pay by the due date, typically 1.25–2% a month, compounding on the arrear. It is the most avoidable line on any bill: paying on the due date removes it entirely. If a disputed amount is sitting in arrears, LPSC keeps accruing on it while the dispute is open, so raise disputes early.</p>
-        <p class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
-          <span class="ub-live-text"></span></p>
+        <div class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"></div></div>
         <p class="ub-live is-absent">Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
       </article>
       <article class="ub-explain" id="explain-net-payable" data-line="net-payable" data-live="netPayable">
         <h3><span class="ub-num">9</span>Net payable</h3>
         <p>Current bill, plus arrears and surcharge, minus payments already credited. This is what you owe. Pay the full amount — a part payment does not stop the surcharge on the remainder, and on a prepaid or disconnection-notice account it does not stop the clock either.</p>
-        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
-          <span class="ub-live-text">₹1,727. Nothing is carried forward on this bill, so it equals the current bill amount above.</span></p>
+        <div class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">Net payable = current bill + arrears + surcharge − payments already credited</div><div class="ub-calc-work"><span class="ub-calc-step">₹1,727 current bill</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,727</div></div><p class="ub-live-note">Nothing is carried forward on this bill, so it equals the current bill above.</p></div></div>
         <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
       </article>
     </section>
