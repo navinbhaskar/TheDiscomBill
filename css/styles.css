@@ -4456,8 +4456,12 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
    the taller block. Every other entry is untouched. */
 .tool-label { display: grid; gap: 1px; min-width: 0; }
 .tool-label small {
-  font-size: 11.5px; line-height: 1.35; color: var(--text-tertiary);
+  font-size: 10.5px; line-height: 1.3; color: var(--text-tertiary);
 }
+/* Brackets from CSS rather than from the strings: they are punctuation around the phrase, not
+   part of it, and this way they cannot be lost or doubled in any of the four translations. */
+.tool-label small::before { content: "("; }
+.tool-label small::after  { content: ")"; }
 .tools-group a:hover .tool-label small, .tools-group a:focus-visible .tool-label small {
   color: var(--text-secondary);
 }
