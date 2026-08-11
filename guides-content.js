@@ -2610,19 +2610,24 @@ export const GUIDES = [
     states: ['Uttar Pradesh'],
     title: 'Why Did My Sanctioned Load Suddenly Increase? (UPPCL / UP)',
     metaTitle: 'UPPCL Increased Your Sanctioned Load in 2026? Why — and How to Reduce It',
-    description: 'Your smart meter records Maximum Demand, and the UP Supply Code lets UPPCL raise your sanctioned load to match it — raising the fixed charge you pay every single month. How to spot the revision on your bill, what it costs per kW, and the load-reduction application step by step.',
-    minutes: 5,
+    description: 'UPPCL revised 46.68 lakh consumers at once. What clause 6.9(B)(v) of the UP Supply Code actually requires, why 1 kW to 2 kW costs ₹5,616 a year for the same electricity, how much extra security deposit to expect, and how to contest it.',
+    // Nine sections and two figure tables now, and the security-deposit section is linked from
+    // the cost table above it — those cross-links need the section ids the index stamps on.
+    toc: true,
+    minutes: 8,
     toolCta: {
       href: '/sanctioned-load-optimizer/',
       title: { en: 'Check the sanctioned load you actually need', hi: 'वह स्वीकृत भार जाँचें जिसकी आपको वास्तव में ज़रूरत है' },
       sub: { en: 'Compare your load against your recorded demand and see the fixed charge — and yearly saving — at the right kW.', hi: 'अपने भार की तुलना दर्ज मांग से करें और सही kW पर फिक्स्ड चार्ज — और सालाना बचत — देखें।' },
     },
     intro: `If your UPPCL bill suddenly shows a higher sanctioned load — 1 kW became 2 kW, or
-      2 kW became 4 kW — you are not alone, and it is usually not a mistake. Your new
-      <strong>smart meter records Maximum Demand (MD)</strong>, and under the UP Electricity
-      Supply Code the DISCOM can revise your sanctioned load upward to match the demand you
-      actually drew — <em>without</em> you applying for it. This guide explains why it happens,
-      exactly what it costs you every month, and how to get the load reduced if it was a one-off spike.`,
+      2 kW became 4 kW — you are very far from alone: about <strong>46.68 lakh UP consumers</strong>
+      were revised at once in July 2026. Your new <strong>smart meter records Maximum Demand (MD)</strong>,
+      and clause 6.9(B)(v) of the U.P. Electricity Supply Code lets the DISCOM merge excess load into
+      your sanctioned load — but only after three continuous months above your contracted demand, and
+      only after one month's written notice. This guide explains why it happens, what it really costs
+      (at 100 units a month, <strong>₹5,616 a year</strong> for the same electricity), how much extra
+      security deposit to expect, and what to do if the notice never came.`,
     sections: `
       <section class="seo-section">
         <h2>The short answer: your smart meter recorded a higher demand</h2>
@@ -2642,15 +2647,93 @@ export const GUIDES = [
         <div class="comparison-table-wrapper"><table class="comparison-table">
           <thead><tr><th>Effect</th><th>Why it hits your bill</th></tr></thead>
           <tbody>
-            <tr><td><strong>Higher fixed charge — every month</strong></td><td>UP fixed charges are billed <strong>per kW of sanctioned load</strong>, consumption or not. Each extra kW adds the full per-kW fixed charge to every future bill. Current per-kW rates for your DISCOM are on our <a href="/tariffs/uttar-pradesh/">UP tariff pages</a>.</td></tr>
-            <tr><td><strong>Loss of lifeline rates</strong></td><td>UP's lifeline (subsidised) domestic schedule applies only to connections of <strong>up to 1 kW</strong> with low consumption. If your load is revised from 1 kW to 2 kW, you drop out of the lifeline slab even if your usage never changed.</td></tr>
+            <tr><td><strong>Higher fixed charge — every month</strong></td><td>UP fixed charges are billed <strong>per kW of sanctioned load</strong>, consumption or not. Worse, the per-kW rate itself is not constant: urban Life Line (ST-10A) pays <strong>₹50/kW</strong>, urban domestic above 1 kW (ST-10B) pays <strong>₹110/kW</strong>. So 1 kW → 2 kW is not ₹50 → ₹100. It is ₹50 → ₹220.</td></tr>
+            <tr><td><strong>Loss of lifeline rates</strong></td><td>UP's lifeline (subsidised) domestic schedule applies only to connections of <strong>up to 1 kW</strong> with low consumption. Crossing 1 kW moves you to ST-10B entirely, and the first 100 units go from <strong>₹2.75 to ₹5.50 a unit</strong> — double — because the ₹3.75/unit state subsidy goes with it.</td></tr>
             <tr><td><strong>Higher schedule for commercial users</strong></td><td>Commercial (LMV-2) connections crossing <strong>4 kW</strong> move to a costlier rate schedule with a higher per-kW fixed charge and steeper energy slabs.</td></tr>
-            <tr><td><strong>Additional security deposit</strong></td><td>The security deposit is linked to load and consumption, so the DISCOM may raise a one-time additional security demand after an enhancement.</td></tr>
+            <tr><td><strong>Additional security deposit</strong></td><td>A one-off lump on a later bill, separate from the monthly increase. Roughly two months of your new bill, less what you already hold — worked through with figures <a href="#how-much-extra-security-deposit-will-be-demanded">below</a>.</td></tr>
           </tbody>
         </table></div>
-        <p>To see the exact rupee impact for your connection, put your units into the
-        <a href="/?state=Uttar%20Pradesh#calculator">UPPCL bill calculator</a> twice — once with the
+        <p>Those two effects compound, and the result is much larger than "one more kW". Run through
+        our own engine on the FY 2026-27 urban domestic schedule, a 1 kW → 2 kW revision looks like this
+        for a household whose consumption does not change at all:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Units / month</th><th>At 1 kW (ST-10A)</th><th>At 2 kW (ST-10B)</th><th>Extra per year</th></tr></thead>
+          <tbody>
+            <tr><td>80</td><td>₹284</td><td>₹693</td><td><strong>₹4,908</strong></td></tr>
+            <tr><td>100</td><td>₹341</td><td>₹809</td><td><strong>₹5,616</strong></td></tr>
+            <tr><td>150</td><td>₹630</td><td>₹1,097</td><td><strong>₹5,604</strong></td></tr>
+            <tr><td>250</td><td>₹1,208</td><td>₹1,727</td><td><strong>₹6,228</strong></td></tr>
+          </tbody>
+        </table></div>
+        <p class="seo-note">Monthly net bills including 5% electricity duty, FY 2026-27 urban domestic
+        rates, no fuel surcharge, 30-day cycle. Rural schedules differ — the ₹90/kW band applies there.</p>
+        <p>At 100 units a month that is <strong>₹468 more every month, ₹5,616 a year, for exactly the
+        same electricity</strong>. To check the figure against your own connection, put your units into
+        the <a href="/?state=Uttar%20Pradesh#calculator">UPPCL bill calculator</a> twice — once with the
         old load and once with the new — and compare the totals.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>What the Supply Code actually says</h2>
+        <p>This is not discretionary. The rule is <strong>clause 6.9(B)(v) of the U.P. Electricity Supply
+        Code 2005</strong>, in the section headed <em>Billing in case of Excess Load</em>, as substituted
+        by the 5th Amendment. In its own words, if a consumer is found to have exceeded the contracted
+        demand for the continuous previous three months, they are to be served <strong>one month's
+        notice</strong> advising them to get the contracted load enhanced; the licensee then merges the
+        excess load with the sanctioned load and levies additional charges "along with additional
+        security". The full text is in
+        <a href="https://uperc.org/App_File/U-P-ElectricitySupplyCode2005upto12thAmendment-pdf323201825406PM.pdf" target="_blank" rel="noopener nofollow">UPERC's consolidated Supply Code</a>.</p>
+        <p>Two conditions are worth reading twice, because they are the ones a revision can fail:</p>
+        <ul>
+          <li><strong>Three continuous months.</strong> Not one spike, and not the single highest reading
+          of the year. The demand has to have exceeded your contracted load for three months running.</li>
+          <li><strong>One month's written notice.</strong> The notice comes <em>before</em> the enhancement,
+          and it is meant to advise you to apply — not to inform you it has already happened on your bill.</li>
+        </ul>
+        <p>That matters right now. When UPPCL revised the sanctioned load of about <strong>46.68 lakh
+        consumers</strong> — some 3,654 MW in all — on the day the FY 2026-27 tariff order came into effect,
+        it did so, in its own Director (Commercial)'s description, on each consumer's <em>highest recorded
+        monthly demand during the financial year</em>. The Uttar Pradesh Rajya Vidyut Upbhokta Parishad
+        questioned it on exactly the two points above: highest-of-the-year is not three continuous months,
+        and consumers say the one-month notice never arrived. If that describes your bill, the compliance
+        question is a real one and belongs in your complaint.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>How much extra security deposit will be demanded</h2>
+        <p>A load enhancement drags the security deposit up with it, and this is the part that arrives as a
+        one-off lump on a later bill rather than in the monthly figure above. The rule is
+        <strong>clause 4.20</strong> of the same Code:</p>
+        <ul>
+          <li><strong>The deposit covers two months of estimated consumption</strong> — clause 4.20(a). So
+          as a rule of thumb, your required security is roughly <strong>twice your new monthly bill</strong>.</li>
+          <li><strong>Only the difference is payable</strong> — clause 4.20(c): on enhancement, only
+          additional security covering the additional load needs to be deposited. You are not re-depositing
+          from zero.</li>
+          <li><strong>It is based on last year's usage</strong> — clause 4.20(e)(i): the shortfall is worked
+          out against your average monthly consumption for the preceding financial year, not a guess about
+          the future.</li>
+          <li><strong>Under 10% is not demanded</strong> — clause 4.20(e)(iii): a demand is raised only when
+          the additional security payable exceeds <strong>10% of your existing deposit</strong>. Small
+          revisions therefore often produce no demand at all.</li>
+        </ul>
+        <p>On the same 1 kW → 2 kW example, two months of bill is what changes:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Units / month</th><th>Security at 1 kW</th><th>Security at 2 kW</th><th>Likely top-up</th></tr></thead>
+          <tbody>
+            <tr><td>80</td><td>₹568</td><td>₹1,386</td><td><strong>₹818</strong></td></tr>
+            <tr><td>100</td><td>₹682</td><td>₹1,618</td><td><strong>₹936</strong></td></tr>
+            <tr><td>150</td><td>₹1,260</td><td>₹2,194</td><td><strong>₹934</strong></td></tr>
+            <tr><td>250</td><td>₹2,416</td><td>₹3,454</td><td><strong>₹1,038</strong></td></tr>
+          </tbody>
+        </table></div>
+        <p class="seo-note">Two months of the net monthly bill at each load, per clause 4.20(a). Treat this
+        as the size of the thing, not a quotation: the actual demand is the shortfall against the deposit
+        you <em>already</em> hold and your preceding year's average consumption, and it is only raised at
+        all once it clears the 10% threshold.</p>
+        <p>Security deposit is refundable and earns interest — it is not a charge. But it is real money
+        held for the life of the connection, and on a load revision you never asked for it is worth adding
+        to the sum when you decide whether to contest.</p>
       </section>
 
       <section class="seo-section">
@@ -2684,7 +2767,17 @@ export const GUIDES = [
           MD data doesn't match your appliances), file a written complaint at the sub-division and
           escalate to the Consumer Grievance Redressal Forum if unresolved — keep copies of the
           bills showing the MD history.</li>
+          <li><strong>Say so if no notice arrived.</strong> Clause 6.9(B)(v) requires one month's
+          written notice before the load is merged, and requires three <em>continuous</em> months
+          above your contracted demand — not the year's single highest reading. If either is missing,
+          put it in writing rather than only arguing that the load feels too high. It is a procedural
+          point, and procedural points are the ones a forum can act on.</li>
         </ol>
+        <p class="seo-note">Note the asymmetry while you are at it: UPPCL's consumer portal will
+        <a href="/guides/wss-portal/#uppcl-wss-every-service-with-the-direct-link">enhance a load
+        online in a couple of minutes</a> but offers
+        no reduction service at all, so this journey is a sub-division one. Maharashtra's equivalent
+        accepts load change in either direction online.</p>
         <p>Not sure whether your numbers justify a complaint? Upload your bill to our free
         <a href="/bill-review/">expert Bill Review</a> and we'll check the load, MD and fixed-charge
         lines for you.</p>
@@ -2706,13 +2799,15 @@ export const GUIDES = [
       </section>`,
     faqs: [
       { q: 'Can UPPCL increase my sanctioned load without my permission?',
-        a: 'Yes. Under the UP Electricity Supply Code, if the demand recorded by your meter repeatedly exceeds your sanctioned load, the DISCOM can revise the load upward to the recorded demand without an application from you. The revised load appears directly on your bill.' },
+        a: 'Yes, but not without conditions. Clause 6.9(B)(v) of the U.P. Electricity Supply Code 2005 lets the licensee merge excess load into your sanctioned load — however it requires that you exceeded the contracted demand for three continuous months, and that you were served one month’s written notice first. Permission is not needed; the three months and the notice are. A revision based on the single highest reading of the year, or with no notice at all, does not meet the clause.' },
+      { q: 'How much extra security deposit will UPPCL charge after a load increase?',
+        a: 'Clause 4.20(a) sets the security deposit at two months of estimated consumption, and clause 4.20(c) says only the additional amount is payable on an enhancement, not a fresh deposit. In practice that means roughly twice your new monthly bill, minus what you already hold. On a 1 kW to 2 kW revision at 100 units a month the requirement moves from about ₹682 to ₹1,618, a top-up near ₹936. No demand is raised at all unless the additional security exceeds 10% of your existing deposit (clause 4.20(e)(iii)).' },
       { q: 'Why did my load increase after the smart meter was installed?',
         a: 'Old domestic meters only counted units; smart meters also record Maximum Demand (MD). The demand you drew was probably always above your sanctioned load — running an AC and geyser together easily exceeds 2 kW — but it was only measurable, and therefore actionable, after the smart meter arrived.' },
       { q: 'How do I reduce my sanctioned load in UP?',
         a: 'Apply for load reduction at your sub-division office or through UPPCL’s online consumer services. Reduction is normally approved only if your recorded maximum demand over recent billing months stays within the lower load — so stagger heavy appliances for a couple of cycles before applying.' },
       { q: 'Does a higher sanctioned load increase my bill even if my usage is the same?',
-        a: 'Yes. UP fixed charges are billed per kW of sanctioned load every month regardless of consumption, and a load above 1 kW also disqualifies you from the subsidised lifeline slab. Same units, higher bill.' },
+        a: 'Yes, and by more than most people expect. Crossing 1 kW moves an urban UP household from ST-10A to ST-10B: the fixed charge goes from ₹50/kW to ₹110/kW, so 1 kW to 2 kW is ₹50 to ₹220 a month, and the first 100 units go from ₹2.75 to ₹5.50 because the state lifeline subsidy no longer applies. At 100 units a month the net bill moves from about ₹341 to ₹809 — ₹5,616 more a year for identical consumption.' },
       { q: 'What is Maximum Demand (MD) on my electricity bill?',
         a: 'MD is the highest average power (in kW) you drew in any demand-measurement window during the billing period, recorded by the meter and reset each cycle. It reflects how many appliances you ran simultaneously, not how many units you consumed overall.' },
     ],
@@ -2752,7 +2847,51 @@ export const GUIDES = [
         <p>अपने कनेक्शन पर सटीक रुपये का असर देखने के लिए अपनी यूनिटें
         <a href="/?state=Uttar%20Pradesh#calculator">UPPCL बिल कैलकुलेटर</a> में दो बार डालें — एक बार
         पुराने भार से, एक बार नए से — और कुल की तुलना करें।</p>
+      
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>यूनिट/माह</th><th>1 kW (ST-10A)</th><th>2 kW (ST-10B)</th><th>साल में अतिरिक्त</th></tr></thead>
+          <tbody>
+            <tr><td>80</td><td>&#8377;284</td><td>&#8377;693</td><td><strong>&#8377;4,908</strong></td></tr>
+            <tr><td>100</td><td>&#8377;341</td><td>&#8377;809</td><td><strong>&#8377;5,616</strong></td></tr>
+            <tr><td>150</td><td>&#8377;630</td><td>&#8377;1,097</td><td><strong>&#8377;5,604</strong></td></tr>
+            <tr><td>250</td><td>&#8377;1,208</td><td>&#8377;1,727</td><td><strong>&#8377;6,228</strong></td></tr>
+          </tbody>
+        </table></div>
       </section>
+
+      <section class="seo-section" data-toc="सप्लाई कोड">
+        <h2>&#2360;&#2346;&#2381;&#2354;&#2366;&#2312; &#2325;&#2379;&#2337; &#2357;&#2366;&#2360;&#2381;&#2340;&#2357; &#2350;&#2375;&#2306; &#2325;&#2381;&#2351;&#2366; &#2325;&#2361;&#2340;&#2366; &#2361;&#2380;</h2>
+        <p>&#2351;&#2361; &#2337;&#2367;&#2360;&#2381;&#2325;&#2377;&#2350; &#2325;&#2368; &#2350;&#2352;&#2381;&#2332;&#2364;&#2368; &#2325;&#2366; &#2350;&#2366;&#2350;&#2354;&#2366; &#2344;&#2361;&#2368;&#2306; &#2361;&#2376;&#2404; &#2344;&#2367;&#2351;&#2350; <strong>&#2313;&#2340;&#2381;&#2340;&#2352; &#2346;&#2381;&#2352;&#2342;&#2375;&#2358; &#2357;&#2367;&#2342;&#2381;&#2351;&#2369;&#2340; &#2360;&#2346;&#2381;&#2354;&#2366;&#2312; &#2325;&#2379;&#2337; 2005 &#2325;&#2366; &#2326;&#2306;&#2337; 6.9(B)(v)</strong> &#2361;&#2376;, &#2332;&#2379; <em>Billing in case of Excess Load</em> &#2358;&#2368;&#2352;&#2381;&#2359;&#2325; &#2325;&#2375; &#2340;&#2361;&#2340; &#2310;&#2340;&#2366; &#2361;&#2376;&#2404; &#2311;&#2360;&#2325;&#2375; &#2309;&#2344;&#2369;&#2360;&#2366;&#2352;, &#2309;&#2327;&#2352; &#2313;&#2346;&#2349;&#2379;&#2325;&#2381;&#2340;&#2366; &#2354;&#2327;&#2366;&#2340;&#2366;&#2352; <strong>&#2346;&#2367;&#2331;&#2354;&#2375; &#2340;&#2368;&#2344; &#2350;&#2361;&#2368;&#2344;&#2379;&#2306;</strong> &#2309;&#2344;&#2369;&#2348;&#2306;&#2343; &#2350;&#2366;&#2306;&#2327; &#2360;&#2375; &#2314;&#2346;&#2352; &#2352;&#2361;&#2366; &#2361;&#2379;, &#2340;&#2379; &#2313;&#2360;&#2375; <strong>&#2319;&#2325; &#2350;&#2366;&#2361; &#2325;&#2366; &#2344;&#2379;&#2335;&#2367;&#2360;</strong> &#2342;&#2367;&#2351;&#2366; &#2332;&#2366;&#2319;&#2327;&#2366;; &#2313;&#2360;&#2325;&#2375; &#2348;&#2366;&#2342; &#2354;&#2366;&#2311;&#2360;&#2375;&#2306;&#2360;&#2368; &#2309;&#2340;&#2367;&#2352;&#2367;&#2325;&#2381;&#2340; &#2349;&#2366;&#2352; &#2325;&#2379; &#2360;&#2381;&#2357;&#2368;&#2325;&#2371;&#2340; &#2349;&#2366;&#2352; &#2350;&#2375;&#2306; &#2350;&#2367;&#2354;&#2366;&#2325;&#2352; &#2309;&#2340;&#2367;&#2352;&#2367;&#2325;&#2381;&#2340; &#2358;&#2369;&#2354;&#2381;&#2325; &#2324;&#2352; &#2309;&#2340;&#2367;&#2352;&#2367;&#2325;&#2381;&#2340; &#2360;&#2367;&#2325;&#2381;&#2351;&#2379;&#2352;&#2367;&#2335;&#2368; &#2354;&#2375;&#2340;&#2366; &#2361;&#2376;&#2404; &#2346;&#2370;&#2352;&#2366; &#2346;&#2366;&#2336; <a href="https://uperc.org/App_File/U-P-ElectricitySupplyCode2005upto12thAmendment-pdf323201825406PM.pdf" target="_blank" rel="noopener nofollow">UPERC &#2325;&#2375; &#2360;&#2346;&#2381;&#2354;&#2366;&#2312; &#2325;&#2379;&#2337;</a> &#2350;&#2375;&#2306; &#2361;&#2376;&#2404;</p>
+        <p>&#2342;&#2379; &#2358;&#2352;&#2381;&#2340;&#2375;&#2306; &#2343;&#2381;&#2351;&#2366;&#2344; &#2360;&#2375; &#2346;&#2338;&#2364;&#2375;&#2306;, &#2325;&#2381;&#2351;&#2379;&#2306;&#2325;&#2367; &#2360;&#2306;&#2358;&#2379;&#2343;&#2344; &#2311;&#2344;&#2381;&#2361;&#2368;&#2306; &#2346;&#2352; &#2327;&#2354;&#2340; &#2361;&#2379; &#2360;&#2325;&#2340;&#2366; &#2361;&#2376;:</p>
+        <ul>
+          <li><strong>&#2354;&#2327;&#2366;&#2340;&#2366;&#2352; &#2340;&#2368;&#2344; &#2350;&#2361;&#2368;&#2344;&#2375;&#2404;</strong> &#2319;&#2325; &#2360;&#2381;&#2346;&#2366;&#2311;&#2325; &#2344;&#2361;&#2368;&#2306;, &#2324;&#2352; &#2360;&#2366;&#2354; &#2325;&#2368; &#2360;&#2348;&#2360;&#2375; &#2314;&#2306;&#2330;&#2368; &#2352;&#2368;&#2337;&#2367;&#2306;&#2327; &#2349;&#2368; &#2344;&#2361;&#2368;&#2306;&#2404;</li>
+          <li><strong>&#2319;&#2325; &#2350;&#2366;&#2361; &#2325;&#2366; &#2354;&#2367;&#2326;&#2367;&#2340; &#2344;&#2379;&#2335;&#2367;&#2360;&#2404;</strong> &#2344;&#2379;&#2335;&#2367;&#2360; &#2349;&#2366;&#2352; &#2348;&#2338;&#2364;&#2344;&#2375; &#2360;&#2375; <em>&#2346;&#2361;&#2354;&#2375;</em> &#2310;&#2344;&#2366; &#2330;&#2366;&#2361;&#2367;&#2319; &#2404;</li>
+        </ul>
+        <p>&#2332;&#2369;&#2354;&#2366;&#2312; 2026 &#2350;&#2375;&#2306; UPPCL &#2344;&#2375; &#2319;&#2325; &#2360;&#2366;&#2341; &#2354;&#2327;&#2349;&#2327; <strong>46.68 &#2354;&#2366;&#2326; &#2313;&#2346;&#2349;&#2379;&#2325;&#2381;&#2340;&#2366;&#2323;&#2306;</strong> &#2325;&#2366; &#2349;&#2366;&#2352; &#2360;&#2306;&#2358;&#2379;&#2343;&#2367;&#2340; &#2325;&#2367;&#2351;&#2366; &#8212; &#2313;&#2360;&#2325;&#2375; &#2309;&#2346;&#2344;&#2375; &#2344;&#2367;&#2342;&#2375;&#2358;&#2325; (&#2357;&#2366;&#2339;&#2367;&#2332;&#2381;&#2351;) &#2325;&#2375; &#2309;&#2344;&#2369;&#2360;&#2366;&#2352; <em>&#2357;&#2367;&#2340;&#2381;&#2340; &#2357;&#2352;&#2381;&#2359; &#2325;&#2368; &#2360;&#2348;&#2360;&#2375; &#2314;&#2306;&#2330;&#2368; &#2350;&#2366;&#2360;&#2367;&#2325; &#2350;&#2366;&#2306;&#2327;</em> &#2346;&#2352;&#2404; &#2313;&#2340;&#2381;&#2340;&#2352; &#2346;&#2381;&#2352;&#2342;&#2375;&#2358; &#2352;&#2366;&#2332;&#2381;&#2351; &#2357;&#2367;&#2342;&#2381;&#2351;&#2369;&#2340; &#2313;&#2346;&#2349;&#2379;&#2325;&#2381;&#2340;&#2366; &#2346;&#2352;&#2367;&#2359;&#2342; &#2344;&#2375; &#2311;&#2344;&#2381;&#2361;&#2368;&#2306; &#2342;&#2379;&#2344;&#2379;&#2306; &#2348;&#2367;&#2306;&#2342;&#2369;&#2323;&#2306; &#2346;&#2352; &#2310;&#2346;&#2340;&#2381;&#2340;&#2367; &#2313;&#2336;&#2366;&#2312;&#2404; &#2309;&#2327;&#2352; &#2351;&#2361;&#2368; &#2310;&#2346;&#2325;&#2375; &#2348;&#2367;&#2354; &#2346;&#2352; &#2361;&#2369;&#2310; &#2361;&#2376;, &#2340;&#2379; &#2351;&#2361; &#2348;&#2366;&#2340; &#2310;&#2346;&#2325;&#2368; &#2358;&#2367;&#2325;&#2366;&#2351;&#2340; &#2350;&#2375;&#2306; &#2361;&#2379;&#2344;&#2368; &#2330;&#2366;&#2361;&#2367;&#2319;&#2404;</p>
+      </section>
+
+      <section class="seo-section" data-toc="सिक्योरिटी">
+        <h2>&#2325;&#2367;&#2340;&#2344;&#2368; &#2309;&#2340;&#2367;&#2352;&#2367;&#2325;&#2381;&#2340; &#2360;&#2367;&#2325;&#2381;&#2351;&#2379;&#2352;&#2367;&#2335;&#2368; &#2354;&#2327;&#2375;&#2327;&#2368;</h2>
+        <p>&#2349;&#2366;&#2352; &#2348;&#2338;&#2364;&#2344;&#2375; &#2346;&#2352; &#2360;&#2367;&#2325;&#2381;&#2351;&#2379;&#2352;&#2367;&#2335;&#2368; &#2337;&#2367;&#2346;&#2377;&#2332;&#2367;&#2335; &#2349;&#2368; &#2348;&#2338;&#2364;&#2340;&#2368; &#2361;&#2376;, &#2324;&#2352; &#2351;&#2361; &#2350;&#2366;&#2360;&#2367;&#2325; &#2348;&#2367;&#2354; &#2360;&#2375; &#2309;&#2354;&#2327; &#2319;&#2325; &#2350;&#2369;&#2358;&#2381;&#2340; &#2352;&#2325;&#2350; &#2325;&#2375; &#2352;&#2370;&#2346; &#2350;&#2375;&#2306; &#2310;&#2340;&#2368; &#2361;&#2376;&#2404; &#2344;&#2367;&#2351;&#2350; &#2311;&#2360;&#2368; &#2325;&#2379;&#2337; &#2325;&#2366; <strong>&#2326;&#2306;&#2337; 4.20</strong> &#2361;&#2376;:</p>
+        <ul>
+          <li><strong>&#2342;&#2379; &#2350;&#2361;&#2368;&#2344;&#2375; &#2325;&#2368; &#2326;&#2346;&#2340;</strong> &#8212; &#2326;&#2306;&#2337; 4.20(a)&#2404; &#2351;&#2366;&#2344;&#2368; &#2350;&#2379;&#2335;&#2375; &#2340;&#2380;&#2352; &#2346;&#2352; &#2310;&#2346;&#2325;&#2375; &#2344;&#2319; &#2350;&#2366;&#2360;&#2367;&#2325; &#2348;&#2367;&#2354; &#2325;&#2366; &#2342;&#2379;&#2327;&#2369;&#2344;&#2366;&#2404;</li>
+          <li><strong>&#2325;&#2375;&#2357;&#2354; &#2309;&#2306;&#2340;&#2352; &#2342;&#2375;&#2351;</strong> &#8212; &#2326;&#2306;&#2337; 4.20(c): &#2349;&#2366;&#2352; &#2348;&#2338;&#2364;&#2344;&#2375; &#2346;&#2352; &#2325;&#2375;&#2357;&#2354; &#2309;&#2340;&#2367;&#2352;&#2367;&#2325;&#2381;&#2340; &#2349;&#2366;&#2352; &#2325;&#2368; &#2360;&#2367;&#2325;&#2381;&#2351;&#2379;&#2352;&#2367;&#2335;&#2368; &#2332;&#2350;&#2366; &#2325;&#2352;&#2344;&#2368; &#2361;&#2379;&#2340;&#2368; &#2361;&#2376;, &#2346;&#2370;&#2352;&#2368; &#2352;&#2325;&#2350; &#2342;&#2379;&#2348;&#2366;&#2352;&#2366; &#2344;&#2361;&#2368;&#2306;&#2404;</li>
+          <li><strong>&#2346;&#2367;&#2331;&#2354;&#2375; &#2360;&#2366;&#2354; &#2325;&#2368; &#2326;&#2346;&#2340; &#2346;&#2352;</strong> &#8212; &#2326;&#2306;&#2337; 4.20(e)(i)&#2404;</li>
+          <li><strong>10% &#2360;&#2375; &#2325;&#2350; &#2361;&#2379; &#2340;&#2379; &#2350;&#2366;&#2306;&#2327; &#2344;&#2361;&#2368;&#2306;</strong> &#8212; &#2326;&#2306;&#2337; 4.20(e)(iii): &#2350;&#2366;&#2306;&#2327; &#2340;&#2349;&#2368; &#2313;&#2336;&#2340;&#2368; &#2361;&#2376; &#2332;&#2348; &#2309;&#2340;&#2367;&#2352;&#2367;&#2325;&#2381;&#2340; &#2352;&#2325;&#2350; &#2350;&#2380;&#2332;&#2370;&#2342;&#2366; &#2360;&#2367;&#2325;&#2381;&#2351;&#2379;&#2352;&#2367;&#2335;&#2368; &#2325;&#2375; 10% &#2360;&#2375; &#2309;&#2343;&#2367;&#2325; &#2361;&#2379;&#2404;</li>
+        </ul>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>यूनिट/माह</th><th>1 kW</th><th>2 kW</th><th>संभावित टॉप-अप</th></tr></thead>
+          <tbody>
+            <tr><td>80</td><td>&#8377;568</td><td>&#8377;1,386</td><td><strong>&#8377;818</strong></td></tr>
+            <tr><td>100</td><td>&#8377;682</td><td>&#8377;1,618</td><td><strong>&#8377;936</strong></td></tr>
+            <tr><td>150</td><td>&#8377;1,260</td><td>&#8377;2,194</td><td><strong>&#8377;934</strong></td></tr>
+            <tr><td>250</td><td>&#8377;2,416</td><td>&#8377;3,454</td><td><strong>&#8377;1,038</strong></td></tr>
+          </tbody>
+        </table></div>
+        <p class="seo-note">&#2326;&#2306;&#2337; 4.20(a) &#2325;&#2375; &#2309;&#2344;&#2369;&#2360;&#2366;&#2352; &#2342;&#2379; &#2350;&#2361;&#2368;&#2344;&#2375; &#2325;&#2366; &#2348;&#2367;&#2354;&#2404; &#2311;&#2360;&#2375; &#2309;&#2344;&#2369;&#2350;&#2366;&#2344; &#2350;&#2366;&#2344;&#2375;&#2306;, &#2325;&#2379;&#2335;&#2375;&#2358;&#2344; &#2344;&#2361;&#2368;&#2306;: &#2357;&#2366;&#2360;&#2381;&#2340;&#2357;&#2367;&#2325; &#2350;&#2366;&#2306;&#2327; &#2310;&#2346;&#2325;&#2368; &#2350;&#2380;&#2332;&#2370;&#2342;&#2366; &#2332;&#2350;&#2366; &#2352;&#2366;&#2358;&#2367; &#2324;&#2352; &#2346;&#2367;&#2331;&#2354;&#2375; &#2360;&#2366;&#2354; &#2325;&#2368; &#2324;&#2360;&#2340; &#2326;&#2346;&#2340; &#2346;&#2352; &#2344;&#2367;&#2352;&#2381;&#2349;&#2352; &#2325;&#2352;&#2340;&#2368; &#2361;&#2376;&#2404;</p>
+        <p>&#2360;&#2367;&#2325;&#2381;&#2351;&#2379;&#2352;&#2367;&#2335;&#2368; &#2357;&#2366;&#2346;&#2360;&#2368; &#2351;&#2379;&#2327;&#2381;&#2351; &#2361;&#2376; &#2324;&#2352; &#2313;&#2360; &#2346;&#2352; &#2348;&#2381;&#2351;&#2366;&#2332; &#2350;&#2367;&#2354;&#2340;&#2366; &#2361;&#2376; &#8212; &#2351;&#2361; &#2358;&#2369;&#2354;&#2381;&#2325; &#2344;&#2361;&#2368;&#2306;&#2404; &#2347;&#2367;&#2352; &#2349;&#2368;, &#2351;&#2375; &#2310;&#2346;&#2325;&#2366; &#2346;&#2376;&#2360;&#2366; &#2361;&#2376; &#2332;&#2379; &#2325;&#2344;&#2375;&#2325;&#2381;&#2358;&#2344; &#2352;&#2361;&#2344;&#2375; &#2340;&#2325; &#2337;&#2367;&#2360;&#2381;&#2325;&#2377;&#2350; &#2325;&#2375; &#2346;&#2366;&#2360; &#2352;&#2361;&#2340;&#2366; &#2361;&#2376;&#2404;</p>
+      </section>
+
 
       <section class="seo-section">
         <h2>बिल जाँचें: क्या वृद्धि जायज़ थी?</h2>
@@ -2844,7 +2983,50 @@ export const GUIDES = [
         </table></div>
         <p>तुमच्या जोडणीसाठी नेमका रुपयांतील परिणाम पाहण्यासाठी तुमची युनिटे <a href="/?state=Uttar%20Pradesh#calculator">UPPCL
         बिल कॅल्क्युलेटर</a> मध्ये दोनदा टाका — एकदा जुन्या भाराने, एकदा नव्याने — आणि एकूण तुलना करा.</p>
+      
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>यूनिट/महिना</th><th>1 kW (ST-10A)</th><th>2 kW (ST-10B)</th><th>वर्षात अधिक</th></tr></thead>
+          <tbody>
+            <tr><td>80</td><td>&#8377;284</td><td>&#8377;693</td><td><strong>&#8377;4,908</strong></td></tr>
+            <tr><td>100</td><td>&#8377;341</td><td>&#8377;809</td><td><strong>&#8377;5,616</strong></td></tr>
+            <tr><td>150</td><td>&#8377;630</td><td>&#8377;1,097</td><td><strong>&#8377;5,604</strong></td></tr>
+            <tr><td>250</td><td>&#8377;1,208</td><td>&#8377;1,727</td><td><strong>&#8377;6,228</strong></td></tr>
+          </tbody>
+        </table></div>
       </section>
+
+      <section class="seo-section" data-toc="पुरवठा कोड">
+        <h2>&#2346;&#2369;&#2352;&#2357;&#2336;&#2366; &#2325;&#2379;&#2337; &#2346;&#2381;&#2352;&#2340;&#2381;&#2351;&#2325;&#2381;&#2359;&#2366;&#2340; &#2325;&#2366;&#2351; &#2360;&#2366;&#2306;&#2327;&#2340;&#2379;</h2>
+        <p>&#2361;&#2366; &#2337;&#2367;&#2360;&#2381;&#2325;&#2377;&#2350;&#2330;&#2381;&#2351;&#2366; &#2350;&#2352;&#2381;&#2332;&#2368;&#2330;&#2366; &#2357;&#2367;&#2359;&#2351; &#2344;&#2366;&#2361;&#2368;&#2404; &#2344;&#2367;&#2351;&#2350; <strong>&#2313;&#2340;&#2381;&#2340;&#2352; &#2346;&#2381;&#2352;&#2342;&#2375;&#2358; &#2357;&#2367;&#2342;&#2381;&#2351;&#2369;&#2340; &#2346;&#2369;&#2352;&#2357;&#2336;&#2366; &#2325;&#2379;&#2337; 2005 &#2330;&#2375; &#2325;&#2354;&#2350; 6.9(B)(v)</strong> &#2310;&#2361;&#2375;, &#2332;&#2379; <em>Billing in case of Excess Load</em> &#2351;&#2366; &#2358;&#2368;&#2352;&#2381;&#2359;&#2325;&#2366;&#2326;&#2366;&#2354;&#2368; &#2351;&#2375;&#2340;&#2379;&#2404; &#2340;&#2381;&#2351;&#2366;&#2344;&#2369;&#2360;&#2366;&#2352;, &#2327;&#2381;&#2352;&#2366;&#2361;&#2325;&#2366;&#2330;&#2368; &#2350;&#2366;&#2327;&#2339;&#2368; <strong>&#2360;&#2354;&#2327; &#2340;&#2368;&#2344; &#2350;&#2361;&#2367;&#2344;&#2375;</strong> &#2325;&#2352;&#2366;&#2352;&#2366;&#2346;&#2375;&#2325;&#2381;&#2359;&#2366; &#2332;&#2366;&#2360;&#2381;&#2340; &#2352;&#2366;&#2361;&#2367;&#2354;&#2368; &#2340;&#2352;&#2330; &#2340;&#2381;&#2351;&#2366;&#2354;&#2366; <strong>&#2319;&#2325; &#2350;&#2361;&#2367;&#2344;&#2381;&#2351;&#2366;&#2330;&#2368; &#2344;&#2379;&#2335;&#2368;&#2360;</strong> &#2342;&#2367;&#2354;&#2368; &#2332;&#2366;&#2312;&#2354;; &#2340;&#2381;&#2351;&#2366;&#2344;&#2306;&#2340;&#2352; &#2354;&#2366;&#2312;&#2360;&#2344;&#2381;&#2360;&#2343;&#2366;&#2352;&#2325; &#2332;&#2366;&#2342;&#2366; &#2349;&#2366;&#2352; &#2350;&#2306;&#2332;&#2370;&#2352; &#2349;&#2366;&#2352;&#2366;&#2340; &#2350;&#2367;&#2360;&#2354;&#2370;&#2344; &#2309;&#2340;&#2367;&#2352;&#2367;&#2325;&#2381;&#2340; &#2310;&#2325;&#2366;&#2352; &#2310;&#2339;&#2367; &#2309;&#2340;&#2367;&#2352;&#2367;&#2325;&#2381;&#2340; &#2360;&#2369;&#2352;&#2325;&#2381;&#2359;&#2366; &#2336;&#2375;&#2357; &#2310;&#2325;&#2366;&#2352;&#2340;&#2379;&#2404; &#2360;&#2306;&#2346;&#2370;&#2352;&#2381;&#2339; &#2350;&#2333;&#2325;&#2370;&#2352; <a href="https://uperc.org/App_File/U-P-ElectricitySupplyCode2005upto12thAmendment-pdf323201825406PM.pdf" target="_blank" rel="noopener nofollow">UPERC &#2330;&#2381;&#2351;&#2366; &#2346;&#2369;&#2352;&#2357;&#2336;&#2366; &#2325;&#2379;&#2337;</a> &#2350;&#2343;&#2381;&#2351;&#2375; &#2310;&#2361;&#2375;&#2404;</p>
+        <p>&#2342;&#2379;&#2344; &#2309;&#2335;&#2367; &#2325;&#2366;&#2354;&#2332;&#2368;&#2346;&#2370;&#2352;&#2381;&#2357;&#2325; &#2357;&#2366;&#2330;&#2366;, &#2325;&#2366;&#2352;&#2339; &#2360;&#2369;&#2343;&#2366;&#2352;&#2339;&#2366; &#2351;&#2366;&#2306;&#2330;&#2381;&#2351;&#2366;&#2357;&#2352;&#2330; &#2309;&#2337;&#2325;&#2370; &#2358;&#2325;&#2340;&#2375;:</p>
+        <ul>
+          <li><strong>&#2360;&#2354;&#2327; &#2340;&#2368;&#2344; &#2350;&#2361;&#2367;&#2344;&#2375;&#2404;</strong> &#2319;&#2325; &#2360;&#2381;&#2346;&#2366;&#2312;&#2325; &#2344;&#2366;&#2361;&#2368;, &#2310;&#2339;&#2367; &#2357;&#2352;&#2381;&#2359;&#2366;&#2340;&#2368;&#2354; &#2360;&#2352;&#2381;&#2357;&#2379;&#2330;&#2381;&#2330; &#2352;&#2368;&#2337;&#2367;&#2306;&#2327;&#2361;&#2368; &#2344;&#2366;&#2361;&#2368;&#2404;</li>
+          <li><strong>&#2319;&#2325; &#2350;&#2361;&#2367;&#2344;&#2381;&#2351;&#2366;&#2330;&#2368; &#2354;&#2375;&#2326;&#2368; &#2344;&#2379;&#2335;&#2368;&#2360;&#2404;</strong> &#2344;&#2379;&#2335;&#2368;&#2360; &#2357;&#2366;&#2338;&#2368;&#2330;&#2381;&#2351;&#2366; <em>&#2310;&#2343;&#2368;</em> &#2351;&#2366;&#2351;&#2354;&#2366; &#2361;&#2357;&#2368;&#2404;</li>
+        </ul>
+        <p>&#2332;&#2369;&#2354;&#2376; 2026 &#2350;&#2343;&#2381;&#2351;&#2375; UPPCL &#2344;&#2375; &#2360;&#2369;&#2350;&#2366;&#2352;&#2375; <strong>46.68 &#2354;&#2366;&#2326; &#2327;&#2381;&#2352;&#2366;&#2361;&#2325;&#2366;&#2306;&#2330;&#2366;</strong> &#2349;&#2366;&#2352; &#2319;&#2325;&#2366;&#2330; &#2357;&#2375;&#2354;&#2368; &#2360;&#2369;&#2343;&#2366;&#2352;&#2367;&#2340; &#2325;&#2375;&#2354;&#2366; &#8212; &#2340;&#2381;&#2351;&#2366;&#2306;&#2330;&#2381;&#2351;&#2366;&#2330; &#2360;&#2306;&#2330;&#2366;&#2354;&#2325; (&#2357;&#2366;&#2339;&#2367;&#2332;&#2381;&#2351;) &#2351;&#2366;&#2306;&#2330;&#2381;&#2351;&#2366; &#2357;&#2352;&#2381;&#2339;&#2344;&#2366;&#2344;&#2369;&#2360;&#2366;&#2352; <em>&#2357;&#2367;&#2340;&#2381;&#2340;&#2357;&#2352;&#2381;&#2359;&#2366;&#2340;&#2368;&#2354; &#2360;&#2352;&#2381;&#2357;&#2379;&#2330;&#2381;&#2330; &#2350;&#2366;&#2360;&#2367;&#2325; &#2350;&#2366;&#2327;&#2339;&#2368;&#2360;</em> &#2309;&#2344;&#2369;&#2360;&#2352;&#2370;&#2344;&#2404; &#2313;&#2340;&#2381;&#2340;&#2352; &#2346;&#2381;&#2352;&#2342;&#2375;&#2358; &#2352;&#2366;&#2332;&#2381;&#2351; &#2357;&#2367;&#2342;&#2381;&#2351;&#2369;&#2340; &#2327;&#2381;&#2352;&#2366;&#2361;&#2325; &#2346;&#2352;&#2367;&#2359;&#2342;&#2375;&#2344;&#2375; &#2351;&#2366;&#2330; &#2342;&#2379;&#2344; &#2350;&#2369;&#2342;&#2381;&#2342;&#2381;&#2351;&#2366;&#2306;&#2357;&#2352; &#2310;&#2325;&#2381;&#2359;&#2375;&#2346; &#2328;&#2375;&#2340;&#2354;&#2366;&#2404;</p>
+      </section>
+
+      <section class="seo-section" data-toc="सुरक्षा ठेव">
+        <h2>&#2325;&#2367;&#2340;&#2368; &#2309;&#2340;&#2367;&#2352;&#2367;&#2325;&#2381;&#2340; &#2360;&#2369;&#2352;&#2325;&#2381;&#2359;&#2366; &#2336;&#2375;&#2357; &#2354;&#2366;&#2327;&#2375;&#2354;</h2>
+        <p>&#2349;&#2366;&#2352; &#2357;&#2366;&#2338;&#2354;&#2381;&#2351;&#2366;&#2357;&#2352; &#2360;&#2369;&#2352;&#2325;&#2381;&#2359;&#2366; &#2336;&#2375;&#2357;&#2361;&#2368; &#2357;&#2366;&#2338;&#2340;&#2379;, &#2310;&#2339;&#2367; &#2340;&#2379; &#2350;&#2366;&#2360;&#2367;&#2325; &#2348;&#2367;&#2354;&#2366;&#2357;&#2381;&#2351;&#2340;&#2367;&#2352;&#2367;&#2325;&#2381;&#2340; &#2319;&#2325;&#2352;&#2325;&#2381;&#2325;&#2350;&#2368; &#2352;&#2325;&#2381;&#2325;&#2350; &#2350;&#2381;&#2361;&#2339;&#2370;&#2344; &#2351;&#2375;&#2340;&#2379;&#2404; &#2344;&#2367;&#2351;&#2350; &#2351;&#2366;&#2330; &#2325;&#2379;&#2337;&#2330;&#2375; <strong>&#2325;&#2354;&#2350; 4.20</strong> &#2310;&#2361;&#2375;:</p>
+        <ul>
+          <li><strong>&#2342;&#2379;&#2344; &#2350;&#2361;&#2367;&#2344;&#2381;&#2351;&#2366;&#2306;&#2330;&#2366; &#2357;&#2366;&#2346;&#2352;</strong> &#8212; &#2325;&#2354;&#2350; 4.20(a)&#2404;</li>
+          <li><strong>&#2347;&#2325;&#2381;&#2340; &#2347;&#2352;&#2325;&#2330; &#2349;&#2352;&#2366;&#2357;&#2366; &#2354;&#2366;&#2327;&#2340;&#2379;</strong> &#8212; &#2325;&#2354;&#2350; 4.20(c)&#2404;</li>
+          <li><strong>&#2350;&#2366;&#2327;&#2368;&#2354; &#2357;&#2352;&#2381;&#2359;&#2366;&#2330;&#2381;&#2351;&#2366; &#2360;&#2352;&#2366;&#2360;&#2352;&#2368;&#2357;&#2352;</strong> &#8212; &#2325;&#2354;&#2350; 4.20(e)(i)&#2404;</li>
+          <li><strong>10% &#2346;&#2375;&#2325;&#2381;&#2359;&#2366; &#2325;&#2350;&#2368; &#2309;&#2360;&#2354;&#2381;&#2351;&#2366;&#2360; &#2350;&#2366;&#2327;&#2339;&#2368; &#2344;&#2366;&#2361;&#2368;</strong> &#8212; &#2325;&#2354;&#2350; 4.20(e)(iii)&#2404;</li>
+        </ul>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>यूनिट/महिना</th><th>1 kW</th><th>2 kW</th><th>संभाव्य टॉप-अप</th></tr></thead>
+          <tbody>
+            <tr><td>80</td><td>&#8377;568</td><td>&#8377;1,386</td><td><strong>&#8377;818</strong></td></tr>
+            <tr><td>100</td><td>&#8377;682</td><td>&#8377;1,618</td><td><strong>&#8377;936</strong></td></tr>
+            <tr><td>150</td><td>&#8377;1,260</td><td>&#8377;2,194</td><td><strong>&#8377;934</strong></td></tr>
+            <tr><td>250</td><td>&#8377;2,416</td><td>&#8377;3,454</td><td><strong>&#8377;1,038</strong></td></tr>
+          </tbody>
+        </table></div>
+        <p class="seo-note">&#2325;&#2354;&#2350; 4.20(a) &#2344;&#2369;&#2360;&#2366;&#2352; &#2342;&#2379;&#2344; &#2350;&#2361;&#2367;&#2344;&#2381;&#2351;&#2366;&#2306;&#2330;&#2375; &#2348;&#2367;&#2354;&#2404; &#2361;&#2366; &#2309;&#2306;&#2342;&#2366;&#2332; &#2310;&#2361;&#2375;, &#2325;&#2379;&#2335; &#2344;&#2366;&#2361;&#2368;&#2404;</p>
+      </section>
+
 
       <section class="seo-section">
         <h2>बिल तपासा: वाढ न्याय्य होती का?</h2>

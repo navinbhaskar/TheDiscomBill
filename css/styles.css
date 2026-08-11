@@ -6365,7 +6365,13 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
 }
 .page-toc a {
   font-size: 13px; font-weight: 550; color: var(--text-secondary); text-decoration: none;
-  padding: 4px 10px; border-radius: 999px;
+  /* 44px tall, not the 30px these used to be. WCAG 2.5.8 wants a 44px target and these are the
+     one control on the page a reader taps before they have read anything — a missed tap here
+     scrolls them somewhere arbitrary in a 2,000-word article. Height rather than padding so the
+     pills stay a uniform row whatever the label length; the horizontal padding still grows the
+     hit area sideways. */
+  display: inline-flex; align-items: center; min-height: 44px;
+  padding: 0 14px; border-radius: 999px;
   background: var(--surface-card); border: 1px solid var(--border-default);
   transition: color var(--t-fast), border-color var(--t-fast), background-color var(--t-fast);
 }
