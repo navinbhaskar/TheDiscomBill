@@ -38,9 +38,17 @@ export const SCENARIO_COPY = {
     label: { en: 'KSEB (Kerala) — Domestic' },
     note: { en: 'Five narrow slabs, and no additional charges at all — the simplest shape a bill takes.' },
   },
+  'delhi-domestic': {
+    label: { en: 'BRPL (Delhi) — Domestic' },
+    note: { en: 'A percentage fuel surcharge (PPAC) at 17.94%, plus the GNCTD subsidy shown as a deduction.' },
+  },
+  'odisha-domestic': {
+    label: { en: 'TPCODL (Odisha) — Domestic' },
+    note: { en: 'Carries a prompt-payment rebate, so the bill shows two totals: one if you pay by the due date, one if you do not.' },
+  },
   'uppcl-commercial': {
     label: { en: 'UPPCL (Uttar Pradesh) — Commercial' },
-    note: { en: 'Billed on recorded maximum demand, so exceeding your sanctioned load costs real money.' },
+    note: { en: 'Billed on recorded maximum demand — and July 2026’s fuel surcharge was a credit, so that line is a refund.' },
   },
 };
 
@@ -86,16 +94,58 @@ export const LINES = [
       demand overshoots it. It is a genuine trade-off, not a number to minimise.` },
     live: 'sanctionedLoad',
   },
+
+  {
+    id: 'bill-month', always: true, group: 'period',
+    title: { en: 'Bill month' },
+    body: { en: `The month the electricity was <em>used</em>, which is not the month the bill was
+      printed and not the month you pay it. Three different dates, and bills label them
+      inconsistently. This is the one that identifies the consumption, so it is the one to quote in
+      a complaint — and, because the fuel surcharge is notified monthly, it is also what decides
+      which surcharge rate applies to you.` },
+    live: 'billMonth',
+  },
+  {
+    id: 'due-date', always: true, group: 'period',
+    title: { en: 'Due date' },
+    body: { en: `The last day the bill costs what it says. It is worth money in two directions:
+      past it, a late payment surcharge starts accruing on the whole outstanding amount and
+      compounds every month; and where the DISCOM offers a prompt-payment rebate, paying on time is
+      the only way to get it. Disconnection notices are driven off this date too, not off the bill
+      date.` },
+    live: 'dueDate',
+  },
+
   {
     id: 'units-consumed', always: true, group: 'reading',
     title: { en: 'Units consumed' },
     body: { en: `Present reading minus previous reading, multiplied by the meter constant (the
       multiplying factor, almost always 1 on a domestic connection). One unit is one kilowatt-hour.
-      If the bill is marked <strong>Average</strong>, <strong>Provisional</strong> or
-      <strong>RNT</strong>, nobody read the meter — the figure is an estimate and will be trued up
-      later, so check it against the meter yourself.` },
+      This is the only measured quantity on the whole bill — everything below it is arithmetic
+      performed on this one number.` },
     live: 'unitsConsumed',
   },
+  {
+    id: 'md', always: true, group: 'reading',
+    title: { en: 'Maximum demand (MD)' },
+    body: { en: `The highest half-hour average power your connection drew during the month, in kW —
+      a peak, not a total. Consumption and demand are different things: run a 2 kW geyser for ten
+      hours and you use 20 units at 2 kW of demand; run ten 2 kW appliances for one hour and you use
+      the same 20 units at 20 kW. On a commercial or industrial connection the second one costs far
+      more, because the charge follows the peak.` },
+    live: 'md',
+  },
+  {
+    id: 'reading-status', always: true, group: 'reading',
+    title: { en: 'Reading status' },
+    body: { en: `A short code saying how the reading was obtained — whether a meter reader actually
+      read the meter, or the DISCOM estimated it because the meter was locked away, unreadable or
+      faulty. The vocabulary is utility-specific and the codes are rarely expanded anywhere on the
+      bill, but the distinction is the thing that matters: a real reading is a fact, an estimate is
+      a placeholder that will be corrected later, usually by a much larger bill.` },
+    live: 'readingStatus',
+  },
+
   {
     id: 'energy-charge', always: true, group: 'charges',
     title: { en: 'Energy charge' },
@@ -107,7 +157,7 @@ export const LINES = [
   },
   {
     id: 'fixed-charge', always: true, group: 'charges',
-    title: { en: 'Fixed charge' },
+    title: { en: 'Fixed charge / demand charge' },
     body: { en: `Payable whether you use a single unit or none. It funds the wires, the meter and
       the crew, and it is why a locked, empty house still gets a bill. On a domestic connection it
       is levied per kW of <em>sanctioned load</em>; on a commercial or industrial one it is levied
@@ -127,12 +177,14 @@ export const LINES = [
   },
   {
     id: 'fppa', always: false, group: 'charges',
-    title: { en: 'Fuel surcharge (FPPA / FCA)' },
+    title: { en: 'Fuel surcharge (FPPA / FPPAS / PPAC / FAC)' },
     body: { en: `The one line that changes month to month for reasons nothing to do with you. When
-      the DISCOM's actual cost of buying power differs from what the regulator assumed when it set
-      your tariff, the gap is passed through here. Some states publish it as paise per unit, others
-      as a percentage of the energy charge. It is legitimate, it is capped, and the notified rate
-      is public — a bill that shows this line without a rate is worth questioning.` },
+      the DISCOM's actual cost of buying power differs from what the regulator assumed when your
+      tariff was set, the gap is passed through here. Four things surprise people about it: it is
+      recalculated <em>monthly</em> in several states; it can be <em>negative</em>, in which case it
+      is a refund; where it is a percentage it usually applies to the fixed charge as well as the
+      energy charge; and the notified rate is public, so a bill that shows this line without a rate
+      is worth questioning.` },
     live: 'fppa',
   },
   {
@@ -153,22 +205,26 @@ export const LINES = [
       There is no GST on domestic electricity supply — if you see one, look again.` },
     live: 'electricityDuty',
   },
+
   {
-    id: 'subsidy', always: false, group: 'charges',
+    id: 'subsidy', always: false, group: 'totals',
     title: { en: 'Subsidy' },
-    body: { en: `A state government rebate, shown as a deduction. The DISCOM bills the full tariff and
-      the state reimburses it, which is why the gross figure stays high and the credit appears
-      separately. Most schemes are conditional — on consumption staying under a cap, on the category,
+    body: { en: `A state government rebate, shown as a deduction from the charges above rather than
+      as a lower rate. The DISCOM bills the full tariff and the state reimburses it — which is why
+      the gross figure stays high, and why a subsidy can be withdrawn without any tariff order
+      changing. Most schemes are conditional: on consumption staying under a cap, on the category,
       sometimes on a registration you have to renew.` },
     live: 'subsidy',
   },
   {
-    id: 'current-bill', always: true, group: 'totals',
-    title: { en: 'Current bill amount' },
-    body: { en: `Everything above, for this month alone. This is the figure to compare against last
-      month — not the net payable at the bottom, which mixes in old dues and would tell you the wrong
-      story about your consumption.` },
-    live: 'currentBill',
+    id: 'net-current-bill', always: true, group: 'totals',
+    title: { en: 'Net current bill' },
+    body: { en: `This month's charges, after any subsidy — and <strong>not</strong> what you owe.
+      This is the figure to compare against last month, because it contains this month's consumption
+      and nothing else. The total payable below is a different quantity: it mixes in old dues, and
+      comparing <em>it</em> month to month will tell you a story about your payment history rather
+      than about your electricity use.` },
+    live: 'netCurrentBill',
   },
   {
     id: 'arrears', always: false, group: 'totals',
@@ -189,12 +245,22 @@ export const LINES = [
     live: 'lpsc',
   },
   {
-    id: 'net-payable', always: true, group: 'totals',
-    title: { en: 'Net payable' },
-    body: { en: `Current bill, plus arrears and surcharge, minus payments already credited. This is what
-      you owe. Pay the full amount — a part payment does not stop the surcharge on the remainder, and
-      on a prepaid or disconnection-notice account it does not stop the clock either.` },
-    live: 'netPayable',
+    id: 'total-payable', always: true, group: 'totals',
+    title: { en: 'Total payable' },
+    body: { en: `Net current bill, plus arrears and surcharge, minus payments already credited. This is
+      what you owe today. Pay the full amount — a part payment does not stop the surcharge on the
+      remainder, and on a prepaid or disconnection-notice account it does not stop the clock either.` },
+    live: 'totalPayable',
+  },
+  {
+    id: 'due-date-rebate', always: false, group: 'totals',
+    title: { en: 'Prompt-payment rebate' },
+    body: { en: `Several DISCOMs take a small amount <em>off</em> the bill if you pay on or before the
+      due date — a few paise per unit, or a percentage of the energy charge, sometimes with an extra
+      slice for paying digitally. It is easy to miss because it is printed as a second, lower total
+      near the bottom rather than as a charge. Where it exists, the due date is worth money twice
+      over: you gain the rebate by meeting it and start paying surcharge by missing it.` },
+    live: 'dueDateRebate',
   },
 ];
 
@@ -219,6 +285,7 @@ export const UB = {
     label: { en: 'On this page' },
     bill: { en: 'The bill' },
     header: { en: 'Who and what' },
+    period: { en: 'Dates that cost money' },
     reading: { en: 'The meter reading' },
     charges: { en: 'The charges' },
     totals: { en: 'The totals' },
@@ -280,11 +347,15 @@ export const UB = {
 
   sectionH2: {
     header: { en: 'Who the bill is for, and under what tariff' },
+    period: { en: 'The dates, and which ones cost you money' },
     reading: { en: 'What the meter said' },
     charges: { en: 'What you are being charged' },
     totals: { en: 'What you actually owe' },
   },
   sectionIntro: {
+    period: { en: `A bill carries three dates and they are not interchangeable. One identifies the
+      consumption, one is when the bill was cut, and one is a deadline with money attached to both
+      sides of it.` },
     header: { en: `The top block identifies the account and, crucially, the rate schedule it is billed
       under. Errors here are expensive and they persist quietly for years, so it is worth two minutes.` },
     reading: { en: `The only measured quantity on the whole bill. Everything below is arithmetic

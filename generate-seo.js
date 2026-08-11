@@ -523,8 +523,13 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
   const chrome = langChrome(HEADER(LANGMENU_TOKEN), lang)
     .replace(LANGMENU_TOKEN, langMenuItems(page, lang, altLangs));
   const footer = langChrome(FOOTER, lang);
+  // A page with no vernacular twins must not offer vernaculars in the switcher: the body is
+  // static prose, so picking Hindi translates the chrome and leaves the article in English.
+  // The attribute is DERIVED from altLangs rather than passed in, so a new English-only page
+  // template cannot forget it — /fuel-surcharge/ and /understand-your-bill/ both had the dead
+  // option before this.
   return `<!DOCTYPE html>
-<html lang="${lang}">
+<html lang="${lang}"${altLangs.length ? '' : ' data-i18n-twins-only'}>
 <head>
   <meta charset="UTF-8">
   <script>
@@ -3513,7 +3518,7 @@ function understandBillPage(lang = 'en') {
     </section>`;
 
   const toc = [
-    ['#bill', U.toc.bill], ['#who', U.toc.header], ['#reading', U.toc.reading],
+    ['#bill', U.toc.bill], ['#who', U.toc.header], ['#when', U.toc.period], ['#reading', U.toc.reading],
     ['#charges', U.toc.charges], ['#totals', U.toc.totals],
     ['#why-higher', U.toc.higher], ['#faq', U.toc.faq],
   ].map(([href, node]) => `<a href="${href}">${esc(T(lang, node))}</a>`).join('\n        ');
@@ -3592,6 +3597,7 @@ function understandBillPage(lang = 'en') {
       <p class="seo-note" id="ubError" hidden></p>
     </section>
 ${section('who', 'header')}
+${section('when', 'period')}
 ${section('reading', 'reading')}
 ${section('charges', 'charges')}
 ${section('totals', 'totals')}

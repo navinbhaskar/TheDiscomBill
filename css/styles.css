@@ -6620,8 +6620,9 @@ html:not(.js) .m-btn-ring { display: none; }
    it, so changing the padding at a breakpoint moves everything together. */
 .bill-figure {
   --bill-pad: 16px;
-  --gut: calc(var(--bill-pad) + 30px);
-  margin: 0 0 8px; padding-left: var(--gut);
+  --lead: 26px;          /* leader line: row's right edge out to the callout */
+  --label-w: 178px;      /* callout column: wide enough for "Late payment surcharge" on one line */
+  margin: 0 0 8px; padding-right: calc(var(--lead) + var(--label-w));
 }
 .bill-doc {
   max-width: 420px;
@@ -6686,21 +6687,30 @@ html:not(.js) .m-btn-ring { display: none; }
    further down the page, so it behaves like every other in-page anchor, middle-click
    included. The leader line is drawn from the marker across to the document edge. */
 .bill-mark {
-  position: absolute; left: calc(-1 * var(--gut)); top: 50%;
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 19px; height: 19px; margin-top: -9.5px;
-  font-size: 10.5px; font-weight: 800; line-height: 1;
-  color: #fff; background: var(--brand); border-radius: var(--radius-full);
-  text-decoration: none; transition: transform var(--t-fast), background var(--t-fast);
+  position: absolute; left: calc(100% + var(--lead)); top: 50%;
+  width: var(--label-w); transform: translateY(-50%);
+  display: flex; align-items: baseline; gap: 5px;
+  font-size: 11.5px; line-height: 1.3; text-decoration: none;
+  color: var(--text-secondary); transition: color var(--t-fast);
 }
-.bill-mark::after {
-  content: ""; position: absolute; left: 100%; top: 50%;
-  width: calc(var(--gut) - 19px); height: 1px;
-  background: var(--brand-border);
+.bill-mark-n { flex: none; font-weight: 800; color: var(--text-brand); font-variant-numeric: tabular-nums; }
+/* The full stop is decoration on the callout and wrong inside the mobile badge, so it comes
+   from CSS rather than from the markup. */
+.bill-mark-n::after { content: "."; }
+.bill-mark-t { min-width: 0; }
+/* The leader line runs from the row's right edge across the gutter to the callout. It starts
+   at the row, not the card edge, so it stays put when the card's padding changes. */
+.bill-mark::before {
+  content: ""; position: absolute; right: 100%; top: .55em;
+  width: var(--lead); height: 1px; background: var(--brand-border);
 }
-.bill-mark:hover, .bill-mark:focus-visible { background: var(--brand-hover); transform: scale(1.15); }
+.bill-mark:hover, .bill-mark:focus-visible { color: var(--text-brand); }
+.bill-mark:hover .bill-mark-t, .bill-mark:focus-visible .bill-mark-t { text-decoration: underline; }
 .bill-row.is-lit { background: var(--brand-faint); box-shadow: 0 0 0 4px var(--brand-faint); border-radius: var(--radius-xs); }
-.bill-row.is-lit .bill-mark::after { background: var(--brand); }
+.bill-row.is-lit .bill-mark { color: var(--text-brand); }
+.bill-row.is-lit .bill-mark::before { background: var(--brand); }
+/* Marked rows get a floor so two adjacent callouts cannot collide when a title wraps. */
+.bill-row.is-marked { min-height: 30px; }
 
 .bill-block-slabs { background: var(--surface-sunken); }
 .bill-scroll { overflow-x: auto; }
@@ -6779,15 +6789,31 @@ html:not(.js) .m-btn-ring { display: none; }
 }
 .ub-calc-eq { font-weight: 500; color: var(--text-tertiary); }
 
-@media (max-width: 620px) {
-  /* Below this the gutter costs more width than the callouts are worth, so the markers come
-     back inside and sit against their row label. The leader line retires with them — it has
+@media (max-width: 880px) {
+  /* The bill (420) plus the gutter (26 + 178) needs ~630px of container before it starts
+     squeezing the callout titles onto three lines. Below that the callouts fold back onto
+     their rows as a number and title on one line, and the leader line retires — it has
      nothing left to span. */
-  .bill-figure { --bill-pad: 13px; padding-left: 0; }
+  .bill-figure { --bill-pad: 13px; padding-right: 0; }
   .bill-doc { max-width: none; }
-  .bill-mark { position: static; margin: 0 0 0 6px; vertical-align: 1px; }
-  .bill-mark::after { display: none; }
-  .bill-row { grid-template-columns: 1fr auto; }
+  .bill-mark {
+    position: static; transform: none; width: auto;
+    display: inline-flex; margin-left: 7px; font-size: 10.5px;
+  }
+  .bill-mark::before { display: none; }
+  /* The row label is right beside it, so the title is redundant on screen — but it is still
+     this link's accessible name, so it is clipped, never display:none. */
+  .bill-mark-t {
+    position: absolute; width: 1px; height: 1px;
+    overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+  }
+  .bill-mark-n::after { content: none; }
+  .bill-mark-n {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 17px; height: 17px; border-radius: var(--radius-full);
+    background: var(--brand); color: #fff; font-size: 10px;
+  }
+  .bill-row.is-marked { min-height: 0; }
   .bill-row.is-lit { box-shadow: none; }
   .ub-field-wide { grid-column: 1 / -1; }
   .bill-doc-stamp { display: none; }

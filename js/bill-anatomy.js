@@ -12,41 +12,80 @@
 // engine actually does. If the engine changes, these have to change with it; a formula that
 // does not reproduce the number beside it is worse than no formula at all.
 
+import { resolveFppaForDiscom } from './tariffs/fppa-resolve.js';
+import { DOMESTIC_SUBSIDY } from './tariffs/subsidy.js';
+
 /**
  * The scenarios the DISCOM selector offers — structure only; their labels and notes live in
  * understand-bill-content.js, which is a build-time module and never reaches the browser.
  *
  * Chosen for STRUCTURAL variety, not popularity. Between them they exercise every shape the
  * bill can take, which is the whole point of letting the reader switch:
- *   uppcl-domestic   two slabs, percent-of-total Electricity Duty, no wheeling
- *   msedcl-domestic  a separate Wheeling Charge line, and ED levied on energy only
+ *   uppcl-domestic   two slabs, percent-of-total duty, and a POSITIVE monthly FPPAS
+ *   msedcl-domestic  a separate wheeling line, and duty levied on energy only
  *   kseb-domestic    five narrow slabs and no additional charges at all
- *   uppcl-commercial demand-billed: fixed charge on recorded MD, plus an excess-demand penalty
+ *   delhi-domestic   a percent PPAC and a real state subsidy on the same bill
+ *   uppcl-commercial demand-billed, an excess-demand penalty, and a NEGATIVE FPPAS (a credit)
+ *
+ * `period` is not decoration. FPPA/FPPAS/PPAC is notified per month, so the month decides the
+ * rate — and the two UPPCL scenarios deliberately sit in different months to show the same
+ * DISCOM charging +10% in one and refunding 4.43% in the next. Both figures are the verified
+ * ones in js/tariffs/fppa.js; none of this is invented.
+ *
+ * `md` is the maximum demand the meter recorded. On the domestic scenarios it is deliberately
+ * BELOW the sanctioned load: those categories bill the fixed charge on sanctioned load and the
+ * engine would otherwise raise a penalty, which is not what a normal domestic bill shows.
  */
 export const SCENARIOS = [
   {
     id: 'uppcl-domestic',
     discomId: 'mvvnl', categoryId: 'domestic', supplyTypeId: '10B',
-    units: 250, connectedLoadKw: 2,
-    consumerNo: '1234 5678 9012', meterNo: 'MV 4471 2208', phase: 'Single phase',
+    units: 250, connectedLoadKw: 2, md: 1.62,
+    period: { from: '01-06-2026', to: '30-06-2026', month: 'JUN-2026', end: '2026-06-30', bill: '05-07-2026', due: '20-07-2026' },
+    consumerNo: '1234 5678 9012', meterNo: 'MV 4471 2208', phase: 'Single phase', status: 'OK',
   },
   {
     id: 'msedcl-domestic',
     discomId: 'msedcl', categoryId: 'domestic', supplyTypeId: '',
-    units: 250, connectedLoadKw: 2,
-    consumerNo: '0210 4455 6677', meterNo: 'MS 9032 5514', phase: 'Single phase',
+    units: 250, connectedLoadKw: 2, md: 1.74,
+    period: { from: '01-07-2026', to: '31-07-2026', month: 'JUL-2026', end: '2026-07-31', bill: '05-08-2026', due: '20-08-2026' },
+    consumerNo: '0210 4455 6677', meterNo: 'MS 9032 5514', phase: 'Single phase', status: 'OK',
   },
   {
     id: 'kseb-domestic',
     discomId: 'kseb', categoryId: 'domestic', supplyTypeId: 'single_phase',
-    units: 250, connectedLoadKw: 2,
-    consumerNo: '1195 3320 8841', meterNo: 'KS 2210 7743', phase: 'Single phase',
+    units: 250, connectedLoadKw: 2, md: 1.48,
+    period: { from: '01-07-2026', to: '31-07-2026', month: 'JUL-2026', end: '2026-07-31', bill: '05-08-2026', due: '20-08-2026' },
+    consumerNo: '1195 3320 8841', meterNo: 'KS 2210 7743', phase: 'Single phase', status: 'OK',
+  },
+  {
+    id: 'delhi-domestic',
+    discomId: 'brpl', categoryId: 'domestic', supplyTypeId: '',
+    units: 320, connectedLoadKw: 3, md: 2.42, subsidyState: 'Delhi',
+    period: { from: '01-07-2026', to: '31-07-2026', month: 'JUL-2026', end: '2026-07-31', bill: '05-08-2026', due: '20-08-2026' },
+    consumerNo: '1002 3345 7781', meterNo: 'BR 5590 3312', phase: 'Single phase', status: 'OK',
+  },
+  {
+    // The only scenario carrying a prompt-payment rebate, because Odisha is the one DISCOM in
+    // this set whose own schedule documents a figure (10 paise/unit, OERC RST order — see the
+    // category notes in js/tariffs/odisha.js). There is no generic rate to fall back on, and
+    // putting an invented discount on the page would be worse than omitting the line.
+    id: 'odisha-domestic',
+    discomId: 'tpcodl', categoryId: 'domestic', supplyTypeId: 'general',
+    units: 250, connectedLoadKw: 2, md: 1.55,
+    rebate: {
+      type: 'per_unit', rate: 0.10,
+      label: 'Odisha allows a prompt-payment rebate of 10 paise per unit (OERC retail supply tariff order).',
+    },
+    period: { from: '01-07-2026', to: '31-07-2026', month: 'JUL-2026', end: '2026-07-31', bill: '05-08-2026', due: '20-08-2026' },
+    consumerNo: '2140 8876 5503', meterNo: 'OD 3312 9987', phase: 'Single phase', status: 'OK',
   },
   {
     id: 'uppcl-commercial',
     discomId: 'mvvnl', categoryId: 'commercial', supplyTypeId: '20HV',
-    units: 800, connectedLoadKw: 8, billedDemandKw: 9,
-    consumerNo: '5566 1234 8890', meterNo: 'MV 7781 0043', phase: 'Three phase',
+    units: 800, connectedLoadKw: 8, md: 9,
+    period: { from: '01-07-2026', to: '31-07-2026', month: 'JUL-2026', end: '2026-07-31', bill: '05-08-2026', due: '20-08-2026' },
+    consumerNo: '5566 1234 8890', meterNo: 'MV 7781 0043', phase: 'Three phase', status: 'OK',
   },
 ];
 
@@ -63,11 +102,9 @@ const money = (n) => {
 const rate2 = (n) => '₹' + Number(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const num = (n, d = 0) => Number(n).toLocaleString('en-IN', { maximumFractionDigits: d });
 const pct = (n) => num(n, 2) + '%';
+/** "+ a + b − c" → "a + b − c": drops the leading sign off a built-up sum. */
+const join = (parts) => parts.join(' ').replace(/^\+ /, '');
 
-/** Fixed dates, so the served HTML is byte-stable across rebuilds and diffs stay readable. */
-const BILL_DATE = '05-08-2026';
-const DUE_DATE = '20-08-2026';
-const PERIOD = '01-07-2026 – 31-07-2026';
 /** The present reading. Previous is back-computed from it, so the subtraction checks out. */
 const PRESENT_READING = 14820;
 
@@ -84,14 +121,24 @@ export function billInput(scenario, { units, connectedLoadKw, messy } = {}) {
     units: units != null ? units : scenario.units,
     connectedLoadKw: load,
     billingPeriodDays: 30,
+    // The END of the billing period, not the bill date: FPPA windows and tariff revisions are
+    // keyed to the month the power was consumed, not the month the bill was printed.
+    billingDate: scenario.period.end,
   };
-  // Recorded MD only matters on a demand-billed category. The scenario carries it as an
-  // offset from its own default load so that dragging the load slider keeps the overshoot
-  // — otherwise raising the load would silently make the penalty vanish, which is the one
-  // thing this scenario exists to demonstrate.
-  if (scenario.billedDemandKw != null) {
-    input.billedDemandKw = +(load + (scenario.billedDemandKw - scenario.connectedLoadKw)).toFixed(2);
+  // Recorded MD is carried as an offset from the scenario's own default load, so dragging the
+  // load slider keeps any overshoot — otherwise raising the load would silently make the
+  // penalty vanish, which is the one thing the commercial scenario exists to demonstrate.
+  input.billedDemandKw = +(load + (scenario.md - scenario.connectedLoadKw)).toFixed(2);
+
+  // FPPA and subsidy come from the verified tables, resolved for this scenario's month. If a
+  // state has no notified figure for that window the line simply does not appear — which is
+  // the correct outcome, and better than inventing a rate to make the page look complete.
+  const fppa = resolveFppaForDiscom(scenario.discomId, scenario.period.end);
+  if (fppa) { input.facRate = fppa.rate; input.facMode = fppa.mode; }
+  if (scenario.subsidyState && DOMESTIC_SUBSIDY[scenario.subsidyState]) {
+    input.subsidy = DOMESTIC_SUBSIDY[scenario.subsidyState];
   }
+
   if (messy) {
     input.arrears = MESSY.arrears;
     input.lpscRate = MESSY.lpscRate;
@@ -99,6 +146,11 @@ export function billInput(scenario, { units, connectedLoadKw, messy } = {}) {
     input.payments = [{ label: 'Part payment', amount: MESSY.payment }];
   }
   return input;
+}
+
+/** The notified FPPA entry behind a scenario, for the label and the source note. */
+export function fppaFor(scenario) {
+  return resolveFppaForDiscom(scenario.discomId, scenario.period.end);
 }
 
 /** The one extra charge that gets its own annotated row; everything else rides along generically. */
@@ -156,11 +208,34 @@ export function readout(b, scenario) {
     { k: 'Meter number', v: `${scenario.meterNo} · ${scenario.phase}` },
   ];
 
+  // ── billing period ────────────────────────────────────────────────────────
+  const P = scenario.period;
+  const period = [
+    { k: 'Bill month', v: P.month, mark: 'bill-month' },
+    { k: 'Reading period', v: `${P.from} – ${P.to}` },
+    { k: 'Bill date', v: P.bill },
+    { k: 'Due date', v: P.due, mark: 'due-date' },
+  ];
+  live.billMonth = {
+    note: `${P.month} — the month the power was USED (${P.from} to ${P.to}), not the month the bill was `
+      + `printed. It matters more than it looks: the fuel surcharge is notified per month, so this field `
+      + `decides which rate applies. Switch DISCOM above and watch the same UPPCL connection charge +10% `
+      + `in June and refund 4.43% in July.`,
+  };
+  live.dueDate = {
+    note: `Pay on or before ${P.due} and the bill costs exactly what it says. After it, a late payment `
+      + `surcharge starts accruing on the whole outstanding amount and compounds monthly — and where the `
+      + `DISCOM offers a prompt-payment rebate, you lose that too. The gap between the bill date and the `
+      + `due date is typically 15 days.`,
+  };
+
   // ── meter reading ─────────────────────────────────────────────────────────
   const reading = [
     { k: 'Previous reading', v: num(previous) },
     { k: 'Present reading', v: num(PRESENT_READING) },
     { k: 'Units consumed', v: `${num(b.units, 2)} ${eUnit}`, mark: 'units-consumed' },
+    { k: 'Maximum demand', v: `${num(b.billedDemandKw, 2)} ${dUnit}`, mark: 'md' },
+    { k: 'Reading status', v: scenario.status, mark: 'reading-status' },
   ];
   live.unitsConsumed = {
     formula: 'Units = (Present reading − Previous reading) × Meter constant',
@@ -169,6 +244,33 @@ export function readout(b, scenario) {
     note: `About ${num(b.units / (b.billingPeriodDays || 30), 1)} units a day over `
       + `${b.billingPeriodDays || 30} days. The meter constant is 1 on almost every domestic `
       + `connection; where it is not, it is printed on the meter and multiplies the difference.`,
+  };
+  // MD is on every bill, but it only COSTS anything on a demand-billed category — and saying so
+  // is the point. A domestic reader who sees this field usually assumes it is being charged for.
+  live.md = b.isDemandBilled
+    ? {
+        formula: 'Billed demand = higher of (recorded MD, contractual floor)',
+        calc: [`max(${num(b.billedDemandKw, 2)}, ${num(b.demandFloor || 0, 2)}) ${dUnit}`],
+        result: `${num(b.billingDemand, 2)} ${dUnit}`,
+        note: `The highest half-hour average the meter logged this month. On this category the demand `
+          + `charge and any excess-demand penalty are both levied on it, so a few minutes with everything `
+          + `running at once sets the price of the whole month.`,
+      }
+    : {
+        result: `${num(b.billedDemandKw, 2)} ${dUnit} recorded, against ${num(b.connectedLoadKw, 2)} ${dUnit} sanctioned`,
+        note: `The highest half-hour average the meter logged. On a domestic connection it is recorded but `
+          + `NOT what you are billed on — the fixed charge follows the sanctioned load regardless. It still `
+          + `matters: if it creeps above your sanctioned load, the DISCOM can raise a penalty or ask you to `
+          + `regularise the connection.`,
+      };
+  live.readingStatus = {
+    result: scenario.status,
+    note: `How the reading was obtained. ${scenario.status === 'OK' ? 'OK means the meter was physically '
+      + 'read and the reading was accepted — the bill is based on real consumption. ' : ''}DISCOMs print a `
+      + `short code here and the vocabulary is utility-specific. What matters is the distinction: a status `
+      + `saying the meter was actually read, versus one saying it was estimated, inaccessible or faulty. `
+      + `Anything in the second group means the units above are a guess that will be trued up later, and `
+      + `it is worth taking your own reading and quoting it.`,
   };
 
   // ── slab ladder ───────────────────────────────────────────────────────────
@@ -239,19 +341,34 @@ export function readout(b, scenario) {
         };
   }
 
-  if (b.facAmount > 0) {
-    charges.push({ k: 'Fuel surcharge (FPPA)', v: money(b.facAmount), mark: 'fppa' });
+  // FPPA can be NEGATIVE — UPPCL notified a 4.43% credit for July 2026 — so this is gated on
+  // "not zero", not "greater than zero", and a credit renders as a deduction.
+  if (b.facAmount !== 0) {
+    const credit = b.facAmount < 0;
+    charges.push({
+      k: credit ? 'Fuel surcharge credit (FPPA)' : 'Fuel surcharge (FPPA)',
+      v: (credit ? '− ' : '') + money(Math.abs(b.facAmount)),
+      mark: 'fppa', credit,
+    });
+    // The percent base is the engine's facBase: fixed + energy + penalty + TOD + min top-up.
+    // NOT the energy charge alone — that is the commonest wrong assumption about FPPA.
+    const facBase = b.fixedCharge + b.totalEnergy + b.excessDemandPenalty + (b.todNet || 0) + b.minChargeTopUp;
     live.fppa = b.facMode === 'percent'
       ? {
-          formula: 'FPPA = energy charge × notified rate %',
-          calc: [`${money(b.totalEnergy)} × ${pct(b.facRate)}`],
-          result: money(b.facAmount),
-          note: 'The rate is notified periodically and can change without your usage changing at all.',
+          formula: 'FPPA = (energy charge + fixed/demand charge + penalties) × notified rate %',
+          calc: [`Base = ${money(facBase)}`, `${money(facBase)} × ${pct(b.facRate)}`],
+          result: (credit ? '− ' : '') + money(Math.abs(b.facAmount)),
+          note: (credit
+              ? 'This month the rate is NEGATIVE, so the line is a credit: power cost the DISCOM less than '
+                + 'the regulator assumed and the difference comes back to you. '
+              : '')
+            + 'The rate is notified per month and it applies to the fixed charge as well as the energy '
+            + 'charge — not to the units alone, which is the commonest misreading of this line.',
         }
       : {
           formula: 'FPPA = units × notified rate per unit',
           calc: [`${num(b.units, 2)} × ${rate2(b.facRate)}`],
-          result: money(b.facAmount),
+          result: (credit ? '− ' : '') + money(Math.abs(b.facAmount)),
           note: 'The per-unit rate is the gap between what power actually cost the DISCOM and what '
             + 'the regulator assumed when your tariff was set.',
         };
@@ -308,31 +425,39 @@ export function readout(b, scenario) {
         };
   }
 
+  if (b.minChargeTopUp > 0) charges.push({ k: 'Minimum charge top-up', v: money(b.minChargeTopUp) });
+
+  // ── amount payable ────────────────────────────────────────────────────────
+  // Gross → subsidy → NET CURRENT BILL → arrears/surcharge/payments → TOTAL PAYABLE.
+  // The two bold figures are different quantities and the bill has to show why: the net
+  // current bill is this month's consumption, the total payable is what you owe today.
+  const totals = [{ k: 'Current charges', v: money(b.currentGross) }];
+
   if (b.subsidyAmount > 0) {
-    charges.push({ k: b.subsidyLabel || 'Subsidy', v: '− ' + money(b.subsidyAmount), mark: 'subsidy', credit: true });
+    totals.push({ k: 'Subsidy', v: '− ' + money(b.subsidyAmount), mark: 'subsidy', credit: true });
     live.subsidy = {
-      result: '− ' + money(b.subsidyAmount),
-      note: `A credit of ${money(b.subsidyAmount)} under ${b.subsidyLabel || 'the state scheme'}. `
-        + `The DISCOM still bills the full tariff above and the state reimburses it, which is why this `
-        + `shows as a deduction rather than as a lower rate.`,
+      formula: 'Net current bill = current charges − subsidy',
+      calc: [`${money(b.currentGross)} − ${money(b.subsidyAmount)}`],
+      result: money(b.currentNet),
+      note: `${b.subsidyLabel || 'A state scheme'} applies here. The DISCOM still bills the full tariff `
+        + `above and the state reimburses it, which is why this shows as a deduction rather than as a `
+        + `lower rate — and why the subsidy can be withdrawn without any tariff order changing.`,
     };
   }
 
-  if (b.minChargeTopUp > 0) charges.push({ k: 'Minimum charge top-up', v: money(b.minChargeTopUp) });
-
-  // ── totals ────────────────────────────────────────────────────────────────
-  const totals = [{ k: 'Current bill', v: money(b.currentNet), mark: 'current-bill' }];
-  // Built from the rows actually rendered, so the sum shown is the sum the reader can see —
-  // and it changes shape with the scenario, which is the point: there is no fixed list of
-  // charges that every Indian bill carries.
-  const join = (parts) => parts.join(' ').replace(/^\+ /, '');
-  live.currentBill = {
-    formula: 'Current bill = ' + join(charges.map(c => (c.credit ? '−' : '+') + ' ' + c.k.toLowerCase())),
-    calc: [join(charges.map(c => (c.credit ? '−' : '+') + ' ' + c.v.replace(/^− /, '')))],
+  totals.push({ k: 'Net current bill', v: money(b.currentNet), mark: 'net-current-bill', sub: true });
+  live.netCurrentBill = {
+    formula: b.subsidyAmount > 0
+      ? 'Net current bill = current charges − subsidy'
+      : 'Net current bill = ' + join(charges.map(c => (c.credit ? '−' : '+') + ' ' + c.k.toLowerCase())),
+    calc: b.subsidyAmount > 0
+      ? [`${money(b.currentGross)} − ${money(b.subsidyAmount)}`]
+      : [join(charges.map(c => (c.credit ? '−' : '+') + ' ' + c.v.replace(/^− /, '')))],
     result: money(b.currentNet),
-    note: `Across ${num(b.units, 2)} units that is ${money(b.currentNet)} ÷ ${num(b.units, 2)} = `
-      + `${rate2(b.units > 0 ? b.currentNet / b.units : 0)} all-in per unit — always above the slab rate, `
-      + `and the figure worth comparing month to month.`,
+    note: `THIS MONTH ONLY — it is not what you owe. Across ${num(b.units, 2)} units it works out to `
+      + `${money(b.currentNet)} ÷ ${num(b.units, 2)} = ${rate2(b.units > 0 ? b.currentNet / b.units : 0)} `
+      + `all-in per unit, always above the slab rate. This is the figure to compare month to month; the `
+      + `total payable below mixes in old dues and would tell you the wrong story about your usage.`,
   };
 
   if (b.arrears > 0) {
@@ -357,20 +482,45 @@ export function readout(b, scenario) {
   if (b.totalPayments > 0) {
     totals.push({ k: 'Payments received', v: '− ' + money(b.totalPayments), credit: true });
   }
-  totals.push({ k: 'Net payable', v: money(b.totalPayable), mark: 'net-payable', grand: true });
+  totals.push({ k: 'Total payable', v: money(b.totalPayable), mark: 'total-payable', grand: true });
 
-  const netCalc = [`${money(b.currentNet)} current bill`];
+  const netCalc = [`${money(b.currentNet)} net current bill`];
   if (b.arrears > 0) netCalc.push(`+ ${money(b.arrears)} arrears`);
   if (lpsc > 0) netCalc.push(`+ ${money(lpsc)} surcharge`);
   if (b.totalPayments > 0) netCalc.push(`− ${money(b.totalPayments)} paid`);
-  live.netPayable = {
-    formula: 'Net payable = current bill + arrears + surcharge − payments already credited',
+  live.totalPayable = {
+    formula: 'Total payable = net current bill + arrears + surcharge − payments already credited',
     calc: [netCalc.join(' ')],
     result: money(b.totalPayable),
-    note: b.arrears > 0 || lpsc > 0
-      ? 'Pay the full amount: a part payment does not stop the surcharge accruing on the remainder.'
-      : 'Nothing is carried forward on this bill, so it equals the current bill above.',
+    note: (b.arrears > 0 || lpsc > 0
+        ? 'Different from the net current bill above because old dues are in it. '
+        : 'Equal to the net current bill above only because nothing is carried forward on this bill. ')
+      + 'Pay the full amount: a part payment does not stop the surcharge accruing on the remainder.',
   };
+
+  // Prompt-payment rebate — only where the DISCOM's own schedule documents one. There is no
+  // generic rate to fall back on, and inventing one would put a fake discount on the page.
+  if (scenario.rebate) {
+    const R = scenario.rebate;
+    const amount = R.type === 'per_unit'
+      ? +(b.units * R.rate).toFixed(2)
+      : +(b.totalEnergy * R.rate / 100).toFixed(2);
+    const payByDue = Math.round(b.totalPayable - amount);
+    totals.push({ k: `Rebate if paid by ${P.due}`, v: '− ' + money(amount), mark: 'due-date-rebate', credit: true });
+    totals.push({ k: 'Payable on or before due date', v: money(payByDue), grand: true });
+    live.dueDateRebate = {
+      formula: R.type === 'per_unit'
+        ? 'Rebate = units × rebate rate per unit'
+        : 'Rebate = energy charge × rebate rate %',
+      calc: [R.type === 'per_unit'
+        ? `${num(b.units, 2)} × ${rate2(R.rate)}`
+        : `${money(b.totalEnergy)} × ${pct(R.rate)}`],
+      result: '− ' + money(amount),
+      note: `${R.label} Pay on or before ${P.due} and you owe ${money(payByDue)} instead of `
+        + `${money(b.totalPayable)}. Miss it and you lose the rebate AND start accruing late payment `
+        + `surcharge — the due date is worth two separate amounts of money, not one.`,
+    };
+  }
 
   const source = {
     label: b.tariffAsOf || b.tariffPeriodLabel || '',
@@ -379,7 +529,7 @@ export function readout(b, scenario) {
     discom: b.discom ? (b.discom.fullName || b.discom.name) : '',
   };
 
-  return { account, reading, slabs, charges, totals, live, source, meta: { BILL_DATE, DUE_DATE, PERIOD } };
+  return { account, period, reading, slabs, charges, totals, live, source };
 }
 
 // ─── markup ───────────────────────────────────────────────────────────────────
@@ -393,9 +543,13 @@ const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c =>
 // Every marked row is one grid row of a single-column document, so a marker can be pulled
 // out into the gutter beside the bill with pure CSS — no measuring, no JS, and it stays put
 // when a row's text wraps. The leader line is drawn by ::after on the anchor itself.
+// The callout carries the number AND the row's title, so the gutter reads as a legend on its
+// own — "1. Consumer number", "7. Fuel surcharge (FPPA)" — rather than as bare digits that
+// only mean something once you have found the matching explanation below.
 function marker(mark, k, n) {
-  return `<a class="bill-mark" href="#explain-${mark}" id="mark-${mark}"`
-    + ` aria-label="${esc('What is ' + k + '?')}">${n}</a>`;
+  return `<a class="bill-mark" href="#explain-${mark}" id="mark-${mark}">`
+    + `<span class="bill-mark-n">${n}</span>`
+    + `<span class="bill-mark-t">${esc(k)}</span></a>`;
 }
 
 function fieldRows(rows, counter) {
@@ -426,6 +580,7 @@ export function billHtml(r) {
   // Numbering follows DOCUMENT order, so the blocks are built in the order they appear on the
   // page rather than in the order the template happens to interpolate them.
   const accountBlock = block('Account', r.account, counter);
+  const periodBlock = block('Billing period', r.period, counter, 'bill-block-period');
   const readingBlock = block('Meter reading', r.reading, counter, 'bill-block-reading');
   const chargesBlock = block('Charges', r.charges, counter, 'bill-block-charges');
   const totalsBlock = block('Amount payable', r.totals, counter, 'bill-block-total');
@@ -451,12 +606,8 @@ export function billHtml(r) {
           </div>
           <span class="bill-doc-stamp">Sample</span>
         </div>
-        <div class="bill-dates">
-          <span><b>Bill date</b> ${esc(r.meta.BILL_DATE)}</span>
-          <span><b>Due date</b> ${esc(r.meta.DUE_DATE)}</span>
-          <span><b>Period</b> ${esc(r.meta.PERIOD)}</span>
-        </div>
         ${accountBlock}
+        ${periodBlock}
         ${readingBlock}
         <section class="bill-block bill-block-slabs">
           <h4>Slab ladder behind the energy charge</h4>

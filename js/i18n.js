@@ -561,13 +561,18 @@ function altUrlFor(lang) {
 }
 
 // Reflect the active language in the custom dropdown (trigger label + selected option).
+//
+// The menu is REBUILT, not just re-flagged. The current language renders as an inert <span>
+// rather than a button, so moving aria-current alone left the previously-current row as a
+// span forever: after switching English → Hindi in place, the English row stayed unclickable
+// and there was no way back. Rebuilding turns it back into a button. This is safe to do on
+// every switch only because the row listeners are delegated to #langMenu (see initI18n) —
+// re-binding them per render is what orphans listeners.
 function syncLangUI(lang) {
   const trigger = document.getElementById('langTriggerText');
   if (trigger) trigger.textContent = langMeta(lang).badge;
-  document.querySelectorAll('#langMenu .lang-opt').forEach(opt => {
-    if (opt.dataset.lang === lang) opt.setAttribute('aria-current', 'true');
-    else opt.removeAttribute('aria-current');
-  });
+  const menu = document.getElementById('langMenu');
+  if (menu) buildLangMenu(menu, lang);
 }
 
 // Rebuild the switcher menu from the registry so every page — including the 370+
@@ -595,8 +600,11 @@ function availableLangs() {
 //
 // A row is an <a> wherever the page declares a twin for that language, and a <button> where
 // switching is an in-place dictionary swap with no URL to point at.
-function buildLangMenu(menu) {
-  const here = document.documentElement.lang || 'en';
+// `active` is passed explicitly rather than read off <html lang> because the two disagree at
+// exactly one moment that matters: on boot, syncLangUI runs before applyLang has stamped the
+// saved language onto the document, so reading the element would mark the wrong row current.
+function buildLangMenu(menu, active) {
+  const here = active || document.documentElement.lang || 'en';
   menu.innerHTML = availableLangs().map(l => {
     const label = `<span class="lang-opt-name">${l.name}</span><span class="lang-opt-code">${l.badge}</span>`;
     if (l.code === here) return `<li><span class="lang-opt" data-lang="${l.code}" aria-current="true">${label}</span></li>`;
@@ -632,9 +640,11 @@ export function initI18n() {
   const menu = document.getElementById('langMenu');
 
   if (sw && trigger && menu) {
-    buildLangMenu(menu);
+    buildLangMenu(menu, lang);
     // Actionable rows only — the current language renders as a <span> and is not a target.
-    const opts = [...menu.querySelectorAll('a.lang-opt, button.lang-opt')];
+    // Read fresh on every use: syncLangUI rebuilds the menu whenever the language changes,
+    // so a list captured once would go stale the first time someone switches.
+    const options = () => [...menu.querySelectorAll('a.lang-opt, button.lang-opt')];
     // Register with the shared popup coordinator so opening another popup (account,
     // Quick Links, review chooser) dismisses this one, and vice versa.
     window.__popups?.register('lang', () => closeMenu(false));
@@ -645,7 +655,7 @@ export function initI18n() {
     const closeMenu = (focusTrigger) => {
       sw.classList.remove('open');
       trigger.setAttribute('aria-expanded', 'false');
-      opts.forEach(o => o.classList.remove('is-active'));
+      options().forEach(o => o.classList.remove('is-active'));
       if (focusTrigger) trigger.focus();
     };
     const choose = (l) => {
@@ -667,20 +677,26 @@ export function initI18n() {
       e.stopPropagation();
       sw.classList.contains('open') ? closeMenu() : openMenu();
     });
-    opts.forEach(opt => opt.addEventListener('click', () => {
+    // Delegated to the menu, not bound per row: the rows are replaced on every language
+    // change, and per-row listeners would be orphaned by the first switch.
+    menu.addEventListener('click', (e) => {
+      const opt = e.target.closest('a.lang-opt, button.lang-opt');
+      if (!opt || !menu.contains(opt)) return;
       const l = opt.dataset.lang;
       // An anchor already knows where it is going — let the browser navigate, and only
       // record the choice so the twin boots in it. Calling choose() here would work too,
       // but it would fight the native navigation and break middle-click / ctrl-click.
       if (opt.tagName === 'A') {
-        try { localStorage.setItem('lang', l); } catch (e) {}
+        try { localStorage.setItem('lang', l); } catch (e2) {}
         return;
       }
       choose(l);
-    }));
+    });
 
     // Keyboard: arrows move a highlight, Enter/Space selects, Escape closes.
     const move = (dir) => {
+      const opts = options();
+      if (!opts.length) return;
       const cur = opts.findIndex(o => o.classList.contains('is-active'));
       const next = (cur < 0 ? (dir > 0 ? 0 : opts.length - 1) : (cur + dir + opts.length) % opts.length);
       opts.forEach(o => o.classList.remove('is-active'));
@@ -697,7 +713,7 @@ export function initI18n() {
         e.preventDefault();
         // click() rather than choose(): it runs the listener above and, on an anchor,
         // performs the navigation — one path for both row kinds.
-        const act = opts.find(o => o.classList.contains('is-active'));
+        const act = options().find(o => o.classList.contains('is-active'));
         if (act) act.click();
       }
     });
