@@ -46,6 +46,7 @@ export default {
     'ql.billReview': 'तज्ज्ञ बिल तपासणी',
     'ql.guides': 'ब्लॉग आणि लेख',
     'ql.glossary': 'बिल शब्दावली',
+    'ql.understandBill': 'तुमचे बिल समजून घ्या',
     'ql.methodology': 'कार्यपद्धती व अचूकता',
     'ql.contact': 'संपर्क करा',
     'ql.privacy': 'गोपनीयता धोरण',

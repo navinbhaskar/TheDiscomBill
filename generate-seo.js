@@ -26,6 +26,8 @@ import { buildTariffIndex } from './scripts/build-tariff-index.mjs';
 
 import { SMG } from './smart-meter-content.js';
 import { METER_SVG } from './smart-meter-svg.js';
+import { SCENARIO_COPY, LINES, UB } from './understand-bill-content.js';
+import { SCENARIOS, DEFAULT_SCENARIO, billInput, readout, billHtml } from './js/bill-anatomy.js';
 
 // The registry serves an index up front and loads tariff tables per state in the browser.
 // A whole-site pre-render needs all of them, so pull the lot before anything reads a rate.
@@ -399,6 +401,7 @@ const FOOTER_SITEMAP = `
         <a href="/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
         <a href="/guides/" data-i18n="nav.blog">Blog</a>
         <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
         <a href="/fuel-surcharge/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/#about" data-i18n="nav.about">About</a>
@@ -3447,6 +3450,188 @@ ${METER_SVG.replace('>Press here<', `>${esc(T(lang, S.pressHere))}<`)}
   });
 }
 
+// ── understand your bill (/understand-your-bill/) ─────────────────────────────
+// An annotated, interactive bill. The reader changes DISCOM, units, sanctioned load or the
+// arrears toggle and every figure recomputes through js/engine.js — the same engine behind
+// the calculator, so the explanations describe arithmetic that really ran and a tariff
+// revision reaches this page without anyone editing it.
+//
+// The default scenario is rendered here, at build time, complete with its numbers. That is
+// deliberate and it is the difference between this page and /compare/: a page whose entire
+// substance arrives by JS ships an empty document to a crawler. Only the FIGURES are live;
+// every word of explanation is in the served HTML.
+//
+// English-only for now. The strings are already in { en } objects and T() falls back to .en,
+// so adding twins later is additive — but the explanation prose is the hardest copy on the
+// site to translate well, and it is not worth doing before the page has earned impressions.
+function understandBillPage(lang = 'en') {
+  const enUrl = '/understand-your-bill/';
+  const U = UB;
+  const t = (node) => T(lang, node).replace(/\s+/g, ' ').trim();
+
+  const scenario = SCENARIOS.find(s => s.id === DEFAULT_SCENARIO) || SCENARIOS[0];
+  const bill = calculateBill(billInput(scenario));
+  if (bill.error) throw new Error(`understandBillPage: ${bill.message}`);
+  const r = readout(bill, scenario);
+  const { html: billMarkup, marks } = billHtml(r);
+
+  const copy = (s) => {
+    const c = SCENARIO_COPY[s.id];
+    if (!c) throw new Error(`understandBillPage: no SCENARIO_COPY for "${s.id}"`);
+    return c;
+  };
+  const scenarioOpts = SCENARIOS.map(s =>
+    `<option value="${attr(s.id)}"${s.id === scenario.id ? ' selected' : ''}>${esc(T(lang, copy(s).label))}</option>`
+  ).join('\n            ');
+
+  // The scenario notes are all rendered, and JS shows the one that matches. Rendering only the
+  // current one would mean the other three exist nowhere in the HTML, and they are useful copy.
+  const scenarioNotes = SCENARIOS.map(s =>
+    `<p class="ub-note" data-scenario="${attr(s.id)}"${s.id === scenario.id ? '' : ' hidden'}>${esc(T(lang, copy(s).note))}</p>`
+  ).join('\n          ');
+
+  // One explanation per LINE. A line the default bill does not carry still gets its block —
+  // it is real content, it is what someone searching "what is FPPA" arrives for, and hiding
+  // it would make the page's substance depend on which scenario happened to be default.
+  const explain = (group) => LINES.filter(l => l.group === group).map(l => {
+    const n = marks[l.id];
+    const live = r.live[l.live];
+    return `<article class="ub-explain" id="explain-${l.id}" data-line="${attr(l.id)}" data-live="${attr(l.live || '')}"${n ? '' : ' data-absent'}>
+        <h3><span class="ub-num"${n ? '' : ' hidden'}>${n || ''}</span>${esc(T(lang, l.title))}</h3>
+        <p>${t(l.body)}</p>
+        <p class="ub-live"${live ? '' : ' hidden'}><span class="ub-live-tag">${esc(T(lang, U.onThisBill))}</span>
+          <span class="ub-live-text">${esc(live || '')}</span></p>
+        <p class="ub-live is-absent"${live ? ' hidden' : ''}>${esc(T(lang, U.notOnThisBill))}</p>
+      </article>`;
+  }).join('\n      ');
+
+  const section = (id, group) => `
+    <section class="seo-section" id="${id}">
+      <h2>${esc(T(lang, U.sectionH2[group]))}</h2>
+      <p>${t(U.sectionIntro[group])}</p>
+      ${explain(group)}
+    </section>`;
+
+  const toc = [
+    ['#bill', U.toc.bill], ['#who', U.toc.header], ['#reading', U.toc.reading],
+    ['#charges', U.toc.charges], ['#totals', U.toc.totals],
+    ['#why-higher', U.toc.higher], ['#faq', U.toc.faq],
+  ].map(([href, node]) => `<a href="${href}">${esc(T(lang, node))}</a>`).join('\n        ');
+
+  const higher = T(lang, U.higherPoints).map(([h, d]) =>
+    `<li><strong>${esc(h)}</strong> ${esc(d.replace(/\s+/g, ' ').trim())}</li>`).join('\n        ');
+
+  const faqItems = U.faq.map(f =>
+    `<details class="seo-faq-item">
+        <summary>${esc(T(lang, f.q))}</summary>
+        <div class="seo-faq-a">${t(f.a)}</div>
+      </details>`).join('\n      ');
+
+  const faqLd = {
+    '@context': 'https://schema.org', '@type': 'FAQPage',
+    mainEntity: U.faq.map(f => ({
+      '@type': 'Question', name: T(lang, f.q),
+      acceptedAnswer: { '@type': 'Answer', text: t(f.a).replace(/<[^>]+>/g, '') },
+    })),
+  };
+
+  const card = (c) => `<a class="seo-link-card" href="${attr(c.href)}">`
+    + `<strong>${esc(T(lang, c.t))}</strong><span>${esc(T(lang, c.d))}</span></a>`;
+
+  const body = `
+  <section class="seo-page container understand-bill-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">${esc(T(lang, U.crumb))}</span></li></ol></nav>
+    <h1>${esc(T(lang, U.h1))}</h1>
+    <p class="guide-meta">${T(lang, U.meta).replace('%DATE%', LASTMOD_TOKEN[lang])}</p>
+    <p class="seo-lead">${t(U.lead)}</p>
+
+    <nav class="page-toc" aria-label="${esc(T(lang, U.toc.label))}">
+      <span class="page-toc-label">${esc(T(lang, U.toc.label))}</span>
+      ${toc}
+    </nav>
+
+    <section class="seo-section" id="bill">
+      <h2>${esc(T(lang, U.controlsH2))}</h2>
+      <p>${t(U.controlsIntro)}</p>
+
+      <form class="ub-controls" id="ubControls" novalidate>
+        <div class="ub-field ub-field-wide">
+          <label for="ubScenario">${esc(T(lang, U.ctl.scenario))}</label>
+          <select id="ubScenario" name="scenario">
+            ${scenarioOpts}
+          </select>
+        </div>
+        <div class="ub-field">
+          <label for="ubUnits">${esc(T(lang, U.ctl.units))}</label>
+          <input type="number" id="ubUnits" name="units" min="0" max="5000" step="10" value="${scenario.units}" inputmode="numeric">
+        </div>
+        <div class="ub-field">
+          <label for="ubLoad">${esc(T(lang, U.ctl.load))}</label>
+          <input type="number" id="ubLoad" name="load" min="0.5" max="150" step="0.5" value="${scenario.connectedLoadKw}" inputmode="decimal">
+        </div>
+        <div class="ub-field ub-field-check">
+          <label><input type="checkbox" id="ubMessy" name="messy"> ${esc(T(lang, U.ctl.messy))}</label>
+          <span class="ub-hint">${esc(T(lang, U.ctl.messyHint))}</span>
+        </div>
+        <button type="button" class="btn-ghost ub-reset" id="ubReset">${esc(T(lang, U.ctl.reset))}</button>
+      </form>
+      ${scenarioNotes}
+
+      <p class="ub-illustrative">
+        <span class="ub-illustrative-tag">${esc(T(lang, U.illustrative))}</span>
+        <span>${t(U.illustrativeBody)}</span>
+      </p>
+
+      <div class="bill-doc" id="billDoc" aria-live="polite">${billMarkup}
+      </div>
+      <p class="seo-note" id="ubError" hidden></p>
+    </section>
+${section('who', 'header')}
+${section('reading', 'reading')}
+${section('charges', 'charges')}
+${section('totals', 'totals')}
+
+    <section class="seo-section" id="why-higher">
+      <h2>${esc(T(lang, U.higherH2))}</h2>
+      <p>${t(U.higherIntro)}</p>
+      <ul>
+        ${higher}
+      </ul>
+      <p>${t(U.higherOutro)}</p>
+    </section>
+
+    <section class="seo-section" id="faq">
+      <h2>${esc(T(lang, U.faqH2))}</h2>
+      ${faqItems}
+    </section>
+
+    <section class="seo-section">
+      <h2>${esc(T(lang, U.nextH2))}</h2>
+      <div class="seo-link-grid">
+        ${card(U.cards.calc)}
+        ${card(U.cards.check)}
+        ${card(U.cards.glossary)}
+        ${card(U.cards.load)}
+      </div>
+    </section>
+
+    <p class="seo-disclaimer">${t(U.disclaimer)}</p>
+  </section>
+  <script type="module">
+    import { initUnderstandBill } from "/js/understand-bill.js";
+    initUnderstandBill();
+  </script>`;
+
+  return layout({
+    title: T(lang, U.title),
+    description: T(lang, U.description),
+    canonical: `${SITE}${enUrl}`,
+    lang, page: enUrl, altLangs: [],
+    jsonld: [faqLd],
+    body,
+  });
+}
+
 // ── smart meter recharge (/smart-meter-recharge/) ─────────────────────────────
 // Prepaid smart meters are being mass-installed under RDSS, and "<DISCOM> smart meter
 // recharge" is a high-volume, low-competition query family. One page per DISCOM (EN + HI),
@@ -4137,6 +4322,7 @@ export function generateSeo() {
 
     // English-only (see the note on fuelSurchargePage) — emitted once, not per language.
     if (lang === 'en') { emitPage('fuel-surcharge', fuelSurchargePage()); pages++; }
+    if (lang === 'en') { emitPage('understand-your-bill', understandBillPage()); pages++; }
 
     for (const state of states) {
       if (!langServesState(lang, state)) continue;   // vernacular tariff twins are state-scoped

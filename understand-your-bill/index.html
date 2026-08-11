@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      
+    })();
+  </script>
+  <title>Understand Your Electricity Bill: Every Line Explained</title>
+  <meta name="description" content="An interactive electricity bill you can change. Switch DISCOM, units and sanctioned load and see what every line means — fixed charge, slabs, FPPA, duty">
+  <link rel="canonical" href="https://thediscombill.com/understand-your-bill/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/understand-your-bill/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/understand-your-bill/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="Understand Your Electricity Bill: Every Line Explained">
+  <meta property="og:description" content="An interactive electricity bill you can change. Switch DISCOM, units and sanctioned load and see what every line means — fixed charge, slabs, FPPA, duty, demand penalty.">
+  <meta property="og:url" content="https://thediscombill.com/understand-your-bill/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="Understand Your Electricity Bill: Every Line Explained">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:locale:alternate" content="hi_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Understand Your Electricity Bill: Every Line Explained">
+  <meta name="twitter:description" content="An interactive electricity bill you can change. Switch DISCOM, units and sanctioned load and see what every line means — fixed charge, slabs, FPPA, duty, demand penalty.">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/understand-your-bill/","name":"Understand Your Electricity Bill: Every Line Explained","description":"An interactive electricity bill you can change. Switch DISCOM, units and sanctioned load and see what every line means — fixed charge, slabs, FPPA, duty, demand penalty.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-11"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why does my bill have a fixed charge when I used no electricity?","acceptedAnswer":{"@type":"Answer","text":"Because the fixed charge pays for the connection, not the consumption — the line to your premises, the meter, and the capacity kept available for you. It is levied per kW of sanctioned load and applies to a locked house. The only way to stop it is to surrender the connection formally; simply not using power does not."}},{"@type":"Question","name":"What is FPPA on my electricity bill?","acceptedAnswer":{"@type":"Answer","text":"Fuel and Power Purchase Adjustment: the difference between what the DISCOM actually paid for power and what the regulator assumed when your tariff was fixed, passed through to you. It is recalculated periodically, so it varies month to month even when your usage does not. Some states charge it in paise per unit, others as a percentage of the energy charge."}},{"@type":"Question","name":"Is GST charged on an electricity bill?","acceptedAnswer":{"@type":"Answer","text":"No. The supply of electricity to a domestic consumer is exempt from GST. What you see is electricity duty, a state tax, which is a different thing. GST can appear on ancillary items a DISCOM bills separately — a new connection fee, a meter testing charge — but not on the energy supply itself."}},{"@type":"Question","name":"My bill says \"Average\" or \"Provisional\". What does that mean?","acceptedAnswer":{"@type":"Answer","text":"Nobody read the meter that month, so the DISCOM estimated the consumption from your history. It is trued up on the next actual reading, which is why an estimated month is often followed by an unusually large one. Take your own reading and quote it when you raise it — the adjustment is routine."}},{"@type":"Question","name":"Can I change my tariff category?","acceptedAnswer":{"@type":"Answer","text":"Yes, by applying to the DISCOM with evidence of how the premises is used. It matters: a home billed under a commercial schedule can pay close to double. The change is normally prospective, so the sooner a wrong category is caught the less it costs."}}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <a href="/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">Smart Meter</a>
+      <a href="/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/#calculator" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">Smart Meter</span></a>
+            <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <!-- aria-labelledby, not aria-label: the accessible name has to CONTAIN the visible
+             text ("EN"), or speech input cannot activate the button and a screen reader never
+             announces which language is active (WCAG 2.5.3). Referencing the live span also
+             keeps the name in step when syncLangUI() rewrites the badge. -->
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- A plain list of links, not a listbox. These rows navigate, so they are anchors:
+             that makes them crawlable, middle-clickable and keyboard-operable for free,
+             none of which a role="option" <li> with a click handler ever was. Rows that
+             translate in place (no twin URL to point at) stay <button>s. -->
+        <ul class="lang-menu" id="langMenu" aria-label="Select language">
+          <li><span class="lang-opt" data-lang="en" aria-current="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body" role="main">
+
+  <section class="seo-page container understand-bill-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">Understand Your Bill</span></li></ol></nav>
+    <h1>Understand Your Electricity Bill, Line by Line</h1>
+    <p class="guide-meta">Updated 11 August 2026 · Figures computed live by the same engine behind our calculator · <a href="/methodology/">How we source and verify</a></p>
+    <p class="seo-lead">Almost nobody is taught to read an electricity bill, and the bill does not help — a dozen charges in abbreviations, most of them unexplained. Below is a working bill. Change the DISCOM, the units or the sanctioned load and it recalculates, and every numbered marker explains the line it points at using the numbers you are looking at.</p>
+
+    <nav class="page-toc" aria-label="On this page">
+      <span class="page-toc-label">On this page</span>
+      <a href="#bill">The bill</a>
+        <a href="#who">Who and what</a>
+        <a href="#reading">The meter reading</a>
+        <a href="#charges">The charges</a>
+        <a href="#totals">The totals</a>
+        <a href="#why-higher">Why it exceeds units × rate</a>
+        <a href="#faq">Common questions</a>
+    </nav>
+
+    <section class="seo-section" id="bill">
+      <h2>Change the bill</h2>
+      <p>Every figure below is recalculated from the real tariff schedule for the DISCOM you pick, so the explanations describe arithmetic that actually ran — not a worked example written once and left to age.</p>
+
+      <form class="ub-controls" id="ubControls" novalidate>
+        <div class="ub-field ub-field-wide">
+          <label for="ubScenario">DISCOM and category</label>
+          <select id="ubScenario" name="scenario">
+            <option value="uppcl-domestic" selected>UPPCL (Uttar Pradesh) — Domestic</option>
+            <option value="msedcl-domestic">MSEDCL (Maharashtra) — Domestic</option>
+            <option value="kseb-domestic">KSEB (Kerala) — Domestic</option>
+            <option value="uppcl-commercial">UPPCL (Uttar Pradesh) — Commercial</option>
+          </select>
+        </div>
+        <div class="ub-field">
+          <label for="ubUnits">Units consumed</label>
+          <input type="number" id="ubUnits" name="units" min="0" max="5000" step="10" value="250" inputmode="numeric">
+        </div>
+        <div class="ub-field">
+          <label for="ubLoad">Sanctioned load (kW)</label>
+          <input type="number" id="ubLoad" name="load" min="0.5" max="150" step="0.5" value="2" inputmode="decimal">
+        </div>
+        <div class="ub-field ub-field-check">
+          <label><input type="checkbox" id="ubMessy" name="messy"> Add arrears, late payment surcharge and a part payment</label>
+          <span class="ub-hint">Most real bills carry old dues. Turn this on to see how they change the total.</span>
+        </div>
+        <button type="button" class="btn-ghost ub-reset" id="ubReset">Reset</button>
+      </form>
+      <p class="ub-note" data-scenario="uppcl-domestic">Urban domestic above 1 kW. Electricity Duty is a percentage of the whole bill here.</p>
+          <p class="ub-note" data-scenario="msedcl-domestic" hidden>Adds a Wheeling Charge line, and levies Electricity Duty on the energy charge only.</p>
+          <p class="ub-note" data-scenario="kseb-domestic" hidden>Five narrow slabs, and no additional charges at all — the simplest shape a bill takes.</p>
+          <p class="ub-note" data-scenario="uppcl-commercial" hidden>Billed on recorded maximum demand, so exceeding your sanctioned load costs real money.</p>
+
+      <p class="ub-illustrative">
+        <span class="ub-illustrative-tag">Illustrative example</span>
+        <span>This is not a real bill and not a copy of any DISCOM's stationery. Bills differ in layout, field names and ordering from one utility to the next; what is common between them is the set of charges shown here. The consumer number, meter number and address are invented.</span>
+      </p>
+
+      <div class="bill-doc" id="billDoc" aria-live="polite">
+      <div class="bill-doc-head">
+        <div>
+          <strong class="bill-doc-title">Madhyanchal Vidyut Vitaran Nigam Ltd.</strong>
+          <span class="bill-doc-sub">Electricity bill · this is an illustration, not a real bill</span>
+        </div>
+        <span class="bill-doc-stamp">Sample</span>
+      </div>
+      <div class="bill-grid">
+        <section class="bill-block"><h4>Consumer details</h4><dl class="bill-fields"><div class="bill-field" data-line="consumer-no"><dt>Consumer number <a class="bill-mark" href="#explain-consumer-no" id="mark-consumer-no" aria-label="What is Consumer number?">1</a></dt><dd>1234 5678 9012</dd></div><div class="bill-field"><dt>Consumer name</dt><dd>A. Kumar</dd></div><div class="bill-field"><dt>Address</dt><dd>14, MG Road (address is invented)</dd></div><div class="bill-field" data-line="tariff-category"><dt>Tariff category <a class="bill-mark" href="#explain-tariff-category" id="mark-tariff-category" aria-label="What is Tariff category?">2</a></dt><dd>LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW)</dd></div><div class="bill-field" data-line="sanctioned-load"><dt>Sanctioned load <a class="bill-mark" href="#explain-sanctioned-load" id="mark-sanctioned-load" aria-label="What is Sanctioned load?">3</a></dt><dd>2 kW</dd></div><div class="bill-field"><dt>Meter number</dt><dd>MV 4471 2208</dd></div><div class="bill-field"><dt>Connection</dt><dd>Single phase</dd></div></dl></section>
+        <section class="bill-block"><h4>Bill summary</h4><dl class="bill-fields"><div class="bill-field"><dt>Bill date</dt><dd>05-08-2026</dd></div><div class="bill-field"><dt>Due date</dt><dd>20-08-2026</dd></div><div class="bill-field"><dt>Billing period</dt><dd>01-07-2026 to 31-07-2026</dd></div><div class="bill-field"><dt>Bill number</dt><dd>ILLUSTRATIVE / NOT A BILL</dd></div></dl></section>
+      </div>
+      <section class="bill-block">
+        <h4>Meter reading</h4>
+        <div class="bill-scroll"><table class="bill-reading">
+          <thead><tr><th scope="col">Previous</th><th scope="col">Present</th><th scope="col">Multiplying factor</th><th scope="col">Units consumed</th></tr></thead>
+          <tbody><tr><td class="num">14,570</td><td class="num">14,820</td><td class="num">1</td><td data-line="units-consumed" class="num is-marked">250 kWh <a class="bill-mark" href="#explain-units-consumed" id="mark-units-consumed" aria-label="What is Units consumed?">4</a></td></tr></tbody>
+        </table></div>
+      </section>
+      <section class="bill-block">
+        <h4>How the energy charge was built</h4>
+        <div class="bill-scroll"><table class="bill-slabs">
+          <thead><tr><th scope="col">Slab</th><th scope="col">Units</th><th scope="col">Rate</th><th scope="col">Amount</th></tr></thead>
+          <tbody><tr><td>1 – 150 units</td><td class="num">150</td><td class="num">₹5.50</td><td class="num">₹825</td></tr><tr><td>151 – 250 units</td><td class="num">100</td><td class="num">₹6.00</td><td class="num">₹600</td></tr></tbody>
+        </table></div>
+      </section>
+      <section class="bill-block bill-block-charges"><h4>Charges</h4><table class="bill-lines"><tbody><tr data-line="energy-charge"><th scope="row">Energy charge <a class="bill-mark" href="#explain-energy-charge" id="mark-energy-charge" aria-label="What is Energy charge?">5</a></th><td class="num">₹1,425</td></tr><tr data-line="fixed-charge"><th scope="row">Fixed charge <a class="bill-mark" href="#explain-fixed-charge" id="mark-fixed-charge" aria-label="What is Fixed charge?">6</a></th><td class="num">₹220</td></tr><tr data-line="electricity-duty"><th scope="row">Electricity Duty <a class="bill-mark" href="#explain-electricity-duty" id="mark-electricity-duty" aria-label="What is Electricity Duty?">7</a></th><td class="num">₹82.25</td></tr></tbody></table></section>
+      <section class="bill-block bill-block-total"><h4>Amount payable</h4><table class="bill-lines"><tbody><tr data-line="current-bill"><th scope="row">Current bill amount <a class="bill-mark" href="#explain-current-bill" id="mark-current-bill" aria-label="What is Current bill amount?">8</a></th><td class="num">₹1,727</td></tr><tr class="is-grand" data-line="net-payable"><th scope="row">Net payable <a class="bill-mark" href="#explain-net-payable" id="mark-net-payable" aria-label="What is Net payable?">9</a></th><td class="num">₹1,727</td></tr></tbody></table></section>
+      <p class="bill-source">Madhyanchal Vidyut Vitaran Nigam Ltd. · FY 2026-27 (UPERC order dt. 02-Jul-2026, rates retained) <span class="bill-badge is-ok">Verified against the tariff order</span> · <a href="https://www.mvvnl.in" target="_blank" rel="noopener">Source</a></p>
+      </div>
+      <p class="seo-note" id="ubError" hidden></p>
+    </section>
+
+    <section class="seo-section" id="who">
+      <h2>Who the bill is for, and under what tariff</h2>
+      <p>The top block identifies the account and, crucially, the rate schedule it is billed under. Errors here are expensive and they persist quietly for years, so it is worth two minutes.</p>
+      <article class="ub-explain" id="explain-consumer-no" data-line="consumer-no" data-live="">
+        <h3><span class="ub-num">1</span>Consumer number</h3>
+        <p>The account the connection is billed to, not the meter. It survives a meter replacement, and it is the number every portal, payment app and complaint form asks for. Names vary by state — <strong>Account ID</strong>, <strong>K Number</strong>, <strong>CA Number</strong>, <strong>Service Number</strong> — but they are all this field. Copy it exactly, including leading zeroes.</p>
+        <p class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
+          <span class="ub-live-text"></span></p>
+        <p class="ub-live is-absent">Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+      </article>
+      <article class="ub-explain" id="explain-tariff-category" data-line="tariff-category" data-live="tariffCategory">
+        <h3><span class="ub-num">2</span>Tariff category</h3>
+        <p>Which rate schedule your connection is billed under. This one code decides your slab rates, your fixed charge and whether a demand penalty can apply, so it is the single most consequential field on the bill — and the one most often wrong. A home billed under a commercial code pays roughly double. If yours does not match how the premises are actually used, that is a correction worth chasing.</p>
+        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <span class="ub-live-text">LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW). Every rate on this bill follows from that one code.</span></p>
+        <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+      </article>
+      <article class="ub-explain" id="explain-sanctioned-load" data-line="sanctioned-load" data-live="sanctionedLoad">
+        <h3><span class="ub-num">3</span>Sanctioned load</h3>
+        <p>The capacity the DISCOM has contracted to supply you, in kW — not what you used. On a domestic bill it usually sets the fixed charge directly. Raising it costs a one-time fee and a higher monthly fixed charge; leaving it too low risks a penalty if your recorded demand overshoots it. It is a genuine trade-off, not a number to minimise.</p>
+        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <span class="ub-live-text">2 kW, which is what the ₹220 fixed charge below is levied on — ₹110.00 per kW a month.</span></p>
+        <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+      </article>
+    </section>
+
+    <section class="seo-section" id="reading">
+      <h2>What the meter said</h2>
+      <p>The only measured quantity on the whole bill. Everything below is arithmetic performed on this one number.</p>
+      <article class="ub-explain" id="explain-units-consumed" data-line="units-consumed" data-live="unitsConsumed">
+        <h3><span class="ub-num">4</span>Units consumed</h3>
+        <p>Present reading minus previous reading, multiplied by the meter constant (the multiplying factor, almost always 1 on a domestic connection). One unit is one kilowatt-hour. If the bill is marked <strong>Average</strong>, <strong>Provisional</strong> or <strong>RNT</strong>, nobody read the meter — the figure is an estimate and will be trued up later, so check it against the meter yourself.</p>
+        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <span class="ub-live-text">250 units over 30 days — about 8.3 units a day. 14,820 − 14,570 = 250, times a meter constant of 1.</span></p>
+        <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+      </article>
+    </section>
+
+    <section class="seo-section" id="charges">
+      <h2>What you are being charged</h2>
+      <p>A bill is not one price. It is a stack of separate charges, each set by a different rule, and knowing which is which tells you which ones you can do something about.</p>
+      <article class="ub-explain" id="explain-energy-charge" data-line="energy-charge" data-live="energyCharge">
+        <h3><span class="ub-num">5</span>Energy charge</h3>
+        <p>What the units themselves cost. Almost every Indian domestic tariff is <em>telescopic</em>: the slabs stack rather than replace each other, so crossing into a higher slab raises the price of the extra units only, never of the units below. Your bill prints one total; the table above shows the ladder it came from.</p>
+        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <span class="ub-live-text">₹1,425 for 250 units, across 2 slabs. The last unit cost ₹6.00, but the average across the whole bill is ₹5.70 — that gap is the telescopic ladder at work.</span></p>
+        <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+      </article>
+      <article class="ub-explain" id="explain-fixed-charge" data-line="fixed-charge" data-live="fixedCharge">
+        <h3><span class="ub-num">6</span>Fixed charge</h3>
+        <p>Payable whether you use a single unit or none. It funds the wires, the meter and the crew, and it is why a locked, empty house still gets a bill. On a domestic connection it is levied per kW of <em>sanctioned load</em>; on a commercial or industrial one it is levied on the <em>recorded maximum demand</em>, which is why the same rate produces very different amounts on the two bills.</p>
+        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <span class="ub-live-text">₹220 — ₹110.00 per kW on 2 kW of sanctioned load. Set the units to zero above and this line is all that remains.</span></p>
+        <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+      </article>
+      <article class="ub-explain" id="explain-excess-demand" data-line="excess-demand" data-live="excessDemand" data-absent>
+        <h3><span class="ub-num" hidden></span>Excess demand penalty</h3>
+        <p>Charged when the maximum demand the meter recorded during the month exceeded your sanctioned load. The meter logs the highest half-hour average, so a few minutes of everything running at once is enough to trigger it — and it recurs every month you overshoot. Two fixes: stagger the heavy loads, or apply to raise the sanctioned load. Which one is cheaper depends on how far over you are running.</p>
+        <p class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
+          <span class="ub-live-text"></span></p>
+        <p class="ub-live is-absent">Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+      </article>
+      <article class="ub-explain" id="explain-fppa" data-line="fppa" data-live="fppa" data-absent>
+        <h3><span class="ub-num" hidden></span>Fuel surcharge (FPPA / FCA)</h3>
+        <p>The one line that changes month to month for reasons nothing to do with you. When the DISCOM's actual cost of buying power differs from what the regulator assumed when it set your tariff, the gap is passed through here. Some states publish it as paise per unit, others as a percentage of the energy charge. It is legitimate, it is capped, and the notified rate is public — a bill that shows this line without a rate is worth questioning.</p>
+        <p class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
+          <span class="ub-live-text"></span></p>
+        <p class="ub-live is-absent">Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+      </article>
+      <article class="ub-explain" id="explain-wheeling" data-line="wheeling" data-live="wheeling" data-absent>
+        <h3><span class="ub-num" hidden></span>Wheeling charge</h3>
+        <p>The cost of moving the electricity across the distribution network to your premises, unbundled from the cost of the electricity itself. States that separate the two — Maharashtra most visibly — print it as its own line. States that do not have folded the same cost into the energy rate. You are not paying it twice.</p>
+        <p class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
+          <span class="ub-live-text"></span></p>
+        <p class="ub-live is-absent">Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+      </article>
+      <article class="ub-explain" id="explain-electricity-duty" data-line="electricity-duty" data-live="electricityDuty">
+        <h3><span class="ub-num">7</span>Electricity duty</h3>
+        <p>A state tax, collected by the DISCOM on the government's behalf. Whether it lands on the energy charge alone or on the whole bill is a state-by-state decision, and it is the reason two bills with identical consumption can differ by a few hundred rupees across a state border. There is no GST on domestic electricity supply — if you see one, look again.</p>
+        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <span class="ub-live-text">₹82.25 at 5% on the whole bill, fixed charge included. Switch DISCOM above and the base changes with it — that is a state-by-state decision, not a rate difference.</span></p>
+        <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+      </article>
+      <article class="ub-explain" id="explain-subsidy" data-line="subsidy" data-live="subsidy" data-absent>
+        <h3><span class="ub-num" hidden></span>Subsidy</h3>
+        <p>A state government rebate, shown as a deduction. The DISCOM bills the full tariff and the state reimburses it, which is why the gross figure stays high and the credit appears separately. Most schemes are conditional — on consumption staying under a cap, on the category, sometimes on a registration you have to renew.</p>
+        <p class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
+          <span class="ub-live-text"></span></p>
+        <p class="ub-live is-absent">Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+      </article>
+    </section>
+
+    <section class="seo-section" id="totals">
+      <h2>What you actually owe</h2>
+      <p>Where this month's charges meet whatever was left over from before.</p>
+      <article class="ub-explain" id="explain-current-bill" data-line="current-bill" data-live="currentBill">
+        <h3><span class="ub-num">8</span>Current bill amount</h3>
+        <p>Everything above, for this month alone. This is the figure to compare against last month — not the net payable at the bottom, which mixes in old dues and would tell you the wrong story about your consumption.</p>
+        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <span class="ub-live-text">₹1,727 for this month alone. Across 250 units that works out to ₹6.91 all-in per unit — the number worth comparing month to month, and always above the slab rate.</span></p>
+        <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+      </article>
+      <article class="ub-explain" id="explain-arrears" data-line="arrears" data-live="arrears" data-absent>
+        <h3><span class="ub-num" hidden></span>Arrears</h3>
+        <p>Unpaid amounts carried forward. An arrear that appears on a bill you believe you paid is usually a payment posted after the bill was generated — check the payment date against the bill date before raising it. A stubborn one that survives two cycles is worth a written complaint with the transaction reference.</p>
+        <p class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
+          <span class="ub-live-text"></span></p>
+        <p class="ub-live is-absent">Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+      </article>
+      <article class="ub-explain" id="explain-lpsc" data-line="lpsc" data-live="lpsc" data-absent>
+        <h3><span class="ub-num" hidden></span>Late payment surcharge (LPSC)</h3>
+        <p>Interest on what you did not pay by the due date, typically 1.25–2% a month, compounding on the arrear. It is the most avoidable line on any bill: paying on the due date removes it entirely. If a disputed amount is sitting in arrears, LPSC keeps accruing on it while the dispute is open, so raise disputes early.</p>
+        <p class="ub-live" hidden><span class="ub-live-tag">On this bill</span>
+          <span class="ub-live-text"></span></p>
+        <p class="ub-live is-absent">Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+      </article>
+      <article class="ub-explain" id="explain-net-payable" data-line="net-payable" data-live="netPayable">
+        <h3><span class="ub-num">9</span>Net payable</h3>
+        <p>Current bill, plus arrears and surcharge, minus payments already credited. This is what you owe. Pay the full amount — a part payment does not stop the surcharge on the remainder, and on a prepaid or disconnection-notice account it does not stop the clock either.</p>
+        <p class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <span class="ub-live-text">₹1,727. Nothing is carried forward on this bill, so it equals the current bill amount above.</span></p>
+        <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+      </article>
+    </section>
+
+    <section class="seo-section" id="why-higher">
+      <h2>Why the bill is more than units × rate</h2>
+      <p>The most common complaint about an electricity bill is that the total does not match units multiplied by the rate the reader has in mind. It usually is not an error. Four things account for nearly all of the gap:</p>
+      <ul>
+        <li><strong>The slabs stack.</strong> There is no single rate. The last unit you used cost more than the first one, and the average rate you paid sits somewhere between the two — always higher than the cheapest slab you remember.</li>
+        <li><strong>The fixed charge is not consumption.</strong> It is levied per kW of sanctioned load regardless of use, so it lands hardest, per unit, in a month you used very little.</li>
+        <li><strong>Tax comes last.</strong> Electricity duty is applied on top of the charges — in several states on the whole bill, not just the energy component.</li>
+        <li><strong>A pass-through can move without warning.</strong> Fuel surcharge is recalculated periodically and can appear on one bill and not the next, with no change in your usage at all.</li>
+      </ul>
+      <p>If the total still looks wrong after accounting for those, the next thing to check is the reading — an estimated or averaged bill followed by a real reading produces one alarming month that is really two months of consumption.</p>
+    </section>
+
+    <section class="seo-section" id="faq">
+      <h2>Common questions</h2>
+      <details class="seo-faq-item">
+        <summary>Why does my bill have a fixed charge when I used no electricity?</summary>
+        <div class="seo-faq-a">Because the fixed charge pays for the connection, not the consumption — the line to your premises, the meter, and the capacity kept available for you. It is levied per kW of sanctioned load and applies to a locked house. The only way to stop it is to surrender the connection formally; simply not using power does not.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>What is FPPA on my electricity bill?</summary>
+        <div class="seo-faq-a">Fuel and Power Purchase Adjustment: the difference between what the DISCOM actually paid for power and what the regulator assumed when your tariff was fixed, passed through to you. It is recalculated periodically, so it varies month to month even when your usage does not. Some states charge it in paise per unit, others as a percentage of the energy charge.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>Is GST charged on an electricity bill?</summary>
+        <div class="seo-faq-a">No. The supply of electricity to a domestic consumer is exempt from GST. What you see is electricity duty, a state tax, which is a different thing. GST can appear on ancillary items a DISCOM bills separately — a new connection fee, a meter testing charge — but not on the energy supply itself.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>My bill says &quot;Average&quot; or &quot;Provisional&quot;. What does that mean?</summary>
+        <div class="seo-faq-a">Nobody read the meter that month, so the DISCOM estimated the consumption from your history. It is trued up on the next actual reading, which is why an estimated month is often followed by an unusually large one. Take your own reading and quote it when you raise it — the adjustment is routine.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>Can I change my tariff category?</summary>
+        <div class="seo-faq-a">Yes, by applying to the DISCOM with evidence of how the premises is used. It matters: a home billed under a commercial schedule can pay close to double. The change is normally prospective, so the sooner a wrong category is caught the less it costs.</div>
+      </details>
+    </section>
+
+    <section class="seo-section">
+      <h2>Next steps</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/#calculator"><strong>Calculate your actual bill</strong><span>Your DISCOM, your units, your load — the full bill with every line itemised.</span></a>
+        <a class="seo-link-card" href="/check-my-bill/"><strong>Check a bill you have received</strong><span>Upload or type in a bill and see whether the charges add up.</span></a>
+        <a class="seo-link-card" href="/glossary/"><strong>Glossary of billing terms</strong><span>Every abbreviation an Indian electricity bill can print, defined.</span></a>
+        <a class="seo-link-card" href="/sanctioned-load-optimizer/"><strong>Is your sanctioned load right?</strong><span>What raising or lowering it costs, and when the penalty starts to bite.</span></a>
+      </div>
+    </section>
+
+    <p class="seo-disclaimer">The bill above is an illustration built from published tariff schedules. It is not a bill, not a quotation, and not a substitute for the one your DISCOM issues. Where a figure here and a figure on your bill disagree, your bill is the authority — and if you think it is wrong, raise it with the DISCOM.</p>
+  </section>
+  <script type="module">
+    import { initUnderstandBill } from "/js/understand-bill.js";
+    initUnderstandBill();
+  </script>
+</div>
+
+<footer>
+  <div class="container">
+    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+        <a href="/compare/" data-i18n="nav.compare">Compare</a>
+        <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</a>
+        <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/smart-meter/" data-i18n="ql.meterDisplay">Smart Meter Guide</a>
+        <a href="/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/fuel-surcharge/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/contact/" data-i18n="ql.contact">Contact</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>
