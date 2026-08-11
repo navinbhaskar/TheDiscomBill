@@ -9456,27 +9456,28 @@ export const GUIDES = [
     // does not compete with /guides/msedcl-wss-portal/ for "msedcl wss".
     slug: 'wss-portal',
     published: "2026-07-26",
-    states: ['Maharashtra', 'Kerala'],
+    states: ['Maharashtra', 'Kerala', 'Uttarakhand', 'Jammu & Kashmir'],
     title: 'WSS Portal: Which Web Self Service Is Yours?',
-    // The disambiguation IS the value here — "wss kseb" alone took 377 impressions and zero
-    // clicks in the Aug 2026 export, because a generic WSS result does not look like it knows
-    // which portal the searcher means. Naming both DISCOMs in the title answers that in the SERP.
-    metaTitle: 'WSS Portal Login: Is Yours MSEDCL or KSEB? Both Links Here',
-    description: 'Two DISCOMs run a portal called WSS — MSEDCL at wss.mahadiscom.in and KSEB at wss.kseb.in. Which one bills you, the direct login links, and what each can do.',
-    minutes: 4,
+    // This page took heavy impressions and near-zero clicks, and the old title is the likeliest
+    // reason: "Is Yours MSEDCL or KSEB?" DISQUALIFIES three quarters of the people who see it.
+    // Someone searching "upcl wss" or "jpdcl wss" reads a title naming two other utilities and
+    // scrolls past. Listing the DISCOMs instead of asking a two-way question lets the searcher
+    // spot their own name in the SERP, which is the whole job of a disambiguation page.
+    metaTitle: 'WSS Portal Login: MSEDCL, KSEB, UPCL & JPDCL Links',
+    description: 'Four DISCOMs run a portal called WSS — MSEDCL, KSEB, UPCL (Uttarakhand) and JPDCL (Jammu). Which one bills you, the direct login links, and what each can do.',
+    minutes: 5,
     howtoSteps: [
-      { name: 'Work out which DISCOM bills you', text: 'Your electricity bill names the distributor at the top. Maharashtra is MSEDCL (Mahavitaran); Kerala is KSEB. They run different WSS portals with separate logins.' },
-      { name: 'Open the right WSS address', text: 'MSEDCL consumers use wss.mahadiscom.in. KSEB consumers use wss.kseb.in. The two accounts are unrelated, so a login on one will not work on the other.' },
-      { name: 'Find your consumer number', text: 'It is printed at the top of your bill. MSEDCL uses a 12-digit consumer number; KSEB identifies the connection by its own consumer number and electrical section.' },
-      { name: 'Pay or raise a request', text: 'MSEDCL lets you pay a single bill without registering. KSEB asks you to register with a mobile number and email before most services.' },
+      { name: 'Work out which DISCOM bills you', text: 'Your electricity bill names the distributor at the top. Maharashtra is MSEDCL (Mahavitaran), Kerala is KSEB, Uttarakhand is UPCL and the Jammu division of J&K is JPDCL. Each runs its own WSS with a separate login.' },
+      { name: 'Open the right WSS address', text: 'MSEDCL uses wss.mahadiscom.in, KSEB uses wss.kseb.in, UPCL uses upcl.org/wss and JPDCL uses wss.jpdcl.co.in. The accounts are unrelated, so a login on one will not work on another.' },
+      { name: 'Find your consumer number', text: 'It is printed at the top of your bill. MSEDCL uses a 12-digit consumer number; KSEB, UPCL and JPDCL each use their own consumer or account number in their own format.' },
+      { name: 'Pay or raise a request', text: 'MSEDCL lets you pay a single bill without registering. KSEB, UPCL and JPDCL ask you to register with a mobile number and email before most services.' },
     ],
-    intro: `<strong>WSS</strong> stands for <strong>Web Self Service</strong>, and it is the name two Indian
-      DISCOMs give their consumer portal: <strong>MSEDCL (Mahavitaran)</strong> in Maharashtra at
-      <a href="https://wss.mahadiscom.in/wss/wss" target="_blank" rel="noopener nofollow">wss.mahadiscom.in</a>,
-      and <strong>KSEB</strong> in Kerala at
-      <a href="https://wss.kseb.in/selfservices/" target="_blank" rel="noopener nofollow">wss.kseb.in</a>.
-      They are separate sites with separate logins, which is why searching for "WSS portal" on its own
-      tends to land you on the wrong one. This page sorts out which is yours in about a minute.`,
+    intro: `<strong>WSS</strong> stands for <strong>Web Self Service</strong>, and several Indian DISCOMs
+      use that exact name for their consumer portal — <strong>MSEDCL (Mahavitaran)</strong> in Maharashtra,
+      <strong>KSEB</strong> in Kerala, <strong>UPCL</strong> in Uttarakhand and <strong>JPDCL</strong> in the
+      Jammu division of Jammu &amp; Kashmir. They are separate sites with separate logins, which is why
+      searching for "WSS portal" on its own tends to land you on the wrong one. This page sorts out which
+      is yours in about a minute, and tells you what to search for if your DISCOM is not one of the four.`,
     sections: `
       <section class="seo-section">
         <h2>Which WSS portal is yours?</h2>
@@ -9486,23 +9487,32 @@ export const GUIDES = [
             <tr>
               <td><strong>MSEDCL</strong> (Mahavitaran)</td>
               <td>Maharashtra, outside Mumbai city</td>
-              <td>wss.mahadiscom.in</td>
+              <td><a href="https://wss.mahadiscom.in/wss/wss" target="_blank" rel="noopener nofollow">wss.mahadiscom.in</a></td>
               <td>No, for a one-off bill payment</td>
             </tr>
             <tr>
               <td><strong>KSEB</strong></td>
               <td>All of Kerala</td>
-              <td>wss.kseb.in</td>
+              <td><a href="https://wss.kseb.in/selfservices/" target="_blank" rel="noopener nofollow">wss.kseb.in</a></td>
+              <td>Yes, for most services</td>
+            </tr>
+            <tr>
+              <td><strong>UPCL</strong></td>
+              <td>All of Uttarakhand</td>
+              <td><a href="https://www.upcl.org/wss/login" target="_blank" rel="noopener nofollow">upcl.org/wss</a></td>
+              <td>Yes, for most services</td>
+            </tr>
+            <tr>
+              <td><strong>JPDCL</strong></td>
+              <td>Jammu division of Jammu &amp; Kashmir</td>
+              <td><a href="https://wss.jpdcl.co.in/login" target="_blank" rel="noopener nofollow">wss.jpdcl.co.in</a></td>
               <td>Yes, for most services</td>
             </tr>
           </tbody>
         </table></div>
-        <p>If your bill names a different distributor, you are not looking for a WSS portal at all. Other
-        DISCOMs run the same kind of self-service site under their own branding, and you can find yours on our
-        <a href="/services/">DISCOM services directory</a>.</p>
       </section>
 
-      <section class="seo-section">
+<section class="seo-section">
         <h2>MSEDCL WSS: pay without an account</h2>
         <p>Maharashtra's portal is the more permissive of the two. You can pay a bill without registering at
         all: choose <em>Pay Bill</em>, type the <strong>12-digit consumer number</strong> printed at the top of
@@ -9512,7 +9522,7 @@ export const GUIDES = [
         <a href="/guides/msedcl-wss-portal/">MSEDCL WSS portal guide</a>.</p>
       </section>
 
-      <section class="seo-section">
+<section class="seo-section">
         <h2>KSEB WSS: one portal for the whole state</h2>
         <p>Kerala has a single distributor, so one WSS covers everything: new connections, bills for an existing
         consumer number, ownership transfers, load changes and tariff changes. Most of it sits behind a login, so
@@ -9524,9 +9534,49 @@ export const GUIDES = [
         you will be billed at.</p>
       </section>
 
-      <section class="seo-section">
+<section class="seo-section">
+        <h2>UPCL WSS: Uttarakhand's single portal</h2>
+        <p>Uttarakhand has one distribution licensee, <strong>Uttarakhand Power Corporation Limited</strong>,
+        supplying around 2.6 million consumers across the state, and its consumer portal is branded WSS in so
+        many words — the page itself is titled <em>UPCL | WSS - Consumer Self Service</em>. It sits at
+        <a href="https://www.upcl.org/wss/login" target="_blank" rel="noopener nofollow">upcl.org/wss/login</a>,
+        reached from the main <a href="https://www.upcl.org/" target="_blank" rel="noopener nofollow">upcl.org</a>
+        site, and there is a matching <em>UPCL Consumer Self Service</em> app for Android and iOS.</p>
+        <p>Register with your consumer number to view and pay bills, see your consumption history, apply for a
+        new connection and log complaints. UPCL's general complaint line is 1912, with a helpline on
+        1800-419-0405. For the rates behind the bill, see the
+        <a href="/tariffs/uttarakhand/upcl/">UPCL tariff and bill calculator</a>.</p>
+      </section>
+
+<section class="seo-section">
+        <h2>JPDCL WSS: the Jammu division only</h2>
+        <p><strong>Jammu Power Distribution Corporation Limited</strong> runs its consumer portal at a WSS
+        address — <a href="https://wss.jpdcl.co.in/login" target="_blank" rel="noopener nofollow">wss.jpdcl.co.in</a>
+        — where you can view a bill assessment, look at historical meter readings, pay dues and file service
+        requests such as a name change or a load enhancement. Registration uses your consumer code and account
+        number with a mobile number or email.</p>
+        <p><strong>This is the Jammu division only.</strong> The Kashmir division is served by a different
+        company, KPDCL, whose billing portal is <em>not</em> WSS-branded and lives at a separate address
+        entirely — so a Srinagar consumer looking for "WSS" is looking for the wrong thing. Jammu rates are on
+        our <a href="/tariffs/jammu-and-kashmir/jkpdd_jammu/">JPDCL tariff and bill calculator</a>.</p>
+      </section>
+
+<section class="seo-section">
+        <h2>If your DISCOM is not one of the four</h2>
+        <p>Most Indian DISCOMs run the same kind of self-service site but do not call it WSS. Searching for
+        "WSS" plus their name will usually fail, because the term simply is not theirs — search for the
+        DISCOM's own name plus "bill payment" or "consumer portal" instead, or start from our
+        <a href="/services/">DISCOM services directory</a>, which lists the official portal for each one.</p>
+        <p>Two things worth knowing before you go hunting. Some portals that once used a WSS address have
+        since moved: Rajasthan's discoms were reachable at a <code>wss1.rajdiscoms.com</code> address that no
+        longer resolves, so old links and screenshots pointing there are dead. And a similar-looking acronym
+        is not the same service — "Consumer Self Service" or "CSS" portals do the same job under a different
+        label. Follow the link printed on your own bill in preference to any of them.</p>
+      </section>
+
+<section class="seo-section">
         <h2>What a WSS portal can and cannot do</h2>
-        <p>Both portals cover the same ground: view the current bill, pay it, download past bills and receipts,
+        <p>All four cover the same ground: view the current bill, pay it, download past bills and receipts,
         and log service requests such as a name change or a load change. What neither will do is tell you whether
         the bill is <em>correct</em>. The portal shows you the amount the DISCOM has computed; it does not show
         the slab arithmetic behind it.</p>
@@ -9570,7 +9620,7 @@ export const GUIDES = [
       runs so you can view, pay and download your electricity bill and raise service requests without visiting an
       office. The best-known one is <strong>MSEDCL's (Mahavitaran) portal at
       <a href="https://wss.mahadiscom.in/wss/wss" target="_blank" rel="noopener nofollow">wss.mahadiscom.in</a></strong>,
-      but Kerala's KSEB, West Bengal's WBSEDCL and several other DISCOMs run the same kind of WSS
+      but Kerala's KSEB, Uttarakhand's UPCL and Jammu's JPDCL each run their own WSS under that same name
       (<a href="/guides/wss-portal/">not sure which one is yours?</a>). This guide walks
       through what it does, how to pay with or without registering, and the service requests you can file on it.`,
     sections: `
