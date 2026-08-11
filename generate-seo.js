@@ -3299,8 +3299,27 @@ function smartMeterGuidePage(lang = 'en') {
     ['#three-phase', S.toc.three], ['#amisp', S.toc.amisp], ['#faq', S.toc.faq],
   ].map(([href, node]) => `<a href="${href}">${esc(T(lang, node))}</a>`).join('\n        ');
 
-  const legend = S.legend.map(it =>
-    `<li><strong>${esc(T(lang, it.t))}</strong> — ${t(it.d)}</li>`).join('\n        ');
+  const legend = S.legend.map((it, i) =>
+    `<li id="meter-item-${i + 1}"><strong>${esc(T(lang, it.t))}</strong> — ${t(it.d)}</li>`
+  ).join('\n        ');
+
+  // Where each numbered circle sits inside the 700x560 viewBox of METER_SVG, in the legend's
+  // own order. The HTML callouts are positioned from these as percentages, so they track the
+  // diagram exactly as it scales. The alternative, <text> inside the SVG, cannot wrap and
+  // would break on the longer Tamil and Marathi labels.
+  //
+  // If a circle moves in smart-meter-svg.js, its entry here has to move with it. That is the
+  // one coupling in this arrangement, and it is why the number is not repeated in the HTML:
+  // the circle on the diagram IS the number, the label beside it is only the name.
+  const CALLOUTS = [
+    ['r', 100], ['r', 134], ['l', 214], ['l', 248], ['r', 214], ['r', 248],
+    ['l', 282], ['l', 316], ['r', 292], ['l', 350], ['r', 358], ['l', 380],
+  ];
+  const callouts = S.legend.map((it, i) => {
+    const [side, y] = CALLOUTS[i];
+    return `<a class="meter-call is-${side}" href="#meter-item-${i + 1}" style="--y:${y}">`
+      + `<span class="meter-call-t">${esc(T(lang, it.t))}</span></a>`;
+  }).join('\n              ');
 
   const codeRows = S.codes.map(r =>
     `<tr><td><code>${r.c.replace(' / ', '</code> / <code>')}</code></td><td>${esc(T(lang, r.w))}</td><td>${esc(T(lang, r.y))}</td></tr>`
@@ -3358,7 +3377,14 @@ function smartMeterGuidePage(lang = 'en') {
         <span>${t(S.hint)}</span>
       </p>
       <figure class="meter-figure">
+        <div class="meter-stage-wrap">
+          <div class="meter-stage">
 ${METER_SVG.replace('>Press here<', `>${esc(T(lang, S.pressHere))}<`)}
+            <div class="meter-callouts">
+              ${callouts}
+            </div>
+          </div>
+        </div>
         <div class="meter-readout" id="mReadout" aria-live="polite">
           <div class="meter-readout-head">
             <span class="meter-readout-step" id="mStep"></span>
@@ -3574,7 +3600,7 @@ function understandBillPage(lang = 'en') {
           <label for="ubLoad">${esc(T(lang, U.ctl.load))}</label>
           <input type="number" id="ubLoad" name="load" min="0.5" max="150" step="0.5" value="${scenario.connectedLoadKw}" inputmode="decimal">
         </div>
-        <div class="ub-field">
+        <div class="ub-field ub-field-own-row">
           <label for="ubMd">${esc(T(lang, U.ctl.md))} <span class="ub-optional">${esc(T(lang, U.ctl.optional))}</span></label>
           <input type="number" id="ubMd" name="md" min="0" max="500" step="0.1" placeholder="${attr(scenario.md)}" inputmode="decimal">
         </div>

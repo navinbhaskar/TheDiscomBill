@@ -47,6 +47,8 @@ export default {
     'ql.guides': 'ब्लॉग और लेख',
     'ql.glossary': 'बिल शब्दावली',
     'ql.understandBill': 'अपना बिल समझें',
+    'tools.d.understandBill': 'एक नमूना बिल, जिसे आप बदल सकते हैं',
+    'tools.d.smartMeter': 'मीटर डिस्प्ले, जिसे आप एक-एक करके देख सकते हैं',
     'ql.methodology': 'कार्यप्रणाली व सटीकता',
     'ql.contact': 'संपर्क करें',
     'ql.privacy': 'गोपनीयता नीति',

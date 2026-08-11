@@ -57,6 +57,11 @@ export const STRINGS = {
     'tools.g2.sub': 'Work out a bill before it arrives — by appliance, by tariff, or per tenant.',
     'tools.g3.title': 'Is solar worth it?',
     'tools.g3.sub': 'Size a system, check the subsidy, and see the payback on your own bill.',
+    // Sub-lines under two entries in the homepage tools list. Only these two get one: they are
+    // the entries that read as reference pages next to a glossary and a tracker, when in fact
+    // they show you your own numbers. The other eleven are self-describing.
+    'tools.d.understandBill': 'A working bill you can change',
+    'tools.d.smartMeter': 'A meter display you can step through',
     'ql.contact': 'Contact',
     'ql.privacy': 'Privacy Policy',
     'ql.cookies': 'Cookie Policy',

@@ -185,6 +185,8 @@
         <span>Press the <strong>Scroll</strong> button on the meter — or tap the display — to step through the readings, exactly as the real one does.</span>
       </p>
       <figure class="meter-figure">
+        <div class="meter-stage-wrap">
+          <div class="meter-stage">
 <svg class="meter-svg" viewBox="0 0 700 560" role="img"
      aria-labelledby="meter-dia-title meter-dia-desc">
   <title id="meter-dia-title">Labelled diagram of an Indian single-phase prepaid smart meter</title>
@@ -194,7 +196,7 @@
   icon row, the main reading, a register code and a unit label; a pulse LED and standard
   markings below it; a serial barcode and printed specification block on the left; and a
   scroll button with a circular optical port on the right. A dark terminal block with brass
-  screws runs along the bottom. Ten numbered callouts key each element to the legend below.</desc>
+  screws runs along the bottom. Twelve numbered callouts key each element to the legend below.</desc>
 
   <defs>
     <linearGradient id="mBody" x1="0" y1="0" x2="0.3" y2="1">
@@ -419,6 +421,22 @@
     <circle cx="588" cy="358" r="12"/><text x="588" y="362.5">11</text>
     <circle cx="112" cy="380" r="12"/><text x="112" y="384.5">12</text>
   </g>        </svg>
+            <div class="meter-callouts">
+              <a class="meter-call is-r" href="#meter-item-1" style="--y:100"><span class="meter-call-t">COM lamp</span></a>
+              <a class="meter-call is-r" href="#meter-item-2" style="--y:134"><span class="meter-call-t">ON lamp</span></a>
+              <a class="meter-call is-l" href="#meter-item-3" style="--y:214"><span class="meter-call-t">Network signal</span></a>
+              <a class="meter-call is-l" href="#meter-item-4" style="--y:248"><span class="meter-call-t">Tamper / magnet flag</span></a>
+              <a class="meter-call is-r" href="#meter-item-5" style="--y:214"><span class="meter-call-t">Supply / relay status</span></a>
+              <a class="meter-call is-r" href="#meter-item-6" style="--y:248"><span class="meter-call-t">Low-balance alert</span></a>
+              <a class="meter-call is-l" href="#meter-item-7" style="--y:282"><span class="meter-call-t">Main reading</span></a>
+              <a class="meter-call is-l" href="#meter-item-8" style="--y:316"><span class="meter-call-t">Register code</span></a>
+              <a class="meter-call is-r" href="#meter-item-9" style="--y:292"><span class="meter-call-t">Unit label</span></a>
+              <a class="meter-call is-l" href="#meter-item-10" style="--y:350"><span class="meter-call-t">Pulse LED</span></a>
+              <a class="meter-call is-r" href="#meter-item-11" style="--y:358"><span class="meter-call-t">Display button</span></a>
+              <a class="meter-call is-l" href="#meter-item-12" style="--y:380"><span class="meter-call-t">Nameplate</span></a>
+            </div>
+          </div>
+        </div>
         <div class="meter-readout" id="mReadout" aria-live="polite">
           <div class="meter-readout-head">
             <span class="meter-readout-step" id="mStep"></span>
@@ -430,18 +448,18 @@
         <figcaption>An interactive composite — press <strong>Scroll</strong> on the meter (or the button above) to step through the display cycle. A real meter never lights every indicator at once; layout and icon shapes vary by manufacturer, the meanings do not.</figcaption>
       </figure>
       <ol class="meter-legend">
-        <li><strong>COM lamp</strong> — communication activity. It blinks when the meter talks to the utility's network, which is occasional rather than constant: most meters report in bursts every 15 to 30 minutes, not continuously. A COM lamp that never lights at all suggests the communication module is not reaching the network, which is what delays a recharge from landing. It is not related to your supply.</li>
-        <li><strong>ON lamp</strong> — supply present at the meter's terminals. Steady means power is reaching you. This is the fastest way to tell a local problem from a network one: if the ON lamp is lit but you have no power, the fault is on your side of the meter — your MCB, your wiring, your board — and not a DISCOM outage.</li>
-        <li><strong>Network signal</strong> — the meter's link to the utility (RF mesh, or a cellular/NIC module). Weak or empty bars mean readings and recharges reach the meter late. Your balance still decrements normally; it is the <em>reporting</em> that lags, which is the usual reason a paid recharge appears to vanish.</li>
-        <li><strong>Tamper / magnet flag</strong> — set when the meter detects a strong external magnetic field, a removed terminal cover, or a reversed connection. It is logged with a timestamp and reported to the DISCOM. If it appears without anyone touching the meter, raise a complaint quickly — the log is the evidence, and it is easier to contest early.</li>
-        <li><strong>Supply / relay status</strong> — whether the internal disconnect switch is closed (supply on) or open. An open relay with credit still on the meter usually means a remote disconnection or a load-limit trip, not a fault.</li>
-        <li><strong>Low-balance alert</strong> — lights once your prepaid balance falls under the DISCOM's threshold. Most Indian DISCOMs then allow a short grace or emergency credit before the relay opens, and will not disconnect during notified night hours or on holidays.</li>
-        <li><strong>Main reading</strong> — the value currently being displayed. On a prepaid meter the display cycles between your remaining <strong>₹ balance</strong> and the cumulative energy registers, so the big number is not always the same quantity.</li>
-        <li><strong>Register code</strong> — the small code that tells you <em>which</em> quantity the big number is. This is the single most useful thing on the face, and the one nobody is told about. The codes are standardised; see the table below.</li>
-        <li><strong>Unit label</strong> — <code>kWh</code> for energy, <code>kVAh</code> for apparent energy, <code>kW</code>/<code>kVA</code> for demand, <code>₹</code> for prepaid balance. If your meter bills on kVAh, a poor power factor raises the bill even when kWh stays flat.</li>
-        <li><strong>Pulse LED</strong> — flashes a fixed number of times per unit consumed, printed beside it (commonly 1000 imp/kWh, i.e. one flash per watt-hour). It is a direct load indicator: <strong>faster flashing means more load right now</strong>. Switch everything off and it should slow to almost nothing.</li>
-        <li><strong>Display button</strong> — (marked <em>Scroll</em> or <em>Push</em>) — steps the display through the register list manually instead of waiting for the auto-scroll. A long press usually opens a second, deeper list (billing history, tamper log) on most makes.</li>
-        <li><strong>Nameplate</strong> — meter serial number, standard mark, accuracy class and current rating. <strong>The serial number here must match the one on your bill.</strong> That single check catches the mis-assigned-meter billing error, which is one of the more common and most expensive to unwind after the fact.</li>
+        <li id="meter-item-1"><strong>COM lamp</strong> — communication activity. It blinks when the meter talks to the utility's network, which is occasional rather than constant: most meters report in bursts every 15 to 30 minutes, not continuously. A COM lamp that never lights at all suggests the communication module is not reaching the network, which is what delays a recharge from landing. It is not related to your supply.</li>
+        <li id="meter-item-2"><strong>ON lamp</strong> — supply present at the meter's terminals. Steady means power is reaching you. This is the fastest way to tell a local problem from a network one: if the ON lamp is lit but you have no power, the fault is on your side of the meter — your MCB, your wiring, your board — and not a DISCOM outage.</li>
+        <li id="meter-item-3"><strong>Network signal</strong> — the meter's link to the utility (RF mesh, or a cellular/NIC module). Weak or empty bars mean readings and recharges reach the meter late. Your balance still decrements normally; it is the <em>reporting</em> that lags, which is the usual reason a paid recharge appears to vanish.</li>
+        <li id="meter-item-4"><strong>Tamper / magnet flag</strong> — set when the meter detects a strong external magnetic field, a removed terminal cover, or a reversed connection. It is logged with a timestamp and reported to the DISCOM. If it appears without anyone touching the meter, raise a complaint quickly — the log is the evidence, and it is easier to contest early.</li>
+        <li id="meter-item-5"><strong>Supply / relay status</strong> — whether the internal disconnect switch is closed (supply on) or open. An open relay with credit still on the meter usually means a remote disconnection or a load-limit trip, not a fault.</li>
+        <li id="meter-item-6"><strong>Low-balance alert</strong> — lights once your prepaid balance falls under the DISCOM's threshold. Most Indian DISCOMs then allow a short grace or emergency credit before the relay opens, and will not disconnect during notified night hours or on holidays.</li>
+        <li id="meter-item-7"><strong>Main reading</strong> — the value currently being displayed. On a prepaid meter the display cycles between your remaining <strong>₹ balance</strong> and the cumulative energy registers, so the big number is not always the same quantity.</li>
+        <li id="meter-item-8"><strong>Register code</strong> — the small code that tells you <em>which</em> quantity the big number is. This is the single most useful thing on the face, and the one nobody is told about. The codes are standardised; see the table below.</li>
+        <li id="meter-item-9"><strong>Unit label</strong> — <code>kWh</code> for energy, <code>kVAh</code> for apparent energy, <code>kW</code>/<code>kVA</code> for demand, <code>₹</code> for prepaid balance. If your meter bills on kVAh, a poor power factor raises the bill even when kWh stays flat.</li>
+        <li id="meter-item-10"><strong>Pulse LED</strong> — flashes a fixed number of times per unit consumed, printed beside it (commonly 1000 imp/kWh, i.e. one flash per watt-hour). It is a direct load indicator: <strong>faster flashing means more load right now</strong>. Switch everything off and it should slow to almost nothing.</li>
+        <li id="meter-item-11"><strong>Display button</strong> — (marked <em>Scroll</em> or <em>Push</em>) — steps the display through the register list manually instead of waiting for the auto-scroll. A long press usually opens a second, deeper list (billing history, tamper log) on most makes.</li>
+        <li id="meter-item-12"><strong>Nameplate</strong> — meter serial number, standard mark, accuracy class and current rating. <strong>The serial number here must match the one on your bill.</strong> That single check catches the mis-assigned-meter billing error, which is one of the more common and most expensive to unwind after the fact.</li>
       </ol>
     </section>
 

@@ -4451,6 +4451,16 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   stroke-linecap: round; stroke-linejoin: round;
   transition: background-color var(--t-fast), color var(--t-fast);
 }
+/* Two entries carry a sub-line (see tools.d.* in i18n.js). The label and its sub-line share
+   the middle grid cell, so the row keeps its three columns and the icon stays centred against
+   the taller block. Every other entry is untouched. */
+.tool-label { display: grid; gap: 1px; min-width: 0; }
+.tool-label small {
+  font-size: 11.5px; line-height: 1.35; color: var(--text-tertiary);
+}
+.tools-group a:hover .tool-label small, .tools-group a:focus-visible .tool-label small {
+  color: var(--text-secondary);
+}
 /* Chevron drawn from borders rather than a 15th sprite entry — it is a shape, not an icon. */
 .tools-group a::after {
   content: ''; width: 5px; height: 5px; justify-self: end;
@@ -6546,6 +6556,47 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
 .meter-svg.has-pressed .m-hint-tag { animation: none; opacity: 0; pointer-events: none; }
 @media (prefers-reduced-motion: reduce) { .m-hint-tag { animation: none; } }
 
+/* ── /smart-meter/ callouts ────────────────────────────────────────────────────
+   The diagram already carried numbered circles and leader lines inside the SVG; these add
+   the NAME beside each number, so the reader can identify a part without hunting the legend.
+
+   HTML overlay rather than <svg><text>: SVG text cannot wrap, and the Tamil and Marathi
+   labels are long enough to need two lines. Positioned from the circles' own viewBox
+   coordinates as percentages, so the labels track the diagram exactly as it scales — the
+   coordinate table lives beside them in generate-seo.js.
+
+   The number is NOT repeated here. The circle on the diagram is the number; duplicating it
+   would put two of everything in the reader's eye. */
+.meter-stage-wrap { padding: 0 128px; }
+.meter-stage { position: relative; }
+.meter-callouts { position: absolute; inset: 0; }
+.meter-call {
+  position: absolute;
+  top: calc(var(--y) / 560 * 100%);
+  transform: translateY(-50%);
+  width: 124px;
+  font-size: 11.5px; line-height: 1.3; text-decoration: none;
+  color: var(--text-secondary);
+  transition: color var(--t-fast);
+}
+/* 112 and 588 are the circle centres in the viewBox; 20 clears the r=12 circle plus a gap. */
+.meter-call.is-l { right: calc(100% - (112 - 20) / 700 * 100%); text-align: right; }
+.meter-call.is-r { left:  calc((588 + 20) / 700 * 100%); text-align: left; }
+.meter-call:hover, .meter-call:focus-visible { color: var(--text-brand); text-decoration: underline; }
+.meter-call:target, .meter-call.is-lit { color: var(--text-brand); font-weight: 700; }
+
+/* The legend item a callout points at, once followed. */
+.meter-legend li { scroll-margin-top: 90px; }
+.meter-legend li:target { background: var(--brand-faint); border-radius: var(--radius-xs); }
+
+@media (max-width: 900px) {
+  /* Under this the diagram is small enough that 124px of label either side crushes it. The
+     numbered circles and the legend below carry the page on their own, exactly as they did
+     before the labels existed. */
+  .meter-stage-wrap { padding: 0; }
+  .meter-callouts { display: none; }
+}
+
 /* Without JS the meter is a static diagram, so the cues that promise interaction are hidden
    rather than left lying. The diagram and legend carry the page on their own. */
 html:not(.js) .meter-hint, html:not(.js) .m-hint-tag, html:not(.js) .m-btn-pulse,
@@ -6592,6 +6643,11 @@ html:not(.js) .m-btn-ring { display: none; }
 }
 .ub-hint { font-size: 12px; color: var(--text-tertiary); padding-left: 25px; }
 .ub-hint-md { grid-column: 1 / -1; margin: -4px 0 0; padding-left: 0; }
+/* Maximum demand sits on its own row rather than beside the load: it is optional, and
+   putting it third in a row of three read as a required field like the two before it.
+   Capped in width because a number input the width of the card looks like it wants an
+   essay. */
+.ub-field-own-row { grid-column: 1 / -1; max-width: 280px; }
 .ub-optional {
   margin-left: 5px; padding: 1px 6px; border-radius: var(--radius-full);
   font-size: 10px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase;

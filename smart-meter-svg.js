@@ -15,7 +15,7 @@ export const METER_SVG = String.raw`<svg class="meter-svg" viewBox="0 0 700 560"
   icon row, the main reading, a register code and a unit label; a pulse LED and standard
   markings below it; a serial barcode and printed specification block on the left; and a
   scroll button with a circular optical port on the right. A dark terminal block with brass
-  screws runs along the bottom. Ten numbered callouts key each element to the legend below.</desc>
+  screws runs along the bottom. Twelve numbered callouts key each element to the legend below.</desc>
 
   <defs>
     <linearGradient id="mBody" x1="0" y1="0" x2="0.3" y2="1">
