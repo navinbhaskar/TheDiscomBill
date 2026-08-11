@@ -6828,6 +6828,21 @@ html:not(.js) .m-btn-ring { display: none; }
   font-size: 10.5px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
   color: var(--text-brand);
 }
+/* Related links under an explanation. Chips rather than a sentence of prose: they are
+   navigation, and a reader scanning for "where do I learn more about FPPA" should be able to
+   find them without reading. */
+.ub-more { display: flex; flex-wrap: wrap; gap: 7px; margin: 10px 0 0; }
+.ub-more a {
+  padding: 4px 11px 4px 9px; border-radius: var(--radius-full);
+  font-size: 12px; font-weight: 600; text-decoration: none;
+  color: var(--text-brand); background: var(--brand-faint);
+  border: 1px solid var(--brand-border);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.ub-more a::before { content: "92"; margin-right: 5px; opacity: .6; }
+.ub-more a:hover, .ub-more a:focus-visible { background: var(--brand-subtle); color: var(--text-brand-dark); }
+.ub-more-scenario { margin: -8px 0 18px; }
+
 .ub-live.is-absent {
   font-size: 13.5px; line-height: 1.6;
   color: var(--text-tertiary); background: var(--surface-sunken); border-left-color: var(--border-strong);

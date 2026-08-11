@@ -68,6 +68,7 @@ export const SCENARIO_COPY = {
 export const LINES = [
   {
     id: 'consumer-no', always: true, group: 'header',
+    links: [['/check-my-bill/', { en: 'Check a bill you have received' }]],
     title: { en: 'Consumer number' },
     body: { en: `The account the connection is billed to, not the meter. It survives a meter
       replacement, and it is the number every portal, payment app and complaint form asks for.
@@ -77,6 +78,7 @@ export const LINES = [
   },
   {
     id: 'tariff-category', always: true, group: 'header',
+    links: [['/tariffs/states/', { en: 'Tariff schedules by state and DISCOM' }], ['/glossary/', { en: 'Bill glossary' }]],
     title: { en: 'Tariff category' },
     body: { en: `Which rate schedule your connection is billed under. This one code decides your
       slab rates, your fixed charge and whether a demand penalty can apply, so it is the single
@@ -87,6 +89,7 @@ export const LINES = [
   },
   {
     id: 'sanctioned-load', always: true, group: 'header',
+    links: [['/guides/reduce-fixed-charges-sanctioned-load/', { en: 'How to cut your fixed charge' }], ['/sanctioned-load-optimizer/', { en: 'Sanctioned load optimizer' }]],
     title: { en: 'Sanctioned load' },
     body: { en: `The capacity the DISCOM has contracted to supply you, in kW — not what you used.
       On a domestic bill it usually sets the fixed charge directly. Raising it costs a one-time
@@ -97,6 +100,7 @@ export const LINES = [
 
   {
     id: 'bill-month', always: true, group: 'period',
+    links: [['/fuel-surcharge/', { en: 'This month’s fuel surcharge, by state' }]],
     title: { en: 'Bill month' },
     body: { en: `The month the electricity was <em>used</em>, which is not the month the bill was
       printed and not the month you pay it. Three different dates, and bills label them
@@ -107,6 +111,7 @@ export const LINES = [
   },
   {
     id: 'due-date', always: true, group: 'period',
+    links: [['/guides/smart-meter-prepaid-disconnection/', { en: 'What happens when a bill goes unpaid' }]],
     title: { en: 'Due date' },
     body: { en: `The last day the bill costs what it says. It is worth money in two directions:
       past it, a late payment surcharge starts accruing on the whole outstanding amount and
@@ -118,6 +123,7 @@ export const LINES = [
 
   {
     id: 'units-consumed', always: true, group: 'reading',
+    links: [['/guides/uppcl-smart-meter-readings-explained/', { en: 'Reading a smart meter yourself' }], ['/smart-meter/', { en: 'What every meter symbol means' }]],
     title: { en: 'Units consumed' },
     body: { en: `Present reading minus previous reading, multiplied by the meter constant (the
       multiplying factor, almost always 1 on a domestic connection). One unit is one kilowatt-hour.
@@ -127,6 +133,7 @@ export const LINES = [
   },
   {
     id: 'md', always: true, group: 'reading',
+    links: [['/guides/power-factor-kvah-billing-explained/', { en: 'Power factor and kVAh billing' }], ['/sanctioned-load-optimizer/', { en: 'Is your sanctioned load right?' }]],
     title: { en: 'Maximum demand (MD)' },
     body: { en: `The highest half-hour average power your connection drew during the month, in kW —
       a peak, not a total. Consumption and demand are different things: run a 2 kW geyser for ten
@@ -137,6 +144,7 @@ export const LINES = [
   },
   {
     id: 'reading-status', always: true, group: 'reading',
+    links: [['/guides/smart-meter-running-fast/', { en: 'When you think the meter is wrong' }], ['/check-my-bill/', { en: 'Check a bill you have received' }]],
     title: { en: 'Reading status' },
     body: { en: `A short code saying how the reading was obtained — whether a meter reader actually
       read the meter, or the DISCOM estimated it because the meter was locked away, unreadable or
@@ -148,6 +156,7 @@ export const LINES = [
 
   {
     id: 'energy-charge', always: true, group: 'charges',
+    links: [['/compare/', { en: 'Compare slab rates across DISCOMs' }], ['/guides/tod-billing-explained/', { en: 'Time-of-day billing' }]],
     title: { en: 'Energy charge' },
     body: { en: `What the units themselves cost. Almost every Indian domestic tariff is
       <em>telescopic</em>: the slabs stack rather than replace each other, so crossing into a
@@ -157,6 +166,7 @@ export const LINES = [
   },
   {
     id: 'fixed-charge', always: true, group: 'charges',
+    links: [['/guides/reduce-fixed-charges-sanctioned-load/', { en: 'How to cut your fixed charge' }]],
     title: { en: 'Fixed charge / demand charge' },
     body: { en: `Payable whether you use a single unit or none. It funds the wires, the meter and
       the crew, and it is why a locked, empty house still gets a bill. On a domestic connection it
@@ -167,6 +177,7 @@ export const LINES = [
   },
   {
     id: 'excess-demand', always: false, group: 'charges',
+    links: [['/guides/uppcl-sanctioned-load-increased/', { en: 'When the DISCOM raises your load' }], ['/sanctioned-load-optimizer/', { en: 'Work out the cheaper option' }]],
     title: { en: 'Excess demand penalty' },
     body: { en: `Charged when the maximum demand the meter recorded during the month exceeded your
       sanctioned load. The meter logs the highest half-hour average, so a few minutes of everything
@@ -177,6 +188,7 @@ export const LINES = [
   },
   {
     id: 'fppa', always: false, group: 'charges',
+    links: [['/guides/how-fppa-fuel-surcharge-is-calculated/', { en: 'How FPPA is calculated' }], ['/guides/up-electricity-bill-10-percent-fppa-surcharge/', { en: 'The 10% cap in Uttar Pradesh' }], ['/fuel-surcharge/', { en: 'Current rates by state' }]],
     title: { en: 'Fuel surcharge (FPPA / FPPAS / PPAC / FAC)' },
     body: { en: `The one line that changes month to month for reasons nothing to do with you. When
       the DISCOM's actual cost of buying power differs from what the regulator assumed when your
@@ -189,6 +201,7 @@ export const LINES = [
   },
   {
     id: 'wheeling', always: false, group: 'charges',
+    links: [['/guides/how-to-read-msedcl-bill/', { en: 'How to read an MSEDCL bill' }], ['/guides/msedcl-fppa-charges-explained/', { en: 'MSEDCL’s own surcharge lines' }]],
     title: { en: 'Wheeling charge' },
     body: { en: `The cost of moving the electricity across the distribution network to your premises,
       unbundled from the cost of the electricity itself. States that separate the two — Maharashtra
@@ -198,6 +211,7 @@ export const LINES = [
   },
   {
     id: 'electricity-duty', always: false, group: 'charges',
+    links: [['/guides/electricity-duty-explained/', { en: 'Electricity duty, state by state' }]],
     title: { en: 'Electricity duty' },
     body: { en: `A state tax, collected by the DISCOM on the government's behalf. Whether it lands on
       the energy charge alone or on the whole bill is a state-by-state decision, and it is the reason
@@ -208,6 +222,7 @@ export const LINES = [
 
   {
     id: 'subsidy', always: false, group: 'totals',
+    links: [['/guides/how-to-read-bses-delhi-bill/', { en: 'How to read a BSES Delhi bill' }]],
     title: { en: 'Subsidy' },
     body: { en: `A state government rebate, shown as a deduction from the charges above rather than
       as a lower rate. The DISCOM bills the full tariff and the state reimburses it — which is why
@@ -218,6 +233,7 @@ export const LINES = [
   },
   {
     id: 'net-current-bill', always: true, group: 'totals',
+    links: [['/#calculator', { en: 'Calculate your own bill' }]],
     title: { en: 'Net current bill' },
     body: { en: `This month's charges, after any subsidy — and <strong>not</strong> what you owe.
       This is the figure to compare against last month, because it contains this month's consumption
@@ -228,6 +244,7 @@ export const LINES = [
   },
   {
     id: 'arrears', always: false, group: 'totals',
+    links: [['/check-my-bill/', { en: 'Check a bill you have received' }]],
     title: { en: 'Arrears' },
     body: { en: `Unpaid amounts carried forward. An arrear that appears on a bill you believe you paid
       is usually a payment posted after the bill was generated — check the payment date against the
@@ -237,6 +254,7 @@ export const LINES = [
   },
   {
     id: 'lpsc', always: false, group: 'totals',
+    links: [['/guides/smart-meter-prepaid-disconnection/', { en: 'What happens when a bill goes unpaid' }]],
     title: { en: 'Late payment surcharge (LPSC)' },
     body: { en: `Interest on what you did not pay by the due date, typically 1.25–2% a month, compounding
       on the arrear. It is the most avoidable line on any bill: paying on the due date removes it
@@ -246,6 +264,7 @@ export const LINES = [
   },
   {
     id: 'total-payable', always: true, group: 'totals',
+    links: [['/#calculator', { en: 'Calculate your own bill' }], ['/bill-review/', { en: 'Have a bill reviewed' }]],
     title: { en: 'Total payable' },
     body: { en: `Net current bill, plus arrears and surcharge, minus payments already credited. This is
       what you owe today. Pay the full amount — a part payment does not stop the surcharge on the
@@ -254,6 +273,7 @@ export const LINES = [
   },
   {
     id: 'due-date-rebate', always: false, group: 'totals',
+    links: [['/guides/how-to-read-tpcodl-odisha-bill/', { en: 'How to read a TPCODL Odisha bill' }]],
     title: { en: 'Prompt-payment rebate' },
     body: { en: `Several DISCOMs take a small amount <em>off</em> the bill if you pay on or before the
       due date — a few paise per unit, or a percentage of the energy charge, sometimes with an extra
@@ -431,6 +451,8 @@ export const UB = {
     },
   ],
 
+  realBill: { en: 'See this DISCOM’s real bill layout' },
+  realRates: { en: 'Its full rate schedule' },
   nextH2: { en: 'Next steps' },
   cards: {
     calc: {

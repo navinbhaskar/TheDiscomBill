@@ -3495,6 +3495,15 @@ ${METER_SVG.replace('>Press here<', `>${esc(T(lang, S.pressHere))}<`)}
 // English-only for now. The strings are already in { en } objects and T() falls back to .en,
 // so adding twins later is additive — but the explanation prose is the hardest copy on the
 // site to translate well, and it is not worth doing before the page has earned impressions.
+// Guides and tariff pages have vernacular twins; the tool pages (/compare/, /check-my-bill/,
+// /sanctioned-load-optimizer/, /bill-review/) and the homepage anchor do not. Sending a Hindi
+// reader to /hi/compare/ would 404, so only the families that actually have twins get prefixed.
+const TWINNED = /^\/(guides|tariffs|glossary|smart-meter|fuel-surcharge)\b/;
+function langUrl2(href, lang) {
+  if (lang === 'en' || !TWINNED.test(href)) return href;
+  return `/${lang}${href}`;
+}
+
 function understandBillPage(lang = 'en') {
   const enUrl = '/understand-your-bill/';
   const U = UB;
@@ -3517,6 +3526,17 @@ function understandBillPage(lang = 'en') {
 
   // The scenario notes are all rendered, and JS shows the one that matches. Rendering only the
   // current one would mean the other three exist nowhere in the HTML, and they are useful copy.
+  // The bill above is a schematic; these point at the DISCOM's actual bill layout and its
+  // actual rate schedule. It is the most useful link on the page for a reader who has just
+  // recognised their own utility in the selector.
+  const scenarioLinks = SCENARIOS.map(s => {
+    const parts = [];
+    if (s.guide) parts.push(`<a href="${attr(langUrl2(s.guide, lang))}">${esc(T(lang, U.realBill))}</a>`);
+    parts.push(`<a href="${attr(langUrl2(s.tariffPage, lang))}">${esc(T(lang, U.realRates))}</a>`);
+    return `<p class="ub-more ub-more-scenario" data-scenario="${attr(s.id)}"`
+      + `${s.id === scenario.id ? '' : ' hidden'}>${parts.join('')}</p>`;
+  }).join('\n      ');
+
   const scenarioNotes = SCENARIOS.map(s =>
     `<p class="ub-note" data-scenario="${attr(s.id)}"${s.id === scenario.id ? '' : ' hidden'}>${esc(T(lang, copy(s).note))}</p>`
   ).join('\n          ');
@@ -3532,7 +3552,10 @@ function understandBillPage(lang = 'en') {
         <p>${t(l.body)}</p>
         <div class="ub-live"${live ? '' : ' hidden'}><span class="ub-live-tag">${esc(T(lang, U.onThisBill))}</span>
           <div class="ub-live-body">${liveHtml(live)}</div></div>
-        <p class="ub-live is-absent"${live ? ' hidden' : ''}>${esc(T(lang, U.notOnThisBill))}</p>
+        <p class="ub-live is-absent"${live ? ' hidden' : ''}>${esc(T(lang, U.notOnThisBill))}</p>${
+        (l.links || []).length ? `
+        <p class="ub-more">${(l.links).map(([href, label]) =>
+          `<a href="${attr(langUrl2(href, lang))}">${esc(T(lang, label))}</a>`).join('')}</p>` : ''}
       </article>`;
   }).join('\n      ');
 
@@ -3612,6 +3635,7 @@ function understandBillPage(lang = 'en') {
         <button type="button" class="btn-ghost ub-reset" id="ubReset">${esc(T(lang, U.ctl.reset))}</button>
       </form>
       ${scenarioNotes}
+      ${scenarioLinks}
 
       <p class="ub-illustrative">
         <span class="ub-illustrative-tag">${esc(T(lang, U.illustrative))}</span>

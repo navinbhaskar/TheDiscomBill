@@ -39,6 +39,7 @@ import { DOMESTIC_SUBSIDY } from './tariffs/subsidy.js';
 export const SCENARIOS = [
   {
     id: 'uppcl-domestic',
+    guide: '/guides/how-to-read-uppcl-bill/', tariffPage: '/tariffs/uttar-pradesh/mvvnl/',
     discomId: 'mvvnl', categoryId: 'domestic', supplyTypeId: '10B',
     units: 250, connectedLoadKw: 2, md: 1.62,
     period: { from: '01-06-2026', to: '30-06-2026', month: 'JUN-2026', end: '2026-06-30', bill: '05-07-2026', due: '20-07-2026' },
@@ -46,6 +47,7 @@ export const SCENARIOS = [
   },
   {
     id: 'msedcl-domestic',
+    guide: '/guides/how-to-read-msedcl-bill/', tariffPage: '/tariffs/maharashtra/msedcl/',
     discomId: 'msedcl', categoryId: 'domestic', supplyTypeId: '',
     units: 250, connectedLoadKw: 2, md: 1.74,
     period: { from: '01-07-2026', to: '31-07-2026', month: 'JUL-2026', end: '2026-07-31', bill: '05-08-2026', due: '20-08-2026' },
@@ -53,6 +55,7 @@ export const SCENARIOS = [
   },
   {
     id: 'kseb-domestic',
+    guide: null, tariffPage: '/tariffs/kerala/kseb/',
     discomId: 'kseb', categoryId: 'domestic', supplyTypeId: 'single_phase',
     units: 250, connectedLoadKw: 2, md: 1.48,
     period: { from: '01-07-2026', to: '31-07-2026', month: 'JUL-2026', end: '2026-07-31', bill: '05-08-2026', due: '20-08-2026' },
@@ -60,6 +63,7 @@ export const SCENARIOS = [
   },
   {
     id: 'delhi-domestic',
+    guide: '/guides/how-to-read-bses-delhi-bill/', tariffPage: '/tariffs/delhi/brpl/',
     discomId: 'brpl', categoryId: 'domestic', supplyTypeId: '',
     units: 320, connectedLoadKw: 3, md: 2.42, subsidyState: 'Delhi',
     period: { from: '01-07-2026', to: '31-07-2026', month: 'JUL-2026', end: '2026-07-31', bill: '05-08-2026', due: '20-08-2026' },
@@ -71,6 +75,7 @@ export const SCENARIOS = [
     // category notes in js/tariffs/odisha.js). There is no generic rate to fall back on, and
     // putting an invented discount on the page would be worse than omitting the line.
     id: 'odisha-domestic',
+    guide: '/guides/how-to-read-tpcodl-odisha-bill/', tariffPage: '/tariffs/odisha/tpcodl/',
     discomId: 'tpcodl', categoryId: 'domestic', supplyTypeId: 'general',
     units: 250, connectedLoadKw: 2, md: 1.55,
     rebate: {
@@ -82,6 +87,7 @@ export const SCENARIOS = [
   },
   {
     id: 'uppcl-commercial',
+    guide: '/guides/how-to-read-uppcl-bill/', tariffPage: '/tariffs/uttar-pradesh/mvvnl/',
     discomId: 'mvvnl', categoryId: 'commercial', supplyTypeId: '20HV',
     units: 800, connectedLoadKw: 8, md: 9,
     period: { from: '01-07-2026', to: '31-07-2026', month: 'JUL-2026', end: '2026-07-31', bill: '05-08-2026', due: '20-08-2026' },
