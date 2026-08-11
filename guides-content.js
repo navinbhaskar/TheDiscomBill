@@ -9463,6 +9463,10 @@ export const GUIDES = [
     // Someone searching "upcl wss" or "jpdcl wss" reads a title naming two other utilities and
     // scrolls past. Listing the DISCOMs instead of asking a two-way question lets the searcher
     // spot their own name in the SERP, which is the whole job of a disambiguation page.
+    // Five DISCOM sections and five tables past 2,200 words: readers arrive knowing which
+    // utility is theirs and should be able to jump straight to it instead of scrolling past
+    // four that are not.
+    toc: true,
     metaTitle: 'WSS Portal Login: UPPCL, MSEDCL, KSEB, UPCL, JPDCL',
     description: 'Five DISCOMs run a portal called WSS — UPPCL, MSEDCL, KSEB, UPCL (Uttarakhand) and JPDCL (Jammu). Which one bills you, the direct links, and every service each offers.',
     minutes: 7,
@@ -9482,7 +9486,7 @@ export const GUIDES = [
       states, both running a WSS. This page sorts out which is yours in about a minute, and tells you
       what to search for if your DISCOM is not one of the five.`,
     sections: `
-      <section class="seo-section">
+      <section class="seo-section" data-toc="Which is mine?">
         <h2>Which WSS portal is yours?</h2>
         <div class="comparison-table-wrapper"><table class="comparison-table">
           <thead><tr><th>DISCOM</th><th>Serves</th><th>WSS address</th><th>Login needed?</th></tr></thead>
@@ -9521,7 +9525,7 @@ export const GUIDES = [
         </table></div>
       </section>
 
-      <section class="seo-section">
+      <section class="seo-section" data-toc="UPPCL">
         <h2>UPPCL WSS: every service, with the direct link</h2>
         <p>Uttar Pradesh has the largest WSS audience of the five. One portal at
         <a href="https://consumer.uppcl.org/wss/home" target="_blank" rel="noopener nofollow">consumer.uppcl.org/wss</a>
@@ -9559,7 +9563,7 @@ export const GUIDES = [
         came from a single spike or a meter you doubt.</p>
       </section>
 
-      <section class="seo-section">
+      <section class="seo-section" data-toc="MSEDCL">
         <h2>MSEDCL WSS: pay without an account</h2>
         <p>Maharashtra's portal is the most permissive of the five. You can pay a bill without registering at
         all: choose <em>Pay Bill</em>, type the <strong>12-digit consumer number</strong> printed at the top of
@@ -9595,7 +9599,7 @@ export const GUIDES = [
         <a href="/guides/msedcl-wss-portal/">MSEDCL WSS portal guide</a>.</p>
       </section>
 
-      <section class="seo-section">
+      <section class="seo-section" data-toc="KSEB">
         <h2>KSEB WSS: one portal for the whole state</h2>
         <p>Kerala has a single distributor, so one WSS covers everything: new connections, bills for an existing
         consumer number, ownership transfers, load changes and tariff changes. Less of it needs a login than you
@@ -9621,7 +9625,7 @@ export const GUIDES = [
         you will be billed at.</p>
       </section>
 
-      <section class="seo-section">
+      <section class="seo-section" data-toc="UPCL">
         <h2>UPCL WSS: Uttarakhand's single portal</h2>
         <p>Uttarakhand has one distribution licensee, <strong>Uttarakhand Power Corporation Limited</strong>,
         supplying around 2.6 million consumers across the state, and its consumer portal is branded WSS in so
@@ -9656,7 +9660,7 @@ export const GUIDES = [
         <a href="/tariffs/uttarakhand/upcl/">UPCL tariff and bill calculator</a>.</p>
       </section>
 
-      <section class="seo-section">
+      <section class="seo-section" data-toc="JPDCL">
         <h2>JPDCL WSS: the Jammu division only</h2>
         <p><strong>Jammu Power Distribution Corporation Limited</strong> runs its consumer portal at a WSS
         address — <a href="https://wss.jpdcl.co.in/login" target="_blank" rel="noopener nofollow">wss.jpdcl.co.in</a>
@@ -9679,7 +9683,7 @@ export const GUIDES = [
         our <a href="/tariffs/jammu-and-kashmir/jkpdd_jammu/">JPDCL tariff and bill calculator</a>.</p>
       </section>
 
-      <section class="seo-section">
+      <section class="seo-section" data-toc="Not listed?">
         <h2>If your DISCOM is not one of the five</h2>
         <p>Most Indian DISCOMs run the same kind of self-service site but do not call it WSS. Searching for
         "WSS" plus their name will usually fail, because the term simply is not theirs — search for the
@@ -9692,7 +9696,7 @@ export const GUIDES = [
         label. Follow the link printed on your own bill in preference to any of them.</p>
       </section>
 
-      <section class="seo-section">
+      <section class="seo-section" data-toc="What it can do">
         <h2>What a WSS portal can and cannot do</h2>
         <p>All four cover the same ground: view the current bill, pay it, download past bills and receipts,
         and log service requests such as a name change or a load change. What neither will do is tell you whether
@@ -9704,7 +9708,7 @@ export const GUIDES = [
         for the usual causes.</p>
       </section>
 
-      <section class="seo-section">
+      <section class="seo-section" data-toc="Payment delays">
         <h2>Payments that do not show up straight away</h2>
         <p>A WSS payment is not always reflected on the bill immediately. Settlement can take a few hours, and in
         some cases until the next billing cycle, so keep the transaction reference until the portal shows the bill

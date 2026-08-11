@@ -679,6 +679,57 @@ function faqJsonLd(faqs) {
   };
 }
 
+// Jump-link index for a long guide, opt-in per guide with `toc: true`.
+//
+// The entries are DERIVED from the section headings rather than listed by hand. A hand-listed
+// index is a second copy of the outline, and the moment someone renames or reorders a section
+// it starts lying — which on a jump-link row means a dead anchor rather than merely stale prose.
+// Deriving it means the index cannot disagree with the body.
+//
+// Returns both halves because the ids have to be stamped onto the sections at the same time as
+// the links that point at them.
+function guideToc(sectionsHtml, lang = 'en') {
+  const entries = [];
+  let n = 0;
+  const sections = sectionsHtml.replace(
+    /<section class="seo-section"([^>]*)>(\s*)<h2>([\s\S]*?)<\/h2>/g,
+    (whole, attrs, gap, heading) => {
+      n++;
+      if (/\bid\s*=/.test(attrs)) return whole;   // an author-set id wins; do not fight it
+      const text = heading.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+      // Latin slug where the heading allows one; Devanagari and Tamil headings reduce to
+      // nothing under [a-z0-9], so those fall back to a positional id rather than an empty one.
+      const slug = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+        || `section-${n}`;
+      // A jump row wants a label, not a sentence. Nine full headings rendered 212px of pills
+      // across five wrapped rows, which pushes the article down the page and costs more than
+      // the navigation is worth. So: an explicit data-toc on the section wins; otherwise take
+      // the part before a colon, which is exactly the short form these headings already carry
+      // ("UPPCL WSS: every service…" → "UPPCL WSS"); otherwise the heading stands as written.
+      const explicit = /\bdata-toc\s*=\s*"([^"]*)"/.exec(attrs);
+      const label = explicit ? explicit[1]
+        : (text.includes(':') ? text.slice(0, text.indexOf(':')).trim() : text);
+      entries.push({ slug, label });
+      return `<section class="seo-section" id="${slug}"${attrs}>${gap}<h2>${heading}</h2>`;
+    });
+
+  if (entries.length < 3) return { toc: '', sections: sectionsHtml };  // too short to need one
+
+  const label = T(lang, {
+    en: 'On this page', hi: 'इस पेज पर', mr: 'या पानावर', ta: 'இந்தப் பக்கத்தில்',
+  });
+  const links = entries
+    .map(e => `<a href="#${e.slug}">${esc(e.label)}</a>`)
+    .join('\n        ');
+  return {
+    toc: `<nav class="page-toc" aria-label="${esc(label)}">
+      <span class="page-toc-label">${esc(label)}</span>
+      ${links}
+    </nav>`,
+    sections,
+  };
+}
+
 function faqHtml(faqs, lang = 'en') {
   if (!faqs.length) return '';
   const items = faqs.map(f => `
@@ -2511,7 +2562,12 @@ function guidePage(guide, lang = 'en') {
   const url = langUrl(enUrl, L);
   const title = guideField(guide, 'title', L) || guide.title;
   const intro = guideField(guide, 'intro', L) || guide.intro;
-  const sections = guideField(guide, 'sections', L) || guide.sections;
+  const rawSections = guideField(guide, 'sections', L) || guide.sections;
+  // Opt-in: only guides that set `toc: true` get the jump-link row, so adding the feature does
+  // not silently restyle 100-odd existing articles that are short enough not to want one.
+  const { toc: tocHtml, sections } = guide.toc
+    ? guideToc(rawSections, L)
+    : { toc: '', sections: rawSections };
   const faqs = guideField(guide, 'faqs', L) || guide.faqs || [];
   const guidesBase = `${L === 'en' ? '' : '/' + L}/guides/`;
   // Which vernaculars have a translated twin of THIS guide (for hreflang + lang-switch links).
@@ -2564,7 +2620,7 @@ function guidePage(guide, lang = 'en') {
     ${langSwitchLink(enUrl, L, altLangs)}
     <h1>${esc(title)}</h1>
     <p class="guide-meta">${meta}</p>
-    <p class="seo-lead">${intro}</p>
+    <p class="seo-lead">${intro}</p>${tocHtml ? `\n    ${tocHtml}` : ''}
     ${guideToolCtaHtml(guide, L)}
     ${sections}
     ${faqHtml(faqs, L)}

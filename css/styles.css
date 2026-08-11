@@ -6370,8 +6370,9 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
   transition: color var(--t-fast), border-color var(--t-fast), background-color var(--t-fast);
 }
 .page-toc a:hover { color: var(--text-brand); border-color: var(--brand); background: var(--brand-faint); }
-/* Anchor targets sit under the sticky header without this. */
-.smart-meter-page .seo-section[id] { scroll-margin-top: 84px; }
+/* Anchor targets sit under the sticky header without this. Not scoped to the smart-meter page
+   any more: guides opting into `toc: true` get the same jump links and the same problem. */
+.seo-section[id] { scroll-margin-top: 84px; }
 
 /* Mid-page CTA, placed where the reader has just taken a reading off their own meter. */
 .inline-cta {
