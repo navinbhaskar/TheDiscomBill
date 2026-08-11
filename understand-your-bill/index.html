@@ -190,10 +190,15 @@
           <label for="ubLoad">Sanctioned load (kW)</label>
           <input type="number" id="ubLoad" name="load" min="0.5" max="150" step="0.5" value="2" inputmode="decimal">
         </div>
+        <div class="ub-field">
+          <label for="ubMd">Maximum demand (kW) <span class="ub-optional">optional</span></label>
+          <input type="number" id="ubMd" name="md" min="0" max="500" step="0.1" placeholder="1.62" inputmode="decimal">
+        </div>
         <div class="ub-field ub-field-check">
           <label><input type="checkbox" id="ubMessy" name="messy"> Add arrears, late payment surcharge and a part payment</label>
           <span class="ub-hint">Most real bills carry old dues. Turn this on to see how they change the total.</span>
         </div>
+        <p class="ub-hint ub-hint-md">Leave blank to use the demand the meter recorded on this bill. Enter one above the sanctioned load to see what a penalty does.</p>
         <button type="button" class="btn-ghost ub-reset" id="ubReset">Reset</button>
       </form>
       <p class="ub-note" data-scenario="uppcl-domestic">Urban domestic above 1 kW. Electricity Duty is a percentage of the whole bill here.</p>

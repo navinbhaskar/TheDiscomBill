@@ -20,6 +20,7 @@ export async function initUnderstandBill() {
   const sel = document.getElementById('ubScenario');
   const units = document.getElementById('ubUnits');
   const load = document.getElementById('ubLoad');
+  const md = document.getElementById('ubMd');
   const messy = document.getElementById('ubMessy');
   const reset = document.getElementById('ubReset');
   const err = document.getElementById('ubError');
@@ -40,9 +41,14 @@ export async function initUnderstandBill() {
 
   const current = () => SCENARIOS.find(s => s.id === sel.value) || SCENARIOS[0];
 
+  // MD is optional, so switching scenario CLEARS it and moves the scenario's own recorded
+  // figure into the placeholder. Filling the field instead would quietly turn every scenario
+  // change into an explicit override and the field would stop meaning "leave blank for normal".
   function applyDefaults(s) {
     units.value = s.units;
     load.value = s.connectedLoadKw;
+    md.value = '';
+    md.placeholder = String(s.md);
   }
 
   function fail(message) {
@@ -60,12 +66,19 @@ export async function initUnderstandBill() {
       fail('Enter a consumption of 0 or more and a sanctioned load above 0.');
       return;
     }
+    // Blank is the normal state, not an error — it means "use the recorded demand".
+    const mdRaw = md.value.trim();
+    const mdVal = mdRaw === '' ? null : Number(mdRaw);
+    if (mdVal !== null && (!Number.isFinite(mdVal) || mdVal < 0)) {
+      fail('Maximum demand must be 0 or more, or left blank.');
+      return;
+    }
 
     const { engine: E, registry: R } = await deps();
     await R.ensureDiscom(s.discomId);
 
     const bill = E.calculateBill(billInput(s, {
-      units: u, connectedLoadKw: kw, messy: messy.checked,
+      units: u, connectedLoadKw: kw, md: mdVal, messy: messy.checked,
     }));
     if (bill.error) { fail(bill.message); return; }
     err.hidden = true;
@@ -130,6 +143,7 @@ export async function initUnderstandBill() {
   sel.addEventListener('change', () => { applyDefaults(current()); render(); });
   units.addEventListener('input', debounced);
   load.addEventListener('input', debounced);
+  md.addEventListener('input', debounced);
   messy.addEventListener('change', render);
   reset.addEventListener('click', () => {
     sel.value = DEFAULT_SCENARIO;
@@ -149,6 +163,7 @@ export async function initUnderstandBill() {
   }
   if (q.has('units')) { units.value = q.get('units'); deep = true; }
   if (q.has('load')) { load.value = q.get('load'); deep = true; }
+  if (q.has('md')) { md.value = q.get('md'); deep = true; }
   if (q.get('messy') === '1') { messy.checked = true; deep = true; }
   if (deep) render();
 

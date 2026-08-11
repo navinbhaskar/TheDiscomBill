@@ -6591,6 +6591,12 @@ html:not(.js) .m-btn-ring { display: none; }
   font-size: 13.5px; font-weight: 500; color: var(--text-primary); cursor: pointer;
 }
 .ub-hint { font-size: 12px; color: var(--text-tertiary); padding-left: 25px; }
+.ub-hint-md { grid-column: 1 / -1; margin: -4px 0 0; padding-left: 0; }
+.ub-optional {
+  margin-left: 5px; padding: 1px 6px; border-radius: var(--radius-full);
+  font-size: 10px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase;
+  color: var(--text-tertiary); background: var(--surface-overlay);
+}
 .ub-reset {
   align-self: end; justify-self: start;
   padding: 8px 15px; font-size: 13px; font-weight: 600;

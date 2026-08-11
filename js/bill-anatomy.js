@@ -112,7 +112,7 @@ const PRESENT_READING = 14820;
 export const MESSY = { arrears: 1240, lpscRate: 1.25, payment: 500 };
 
 /** Inputs for calculateBill() for a scenario, with the reader's overrides applied. */
-export function billInput(scenario, { units, connectedLoadKw, messy } = {}) {
+export function billInput(scenario, { units, connectedLoadKw, md, messy } = {}) {
   const load = connectedLoadKw != null ? connectedLoadKw : scenario.connectedLoadKw;
   const input = {
     discomId: scenario.discomId,
@@ -125,10 +125,13 @@ export function billInput(scenario, { units, connectedLoadKw, messy } = {}) {
     // keyed to the month the power was consumed, not the month the bill was printed.
     billingDate: scenario.period.end,
   };
-  // Recorded MD is carried as an offset from the scenario's own default load, so dragging the
-  // load slider keeps any overshoot — otherwise raising the load would silently make the
-  // penalty vanish, which is the one thing the commercial scenario exists to demonstrate.
-  input.billedDemandKw = +(load + (scenario.md - scenario.connectedLoadKw)).toFixed(2);
+  // An explicit MD from the reader wins outright. Left blank, the scenario's own recorded MD is
+  // carried as an OFFSET from its default load, so dragging the load slider keeps any overshoot
+  // — otherwise raising the load would silently make the penalty vanish, which is the one thing
+  // the commercial scenario exists to demonstrate.
+  input.billedDemandKw = (md != null && Number.isFinite(md) && md > 0)
+    ? +Number(md).toFixed(2)
+    : +(load + (scenario.md - scenario.connectedLoadKw)).toFixed(2);
 
   // FPPA and subsidy come from the verified tables, resolved for this scenario's month. If a
   // state has no notified figure for that window the line simply does not appear — which is

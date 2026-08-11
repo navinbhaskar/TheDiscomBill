@@ -3574,10 +3574,15 @@ function understandBillPage(lang = 'en') {
           <label for="ubLoad">${esc(T(lang, U.ctl.load))}</label>
           <input type="number" id="ubLoad" name="load" min="0.5" max="150" step="0.5" value="${scenario.connectedLoadKw}" inputmode="decimal">
         </div>
+        <div class="ub-field">
+          <label for="ubMd">${esc(T(lang, U.ctl.md))} <span class="ub-optional">${esc(T(lang, U.ctl.optional))}</span></label>
+          <input type="number" id="ubMd" name="md" min="0" max="500" step="0.1" placeholder="${attr(scenario.md)}" inputmode="decimal">
+        </div>
         <div class="ub-field ub-field-check">
           <label><input type="checkbox" id="ubMessy" name="messy"> ${esc(T(lang, U.ctl.messy))}</label>
           <span class="ub-hint">${esc(T(lang, U.ctl.messyHint))}</span>
         </div>
+        <p class="ub-hint ub-hint-md">${esc(T(lang, U.ctl.mdHint))}</p>
         <button type="button" class="btn-ghost ub-reset" id="ubReset">${esc(T(lang, U.ctl.reset))}</button>
       </form>
       ${scenarioNotes}
