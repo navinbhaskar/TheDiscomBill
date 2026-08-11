@@ -133,14 +133,19 @@
              text ("EN"), or speech input cannot activate the button and a screen reader never
              announces which language is active (WCAG 2.5.3). Referencing the live span also
              keeps the name in step when syncLangUI() rewrites the badge. -->
-        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
           <span class="lang-trigger-text" id="langTriggerText">EN</span>
           <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
           <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
-          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
-          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        <!-- A plain list of links, not a listbox. These rows navigate, so they are anchors:
+             that makes them crawlable, middle-clickable and keyboard-operable for free,
+             none of which a role="option" <li> with a click handler ever was. Rows that
+             translate in place (no twin URL to point at) stay <button>s. -->
+        <ul class="lang-menu" id="langMenu" aria-label="Select language">
+          <li><a class="lang-opt" href="/guides/how-to-read-bescom-bill/" hreflang="en-IN" lang="en" data-lang="en"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></a></li>
+          <li><span class="lang-opt" data-lang="hi" aria-current="true"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">हिं</span></span></li>
+          <li><a class="lang-opt" href="/mr/guides/how-to-read-bescom-bill/" hreflang="mr-IN" lang="mr" data-lang="mr"><span class="lang-opt-name">मराठी</span><span class="lang-opt-code">म</span></a></li>
         </ul>
       </div>
       <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>

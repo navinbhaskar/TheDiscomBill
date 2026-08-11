@@ -630,19 +630,28 @@
 }
 .lang-switch.open .lang-menu { opacity: 1; transform: none; pointer-events: auto; }
 
-.lang-opt {
+/* One rule for three elements: the row is an <a> when the language has a pre-rendered twin
+   to link to, a <button> when switching is an in-place swap, and a <span> for the language
+   already showing. The resets below are what let those look identical. */
+/* Scoped to .lang-menu, not bare .lang-opt: the link rows sit inside .header-nav, whose
+   `.header-nav a` rule is more specific than a lone class and was resetting their font-size,
+   colour and padding — the anchors rendered a size larger than the current-language row. */
+.lang-menu .lang-opt {
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding: 8px 10px; border-radius: var(--radius-md); cursor: pointer;
+  width: 100%; padding: 8px 10px; border-radius: var(--radius-md); cursor: pointer;
   color: var(--text-primary); font-size: 13.5px; font-weight: 500;
+  font-family: inherit; text-align: left; text-decoration: none;
+  background: none; border: 0;
   transition: background var(--t-fast);
 }
-.lang-opt:hover, .lang-opt.is-active { background: var(--brand-faint); }
-.lang-opt[aria-selected="true"] { color: var(--text-brand); font-weight: 700; }
+.lang-menu span.lang-opt { cursor: default; }
+.lang-menu .lang-opt:hover, .lang-menu .lang-opt.is-active { background: var(--brand-faint); }
+.lang-menu .lang-opt[aria-current] { color: var(--text-brand); font-weight: 700; }
 .lang-opt-name { display: flex; align-items: center; gap: 7px; }
-.lang-opt[aria-selected="true"] .lang-opt-name::before {
+.lang-menu .lang-opt[aria-current] .lang-opt-name::before {
   content: "✓"; color: var(--text-brand); font-size: 12px; font-weight: 700;
 }
-.lang-opt:not([aria-selected="true"]) .lang-opt-name { padding-left: 19px; }   /* align with checked rows */
+.lang-menu .lang-opt:not([aria-current]) .lang-opt-name { padding-left: 19px; }   /* align with checked rows */
 .lang-opt-code {
   font-size: 11px; font-weight: 700; letter-spacing: .03em;
   color: var(--text-tertiary); background: var(--surface-sunken);
@@ -650,7 +659,7 @@
 }
 /* --text-brand on --brand-subtle is only 4.2:1, and this is an 11px bold code. The darker
    brand ink is the one that carries on a tinted chip rather than on the page. */
-.lang-opt[aria-selected="true"] .lang-opt-code { color: var(--text-brand-dark); background: var(--brand-subtle); }
+.lang-menu .lang-opt[aria-current] .lang-opt-code { color: var(--text-brand-dark); background: var(--brand-subtle); }
 
 /* ─── Reset & Base ───────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

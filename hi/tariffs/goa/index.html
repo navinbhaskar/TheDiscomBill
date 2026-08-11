@@ -85,7 +85,7 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/tariffs/goa/","name":"गोवा बिजली टैरिफ 2026-27 — ₹1.50–6.70/यूनिट","description":"गोवा की 2026-27 स्लैब दरें देखें और 30 सेकंड में अपना सटीक बिजली बिल निकालें। 1 डिस्कॉम (Goa Electricity Dept.) — फिक्स्ड चार्ज व FPPA सहित। घरेलू दर ₹1.5/यूनिट से। मुफ़्त, बिना साइन-अप।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-10"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/tariffs/goa/","name":"गोवा बिजली टैरिफ 2026-27 — ₹1.50–6.70/यूनिट","description":"गोवा की 2026-27 स्लैब दरें देखें और 30 सेकंड में अपना सटीक बिजली बिल निकालें। 1 डिस्कॉम (Goa Electricity Dept.) — फिक्स्ड चार्ज व FPPA सहित। घरेलू दर ₹1.5/यूनिट से। मुफ़्त, बिना साइन-अप।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-11"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"टैरिफ","item":"https://thediscombill.com/hi/tariffs/states/"},{"@type":"ListItem","position":3,"name":"गोवा","item":"https://thediscombill.com/hi/tariffs/goa/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"गोवा में बिजली बिल कैसे निकाला जाता है?","acceptedAnswer":{"@type":"Answer","text":"गोवा के बिल में स्लैब-वार ऊर्जा शुल्क, प्रति kW (या kVA) फिक्स्ड/डिमांड चार्ज, ईंधन व विद्युत क्रय समायोजन (FPPA) और बिजली शुल्क जुड़ते हैं। अपने डिस्कॉम का मदवार अनुमानित बिल पाने के लिए हमारा <a href=\"/#calculator\">मुफ़्त कैलकुलेटर</a> इस्तेमाल करें।"}},{"@type":"Question","name":"गोवा में मेरे इलाक़े में कौन-सी बिजली वितरण कंपनी है?","acceptedAnswer":{"@type":"Answer","text":"गोवा में 1 डिस्कॉम है: <strong>Goa Electricity Dept.</strong> (Entire Goa)। पूरी टैरिफ और अनुमानित बिल के लिए ऊपर अपना डिस्कॉम खोलें।"}},{"@type":"Question","name":"गोवा में सबसे सस्ती घरेलू बिजली दर क्या है?","acceptedAnswer":{"@type":"Answer","text":"गोवा के डिस्कॉम में सबसे कम घरेलू ऊर्जा शुल्क लगभग ₹1.5 प्रति यूनिट (सबसे निचला स्लैब) से शुरू होता है — फिक्स्ड चार्ज, FPPA और शुल्क अलग। सटीक दरें आपके डिस्कॉम और खपत स्लैब पर निर्भर हैं।"}},{"@type":"Question","name":"गोवा का वर्तमान बिजली टैरिफ वर्ष क्या है?","acceptedAnswer":{"@type":"Answer","text":"दिखाई गई दरें 2026-27 की हैं (नवीनतम उपलब्ध)।"}}]}</script>
 </head>
@@ -131,14 +131,18 @@
              text ("EN"), or speech input cannot activate the button and a screen reader never
              announces which language is active (WCAG 2.5.3). Referencing the live span also
              keeps the name in step when syncLangUI() rewrites the badge. -->
-        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
           <span class="lang-trigger-text" id="langTriggerText">EN</span>
           <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
           <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
-          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
-          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        <!-- A plain list of links, not a listbox. These rows navigate, so they are anchors:
+             that makes them crawlable, middle-clickable and keyboard-operable for free,
+             none of which a role="option" <li> with a click handler ever was. Rows that
+             translate in place (no twin URL to point at) stay <button>s. -->
+        <ul class="lang-menu" id="langMenu" aria-label="Select language">
+          <li><a class="lang-opt" href="/tariffs/goa/" hreflang="en-IN" lang="en" data-lang="en"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></a></li>
+          <li><span class="lang-opt" data-lang="hi" aria-current="true"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">हिं</span></span></li>
         </ul>
       </div>
       <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>

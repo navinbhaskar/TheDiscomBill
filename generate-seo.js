@@ -300,7 +300,11 @@ const yearLabel = (fy) => String(fy).replace(/^FY\s*/i, '');
 const TITLE_YEAR = String(new Date().getFullYear());
 
 // ── shared chrome (header / footer) ───────────────────────────────────────────
-const HEADER = `
+// `langMenu` is built per page by langMenuItems() below, so the switcher's rows are real
+// links to that page's twins rather than fixed markup driven entirely by JS. It is passed
+// in as a token and swapped in after langChrome() — see the call site in layout().
+const LANGMENU_TOKEN = '<!--LANGMENU-->';
+const HEADER = (langMenu) => `
 <header class="site-header">
   <div class="header-inner">
     <a href="/" class="logo">
@@ -341,14 +345,17 @@ const HEADER = `
              text ("EN"), or speech input cannot activate the button and a screen reader never
              announces which language is active (WCAG 2.5.3). Referencing the live span also
              keeps the name in step when syncLangUI() rewrites the badge. -->
-        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
           <span class="lang-trigger-text" id="langTriggerText">EN</span>
           <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
           <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
-        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
-          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
-          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        <!-- A plain list of links, not a listbox. These rows navigate, so they are anchors:
+             that makes them crawlable, middle-clickable and keyboard-operable for free,
+             none of which a role="option" <li> with a click handler ever was. Rows that
+             translate in place (no twin URL to point at) stay <button>s. -->
+        <ul class="lang-menu" id="langMenu" aria-label="Select language">
+          ${langMenu}
         </ul>
       </div>
       <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
@@ -429,6 +436,38 @@ function langChrome(html, lang) {
 
 // BCP-47 tags + native og:locale for each supported language.
 const LANG_LOCALE = { en: 'en-IN', hi: 'hi-IN', mr: 'mr-IN', ta: 'ta-IN' };
+// Matches the `badge` column of LANGS in js/i18n.js, which rebuilds this same menu at runtime.
+const LANG_BADGE = { en: 'EN', hi: 'हिं', mr: 'म', ta: 'த' };
+
+// The rows of the header language switcher for ONE page.
+//
+// These used to be `<li data-lang="hi">` with a JS click handler, which meant the /hi/, /mr/
+// and /ta/ trees had no inbound link anywhere on the site. The only thing pointing at them was
+// the <link rel="alternate"> block, and hreflang is a hint about how URLs relate — not a way in.
+//
+// A language gets an anchor only where a twin actually exists, and that set is `altLangs`: the
+// very list the hreflang block below is built from. Deriving both from one argument is what
+// keeps a visible link from ever promising a page the hreflang set doesn't claim — /hi/ has no
+// homepage, for instance, so the homepage must not offer one.
+//
+// Pages that translate in place from the string tables have no URL to point at; those rows stay
+// <button>s. js/i18n.js re-renders this menu on load with the same shape.
+function langMenuItems(page, lang, altLangs) {
+  const codes = ['en', ...(page ? altLangs : ['hi']).filter(l => l !== 'en')];
+  return codes.map(l => {
+    const label = `<span class="lang-opt-name">${LANG_NATIVE[l]}</span>`
+      + `<span class="lang-opt-code">${LANG_BADGE[l]}</span>`;
+    if (l === lang) {
+      return `<li><span class="lang-opt" data-lang="${l}" aria-current="true">${label}</span></li>`;
+    }
+    if (!page) {
+      return `<li><button type="button" class="lang-opt" data-lang="${l}">${label}</button></li>`;
+    }
+    const href = l === 'en' ? page : langUrl(page, l);
+    return `<li><a class="lang-opt" href="${attr(href)}" hreflang="${LANG_LOCALE[l]}"`
+      + ` lang="${l}" data-lang="${l}">${label}</a></li>`;
+  }).join('\n          ');
+}
 const OG_LOCALE = { en: 'en_IN', hi: 'hi_IN', mr: 'mr_IN', ta: 'ta_IN' };
 
 // `page` is the site-relative English URL of this page (e.g. "/glossary/"). When given,
@@ -474,7 +513,12 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
   // On a vernacular page the URL itself is an explicit language choice: persist it so the
   // client i18n layer renders the shared chrome (nav/footer) in that language immediately.
   const langBoot = lang !== 'en' ? `try { localStorage.setItem('lang', '${lang}'); } catch (e) {}` : '';
-  const chrome = langChrome(HEADER, lang);
+  // The menu is substituted AFTER langChrome, never before: langChrome rewrites bare chrome
+  // hrefs like "/guides/" to "/hi/guides/", and on the Hindi guides index the switcher's
+  // "English" row is exactly that string — it would have been rewritten to point at the very
+  // Hindi page it is offering to leave.
+  const chrome = langChrome(HEADER(LANGMENU_TOKEN), lang)
+    .replace(LANGMENU_TOKEN, langMenuItems(page, lang, altLangs));
   const footer = langChrome(FOOTER, lang);
   return `<!DOCTYPE html>
 <html lang="${lang}">

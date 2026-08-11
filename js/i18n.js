@@ -565,7 +565,8 @@ function syncLangUI(lang) {
   const trigger = document.getElementById('langTriggerText');
   if (trigger) trigger.textContent = langMeta(lang).badge;
   document.querySelectorAll('#langMenu .lang-opt').forEach(opt => {
-    opt.setAttribute('aria-selected', opt.dataset.lang === lang ? 'true' : 'false');
+    if (opt.dataset.lang === lang) opt.setAttribute('aria-current', 'true');
+    else opt.removeAttribute('aria-current');
   });
 }
 
@@ -588,10 +589,22 @@ function availableLangs() {
   );
 }
 
+// Mirrors langMenuItems() in generate-seo.js. This runs on every page and replaces the
+// pre-rendered rows wholesale, so it has to emit the same anchors — otherwise the crawlable
+// links exist in the served HTML and vanish the moment the page is rendered.
+//
+// A row is an <a> wherever the page declares a twin for that language, and a <button> where
+// switching is an in-place dictionary swap with no URL to point at.
 function buildLangMenu(menu) {
-  menu.innerHTML = availableLangs().map(l =>
-    `<li class="lang-opt" role="option" data-lang="${l.code}" aria-selected="false"><span class="lang-opt-name">${l.name}</span><span class="lang-opt-code">${l.badge}</span></li>`
-  ).join('');
+  const here = document.documentElement.lang || 'en';
+  menu.innerHTML = availableLangs().map(l => {
+    const label = `<span class="lang-opt-name">${l.name}</span><span class="lang-opt-code">${l.badge}</span>`;
+    if (l.code === here) return `<li><span class="lang-opt" data-lang="${l.code}" aria-current="true">${label}</span></li>`;
+    const twin = altUrlFor(l.code);
+    return twin
+      ? `<li><a class="lang-opt" href="${twin}" hreflang="${l.hreflang}" lang="${l.code}" data-lang="${l.code}">${label}</a></li>`
+      : `<li><button type="button" class="lang-opt" data-lang="${l.code}">${label}</button></li>`;
+  }).join('');
 }
 
 export function initI18n() {
@@ -620,7 +633,8 @@ export function initI18n() {
 
   if (sw && trigger && menu) {
     buildLangMenu(menu);
-    const opts = [...menu.querySelectorAll('.lang-opt')];
+    // Actionable rows only — the current language renders as a <span> and is not a target.
+    const opts = [...menu.querySelectorAll('a.lang-opt, button.lang-opt')];
     // Register with the shared popup coordinator so opening another popup (account,
     // Quick Links, review chooser) dismisses this one, and vice versa.
     window.__popups?.register('lang', () => closeMenu(false));
@@ -653,7 +667,17 @@ export function initI18n() {
       e.stopPropagation();
       sw.classList.contains('open') ? closeMenu() : openMenu();
     });
-    opts.forEach(opt => opt.addEventListener('click', () => choose(opt.dataset.lang)));
+    opts.forEach(opt => opt.addEventListener('click', () => {
+      const l = opt.dataset.lang;
+      // An anchor already knows where it is going — let the browser navigate, and only
+      // record the choice so the twin boots in it. Calling choose() here would work too,
+      // but it would fight the native navigation and break middle-click / ctrl-click.
+      if (opt.tagName === 'A') {
+        try { localStorage.setItem('lang', l); } catch (e) {}
+        return;
+      }
+      choose(l);
+    }));
 
     // Keyboard: arrows move a highlight, Enter/Space selects, Escape closes.
     const move = (dir) => {
@@ -671,8 +695,10 @@ export function initI18n() {
       else if (e.key === 'Escape') { e.preventDefault(); closeMenu(true); }
       else if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
+        // click() rather than choose(): it runs the listener above and, on an anchor,
+        // performs the navigation — one path for both row kinds.
         const act = opts.find(o => o.classList.contains('is-active'));
-        if (act) choose(act.dataset.lang);
+        if (act) act.click();
       }
     });
     // Make the open menu reachable by keyboard.
