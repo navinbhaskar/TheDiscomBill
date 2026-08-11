@@ -13,6 +13,7 @@
 // does not reproduce the number beside it is worse than no formula at all.
 
 import { resolveFppaForDiscom } from './tariffs/fppa-resolve.js';
+import { billT } from './bill-strings.js';
 import { DOMESTIC_SUBSIDY } from './tariffs/subsidy.js';
 
 /**
@@ -110,6 +111,8 @@ const num = (n, d = 0) => Number(n).toLocaleString('en-IN', { maximumFractionDig
 const pct = (n) => num(n, 2) + '%';
 /** "+ a + b − c" → "a + b − c": drops the leading sign off a built-up sum. */
 const join = (parts) => parts.join(' ').replace(/^\+ /, '');
+/** Mirrors T() in generate-seo.js, for the few { en, hi, mr, ta } nodes carried on scenarios. */
+const T = (lang, m) => (m && typeof m === 'object') ? (m[lang] != null ? m[lang] : m.en) : m;
 
 /** The present reading. Previous is back-computed from it, so the subtraction checks out. */
 const PRESENT_READING = 14820;
@@ -173,7 +176,7 @@ const isDuty = (c) => /duty/i.test(c.name || '');
  *   rather than a sentence, so the page can show the rule AND the arithmetic that produced the
  *   figure beside it. A key that is absent means the line is not on this bill.
  */
-export function readout(b, scenario) {
+export function readout(b, scenario, lang = 'en') {
   const live = {};
   const duty = (b.extraCharges || []).find(isDuty);
   const otherExtras = (b.extraCharges || []).filter(c => !isDuty(c));
@@ -187,99 +190,88 @@ export function readout(b, scenario) {
   const fixedRate = fixedBasis > 0 ? b.fixedCharge / fixedBasis : 0;
   const previous = +(PRESENT_READING - b.units).toFixed(0);
 
+  // Every user-visible word comes from billT(lang); nothing below is an English literal.
+  // `c` is the context the note functions interpolate — already formatted, so a translation
+  // can reorder a sentence without touching any arithmetic.
+  const S = billT(lang);
+  const P = scenario.period;
+  const c = {
+    dUnit, eUnit,
+    load: num(b.connectedLoadKw, 2),
+    md: num(b.billedDemandKw, 2),
+    threshold: '', excess: num(b.excessDemand, 2),
+    units: num(b.units, 2),
+    days: b.billingPeriodDays || 30,
+    perDay: num(b.units / (b.billingPeriodDays || 30), 1),
+    energy: money(b.totalEnergy),
+    lastRate: rate2(lastRate),
+    avgRate: rate2(avgRate),
+    net: money(b.currentNet),
+    allIn: rate2(b.units > 0 ? b.currentNet / b.units : 0),
+    payable: money(b.totalPayable),
+    due: P.due, month: P.month, from: P.from, to: P.to,
+    tariffLabel: '',
+  };
+
   // ── account block ─────────────────────────────────────────────────────────
   const catName = b.category ? b.category.name : '';
-  const tariffLabel = b.supplyTypeName ? `${catName} · ${b.supplyTypeName}` : catName;
+  c.tariffLabel = b.supplyTypeName ? `${catName} · ${b.supplyTypeName}` : catName;
 
-  live.tariffCategory = {
-    note: `This bill is on ${tariffLabel}. Every rate below — the slabs, the fixed charge, whether a `
-      + `demand penalty can apply at all — follows from that one code and nothing else.`,
-  };
+  live.tariffCategory = { note: S.nTariffCategory(c) };
   live.sanctionedLoad = b.isDemandBilled
-    ? {
-        note: `${num(b.connectedLoadKw, 2)} ${dUnit} sanctioned, against ${num(b.billedDemandKw, 2)} ${dUnit} `
-          + `actually recorded. On this category the charge follows the recorded figure, not the sanctioned `
-          + `one — and the gap between them is what the penalty is levied on.`,
-      }
+    ? { note: S.nLoadDemandBilled(c) }
     : {
-        formula: `Fixed charge = rate per ${dUnit} × sanctioned load`,
-        calc: [`${rate2(fixedRate)} × ${num(b.connectedLoadKw, 2)} ${dUnit}`],
+        formula: S.fFixedLoad(c),
+        calc: [`${rate2(fixedRate)} × ${c.load} ${dUnit}`],
         result: money(b.fixedCharge),
-        note: `The sanctioned load is the only thing this charge depends on. Set the units to zero above `
-          + `and it is all that remains on the bill.`,
+        note: S.nLoadFixed(c),
       };
 
   const account = [
-    { k: 'Consumer number', v: scenario.consumerNo, mark: 'consumer-no' },
-    { k: 'Consumer name', v: 'A. Kumar' },
-    { k: 'Tariff category', v: tariffLabel, mark: 'tariff-category' },
-    { k: 'Sanctioned load', v: `${num(b.connectedLoadKw, 2)} ${dUnit}`, mark: 'sanctioned-load' },
-    { k: 'Meter number', v: `${scenario.meterNo} · ${scenario.phase}` },
+    { k: S.consumerNo, v: scenario.consumerNo, mark: 'consumer-no' },
+    { k: S.consumerName, v: S.sampleName },
+    { k: S.tariffCategory, v: c.tariffLabel, mark: 'tariff-category' },
+    { k: S.sanctionedLoad, v: `${c.load} ${dUnit}`, mark: 'sanctioned-load' },
+    { k: S.meterNo, v: `${scenario.meterNo} · ${scenario.phase === 'Three phase' ? S.threePhase : S.singlePhase}` },
   ];
 
   // ── billing period ────────────────────────────────────────────────────────
-  const P = scenario.period;
   const period = [
-    { k: 'Bill month', v: P.month, mark: 'bill-month' },
-    { k: 'Reading period', v: `${P.from} – ${P.to}` },
-    { k: 'Bill date', v: P.bill },
-    { k: 'Due date', v: P.due, mark: 'due-date' },
+    { k: S.billMonth, v: P.month, mark: 'bill-month' },
+    { k: S.readingPeriod, v: `${P.from} – ${P.to}` },
+    { k: S.billDate, v: P.bill },
+    { k: S.dueDate, v: P.due, mark: 'due-date' },
   ];
-  live.billMonth = {
-    note: `${P.month} — the month the power was USED (${P.from} to ${P.to}), not the month the bill was `
-      + `printed. It matters more than it looks: the fuel surcharge is notified per month, so this field `
-      + `decides which rate applies. Switch DISCOM above and watch the same UPPCL connection charge +10% `
-      + `in June and refund 4.43% in July.`,
-  };
-  live.dueDate = {
-    note: `Pay on or before ${P.due} and the bill costs exactly what it says. After it, a late payment `
-      + `surcharge starts accruing on the whole outstanding amount and compounds monthly — and where the `
-      + `DISCOM offers a prompt-payment rebate, you lose that too. The gap between the bill date and the `
-      + `due date is typically 15 days.`,
-  };
+  live.billMonth = { note: S.nBillMonth(c) };
+  live.dueDate = { note: S.nDueDate(c) };
 
   // ── meter reading ─────────────────────────────────────────────────────────
   const reading = [
-    { k: 'Previous reading', v: num(previous) },
-    { k: 'Present reading', v: num(PRESENT_READING) },
-    { k: 'Units consumed', v: `${num(b.units, 2)} ${eUnit}`, mark: 'units-consumed' },
-    { k: 'Maximum demand', v: `${num(b.billedDemandKw, 2)} ${dUnit}`, mark: 'md' },
-    { k: 'Reading status', v: scenario.status, mark: 'reading-status' },
+    { k: S.prevReading, v: num(previous) },
+    { k: S.presReading, v: num(PRESENT_READING) },
+    { k: S.unitsConsumed, v: `${c.units} ${eUnit}`, mark: 'units-consumed' },
+    { k: S.maxDemand, v: `${c.md} ${dUnit}`, mark: 'md' },
+    { k: S.readingStatus, v: scenario.status, mark: 'reading-status' },
   ];
   live.unitsConsumed = {
-    formula: 'Units = (Present reading − Previous reading) × Meter constant',
+    formula: S.fUnits,
     calc: [`(${num(PRESENT_READING)} − ${num(previous)}) × 1`],
-    result: `${num(b.units, 2)} ${eUnit}`,
-    note: `About ${num(b.units / (b.billingPeriodDays || 30), 1)} units a day over `
-      + `${b.billingPeriodDays || 30} days. The meter constant is 1 on almost every domestic `
-      + `connection; where it is not, it is printed on the meter and multiplies the difference.`,
+    result: `${c.units} ${eUnit}`,
+    note: S.nUnits(c),
   };
   // MD is on every bill, but it only COSTS anything on a demand-billed category — and saying so
   // is the point. A domestic reader who sees this field usually assumes it is being charged for.
   live.md = b.isDemandBilled
     ? {
-        formula: 'Billed demand = higher of (recorded MD, contractual floor)',
-        calc: [`max(${num(b.billedDemandKw, 2)}, ${num(b.demandFloor || 0, 2)}) ${dUnit}`],
+        formula: S.fBilledDemand,
+        calc: [`max(${c.md}, ${num(b.demandFloor || 0, 2)}) ${dUnit}`],
         result: `${num(b.billingDemand, 2)} ${dUnit}`,
-        note: `The highest half-hour average the meter logged this month. On this category the demand `
-          + `charge and any excess-demand penalty are both levied on it, so a few minutes with everything `
-          + `running at once sets the price of the whole month.`,
+        note: S.nMdBilled(c),
       }
-    : {
-        result: `${num(b.billedDemandKw, 2)} ${dUnit} recorded, against ${num(b.connectedLoadKw, 2)} ${dUnit} sanctioned`,
-        note: `The highest half-hour average the meter logged. On a domestic connection it is recorded but `
-          + `NOT what you are billed on — the fixed charge follows the sanctioned load regardless. It still `
-          + `matters: if it creeps above your sanctioned load, the DISCOM can raise a penalty or ask you to `
-          + `regularise the connection.`,
-      };
+    : { result: S.nMdResult(c), note: S.nMdRecorded(c) };
   live.readingStatus = {
     result: scenario.status,
-    note: `How the reading was obtained. ${scenario.status === 'OK' ? 'OK means the meter was physically '
-      + 'read and the reading was accepted — the bill is based on real consumption. ' : ''}DISCOMs print a `
-      + `short code here and the vocabulary is utility-specific. What matters is the distinction: a status `
-      + `saying the meter was actually read, versus one saying it was estimated, inaccessible or faulty. `
-      + `Anything in the second group means the units above are a guess that will be trued up later, and `
-      + `it is worth taking your own reading and quoting it.`,
+    note: S.nStatus({ ...c, okPrefix: scenario.status === 'OK' ? S.nStatusOk(c) : '' }),
   };
 
   // ── slab ladder ───────────────────────────────────────────────────────────
@@ -287,66 +279,55 @@ export function readout(b, scenario) {
     label: s.label, units: num(s.units, 2), rate: rate2(s.rate), amount: money(s.amount),
   }));
   live.energyCharge = {
-    formula: 'Energy charge = Σ (units falling in each slab × that slab’s rate)',
+    formula: S.fEnergy,
     calc: (b.slabBreakdown || []).map(s =>
       `${num(s.units, 2)} × ${rate2(s.rate)} = ${money(s.amount)}`),
     result: money(b.totalEnergy),
-    note: slabs.length > 1
-      ? `The slabs STACK — crossing into a higher one raises the price of the extra units only. `
-        + `The last unit cost ${rate2(lastRate)}, but the average across the bill is `
-        + `${money(b.totalEnergy)} ÷ ${num(b.units, 2)} = ${rate2(avgRate)} a unit.`
-      : `A single slab, so there is no ladder here: every unit cost ${rate2(avgRate)}.`,
+    note: slabs.length > 1 ? S.nEnergyLadder(c) : S.nEnergyFlat(c),
   };
 
   // ── charges ───────────────────────────────────────────────────────────────
   const charges = [];
-  charges.push({ k: 'Energy charge', v: money(b.totalEnergy), mark: 'energy-charge' });
+  charges.push({ k: S.energyCharge, v: money(b.totalEnergy), mark: 'energy-charge' });
   charges.push({
-    k: b.isDemandBilled ? 'Demand charge' : 'Fixed charge',
+    k: b.isDemandBilled ? S.demandCharge : S.fixedCharge,
     v: money(b.fixedCharge), mark: 'fixed-charge',
   });
   live.fixedCharge = b.isDemandBilled
     ? {
-        formula: `Demand charge = rate per ${dUnit} × billed demand`,
+        formula: S.fDemand(c),
         calc: [`${rate2(fixedRate)} × ${num(b.billingDemand, 2)} ${dUnit}`],
         result: money(b.fixedCharge),
-        note: `Billed demand is the higher of the recorded maximum demand and any contractual floor, `
-          + `so on this category the charge moves month to month with how hard you ran.`,
+        note: S.nDemandCharge(c),
       }
     : {
-        formula: `Fixed charge = rate per ${dUnit} × sanctioned load`,
-        calc: [`${rate2(fixedRate)} × ${num(b.connectedLoadKw, 2)} ${dUnit}`],
+        formula: S.fFixedLoad(c),
+        calc: [`${rate2(fixedRate)} × ${c.load} ${dUnit}`],
         result: money(b.fixedCharge),
-        note: `Consumption does not enter this formula anywhere. That is why a locked, empty house `
-          + `still receives a bill.`,
+        note: S.nFixedCharge(c),
       };
 
   if (b.excessDemandPenalty > 0) {
-    charges.push({ k: 'Excess demand penalty', v: money(b.excessDemandPenalty), mark: 'excess-demand' });
-    const threshold = b.connectedLoadKw * (1 + (b.excessDemandTolerancePct || 0) / 100);
+    charges.push({ k: S.excessPenalty, v: money(b.excessDemandPenalty), mark: 'excess-demand' });
+    c.threshold = num(b.connectedLoadKw * (1 + (b.excessDemandTolerancePct || 0) / 100), 2);
+    c.tolerancePct = pct(b.excessDemandTolerancePct);
+    c.tolerance = b.excessDemandTolerancePct ? S.nToleranceClause(c) : '';
+    c.multiplier = num(b.excessDemandMultiplier, 2);
+    c.multiplierClause = b.excessDemandMultiplier ? S.nMultiplierClause(c) : '';
     // Three ways a state levies this, and the engine picks between them — so the formula shown
     // has to match the one that actually ran, not a generic ₹/kW that happens to be commonest.
     live.excessDemand = b.excessDemandPctEnergyPerKw
       ? {
-          formula: 'Penalty = excess demand × (% of energy charge per excess kW)',
-          calc: [`${num(b.excessDemand, 2)} ${dUnit} × ${pct(b.excessDemandPctEnergyPerKw)} × ${money(b.totalEnergy)}`],
+          formula: S.fPenaltyPct,
+          calc: [`${c.excess} ${dUnit} × ${pct(b.excessDemandPctEnergyPerKw)} × ${money(b.totalEnergy)}`],
           result: money(b.excessDemandPenalty),
-          note: `Threshold: ${num(threshold, 2)} ${dUnit}`
-            + (b.excessDemandTolerancePct ? ` (sanctioned load plus a ${pct(b.excessDemandTolerancePct)} tolerance)` : '')
-            + `. Recorded demand was ${num(b.billedDemandKw, 2)} ${dUnit}.`,
+          note: S.nPenaltyPct(c),
         }
       : {
-          formula: `Penalty = excess demand × penalty rate per ${dUnit}`,
-          calc: [
-            `Excess = ${num(b.billedDemandKw, 2)} − ${num(threshold, 2)} = ${num(b.excessDemand, 2)} ${dUnit}`,
-            `${num(b.excessDemand, 2)} × ${rate2(b.excessDemandRate)}`,
-          ],
+          formula: S.fPenaltyRate(c),
+          calc: [S.cExcess(c), `${c.excess} × ${rate2(b.excessDemandRate)}`],
           result: money(b.excessDemandPenalty),
-          note: (b.excessDemandMultiplier
-            ? `The penalty rate is ${num(b.excessDemandMultiplier, 2)}× the normal demand rate. `
-            : '')
-            + `Raise the sanctioned load above and watch this line disappear — then check whether the `
-            + `higher fixed charge costs you more or less than the penalty did.`,
+          note: S.nPenaltyRate(c),
         };
   }
 
@@ -355,54 +336,47 @@ export function readout(b, scenario) {
   if (b.facAmount !== 0) {
     const credit = b.facAmount < 0;
     charges.push({
-      k: credit ? 'Fuel surcharge credit (FPPA)' : 'Fuel surcharge (FPPA)',
+      k: credit ? S.fppaCredit : S.fppa,
       v: (credit ? '− ' : '') + money(Math.abs(b.facAmount)),
       mark: 'fppa', credit,
     });
     // The percent base is the engine's facBase: fixed + energy + penalty + TOD + min top-up.
     // NOT the energy charge alone — that is the commonest wrong assumption about FPPA.
     const facBase = b.fixedCharge + b.totalEnergy + b.excessDemandPenalty + (b.todNet || 0) + b.minChargeTopUp;
+    c.creditClause = credit ? S.nFppaCreditClause(c) : '';
     live.fppa = b.facMode === 'percent'
       ? {
-          formula: 'FPPA = (energy charge + fixed/demand charge + penalties) × notified rate %',
-          calc: [`Base = ${money(facBase)}`, `${money(facBase)} × ${pct(b.facRate)}`],
+          formula: S.fFppaPct,
+          calc: [S.cBase({ ...c, base: money(facBase) }), `${money(facBase)} × ${pct(b.facRate)}`],
           result: (credit ? '− ' : '') + money(Math.abs(b.facAmount)),
-          note: (credit
-              ? 'This month the rate is NEGATIVE, so the line is a credit: power cost the DISCOM less than '
-                + 'the regulator assumed and the difference comes back to you. '
-              : '')
-            + 'The rate is notified per month and it applies to the fixed charge as well as the energy '
-            + 'charge — not to the units alone, which is the commonest misreading of this line.',
+          note: S.nFppaPct(c),
         }
       : {
-          formula: 'FPPA = units × notified rate per unit',
-          calc: [`${num(b.units, 2)} × ${rate2(b.facRate)}`],
+          formula: S.fFppaUnit,
+          calc: [`${c.units} × ${rate2(b.facRate)}`],
           result: (credit ? '− ' : '') + money(Math.abs(b.facAmount)),
-          note: 'The per-unit rate is the gap between what power actually cost the DISCOM and what '
-            + 'the regulator assumed when your tariff was set.',
+          note: S.nFppaUnit(c),
         };
   }
 
   if (b.wheelingCharge > 0) {
-    charges.push({ k: b.wheelingLabel || 'Wheeling charge', v: money(b.wheelingCharge), mark: 'wheeling' });
+    charges.push({ k: b.wheelingLabel || S.wheeling, v: money(b.wheelingCharge), mark: 'wheeling' });
     live.wheeling = b.wheelingType === 'per_unit'
       ? {
-          formula: 'Wheeling charge = units × wheeling rate per unit',
-          calc: [`${num(b.units, 2)} × ${rate2(b.wheelingRate)}`],
+          formula: S.fWheelUnit,
+          calc: [`${c.units} × ${rate2(b.wheelingRate)}`],
           result: money(b.wheelingCharge),
-          note: 'This state unbundles the cost of the wires from the cost of the power. States that '
-            + 'do not have folded the same cost into the energy rate — you are not paying it twice.',
+          note: S.nWheelUnit(c),
         }
       : {
-          formula: `Wheeling charge = rate per ${dUnit} × sanctioned load`,
-          calc: [`${rate2(b.wheelingRate)} × ${num(b.connectedLoadKw, 2)} ${dUnit}`],
+          formula: S.fWheelLoad(c),
+          calc: [`${rate2(b.wheelingRate)} × ${c.load} ${dUnit}`],
           result: money(b.wheelingCharge),
-          note: 'Levied on the load rather than the units, because the network has to be sized for '
-            + 'the capacity you might draw, not the energy you happened to use.',
+          note: S.nWheelLoad(c),
         };
   }
 
-  for (const c of otherExtras) charges.push({ k: c.name, v: money(c.amount) });
+  for (const x of otherExtras) charges.push({ k: x.name, v: money(x.amount) });
 
   if (duty) {
     charges.push({ k: duty.name, v: money(duty.amount), mark: 'electricity-duty' });
@@ -412,99 +386,87 @@ export function readout(b, scenario) {
       + (b.todNet || 0) + b.minChargeTopUp + b.wheelingCharge + b.facAmount;
     live.electricityDuty = duty.type === 'percent_energy'
       ? {
-          formula: 'Duty = energy charge × duty rate %',
+          formula: S.fDutyEnergy,
           calc: [`${money(b.totalEnergy)} × ${pct(duty.rate)}`],
           result: money(duty.amount),
-          note: 'Here the duty sits on the energy charge alone — the fixed charge is not taxed.',
+          note: S.nDutyEnergy(c),
         }
       : duty.type === 'percent_total'
       ? {
-          formula: 'Duty = (energy + fixed + penalties + wheeling + FPPA) × duty rate %',
-          calc: [`Base = ${money(totalBase)}`, `${money(totalBase)} × ${pct(duty.rate)}`],
+          formula: S.fDutyTotal,
+          calc: [S.cBase({ ...c, base: money(totalBase) }), `${money(totalBase)} × ${pct(duty.rate)}`],
           result: money(duty.amount),
-          note: 'Here the duty sits on the WHOLE bill, fixed charge included. Which base a state uses '
-            + 'is a state-by-state decision, and it is why two identical households across a border '
-            + 'pay different totals.',
+          note: S.nDutyTotal(c),
         }
       : {
-          formula: 'Duty = units × duty rate per unit',
-          calc: [`${num(b.units, 2)} × ${rate2(duty.rate)}`],
+          formula: S.fDutyUnit,
+          calc: [`${c.units} × ${rate2(duty.rate)}`],
           result: money(duty.amount),
-          note: 'A per-unit duty, so it scales with consumption rather than with the bill.',
+          note: S.nDutyUnit(c),
         };
   }
 
-  if (b.minChargeTopUp > 0) charges.push({ k: 'Minimum charge top-up', v: money(b.minChargeTopUp) });
+  if (b.minChargeTopUp > 0) charges.push({ k: S.minTopUp, v: money(b.minChargeTopUp) });
 
   // ── amount payable ────────────────────────────────────────────────────────
   // Gross → subsidy → NET CURRENT BILL → arrears/surcharge/payments → TOTAL PAYABLE.
   // The two bold figures are different quantities and the bill has to show why: the net
   // current bill is this month's consumption, the total payable is what you owe today.
-  const totals = [{ k: 'Current charges', v: money(b.currentGross) }];
+  const totals = [{ k: S.currentCharges, v: money(b.currentGross) }];
 
   if (b.subsidyAmount > 0) {
-    totals.push({ k: 'Subsidy', v: '− ' + money(b.subsidyAmount), mark: 'subsidy', credit: true });
+    totals.push({ k: S.subsidy, v: '− ' + money(b.subsidyAmount), mark: 'subsidy', credit: true });
     live.subsidy = {
-      formula: 'Net current bill = current charges − subsidy',
+      formula: S.fNetAfterSubsidy,
       calc: [`${money(b.currentGross)} − ${money(b.subsidyAmount)}`],
       result: money(b.currentNet),
-      note: `${b.subsidyLabel || 'A state scheme'} applies here. The DISCOM still bills the full tariff `
-        + `above and the state reimburses it, which is why this shows as a deduction rather than as a `
-        + `lower rate — and why the subsidy can be withdrawn without any tariff order changing.`,
+      note: S.nSubsidy({ ...c, subsidyLabel: b.subsidyLabel || S.wStateScheme }),
     };
   }
 
-  totals.push({ k: 'Net current bill', v: money(b.currentNet), mark: 'net-current-bill', sub: true });
+  totals.push({ k: S.netCurrentBill, v: money(b.currentNet), mark: 'net-current-bill' });
   live.netCurrentBill = {
     formula: b.subsidyAmount > 0
-      ? 'Net current bill = current charges − subsidy'
-      : 'Net current bill = ' + join(charges.map(c => (c.credit ? '−' : '+') + ' ' + c.k.toLowerCase())),
+      ? S.fNetAfterSubsidy
+      : S.fNetSum + join(charges.map(x => (x.credit ? '−' : '+') + ' ' + x.k.toLowerCase())),
     calc: b.subsidyAmount > 0
       ? [`${money(b.currentGross)} − ${money(b.subsidyAmount)}`]
-      : [join(charges.map(c => (c.credit ? '−' : '+') + ' ' + c.v.replace(/^− /, '')))],
+      : [join(charges.map(x => (x.credit ? '−' : '+') + ' ' + x.v.replace(/^− /, '')))],
     result: money(b.currentNet),
-    note: `THIS MONTH ONLY — it is not what you owe. Across ${num(b.units, 2)} units it works out to `
-      + `${money(b.currentNet)} ÷ ${num(b.units, 2)} = ${rate2(b.units > 0 ? b.currentNet / b.units : 0)} `
-      + `all-in per unit, always above the slab rate. This is the figure to compare month to month; the `
-      + `total payable below mixes in old dues and would tell you the wrong story about your usage.`,
+    note: S.nNetCurrentBill(c),
   };
 
   if (b.arrears > 0) {
-    totals.push({ k: 'Arrears', v: money(b.arrears), mark: 'arrears' });
-    live.arrears = {
-      result: money(b.arrears),
-      note: 'Carried forward from earlier bills. It is not part of this month’s consumption and '
-        + 'should not be read as such when you compare months.',
-    };
+    totals.push({ k: S.arrears, v: money(b.arrears), mark: 'arrears' });
+    live.arrears = { result: money(b.arrears), note: S.nArrears(c) };
   }
   const lpsc = (b.arrearLpsc || 0) + (b.currentLpsc || 0);
   if (lpsc > 0) {
-    totals.push({ k: 'Late payment surcharge', v: money(lpsc), mark: 'lpsc' });
+    totals.push({ k: S.lpsc, v: money(lpsc), mark: 'lpsc' });
     live.lpsc = {
-      formula: 'LPSC = arrears × surcharge rate % per month',
+      formula: S.fLpsc,
       calc: [`${money(b.arrears)} × ${pct(b.lpscRate)}`],
       result: money(lpsc),
-      note: 'It compounds while the arrear is outstanding. Paying by the due date removes this line '
-        + 'entirely — it is the one charge on the bill that is purely optional.',
+      note: S.nLpsc(c),
     };
   }
   if (b.totalPayments > 0) {
-    totals.push({ k: 'Payments received', v: '− ' + money(b.totalPayments), credit: true });
+    totals.push({ k: S.payments, v: '− ' + money(b.totalPayments), credit: true });
   }
-  totals.push({ k: 'Total payable', v: money(b.totalPayable), mark: 'total-payable', grand: true });
+  totals.push({ k: S.totalPayable, v: money(b.totalPayable), mark: 'total-payable', grand: true });
 
-  const netCalc = [`${money(b.currentNet)} net current bill`];
-  if (b.arrears > 0) netCalc.push(`+ ${money(b.arrears)} arrears`);
-  if (lpsc > 0) netCalc.push(`+ ${money(lpsc)} surcharge`);
-  if (b.totalPayments > 0) netCalc.push(`− ${money(b.totalPayments)} paid`);
+  const netCalc = [`${money(b.currentNet)} ${S.wNetCurrentBill}`];
+  if (b.arrears > 0) netCalc.push(`+ ${money(b.arrears)} ${S.wArrears}`);
+  if (lpsc > 0) netCalc.push(`+ ${money(lpsc)} ${S.wSurcharge}`);
+  if (b.totalPayments > 0) netCalc.push(`− ${money(b.totalPayments)} ${S.wPaid}`);
   live.totalPayable = {
-    formula: 'Total payable = net current bill + arrears + surcharge − payments already credited',
+    formula: S.fTotal,
     calc: [netCalc.join(' ')],
     result: money(b.totalPayable),
-    note: (b.arrears > 0 || lpsc > 0
-        ? 'Different from the net current bill above because old dues are in it. '
-        : 'Equal to the net current bill above only because nothing is carried forward on this bill. ')
-      + 'Pay the full amount: a part payment does not stop the surcharge accruing on the remainder.',
+    note: S.nTotalPayable({
+      ...c,
+      diffClause: (b.arrears > 0 || lpsc > 0) ? S.nTotalDiffers(c) : S.nTotalSame(c),
+    }),
   };
 
   // Prompt-payment rebate — only where the DISCOM's own schedule documents one. There is no
@@ -515,19 +477,15 @@ export function readout(b, scenario) {
       ? +(b.units * R.rate).toFixed(2)
       : +(b.totalEnergy * R.rate / 100).toFixed(2);
     const payByDue = Math.round(b.totalPayable - amount);
-    totals.push({ k: `Rebate if paid by ${P.due}`, v: '− ' + money(amount), mark: 'due-date-rebate', credit: true });
-    totals.push({ k: 'Payable on or before due date', v: money(payByDue), grand: true });
+    totals.push({ k: S.rebateBy(c), v: '− ' + money(amount), mark: 'due-date-rebate', credit: true });
+    totals.push({ k: S.payableByDue, v: money(payByDue), grand: true });
     live.dueDateRebate = {
-      formula: R.type === 'per_unit'
-        ? 'Rebate = units × rebate rate per unit'
-        : 'Rebate = energy charge × rebate rate %',
+      formula: R.type === 'per_unit' ? S.fRebateUnit : S.fRebatePct,
       calc: [R.type === 'per_unit'
-        ? `${num(b.units, 2)} × ${rate2(R.rate)}`
+        ? `${c.units} × ${rate2(R.rate)}`
         : `${money(b.totalEnergy)} × ${pct(R.rate)}`],
       result: '− ' + money(amount),
-      note: `${R.label} Pay on or before ${P.due} and you owe ${money(payByDue)} instead of `
-        + `${money(b.totalPayable)}. Miss it and you lose the rebate AND start accruing late payment `
-        + `surcharge — the due date is worth two separate amounts of money, not one.`,
+      note: S.nRebate({ ...c, rebateLabel: T(lang, R.label), payByDue: money(payByDue) }),
     };
   }
 
@@ -538,7 +496,7 @@ export function readout(b, scenario) {
     discom: b.discom ? (b.discom.fullName || b.discom.name) : '',
   };
 
-  return { account, period, reading, slabs, charges, totals, live, source };
+  return { account, period, reading, slabs, charges, totals, live, source, S };
 }
 
 // ─── markup ───────────────────────────────────────────────────────────────────
@@ -548,6 +506,9 @@ export function readout(b, scenario) {
 
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c =>
   ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+// The note and formula templates in bill-strings.js are written across several lines for
+// legibility, so their indentation has to be squashed before it reaches the page.
+const flat = (s) => esc(String(s ?? '').replace(/\s+/g, ' ').trim());
 
 // Every marked row is one grid row of a single-column document, so a marker can be pulled
 // out into the gutter beside the bill with pure CSS — no measuring, no JS, and it stays put
@@ -588,11 +549,11 @@ export function billHtml(r) {
 
   // Numbering follows DOCUMENT order, so the blocks are built in the order they appear on the
   // page rather than in the order the template happens to interpolate them.
-  const accountBlock = block('Account', r.account, counter);
-  const periodBlock = block('Billing period', r.period, counter, 'bill-block-period');
-  const readingBlock = block('Meter reading', r.reading, counter, 'bill-block-reading');
-  const chargesBlock = block('Charges', r.charges, counter, 'bill-block-charges');
-  const totalsBlock = block('Amount payable', r.totals, counter, 'bill-block-total');
+  const accountBlock = block(r.S.blkAccount, r.account, counter);
+  const periodBlock = block(r.S.blkPeriod, r.period, counter, 'bill-block-period');
+  const readingBlock = block(r.S.blkReading, r.reading, counter, 'bill-block-reading');
+  const chargesBlock = block(r.S.blkCharges, r.charges, counter, 'bill-block-charges');
+  const totalsBlock = block(r.S.blkPayable, r.totals, counter, 'bill-block-total');
 
   const slabRows = r.slabs.map(s =>
     `<tr><td>${esc(s.label)}</td><td class="num">${esc(s.units)}</td>`
@@ -601,27 +562,27 @@ export function billHtml(r) {
   const src = r.source.label
     ? `<p class="bill-source">${esc(r.source.label)}`
       + (r.source.verified
-        ? ` <span class="bill-badge is-ok">Verified against the order</span>`
-        : ` <span class="bill-badge">Representative rates</span>`)
-      + (r.source.url ? ` · <a href="${esc(r.source.url)}" target="_blank" rel="noopener">Source</a>` : '')
+        ? ` <span class="bill-badge is-ok">${esc(r.S.verified)}</span>`
+        : ` <span class="bill-badge">${esc(r.S.representative)}</span>`)
+      + (r.source.url ? ` · <a href="${esc(r.source.url)}" target="_blank" rel="noopener">${esc(r.S.source)}</a>` : '')
       + `</p>`
     : '';
 
   const html = `
         <div class="bill-doc-head">
           <div class="bill-doc-id">
-            <strong class="bill-doc-title">${esc(r.source.discom || 'Electricity Distribution Company')}</strong>
-            <span class="bill-doc-sub">Illustration · not a real bill</span>
+            <strong class="bill-doc-title">${esc(r.source.discom || r.S.fallbackDiscom)}</strong>
+            <span class="bill-doc-sub">${esc(r.S.docSub)}</span>
           </div>
-          <span class="bill-doc-stamp">Sample</span>
+          <span class="bill-doc-stamp">${esc(r.S.stamp)}</span>
         </div>
         ${accountBlock}
         ${periodBlock}
         ${readingBlock}
         <section class="bill-block bill-block-slabs">
-          <h4>Slab ladder behind the energy charge</h4>
+          <h4>${esc(r.S.blkSlabs)}</h4>
           <div class="bill-scroll"><table class="bill-slabs">
-            <thead><tr><th scope="col">Slab</th><th scope="col">Units</th><th scope="col">Rate</th><th scope="col">Amount</th></tr></thead>
+            <thead><tr><th scope="col">${esc(r.S.thSlab)}</th><th scope="col">${esc(r.S.thUnits)}</th><th scope="col">${esc(r.S.thRate)}</th><th scope="col">${esc(r.S.thAmount)}</th></tr></thead>
             <tbody>${slabRows}</tbody>
           </table></div>
         </section>
@@ -639,17 +600,17 @@ export function billHtml(r) {
 export function liveHtml(live) {
   if (!live) return '';
   const parts = [];
-  if (live.formula) parts.push(`<div class="ub-calc-formula">${esc(live.formula)}</div>`);
+  if (live.formula) parts.push(`<div class="ub-calc-formula">${flat(live.formula)}</div>`);
   if (live.calc && live.calc.length) {
     parts.push(`<div class="ub-calc-work">`
-      + live.calc.map(c => `<span class="ub-calc-step">${esc(c)}</span>`).join('')
+      + live.calc.map(c => `<span class="ub-calc-step">${flat(c)}</span>`).join('')
       + `</div>`);
   }
   if (live.result) {
     parts.push(`<div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span>`
-      + `<span class="sr-only">Result</span>${esc(live.result)}</div>`);
+      + `<span class="sr-only">Result</span>${flat(live.result)}</div>`);
   }
   const calc = parts.length ? `<div class="ub-calc">${parts.join('')}</div>` : '';
-  const note = live.note ? `<p class="ub-live-note">${esc(live.note)}</p>` : '';
+  const note = live.note ? `<p class="ub-live-note">${flat(live.note)}</p>` : '';
   return calc + note;
 }

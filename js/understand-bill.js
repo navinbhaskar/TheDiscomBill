@@ -83,7 +83,7 @@ export async function initUnderstandBill() {
     if (bill.error) { fail(bill.message); return; }
     err.hidden = true;
 
-    const r = readout(bill, s);
+    const r = readout(bill, s, document.documentElement.lang || 'en');
     const { html, marks } = billHtml(r);
     doc.innerHTML = html;
     syncExplanations(r, marks);

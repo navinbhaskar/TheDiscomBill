@@ -3512,7 +3512,7 @@ function understandBillPage(lang = 'en') {
   const scenario = SCENARIOS.find(s => s.id === DEFAULT_SCENARIO) || SCENARIOS[0];
   const bill = calculateBill(billInput(scenario));
   if (bill.error) throw new Error(`understandBillPage: ${bill.message}`);
-  const r = readout(bill, scenario);
+  const r = readout(bill, scenario, lang);
   const { html: billMarkup, marks } = billHtml(r);
 
   const copy = (s) => {
