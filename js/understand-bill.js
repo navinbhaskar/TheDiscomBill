@@ -95,7 +95,7 @@ export async function initUnderstandBill() {
     const { html, marks } = billHtml(r);
     doc.innerHTML = html;
     syncExplanations(r, marks);
-    syncMeter(r, marks);
+    syncMeter(r);
   }
 
   // Keep the explanation column in step with the bill: the marker digits shift whenever a
@@ -162,11 +162,6 @@ export async function initUnderstandBill() {
     step: document.getElementById('mmStep'),
     title: document.getElementById('mmTitle'),
     btn: document.getElementById('mBtn'),
-    nums: {
-      'present-reading': document.getElementById('mmPresent'),
-      md: document.getElementById('mmMd'),
-      'meter-number': document.getElementById('mmSerial'),
-    },
   };
   let screens = [];
   let screenIx = 0;
@@ -180,24 +175,19 @@ export async function initUnderstandBill() {
     mm.title.textContent = sc.title;
     mm.step.textContent = String(screenIx + 1) + '/' + screens.length;
     // Light the register being displayed, on the meter AND on the bill row it feeds.
-    // Each callout is its own <g data-mm>, so the register being displayed can light while
-    // the other two dim — without any of them renumbering.
-    meterSvg.querySelectorAll('.meter-mini-num g[data-mm]').forEach(g => {
-      g.classList.toggle('is-live', g.dataset.mm === sc.key);
+    // Light the part of the meter the displayed register lives on. Nothing renumbers, because
+    // the number is not on the meter at all — it is the single marker in the gap.
+    meterSvg.querySelectorAll('.meter-mini-parts [data-mm]').forEach(el => {
+      el.classList.toggle('is-live', el.dataset.mm === sc.key);
     });
     document.querySelectorAll('[data-line].is-live').forEach(el => el.classList.remove('is-live'));
     document.querySelectorAll('[data-line="' + CSS.escape(sc.key) + '"]')
       .forEach(el => el.classList.add('is-live'));
   }
 
-  function syncMeter(r, marks) {
+  function syncMeter(r) {
     if (!mm) return;
     screens = r.meter.screens;
-    // Re-stamp from marks rather than trusting the served digits: a line appearing above these
-    // rows would shift them, and a meter showing a stale number is worse than showing none.
-    for (const [key, el] of Object.entries(mm.nums)) {
-      if (el) el.textContent = marks[key] || '';
-    }
     paintMeter();
   }
 

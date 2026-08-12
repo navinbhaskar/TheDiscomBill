@@ -539,8 +539,13 @@ const flat = (s) => esc(String(s ?? '').replace(/\s+/g, ' ').trim());
 // The callout carries the number AND the row's title, so the gutter reads as a legend on its
 // own — "1. Consumer number", "7. Fuel surcharge (FPPA)" — rather than as bare digits that
 // only mean something once you have found the matching explanation below.
+// Lines the meter beside the bill also shows. These get ONE marker, placed in the gap between
+// the two drawings with a leader running each way, rather than a number printed twice.
+const SHARED_WITH_METER = new Set(['meter-number', 'present-reading', 'md']);
+
 function marker(mark, k, n) {
-  return `<a class="bill-mark" href="#explain-${mark}" id="mark-${mark}">`
+  const cls = SHARED_WITH_METER.has(mark) ? 'bill-mark is-shared' : 'bill-mark';
+  return `<a class="${cls}" href="#explain-${mark}" id="mark-${mark}">`
     + `<span class="bill-mark-n">${n}</span>`
     + `<span class="bill-mark-t">${esc(k)}</span></a>`;
 }

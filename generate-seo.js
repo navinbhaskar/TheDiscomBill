@@ -3661,15 +3661,12 @@ function understandBillPage(lang = 'en') {
         <figcaption class="meter-mini-cap">${esc(r.S.mFigure)}</figcaption>
         <div class="meter-mini-stage">
 ${METER_DEVICE.replace('>Press here<', `>${esc(T(lang, SMG.pressHere))}<`)}
-          <g class="m-lead">
-            <path d="M124 282h150l12-18"/>
-            <path d="M124 316h150l14-22"/>
-            <path d="M124 380h56"/>
-          </g>
-          <g class="m-num meter-mini-num">
-            <g data-mm="present-reading" class="is-live"><circle cx="112" cy="282" r="12"/><text x="112" y="286.5" id="mmPresent">${marks['present-reading'] || ''}</text></g>
-            <g data-mm="md"><circle cx="112" cy="316" r="12"/><text x="112" y="320.5" id="mmMd">${marks['md'] || ''}</text></g>
-            <g data-mm="meter-number"><circle cx="112" cy="380" r="12"/><text x="112" y="384.5" id="mmSerial">${marks['meter-number'] || ''}</text></g>
+          <!-- The parts a shared marker refers to. No numbers here: the marker itself lives in
+               the gap between the two drawings and is the only one. These just light up. -->
+          <g class="meter-mini-parts">
+            <rect data-mm="present-reading" class="is-live" x="288" y="216" width="176" height="86" rx="4"/>
+            <rect data-mm="md" x="288" y="216" width="176" height="86" rx="4"/>
+            <rect data-mm="meter-number" x="150" y="360" width="150" height="40" rx="4"/>
           </g>
         </svg>
         </div>
