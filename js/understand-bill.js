@@ -24,7 +24,12 @@ export async function initUnderstandBill() {
   const messy = document.getElementById('ubMessy');
   const reset = document.getElementById('ubReset');
   const err = document.getElementById('ubError');
-  const notes = [...document.querySelectorAll('.ub-note')];
+  // Everything that belongs to one scenario and hides for the others: the note under the
+  // selector AND its row of links to that DISCOM's real bill and rate schedule. Selecting on
+  // the data attribute rather than on a class means a new per-scenario block is toggled
+  // automatically — the link rows were missed when they were added, and sat frozen on the
+  // first scenario no matter what the reader picked.
+  const perScenario = [...document.querySelectorAll('[data-scenario]')];
 
   // Loaded lazily so a reader who never touches a control pays nothing for them. Both are
   // needed together, so one await covers both.
@@ -58,7 +63,7 @@ export async function initUnderstandBill() {
 
   async function render() {
     const s = current();
-    notes.forEach(n => { n.hidden = n.dataset.scenario !== s.id; });
+    perScenario.forEach(n => { n.hidden = n.dataset.scenario !== s.id; });
 
     const u = Number(units.value);
     const kw = Number(load.value);

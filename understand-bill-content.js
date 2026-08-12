@@ -451,6 +451,7 @@ export const UB = {
     },
   ],
 
+  realThing: { en: 'The real thing:' },
   realBill: { en: 'See this DISCOM’s real bill layout' },
   realRates: { en: 'Its full rate schedule' },
   nextH2: { en: 'Next steps' },

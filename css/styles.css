@@ -6839,9 +6839,19 @@ html:not(.js) .m-btn-ring { display: none; }
   border: 1px solid var(--brand-border);
   transition: background var(--t-fast), color var(--t-fast);
 }
-.ub-more a::before { content: "92"; margin-right: 5px; opacity: .6; }
+/* A literal arrow character, not a CSS escape. The escape form has now been silently
+   corrupted twice by the tooling writing this file, and there is nothing about this
+   codepoint that needs escaping. */
+.ub-more a::before { content: "→"; margin-right: 5px; opacity: .55; }
 .ub-more a:hover, .ub-more a:focus-visible { background: var(--brand-subtle); color: var(--text-brand-dark); }
-.ub-more-scenario { margin: -8px 0 18px; }
+/* The hidden ATTRIBUTE only wins against the UA sheet. An author `display` beats it, so
+   every element this page toggles with [hidden] and styles with a display value needs
+   this guard — without it all six scenarios showed their links at once. */
+.ub-more[hidden], .ub-num[hidden] { display: none; }
+.ub-more-scenario {
+  align-items: baseline; gap: 8px; margin: -6px 0 18px;
+}
+.ub-more-label { font-size: 12px; color: var(--text-tertiary); }
 
 .ub-live.is-absent {
   font-size: 13.5px; line-height: 1.6;

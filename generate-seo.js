@@ -3534,7 +3534,8 @@ function understandBillPage(lang = 'en') {
     if (s.guide) parts.push(`<a href="${attr(langUrl2(s.guide, lang))}">${esc(T(lang, U.realBill))}</a>`);
     parts.push(`<a href="${attr(langUrl2(s.tariffPage, lang))}">${esc(T(lang, U.realRates))}</a>`);
     return `<p class="ub-more ub-more-scenario" data-scenario="${attr(s.id)}"`
-      + `${s.id === scenario.id ? '' : ' hidden'}>${parts.join('')}</p>`;
+      + `${s.id === scenario.id ? '' : ' hidden'}>`
+      + `<span class="ub-more-label">${esc(T(lang, U.realThing))}</span>${parts.join('')}</p>`;
   }).join('\n      ');
 
   const scenarioNotes = SCENARIOS.map(s =>
