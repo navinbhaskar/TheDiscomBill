@@ -226,6 +226,238 @@
         <span>यह असली बिल नहीं है और न ही किसी DISCOM के छपे बिल की नक़ल। एक कंपनी से दूसरी तक बिल की बनावट, खानों के नाम और क्रम बदलते रहते हैं; उनमें साझा जो है वह यहाँ दिखाए गए प्रभारों का समूह है। उपभोक्ता संख्या, मीटर संख्या और पता काल्पनिक हैं।</span>
       </p>
 
+      <div class="ub-stage">
+      <!-- The meter and the bill carry ONE set of numbers between them: marker 4 is the meter
+           number on both drawings, 7 is the present reading, 9 is the maximum demand. That shared
+           digit is the connection — it needs no leader line spanning two independently-flowing
+           elements, which would need JS measurement on every resize and would still be fragile.
+
+           The three leader paths are lifted from the guide's own diagram, so they terminate on
+           exactly the same parts of exactly the same drawing. -->
+      <figure class="meter-mini">
+        <figcaption class="meter-mini-cap">वह मीटर जिससे यह बिल पढ़ा गया</figcaption>
+        <div class="meter-mini-stage">
+<svg class="meter-svg" viewBox="0 0 700 560" role="img"
+     aria-labelledby="meter-dia-title meter-dia-desc">
+  <title id="meter-dia-title">Labelled diagram of an Indian single-phase prepaid smart meter</title>
+  <desc id="meter-dia-desc">A single-phase AC static watthour smart meter seen face on. The
+  upper casing carries a maker's mark, COM and ON indicator lamps and the communication
+  module details. The lower face carries a green backlit LCD in the centre showing a status
+  icon row, the main reading, a register code and a unit label; a pulse LED and standard
+  markings below it; a serial barcode and printed specification block on the left; and a
+  scroll button with a circular optical port on the right. A dark terminal block with brass
+  screws runs along the bottom. Twelve numbered callouts key each element to the legend below.</desc>
+
+  <defs>
+    <linearGradient id="mBody" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#fbfaf6"/><stop offset="0.5" stop-color="#f1efe8"/>
+      <stop offset="1" stop-color="#dedbd2"/>
+    </linearGradient>
+    <linearGradient id="mBodyTop" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0" stop-color="#fdfdfa"/><stop offset="1" stop-color="#e7e4dc"/>
+    </linearGradient>
+    <linearGradient id="mLcd" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#b6e86a"/><stop offset="0.55" stop-color="#8ed23a"/>
+      <stop offset="1" stop-color="#6fb823"/>
+    </linearGradient>
+    <linearGradient id="mGloss" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.4"/>
+      <stop offset="0.55" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="mPortMetal" cx="0.32" cy="0.26" r="0.9">
+      <stop offset="0" stop-color="#ffffff"/><stop offset="0.35" stop-color="#d6d9dd"/>
+      <stop offset="0.7" stop-color="#9aa0a7"/><stop offset="1" stop-color="#c9ced4"/>
+    </radialGradient>
+    <linearGradient id="mTerm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a4a4a"/><stop offset="0.5" stop-color="#2e2e2e"/>
+      <stop offset="1" stop-color="#3d3d3d"/>
+    </linearGradient>
+    <radialGradient id="mBrass" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#e8d089"/><stop offset="0.6" stop-color="#b8963f"/>
+      <stop offset="1" stop-color="#7d6427"/>
+    </radialGradient>
+    <radialGradient id="mLedOn" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#ff9a9a"/><stop offset="0.45" stop-color="#e01b1b"/>
+      <stop offset="1" stop-color="#7a1010"/>
+    </radialGradient>
+    <radialGradient id="mLedOff" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#f2f1ee"/><stop offset="1" stop-color="#c3c1ba"/>
+    </radialGradient>
+    <radialGradient id="mScrew" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#f0eee9"/><stop offset="1" stop-color="#a9a69e"/>
+    </radialGradient>
+    <filter id="mShadow" x="-15%" y="-10%" width="130%" height="128%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0b1020" flood-opacity="0.3"/>
+    </filter>
+    <filter id="mGlowLcd" x="-25%" y="-40%" width="150%" height="180%">
+      <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#8ed23a" flood-opacity="0.5"/>
+    </filter>
+    <filter id="mGlowLed" x="-160%" y="-160%" width="420%" height="420%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.6" flood-color="#ff2d2d" flood-opacity="0.9"/>
+    </filter>
+    <clipPath id="mLcdClip"><rect x="292" y="220" width="168" height="78" rx="3"/></clipPath>
+  </defs>
+
+  <g filter="url(#mShadow)">
+    <!-- mounting flanges behind the casing, top and bottom -->
+    <path class="m-flange" d="M148 62h404v32H148zM148 424h404v30H148z"/>
+    <circle class="m-flange-hole" cx="164" cy="78" r="5"/>
+    <circle class="m-flange-hole" cx="536" cy="78" r="5"/>
+
+    <!-- upper casing -->
+    <rect class="m-case-top" x="172" y="40" width="356" height="146" rx="10"/>
+    <g class="m-screw-sm">
+      <circle cx="190" cy="58" r="6"/><circle cx="510" cy="58" r="6"/>
+      <circle cx="190" cy="168" r="6"/><circle cx="510" cy="168" r="6"/>
+    </g>
+    <!-- neutral maker's mark: this is a dummy device, so it carries no real brand -->
+    <g class="m-mark" transform="translate(200 92)">
+      <path d="M0 0h14a14 14 0 0 1 0 28H7v12H0z"/>
+      <path class="m-mark-cut" d="M7 7h7a7 7 0 0 1 0 14H7z"/>
+    </g>
+    <text class="m-maker" x="200" y="164">SMART METER</text>
+    <!-- COM / ON lamps -->
+    <text class="m-lamp-lbl" x="356" y="88">COM</text>
+    <text class="m-lamp-lbl" x="414" y="88">ON</text>
+    <path class="m-lamp-tick" d="M356 92v7M414 92v7"/>
+    <circle class="m-lamp-on" id="mLampCom" cx="349" cy="110" r="6"/>
+    <circle class="m-lamp-off" cx="371" cy="110" r="6"/>
+    <circle class="m-lamp-on" cx="407" cy="110" r="6"/>
+    <circle class="m-lamp-off" cx="429" cy="110" r="6"/>
+    <text class="m-spec" x="342" y="142">Comm. Tech.: NAN (865-867 MHz)</text>
+    <text class="m-spec" x="342" y="156">Communication Module: Plug-in</text>
+
+    <!-- lower casing -->
+    <rect class="m-case" x="172" y="186" width="356" height="254" rx="10"/>
+    <text class="m-title" x="350" y="203">AC STATIC WATTHOUR SMART METER</text>
+
+    <!-- LCD -->
+    <rect class="m-lcd-frame" x="286" y="214" width="180" height="90" rx="5"/>
+    <rect class="m-lcd" x="292" y="220" width="168" height="78" rx="3" filter="url(#mGlowLcd)"/>
+    <g clip-path="url(#mLcdClip)">
+      <g class="m-ico">
+        <g transform="translate(300 226)">
+          <rect x="0" y="7" width="2.4" height="4"/><rect x="3.6" y="4.8" width="2.4" height="6.2"/>
+          <rect x="7.2" y="2.4" width="2.4" height="8.6"/><rect x="10.8" y="0" width="2.4" height="11"/>
+        </g>
+        <g transform="translate(332 226)" class="m-ico-warn">
+          <path d="M1.6 10.4V4.8a4.8 4.8 0 0 1 9.6 0v5.6" fill="none" stroke-width="2.4"/>
+          <rect x="0.4" y="9.6" width="4" height="2.4"/><rect x="8.4" y="9.6" width="4" height="2.4"/>
+        </g>
+        <g transform="translate(364 226)">
+          <circle cx="6.4" cy="6" r="5.6" fill="none" stroke-width="1.9"/>
+          <path d="M6.4 1.2v5.6" fill="none" stroke-width="1.9" stroke-linecap="round"/>
+        </g>
+        <g transform="translate(396 225)" class="m-ico-warn">
+          <path d="M7.2 0 14.4 12.8H0z" fill="none" stroke-width="1.9" stroke-linejoin="round"/>
+          <path d="M7.2 4.8v4" stroke-width="1.9" stroke-linecap="round"/>
+          <circle cx="7.2" cy="10.7" r="1" stroke="none"/>
+        </g>
+      </g>
+      <!-- the unlit segments of an LCD stay faintly visible; that ghost is most of what
+           makes a real display read as a display rather than as printed text -->
+      <!-- Seven-segment digits. Markup is stamped by scripts/meter-digits.mjs from the
+           same segmentsFor() the runtime uses, so a no-JS visitor sees a real display too.
+           Regenerate with: node scripts/meter-digits.mjs -->
+      <g class="m-seg" id="mSeg"><polygon class="sg-on" points="323.4,246 333.6,246 335.3,247.7 333.6,249.39999999999998 323.4,249.39999999999998 321.7,247.7"/><polygon class="sg-off" points="323.4,259.3 333.6,259.3 335.3,261 333.6,262.7 323.4,262.7 321.7,261"/><polygon class="sg-on" points="323.4,272.6 333.6,272.6 335.3,274.3 333.6,276 323.4,276 321.7,274.3"/><polygon class="sg-on" points="320,249.39999999999998 321.7,247.7 323.4,249.39999999999998 323.4,259.3 321.7,261 320,259.3"/><polygon class="sg-on" points="333.6,249.39999999999998 335.3,247.7 337,249.39999999999998 337,259.3 335.3,261 333.6,259.3"/><polygon class="sg-on" points="320,262.7 321.7,261 323.4,262.7 323.4,272.6 321.7,274.3 320,272.6"/><polygon class="sg-on" points="333.6,262.7 335.3,261 337,262.7 337,272.6 335.3,274.3 333.6,272.6"/><polygon class="sg-off" points="343.9,246 354.1,246 355.8,247.7 354.1,249.39999999999998 343.9,249.39999999999998 342.2,247.7"/><polygon class="sg-on" points="343.9,259.3 354.1,259.3 355.8,261 354.1,262.7 343.9,262.7 342.2,261"/><polygon class="sg-off" points="343.9,272.6 354.1,272.6 355.8,274.3 354.1,276 343.9,276 342.2,274.3"/><polygon class="sg-on" points="340.5,249.39999999999998 342.2,247.7 343.9,249.39999999999998 343.9,259.3 342.2,261 340.5,259.3"/><polygon class="sg-on" points="354.1,249.39999999999998 355.8,247.7 357.5,249.39999999999998 357.5,259.3 355.8,261 354.1,259.3"/><polygon class="sg-off" points="340.5,262.7 342.2,261 343.9,262.7 343.9,272.6 342.2,274.3 340.5,272.6"/><polygon class="sg-on" points="354.1,262.7 355.8,261 357.5,262.7 357.5,272.6 355.8,274.3 354.1,272.6"/><polygon class="sg-on" points="364.4,246 374.6,246 376.3,247.7 374.6,249.39999999999998 364.4,249.39999999999998 362.7,247.7"/><polygon class="sg-on" points="364.4,259.3 374.6,259.3 376.3,261 374.6,262.7 364.4,262.7 362.7,261"/><polygon class="sg-on" points="364.4,272.6 374.6,272.6 376.3,274.3 374.6,276 364.4,276 362.7,274.3"/><polygon class="sg-on" points="361,249.39999999999998 362.7,247.7 364.4,249.39999999999998 364.4,259.3 362.7,261 361,259.3"/><polygon class="sg-on" points="374.6,249.39999999999998 376.3,247.7 378,249.39999999999998 378,259.3 376.3,261 374.6,259.3"/><polygon class="sg-off" points="361,262.7 362.7,261 364.4,262.7 364.4,272.6 362.7,274.3 361,272.6"/><polygon class="sg-on" points="374.6,262.7 376.3,261 378,262.7 378,272.6 376.3,274.3 374.6,272.6"/><polygon class="sg-off" points="384.9,246 395.1,246 396.8,247.7 395.1,249.39999999999998 384.9,249.39999999999998 383.2,247.7"/><polygon class="sg-off" points="384.9,259.3 395.1,259.3 396.8,261 395.1,262.7 384.9,262.7 383.2,261"/><polygon class="sg-off" points="384.9,272.6 395.1,272.6 396.8,274.3 395.1,276 384.9,276 383.2,274.3"/><polygon class="sg-off" points="381.5,249.39999999999998 383.2,247.7 384.9,249.39999999999998 384.9,259.3 383.2,261 381.5,259.3"/><polygon class="sg-on" points="395.1,249.39999999999998 396.8,247.7 398.5,249.39999999999998 398.5,259.3 396.8,261 395.1,259.3"/><polygon class="sg-off" points="381.5,262.7 383.2,261 384.9,262.7 384.9,272.6 383.2,274.3 381.5,272.6"/><polygon class="sg-on" points="395.1,262.7 396.8,261 398.5,262.7 398.5,272.6 396.8,274.3 395.1,272.6"/><polygon class="sg-on" points="405.4,246 415.6,246 417.3,247.7 415.6,249.39999999999998 405.4,249.39999999999998 403.7,247.7"/><polygon class="sg-on" points="405.4,259.3 415.6,259.3 417.3,261 415.6,262.7 405.4,262.7 403.7,261"/><polygon class="sg-on" points="405.4,272.6 415.6,272.6 417.3,274.3 415.6,276 405.4,276 403.7,274.3"/><polygon class="sg-off" points="402,249.39999999999998 403.7,247.7 405.4,249.39999999999998 405.4,259.3 403.7,261 402,259.3"/><polygon class="sg-on" points="415.6,249.39999999999998 417.3,247.7 419,249.39999999999998 419,259.3 417.3,261 415.6,259.3"/><polygon class="sg-on" points="402,262.7 403.7,261 405.4,262.7 405.4,272.6 403.7,274.3 402,272.6"/><polygon class="sg-off" points="415.6,262.7 417.3,261 419,262.7 419,272.6 417.3,274.3 415.6,272.6"/><rect class="sg-on" x="423.5" y="272.6" width="3.4" height="3.4"/><polygon class="sg-on" points="438.4,246 448.6,246 450.3,247.7 448.6,249.39999999999998 438.4,249.39999999999998 436.7,247.7"/><polygon class="sg-on" points="438.4,259.3 448.6,259.3 450.3,261 448.6,262.7 438.4,262.7 436.7,261"/><polygon class="sg-on" points="438.4,272.6 448.6,272.6 450.3,274.3 448.6,276 438.4,276 436.7,274.3"/><polygon class="sg-on" points="435,249.39999999999998 436.7,247.7 438.4,249.39999999999998 438.4,259.3 436.7,261 435,259.3"/><polygon class="sg-off" points="448.6,249.39999999999998 450.3,247.7 452,249.39999999999998 452,259.3 450.3,261 448.6,259.3"/><polygon class="sg-on" points="435,262.7 436.7,261 438.4,262.7 438.4,272.6 436.7,274.3 435,272.6"/><polygon class="sg-on" points="448.6,262.7 450.3,261 452,262.7 452,272.6 450.3,274.3 448.6,272.6"/></g>
+      <text class="m-code" id="mCode" x="300" y="292">1.8.0</text>
+      <text class="m-unit" id="mUnit" x="452" y="292">kWh</text>
+    </g>
+    <path class="m-gloss" d="M292 220h168v28l-168 32z"/>
+
+    <!-- pulse LED and standard markings -->
+    <circle class="m-led-pulse" cx="298" cy="326" r="5.5" filter="url(#mGlowLed)"/>
+    <text class="m-print" x="310" y="330">kWh — 3200 Imp/Unit</text>
+    <text class="m-print" x="292" y="352">IS 16444 (Part 1)</text>
+    <text class="m-print m-print-sm" x="292" y="364">CM/L-8400169811</text>
+
+    <!-- serial barcode + printed specification block -->
+    <g class="m-bars" transform="translate(186 340)">
+      <rect x="0" y="0" width="2.2" height="22"/><rect x="4.4" y="0" width="1.1" height="22"/>
+      <rect x="7.7" y="0" width="3.3" height="22"/><rect x="13.2" y="0" width="1.1" height="22"/>
+      <rect x="16.5" y="0" width="2.2" height="22"/><rect x="22" y="0" width="1.1" height="22"/>
+      <rect x="25.3" y="0" width="1.1" height="22"/><rect x="28.6" y="0" width="3.3" height="22"/>
+      <rect x="34.1" y="0" width="1.1" height="22"/><rect x="37.4" y="0" width="2.2" height="22"/>
+      <rect x="42.9" y="0" width="3.3" height="22"/><rect x="48.4" y="0" width="1.1" height="22"/>
+      <rect x="51.7" y="0" width="2.2" height="22"/><rect x="57.2" y="0" width="1.1" height="22"/>
+      <rect x="60.5" y="0" width="3.3" height="22"/><rect x="66" y="0" width="1.1" height="22"/>
+      <rect x="69.3" y="0" width="2.2" height="22"/><rect x="74.8" y="0" width="1.1" height="22"/>
+    </g>
+    <text class="m-serial" x="186" y="378">Sr. No. RND00001</text>
+    <g class="m-spec">
+      <text x="186" y="396">1P, 2W, 240V, 5-60A, 50 Hz, Class 1.0</text>
+      <text x="186" y="408">DLMS Meter Type: 6 · Cat.: D1, 27&#176;C</text>
+      <text x="186" y="420">Type: GPSM 03 · MM/YYYY: 08/2026</text>
+      <text x="186" y="432">Illustration only — not a real meter</text>
+    </g>
+
+    <!-- right column -->
+    <text class="m-print m-print-sm m-print-end" x="518" y="332">MTCTE : 283603039</text>
+    <!-- Real control, not decoration: focusable, keyboard-operable, and with a hit area
+         larger than the drawn button so it clears the 24px minimum on touch. -->
+    <!-- "Press here" tag. Brand blue and pill-shaped so it reads as annotation laid over
+         the device rather than as something printed on it. Decorative to assistive tech —
+         the button below already carries its own label — and it retires on first press
+         along with the pulse, since by then it has said what it had to say. -->
+    <g class="m-hint-tag" aria-hidden="true">
+      <rect x="384" y="348" width="86" height="21" rx="10.5"/>
+      <text x="424" y="363">यहाँ दबाएँ</text>
+      <path d="M472 352.5 481 358.5 472 364.5 Z"/>
+    </g>
+    <g class="m-btn-hit" id="mBtn" role="button" tabindex="0"
+       aria-label="Press the meter's scroll button to show the next reading"
+       aria-describedby="mReadout">
+      <circle class="m-btn-target" cx="500" cy="358" r="26"/>
+      <!-- Resting affordance. Hover cannot carry this — it does not exist on touch —
+           so an expanding ring runs until the first press, then stops for good. -->
+      <circle class="m-btn-pulse" cx="500" cy="358" r="15"/>
+      <circle class="m-btn-ring" cx="500" cy="358" r="20"/>
+      <circle class="m-btn-rim" cx="500" cy="358" r="15"/>
+      <circle class="m-btn" cx="500" cy="358" r="11.5"/>
+      <text class="m-label" x="500" y="382">Scroll</text>
+    </g>
+    <circle class="m-port-metal" cx="486" cy="410" r="24"/>
+    <circle class="m-port-ring" cx="486" cy="410" r="17.5"/>
+    <ellipse class="m-port-slot" cx="486" cy="410" rx="11" ry="5.5"/>
+
+    <!-- terminal block -->
+    <rect class="m-term" x="196" y="440" width="308" height="50" rx="4"/>
+    <g class="m-term-slot">
+      <rect x="214" y="446" width="38" height="28" rx="2"/>
+      <rect x="271" y="446" width="38" height="28" rx="2"/>
+      <rect x="328" y="446" width="38" height="28" rx="2"/>
+      <rect x="385" y="446" width="38" height="28" rx="2"/>
+      <rect x="442" y="446" width="38" height="28" rx="2"/>
+    </g>
+    <g class="m-brass">
+      <circle cx="233" cy="458" r="6.5"/><circle cx="290" cy="458" r="6.5"/>
+      <circle cx="347" cy="458" r="6.5"/><circle cx="404" cy="458" r="6.5"/>
+      <circle cx="461" cy="458" r="6.5"/>
+    </g>
+    <circle class="m-term-seal" cx="350" cy="481" r="4.5"/>
+  </g>
+
+
+          <g class="m-lead">
+            <path d="M124 282h150l12-18"/>
+            <path d="M124 316h150l14-22"/>
+            <path d="M124 380h56"/>
+          </g>
+          <g class="m-num meter-mini-num">
+            <g data-mm="present-reading" class="is-live"><circle cx="112" cy="282" r="12"/><text x="112" y="286.5" id="mmPresent">7</text></g>
+            <g data-mm="md"><circle cx="112" cy="316" r="12"/><text x="112" y="320.5" id="mmMd">9</text></g>
+            <g data-mm="meter-number"><circle cx="112" cy="380" r="12"/><text x="112" y="384.5" id="mmSerial">4</text></g>
+          </g>
+        </svg>
+        </div>
+        <p class="meter-mini-readout">
+          <span class="meter-mini-step" id="mmStep">1/2</span>
+          <strong id="mmTitle">कुल आयातित ऊर्जा</strong>
+        </p>
+        <p class="meter-mini-hint">असली मीटर एक बार में एक ही रजिस्टर दिखाता है और बटन दबाने पर आगे बढ़ता है। दबाकर देखिए।</p>
+      </figure>
+
       <!-- The gutter that the numbered markers hang in lives on .bill-figure, outside the
            document's own border — the same arrangement as the meter diagram on
            /smart-meter/, where the callouts sit beside the device rather than on it. -->
@@ -238,9 +470,9 @@
           </div>
           <span class="bill-doc-stamp">नमूना</span>
         </div>
-        <section class="bill-block"><h4>खाता</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="consumer-no"><a class="bill-mark" href="#explain-consumer-no" id="mark-consumer-no"><span class="bill-mark-n">1</span><span class="bill-mark-t">उपभोक्ता संख्या</span></a><span class="bill-row-k">उपभोक्ता संख्या</span><span class="bill-row-v">1234 5678 9012</span></div><div class="bill-row"><span class="bill-row-k">उपभोक्ता का नाम</span><span class="bill-row-v">ए. कुमार</span></div><div class="bill-row is-marked" data-line="tariff-category"><a class="bill-mark" href="#explain-tariff-category" id="mark-tariff-category"><span class="bill-mark-n">2</span><span class="bill-mark-t">टैरिफ श्रेणी</span></a><span class="bill-row-k">टैरिफ श्रेणी</span><span class="bill-row-v">LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW)</span></div><div class="bill-row is-marked" data-line="sanctioned-load"><a class="bill-mark" href="#explain-sanctioned-load" id="mark-sanctioned-load"><span class="bill-mark-n">3</span><span class="bill-mark-t">स्वीकृत भार</span></a><span class="bill-row-k">स्वीकृत भार</span><span class="bill-row-v">2 kW</span></div><div class="bill-row"><span class="bill-row-k">मीटर संख्या</span><span class="bill-row-v">MV 4471 2208 · सिंगल फेज़</span></div></div></section>
-        <section class="bill-block bill-block-period"><h4>बिलिंग अवधि</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="bill-month"><a class="bill-mark" href="#explain-bill-month" id="mark-bill-month"><span class="bill-mark-n">4</span><span class="bill-mark-t">बिल माह</span></a><span class="bill-row-k">बिल माह</span><span class="bill-row-v">JUN-2026</span></div><div class="bill-row"><span class="bill-row-k">रीडिंग अवधि</span><span class="bill-row-v">01-06-2026 – 30-06-2026</span></div><div class="bill-row"><span class="bill-row-k">बिल तिथि</span><span class="bill-row-v">05-07-2026</span></div><div class="bill-row is-marked" data-line="due-date"><a class="bill-mark" href="#explain-due-date" id="mark-due-date"><span class="bill-mark-n">5</span><span class="bill-mark-t">देय तिथि</span></a><span class="bill-row-k">देय तिथि</span><span class="bill-row-v">20-07-2026</span></div></div></section>
-        <section class="bill-block bill-block-reading"><h4>मीटर रीडिंग</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">पिछली रीडिंग</span><span class="bill-row-v">14,570</span></div><div class="bill-row"><span class="bill-row-k">वर्तमान रीडिंग</span><span class="bill-row-v">14,820</span></div><div class="bill-row is-marked" data-line="units-consumed"><a class="bill-mark" href="#explain-units-consumed" id="mark-units-consumed"><span class="bill-mark-n">6</span><span class="bill-mark-t">खपत यूनिट</span></a><span class="bill-row-k">खपत यूनिट</span><span class="bill-row-v">250 kWh</span></div><div class="bill-row is-marked" data-line="md"><a class="bill-mark" href="#explain-md" id="mark-md"><span class="bill-mark-n">7</span><span class="bill-mark-t">अधिकतम मांग (MD)</span></a><span class="bill-row-k">अधिकतम मांग (MD)</span><span class="bill-row-v">1.62 kW</span></div><div class="bill-row is-marked" data-line="reading-status"><a class="bill-mark" href="#explain-reading-status" id="mark-reading-status"><span class="bill-mark-n">8</span><span class="bill-mark-t">रीडिंग स्थिति</span></a><span class="bill-row-k">रीडिंग स्थिति</span><span class="bill-row-v">OK</span></div></div></section>
+        <section class="bill-block"><h4>खाता</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="consumer-no"><a class="bill-mark" href="#explain-consumer-no" id="mark-consumer-no"><span class="bill-mark-n">1</span><span class="bill-mark-t">उपभोक्ता संख्या</span></a><span class="bill-row-k">उपभोक्ता संख्या</span><span class="bill-row-v">1234 5678 9012</span></div><div class="bill-row"><span class="bill-row-k">उपभोक्ता का नाम</span><span class="bill-row-v">ए. कुमार</span></div><div class="bill-row is-marked" data-line="tariff-category"><a class="bill-mark" href="#explain-tariff-category" id="mark-tariff-category"><span class="bill-mark-n">2</span><span class="bill-mark-t">टैरिफ श्रेणी</span></a><span class="bill-row-k">टैरिफ श्रेणी</span><span class="bill-row-v">LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW)</span></div><div class="bill-row is-marked" data-line="sanctioned-load"><a class="bill-mark" href="#explain-sanctioned-load" id="mark-sanctioned-load"><span class="bill-mark-n">3</span><span class="bill-mark-t">स्वीकृत भार</span></a><span class="bill-row-k">स्वीकृत भार</span><span class="bill-row-v">2 kW</span></div><div class="bill-row is-marked" data-line="meter-number"><a class="bill-mark" href="#explain-meter-number" id="mark-meter-number"><span class="bill-mark-n">4</span><span class="bill-mark-t">मीटर संख्या</span></a><span class="bill-row-k">मीटर संख्या</span><span class="bill-row-v">MV 4471 2208 · सिंगल फेज़</span></div></div></section>
+        <section class="bill-block bill-block-period"><h4>बिलिंग अवधि</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="bill-month"><a class="bill-mark" href="#explain-bill-month" id="mark-bill-month"><span class="bill-mark-n">5</span><span class="bill-mark-t">बिल माह</span></a><span class="bill-row-k">बिल माह</span><span class="bill-row-v">JUN-2026</span></div><div class="bill-row"><span class="bill-row-k">रीडिंग अवधि</span><span class="bill-row-v">01-06-2026 – 30-06-2026</span></div><div class="bill-row"><span class="bill-row-k">बिल तिथि</span><span class="bill-row-v">05-07-2026</span></div><div class="bill-row is-marked" data-line="due-date"><a class="bill-mark" href="#explain-due-date" id="mark-due-date"><span class="bill-mark-n">6</span><span class="bill-mark-t">देय तिथि</span></a><span class="bill-row-k">देय तिथि</span><span class="bill-row-v">20-07-2026</span></div></div></section>
+        <section class="bill-block bill-block-reading"><h4>मीटर रीडिंग</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">पिछली रीडिंग</span><span class="bill-row-v">14,570</span></div><div class="bill-row is-marked is-live" data-line="present-reading"><a class="bill-mark" href="#explain-present-reading" id="mark-present-reading"><span class="bill-mark-n">7</span><span class="bill-mark-t">वर्तमान रीडिंग</span></a><span class="bill-row-k">वर्तमान रीडिंग</span><span class="bill-row-v">14,820</span></div><div class="bill-row is-marked" data-line="units-consumed"><a class="bill-mark" href="#explain-units-consumed" id="mark-units-consumed"><span class="bill-mark-n">8</span><span class="bill-mark-t">खपत यूनिट</span></a><span class="bill-row-k">खपत यूनिट</span><span class="bill-row-v">250 kWh</span></div><div class="bill-row is-marked" data-line="md"><a class="bill-mark" href="#explain-md" id="mark-md"><span class="bill-mark-n">9</span><span class="bill-mark-t">अधिकतम मांग (MD)</span></a><span class="bill-row-k">अधिकतम मांग (MD)</span><span class="bill-row-v">1.62 kW</span></div><div class="bill-row is-marked" data-line="reading-status"><a class="bill-mark" href="#explain-reading-status" id="mark-reading-status"><span class="bill-mark-n">10</span><span class="bill-mark-t">रीडिंग स्थिति</span></a><span class="bill-row-k">रीडिंग स्थिति</span><span class="bill-row-v">OK</span></div></div></section>
         <section class="bill-block bill-block-slabs">
           <h4>ऊर्जा प्रभार के पीछे की स्लैब सीढ़ी</h4>
           <div class="bill-scroll"><table class="bill-slabs">
@@ -248,11 +480,12 @@
             <tbody><tr><td>1 – 150 units</td><td class="num">150</td><td class="num">₹5.50</td><td class="num">₹825</td></tr><tr><td>151 – 250 units</td><td class="num">100</td><td class="num">₹6.00</td><td class="num">₹600</td></tr></tbody>
           </table></div>
         </section>
-        <section class="bill-block bill-block-charges"><h4>प्रभार</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="energy-charge"><a class="bill-mark" href="#explain-energy-charge" id="mark-energy-charge"><span class="bill-mark-n">9</span><span class="bill-mark-t">ऊर्जा प्रभार</span></a><span class="bill-row-k">ऊर्जा प्रभार</span><span class="bill-row-v">₹1,425</span></div><div class="bill-row is-marked" data-line="fixed-charge"><a class="bill-mark" href="#explain-fixed-charge" id="mark-fixed-charge"><span class="bill-mark-n">10</span><span class="bill-mark-t">नियत प्रभार</span></a><span class="bill-row-k">नियत प्रभार</span><span class="bill-row-v">₹220</span></div><div class="bill-row is-marked" data-line="fppa"><a class="bill-mark" href="#explain-fppa" id="mark-fppa"><span class="bill-mark-n">11</span><span class="bill-mark-t">ईंधन अधिभार (FPPA)</span></a><span class="bill-row-k">ईंधन अधिभार (FPPA)</span><span class="bill-row-v">₹164.50</span></div><div class="bill-row is-marked" data-line="electricity-duty"><a class="bill-mark" href="#explain-electricity-duty" id="mark-electricity-duty"><span class="bill-mark-n">12</span><span class="bill-mark-t">Electricity Duty</span></a><span class="bill-row-k">Electricity Duty</span><span class="bill-row-v">₹90.47</span></div></div></section>
-        <section class="bill-block bill-block-total"><h4>देय राशि</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">वर्तमान प्रभार</span><span class="bill-row-v">₹1,899.97</span></div><div class="bill-row is-marked" data-line="net-current-bill"><a class="bill-mark" href="#explain-net-current-bill" id="mark-net-current-bill"><span class="bill-mark-n">13</span><span class="bill-mark-t">शुद्ध वर्तमान बिल</span></a><span class="bill-row-k">शुद्ध वर्तमान बिल</span><span class="bill-row-v">₹1,900</span></div><div class="bill-row is-marked is-grand" data-line="total-payable"><a class="bill-mark" href="#explain-total-payable" id="mark-total-payable"><span class="bill-mark-n">14</span><span class="bill-mark-t">कुल देय राशि</span></a><span class="bill-row-k">कुल देय राशि</span><span class="bill-row-v">₹1,900</span></div></div></section>
+        <section class="bill-block bill-block-charges"><h4>प्रभार</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="energy-charge"><a class="bill-mark" href="#explain-energy-charge" id="mark-energy-charge"><span class="bill-mark-n">11</span><span class="bill-mark-t">ऊर्जा प्रभार</span></a><span class="bill-row-k">ऊर्जा प्रभार</span><span class="bill-row-v">₹1,425</span></div><div class="bill-row is-marked" data-line="fixed-charge"><a class="bill-mark" href="#explain-fixed-charge" id="mark-fixed-charge"><span class="bill-mark-n">12</span><span class="bill-mark-t">नियत प्रभार</span></a><span class="bill-row-k">नियत प्रभार</span><span class="bill-row-v">₹220</span></div><div class="bill-row is-marked" data-line="fppa"><a class="bill-mark" href="#explain-fppa" id="mark-fppa"><span class="bill-mark-n">13</span><span class="bill-mark-t">ईंधन अधिभार (FPPA)</span></a><span class="bill-row-k">ईंधन अधिभार (FPPA)</span><span class="bill-row-v">₹164.50</span></div><div class="bill-row is-marked" data-line="electricity-duty"><a class="bill-mark" href="#explain-electricity-duty" id="mark-electricity-duty"><span class="bill-mark-n">14</span><span class="bill-mark-t">Electricity Duty</span></a><span class="bill-row-k">Electricity Duty</span><span class="bill-row-v">₹90.47</span></div></div></section>
+        <section class="bill-block bill-block-total"><h4>देय राशि</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">वर्तमान प्रभार</span><span class="bill-row-v">₹1,899.97</span></div><div class="bill-row is-marked" data-line="net-current-bill"><a class="bill-mark" href="#explain-net-current-bill" id="mark-net-current-bill"><span class="bill-mark-n">15</span><span class="bill-mark-t">शुद्ध वर्तमान बिल</span></a><span class="bill-row-k">शुद्ध वर्तमान बिल</span><span class="bill-row-v">₹1,900</span></div><div class="bill-row is-marked is-grand" data-line="total-payable"><a class="bill-mark" href="#explain-total-payable" id="mark-total-payable"><span class="bill-mark-n">16</span><span class="bill-mark-t">कुल देय राशि</span></a><span class="bill-row-k">कुल देय राशि</span><span class="bill-row-v">₹1,900</span></div></div></section>
         <p class="bill-source">FY 2026-27 (UPERC order dt. 02-Jul-2026, rates retained) <span class="bill-badge is-ok">टैरिफ आदेश से मिलान किया गया</span> · <a href="https://www.mvvnl.in" target="_blank" rel="noopener">स्रोत</a></p>
         </div>
       </figure>
+      </div>
       <p class="seo-note" id="ubError" hidden></p>
     </section>
 
@@ -283,13 +516,21 @@
         <p class="ub-live is-absent" hidden>दिखाए गए बिल पर यह नहीं लगा — ऊपर कोई दूसरा DISCOM या श्रेणी चुनिए, यह आ जाएगा।</p>
         <p class="ub-more"><a href="/hi/guides/reduce-fixed-charges-sanctioned-load/">नियत प्रभार कैसे घटाएँ</a><a href="/sanctioned-load-optimizer/">स्वीकृत भार ऑप्टिमाइज़र</a></p>
       </article>
+      <article class="ub-explain" id="explain-meter-number" data-line="meter-number" data-live="meterNumber">
+        <h3><span class="ub-num">4</span>मीटर संख्या</h3>
+        <p>मीटर की नेमप्लेट पर छपा क्रम-संख्या, जो बिल पर दोहराई जाती है। यही एक ख़ाना है जिसे आप बिना कोई संख्या पढ़े जाँच सकते हैं: मीटर के पास खड़े होकर मिलाइए। मेल न खाए तो बिल किसी और कनेक्शन का है — इस सूची में यह सबसे आसानी से पकड़ में आने वाली और सबसे महँगी पड़ने वाली ग़लती है।</p>
+        <div class="ub-live"><span class="ub-live-tag">इस बिल पर</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>MV 4471 2208</div></div><p class="ub-live-note">मीटर की नेमप्लेट पर छपा रहता है और बिल पर दोहराया जाता है — DISCOM इसी से दोनों को जोड़ता है। अगर दोनों मेल न खाएँ, तो यह बिल आपकी दीवार पर लगे मीटर का नहीं है — यह अगले महीने नहीं, तुरंत उठाने वाली बात है।</p></div></div>
+        <p class="ub-live is-absent" hidden>दिखाए गए बिल पर यह नहीं लगा — ऊपर कोई दूसरा DISCOM या श्रेणी चुनिए, यह आ जाएगा।</p>
+        <p class="ub-more"><a href="/hi/smart-meter/">मीटर के हर चिह्न का मतलब</a></p>
+      </article>
     </section>
 
     <section class="seo-section" id="when">
       <h2>तारीख़ें, और उनमें से कौन-सी आपको पैसे में पड़ती हैं</h2>
       <p>बिल पर तीन तारीख़ें होती हैं और वे आपस में बदली नहीं जा सकतीं। एक खपत की पहचान बताती है, एक बताती है कि बिल कब बना, और एक वह समय-सीमा है जिसके दोनों ओर पैसा जुड़ा है।</p>
       <article class="ub-explain" id="explain-bill-month" data-line="bill-month" data-live="billMonth">
-        <h3><span class="ub-num">4</span>बिल माह</h3>
+        <h3><span class="ub-num">5</span>बिल माह</h3>
         <p>वह महीना जिसमें बिजली <em>इस्तेमाल</em> हुई — न वह जिसमें बिल छपा, न वह जिसमें आप भुगतान करते हैं। तीन अलग-अलग तारीख़ें, और बिल इन्हें एक-सा नाम नहीं देते। खपत की पहचान यही करता है, इसलिए शिकायत में यही बताइए — और चूँकि ईंधन अधिभार हर महीने अधिसूचित होता है, आप पर कौन-सी अधिभार दर लगेगी यह भी यही तय करता है।</p>
         <div class="ub-live"><span class="ub-live-tag">इस बिल पर</span>
           <div class="ub-live-body"><p class="ub-live-note">JUN-2026 — वह महीना जिसमें बिजली इस्तेमाल हुई (01-06-2026 से 30-06-2026), वह नहीं जिसमें बिल छपा। यह दिखने से ज़्यादा मायने रखता है: ईंधन अधिभार हर महीने अधिसूचित होता है, इसलिए यही खाना तय करता है कि कौन-सी दर लगेगी। ऊपर DISCOM बदलिए और देखिए कि वही UPPCL कनेक्शन जून में +10% वसूलता है और जुलाई में 4.43% लौटाता है।</p></div></div>
@@ -297,7 +538,7 @@
         <p class="ub-more"><a href="/fuel-surcharge/">इस महीने का ईंधन अधिभार, राज्यवार</a></p>
       </article>
       <article class="ub-explain" id="explain-due-date" data-line="due-date" data-live="dueDate">
-        <h3><span class="ub-num">5</span>देय तिथि</h3>
+        <h3><span class="ub-num">6</span>देय तिथि</h3>
         <p>वह आख़िरी दिन जब तक बिल उतना ही है जितना लिखा है। यह दोनों तरफ़ से पैसे की बात है: इसके बाद पूरी बकाया राशि पर विलंब भुगतान अधिभार लगना शुरू होता है और हर महीने चक्रवृद्धि होता है; और जहाँ DISCOM समय पर भुगतान की छूट देता है, वह छूट पाने का यही एक रास्ता है। कनेक्शन काटने के नोटिस भी इसी तारीख़ से चलते हैं, बिल तिथि से नहीं।</p>
         <div class="ub-live"><span class="ub-live-tag">इस बिल पर</span>
           <div class="ub-live-body"><p class="ub-live-note">20-07-2026 तक भुगतान कीजिए तो बिल उतना ही है जितना लिखा है। उसके बाद पूरी बकाया राशि पर विलंब भुगतान अधिभार लगना शुरू हो जाता है और हर महीने चक्रवृद्धि होता है — और जहाँ DISCOM समय पर भुगतान की छूट देता है, वह भी चली जाती है। बिल तिथि और देय तिथि के बीच आमतौर पर 15 दिन होते हैं।</p></div></div>
@@ -309,8 +550,16 @@
     <section class="seo-section" id="reading">
       <h2>मीटर ने क्या कहा</h2>
       <p>पूरे बिल पर यही एक चीज़ नापी गई है। नीचे का सब कुछ इसी एक संख्या पर किया गया गणित है।</p>
+      <article class="ub-explain" id="explain-present-reading" data-line="present-reading" data-live="presentReading">
+        <h3><span class="ub-num">7</span>वर्तमान रीडिंग</h3>
+        <p>रीडिंग की तारीख़ को मीटर पर जो संचयी आंकड़ा दिख रहा था — वही संख्या जो इस बिल के बग़ल वाले मीटर पर दिख रही है। यही एक पंक्ति है जिसे आप किसी पर भरोसा किए बिना ख़ुद जाँच सकते हैं: मीटर तक जाइए और देख लीजिए। यह भी ध्यान दीजिए कि मीटर आपको क्या <em>नहीं</em> बता सकता: पिछली रीडिंग। वह पिछले बिल से आती है — पुराना बिल संभालकर रखने की व्यावहारिक वजह यही है।</p>
+        <div class="ub-live"><span class="ub-live-tag">इस बिल पर</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>14,820 kWh</div></div><p class="ub-live-note">बिल पर यही एक आंकड़ा है जिसे आप ख़ुद जाँच सकते हैं — मीटर तक जाकर देख लीजिए। बाक़ी सब इसी पर किया गया गणित है। ध्यान रहे, मीटर आपको पिछली रीडिंग नहीं दिखा सकता — वह पिछले बिल से आती है, इसीलिए पुराना बिल संभालकर रखना काम आता है।</p></div></div>
+        <p class="ub-live is-absent" hidden>दिखाए गए बिल पर यह नहीं लगा — ऊपर कोई दूसरा DISCOM या श्रेणी चुनिए, यह आ जाएगा।</p>
+        <p class="ub-more"><a href="/hi/guides/uppcl-smart-meter-readings-explained/">स्मार्ट मीटर खुद कैसे पढ़ें</a><a href="/hi/guides/smart-meter-running-fast/">जब लगे कि मीटर ग़लत है</a></p>
+      </article>
       <article class="ub-explain" id="explain-units-consumed" data-line="units-consumed" data-live="unitsConsumed">
-        <h3><span class="ub-num">6</span>खपत यूनिट</h3>
+        <h3><span class="ub-num">8</span>खपत यूनिट</h3>
         <p>वर्तमान रीडिंग में से पिछली रीडिंग घटाकर, मीटर गुणांक से गुणा (गुणक, घरेलू कनेक्शन पर लगभग हमेशा 1)। एक यूनिट यानी एक किलोवाट-घंटा। पूरे बिल पर यही एक चीज़ नापी गई है — नीचे का सब कुछ इसी एक संख्या पर किया गया गणित है।</p>
         <div class="ub-live"><span class="ub-live-tag">इस बिल पर</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">यूनिट = (वर्तमान रीडिंग − पिछली रीडिंग) × मीटर गुणांक</div><div class="ub-calc-work"><span class="ub-calc-step">(14,820 − 14,570) × 1</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>250 kWh</div></div><p class="ub-live-note">30 दिनों में लगभग 8.3 यूनिट प्रतिदिन। लगभग हर घरेलू कनेक्शन पर मीटर गुणांक 1 होता है; जहाँ नहीं होता, वह मीटर पर छपा रहता है और अंतर से गुणा होता है।</p></div></div>
@@ -318,7 +567,7 @@
         <p class="ub-more"><a href="/hi/guides/uppcl-smart-meter-readings-explained/">स्मार्ट मीटर खुद कैसे पढ़ें</a><a href="/hi/smart-meter/">मीटर के हर चिह्न का मतलब</a></p>
       </article>
       <article class="ub-explain" id="explain-md" data-line="md" data-live="md">
-        <h3><span class="ub-num">7</span>अधिकतम मांग (MD)</h3>
+        <h3><span class="ub-num">9</span>अधिकतम मांग (MD)</h3>
         <p>महीने भर में आपके कनेक्शन ने आधे घंटे के औसत में जितनी सबसे ज़्यादा बिजली खींची, kW में — यह शिखर है, कुल नहीं। खपत और मांग अलग चीज़ें हैं: 2 kW का गीज़र दस घंटे चलाइए तो 20 यूनिट खर्च होंगी और मांग 2 kW रहेगी; 2 kW वाले दस उपकरण एक घंटे चलाइए तो वही 20 यूनिट लगेंगी पर मांग 20 kW हो जाएगी। व्यावसायिक या औद्योगिक कनेक्शन पर दूसरा तरीक़ा कहीं ज़्यादा महँगा पड़ता है, क्योंकि प्रभार शिखर के पीछे चलता है।</p>
         <div class="ub-live"><span class="ub-live-tag">इस बिल पर</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>दर्ज 1.62 kW, स्वीकृत 2 kW</div></div><p class="ub-live-note">मीटर ने जो सबसे ऊँचा आधे घंटे का औसत दर्ज किया। घरेलू कनेक्शन पर यह दर्ज तो होता है पर इस पर बिल नहीं बनता — नियत प्रभार फिर भी स्वीकृत भार पर ही लगता है। फिर भी यह मायने रखता है: अगर यह आपके स्वीकृत भार से ऊपर जाने लगे, तो DISCOM शास्ति लगा सकता है या कनेक्शन नियमित कराने को कह सकता है।</p></div></div>
@@ -326,7 +575,7 @@
         <p class="ub-more"><a href="/guides/power-factor-kvah-billing-explained/">पावर फैक्टर और kVAh बिलिंग</a><a href="/sanctioned-load-optimizer/">क्या आपका स्वीकृत भार सही है?</a></p>
       </article>
       <article class="ub-explain" id="explain-reading-status" data-line="reading-status" data-live="readingStatus">
-        <h3><span class="ub-num">8</span>रीडिंग स्थिति</h3>
+        <h3><span class="ub-num">10</span>रीडिंग स्थिति</h3>
         <p>एक छोटा कोड जो बताता है कि रीडिंग कैसे ली गई — मीटर रीडर ने सचमुच मीटर पढ़ा, या DISCOM ने अनुमान लगाया क्योंकि मीटर बंद जगह पर था, पढ़ा नहीं जा सका, या ख़राब था। यह शब्दावली हर कंपनी की अलग होती है और बिल पर इन कोड का मतलब शायद ही कहीं लिखा होता है, पर असल बात यह फ़र्क़ है: असली रीडिंग एक तथ्य है, अनुमान एक अस्थायी आंकड़ा है जो बाद में ठीक होगा — आमतौर पर एक कहीं बड़े बिल के रूप में।</p>
         <div class="ub-live"><span class="ub-live-tag">इस बिल पर</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>OK</div></div><p class="ub-live-note">रीडिंग कैसे ली गई। OK का मतलब है कि मीटर सचमुच पढ़ा गया और रीडिंग स्वीकार हुई — बिल असली खपत पर बना है। DISCOM यहाँ एक छोटा कोड छापते हैं और यह शब्दावली हर कंपनी की अलग होती है। असल फ़र्क़ यह है: कोड कह रहा है कि मीटर वाक़ई पढ़ा गया, या यह कि रीडिंग अनुमान से लगाई गई, मीटर तक पहुँच नहीं हुई, या मीटर ख़राब था। दूसरी स्थिति का मतलब है कि ऊपर की यूनिट एक अनुमान हैं जिन्हें बाद में ठीक किया जाएगा — ऐसे में अपनी रीडिंग खुद लेकर बतानी चाहिए।</p></div></div>
@@ -339,7 +588,7 @@
       <h2>आपसे क्या-क्या वसूला जा रहा है</h2>
       <p>बिल एक क़ीमत नहीं है। यह अलग-अलग प्रभारों का ढेर है, हर एक अलग नियम से तय होता है — और कौन-सा कौन है यह जानने से पता चलता है कि किन पर आप कुछ कर सकते हैं।</p>
       <article class="ub-explain" id="explain-energy-charge" data-line="energy-charge" data-live="energyCharge">
-        <h3><span class="ub-num">9</span>ऊर्जा प्रभार</h3>
+        <h3><span class="ub-num">11</span>ऊर्जा प्रभार</h3>
         <p>यूनिट की अपनी क़ीमत। भारत का लगभग हर घरेलू टैरिफ़ <em>टेलीस्कोपिक</em> है: स्लैब एक-दूसरे की जगह नहीं लेते, जुड़ते हैं — यानी ऊपर वाले स्लैब में जाने से सिर्फ़ अतिरिक्त यूनिट महँगी होती हैं, नीचे वाली कभी नहीं। आपका बिल एक कुल राशि छापता है; ऊपर की तालिका वह सीढ़ी दिखाती है जिससे वह बनी।</p>
         <div class="ub-live"><span class="ub-live-tag">इस बिल पर</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">ऊर्जा प्रभार = Σ (हर स्लैब में आने वाली यूनिट × उस स्लैब की दर)</div><div class="ub-calc-work"><span class="ub-calc-step">150 × ₹5.50 = ₹825</span><span class="ub-calc-step">100 × ₹6.00 = ₹600</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,425</div></div><p class="ub-live-note">स्लैब जुड़ते हैं, बदलते नहीं — ऊपर वाले स्लैब में जाने से सिर्फ़ अतिरिक्त यूनिट महँगी होती हैं। आख़िरी यूनिट ₹6.00 की पड़ी, पर पूरे बिल का औसत ₹1,425 ÷ 250 = ₹5.70 प्रति यूनिट है।</p></div></div>
@@ -347,7 +596,7 @@
         <p class="ub-more"><a href="/compare/">DISCOM के बीच स्लैब दरों की तुलना</a><a href="/hi/guides/tod-billing-explained/">समय-आधारित (ToD) बिलिंग</a></p>
       </article>
       <article class="ub-explain" id="explain-fixed-charge" data-line="fixed-charge" data-live="fixedCharge">
-        <h3><span class="ub-num">10</span>नियत प्रभार / मांग प्रभार</h3>
+        <h3><span class="ub-num">12</span>नियत प्रभार / मांग प्रभार</h3>
         <p>आप एक यूनिट इस्तेमाल करें या एक भी नहीं, यह देना ही है। यह तारों, मीटर और अमले का ख़र्च उठाता है, और यही वजह है कि बंद पड़े ख़ाली घर का भी बिल आता है। घरेलू कनेक्शन पर यह <em>स्वीकृत भार</em> के हर kW पर लगता है; व्यावसायिक या औद्योगिक पर <em>दर्ज अधिकतम मांग</em> पर — इसीलिए एक ही दर से दोनों बिलों पर बहुत अलग रक़में बनती हैं।</p>
         <div class="ub-live"><span class="ub-live-tag">इस बिल पर</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">नियत प्रभार = प्रति kW दर × स्वीकृत भार</div><div class="ub-calc-work"><span class="ub-calc-step">₹110.00 × 2 kW</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹220</div></div><p class="ub-live-note">इस सूत्र में खपत कहीं आती ही नहीं। यही वजह है कि बंद पड़े ख़ाली घर का भी बिल आता है।</p></div></div>
@@ -363,7 +612,7 @@
         <p class="ub-more"><a href="/hi/guides/uppcl-sanctioned-load-increased/">जब DISCOM आपका भार बढ़ा दे</a><a href="/sanctioned-load-optimizer/">कौन-सा विकल्प सस्ता है, हिसाब लगाइए</a></p>
       </article>
       <article class="ub-explain" id="explain-fppa" data-line="fppa" data-live="fppa">
-        <h3><span class="ub-num">11</span>ईंधन अधिभार (FPPA / FPPAS / PPAC / FAC)</h3>
+        <h3><span class="ub-num">13</span>ईंधन अधिभार (FPPA / FPPAS / PPAC / FAC)</h3>
         <p>यही एक पंक्ति है जो हर महीने ऐसे कारणों से बदलती है जिनका आपसे कोई लेना-देना नहीं। DISCOM को बिजली ख़रीदने में जो असली ख़र्च आया और आपका टैरिफ़ तय करते समय नियामक ने जो मान लिया था, उन दोनों का अंतर यहाँ से गुज़रता है। इसमें चार बातें लोगों को चौंकाती हैं: कई राज्यों में यह <em>हर महीने</em> दोबारा तय होती है; यह <em>ऋणात्मक</em> भी हो सकती है, तब यह वापसी है; जहाँ यह प्रतिशत में है, वहाँ आमतौर पर ऊर्जा प्रभार के साथ नियत प्रभार पर भी लगती है; और अधिसूचित दर सार्वजनिक होती है, इसलिए बिना दर बताए यह पंक्ति दिखाने वाला बिल पूछने लायक है।</p>
         <div class="ub-live"><span class="ub-live-tag">इस बिल पर</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">FPPA = (ऊर्जा प्रभार + नियत/मांग प्रभार + शास्ति) × अधिसूचित दर %</div><div class="ub-calc-work"><span class="ub-calc-step">आधार = ₹1,645</span><span class="ub-calc-step">₹1,645 × 10%</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹164.50</div></div><p class="ub-live-note">दर हर महीने अधिसूचित होती है और यह ऊर्जा प्रभार के साथ-साथ नियत प्रभार पर भी लगती है — सिर्फ़ यूनिट पर नहीं, जो इस पंक्ति की सबसे आम ग़लतफ़हमी है।</p></div></div>
@@ -379,7 +628,7 @@
         <p class="ub-more"><a href="/hi/guides/how-to-read-msedcl-bill/">MSEDCL का बिल कैसे पढ़ें</a><a href="/hi/guides/msedcl-fppa-charges-explained/">MSEDCL की अपनी अधिभार पंक्तियाँ</a></p>
       </article>
       <article class="ub-explain" id="explain-electricity-duty" data-line="electricity-duty" data-live="electricityDuty">
-        <h3><span class="ub-num">12</span>विद्युत शुल्क</h3>
+        <h3><span class="ub-num">14</span>विद्युत शुल्क</h3>
         <p>एक राज्य कर, जिसे DISCOM सरकार की ओर से वसूलता है। यह सिर्फ़ ऊर्जा प्रभार पर लगे या पूरे बिल पर, यह हर राज्य अपने हिसाब से तय करता है — और यही वजह है कि एक जैसी खपत वाले दो बिल राज्य की सीमा के आर-पार कुछ सौ रुपये तक अलग हो सकते हैं। घरेलू बिजली आपूर्ति पर GST नहीं लगता — अगर दिखे, तो दोबारा देखिए।</p>
         <div class="ub-live"><span class="ub-live-tag">इस बिल पर</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">शुल्क = (ऊर्जा + नियत + शास्ति + व्हीलिंग + FPPA) × शुल्क दर %</div><div class="ub-calc-work"><span class="ub-calc-step">आधार = ₹1,809.50</span><span class="ub-calc-step">₹1,809.50 × 5%</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹90.47</div></div><p class="ub-live-note">यहाँ शुल्क पूरे बिल पर लगता है, नियत प्रभार समेत। कौन-सा आधार लिया जाए यह हर राज्य अपने हिसाब से तय करता है, और यही वजह है कि सीमा के दोनों ओर एक जैसे दो घरों का बिल अलग आता है।</p></div></div>
@@ -400,7 +649,7 @@
         <p class="ub-more"><a href="/hi/guides/how-to-read-bses-delhi-bill/">BSES दिल्ली का बिल कैसे पढ़ें</a></p>
       </article>
       <article class="ub-explain" id="explain-net-current-bill" data-line="net-current-bill" data-live="netCurrentBill">
-        <h3><span class="ub-num">13</span>शुद्ध वर्तमान बिल</h3>
+        <h3><span class="ub-num">15</span>शुद्ध वर्तमान बिल</h3>
         <p>इस महीने के प्रभार, किसी भी सब्सिडी के बाद — और यह वह <strong>नहीं</strong> है जो आपको चुकाना है। पिछले महीने से तुलना इसी आंकड़े से कीजिए, क्योंकि इसमें सिर्फ़ इसी महीने की खपत है और कुछ नहीं। नीचे की कुल देय राशि एक अलग चीज़ है: उसमें पुराना बकाया मिला होता है, और महीने-दर-महीने <em>उसकी</em> तुलना आपको आपकी बिजली की खपत की नहीं, आपके भुगतान के इतिहास की कहानी बताएगी।</p>
         <div class="ub-live"><span class="ub-live-tag">इस बिल पर</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">शुद्ध वर्तमान बिल = ऊर्जा प्रभार + नियत प्रभार + ईंधन अधिभार (fppa) + electricity duty</div><div class="ub-calc-work"><span class="ub-calc-step">₹1,425 + ₹220 + ₹164.50 + ₹90.47</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,900</div></div><p class="ub-live-note">सिर्फ़ इस महीने का — यह वह नहीं है जो आपको चुकाना है। 250 यूनिट पर यह ₹1,900 ÷ 250 = ₹7.60 प्रति यूनिट पड़ता है, जो हमेशा स्लैब दर से ऊपर रहता है। महीने-दर-महीने तुलना इसी से कीजिए; नीचे की कुल देय राशि में पुराना बकाया मिला होता है और वह आपकी खपत की ग़लत तस्वीर दिखाएगी।</p></div></div>
@@ -424,7 +673,7 @@
         <p class="ub-more"><a href="/hi/guides/smart-meter-prepaid-disconnection/">बिल न चुकाने पर क्या होता है</a></p>
       </article>
       <article class="ub-explain" id="explain-total-payable" data-line="total-payable" data-live="totalPayable">
-        <h3><span class="ub-num">14</span>कुल देय राशि</h3>
+        <h3><span class="ub-num">16</span>कुल देय राशि</h3>
         <p>शुद्ध वर्तमान बिल, साथ में बकाया और अधिभार, घटाकर वे भुगतान जो पहले जमा हो चुके हैं। आज की तारीख़ में आपको यही चुकाना है। पूरी राशि चुकाइए — आंशिक भुगतान से बची हुई रकम पर अधिभार लगना बंद नहीं होता, और प्रीपेड या कटौती-नोटिस वाले खाते पर घड़ी भी नहीं रुकती।</p>
         <div class="ub-live"><span class="ub-live-tag">इस बिल पर</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">कुल देय = शुद्ध वर्तमान बिल + बकाया + अधिभार − पहले जमा भुगतान</div><div class="ub-calc-work"><span class="ub-calc-step">₹1,900 शुद्ध वर्तमान बिल</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,900</div></div><p class="ub-live-note">ऊपर के शुद्ध वर्तमान बिल के बराबर, सिर्फ़ इसलिए कि इस बिल पर कुछ भी आगे नहीं लाया गया। पूरी राशि चुकाइए: आंशिक भुगतान से बची हुई रकम पर अधिभार लगना बंद नहीं होता।</p></div></div>

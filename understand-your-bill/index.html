@@ -226,6 +226,238 @@
         <span>This is not a real bill and not a copy of any DISCOM's stationery. Bills differ in layout, field names and ordering from one utility to the next; what is common between them is the set of charges shown here. The consumer number, meter number and address are invented.</span>
       </p>
 
+      <div class="ub-stage">
+      <!-- The meter and the bill carry ONE set of numbers between them: marker 4 is the meter
+           number on both drawings, 7 is the present reading, 9 is the maximum demand. That shared
+           digit is the connection — it needs no leader line spanning two independently-flowing
+           elements, which would need JS measurement on every resize and would still be fragile.
+
+           The three leader paths are lifted from the guide's own diagram, so they terminate on
+           exactly the same parts of exactly the same drawing. -->
+      <figure class="meter-mini">
+        <figcaption class="meter-mini-cap">The meter this bill was read from</figcaption>
+        <div class="meter-mini-stage">
+<svg class="meter-svg" viewBox="0 0 700 560" role="img"
+     aria-labelledby="meter-dia-title meter-dia-desc">
+  <title id="meter-dia-title">Labelled diagram of an Indian single-phase prepaid smart meter</title>
+  <desc id="meter-dia-desc">A single-phase AC static watthour smart meter seen face on. The
+  upper casing carries a maker's mark, COM and ON indicator lamps and the communication
+  module details. The lower face carries a green backlit LCD in the centre showing a status
+  icon row, the main reading, a register code and a unit label; a pulse LED and standard
+  markings below it; a serial barcode and printed specification block on the left; and a
+  scroll button with a circular optical port on the right. A dark terminal block with brass
+  screws runs along the bottom. Twelve numbered callouts key each element to the legend below.</desc>
+
+  <defs>
+    <linearGradient id="mBody" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#fbfaf6"/><stop offset="0.5" stop-color="#f1efe8"/>
+      <stop offset="1" stop-color="#dedbd2"/>
+    </linearGradient>
+    <linearGradient id="mBodyTop" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0" stop-color="#fdfdfa"/><stop offset="1" stop-color="#e7e4dc"/>
+    </linearGradient>
+    <linearGradient id="mLcd" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#b6e86a"/><stop offset="0.55" stop-color="#8ed23a"/>
+      <stop offset="1" stop-color="#6fb823"/>
+    </linearGradient>
+    <linearGradient id="mGloss" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.4"/>
+      <stop offset="0.55" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="mPortMetal" cx="0.32" cy="0.26" r="0.9">
+      <stop offset="0" stop-color="#ffffff"/><stop offset="0.35" stop-color="#d6d9dd"/>
+      <stop offset="0.7" stop-color="#9aa0a7"/><stop offset="1" stop-color="#c9ced4"/>
+    </radialGradient>
+    <linearGradient id="mTerm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a4a4a"/><stop offset="0.5" stop-color="#2e2e2e"/>
+      <stop offset="1" stop-color="#3d3d3d"/>
+    </linearGradient>
+    <radialGradient id="mBrass" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#e8d089"/><stop offset="0.6" stop-color="#b8963f"/>
+      <stop offset="1" stop-color="#7d6427"/>
+    </radialGradient>
+    <radialGradient id="mLedOn" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#ff9a9a"/><stop offset="0.45" stop-color="#e01b1b"/>
+      <stop offset="1" stop-color="#7a1010"/>
+    </radialGradient>
+    <radialGradient id="mLedOff" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#f2f1ee"/><stop offset="1" stop-color="#c3c1ba"/>
+    </radialGradient>
+    <radialGradient id="mScrew" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#f0eee9"/><stop offset="1" stop-color="#a9a69e"/>
+    </radialGradient>
+    <filter id="mShadow" x="-15%" y="-10%" width="130%" height="128%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0b1020" flood-opacity="0.3"/>
+    </filter>
+    <filter id="mGlowLcd" x="-25%" y="-40%" width="150%" height="180%">
+      <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#8ed23a" flood-opacity="0.5"/>
+    </filter>
+    <filter id="mGlowLed" x="-160%" y="-160%" width="420%" height="420%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.6" flood-color="#ff2d2d" flood-opacity="0.9"/>
+    </filter>
+    <clipPath id="mLcdClip"><rect x="292" y="220" width="168" height="78" rx="3"/></clipPath>
+  </defs>
+
+  <g filter="url(#mShadow)">
+    <!-- mounting flanges behind the casing, top and bottom -->
+    <path class="m-flange" d="M148 62h404v32H148zM148 424h404v30H148z"/>
+    <circle class="m-flange-hole" cx="164" cy="78" r="5"/>
+    <circle class="m-flange-hole" cx="536" cy="78" r="5"/>
+
+    <!-- upper casing -->
+    <rect class="m-case-top" x="172" y="40" width="356" height="146" rx="10"/>
+    <g class="m-screw-sm">
+      <circle cx="190" cy="58" r="6"/><circle cx="510" cy="58" r="6"/>
+      <circle cx="190" cy="168" r="6"/><circle cx="510" cy="168" r="6"/>
+    </g>
+    <!-- neutral maker's mark: this is a dummy device, so it carries no real brand -->
+    <g class="m-mark" transform="translate(200 92)">
+      <path d="M0 0h14a14 14 0 0 1 0 28H7v12H0z"/>
+      <path class="m-mark-cut" d="M7 7h7a7 7 0 0 1 0 14H7z"/>
+    </g>
+    <text class="m-maker" x="200" y="164">SMART METER</text>
+    <!-- COM / ON lamps -->
+    <text class="m-lamp-lbl" x="356" y="88">COM</text>
+    <text class="m-lamp-lbl" x="414" y="88">ON</text>
+    <path class="m-lamp-tick" d="M356 92v7M414 92v7"/>
+    <circle class="m-lamp-on" id="mLampCom" cx="349" cy="110" r="6"/>
+    <circle class="m-lamp-off" cx="371" cy="110" r="6"/>
+    <circle class="m-lamp-on" cx="407" cy="110" r="6"/>
+    <circle class="m-lamp-off" cx="429" cy="110" r="6"/>
+    <text class="m-spec" x="342" y="142">Comm. Tech.: NAN (865-867 MHz)</text>
+    <text class="m-spec" x="342" y="156">Communication Module: Plug-in</text>
+
+    <!-- lower casing -->
+    <rect class="m-case" x="172" y="186" width="356" height="254" rx="10"/>
+    <text class="m-title" x="350" y="203">AC STATIC WATTHOUR SMART METER</text>
+
+    <!-- LCD -->
+    <rect class="m-lcd-frame" x="286" y="214" width="180" height="90" rx="5"/>
+    <rect class="m-lcd" x="292" y="220" width="168" height="78" rx="3" filter="url(#mGlowLcd)"/>
+    <g clip-path="url(#mLcdClip)">
+      <g class="m-ico">
+        <g transform="translate(300 226)">
+          <rect x="0" y="7" width="2.4" height="4"/><rect x="3.6" y="4.8" width="2.4" height="6.2"/>
+          <rect x="7.2" y="2.4" width="2.4" height="8.6"/><rect x="10.8" y="0" width="2.4" height="11"/>
+        </g>
+        <g transform="translate(332 226)" class="m-ico-warn">
+          <path d="M1.6 10.4V4.8a4.8 4.8 0 0 1 9.6 0v5.6" fill="none" stroke-width="2.4"/>
+          <rect x="0.4" y="9.6" width="4" height="2.4"/><rect x="8.4" y="9.6" width="4" height="2.4"/>
+        </g>
+        <g transform="translate(364 226)">
+          <circle cx="6.4" cy="6" r="5.6" fill="none" stroke-width="1.9"/>
+          <path d="M6.4 1.2v5.6" fill="none" stroke-width="1.9" stroke-linecap="round"/>
+        </g>
+        <g transform="translate(396 225)" class="m-ico-warn">
+          <path d="M7.2 0 14.4 12.8H0z" fill="none" stroke-width="1.9" stroke-linejoin="round"/>
+          <path d="M7.2 4.8v4" stroke-width="1.9" stroke-linecap="round"/>
+          <circle cx="7.2" cy="10.7" r="1" stroke="none"/>
+        </g>
+      </g>
+      <!-- the unlit segments of an LCD stay faintly visible; that ghost is most of what
+           makes a real display read as a display rather than as printed text -->
+      <!-- Seven-segment digits. Markup is stamped by scripts/meter-digits.mjs from the
+           same segmentsFor() the runtime uses, so a no-JS visitor sees a real display too.
+           Regenerate with: node scripts/meter-digits.mjs -->
+      <g class="m-seg" id="mSeg"><polygon class="sg-on" points="323.4,246 333.6,246 335.3,247.7 333.6,249.39999999999998 323.4,249.39999999999998 321.7,247.7"/><polygon class="sg-off" points="323.4,259.3 333.6,259.3 335.3,261 333.6,262.7 323.4,262.7 321.7,261"/><polygon class="sg-on" points="323.4,272.6 333.6,272.6 335.3,274.3 333.6,276 323.4,276 321.7,274.3"/><polygon class="sg-on" points="320,249.39999999999998 321.7,247.7 323.4,249.39999999999998 323.4,259.3 321.7,261 320,259.3"/><polygon class="sg-on" points="333.6,249.39999999999998 335.3,247.7 337,249.39999999999998 337,259.3 335.3,261 333.6,259.3"/><polygon class="sg-on" points="320,262.7 321.7,261 323.4,262.7 323.4,272.6 321.7,274.3 320,272.6"/><polygon class="sg-on" points="333.6,262.7 335.3,261 337,262.7 337,272.6 335.3,274.3 333.6,272.6"/><polygon class="sg-off" points="343.9,246 354.1,246 355.8,247.7 354.1,249.39999999999998 343.9,249.39999999999998 342.2,247.7"/><polygon class="sg-on" points="343.9,259.3 354.1,259.3 355.8,261 354.1,262.7 343.9,262.7 342.2,261"/><polygon class="sg-off" points="343.9,272.6 354.1,272.6 355.8,274.3 354.1,276 343.9,276 342.2,274.3"/><polygon class="sg-on" points="340.5,249.39999999999998 342.2,247.7 343.9,249.39999999999998 343.9,259.3 342.2,261 340.5,259.3"/><polygon class="sg-on" points="354.1,249.39999999999998 355.8,247.7 357.5,249.39999999999998 357.5,259.3 355.8,261 354.1,259.3"/><polygon class="sg-off" points="340.5,262.7 342.2,261 343.9,262.7 343.9,272.6 342.2,274.3 340.5,272.6"/><polygon class="sg-on" points="354.1,262.7 355.8,261 357.5,262.7 357.5,272.6 355.8,274.3 354.1,272.6"/><polygon class="sg-on" points="364.4,246 374.6,246 376.3,247.7 374.6,249.39999999999998 364.4,249.39999999999998 362.7,247.7"/><polygon class="sg-on" points="364.4,259.3 374.6,259.3 376.3,261 374.6,262.7 364.4,262.7 362.7,261"/><polygon class="sg-on" points="364.4,272.6 374.6,272.6 376.3,274.3 374.6,276 364.4,276 362.7,274.3"/><polygon class="sg-on" points="361,249.39999999999998 362.7,247.7 364.4,249.39999999999998 364.4,259.3 362.7,261 361,259.3"/><polygon class="sg-on" points="374.6,249.39999999999998 376.3,247.7 378,249.39999999999998 378,259.3 376.3,261 374.6,259.3"/><polygon class="sg-off" points="361,262.7 362.7,261 364.4,262.7 364.4,272.6 362.7,274.3 361,272.6"/><polygon class="sg-on" points="374.6,262.7 376.3,261 378,262.7 378,272.6 376.3,274.3 374.6,272.6"/><polygon class="sg-off" points="384.9,246 395.1,246 396.8,247.7 395.1,249.39999999999998 384.9,249.39999999999998 383.2,247.7"/><polygon class="sg-off" points="384.9,259.3 395.1,259.3 396.8,261 395.1,262.7 384.9,262.7 383.2,261"/><polygon class="sg-off" points="384.9,272.6 395.1,272.6 396.8,274.3 395.1,276 384.9,276 383.2,274.3"/><polygon class="sg-off" points="381.5,249.39999999999998 383.2,247.7 384.9,249.39999999999998 384.9,259.3 383.2,261 381.5,259.3"/><polygon class="sg-on" points="395.1,249.39999999999998 396.8,247.7 398.5,249.39999999999998 398.5,259.3 396.8,261 395.1,259.3"/><polygon class="sg-off" points="381.5,262.7 383.2,261 384.9,262.7 384.9,272.6 383.2,274.3 381.5,272.6"/><polygon class="sg-on" points="395.1,262.7 396.8,261 398.5,262.7 398.5,272.6 396.8,274.3 395.1,272.6"/><polygon class="sg-on" points="405.4,246 415.6,246 417.3,247.7 415.6,249.39999999999998 405.4,249.39999999999998 403.7,247.7"/><polygon class="sg-on" points="405.4,259.3 415.6,259.3 417.3,261 415.6,262.7 405.4,262.7 403.7,261"/><polygon class="sg-on" points="405.4,272.6 415.6,272.6 417.3,274.3 415.6,276 405.4,276 403.7,274.3"/><polygon class="sg-off" points="402,249.39999999999998 403.7,247.7 405.4,249.39999999999998 405.4,259.3 403.7,261 402,259.3"/><polygon class="sg-on" points="415.6,249.39999999999998 417.3,247.7 419,249.39999999999998 419,259.3 417.3,261 415.6,259.3"/><polygon class="sg-on" points="402,262.7 403.7,261 405.4,262.7 405.4,272.6 403.7,274.3 402,272.6"/><polygon class="sg-off" points="415.6,262.7 417.3,261 419,262.7 419,272.6 417.3,274.3 415.6,272.6"/><rect class="sg-on" x="423.5" y="272.6" width="3.4" height="3.4"/><polygon class="sg-on" points="438.4,246 448.6,246 450.3,247.7 448.6,249.39999999999998 438.4,249.39999999999998 436.7,247.7"/><polygon class="sg-on" points="438.4,259.3 448.6,259.3 450.3,261 448.6,262.7 438.4,262.7 436.7,261"/><polygon class="sg-on" points="438.4,272.6 448.6,272.6 450.3,274.3 448.6,276 438.4,276 436.7,274.3"/><polygon class="sg-on" points="435,249.39999999999998 436.7,247.7 438.4,249.39999999999998 438.4,259.3 436.7,261 435,259.3"/><polygon class="sg-off" points="448.6,249.39999999999998 450.3,247.7 452,249.39999999999998 452,259.3 450.3,261 448.6,259.3"/><polygon class="sg-on" points="435,262.7 436.7,261 438.4,262.7 438.4,272.6 436.7,274.3 435,272.6"/><polygon class="sg-on" points="448.6,262.7 450.3,261 452,262.7 452,272.6 450.3,274.3 448.6,272.6"/></g>
+      <text class="m-code" id="mCode" x="300" y="292">1.8.0</text>
+      <text class="m-unit" id="mUnit" x="452" y="292">kWh</text>
+    </g>
+    <path class="m-gloss" d="M292 220h168v28l-168 32z"/>
+
+    <!-- pulse LED and standard markings -->
+    <circle class="m-led-pulse" cx="298" cy="326" r="5.5" filter="url(#mGlowLed)"/>
+    <text class="m-print" x="310" y="330">kWh — 3200 Imp/Unit</text>
+    <text class="m-print" x="292" y="352">IS 16444 (Part 1)</text>
+    <text class="m-print m-print-sm" x="292" y="364">CM/L-8400169811</text>
+
+    <!-- serial barcode + printed specification block -->
+    <g class="m-bars" transform="translate(186 340)">
+      <rect x="0" y="0" width="2.2" height="22"/><rect x="4.4" y="0" width="1.1" height="22"/>
+      <rect x="7.7" y="0" width="3.3" height="22"/><rect x="13.2" y="0" width="1.1" height="22"/>
+      <rect x="16.5" y="0" width="2.2" height="22"/><rect x="22" y="0" width="1.1" height="22"/>
+      <rect x="25.3" y="0" width="1.1" height="22"/><rect x="28.6" y="0" width="3.3" height="22"/>
+      <rect x="34.1" y="0" width="1.1" height="22"/><rect x="37.4" y="0" width="2.2" height="22"/>
+      <rect x="42.9" y="0" width="3.3" height="22"/><rect x="48.4" y="0" width="1.1" height="22"/>
+      <rect x="51.7" y="0" width="2.2" height="22"/><rect x="57.2" y="0" width="1.1" height="22"/>
+      <rect x="60.5" y="0" width="3.3" height="22"/><rect x="66" y="0" width="1.1" height="22"/>
+      <rect x="69.3" y="0" width="2.2" height="22"/><rect x="74.8" y="0" width="1.1" height="22"/>
+    </g>
+    <text class="m-serial" x="186" y="378">Sr. No. RND00001</text>
+    <g class="m-spec">
+      <text x="186" y="396">1P, 2W, 240V, 5-60A, 50 Hz, Class 1.0</text>
+      <text x="186" y="408">DLMS Meter Type: 6 · Cat.: D1, 27&#176;C</text>
+      <text x="186" y="420">Type: GPSM 03 · MM/YYYY: 08/2026</text>
+      <text x="186" y="432">Illustration only — not a real meter</text>
+    </g>
+
+    <!-- right column -->
+    <text class="m-print m-print-sm m-print-end" x="518" y="332">MTCTE : 283603039</text>
+    <!-- Real control, not decoration: focusable, keyboard-operable, and with a hit area
+         larger than the drawn button so it clears the 24px minimum on touch. -->
+    <!-- "Press here" tag. Brand blue and pill-shaped so it reads as annotation laid over
+         the device rather than as something printed on it. Decorative to assistive tech —
+         the button below already carries its own label — and it retires on first press
+         along with the pulse, since by then it has said what it had to say. -->
+    <g class="m-hint-tag" aria-hidden="true">
+      <rect x="384" y="348" width="86" height="21" rx="10.5"/>
+      <text x="424" y="363">Press here</text>
+      <path d="M472 352.5 481 358.5 472 364.5 Z"/>
+    </g>
+    <g class="m-btn-hit" id="mBtn" role="button" tabindex="0"
+       aria-label="Press the meter's scroll button to show the next reading"
+       aria-describedby="mReadout">
+      <circle class="m-btn-target" cx="500" cy="358" r="26"/>
+      <!-- Resting affordance. Hover cannot carry this — it does not exist on touch —
+           so an expanding ring runs until the first press, then stops for good. -->
+      <circle class="m-btn-pulse" cx="500" cy="358" r="15"/>
+      <circle class="m-btn-ring" cx="500" cy="358" r="20"/>
+      <circle class="m-btn-rim" cx="500" cy="358" r="15"/>
+      <circle class="m-btn" cx="500" cy="358" r="11.5"/>
+      <text class="m-label" x="500" y="382">Scroll</text>
+    </g>
+    <circle class="m-port-metal" cx="486" cy="410" r="24"/>
+    <circle class="m-port-ring" cx="486" cy="410" r="17.5"/>
+    <ellipse class="m-port-slot" cx="486" cy="410" rx="11" ry="5.5"/>
+
+    <!-- terminal block -->
+    <rect class="m-term" x="196" y="440" width="308" height="50" rx="4"/>
+    <g class="m-term-slot">
+      <rect x="214" y="446" width="38" height="28" rx="2"/>
+      <rect x="271" y="446" width="38" height="28" rx="2"/>
+      <rect x="328" y="446" width="38" height="28" rx="2"/>
+      <rect x="385" y="446" width="38" height="28" rx="2"/>
+      <rect x="442" y="446" width="38" height="28" rx="2"/>
+    </g>
+    <g class="m-brass">
+      <circle cx="233" cy="458" r="6.5"/><circle cx="290" cy="458" r="6.5"/>
+      <circle cx="347" cy="458" r="6.5"/><circle cx="404" cy="458" r="6.5"/>
+      <circle cx="461" cy="458" r="6.5"/>
+    </g>
+    <circle class="m-term-seal" cx="350" cy="481" r="4.5"/>
+  </g>
+
+
+          <g class="m-lead">
+            <path d="M124 282h150l12-18"/>
+            <path d="M124 316h150l14-22"/>
+            <path d="M124 380h56"/>
+          </g>
+          <g class="m-num meter-mini-num">
+            <g data-mm="present-reading" class="is-live"><circle cx="112" cy="282" r="12"/><text x="112" y="286.5" id="mmPresent">7</text></g>
+            <g data-mm="md"><circle cx="112" cy="316" r="12"/><text x="112" y="320.5" id="mmMd">9</text></g>
+            <g data-mm="meter-number"><circle cx="112" cy="380" r="12"/><text x="112" y="384.5" id="mmSerial">4</text></g>
+          </g>
+        </svg>
+        </div>
+        <p class="meter-mini-readout">
+          <span class="meter-mini-step" id="mmStep">1/2</span>
+          <strong id="mmTitle">Total energy imported</strong>
+        </p>
+        <p class="meter-mini-hint">A real meter shows one register at a time and cycles when you press the button. Press it.</p>
+      </figure>
+
       <!-- The gutter that the numbered markers hang in lives on .bill-figure, outside the
            document's own border — the same arrangement as the meter diagram on
            /smart-meter/, where the callouts sit beside the device rather than on it. -->
@@ -238,9 +470,9 @@
           </div>
           <span class="bill-doc-stamp">Sample</span>
         </div>
-        <section class="bill-block"><h4>Account</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="consumer-no"><a class="bill-mark" href="#explain-consumer-no" id="mark-consumer-no"><span class="bill-mark-n">1</span><span class="bill-mark-t">Consumer number</span></a><span class="bill-row-k">Consumer number</span><span class="bill-row-v">1234 5678 9012</span></div><div class="bill-row"><span class="bill-row-k">Consumer name</span><span class="bill-row-v">A. Kumar</span></div><div class="bill-row is-marked" data-line="tariff-category"><a class="bill-mark" href="#explain-tariff-category" id="mark-tariff-category"><span class="bill-mark-n">2</span><span class="bill-mark-t">Tariff category</span></a><span class="bill-row-k">Tariff category</span><span class="bill-row-v">LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW)</span></div><div class="bill-row is-marked" data-line="sanctioned-load"><a class="bill-mark" href="#explain-sanctioned-load" id="mark-sanctioned-load"><span class="bill-mark-n">3</span><span class="bill-mark-t">Sanctioned load</span></a><span class="bill-row-k">Sanctioned load</span><span class="bill-row-v">2 kW</span></div><div class="bill-row"><span class="bill-row-k">Meter number</span><span class="bill-row-v">MV 4471 2208 · Single phase</span></div></div></section>
-        <section class="bill-block bill-block-period"><h4>Billing period</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="bill-month"><a class="bill-mark" href="#explain-bill-month" id="mark-bill-month"><span class="bill-mark-n">4</span><span class="bill-mark-t">Bill month</span></a><span class="bill-row-k">Bill month</span><span class="bill-row-v">JUN-2026</span></div><div class="bill-row"><span class="bill-row-k">Reading period</span><span class="bill-row-v">01-06-2026 – 30-06-2026</span></div><div class="bill-row"><span class="bill-row-k">Bill date</span><span class="bill-row-v">05-07-2026</span></div><div class="bill-row is-marked" data-line="due-date"><a class="bill-mark" href="#explain-due-date" id="mark-due-date"><span class="bill-mark-n">5</span><span class="bill-mark-t">Due date</span></a><span class="bill-row-k">Due date</span><span class="bill-row-v">20-07-2026</span></div></div></section>
-        <section class="bill-block bill-block-reading"><h4>Meter reading</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">Previous reading</span><span class="bill-row-v">14,570</span></div><div class="bill-row"><span class="bill-row-k">Present reading</span><span class="bill-row-v">14,820</span></div><div class="bill-row is-marked" data-line="units-consumed"><a class="bill-mark" href="#explain-units-consumed" id="mark-units-consumed"><span class="bill-mark-n">6</span><span class="bill-mark-t">Units consumed</span></a><span class="bill-row-k">Units consumed</span><span class="bill-row-v">250 kWh</span></div><div class="bill-row is-marked" data-line="md"><a class="bill-mark" href="#explain-md" id="mark-md"><span class="bill-mark-n">7</span><span class="bill-mark-t">Maximum demand</span></a><span class="bill-row-k">Maximum demand</span><span class="bill-row-v">1.62 kW</span></div><div class="bill-row is-marked" data-line="reading-status"><a class="bill-mark" href="#explain-reading-status" id="mark-reading-status"><span class="bill-mark-n">8</span><span class="bill-mark-t">Reading status</span></a><span class="bill-row-k">Reading status</span><span class="bill-row-v">OK</span></div></div></section>
+        <section class="bill-block"><h4>Account</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="consumer-no"><a class="bill-mark" href="#explain-consumer-no" id="mark-consumer-no"><span class="bill-mark-n">1</span><span class="bill-mark-t">Consumer number</span></a><span class="bill-row-k">Consumer number</span><span class="bill-row-v">1234 5678 9012</span></div><div class="bill-row"><span class="bill-row-k">Consumer name</span><span class="bill-row-v">A. Kumar</span></div><div class="bill-row is-marked" data-line="tariff-category"><a class="bill-mark" href="#explain-tariff-category" id="mark-tariff-category"><span class="bill-mark-n">2</span><span class="bill-mark-t">Tariff category</span></a><span class="bill-row-k">Tariff category</span><span class="bill-row-v">LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW)</span></div><div class="bill-row is-marked" data-line="sanctioned-load"><a class="bill-mark" href="#explain-sanctioned-load" id="mark-sanctioned-load"><span class="bill-mark-n">3</span><span class="bill-mark-t">Sanctioned load</span></a><span class="bill-row-k">Sanctioned load</span><span class="bill-row-v">2 kW</span></div><div class="bill-row is-marked" data-line="meter-number"><a class="bill-mark" href="#explain-meter-number" id="mark-meter-number"><span class="bill-mark-n">4</span><span class="bill-mark-t">Meter number</span></a><span class="bill-row-k">Meter number</span><span class="bill-row-v">MV 4471 2208 · Single phase</span></div></div></section>
+        <section class="bill-block bill-block-period"><h4>Billing period</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="bill-month"><a class="bill-mark" href="#explain-bill-month" id="mark-bill-month"><span class="bill-mark-n">5</span><span class="bill-mark-t">Bill month</span></a><span class="bill-row-k">Bill month</span><span class="bill-row-v">JUN-2026</span></div><div class="bill-row"><span class="bill-row-k">Reading period</span><span class="bill-row-v">01-06-2026 – 30-06-2026</span></div><div class="bill-row"><span class="bill-row-k">Bill date</span><span class="bill-row-v">05-07-2026</span></div><div class="bill-row is-marked" data-line="due-date"><a class="bill-mark" href="#explain-due-date" id="mark-due-date"><span class="bill-mark-n">6</span><span class="bill-mark-t">Due date</span></a><span class="bill-row-k">Due date</span><span class="bill-row-v">20-07-2026</span></div></div></section>
+        <section class="bill-block bill-block-reading"><h4>Meter reading</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">Previous reading</span><span class="bill-row-v">14,570</span></div><div class="bill-row is-marked is-live" data-line="present-reading"><a class="bill-mark" href="#explain-present-reading" id="mark-present-reading"><span class="bill-mark-n">7</span><span class="bill-mark-t">Present reading</span></a><span class="bill-row-k">Present reading</span><span class="bill-row-v">14,820</span></div><div class="bill-row is-marked" data-line="units-consumed"><a class="bill-mark" href="#explain-units-consumed" id="mark-units-consumed"><span class="bill-mark-n">8</span><span class="bill-mark-t">Units consumed</span></a><span class="bill-row-k">Units consumed</span><span class="bill-row-v">250 kWh</span></div><div class="bill-row is-marked" data-line="md"><a class="bill-mark" href="#explain-md" id="mark-md"><span class="bill-mark-n">9</span><span class="bill-mark-t">Maximum demand</span></a><span class="bill-row-k">Maximum demand</span><span class="bill-row-v">1.62 kW</span></div><div class="bill-row is-marked" data-line="reading-status"><a class="bill-mark" href="#explain-reading-status" id="mark-reading-status"><span class="bill-mark-n">10</span><span class="bill-mark-t">Reading status</span></a><span class="bill-row-k">Reading status</span><span class="bill-row-v">OK</span></div></div></section>
         <section class="bill-block bill-block-slabs">
           <h4>Slab ladder behind the energy charge</h4>
           <div class="bill-scroll"><table class="bill-slabs">
@@ -248,11 +480,12 @@
             <tbody><tr><td>1 – 150 units</td><td class="num">150</td><td class="num">₹5.50</td><td class="num">₹825</td></tr><tr><td>151 – 250 units</td><td class="num">100</td><td class="num">₹6.00</td><td class="num">₹600</td></tr></tbody>
           </table></div>
         </section>
-        <section class="bill-block bill-block-charges"><h4>Charges</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="energy-charge"><a class="bill-mark" href="#explain-energy-charge" id="mark-energy-charge"><span class="bill-mark-n">9</span><span class="bill-mark-t">Energy charge</span></a><span class="bill-row-k">Energy charge</span><span class="bill-row-v">₹1,425</span></div><div class="bill-row is-marked" data-line="fixed-charge"><a class="bill-mark" href="#explain-fixed-charge" id="mark-fixed-charge"><span class="bill-mark-n">10</span><span class="bill-mark-t">Fixed charge</span></a><span class="bill-row-k">Fixed charge</span><span class="bill-row-v">₹220</span></div><div class="bill-row is-marked" data-line="fppa"><a class="bill-mark" href="#explain-fppa" id="mark-fppa"><span class="bill-mark-n">11</span><span class="bill-mark-t">Fuel surcharge (FPPA)</span></a><span class="bill-row-k">Fuel surcharge (FPPA)</span><span class="bill-row-v">₹164.50</span></div><div class="bill-row is-marked" data-line="electricity-duty"><a class="bill-mark" href="#explain-electricity-duty" id="mark-electricity-duty"><span class="bill-mark-n">12</span><span class="bill-mark-t">Electricity Duty</span></a><span class="bill-row-k">Electricity Duty</span><span class="bill-row-v">₹90.47</span></div></div></section>
-        <section class="bill-block bill-block-total"><h4>Amount payable</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">Current charges</span><span class="bill-row-v">₹1,899.97</span></div><div class="bill-row is-marked" data-line="net-current-bill"><a class="bill-mark" href="#explain-net-current-bill" id="mark-net-current-bill"><span class="bill-mark-n">13</span><span class="bill-mark-t">Net current bill</span></a><span class="bill-row-k">Net current bill</span><span class="bill-row-v">₹1,900</span></div><div class="bill-row is-marked is-grand" data-line="total-payable"><a class="bill-mark" href="#explain-total-payable" id="mark-total-payable"><span class="bill-mark-n">14</span><span class="bill-mark-t">Total payable</span></a><span class="bill-row-k">Total payable</span><span class="bill-row-v">₹1,900</span></div></div></section>
+        <section class="bill-block bill-block-charges"><h4>Charges</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="energy-charge"><a class="bill-mark" href="#explain-energy-charge" id="mark-energy-charge"><span class="bill-mark-n">11</span><span class="bill-mark-t">Energy charge</span></a><span class="bill-row-k">Energy charge</span><span class="bill-row-v">₹1,425</span></div><div class="bill-row is-marked" data-line="fixed-charge"><a class="bill-mark" href="#explain-fixed-charge" id="mark-fixed-charge"><span class="bill-mark-n">12</span><span class="bill-mark-t">Fixed charge</span></a><span class="bill-row-k">Fixed charge</span><span class="bill-row-v">₹220</span></div><div class="bill-row is-marked" data-line="fppa"><a class="bill-mark" href="#explain-fppa" id="mark-fppa"><span class="bill-mark-n">13</span><span class="bill-mark-t">Fuel surcharge (FPPA)</span></a><span class="bill-row-k">Fuel surcharge (FPPA)</span><span class="bill-row-v">₹164.50</span></div><div class="bill-row is-marked" data-line="electricity-duty"><a class="bill-mark" href="#explain-electricity-duty" id="mark-electricity-duty"><span class="bill-mark-n">14</span><span class="bill-mark-t">Electricity Duty</span></a><span class="bill-row-k">Electricity Duty</span><span class="bill-row-v">₹90.47</span></div></div></section>
+        <section class="bill-block bill-block-total"><h4>Amount payable</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">Current charges</span><span class="bill-row-v">₹1,899.97</span></div><div class="bill-row is-marked" data-line="net-current-bill"><a class="bill-mark" href="#explain-net-current-bill" id="mark-net-current-bill"><span class="bill-mark-n">15</span><span class="bill-mark-t">Net current bill</span></a><span class="bill-row-k">Net current bill</span><span class="bill-row-v">₹1,900</span></div><div class="bill-row is-marked is-grand" data-line="total-payable"><a class="bill-mark" href="#explain-total-payable" id="mark-total-payable"><span class="bill-mark-n">16</span><span class="bill-mark-t">Total payable</span></a><span class="bill-row-k">Total payable</span><span class="bill-row-v">₹1,900</span></div></div></section>
         <p class="bill-source">FY 2026-27 (UPERC order dt. 02-Jul-2026, rates retained) <span class="bill-badge is-ok">Verified against the order</span> · <a href="https://www.mvvnl.in" target="_blank" rel="noopener">Source</a></p>
         </div>
       </figure>
+      </div>
       <p class="seo-note" id="ubError" hidden></p>
     </section>
 
@@ -283,13 +516,21 @@
         <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
         <p class="ub-more"><a href="/guides/reduce-fixed-charges-sanctioned-load/">How to cut your fixed charge</a><a href="/sanctioned-load-optimizer/">Sanctioned load optimizer</a></p>
       </article>
+      <article class="ub-explain" id="explain-meter-number" data-line="meter-number" data-live="meterNumber">
+        <h3><span class="ub-num">4</span>Meter number</h3>
+        <p>The serial printed on the meter's nameplate, repeated on the bill. It is the one field you can check without reading a single number: stand at the meter, compare. A mismatch means the bill belongs to a different connection, and it is the cheapest error on this list to catch and the most expensive to leave.</p>
+        <div class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>MV 4471 2208</div></div><p class="ub-live-note">Printed on the meter's nameplate and repeated on the bill, which is how the DISCOM ties the two together. If they do not match, the bill is not for the meter on your wall — that is worth raising immediately, not next month.</p></div></div>
+        <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+        <p class="ub-more"><a href="/smart-meter/">What every meter symbol means</a></p>
+      </article>
     </section>
 
     <section class="seo-section" id="when">
       <h2>The dates, and which ones cost you money</h2>
       <p>A bill carries three dates and they are not interchangeable. One identifies the consumption, one is when the bill was cut, and one is a deadline with money attached to both sides of it.</p>
       <article class="ub-explain" id="explain-bill-month" data-line="bill-month" data-live="billMonth">
-        <h3><span class="ub-num">4</span>Bill month</h3>
+        <h3><span class="ub-num">5</span>Bill month</h3>
         <p>The month the electricity was <em>used</em>, which is not the month the bill was printed and not the month you pay it. Three different dates, and bills label them inconsistently. This is the one that identifies the consumption, so it is the one to quote in a complaint — and, because the fuel surcharge is notified monthly, it is also what decides which surcharge rate applies to you.</p>
         <div class="ub-live"><span class="ub-live-tag">On this bill</span>
           <div class="ub-live-body"><p class="ub-live-note">JUN-2026 — the month the power was USED (01-06-2026 to 30-06-2026), not the month the bill was printed. It matters more than it looks: the fuel surcharge is notified per month, so this field decides which rate applies. Switch DISCOM above and watch the same UPPCL connection charge +10% in June and refund 4.43% in July.</p></div></div>
@@ -297,7 +538,7 @@
         <p class="ub-more"><a href="/fuel-surcharge/">This month’s fuel surcharge, by state</a></p>
       </article>
       <article class="ub-explain" id="explain-due-date" data-line="due-date" data-live="dueDate">
-        <h3><span class="ub-num">5</span>Due date</h3>
+        <h3><span class="ub-num">6</span>Due date</h3>
         <p>The last day the bill costs what it says. It is worth money in two directions: past it, a late payment surcharge starts accruing on the whole outstanding amount and compounds every month; and where the DISCOM offers a prompt-payment rebate, paying on time is the only way to get it. Disconnection notices are driven off this date too, not off the bill date.</p>
         <div class="ub-live"><span class="ub-live-tag">On this bill</span>
           <div class="ub-live-body"><p class="ub-live-note">Pay on or before 20-07-2026 and the bill costs exactly what it says. After it, a late payment surcharge starts accruing on the whole outstanding amount and compounds monthly — and where the DISCOM offers a prompt-payment rebate, you lose that too. The gap between the bill date and the due date is typically 15 days.</p></div></div>
@@ -309,8 +550,16 @@
     <section class="seo-section" id="reading">
       <h2>What the meter said</h2>
       <p>The only measured quantity on the whole bill. Everything below is arithmetic performed on this one number.</p>
+      <article class="ub-explain" id="explain-present-reading" data-line="present-reading" data-live="presentReading">
+        <h3><span class="ub-num">7</span>Present reading</h3>
+        <p>The cumulative figure the meter displayed on the reading date — the same number the meter beside this bill is showing. It is the only line you can verify yourself without trusting anybody: walk to the meter and look. Note what the meter <em>cannot</em> tell you: the previous reading. That comes off your last bill, which is the practical reason to keep one.</p>
+        <div class="ub-live"><span class="ub-live-tag">On this bill</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>14,820 kWh</div></div><p class="ub-live-note">This is the ONLY figure on the bill you can verify yourself, by walking to the meter and looking. Everything else is arithmetic performed on it. Note that the meter cannot show you the previous reading — that comes off your last bill, which is why keeping the last one matters.</p></div></div>
+        <p class="ub-live is-absent" hidden>Not charged on the bill shown — pick another DISCOM or category above and it appears.</p>
+        <p class="ub-more"><a href="/guides/uppcl-smart-meter-readings-explained/">Reading a smart meter yourself</a><a href="/guides/smart-meter-running-fast/">When you think the meter is wrong</a></p>
+      </article>
       <article class="ub-explain" id="explain-units-consumed" data-line="units-consumed" data-live="unitsConsumed">
-        <h3><span class="ub-num">6</span>Units consumed</h3>
+        <h3><span class="ub-num">8</span>Units consumed</h3>
         <p>Present reading minus previous reading, multiplied by the meter constant (the multiplying factor, almost always 1 on a domestic connection). One unit is one kilowatt-hour. This is the only measured quantity on the whole bill — everything below it is arithmetic performed on this one number.</p>
         <div class="ub-live"><span class="ub-live-tag">On this bill</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">Units = (Present reading − Previous reading) × Meter constant</div><div class="ub-calc-work"><span class="ub-calc-step">(14,820 − 14,570) × 1</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>250 kWh</div></div><p class="ub-live-note">About 8.3 units a day over 30 days. The meter constant is 1 on almost every domestic connection; where it is not, it is printed on the meter and multiplies the difference.</p></div></div>
@@ -318,7 +567,7 @@
         <p class="ub-more"><a href="/guides/uppcl-smart-meter-readings-explained/">Reading a smart meter yourself</a><a href="/smart-meter/">What every meter symbol means</a></p>
       </article>
       <article class="ub-explain" id="explain-md" data-line="md" data-live="md">
-        <h3><span class="ub-num">7</span>Maximum demand (MD)</h3>
+        <h3><span class="ub-num">9</span>Maximum demand (MD)</h3>
         <p>The highest half-hour average power your connection drew during the month, in kW — a peak, not a total. Consumption and demand are different things: run a 2 kW geyser for ten hours and you use 20 units at 2 kW of demand; run ten 2 kW appliances for one hour and you use the same 20 units at 20 kW. On a commercial or industrial connection the second one costs far more, because the charge follows the peak.</p>
         <div class="ub-live"><span class="ub-live-tag">On this bill</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>1.62 kW recorded, against 2 kW sanctioned</div></div><p class="ub-live-note">The highest half-hour average the meter logged. On a domestic connection it is recorded but NOT what you are billed on — the fixed charge follows the sanctioned load regardless. It still matters: if it creeps above your sanctioned load, the DISCOM can raise a penalty or ask you to regularise the connection.</p></div></div>
@@ -326,7 +575,7 @@
         <p class="ub-more"><a href="/guides/power-factor-kvah-billing-explained/">Power factor and kVAh billing</a><a href="/sanctioned-load-optimizer/">Is your sanctioned load right?</a></p>
       </article>
       <article class="ub-explain" id="explain-reading-status" data-line="reading-status" data-live="readingStatus">
-        <h3><span class="ub-num">8</span>Reading status</h3>
+        <h3><span class="ub-num">10</span>Reading status</h3>
         <p>A short code saying how the reading was obtained — whether a meter reader actually read the meter, or the DISCOM estimated it because the meter was locked away, unreadable or faulty. The vocabulary is utility-specific and the codes are rarely expanded anywhere on the bill, but the distinction is the thing that matters: a real reading is a fact, an estimate is a placeholder that will be corrected later, usually by a much larger bill.</p>
         <div class="ub-live"><span class="ub-live-tag">On this bill</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>OK</div></div><p class="ub-live-note">How the reading was obtained. OK means the meter was physically read and the reading was accepted — the bill is based on real consumption. DISCOMs print a short code here and the vocabulary is utility-specific. What matters is the distinction: a status saying the meter was actually read, versus one saying it was estimated, inaccessible or faulty. Anything in the second group means the units above are a guess that will be trued up later, and it is worth taking your own reading and quoting it.</p></div></div>
@@ -339,7 +588,7 @@
       <h2>What you are being charged</h2>
       <p>A bill is not one price. It is a stack of separate charges, each set by a different rule, and knowing which is which tells you which ones you can do something about.</p>
       <article class="ub-explain" id="explain-energy-charge" data-line="energy-charge" data-live="energyCharge">
-        <h3><span class="ub-num">9</span>Energy charge</h3>
+        <h3><span class="ub-num">11</span>Energy charge</h3>
         <p>What the units themselves cost. Almost every Indian domestic tariff is <em>telescopic</em>: the slabs stack rather than replace each other, so crossing into a higher slab raises the price of the extra units only, never of the units below. Your bill prints one total; the table above shows the ladder it came from.</p>
         <div class="ub-live"><span class="ub-live-tag">On this bill</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">Energy charge = Σ (units falling in each slab × that slab’s rate)</div><div class="ub-calc-work"><span class="ub-calc-step">150 × ₹5.50 = ₹825</span><span class="ub-calc-step">100 × ₹6.00 = ₹600</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,425</div></div><p class="ub-live-note">The slabs STACK — crossing into a higher one raises the price of the extra units only. The last unit cost ₹6.00, but the average across the bill is ₹1,425 ÷ 250 = ₹5.70 a unit.</p></div></div>
@@ -347,7 +596,7 @@
         <p class="ub-more"><a href="/compare/">Compare slab rates across DISCOMs</a><a href="/guides/tod-billing-explained/">Time-of-day billing</a></p>
       </article>
       <article class="ub-explain" id="explain-fixed-charge" data-line="fixed-charge" data-live="fixedCharge">
-        <h3><span class="ub-num">10</span>Fixed charge / demand charge</h3>
+        <h3><span class="ub-num">12</span>Fixed charge / demand charge</h3>
         <p>Payable whether you use a single unit or none. It funds the wires, the meter and the crew, and it is why a locked, empty house still gets a bill. On a domestic connection it is levied per kW of <em>sanctioned load</em>; on a commercial or industrial one it is levied on the <em>recorded maximum demand</em>, which is why the same rate produces very different amounts on the two bills.</p>
         <div class="ub-live"><span class="ub-live-tag">On this bill</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">Fixed charge = rate per kW × sanctioned load</div><div class="ub-calc-work"><span class="ub-calc-step">₹110.00 × 2 kW</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹220</div></div><p class="ub-live-note">Consumption does not enter this formula anywhere. That is why a locked, empty house still receives a bill.</p></div></div>
@@ -363,7 +612,7 @@
         <p class="ub-more"><a href="/guides/uppcl-sanctioned-load-increased/">When the DISCOM raises your load</a><a href="/sanctioned-load-optimizer/">Work out the cheaper option</a></p>
       </article>
       <article class="ub-explain" id="explain-fppa" data-line="fppa" data-live="fppa">
-        <h3><span class="ub-num">11</span>Fuel surcharge (FPPA / FPPAS / PPAC / FAC)</h3>
+        <h3><span class="ub-num">13</span>Fuel surcharge (FPPA / FPPAS / PPAC / FAC)</h3>
         <p>The one line that changes month to month for reasons nothing to do with you. When the DISCOM's actual cost of buying power differs from what the regulator assumed when your tariff was set, the gap is passed through here. Four things surprise people about it: it is recalculated <em>monthly</em> in several states; it can be <em>negative</em>, in which case it is a refund; where it is a percentage it usually applies to the fixed charge as well as the energy charge; and the notified rate is public, so a bill that shows this line without a rate is worth questioning.</p>
         <div class="ub-live"><span class="ub-live-tag">On this bill</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">FPPA = (energy charge + fixed/demand charge + penalties) × notified rate %</div><div class="ub-calc-work"><span class="ub-calc-step">Base = ₹1,645</span><span class="ub-calc-step">₹1,645 × 10%</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹164.50</div></div><p class="ub-live-note">The rate is notified per month and it applies to the fixed charge as well as the energy charge — not to the units alone, which is the commonest misreading of this line.</p></div></div>
@@ -379,7 +628,7 @@
         <p class="ub-more"><a href="/guides/how-to-read-msedcl-bill/">How to read an MSEDCL bill</a><a href="/guides/msedcl-fppa-charges-explained/">MSEDCL’s own surcharge lines</a></p>
       </article>
       <article class="ub-explain" id="explain-electricity-duty" data-line="electricity-duty" data-live="electricityDuty">
-        <h3><span class="ub-num">12</span>Electricity duty</h3>
+        <h3><span class="ub-num">14</span>Electricity duty</h3>
         <p>A state tax, collected by the DISCOM on the government's behalf. Whether it lands on the energy charge alone or on the whole bill is a state-by-state decision, and it is the reason two bills with identical consumption can differ by a few hundred rupees across a state border. There is no GST on domestic electricity supply — if you see one, look again.</p>
         <div class="ub-live"><span class="ub-live-tag">On this bill</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">Duty = (energy + fixed + penalties + wheeling + FPPA) × duty rate %</div><div class="ub-calc-work"><span class="ub-calc-step">Base = ₹1,809.50</span><span class="ub-calc-step">₹1,809.50 × 5%</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹90.47</div></div><p class="ub-live-note">Here the duty sits on the WHOLE bill, fixed charge included. Which base a state uses is a state-by-state decision, and it is why two identical households across a border pay different totals.</p></div></div>
@@ -400,7 +649,7 @@
         <p class="ub-more"><a href="/guides/how-to-read-bses-delhi-bill/">How to read a BSES Delhi bill</a></p>
       </article>
       <article class="ub-explain" id="explain-net-current-bill" data-line="net-current-bill" data-live="netCurrentBill">
-        <h3><span class="ub-num">13</span>Net current bill</h3>
+        <h3><span class="ub-num">15</span>Net current bill</h3>
         <p>This month's charges, after any subsidy — and <strong>not</strong> what you owe. This is the figure to compare against last month, because it contains this month's consumption and nothing else. The total payable below is a different quantity: it mixes in old dues, and comparing <em>it</em> month to month will tell you a story about your payment history rather than about your electricity use.</p>
         <div class="ub-live"><span class="ub-live-tag">On this bill</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">Net current bill = energy charge + fixed charge + fuel surcharge (fppa) + electricity duty</div><div class="ub-calc-work"><span class="ub-calc-step">₹1,425 + ₹220 + ₹164.50 + ₹90.47</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,900</div></div><p class="ub-live-note">THIS MONTH ONLY — it is not what you owe. Across 250 units it works out to ₹1,900 ÷ 250 = ₹7.60 all-in per unit, always above the slab rate. This is the figure to compare month to month; the total payable below mixes in old dues and would tell you the wrong story about your usage.</p></div></div>
@@ -424,7 +673,7 @@
         <p class="ub-more"><a href="/guides/smart-meter-prepaid-disconnection/">What happens when a bill goes unpaid</a></p>
       </article>
       <article class="ub-explain" id="explain-total-payable" data-line="total-payable" data-live="totalPayable">
-        <h3><span class="ub-num">14</span>Total payable</h3>
+        <h3><span class="ub-num">16</span>Total payable</h3>
         <p>Net current bill, plus arrears and surcharge, minus payments already credited. This is what you owe today. Pay the full amount — a part payment does not stop the surcharge on the remainder, and on a prepaid or disconnection-notice account it does not stop the clock either.</p>
         <div class="ub-live"><span class="ub-live-tag">On this bill</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">Total payable = net current bill + arrears + surcharge − payments already credited</div><div class="ub-calc-work"><span class="ub-calc-step">₹1,900 net current bill</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,900</div></div><p class="ub-live-note">Equal to the net current bill above only because nothing is carried forward on this bill. Pay the full amount: a part payment does not stop the surcharge accruing on the remainder.</p></div></div>

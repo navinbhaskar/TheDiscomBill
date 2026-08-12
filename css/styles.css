@@ -6680,6 +6680,53 @@ html:not(.js) .m-btn-ring { display: none; }
   color: var(--warn-text); background: var(--surface-card);
 }
 
+/* ── the meter beside the bill ────────────────────────────────────
+   Same drawing as /smart-meter/, its own three callouts. The connection between the two
+   artefacts is the SHARED NUMBER, not a drawn line: a leader spanning two independently
+   flowing elements would need JS measurement on every resize and would still be fragile.
+
+   Side by side only where there is genuinely room for the bill (420) plus its callout gutter
+   (204) plus a meter. Below that the meter goes above the bill, which is also the order you
+   would read them in. */
+.ub-stage { display: grid; grid-template-columns: minmax(240px, 320px) 1fr; gap: 24px; align-items: start; }
+.meter-mini { margin: 0; min-width: 0; }
+.meter-mini-cap {
+  margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .6px;
+  text-transform: uppercase; color: var(--text-tertiary);
+}
+.meter-mini-stage { position: relative; }
+.meter-mini .meter-svg { width: 100%; height: auto; display: block; }
+
+/* The two register callouts dim when the display is not showing them, so the meter always
+   says which of its numbers you are currently looking at without anything renumbering. */
+.meter-mini-num circle { transition: opacity var(--t-base), fill var(--t-base); }
+.meter-mini-num g:not(.is-live) { opacity: .38; }
+.meter-mini-num .is-live circle { fill: var(--brand); }
+
+.meter-mini-readout {
+  display: flex; align-items: baseline; gap: 8px; margin: 6px 0 0;
+  font-size: 13px; color: var(--text-primary);
+}
+.meter-mini-step {
+  flex: none; padding: 1px 7px; border-radius: var(--radius-full);
+  font-size: 10.5px; font-weight: 700; font-variant-numeric: tabular-nums;
+  color: var(--text-brand); background: var(--brand-faint);
+}
+.meter-mini-hint { margin: 5px 0 0; font-size: 12px; line-height: 1.5; color: var(--text-tertiary); }
+
+/* A bill row whose register the meter is currently displaying. Deliberately quieter than
+   .is-lit, which is the click-through highlight — this one is ambient, not a response. */
+.bill-row.is-live { background: var(--brand-faint); border-radius: var(--radius-xs); }
+.bill-row.is-live .bill-mark { color: var(--text-brand); font-weight: 600; }
+
+@media (max-width: 1080px) {
+  .ub-stage { grid-template-columns: 1fr; gap: 20px; }
+  .meter-mini { max-width: 320px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .meter-mini-num circle { transition: none; }
+}
+
 /* ── the document ─────────────────────────────────────────────────────────── */
 /* --gut is the distance from a row's left edge out to the marker: the document's own
    horizontal padding plus the gutter. Both the offset and the leader line are derived from

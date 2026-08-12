@@ -6,7 +6,10 @@
 //
 // The seven-segment digits inside <g id="mSeg"> are stamped by scripts/meter-digits.mjs from
 // the same segmentsFor() the runtime uses. Regenerate with: node scripts/meter-digits.mjs
-export const METER_SVG = String.raw`<svg class="meter-svg" viewBox="0 0 700 560" role="img"
+// The device on its own. /understand-your-bill/ renders this and supplies its own callouts,
+// numbered to match the bill beside it — so one number means one thing across both drawings.
+// Keeping it as the same string the guide uses is the point: the two pages cannot drift.
+export const METER_DEVICE = String.raw`<svg class="meter-svg" viewBox="0 0 700 560" role="img"
      aria-labelledby="meter-dia-title meter-dia-desc">
   <title id="meter-dia-title">Labelled diagram of an Indian single-phase prepaid smart meter</title>
   <desc id="meter-dia-desc">A single-phase AC static watthour smart meter seen face on. The
@@ -207,7 +210,10 @@ export const METER_SVG = String.raw`<svg class="meter-svg" viewBox="0 0 700 560"
     <circle class="m-term-seal" cx="350" cy="481" r="4.5"/>
   </g>
 
-  <!-- callout leaders: every run is routed through a corridor with no printed detail in it -->
+`;
+
+// The guide's own twelve callouts. Appended to the device to make the full diagram.
+const METER_CALLOUTS = String.raw`  <!-- callout leaders: every run is routed through a corridor with no printed detail in it -->
   <!-- Numbered top-to-bottom down the device, so the two casing lamps take 1 and 2 and
        everything on the LCD follows. The legend uses a CSS counter, so its numbering
        tracks this automatically. COM approaches from below the ON pair to avoid
@@ -239,4 +245,6 @@ export const METER_SVG = String.raw`<svg class="meter-svg" viewBox="0 0 700 560"
     <circle cx="112" cy="350" r="12"/><text x="112" y="354.5">10</text>
     <circle cx="588" cy="358" r="12"/><text x="588" y="362.5">11</text>
     <circle cx="112" cy="380" r="12"/><text x="112" y="384.5">12</text>
-  </g>        </svg>`;
+  </g>        `;
+
+export const METER_SVG = METER_DEVICE + METER_CALLOUTS + String.raw`</svg>`;

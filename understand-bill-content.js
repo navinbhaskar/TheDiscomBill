@@ -433,6 +433,57 @@ export const LINES = [
   },
 
   {
+    id: 'meter-number', always: true, group: 'header',
+    links: [['/smart-meter/', L.meterSymbols]],
+    title: {
+      en: 'Meter number', hi: 'मीटर संख्या', mr: 'मीटर क्रमांक', ta: 'மீட்டர் எண்',
+    },
+    body: {
+      en: `The serial printed on the meter's nameplate, repeated on the bill. It is the one field
+        you can check without reading a single number: stand at the meter, compare. A mismatch means
+        the bill belongs to a different connection, and it is the cheapest error on this list to
+        catch and the most expensive to leave.`,
+      hi: `मीटर की नेमप्लेट पर छपा क्रम-संख्या, जो बिल पर दोहराई जाती है। यही एक ख़ाना है जिसे आप बिना कोई
+        संख्या पढ़े जाँच सकते हैं: मीटर के पास खड़े होकर मिलाइए। मेल न खाए तो बिल किसी और कनेक्शन का है — इस
+        सूची में यह सबसे आसानी से पकड़ में आने वाली और सबसे महँगी पड़ने वाली ग़लती है।`,
+      mr: `मीटरच्या नेमप्लेटवर छापलेला अनुक्रमांक, जो बिलावर पुन्हा येतो. एकही आकडा न वाचता तुम्ही तपासू
+        शकता असा हा एकमेव रकाना: मीटरजवळ उभे राहून ताडून पाहा. जुळले नाही तर बिल दुसऱ्या जोडणीचे आहे — या
+        यादीतील सर्वात सहज सापडणारी आणि दुर्लक्ष केल्यास सर्वात महाग पडणारी चूक.`,
+      ta: `மீட்டரின் நேம்பிளேட்டில் அச்சிடப்பட்ட வரிசை எண், பில்லிலும் மீண்டும் வரும். ஒரு எண்ணைக்கூடப்
+        படிக்காமல் நீங்கள் சரிபார்க்கக்கூடிய ஒரே புலம் இதுதான்: மீட்டரின் அருகே நின்று ஒப்பிடுங்கள்.
+        பொருந்தவில்லை என்றால் பில் வேறு இணைப்புக்குரியது — இந்தப் பட்டியலில் மிக எளிதாகக் கண்டறியக்கூடிய,
+        விட்டுவிட்டால் மிக விலை உயர்ந்த தவறு.`,
+    },
+    live: 'meterNumber',
+  },
+  {
+    id: 'present-reading', always: true, group: 'reading',
+    links: [['/guides/uppcl-smart-meter-readings-explained/', L.readMeter], ['/guides/smart-meter-running-fast/', L.meterWrong]],
+    title: {
+      en: 'Present reading', hi: 'वर्तमान रीडिंग',
+      mr: 'सध्याची रीडिंग', ta: 'தற்போதைய ரீடிங்',
+    },
+    body: {
+      en: `The cumulative figure the meter displayed on the reading date — the same number the meter
+        beside this bill is showing. It is the only line you can verify yourself without trusting
+        anybody: walk to the meter and look. Note what the meter <em>cannot</em> tell you: the previous
+        reading. That comes off your last bill, which is the practical reason to keep one.`,
+      hi: `रीडिंग की तारीख़ को मीटर पर जो संचयी आंकड़ा दिख रहा था — वही संख्या जो इस बिल के बग़ल वाले मीटर पर
+        दिख रही है। यही एक पंक्ति है जिसे आप किसी पर भरोसा किए बिना ख़ुद जाँच सकते हैं: मीटर तक जाइए और देख
+        लीजिए। यह भी ध्यान दीजिए कि मीटर आपको क्या <em>नहीं</em> बता सकता: पिछली रीडिंग। वह पिछले बिल से आती
+        है — पुराना बिल संभालकर रखने की व्यावहारिक वजह यही है।`,
+      mr: `रीडिंगच्या तारखेला मीटरवर दिसणारा एकत्रित आकडा — याच बिलाशेजारच्या मीटरवर दिसणारी तीच संख्या.
+        कुणावरही विश्वास न ठेवता तुम्ही स्वतः तपासू शकता अशी हीच एक ओळ: मीटरपर्यंत जा आणि पाहा. मीटर तुम्हाला
+        काय सांगू <em>शकत नाही</em> तेही लक्षात घ्या: मागील रीडिंग. ती मागील बिलावरून येते — जुने बिल जपून
+        ठेवण्याचे व्यावहारिक कारण हेच.`,
+      ta: `ரீடிங் தேதியில் மீட்டர் காட்டிய ஒட்டுமொத்த எண் — இந்தப் பில்லுக்கு அருகில் உள்ள மீட்டரில்
+        தெரியும் அதே எண். யாரையும் நம்பாமல் நீங்களே சரிபார்க்கக்கூடிய ஒரே வரி இதுதான்: மீட்டர் வரை சென்று
+        பாருங்கள். மீட்டரால் என்ன சொல்ல <em>முடியாது</em> என்பதையும் கவனியுங்கள்: முந்தைய ரீடிங். அது உங்கள்
+        கடந்த பில்லிலிருந்து வருகிறது — பழைய பில்லை வைத்திருப்பதற்கான நடைமுறைக் காரணம் இதுவே.`,
+    },
+    live: 'presentReading',
+  },
+  {
     id: 'units-consumed', always: true, group: 'reading',
     links: [['/guides/uppcl-smart-meter-readings-explained/', L.readMeter], ['/smart-meter/', L.meterSymbols]],
     title: {

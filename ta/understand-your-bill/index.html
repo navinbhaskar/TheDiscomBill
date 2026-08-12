@@ -226,6 +226,238 @@
         <span>இது உண்மையான பில் அல்ல, எந்த DISCOM-இன் அச்சிட்ட பில்லின் நகலும் அல்ல. ஒரு நிறுவனத்திலிருந்து மற்றொன்றுக்கு பில்லின் அமைப்பு, புலப் பெயர்கள், வரிசை மாறும்; அவற்றுக்கு இடையே பொதுவானது இங்கே காட்டப்பட்டுள்ள கட்டணங்களின் தொகுப்பு. நுகர்வோர் எண், மீட்டர் எண், முகவரி ஆகியவை கற்பனையானவை.</span>
       </p>
 
+      <div class="ub-stage">
+      <!-- The meter and the bill carry ONE set of numbers between them: marker 4 is the meter
+           number on both drawings, 7 is the present reading, 9 is the maximum demand. That shared
+           digit is the connection — it needs no leader line spanning two independently-flowing
+           elements, which would need JS measurement on every resize and would still be fragile.
+
+           The three leader paths are lifted from the guide's own diagram, so they terminate on
+           exactly the same parts of exactly the same drawing. -->
+      <figure class="meter-mini">
+        <figcaption class="meter-mini-cap">இந்தப் பில் எந்த மீட்டரிலிருந்து படிக்கப்பட்டதோ அது</figcaption>
+        <div class="meter-mini-stage">
+<svg class="meter-svg" viewBox="0 0 700 560" role="img"
+     aria-labelledby="meter-dia-title meter-dia-desc">
+  <title id="meter-dia-title">Labelled diagram of an Indian single-phase prepaid smart meter</title>
+  <desc id="meter-dia-desc">A single-phase AC static watthour smart meter seen face on. The
+  upper casing carries a maker's mark, COM and ON indicator lamps and the communication
+  module details. The lower face carries a green backlit LCD in the centre showing a status
+  icon row, the main reading, a register code and a unit label; a pulse LED and standard
+  markings below it; a serial barcode and printed specification block on the left; and a
+  scroll button with a circular optical port on the right. A dark terminal block with brass
+  screws runs along the bottom. Twelve numbered callouts key each element to the legend below.</desc>
+
+  <defs>
+    <linearGradient id="mBody" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#fbfaf6"/><stop offset="0.5" stop-color="#f1efe8"/>
+      <stop offset="1" stop-color="#dedbd2"/>
+    </linearGradient>
+    <linearGradient id="mBodyTop" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0" stop-color="#fdfdfa"/><stop offset="1" stop-color="#e7e4dc"/>
+    </linearGradient>
+    <linearGradient id="mLcd" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0" stop-color="#b6e86a"/><stop offset="0.55" stop-color="#8ed23a"/>
+      <stop offset="1" stop-color="#6fb823"/>
+    </linearGradient>
+    <linearGradient id="mGloss" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.4"/>
+      <stop offset="0.55" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="mPortMetal" cx="0.32" cy="0.26" r="0.9">
+      <stop offset="0" stop-color="#ffffff"/><stop offset="0.35" stop-color="#d6d9dd"/>
+      <stop offset="0.7" stop-color="#9aa0a7"/><stop offset="1" stop-color="#c9ced4"/>
+    </radialGradient>
+    <linearGradient id="mTerm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a4a4a"/><stop offset="0.5" stop-color="#2e2e2e"/>
+      <stop offset="1" stop-color="#3d3d3d"/>
+    </linearGradient>
+    <radialGradient id="mBrass" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#e8d089"/><stop offset="0.6" stop-color="#b8963f"/>
+      <stop offset="1" stop-color="#7d6427"/>
+    </radialGradient>
+    <radialGradient id="mLedOn" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#ff9a9a"/><stop offset="0.45" stop-color="#e01b1b"/>
+      <stop offset="1" stop-color="#7a1010"/>
+    </radialGradient>
+    <radialGradient id="mLedOff" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#f2f1ee"/><stop offset="1" stop-color="#c3c1ba"/>
+    </radialGradient>
+    <radialGradient id="mScrew" cx="0.35" cy="0.3" r="0.85">
+      <stop offset="0" stop-color="#f0eee9"/><stop offset="1" stop-color="#a9a69e"/>
+    </radialGradient>
+    <filter id="mShadow" x="-15%" y="-10%" width="130%" height="128%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0b1020" flood-opacity="0.3"/>
+    </filter>
+    <filter id="mGlowLcd" x="-25%" y="-40%" width="150%" height="180%">
+      <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#8ed23a" flood-opacity="0.5"/>
+    </filter>
+    <filter id="mGlowLed" x="-160%" y="-160%" width="420%" height="420%">
+      <feDropShadow dx="0" dy="0" stdDeviation="3.6" flood-color="#ff2d2d" flood-opacity="0.9"/>
+    </filter>
+    <clipPath id="mLcdClip"><rect x="292" y="220" width="168" height="78" rx="3"/></clipPath>
+  </defs>
+
+  <g filter="url(#mShadow)">
+    <!-- mounting flanges behind the casing, top and bottom -->
+    <path class="m-flange" d="M148 62h404v32H148zM148 424h404v30H148z"/>
+    <circle class="m-flange-hole" cx="164" cy="78" r="5"/>
+    <circle class="m-flange-hole" cx="536" cy="78" r="5"/>
+
+    <!-- upper casing -->
+    <rect class="m-case-top" x="172" y="40" width="356" height="146" rx="10"/>
+    <g class="m-screw-sm">
+      <circle cx="190" cy="58" r="6"/><circle cx="510" cy="58" r="6"/>
+      <circle cx="190" cy="168" r="6"/><circle cx="510" cy="168" r="6"/>
+    </g>
+    <!-- neutral maker's mark: this is a dummy device, so it carries no real brand -->
+    <g class="m-mark" transform="translate(200 92)">
+      <path d="M0 0h14a14 14 0 0 1 0 28H7v12H0z"/>
+      <path class="m-mark-cut" d="M7 7h7a7 7 0 0 1 0 14H7z"/>
+    </g>
+    <text class="m-maker" x="200" y="164">SMART METER</text>
+    <!-- COM / ON lamps -->
+    <text class="m-lamp-lbl" x="356" y="88">COM</text>
+    <text class="m-lamp-lbl" x="414" y="88">ON</text>
+    <path class="m-lamp-tick" d="M356 92v7M414 92v7"/>
+    <circle class="m-lamp-on" id="mLampCom" cx="349" cy="110" r="6"/>
+    <circle class="m-lamp-off" cx="371" cy="110" r="6"/>
+    <circle class="m-lamp-on" cx="407" cy="110" r="6"/>
+    <circle class="m-lamp-off" cx="429" cy="110" r="6"/>
+    <text class="m-spec" x="342" y="142">Comm. Tech.: NAN (865-867 MHz)</text>
+    <text class="m-spec" x="342" y="156">Communication Module: Plug-in</text>
+
+    <!-- lower casing -->
+    <rect class="m-case" x="172" y="186" width="356" height="254" rx="10"/>
+    <text class="m-title" x="350" y="203">AC STATIC WATTHOUR SMART METER</text>
+
+    <!-- LCD -->
+    <rect class="m-lcd-frame" x="286" y="214" width="180" height="90" rx="5"/>
+    <rect class="m-lcd" x="292" y="220" width="168" height="78" rx="3" filter="url(#mGlowLcd)"/>
+    <g clip-path="url(#mLcdClip)">
+      <g class="m-ico">
+        <g transform="translate(300 226)">
+          <rect x="0" y="7" width="2.4" height="4"/><rect x="3.6" y="4.8" width="2.4" height="6.2"/>
+          <rect x="7.2" y="2.4" width="2.4" height="8.6"/><rect x="10.8" y="0" width="2.4" height="11"/>
+        </g>
+        <g transform="translate(332 226)" class="m-ico-warn">
+          <path d="M1.6 10.4V4.8a4.8 4.8 0 0 1 9.6 0v5.6" fill="none" stroke-width="2.4"/>
+          <rect x="0.4" y="9.6" width="4" height="2.4"/><rect x="8.4" y="9.6" width="4" height="2.4"/>
+        </g>
+        <g transform="translate(364 226)">
+          <circle cx="6.4" cy="6" r="5.6" fill="none" stroke-width="1.9"/>
+          <path d="M6.4 1.2v5.6" fill="none" stroke-width="1.9" stroke-linecap="round"/>
+        </g>
+        <g transform="translate(396 225)" class="m-ico-warn">
+          <path d="M7.2 0 14.4 12.8H0z" fill="none" stroke-width="1.9" stroke-linejoin="round"/>
+          <path d="M7.2 4.8v4" stroke-width="1.9" stroke-linecap="round"/>
+          <circle cx="7.2" cy="10.7" r="1" stroke="none"/>
+        </g>
+      </g>
+      <!-- the unlit segments of an LCD stay faintly visible; that ghost is most of what
+           makes a real display read as a display rather than as printed text -->
+      <!-- Seven-segment digits. Markup is stamped by scripts/meter-digits.mjs from the
+           same segmentsFor() the runtime uses, so a no-JS visitor sees a real display too.
+           Regenerate with: node scripts/meter-digits.mjs -->
+      <g class="m-seg" id="mSeg"><polygon class="sg-on" points="323.4,246 333.6,246 335.3,247.7 333.6,249.39999999999998 323.4,249.39999999999998 321.7,247.7"/><polygon class="sg-off" points="323.4,259.3 333.6,259.3 335.3,261 333.6,262.7 323.4,262.7 321.7,261"/><polygon class="sg-on" points="323.4,272.6 333.6,272.6 335.3,274.3 333.6,276 323.4,276 321.7,274.3"/><polygon class="sg-on" points="320,249.39999999999998 321.7,247.7 323.4,249.39999999999998 323.4,259.3 321.7,261 320,259.3"/><polygon class="sg-on" points="333.6,249.39999999999998 335.3,247.7 337,249.39999999999998 337,259.3 335.3,261 333.6,259.3"/><polygon class="sg-on" points="320,262.7 321.7,261 323.4,262.7 323.4,272.6 321.7,274.3 320,272.6"/><polygon class="sg-on" points="333.6,262.7 335.3,261 337,262.7 337,272.6 335.3,274.3 333.6,272.6"/><polygon class="sg-off" points="343.9,246 354.1,246 355.8,247.7 354.1,249.39999999999998 343.9,249.39999999999998 342.2,247.7"/><polygon class="sg-on" points="343.9,259.3 354.1,259.3 355.8,261 354.1,262.7 343.9,262.7 342.2,261"/><polygon class="sg-off" points="343.9,272.6 354.1,272.6 355.8,274.3 354.1,276 343.9,276 342.2,274.3"/><polygon class="sg-on" points="340.5,249.39999999999998 342.2,247.7 343.9,249.39999999999998 343.9,259.3 342.2,261 340.5,259.3"/><polygon class="sg-on" points="354.1,249.39999999999998 355.8,247.7 357.5,249.39999999999998 357.5,259.3 355.8,261 354.1,259.3"/><polygon class="sg-off" points="340.5,262.7 342.2,261 343.9,262.7 343.9,272.6 342.2,274.3 340.5,272.6"/><polygon class="sg-on" points="354.1,262.7 355.8,261 357.5,262.7 357.5,272.6 355.8,274.3 354.1,272.6"/><polygon class="sg-on" points="364.4,246 374.6,246 376.3,247.7 374.6,249.39999999999998 364.4,249.39999999999998 362.7,247.7"/><polygon class="sg-on" points="364.4,259.3 374.6,259.3 376.3,261 374.6,262.7 364.4,262.7 362.7,261"/><polygon class="sg-on" points="364.4,272.6 374.6,272.6 376.3,274.3 374.6,276 364.4,276 362.7,274.3"/><polygon class="sg-on" points="361,249.39999999999998 362.7,247.7 364.4,249.39999999999998 364.4,259.3 362.7,261 361,259.3"/><polygon class="sg-on" points="374.6,249.39999999999998 376.3,247.7 378,249.39999999999998 378,259.3 376.3,261 374.6,259.3"/><polygon class="sg-off" points="361,262.7 362.7,261 364.4,262.7 364.4,272.6 362.7,274.3 361,272.6"/><polygon class="sg-on" points="374.6,262.7 376.3,261 378,262.7 378,272.6 376.3,274.3 374.6,272.6"/><polygon class="sg-off" points="384.9,246 395.1,246 396.8,247.7 395.1,249.39999999999998 384.9,249.39999999999998 383.2,247.7"/><polygon class="sg-off" points="384.9,259.3 395.1,259.3 396.8,261 395.1,262.7 384.9,262.7 383.2,261"/><polygon class="sg-off" points="384.9,272.6 395.1,272.6 396.8,274.3 395.1,276 384.9,276 383.2,274.3"/><polygon class="sg-off" points="381.5,249.39999999999998 383.2,247.7 384.9,249.39999999999998 384.9,259.3 383.2,261 381.5,259.3"/><polygon class="sg-on" points="395.1,249.39999999999998 396.8,247.7 398.5,249.39999999999998 398.5,259.3 396.8,261 395.1,259.3"/><polygon class="sg-off" points="381.5,262.7 383.2,261 384.9,262.7 384.9,272.6 383.2,274.3 381.5,272.6"/><polygon class="sg-on" points="395.1,262.7 396.8,261 398.5,262.7 398.5,272.6 396.8,274.3 395.1,272.6"/><polygon class="sg-on" points="405.4,246 415.6,246 417.3,247.7 415.6,249.39999999999998 405.4,249.39999999999998 403.7,247.7"/><polygon class="sg-on" points="405.4,259.3 415.6,259.3 417.3,261 415.6,262.7 405.4,262.7 403.7,261"/><polygon class="sg-on" points="405.4,272.6 415.6,272.6 417.3,274.3 415.6,276 405.4,276 403.7,274.3"/><polygon class="sg-off" points="402,249.39999999999998 403.7,247.7 405.4,249.39999999999998 405.4,259.3 403.7,261 402,259.3"/><polygon class="sg-on" points="415.6,249.39999999999998 417.3,247.7 419,249.39999999999998 419,259.3 417.3,261 415.6,259.3"/><polygon class="sg-on" points="402,262.7 403.7,261 405.4,262.7 405.4,272.6 403.7,274.3 402,272.6"/><polygon class="sg-off" points="415.6,262.7 417.3,261 419,262.7 419,272.6 417.3,274.3 415.6,272.6"/><rect class="sg-on" x="423.5" y="272.6" width="3.4" height="3.4"/><polygon class="sg-on" points="438.4,246 448.6,246 450.3,247.7 448.6,249.39999999999998 438.4,249.39999999999998 436.7,247.7"/><polygon class="sg-on" points="438.4,259.3 448.6,259.3 450.3,261 448.6,262.7 438.4,262.7 436.7,261"/><polygon class="sg-on" points="438.4,272.6 448.6,272.6 450.3,274.3 448.6,276 438.4,276 436.7,274.3"/><polygon class="sg-on" points="435,249.39999999999998 436.7,247.7 438.4,249.39999999999998 438.4,259.3 436.7,261 435,259.3"/><polygon class="sg-off" points="448.6,249.39999999999998 450.3,247.7 452,249.39999999999998 452,259.3 450.3,261 448.6,259.3"/><polygon class="sg-on" points="435,262.7 436.7,261 438.4,262.7 438.4,272.6 436.7,274.3 435,272.6"/><polygon class="sg-on" points="448.6,262.7 450.3,261 452,262.7 452,272.6 450.3,274.3 448.6,272.6"/></g>
+      <text class="m-code" id="mCode" x="300" y="292">1.8.0</text>
+      <text class="m-unit" id="mUnit" x="452" y="292">kWh</text>
+    </g>
+    <path class="m-gloss" d="M292 220h168v28l-168 32z"/>
+
+    <!-- pulse LED and standard markings -->
+    <circle class="m-led-pulse" cx="298" cy="326" r="5.5" filter="url(#mGlowLed)"/>
+    <text class="m-print" x="310" y="330">kWh — 3200 Imp/Unit</text>
+    <text class="m-print" x="292" y="352">IS 16444 (Part 1)</text>
+    <text class="m-print m-print-sm" x="292" y="364">CM/L-8400169811</text>
+
+    <!-- serial barcode + printed specification block -->
+    <g class="m-bars" transform="translate(186 340)">
+      <rect x="0" y="0" width="2.2" height="22"/><rect x="4.4" y="0" width="1.1" height="22"/>
+      <rect x="7.7" y="0" width="3.3" height="22"/><rect x="13.2" y="0" width="1.1" height="22"/>
+      <rect x="16.5" y="0" width="2.2" height="22"/><rect x="22" y="0" width="1.1" height="22"/>
+      <rect x="25.3" y="0" width="1.1" height="22"/><rect x="28.6" y="0" width="3.3" height="22"/>
+      <rect x="34.1" y="0" width="1.1" height="22"/><rect x="37.4" y="0" width="2.2" height="22"/>
+      <rect x="42.9" y="0" width="3.3" height="22"/><rect x="48.4" y="0" width="1.1" height="22"/>
+      <rect x="51.7" y="0" width="2.2" height="22"/><rect x="57.2" y="0" width="1.1" height="22"/>
+      <rect x="60.5" y="0" width="3.3" height="22"/><rect x="66" y="0" width="1.1" height="22"/>
+      <rect x="69.3" y="0" width="2.2" height="22"/><rect x="74.8" y="0" width="1.1" height="22"/>
+    </g>
+    <text class="m-serial" x="186" y="378">Sr. No. RND00001</text>
+    <g class="m-spec">
+      <text x="186" y="396">1P, 2W, 240V, 5-60A, 50 Hz, Class 1.0</text>
+      <text x="186" y="408">DLMS Meter Type: 6 · Cat.: D1, 27&#176;C</text>
+      <text x="186" y="420">Type: GPSM 03 · MM/YYYY: 08/2026</text>
+      <text x="186" y="432">Illustration only — not a real meter</text>
+    </g>
+
+    <!-- right column -->
+    <text class="m-print m-print-sm m-print-end" x="518" y="332">MTCTE : 283603039</text>
+    <!-- Real control, not decoration: focusable, keyboard-operable, and with a hit area
+         larger than the drawn button so it clears the 24px minimum on touch. -->
+    <!-- "Press here" tag. Brand blue and pill-shaped so it reads as annotation laid over
+         the device rather than as something printed on it. Decorative to assistive tech —
+         the button below already carries its own label — and it retires on first press
+         along with the pulse, since by then it has said what it had to say. -->
+    <g class="m-hint-tag" aria-hidden="true">
+      <rect x="384" y="348" width="86" height="21" rx="10.5"/>
+      <text x="424" y="363">இங்கே அழுத்தவும்</text>
+      <path d="M472 352.5 481 358.5 472 364.5 Z"/>
+    </g>
+    <g class="m-btn-hit" id="mBtn" role="button" tabindex="0"
+       aria-label="Press the meter's scroll button to show the next reading"
+       aria-describedby="mReadout">
+      <circle class="m-btn-target" cx="500" cy="358" r="26"/>
+      <!-- Resting affordance. Hover cannot carry this — it does not exist on touch —
+           so an expanding ring runs until the first press, then stops for good. -->
+      <circle class="m-btn-pulse" cx="500" cy="358" r="15"/>
+      <circle class="m-btn-ring" cx="500" cy="358" r="20"/>
+      <circle class="m-btn-rim" cx="500" cy="358" r="15"/>
+      <circle class="m-btn" cx="500" cy="358" r="11.5"/>
+      <text class="m-label" x="500" y="382">Scroll</text>
+    </g>
+    <circle class="m-port-metal" cx="486" cy="410" r="24"/>
+    <circle class="m-port-ring" cx="486" cy="410" r="17.5"/>
+    <ellipse class="m-port-slot" cx="486" cy="410" rx="11" ry="5.5"/>
+
+    <!-- terminal block -->
+    <rect class="m-term" x="196" y="440" width="308" height="50" rx="4"/>
+    <g class="m-term-slot">
+      <rect x="214" y="446" width="38" height="28" rx="2"/>
+      <rect x="271" y="446" width="38" height="28" rx="2"/>
+      <rect x="328" y="446" width="38" height="28" rx="2"/>
+      <rect x="385" y="446" width="38" height="28" rx="2"/>
+      <rect x="442" y="446" width="38" height="28" rx="2"/>
+    </g>
+    <g class="m-brass">
+      <circle cx="233" cy="458" r="6.5"/><circle cx="290" cy="458" r="6.5"/>
+      <circle cx="347" cy="458" r="6.5"/><circle cx="404" cy="458" r="6.5"/>
+      <circle cx="461" cy="458" r="6.5"/>
+    </g>
+    <circle class="m-term-seal" cx="350" cy="481" r="4.5"/>
+  </g>
+
+
+          <g class="m-lead">
+            <path d="M124 282h150l12-18"/>
+            <path d="M124 316h150l14-22"/>
+            <path d="M124 380h56"/>
+          </g>
+          <g class="m-num meter-mini-num">
+            <g data-mm="present-reading" class="is-live"><circle cx="112" cy="282" r="12"/><text x="112" y="286.5" id="mmPresent">7</text></g>
+            <g data-mm="md"><circle cx="112" cy="316" r="12"/><text x="112" y="320.5" id="mmMd">9</text></g>
+            <g data-mm="meter-number"><circle cx="112" cy="380" r="12"/><text x="112" y="384.5" id="mmSerial">4</text></g>
+          </g>
+        </svg>
+        </div>
+        <p class="meter-mini-readout">
+          <span class="meter-mini-step" id="mmStep">1/2</span>
+          <strong id="mmTitle">மொத்த இறக்குமதி ஆற்றல்</strong>
+        </p>
+        <p class="meter-mini-hint">உண்மையான மீட்டர் ஒரு நேரத்தில் ஒரு ரெஜிஸ்டரை மட்டுமே காட்டும், பொத்தானை அழுத்தினால் அடுத்ததற்குச் செல்லும். அழுத்திப் பாருங்கள்.</p>
+      </figure>
+
       <!-- The gutter that the numbered markers hang in lives on .bill-figure, outside the
            document's own border — the same arrangement as the meter diagram on
            /smart-meter/, where the callouts sit beside the device rather than on it. -->
@@ -238,9 +470,9 @@
           </div>
           <span class="bill-doc-stamp">மாதிரி</span>
         </div>
-        <section class="bill-block"><h4>கணக்கு</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="consumer-no"><a class="bill-mark" href="#explain-consumer-no" id="mark-consumer-no"><span class="bill-mark-n">1</span><span class="bill-mark-t">நுகர்வோர் எண்</span></a><span class="bill-row-k">நுகர்வோர் எண்</span><span class="bill-row-v">1234 5678 9012</span></div><div class="bill-row"><span class="bill-row-k">நுகர்வோர் பெயர்</span><span class="bill-row-v">ஏ. குமார்</span></div><div class="bill-row is-marked" data-line="tariff-category"><a class="bill-mark" href="#explain-tariff-category" id="mark-tariff-category"><span class="bill-mark-n">2</span><span class="bill-mark-t">கட்டண வகை</span></a><span class="bill-row-k">கட்டண வகை</span><span class="bill-row-v">LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW)</span></div><div class="bill-row is-marked" data-line="sanctioned-load"><a class="bill-mark" href="#explain-sanctioned-load" id="mark-sanctioned-load"><span class="bill-mark-n">3</span><span class="bill-mark-t">அனுமதிக்கப்பட்ட சுமை</span></a><span class="bill-row-k">அனுமதிக்கப்பட்ட சுமை</span><span class="bill-row-v">2 kW</span></div><div class="bill-row"><span class="bill-row-k">மீட்டர் எண்</span><span class="bill-row-v">MV 4471 2208 · சிங்கிள் ஃபேஸ்</span></div></div></section>
-        <section class="bill-block bill-block-period"><h4>பில்லிங் காலம்</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="bill-month"><a class="bill-mark" href="#explain-bill-month" id="mark-bill-month"><span class="bill-mark-n">4</span><span class="bill-mark-t">பில் மாதம்</span></a><span class="bill-row-k">பில் மாதம்</span><span class="bill-row-v">JUN-2026</span></div><div class="bill-row"><span class="bill-row-k">ரீடிங் காலம்</span><span class="bill-row-v">01-06-2026 – 30-06-2026</span></div><div class="bill-row"><span class="bill-row-k">பில் தேதி</span><span class="bill-row-v">05-07-2026</span></div><div class="bill-row is-marked" data-line="due-date"><a class="bill-mark" href="#explain-due-date" id="mark-due-date"><span class="bill-mark-n">5</span><span class="bill-mark-t">கடைசி தேதி</span></a><span class="bill-row-k">கடைசி தேதி</span><span class="bill-row-v">20-07-2026</span></div></div></section>
-        <section class="bill-block bill-block-reading"><h4>மீட்டர் ரீடிங்</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">முந்தைய ரீடிங்</span><span class="bill-row-v">14,570</span></div><div class="bill-row"><span class="bill-row-k">தற்போதைய ரீடிங்</span><span class="bill-row-v">14,820</span></div><div class="bill-row is-marked" data-line="units-consumed"><a class="bill-mark" href="#explain-units-consumed" id="mark-units-consumed"><span class="bill-mark-n">6</span><span class="bill-mark-t">பயன்படுத்திய யூனிட்</span></a><span class="bill-row-k">பயன்படுத்திய யூனிட்</span><span class="bill-row-v">250 kWh</span></div><div class="bill-row is-marked" data-line="md"><a class="bill-mark" href="#explain-md" id="mark-md"><span class="bill-mark-n">7</span><span class="bill-mark-t">அதிகபட்ச தேவை (MD)</span></a><span class="bill-row-k">அதிகபட்ச தேவை (MD)</span><span class="bill-row-v">1.62 kW</span></div><div class="bill-row is-marked" data-line="reading-status"><a class="bill-mark" href="#explain-reading-status" id="mark-reading-status"><span class="bill-mark-n">8</span><span class="bill-mark-t">ரீடிங் நிலை</span></a><span class="bill-row-k">ரீடிங் நிலை</span><span class="bill-row-v">OK</span></div></div></section>
+        <section class="bill-block"><h4>கணக்கு</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="consumer-no"><a class="bill-mark" href="#explain-consumer-no" id="mark-consumer-no"><span class="bill-mark-n">1</span><span class="bill-mark-t">நுகர்வோர் எண்</span></a><span class="bill-row-k">நுகர்வோர் எண்</span><span class="bill-row-v">1234 5678 9012</span></div><div class="bill-row"><span class="bill-row-k">நுகர்வோர் பெயர்</span><span class="bill-row-v">ஏ. குமார்</span></div><div class="bill-row is-marked" data-line="tariff-category"><a class="bill-mark" href="#explain-tariff-category" id="mark-tariff-category"><span class="bill-mark-n">2</span><span class="bill-mark-t">கட்டண வகை</span></a><span class="bill-row-k">கட்டண வகை</span><span class="bill-row-v">LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW)</span></div><div class="bill-row is-marked" data-line="sanctioned-load"><a class="bill-mark" href="#explain-sanctioned-load" id="mark-sanctioned-load"><span class="bill-mark-n">3</span><span class="bill-mark-t">அனுமதிக்கப்பட்ட சுமை</span></a><span class="bill-row-k">அனுமதிக்கப்பட்ட சுமை</span><span class="bill-row-v">2 kW</span></div><div class="bill-row is-marked" data-line="meter-number"><a class="bill-mark" href="#explain-meter-number" id="mark-meter-number"><span class="bill-mark-n">4</span><span class="bill-mark-t">மீட்டர் எண்</span></a><span class="bill-row-k">மீட்டர் எண்</span><span class="bill-row-v">MV 4471 2208 · சிங்கிள் ஃபேஸ்</span></div></div></section>
+        <section class="bill-block bill-block-period"><h4>பில்லிங் காலம்</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="bill-month"><a class="bill-mark" href="#explain-bill-month" id="mark-bill-month"><span class="bill-mark-n">5</span><span class="bill-mark-t">பில் மாதம்</span></a><span class="bill-row-k">பில் மாதம்</span><span class="bill-row-v">JUN-2026</span></div><div class="bill-row"><span class="bill-row-k">ரீடிங் காலம்</span><span class="bill-row-v">01-06-2026 – 30-06-2026</span></div><div class="bill-row"><span class="bill-row-k">பில் தேதி</span><span class="bill-row-v">05-07-2026</span></div><div class="bill-row is-marked" data-line="due-date"><a class="bill-mark" href="#explain-due-date" id="mark-due-date"><span class="bill-mark-n">6</span><span class="bill-mark-t">கடைசி தேதி</span></a><span class="bill-row-k">கடைசி தேதி</span><span class="bill-row-v">20-07-2026</span></div></div></section>
+        <section class="bill-block bill-block-reading"><h4>மீட்டர் ரீடிங்</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">முந்தைய ரீடிங்</span><span class="bill-row-v">14,570</span></div><div class="bill-row is-marked is-live" data-line="present-reading"><a class="bill-mark" href="#explain-present-reading" id="mark-present-reading"><span class="bill-mark-n">7</span><span class="bill-mark-t">தற்போதைய ரீடிங்</span></a><span class="bill-row-k">தற்போதைய ரீடிங்</span><span class="bill-row-v">14,820</span></div><div class="bill-row is-marked" data-line="units-consumed"><a class="bill-mark" href="#explain-units-consumed" id="mark-units-consumed"><span class="bill-mark-n">8</span><span class="bill-mark-t">பயன்படுத்திய யூனிட்</span></a><span class="bill-row-k">பயன்படுத்திய யூனிட்</span><span class="bill-row-v">250 kWh</span></div><div class="bill-row is-marked" data-line="md"><a class="bill-mark" href="#explain-md" id="mark-md"><span class="bill-mark-n">9</span><span class="bill-mark-t">அதிகபட்ச தேவை (MD)</span></a><span class="bill-row-k">அதிகபட்ச தேவை (MD)</span><span class="bill-row-v">1.62 kW</span></div><div class="bill-row is-marked" data-line="reading-status"><a class="bill-mark" href="#explain-reading-status" id="mark-reading-status"><span class="bill-mark-n">10</span><span class="bill-mark-t">ரீடிங் நிலை</span></a><span class="bill-row-k">ரீடிங் நிலை</span><span class="bill-row-v">OK</span></div></div></section>
         <section class="bill-block bill-block-slabs">
           <h4>ஆற்றல் கட்டணத்தின் பின்னால் உள்ள ஸ்லாப் ஏணி</h4>
           <div class="bill-scroll"><table class="bill-slabs">
@@ -248,11 +480,12 @@
             <tbody><tr><td>1 – 150 units</td><td class="num">150</td><td class="num">₹5.50</td><td class="num">₹825</td></tr><tr><td>151 – 250 units</td><td class="num">100</td><td class="num">₹6.00</td><td class="num">₹600</td></tr></tbody>
           </table></div>
         </section>
-        <section class="bill-block bill-block-charges"><h4>கட்டணங்கள்</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="energy-charge"><a class="bill-mark" href="#explain-energy-charge" id="mark-energy-charge"><span class="bill-mark-n">9</span><span class="bill-mark-t">ஆற்றல் கட்டணம்</span></a><span class="bill-row-k">ஆற்றல் கட்டணம்</span><span class="bill-row-v">₹1,425</span></div><div class="bill-row is-marked" data-line="fixed-charge"><a class="bill-mark" href="#explain-fixed-charge" id="mark-fixed-charge"><span class="bill-mark-n">10</span><span class="bill-mark-t">நிலையான கட்டணம்</span></a><span class="bill-row-k">நிலையான கட்டணம்</span><span class="bill-row-v">₹220</span></div><div class="bill-row is-marked" data-line="fppa"><a class="bill-mark" href="#explain-fppa" id="mark-fppa"><span class="bill-mark-n">11</span><span class="bill-mark-t">எரிபொருள் கூடுதல் கட்டணம் (FPPA)</span></a><span class="bill-row-k">எரிபொருள் கூடுதல் கட்டணம் (FPPA)</span><span class="bill-row-v">₹164.50</span></div><div class="bill-row is-marked" data-line="electricity-duty"><a class="bill-mark" href="#explain-electricity-duty" id="mark-electricity-duty"><span class="bill-mark-n">12</span><span class="bill-mark-t">Electricity Duty</span></a><span class="bill-row-k">Electricity Duty</span><span class="bill-row-v">₹90.47</span></div></div></section>
-        <section class="bill-block bill-block-total"><h4>செலுத்த வேண்டிய தொகை</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">நடப்பு கட்டணங்கள்</span><span class="bill-row-v">₹1,899.97</span></div><div class="bill-row is-marked" data-line="net-current-bill"><a class="bill-mark" href="#explain-net-current-bill" id="mark-net-current-bill"><span class="bill-mark-n">13</span><span class="bill-mark-t">நிகர நடப்பு பில்</span></a><span class="bill-row-k">நிகர நடப்பு பில்</span><span class="bill-row-v">₹1,900</span></div><div class="bill-row is-marked is-grand" data-line="total-payable"><a class="bill-mark" href="#explain-total-payable" id="mark-total-payable"><span class="bill-mark-n">14</span><span class="bill-mark-t">மொத்தம் செலுத்த வேண்டியது</span></a><span class="bill-row-k">மொத்தம் செலுத்த வேண்டியது</span><span class="bill-row-v">₹1,900</span></div></div></section>
+        <section class="bill-block bill-block-charges"><h4>கட்டணங்கள்</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="energy-charge"><a class="bill-mark" href="#explain-energy-charge" id="mark-energy-charge"><span class="bill-mark-n">11</span><span class="bill-mark-t">ஆற்றல் கட்டணம்</span></a><span class="bill-row-k">ஆற்றல் கட்டணம்</span><span class="bill-row-v">₹1,425</span></div><div class="bill-row is-marked" data-line="fixed-charge"><a class="bill-mark" href="#explain-fixed-charge" id="mark-fixed-charge"><span class="bill-mark-n">12</span><span class="bill-mark-t">நிலையான கட்டணம்</span></a><span class="bill-row-k">நிலையான கட்டணம்</span><span class="bill-row-v">₹220</span></div><div class="bill-row is-marked" data-line="fppa"><a class="bill-mark" href="#explain-fppa" id="mark-fppa"><span class="bill-mark-n">13</span><span class="bill-mark-t">எரிபொருள் கூடுதல் கட்டணம் (FPPA)</span></a><span class="bill-row-k">எரிபொருள் கூடுதல் கட்டணம் (FPPA)</span><span class="bill-row-v">₹164.50</span></div><div class="bill-row is-marked" data-line="electricity-duty"><a class="bill-mark" href="#explain-electricity-duty" id="mark-electricity-duty"><span class="bill-mark-n">14</span><span class="bill-mark-t">Electricity Duty</span></a><span class="bill-row-k">Electricity Duty</span><span class="bill-row-v">₹90.47</span></div></div></section>
+        <section class="bill-block bill-block-total"><h4>செலுத்த வேண்டிய தொகை</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">நடப்பு கட்டணங்கள்</span><span class="bill-row-v">₹1,899.97</span></div><div class="bill-row is-marked" data-line="net-current-bill"><a class="bill-mark" href="#explain-net-current-bill" id="mark-net-current-bill"><span class="bill-mark-n">15</span><span class="bill-mark-t">நிகர நடப்பு பில்</span></a><span class="bill-row-k">நிகர நடப்பு பில்</span><span class="bill-row-v">₹1,900</span></div><div class="bill-row is-marked is-grand" data-line="total-payable"><a class="bill-mark" href="#explain-total-payable" id="mark-total-payable"><span class="bill-mark-n">16</span><span class="bill-mark-t">மொத்தம் செலுத்த வேண்டியது</span></a><span class="bill-row-k">மொத்தம் செலுத்த வேண்டியது</span><span class="bill-row-v">₹1,900</span></div></div></section>
         <p class="bill-source">FY 2026-27 (UPERC order dt. 02-Jul-2026, rates retained) <span class="bill-badge is-ok">கட்டண ஆணையுடன் சரிபார்க்கப்பட்டது</span> · <a href="https://www.mvvnl.in" target="_blank" rel="noopener">ஆதாரம்</a></p>
         </div>
       </figure>
+      </div>
       <p class="seo-note" id="ubError" hidden></p>
     </section>
 
@@ -283,13 +516,21 @@
         <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
         <p class="ub-more"><a href="/guides/reduce-fixed-charges-sanctioned-load/">நிலையான கட்டணத்தை எப்படிக் குறைப்பது</a><a href="/sanctioned-load-optimizer/">அனுமதிக்கப்பட்ட சுமை ஆப்டிமைசர்</a></p>
       </article>
+      <article class="ub-explain" id="explain-meter-number" data-line="meter-number" data-live="meterNumber">
+        <h3><span class="ub-num">4</span>மீட்டர் எண்</h3>
+        <p>மீட்டரின் நேம்பிளேட்டில் அச்சிடப்பட்ட வரிசை எண், பில்லிலும் மீண்டும் வரும். ஒரு எண்ணைக்கூடப் படிக்காமல் நீங்கள் சரிபார்க்கக்கூடிய ஒரே புலம் இதுதான்: மீட்டரின் அருகே நின்று ஒப்பிடுங்கள். பொருந்தவில்லை என்றால் பில் வேறு இணைப்புக்குரியது — இந்தப் பட்டியலில் மிக எளிதாகக் கண்டறியக்கூடிய, விட்டுவிட்டால் மிக விலை உயர்ந்த தவறு.</p>
+        <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>MV 4471 2208</div></div><p class="ub-live-note">மீட்டரின் நேம்பிளேட்டில் அச்சிடப்பட்டு பில்லிலும் மீண்டும் வரும் — DISCOM இதன் மூலமே இரண்டையும் இணைக்கிறது. இரண்டும் பொருந்தவில்லை என்றால், இந்தப் பில் உங்கள் சுவரில் உள்ள மீட்டருடையது அல்ல — இதை அடுத்த மாதம் அல்ல, உடனே எழுப்ப வேண்டும்.</p></div></div>
+        <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/ta/smart-meter/">ஒவ்வொரு மீட்டர் சின்னத்தின் பொருள்</a></p>
+      </article>
     </section>
 
     <section class="seo-section" id="when">
       <h2>தேதிகள், அவற்றில் எவை உங்களுக்குப் பணச் செலவு</h2>
       <p>ஒரு பில்லில் மூன்று தேதிகள் உள்ளன, அவை ஒன்றுக்கொன்று மாற்றாகா. ஒன்று நுகர்வை அடையாளம் காட்டுகிறது, ஒன்று பில் எப்போது தயாரானது என்பதைச் சொல்கிறது, ஒன்று இரு பக்கமும் பணம் இணைந்த ஒரு காலக்கெடு.</p>
       <article class="ub-explain" id="explain-bill-month" data-line="bill-month" data-live="billMonth">
-        <h3><span class="ub-num">4</span>பில் மாதம்</h3>
+        <h3><span class="ub-num">5</span>பில் மாதம்</h3>
         <p>மின்சாரம் <em>பயன்படுத்தப்பட்ட</em> மாதம் — பில் அச்சிடப்பட்ட மாதமும் அல்ல, நீங்கள் செலுத்தும் மாதமும் அல்ல. மூன்று வெவ்வேறு தேதிகள், பில்கள் அவற்றுக்கு ஒரே மாதிரியான பெயர் வைப்பதில்லை. நுகர்வை அடையாளம் காட்டுவது இதுவே, எனவே புகாரில் இதைத்தான் குறிப்பிட வேண்டும் — மேலும் எரிபொருள் கூடுதல் கட்டணம் மாதந்தோறும் அறிவிக்கப்படுவதால், உங்களுக்கு எந்த விகிதம் பொருந்தும் என்பதையும் இதுவே தீர்மானிக்கிறது.</p>
         <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
           <div class="ub-live-body"><p class="ub-live-note">JUN-2026 — மின்சாரம் பயன்படுத்தப்பட்ட மாதம் (01-06-2026 முதல் 30-06-2026 வரை), பில் அச்சிடப்பட்ட மாதம் அல்ல. இது தோற்றத்தை விட முக்கியம்: எரிபொருள் கூடுதல் கட்டணம் மாதந்தோறும் அறிவிக்கப்படுகிறது, எனவே எந்த விகிதம் பொருந்தும் என்பதை இந்தப் புலமே தீர்மானிக்கிறது. மேலே DISCOM-ஐ மாற்றிப் பாருங்கள் — அதே UPPCL இணைப்பு ஜூனில் +10% வசூலிக்கிறது, ஜூலையில் 4.43% திருப்பித் தருகிறது.</p></div></div>
@@ -297,7 +538,7 @@
         <p class="ub-more"><a href="/fuel-surcharge/">இந்த மாத எரிபொருள் கூடுதல் கட்டணம், மாநில வாரியாக</a></p>
       </article>
       <article class="ub-explain" id="explain-due-date" data-line="due-date" data-live="dueDate">
-        <h3><span class="ub-num">5</span>கடைசி தேதி</h3>
+        <h3><span class="ub-num">6</span>கடைசி தேதி</h3>
         <p>பில் எழுதியுள்ள தொகையாகவே இருக்கும் கடைசி நாள். இது இரு வழிகளிலும் பணத்தின் விஷயம்: இதற்குப் பிறகு மொத்த நிலுவைத் தொகையின் மீது தாமத கட்டண அபராதம் சேரத் தொடங்கி மாதந்தோறும் கூட்டு வட்டியாகும்; மேலும் DISCOM விரைவுச் செலுத்துதல் தள்ளுபடி தந்தால், அதைப் பெறுவதற்கான ஒரே வழி இதுதான். இணைப்புத் துண்டிப்பு அறிவிப்புகளும் இந்தத் தேதியிலிருந்தே கணக்கிடப்படுகின்றன, பில் தேதியிலிருந்து அல்ல.</p>
         <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
           <div class="ub-live-body"><p class="ub-live-note">20-07-2026 அல்லது அதற்கு முன் செலுத்தினால் பில் எழுதியுள்ள தொகைதான். அதன் பிறகு மொத்த நிலுவைத் தொகையின் மீது தாமத கட்டண அபராதம் சேரத் தொடங்கி மாதந்தோறும் கூட்டு வட்டியாகிறது — DISCOM விரைவுச் செலுத்துதல் தள்ளுபடி தந்தால் அதுவும் போய்விடும். பில் தேதிக்கும் கடைசி தேதிக்கும் இடையே பொதுவாக 15 நாட்கள்.</p></div></div>
@@ -309,8 +550,16 @@
     <section class="seo-section" id="reading">
       <h2>மீட்டர் என்ன சொன்னது</h2>
       <p>முழு பில்லிலும் அளக்கப்பட்ட ஒரே அளவு. கீழே உள்ள அனைத்தும் இந்த ஒரு எண்ணின் மீது செய்யப்பட்ட கணக்கு.</p>
+      <article class="ub-explain" id="explain-present-reading" data-line="present-reading" data-live="presentReading">
+        <h3><span class="ub-num">7</span>தற்போதைய ரீடிங்</h3>
+        <p>ரீடிங் தேதியில் மீட்டர் காட்டிய ஒட்டுமொத்த எண் — இந்தப் பில்லுக்கு அருகில் உள்ள மீட்டரில் தெரியும் அதே எண். யாரையும் நம்பாமல் நீங்களே சரிபார்க்கக்கூடிய ஒரே வரி இதுதான்: மீட்டர் வரை சென்று பாருங்கள். மீட்டரால் என்ன சொல்ல <em>முடியாது</em> என்பதையும் கவனியுங்கள்: முந்தைய ரீடிங். அது உங்கள் கடந்த பில்லிலிருந்து வருகிறது — பழைய பில்லை வைத்திருப்பதற்கான நடைமுறைக் காரணம் இதுவே.</p>
+        <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>14,820 kWh</div></div><p class="ub-live-note">பில்லில் நீங்களே சரிபார்க்கக்கூடிய ஒரே எண் இதுதான் — மீட்டர் வரை சென்று பாருங்கள். மற்ற அனைத்தும் இதன் மீது செய்யப்பட்ட கணக்கு. கவனியுங்கள், முந்தைய ரீடிங்கை மீட்டரால் காட்ட முடியாது — அது உங்கள் கடந்த பில்லிலிருந்து வருகிறது, அதனால்தான் பழைய பில்லை வைத்திருப்பது பயன்படும்.</p></div></div>
+        <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/guides/uppcl-smart-meter-readings-explained/">ஸ்மார்ட் மீட்டரை நீங்களே படிப்பது எப்படி</a><a href="/ta/guides/smart-meter-running-fast/">மீட்டர் தவறு என்று தோன்றும்போது</a></p>
+      </article>
       <article class="ub-explain" id="explain-units-consumed" data-line="units-consumed" data-live="unitsConsumed">
-        <h3><span class="ub-num">6</span>பயன்படுத்திய யூனிட்</h3>
+        <h3><span class="ub-num">8</span>பயன்படுத்திய யூனிட்</h3>
         <p>தற்போதைய ரீடிங்கிலிருந்து முந்தைய ரீடிங்கைக் கழித்து, மீட்டர் மாறிலியால் பெருக்கியது (பெருக்கி, வீட்டு இணைப்பில் கிட்டத்தட்ட எப்போதும் 1). ஒரு யூனிட் என்பது ஒரு கிலோவாட்-மணி. முழு பில்லிலும் அளக்கப்பட்ட ஒரே அளவு இதுதான் — கீழே உள்ள அனைத்தும் இந்த ஒரு எண்ணின் மீது செய்யப்பட்ட கணக்கு.</p>
         <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">யூனிட் = (தற்போதைய ரீடிங் − முந்தைய ரீடிங்) × மீட்டர் மாறிலி</div><div class="ub-calc-work"><span class="ub-calc-step">(14,820 − 14,570) × 1</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>250 kWh</div></div><p class="ub-live-note">30 நாட்களில் ஒரு நாளைக்கு சுமார் 8.3 யூனிட். கிட்டத்தட்ட ஒவ்வொரு வீட்டு இணைப்பிலும் மீட்டர் மாறிலி 1; இல்லாத இடத்தில் அது மீட்டரில் அச்சிடப்பட்டிருக்கும், வித்தியாசத்தால் பெருக்கப்படும்.</p></div></div>
@@ -318,7 +567,7 @@
         <p class="ub-more"><a href="/guides/uppcl-smart-meter-readings-explained/">ஸ்மார்ட் மீட்டரை நீங்களே படிப்பது எப்படி</a><a href="/ta/smart-meter/">ஒவ்வொரு மீட்டர் சின்னத்தின் பொருள்</a></p>
       </article>
       <article class="ub-explain" id="explain-md" data-line="md" data-live="md">
-        <h3><span class="ub-num">7</span>அதிகபட்ச தேவை (MD)</h3>
+        <h3><span class="ub-num">9</span>அதிகபட்ச தேவை (MD)</h3>
         <p>மாதம் முழுவதும் உங்கள் இணைப்பு அரை மணி நேர சராசரியில் எடுத்த மிக அதிக மின்சாரம், kW-இல் — இது உச்சம், மொத்தம் அல்ல. நுகர்வும் தேவையும் வெவ்வேறு: 2 kW கீசரை பத்து மணி நேரம் இயக்கினால் 20 யூனிட், தேவை 2 kW; 2 kW கொண்ட பத்து சாதனங்களை ஒரு மணி நேரம் இயக்கினால் அதே 20 யூனிட், ஆனால் தேவை 20 kW. வணிக அல்லது தொழிற்சாலை இணைப்பில் இரண்டாவது வழி மிக அதிக செலவாகும், ஏனெனில் கட்டணம் உச்சத்தைப் பின்தொடர்கிறது.</p>
         <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>பதிவு 1.62 kW, அனுமதி 2 kW</div></div><p class="ub-live-note">மீட்டர் பதிவு செய்த மிக உயர்ந்த அரை மணி நேர சராசரி. வீட்டு இணைப்பில் இது பதிவாகிறது, ஆனால் இதன் மீது பில் போடப்படுவதில்லை — நிலையான கட்டணம் அனுமதிக்கப்பட்ட சுமையைத்தான் பின்பற்றும். இருந்தும் இது முக்கியம்: இது உங்கள் அனுமதிக்கப்பட்ட சுமையை மீறத் தொடங்கினால், DISCOM அபராதம் விதிக்கலாம் அல்லது இணைப்பை ஒழுங்குபடுத்தச் சொல்லலாம்.</p></div></div>
@@ -326,7 +575,7 @@
         <p class="ub-more"><a href="/guides/power-factor-kvah-billing-explained/">பவர் ஃபேக்டர் மற்றும் kVAh பில்லிங்</a><a href="/sanctioned-load-optimizer/">உங்கள் அனுமதிக்கப்பட்ட சுமை சரியா?</a></p>
       </article>
       <article class="ub-explain" id="explain-reading-status" data-line="reading-status" data-live="readingStatus">
-        <h3><span class="ub-num">8</span>ரீடிங் நிலை</h3>
+        <h3><span class="ub-num">10</span>ரீடிங் நிலை</h3>
         <p>ரீடிங் எப்படிப் பெறப்பட்டது என்று சொல்லும் ஒரு சிறு குறியீடு — மீட்டர் ரீடர் நேரில் மீட்டரைப் படித்தாரா, அல்லது மீட்டர் பூட்டிய இடத்தில் இருந்ததால், படிக்க முடியாததால், அல்லது பழுதானதால் DISCOM மதிப்பிட்டதா. இந்தச் சொற்கள் ஒவ்வொரு நிறுவனத்திற்கும் வேறுபடும், பில்லில் இந்தக் குறியீடுகளின் பொருள் எங்கும் விளக்கப்படுவதில்லை. ஆனால் முக்கியமானது இந்த வேறுபாடு: உண்மையான ரீடிங் ஒரு உண்மை, மதிப்பீடு என்பது பின்னர் திருத்தப்படும் தற்காலிக எண் — பொதுவாக மிகப் பெரிய பில்லாக.</p>
         <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>OK</div></div><p class="ub-live-note">ரீடிங் எப்படிப் பெறப்பட்டது. OK என்றால் மீட்டர் நேரில் படிக்கப்பட்டு ரீடிங் ஏற்கப்பட்டது — பில் உண்மையான நுகர்வின் அடிப்படையில் உள்ளது. DISCOM-கள் இங்கே ஒரு சிறு குறியீட்டை அச்சிடுகின்றன, இந்தச் சொற்கள் ஒவ்வொரு நிறுவனத்திற்கும் வேறுபடும். முக்கியமான வேறுபாடு இதுதான்: மீட்டர் உண்மையில் படிக்கப்பட்டது என்கிறதா, அல்லது ரீடிங் மதிப்பிடப்பட்டது, மீட்டரை அணுக முடியவில்லை, அல்லது மீட்டர் பழுதானது என்கிறதா. இரண்டாவது வகை என்றால் மேலே உள்ள யூனிட் ஒரு மதிப்பீடு, பின்னர் சரிசெய்யப்படும் — அப்போது நீங்களே ரீடிங் எடுத்துத் தெரிவிப்பது நல்லது.</p></div></div>
@@ -339,7 +588,7 @@
       <h2>உங்களிடம் என்னென்ன வசூலிக்கப்படுகிறது</h2>
       <p>பில் என்பது ஒரு விலை அல்ல. இது தனித்தனி கட்டணங்களின் அடுக்கு, ஒவ்வொன்றும் வெவ்வேறு விதியால் நிர்ணயிக்கப்படுகிறது — எது எது என்று தெரிந்தால், எவற்றில் நீங்கள் ஏதாவது செய்ய முடியும் என்பது புரியும்.</p>
       <article class="ub-explain" id="explain-energy-charge" data-line="energy-charge" data-live="energyCharge">
-        <h3><span class="ub-num">9</span>ஆற்றல் கட்டணம்</h3>
+        <h3><span class="ub-num">11</span>ஆற்றல் கட்டணம்</h3>
         <p>யூனிட்டுகளின் சொந்த விலை. இந்தியாவின் கிட்டத்தட்ட ஒவ்வொரு வீட்டுக் கட்டணமும் <em>டெலிஸ்கோப்பிக்</em>: ஸ்லாப்கள் ஒன்றையொன்று மாற்றுவதில்லை, சேர்ந்து கொள்கின்றன — அதாவது உயர்ந்த ஸ்லாபுக்குச் செல்வது கூடுதல் யூனிட்டுகளின் விலையை மட்டுமே உயர்த்தும், கீழுள்ளவற்றை ஒருபோதும் அல்ல. உங்கள் பில் ஒரே மொத்தத்தை அச்சிடுகிறது; மேலே உள்ள அட்டவணை அது வந்த ஏணியைக் காட்டுகிறது.</p>
         <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">ஆற்றல் கட்டணம் = Σ (ஒவ்வொரு ஸ்லாபிலும் வரும் யூனிட் × அந்த ஸ்லாபின் விகிதம்)</div><div class="ub-calc-work"><span class="ub-calc-step">150 × ₹5.50 = ₹825</span><span class="ub-calc-step">100 × ₹6.00 = ₹600</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,425</div></div><p class="ub-live-note">ஸ்லாப்கள் ஒன்றன் மேல் ஒன்றாகச் சேரும், மாறாது — உயர்ந்த ஸ்லாபுக்குச் செல்வது கூடுதல் யூனிட்டுகளின் விலையை மட்டுமே உயர்த்தும். கடைசி யூனிட் ₹6.00, ஆனால் முழு பில்லின் சராசரி ₹1,425 ÷ 250 = ₹5.70 ஒரு யூனிட்டுக்கு.</p></div></div>
@@ -347,7 +596,7 @@
         <p class="ub-more"><a href="/compare/">DISCOM-களுக்கு இடையே ஸ்லாப் விகிதங்களை ஒப்பிடுங்கள்</a><a href="/ta/guides/tod-billing-explained/">நேரம் சார்ந்த (ToD) பில்லிங்</a></p>
       </article>
       <article class="ub-explain" id="explain-fixed-charge" data-line="fixed-charge" data-live="fixedCharge">
-        <h3><span class="ub-num">10</span>நிலையான கட்டணம் / தேவை கட்டணம்</h3>
+        <h3><span class="ub-num">12</span>நிலையான கட்டணம் / தேவை கட்டணம்</h3>
         <p>நீங்கள் ஒரு யூனிட் பயன்படுத்தினாலும், ஒன்றும் பயன்படுத்தாவிட்டாலும் செலுத்த வேண்டியது. இது கம்பிகள், மீட்டர், பணியாளர்களின் செலவை ஈடுகட்டுகிறது, அதனால்தான் பூட்டிய காலி வீட்டுக்கும் பில் வருகிறது. வீட்டு இணைப்பில் இது <em>அனுமதிக்கப்பட்ட சுமையின்</em> ஒவ்வொரு kW-க்கும் விதிக்கப்படுகிறது; வணிக அல்லது தொழிற்சாலையில் <em>பதிவான அதிகபட்ச தேவையின்</em> மீது — அதனால்தான் ஒரே விகிதம் இரு பில்களிலும் மிக வேறுபட்ட தொகைகளைத் தருகிறது.</p>
         <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">நிலையான கட்டணம் = ஒரு kW-க்கான விகிதம் × அனுமதிக்கப்பட்ட சுமை</div><div class="ub-calc-work"><span class="ub-calc-step">₹110.00 × 2 kW</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹220</div></div><p class="ub-live-note">இந்த சூத்திரத்தில் நுகர்வு எங்கும் வருவதில்லை. அதனால்தான் பூட்டிய காலி வீட்டுக்கும் பில் வருகிறது.</p></div></div>
@@ -363,7 +612,7 @@
         <p class="ub-more"><a href="/guides/uppcl-sanctioned-load-increased/">DISCOM உங்கள் சுமையை உயர்த்தும்போது</a><a href="/sanctioned-load-optimizer/">எது மலிவு என்று கணக்கிடுங்கள்</a></p>
       </article>
       <article class="ub-explain" id="explain-fppa" data-line="fppa" data-live="fppa">
-        <h3><span class="ub-num">11</span>எரிபொருள் கூடுதல் கட்டணம் (FPPA / FPPAS / PPAC / FAC)</h3>
+        <h3><span class="ub-num">13</span>எரிபொருள் கூடுதல் கட்டணம் (FPPA / FPPAS / PPAC / FAC)</h3>
         <p>உங்களுடன் எந்தத் தொடர்பும் இல்லாத காரணங்களால் மாதந்தோறும் மாறும் ஒரே வரி இதுதான். DISCOM மின்சாரம் வாங்கிய உண்மையான செலவுக்கும், உங்கள் கட்டணம் நிர்ணயிக்கப்பட்டபோது ஒழுங்குமுறை ஆணையம் கருதிய செலவுக்கும் உள்ள இடைவெளி இங்கே கடத்தப்படுகிறது. இதில் நான்கு விஷயங்கள் மக்களை வியப்பில் ஆழ்த்தும்: பல மாநிலங்களில் இது <em>மாதந்தோறும்</em> மறுகணக்கிடப்படுகிறது; இது <em>எதிர்மறையாகவும்</em> இருக்கலாம், அப்போது அது ஒரு திரும்பப் பணம்; சதவீதமாக இருக்கும் இடங்களில் இது ஆற்றல் கட்டணத்துடன் நிலையான கட்டணத்திற்கும் பொருந்தும்; மேலும் அறிவிக்கப்பட்ட விகிதம் பொதுவானது, எனவே விகிதம் காட்டாமல் இந்த வரியைக் காட்டும் பில்லைக் கேள்வி கேட்பது நியாயம்.</p>
         <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">FPPA = (ஆற்றல் கட்டணம் + நிலையான/தேவை கட்டணம் + அபராதம்) × அறிவிக்கப்பட்ட விகிதம் %</div><div class="ub-calc-work"><span class="ub-calc-step">அடிப்படை = ₹1,645</span><span class="ub-calc-step">₹1,645 × 10%</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹164.50</div></div><p class="ub-live-note">விகிதம் மாதந்தோறும் அறிவிக்கப்படுகிறது, அது ஆற்றல் கட்டணத்துடன் நிலையான கட்டணத்திற்கும் பொருந்தும் — யூனிட்டுகளுக்கு மட்டும் அல்ல, இதுவே இந்த வரியைப் பற்றிய மிகப் பொதுவான தவறான புரிதல்.</p></div></div>
@@ -379,7 +628,7 @@
         <p class="ub-more"><a href="/ta/guides/how-to-read-msedcl-bill/">MSEDCL பில்லை எப்படிப் படிப்பது</a><a href="/guides/msedcl-fppa-charges-explained/">MSEDCL-இன் சொந்த கூடுதல் கட்டண வரிகள்</a></p>
       </article>
       <article class="ub-explain" id="explain-electricity-duty" data-line="electricity-duty" data-live="electricityDuty">
-        <h3><span class="ub-num">12</span>மின் வரி</h3>
+        <h3><span class="ub-num">14</span>மின் வரி</h3>
         <p>ஒரு மாநில வரி, DISCOM அரசு சார்பாக வசூலிக்கிறது. இது ஆற்றல் கட்டணத்தின் மீது மட்டும் விழுகிறதா அல்லது முழு பில்லின் மீதா என்பதை ஒவ்வொரு மாநிலமும் தானே முடிவு செய்கிறது — அதனால்தான் ஒரே அளவு நுகர்வு கொண்ட இரு பில்கள் மாநில எல்லைக்கு அப்பால் சில நூறு ரூபாய் வரை வேறுபடலாம். வீட்டு மின் விநியோகத்திற்கு GST இல்லை — தென்பட்டால், மீண்டும் பாருங்கள்.</p>
         <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">வரி = (ஆற்றல் + நிலையான + அபராதம் + வீலிங் + FPPA) × வரி விகிதம் %</div><div class="ub-calc-work"><span class="ub-calc-step">அடிப்படை = ₹1,809.50</span><span class="ub-calc-step">₹1,809.50 × 5%</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹90.47</div></div><p class="ub-live-note">இங்கே வரி முழு பில்லின் மீதும், நிலையான கட்டணம் உட்பட. எந்த அடிப்படையை எடுப்பது என்பதை ஒவ்வொரு மாநிலமும் தானே முடிவு செய்கிறது, அதனால்தான் எல்லைக்கு இருபுறமும் உள்ள ஒரே மாதிரியான இரு வீடுகள் வெவ்வேறு தொகையைச் செலுத்துகின்றன.</p></div></div>
@@ -400,7 +649,7 @@
         <p class="ub-more"><a href="/guides/how-to-read-bses-delhi-bill/">BSES டெல்லி பில்லை எப்படிப் படிப்பது</a></p>
       </article>
       <article class="ub-explain" id="explain-net-current-bill" data-line="net-current-bill" data-live="netCurrentBill">
-        <h3><span class="ub-num">13</span>நிகர நடப்பு பில்</h3>
+        <h3><span class="ub-num">15</span>நிகர நடப்பு பில்</h3>
         <p>இந்த மாதத்தின் கட்டணங்கள், மானியம் கழித்த பிறகு — இது நீங்கள் செலுத்த வேண்டியது <strong>அல்ல</strong>. கடந்த மாதத்துடன் ஒப்பிட வேண்டியது இந்த எண்ணைத்தான், ஏனெனில் இதில் இந்த மாதத்தின் நுகர்வு மட்டுமே உள்ளது, வேறெதுவும் இல்லை. கீழே உள்ள மொத்தத் தொகை வேறு ஒன்று: அதில் பழைய நிலுவை கலந்திருக்கும், <em>அதை</em> மாதம் மாதம் ஒப்பிடுவது உங்கள் மின் பயன்பாட்டைப் பற்றி அல்ல, உங்கள் கட்டண வரலாற்றைப் பற்றியே சொல்லும்.</p>
         <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">நிகர நடப்பு பில் = ஆற்றல் கட்டணம் + நிலையான கட்டணம் + எரிபொருள் கூடுதல் கட்டணம் (fppa) + electricity duty</div><div class="ub-calc-work"><span class="ub-calc-step">₹1,425 + ₹220 + ₹164.50 + ₹90.47</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,900</div></div><p class="ub-live-note">இந்த மாதம் மட்டும் — இது நீங்கள் செலுத்த வேண்டியது அல்ல. 250 யூனிட்டுக்கு இது ₹1,900 ÷ 250 = ₹7.60 ஒரு யூனிட்டுக்கு, எப்போதும் ஸ்லாப் விகிதத்தை விட அதிகம். மாதம் மாதம் ஒப்பிட வேண்டியது இந்த எண்ணைத்தான்; கீழே உள்ள மொத்தத் தொகையில் பழைய நிலுவை கலந்திருக்கும், அது உங்கள் பயன்பாட்டைப் பற்றித் தவறான கதையைச் சொல்லும்.</p></div></div>
@@ -424,7 +673,7 @@
         <p class="ub-more"><a href="/ta/guides/smart-meter-prepaid-disconnection/">பில் செலுத்தாவிட்டால் என்ன ஆகும்</a></p>
       </article>
       <article class="ub-explain" id="explain-total-payable" data-line="total-payable" data-live="totalPayable">
-        <h3><span class="ub-num">14</span>மொத்தம் செலுத்த வேண்டியது</h3>
+        <h3><span class="ub-num">16</span>மொத்தம் செலுத்த வேண்டியது</h3>
         <p>நிகர நடப்பு பில், உடன் நிலுவையும் அபராதமும், ஏற்கெனவே வரவு வைக்கப்பட்ட பணத்தைக் கழித்து. இன்று நீங்கள் செலுத்த வேண்டியது இதுதான். முழுத் தொகையையும் செலுத்துங்கள் — பகுதியாகச் செலுத்துவது மீதித் தொகையின் மீதான அபராதத்தை நிறுத்தாது, ப்ரீபெய்டு அல்லது துண்டிப்பு அறிவிப்புள்ள கணக்கில் கடிகாரத்தையும் நிறுத்தாது.</p>
         <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
           <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">மொத்தம் செலுத்த வேண்டியது = நிகர நடப்பு பில் + நிலுவை + அபராதம் − ஏற்கெனவே செலுத்தியது</div><div class="ub-calc-work"><span class="ub-calc-step">₹1,900 நிகர நடப்பு பில்</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,900</div></div><p class="ub-live-note">மேலே உள்ள நிகர நடப்பு பில்லுக்குச் சமம், ஏனெனில் இந்தப் பில்லில் எதுவும் கொண்டு வரப்படவில்லை. முழுத் தொகையையும் செலுத்துங்கள்: பகுதியாகச் செலுத்துவது மீதித் தொகையின் மீதான அபராதத்தை நிறுத்தாது.</p></div></div>

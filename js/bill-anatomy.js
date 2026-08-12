@@ -232,7 +232,7 @@ export function readout(b, scenario, lang = 'en') {
     { k: S.consumerName, v: S.sampleName },
     { k: S.tariffCategory, v: c.tariffLabel, mark: 'tariff-category' },
     { k: S.sanctionedLoad, v: `${c.load} ${dUnit}`, mark: 'sanctioned-load' },
-    { k: S.meterNo, v: `${scenario.meterNo} · ${scenario.phase === 'Three phase' ? S.threePhase : S.singlePhase}` },
+    { k: S.meterNo, v: `${scenario.meterNo} · ${scenario.phase === 'Three phase' ? S.threePhase : S.singlePhase}`, mark: 'meter-number' },
   ];
 
   // ── billing period ────────────────────────────────────────────────────────
@@ -248,11 +248,34 @@ export function readout(b, scenario, lang = 'en') {
   // ── meter reading ─────────────────────────────────────────────────────────
   const reading = [
     { k: S.prevReading, v: num(previous) },
-    { k: S.presReading, v: num(PRESENT_READING) },
+    { k: S.presReading, v: num(PRESENT_READING), mark: 'present-reading', live: true },
     { k: S.unitsConsumed, v: `${c.units} ${eUnit}`, mark: 'units-consumed' },
     { k: S.maxDemand, v: `${c.md} ${dUnit}`, mark: 'md' },
     { k: S.readingStatus, v: scenario.status, mark: 'reading-status' },
   ];
+  live.meterNumber = { result: scenario.meterNo, note: S.nMeterNumber(c) };
+  live.presentReading = {
+    result: `${num(PRESENT_READING)} ${eUnit}`,
+    note: S.nPresentReading(c),
+  };
+
+  // What the meter beside the bill displays. Two registers, because those are the two the
+  // bill quotes: the cumulative energy reading and the recorded maximum demand. Values are
+  // zero-padded to seven cells, which is what the glass on a real meter holds.
+  const meter = {
+    serial: scenario.meterNo,
+    screens: [
+      {
+        key: 'present-reading', code: '1.8.0', unit: eUnit,
+        value: `${PRESENT_READING}.0`, title: S.mScreenReading,
+      },
+      {
+        key: 'md', code: '1.6.0', unit: dUnit,
+        value: Number(b.billedDemandKw).toFixed(2).padStart(7, '0'), title: S.mScreenMd,
+      },
+    ],
+  };
+
   live.unitsConsumed = {
     formula: S.fUnits,
     calc: [`(${num(PRESENT_READING)} − ${num(previous)}) × 1`],
@@ -496,7 +519,7 @@ export function readout(b, scenario, lang = 'en') {
     discom: b.discom ? (b.discom.fullName || b.discom.name) : '',
   };
 
-  return { account, period, reading, slabs, charges, totals, live, source, S };
+  return { account, period, reading, slabs, charges, totals, live, source, meter, S };
 }
 
 // ─── markup ───────────────────────────────────────────────────────────────────
@@ -525,7 +548,8 @@ function marker(mark, k, n) {
 function fieldRows(rows, counter) {
   return rows.map(r => {
     const m = r.mark ? marker(r.mark, r.k, counter.next(r.mark)) : '';
-    const c = [r.mark ? 'is-marked' : '', r.credit ? 'is-credit' : '', r.grand ? 'is-grand' : '']
+    const c = [r.mark ? 'is-marked' : '', r.credit ? 'is-credit' : '', r.grand ? 'is-grand' : '',
+      r.live ? 'is-live' : '']
       .filter(Boolean).join(' ');
     return `<div class="bill-row${c ? ' ' + c : ''}"${r.mark ? ` data-line="${r.mark}"` : ''}>`
       + `${m}<span class="bill-row-k">${esc(r.k)}</span>`

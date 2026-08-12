@@ -9,6 +9,9 @@
 // the scenario's state is fetched before the engine is asked for a bill.
 
 import { SCENARIOS, DEFAULT_SCENARIO, billInput, readout, billHtml, liveHtml } from '/js/bill-anatomy.js';
+// The seven-segment renderer the smart-meter guide already uses. Importing it rather than
+// reimplementing keeps one definition of what a digit looks like on the glass.
+import { segmentsFor } from '/js/smart-meter.js';
 
 const NOT_ON_BILL = 'Not charged on the bill shown — pick another DISCOM or category above and it appears.';
 
@@ -92,6 +95,7 @@ export async function initUnderstandBill() {
     const { html, marks } = billHtml(r);
     doc.innerHTML = html;
     syncExplanations(r, marks);
+    syncMeter(r, marks);
   }
 
   // Keep the explanation column in step with the bill: the marker digits shift whenever a
@@ -142,6 +146,73 @@ export async function initUnderstandBill() {
     document.querySelectorAll(`[data-line="${CSS.escape(id)}"]`).forEach(el => el.classList.add('is-lit'));
   }
 
+  // ── the meter beside the bill ───────────────────────────────────────────
+  // Press-driven, never timed. The markers are links, and a link that relocates while the
+  // reader is reaching for it is a real usability failure — WCAG 2.2.2 wants a pause control
+  // for anything that updates on its own. The guide's meter made the same call.
+  //
+  // The numbers on the meter NEVER renumber as the display cycles. Both registers keep their
+  // own permanent marker; the active one lights up and the other dims. Renumbering would break
+  // the page's core contract, which is that marker 7 means one thing.
+  const meterSvg = document.querySelector('.meter-mini-stage .meter-svg');
+  const mm = meterSvg && {
+    seg: document.getElementById('mSeg'),
+    code: document.getElementById('mCode'),
+    unit: document.getElementById('mUnit'),
+    step: document.getElementById('mmStep'),
+    title: document.getElementById('mmTitle'),
+    btn: document.getElementById('mBtn'),
+    nums: {
+      'present-reading': document.getElementById('mmPresent'),
+      md: document.getElementById('mmMd'),
+      'meter-number': document.getElementById('mmSerial'),
+    },
+  };
+  let screens = [];
+  let screenIx = 0;
+
+  function paintMeter() {
+    if (!mm || !screens.length) return;
+    const sc = screens[screenIx % screens.length];
+    mm.seg.innerHTML = segmentsFor(sc.value);
+    mm.code.textContent = sc.code;
+    mm.unit.textContent = sc.unit;
+    mm.title.textContent = sc.title;
+    mm.step.textContent = String(screenIx + 1) + '/' + screens.length;
+    // Light the register being displayed, on the meter AND on the bill row it feeds.
+    // Each callout is its own <g data-mm>, so the register being displayed can light while
+    // the other two dim — without any of them renumbering.
+    meterSvg.querySelectorAll('.meter-mini-num g[data-mm]').forEach(g => {
+      g.classList.toggle('is-live', g.dataset.mm === sc.key);
+    });
+    document.querySelectorAll('[data-line].is-live').forEach(el => el.classList.remove('is-live'));
+    document.querySelectorAll('[data-line="' + CSS.escape(sc.key) + '"]')
+      .forEach(el => el.classList.add('is-live'));
+  }
+
+  function syncMeter(r, marks) {
+    if (!mm) return;
+    screens = r.meter.screens;
+    // Re-stamp from marks rather than trusting the served digits: a line appearing above these
+    // rows would shift them, and a meter showing a stale number is worse than showing none.
+    for (const [key, el] of Object.entries(mm.nums)) {
+      if (el) el.textContent = marks[key] || '';
+    }
+    paintMeter();
+  }
+
+  if (mm && mm.btn) {
+    const press = () => {
+      screenIx = (screenIx + 1) % Math.max(1, screens.length);
+      meterSvg.classList.add('has-pressed');
+      paintMeter();
+    };
+    mm.btn.addEventListener('click', press);
+    mm.btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); press(); }
+    });
+  }
+
   let t;
   const debounced = () => { clearTimeout(t); t = setTimeout(render, 200); };
 
@@ -171,6 +242,16 @@ export async function initUnderstandBill() {
   if (q.has('md')) { md.value = q.get('md'); deep = true; }
   if (q.get('messy') === '1') { messy.checked = true; deep = true; }
   if (deep) render();
+
+  // The served HTML already shows the right digits, but the meter's screen list lives in the
+  // readout — so build it once on load without touching the DOM the build produced.
+  if (mm && !deep) {
+    const s0 = current();
+    deps().then(({ engine: E, registry: R }) => R.ensureDiscom(s0.discomId).then(() => {
+      const b0 = E.calculateBill(billInput(s0));
+      if (!b0.error) screens = readout(b0, s0, document.documentElement.lang || 'en').meter.screens;
+    })).catch(() => {});
+  }
 
   if (location.hash.startsWith('#explain-')) highlight(location.hash.replace('#explain-', ''));
 }

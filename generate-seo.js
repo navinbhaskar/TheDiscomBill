@@ -25,7 +25,7 @@ import { TARIFF_DB, STATE_META, getStates, getDiscoms, tariffAge, ensureAll } fr
 import { buildTariffIndex } from './scripts/build-tariff-index.mjs';
 
 import { SMG } from './smart-meter-content.js';
-import { METER_SVG } from './smart-meter-svg.js';
+import { METER_SVG, METER_DEVICE } from './smart-meter-svg.js';
 import { SCENARIO_COPY, LINES, UB } from './understand-bill-content.js';
 import { SCENARIOS, DEFAULT_SCENARIO, billInput, readout, billHtml, liveHtml } from './js/bill-anatomy.js';
 
@@ -3649,6 +3649,37 @@ function understandBillPage(lang = 'en') {
         <span>${t(U.illustrativeBody)}</span>
       </p>
 
+      <div class="ub-stage">
+      <!-- The meter and the bill carry ONE set of numbers between them: marker 4 is the meter
+           number on both drawings, 7 is the present reading, 9 is the maximum demand. That shared
+           digit is the connection — it needs no leader line spanning two independently-flowing
+           elements, which would need JS measurement on every resize and would still be fragile.
+
+           The three leader paths are lifted from the guide's own diagram, so they terminate on
+           exactly the same parts of exactly the same drawing. -->
+      <figure class="meter-mini">
+        <figcaption class="meter-mini-cap">${esc(r.S.mFigure)}</figcaption>
+        <div class="meter-mini-stage">
+${METER_DEVICE.replace('>Press here<', `>${esc(T(lang, SMG.pressHere))}<`)}
+          <g class="m-lead">
+            <path d="M124 282h150l12-18"/>
+            <path d="M124 316h150l14-22"/>
+            <path d="M124 380h56"/>
+          </g>
+          <g class="m-num meter-mini-num">
+            <g data-mm="present-reading" class="is-live"><circle cx="112" cy="282" r="12"/><text x="112" y="286.5" id="mmPresent">${marks['present-reading'] || ''}</text></g>
+            <g data-mm="md"><circle cx="112" cy="316" r="12"/><text x="112" y="320.5" id="mmMd">${marks['md'] || ''}</text></g>
+            <g data-mm="meter-number"><circle cx="112" cy="380" r="12"/><text x="112" y="384.5" id="mmSerial">${marks['meter-number'] || ''}</text></g>
+          </g>
+        </svg>
+        </div>
+        <p class="meter-mini-readout">
+          <span class="meter-mini-step" id="mmStep">1/${r.meter.screens.length}</span>
+          <strong id="mmTitle">${esc(r.S.mScreenReading)}</strong>
+        </p>
+        <p class="meter-mini-hint">${esc(r.S.mHint)}</p>
+      </figure>
+
       <!-- The gutter that the numbered markers hang in lives on .bill-figure, outside the
            document's own border — the same arrangement as the meter diagram on
            /smart-meter/, where the callouts sit beside the device rather than on it. -->
@@ -3656,6 +3687,7 @@ function understandBillPage(lang = 'en') {
         <div class="bill-doc" id="billDoc" aria-live="polite">${billMarkup}
         </div>
       </figure>
+      </div>
       <p class="seo-note" id="ubError" hidden></p>
     </section>
 ${section('who', 'header')}

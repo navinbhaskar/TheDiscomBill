@@ -20,6 +20,21 @@
 const en = {
   // ── document chrome ──────────────────────────────────────────────────────
   docSub: 'Illustration · not a real bill',
+  // ── the meter beside the bill ────────────────────────────────────────────
+  mFigure: 'The meter this bill was read from',
+  mPress: 'Press',
+  mScreenReading: 'Total energy imported',
+  mScreenMd: 'Maximum demand recorded',
+  mScreenOf: (c) => `Screen ${c.i} of ${c.n}`,
+  mHint: 'A real meter shows one register at a time and cycles when you press the button. Press it.',
+  mCaption: 'The numbers on the meter and the numbers on the bill are the same figures — the markers connect them.',
+  nMeterNumber: (c) => `Printed on the meter's nameplate and repeated on the bill, which is how the DISCOM
+    ties the two together. If they do not match, the bill is not for the meter on your wall — that is worth
+    raising immediately, not next month.`,
+  nPresentReading: (c) => `This is the ONLY figure on the bill you can verify yourself, by walking to the
+    meter and looking. Everything else is arithmetic performed on it. Note that the meter cannot show you the
+    previous reading — that comes off your last bill, which is why keeping the last one matters.`,
+
   stamp: 'Sample',
   verified: 'Verified against the order',
   representative: 'Representative rates',
@@ -186,6 +201,20 @@ const en = {
 };
 
 const hi = {
+
+  mFigure: 'वह मीटर जिससे यह बिल पढ़ा गया',
+  mPress: 'दबाएँ',
+  mScreenReading: 'कुल आयातित ऊर्जा',
+  mScreenMd: 'दर्ज अधिकतम मांग',
+  mScreenOf: (c) => `स्क्रीन ${c.i} / ${c.n}`,
+  mHint: 'असली मीटर एक बार में एक ही रजिस्टर दिखाता है और बटन दबाने पर आगे बढ़ता है। दबाकर देखिए।',
+  mCaption: 'मीटर पर दिखने वाले और बिल पर छपे आंकड़े एक ही हैं — निशान उन्हें आपस में जोड़ते हैं।',
+  nMeterNumber: (c) => `मीटर की नेमप्लेट पर छपा रहता है और बिल पर दोहराया जाता है — DISCOM इसी से दोनों को
+    जोड़ता है। अगर दोनों मेल न खाएँ, तो यह बिल आपकी दीवार पर लगे मीटर का नहीं है — यह अगले महीने नहीं, तुरंत
+    उठाने वाली बात है।`,
+  nPresentReading: (c) => `बिल पर यही एक आंकड़ा है जिसे आप ख़ुद जाँच सकते हैं — मीटर तक जाकर देख लीजिए। बाक़ी
+    सब इसी पर किया गया गणित है। ध्यान रहे, मीटर आपको पिछली रीडिंग नहीं दिखा सकता — वह पिछले बिल से आती है,
+    इसीलिए पुराना बिल संभालकर रखना काम आता है।`,
   docSub: 'उदाहरण · वास्तविक बिल नहीं',
   stamp: 'नमूना',
   verified: 'टैरिफ आदेश से मिलान किया गया',
@@ -342,6 +371,20 @@ const hi = {
 };
 
 const mr = {
+
+  mFigure: 'ज्या मीटरवरून हे बिल वाचले गेले तो',
+  mPress: 'दाबा',
+  mScreenReading: 'एकूण आयात केलेली ऊर्जा',
+  mScreenMd: 'नोंदलेली कमाल मागणी',
+  mScreenOf: (c) => `स्क्रीन ${c.i} / ${c.n}`,
+  mHint: 'खरा मीटर एका वेळी एकच रजिस्टर दाखवतो आणि बटण दाबल्यावर पुढे जातो. दाबून पाहा.',
+  mCaption: 'मीटरवरचे आणि बिलावरचे आकडे एकच आहेत — खुणा त्यांना जोडतात.',
+  nMeterNumber: (c) => `मीटरच्या नेमप्लेटवर छापलेला असतो आणि बिलावर पुन्हा येतो — DISCOM याच आधारे दोन्ही
+    जोडते. दोन्ही जुळत नसतील, तर हे बिल तुमच्या भिंतीवरच्या मीटरचे नाही — ही गोष्ट पुढच्या महिन्यात नव्हे,
+    लगेच मांडायची.`,
+  nPresentReading: (c) => `बिलावरचा हाच एक आकडा तुम्ही स्वतः तपासू शकता — मीटरपर्यंत जाऊन पाहा. बाकी सर्व
+    यावर केलेले गणित आहे. लक्षात ठेवा, मीटर तुम्हाला मागील रीडिंग दाखवू शकत नाही — ती मागील बिलावरून येते,
+    म्हणूनच जुने बिल जपून ठेवणे उपयोगी.`,
   docSub: 'उदाहरण · खरे बिल नाही',
   stamp: 'नमुना',
   verified: 'टॅरिफ आदेशाशी पडताळले',
@@ -493,6 +536,20 @@ const mr = {
 };
 
 const ta = {
+
+  mFigure: 'இந்தப் பில் எந்த மீட்டரிலிருந்து படிக்கப்பட்டதோ அது',
+  mPress: 'அழுத்துங்கள்',
+  mScreenReading: 'மொத்த இறக்குமதி ஆற்றல்',
+  mScreenMd: 'பதிவான அதிகபட்ச தேவை',
+  mScreenOf: (c) => `திரை ${c.i} / ${c.n}`,
+  mHint: 'உண்மையான மீட்டர் ஒரு நேரத்தில் ஒரு ரெஜிஸ்டரை மட்டுமே காட்டும், பொத்தானை அழுத்தினால் அடுத்ததற்குச் செல்லும். அழுத்திப் பாருங்கள்.',
+  mCaption: 'மீட்டரில் தெரியும் எண்களும் பில்லில் அச்சிட்ட எண்களும் ஒன்றே — குறிகள் அவற்றை இணைக்கின்றன.',
+  nMeterNumber: (c) => `மீட்டரின் நேம்பிளேட்டில் அச்சிடப்பட்டு பில்லிலும் மீண்டும் வரும் — DISCOM இதன்
+    மூலமே இரண்டையும் இணைக்கிறது. இரண்டும் பொருந்தவில்லை என்றால், இந்தப் பில் உங்கள் சுவரில் உள்ள மீட்டருடையது
+    அல்ல — இதை அடுத்த மாதம் அல்ல, உடனே எழுப்ப வேண்டும்.`,
+  nPresentReading: (c) => `பில்லில் நீங்களே சரிபார்க்கக்கூடிய ஒரே எண் இதுதான் — மீட்டர் வரை சென்று
+    பாருங்கள். மற்ற அனைத்தும் இதன் மீது செய்யப்பட்ட கணக்கு. கவனியுங்கள், முந்தைய ரீடிங்கை மீட்டரால் காட்ட
+    முடியாது — அது உங்கள் கடந்த பில்லிலிருந்து வருகிறது, அதனால்தான் பழைய பில்லை வைத்திருப்பது பயன்படும்.`,
   docSub: 'விளக்கப்படம் · உண்மையான பில் அல்ல',
   stamp: 'மாதிரி',
   verified: 'கட்டண ஆணையுடன் சரிபார்க்கப்பட்டது',
