@@ -26,6 +26,10 @@ import { buildTariffIndex } from './scripts/build-tariff-index.mjs';
 
 import { SMG } from './smart-meter-content.js';
 import { METER_SVG, METER_DEVICE } from './smart-meter-svg.js';
+// The same seven-segment renderer the runtime uses, so the digits in the served HTML are the
+// ones paintMeter() would draw — the glass shipped with the drawing's own sample reading
+// (04912.6) while the bill beside it said 14,820.
+import { segmentsFor } from './js/smart-meter.js';
 import { SCENARIO_COPY, LINES, UB } from './understand-bill-content.js';
 import { SCENARIOS, DEFAULT_SCENARIO, billInput, readout, billHtml, liveHtml } from './js/bill-anatomy.js';
 
@@ -3670,7 +3674,16 @@ function understandBillPage(lang = 'en') {
       <figure class="meter-mini">
         <figcaption class="meter-mini-cap">${esc(r.S.mFigure)}</figcaption>
         <div class="meter-mini-stage">
-${METER_DEVICE.replace('>Press here<', `>${esc(T(lang, SMG.pressHere))}<`)}
+${METER_DEVICE
+  .replace('>Press here<', `>${esc(T(lang, SMG.pressHere))}<`)
+  .replace('<text class="m-serial" x="186" y="378">Sr. No. RND00001</text>',
+           `<text class="m-serial" id="mmSerialText" x="186" y="378">Sr. No. ${esc(scenario.meterNo)}</text>`)
+  .replace(/<g class="m-seg" id="mSeg">[\s\S]*?<\/g>/,
+           `<g class="m-seg" id="mSeg">${segmentsFor(r.meter.screens[0].value)}</g>`)
+  .replace(/<text class="m-code" id="mCode"([^>]*)>[^<]*<\/text>/,
+           `<text class="m-code" id="mCode"$1>${esc(r.meter.screens[0].code)}</text>`)
+  .replace(/<text class="m-unit" id="mUnit"([^>]*)>[^<]*<\/text>/,
+           `<text class="m-unit" id="mUnit"$1>${esc(r.meter.screens[0].unit)}</text>`)}
           <!-- The parts a shared marker refers to. No numbers here: the marker itself lives in
                the gap between the two drawings and is the only one. These just light up. -->
           <!-- Each shared marker's route is drawn to one of these, so the anchors have to sit on

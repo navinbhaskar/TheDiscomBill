@@ -250,7 +250,7 @@ export function readout(b, scenario, lang = 'en') {
     { k: S.prevReading, v: num(previous) },
     { k: S.presReading, v: num(PRESENT_READING), mark: 'present-reading', live: true },
     { k: S.unitsConsumed, v: `${c.units} ${eUnit}`, mark: 'units-consumed' },
-    { k: S.maxDemand, v: `${c.md} ${dUnit}`, mark: 'md' },
+    { k: S.maxDemand, v: `${Number(b.billedDemandKw).toFixed(2)} ${dUnit}`, mark: 'md' },
     { k: S.readingStatus, v: scenario.status, mark: 'reading-status' },
   ];
   live.meterNumber = { result: scenario.meterNo, note: S.nMeterNumber(c) };
@@ -267,11 +267,11 @@ export function readout(b, scenario, lang = 'en') {
     screens: [
       {
         key: 'present-reading', code: '1.8.0', unit: eUnit,
-        value: `${PRESENT_READING}.0`, title: S.mScreenReading,
+        value: String(PRESENT_READING), title: S.mScreenReading,
       },
       {
         key: 'md', code: '1.6.0', unit: dUnit,
-        value: Number(b.billedDemandKw).toFixed(2).padStart(7, '0'), title: S.mScreenMd,
+        value: Number(b.billedDemandKw).toFixed(2), title: S.mScreenMd,
       },
     ],
   };

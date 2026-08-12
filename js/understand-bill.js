@@ -163,6 +163,7 @@ export async function initUnderstandBill() {
     step: document.getElementById('mmStep'),
     title: document.getElementById('mmTitle'),
     btn: document.getElementById('mBtn'),
+    serial: document.getElementById('mmSerialText'),
   };
   let screens = [];
   let screenIx = 0;
@@ -190,6 +191,10 @@ export async function initUnderstandBill() {
   function syncMeter(r) {
     if (!mm) return;
     screens = r.meter.screens;
+    // The serial is printed on the nameplate, not shown on the display, so it is set here
+    // rather than in paintMeter — but it still has to follow the scenario, or the meter and
+    // the bill would disagree about which connection this is.
+    if (mm.serial) mm.serial.textContent = 'Sr. No. ' + r.meter.serial;
     paintMeter();
   }
 
