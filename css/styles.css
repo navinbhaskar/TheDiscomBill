@@ -6703,14 +6703,22 @@ html:not(.js) .m-btn-ring { display: none; }
    pixels apart — there is no CSS that joins them. Behind everything and inert. */
 .ub-links {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  pointer-events: none; overflow: visible; z-index: 0;
+  /* Above the meter, not behind it. Each route starts at a part INSIDE the meter's own SVG, so
+     painted underneath, its first segment vanished into the casing and the line appeared to
+     begin at the meter's outer edge — pointing at the device rather than at the part. */
+  pointer-events: none; overflow: visible; z-index: 2;
 }
 .ub-link {
   fill: none; stroke: var(--brand-border); stroke-width: 1.5;
   stroke-linecap: round; stroke-linejoin: round;
-  transition: stroke var(--t-base), stroke-width var(--t-base);
+  transition: stroke var(--t-base), stroke-width var(--t-base), opacity var(--t-base);
 }
 .ub-link.is-live { stroke: var(--brand); stroke-width: 2; }
+/* The display holds one register at a time, so only the route to the one on screen is drawn.
+   Press the meter and 7 gives way to 9. The markers themselves stay put — they are links to
+   the explanations, and moving or removing those on a timer is what we set out not to do. */
+.ub-link.is-register { opacity: 0; }
+.ub-link.is-register.is-live { opacity: 1; }
 /* The markers and the bill sit above the routes. */
 .bill-figure, .meter-mini { position: relative; z-index: 1; }
 .meter-mini { margin: 0; min-width: 0; }
@@ -6753,7 +6761,7 @@ html:not(.js) .m-btn-ring { display: none; }
   .meter-mini { max-width: 320px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .meter-mini-num circle { transition: none; }
+  .meter-mini-parts [data-mm], .ub-link { transition: none; }
 }
 
 /* ── the document ─────────────────────────────────────────────────────────── */
