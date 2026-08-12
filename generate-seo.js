@@ -3495,10 +3495,15 @@ ${METER_SVG.replace('>Press here<', `>${esc(T(lang, S.pressHere))}<`)}
 // English-only for now. The strings are already in { en } objects and T() falls back to .en,
 // so adding twins later is additive — but the explanation prose is the hardest copy on the
 // site to translate well, and it is not worth doing before the page has earned impressions.
-// Guides and tariff pages have vernacular twins; the tool pages (/compare/, /check-my-bill/,
-// /sanctioned-load-optimizer/, /bill-review/) and the homepage anchor do not. Sending a Hindi
-// reader to /hi/compare/ would 404, so only the families that actually have twins get prefixed.
-const TWINNED = /^\/(guides|tariffs|glossary|smart-meter|fuel-surcharge)\b/;
+// Only the families that actually have vernacular twins get a language prefix. The tool pages
+// (/compare/, /check-my-bill/, /sanctioned-load-optimizer/, /bill-review/), /fuel-surcharge/
+// and the homepage anchor have none, and sending a Hindi reader to /hi/compare/ would 404.
+//
+// Within the families listed here, coverage still varies per language — Marathi tariff twins
+// exist only for Maharashtra, Tamil for none of the states in the scenario set. That is handled
+// downstream: emitPage() strips a language prefix from any guides/tariffs URL whose twin was
+// not generated, so a link to an untranslated page falls back to English rather than 404ing.
+const TWINNED = /^\/(guides|tariffs|glossary|smart-meter)\b/;
 function langUrl2(href, lang) {
   if (lang === 'en' || !TWINNED.test(href)) return href;
   return `/${lang}${href}`;
@@ -3595,8 +3600,9 @@ function understandBillPage(lang = 'en') {
 
   const body = `
   <section class="seo-page container understand-bill-page">
-    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">${esc(T(lang, U.crumb))}</span></li></ol></nav>
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">${esc(T(lang, { en: 'Home', hi: 'होम', mr: 'होम', ta: 'முகப்பு' }))}</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">${esc(T(lang, U.crumb))}</span></li></ol></nav>
     <h1>${esc(T(lang, U.h1))}</h1>
+    ${langPills(enUrl, lang)}
     <p class="guide-meta">${T(lang, U.meta).replace('%DATE%', LASTMOD_TOKEN[lang])}</p>
     <p class="seo-lead">${t(U.lead)}</p>
 
@@ -3693,7 +3699,7 @@ ${section('totals', 'totals')}
     title: T(lang, U.title),
     description: T(lang, U.description),
     canonical: `${SITE}${enUrl}`,
-    lang, page: enUrl, altLangs: [],
+    lang, page: enUrl, altLangs: VERNACULARS,
     jsonld: [faqLd],
     body,
   });
@@ -4389,7 +4395,8 @@ export function generateSeo() {
 
     // English-only (see the note on fuelSurchargePage) — emitted once, not per language.
     if (lang === 'en') { emitPage('fuel-surcharge', fuelSurchargePage()); pages++; }
-    if (lang === 'en') { emitPage('understand-your-bill', understandBillPage()); pages++; }
+    emitPage(`${p}understand-your-bill`, understandBillPage(lang));
+    pages++;
 
     for (const state of states) {
       if (!langServesState(lang, state)) continue;   // vernacular tariff twins are state-scoped

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      try { localStorage.setItem('lang', 'mr'); } catch (e) {}
+    })();
+  </script>
+  <title>तुमचे वीज बिल समजून घ्या: प्रत्येक ओळीचे स्पष्टीकरण</title>
+  <meta name="description" content="बदलता येणारे एक इंटरअ‍ॅक्टिव्ह वीज बिल. DISCOM, युनिट आणि मंजूर भार बदला आणि प्रत्येक ओळीचा अर्थ पाहा — स्थिर आकार, स्लॅब, FPPA, शुल्क, मागणी दंड.">
+  <link rel="canonical" href="https://thediscombill.com/understand-your-bill/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/understand-your-bill/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/understand-your-bill/">
+  <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/understand-your-bill/">
+  <link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/understand-your-bill/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/understand-your-bill/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="तुमचे वीज बिल समजून घ्या: प्रत्येक ओळीचे स्पष्टीकरण">
+  <meta property="og:description" content="बदलता येणारे एक इंटरअ‍ॅक्टिव्ह वीज बिल. DISCOM, युनिट आणि मंजूर भार बदला आणि प्रत्येक ओळीचा अर्थ पाहा — स्थिर आकार, स्लॅब, FPPA, शुल्क, मागणी दंड.">
+  <meta property="og:url" content="https://thediscombill.com/understand-your-bill/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="तुमचे वीज बिल समजून घ्या: प्रत्येक ओळीचे स्पष्टीकरण">
+  <meta property="og:locale" content="mr_IN">
+  <meta property="og:locale:alternate" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="तुमचे वीज बिल समजून घ्या: प्रत्येक ओळीचे स्पष्टीकरण">
+  <meta name="twitter:description" content="बदलता येणारे एक इंटरअ‍ॅक्टिव्ह वीज बिल. DISCOM, युनिट आणि मंजूर भार बदला आणि प्रत्येक ओळीचा अर्थ पाहा — स्थिर आकार, स्लॅब, FPPA, शुल्क, मागणी दंड.">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/understand-your-bill/","name":"तुमचे वीज बिल समजून घ्या: प्रत्येक ओळीचे स्पष्टीकरण","description":"बदलता येणारे एक इंटरअ‍ॅक्टिव्ह वीज बिल. DISCOM, युनिट आणि मंजूर भार बदला आणि प्रत्येक ओळीचा अर्थ पाहा — स्थिर आकार, स्लॅब, FPPA, शुल्क, मागणी दंड.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-12"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"वीज वापरलीच नाही, तरी बिलावर स्थिर आकार का?","acceptedAnswer":{"@type":"Answer","text":"कारण स्थिर आकार जोडणीची किंमत आहे, वापराची नव्हे — तुमच्या जागेपर्यंतची लाइन, मीटर, आणि तुमच्यासाठी राखून ठेवलेली क्षमता. तो मंजूर भाराच्या प्रत्येक kW वर लागतो आणि बंद घरालाही लागतो. तो थांबवण्याचा एकच मार्ग म्हणजे जोडणी रीतसर परत करणे; केवळ वीज न वापरल्याने तो थांबत नाही."}},{"@type":"Question","name":"वीज बिलावरील FPPA म्हणजे काय?","acceptedAnswer":{"@type":"Answer","text":"Fuel and Power Purchase Adjustment: DISCOM ने विजेसाठी प्रत्यक्षात जे भरले आणि तुमचा टॅरिफ ठरवताना नियामकाने जे गृहीत धरले, या दोहोंतील फरक — जो तुमच्यापर्यंत पोहोचवला जातो. तो वेळोवेळी पुन्हा ठरतो, त्यामुळे तुमचा वापर न बदलताही तो दरमहा बदलतो. काही राज्ये तो प्रति युनिट पैशांत घेतात, काही ऊर्जा आकाराच्या टक्केवारीत."}},{"@type":"Question","name":"वीज बिलावर GST लागतो का?","acceptedAnswer":{"@type":"Answer","text":"नाही. घरगुती ग्राहकाला विजेचा पुरवठा GST मधून वगळलेला आहे. तुम्हाला दिसते ते वीज शुल्क आहे, एक राज्य कर, जी वेगळी गोष्ट आहे. DISCOM जे स्वतंत्रपणे बिल करते त्यावर GST येऊ शकतो — नव्या जोडणीचे शुल्क, मीटर तपासणीचा आकार — पण विजेच्या पुरवठ्यावर नाही."}},{"@type":"Question","name":"माझ्या बिलावर \"Average\" किंवा \"Provisional\" लिहिले आहे. याचा अर्थ काय?","acceptedAnswer":{"@type":"Answer","text":"त्या महिन्यात कुणीही मीटर वाचले नाही, म्हणून DISCOM ने तुमच्या मागील नोंदींवरून वापराचा अंदाज लावला. पुढच्या खऱ्या रीडिंगला त्याचा हिशोब बरोबर होतो — म्हणूनच अंदाजाच्या महिन्यानंतर बरेचदा एक असामान्यपणे मोठा महिना येतो. स्वतःची रीडिंग घ्या आणि तक्रार करताना तीच नमूद करा — ही दुरुस्ती नेहमीचीच आहे."}},{"@type":"Question","name":"मी माझी टॅरिफ श्रेणी बदलू शकतो का?","acceptedAnswer":{"@type":"Answer","text":"होय, जागेचा वापर कसा आहे याचा पुरावा देऊन DISCOM कडे अर्ज करून. हे महत्त्वाचे आहे: व्यावसायिक अनुसूचीवर बिल होणारे घर जवळपास दुप्पट भरू शकते. बदल सहसा पुढच्या काळासाठी लागू होतो, त्यामुळे चुकीची श्रेणी जितक्या लवकर लक्षात येईल तितका तोटा कमी."}}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <a href="/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">Smart Meter</a>
+      <a href="/mr/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/mr/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/#calculator" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">Smart Meter</span></a>
+            <a href="/mr/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/mr/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <!-- aria-labelledby, not aria-label: the accessible name has to CONTAIN the visible
+             text ("EN"), or speech input cannot activate the button and a screen reader never
+             announces which language is active (WCAG 2.5.3). Referencing the live span also
+             keeps the name in step when syncLangUI() rewrites the badge. -->
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- A plain list of links, not a listbox. These rows navigate, so they are anchors:
+             that makes them crawlable, middle-clickable and keyboard-operable for free,
+             none of which a role="option" <li> with a click handler ever was. Rows that
+             translate in place (no twin URL to point at) stay <button>s. -->
+        <ul class="lang-menu" id="langMenu" aria-label="Select language">
+          <li><a class="lang-opt" href="/understand-your-bill/" hreflang="en-IN" lang="en" data-lang="en"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></a></li>
+          <li><a class="lang-opt" href="/hi/understand-your-bill/" hreflang="hi-IN" lang="hi" data-lang="hi"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">हिं</span></a></li>
+          <li><span class="lang-opt" data-lang="mr" aria-current="true"><span class="lang-opt-name">मराठी</span><span class="lang-opt-code">म</span></span></li>
+          <li><a class="lang-opt" href="/ta/understand-your-bill/" hreflang="ta-IN" lang="ta" data-lang="ta"><span class="lang-opt-name">தமிழ்</span><span class="lang-opt-code">த</span></a></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body" role="main">
+
+  <section class="seo-page container understand-bill-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">होम</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">तुमचे बिल समजून घ्या</span></li></ol></nav>
+    <h1>तुमचे वीज बिल समजून घ्या, ओळ न ओळ</h1>
+    <p class="seo-lang-pills"><svg class="seo-lang-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span class="sr-only">Available in</span><a class="seo-lang-pill" href="/understand-your-bill/" hreflang="en-IN" lang="en">English</a><a class="seo-lang-pill" href="/hi/understand-your-bill/" hreflang="hi-IN" lang="hi">हिंदी</a><span class="seo-lang-pill is-current" lang="mr" aria-current="page">मराठी</span><a class="seo-lang-pill" href="/ta/understand-your-bill/" hreflang="ta-IN" lang="ta">தமிழ்</a></p>
+    <p class="guide-meta">अद्ययावत १२ ऑगस्ट, २०२६ · आकडे त्याच इंजिनने तयार होतात जे आमच्या कॅल्क्युलेटरमागे आहे · <a href="/methodology/">आम्ही स्रोत कसे मिळवतो आणि तपासतो</a></p>
+    <p class="seo-lead">वीज बिल कसे वाचावे हे जवळपास कुणालाच शिकवले जात नाही, आणि बिलही मदत करत नाही — डझनभर आकार, संक्षिप्त नावांत, बहुतेक कोणत्याही स्पष्टीकरणाशिवाय. खाली एक चालते बिल आहे. DISCOM, युनिट किंवा मंजूर भार बदला, ते पुन्हा हिशोब करेल — आणि प्रत्येक क्रमांकित खूण तीच ओळ तुमच्यासमोरच्या आकड्यांनी समजावून सांगेल.</p>
+
+    <nav class="page-toc" aria-label="या पानावर">
+      <span class="page-toc-label">या पानावर</span>
+      <a href="#bill">बिल</a>
+        <a href="#who">कोण आणि काय</a>
+        <a href="#when">पैशाच्या तारखा</a>
+        <a href="#reading">मीटर रीडिंग</a>
+        <a href="#charges">आकार</a>
+        <a href="#totals">एकूण रकमा</a>
+        <a href="#why-higher">युनिट × दर पेक्षा जास्त का</a>
+        <a href="#faq">सामान्य प्रश्न</a>
+    </nav>
+
+    <section class="seo-section" id="bill">
+      <h2>बिल बदला</h2>
+      <p>खालचा प्रत्येक आकडा तुम्ही निवडलेल्या DISCOM च्या खऱ्या टॅरिफ अनुसूचीतून पुन्हा तयार होतो, त्यामुळे स्पष्टीकरणे प्रत्यक्ष चाललेल्या गणिताचे वर्णन करतात — एकदा लिहून जुने होऊ दिलेले उदाहरण नव्हे.</p>
+
+      <form class="ub-controls" id="ubControls" novalidate>
+        <div class="ub-field ub-field-wide">
+          <label for="ubScenario">DISCOM आणि श्रेणी</label>
+          <select id="ubScenario" name="scenario">
+            <option value="uppcl-domestic" selected>UPPCL (उत्तर प्रदेश) — घरगुती</option>
+            <option value="msedcl-domestic">MSEDCL (महाराष्ट्र) — घरगुती</option>
+            <option value="kseb-domestic">KSEB (केरळ) — घरगुती</option>
+            <option value="delhi-domestic">BRPL (दिल्ली) — घरगुती</option>
+            <option value="odisha-domestic">TPCODL (ओडिशा) — घरगुती</option>
+            <option value="uppcl-commercial">UPPCL (उत्तर प्रदेश) — व्यावसायिक</option>
+          </select>
+        </div>
+        <div class="ub-field">
+          <label for="ubUnits">वापरलेली युनिट</label>
+          <input type="number" id="ubUnits" name="units" min="0" max="5000" step="10" value="250" inputmode="numeric">
+        </div>
+        <div class="ub-field">
+          <label for="ubLoad">मंजूर भार (kW)</label>
+          <input type="number" id="ubLoad" name="load" min="0.5" max="150" step="0.5" value="2" inputmode="decimal">
+        </div>
+        <div class="ub-field ub-field-own-row">
+          <label for="ubMd">कमाल मागणी (kW) <span class="ub-optional">ऐच्छिक</span></label>
+          <input type="number" id="ubMd" name="md" min="0" max="500" step="0.1" placeholder="1.62" inputmode="decimal">
+        </div>
+        <div class="ub-field ub-field-check">
+          <label><input type="checkbox" id="ubMessy" name="messy"> थकबाकी, विलंब भरणा अधिभार आणि अंशतः भरणा जोडा</label>
+          <span class="ub-hint">बहुतेक खऱ्या बिलांवर जुनी थकबाकी असते. हे चालू करून ते एकूण रक्कम कशी बदलते ते पाहा.</span>
+        </div>
+        <p class="ub-hint ub-hint-md">रिकामे ठेवल्यास या बिलावर मीटरने नोंदवलेली मागणी वापरली जाईल. मंजूर भारापेक्षा जास्त आकडा टाका आणि दंड काय करतो ते पाहा.</p>
+        <button type="button" class="btn-ghost ub-reset" id="ubReset">रीसेट</button>
+      </form>
+      <p class="ub-note" data-scenario="uppcl-domestic">1 kW वरील शहरी घरगुती. इथे वीज शुल्क संपूर्ण बिलाच्या टक्केवारीत आहे.</p>
+          <p class="ub-note" data-scenario="msedcl-domestic" hidden>व्हीलिंग आकाराची एक ओळ जोडते, आणि वीज शुल्क फक्त ऊर्जा आकारावर लावते.</p>
+          <p class="ub-note" data-scenario="kseb-domestic" hidden>पाच लहान स्लॅब, आणि कोणतेही अतिरिक्त आकार नाहीत — बिलाचे सर्वात सोपे रूप.</p>
+          <p class="ub-note" data-scenario="delhi-domestic" hidden>17.94% दराने टक्केवारी इंधन अधिभार (PPAC), आणि सोबत GNCTD सबसिडी वजावट म्हणून.</p>
+          <p class="ub-note" data-scenario="odisha-domestic" hidden>वेळेवर भरण्याची सवलत देते, त्यामुळे बिलावर दोन एकूण रकमा दिसतात: एक देय दिनांकापर्यंत भरल्यास, दुसरी त्यानंतर.</p>
+          <p class="ub-note" data-scenario="uppcl-commercial" hidden>नोंदलेल्या कमाल मागणीवर बिल होते — आणि जुलै 2026 चा इंधन अधिभार क्रेडिट होता, त्यामुळे ती ओळ परतावा आहे.</p>
+      <p class="ub-more ub-more-scenario" data-scenario="uppcl-domestic"><span class="ub-more-label">खरी गोष्ट:</span><a href="/mr/guides/how-to-read-uppcl-bill/">या DISCOM चे खरे बिल कसे दिसते</a><a href="/tariffs/uttar-pradesh/mvvnl/">त्याची संपूर्ण दर-अनुसूची</a></p>
+      <p class="ub-more ub-more-scenario" data-scenario="msedcl-domestic" hidden><span class="ub-more-label">खरी गोष्ट:</span><a href="/mr/guides/how-to-read-msedcl-bill/">या DISCOM चे खरे बिल कसे दिसते</a><a href="/mr/tariffs/maharashtra/msedcl/">त्याची संपूर्ण दर-अनुसूची</a></p>
+      <p class="ub-more ub-more-scenario" data-scenario="kseb-domestic" hidden><span class="ub-more-label">खरी गोष्ट:</span><a href="/tariffs/kerala/kseb/">त्याची संपूर्ण दर-अनुसूची</a></p>
+      <p class="ub-more ub-more-scenario" data-scenario="delhi-domestic" hidden><span class="ub-more-label">खरी गोष्ट:</span><a href="/mr/guides/how-to-read-bses-delhi-bill/">या DISCOM चे खरे बिल कसे दिसते</a><a href="/tariffs/delhi/brpl/">त्याची संपूर्ण दर-अनुसूची</a></p>
+      <p class="ub-more ub-more-scenario" data-scenario="odisha-domestic" hidden><span class="ub-more-label">खरी गोष्ट:</span><a href="/guides/how-to-read-tpcodl-odisha-bill/">या DISCOM चे खरे बिल कसे दिसते</a><a href="/tariffs/odisha/tpcodl/">त्याची संपूर्ण दर-अनुसूची</a></p>
+      <p class="ub-more ub-more-scenario" data-scenario="uppcl-commercial" hidden><span class="ub-more-label">खरी गोष्ट:</span><a href="/mr/guides/how-to-read-uppcl-bill/">या DISCOM चे खरे बिल कसे दिसते</a><a href="/tariffs/uttar-pradesh/mvvnl/">त्याची संपूर्ण दर-अनुसूची</a></p>
+
+      <p class="ub-illustrative">
+        <span class="ub-illustrative-tag">केवळ उदाहरण</span>
+        <span>हे खरे बिल नाही आणि कोणत्याही DISCOM च्या छापील बिलाची नक्कलही नाही. एका कंपनीकडून दुसरीकडे बिलाची रचना, रकान्यांची नावे आणि क्रम बदलतात; त्यांच्यात समान असलेला भाग म्हणजे इथे दाखवलेल्या आकारांचा संच. ग्राहक क्रमांक, मीटर क्रमांक आणि पत्ता काल्पनिक आहेत.</span>
+      </p>
+
+      <!-- The gutter that the numbered markers hang in lives on .bill-figure, outside the
+           document's own border — the same arrangement as the meter diagram on
+           /smart-meter/, where the callouts sit beside the device rather than on it. -->
+      <figure class="bill-figure">
+        <div class="bill-doc" id="billDoc" aria-live="polite">
+        <div class="bill-doc-head">
+          <div class="bill-doc-id">
+            <strong class="bill-doc-title">Madhyanchal Vidyut Vitaran Nigam Ltd.</strong>
+            <span class="bill-doc-sub">उदाहरण · खरे बिल नाही</span>
+          </div>
+          <span class="bill-doc-stamp">नमुना</span>
+        </div>
+        <section class="bill-block"><h4>खाते</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="consumer-no"><a class="bill-mark" href="#explain-consumer-no" id="mark-consumer-no"><span class="bill-mark-n">1</span><span class="bill-mark-t">ग्राहक क्रमांक</span></a><span class="bill-row-k">ग्राहक क्रमांक</span><span class="bill-row-v">1234 5678 9012</span></div><div class="bill-row"><span class="bill-row-k">ग्राहकाचे नाव</span><span class="bill-row-v">ए. कुमार</span></div><div class="bill-row is-marked" data-line="tariff-category"><a class="bill-mark" href="#explain-tariff-category" id="mark-tariff-category"><span class="bill-mark-n">2</span><span class="bill-mark-t">टॅरिफ श्रेणी</span></a><span class="bill-row-k">टॅरिफ श्रेणी</span><span class="bill-row-v">LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW)</span></div><div class="bill-row is-marked" data-line="sanctioned-load"><a class="bill-mark" href="#explain-sanctioned-load" id="mark-sanctioned-load"><span class="bill-mark-n">3</span><span class="bill-mark-t">मंजूर भार</span></a><span class="bill-row-k">मंजूर भार</span><span class="bill-row-v">2 kW</span></div><div class="bill-row"><span class="bill-row-k">मीटर क्रमांक</span><span class="bill-row-v">MV 4471 2208 · सिंगल फेज</span></div></div></section>
+        <section class="bill-block bill-block-period"><h4>बिलिंग कालावधी</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="bill-month"><a class="bill-mark" href="#explain-bill-month" id="mark-bill-month"><span class="bill-mark-n">4</span><span class="bill-mark-t">बिल महिना</span></a><span class="bill-row-k">बिल महिना</span><span class="bill-row-v">JUN-2026</span></div><div class="bill-row"><span class="bill-row-k">रीडिंग कालावधी</span><span class="bill-row-v">01-06-2026 – 30-06-2026</span></div><div class="bill-row"><span class="bill-row-k">बिल दिनांक</span><span class="bill-row-v">05-07-2026</span></div><div class="bill-row is-marked" data-line="due-date"><a class="bill-mark" href="#explain-due-date" id="mark-due-date"><span class="bill-mark-n">5</span><span class="bill-mark-t">देय दिनांक</span></a><span class="bill-row-k">देय दिनांक</span><span class="bill-row-v">20-07-2026</span></div></div></section>
+        <section class="bill-block bill-block-reading"><h4>मीटर रीडिंग</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">मागील रीडिंग</span><span class="bill-row-v">14,570</span></div><div class="bill-row"><span class="bill-row-k">सध्याची रीडिंग</span><span class="bill-row-v">14,820</span></div><div class="bill-row is-marked" data-line="units-consumed"><a class="bill-mark" href="#explain-units-consumed" id="mark-units-consumed"><span class="bill-mark-n">6</span><span class="bill-mark-t">वापरलेली युनिट</span></a><span class="bill-row-k">वापरलेली युनिट</span><span class="bill-row-v">250 kWh</span></div><div class="bill-row is-marked" data-line="md"><a class="bill-mark" href="#explain-md" id="mark-md"><span class="bill-mark-n">7</span><span class="bill-mark-t">कमाल मागणी (MD)</span></a><span class="bill-row-k">कमाल मागणी (MD)</span><span class="bill-row-v">1.62 kW</span></div><div class="bill-row is-marked" data-line="reading-status"><a class="bill-mark" href="#explain-reading-status" id="mark-reading-status"><span class="bill-mark-n">8</span><span class="bill-mark-t">रीडिंग स्थिती</span></a><span class="bill-row-k">रीडिंग स्थिती</span><span class="bill-row-v">OK</span></div></div></section>
+        <section class="bill-block bill-block-slabs">
+          <h4>ऊर्जा आकारामागील स्लॅब शिडी</h4>
+          <div class="bill-scroll"><table class="bill-slabs">
+            <thead><tr><th scope="col">स्लॅब</th><th scope="col">युनिट</th><th scope="col">दर</th><th scope="col">रक्कम</th></tr></thead>
+            <tbody><tr><td>1 – 150 units</td><td class="num">150</td><td class="num">₹5.50</td><td class="num">₹825</td></tr><tr><td>151 – 250 units</td><td class="num">100</td><td class="num">₹6.00</td><td class="num">₹600</td></tr></tbody>
+          </table></div>
+        </section>
+        <section class="bill-block bill-block-charges"><h4>आकार</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="energy-charge"><a class="bill-mark" href="#explain-energy-charge" id="mark-energy-charge"><span class="bill-mark-n">9</span><span class="bill-mark-t">ऊर्जा आकार</span></a><span class="bill-row-k">ऊर्जा आकार</span><span class="bill-row-v">₹1,425</span></div><div class="bill-row is-marked" data-line="fixed-charge"><a class="bill-mark" href="#explain-fixed-charge" id="mark-fixed-charge"><span class="bill-mark-n">10</span><span class="bill-mark-t">स्थिर आकार</span></a><span class="bill-row-k">स्थिर आकार</span><span class="bill-row-v">₹220</span></div><div class="bill-row is-marked" data-line="fppa"><a class="bill-mark" href="#explain-fppa" id="mark-fppa"><span class="bill-mark-n">11</span><span class="bill-mark-t">इंधन अधिभार (FPPA)</span></a><span class="bill-row-k">इंधन अधिभार (FPPA)</span><span class="bill-row-v">₹164.50</span></div><div class="bill-row is-marked" data-line="electricity-duty"><a class="bill-mark" href="#explain-electricity-duty" id="mark-electricity-duty"><span class="bill-mark-n">12</span><span class="bill-mark-t">Electricity Duty</span></a><span class="bill-row-k">Electricity Duty</span><span class="bill-row-v">₹90.47</span></div></div></section>
+        <section class="bill-block bill-block-total"><h4>देय रक्कम</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">चालू आकार</span><span class="bill-row-v">₹1,899.97</span></div><div class="bill-row is-marked" data-line="net-current-bill"><a class="bill-mark" href="#explain-net-current-bill" id="mark-net-current-bill"><span class="bill-mark-n">13</span><span class="bill-mark-t">निव्वळ चालू बिल</span></a><span class="bill-row-k">निव्वळ चालू बिल</span><span class="bill-row-v">₹1,900</span></div><div class="bill-row is-marked is-grand" data-line="total-payable"><a class="bill-mark" href="#explain-total-payable" id="mark-total-payable"><span class="bill-mark-n">14</span><span class="bill-mark-t">एकूण देय रक्कम</span></a><span class="bill-row-k">एकूण देय रक्कम</span><span class="bill-row-v">₹1,900</span></div></div></section>
+        <p class="bill-source">FY 2026-27 (UPERC order dt. 02-Jul-2026, rates retained) <span class="bill-badge is-ok">टॅरिफ आदेशाशी पडताळले</span> · <a href="https://www.mvvnl.in" target="_blank" rel="noopener">स्रोत</a></p>
+        </div>
+      </figure>
+      <p class="seo-note" id="ubError" hidden></p>
+    </section>
+
+    <section class="seo-section" id="who">
+      <h2>बिल कोणाचे, आणि कोणत्या टॅरिफवर</h2>
+      <p>वरचा भाग खात्याची ओळख सांगतो आणि — सर्वात महत्त्वाचे — ज्या दर-अनुसूचीवर बिल होते ती. इथल्या चुका महाग पडतात आणि वर्षानुवर्षे गुपचूप चालू राहतात, म्हणून दोन मिनिटे देणे योग्य.</p>
+      <article class="ub-explain" id="explain-consumer-no" data-line="consumer-no" data-live="">
+        <h3><span class="ub-num">1</span>ग्राहक क्रमांक</h3>
+        <p>ज्या खात्यावर जोडणीचे बिल होते ते — मीटर नव्हे. मीटर बदलले तरी हे तेच राहते, आणि प्रत्येक पोर्टल, पेमेंट अ‍ॅप व तक्रार फॉर्म हाच क्रमांक विचारतो. राज्यानुसार नावे बदलतात — <strong>Account ID</strong>, <strong>K Number</strong>, <strong>CA Number</strong>, <strong>Service Number</strong> — पण सर्व हेच एक रकाना आहेत. सुरुवातीच्या शून्यांसह जसाच्या तसा लिहा.</p>
+        <div class="ub-live" hidden><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"></div></div>
+        <p class="ub-live is-absent">दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/check-my-bill/">तुम्हाला आलेले बिल तपासा</a></p>
+      </article>
+      <article class="ub-explain" id="explain-tariff-category" data-line="tariff-category" data-live="tariffCategory">
+        <h3><span class="ub-num">2</span>टॅरिफ श्रेणी</h3>
+        <p>तुमच्या जोडणीचे बिल कोणत्या दर-अनुसूचीवर होते. हाच एक कोड तुमचे स्लॅब दर, स्थिर आकार आणि मागणी दंड लागू होऊ शकतो का हे ठरवतो — म्हणजे बिलावरचा सर्वात परिणामकारक रकाना, आणि सर्वाधिक चुकीचा असणाराही. व्यावसायिक कोडवर बिल होणारे घर जवळपास दुप्पट भरते. हे तुमच्या जागेच्या प्रत्यक्ष वापराशी जुळत नसेल, तर ती दुरुस्ती करून घेण्यासारखी आहे.</p>
+        <div class="ub-live"><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"><p class="ub-live-note">हे बिल LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW) वर आहे. खालचा प्रत्येक दर — स्लॅब, स्थिर आकार, मागणी दंड लागू होऊ शकतो की नाही — फक्त याच एका कोडवरून ठरतो.</p></div></div>
+        <p class="ub-live is-absent" hidden>दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/mr/tariffs/states/">राज्य आणि DISCOM नुसार टॅरिफ अनुसूची</a><a href="/mr/glossary/">बिल शब्दसंग्रह</a></p>
+      </article>
+      <article class="ub-explain" id="explain-sanctioned-load" data-line="sanctioned-load" data-live="sanctionedLoad">
+        <h3><span class="ub-num">3</span>मंजूर भार</h3>
+        <p>DISCOM ने तुम्हाला जेवढी क्षमता देण्याचा करार केला आहे ती, kW मध्ये — तुम्ही किती वापरली ती नव्हे. घरगुती बिलावर सहसा हेच थेट स्थिर आकार ठरवते. ते वाढवल्यास एकदाचे शुल्क आणि दरमहा जास्त स्थिर आकार लागतो; फार कमी ठेवल्यास नोंदलेली मागणी त्याहून वर गेल्यास दंडाचा धोका असतो. हा खरा समतोल आहे, कमी करत जाण्याचा आकडा नव्हे.</p>
+        <div class="ub-live"><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">स्थिर आकार = प्रति kW दर × मंजूर भार</div><div class="ub-calc-work"><span class="ub-calc-step">₹110.00 × 2 kW</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹220</div></div><p class="ub-live-note">हा आकार फक्त मंजूर भारावर अवलंबून असतो. वरची युनिट शून्य करा, बिलावर हेच तेवढे उरेल.</p></div></div>
+        <p class="ub-live is-absent" hidden>दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/mr/guides/reduce-fixed-charges-sanctioned-load/">स्थिर आकार कसा कमी करावा</a><a href="/sanctioned-load-optimizer/">मंजूर भार ऑप्टिमायझर</a></p>
+      </article>
+    </section>
+
+    <section class="seo-section" id="when">
+      <h2>तारखा, आणि त्यांपैकी कोणत्या पैशात पडतात</h2>
+      <p>बिलावर तीन तारखा असतात आणि त्या एकमेकांच्या जागी वापरता येत नाहीत. एक वापराची ओळख सांगते, एक बिल कधी तयार झाले ते सांगते, आणि एक ती मुदत आहे जिच्या दोन्ही बाजूंना पैसा जोडलेला आहे.</p>
+      <article class="ub-explain" id="explain-bill-month" data-line="bill-month" data-live="billMonth">
+        <h3><span class="ub-num">4</span>बिल महिना</h3>
+        <p>ज्या महिन्यात वीज <em>वापरली</em> गेली तो — बिल छापले तो नव्हे, आणि तुम्ही भरता तोही नव्हे. तीन वेगळ्या तारखा, आणि बिले त्यांना सारखी नावे देत नाहीत. वापराची ओळख हाच करून देतो, म्हणून तक्रारीत हाच नमूद करा — आणि इंधन अधिभार दरमहा अधिसूचित होत असल्याने, तुम्हाला कोणता अधिभार दर लागेल हेही हेच ठरवते.</p>
+        <div class="ub-live"><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"><p class="ub-live-note">JUN-2026 — ज्या महिन्यात वीज वापरली गेली तो (01-06-2026 ते 30-06-2026), बिल छापले तो नाही. हे दिसते त्यापेक्षा महत्त्वाचे आहे: इंधन अधिभार दरमहा अधिसूचित होतो, त्यामुळे कोणता दर लागेल हे हेच रकाना ठरवते. वर DISCOM बदला आणि पाहा — तेच UPPCL कनेक्शन जूनमध्ये +10% घेते आणि जुलैमध्ये 4.43% परत करते.</p></div></div>
+        <p class="ub-live is-absent" hidden>दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/fuel-surcharge/">या महिन्याचा इंधन अधिभार, राज्यनिहाय</a></p>
+      </article>
+      <article class="ub-explain" id="explain-due-date" data-line="due-date" data-live="dueDate">
+        <h3><span class="ub-num">5</span>देय दिनांक</h3>
+        <p>बिल लिहिले आहे तेवढेच राहण्याचा शेवटचा दिवस. हा दोन्ही बाजूंनी पैशाचा प्रश्न आहे: यानंतर संपूर्ण थकीत रकमेवर विलंब भरणा अधिभार लागू होतो आणि दरमहा चक्रवाढ होतो; आणि जिथे DISCOM वेळेवर भरण्याची सवलत देते, ती मिळवण्याचा हाच एकमेव मार्ग. जोडणी तोडण्याच्या नोटिसाही याच तारखेवरून चालतात, बिल दिनांकावरून नव्हे.</p>
+        <div class="ub-live"><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"><p class="ub-live-note">20-07-2026 पर्यंत भरल्यास बिल लिहिले आहे तेवढेच पडते. त्यानंतर संपूर्ण थकीत रकमेवर विलंब भरणा अधिभार लागू होतो आणि दरमहा चक्रवाढ होतो — आणि जिथे DISCOM वेळेवर भरण्याची सवलत देते, तीही जाते. बिल दिनांक आणि देय दिनांक यांत साधारण 15 दिवस असतात.</p></div></div>
+        <p class="ub-live is-absent" hidden>दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/mr/guides/smart-meter-prepaid-disconnection/">बिल न भरल्यास काय होते</a></p>
+      </article>
+    </section>
+
+    <section class="seo-section" id="reading">
+      <h2>मीटरने काय सांगितले</h2>
+      <p>संपूर्ण बिलावर हीच एक मोजलेली गोष्ट. खालचे सर्व याच एका आकड्यावर केलेले गणित आहे.</p>
+      <article class="ub-explain" id="explain-units-consumed" data-line="units-consumed" data-live="unitsConsumed">
+        <h3><span class="ub-num">6</span>वापरलेली युनिट</h3>
+        <p>सध्याच्या रीडिंगमधून मागील रीडिंग वजा करून, मीटर गुणकाने गुणिले (गुणक, घरगुती जोडणीवर जवळपास नेहमी 1). एक युनिट म्हणजे एक किलोवॉट-तास. संपूर्ण बिलावर हीच एक मोजलेली गोष्ट आहे — खालचे सर्व याच एका आकड्यावर केलेले गणित आहे.</p>
+        <div class="ub-live"><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">युनिट = (सध्याची रीडिंग − मागील रीडिंग) × मीटर गुणक</div><div class="ub-calc-work"><span class="ub-calc-step">(14,820 − 14,570) × 1</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>250 kWh</div></div><p class="ub-live-note">30 दिवसांत दररोज सुमारे 8.3 युनिट. जवळपास प्रत्येक घरगुती कनेक्शनवर मीटर गुणक 1 असतो; जिथे नसतो, तो मीटरवर छापलेला असतो आणि फरकाने गुणला जातो.</p></div></div>
+        <p class="ub-live is-absent" hidden>दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/mr/guides/uppcl-smart-meter-readings-explained/">स्मार्ट मीटर स्वतः कसे वाचावे</a><a href="/mr/smart-meter/">मीटरवरील प्रत्येक चिन्हाचा अर्थ</a></p>
+      </article>
+      <article class="ub-explain" id="explain-md" data-line="md" data-live="md">
+        <h3><span class="ub-num">7</span>कमाल मागणी (MD)</h3>
+        <p>महिनाभरात तुमच्या जोडणीने अर्ध्या तासाच्या सरासरीत ओढलेली सर्वाधिक वीज, kW मध्ये — हे शिखर आहे, एकूण नव्हे. वापर आणि मागणी वेगळ्या गोष्टी आहेत: 2 kW चा गीझर दहा तास चालवा, 20 युनिट लागतील आणि मागणी 2 kW राहील; 2 kW ची दहा उपकरणे एक तास चालवा, तेवढीच 20 युनिट लागतील पण मागणी 20 kW होईल. व्यावसायिक किंवा औद्योगिक जोडणीवर दुसरा प्रकार खूप महाग पडतो, कारण आकार शिखराच्या मागे जातो.</p>
+        <div class="ub-live"><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>नोंद 1.62 kW, मंजूर 2 kW</div></div><p class="ub-live-note">मीटरने नोंदवलेली सर्वात जास्त अर्ध्या तासाची सरासरी. घरगुती कनेक्शनवर ती नोंदली जाते पण तिच्यावर बिल होत नाही — स्थिर आकार तरीही मंजूर भारावरच लागतो. तरीही ती महत्त्वाची आहे: ती तुमच्या मंजूर भारापेक्षा वर जाऊ लागली, तर DISCOM दंड लावू शकते किंवा कनेक्शन नियमित करायला सांगू शकते.</p></div></div>
+        <p class="ub-live is-absent" hidden>दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/mr/guides/power-factor-kvah-billing-explained/">पॉवर फॅक्टर आणि kVAh बिलिंग</a><a href="/sanctioned-load-optimizer/">तुमचा मंजूर भार योग्य आहे का?</a></p>
+      </article>
+      <article class="ub-explain" id="explain-reading-status" data-line="reading-status" data-live="readingStatus">
+        <h3><span class="ub-num">8</span>रीडिंग स्थिती</h3>
+        <p>रीडिंग कशी घेतली हे सांगणारा एक छोटा कोड — मीटर रीडरने प्रत्यक्ष मीटर वाचले, की DISCOM ने अंदाज लावला कारण मीटर बंद जागी होते, वाचता आले नाही, किंवा बिघडलेले होते. ही शब्दावली प्रत्येक कंपनीची वेगळी असते आणि बिलावर या कोडचा अर्थ क्वचितच कुठे लिहिलेला असतो, पण खरा मुद्दा हा फरक आहे: खरी रीडिंग हे तथ्य आहे, अंदाज हा तात्पुरता आकडा आहे जो नंतर दुरुस्त होईल — सहसा खूप मोठ्या बिलाच्या रूपात.</p>
+        <div class="ub-live"><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>OK</div></div><p class="ub-live-note">रीडिंग कशी घेतली गेली. OK म्हणजे मीटर प्रत्यक्ष वाचले गेले आणि रीडिंग स्वीकारले गेले — बिल खऱ्या वापरावर आहे. DISCOM इथे एक छोटा कोड छापतात आणि ही शब्दावली प्रत्येक कंपनीची वेगळी असते. खरा फरक हा: कोड सांगतो की मीटर खरोखर वाचले गेले, की रीडिंग अंदाजाने लावली, मीटरपर्यंत पोहोचता आले नाही, किंवा मीटर बिघडलेले होते. दुसऱ्या प्रकाराचा अर्थ वरची युनिट हा अंदाज आहे जो नंतर दुरुस्त होईल — अशा वेळी स्वतःची रीडिंग घेऊन कळवणे योग्य.</p></div></div>
+        <p class="ub-live is-absent" hidden>दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/mr/guides/smart-meter-running-fast/">मीटर चुकीचे वाटत असेल तेव्हा</a><a href="/check-my-bill/">तुम्हाला आलेले बिल तपासा</a></p>
+      </article>
+    </section>
+
+    <section class="seo-section" id="charges">
+      <h2>तुमच्याकडून काय काय आकारले जाते</h2>
+      <p>बिल म्हणजे एक किंमत नव्हे. तो वेगवेगळ्या आकारांचा ढीग आहे, प्रत्येक वेगळ्या नियमाने ठरतो — आणि कोणता कोणता हे कळल्यावर कोणत्यावर तुम्ही काही करू शकता ते समजते.</p>
+      <article class="ub-explain" id="explain-energy-charge" data-line="energy-charge" data-live="energyCharge">
+        <h3><span class="ub-num">9</span>ऊर्जा आकार</h3>
+        <p>युनिटची स्वतःची किंमत. भारतातील जवळपास प्रत्येक घरगुती टॅरिफ <em>टेलिस्कोपिक</em> आहे: स्लॅब एकमेकांची जागा घेत नाहीत, ते जोडले जातात — म्हणजे वरच्या स्लॅबमध्ये गेल्याने फक्त जादा युनिट महाग होतात, खालची कधीच नाही. तुमचे बिल एक एकूण रक्कम छापते; वरची तक्ता ती ज्या शिडीतून आली ती दाखवते.</p>
+        <div class="ub-live"><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">ऊर्जा आकार = Σ (प्रत्येक स्लॅबमधील युनिट × त्या स्लॅबचा दर)</div><div class="ub-calc-work"><span class="ub-calc-step">150 × ₹5.50 = ₹825</span><span class="ub-calc-step">100 × ₹6.00 = ₹600</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,425</div></div><p class="ub-live-note">स्लॅब एकावर एक चढतात, बदलत नाहीत — वरच्या स्लॅबमध्ये गेल्याने फक्त जादा युनिट महाग होतात. शेवटचे युनिट ₹6.00 ला पडले, पण संपूर्ण बिलाची सरासरी ₹1,425 ÷ 250 = ₹5.70 प्रति युनिट आहे.</p></div></div>
+        <p class="ub-live is-absent" hidden>दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/compare/">DISCOM मधील स्लॅब दरांची तुलना</a><a href="/mr/guides/tod-billing-explained/">वेळेनुसार (ToD) बिलिंग</a></p>
+      </article>
+      <article class="ub-explain" id="explain-fixed-charge" data-line="fixed-charge" data-live="fixedCharge">
+        <h3><span class="ub-num">10</span>स्थिर आकार / मागणी आकार</h3>
+        <p>तुम्ही एक युनिट वापरा किंवा एकही नाही, हे भरावेच लागते. हे तारा, मीटर आणि कर्मचाऱ्यांचा खर्च उचलते, आणि म्हणूनच बंद असलेल्या रिकाम्या घराचेही बिल येते. घरगुती जोडणीवर हे <em>मंजूर भारा</em>च्या प्रत्येक kW वर लागते; व्यावसायिक किंवा औद्योगिकवर <em>नोंदलेल्या कमाल मागणी</em>वर — म्हणूनच एकाच दराने दोन्ही बिलांवर खूप वेगळ्या रकमा येतात.</p>
+        <div class="ub-live"><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">स्थिर आकार = प्रति kW दर × मंजूर भार</div><div class="ub-calc-work"><span class="ub-calc-step">₹110.00 × 2 kW</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹220</div></div><p class="ub-live-note">या सूत्रात वापर कुठेच येत नाही. म्हणूनच बंद असलेल्या रिकाम्या घराचेही बिल येते.</p></div></div>
+        <p class="ub-live is-absent" hidden>दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/mr/guides/reduce-fixed-charges-sanctioned-load/">स्थिर आकार कसा कमी करावा</a></p>
+      </article>
+      <article class="ub-explain" id="explain-excess-demand" data-line="excess-demand" data-live="excessDemand" data-absent>
+        <h3><span class="ub-num" hidden></span>अतिरिक्त मागणी दंड</h3>
+        <p>महिनाभरात मीटरने नोंदवलेली कमाल मागणी तुमच्या मंजूर भारापेक्षा जास्त झाल्यास हा लागतो. मीटर अर्ध्या तासाची सर्वात जास्त सरासरी नोंदवते, त्यामुळे काही मिनिटे सर्व काही एकत्र चालवणेही पुरेसे आहे — आणि ज्या ज्या महिन्यात तुम्ही वर जाल, तो पुन्हा लागेल. दोन उपाय: जड उपकरणे वेगवेगळ्या वेळी चालवा, किंवा मंजूर भार वाढवण्यासाठी अर्ज करा. कोणते स्वस्त हे तुम्ही किती वर चालत आहात यावर अवलंबून.</p>
+        <div class="ub-live" hidden><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"></div></div>
+        <p class="ub-live is-absent">दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/mr/guides/uppcl-sanctioned-load-increased/">DISCOM तुमचा भार वाढवते तेव्हा</a><a href="/sanctioned-load-optimizer/">कोणता पर्याय स्वस्त, हिशोब करा</a></p>
+      </article>
+      <article class="ub-explain" id="explain-fppa" data-line="fppa" data-live="fppa">
+        <h3><span class="ub-num">11</span>इंधन अधिभार (FPPA / FPPAS / PPAC / FAC)</h3>
+        <p>हीच एक ओळ आहे जी दरमहा अशा कारणांनी बदलते ज्यांचा तुमच्याशी काहीही संबंध नाही. DISCOM ला वीज खरेदीचा प्रत्यक्ष खर्च आणि तुमचा टॅरिफ ठरवताना नियामकाने गृहीत धरलेला खर्च, या दोहोंतील फरक इथून जातो. यात चार गोष्टी लोकांना चकित करतात: अनेक राज्यांत ती <em>दरमहा</em> पुन्हा ठरते; ती <em>ऋण</em>ही असू शकते, तेव्हा तो परतावा असतो; जिथे ती टक्केवारीत आहे तिथे सहसा ऊर्जा आकाराबरोबरच स्थिर आकारावरही लागते; आणि अधिसूचित दर सार्वजनिक असतो, त्यामुळे दर न दाखवता ही ओळ छापणारे बिल विचारण्यासारखे आहे.</p>
+        <div class="ub-live"><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">FPPA = (ऊर्जा आकार + स्थिर/मागणी आकार + दंड) × अधिसूचित दर %</div><div class="ub-calc-work"><span class="ub-calc-step">आधार = ₹1,645</span><span class="ub-calc-step">₹1,645 × 10%</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹164.50</div></div><p class="ub-live-note">दर दरमहा अधिसूचित होतो आणि तो ऊर्जा आकाराबरोबरच स्थिर आकारावरही लागतो — फक्त युनिटवर नाही, हाच या ओळीचा सर्वात सामान्य गैरसमज आहे.</p></div></div>
+        <p class="ub-live is-absent" hidden>दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/mr/guides/how-fppa-fuel-surcharge-is-calculated/">FPPA ची गणना कशी होते</a><a href="/guides/up-electricity-bill-10-percent-fppa-surcharge/">उत्तर प्रदेशातील 10% मर्यादा</a><a href="/fuel-surcharge/">राज्यनिहाय सध्याचे दर</a></p>
+      </article>
+      <article class="ub-explain" id="explain-wheeling" data-line="wheeling" data-live="wheeling" data-absent>
+        <h3><span class="ub-num" hidden></span>व्हीलिंग आकार</h3>
+        <p>वीज वितरण नेटवर्कमधून तुमच्या जागेपर्यंत पोहोचवण्याचा खर्च, विजेच्या स्वतःच्या किमतीपासून वेगळा करून. जी राज्ये दोन्ही वेगळी ठेवतात — महाराष्ट्र सर्वात स्पष्टपणे — ती हे स्वतंत्र ओळीत छापतात. जी ठेवत नाहीत, त्यांनी तोच खर्च ऊर्जा दरात मिसळला आहे. तुम्ही तो दोनदा भरत नाही.</p>
+        <div class="ub-live" hidden><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"></div></div>
+        <p class="ub-live is-absent">दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/mr/guides/how-to-read-msedcl-bill/">MSEDCL चे बिल कसे वाचावे</a><a href="/mr/guides/msedcl-fppa-charges-explained/">MSEDCL च्या स्वतःच्या अधिभार ओळी</a></p>
+      </article>
+      <article class="ub-explain" id="explain-electricity-duty" data-line="electricity-duty" data-live="electricityDuty">
+        <h3><span class="ub-num">12</span>वीज शुल्क</h3>
+        <p>एक राज्य कर, जो DISCOM सरकारच्या वतीने गोळा करते. तो फक्त ऊर्जा आकारावर लागतो की संपूर्ण बिलावर, हे प्रत्येक राज्य स्वतः ठरवते — आणि म्हणूनच सारखाच वापर असलेली दोन बिले राज्याच्या सीमेपलीकडे काही शंभर रुपयांनी वेगळी असू शकतात. घरगुती वीजपुरवठ्यावर GST नाही — दिसला तर पुन्हा तपासा.</p>
+        <div class="ub-live"><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">शुल्क = (ऊर्जा + स्थिर + दंड + व्हीलिंग + FPPA) × शुल्क दर %</div><div class="ub-calc-work"><span class="ub-calc-step">आधार = ₹1,809.50</span><span class="ub-calc-step">₹1,809.50 × 5%</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹90.47</div></div><p class="ub-live-note">इथे शुल्क संपूर्ण बिलावर आहे, स्थिर आकारासह. कोणता आधार घ्यायचा हे प्रत्येक राज्य स्वतः ठरवते, आणि म्हणूनच सीमेच्या दोन्ही बाजूंची सारखी दोन घरे वेगळे बिल भरतात.</p></div></div>
+        <p class="ub-live is-absent" hidden>दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/mr/guides/electricity-duty-explained/">वीज शुल्क, राज्यानुसार</a></p>
+      </article>
+    </section>
+
+    <section class="seo-section" id="totals">
+      <h2>प्रत्यक्षात तुम्हाला काय भरायचे आहे</h2>
+      <p>जिथे या महिन्याचे आकार आधीच्या उरलेल्या हिशोबाला येऊन मिळतात.</p>
+      <article class="ub-explain" id="explain-subsidy" data-line="subsidy" data-live="subsidy" data-absent>
+        <h3><span class="ub-num" hidden></span>सबसिडी</h3>
+        <p>राज्य सरकारची सवलत, जी कमी दराऐवजी वरील आकारांतून वजावट म्हणून दिसते. DISCOM पूर्ण टॅरिफच लावते आणि राज्य त्याची भरपाई करते — म्हणूनच स्थूल रक्कम मोठी राहते, आणि म्हणूनच कोणताही टॅरिफ आदेश न बदलता सबसिडी मागे घेतली जाऊ शकते. बहुतेक योजना अटींवर आधारित असतात: वापर एका मर्यादेखाली राहणे, श्रेणी तीच असणे, आणि कधी कधी नूतनीकरण करावे लागणारी नोंदणी.</p>
+        <div class="ub-live" hidden><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"></div></div>
+        <p class="ub-live is-absent">दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/mr/guides/how-to-read-bses-delhi-bill/">BSES दिल्लीचे बिल कसे वाचावे</a></p>
+      </article>
+      <article class="ub-explain" id="explain-net-current-bill" data-line="net-current-bill" data-live="netCurrentBill">
+        <h3><span class="ub-num">13</span>निव्वळ चालू बिल</h3>
+        <p>या महिन्याचे आकार, कोणतीही सबसिडी वजा करून — आणि हे तुम्हाला भरायचे आहे ते <strong>नव्हे</strong>. मागील महिन्याशी तुलना याच आकड्याने करा, कारण यात फक्त या महिन्याचा वापर आहे, दुसरे काही नाही. खालची एकूण देय रक्कम वेगळी गोष्ट आहे: तिच्यात जुनी थकबाकी मिसळलेली असते, आणि महिन्या-महिन्याला <em>तिची</em> तुलना तुम्हाला विजेच्या वापराची नव्हे, भरण्याच्या इतिहासाची कहाणी सांगेल.</p>
+        <div class="ub-live"><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">निव्वळ चालू बिल = ऊर्जा आकार + स्थिर आकार + इंधन अधिभार (fppa) + electricity duty</div><div class="ub-calc-work"><span class="ub-calc-step">₹1,425 + ₹220 + ₹164.50 + ₹90.47</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,900</div></div><p class="ub-live-note">फक्त या महिन्याचे — हे तुम्हाला भरायचे आहे ते नव्हे. 250 युनिटवर हे ₹1,900 ÷ 250 = ₹7.60 प्रति युनिट पडते, जे नेहमी स्लॅब दरापेक्षा जास्त असते. महिन्या-महिन्याची तुलना याच आकड्याने करा; खालच्या एकूण देय रकमेत जुनी थकबाकी मिसळलेली असते आणि ती तुमच्या वापराचे चुकीचे चित्र दाखवेल.</p></div></div>
+        <p class="ub-live is-absent" hidden>दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/#calculator">तुमचे बिल मोजा</a></p>
+      </article>
+      <article class="ub-explain" id="explain-arrears" data-line="arrears" data-live="arrears" data-absent>
+        <h3><span class="ub-num" hidden></span>थकबाकी</h3>
+        <p>न भरलेल्या रकमा ज्या पुढे आणल्या आहेत. ज्या बिलाचा भरणा तुम्हाला आठवतो, त्यावर थकबाकी दिसल्यास सहसा भरणा बिल तयार झाल्यानंतर नोंदला गेलेला असतो — तक्रार करण्यापूर्वी भरण्याची तारीख आणि बिल दिनांक ताडून पाहा. दोन चक्रे टिकून राहणाऱ्या थकबाकीसाठी व्यवहार संदर्भासह लेखी तक्रार करावी.</p>
+        <div class="ub-live" hidden><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"></div></div>
+        <p class="ub-live is-absent">दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/check-my-bill/">तुम्हाला आलेले बिल तपासा</a></p>
+      </article>
+      <article class="ub-explain" id="explain-lpsc" data-line="lpsc" data-live="lpsc" data-absent>
+        <h3><span class="ub-num" hidden></span>विलंब भरणा अधिभार (LPSC)</h3>
+        <p>देय दिनांकापर्यंत तुम्ही जे भरले नाही त्यावरील व्याज — सहसा दरमहा 1.25–2%, थकबाकीवर चक्रवाढ. कोणत्याही बिलावरची ही सर्वात टाळता येणारी ओळ आहे: देय दिनांकापर्यंत भरा, ती पूर्णपणे निघून जाते. एखादी वादग्रस्त रक्कम थकबाकीत असेल, तर वाद सुरू असेपर्यंत तिच्यावरही LPSC चढत राहतो — म्हणून वाद लवकर मांडा.</p>
+        <div class="ub-live" hidden><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"></div></div>
+        <p class="ub-live is-absent">दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/mr/guides/smart-meter-prepaid-disconnection/">बिल न भरल्यास काय होते</a></p>
+      </article>
+      <article class="ub-explain" id="explain-total-payable" data-line="total-payable" data-live="totalPayable">
+        <h3><span class="ub-num">14</span>एकूण देय रक्कम</h3>
+        <p>निव्वळ चालू बिल, अधिक थकबाकी आणि अधिभार, वजा आधीच जमा झालेले भरणे. आजच्या तारखेला तुम्हाला हेच भरायचे आहे. पूर्ण रक्कम भरा — अंशतः भरल्याने उरलेल्या रकमेवरचा अधिभार थांबत नाही, आणि प्रीपेड किंवा तोडणी-नोटीस असलेल्या खात्यावर घड्याळही थांबत नाही.</p>
+        <div class="ub-live"><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">एकूण देय = निव्वळ चालू बिल + थकबाकी + अधिभार − आधी जमा झालेले भरणे</div><div class="ub-calc-work"><span class="ub-calc-step">₹1,900 निव्वळ चालू बिल</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,900</div></div><p class="ub-live-note">वरच्या निव्वळ चालू बिलाइतकेच, फक्त कारण या बिलावर काहीही पुढे आणलेले नाही. पूर्ण रक्कम भरा: अंशतः भरल्याने उरलेल्या रकमेवरचा अधिभार थांबत नाही.</p></div></div>
+        <p class="ub-live is-absent" hidden>दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/#calculator">तुमचे बिल मोजा</a><a href="/bill-review/">बिलाची तपासणी करून घ्या</a></p>
+      </article>
+      <article class="ub-explain" id="explain-due-date-rebate" data-line="due-date-rebate" data-live="dueDateRebate" data-absent>
+        <h3><span class="ub-num" hidden></span>वेळेवर भरण्याची सवलत</h3>
+        <p>अनेक DISCOM देय दिनांकापर्यंत भरल्यास बिलातून थोडी रक्कम <em>वजा</em> करतात — काही पैसे प्रति युनिट, किंवा ऊर्जा आकाराची टक्केवारी, आणि कधी कधी डिजिटल भरण्यासाठी आणखी थोडी. ती सहज नजरेतून सुटते कारण ती आकारासारखी नव्हे, तर खाली एक दुसरी, कमी एकूण रक्कम म्हणून छापली जाते. जिथे ती आहे, तिथे देय दिनांक दुप्पट पैशाचा आहे: वेळेवर भरून सवलत मिळते, आणि चुकवून अधिभार सुरू होतो.</p>
+        <div class="ub-live" hidden><span class="ub-live-tag">या बिलावर</span>
+          <div class="ub-live-body"></div></div>
+        <p class="ub-live is-absent">दाखवलेल्या बिलावर हा लागलेला नाही — वर दुसरा DISCOM किंवा श्रेणी निवडा, तो दिसेल.</p>
+        <p class="ub-more"><a href="/guides/how-to-read-tpcodl-odisha-bill/">TPCODL ओडिशाचे बिल कसे वाचावे</a></p>
+      </article>
+    </section>
+
+    <section class="seo-section" id="why-higher">
+      <h2>बिल युनिट × दर पेक्षा जास्त का येते</h2>
+      <p>वीज बिलाबद्दलची सर्वात सामान्य तक्रार हीच की एकूण रक्कम, युनिटला डोक्यातल्या दराने गुणल्यावर जुळत नाही. सहसा ती चूक नसते. या फरकाची जवळपास पूर्ण कारणे चार आहेत:</p>
+      <ul>
+        <li><strong>स्लॅब एकावर एक चढतात.</strong> एकच दर असा नसतोच. तुमचे शेवटचे युनिट पहिल्यापेक्षा महाग पडले, आणि तुम्ही भरलेला सरासरी दर दोहोंच्या मध्ये कुठेतरी आहे — तुम्हाला आठवणाऱ्या सर्वात स्वस्त स्लॅबपेक्षा नेहमीच वर.</li>
+        <li><strong>स्थिर आकार म्हणजे वापर नव्हे.</strong> तो मंजूर भाराच्या प्रत्येक kW वर लागतो, वापर कितीही असो — त्यामुळे ज्या महिन्यात तुम्ही फार कमी वीज वापरली, त्याच महिन्यात प्रति युनिट तो सर्वात जड पडतो.</li>
+        <li><strong>कर सर्वात शेवटी येतो.</strong> वीज शुल्क आकारांच्या वर लागते — अनेक राज्यांत संपूर्ण बिलावर, फक्त ऊर्जा भागावर नव्हे.</li>
+        <li><strong>पास-थ्रू पूर्वसूचनेशिवाय हलू शकतो.</strong> इंधन अधिभार वेळोवेळी पुन्हा ठरतो आणि एका बिलावर येऊ शकतो, पुढच्यावर नाही — तुमच्या वापरात काहीही बदल नसताना.</li>
+      </ul>
+      <p>हे सर्व हिशेबात घेतल्यावरही एकूण रक्कम चुकीची वाटत असेल, तर पुढे रीडिंग तपासा — अंदाजाच्या किंवा सरासरीच्या बिलानंतर खरी रीडिंग आली की एक धक्कादायक महिना तयार होतो, जो प्रत्यक्षात दोन महिन्यांचा वापर असतो.</p>
+    </section>
+
+    <section class="seo-section" id="faq">
+      <h2>सामान्य प्रश्न</h2>
+      <details class="seo-faq-item">
+        <summary>वीज वापरलीच नाही, तरी बिलावर स्थिर आकार का?</summary>
+        <div class="seo-faq-a">कारण स्थिर आकार जोडणीची किंमत आहे, वापराची नव्हे — तुमच्या जागेपर्यंतची लाइन, मीटर, आणि तुमच्यासाठी राखून ठेवलेली क्षमता. तो मंजूर भाराच्या प्रत्येक kW वर लागतो आणि बंद घरालाही लागतो. तो थांबवण्याचा एकच मार्ग म्हणजे जोडणी रीतसर परत करणे; केवळ वीज न वापरल्याने तो थांबत नाही.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>वीज बिलावरील FPPA म्हणजे काय?</summary>
+        <div class="seo-faq-a">Fuel and Power Purchase Adjustment: DISCOM ने विजेसाठी प्रत्यक्षात जे भरले आणि तुमचा टॅरिफ ठरवताना नियामकाने जे गृहीत धरले, या दोहोंतील फरक — जो तुमच्यापर्यंत पोहोचवला जातो. तो वेळोवेळी पुन्हा ठरतो, त्यामुळे तुमचा वापर न बदलताही तो दरमहा बदलतो. काही राज्ये तो प्रति युनिट पैशांत घेतात, काही ऊर्जा आकाराच्या टक्केवारीत.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>वीज बिलावर GST लागतो का?</summary>
+        <div class="seo-faq-a">नाही. घरगुती ग्राहकाला विजेचा पुरवठा GST मधून वगळलेला आहे. तुम्हाला दिसते ते वीज शुल्क आहे, एक राज्य कर, जी वेगळी गोष्ट आहे. DISCOM जे स्वतंत्रपणे बिल करते त्यावर GST येऊ शकतो — नव्या जोडणीचे शुल्क, मीटर तपासणीचा आकार — पण विजेच्या पुरवठ्यावर नाही.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>माझ्या बिलावर &quot;Average&quot; किंवा &quot;Provisional&quot; लिहिले आहे. याचा अर्थ काय?</summary>
+        <div class="seo-faq-a">त्या महिन्यात कुणीही मीटर वाचले नाही, म्हणून DISCOM ने तुमच्या मागील नोंदींवरून वापराचा अंदाज लावला. पुढच्या खऱ्या रीडिंगला त्याचा हिशोब बरोबर होतो — म्हणूनच अंदाजाच्या महिन्यानंतर बरेचदा एक असामान्यपणे मोठा महिना येतो. स्वतःची रीडिंग घ्या आणि तक्रार करताना तीच नमूद करा — ही दुरुस्ती नेहमीचीच आहे.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>मी माझी टॅरिफ श्रेणी बदलू शकतो का?</summary>
+        <div class="seo-faq-a">होय, जागेचा वापर कसा आहे याचा पुरावा देऊन DISCOM कडे अर्ज करून. हे महत्त्वाचे आहे: व्यावसायिक अनुसूचीवर बिल होणारे घर जवळपास दुप्पट भरू शकते. बदल सहसा पुढच्या काळासाठी लागू होतो, त्यामुळे चुकीची श्रेणी जितक्या लवकर लक्षात येईल तितका तोटा कमी.</div>
+      </details>
+    </section>
+
+    <section class="seo-section">
+      <h2>पुढे काय</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/#calculator"><strong>तुमचे खरे बिल मोजा</strong><span>तुमचा DISCOM, तुमची युनिट, तुमचा भार — संपूर्ण बिल, प्रत्येक ओळ स्वतंत्र.</span></a>
+        <a class="seo-link-card" href="/check-my-bill/"><strong>तुम्हाला आलेले बिल तपासा</strong><span>बिल अपलोड करा किंवा टाइप करा, आणि आकार बरोबर जुळतात का ते पाहा.</span></a>
+        <a class="seo-link-card" href="/glossary/"><strong>बिलिंग शब्दसंग्रह</strong><span>भारतीय वीज बिलावर छापल्या जाणाऱ्या प्रत्येक संक्षिप्त नावाची व्याख्या.</span></a>
+        <a class="seo-link-card" href="/sanctioned-load-optimizer/"><strong>तुमचा मंजूर भार योग्य आहे का?</strong><span>तो वाढवण्यात किंवा कमी करण्यात काय खर्च, आणि दंड कधी बोचू लागतो.</span></a>
+      </div>
+    </section>
+
+    <p class="seo-disclaimer">वरचे बिल प्रकाशित टॅरिफ अनुसूचींवरून तयार केलेले उदाहरण आहे. ते बिल नाही, कोटेशन नाही, आणि तुमच्या DISCOM ने दिलेल्या बिलाला पर्यायही नाही. इथला एखादा आकडा आणि तुमच्या बिलावरचा आकडा जुळत नसेल, तर तुमचे बिलच प्रमाण — आणि ते चुकीचे वाटत असेल तर DISCOM कडे मांडा.</p>
+  </section>
+  <script type="module">
+    import { initUnderstandBill } from "/js/understand-bill.js";
+    initUnderstandBill();
+  </script>
+</div>
+
+<footer>
+  <div class="container">
+    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+        <a href="/compare/" data-i18n="nav.compare">Compare</a>
+        <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</a>
+        <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/mr/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/smart-meter/" data-i18n="ql.meterDisplay">Smart Meter Guide</a>
+        <a href="/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/mr/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/mr/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/mr/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/fuel-surcharge/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/contact/" data-i18n="ql.contact">Contact</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

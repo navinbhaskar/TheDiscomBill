@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      try { localStorage.setItem('lang', 'ta'); } catch (e) {}
+    })();
+  </script>
+  <title>உங்கள் மின் பில்லைப் புரிந்துகொள்ளுங்கள்</title>
+  <meta name="description" content="நீங்கள் மாற்றக்கூடிய ஊடாடும் மின் பில். DISCOM, யூனிட், அனுமதிக்கப்பட்ட சுமையை மாற்றி ஒவ்வொரு வரியின் பொருளையும்">
+  <link rel="canonical" href="https://thediscombill.com/understand-your-bill/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/understand-your-bill/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/understand-your-bill/">
+  <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/understand-your-bill/">
+  <link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/understand-your-bill/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/understand-your-bill/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="உங்கள் மின் பில்லைப் புரிந்துகொள்ளுங்கள்: ஒவ்வொரு வரியும் விளக்கம்">
+  <meta property="og:description" content="நீங்கள் மாற்றக்கூடிய ஊடாடும் மின் பில். DISCOM, யூனிட், அனுமதிக்கப்பட்ட சுமையை மாற்றி ஒவ்வொரு வரியின் பொருளையும் பாருங்கள் — நிலையான கட்டணம், ஸ்லாப், FPPA, வரி, தேவை அபராதம்.">
+  <meta property="og:url" content="https://thediscombill.com/understand-your-bill/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="உங்கள் மின் பில்லைப் புரிந்துகொள்ளுங்கள்: ஒவ்வொரு வரியும் விளக்கம்">
+  <meta property="og:locale" content="ta_IN">
+  <meta property="og:locale:alternate" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="உங்கள் மின் பில்லைப் புரிந்துகொள்ளுங்கள்: ஒவ்வொரு வரியும் விளக்கம்">
+  <meta name="twitter:description" content="நீங்கள் மாற்றக்கூடிய ஊடாடும் மின் பில். DISCOM, யூனிட், அனுமதிக்கப்பட்ட சுமையை மாற்றி ஒவ்வொரு வரியின் பொருளையும் பாருங்கள் — நிலையான கட்டணம், ஸ்லாப், FPPA, வரி, தேவை அபராதம்.">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/understand-your-bill/","name":"உங்கள் மின் பில்லைப் புரிந்துகொள்ளுங்கள்: ஒவ்வொரு வரியும் விளக்கம்","description":"நீங்கள் மாற்றக்கூடிய ஊடாடும் மின் பில். DISCOM, யூனிட், அனுமதிக்கப்பட்ட சுமையை மாற்றி ஒவ்வொரு வரியின் பொருளையும் பாருங்கள் — நிலையான கட்டணம், ஸ்லாப், FPPA, வரி, தேவை அபராதம்.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN","dateModified":"2026-08-12"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"மின்சாரமே பயன்படுத்தவில்லை, பிறகு ஏன் பில்லில் நிலையான கட்டணம்?","acceptedAnswer":{"@type":"Answer","text":"ஏனெனில் நிலையான கட்டணம் இணைப்பின் விலை, நுகர்வின் அல்ல — உங்கள் இடம் வரையிலான வழி, மீட்டர், உங்களுக்காக ஒதுக்கி வைக்கப்பட்ட கொள்ளளவு. இது அனுமதிக்கப்பட்ட சுமையின் ஒவ்வொரு kW-க்கும் விதிக்கப்படுகிறது, பூட்டிய வீட்டுக்கும் பொருந்தும். இதை நிறுத்த ஒரே வழி இணைப்பை முறையாகச் சரணடைவதுதான்; வெறுமனே மின்சாரம் பயன்படுத்தாமல் இருப்பதால் நிற்காது."}},{"@type":"Question","name":"மின் பில்லில் FPPA என்றால் என்ன?","acceptedAnswer":{"@type":"Answer","text":"Fuel and Power Purchase Adjustment: மின்சாரத்திற்காக DISCOM உண்மையில் செலுத்தியதற்கும், உங்கள் கட்டணம் நிர்ணயிக்கப்பட்டபோது ஒழுங்குமுறை ஆணையம் கருதியதற்கும் உள்ள வித்தியாசம் — அது உங்களுக்குக் கடத்தப்படுகிறது. இது அவ்வப்போது மறுகணக்கிடப்படுகிறது, எனவே உங்கள் பயன்பாடு மாறாவிட்டாலும் மாதந்தோறும் மாறும். சில மாநிலங்கள் யூனிட்டுக்கு பைசாவில் வசூலிக்கின்றன, சில ஆற்றல் கட்டணத்தின் சதவீதமாக."}},{"@type":"Question","name":"மின் பில்லில் GST வசூலிக்கப்படுகிறதா?","acceptedAnswer":{"@type":"Answer","text":"இல்லை. வீட்டு நுகர்வோருக்கு மின்சார விநியோகம் GST-இலிருந்து விலக்கு பெற்றது. நீங்கள் பார்ப்பது மின் வரி, ஒரு மாநில வரி, அது வேறு விஷயம். DISCOM தனியாகப் பில் செய்யும் இதர விஷயங்களில் GST வரலாம் — புதிய இணைப்புக் கட்டணம், மீட்டர் சோதனைக் கட்டணம் — ஆனால் மின் விநியோகத்தின் மீது அல்ல."}},{"@type":"Question","name":"என் பில்லில் \"Average\" அல்லது \"Provisional\" என்று உள்ளது. அதன் பொருள் என்ன?","acceptedAnswer":{"@type":"Answer","text":"அந்த மாதம் யாரும் மீட்டரைப் படிக்கவில்லை, எனவே DISCOM உங்கள் முந்தைய பதிவுகளிலிருந்து நுகர்வை மதிப்பிட்டது. அடுத்த உண்மையான ரீடிங்கில் அது சரிசெய்யப்படுகிறது — அதனால்தான் மதிப்பீட்டு மாதத்திற்குப் பிறகு பெரும்பாலும் வழக்கத்திற்கு மாறாக ஒரு பெரிய மாதம் வருகிறது. நீங்களே ரீடிங் எடுத்து, புகார் அளிக்கும்போது அதைக் குறிப்பிடுங்கள் — இந்தத் திருத்தம் வழக்கமானது."}},{"@type":"Question","name":"என் கட்டண வகையை மாற்ற முடியுமா?","acceptedAnswer":{"@type":"Answer","text":"ஆம், இடம் எப்படிப் பயன்படுத்தப்படுகிறது என்பதற்கான ஆதாரத்துடன் DISCOM-இடம் விண்ணப்பித்து. இது முக்கியம்: வணிக அட்டவணையில் பில் செய்யப்படும் வீடு கிட்டத்தட்ட இரு மடங்கு செலுத்த நேரிடும். மாற்றம் பொதுவாக எதிர்காலத்திற்கே பொருந்தும், எனவே தவறான வகை எவ்வளவு விரைவில் கண்டறியப்படுகிறதோ அவ்வளவு நஷ்டம் குறையும்."}}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <a href="/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">Smart Meter</a>
+      <a href="/ta/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/ta/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/#calculator" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">Smart Meter</span></a>
+            <a href="/ta/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/ta/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <!-- aria-labelledby, not aria-label: the accessible name has to CONTAIN the visible
+             text ("EN"), or speech input cannot activate the button and a screen reader never
+             announces which language is active (WCAG 2.5.3). Referencing the live span also
+             keeps the name in step when syncLangUI() rewrites the badge. -->
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- A plain list of links, not a listbox. These rows navigate, so they are anchors:
+             that makes them crawlable, middle-clickable and keyboard-operable for free,
+             none of which a role="option" <li> with a click handler ever was. Rows that
+             translate in place (no twin URL to point at) stay <button>s. -->
+        <ul class="lang-menu" id="langMenu" aria-label="Select language">
+          <li><a class="lang-opt" href="/understand-your-bill/" hreflang="en-IN" lang="en" data-lang="en"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></a></li>
+          <li><a class="lang-opt" href="/hi/understand-your-bill/" hreflang="hi-IN" lang="hi" data-lang="hi"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">हिं</span></a></li>
+          <li><a class="lang-opt" href="/mr/understand-your-bill/" hreflang="mr-IN" lang="mr" data-lang="mr"><span class="lang-opt-name">मराठी</span><span class="lang-opt-code">म</span></a></li>
+          <li><span class="lang-opt" data-lang="ta" aria-current="true"><span class="lang-opt-name">தமிழ்</span><span class="lang-opt-code">த</span></span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body" role="main">
+
+  <section class="seo-page container understand-bill-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">முகப்பு</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">உங்கள் பில்லைப் புரிந்துகொள்ளுங்கள்</span></li></ol></nav>
+    <h1>உங்கள் மின் பில்லை வரி வரியாகப் புரிந்துகொள்ளுங்கள்</h1>
+    <p class="seo-lang-pills"><svg class="seo-lang-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span class="sr-only">Available in</span><a class="seo-lang-pill" href="/understand-your-bill/" hreflang="en-IN" lang="en">English</a><a class="seo-lang-pill" href="/hi/understand-your-bill/" hreflang="hi-IN" lang="hi">हिंदी</a><a class="seo-lang-pill" href="/mr/understand-your-bill/" hreflang="mr-IN" lang="mr">मराठी</a><span class="seo-lang-pill is-current" lang="ta" aria-current="page">தமிழ்</span></p>
+    <p class="guide-meta">புதுப்பிப்பு 12 ஆகஸ்ட், 2026 · எங்கள் கால்குலேட்டருக்குப் பின்னால் உள்ள அதே இன்ஜின் மூலம் கணக்கிடப்பட்ட எண்கள் · <a href="/methodology/">நாங்கள் எப்படி ஆதாரம் திரட்டி சரிபார்க்கிறோம்</a></p>
+    <p class="seo-lead">மின் பில்லை எப்படிப் படிப்பது என்பதை கிட்டத்தட்ட யாருக்கும் கற்றுத் தரப்படுவதில்லை, பில்லும் உதவுவதில்லை — டசின் கணக்கான கட்டணங்கள், சுருக்கெழுத்துகளில், பெரும்பாலானவை விளக்கமின்றி. கீழே ஒரு இயங்கும் பில். DISCOM, யூனிட் அல்லது அனுமதிக்கப்பட்ட சுமையை மாற்றுங்கள், அது மீண்டும் கணக்கிடும் — ஒவ்வொரு எண்ணிடப்பட்ட குறியும் அந்த வரியை உங்கள் கண்முன் உள்ள எண்களைக் கொண்டே விளக்கும்.</p>
+
+    <nav class="page-toc" aria-label="இந்தப் பக்கத்தில்">
+      <span class="page-toc-label">இந்தப் பக்கத்தில்</span>
+      <a href="#bill">பில்</a>
+        <a href="#who">யார், எது</a>
+        <a href="#when">பணம் சார்ந்த தேதிகள்</a>
+        <a href="#reading">மீட்டர் ரீடிங்</a>
+        <a href="#charges">கட்டணங்கள்</a>
+        <a href="#totals">மொத்தங்கள்</a>
+        <a href="#why-higher">யூனிட் × விகிதத்தை ஏன் மீறுகிறது</a>
+        <a href="#faq">பொதுவான கேள்விகள்</a>
+    </nav>
+
+    <section class="seo-section" id="bill">
+      <h2>பில்லை மாற்றுங்கள்</h2>
+      <p>கீழே உள்ள ஒவ்வொரு எண்ணும் நீங்கள் தேர்ந்தெடுத்த DISCOM-இன் உண்மையான கட்டண அட்டவணையிலிருந்து மீண்டும் கணக்கிடப்படுகிறது, எனவே விளக்கங்கள் உண்மையில் நடந்த கணக்கையே விவரிக்கின்றன — ஒருமுறை எழுதி பழையதாக விடப்பட்ட எடுத்துக்காட்டு அல்ல.</p>
+
+      <form class="ub-controls" id="ubControls" novalidate>
+        <div class="ub-field ub-field-wide">
+          <label for="ubScenario">DISCOM மற்றும் வகை</label>
+          <select id="ubScenario" name="scenario">
+            <option value="uppcl-domestic" selected>UPPCL (உத்தரப் பிரதேசம்) — வீட்டு உபயோகம்</option>
+            <option value="msedcl-domestic">MSEDCL (மகாராஷ்டிரா) — வீட்டு உபயோகம்</option>
+            <option value="kseb-domestic">KSEB (கேரளா) — வீட்டு உபயோகம்</option>
+            <option value="delhi-domestic">BRPL (டெல்லி) — வீட்டு உபயோகம்</option>
+            <option value="odisha-domestic">TPCODL (ஒடிசா) — வீட்டு உபயோகம்</option>
+            <option value="uppcl-commercial">UPPCL (உத்தரப் பிரதேசம்) — வணிகம்</option>
+          </select>
+        </div>
+        <div class="ub-field">
+          <label for="ubUnits">பயன்படுத்திய யூனிட்</label>
+          <input type="number" id="ubUnits" name="units" min="0" max="5000" step="10" value="250" inputmode="numeric">
+        </div>
+        <div class="ub-field">
+          <label for="ubLoad">அனுமதிக்கப்பட்ட சுமை (kW)</label>
+          <input type="number" id="ubLoad" name="load" min="0.5" max="150" step="0.5" value="2" inputmode="decimal">
+        </div>
+        <div class="ub-field ub-field-own-row">
+          <label for="ubMd">அதிகபட்ச தேவை (kW) <span class="ub-optional">விருப்பத்தேர்வு</span></label>
+          <input type="number" id="ubMd" name="md" min="0" max="500" step="0.1" placeholder="1.62" inputmode="decimal">
+        </div>
+        <div class="ub-field ub-field-check">
+          <label><input type="checkbox" id="ubMessy" name="messy"> நிலுவை, தாமத கட்டண அபராதம், பகுதிச் செலுத்துதல் ஆகியவற்றைச் சேர்க்கவும்</label>
+          <span class="ub-hint">பெரும்பாலான உண்மையான பில்களில் பழைய நிலுவை இருக்கும். இதை இயக்கி அது மொத்தத்தை எப்படி மாற்றுகிறது என்று பாருங்கள்.</span>
+        </div>
+        <p class="ub-hint ub-hint-md">காலியாக விட்டால் இந்தப் பில்லில் மீட்டர் பதிவு செய்த தேவை பயன்படுத்தப்படும். அனுமதிக்கப்பட்ட சுமையை விட அதிகமாக ஒன்றை உள்ளிட்டு அபராதம் என்ன செய்கிறது என்று பாருங்கள்.</p>
+        <button type="button" class="btn-ghost ub-reset" id="ubReset">மீட்டமை</button>
+      </form>
+      <p class="ub-note" data-scenario="uppcl-domestic">1 kW மேலான நகர்ப்புற வீட்டு இணைப்பு. இங்கே மின் வரி முழு பில்லின் சதவீதமாக உள்ளது.</p>
+          <p class="ub-note" data-scenario="msedcl-domestic" hidden>ஒரு வீலிங் கட்டண வரியைச் சேர்க்கிறது, மின் வரியை ஆற்றல் கட்டணத்தின் மீது மட்டும் விதிக்கிறது.</p>
+          <p class="ub-note" data-scenario="kseb-domestic" hidden>ஐந்து சிறிய ஸ்லாப்கள், கூடுதல் கட்டணங்கள் எதுவும் இல்லை — பில்லின் எளிமையான வடிவம்.</p>
+          <p class="ub-note" data-scenario="delhi-domestic" hidden>17.94% விகிதத்தில் சதவீத எரிபொருள் கூடுதல் கட்டணம் (PPAC), உடன் GNCTD மானியம் கழிவாக.</p>
+          <p class="ub-note" data-scenario="odisha-domestic" hidden>விரைவுச் செலுத்துதல் தள்ளுபடி உண்டு, எனவே பில்லில் இரு மொத்தத் தொகைகள்: ஒன்று கடைசி தேதிக்குள் செலுத்தினால், மற்றொன்று இல்லையெனில்.</p>
+          <p class="ub-note" data-scenario="uppcl-commercial" hidden>பதிவான அதிகபட்ச தேவையின் மீது பில் — ஜூலை 2026-இன் எரிபொருள் கட்டணம் ஒரு வரவு, எனவே அந்த வரி ஒரு திரும்பப் பணம்.</p>
+      <p class="ub-more ub-more-scenario" data-scenario="uppcl-domestic"><span class="ub-more-label">உண்மையானது:</span><a href="/guides/how-to-read-uppcl-bill/">இந்த DISCOM-இன் உண்மையான பில் அமைப்பு</a><a href="/tariffs/uttar-pradesh/mvvnl/">அதன் முழு விகித அட்டவணை</a></p>
+      <p class="ub-more ub-more-scenario" data-scenario="msedcl-domestic" hidden><span class="ub-more-label">உண்மையானது:</span><a href="/ta/guides/how-to-read-msedcl-bill/">இந்த DISCOM-இன் உண்மையான பில் அமைப்பு</a><a href="/tariffs/maharashtra/msedcl/">அதன் முழு விகித அட்டவணை</a></p>
+      <p class="ub-more ub-more-scenario" data-scenario="kseb-domestic" hidden><span class="ub-more-label">உண்மையானது:</span><a href="/tariffs/kerala/kseb/">அதன் முழு விகித அட்டவணை</a></p>
+      <p class="ub-more ub-more-scenario" data-scenario="delhi-domestic" hidden><span class="ub-more-label">உண்மையானது:</span><a href="/guides/how-to-read-bses-delhi-bill/">இந்த DISCOM-இன் உண்மையான பில் அமைப்பு</a><a href="/tariffs/delhi/brpl/">அதன் முழு விகித அட்டவணை</a></p>
+      <p class="ub-more ub-more-scenario" data-scenario="odisha-domestic" hidden><span class="ub-more-label">உண்மையானது:</span><a href="/guides/how-to-read-tpcodl-odisha-bill/">இந்த DISCOM-இன் உண்மையான பில் அமைப்பு</a><a href="/tariffs/odisha/tpcodl/">அதன் முழு விகித அட்டவணை</a></p>
+      <p class="ub-more ub-more-scenario" data-scenario="uppcl-commercial" hidden><span class="ub-more-label">உண்மையானது:</span><a href="/guides/how-to-read-uppcl-bill/">இந்த DISCOM-இன் உண்மையான பில் அமைப்பு</a><a href="/tariffs/uttar-pradesh/mvvnl/">அதன் முழு விகித அட்டவணை</a></p>
+
+      <p class="ub-illustrative">
+        <span class="ub-illustrative-tag">விளக்கத்திற்கு மட்டும்</span>
+        <span>இது உண்மையான பில் அல்ல, எந்த DISCOM-இன் அச்சிட்ட பில்லின் நகலும் அல்ல. ஒரு நிறுவனத்திலிருந்து மற்றொன்றுக்கு பில்லின் அமைப்பு, புலப் பெயர்கள், வரிசை மாறும்; அவற்றுக்கு இடையே பொதுவானது இங்கே காட்டப்பட்டுள்ள கட்டணங்களின் தொகுப்பு. நுகர்வோர் எண், மீட்டர் எண், முகவரி ஆகியவை கற்பனையானவை.</span>
+      </p>
+
+      <!-- The gutter that the numbered markers hang in lives on .bill-figure, outside the
+           document's own border — the same arrangement as the meter diagram on
+           /smart-meter/, where the callouts sit beside the device rather than on it. -->
+      <figure class="bill-figure">
+        <div class="bill-doc" id="billDoc" aria-live="polite">
+        <div class="bill-doc-head">
+          <div class="bill-doc-id">
+            <strong class="bill-doc-title">Madhyanchal Vidyut Vitaran Nigam Ltd.</strong>
+            <span class="bill-doc-sub">விளக்கப்படம் · உண்மையான பில் அல்ல</span>
+          </div>
+          <span class="bill-doc-stamp">மாதிரி</span>
+        </div>
+        <section class="bill-block"><h4>கணக்கு</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="consumer-no"><a class="bill-mark" href="#explain-consumer-no" id="mark-consumer-no"><span class="bill-mark-n">1</span><span class="bill-mark-t">நுகர்வோர் எண்</span></a><span class="bill-row-k">நுகர்வோர் எண்</span><span class="bill-row-v">1234 5678 9012</span></div><div class="bill-row"><span class="bill-row-k">நுகர்வோர் பெயர்</span><span class="bill-row-v">ஏ. குமார்</span></div><div class="bill-row is-marked" data-line="tariff-category"><a class="bill-mark" href="#explain-tariff-category" id="mark-tariff-category"><span class="bill-mark-n">2</span><span class="bill-mark-t">கட்டண வகை</span></a><span class="bill-row-k">கட்டண வகை</span><span class="bill-row-v">LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW)</span></div><div class="bill-row is-marked" data-line="sanctioned-load"><a class="bill-mark" href="#explain-sanctioned-load" id="mark-sanctioned-load"><span class="bill-mark-n">3</span><span class="bill-mark-t">அனுமதிக்கப்பட்ட சுமை</span></a><span class="bill-row-k">அனுமதிக்கப்பட்ட சுமை</span><span class="bill-row-v">2 kW</span></div><div class="bill-row"><span class="bill-row-k">மீட்டர் எண்</span><span class="bill-row-v">MV 4471 2208 · சிங்கிள் ஃபேஸ்</span></div></div></section>
+        <section class="bill-block bill-block-period"><h4>பில்லிங் காலம்</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="bill-month"><a class="bill-mark" href="#explain-bill-month" id="mark-bill-month"><span class="bill-mark-n">4</span><span class="bill-mark-t">பில் மாதம்</span></a><span class="bill-row-k">பில் மாதம்</span><span class="bill-row-v">JUN-2026</span></div><div class="bill-row"><span class="bill-row-k">ரீடிங் காலம்</span><span class="bill-row-v">01-06-2026 – 30-06-2026</span></div><div class="bill-row"><span class="bill-row-k">பில் தேதி</span><span class="bill-row-v">05-07-2026</span></div><div class="bill-row is-marked" data-line="due-date"><a class="bill-mark" href="#explain-due-date" id="mark-due-date"><span class="bill-mark-n">5</span><span class="bill-mark-t">கடைசி தேதி</span></a><span class="bill-row-k">கடைசி தேதி</span><span class="bill-row-v">20-07-2026</span></div></div></section>
+        <section class="bill-block bill-block-reading"><h4>மீட்டர் ரீடிங்</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">முந்தைய ரீடிங்</span><span class="bill-row-v">14,570</span></div><div class="bill-row"><span class="bill-row-k">தற்போதைய ரீடிங்</span><span class="bill-row-v">14,820</span></div><div class="bill-row is-marked" data-line="units-consumed"><a class="bill-mark" href="#explain-units-consumed" id="mark-units-consumed"><span class="bill-mark-n">6</span><span class="bill-mark-t">பயன்படுத்திய யூனிட்</span></a><span class="bill-row-k">பயன்படுத்திய யூனிட்</span><span class="bill-row-v">250 kWh</span></div><div class="bill-row is-marked" data-line="md"><a class="bill-mark" href="#explain-md" id="mark-md"><span class="bill-mark-n">7</span><span class="bill-mark-t">அதிகபட்ச தேவை (MD)</span></a><span class="bill-row-k">அதிகபட்ச தேவை (MD)</span><span class="bill-row-v">1.62 kW</span></div><div class="bill-row is-marked" data-line="reading-status"><a class="bill-mark" href="#explain-reading-status" id="mark-reading-status"><span class="bill-mark-n">8</span><span class="bill-mark-t">ரீடிங் நிலை</span></a><span class="bill-row-k">ரீடிங் நிலை</span><span class="bill-row-v">OK</span></div></div></section>
+        <section class="bill-block bill-block-slabs">
+          <h4>ஆற்றல் கட்டணத்தின் பின்னால் உள்ள ஸ்லாப் ஏணி</h4>
+          <div class="bill-scroll"><table class="bill-slabs">
+            <thead><tr><th scope="col">ஸ்லாப்</th><th scope="col">யூனிட்</th><th scope="col">விகிதம்</th><th scope="col">தொகை</th></tr></thead>
+            <tbody><tr><td>1 – 150 units</td><td class="num">150</td><td class="num">₹5.50</td><td class="num">₹825</td></tr><tr><td>151 – 250 units</td><td class="num">100</td><td class="num">₹6.00</td><td class="num">₹600</td></tr></tbody>
+          </table></div>
+        </section>
+        <section class="bill-block bill-block-charges"><h4>கட்டணங்கள்</h4><div class="bill-rows"><div class="bill-row is-marked" data-line="energy-charge"><a class="bill-mark" href="#explain-energy-charge" id="mark-energy-charge"><span class="bill-mark-n">9</span><span class="bill-mark-t">ஆற்றல் கட்டணம்</span></a><span class="bill-row-k">ஆற்றல் கட்டணம்</span><span class="bill-row-v">₹1,425</span></div><div class="bill-row is-marked" data-line="fixed-charge"><a class="bill-mark" href="#explain-fixed-charge" id="mark-fixed-charge"><span class="bill-mark-n">10</span><span class="bill-mark-t">நிலையான கட்டணம்</span></a><span class="bill-row-k">நிலையான கட்டணம்</span><span class="bill-row-v">₹220</span></div><div class="bill-row is-marked" data-line="fppa"><a class="bill-mark" href="#explain-fppa" id="mark-fppa"><span class="bill-mark-n">11</span><span class="bill-mark-t">எரிபொருள் கூடுதல் கட்டணம் (FPPA)</span></a><span class="bill-row-k">எரிபொருள் கூடுதல் கட்டணம் (FPPA)</span><span class="bill-row-v">₹164.50</span></div><div class="bill-row is-marked" data-line="electricity-duty"><a class="bill-mark" href="#explain-electricity-duty" id="mark-electricity-duty"><span class="bill-mark-n">12</span><span class="bill-mark-t">Electricity Duty</span></a><span class="bill-row-k">Electricity Duty</span><span class="bill-row-v">₹90.47</span></div></div></section>
+        <section class="bill-block bill-block-total"><h4>செலுத்த வேண்டிய தொகை</h4><div class="bill-rows"><div class="bill-row"><span class="bill-row-k">நடப்பு கட்டணங்கள்</span><span class="bill-row-v">₹1,899.97</span></div><div class="bill-row is-marked" data-line="net-current-bill"><a class="bill-mark" href="#explain-net-current-bill" id="mark-net-current-bill"><span class="bill-mark-n">13</span><span class="bill-mark-t">நிகர நடப்பு பில்</span></a><span class="bill-row-k">நிகர நடப்பு பில்</span><span class="bill-row-v">₹1,900</span></div><div class="bill-row is-marked is-grand" data-line="total-payable"><a class="bill-mark" href="#explain-total-payable" id="mark-total-payable"><span class="bill-mark-n">14</span><span class="bill-mark-t">மொத்தம் செலுத்த வேண்டியது</span></a><span class="bill-row-k">மொத்தம் செலுத்த வேண்டியது</span><span class="bill-row-v">₹1,900</span></div></div></section>
+        <p class="bill-source">FY 2026-27 (UPERC order dt. 02-Jul-2026, rates retained) <span class="bill-badge is-ok">கட்டண ஆணையுடன் சரிபார்க்கப்பட்டது</span> · <a href="https://www.mvvnl.in" target="_blank" rel="noopener">ஆதாரம்</a></p>
+        </div>
+      </figure>
+      <p class="seo-note" id="ubError" hidden></p>
+    </section>
+
+    <section class="seo-section" id="who">
+      <h2>பில் யாருக்கு, எந்தக் கட்டணத்தில்</h2>
+      <p>மேல் பகுதி கணக்கை அடையாளம் காட்டுகிறது, மேலும் — மிக முக்கியமாக — எந்த விகித அட்டவணையில் பில் செய்யப்படுகிறது என்பதையும். இங்குள்ள தவறுகள் விலை உயர்ந்தவை, ஆண்டுக்கணக்கில் அமைதியாகத் தொடரும், எனவே இரு நிமிடம் செலவிடுவது நல்லது.</p>
+      <article class="ub-explain" id="explain-consumer-no" data-line="consumer-no" data-live="">
+        <h3><span class="ub-num">1</span>நுகர்வோர் எண்</h3>
+        <p>இணைப்பு எந்தக் கணக்கின் மீது பில் செய்யப்படுகிறதோ அது — மீட்டர் அல்ல. மீட்டர் மாறினாலும் இது அப்படியே இருக்கும், ஒவ்வொரு போர்ட்டல், கட்டண செயலி, புகார் படிவமும் இதையே கேட்கும். மாநிலத்திற்கு ஏற்ப பெயர்கள் மாறும் — <strong>Account ID</strong>, <strong>K Number</strong>, <strong>CA Number</strong>, <strong>Service Number</strong> — ஆனால் எல்லாம் இதே புலம்தான். முன்னால் உள்ள பூஜ்ஜியங்கள் உட்பட அப்படியே நகலெடுங்கள்.</p>
+        <div class="ub-live" hidden><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"></div></div>
+        <p class="ub-live is-absent">காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/check-my-bill/">உங்களுக்கு வந்த பில்லைச் சரிபாருங்கள்</a></p>
+      </article>
+      <article class="ub-explain" id="explain-tariff-category" data-line="tariff-category" data-live="tariffCategory">
+        <h3><span class="ub-num">2</span>கட்டண வகை</h3>
+        <p>உங்கள் இணைப்பு எந்த விகித அட்டவணையின் கீழ் பில் செய்யப்படுகிறது. இந்த ஒரு குறியீடுதான் உங்கள் ஸ்லாப் விகிதங்கள், நிலையான கட்டணம், தேவை அபராதம் விதிக்க முடியுமா என்பதைத் தீர்மானிக்கிறது — எனவே பில்லில் மிக முக்கியமான புலம், மேலும் அடிக்கடி தவறாக இருக்கும் புலமும் இதுவே. வணிகக் குறியீட்டில் பில் செய்யப்படும் வீடு கிட்டத்தட்ட இரு மடங்கு செலுத்தும். உங்கள் இடம் உண்மையில் எப்படிப் பயன்படுத்தப்படுகிறதோ அதனுடன் இது பொருந்தவில்லை என்றால், அதைத் திருத்திக் கொள்வது நல்லது.</p>
+        <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"><p class="ub-live-note">இந்தப் பில் LMV-1 Residential / Domestic · ST-10B – Urban Domestic (Sanctioned Load &gt; 1 kW) வகையில் உள்ளது. கீழே உள்ள ஒவ்வொரு விகிதமும் — ஸ்லாப்கள், நிலையான கட்டணம், தேவை அபராதம் விதிக்க முடியுமா என்பது வரை — இந்த ஒரு குறியீட்டிலிருந்தே வருகிறது.</p></div></div>
+        <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/ta/tariffs/states/">மாநிலம் மற்றும் DISCOM வாரியான கட்டண அட்டவணை</a><a href="/ta/glossary/">பில் சொற்களஞ்சியம்</a></p>
+      </article>
+      <article class="ub-explain" id="explain-sanctioned-load" data-line="sanctioned-load" data-live="sanctionedLoad">
+        <h3><span class="ub-num">3</span>அனுமதிக்கப்பட்ட சுமை</h3>
+        <p>DISCOM உங்களுக்கு வழங்க ஒப்பந்தம் செய்துள்ள கொள்ளளவு, kW-இல் — நீங்கள் எவ்வளவு பயன்படுத்தினீர்கள் என்பது அல்ல. வீட்டுப் பில்லில் பொதுவாக இதுவே நேரடியாக நிலையான கட்டணத்தைத் தீர்மானிக்கிறது. இதை உயர்த்த ஒரு முறை கட்டணமும் மாதந்தோறும் அதிக நிலையான கட்டணமும் ஆகும்; மிகக் குறைவாக வைத்தால் பதிவான தேவை அதைத் தாண்டினால் அபராதம் வரும் அபாயம். இது ஒரு உண்மையான சமநிலை, குறைத்துக்கொண்டே போக வேண்டிய எண் அல்ல.</p>
+        <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">நிலையான கட்டணம் = ஒரு kW-க்கான விகிதம் × அனுமதிக்கப்பட்ட சுமை</div><div class="ub-calc-work"><span class="ub-calc-step">₹110.00 × 2 kW</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹220</div></div><p class="ub-live-note">இந்தக் கட்டணம் அனுமதிக்கப்பட்ட சுமையை மட்டுமே சார்ந்தது. மேலே யூனிட்டை பூஜ்ஜியமாக வையுங்கள், பில்லில் இது மட்டுமே மிஞ்சும்.</p></div></div>
+        <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/guides/reduce-fixed-charges-sanctioned-load/">நிலையான கட்டணத்தை எப்படிக் குறைப்பது</a><a href="/sanctioned-load-optimizer/">அனுமதிக்கப்பட்ட சுமை ஆப்டிமைசர்</a></p>
+      </article>
+    </section>
+
+    <section class="seo-section" id="when">
+      <h2>தேதிகள், அவற்றில் எவை உங்களுக்குப் பணச் செலவு</h2>
+      <p>ஒரு பில்லில் மூன்று தேதிகள் உள்ளன, அவை ஒன்றுக்கொன்று மாற்றாகா. ஒன்று நுகர்வை அடையாளம் காட்டுகிறது, ஒன்று பில் எப்போது தயாரானது என்பதைச் சொல்கிறது, ஒன்று இரு பக்கமும் பணம் இணைந்த ஒரு காலக்கெடு.</p>
+      <article class="ub-explain" id="explain-bill-month" data-line="bill-month" data-live="billMonth">
+        <h3><span class="ub-num">4</span>பில் மாதம்</h3>
+        <p>மின்சாரம் <em>பயன்படுத்தப்பட்ட</em> மாதம் — பில் அச்சிடப்பட்ட மாதமும் அல்ல, நீங்கள் செலுத்தும் மாதமும் அல்ல. மூன்று வெவ்வேறு தேதிகள், பில்கள் அவற்றுக்கு ஒரே மாதிரியான பெயர் வைப்பதில்லை. நுகர்வை அடையாளம் காட்டுவது இதுவே, எனவே புகாரில் இதைத்தான் குறிப்பிட வேண்டும் — மேலும் எரிபொருள் கூடுதல் கட்டணம் மாதந்தோறும் அறிவிக்கப்படுவதால், உங்களுக்கு எந்த விகிதம் பொருந்தும் என்பதையும் இதுவே தீர்மானிக்கிறது.</p>
+        <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"><p class="ub-live-note">JUN-2026 — மின்சாரம் பயன்படுத்தப்பட்ட மாதம் (01-06-2026 முதல் 30-06-2026 வரை), பில் அச்சிடப்பட்ட மாதம் அல்ல. இது தோற்றத்தை விட முக்கியம்: எரிபொருள் கூடுதல் கட்டணம் மாதந்தோறும் அறிவிக்கப்படுகிறது, எனவே எந்த விகிதம் பொருந்தும் என்பதை இந்தப் புலமே தீர்மானிக்கிறது. மேலே DISCOM-ஐ மாற்றிப் பாருங்கள் — அதே UPPCL இணைப்பு ஜூனில் +10% வசூலிக்கிறது, ஜூலையில் 4.43% திருப்பித் தருகிறது.</p></div></div>
+        <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/fuel-surcharge/">இந்த மாத எரிபொருள் கூடுதல் கட்டணம், மாநில வாரியாக</a></p>
+      </article>
+      <article class="ub-explain" id="explain-due-date" data-line="due-date" data-live="dueDate">
+        <h3><span class="ub-num">5</span>கடைசி தேதி</h3>
+        <p>பில் எழுதியுள்ள தொகையாகவே இருக்கும் கடைசி நாள். இது இரு வழிகளிலும் பணத்தின் விஷயம்: இதற்குப் பிறகு மொத்த நிலுவைத் தொகையின் மீது தாமத கட்டண அபராதம் சேரத் தொடங்கி மாதந்தோறும் கூட்டு வட்டியாகும்; மேலும் DISCOM விரைவுச் செலுத்துதல் தள்ளுபடி தந்தால், அதைப் பெறுவதற்கான ஒரே வழி இதுதான். இணைப்புத் துண்டிப்பு அறிவிப்புகளும் இந்தத் தேதியிலிருந்தே கணக்கிடப்படுகின்றன, பில் தேதியிலிருந்து அல்ல.</p>
+        <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"><p class="ub-live-note">20-07-2026 அல்லது அதற்கு முன் செலுத்தினால் பில் எழுதியுள்ள தொகைதான். அதன் பிறகு மொத்த நிலுவைத் தொகையின் மீது தாமத கட்டண அபராதம் சேரத் தொடங்கி மாதந்தோறும் கூட்டு வட்டியாகிறது — DISCOM விரைவுச் செலுத்துதல் தள்ளுபடி தந்தால் அதுவும் போய்விடும். பில் தேதிக்கும் கடைசி தேதிக்கும் இடையே பொதுவாக 15 நாட்கள்.</p></div></div>
+        <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/ta/guides/smart-meter-prepaid-disconnection/">பில் செலுத்தாவிட்டால் என்ன ஆகும்</a></p>
+      </article>
+    </section>
+
+    <section class="seo-section" id="reading">
+      <h2>மீட்டர் என்ன சொன்னது</h2>
+      <p>முழு பில்லிலும் அளக்கப்பட்ட ஒரே அளவு. கீழே உள்ள அனைத்தும் இந்த ஒரு எண்ணின் மீது செய்யப்பட்ட கணக்கு.</p>
+      <article class="ub-explain" id="explain-units-consumed" data-line="units-consumed" data-live="unitsConsumed">
+        <h3><span class="ub-num">6</span>பயன்படுத்திய யூனிட்</h3>
+        <p>தற்போதைய ரீடிங்கிலிருந்து முந்தைய ரீடிங்கைக் கழித்து, மீட்டர் மாறிலியால் பெருக்கியது (பெருக்கி, வீட்டு இணைப்பில் கிட்டத்தட்ட எப்போதும் 1). ஒரு யூனிட் என்பது ஒரு கிலோவாட்-மணி. முழு பில்லிலும் அளக்கப்பட்ட ஒரே அளவு இதுதான் — கீழே உள்ள அனைத்தும் இந்த ஒரு எண்ணின் மீது செய்யப்பட்ட கணக்கு.</p>
+        <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">யூனிட் = (தற்போதைய ரீடிங் − முந்தைய ரீடிங்) × மீட்டர் மாறிலி</div><div class="ub-calc-work"><span class="ub-calc-step">(14,820 − 14,570) × 1</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>250 kWh</div></div><p class="ub-live-note">30 நாட்களில் ஒரு நாளைக்கு சுமார் 8.3 யூனிட். கிட்டத்தட்ட ஒவ்வொரு வீட்டு இணைப்பிலும் மீட்டர் மாறிலி 1; இல்லாத இடத்தில் அது மீட்டரில் அச்சிடப்பட்டிருக்கும், வித்தியாசத்தால் பெருக்கப்படும்.</p></div></div>
+        <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/guides/uppcl-smart-meter-readings-explained/">ஸ்மார்ட் மீட்டரை நீங்களே படிப்பது எப்படி</a><a href="/ta/smart-meter/">ஒவ்வொரு மீட்டர் சின்னத்தின் பொருள்</a></p>
+      </article>
+      <article class="ub-explain" id="explain-md" data-line="md" data-live="md">
+        <h3><span class="ub-num">7</span>அதிகபட்ச தேவை (MD)</h3>
+        <p>மாதம் முழுவதும் உங்கள் இணைப்பு அரை மணி நேர சராசரியில் எடுத்த மிக அதிக மின்சாரம், kW-இல் — இது உச்சம், மொத்தம் அல்ல. நுகர்வும் தேவையும் வெவ்வேறு: 2 kW கீசரை பத்து மணி நேரம் இயக்கினால் 20 யூனிட், தேவை 2 kW; 2 kW கொண்ட பத்து சாதனங்களை ஒரு மணி நேரம் இயக்கினால் அதே 20 யூனிட், ஆனால் தேவை 20 kW. வணிக அல்லது தொழிற்சாலை இணைப்பில் இரண்டாவது வழி மிக அதிக செலவாகும், ஏனெனில் கட்டணம் உச்சத்தைப் பின்தொடர்கிறது.</p>
+        <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>பதிவு 1.62 kW, அனுமதி 2 kW</div></div><p class="ub-live-note">மீட்டர் பதிவு செய்த மிக உயர்ந்த அரை மணி நேர சராசரி. வீட்டு இணைப்பில் இது பதிவாகிறது, ஆனால் இதன் மீது பில் போடப்படுவதில்லை — நிலையான கட்டணம் அனுமதிக்கப்பட்ட சுமையைத்தான் பின்பற்றும். இருந்தும் இது முக்கியம்: இது உங்கள் அனுமதிக்கப்பட்ட சுமையை மீறத் தொடங்கினால், DISCOM அபராதம் விதிக்கலாம் அல்லது இணைப்பை ஒழுங்குபடுத்தச் சொல்லலாம்.</p></div></div>
+        <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/guides/power-factor-kvah-billing-explained/">பவர் ஃபேக்டர் மற்றும் kVAh பில்லிங்</a><a href="/sanctioned-load-optimizer/">உங்கள் அனுமதிக்கப்பட்ட சுமை சரியா?</a></p>
+      </article>
+      <article class="ub-explain" id="explain-reading-status" data-line="reading-status" data-live="readingStatus">
+        <h3><span class="ub-num">8</span>ரீடிங் நிலை</h3>
+        <p>ரீடிங் எப்படிப் பெறப்பட்டது என்று சொல்லும் ஒரு சிறு குறியீடு — மீட்டர் ரீடர் நேரில் மீட்டரைப் படித்தாரா, அல்லது மீட்டர் பூட்டிய இடத்தில் இருந்ததால், படிக்க முடியாததால், அல்லது பழுதானதால் DISCOM மதிப்பிட்டதா. இந்தச் சொற்கள் ஒவ்வொரு நிறுவனத்திற்கும் வேறுபடும், பில்லில் இந்தக் குறியீடுகளின் பொருள் எங்கும் விளக்கப்படுவதில்லை. ஆனால் முக்கியமானது இந்த வேறுபாடு: உண்மையான ரீடிங் ஒரு உண்மை, மதிப்பீடு என்பது பின்னர் திருத்தப்படும் தற்காலிக எண் — பொதுவாக மிகப் பெரிய பில்லாக.</p>
+        <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>OK</div></div><p class="ub-live-note">ரீடிங் எப்படிப் பெறப்பட்டது. OK என்றால் மீட்டர் நேரில் படிக்கப்பட்டு ரீடிங் ஏற்கப்பட்டது — பில் உண்மையான நுகர்வின் அடிப்படையில் உள்ளது. DISCOM-கள் இங்கே ஒரு சிறு குறியீட்டை அச்சிடுகின்றன, இந்தச் சொற்கள் ஒவ்வொரு நிறுவனத்திற்கும் வேறுபடும். முக்கியமான வேறுபாடு இதுதான்: மீட்டர் உண்மையில் படிக்கப்பட்டது என்கிறதா, அல்லது ரீடிங் மதிப்பிடப்பட்டது, மீட்டரை அணுக முடியவில்லை, அல்லது மீட்டர் பழுதானது என்கிறதா. இரண்டாவது வகை என்றால் மேலே உள்ள யூனிட் ஒரு மதிப்பீடு, பின்னர் சரிசெய்யப்படும் — அப்போது நீங்களே ரீடிங் எடுத்துத் தெரிவிப்பது நல்லது.</p></div></div>
+        <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/ta/guides/smart-meter-running-fast/">மீட்டர் தவறு என்று தோன்றும்போது</a><a href="/check-my-bill/">உங்களுக்கு வந்த பில்லைச் சரிபாருங்கள்</a></p>
+      </article>
+    </section>
+
+    <section class="seo-section" id="charges">
+      <h2>உங்களிடம் என்னென்ன வசூலிக்கப்படுகிறது</h2>
+      <p>பில் என்பது ஒரு விலை அல்ல. இது தனித்தனி கட்டணங்களின் அடுக்கு, ஒவ்வொன்றும் வெவ்வேறு விதியால் நிர்ணயிக்கப்படுகிறது — எது எது என்று தெரிந்தால், எவற்றில் நீங்கள் ஏதாவது செய்ய முடியும் என்பது புரியும்.</p>
+      <article class="ub-explain" id="explain-energy-charge" data-line="energy-charge" data-live="energyCharge">
+        <h3><span class="ub-num">9</span>ஆற்றல் கட்டணம்</h3>
+        <p>யூனிட்டுகளின் சொந்த விலை. இந்தியாவின் கிட்டத்தட்ட ஒவ்வொரு வீட்டுக் கட்டணமும் <em>டெலிஸ்கோப்பிக்</em>: ஸ்லாப்கள் ஒன்றையொன்று மாற்றுவதில்லை, சேர்ந்து கொள்கின்றன — அதாவது உயர்ந்த ஸ்லாபுக்குச் செல்வது கூடுதல் யூனிட்டுகளின் விலையை மட்டுமே உயர்த்தும், கீழுள்ளவற்றை ஒருபோதும் அல்ல. உங்கள் பில் ஒரே மொத்தத்தை அச்சிடுகிறது; மேலே உள்ள அட்டவணை அது வந்த ஏணியைக் காட்டுகிறது.</p>
+        <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">ஆற்றல் கட்டணம் = Σ (ஒவ்வொரு ஸ்லாபிலும் வரும் யூனிட் × அந்த ஸ்லாபின் விகிதம்)</div><div class="ub-calc-work"><span class="ub-calc-step">150 × ₹5.50 = ₹825</span><span class="ub-calc-step">100 × ₹6.00 = ₹600</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,425</div></div><p class="ub-live-note">ஸ்லாப்கள் ஒன்றன் மேல் ஒன்றாகச் சேரும், மாறாது — உயர்ந்த ஸ்லாபுக்குச் செல்வது கூடுதல் யூனிட்டுகளின் விலையை மட்டுமே உயர்த்தும். கடைசி யூனிட் ₹6.00, ஆனால் முழு பில்லின் சராசரி ₹1,425 ÷ 250 = ₹5.70 ஒரு யூனிட்டுக்கு.</p></div></div>
+        <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/compare/">DISCOM-களுக்கு இடையே ஸ்லாப் விகிதங்களை ஒப்பிடுங்கள்</a><a href="/ta/guides/tod-billing-explained/">நேரம் சார்ந்த (ToD) பில்லிங்</a></p>
+      </article>
+      <article class="ub-explain" id="explain-fixed-charge" data-line="fixed-charge" data-live="fixedCharge">
+        <h3><span class="ub-num">10</span>நிலையான கட்டணம் / தேவை கட்டணம்</h3>
+        <p>நீங்கள் ஒரு யூனிட் பயன்படுத்தினாலும், ஒன்றும் பயன்படுத்தாவிட்டாலும் செலுத்த வேண்டியது. இது கம்பிகள், மீட்டர், பணியாளர்களின் செலவை ஈடுகட்டுகிறது, அதனால்தான் பூட்டிய காலி வீட்டுக்கும் பில் வருகிறது. வீட்டு இணைப்பில் இது <em>அனுமதிக்கப்பட்ட சுமையின்</em> ஒவ்வொரு kW-க்கும் விதிக்கப்படுகிறது; வணிக அல்லது தொழிற்சாலையில் <em>பதிவான அதிகபட்ச தேவையின்</em> மீது — அதனால்தான் ஒரே விகிதம் இரு பில்களிலும் மிக வேறுபட்ட தொகைகளைத் தருகிறது.</p>
+        <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">நிலையான கட்டணம் = ஒரு kW-க்கான விகிதம் × அனுமதிக்கப்பட்ட சுமை</div><div class="ub-calc-work"><span class="ub-calc-step">₹110.00 × 2 kW</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹220</div></div><p class="ub-live-note">இந்த சூத்திரத்தில் நுகர்வு எங்கும் வருவதில்லை. அதனால்தான் பூட்டிய காலி வீட்டுக்கும் பில் வருகிறது.</p></div></div>
+        <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/guides/reduce-fixed-charges-sanctioned-load/">நிலையான கட்டணத்தை எப்படிக் குறைப்பது</a></p>
+      </article>
+      <article class="ub-explain" id="explain-excess-demand" data-line="excess-demand" data-live="excessDemand" data-absent>
+        <h3><span class="ub-num" hidden></span>கூடுதல் தேவை அபராதம்</h3>
+        <p>மாதம் முழுவதும் மீட்டர் பதிவு செய்த அதிகபட்ச தேவை உங்கள் அனுமதிக்கப்பட்ட சுமையை மீறினால் விதிக்கப்படுகிறது. மீட்டர் அரை மணி நேரத்தின் மிக உயர்ந்த சராசரியைப் பதிவு செய்கிறது, எனவே சில நிமிடங்கள் எல்லாவற்றையும் ஒரே நேரத்தில் இயக்குவதே போதும் — நீங்கள் மீறும் ஒவ்வொரு மாதமும் இது திரும்பும். இரு தீர்வுகள்: கனமான சாதனங்களை வெவ்வேறு நேரங்களில் இயக்குங்கள், அல்லது அனுமதிக்கப்பட்ட சுமையை உயர்த்த விண்ணப்பியுங்கள். எது மலிவு என்பது நீங்கள் எவ்வளவு மீறுகிறீர்கள் என்பதைப் பொறுத்தது.</p>
+        <div class="ub-live" hidden><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"></div></div>
+        <p class="ub-live is-absent">காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/guides/uppcl-sanctioned-load-increased/">DISCOM உங்கள் சுமையை உயர்த்தும்போது</a><a href="/sanctioned-load-optimizer/">எது மலிவு என்று கணக்கிடுங்கள்</a></p>
+      </article>
+      <article class="ub-explain" id="explain-fppa" data-line="fppa" data-live="fppa">
+        <h3><span class="ub-num">11</span>எரிபொருள் கூடுதல் கட்டணம் (FPPA / FPPAS / PPAC / FAC)</h3>
+        <p>உங்களுடன் எந்தத் தொடர்பும் இல்லாத காரணங்களால் மாதந்தோறும் மாறும் ஒரே வரி இதுதான். DISCOM மின்சாரம் வாங்கிய உண்மையான செலவுக்கும், உங்கள் கட்டணம் நிர்ணயிக்கப்பட்டபோது ஒழுங்குமுறை ஆணையம் கருதிய செலவுக்கும் உள்ள இடைவெளி இங்கே கடத்தப்படுகிறது. இதில் நான்கு விஷயங்கள் மக்களை வியப்பில் ஆழ்த்தும்: பல மாநிலங்களில் இது <em>மாதந்தோறும்</em> மறுகணக்கிடப்படுகிறது; இது <em>எதிர்மறையாகவும்</em> இருக்கலாம், அப்போது அது ஒரு திரும்பப் பணம்; சதவீதமாக இருக்கும் இடங்களில் இது ஆற்றல் கட்டணத்துடன் நிலையான கட்டணத்திற்கும் பொருந்தும்; மேலும் அறிவிக்கப்பட்ட விகிதம் பொதுவானது, எனவே விகிதம் காட்டாமல் இந்த வரியைக் காட்டும் பில்லைக் கேள்வி கேட்பது நியாயம்.</p>
+        <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">FPPA = (ஆற்றல் கட்டணம் + நிலையான/தேவை கட்டணம் + அபராதம்) × அறிவிக்கப்பட்ட விகிதம் %</div><div class="ub-calc-work"><span class="ub-calc-step">அடிப்படை = ₹1,645</span><span class="ub-calc-step">₹1,645 × 10%</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹164.50</div></div><p class="ub-live-note">விகிதம் மாதந்தோறும் அறிவிக்கப்படுகிறது, அது ஆற்றல் கட்டணத்துடன் நிலையான கட்டணத்திற்கும் பொருந்தும் — யூனிட்டுகளுக்கு மட்டும் அல்ல, இதுவே இந்த வரியைப் பற்றிய மிகப் பொதுவான தவறான புரிதல்.</p></div></div>
+        <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/guides/how-fppa-fuel-surcharge-is-calculated/">FPPA எப்படிக் கணக்கிடப்படுகிறது</a><a href="/guides/up-electricity-bill-10-percent-fppa-surcharge/">உத்தரப் பிரதேசத்தில் 10% உச்சவரம்பு</a><a href="/fuel-surcharge/">மாநில வாரியான நடப்பு விகிதங்கள்</a></p>
+      </article>
+      <article class="ub-explain" id="explain-wheeling" data-line="wheeling" data-live="wheeling" data-absent>
+        <h3><span class="ub-num" hidden></span>வீலிங் கட்டணம்</h3>
+        <p>மின்சாரத்தை விநியோக நெட்வொர்க் வழியாக உங்கள் இடத்திற்குக் கொண்டு வரும் செலவு, மின்சாரத்தின் சொந்த விலையிலிருந்து தனியாகப் பிரிக்கப்பட்டது. இரண்டையும் தனியாக வைக்கும் மாநிலங்கள் — மகாராஷ்டிரா மிகத் தெளிவாக — இதைத் தனி வரியாக அச்சிடுகின்றன. வைக்காதவை அதே செலவை ஆற்றல் விகிதத்தில் கலந்துவிட்டன. நீங்கள் இரண்டு முறை செலுத்தவில்லை.</p>
+        <div class="ub-live" hidden><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"></div></div>
+        <p class="ub-live is-absent">காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/ta/guides/how-to-read-msedcl-bill/">MSEDCL பில்லை எப்படிப் படிப்பது</a><a href="/guides/msedcl-fppa-charges-explained/">MSEDCL-இன் சொந்த கூடுதல் கட்டண வரிகள்</a></p>
+      </article>
+      <article class="ub-explain" id="explain-electricity-duty" data-line="electricity-duty" data-live="electricityDuty">
+        <h3><span class="ub-num">12</span>மின் வரி</h3>
+        <p>ஒரு மாநில வரி, DISCOM அரசு சார்பாக வசூலிக்கிறது. இது ஆற்றல் கட்டணத்தின் மீது மட்டும் விழுகிறதா அல்லது முழு பில்லின் மீதா என்பதை ஒவ்வொரு மாநிலமும் தானே முடிவு செய்கிறது — அதனால்தான் ஒரே அளவு நுகர்வு கொண்ட இரு பில்கள் மாநில எல்லைக்கு அப்பால் சில நூறு ரூபாய் வரை வேறுபடலாம். வீட்டு மின் விநியோகத்திற்கு GST இல்லை — தென்பட்டால், மீண்டும் பாருங்கள்.</p>
+        <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">வரி = (ஆற்றல் + நிலையான + அபராதம் + வீலிங் + FPPA) × வரி விகிதம் %</div><div class="ub-calc-work"><span class="ub-calc-step">அடிப்படை = ₹1,809.50</span><span class="ub-calc-step">₹1,809.50 × 5%</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹90.47</div></div><p class="ub-live-note">இங்கே வரி முழு பில்லின் மீதும், நிலையான கட்டணம் உட்பட. எந்த அடிப்படையை எடுப்பது என்பதை ஒவ்வொரு மாநிலமும் தானே முடிவு செய்கிறது, அதனால்தான் எல்லைக்கு இருபுறமும் உள்ள ஒரே மாதிரியான இரு வீடுகள் வெவ்வேறு தொகையைச் செலுத்துகின்றன.</p></div></div>
+        <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/ta/guides/electricity-duty-explained/">மின் வரி, மாநிலம் வாரியாக</a></p>
+      </article>
+    </section>
+
+    <section class="seo-section" id="totals">
+      <h2>உண்மையில் நீங்கள் செலுத்த வேண்டியது</h2>
+      <p>இந்த மாதத்தின் கட்டணங்கள் முன்பிருந்து மீதமிருந்ததைச் சந்திக்கும் இடம்.</p>
+      <article class="ub-explain" id="explain-subsidy" data-line="subsidy" data-live="subsidy" data-absent>
+        <h3><span class="ub-num" hidden></span>மானியம்</h3>
+        <p>மாநில அரசின் தள்ளுபடி, குறைந்த விகிதமாக அல்லாமல் மேலே உள்ள கட்டணங்களிலிருந்து கழிவாகக் காட்டப்படுகிறது. DISCOM முழுக் கட்டணத்தையே விதிக்கிறது, மாநிலம் அதைத் திருப்பித் தருகிறது — அதனால்தான் மொத்தத் தொகை உயர்ந்தே இருக்கிறது, அதனால்தான் எந்தக் கட்டண ஆணையையும் மாற்றாமல் மானியத்தைத் திரும்பப் பெற முடியும். பெரும்பாலான திட்டங்கள் நிபந்தனைக்குட்பட்டவை: நுகர்வு ஒரு வரம்புக்குள் இருக்க வேண்டும், வகை அதுவாக இருக்க வேண்டும், சில நேரங்களில் புதுப்பிக்க வேண்டிய பதிவும் தேவை.</p>
+        <div class="ub-live" hidden><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"></div></div>
+        <p class="ub-live is-absent">காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/guides/how-to-read-bses-delhi-bill/">BSES டெல்லி பில்லை எப்படிப் படிப்பது</a></p>
+      </article>
+      <article class="ub-explain" id="explain-net-current-bill" data-line="net-current-bill" data-live="netCurrentBill">
+        <h3><span class="ub-num">13</span>நிகர நடப்பு பில்</h3>
+        <p>இந்த மாதத்தின் கட்டணங்கள், மானியம் கழித்த பிறகு — இது நீங்கள் செலுத்த வேண்டியது <strong>அல்ல</strong>. கடந்த மாதத்துடன் ஒப்பிட வேண்டியது இந்த எண்ணைத்தான், ஏனெனில் இதில் இந்த மாதத்தின் நுகர்வு மட்டுமே உள்ளது, வேறெதுவும் இல்லை. கீழே உள்ள மொத்தத் தொகை வேறு ஒன்று: அதில் பழைய நிலுவை கலந்திருக்கும், <em>அதை</em> மாதம் மாதம் ஒப்பிடுவது உங்கள் மின் பயன்பாட்டைப் பற்றி அல்ல, உங்கள் கட்டண வரலாற்றைப் பற்றியே சொல்லும்.</p>
+        <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">நிகர நடப்பு பில் = ஆற்றல் கட்டணம் + நிலையான கட்டணம் + எரிபொருள் கூடுதல் கட்டணம் (fppa) + electricity duty</div><div class="ub-calc-work"><span class="ub-calc-step">₹1,425 + ₹220 + ₹164.50 + ₹90.47</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,900</div></div><p class="ub-live-note">இந்த மாதம் மட்டும் — இது நீங்கள் செலுத்த வேண்டியது அல்ல. 250 யூனிட்டுக்கு இது ₹1,900 ÷ 250 = ₹7.60 ஒரு யூனிட்டுக்கு, எப்போதும் ஸ்லாப் விகிதத்தை விட அதிகம். மாதம் மாதம் ஒப்பிட வேண்டியது இந்த எண்ணைத்தான்; கீழே உள்ள மொத்தத் தொகையில் பழைய நிலுவை கலந்திருக்கும், அது உங்கள் பயன்பாட்டைப் பற்றித் தவறான கதையைச் சொல்லும்.</p></div></div>
+        <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/#calculator">உங்கள் பில்லைக் கணக்கிடுங்கள்</a></p>
+      </article>
+      <article class="ub-explain" id="explain-arrears" data-line="arrears" data-live="arrears" data-absent>
+        <h3><span class="ub-num" hidden></span>நிலுவை</h3>
+        <p>செலுத்தப்படாமல் முன்னெடுத்துச் செல்லப்பட்ட தொகைகள். நீங்கள் செலுத்தியதாக நினைக்கும் பில்லில் நிலுவை தென்பட்டால், பொதுவாக பில் உருவான பிறகு பணம் பதிவாகியிருக்கும் — புகார் அளிக்கும் முன் செலுத்திய தேதியையும் பில் தேதியையும் ஒப்பிடுங்கள். இரு சுழற்சிகள் தாண்டியும் நீடிக்கும் நிலுவைக்கு பரிவர்த்தனை குறிப்புடன் எழுத்துப்பூர்வ புகார் அளிப்பது நல்லது.</p>
+        <div class="ub-live" hidden><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"></div></div>
+        <p class="ub-live is-absent">காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/check-my-bill/">உங்களுக்கு வந்த பில்லைச் சரிபாருங்கள்</a></p>
+      </article>
+      <article class="ub-explain" id="explain-lpsc" data-line="lpsc" data-live="lpsc" data-absent>
+        <h3><span class="ub-num" hidden></span>தாமத கட்டண அபராதம் (LPSC)</h3>
+        <p>கடைசி தேதிக்குள் நீங்கள் செலுத்தாததன் மீதான வட்டி — பொதுவாக மாதம் 1.25–2%, நிலுவையின் மீது கூட்டு வட்டி. எந்தப் பில்லிலும் மிக எளிதாகத் தவிர்க்கக்கூடிய வரி இதுதான்: கடைசி தேதிக்குள் செலுத்தினால் இது முற்றிலும் நீங்கும். தகராறில் உள்ள ஒரு தொகை நிலுவையில் இருந்தால், தகராறு முடியும் வரை அதன் மீதும் LPSC சேர்ந்துகொண்டே இருக்கும் — எனவே தகராறுகளை விரைவில் எழுப்புங்கள்.</p>
+        <div class="ub-live" hidden><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"></div></div>
+        <p class="ub-live is-absent">காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/ta/guides/smart-meter-prepaid-disconnection/">பில் செலுத்தாவிட்டால் என்ன ஆகும்</a></p>
+      </article>
+      <article class="ub-explain" id="explain-total-payable" data-line="total-payable" data-live="totalPayable">
+        <h3><span class="ub-num">14</span>மொத்தம் செலுத்த வேண்டியது</h3>
+        <p>நிகர நடப்பு பில், உடன் நிலுவையும் அபராதமும், ஏற்கெனவே வரவு வைக்கப்பட்ட பணத்தைக் கழித்து. இன்று நீங்கள் செலுத்த வேண்டியது இதுதான். முழுத் தொகையையும் செலுத்துங்கள் — பகுதியாகச் செலுத்துவது மீதித் தொகையின் மீதான அபராதத்தை நிறுத்தாது, ப்ரீபெய்டு அல்லது துண்டிப்பு அறிவிப்புள்ள கணக்கில் கடிகாரத்தையும் நிறுத்தாது.</p>
+        <div class="ub-live"><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"><div class="ub-calc"><div class="ub-calc-formula">மொத்தம் செலுத்த வேண்டியது = நிகர நடப்பு பில் + நிலுவை + அபராதம் − ஏற்கெனவே செலுத்தியது</div><div class="ub-calc-work"><span class="ub-calc-step">₹1,900 நிகர நடப்பு பில்</span></div><div class="ub-calc-result"><span class="ub-calc-eq" aria-hidden="true">=</span><span class="sr-only">Result</span>₹1,900</div></div><p class="ub-live-note">மேலே உள்ள நிகர நடப்பு பில்லுக்குச் சமம், ஏனெனில் இந்தப் பில்லில் எதுவும் கொண்டு வரப்படவில்லை. முழுத் தொகையையும் செலுத்துங்கள்: பகுதியாகச் செலுத்துவது மீதித் தொகையின் மீதான அபராதத்தை நிறுத்தாது.</p></div></div>
+        <p class="ub-live is-absent" hidden>காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/#calculator">உங்கள் பில்லைக் கணக்கிடுங்கள்</a><a href="/bill-review/">பில்லை ஆய்வு செய்யச் சொல்லுங்கள்</a></p>
+      </article>
+      <article class="ub-explain" id="explain-due-date-rebate" data-line="due-date-rebate" data-live="dueDateRebate" data-absent>
+        <h3><span class="ub-num" hidden></span>விரைவுச் செலுத்துதல் தள்ளுபடி</h3>
+        <p>பல DISCOM-கள் கடைசி தேதிக்குள் செலுத்தினால் பில்லிலிருந்து சிறிது தொகையைக் <em>கழிக்கின்றன</em> — யூனிட்டுக்கு சில பைசா, அல்லது ஆற்றல் கட்டணத்தின் ஒரு சதவீதம், சில நேரங்களில் டிஜிட்டல் முறையில் செலுத்த மேலும் கொஞ்சம். இது எளிதில் கவனத்தில் படாமல் போகும், ஏனெனில் இது ஒரு கட்டணமாக அல்லாமல் கீழே இரண்டாவது, குறைந்த மொத்தமாக அச்சிடப்படுகிறது. இது இருக்கும் இடத்தில், கடைசி தேதி இரு மடங்கு பணத்திற்குச் சமம்: சரியான நேரத்தில் செலுத்தி தள்ளுபடி பெறுகிறீர்கள், தவறவிட்டு அபராதம் தொடங்குகிறது.</p>
+        <div class="ub-live" hidden><span class="ub-live-tag">இந்தப் பில்லில்</span>
+          <div class="ub-live-body"></div></div>
+        <p class="ub-live is-absent">காட்டப்பட்ட பில்லில் இது விதிக்கப்படவில்லை — மேலே வேறு DISCOM அல்லது வகையைத் தேர்ந்தெடுத்தால் தோன்றும்.</p>
+        <p class="ub-more"><a href="/guides/how-to-read-tpcodl-odisha-bill/">TPCODL ஒடிசா பில்லை எப்படிப் படிப்பது</a></p>
+      </article>
+    </section>
+
+    <section class="seo-section" id="why-higher">
+      <h2>பில் ஏன் யூனிட் × விகிதத்தை விட அதிகமாக இருக்கிறது</h2>
+      <p>மின் பில் குறித்த மிகப் பொதுவான புகார், மொத்தத் தொகை யூனிட்டை மனதில் உள்ள விகிதத்தால் பெருக்கியதுடன் பொருந்தவில்லை என்பதுதான். பொதுவாக அது தவறல்ல. இந்த இடைவெளிக்கு கிட்டத்தட்ட முழுக் காரணமும் நான்கு:</p>
+      <ul>
+        <li><strong>ஸ்லாப்கள் சேர்ந்து கொள்கின்றன.</strong> ஒரே விகிதம் என்பதே இல்லை. உங்கள் கடைசி யூனிட் முதல் யூனிட்டை விட விலை அதிகம், நீங்கள் செலுத்திய சராசரி விகிதம் இரண்டுக்கும் இடையே எங்கோ உள்ளது — உங்களுக்கு நினைவில் உள்ள மலிவான ஸ்லாபை விட எப்போதும் அதிகம்.</li>
+        <li><strong>நிலையான கட்டணம் நுகர்வு அல்ல.</strong> இது அனுமதிக்கப்பட்ட சுமையின் ஒவ்வொரு kW-க்கும் விதிக்கப்படுகிறது, பயன்பாடு எதுவாக இருந்தாலும் — எனவே நீங்கள் மிகக் குறைவாகப் பயன்படுத்திய மாதத்தில்தான் ஒரு யூனிட்டுக்கு இது மிகக் கனமாக விழுகிறது.</li>
+        <li><strong>வரி கடைசியாக வருகிறது.</strong> மின் வரி கட்டணங்களுக்கு மேல் விதிக்கப்படுகிறது — பல மாநிலங்களில் முழு பில்லின் மீதும், ஆற்றல் பகுதியின் மீது மட்டும் அல்ல.</li>
+        <li><strong>பாஸ்-த்ரூ முன்னறிவிப்பின்றி மாறலாம்.</strong> எரிபொருள் கூடுதல் கட்டணம் அவ்வப்போது மறுகணக்கிடப்படுகிறது, ஒரு பில்லில் தோன்றி அடுத்ததில் தோன்றாமல் போகலாம் — உங்கள் பயன்பாட்டில் எந்த மாற்றமும் இல்லாமல்.</li>
+      </ul>
+      <p>இவற்றையெல்லாம் கணக்கில் கொண்ட பிறகும் மொத்தம் தவறாகத் தோன்றினால், அடுத்ததாக ரீடிங்கைப் பாருங்கள் — மதிப்பீட்டு அல்லது சராசரி பில்லுக்குப் பிறகு உண்மையான ரீடிங் வரும்போது ஒரு அதிர்ச்சியூட்டும் மாதம் உருவாகும், அது உண்மையில் இரு மாத நுகர்வு.</p>
+    </section>
+
+    <section class="seo-section" id="faq">
+      <h2>பொதுவான கேள்விகள்</h2>
+      <details class="seo-faq-item">
+        <summary>மின்சாரமே பயன்படுத்தவில்லை, பிறகு ஏன் பில்லில் நிலையான கட்டணம்?</summary>
+        <div class="seo-faq-a">ஏனெனில் நிலையான கட்டணம் இணைப்பின் விலை, நுகர்வின் அல்ல — உங்கள் இடம் வரையிலான வழி, மீட்டர், உங்களுக்காக ஒதுக்கி வைக்கப்பட்ட கொள்ளளவு. இது அனுமதிக்கப்பட்ட சுமையின் ஒவ்வொரு kW-க்கும் விதிக்கப்படுகிறது, பூட்டிய வீட்டுக்கும் பொருந்தும். இதை நிறுத்த ஒரே வழி இணைப்பை முறையாகச் சரணடைவதுதான்; வெறுமனே மின்சாரம் பயன்படுத்தாமல் இருப்பதால் நிற்காது.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>மின் பில்லில் FPPA என்றால் என்ன?</summary>
+        <div class="seo-faq-a">Fuel and Power Purchase Adjustment: மின்சாரத்திற்காக DISCOM உண்மையில் செலுத்தியதற்கும், உங்கள் கட்டணம் நிர்ணயிக்கப்பட்டபோது ஒழுங்குமுறை ஆணையம் கருதியதற்கும் உள்ள வித்தியாசம் — அது உங்களுக்குக் கடத்தப்படுகிறது. இது அவ்வப்போது மறுகணக்கிடப்படுகிறது, எனவே உங்கள் பயன்பாடு மாறாவிட்டாலும் மாதந்தோறும் மாறும். சில மாநிலங்கள் யூனிட்டுக்கு பைசாவில் வசூலிக்கின்றன, சில ஆற்றல் கட்டணத்தின் சதவீதமாக.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>மின் பில்லில் GST வசூலிக்கப்படுகிறதா?</summary>
+        <div class="seo-faq-a">இல்லை. வீட்டு நுகர்வோருக்கு மின்சார விநியோகம் GST-இலிருந்து விலக்கு பெற்றது. நீங்கள் பார்ப்பது மின் வரி, ஒரு மாநில வரி, அது வேறு விஷயம். DISCOM தனியாகப் பில் செய்யும் இதர விஷயங்களில் GST வரலாம் — புதிய இணைப்புக் கட்டணம், மீட்டர் சோதனைக் கட்டணம் — ஆனால் மின் விநியோகத்தின் மீது அல்ல.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>என் பில்லில் &quot;Average&quot; அல்லது &quot;Provisional&quot; என்று உள்ளது. அதன் பொருள் என்ன?</summary>
+        <div class="seo-faq-a">அந்த மாதம் யாரும் மீட்டரைப் படிக்கவில்லை, எனவே DISCOM உங்கள் முந்தைய பதிவுகளிலிருந்து நுகர்வை மதிப்பிட்டது. அடுத்த உண்மையான ரீடிங்கில் அது சரிசெய்யப்படுகிறது — அதனால்தான் மதிப்பீட்டு மாதத்திற்குப் பிறகு பெரும்பாலும் வழக்கத்திற்கு மாறாக ஒரு பெரிய மாதம் வருகிறது. நீங்களே ரீடிங் எடுத்து, புகார் அளிக்கும்போது அதைக் குறிப்பிடுங்கள் — இந்தத் திருத்தம் வழக்கமானது.</div>
+      </details>
+      <details class="seo-faq-item">
+        <summary>என் கட்டண வகையை மாற்ற முடியுமா?</summary>
+        <div class="seo-faq-a">ஆம், இடம் எப்படிப் பயன்படுத்தப்படுகிறது என்பதற்கான ஆதாரத்துடன் DISCOM-இடம் விண்ணப்பித்து. இது முக்கியம்: வணிக அட்டவணையில் பில் செய்யப்படும் வீடு கிட்டத்தட்ட இரு மடங்கு செலுத்த நேரிடும். மாற்றம் பொதுவாக எதிர்காலத்திற்கே பொருந்தும், எனவே தவறான வகை எவ்வளவு விரைவில் கண்டறியப்படுகிறதோ அவ்வளவு நஷ்டம் குறையும்.</div>
+      </details>
+    </section>
+
+    <section class="seo-section">
+      <h2>அடுத்த படிகள்</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/#calculator"><strong>உங்கள் உண்மையான பில்லைக் கணக்கிடுங்கள்</strong><span>உங்கள் DISCOM, உங்கள் யூனிட், உங்கள் சுமை — ஒவ்வொரு வரியும் தனித்தனியாக முழுப் பில்.</span></a>
+        <a class="seo-link-card" href="/check-my-bill/"><strong>உங்களுக்கு வந்த பில்லைச் சரிபாருங்கள்</strong><span>பில்லை பதிவேற்றுங்கள் அல்லது தட்டச்சு செய்யுங்கள், கட்டணங்கள் சரியாகக் கூடுகிறதா என்று பாருங்கள்.</span></a>
+        <a class="seo-link-card" href="/glossary/"><strong>பில்லிங் சொற்களஞ்சியம்</strong><span>இந்திய மின் பில்லில் அச்சிடப்படக்கூடிய ஒவ்வொரு சுருக்கெழுத்துக்கும் விளக்கம்.</span></a>
+        <a class="seo-link-card" href="/sanctioned-load-optimizer/"><strong>உங்கள் அனுமதிக்கப்பட்ட சுமை சரியா?</strong><span>அதை உயர்த்துவதற்கோ குறைப்பதற்கோ ஆகும் செலவு, அபராதம் எப்போது வலிக்கத் தொடங்கும்.</span></a>
+      </div>
+    </section>
+
+    <p class="seo-disclaimer">மேலே உள்ள பில் வெளியிடப்பட்ட கட்டண அட்டவணைகளிலிருந்து உருவாக்கப்பட்ட ஒரு விளக்கம். இது பில் அல்ல, மதிப்பீடு அல்ல, உங்கள் DISCOM வழங்கும் பில்லுக்கு மாற்றும் அல்ல. இங்குள்ள ஒரு எண்ணும் உங்கள் பில்லில் உள்ள எண்ணும் வேறுபட்டால், உங்கள் பில்லே அதிகாரபூர்வமானது — அது தவறு என்று நினைத்தால் DISCOM-இடம் எழுப்புங்கள்.</p>
+  </section>
+  <script type="module">
+    import { initUnderstandBill } from "/js/understand-bill.js";
+    initUnderstandBill();
+  </script>
+</div>
+
+<footer>
+  <div class="container">
+    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+        <a href="/compare/" data-i18n="nav.compare">Compare</a>
+        <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</a>
+        <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/ta/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/smart-meter/" data-i18n="ql.meterDisplay">Smart Meter Guide</a>
+        <a href="/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/ta/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/ta/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/ta/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/fuel-surcharge/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/contact/" data-i18n="ql.contact">Contact</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-i18n-twins-only>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <script>
@@ -25,6 +25,9 @@
   <meta name="description" content="An interactive electricity bill you can change. Switch DISCOM, units and sanctioned load and see what every line means — fixed charge, slabs, FPPA, duty">
   <link rel="canonical" href="https://thediscombill.com/understand-your-bill/">
   <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/understand-your-bill/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/understand-your-bill/">
+  <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/understand-your-bill/">
+  <link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/understand-your-bill/">
   <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/understand-your-bill/">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
@@ -140,6 +143,9 @@
              translate in place (no twin URL to point at) stay <button>s. -->
         <ul class="lang-menu" id="langMenu" aria-label="Select language">
           <li><span class="lang-opt" data-lang="en" aria-current="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></span></li>
+          <li><a class="lang-opt" href="/hi/understand-your-bill/" hreflang="hi-IN" lang="hi" data-lang="hi"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">हिं</span></a></li>
+          <li><a class="lang-opt" href="/mr/understand-your-bill/" hreflang="mr-IN" lang="mr" data-lang="mr"><span class="lang-opt-name">मराठी</span><span class="lang-opt-code">म</span></a></li>
+          <li><a class="lang-opt" href="/ta/understand-your-bill/" hreflang="ta-IN" lang="ta" data-lang="ta"><span class="lang-opt-name">தமிழ்</span><span class="lang-opt-code">த</span></a></li>
         </ul>
       </div>
       <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
@@ -149,8 +155,9 @@
 <div class="page-body" role="main">
 
   <section class="seo-page container understand-bill-page">
-    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">Understand Your Bill</span></li></ol></nav>
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">Understand Your Bill</span></li></ol></nav>
     <h1>Understand Your Electricity Bill, Line by Line</h1>
+    <p class="seo-lang-pills"><svg class="seo-lang-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span class="sr-only">Available in</span><span class="seo-lang-pill is-current" lang="en" aria-current="page">English</span><a class="seo-lang-pill" href="/hi/understand-your-bill/" hreflang="hi-IN" lang="hi">हिंदी</a><a class="seo-lang-pill" href="/mr/understand-your-bill/" hreflang="mr-IN" lang="mr">मराठी</a><a class="seo-lang-pill" href="/ta/understand-your-bill/" hreflang="ta-IN" lang="ta">தமிழ்</a></p>
     <p class="guide-meta">Updated 12 August 2026 · Figures computed live by the same engine behind our calculator · <a href="/methodology/">How we source and verify</a></p>
     <p class="seo-lead">Almost nobody is taught to read an electricity bill, and the bill does not help — a dozen charges in abbreviations, most of them unexplained. Below is a working bill. Change the DISCOM, the units or the sanctioned load and it recalculates, and every numbered marker explains the line it points at using the numbers you are looking at.</p>
 
