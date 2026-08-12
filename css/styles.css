@@ -6694,7 +6694,25 @@ html:not(.js) .m-btn-ring { display: none; }
 /* gap:0 — the space between the meter and the bill IS the bill figure's left padding, so the
    shared markers sitting in it can be positioned from the bill rows with fixed offsets rather
    than measured against a separate column. */
-.ub-stage { display: grid; grid-template-columns: minmax(240px, 300px) 1fr; gap: 0; align-items: start; }
+.ub-stage {
+  position: relative;   /* the connector overlay is measured against this box */
+  display: grid; grid-template-columns: minmax(240px, 300px) 1fr; gap: 0; align-items: start;
+}
+/* Routes from each shared marker to the part of the meter it names. Drawn by
+   js/understand-bill.js because the two ends sit in independently flowing elements hundreds of
+   pixels apart — there is no CSS that joins them. Behind everything and inert. */
+.ub-links {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; overflow: visible; z-index: 0;
+}
+.ub-link {
+  fill: none; stroke: var(--brand-border); stroke-width: 1.5;
+  stroke-linecap: round; stroke-linejoin: round;
+  transition: stroke var(--t-base), stroke-width var(--t-base);
+}
+.ub-link.is-live { stroke: var(--brand); stroke-width: 2; }
+/* The markers and the bill sit above the routes. */
+.bill-figure, .meter-mini { position: relative; z-index: 1; }
 .meter-mini { margin: 0; min-width: 0; }
 .meter-mini-cap {
   margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .6px;
@@ -6851,12 +6869,8 @@ html:not(.js) .m-btn-ring { display: none; }
   flex-direction: row-reverse;
 }
 .bill-mark.is-shared::before { left: 100%; right: auto; width: var(--lead); }
-.bill-mark.is-shared::after {
-  content: ""; position: absolute; right: 100%; top: .55em;
-  width: calc(var(--gut-l) - var(--lead) - var(--shared-w)); height: 1px;
-  background: var(--brand-border);
-}
-.bill-row.is-lit .bill-mark.is-shared::after { background: var(--brand); }
+/* No ::after stub here — the leader on this side is the drawn route, which actually reaches
+   the meter. The stub used to stop 17px short of it, pointing at nothing. */
 
 .bill-block-slabs { background: var(--surface-sunken); }
 .bill-scroll { overflow-x: auto; }
@@ -6965,6 +6979,10 @@ html:not(.js) .m-btn-ring { display: none; }
      squeezing the callout titles onto three lines. Below that the callouts fold back onto
      their rows as a number and title on one line, and the leader line retires — it has
      nothing left to span. */
+  /* The markers fold back inline against their rows here, so the routes have nothing to join.
+     Hidden in CSS rather than cleared in JS: presentation is CSS's job, and this way stale
+     geometry can never render even if a redraw has not run yet. */
+  .ub-links { display: none; }
   .bill-figure { --bill-pad: 13px; padding-right: 0; padding-left: 0; }
   .bill-doc { max-width: none; }
   .bill-mark, .bill-mark.is-shared {
@@ -6972,7 +6990,7 @@ html:not(.js) .m-btn-ring { display: none; }
     display: inline-flex; flex-direction: row; text-align: left;
     margin-left: 7px; font-size: 10.5px;
   }
-  .bill-mark::before, .bill-mark.is-shared::after { display: none; }
+  .bill-mark::before { display: none; }
   /* The row label is right beside it, so the title is redundant on screen — but it is still
      this link's accessible name, so it is clipped, never display:none. */
   .bill-mark-t {

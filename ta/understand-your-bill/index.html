@@ -227,6 +227,16 @@
       </p>
 
       <div class="ub-stage">
+        <!-- Routed connectors from each shared marker to the part of the meter it names.
+             Measured and drawn by js/understand-bill.js: the two ends live in independently
+             flowing elements hundreds of pixels apart vertically, so there is no CSS that can
+             join them. Empty here and stays empty without JS, where the markers fall back to
+             sitting inline against their rows. -->
+        <svg class="ub-links" id="ubLinks" aria-hidden="true" focusable="false">
+          <path class="ub-link is-live" data-link="present-reading" d=""/>
+          <path class="ub-link" data-link="md" d=""/>
+          <path class="ub-link" data-link="meter-number" d=""/>
+        </svg>
       <!-- The meter and the bill carry ONE set of numbers between them: marker 4 is the meter
            number on both drawings, 7 is the present reading, 9 is the maximum demand. That shared
            digit is the connection — it needs no leader line spanning two independently-flowing
@@ -441,10 +451,14 @@
 
           <!-- The parts a shared marker refers to. No numbers here: the marker itself lives in
                the gap between the two drawings and is the only one. These just light up. -->
+          <!-- Each shared marker's route is drawn to one of these, so the anchors have to sit on
+               the part actually being named: the digit field for the reading, the register-code row
+               for the demand (the code is what tells you WHICH register is on screen), and the
+               nameplate block for the serial. They double as the highlight wash. -->
           <g class="meter-mini-parts">
-            <rect data-mm="present-reading" class="is-live" x="288" y="216" width="176" height="86" rx="4"/>
-            <rect data-mm="md" x="288" y="216" width="176" height="86" rx="4"/>
-            <rect data-mm="meter-number" x="150" y="360" width="150" height="40" rx="4"/>
+            <rect data-mm="present-reading" class="is-live" x="292" y="242" width="168" height="38" rx="3"/>
+            <rect data-mm="md" x="292" y="282" width="168" height="18" rx="3"/>
+            <rect data-mm="meter-number" x="180" y="386" width="232" height="52" rx="3"/>
           </g>
         </svg>
         </div>

@@ -96,6 +96,7 @@ export async function initUnderstandBill() {
     doc.innerHTML = html;
     syncExplanations(r, marks);
     syncMeter(r);
+    drawLinks();
   }
 
   // Keep the explanation column in step with the bill: the marker digits shift whenever a
@@ -183,6 +184,7 @@ export async function initUnderstandBill() {
     document.querySelectorAll('[data-line].is-live').forEach(el => el.classList.remove('is-live'));
     document.querySelectorAll('[data-line="' + CSS.escape(sc.key) + '"]')
       .forEach(el => el.classList.add('is-live'));
+    syncLinkState();
   }
 
   function syncMeter(r) {
@@ -202,6 +204,92 @@ export async function initUnderstandBill() {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); press(); }
     });
   }
+
+  // ── connectors from the shared markers to the meter ─────────────────────
+  // The three markers the meter shares sit beside their BILL rows, which puts them hundreds of
+  // pixels below the parts of the meter they name. No CSS joins two independently flowing
+  // elements across that distance, so the routes are measured and drawn here.
+  //
+  // Orthogonal, not straight: out of the meter, down a lane in the gap, then in to the marker.
+  // A direct line would cross the meter and the bill; a lane per route keeps the three apart.
+  const stage = document.querySelector('.ub-stage');
+  const links = document.getElementById('ubLinks');
+
+  function drawLinks() {
+    if (!links || !stage) return;
+    // Below the breakpoint the markers fold inline against their rows and the routes would be
+    // nonsense, so the overlay is emptied rather than left holding stale geometry.
+    if (!window.matchMedia('(min-width: 881px)').matches) {
+      links.querySelectorAll('.ub-link').forEach(el => el.removeAttribute('d'));
+      return;
+    }
+
+    const box = stage.getBoundingClientRect();
+    links.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
+    links.setAttribute('width', box.width);
+    links.setAttribute('height', box.height);
+
+    const R = 9;                       // corner radius
+    // The paths are declared in the served HTML; only their geometry is set here.
+    const routes = [...links.querySelectorAll('.ub-link')];
+
+    routes.forEach((pathEl, i) => {
+      const id = pathEl.dataset.link;
+      const a = document.querySelector('.bill-mark.is-shared[href="#explain-' + CSS.escape(id) + '"]');
+      const part = document.querySelector('.meter-mini-parts [data-mm="' + CSS.escape(id) + '"]');
+      if (!a || !part) return;
+      const pb = part.getBoundingClientRect();
+      const mb = a.getBoundingClientRect();
+      if (!pb.width || !mb.width) return;
+
+      const x0 = pb.right - box.left;
+      const y0 = pb.top + pb.height / 2 - box.top;
+      const x1 = mb.left - box.left - 5;
+      const y1 = mb.top + mb.height / 2 - box.top;
+
+      // One lane per route, so three descents through the same gap never overlap.
+      const lane = Math.min(x0 + 16 + i * 11, x1 - 16);
+      const dir = y1 > y0 ? 1 : -1;
+      const r = Math.min(R, Math.abs(y1 - y0) / 2, Math.abs(lane - x0), Math.abs(x1 - lane));
+
+      pathEl.setAttribute('d',
+        `M${x0} ${y0} H${lane - r} Q${lane} ${y0} ${lane} ${y0 + dir * r} `
+        + `V${y1 - dir * r} Q${lane} ${y1} ${lane + r} ${y1} H${x1}`);
+    });
+
+    syncLinkState();
+  }
+
+  // The route belonging to the register currently on the meter's display is emphasised, the
+  // same way the meter part and the bill row are.
+  function syncLinkState() {
+    const live = document.querySelector('.meter-mini-parts [data-mm].is-live');
+    const key = live && live.dataset.mm;
+    links && links.querySelectorAll('.ub-link').forEach(pathEl => {
+      pathEl.classList.toggle('is-live', pathEl.dataset.link === key);
+    });
+  }
+
+  if (links && stage) {
+    // Resizes are coalesced through rAF so a drag redraws once per frame rather than per pixel.
+    if ('ResizeObserver' in window) {
+      let raf;
+      new ResizeObserver(() => {
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(drawLinks);
+      }).observe(stage);
+    }
+    // Crossing the breakpoint is a correctness case, not a smoothness one: above it the routes
+    // must exist, below it they must be cleared or they hang across the page pointing at markers
+    // that have folded back inline. rAF is throttled to nothing in a hidden tab, so that
+    // transition is handled directly rather than waiting for a paint.
+    const wide = window.matchMedia('(min-width: 881px)');
+    (wide.addEventListener ? wide.addEventListener.bind(wide, 'change') : wide.addListener.bind(wide))(drawLinks);
+  }
+  addEventListener('load', drawLinks);
+  // Webfont swap changes row heights by a few pixels after first paint, which leaves the routes
+  // landing just off their markers. Redraw once the faces are in.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawLinks).catch(() => {});
 
   let t;
   const debounced = () => { clearTimeout(t); t = setTimeout(render, 200); };
@@ -242,6 +330,8 @@ export async function initUnderstandBill() {
       if (!b0.error) screens = readout(b0, s0, document.documentElement.lang || 'en').meter.screens;
     })).catch(() => {});
   }
+
+  drawLinks();
 
   if (location.hash.startsWith('#explain-')) highlight(location.hash.replace('#explain-', ''));
 }
