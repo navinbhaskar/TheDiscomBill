@@ -225,6 +225,8 @@ export async function initUnderstandBill() {
     }
 
     const box = stage.getBoundingClientRect();
+    const fig = document.querySelector('.meter-mini');
+    const meterRight = fig ? fig.getBoundingClientRect().right - box.left : 0;
     links.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
     links.setAttribute('width', box.width);
     links.setAttribute('height', box.height);
@@ -247,8 +249,11 @@ export async function initUnderstandBill() {
       const x1 = mb.left - box.left - 5;
       const y1 = mb.top + mb.height / 2 - box.top;
 
-      // One lane per route, so three descents through the same gap never overlap.
-      const lane = Math.min(x0 + 16 + i * 11, x1 - 16);
+      // One lane per route, so three descents through the same gap never overlap — and all of
+      // them to the RIGHT of the meter, never through it. Measured from the figure rather than
+      // from the part, because the part is inside the drawing and a lane there would fall
+      // through the casing, the printed spec block and the readout text below.
+      const lane = Math.min(meterRight + 8 + i * 9, x1 - 14);
       const dir = y1 > y0 ? 1 : -1;
       const r = Math.min(R, Math.abs(y1 - y0) / 2, Math.abs(lane - x0), Math.abs(x1 - lane));
 

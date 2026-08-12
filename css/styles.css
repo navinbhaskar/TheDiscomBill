@@ -6713,10 +6713,10 @@ html:not(.js) .m-btn-ring { display: none; }
   stroke-linecap: round; stroke-linejoin: round;
   transition: stroke var(--t-base), stroke-width var(--t-base), opacity var(--t-base);
 }
-.ub-link.is-live { stroke: var(--brand); stroke-width: 2; }
-/* The display holds one register at a time, so only the route to the one on screen is drawn.
-   Press the meter and 7 gives way to 9. The markers themselves stay put — they are links to
-   the explanations, and moving or removing those on a timer is what we set out not to do. */
+/* Every route is drawn the same. is-live decides only WHETHER a register's route is shown —
+   the display holds one at a time, so press the meter and 7 gives way to 9 — never how it
+   looks. The markers themselves stay put; they are links to the explanations, and moving or
+   removing those under a reader is what this design set out to avoid. */
 .ub-link.is-register { opacity: 0; }
 .ub-link.is-register.is-live { opacity: 1; }
 /* The markers and the bill sit above the routes. */
