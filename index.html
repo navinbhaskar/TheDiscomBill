@@ -26,8 +26,10 @@
   </script>
   <title>Free Electricity Bill Calculator India 2026 — 65+ DISCOMs</title>
   <meta name="description" content="Check 2025-26 slab rates for 65+ Indian DISCOMs and calculate your exact electricity bill in 30 seconds — slab-wise breakdown, FPPA and duty included.">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
   <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="canonical" href="https://thediscombill.com/">
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -48,25 +50,10 @@
   <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
   <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/sora-var-latin.woff2">
   <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="stylesheet" href="css/styles.min.css">
-  <!-- Only main.js is preloaded now. Its graph used to be 4 levels deep (main → ui →
-       registry → 37 state files) and every level was hinted here, so ~490KB of calculator
-       code downloaded AND compiled on the main thread before first paint. main.js now
-       imports that chain dynamically (js/calculator-init.js), so hinting it eagerly would
-       put back the cost the split just removed. -->
-  <link rel="modulepreload" href="js/main.js">
-  <!-- The calculator's module chain is discovered one hop at a time — main.js dynamically
-       imports calculator-init.js, which pulls ui.js, which pulls the registry and its index.
-       Each hop costs a round trip, which is invisible on a fast link and very visible on
-       mobile. These four are ALWAYS needed on this page (it is the page with #stateSelect),
-       so naming them up front lets the browser fetch them in parallel with main.js instead
-       of waiting to find out about them. Do not copy this to the guide/tariff pages: they
-       have no calculator, and there the preloads would be pure waste. -->
-  <link rel="modulepreload" href="js/calculator-init.js">
-  <link rel="modulepreload" href="js/ui.js">
-  <link rel="modulepreload" href="js/tariffs/registry.js">
-  <link rel="modulepreload" href="js/tariffs/index.js">
+  <!-- Calculator modules are loaded after first paint/idle; do not preload them into the LCP path. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",

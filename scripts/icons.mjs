@@ -50,7 +50,8 @@ ${svg}`;
 function render(src, size, out) {
   const svg = fs.readFileSync(path.join(ROOT, src), 'utf8');
   fs.writeFileSync(TMP, page(svg, size), 'utf8');
-  execFileSync(CHROME, ['--headless=new', '--disable-gpu', '--hide-scrollbars',
+  execFileSync(CHROME, ['--headless=new', '--disable-gpu', '--disable-gpu-compositing',
+    '--disable-gpu-sandbox', '--disable-dev-shm-usage', '--no-sandbox', '--hide-scrollbars',
     `--window-size=${size},${size}`, '--default-background-color=00000000',
     `--screenshot=${out}`, '--virtual-time-budget=4000',
     'file:///' + TMP.replace(/\\/g, '/')], { stdio: 'ignore' });

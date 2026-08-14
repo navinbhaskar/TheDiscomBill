@@ -686,6 +686,15 @@ html.js .reveal {
 }
 html.js .reveal.is-visible { opacity: 1; transform: none; }
 
+/* Above-the-fold hero content is the likely LCP candidate. It must be visible on the first
+   paint, not wait for IntersectionObserver plus staggered animation. */
+html.js .hero .reveal {
+  opacity: 1;
+  transform: none;
+  transition: none;
+  will-change: auto;
+}
+
 /* Staggered groups — hero lines and the stat cards cascade in */
 html.js .hero .reveal:nth-child(2)            { transition-delay: .07s; }
 html.js .hero .reveal:nth-child(3)            { transition-delay: .14s; }

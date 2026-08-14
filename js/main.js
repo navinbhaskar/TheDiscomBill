@@ -691,7 +691,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // site 514KB of JS (ui.js -> renderer/engine + the registry's 37 state modules +
   // datepicker) for code a guide or tariff page never runs. See js/calculator-init.js.
   if (document.getElementById('stateSelect')) {
-    import('./calculator-init.js').then(m => m.initCalculator()).catch(() => {});
+    const initCalculatorWhenCalm = () => {
+      import('./calculator-init.js').then(m => m.initCalculator()).catch(() => {});
+    };
+    if ('requestIdleCallback' in window) requestIdleCallback(initCalculatorWhenCalm, { timeout: 1500 });
+    else setTimeout(initCalculatorWhenCalm, 0);
   }
 
   // Guide articles only — the Share control. Loaded the same way and for the same reason:
