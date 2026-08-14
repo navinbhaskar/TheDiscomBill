@@ -2676,6 +2676,35 @@ hr { border: none; border-top: 1px solid var(--border-default); margin: 22px 0; 
 }
 
 /* Section titles — quiet grey caps; the uppercase weight is enough of a marker */
+.bill-source-meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px 14px;
+  margin: 8px 0 0;
+  font-size: 11.5px;
+  line-height: 1.35;
+}
+.bill-source-meta div { min-width: 0; }
+.bill-source-meta dt {
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+.bill-source-meta dd {
+  margin: 1px 0 0;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+.bill-source-meta a {
+  color: var(--text-brand);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.svc-card .bill-source-meta,
+.sub-card .bill-source-meta,
+.cc-card .bill-source-meta {
+  grid-template-columns: 1fr;
+}
+
 .bill-section-title {
   font-size: 10.5px; font-weight: 700; color: var(--text-secondary);
   text-transform: uppercase; letter-spacing: 1.2px;
@@ -5215,6 +5244,7 @@ html:not([lang="en"]) .footer-col-title {
   /* Trim the language + theme buttons (icon-sized) so the full wordmark fits */
   .lang-trigger { min-width: 42px; padding: 0 8px; }
   .theme-toggle { width: 36px; }
+  .bill-source-meta { grid-template-columns: 1fr; }
   /* Anchor the menu to the viewport (not the trigger) so its wide items always fit
      on-screen; fixed positioning also keeps it out of the page's scroll width. */
   .nav-dropdown-menu { position: fixed; top: 60px; left: 14px; right: 14px;

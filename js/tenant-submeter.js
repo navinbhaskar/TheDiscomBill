@@ -16,6 +16,7 @@
 // hand over. Deliberately NOT framed as legal advice — see the disclaimer copy.
 
 import { calculateBill } from './engine.js';
+import { tariffProvenanceHtml } from './tariff-provenance.js';
 import { getStates, getDiscoms, getCategories, getDefaultCategory,
          getSupplyTypes, getDefaultSupplyType, ensureState } from './tariffs/registry.js';
 
@@ -201,6 +202,7 @@ function legalBillCard(r) {
         <tfoot><tr><td>Total for the whole connection</td><td class="num"><strong>${rs2(b.currentNet)}</strong></td></tr>
         <tr><td>Effective rate across all units</td><td class="num"><strong>${rs2(b.currentNet / r.totalUnits)}/unit</strong></td></tr></tfoot>
       </table></div>
+      ${tariffProvenanceHtml(b)}
       <p class="rc-note">${esc(b.category ? b.category.name : '')}${b.supplyTypeName ? ' · ' + esc(b.supplyTypeName) : ''},
       ${esc(b.tariffPeriodLabel || '')} rates, ${r.load} kW sanctioned load.
       ${b.tariffVerified ? 'These rates are checked against the published tariff order.' : 'These rates are a representative estimate — confirm against the current tariff order.'}

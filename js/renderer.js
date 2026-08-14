@@ -1,6 +1,7 @@
 // js/renderer.js — Bill HTML renderer (pure string output, no DOM dependencies)
 
 import { displayDate, escHtml } from './utils.js';
+import { tariffProvenanceHtml } from './tariff-provenance.js';
 export { displayDate };
 
 /**
@@ -199,7 +200,7 @@ export function renderBill(params) {
           wheelingCharge, wheelingRate, wheelingType, wheelingLabel,
           todUnits, todPeakSurcharge, todOffPeakRebate,
           extraCharges, facAmount, facRate, facMode,
-          tariffPeriodLabel, tariffEstimated, tariffVerified, tariffAsOf, tariffSourceUrl, tariffRates,
+          tariffPeriodLabel, tariffEstimated, tariffEffectiveFrom, tariffVerified, tariffAsOf, tariffSourceUrl, tariffRates,
           tariffYear, tariffYearsBehind,
           currentGross, subsidyAmount, subsidyLabel, currentNet,
           arrears, arrearLpsc, lpscRate, currentLpscMonths, currentLpsc, lpscApplicable,
@@ -450,7 +451,7 @@ export function renderBill(params) {
       <!-- Licence area runs the full width of the bill rather than inside the left column,
            where it was squeezed into a ~200px gutter and ran to ten lines. -->
       <div class="bill-discom-area">${discom.area}</div>
-      <div class="bill-header-foot">${confidenceBadge(tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind, tariffSourceUrl)}</div>
+      <div class="bill-header-foot">${confidenceBadge(tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind, tariffSourceUrl)}${tariffProvenanceHtml(result)}</div>
     </div>
 
     ${compact ? `
@@ -671,7 +672,7 @@ export function renderRevisionBill(params) {
   const { ledger, consumerName, accountNo, address, meterNo, fromDate, toDate } = params;
   const { rows, monthsCount, totalUnits, unitsPerMonth, startArrear, lpscRate,
           totalEnergy, totalDemand, totalED, totalExcess, totalFppa, totalSubsidy, energySlabs,
-          fixedPerMonth, edRate, tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind,
+          fixedPerMonth, edRate, tariffVerified, tariffAsOf, tariffEffectiveFrom, tariffSourceUrl, tariffYear, tariffYearsBehind,
           arrear, previousLpsc, totalCharges, totalLpsc, totalPay, totalAdj, totalPayable,
           netMetering, totalImport, totalExport, totalNet, finalCredit,
           discom, category, supplyTypeName, connectedLoadKw, billedDemandKw, demandUnit } = ledger;
@@ -835,7 +836,7 @@ export function renderRevisionBill(params) {
       <!-- Licence area runs the full width of the bill rather than inside the left column,
            where it was squeezed into a ~200px gutter and ran to ten lines. -->
       <div class="bill-discom-area">${discom.area}</div>
-      <div class="bill-header-foot">${confidenceBadge(tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind, tariffSourceUrl)}</div>
+      <div class="bill-header-foot">${confidenceBadge(tariffVerified, tariffAsOf, tariffYear, tariffYearsBehind, tariffSourceUrl)}${tariffProvenanceHtml({ tariffEffectiveFrom, tariffAsOf, tariffSourceUrl })}</div>
     </div>
 
     <div class="bill-details-row">

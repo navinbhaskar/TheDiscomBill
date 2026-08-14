@@ -8,6 +8,7 @@
 
 import { getStates, getDiscoms, ensureState } from './tariffs/registry.js';
 import { calculateBill } from './engine.js';
+import { tariffProvenanceHtml } from './tariff-provenance.js';
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -116,6 +117,7 @@ function render() {
       month's numbers)` : ''} or enhance your load on their own. Consider regularising your load upward
       instead — see <a href="/guides/uppcl-sanctioned-load-increased/">what happens when the DISCOM raises
       it for you</a>.</p>
+      ${over ? tariffProvenanceHtml(over) : ''}
     </div>`;
     return;
   }
@@ -233,6 +235,8 @@ function render() {
         : `Rows marked ⚠ sit below your recorded demand: the modelled excess-demand penalty already eats the
            fixed-charge saving there, and repeated excess can get your load force-enhanced.
            The recommendation keeps ${Math.round((HEADROOM - 1) * 100)}% headroom over your 12-month peak.`}</p>`}
+
+      ${recFixed ? tariffProvenanceHtml(recFixed) : ''}
 
       <div class="svc-facts-links rc-links">
         <a href="/guides/reduce-fixed-charges-sanctioned-load/">How to apply for a load reduction →</a>

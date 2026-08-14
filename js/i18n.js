@@ -43,6 +43,7 @@ export const STRINGS = {
     'ql.billReview': 'Expert Bill Review',
     'ql.guides': 'Blogs & Articles',
     'ql.glossary': 'Bill Glossary',
+    'ql.understandBill': 'Understand Your Bill',
     'ql.methodology': 'Methodology & Accuracy',
     'ql.fuelSurcharge': 'Fuel Surcharge Tracker',
     // Homepage "More tools" section. Only the headings live here — every tool LABEL in that

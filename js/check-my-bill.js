@@ -19,6 +19,7 @@
 
 import { extractBillFields } from './bill-ocr.js';
 import { calculateBill } from './engine.js';
+import { tariffProvenanceHtml } from './tariff-provenance.js';
 import { resolveFppaForDiscom } from './tariffs/fppa-resolve.js';
 import {
   getStates, getDiscoms, getCategories, getDefaultCategory,
@@ -365,6 +366,7 @@ function recompute() {
         <tr><td>Charge lines read</td><td>${readCount} of ${rows.length} off your bill</td></tr>
       </tbody>
     </table>
+    ${tariffProvenanceHtml(bill)}
 
     <p class="audit-h">Line-by-line recomputation</p>
     <div class="audit-table-wrap"><table class="audit-table">

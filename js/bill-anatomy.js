@@ -15,6 +15,7 @@
 import { resolveFppaForDiscom } from './tariffs/fppa-resolve.js';
 import { billT } from './bill-strings.js';
 import { DOMESTIC_SUBSIDY } from './tariffs/subsidy.js';
+import { tariffProvenanceHtml } from './tariff-provenance.js';
 
 /**
  * The scenarios the DISCOM selector offers — structure only; their labels and notes live in
@@ -516,6 +517,9 @@ export function readout(b, scenario, lang = 'en') {
     label: b.tariffAsOf || b.tariffPeriodLabel || '',
     verified: !!b.tariffVerified,
     url: b.tariffSourceUrl || '',
+    tariffEffectiveFrom: b.tariffEffectiveFrom || null,
+    tariffAsOf: b.tariffAsOf || null,
+    tariffSourceUrl: b.tariffSourceUrl || '',
     discom: b.discom ? (b.discom.fullName || b.discom.name) : '',
   };
 
@@ -594,7 +598,7 @@ export function billHtml(r) {
         ? ` <span class="bill-badge is-ok">${esc(r.S.verified)}</span>`
         : ` <span class="bill-badge">${esc(r.S.representative)}</span>`)
       + (r.source.url ? ` · <a href="${esc(r.source.url)}" target="_blank" rel="noopener">${esc(r.S.source)}</a>` : '')
-      + `</p>`
+      + `</p>${tariffProvenanceHtml(r.source)}`
     : '';
 
   const html = `

@@ -5,6 +5,7 @@
 import { TARIFF_DB, ensureAll } from './tariffs/registry.js';
 import { DOMESTIC_SUBSIDY } from './tariffs/subsidy.js';
 import { calculateBill } from './engine.js';
+import { tariffProvenanceHtml } from './tariff-provenance.js';
 
 // This page genuinely spans the whole country, so it pulls every state's tariff tables
 // up front. Top-level await means the module is not considered loaded until they are
@@ -287,6 +288,7 @@ function ccCardHtml(opt, bill, units, category, loadKw, isWinner) {
         ${fppa ? `<div><dt>FPPA</dt><dd>${fppa < 0 ? '−' : ''}${fmt(Math.abs(fppa))}</dd></div>` : ''}
         ${subsidy > 0 ? `<div class="cc-subsidy-row"><dt>Govt subsidy${bill.subsidyLabel ? `<span class="cc-subsidy-tag" title="${escHtml(bill.subsidyLabel)}"> ⓘ</span>` : ''}</dt><dd>−${fmt(subsidy)}</dd></div>` : ''}
       </dl>
+      ${tariffProvenanceHtml(bill)}
       <a class="cc-deep" href="${deep}">Full breakdown in calculator →</a>
     </div>`;
 }

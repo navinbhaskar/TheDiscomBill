@@ -7,6 +7,7 @@
 import { TARIFF_DB, getStates, getDiscoms, ensureState } from './tariffs/registry.js';
 import { calculateBill } from './engine.js';
 import { discomFactsHtml } from './portal-page.js';
+import { tariffProvenanceHtml } from './tariff-provenance.js';
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -44,16 +45,17 @@ function render() {
   const cat = domesticCategory(discom);
   if (!cat) { box.innerHTML = '<p class="tx-muted">No domestic tariff on record for this DISCOM.</p>'; return; }
 
-  let bill = null;
+  let billResult = null;
   try {
     const r = calculateBill({ discomId: discom.id, categoryId: cat.id, units, connectedLoadKw: load });
-    if (r && !r.error && r.totalPayable != null) bill = r.totalPayable;
+    if (r && !r.error && r.totalPayable != null) billResult = r;
   } catch (e) { /* engine couldn't price this combination */ }
-  if (bill == null || bill <= 0) {
+  if (!billResult || billResult.totalPayable <= 0) {
     box.innerHTML = '<p class="tx-muted">Couldn’t estimate a bill for this selection — try the <a href="/#calculator">full calculator</a>.</p>';
     return;
   }
 
+  const bill = billResult.totalPayable;
   const daily = bill / DAYS_PER_MONTH;
   const effRate = bill / units;
   const recommended = Math.ceil(bill / 50) * 50;   // monthly recharge, rounded up to ₹50
@@ -104,6 +106,7 @@ function render() {
       (the same engine as our <a href="/?state=${encodeURIComponent(state)}&discom=${encodeURIComponent(discom.id)}#calculator">bill calculator</a>),
       spread over a 30-day month. Seasonal usage swings (AC, geyser) will shorten or stretch these numbers.
       Some DISCOMs also give a small rebate on prepaid smart-meter tariffs — check your tariff order.</p>
+      ${tariffProvenanceHtml(billResult)}
 
       ${discomFactsHtml(state, discom)}
 
