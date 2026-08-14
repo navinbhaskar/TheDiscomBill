@@ -246,12 +246,13 @@ export async function initUnderstandBill() {
 
       const x0 = stacked ? pb.left + pb.width / 2 - box.left : pb.right - box.left;
       const y0 = stacked ? pb.bottom - box.top : pb.top + pb.height / 2 - box.top;
-      const x1 = stacked ? mb.left + mb.width / 2 - box.left : mb.left - box.left - 5;
+      const x1 = stacked ? mb.left - box.left : mb.left - box.left - 5;
       const y1 = mb.top + mb.height / 2 - box.top;
 
       if (stacked) {
-        const laneY = Math.min(y1 - 12, meterBottom + 10 + i * 8);
-        pathEl.setAttribute('d', `M${x0} ${y0} V${laneY} H${x1} V${y1}`);
+        const laneY = Math.min(y1 - 16, meterBottom + 12 + i * 10);
+        const laneX = Math.max(-20, x1 - 12 - i * 10);
+        pathEl.setAttribute('d', `M${x0} ${y0} V${laneY} H${laneX} V${y1} H${x1}`);
         return;
       }
 
