@@ -222,16 +222,11 @@ export async function initUnderstandBill() {
 
   function drawLinks() {
     if (!links || !stage) return;
-    // Below the breakpoint the markers fold inline against their rows and the routes would be
-    // nonsense, so the overlay is emptied rather than left holding stale geometry.
-    if (!window.matchMedia('(min-width: 881px)').matches) {
-      links.querySelectorAll('.ub-link').forEach(el => el.removeAttribute('d'));
-      return;
-    }
-
+    const stacked = !window.matchMedia('(min-width: 881px)').matches;
     const box = stage.getBoundingClientRect();
     const fig = document.querySelector('.meter-mini');
     const meterRight = fig ? fig.getBoundingClientRect().right - box.left : 0;
+    const meterBottom = fig ? fig.getBoundingClientRect().bottom - box.top : 0;
     links.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
     links.setAttribute('width', box.width);
     links.setAttribute('height', box.height);
@@ -249,10 +244,16 @@ export async function initUnderstandBill() {
       const mb = a.getBoundingClientRect();
       if (!pb.width || !mb.width) return;
 
-      const x0 = pb.right - box.left;
-      const y0 = pb.top + pb.height / 2 - box.top;
-      const x1 = mb.left - box.left - 5;
+      const x0 = stacked ? pb.left + pb.width / 2 - box.left : pb.right - box.left;
+      const y0 = stacked ? pb.bottom - box.top : pb.top + pb.height / 2 - box.top;
+      const x1 = stacked ? mb.left + mb.width / 2 - box.left : mb.left - box.left - 5;
       const y1 = mb.top + mb.height / 2 - box.top;
+
+      if (stacked) {
+        const laneY = Math.min(y1 - 12, meterBottom + 10 + i * 8);
+        pathEl.setAttribute('d', `M${x0} ${y0} V${laneY} H${x1} V${y1}`);
+        return;
+      }
 
       // One lane per route, so three descents through the same gap never overlap — and all of
       // them to the RIGHT of the meter, never through it. Measured from the figure rather than
@@ -289,10 +290,8 @@ export async function initUnderstandBill() {
         raf = requestAnimationFrame(drawLinks);
       }).observe(stage);
     }
-    // Crossing the breakpoint is a correctness case, not a smoothness one: above it the routes
-    // must exist, below it they must be cleared or they hang across the page pointing at markers
-    // that have folded back inline. rAF is throttled to nothing in a hidden tab, so that
-    // transition is handled directly rather than waiting for a paint.
+    // Crossing the breakpoint changes the route shape, so redraw immediately rather than
+    // waiting for a resize observer tick.
     const wide = window.matchMedia('(min-width: 881px)');
     (wide.addEventListener ? wide.addEventListener.bind(wide, 'change') : wide.addListener.bind(wide))(drawLinks);
   }

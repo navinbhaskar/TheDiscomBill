@@ -6987,31 +6987,54 @@ html:not(.js) .m-btn-ring { display: none; }
 .ub-calc-eq { font-weight: 500; color: var(--text-tertiary); }
 
 @media (max-width: 880px) {
-  /* The bill (420) plus the gutter (26 + 178) needs ~630px of container before it starts
-     squeezing the callout titles onto three lines. Below that the callouts fold back onto
-     their rows as a number and title on one line, and the leader line retires — it has
-     nothing left to span. */
-  /* The markers fold back inline against their rows here, so the routes have nothing to join.
-     Hidden in CSS rather than cleared in JS: presentation is CSS's job, and this way stale
-     geometry can never render even if a redraw has not run yet. */
-  .ub-links { display: none; }
-  .bill-figure { --bill-pad: 13px; padding-right: 0; padding-left: 0; }
-  .bill-doc { max-width: none; }
+  .understand-bill-page, .ub-stage {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .ub-stage { grid-template-columns: minmax(0, 1fr); }
+  .meter-mini {
+    width: min(100%, 410px);
+    max-width: 410px;
+    justify-self: center;
+  }
+  .bill-figure {
+    --bill-pad: 13px;
+    width: min(100%, calc(100vw - 58px));
+    max-width: calc(100vw - 58px);
+    min-width: 0;
+    justify-self: stretch;
+    padding-right: 0;
+    padding-left: 28px;
+    overflow: visible;
+  }
+  .bill-doc {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .bill-doc-head, .bill-dates, .bill-block { padding-left: 10px; padding-right: 10px; }
+  .bill-block { min-width: 0; }
   .bill-row {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 4px 10px;
-    align-items: start;
+    grid-template-columns: minmax(0, 42%) minmax(0, 58%);
+    width: 100%;
+    max-width: 100%;
+    gap: 7px;
+    align-items: baseline;
+    min-width: 0;
+    font-size: 11.8px;
   }
-  .bill-row:not(.is-marked) .bill-row-v {
-    grid-column: 1 / -1;
-    text-align: left;
+  .bill-row-k, .bill-row-v {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
-  .bill-row.is-marked { grid-template-columns: auto minmax(0, 1fr); }
   .bill-mark, .bill-mark.is-shared {
-    position: static; transform: none; width: auto; right: auto;
-    grid-column: 1; grid-row: 1;
+    position: absolute; left: -26px; right: auto; top: 50%;
+    width: 18px; transform: translateY(-50%);
     display: inline-flex; flex-direction: row; text-align: left;
-    margin: 1px 0 0; font-size: 10.5px;
+    margin: 0; font-size: 10.5px;
   }
   .bill-mark::before { display: none; }
   /* The row label is right beside it, so the title is redundant on screen — but it is still
@@ -7026,11 +7049,14 @@ html:not(.js) .m-btn-ring { display: none; }
     width: 17px; height: 17px; border-radius: var(--radius-full);
     background: var(--brand); color: #fff; font-size: 10px;
   }
-  .bill-row.is-marked .bill-row-k { grid-column: 2; grid-row: 1; }
-  .bill-row.is-marked .bill-row-v {
-    grid-column: 2; grid-row: 2;
-    text-align: left;
+  .bill-row-v {
+    justify-self: stretch;
+    text-align: right;
+    white-space: normal;
+    hyphens: auto;
   }
+  .bill-row.is-grand .bill-row-k, .bill-row.is-grand .bill-row-v { font-size: 13.5px; }
+  .bill-source, .bill-badge { overflow-wrap: anywhere; }
   .bill-row.is-marked { min-height: 0; }
   .bill-row.is-lit { box-shadow: none; }
   .ub-field-wide { grid-column: 1 / -1; }
