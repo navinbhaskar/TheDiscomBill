@@ -239,6 +239,7 @@ export async function initUnderstandBill() {
       const id = pathEl.dataset.link;
       const a = document.querySelector('.bill-mark.is-shared[href="#explain-' + CSS.escape(id) + '"]');
       const part = document.querySelector('.meter-mini-parts [data-mm="' + CSS.escape(id) + '"]');
+      const label = links.querySelector('.ub-link-label[data-link-label="' + CSS.escape(id) + '"]');
       if (!a || !part) return;
       const pb = part.getBoundingClientRect();
       const mb = a.getBoundingClientRect();
@@ -253,6 +254,10 @@ export async function initUnderstandBill() {
         const laneY = Math.min(y1 - 16, meterBottom + 12 + i * 10);
         const laneX = Math.max(-20, x1 - 12 - i * 10);
         pathEl.setAttribute('d', `M${x0} ${y0} V${laneY} H${laneX} V${y1} H${x1}`);
+        if (label) {
+          label.setAttribute('x', Math.max(12, laneX + 12));
+          label.setAttribute('y', Math.max(14, laneY - 6));
+        }
         return;
       }
 
@@ -267,6 +272,10 @@ export async function initUnderstandBill() {
       pathEl.setAttribute('d',
         `M${x0} ${y0} H${lane - r} Q${lane} ${y0} ${lane} ${y0 + dir * r} `
         + `V${y1 - dir * r} Q${lane} ${y1} ${lane + r} ${y1} H${x1}`);
+      if (label) {
+        label.setAttribute('x', lane + 7);
+        label.setAttribute('y', y0 + (y1 - y0) * 0.58);
+      }
     });
 
     syncLinkState();
@@ -279,6 +288,9 @@ export async function initUnderstandBill() {
     const key = live && live.dataset.mm;
     links && links.querySelectorAll('.ub-link').forEach(pathEl => {
       pathEl.classList.toggle('is-live', pathEl.dataset.link === key);
+    });
+    links && links.querySelectorAll('.ub-link-label').forEach(label => {
+      label.classList.toggle('is-live', label.dataset.linkLabel === key);
     });
   }
 

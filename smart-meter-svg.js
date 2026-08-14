@@ -18,7 +18,7 @@ export const METER_DEVICE = String.raw`<svg class="meter-svg" viewBox="0 0 700 5
   icon row, the main reading, a register code and a unit label; a pulse LED and standard
   markings below it; a serial barcode and printed specification block on the left; and a
   scroll button with a circular optical port on the right. A dark terminal block with brass
-  screws runs along the bottom. Twelve numbered callouts key each element to the legend below.</desc>
+  screws runs along the bottom. Fourteen numbered callouts key each element to the legend below.</desc>
 
   <defs>
     <linearGradient id="mBody" x1="0" y1="0" x2="0.3" y2="1">
@@ -231,6 +231,8 @@ const METER_CALLOUTS = String.raw`  <!-- callout leaders: every run is routed th
     <path d="M124 350h150l26-22"/>
     <path d="M576 358h-58"/>
     <path d="M124 380h56"/>
+    <path d="M576 410h-66"/>
+    <path d="M576 462h-84"/>
   </g>
   <g class="m-num">
     <circle cx="588" cy="100" r="12"/><text x="588" y="104.5">1</text>
@@ -245,6 +247,8 @@ const METER_CALLOUTS = String.raw`  <!-- callout leaders: every run is routed th
     <circle cx="112" cy="350" r="12"/><text x="112" y="354.5">10</text>
     <circle cx="588" cy="358" r="12"/><text x="588" y="362.5">11</text>
     <circle cx="112" cy="380" r="12"/><text x="112" y="384.5">12</text>
+    <circle cx="588" cy="410" r="12"/><text x="588" y="414.5">13</text>
+    <circle cx="588" cy="462" r="12"/><text x="588" y="466.5">14</text>
   </g>        `;
 
 export const METER_SVG = METER_DEVICE + METER_CALLOUTS + String.raw`</svg>`;

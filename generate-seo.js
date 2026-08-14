@@ -2538,8 +2538,8 @@ const GUIDE_TOOL_LINK = {
     { en: 'Size a system and see the payback on your own bill', hi: 'सिस्टम का आकार तय करें और अपने बिल पर पेबैक देखें', mr: 'सिस्टिमचा आकार ठरवा आणि तुमच्या बिलावरील परतावा पाहा', ta: 'அமைப்பின் அளவை தீர்மானித்து உங்கள் பில்லில் திருப்பிச் செலுத்தும் காலத்தைப் பாருங்கள்' }],
   ev:         ['/ev-charging-calculator/', { en: 'EV charging cost calculator', hi: 'EV चार्जिंग लागत कैलकुलेटर', mr: 'EV चार्जिंग खर्च कॅल्क्युलेटर', ta: 'EV சார்ஜிங் செலவு கணிப்பான்' },
     { en: 'Per-km cost of charging at home on your tariff', hi: 'अपने टैरिफ पर घर पर चार्जिंग की प्रति-किमी लागत', mr: 'तुमच्या टॅरिफवर घरी चार्जिंगचा प्रति-किमी खर्च', ta: 'உங்கள் கட்டணத்தில் வீட்டில் சார்ஜ் செய்யும் கி.மீ.-க்கான செலவு' }],
-  smartMeter: ['/recharge-calculator/', { en: 'Smart meter recharge calculator', hi: 'स्मार्ट मीटर रिचार्ज कैलकुलेटर', mr: 'स्मार्ट मीटर रिचार्ज कॅल्क्युलेटर', ta: 'ஸ்மார்ட் மீட்டர் ரீசார்ஜ் கணிப்பான்' },
-    { en: 'How many days a recharge lasts at your DISCOM\'s real rates', hi: 'आपके डिस्कॉम की असली दरों पर रिचार्ज कितने दिन चलेगा', mr: 'तुमच्या डिस्कॉमच्या खऱ्या दरांवर रिचार्ज किती दिवस पुरेल', ta: 'உங்கள் DISCOM-இன் உண்மையான விகிதங்களில் ரீசார்ஜ் எத்தனை நாள் நீடிக்கும்' }],
+  smartMeter: ['/smart-meter/', { en: 'Smart meter reading guide', hi: 'स्मार्ट मीटर रीडिंग गाइड', mr: 'स्मार्ट मीटर रीडिंग मार्गदर्शक', ta: 'ஸ்மார்ட் மீட்டர் ரீடிங் வழிகாட்டி' },
+    { en: 'Check your smart meter reading and match it to your bill', hi: 'अपनी स्मार्ट मीटर रीडिंग जांचें और उसे बिल से मिलाएं', mr: 'तुमचे स्मार्ट मीटर रीडिंग तपासा आणि बिलाशी जुळवा', ta: 'உங்கள் ஸ்மார்ட் மீட்டர் ரீடிங்கை சரிபார்த்து பில்லுடன் பொருத்துங்கள்' }],
   newConn:    ['/services/#new-connection', { en: 'New connection helper', hi: 'नया कनेक्शन हेल्पर', mr: 'नवीन जोडणी मदतनीस', ta: 'புதிய இணைப்பு உதவியாளர்' },
     { en: 'Documents, charges and apply steps for your DISCOM', hi: 'आपके डिस्कॉम के दस्तावेज़, शुल्क और आवेदन के स्टेप', mr: 'तुमच्या डिस्कॉमसाठी कागदपत्रे, शुल्क आणि अर्जाचे टप्पे', ta: 'உங்கள் DISCOM-க்கான ஆவணங்கள், கட்டணங்கள் மற்றும் விண்ணப்ப படிகள்' }],
   charges:    ['/glossary/', { en: 'Electricity bill glossary', hi: 'बिजली बिल शब्दावली', mr: 'वीज बिल शब्दावली', ta: 'மின் கட்டண சொற்களஞ்சியம்' },
@@ -2550,12 +2550,29 @@ const GUIDE_TOOL_LINK = {
     { en: 'Every charge line on an Indian bill, in plain language', hi: 'भारतीय बिल की हर शुल्क लाइन, आसान भाषा में', mr: 'भारतीय बिलावरील प्रत्येक शुल्क ओळ, सोप्या भाषेत', ta: 'இந்திய பில்லில் உள்ள ஒவ்வொரு கட்டண வரியும், எளிய மொழியில்' }],
 };
 
-// Prominent inline CTA into an interactive tool, placed right under a guide's intro. Opt-in
-// per guide (guide.toolCta) so only the guides whose search intent a tool directly answers —
-// e.g. the sanctioned-load explainers → the Sanctioned Load Optimizer — get one, high on the page.
+// Prominent inline CTA into an interactive tool, placed right under a guide's intro.
+// Guide-specific CTAs still win, then category links, then the main calculator fallback.
 function guideToolCtaHtml(guide, lang = 'en') {
-  const c = guide.toolCta;
-  if (!c) return '';
+  const tool = GUIDE_TOOL_LINK[guideCategoryId(guide)];
+  const c = guide.toolCta || (tool && {
+    href: tool[0],
+    title: tool[1],
+    sub: tool[2],
+  }) || {
+    href: '/#calculator',
+    title: {
+      en: 'Electricity bill calculator',
+      hi: 'बिजली बिल कैलकुलेटर',
+      mr: 'वीज बिल कॅल्क्युलेटर',
+      ta: 'மின் பில் கணிப்பான்',
+    },
+    sub: {
+      en: 'Calculate this on your bill using real DISCOM rates',
+      hi: 'असली DISCOM दरों से इसे अपने बिल पर कैलकुलेट करें',
+      mr: 'खऱ्या DISCOM दरांनी हे तुमच्या बिलावर कॅल्क्युलेट करा',
+      ta: 'உண்மையான DISCOM விகிதங்களில் இதை உங்கள் பில்லில் கணக்கிடுங்கள்',
+    },
+  };
   const label = T(lang, { en: 'Interactive tool', hi: 'इंटरैक्टिव टूल', mr: 'इंटरॅक्टिव्ह साधन', ta: 'ஊடாடும் கருவி' });
   return `
     <a class="guide-tool-cta" href="${c.href}">
@@ -2564,6 +2581,108 @@ function guideToolCtaHtml(guide, lang = 'en') {
       <span class="guide-tool-cta-sub">${T(lang, c.sub)}</span>
       <span class="guide-tool-cta-go" aria-hidden="true">→</span>
     </a>`;
+}
+
+function guideTopExampleHtml(guide, lang = 'en') {
+  const cat = guideCategoryId(guide);
+  const title = T(lang, {
+    en: 'Example to look for',
+    hi: 'देखने वाला उदाहरण',
+    mr: 'पाहण्यासारखे उदाहरण',
+    ta: 'பார்க்க வேண்டிய எடுத்துக்காட்டு',
+  });
+  const sample = T(lang, { en: 'SAMPLE', hi: 'सैंपल', mr: 'नमुना', ta: 'மாதிரி' });
+  const check = T(lang, { en: 'CHECK THIS', hi: 'यह देखें', mr: 'हे पहा', ta: 'இதைக் காண்க' });
+  const note = T(lang, {
+    en: 'Use this sample as a quick visual map, then match the highlighted line with your own bill or meter.',
+    hi: 'इस सैंपल को विजुअल मैप की तरह देखें, फिर हाईलाइट लाइन को अपने बिल या मीटर से मिलाएं।',
+    mr: 'हा नमुना दृश्य नकाशा म्हणून वापरा, मग हायलाइट केलेली ओळ तुमच्या बिलाशी किंवा मीटरशी जुळवा.',
+    ta: 'இந்த மாதிரியை விரைவு காட்சி வரைபடமாகப் பயன்படுத்தி, பின்னர் குறிக்கப்பட்ட வரியை உங்கள் பில் அல்லது மீட்டருடன் பொருத்துங்கள்.',
+  });
+
+  if (cat === 'smartMeter') {
+    const aria = T(lang, {
+      en: 'Sample smart meter display with present reading highlighted',
+      hi: 'प्रेजेंट रीडिंग हाईलाइट वाला सैंपल स्मार्ट मीटर डिस्प्ले',
+      mr: 'सध्याचे रीडिंग हायलाइट केलेला स्मार्ट मीटर नमुना',
+      ta: 'தற்போதைய ரீடிங் குறிக்கப்பட்ட மாதிரி ஸ்மார்ட் மீட்டர் திரை',
+    });
+    return `
+    <figure class="guide-fig guide-example">
+      <div class="guide-example-label">${title}</div>
+      <div class="guide-example-meter" role="img" aria-label="${attr(aria)}">
+        <div class="gem-screen">
+          <span class="gem-code">1.8.0</span>
+          <strong>14820.6</strong>
+          <span>kWh</span>
+        </div>
+        <div class="gem-grid">
+          <div class="gem-row"><span>Meter no.</span><b>SM-240118</b></div>
+          <div class="gem-row is-hl"><span>Present reading</span><em>${check}</em><b>14820.6</b></div>
+          <div class="gem-row"><span>Balance</span><b>₹642</b></div>
+        </div>
+      </div>
+      <figcaption>${note}</figcaption>
+    </figure>`;
+  }
+
+  if (cat === 'solar') {
+    return `
+    <figure class="guide-fig guide-example">
+      <div class="guide-example-label">${title}</div>
+      <div class="gbill" role="img" aria-label="${attr('Sample net meter bill with export units highlighted')}">
+        <div class="gbill-head">${sample} SOLAR BILL <span>Net meter</span></div>
+        <div class="gbill-row"><span>Import units <small>From grid</small></span><b>210 kWh</b></div>
+        <div class="gbill-row is-hl"><span>Export units <small>Sent to grid</small></span><span class="gbill-tag">${check}</span><b>136 kWh</b></div>
+        <div class="gbill-row"><span>Net billable units</span><b>74 kWh</b></div>
+        <div class="gbill-total"><span>Estimated saving</span><span>₹920</span></div>
+      </div>
+      <figcaption>${note}</figcaption>
+    </figure>`;
+  }
+
+  if (cat === 'ev') {
+    return `
+    <figure class="guide-fig guide-example">
+      <div class="guide-example-label">${title}</div>
+      <div class="gbill" role="img" aria-label="${attr('Sample electricity bill with EV charging units highlighted')}">
+        <div class="gbill-head">${sample} EV BILL <span>Home charging</span></div>
+        <div class="gbill-row"><span>Monthly charging</span><b>86 kWh</b></div>
+        <div class="gbill-row is-hl"><span>Energy charge <small>Units x tariff slab</small></span><span class="gbill-tag">${check}</span><b>₹602</b></div>
+        <div class="gbill-row"><span>Estimated running cost</span><b>₹1.25/km</b></div>
+        <div class="gbill-total"><span>Added bill amount</span><span>₹710</span></div>
+      </div>
+      <figcaption>${note}</figcaption>
+    </figure>`;
+  }
+
+  if (cat === 'newConn') {
+    return `
+    <figure class="guide-fig guide-example">
+      <div class="guide-example-label">${title}</div>
+      <div class="gbill" role="img" aria-label="${attr('Sample new connection estimate with load and deposit highlighted')}">
+        <div class="gbill-head">${sample} ESTIMATE <span>New connection</span></div>
+        <div class="gbill-row"><span>Applied load</span><b>3 kW</b></div>
+        <div class="gbill-row is-hl"><span>Security deposit <small>Based on category and load</small></span><span class="gbill-tag">${check}</span><b>₹3,000</b></div>
+        <div class="gbill-row"><span>Service line charge</span><b>₹1,500</b></div>
+        <div class="gbill-total"><span>Amount payable</span><span>₹4,500</span></div>
+      </div>
+      <figcaption>${note}</figcaption>
+    </figure>`;
+  }
+
+  return `
+    <figure class="guide-fig guide-example">
+      <div class="guide-example-label">${title}</div>
+      <div class="gbill" role="img" aria-label="${attr('Sample electricity bill with key charge line highlighted')}">
+        <div class="gbill-head">${sample} ELECTRICITY BILL <span>250 units · 2 kW</span></div>
+        <div class="gbill-row"><span>Units consumed <small>Current minus previous reading</small></span><b>250 kWh</b></div>
+        <div class="gbill-row is-hl"><span>Energy charge <small>Slab rate applied here</small></span><span class="gbill-tag">${check}</span><b>₹1,425</b></div>
+        <div class="gbill-row"><span>Fixed charge</span><b>₹220</b></div>
+        <div class="gbill-total"><span>Total payable</span><span>₹1,900</span></div>
+      </div>
+      <figcaption>${note}</figcaption>
+    </figure>`;
 }
 
 function guideRelatedPagesHtml(guide, lang = 'en') {
@@ -2678,8 +2797,9 @@ function guidePage(guide, lang = 'en') {
     ${langSwitchLink(enUrl, L, altLangs)}
     <h1>${esc(title)}</h1>
     <p class="guide-meta">${meta}</p>
-    <p class="seo-lead">${intro}</p>${tocHtml ? `\n    ${tocHtml}` : ''}
+    <p class="seo-lead">${intro}</p>
     ${guideToolCtaHtml(guide, L)}
+    ${guideTopExampleHtml(guide, L)}${tocHtml ? `\n    ${tocHtml}` : ''}
     ${sections}
     ${faqHtml(faqs, L)}
     <section class="seo-section guide-calc-cta">
@@ -3320,6 +3440,7 @@ function smartMeterGuidePage(lang = 'en') {
   const CALLOUTS = [
     ['r', 100], ['r', 134], ['l', 214], ['l', 248], ['r', 214], ['r', 248],
     ['l', 282], ['l', 316], ['r', 292], ['l', 350], ['r', 358], ['l', 380],
+    ['r', 410], ['r', 462],
   ];
   const callouts = S.legend.map((it, i) => {
     const [side, y] = CALLOUTS[i];
@@ -3665,6 +3786,9 @@ function understandBillPage(lang = 'en') {
           <path class="ub-link is-register is-live" data-link="present-reading" d=""/>
           <path class="ub-link is-register" data-link="md" d=""/>
           <path class="ub-link" data-link="meter-number" d=""/>
+          <text class="ub-link-label is-register" data-link-label="present-reading">7</text>
+          <text class="ub-link-label is-register" data-link-label="md">9</text>
+          <text class="ub-link-label" data-link-label="meter-number">4</text>
         </svg>
       <!-- The meter and the bill carry ONE set of numbers between them: marker 4 is the meter
            number on both drawings, 7 is the present reading, 9 is the maximum demand. That shared
