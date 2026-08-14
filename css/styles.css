@@ -6427,8 +6427,9 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
    state and a visible focus ring, because an SVG <g role="button"> gives you
    none of those for free — and without them nothing signals that the meter can
    be pressed at all. */
-.m-btn-hit { cursor: pointer; }
-.m-btn-target { fill: transparent; }
+.m-btn-hit { cursor: pointer; pointer-events: all; }
+.m-btn-hit > * { pointer-events: all; }
+.m-btn-target { fill: transparent; pointer-events: all; }
 .m-btn-hit .m-btn { transition: fill var(--t-fast); }
 .m-btn-hit:hover .m-btn { fill: #3d4148; }
 .m-btn-hit:active .m-btn { fill: #16181b; }
@@ -6576,9 +6577,10 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
    would put two of everything in the reader's eye. */
 .meter-stage-wrap { padding: 0 128px; }
 .meter-stage { position: relative; }
-.meter-callouts { position: absolute; inset: 0; }
+.meter-callouts { position: absolute; inset: 0; pointer-events: none; }
 .meter-call {
   position: absolute;
+  pointer-events: auto;
   top: calc(var(--y) / 560 * 100%);
   transform: translateY(-50%);
   width: 124px;

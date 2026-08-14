@@ -239,6 +239,7 @@ export function initSmartMeter() {
   if (readout) readout.classList.add('is-ready');
 
   btn.addEventListener('click', advance);
+  svg.querySelector('.m-hint-tag')?.addEventListener('click', advance);
   // The glass is where the eye already is, so it advances too. Pointer-only: the button
   // above carries the semantics and the keyboard path, and a second focusable control
   // announcing the same action would just be noise on a screen reader.
