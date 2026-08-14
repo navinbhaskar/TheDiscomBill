@@ -272,8 +272,9 @@ export async function initUnderstandBill() {
       pathEl.hidden = false;
       pathEl.removeAttribute('hidden');
       if (label) {
-        label.hidden = false;
-        label.removeAttribute('hidden');
+        label.hidden = stacked;
+        if (stacked) label.setAttribute('hidden', '');
+        else label.removeAttribute('hidden');
       }
 
       const x0 = stacked ? pb.left + pb.width / 2 - box.left : pb.right - box.left;
@@ -284,13 +285,9 @@ export async function initUnderstandBill() {
       if (stacked) {
         const isLiveRegister = !pathEl.classList.contains('is-register') || pathEl.classList.contains('is-live');
         const laneIx = isLiveRegister ? visibleStackedRoute++ : i;
-        const laneY = Math.min(y1 - 18, meterBottom + 14 + laneIx * 12);
-        const laneX = Math.max(0, x1 - 18 - laneIx * 12);
+        const laneY = Math.min(y1 - 16, meterBottom + 12 + laneIx * 18);
+        const laneX = Math.max(4, x1 - 30 - laneIx * 18);
         pathEl.setAttribute('d', `M${x0} ${y0} V${laneY} H${laneX} V${y1} H${x1}`);
-        if (label) {
-          label.setAttribute('x', Math.max(12, laneX + 10));
-          label.setAttribute('y', Math.max(14, laneY - 7));
-        }
         return;
       }
 
