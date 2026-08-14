@@ -893,6 +893,19 @@ function tariffBlockHtml(obj, lang = 'en') {
       ${additionalChargesHtml(obj.additionalCharges, lang)}
     </div>`;
 }
+function tariffCategoryIconSvg(cat) {
+  const text = `${cat.name || ''} ${cat.id || ''}`;
+  const kind = /commerc|non.?domestic|lt-?2|lmv-?2|ned/i.test(text) ? 'commercial'
+             : /industr/i.test(text) ? 'industrial'
+             : /agri/i.test(text) ? 'agriculture' : 'domestic';
+  const paths = {
+    domestic: '<path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/>',
+    commercial: '<path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/>',
+    industrial: '<path d="M3.5 20V9.5l5.2 3V9.5l5.2 3V7.8L20.5 5v15h-17Z"/><path d="M7 16h1.8"/><path d="M11.2 16H13"/><path d="M15.4 16h1.8"/><path d="M18.5 5V3.5"/><path d="M14 12.5h6.5"/>',
+    agriculture: '<path d="M12 21V8"/><path d="M12 14.5c-4.2 0-7.2-2.7-7.2-7.7 4.5 0 7.2 3.1 7.2 7.7Z"/><path d="M12 12.5c4.2 0 7.2-2.7 7.2-7.7-4.5 0-7.2 3.1-7.2 7.7Z"/><path d="M7 20h10"/><path d="M9 17.5h6"/>',
+  };
+  return `<span class="tariff-card-icon tariff-card-icon-${kind}" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">${paths[kind]}</svg></span>`;
+}
 function categoryCardHtml(cat, lang = 'en') {
   const hasSupplyTypes = Array.isArray(cat.supplyTypes) && cat.supplyTypes.length > 0;
   let body;
@@ -906,13 +919,10 @@ function categoryCardHtml(cat, lang = 'en') {
   } else {
     body = tariffBlockHtml(cat, lang);
   }
-  const icon = /commerc|non.?domestic|lt-?2|lmv-?2|ned/i.test(cat.name || cat.id) ? '🏪'
-             : /industr/i.test(cat.name || cat.id) ? '🏭'
-             : /agri/i.test(cat.name || cat.id) ? '🌾' : '🏠';
   return `
     <article class="tariff-card">
       <header class="tariff-card-head">
-        <span class="tariff-card-icon">${icon}</span>
+        ${tariffCategoryIconSvg(cat)}
         <div>
           <h3>${esc(cat.name || cat.id)}</h3>
           ${cat.description && !hasSupplyTypes ? `<p class="tariff-card-desc">${esc(cat.description)}</p>` : ''}
