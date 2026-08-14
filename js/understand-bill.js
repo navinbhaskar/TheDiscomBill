@@ -220,6 +220,12 @@ export async function initUnderstandBill() {
   const stage = document.querySelector('.ub-stage');
   const links = document.getElementById('ubLinks');
 
+  const isVisible = (el) => {
+    if (!el || el.hidden || el.hasAttribute('hidden')) return false;
+    const cs = getComputedStyle(el);
+    return cs.display !== 'none' && cs.visibility !== 'hidden';
+  };
+
   function drawLinks() {
     if (!links || !stage) return;
     const stacked = !window.matchMedia('(min-width: 881px)').matches;
@@ -240,10 +246,31 @@ export async function initUnderstandBill() {
       const a = document.querySelector('.bill-mark.is-shared[href="#explain-' + CSS.escape(id) + '"]');
       const part = document.querySelector('.meter-mini-parts [data-mm="' + CSS.escape(id) + '"]');
       const label = links.querySelector('.ub-link-label[data-link-label="' + CSS.escape(id) + '"]');
-      if (!a || !part) return;
+      const hide = () => {
+        pathEl.hidden = true;
+        pathEl.setAttribute('hidden', '');
+        pathEl.setAttribute('d', '');
+        if (label) {
+          label.hidden = true;
+          label.setAttribute('hidden', '');
+        }
+      };
+      if (!isVisible(a) || !isVisible(part) || a.offsetParent === null) {
+        hide();
+        return;
+      }
       const pb = part.getBoundingClientRect();
       const mb = a.getBoundingClientRect();
-      if (!pb.width || !mb.width) return;
+      if (!pb.width || !mb.width) {
+        hide();
+        return;
+      }
+      pathEl.hidden = false;
+      pathEl.removeAttribute('hidden');
+      if (label) {
+        label.hidden = false;
+        label.removeAttribute('hidden');
+      }
 
       const x0 = stacked ? pb.left + pb.width / 2 - box.left : pb.right - box.left;
       const y0 = stacked ? pb.bottom - box.top : pb.top + pb.height / 2 - box.top;
@@ -302,6 +329,18 @@ export async function initUnderstandBill() {
         cancelAnimationFrame(raf);
         raf = requestAnimationFrame(drawLinks);
       }).observe(stage);
+    }
+    if ('MutationObserver' in window) {
+      let raf;
+      const redraw = () => {
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(drawLinks);
+      };
+      new MutationObserver(redraw).observe(stage, {
+        attributes: true,
+        attributeFilter: ['hidden', 'class', 'style'],
+        subtree: true,
+      });
     }
     // Crossing the breakpoint changes the route shape, so redraw immediately rather than
     // waiting for a resize observer tick.

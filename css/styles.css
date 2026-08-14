@@ -6685,6 +6685,7 @@ html:not(.js) .m-btn-ring { display: none; }
 }
 
 .understand-bill-page { max-width: 1120px; }
+.understand-bill-page [hidden] { display: none !important; }
 .ub-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .ub-field-wide { grid-column: span 2; }
 .ub-field > label { font-size: 12.5px; font-weight: 600; color: var(--text-secondary); }
