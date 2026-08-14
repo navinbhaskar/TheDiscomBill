@@ -1344,6 +1344,21 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
 .coverage-strip .container { max-width: 900px; margin: 0 auto; }
 .coverage-strip .hero-features { margin-top: 0; }
 .coverage-strip .hero-discoms-list { margin-top: 0; }
+
+@supports (content-visibility: auto) {
+  .coverage-strip,
+  .tools-section,
+  .about-section,
+  .states-section,
+  footer {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 520px;
+  }
+  .seo-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 420px;
+  }
+}
 /* Eyebrow introducing the DISCOM chips. Deliberately a <div>, not a <p>: as a paragraph it
    was caught by `.hero p` (0,1,1) and rendered at 16px/1.6 in a centred 520px measure —
    shouty uppercase over two lines, in the same ink as the chips it introduces. A div needs

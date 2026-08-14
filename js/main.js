@@ -1,10 +1,11 @@
 // js/main.js — Entry point. Imports all modules and wires up the UI.
 
-import { initI18n } from './i18n.js';
 import { isConfigured, getStoredUser, getSupabase, clearStoredSession } from './supabase-config.js';
-import { initRemoteRates } from './rates.js';
-import { initHeaderSearch } from './search.js';
-import Lenis from './vendor/lenis.mjs';
+
+function onIdle(fn, timeout = 1500) {
+  if ('requestIdleCallback' in window) requestIdleCallback(fn, { timeout });
+  else setTimeout(fn, Math.min(timeout, 1500));
+}
 
 // ── Popup coordinator ─────────────────────────────────────────────────────────
 // The header/hero carry four independent popups — the account menu, Quick Links,
@@ -428,8 +429,9 @@ async function syncAccountRole(currentRole) {
 // ── Smooth momentum scrolling (Lenis) ─────────────────────────────────────────
 // Gives the whole page an eased, weighted "glide" instead of the browser's default
 // jump. Disabled for users who prefer reduced motion (they keep native scrolling).
-function initSmoothScroll() {
+async function initSmoothScroll() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const { default: Lenis } = await import('./vendor/lenis.mjs');
   const lenis = new Lenis({
     duration: 1.1,
     easing: t => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),   // easeOutExpo — quick start, soft landing
@@ -602,8 +604,35 @@ function initHeroBillCard() {
   play();
 }
 
+function initDeferredHeaderSearch() {
+  const themeBtn = document.getElementById('themeToggle');
+  if (!themeBtn || document.getElementById('siteSearchBtn')) return;
+
+  let searchModulePromise = null;
+  const loadSearch = () => searchModulePromise ||= import('./search.js');
+  const open = () => loadSearch().then(m => m.openSearch()).catch(() => {});
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.id = 'siteSearchBtn';
+  btn.className = 'site-search-btn';
+  btn.setAttribute('aria-label', 'Search the site (Ctrl+K)');
+  btn.title = 'Search (Ctrl+K)';
+  btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>';
+  btn.addEventListener('click', open);
+  btn.addEventListener('pointerenter', loadSearch, { once: true });
+  btn.addEventListener('focus', loadSearch, { once: true });
+  themeBtn.before(btn);
+
+  document.addEventListener('keydown', (e) => {
+    const inField = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName) || document.activeElement?.isContentEditable;
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); open(); }
+    else if (e.key === '/' && !inField && !e.ctrlKey && !e.metaKey && !e.altKey) { e.preventDefault(); open(); }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  initSmoothScroll();   // Lenis momentum scrolling (skipped under prefers-reduced-motion)
+  onIdle(() => { initSmoothScroll().catch(() => {}); }, 1800);   // Lenis momentum scrolling (skipped under prefers-reduced-motion)
   initScrollReveal();   // fade + rise elements as they enter the viewport
   // /guides/ index only — filter + paging, loaded on demand so other pages don't pay for it.
   if (document.getElementById('blogGrid')) {
@@ -611,8 +640,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   // Remote FPPA rates (Supabase, cached + offline-safe). When fresh rows land after the
   // form has rendered, re-run the auto prefill so the visible rate updates too.
-  initRemoteRates();
-  initI18n();   // apply saved/default language + wire the EN/हिंदी switcher
+  onIdle(() => { import('./rates.js').then(m => m.initRemoteRates()).catch(() => {}); }, 2200);
+  onIdle(() => { import('./i18n.js').then(m => m.initI18n()).catch(() => {}); }, 700);   // apply saved/default language + wire the EN/हिंदी switcher
   // /compare/ and the homepage only — initComparisonTable() no-ops without #compTableBody,
   // but the import alone pulled the whole tariff registry onto every page.
   if (document.getElementById('compTableBody')) {
@@ -620,7 +649,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   initLoginButton();     // top-right Login / My Account button
   completeOAuthRedirect();   // ...then correct it if we just came back from Google
-  initHeaderSearch();    // header magnifier + Ctrl+K / '/' site search
+  initDeferredHeaderSearch();    // header magnifier + Ctrl+K / '/' site search
   initHeroBillCard();    // homepage hero card: estimate ⇄ across-India faces
   initGatedLinks();      // Bill Review CTAs open the auth modal, then redirect in
   initNavActive();       // highlight the current page's link in the top nav
