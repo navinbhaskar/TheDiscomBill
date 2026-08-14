@@ -6634,6 +6634,8 @@ html:not(.js) .m-btn-ring { display: none; }
   background: var(--surface-sunken); border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
 }
+
+.understand-bill-page { max-width: 1120px; }
 .ub-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .ub-field-wide { grid-column: span 2; }
 .ub-field > label { font-size: 12.5px; font-weight: 600; color: var(--text-secondary); }
@@ -6698,7 +6700,7 @@ html:not(.js) .m-btn-ring { display: none; }
    than measured against a separate column. */
 .ub-stage {
   position: relative;   /* the connector overlay is measured against this box */
-  display: grid; grid-template-columns: minmax(240px, 300px) 1fr; gap: 0; align-items: start;
+  display: grid; grid-template-columns: minmax(360px, 500px) 1fr; gap: 0; align-items: start;
 }
 /* Routes from each shared marker to the part of the meter it names. Drawn by
    js/understand-bill.js because the two ends sit in independently flowing elements hundreds of
@@ -6995,10 +6997,21 @@ html:not(.js) .m-btn-ring { display: none; }
   .ub-links { display: none; }
   .bill-figure { --bill-pad: 13px; padding-right: 0; padding-left: 0; }
   .bill-doc { max-width: none; }
+  .bill-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 10px;
+    align-items: start;
+  }
+  .bill-row:not(.is-marked) .bill-row-v {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+  .bill-row.is-marked { grid-template-columns: auto minmax(0, 1fr); }
   .bill-mark, .bill-mark.is-shared {
     position: static; transform: none; width: auto; right: auto;
+    grid-column: 1; grid-row: 1;
     display: inline-flex; flex-direction: row; text-align: left;
-    margin-left: 7px; font-size: 10.5px;
+    margin: 1px 0 0; font-size: 10.5px;
   }
   .bill-mark::before { display: none; }
   /* The row label is right beside it, so the title is redundant on screen — but it is still
@@ -7012,6 +7025,11 @@ html:not(.js) .m-btn-ring { display: none; }
     display: inline-flex; align-items: center; justify-content: center;
     width: 17px; height: 17px; border-radius: var(--radius-full);
     background: var(--brand); color: #fff; font-size: 10px;
+  }
+  .bill-row.is-marked .bill-row-k { grid-column: 2; grid-row: 1; }
+  .bill-row.is-marked .bill-row-v {
+    grid-column: 2; grid-row: 2;
+    text-align: left;
   }
   .bill-row.is-marked { min-height: 0; }
   .bill-row.is-lit { box-shadow: none; }
