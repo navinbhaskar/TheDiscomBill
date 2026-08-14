@@ -1,5 +1,8 @@
 // Chhattisgarh — Electricity Tariff Data (FY 2026-27)
 // Rates: CSERC "Tariff Schedule for FY 2026-27", applicable from 1 July 2026.
+// CSERC issued the CSPDCL retail tariff order on 15-Jun-2026; reports describe
+// the average tariff impact as 6.23%, but the calculator stores the actual
+// schedule rows below.
 // CSERC states in terms that BOTH energy charges and fixed charges are telescopic, and
 // gives worked examples for each — see the notes below.
 // See TARIFF_GUIDE.md for the complete field schema and step-by-step instructions.
@@ -69,7 +72,7 @@ const CG_LEVY_NOTE = "The CSERC schedule expressly excludes any tax or duty on e
 export default {
   state: "Chhattisgarh",
   ratesAsOf: "FY 2026-27 (CSERC Tariff Schedule for FY 2026-27, applicable from 01-Jul-2026)",
-  sourceUrl: "https://cserc.gov.in",
+  sourceUrl: "https://cserc.gov.in/Welcome/show_tariff_orders",
   discoms: [
     {
       id: "cspdcl",

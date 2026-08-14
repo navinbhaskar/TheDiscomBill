@@ -364,6 +364,7 @@ const HEADER = (langMenu) => `
           ${langMenu}
         </ul>
       </div>
+      <button type="button" id="siteSearchBtn" class="site-search-btn" aria-label="Search the site (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
       <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
     </nav>
   </div>
@@ -2550,10 +2551,16 @@ const GUIDE_TOOL_LINK = {
     { en: 'Every charge line on an Indian bill, in plain language', hi: 'भारतीय बिल की हर शुल्क लाइन, आसान भाषा में', mr: 'भारतीय बिलावरील प्रत्येक शुल्क ओळ, सोप्या भाषेत', ta: 'இந்திய பில்லில் உள்ள ஒவ்வொரு கட்டண வரியும், எளிய மொழியில்' }],
 };
 
+const GUIDE_AUTO_TOP_TOOL_CATEGORIES = new Set(['solar', 'ev', 'smartMeter', 'newConn', 'saveMoney']);
+const GUIDE_AUTO_TOP_EXAMPLE_CATEGORIES = new Set(['solar', 'ev', 'smartMeter', 'newConn']);
+
 // Prominent inline CTA into an interactive tool, placed right under a guide's intro.
 // Guide-specific CTAs still win, then category links, then the main calculator fallback.
 function guideToolCtaHtml(guide, lang = 'en') {
-  const tool = GUIDE_TOOL_LINK[guideCategoryId(guide)];
+  if (guide.toolCta === false) return '';
+  const cat = guideCategoryId(guide);
+  if (!guide.toolCta && !GUIDE_AUTO_TOP_TOOL_CATEGORIES.has(cat)) return '';
+  const tool = GUIDE_TOOL_LINK[cat];
   const c = guide.toolCta || (tool && {
     href: tool[0],
     title: tool[1],
@@ -2584,7 +2591,9 @@ function guideToolCtaHtml(guide, lang = 'en') {
 }
 
 function guideTopExampleHtml(guide, lang = 'en') {
+  if (guide.topExample === false) return '';
   const cat = guideCategoryId(guide);
+  if (!guide.topExample && !GUIDE_AUTO_TOP_EXAMPLE_CATEGORIES.has(cat)) return '';
   const title = T(lang, {
     en: 'Example to look for',
     hi: 'देखने वाला उदाहरण',
@@ -2671,6 +2680,8 @@ function guideTopExampleHtml(guide, lang = 'en') {
     </figure>`;
   }
 
+  if (guide.topExample !== 'bill') return '';
+
   return `
     <figure class="guide-fig guide-example">
       <div class="guide-example-label">${title}</div>
@@ -2685,6 +2696,45 @@ function guideTopExampleHtml(guide, lang = 'en') {
     </figure>`;
 }
 
+function guideRelatedToolCards(guide, lang = 'en') {
+  const slug = guide.slug;
+  const cat = guideCategoryId(guide);
+  const cards = [];
+  const add = (href, title, sub) => {
+    if (!cards.some(c => c.href === href)) cards.push({ href, title, sub });
+  };
+
+  if (/tariff|hike|surcharge|fppa|fppca|fuel/.test(slug)) {
+    add('/#calculator', 'Electricity bill calculator', 'Estimate the impact on your own monthly bill');
+    add('/fuel-surcharge/', 'Fuel surcharge tracker', 'Check current FPPA and fuel surcharge rates');
+  }
+  if (/how-to-read|bill-increase|tata-power-ddl-bill|what-is-a-unit|tod-billing/.test(slug)) {
+    add('/understand-your-bill/', 'Understand your bill', 'Match meter readings, units and bill lines visually');
+    add('/#calculator', 'Electricity bill calculator', 'Recalculate your bill using published tariff rates');
+  }
+  if (cat === 'smartMeter') {
+    add('/smart-meter/', 'Smart meter reading guide', 'Use the dummy meter to identify kWh, kVAh and balance screens');
+    add('/understand-your-bill/', 'Understand your bill', 'Connect meter readings to the sample bill lines');
+  }
+  if (cat === 'newConn') {
+    add('/services/#new-connection', 'New connection helper', 'Documents, charges and steps for your DISCOM');
+    add('/#calculator', 'Electricity bill calculator', 'Estimate the bill for the load you plan to apply for');
+  }
+  if (cat === 'solar') {
+    add('/solar-calculator/', 'Rooftop solar savings calculator', 'Estimate payback from your monthly units and tariff');
+    add('/solar-subsidy-checker/', 'Solar subsidy checker', 'Check subsidy eligibility before sizing a system');
+  }
+  if (cat === 'ev') {
+    add('/ev-charging-calculator/', 'EV charging cost calculator', 'Compare home charging cost with petrol and public charging');
+    add('/compare/', 'Compare tariffs across states', 'See how electricity cost changes by state');
+  }
+  if (/landlord|ac-1-5-ton|sanctioned-load|reduce-fixed/.test(slug)) {
+    add('/#calculator', 'Electricity bill calculator', 'Estimate the monthly cost using real slab rates');
+  }
+
+  return cards.map(c => `<a class="seo-link-card" href="${c.href}"><strong>${esc(c.title)}</strong><span>${esc(c.sub)}</span></a>`);
+}
+
 function guideRelatedPagesHtml(guide, lang = 'en') {
   const cards = [];
   for (const s of (guide.states || []).slice(0, 3)) {
@@ -2694,8 +2744,10 @@ function guideRelatedPagesHtml(guide, lang = 'en') {
     const sub = T(lang, { en: 'Current slab rates, every DISCOM, itemised bills', hi: 'वर्तमान स्लैब दरें, हर डिस्कॉम, मदवार बिल', mr: 'सध्याचे स्लॅब दर, प्रत्येक डिस्कॉम, तपशीलवार बिले', ta: 'தற்போதைய அடுக்கு விகிதங்கள், ஒவ்வொரு DISCOM, விவரமான பில்கள்' });
     cards.push(`<a class="seo-link-card" href="${pfx}/tariffs/${slugify(s)}/"><strong>${title}</strong><span>${sub}</span></a>`);
   }
-  const tool = GUIDE_TOOL_LINK[guideCategoryId(guide)];
-  if (tool) cards.push(`<a class="seo-link-card" href="${tool[0]}"><strong>${T(lang, tool[1])}</strong><span>${T(lang, tool[2])}</span></a>`);
+  cards.push(...guideRelatedToolCards(guide, lang));
+  const cat = guideCategoryId(guide);
+  const tool = GUIDE_TOOL_LINK[cat];
+  if (tool && GUIDE_AUTO_TOP_TOOL_CATEGORIES.has(cat) && !cards.some(c => c.includes(`href="${tool[0]}"`))) cards.push(`<a class="seo-link-card" href="${tool[0]}"><strong>${T(lang, tool[1])}</strong><span>${T(lang, tool[2])}</span></a>`);
   if (!cards.length) return '';
   const heading = T(lang, { en: 'Related on TheDiscomBill', hi: 'TheDiscomBill पर संबंधित पेज', mr: 'TheDiscomBill वरील संबंधित पाने', ta: 'TheDiscomBill-இல் தொடர்புடையவை' });
   return `
@@ -2703,6 +2755,42 @@ function guideRelatedPagesHtml(guide, lang = 'en') {
       <h2>${heading}</h2>
       <div class="seo-link-grid">${cards.join('')}</div>
     </section>`;
+}
+
+function guideRelatedSeedSlugs(guide) {
+  const slug = guide.slug;
+  const cat = guideCategoryId(guide);
+  const seeds = [];
+  const add = (...slugs) => slugs.forEach(s => {
+    if (s !== slug && !seeds.includes(s)) seeds.push(s);
+  });
+
+  if (/chhattisgarh|tamil-nadu|tariff|hike/.test(slug)) {
+    add('how-fppa-fuel-surcharge-is-calculated', 'up-electricity-bill-10-percent-fppa-surcharge', 'electricity-duty-explained', 'why-did-my-electricity-bill-increase');
+  }
+  if (/fppa|fppca|fuel|surcharge/.test(slug)) {
+    add('how-fppa-fuel-surcharge-is-calculated', 'msedcl-fppa-charges-explained', 'up-electricity-bill-10-percent-fppa-surcharge', 'why-did-my-electricity-bill-increase');
+  }
+  if (/how-to-read|tata-power-ddl-bill/.test(slug)) {
+    add('why-did-my-electricity-bill-increase', 'what-is-a-unit-of-electricity', 'how-fppa-fuel-surcharge-is-calculated', 'electricity-duty-explained');
+  }
+  if (cat === 'smartMeter') {
+    add('uppcl-smart-meter-readings-explained', 'smart-meter-balance-check', 'smart-meter-recharge-failed', 'prepaid-vs-postpaid-smart-meter', 'smart-meter-running-fast');
+  }
+  if (cat === 'newConn') {
+    add('uppcl-new-connection-estimate-2026', 'uppcl-new-connection-jhatpat', 'msedcl-new-connection-online', 'bses-delhi-new-connection');
+  }
+  if (cat === 'solar') {
+    add('solar-net-metering-savings', 'pm-surya-ghar-solar-subsidy');
+  }
+  if (cat === 'ev') {
+    add('ev-home-vs-public-charging-cost');
+  }
+  if (/sanctioned-load|reduce-fixed/.test(slug)) {
+    add('why-did-my-electricity-bill-increase', 'uppcl-sanctioned-load-increased', 'power-factor-kvah-billing-explained');
+  }
+
+  return seeds;
 }
 
 // Pick the N guides most related to `guide`. Every guide used to link to all 40 others,
@@ -2716,8 +2804,15 @@ function guideRelatedPagesHtml(guide, lang = 'en') {
 function relatedGuides(guide, limit = 4) {
   const myStates = new Set(guide.states || []);
   const myCat = guideCategoryId(guide);
+  const seedSlugs = guideRelatedSeedSlugs(guide);
+  const seeded = seedSlugs
+    .map(slug => GUIDES.find(g => g.slug === slug))
+    .filter(Boolean)
+    .slice(0, limit);
+  if (seeded.length >= limit) return seeded;
+  const seededSlugs = new Set(seeded.map(g => g.slug));
   return GUIDES
-    .filter(g => g.slug !== guide.slug)
+    .filter(g => g.slug !== guide.slug && !seededSlugs.has(g.slug))
     .map((g, i) => {
       let score = 0;
       for (const s of (g.states || [])) if (myStates.has(s)) score += 10;
@@ -2727,8 +2822,9 @@ function relatedGuides(guide, limit = 4) {
     // Keep a floor of `limit` cards even for a guide that matches nothing — an empty
     // "More guides" heading looks broken. Unrelated-but-present beats absent here.
     .sort((a, b) => b.score - a.score || a.i - b.i)
-    .slice(0, limit)
-    .map(r => r.g);
+    .slice(0, limit - seeded.length)
+    .map(r => r.g)
+    .reduce((all, g) => all.concat(g), seeded);
 }
 
 function guidePage(guide, lang = 'en') {

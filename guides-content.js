@@ -10580,6 +10580,95 @@ export const GUIDES = [
     ],
   },
   {
+    slug: 'chhattisgarh-electricity-tariff-hike-2026',
+    category: 'charges',
+    published: "2026-08-14",
+    states: ['Chhattisgarh'],
+    title: 'Chhattisgarh Electricity Tariff Hike 2026: What the 6.23% Increase Means',
+    metaTitle: 'Chhattisgarh Power Tariff Hike 2026 - CSPDCL Rates From 1 July',
+    description: 'CSERC approved a 6.23% average electricity tariff increase for CSPDCL from 1 July 2026. Here are the domestic and commercial slab rates, fixed charges, subsidies and how to check your bill.',
+    minutes: 5,
+    intro: `Yes, the news is true. The Chhattisgarh State Electricity Regulatory Commission issued CSPDCL's retail tariff order for FY 2026-27 in June 2026, and reports put the average increase across consumer categories at <strong>6.23%</strong>, equal to about <strong>&#8377;0.42 per unit</strong>. The revised schedule applies from <strong>1 July 2026</strong>.`,
+    sections: `
+      <section class="seo-section">
+        <h2>What changed from 1 July 2026</h2>
+        <p>CSERC's new order covers CSPDCL's retail tariff for FY 2026-27 under the FY 2026-30 control period. The headline number is an <strong>average</strong> increase, so it does not mean every slab or every household bill rises by exactly 6.23%.</p>
+        <p>Your final bill still depends on consumption slab, sanctioned load, category, taxes or duty, and any subsidy applied separately by the state government.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Old vs new domestic rates</h2>
+        <p>For most households, this is the clearest comparison: the old FY 2025-26 domestic schedule versus the new FY 2026-27 schedule from 1 July 2026.</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>Monthly units</th><th>Old rate FY 2025-26</th><th>New rate FY 2026-27</th><th>Increase</th></tr></thead>
+            <tbody>
+              <tr><td>0-100 units</td><td>&#8377;4.10/unit</td><td>&#8377;4.40/unit</td><td>+&#8377;0.30/unit</td></tr>
+              <tr><td>101-200 units</td><td>&#8377;4.20/unit</td><td>&#8377;4.50/unit</td><td>+&#8377;0.30/unit</td></tr>
+              <tr><td>201-400 units</td><td>&#8377;5.60/unit</td><td>&#8377;6.00/unit</td><td>+&#8377;0.40/unit</td></tr>
+              <tr><td>401-600 units</td><td>&#8377;6.60/unit</td><td>&#8377;7.00/unit</td><td>+&#8377;0.40/unit</td></tr>
+              <tr><td>Above 600 units</td><td>&#8377;8.30/unit</td><td>&#8377;8.80/unit</td><td>+&#8377;0.50/unit</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The first two fixed-charge bands stayed the same, but the top band changed: above 10 kW, the domestic fixed charge moved from <strong>&#8377;40/kW/month</strong> to <strong>&#8377;50/kW/month</strong>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Commercial and EV rates</h2>
+        <p>For LV-2 non-domestic consumers, CSPDCL separates rates by phase and connected load.</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>Category</th><th>Old FY 2025-26</th><th>New FY 2026-27</th></tr></thead>
+            <tbody>
+              <tr><td>LV-2.1, 0-100 units</td><td>&#8377;6.30/unit</td><td>&#8377;6.50/unit</td></tr>
+              <tr><td>LV-2.1, 101-400 units</td><td>&#8377;7.30/unit</td><td>&#8377;7.60/unit</td></tr>
+              <tr><td>LV-2.1, above 400 units</td><td>&#8377;8.70/unit</td><td>&#8377;9.10/unit</td></tr>
+              <tr><td>LV-2.2(A), 0-400 units</td><td>&#8377;7.30/unit</td><td>&#8377;7.50/unit</td></tr>
+              <tr><td>LV-2.2(A), above 400 units</td><td>&#8377;8.70/unit</td><td>&#8377;9.00/unit</td></tr>
+              <tr><td>LV-2.2(B), all units</td><td>&#8377;8.00/unit</td><td>&#8377;8.40/unit</td></tr>
+              <tr><td>LV-2.3 EV charging</td><td>&#8377;7.02/unit</td><td>&#8377;7.13/unit</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="seo-list">
+          <li><strong>LV-2.1 single phase up to 5 kW:</strong> fixed charge &#8377;60/kW/month; energy charge &#8377;6.50/unit for the first 100 units, &#8377;7.60/unit for 101-400 units, and &#8377;9.10/unit above 400 units.</li>
+          <li><strong>LV-2.2(A) three phase up to 15 kW:</strong> demand charge &#8377;130/kW/month; energy charge &#8377;7.50/unit for the first 400 units and &#8377;9.00/unit above 400 units.</li>
+          <li><strong>LV-2.2(B) three phase above 15 kW:</strong> demand charge &#8377;210/kW/month; energy charge &#8377;8.40/unit for all units.</li>
+          <li><strong>LV-2.3 EV charging:</strong> &#8377;7.13/unit with no fixed charge in the schedule.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>Why your bill may rise less than the headline</h2>
+        <p>The 6.23% figure is a system-wide average. A low-consumption domestic user, a household receiving a subsidy, a shop on a higher commercial slab, and an EV charging point will all see different rupee impacts.</p>
+        <p>Media reports also noted continuing relief for eligible domestic users, including BPL-linked support and state subsidy for many households up to 400 units. Those subsidies are applied separately on the bill, so the gross tariff and the amount you finally pay may differ.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>How to check your own bill</h2>
+        <p>Use your latest CSPDCL bill and compare three items: total units, sanctioned load, and consumer category. Then apply the slab rates above, add the fixed charge, and remember that taxes or electricity duty are charged separately.</p>
+        <p class="seo-cta-row"><a class="seo-cta" href="/?state=Chhattisgarh&discom=cspdcl#calculator">Calculate your Chhattisgarh electricity bill</a></p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Sources checked</h2>
+        <p>This update is based on CSERC's official tariff-order listing for CSPDCL and contemporary reporting from energy and local news publications. Key references: <a href="https://cserc.gov.in/Welcome/show_tariff_orders" target="_blank" rel="noopener nofollow">CSERC tariff orders</a>, <a href="https://www.mercomindia.com/chhattisgarh-hikes-power-tariff-across-categories-for-fy-2026-27" target="_blank" rel="noopener nofollow">Mercom India</a>, and <a href="https://timesofindia.indiatimes.com/city/raipur/power-bill-set-to-burn-a-bigger-hole-in-your-pocket-tariff-up-6-23-from-july-1/amp_articleshow/131780247.cms" target="_blank" rel="noopener nofollow">The Times of India</a>.</p>
+      </section>`,
+    faqs: [
+      { q: 'Did Chhattisgarh electricity tariff increase in 2026?',
+        a: 'Yes. CSERC issued CSPDCL retail tariffs for FY 2026-27, applicable from 1 July 2026, and reports describe the average increase across categories as 6.23%, or about &#8377;0.42 per unit.' },
+      { q: 'What is the CSPDCL domestic per-unit rate from July 2026?',
+        a: 'The LV-1 domestic energy rates are &#8377;4.40/unit for 0-100 units, &#8377;4.50 for 101-200, &#8377;6.00 for 201-400, &#8377;7.00 for 401-600, and &#8377;8.80 above 600 units.' },
+      { q: 'Does 6.23% mean my bill will rise exactly 6.23%?',
+        a: 'No. It is an average tariff impact across consumer categories. Your own bill depends on units, sanctioned load, category, taxes or duty, and subsidies.' },
+      { q: 'What is the domestic fixed charge in Chhattisgarh now?',
+        a: 'For LV-1 domestic consumers, the fixed charge is telescopic: &#8377;20/kW/month for the first 5 kW, &#8377;30/kW/month for the next 5 kW, and &#8377;50/kW/month above 10 kW.' },
+      { q: 'Are subsidies included in these tariff rates?',
+        a: 'No. The tariff schedule gives gross charges. Eligible subsidies or relief are applied separately on the consumer bill, so the final payable amount may be lower.' },
+    ],
+  },
+  {
     slug: 'up-electricity-bill-10-percent-fppa-surcharge',
     titleHi: 'यूपी का 10% ईंधन अधिभार: आपके बिल पर असल में कितना पड़ा',
     metaTitleHi: 'यूपी 10% ईंधन अधिभार (FPPAS) — बिल पर कितने रुपये बढ़े',

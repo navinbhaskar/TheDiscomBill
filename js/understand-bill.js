@@ -9,6 +9,7 @@
 // the scenario's state is fetched before the engine is asked for a bill.
 
 import { SCENARIOS, DEFAULT_SCENARIO, billInput, readout, billHtml, liveHtml } from '/js/bill-anatomy.js';
+import { playMeterClick } from './meter-click-sound.js';
 // The seven-segment renderer the smart-meter guide already uses. Importing it rather than
 // reimplementing keeps one definition of what a digit looks like on the glass.
 import { segmentsFor } from '/js/smart-meter.js';
@@ -200,9 +201,11 @@ export async function initUnderstandBill() {
 
   if (mm && mm.btn) {
     const press = () => {
+      playMeterClick();
       screenIx = (screenIx + 1) % Math.max(1, screens.length);
       meterSvg.classList.add('has-pressed');
       paintMeter();
+      requestAnimationFrame(drawLinks);
     };
     mm.btn.addEventListener('click', press);
     mm.btn.addEventListener('keydown', (e) => {
@@ -240,6 +243,7 @@ export async function initUnderstandBill() {
     const R = 9;                       // corner radius
     // The paths are declared in the served HTML; only their geometry is set here.
     const routes = [...links.querySelectorAll('.ub-link')];
+    let visibleStackedRoute = 0;
 
     routes.forEach((pathEl, i) => {
       const id = pathEl.dataset.link;
@@ -274,16 +278,18 @@ export async function initUnderstandBill() {
 
       const x0 = stacked ? pb.left + pb.width / 2 - box.left : pb.right - box.left;
       const y0 = stacked ? pb.bottom - box.top : pb.top + pb.height / 2 - box.top;
-      const x1 = stacked ? mb.left - box.left : mb.left - box.left - 5;
+      const x1 = stacked ? mb.left + mb.width / 2 - box.left : mb.left - box.left - 5;
       const y1 = mb.top + mb.height / 2 - box.top;
 
       if (stacked) {
-        const laneY = Math.min(y1 - 16, meterBottom + 12 + i * 10);
-        const laneX = Math.max(-20, x1 - 12 - i * 10);
+        const isLiveRegister = !pathEl.classList.contains('is-register') || pathEl.classList.contains('is-live');
+        const laneIx = isLiveRegister ? visibleStackedRoute++ : i;
+        const laneY = Math.min(y1 - 18, meterBottom + 14 + laneIx * 12);
+        const laneX = Math.max(0, x1 - 18 - laneIx * 12);
         pathEl.setAttribute('d', `M${x0} ${y0} V${laneY} H${laneX} V${y1} H${x1}`);
         if (label) {
-          label.setAttribute('x', Math.max(12, laneX + 12));
-          label.setAttribute('y', Math.max(14, laneY - 6));
+          label.setAttribute('x', Math.max(12, laneX + 10));
+          label.setAttribute('y', Math.max(14, laneY - 7));
         }
         return;
       }

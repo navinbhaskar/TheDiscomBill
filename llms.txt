@@ -66,6 +66,7 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 - [Tata Power New Connection: Mumbai Changeover or Delhi Application](https://thediscombill.com/guides/tata-power-new-connection/): Tata Power runs two separate licences
 - [Landlord Charging ₹10 a Unit? What the DISCOM Rate Actually Is](https://thediscombill.com/guides/landlord-charging-10-rupees-per-unit/): Worked from real tariff data: a Delhi tenant on a shared connection pays about ₹6.58 a unit, a Bengaluru tenant ₹7.47, a UP tenant ₹7.85
 - [Your Tata Power-DDL Bill Explained](https://thediscombill.com/guides/tata-power-ddl-bill/): Every line of a TPDDL bill decoded: the DERC domestic slabs, the flat fixed charge, 5% electricity duty and the 16% PPAC that changes monthly
+- [Chhattisgarh Electricity Tariff Hike 2026: What the 6.23% Increase Means](https://thediscombill.com/guides/chhattisgarh-electricity-tariff-hike-2026/): CSERC approved a 6.23% average electricity tariff increase for CSPDCL from 1 July 2026
 - [UP's 10% Fuel Surcharge: What It Actually Costs on Your Bill](https://thediscombill.com/guides/up-electricity-bill-10-percent-fppa-surcharge/): UPPCL levied a 10% fuel surcharge on the June 2026 billing cycle
 
 ## Reference

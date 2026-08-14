@@ -73,7 +73,7 @@ export const STATE_INFO = {
     "Chhattisgarh": {
       "state": "Chhattisgarh",
       "ratesAsOf": "FY 2026-27 (CSERC Tariff Schedule for FY 2026-27, applicable from 01-Jul-2026)",
-      "sourceUrl": "https://cserc.gov.in"
+      "sourceUrl": "https://cserc.gov.in/Welcome/show_tariff_orders"
     },
     "Dadra & Nagar Haveli and Daman & Diu": {
       "state": "Dadra & Nagar Haveli and Daman & Diu"

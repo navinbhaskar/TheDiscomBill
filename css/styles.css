@@ -5220,6 +5220,17 @@ html:not([lang="en"]) .footer-col-title {
   .nav-dropdown-menu { position: fixed; top: 60px; left: 14px; right: 14px;
     min-width: 0; max-width: none; transform: translateY(-6px) scale(.98); transform-origin: top center; }
   .nav-dropdown.open .nav-dropdown-menu { transform: none; }
+  .hero::before { animation: none; }
+  .hero-glass {
+    background: rgba(255, 255, 255, .82);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    box-shadow: 0 10px 28px rgba(15, 23, 42, .08);
+  }
+  :root[data-theme="dark"] .hero-glass {
+    background: rgba(20, 30, 50, .86);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .24);
+  }
   .hero h1 { letter-spacing: -0.5px; }
   .form-panel { border-radius: var(--radius-lg); padding: 20px; }
   .bill-panel { border-radius: var(--radius-lg); }

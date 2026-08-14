@@ -606,23 +606,26 @@ function initHeroBillCard() {
 
 function initDeferredHeaderSearch() {
   const themeBtn = document.getElementById('themeToggle');
-  if (!themeBtn || document.getElementById('siteSearchBtn')) return;
+  let btn = document.getElementById('siteSearchBtn');
+  if (!themeBtn && !btn) return;
 
   let searchModulePromise = null;
   const loadSearch = () => searchModulePromise ||= import('./search.js');
   const open = () => loadSearch().then(m => m.openSearch()).catch(() => {});
 
-  const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.id = 'siteSearchBtn';
-  btn.className = 'site-search-btn';
-  btn.setAttribute('aria-label', 'Search the site (Ctrl+K)');
-  btn.title = 'Search (Ctrl+K)';
-  btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>';
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'siteSearchBtn';
+    btn.className = 'site-search-btn';
+    btn.setAttribute('aria-label', 'Search the site (Ctrl+K)');
+    btn.title = 'Search (Ctrl+K)';
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>';
+    themeBtn.before(btn);
+  }
   btn.addEventListener('click', open);
   btn.addEventListener('pointerenter', loadSearch, { once: true });
   btn.addEventListener('focus', loadSearch, { once: true });
-  themeBtn.before(btn);
 
   document.addEventListener('keydown', (e) => {
     const inField = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName) || document.activeElement?.isContentEditable;

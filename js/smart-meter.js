@@ -1,3 +1,5 @@
+import { playMeterClick } from './meter-click-sound.js';
+
 // smart-meter.js — drives the interactive meter diagram on /smart-meter/.
 //
 // A real prepaid meter shows one number at a time and cycles on a button press, with no
@@ -196,30 +198,8 @@ export function initSmartMeter() {
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let i = 0;
-  let audioCtx = null;
-
   const lx = L10N[document.documentElement.lang] || null;
   if (lx && next) next.textContent = lx.btn;
-
-  function playClick() {
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    if (!AudioCtx) return;
-    audioCtx ||= new AudioCtx();
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-
-    const now = audioCtx.currentTime;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'square';
-    osc.frequency.setValueAtTime(900, now);
-    osc.frequency.exponentialRampToValueAtTime(260, now + 0.035);
-    gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(0.045, now + 0.004);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.045);
-    osc.connect(gain).connect(audioCtx.destination);
-    osc.start(now);
-    osc.stop(now + 0.05);
-  }
 
   function render() {
     const s = SCREENS[i];
@@ -247,7 +227,7 @@ export function initSmartMeter() {
   }
 
   function advance() {
-    playClick();
+    playMeterClick();
     i = (i + 1) % SCREENS.length;
     // The attention ring has done its job the moment it is used once.
     svg.classList.add('has-pressed');
