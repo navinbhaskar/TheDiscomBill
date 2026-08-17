@@ -1935,7 +1935,7 @@ function discomPage(state, discom, lang = 'en') {
     <section class="seo-section">
       <h2>Other DISCOMs in ${esc(state)}</h2>
       <div class="seo-link-grid">
-        ${siblings.map(d => discomLinkCard(state, d, `/tariffs/${stateSlug}/${d.id}/`)).join('')}
+        ${siblings.map((d, i) => discomLinkCard(state, d, `/tariffs/${stateSlug}/${d.id}/`, i)).join('')}
       </div>
     </section>` : '';
 
@@ -2087,7 +2087,7 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
     <section class="seo-section">
       <h2>${siblingHead}</h2>
       <div class="seo-link-grid">
-        ${siblings.map(d => discomLinkCard(state, d, `${pfx}/tariffs/${stateSlug}/${d.id}/`)).join('')}
+        ${siblings.map((d, i) => discomLinkCard(state, d, `${pfx}/tariffs/${stateSlug}/${d.id}/`, i)).join('')}
       </div>
     </section>` : '';
 
@@ -2249,7 +2249,7 @@ function statePage(state, lang = 'en') {
       mr: `${sl} चे ${fyL} स्लॅब दर पाहा आणि 30 सेकंदांत तुमचे नेमके वीज बिल काढा. ${nd} डिस्कॉम (${names}) — फिक्स्ड चार्ज व FPPA सह.${stateMin != null ? ` घरगुती दर ${rupee(stateMin)}/युनिट पासून.` : ''} मोफत, साइन-अप शिवाय.`,
       ta: `${sl} இன் ${fyL} அடுக்கு விகிதங்களைப் பாருங்கள், 30 விநாடிகளில் உங்கள் சரியான மின் கட்டணத்தைக் கணக்கிடுங்கள். ${nd} DISCOM (${names}) — நிலையான கட்டணம் & FPPA உடன்.${stateMin != null ? ` வீட்டு கட்டணம் ${rupee(stateMin)}/யூனிட் முதல்.` : ''} இலவசம், பதிவு தேவையில்லை.`,
       en: '' });
-    const discomCards = discoms.map(d => discomLinkCard(state, d, `${pfx}/tariffs/${stateSlug}/${d.id}/`)).join('');
+    const discomCards = discoms.map((d, i) => discomLinkCard(state, d, `${pfx}/tariffs/${stateSlug}/${d.id}/`, i)).join('');
     const discomInline = discoms.map(d => { const a = parseArea(d.area); return `<strong>${esc(d.name)}</strong>${a.region ? ` (${esc(a.region)}${a.cities.length ? ` — ${esc(a.cities.slice(0, 3).join(', '))}` : ''})` : ''}`; }).join('; ');
     const faqs = [];
     faqs.push({
@@ -2385,7 +2385,7 @@ function statePage(state, lang = 'en') {
     `${state} electricity tariff ${fy}${rpParen}: compare ${names}${stateMin != null ? `, rates from ${rupee(stateMin)}/unit,` : ''} and get your exact bill in seconds.`,
   ]);
 
-  const discomCards = discoms.map(d => discomLinkCard(state, d, `/tariffs/${stateSlug}/${d.id}/`)).join('');
+  const discomCards = discoms.map((d, i) => discomLinkCard(state, d, `/tariffs/${stateSlug}/${d.id}/`, i)).join('');
 
   const faqs = [];
   faqs.push({ q: `How is the electricity bill calculated in ${state}?`,
@@ -2489,15 +2489,31 @@ function regionCardStat(text, verified) {
     + '</span>';
 }
 
+// ── Tile hues for DISCOM cards ───────────────────────────────────────────────
+// Six soft, desaturated colours that survive being laid under text as a wash. The region hue
+// used to fill this role, but every DISCOM in a state shares its state's region — so on the
+// page where these cards actually live, a state page, they all came out the same colour and
+// the tint told the reader nothing. Now each DISCOM in a state gets its own.
+//
+// The consequence, stated plainly: colour no longer encodes region here. It is stable
+// decoration — the same DISCOM is always the same colour — and nothing is left depending on a
+// reader decoding it, which is why the state code and the rate span do the actual work.
+const TILE_HUES = ['#8b7ad6', '#cf8fa3', '#5fa3a0', '#c2916a', '#7593d4', '#8caa7d'];
+// A stable per-state starting point, so two neighbouring states do not open on the same hue.
+// Deterministic from the name: the build has to regenerate byte-for-byte.
+const stateHueOffset = (state) => [...String(state)]
+  .reduce((n, c) => (n * 31 + c.charCodeAt(0)) >>> 0, 7) % TILE_HUES.length;
+const tileHue = (state, i) => TILE_HUES[(stateHueOffset(state) + i) % TILE_HUES.length];
+
 // A DISCOM inside a state. Badge carries the state code, because every DISCOM on a given page
 // shares it and the code is what tells the reader which page they are on at a glance.
-function discomLinkCard(state, d, href) {
+function discomLinkCard(state, d, href, i = 0) {
   const a = parseArea(d.area);
   const area = a.region
     ? `${a.region}${a.cities.length ? ` — ${a.cities.slice(0, 3).join(', ')}` : ''}`
     : '';
   return `
-    <a class="seo-link-card is-region" style="--dir-accent:${regionAccent(state)}" href="${href}">
+    <a class="seo-link-card is-region is-tile" style="--dir-accent:${tileHue(state, i)}" href="${href}">
       <span class="seo-link-badge" aria-hidden="true">${esc(stateCode(state))}</span>
       <strong>${esc(d.name)}</strong>
       ${d.fullName ? `<span>${esc(d.fullName)}</span>` : ''}
@@ -3813,7 +3829,7 @@ function fppaArchiveSummary(rows) {
   </div>`;
 }
 
-function fppaStateSummaryCard(state, rows) {
+function fppaStateSummaryCard(state, rows, i = 0) {
   const stateSlug = slugify(state);
   const current = rows.map(r => r.cur).filter(Boolean);
   const latest = current[0] || rows[0]?.list?.[0] || null;
@@ -3839,7 +3855,9 @@ function fppaStateSummaryCard(state, rows) {
     rateBlock = `<span class="fs-state-rates">${withCur.map((r, i) =>
       `<span class="fs-state-chip${r.cur.rate < 0 ? ' is-neg' : ''}"><b>${esc(r.code || r.who)}</b>${esc(rateStrs[i])}</span>`).join('')}</span>`;
   }
-  return `<a class="fs-state-card" style="--dir-accent:${regionAccent(state)}" href="/fppa/${stateSlug}/">
+  // Indexed, not region-keyed: the tracker currently covers Delhi, Rajasthan and Uttar Pradesh,
+  // all North India, so the region hue painted all three the same blue and said nothing.
+  return `<a class="fs-state-card" style="--dir-accent:${TILE_HUES[i % TILE_HUES.length]}" href="/fppa/${stateSlug}/">
     <span class="fs-state-card-top">
       <span class="seo-link-badge" aria-hidden="true">${esc(stateCode(state))}</span>
       <span class="fs-state-name">${esc(state)}</span>
@@ -3924,7 +3942,7 @@ function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url } = {}) {
       : `Latest published: ${esc(fsMonth(latest.from))}; ${esc(nowMonth)} not yet notified`;
     return `<tr><td><a href="/fppa/${esc(r.slug)}/">${esc(r.who)}</a></td><td>${esc(r.scope)}</td><td>${val}</td><td>${note}</td></tr>`;
   }).join('');
-  const stateCards = coverage.map(state => fppaStateSummaryCard(state, rows.filter(r => r.state === state))).join('');
+  const stateCards = coverage.map((state, i) => fppaStateSummaryCard(state, rows.filter(r => r.state === state), i)).join('');
 
   // ── UP monthly series (the only state with a true month-by-month history) ────
   const upSeries = [...FPPA_BY_STATE['Uttar Pradesh']].sort((a, b) => a.from.localeCompare(b.from));

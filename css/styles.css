@@ -3845,21 +3845,12 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
      like every other state card on the site, mixed against the surface token so it re-mixes
      itself on the dark page instead of laying a grey film over it. */
   border: 1px solid color-mix(in srgb, var(--dir-accent, var(--brand)) 24%, var(--border-default));
-  border-radius: var(--radius-md);
-  padding-left: 18px;
-  background:
-    linear-gradient(180deg,
-      color-mix(in srgb, var(--dir-accent, var(--brand)) 8%, var(--surface-card)),
-      var(--surface-card) 58%);
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--dir-accent, var(--brand)) 12%, var(--surface-card));
   color: var(--text-primary);
   text-decoration: none;
   box-shadow: var(--shadow-xs);
   transition: border-color var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast), background var(--t-fast);
-}
-.fs-state-card::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  border-radius: var(--radius-md) 0 0 var(--radius-md);
-  background: var(--dir-accent, var(--brand)); opacity: .85;
 }
 .fs-state-card:hover {
   border-color: color-mix(in srgb, var(--dir-accent, var(--brand)) 62%, var(--border-default));
@@ -4024,61 +4015,82 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .seo-link-card span { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
 .seo-link-card small { font-size: 11px; color: var(--text-tertiary); line-height: 1.45; margin-top: 2px; }
 
-/* ── Region cards ────────────────────────────────────────────────────────────
-   One accent per card, set inline as --dir-accent from the state's region, and only ever used
-   on the rail, the badge, the wash and the hover. Body text keeps its own tokens, so contrast
-   does not move with the hue and every card stays AA in both themes.
+/* ── Region / tile cards ─────────────────────────────────────────────────────
+   A soft coloured tile rather than a white box with a stripe down its side. The whole surface
+   carries the hue at low saturation, the border goes, and the corner radius opens up — the rail
+   was reading as a status marker on something that has no status.
+
+   Text keeps its own tokens on top of the wash, so contrast does not move with the hue and the
+   card stays AA in both themes whichever colour it draws.
 
    .is-region is a modifier, not a rewrite of .seo-link-card: the same class carries "Glossary"
-   and "Read methodology" links, and those are not places in India. Only cards that name a state
-   or a DISCOM opt in.
+   and "Read methodology", and those are not places in India. Only cards naming a state or a
+   DISCOM opt in.
 
    color-mix against the surface token rather than a fixed rgba, so the wash re-mixes itself
-   against the dark page instead of turning into a grey film over it.                         */
+   against the dark page instead of laying a grey film over it.                                */
 .seo-link-card.is-region {
   position: relative;
-  padding-left: 19px;                 /* clears the rail */
-  background:
-    linear-gradient(180deg,
-      color-mix(in srgb, var(--dir-accent) 7%, var(--surface-card)),
-      var(--surface-card) 62%);
-  border-color: color-mix(in srgb, var(--dir-accent) 24%, var(--border-default));
+  gap: 2px;
+  padding: 16px 17px 15px;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--dir-accent) 13%, var(--surface-card));
+  box-shadow: none;
 }
-.seo-link-card.is-region::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  border-radius: var(--radius-md) 0 0 var(--radius-md);
-  background: var(--dir-accent);
-  opacity: .85;
+:root[data-theme="dark"] .seo-link-card.is-region {
+  /* The same 13% over a near-black surface barely registers, so the dark tile takes more hue. */
+  background: color-mix(in srgb, var(--dir-accent) 22%, var(--surface-card));
 }
 .seo-link-card.is-region:hover {
-  border-color: color-mix(in srgb, var(--dir-accent) 62%, var(--border-default));
-  box-shadow: 0 10px 24px -12px color-mix(in srgb, var(--dir-accent) 55%, transparent);
+  border-color: transparent;
+  background: color-mix(in srgb, var(--dir-accent) 20%, var(--surface-card));
+  box-shadow: 0 12px 26px -14px color-mix(in srgb, var(--dir-accent) 70%, transparent);
 }
-.seo-link-card.is-region:hover::before { opacity: 1; }
-.seo-link-card.is-region strong { color: var(--text-primary); }
+:root[data-theme="dark"] .seo-link-card.is-region:hover {
+  background: color-mix(in srgb, var(--dir-accent) 30%, var(--surface-card));
+}
+.seo-link-card.is-region strong { color: var(--text-primary); font-size: 15.5px; letter-spacing: -0.2px; }
+.seo-link-card.is-region span { color: var(--text-secondary); }
+/* The service-area line drops --text-tertiary on a tile. Tertiary is tuned against the plain
+   page, and the tint lifts the tile out from under it — on the dark theme that measured 3.84:1,
+   under the 4.5 AA needs. Size carries the hierarchy here instead of a third grey. */
+.seo-link-card.is-region small { color: var(--text-secondary); opacity: .82; }
 
-/* The state code, the same anchor the tariff directory already uses. aria-hidden in the markup:
-   the state is named in the link text right beside it, so a screen reader would otherwise hear
-   "M H Maharashtra". */
+/* The state code. aria-hidden in the markup: the state is named in the link text beside it, so
+   a screen reader would otherwise hear "M H Maharashtra". Sits on the tile, so it reads as a
+   deeper patch of the same colour rather than as a second accent. */
 .seo-link-badge {
   align-self: flex-start;
   display: inline-flex; align-items: center; justify-content: center;
-  min-width: 26px; height: 19px; padding: 0 6px; margin-bottom: 3px;
-  border-radius: var(--radius-sm);
+  min-width: 27px; height: 20px; padding: 0 7px; margin-bottom: 6px;
+  border-radius: var(--radius-full);
   font-size: 10.5px; font-weight: 800; letter-spacing: .04em;
-  color: color-mix(in srgb, var(--dir-accent) 76%, var(--text-primary));
-  background: color-mix(in srgb, var(--dir-accent) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--dir-accent) 30%, transparent);
+  color: color-mix(in srgb, var(--dir-accent) 62%, var(--text-primary));
+  background: color-mix(in srgb, var(--surface-card) 62%, transparent);
+  border: 0;
 }
-/* The data half of the card: what a household on this tariff actually pays. This is the part
-   that separates one card from the next — every DISCOM on a state page shares the state's hue,
-   so colour alone cannot tell them apart. */
+:root[data-theme="dark"] .seo-link-badge {
+  color: color-mix(in srgb, var(--dir-accent) 34%, var(--text-primary));
+  background: color-mix(in srgb, var(--surface-card) 45%, transparent);
+}
+/* The data half of the card: what a household on this tariff actually pays. Sits on a pale
+   panel lifted out of the tile, the way the reference puts its figures on their own block —
+   the number is what a reader is scanning for, and it should not have to fight the wash. */
 .seo-link-stat {
   display: inline-flex; align-items: baseline; gap: 4px; align-self: flex-start;
-  margin-top: 7px; padding: 2px 8px; border-radius: var(--radius-full);
-  background: var(--surface-sunken); border: 1px solid var(--border-subtle);
-  font-size: 11.5px; font-weight: 700; color: var(--text-primary);
+  margin-top: auto; padding: 5px 11px; border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--surface-card) 78%, transparent);
+  border: 0;
+  font-size: 12px; font-weight: 700; color: var(--text-primary);
   font-variant-numeric: tabular-nums;
+}
+/* margin-top:auto pins it to the bottom, so the stat lines up across a row of cards whose
+   names and service areas run to different lengths. */
+.seo-link-card.is-region { justify-content: flex-start; }
+.seo-link-card.is-region small { margin-bottom: 10px; }
+:root[data-theme="dark"] .seo-link-stat {
+  background: color-mix(in srgb, var(--surface-card) 55%, transparent);
 }
 .seo-link-tick { color: var(--ok-text); font-weight: 800; }
 .discom-tool-panel {
@@ -4281,19 +4293,12 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
    its badge and hover, and now carries it the way every other state card on the site does. */
 .seo-dir-state {
   position: relative;
-  background:
-    linear-gradient(180deg,
-      color-mix(in srgb, var(--dir-accent) 7%, var(--surface-card)),
-      var(--surface-card) 62%);
-  border: 1px solid color-mix(in srgb, var(--dir-accent) 24%, var(--border-default));
-  border-radius: var(--radius-md); padding: 12px 14px 12px 17px;
+  background: color-mix(in srgb, var(--dir-accent) 11%, var(--surface-card));
+  border: 1px solid transparent;
+  border-radius: 16px; padding: 13px 15px;
   transition: border-color .16s, box-shadow .16s, transform .16s;
 }
-.seo-dir-state::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  border-radius: var(--radius-md) 0 0 var(--radius-md);
-  background: var(--dir-accent); opacity: .85;
-}
+
 .seo-dir-state:hover {
   border-color: color-mix(in srgb, var(--dir-accent) 45%, var(--border-default));
   box-shadow: 0 8px 22px color-mix(in srgb, var(--dir-accent) 14%, transparent);
