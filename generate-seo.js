@@ -1811,7 +1811,7 @@ function nearbyStatesHtml(state, lang = 'en') {
       en: `${nd} DISCOM${nd > 1 ? 's' : ''} · tariff & bill calculator`,
       hi: `${nd} डिस्कॉम · टैरिफ व बिल कैलकुलेटर`, mr: `${nd} डिस्कॉम · टॅरिफ व बिल कॅल्क्युलेटर`,
       ta: `${nd} DISCOM · கட்டணம் & பில் கணிப்பான்` });
-    return `<a class="seo-link-card" href="${pfx}/tariffs/${slugify(s)}/"><strong>${esc(stateName(s, lang))}</strong><small>${sub}</small></a>`;
+    return stateLinkCard(s, `${pfx}/tariffs/${slugify(s)}/`, esc(stateName(s, lang)), sub);
   }).join('');
   const heading = T(lang, {
     en: `Electricity tariffs across ${region.en}`, hi: `${region.hi} की बिजली दरें`,
@@ -1935,7 +1935,7 @@ function discomPage(state, discom, lang = 'en') {
     <section class="seo-section">
       <h2>Other DISCOMs in ${esc(state)}</h2>
       <div class="seo-link-grid">
-        ${siblings.map(d => { const a = parseArea(d.area); return `<a class="seo-link-card" href="/tariffs/${stateSlug}/${d.id}/"><strong>${esc(d.name)}</strong><span>${esc(d.fullName || '')}</span>${a.region ? `<small>${esc(a.region)}</small>` : ''}</a>`; }).join('')}
+        ${siblings.map(d => discomLinkCard(state, d, `/tariffs/${stateSlug}/${d.id}/`)).join('')}
       </div>
     </section>` : '';
 
@@ -2087,7 +2087,7 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
     <section class="seo-section">
       <h2>${siblingHead}</h2>
       <div class="seo-link-grid">
-        ${siblings.map(d => { const a = parseArea(d.area); return `<a class="seo-link-card" href="${pfx}/tariffs/${stateSlug}/${d.id}/"><strong>${esc(d.name)}</strong><span>${esc(d.fullName || '')}</span>${a.region ? `<small>${esc(a.region)}</small>` : ''}</a>`; }).join('')}
+        ${siblings.map(d => discomLinkCard(state, d, `${pfx}/tariffs/${stateSlug}/${d.id}/`)).join('')}
       </div>
     </section>` : '';
 
@@ -2249,15 +2249,7 @@ function statePage(state, lang = 'en') {
       mr: `${sl} चे ${fyL} स्लॅब दर पाहा आणि 30 सेकंदांत तुमचे नेमके वीज बिल काढा. ${nd} डिस्कॉम (${names}) — फिक्स्ड चार्ज व FPPA सह.${stateMin != null ? ` घरगुती दर ${rupee(stateMin)}/युनिट पासून.` : ''} मोफत, साइन-अप शिवाय.`,
       ta: `${sl} இன் ${fyL} அடுக்கு விகிதங்களைப் பாருங்கள், 30 விநாடிகளில் உங்கள் சரியான மின் கட்டணத்தைக் கணக்கிடுங்கள். ${nd} DISCOM (${names}) — நிலையான கட்டணம் & FPPA உடன்.${stateMin != null ? ` வீட்டு கட்டணம் ${rupee(stateMin)}/யூனிட் முதல்.` : ''} இலவசம், பதிவு தேவையில்லை.`,
       en: '' });
-    const discomCards = discoms.map(d => {
-      const a = parseArea(d.area);
-      return `
-      <a class="seo-link-card" href="${pfx}/tariffs/${stateSlug}/${d.id}/">
-        <strong>${esc(d.name)}</strong>
-        <span>${esc(d.fullName || '')}</span>
-        ${a.region ? `<small>${esc(a.region)}${a.cities.length ? ` — ${esc(a.cities.slice(0, 3).join(', '))}` : ''}</small>` : ''}
-      </a>`;
-    }).join('');
+    const discomCards = discoms.map(d => discomLinkCard(state, d, `${pfx}/tariffs/${stateSlug}/${d.id}/`)).join('');
     const discomInline = discoms.map(d => { const a = parseArea(d.area); return `<strong>${esc(d.name)}</strong>${a.region ? ` (${esc(a.region)}${a.cities.length ? ` — ${esc(a.cities.slice(0, 3).join(', '))}` : ''})` : ''}`; }).join('; ');
     const faqs = [];
     faqs.push({
@@ -2393,15 +2385,7 @@ function statePage(state, lang = 'en') {
     `${state} electricity tariff ${fy}${rpParen}: compare ${names}${stateMin != null ? `, rates from ${rupee(stateMin)}/unit,` : ''} and get your exact bill in seconds.`,
   ]);
 
-  const discomCards = discoms.map(d => {
-    const a = parseArea(d.area);
-    return `
-    <a class="seo-link-card" href="/tariffs/${stateSlug}/${d.id}/">
-      <strong>${esc(d.name)}</strong>
-      <span>${esc(d.fullName || '')}</span>
-      ${a.region ? `<small>${esc(a.region)}${a.cities.length ? ` — ${esc(a.cities.slice(0, 3).join(', '))}` : ''}</small>` : ''}
-    </a>`;
-  }).join('');
+  const discomCards = discoms.map(d => discomLinkCard(state, d, `/tariffs/${stateSlug}/${d.id}/`)).join('');
 
   const faqs = [];
   faqs.push({ q: `How is the electricity bill calculated in ${state}?`,
@@ -2477,6 +2461,63 @@ const STATE_CODE = {
   'Arunachal Pradesh': 'AR', 'Assam': 'AS', 'Manipur': 'MN', 'Meghalaya': 'ML', 'Mizoram': 'MZ', 'Nagaland': 'NL', 'Tripura': 'TR',
 };
 const stateCode = (s) => STATE_CODE[s] || s.replace(/[^A-Za-z]/g, '').slice(0, 2).toUpperCase();
+
+// ── Region colour, shared by every state and DISCOM card ─────────────────────
+// The six REGIONS hues already existed but only /tariffs/states/ ever used them — 8 pages out
+// of 486, while the card a reader actually meets most often (the DISCOM list on each of the
+// 476 state pages) was a plain white box. These helpers push that one colour down to every
+// card, so the accent means "this is where in India you are" rather than being decoration.
+// Colour never carries meaning on its own here: it rides alongside the state name and code,
+// and it is used only on rails, badges and washes, never behind body text.
+const REGION_OF_STATE = new Map(REGIONS.flatMap(r => r.states.map(s => [s, r])));
+const REGION_FALLBACK = { en: 'Other', color: '#64748b', slug: 'other' };
+const regionOf = (state) => REGION_OF_STATE.get(state) || REGION_FALLBACK;
+const regionAccent = (state) => regionOf(state).color || REGION_FALLBACK.color;
+
+// The rate span a household actually pays, for the card's stat line. Returns '' when the
+// tariff DB has nothing quotable rather than inventing a range.
+function domesticSpanLabel(discom) {
+  const dr = domesticRates(discom);
+  if (!dr) return '';
+  return dr.min === dr.max ? `${rupeeRate(dr.min)}/unit` : `${rupeeRate(dr.min)}–${rupeeRate(dr.max)}/unit`;
+}
+
+function regionCardStat(text, verified) {
+  if (!text) return '';
+  return `<span class="seo-link-stat">${esc(text)}`
+    + (verified ? '<b class="seo-link-tick" title="Verified against real bills">✓</b>' : '')
+    + '</span>';
+}
+
+// A DISCOM inside a state. Badge carries the state code, because every DISCOM on a given page
+// shares it and the code is what tells the reader which page they are on at a glance.
+function discomLinkCard(state, d, href) {
+  const a = parseArea(d.area);
+  const area = a.region
+    ? `${a.region}${a.cities.length ? ` — ${a.cities.slice(0, 3).join(', ')}` : ''}`
+    : '';
+  return `
+    <a class="seo-link-card is-region" style="--dir-accent:${regionAccent(state)}" href="${href}">
+      <span class="seo-link-badge" aria-hidden="true">${esc(stateCode(state))}</span>
+      <strong>${esc(d.name)}</strong>
+      ${d.fullName ? `<span>${esc(d.fullName)}</span>` : ''}
+      ${area ? `<small>${esc(area)}</small>` : ''}
+      ${regionCardStat(domesticSpanLabel(d), !!(STATE_META[state] || {}).verified)}
+    </a>`;
+}
+
+// A state, linking to its tariff page.
+function stateLinkCard(state, href, title, sub) {
+  const st = stateDomesticStats(state);
+  const span = st ? (st.min === st.max ? `${rupeeRate(st.min)}/unit` : `${rupeeRate(st.min)}–${rupeeRate(st.max)}/unit`) : '';
+  return `
+    <a class="seo-link-card is-region" style="--dir-accent:${regionAccent(state)}" href="${href}">
+      <span class="seo-link-badge" aria-hidden="true">${esc(stateCode(state))}</span>
+      <strong>${title}</strong>
+      ${sub ? `<small>${sub}</small>` : ''}
+      ${regionCardStat(span, !!(st && st.verified))}
+    </a>`;
+}
 
 // Names people still search that are not the state's current official name, plus the
 // unpunctuated spellings a search box will actually receive. Search keywords only —
@@ -2998,7 +3039,7 @@ function guideRelatedPagesHtml(guide, lang = 'en') {
     const sl = esc(stateName(s, lang));
     const title = T(lang, { en: `${sl} electricity tariff & bill calculator`, hi: `${sl} बिजली टैरिफ व बिल कैलकुलेटर`, mr: `${sl} वीज टॅरिफ व बिल कॅल्क्युलेटर`, ta: `${sl} மின் கட்டணம் & பில் கணிப்பான்` });
     const sub = T(lang, { en: 'Current slab rates, every DISCOM, itemised bills', hi: 'वर्तमान स्लैब दरें, हर डिस्कॉम, मदवार बिल', mr: 'सध्याचे स्लॅब दर, प्रत्येक डिस्कॉम, तपशीलवार बिले', ta: 'தற்போதைய அடுக்கு விகிதங்கள், ஒவ்வொரு DISCOM, விவரமான பில்கள்' });
-    cards.push(`<a class="seo-link-card" href="${pfx}/tariffs/${slugify(s)}/"><strong>${title}</strong><span>${sub}</span></a>`);
+    cards.push(stateLinkCard(s, `${pfx}/tariffs/${slugify(s)}/`, title, sub));
   }
   cards.push(...guideRelatedToolCards(guide, lang));
   const cat = guideCategoryId(guide);
@@ -3798,8 +3839,9 @@ function fppaStateSummaryCard(state, rows) {
     rateBlock = `<span class="fs-state-rates">${withCur.map((r, i) =>
       `<span class="fs-state-chip${r.cur.rate < 0 ? ' is-neg' : ''}"><b>${esc(r.code || r.who)}</b>${esc(rateStrs[i])}</span>`).join('')}</span>`;
   }
-  return `<a class="fs-state-card" href="/fppa/${stateSlug}/">
+  return `<a class="fs-state-card" style="--dir-accent:${regionAccent(state)}" href="/fppa/${stateSlug}/">
     <span class="fs-state-card-top">
+      <span class="seo-link-badge" aria-hidden="true">${esc(stateCode(state))}</span>
       <span class="fs-state-name">${esc(state)}</span>
       <span class="fs-state-open">Open</span>
     </span>
