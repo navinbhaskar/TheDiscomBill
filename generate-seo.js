@@ -1433,40 +1433,71 @@ function fppaTrendRateLabel(e) {
   return `${rupeeRate(e.rate)}/unit`;
 }
 
+// A round step (1, 2, 2.5, 5 or 10 x a power of ten) near span/targetTicks, so the axis reads
+// -4%, -2%, 0%, +2% rather than the quartiles of whatever the data happened to be.
+function niceTickStep(span, targetTicks = 4) {
+  const rough = (span || 1) / targetTicks;
+  const mag = Math.pow(10, Math.floor(Math.log10(rough)));
+  const norm = rough / mag;
+  const mult = norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 2.5 ? 2.5 : norm <= 5 ? 5 : 10;
+  return mult * mag;
+}
+
 function fppaTrendSvg(series, rangeMonths, discomName) {
   const sliced = series.slice(-Math.min(series.length, rangeMonths));
-  const W = 720, H = 236, PAD_L = 54, PAD_R = 18, PAD_T = 20, PAD_B = 42;
+  const W = 720, H = 188, PAD_L = 48, PAD_R = 14, PAD_T = 14, PAD_B = 32;
   const plotW = W - PAD_L - PAD_R, plotH = H - PAD_T - PAD_B;
   if (!sliced.length) return '';
   const vals = sliced.map(e => e.rate);
-  let min = Math.min(0, ...vals), max = Math.max(0, ...vals);
-  if (min === max) { min -= 1; max += 1; }
+  // The scale snaps out to round ticks. Because both ends are whole multiples of the step and
+  // the range always straddles zero, zero is guaranteed to be one of them — which is the point:
+  // on a signed surcharge the only line that means anything by itself is the one dividing
+  // "added to your bill" from "credited back". The old axis cut the data range into quarters,
+  // so zero landed on a gridline essentially never and the chart had no baseline.
+  const step = niceTickStep(Math.max(0, ...vals) - Math.min(0, ...vals));
+  let min = Math.floor(Math.min(0, ...vals) / step) * step;
+  let max = Math.ceil(Math.max(0, ...vals) / step) * step;
+  if (min === max) { min -= step; max += step; }
   const span = max - min || 1;
   const xAt = i => PAD_L + (sliced.length === 1 ? plotW / 2 : i * (plotW / (sliced.length - 1)));
   const yAt = v => PAD_T + ((max - v) / span) * plotH;
   const points = sliced.map((e, i) => [xAt(i), yAt(e.rate), e]);
   const path = points.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`).join(' ');
-  const gridVals = [max, min + span * .75, min + span * .5, min + span * .25, min];
+  const gridVals = [];
+  for (let k = Math.round(min / step); k <= Math.round(max / step); k++) gridVals.push(k * step);
   const unit = sliced[0].mode === 'percent' ? '%' : '/u';
+  const dp = Math.min(2, Math.max(0, -Math.floor(Math.log10(step))));
   const fmtAxis = v => sliced[0].mode === 'percent'
-    ? `${v > 0 ? '+' : ''}${v.toFixed(Math.abs(v) >= 10 ? 0 : 1)}%`
+    ? `${v > 0 ? '+' : ''}${v.toFixed(dp)}%`
     : `${rupeeRate(v)}${unit}`;
   const labelEvery = Math.max(1, Math.ceil(sliced.length / 5));
   const grid = gridVals.map(v => {
     const y = yAt(v);
-    return `<line class="fs-grid${Math.abs(v) < .0001 ? ' fs-grid-zero' : ''}" x1="${PAD_L}" y1="${y.toFixed(1)}" x2="${W - PAD_R}" y2="${y.toFixed(1)}"/><text class="fs-axis" x="${PAD_L - 8}" y="${(y + 4).toFixed(1)}" text-anchor="end">${esc(fmtAxis(v))}</text>`;
+    const zero = Math.abs(v) < step * 1e-6;
+    return `<line class="fs-grid${zero ? ' fs-grid-zero' : ''}" x1="${PAD_L}" y1="${y.toFixed(1)}" x2="${W - PAD_R}" y2="${y.toFixed(1)}"/><text class="fs-axis${zero ? ' fs-axis-zero' : ''}" x="${PAD_L - 8}" y="${(y + 4).toFixed(1)}" text-anchor="end">${esc(fmtAxis(zero ? 0 : v))}</text>`;
   }).join('');
-  const dots = points.map(([x, y, e]) => `<circle class="${e.rate >= 0 ? 'trend-dot-pos' : 'trend-dot-neg'}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.2"><title>${esc(fsMonth(e.from))}: ${esc(fppaTrendRateLabel(e))}</title></circle>`).join('');
+  // No fill under the line. The signed area was tinted red above zero and green below, and at
+  // the low opacity it needed it read as a wash of orange rather than as a charge/credit cue.
+  // The zero line, the round ticks and the per-point colours already carry the sign.
+  const dots = points.map(([x, y, e]) => `<circle class="${e.rate >= 0 ? 'trend-dot-pos' : 'trend-dot-neg'}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.4"><title>${esc(fsMonth(e.from))}: ${esc(fppaTrendRateLabel(e))}</title></circle>`).join('');
   const labels = points.map(([x, , e], i) => {
-    if (i !== 0 && i !== points.length - 1 && i % labelEvery !== 0) return '';
-    return `<text class="fs-axis" x="${x.toFixed(1)}" y="${H - 12}" text-anchor="middle">${esc(fsMonth(e.from).replace(' ', ' '))}</text>`;
+    const last = i === points.length - 1;
+    // The final month is always labelled, so drop any regular tick that would crowd it.
+    if (!last && (i % labelEvery !== 0 || points.length - 1 - i < labelEvery)) return '';
+    return `<text class="fs-axis" x="${x.toFixed(1)}" y="${H - 10}" text-anchor="middle">${esc(fsMonth(e.from).replace(' ', ' '))}</text>`;
   }).join('');
+  // The newest reading is the one people came for: ring it and print its value beside it, on
+  // whichever side of the point has room so the label never sits on top of the line.
+  const [lx, ly, le] = points[points.length - 1];
+  const latestMark = `<circle class="trend-dot-latest" cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="6.5"/>`
+    + `<text class="trend-latest-label" x="${lx.toFixed(1)}" y="${(ly > PAD_T + plotH / 2 ? ly - 11 : ly + 18).toFixed(1)}" text-anchor="end">${esc(fppaTrendRateLabel(le))}</text>`;
   const latest = sliced[sliced.length - 1];
   return `<figure class="fs-chart-wrap discom-trend-chart">
     <svg class="fs-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(discomName)} FPPA or FAC trend for the last ${rangeMonths} months">
       ${grid}
       <path class="trend-line" d="${path}"/>
       ${dots}
+      ${latestMark}
       ${labels}
     </svg>
     <figcaption>Latest point: ${esc(fsMonth(latest.from))} at <strong>${esc(fppaTrendRateLabel(latest))}</strong>. Positive values add to the bill; negative values are credits.</figcaption>
@@ -3748,17 +3779,33 @@ function fppaStateSummaryCard(state, rows) {
   const current = rows.map(r => r.cur).filter(Boolean);
   const latest = current[0] || rows[0]?.list?.[0] || null;
   const mode = rows.some(r => r.type === 'discom') ? 'DISCOM-specific' : 'State-wide';
-  const countText = current.length > 1 ? `${current.length} current rates` : 'Current rate';
   const latestText = latest ? `Latest: ${fsMonth(latest.from)}` : 'Awaiting notice';
-  const rateText = current.length
-    ? current.map(fsRate).join(' / ')
-    : latest ? `Last: ${fsRate(latest)}` : 'Not notified';
+  // A state's DISCOMs often carry different rates, and the card used to join them into one
+  // display-size run: "+17.94% / +17.43% / +12.21%", with no way to tell whose is whose, or
+  // — Rajasthan — "₹1.00/unit / ₹1.00/unit / ₹1.00/unit", the same figure printed three times
+  // at 26px across two lines. Big type is for one number. So: one rate (or several that agree)
+  // keeps the headline and says how far it reaches; rates that differ become labelled chips.
+  const withCur = rows.filter(r => r.cur);
+  const rateStrs = withCur.map(r => fsRate(r.cur));
+  const allSame = rateStrs.length > 1 && rateStrs.every(s => s === rateStrs[0]);
+  const countText = allSame
+    ? `Same across ${rateStrs.length} DISCOMs`
+    : rateStrs.length > 1 ? `${rateStrs.length} current rates` : 'Current rate';
+  let rateBlock;
+  if (!rateStrs.length) {
+    rateBlock = `<strong class="fs-state-rate is-quiet">${esc(latest ? `Last: ${fsRate(latest)}` : 'Not notified')}</strong>`;
+  } else if (rateStrs.length === 1 || allSame) {
+    rateBlock = `<strong class="fs-state-rate">${esc(rateStrs[0])}</strong>`;
+  } else {
+    rateBlock = `<span class="fs-state-rates">${withCur.map((r, i) =>
+      `<span class="fs-state-chip${r.cur.rate < 0 ? ' is-neg' : ''}"><b>${esc(r.code || r.who)}</b>${esc(rateStrs[i])}</span>`).join('')}</span>`;
+  }
   return `<a class="fs-state-card" href="/fppa/${stateSlug}/">
     <span class="fs-state-card-top">
       <span class="fs-state-name">${esc(state)}</span>
       <span class="fs-state-open">Open</span>
     </span>
-    <strong class="fs-state-rate">${esc(rateText)}</strong>
+    ${rateBlock}
     <span class="fs-state-meta">${esc(mode)} surcharge tracker</span>
     <span class="fs-state-foot">
       <span>${esc(countText)}</span>

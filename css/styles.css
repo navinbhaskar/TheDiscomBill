@@ -3742,10 +3742,15 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .trend-line {
   fill: none;
   stroke: var(--brand);
-  stroke-width: 3;
+  stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+/* The chart is drawn in a 720-unit viewBox. Left to fill a 992px column it was scaled 1.38x,
+   which is what softened every line and label — a 3-unit stroke landing on 4.1 blurry pixels.
+   Capped at its natural size it renders 1:1 and stays sharp; below 720 it still scales down,
+   where downscaling costs nothing. */
+.discom-trend-chart .fs-chart { max-width: 720px; margin-inline: 0; }
 .trend-dot-pos {
   fill: var(--err-text);
   stroke: var(--surface-card);
@@ -3756,6 +3761,17 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   stroke: var(--surface-card);
   stroke-width: 2;
 }
+/* The most recent month, ringed rather than recoloured: it is already red or green for its
+   sign, and a second colour on the same dot would be saying two things at once. */
+.trend-dot-latest {
+  fill: none; stroke: var(--text-brand); stroke-width: 1.5; opacity: .55;
+}
+.trend-latest-label {
+  font-size: 12px; font-weight: 700; fill: var(--text-primary);
+  paint-order: stroke fill; stroke: var(--surface-card); stroke-width: 3px;
+}
+/* Zero is the reference the whole chart hangs off, so its label is not one of the grey ones. */
+.fs-axis-zero { fill: var(--text-secondary); font-weight: 700; }
 .discom-trend-tabs {
   display: flex;
   flex-wrap: wrap;
@@ -3819,9 +3835,11 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .fs-state-card {
   display: flex;
   flex-direction: column;
-  gap: 9px;
-  min-height: 150px;
-  padding: 18px;
+  /* Was gap 9 / padding 18 / min-height 150, which held every card near 200px tall even when
+     its content was one short line. The chrome was doing more work than the content. */
+  gap: 7px;
+  min-height: 0;
+  padding: 14px 15px;
   border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   background:
@@ -3855,21 +3873,40 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   font-size: 12px;
   font-weight: 800;
 }
+/* Down from clamp(20px, 2.4vw, 26px): at 26px even a single "₹1.00/unit" nearly spanned the
+   card, and the multi-rate strings this used to carry wrapped onto a second line and pushed the
+   card to 205px tall. Now only one figure is ever shown here, so it can be sized to sit on one
+   line at the card's real width. */
 .fs-state-rate {
   display: block;
   color: var(--text-primary);
-  font-size: clamp(20px, 2.4vw, 26px);
-  line-height: 1.15;
-  letter-spacing: 0;
+  font-size: clamp(19px, 1.9vw, 22px);
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+  font-variant-numeric: tabular-nums;
 }
-.fs-state-meta { color: var(--text-secondary); font-size: 14px; line-height: 1.45; }
+.fs-state-rate.is-quiet { font-size: 15px; font-weight: 600; color: var(--text-tertiary); }
+/* Rates that genuinely differ, one chip per DISCOM, each carrying whose rate it is — the
+   information the joined string dropped. Small on purpose: three of them are a list, not a
+   headline. */
+.fs-state-rates { display: flex; flex-wrap: wrap; gap: 5px; }
+.fs-state-chip {
+  display: inline-flex; align-items: baseline; gap: 5px;
+  padding: 2px 8px; border-radius: var(--radius-full);
+  background: var(--surface-sunken); border: 1px solid var(--border-subtle);
+  font-size: 12px; font-weight: 600; color: var(--text-primary);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.fs-state-chip b { font-weight: 700; font-size: 10.5px; color: var(--text-tertiary); letter-spacing: .02em; }
+.fs-state-chip.is-neg { color: var(--ok-text); }
+.fs-state-meta { color: var(--text-secondary); font-size: 13px; line-height: 1.45; }
 .fs-state-foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
   margin-top: auto;
-  padding-top: 12px;
+  padding-top: 9px;
   border-top: 1px solid var(--border-subtle);
   color: var(--text-tertiary);
   font-size: 12px;
@@ -3982,8 +4019,17 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   border-radius: var(--radius-md);
   background: linear-gradient(180deg, rgba(37, 99, 235, .06), rgba(37, 99, 235, .02));
 }
-.discom-tool-panel h2 { margin-top: 0; }
-.discom-tool-panel p { margin-bottom: 0; }
+/* This panel is a call to action, not a section of the article, and its heading is wrapped in
+   a div — so it missed `.seo-section > h2` (direct child) and fell back to the UA default of
+   1.5em, which on a 15px body is 22.5px. That left the CTA shouting louder than the real
+   section headings under it at 20px. Sized to the site's other tool CTA (.guide-tool-cta,
+   15.5/13) instead, a touch larger because this panel runs the full width. */
+.discom-tool-panel h2 {
+  margin-top: 0;
+  font-size: 17px; font-weight: 600; line-height: 1.35;
+  letter-spacing: -0.2px; color: var(--text-primary);
+}
+.discom-tool-panel p { margin-bottom: 0; font-size: 13.5px; line-height: 1.55; }
 .discom-tool-panel .seo-cta { flex: 0 0 auto; white-space: nowrap; }
 .discom-explain-grid {
   display: grid;
@@ -4186,11 +4232,14 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .seo-dir-state-head:hover .seo-dir-state-name { color: var(--dir-accent); }
 .seo-dir-arrow { font-size: 12px; color: var(--dir-accent); opacity: 0; transform: translateX(-4px); transition: opacity .15s, transform .15s; }
 .seo-dir-state:hover .seo-dir-arrow { opacity: 1; transform: none; }
-.seo-dir-count { font-size: 11px; font-weight: 500; color: var(--text-tertiary); white-space: nowrap; }
+/* Wraps. It used to be nowrap, which held "2 DISCOMs · Domestic ₹2.2–₹7.5/unit" on one
+   178px line inside a 166px column and pushed it clean out of the card — a phone-width
+   override was already patching the symptom at 560px, but the card is only ~238px wide at
+   every size, so it never fit anywhere. Two short lines beat one that escapes the border. */
+.seo-dir-count { font-size: 11px; font-weight: 500; color: var(--text-tertiary); }
 /* Per-state stat line (domestic rate span + verified tick) on directory cards */
 .seo-dir-rate { color: var(--text-tertiary); }
 .seo-dir-verified { color: var(--success, #16a34a); font-weight: 700; margin-left: 4px; }
-@media (max-width: 560px) { .seo-dir-count { white-space: normal; } }
 .seo-dir-discoms { display: flex; flex-wrap: wrap; gap: 5px; }
 .seo-dir-discoms a { font-size: 11.5px; color: var(--text-secondary); text-decoration: none; background: var(--surface-sunken); border: 1px solid var(--border-subtle); border-radius: var(--radius-full); padding: 2px 9px; transition: border-color .15s, background .15s, color .15s; }
 .seo-dir-discoms a:hover { border-color: color-mix(in srgb, var(--dir-accent) 55%, transparent); background: color-mix(in srgb, var(--dir-accent) 9%, transparent); color: var(--dir-accent); }
@@ -7005,7 +7054,7 @@ html:not(.js) .m-btn-ring { display: none; }
   border-radius: var(--radius-lg);
 }
 
-.understand-bill-page { max-width: var(--w-app); }
+.understand-bill-page { max-width: var(--w-page); }
 .understand-bill-page [hidden] { display: none !important; }
 .ub-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .ub-field-wide { grid-column: span 2; }
