@@ -4307,10 +4307,53 @@ function fppaArchiveYearPage(state, year) {
   });
 }
 
-function tariffDatabasePage(summary) {
+function tariffDatabasePage(summary, dbStates = []) {
   const title = "India Residential Electricity Tariff Database";
   const description = "TheDiscomBill maintains a structured Indian residential electricity tariff database covering states, DISCOMs, categories, slabs, fixed charges, duty, FPPA, subsidy notes and tariff sources.";
   const fieldRows = summary.fields.map((f) => `<tr><td><code>${esc(f)}</code></td><td>${esc(databaseFieldDescription(f))}</td></tr>`).join('');
+
+  // ── Coverage, state by state ───────────────────────────────────────────────
+  // The page used to describe the database without ever showing any of it: half its height was
+  // a 17-row dictionary of field names. A reader had no way to tell whether Maharashtra was
+  // covered as well as Uttar Pradesh. This table is the database's own per-state records, gaps
+  // included — a state with no published source says so, because a coverage page that only
+  // showed the covered parts would be the one thing this page cannot afford to be.
+  // Prefer a bare "FY 2026-27", but never report a state as unrecorded just because its note is
+  // phrased differently — Assam's reads "AERC order dt. 25-Mar-2025, w.e.f. …", which has no FY
+  // prefix at all. Matching only the FY shape had this column calling 10 states unrecorded when
+  // 8 are, i.e. the page understating its own coverage.
+  const fyOf = (s) => {
+    // Anchored: an unanchored match picked up whatever FY appeared first anywhere in the note,
+    // and Assam's note is "AERC order dt. 25-Mar-2025 … (APDCL petitioned to continue it
+    // unchanged for FY 2026-27)" — labelling that state "FY 2026-27" would be reporting a
+    // pending petition as the tariff basis. Only a note that opens with the year states it.
+    const m = /^FY\s*20\d\d-\d\d/.exec((s.ratesAsOf || '').trim());
+    if (m) return m[0].replace(/\s+/g, ' ');
+    if (s.tariffYear) return s.tariffYear;
+    const note = (s.ratesAsOf || '').trim();
+    if (!note) return '';
+    // Enough of the note to identify the order, with the full text on hover.
+    const head = note.split(/[,(]/)[0].trim();
+    return head.length > 30 ? `${head.slice(0, 29)}…` : head;
+  };
+  const sorted = [...dbStates].sort((a, b) => a.state.localeCompare(b.state));
+  const coverageRows = sorted.map((s) => {
+    const verified = !!(STATE_META[s.state] || {}).verified;
+    const fy = fyOf(s);
+    const basis = s.ratesAsOf || '';
+    return `<tr>
+      <td><a href="/tariffs/${slugify(s.state)}/">${esc(s.state)}</a>${verified
+        ? ' <b class="db-tick" title="Checked line by line against real bills">✓</b>' : ''}</td>
+      <td class="num">${s.discomCount}</td>
+      <td class="num">${s.categoryCount}</td>
+      <td>${fy ? `<span title="${attr(basis)}">${esc(fy)}</span>` : '<span class="db-gap">not recorded</span>'}</td>
+      <td>${s.sourceUrl
+        ? `<a href="${attr(s.sourceUrl)}" target="_blank" rel="noopener nofollow">Order ↗</a>`
+        : '<span class="db-gap">—</span>'}</td>
+    </tr>`;
+  }).join('');
+  const withSource = sorted.filter((s) => s.sourceUrl).length;
+  const verifiedCount = sorted.filter((s) => (STATE_META[s.state] || {}).verified).length;
   const body = `
   <section class="seo-page container">
     ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Tariff Database', url: null }])}
@@ -4331,13 +4374,39 @@ function tariffDatabasePage(summary) {
     </div>
 
     <section class="seo-section">
-      <h2>What the database tracks</h2>
-      <div class="comparison-table-wrapper database-schema-table">
-        <table class="comparison-table">
-          <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
-          <tbody>${fieldRows}</tbody>
+      <h2>Coverage, state by state</h2>
+      <p>Every row is generated from the database itself, so this page cannot claim coverage the
+      data does not have. ${withSource} of the ${summary.stateCount} states and UTs carry a link to
+      the regulator's own order; the remaining ${summary.stateCount - withSource} are modelled from
+      published schedules with no order URL recorded yet, and say so.
+      ${verifiedCount === 1
+        ? 'One state is additionally marked ✓ — checked line by line against real consumer bills.'
+        : `${verifiedCount} states are additionally marked ✓ — checked line by line against real consumer bills.`}</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table database-coverage">
+          <thead><tr>
+            <th>State / UT</th><th class="num">DISCOMs</th><th class="num">Categories</th>
+            <th>Tariff basis</th><th>Source</th>
+          </tr></thead>
+          <tbody>${coverageRows}</tbody>
         </table>
       </div>
+      <p class="fs-legend">Hover a tariff basis for the full order note. Where a state shows
+      &ldquo;not recorded&rdquo;, the rates are still modelled and usable — what is missing is a
+      stored order reference, not the tariff.</p>
+    </section>
+
+    <section class="seo-section is-aside">
+      <h2>Fields in each record</h2>
+      <details class="database-schema">
+        <summary>${summary.fields.length} fields per tariff record</summary>
+        <div class="comparison-table-wrapper database-schema-table">
+          <table class="comparison-table">
+            <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+            <tbody>${fieldRows}</tbody>
+          </table>
+        </div>
+      </details>
       <p class="fs-legend">The raw generated database is an internal TheDiscomBill data asset.
       Public pages expose the useful consumer-facing views: calculators, DISCOM tariff pages,
       FPPA archives and guides.</p>
@@ -5631,7 +5700,7 @@ export function generateSeo() {
 
     // English-only (see the note on fuelSurchargePage) — emitted once, not per language.
     if (lang === 'en') {
-      emitPage('database', tariffDatabasePage(tariffDatabase.summary));
+      emitPage('database', tariffDatabasePage(tariffDatabase.summary, tariffDatabase.db.states));
       pages++;
       emitPage('fppa', fuelSurchargePage());
       pages++;

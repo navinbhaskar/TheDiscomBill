@@ -170,13 +170,241 @@
     </div>
 
     <section class="seo-section">
-      <h2>What the database tracks</h2>
-      <div class="comparison-table-wrapper database-schema-table">
-        <table class="comparison-table">
-          <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
-          <tbody><tr><td><code>state</code></td><td>State or union territory name.</td></tr><tr><td><code>discom</code></td><td>Distribution company identity, service area and official website where available.</td></tr><tr><td><code>tariffYear</code></td><td>Financial year or tariff schedule year represented by the current record.</td></tr><tr><td><code>consumerCategory</code></td><td>Domestic, commercial or other consumer category and any supply-type variant.</td></tr><tr><td><code>slabs</code></td><td>Telescopic or flat energy charge slabs with cumulative limits.</td></tr><tr><td><code>fixedCharge</code></td><td>Monthly fixed, demand or load-based charge rule.</td></tr><tr><td><code>electricityDuty</code></td><td>Duty or tax line extracted from additional charges.</td></tr><tr><td><code>fppaFac</code></td><td>Current and historical fuel/power purchase adjustment values linked by state or DISCOM.</td></tr><tr><td><code>subsidy</code></td><td>Modelled subsidy schemes and subsidy notes where applicable.</td></tr><tr><td><code>meterCharge</code></td><td>Meter rent or meter-related charge where explicitly modelled.</td></tr><tr><td><code>minimumCharge</code></td><td>Minimum monthly charge or consumption guarantee where present.</td></tr><tr><td><code>solarRules</code></td><td>Solar/net-metering rules where structured data has been added.</td></tr><tr><td><code>effectiveDate</code></td><td>Date from which the current tariff record applies, where known.</td></tr><tr><td><code>tariffOrder</code></td><td>Tariff order label or rates-as-of note.</td></tr><tr><td><code>sourceUrl</code></td><td>Official regulator, DISCOM or tariff-order source URL.</td></tr><tr><td><code>lastVerified</code></td><td>Verification date where explicitly stored.</td></tr><tr><td><code>previousTariff</code></td><td>Historical rateHistory entries retained for old-bill checks.</td></tr></tbody>
+      <h2>Coverage, state by state</h2>
+      <p>Every row is generated from the database itself, so this page cannot claim coverage the
+      data does not have. 26 of the 34 states and UTs carry a link to
+      the regulator's own order; the remaining 8 are modelled from
+      published schedules with no order URL recorded yet, and say so.
+      One state is additionally marked ✓ — checked line by line against real consumer bills.</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table database-coverage">
+          <thead><tr>
+            <th>State / UT</th><th class="num">DISCOMs</th><th class="num">Categories</th>
+            <th>Tariff basis</th><th>Source</th>
+          </tr></thead>
+          <tbody><tr>
+      <td><a href="/tariffs/andhra-pradesh/">Andhra Pradesh</a></td>
+      <td class="num">2</td>
+      <td class="num">6</td>
+      <td><span title="FY 2026-27 (APERC retail supply tariff order — FY 2025-26 schedule retained, no hike)">FY 2026-27</span></td>
+      <td><a href="https://aperc.gov.in" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/arunachal-pradesh/">Arunachal Pradesh</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span class="db-gap">not recorded</span></td>
+      <td><span class="db-gap">—</span></td>
+    </tr><tr>
+      <td><a href="/tariffs/assam/">Assam</a></td>
+      <td class="num">1</td>
+      <td class="num">3</td>
+      <td><span title="AERC order dt. 25-Mar-2025, w.e.f. 1 April 2025 (APDCL petitioned to continue it unchanged for FY 2026-27)">AERC order dt. 25-Mar-2025</span></td>
+      <td><a href="https://aerc.gov.in" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/bihar/">Bihar</a></td>
+      <td class="num">2</td>
+      <td class="num">4</td>
+      <td><span title="FY 2026-27 (BERC order dt. 18-03-2026)">FY 2026-27</span></td>
+      <td><a href="https://berc.co.in/images/pdf/tariff-order/2026-27/Tariff_Chart_FY_2026-27.pdf" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/chandigarh/">Chandigarh</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span title="FY 2026-27 (JERC MYT order for CPDL, FY 2025-26 to FY 2029-30 — FY 2026-27 rates approved in advance)">FY 2026-27</span></td>
+      <td><a href="https://jercuts.gov.in/order_category/chandigarh/" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/chhattisgarh/">Chhattisgarh</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span title="FY 2026-27 (CSERC Tariff Schedule for FY 2026-27, applicable from 01-Jul-2026)">FY 2026-27</span></td>
+      <td><a href="https://cserc.gov.in/Welcome/show_tariff_orders" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/">Dadra &amp; Nagar Haveli and Daman &amp; Diu</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span class="db-gap">not recorded</span></td>
+      <td><span class="db-gap">—</span></td>
+    </tr><tr>
+      <td><a href="/tariffs/delhi/">Delhi</a></td>
+      <td class="num">4</td>
+      <td class="num">7</td>
+      <td><span title="FY 2025-26 (DERC schedule; PPAC monthly, see fppa.js)">FY 2025-26</span></td>
+      <td><a href="https://www.derc.gov.in/tarriff-orders" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/goa/">Goa</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span title="FY 2026-27 (JERC 4th MYT Control Period order, FY 2025-26 to FY 2029-30 — FY 2026-27 rates approved in advance)">FY 2026-27</span></td>
+      <td><a href="https://www.goaelectricity.gov.in" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/gujarat/">Gujarat</a></td>
+      <td class="num">4</td>
+      <td class="num">12</td>
+      <td><span title="FY 2026-27 (GERC orders dt. 25-Mar-2026, rates retained)">FY 2026-27</span></td>
+      <td><a href="https://gercin.org/order-category/tariff-orders/" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/haryana/">Haryana</a></td>
+      <td class="num">2</td>
+      <td class="num">4</td>
+      <td><span title="FY 2026-27 (HERC order dt. 28-Mar-2025; tariff retained unchanged for FY 2026-27)">FY 2026-27</span></td>
+      <td><a href="https://herc.gov.in" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/himachal-pradesh/">Himachal Pradesh</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span title="FY 2026-27 (HPERC Tariff Order for HPSEBL, in force from 01-Apr-2026)">FY 2026-27</span></td>
+      <td><a href="https://hperc.org" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/jammu-and-kashmir/">Jammu &amp; Kashmir</a></td>
+      <td class="num">2</td>
+      <td class="num">4</td>
+      <td><span title="FY 2025-26 (JERC for the UT of J&amp;K and Ladakh — JPDCL &amp; KPDCL ARR and Tariff for FY 2025-26)">FY 2025-26</span></td>
+      <td><a href="https://www.jpdcl.co.in/downloads/tariff/JPDCL_KPDCL_Tariff_Order_2025_26.pdf" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/jharkhand/">Jharkhand</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span title="FY 2026-27 (JSERC tariff determination for FY 2026-27, first year of the FY 2026-27 to FY 2030-31 control period)">FY 2026-27</span></td>
+      <td><a href="https://jserc.org/tariff.aspx" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/karnataka/">Karnataka</a></td>
+      <td class="num">5</td>
+      <td class="num">10</td>
+      <td><span title="FY 2026-27 (KERC Tariff Order 2025, dt. 27-03-2025)">FY 2026-27</span></td>
+      <td><a href="https://kerc.karnataka.gov.in/uploads/96731743148968.pdf" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/kerala/">Kerala</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span title="In force to 31-Mar-2027 (KSERC Order 427/D(T)/2023 dt. 05-Dec-2024, rates w.e.f. 01-Apr-2025)">In force to 31-Mar-2027</span></td>
+      <td><a href="https://erckerala.org/orderpage" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/ladakh/">Ladakh</a></td>
+      <td class="num">1</td>
+      <td class="num">1</td>
+      <td><span class="db-gap">not recorded</span></td>
+      <td><span class="db-gap">—</span></td>
+    </tr><tr>
+      <td><a href="/tariffs/madhya-pradesh/">Madhya Pradesh</a></td>
+      <td class="num">3</td>
+      <td class="num">6</td>
+      <td><span title="FY 2026-27 (MPERC Retail Supply Tariff Order for FY 2026-27, Annexure-2)">FY 2026-27</span></td>
+      <td><a href="https://mperc.in" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/maharashtra/">Maharashtra</a></td>
+      <td class="num">4</td>
+      <td class="num">6</td>
+      <td><span class="db-gap">not recorded</span></td>
+      <td><span class="db-gap">—</span></td>
+    </tr><tr>
+      <td><a href="/tariffs/manipur/">Manipur</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span class="db-gap">not recorded</span></td>
+      <td><span class="db-gap">—</span></td>
+    </tr><tr>
+      <td><a href="/tariffs/meghalaya/">Meghalaya</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span title="FY 2026-27 (MSERC Order in Case No. 11 of 2025, dated 26-03-2026)">FY 2026-27</span></td>
+      <td><a href="https://mserc.gov.in/tarifforders.html" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/mizoram/">Mizoram</a></td>
+      <td class="num">1</td>
+      <td class="num">1</td>
+      <td><span class="db-gap">not recorded</span></td>
+      <td><span class="db-gap">—</span></td>
+    </tr><tr>
+      <td><a href="/tariffs/nagaland/">Nagaland</a></td>
+      <td class="num">1</td>
+      <td class="num">1</td>
+      <td><span class="db-gap">not recorded</span></td>
+      <td><span class="db-gap">—</span></td>
+    </tr><tr>
+      <td><a href="/tariffs/odisha/">Odisha</a></td>
+      <td class="num">4</td>
+      <td class="num">8</td>
+      <td><span title="FY 2026-27 (OERC RST Order dt. 24-03-2026 — FY 2024-25 rates retained)">FY 2026-27</span></td>
+      <td><a href="https://www.orierc.org/CuteSoft_Client/writereaddata/upload/DISCOM_TARIFF_ORDER_FY_2026-27.pdf" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/puducherry/">Puducherry</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span title="FY 2026-27 (JERC 4th MYT Control Period order for the Electricity Department of Puducherry, Table 9-2)">FY 2026-27</span></td>
+      <td><a href="https://jercuts.gov.in/order_category/puducherry/" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/punjab/">Punjab</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span title="FY 2026-27 (PSERC tariff order for PSPCL, w.e.f. 01-Apr-2026)">FY 2026-27</span></td>
+      <td><a href="https://pserc.gov.in/pages/tariff-orders.html" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/rajasthan/">Rajasthan</a></td>
+      <td class="num">3</td>
+      <td class="num">6</td>
+      <td><span title="Tariff for Supply of Electricity-2025 (RERC Petitions 2303–2305/2025, in force from 01-Oct-2025)">Tariff for Supply of Electric…</span></td>
+      <td><a href="https://rerc.rajasthan.gov.in" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/sikkim/">Sikkim</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span title="FY 2025-26 (SSERC Tariff Order for the F.Y. 2025-26)">FY 2025-26</span></td>
+      <td><a href="https://selfservice.powersikkim.in/assets/home/Tariff-Schedule-FY-2025-26.pdf" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/tamil-nadu/">Tamil Nadu</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span title="FY 2025-26 (TNERC T.O. No.6 of 2025)">FY 2025-26</span></td>
+      <td><a href="https://www.tnerc.tn.gov.in/Orders/files/TO-Order%20No6300620252131.pdf" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/telangana/">Telangana</a></td>
+      <td class="num">2</td>
+      <td class="num">4</td>
+      <td><span title="FY 2026-27 (TGERC order dt. 30-Mar-2026, retail rates retained)">FY 2026-27</span></td>
+      <td><a href="https://www.tgerc.telangana.gov.in" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/tripura/">Tripura</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span title="FY 2026-27 (TERC Tariff Order for TSECL, Annexure 2 — revised tariffs effective 01-May-2026)">FY 2026-27</span></td>
+      <td><a href="https://terc.tripura.gov.in/tariff-order" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/uttar-pradesh/">Uttar Pradesh</a> <b class="db-tick" title="Checked line by line against real bills">✓</b></td>
+      <td class="num">5</td>
+      <td class="num">10</td>
+      <td><span title="FY 2026-27 (UPERC order dt. 02-Jul-2026, rates retained)">FY 2026-27</span></td>
+      <td><a href="https://www.uperc.org" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/uttarakhand/">Uttarakhand</a></td>
+      <td class="num">1</td>
+      <td class="num">2</td>
+      <td><span title="FY 2026-27 (UERC order dt. 30-Mar-2026 — existing rates retained, UPCL's proposed hike rejected)">FY 2026-27</span></td>
+      <td><a href="https://uerc.uk.gov.in" target="_blank" rel="noopener nofollow">Order ↗</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/west-bengal/">West Bengal</a></td>
+      <td class="num">3</td>
+      <td class="num">6</td>
+      <td><span class="db-gap">not recorded</span></td>
+      <td><span class="db-gap">—</span></td>
+    </tr></tbody>
         </table>
       </div>
+      <p class="fs-legend">Hover a tariff basis for the full order note. Where a state shows
+      &ldquo;not recorded&rdquo;, the rates are still modelled and usable — what is missing is a
+      stored order reference, not the tariff.</p>
+    </section>
+
+    <section class="seo-section is-aside">
+      <h2>Fields in each record</h2>
+      <details class="database-schema">
+        <summary>17 fields per tariff record</summary>
+        <div class="comparison-table-wrapper database-schema-table">
+          <table class="comparison-table">
+            <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+            <tbody><tr><td><code>state</code></td><td>State or union territory name.</td></tr><tr><td><code>discom</code></td><td>Distribution company identity, service area and official website where available.</td></tr><tr><td><code>tariffYear</code></td><td>Financial year or tariff schedule year represented by the current record.</td></tr><tr><td><code>consumerCategory</code></td><td>Domestic, commercial or other consumer category and any supply-type variant.</td></tr><tr><td><code>slabs</code></td><td>Telescopic or flat energy charge slabs with cumulative limits.</td></tr><tr><td><code>fixedCharge</code></td><td>Monthly fixed, demand or load-based charge rule.</td></tr><tr><td><code>electricityDuty</code></td><td>Duty or tax line extracted from additional charges.</td></tr><tr><td><code>fppaFac</code></td><td>Current and historical fuel/power purchase adjustment values linked by state or DISCOM.</td></tr><tr><td><code>subsidy</code></td><td>Modelled subsidy schemes and subsidy notes where applicable.</td></tr><tr><td><code>meterCharge</code></td><td>Meter rent or meter-related charge where explicitly modelled.</td></tr><tr><td><code>minimumCharge</code></td><td>Minimum monthly charge or consumption guarantee where present.</td></tr><tr><td><code>solarRules</code></td><td>Solar/net-metering rules where structured data has been added.</td></tr><tr><td><code>effectiveDate</code></td><td>Date from which the current tariff record applies, where known.</td></tr><tr><td><code>tariffOrder</code></td><td>Tariff order label or rates-as-of note.</td></tr><tr><td><code>sourceUrl</code></td><td>Official regulator, DISCOM or tariff-order source URL.</td></tr><tr><td><code>lastVerified</code></td><td>Verification date where explicitly stored.</td></tr><tr><td><code>previousTariff</code></td><td>Historical rateHistory entries retained for old-bill checks.</td></tr></tbody>
+          </table>
+        </div>
+      </details>
       <p class="fs-legend">The raw generated database is an internal TheDiscomBill data asset.
       Public pages expose the useful consumer-facing views: calculators, DISCOM tariff pages,
       FPPA archives and guides.</p>
