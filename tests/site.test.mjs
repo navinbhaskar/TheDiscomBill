@@ -402,6 +402,54 @@ console.log('\n• tariff database fresh');
   }
 }
 
+// ── 9. the coverage numbers we advertise match the database ───────────────────
+// The homepage, its FAQ schema, the i18n strings and llms.txt all quote how much ground the
+// site covers. Those are hand-written, and they drifted: the homepage claimed "150+ consumer
+// categories" against 131 in the database, "65+ DISCOMs" against exactly 65, and "35 states"
+// against 34. They are the easiest claims on the site for a reader to check — /database/ prints
+// the real figures one click away — so a stale number here costs more than it looks.
+// Every count must appear as a bare figure, never "65+", because "+" asserts more than we have.
+console.log('\n• advertised coverage matches the database');
+{
+  const summaryPath = path.join(ROOT, 'data', 'tariff-database-summary.json');
+  if (!fs.existsSync(summaryPath)) {
+    fail('tariff-database-summary.json missing — run `npm run seo`');
+  } else {
+    const s = JSON.parse(fs.readFileSync(summaryPath, 'utf8'));
+    const problems = [];
+    const sources = ['index.html', 'llms.txt', path.join('js', 'i18n.js')];
+
+    for (const rel of sources) {
+      const p = path.join(ROOT, rel);
+      if (!fs.existsSync(p)) continue;
+      const text = fs.readFileSync(p, 'utf8');
+
+      // An inflated "N+" next to one of these nouns is the exact shape of the old bug.
+      for (const m of text.matchAll(/(\d+)\+\s*(?:Indian\s+)?(DISCOM|consumer categor|categor|states?\s*&|states?\s+and|states?\b)/gi)) {
+        problems.push(`${rel}: "${m[1]}+ ${m[2]}…" — advertise the exact count, not "${m[1]}+"`);
+      }
+      // And any bare figure attached to those nouns has to be the real one.
+      const checks = [
+        [/(\d+)\s+DISCOM/gi, s.discomCount, 'DISCOMs'],
+        [/(\d+)\s+consumer categor/gi, s.categoryCount, 'consumer categories'],
+        [/(\d+)\s+(?:Indian\s+)?states?\s*(?:&amp;|&|and)\s*(?:UT|union)/gi, s.stateCount, 'states/UTs'],
+      ];
+      for (const [re, expected, label] of checks) {
+        for (const m of text.matchAll(re)) {
+          if (Number(m[1]) !== expected) problems.push(`${rel}: claims ${m[1]} ${label}, database has ${expected}`);
+        }
+      }
+    }
+
+    if (problems.length) {
+      fail(`advertised coverage is out of step with the database:\n    ${[...new Set(problems)].join('\n    ')}`);
+    } else {
+      passed++;
+      console.log(`  ✓ ${s.stateCount} states / ${s.discomCount} DISCOMs / ${s.categoryCount} categories quoted consistently`);
+    }
+  }
+}
+
 // ── summary ───────────────────────────────────────────────────────────────────
 console.log(`\n${failed ? '✗' : '✓'} site checks — ${passed} groups passed, ${failed} failures\n`);
 process.exit(failed ? 1 : 0);

@@ -106,7 +106,7 @@ export const STRINGS = {
     'hero.feat.tod': 'Time-of-Day & kVAh billing',
     'hero.feat.demand': 'Excess demand penalty',
     'hero.feat.duty': 'Electricity duty & state levies',
-    'hero.discoms.label': 'Tariffs for 65+ DISCOMs across 35 states & UTs — including',
+    'hero.discoms.label': 'Tariffs for 65 DISCOMs across 34 states & UTs — including',
     'hero.trust1': 'Every tariff slab verified against official SERC & DISCOM orders — updated for FY 2026-27',
     // Hero sample-bill card — five slides, one per DISCOM (see index.html for the
     // calculateBill() calls each set of figures comes from)

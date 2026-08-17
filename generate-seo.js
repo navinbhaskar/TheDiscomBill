@@ -2571,10 +2571,10 @@ function directoryPage(states, lang = 'en') {
     ta: 'அனைத்து இந்திய மின் DISCOM-கள் & மாநில வாரியான கட்டணங்கள்',
     en: 'All Indian Electricity DISCOMs & Tariffs by State' });
   const description = T(lang, {
-    hi: 'हर भारतीय राज्य और केंद्र शासित प्रदेश के बिजली टैरिफ व बिल कैलकुलेटर देखें। 65+ डिस्कॉम, स्लैब-वार दरें, फिक्स्ड चार्ज और FPPA — एक ही डायरेक्टरी में।',
-    mr: 'प्रत्येक भारतीय राज्य आणि केंद्रशासित प्रदेशाचे वीज टॅरिफ व बिल कॅल्क्युलेटर पाहा. 65+ डिस्कॉम, स्लॅब-निहाय दर, फिक्स्ड चार्ज आणि FPPA — एकाच डिरेक्टरीमध्ये.',
-    ta: 'ஒவ்வொரு இந்திய மாநிலம் மற்றும் யூனியன் பிரதேசத்தின் மின் கட்டணங்கள் மற்றும் பில் கணிப்பான்களைப் பாருங்கள். 65+ DISCOM-கள், அடுக்கு வாரியான விகிதங்கள், நிலையான கட்டணம் மற்றும் FPPA — ஒரே டைரக்டரியில்.',
-    en: 'Browse electricity tariffs and bill calculators for every Indian state and union territory. 65+ DISCOMs, slab-wise rates, fixed charges and FPPA — all in one directory.' });
+    hi: 'हर भारतीय राज्य और केंद्र शासित प्रदेश के बिजली टैरिफ व बिल कैलकुलेटर देखें। 65 डिस्कॉम, स्लैब-वार दरें, फिक्स्ड चार्ज और FPPA — एक ही डायरेक्टरी में।',
+    mr: 'प्रत्येक भारतीय राज्य आणि केंद्रशासित प्रदेशाचे वीज टॅरिफ व बिल कॅल्क्युलेटर पाहा. 65 डिस्कॉम, स्लॅब-निहाय दर, फिक्स्ड चार्ज आणि FPPA — एकाच डिरेक्टरीमध्ये.',
+    ta: 'ஒவ்வொரு இந்திய மாநிலம் மற்றும் யூனியன் பிரதேசத்தின் மின் கட்டணங்கள் மற்றும் பில் கணிப்பான்களைப் பாருங்கள். 65 DISCOM-கள், அடுக்கு வாரியான விகிதங்கள், நிலையான கட்டணம் மற்றும் FPPA — ஒரே டைரக்டரியில்.',
+    en: 'Browse electricity tariffs and bill calculators for every Indian state and union territory. 65 DISCOMs, slab-wise rates, fixed charges and FPPA — all in one directory.' });
 
   const pfx = lang === 'en' ? '' : `/${lang}`;
   // A vernacular tariff twin only exists for states this language is scoped to; elsewhere the
@@ -5360,7 +5360,7 @@ function buildLlmsTxt(states) {
   ).join('\n');
   return `# TheDiscomBill
 
-> Free, browser-based electricity bill calculator for India. Covers 65+ distribution companies (DISCOMs) across all 35 states and union territories with slab-wise energy charges, fixed/demand charges, FPPA fuel surcharge, electricity duty, solar net metering and Time-of-Day billing. Independent — not affiliated with any DISCOM, SERC or government body. Estimates are provisional; official bills come from the DISCOM.
+> Free, browser-based electricity bill calculator for India. Covers 65 distribution companies (DISCOMs) across 34 states and union territories with slab-wise energy charges, fixed/demand charges, FPPA fuel surcharge, electricity duty, solar net metering and Time-of-Day billing. Independent — not affiliated with any DISCOM, SERC or government body. Estimates are provisional; official bills come from the DISCOM.
 
 Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025-26) and the calculation engine applies each DISCOM's published methodology: slab-wise rates, sanctioned-load-based fixed charges, then surcharges and duty.
 
