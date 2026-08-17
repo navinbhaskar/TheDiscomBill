@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -20,24 +20,24 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the â‚¹ sign. -->
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
   <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="canonical" href="https://thediscombill.com/solar-calculator/">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="TheDiscomBill">
-  <meta property="og:title" content="Rooftop Solar Savings Calculator 2026 (PM Surya Ghar) – TheDiscomBill">
+  <meta property="og:title" content="Rooftop Solar Savings Calculator 2026 (PM Surya Ghar) â€“ TheDiscomBill">
   <meta property="og:description" content="Estimate rooftop solar system size, cost, PM Surya Ghar central + state subsidy, monthly savings and payback period from your electricity usage and roof area.">
   <meta property="og:url" content="https://thediscombill.com/solar-calculator/">
   <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:image:alt" content="TheDiscomBill â€” electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
   <meta property="og:locale" content="en_IN">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Rooftop Solar Savings Calculator 2026 (PM Surya Ghar) – TheDiscomBill">
+  <meta name="twitter:title" content="Rooftop Solar Savings Calculator 2026 (PM Surya Ghar) â€“ TheDiscomBill">
   <meta name="twitter:description" content="Estimate rooftop solar size, cost, PM Surya Ghar subsidy, monthly savings and payback period.">
   <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
   <link rel="stylesheet" href="../css/styles.min.css">
@@ -72,7 +72,7 @@
 </head>
 <body>
 
-<!-- ── Header ───────────────────────────────────────────────────────────────── -->
+<!-- â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
 <header class="site-header">
   <div class="header-inner">
     <a href="/" class="logo">
@@ -83,7 +83,7 @@
       </span>
       <div>
         <span class="logo-text">TheDiscomBill</span>
-        <span class="logo-tagline" data-i18n="tagline">Electricity Bill Calculator · All India</span>
+        <span class="logo-tagline" data-i18n="tagline">Electricity Bill Calculator Â· All India</span>
       </div>
     </a>
     <nav class="header-nav">
@@ -92,7 +92,7 @@
       <a href="/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
       <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
       <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
-           to the footer sitemap. The header now carries only the four primary destinations —
+           to the footer sitemap. The header now carries only the four primary destinations â€”
            the footer is shared chrome on every page, so nothing lost a link. -->
       <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
         <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
@@ -111,12 +111,12 @@
       <div class="lang-switch" id="langSwitch">
         <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
           <span class="lang-trigger-text" id="langTriggerText">EN</span>
-          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <span class="sr-only" id="langTriggerLabel">â€” change language / à¤­à¤¾à¤·à¤¾ à¤¬à¤¦à¤²à¥‡à¤‚</span>
           <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
           <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
-          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">à¤¹à¤¿à¤‚à¤¦à¥€</span><span class="lang-opt-code">HI</span></li>
         </ul>
       </div>
       <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
@@ -132,9 +132,9 @@
         <h1 data-i18n="sol.title">Rooftop Solar Savings Calculator (2026)</h1>
         <p class="solar-intro" data-i18n-html="sol.intro">See how much a rooftop solar system would cost and save you, including the <strong>PM Surya Ghar</strong> central subsidy. Enter your monthly units and roof area to get a system size, net cost after subsidy, monthly savings and payback period.</p>
         <div class="solar-chips" role="list">
-          <span class="solar-chip" role="listitem" data-i18n="sol.chip1">Up to ₹78,000 central subsidy</span>
+          <span class="solar-chip" role="listitem" data-i18n="sol.chip1">Up to â‚¹78,000 central subsidy</span>
           <span class="solar-chip" role="listitem" data-i18n="sol.chip2">25-year panel life</span>
-          <span class="solar-chip" role="listitem" data-i18n="sol.chip3">Free · no sign-up</span>
+          <span class="solar-chip" role="listitem" data-i18n="sol.chip3">Free Â· no sign-up</span>
         </div>
       </div>
 
@@ -156,13 +156,13 @@
           </div>
           <div class="solar-or"><span data-i18n="sol.or">or, if you only know your bill</span></div>
           <div class="solar-field">
-            <label for="solBillAmt" data-i18n="sol.billAmt">Monthly bill amount (₹)</label>
+            <label for="solBillAmt" data-i18n="sol.billAmt">Monthly bill amount (â‚¹)</label>
             <input id="solBillAmt" type="number" min="0" step="50" placeholder="e.g., 2450" data-i18n-ph="sol.phBillAmt" inputmode="numeric">
             <!-- The slider and the number field are two views of the same value: dragging is how
                  most people explore "what if my bill were bigger", typing is how they enter the
                  one they actually have. Both write solBillAmt and fire its existing handler. -->
-            <input id="solBillSlider" class="solar-slider" type="range" min="0" max="10000" step="50" value="0" aria-label="Monthly bill amount (₹)">
-            <div class="solar-slider-scale" aria-hidden="true"><span>₹0</span><span>₹5,000</span><span>₹10,000</span></div>
+            <input id="solBillSlider" class="solar-slider" type="range" min="0" max="10000" step="50" value="0" aria-label="Monthly bill amount (â‚¹)">
+            <div class="solar-slider-scale" aria-hidden="true"><span>â‚¹0</span><span>â‚¹5,000</span><span>â‚¹10,000</span></div>
             <span class="solar-hint" id="solBillHint" data-i18n="sol.billAmtHint">We'll convert it to units using your tariff below.</span>
           </div>
           <div class="solar-field">
@@ -177,23 +177,23 @@
           </div>
           <div class="solar-field-row">
             <div class="solar-field">
-              <label for="solRate" data-i18n="sol.rate">Tariff (₹/unit)</label>
+              <label for="solRate" data-i18n="sol.rate">Tariff (â‚¹/unit)</label>
               <input id="solRate" type="number" min="0" step="0.5" value="7" inputmode="decimal">
               <div class="psz-chips sol-quick" data-for="solRate">
-                <button type="button" class="psz-chip-btn" data-val="6">₹6</button>
-                <button type="button" class="psz-chip-btn is-active" data-val="7">₹7</button>
-                <button type="button" class="psz-chip-btn" data-val="8">₹8</button>
+                <button type="button" class="psz-chip-btn" data-val="6">â‚¹6</button>
+                <button type="button" class="psz-chip-btn is-active" data-val="7">â‚¹7</button>
+                <button type="button" class="psz-chip-btn" data-val="8">â‚¹8</button>
               </div>
             </div>
             <div class="solar-field">
-              <label for="solStateSel"><span data-i18n="sol.stateSub">State subsidy (₹)</span>
-                <span class="gloss" tabindex="0" role="img" aria-label="State subsidy info" data-tip="Some states add their own subsidy on top of PM Surya Ghar. Pick your state if listed (amounts auto-adjust to system size), enter a custom amount, or leave as ₹0 if unsure.">i</span>
+              <label for="solStateSel"><span data-i18n="sol.stateSub">State subsidy (â‚¹)</span>
+                <span class="gloss" tabindex="0" role="img" aria-label="State subsidy info" data-tip="Some states add their own subsidy on top of PM Surya Ghar. Pick your state if listed (amounts auto-adjust to system size), enter a custom amount, or leave as â‚¹0 if unsure.">i</span>
               </label>
               <select id="solStateSel">
-                <option value="none" data-i18n="sol.subNone">Not sure / no state top-up (₹0)</option>
-                <option value="up" data-i18n="sol.subUP">Uttar Pradesh — ₹15,000/kW (max ₹30,000)</option>
-                <option value="assam" data-i18n="sol.subAS">Assam — ₹15,000/kW (max ₹45,000)</option>
-                <option value="custom" data-i18n="sol.subCustom">Custom amount…</option>
+                <option value="none" data-i18n="sol.subNone">Not sure / no state top-up (â‚¹0)</option>
+                <option value="up" data-i18n="sol.subUP">Uttar Pradesh â€” â‚¹15,000/kW (max â‚¹30,000)</option>
+                <option value="assam" data-i18n="sol.subAS">Assam â€” â‚¹15,000/kW (max â‚¹45,000)</option>
+                <option value="custom" data-i18n="sol.subCustom">Custom amountâ€¦</option>
               </select>
               <input id="solState" type="number" min="0" step="1000" value="0" inputmode="numeric" aria-label="State subsidy amount in rupees">
               <span class="solar-hint" id="solStateHint" hidden></span>
@@ -202,9 +202,9 @@
           <details class="solar-adv">
             <summary data-i18n="sol.advanced">Advanced</summary>
             <div class="solar-field">
-              <label for="solCost" data-i18n="sol.cost">System cost (₹ per kW)</label>
+              <label for="solCost" data-i18n="sol.cost">System cost (â‚¹ per kW)</label>
               <input id="solCost" type="number" min="0" step="1000" value="55000" inputmode="numeric">
-              <span class="solar-hint" data-i18n="sol.costHint">Turnkey installed cost before subsidy. Typically ₹50,000–65,000/kW.</span>
+              <span class="solar-hint" data-i18n="sol.costHint">Turnkey installed cost before subsidy. Typically â‚¹50,000â€“65,000/kW.</span>
             </div>
           </details>
         </div>
@@ -217,20 +217,20 @@
               <div class="solar-hero-label" data-i18n="sol.heroLabel">Recommended system size</div>
               <div class="solar-size"><span id="solSize">0</span><small> kW</small></div>
               <div class="solar-size-note" id="solSizeNote"></div>
-              <div class="solar-payback-pill"><span data-i18n="sol.paysFor">Pays for itself in</span> <strong id="solPayback">—</strong></div>
+              <div class="solar-payback-pill"><span data-i18n="sol.paysFor">Pays for itself in</span> <strong id="solPayback">â€”</strong></div>
             </div>
             <!-- The numbers below are all correct and all separate; this reassembles them into
                  the one sentence a first-time visitor is actually looking for. -->
             <p class="solar-summary" id="solSummary"></p>
             <div class="solar-breakdown">
-              <div class="solar-bd-row"><span data-i18n="sol.gen">Estimated generation</span><strong id="solGen">—</strong></div>
-              <div class="solar-bd-row"><span data-i18n="sol.grossCost">System cost (before subsidy)</span><strong id="solGross">—</strong></div>
-              <div class="solar-bd-row solar-bd-credit"><span data-i18n="sol.centralSub">PM Surya Ghar central subsidy</span><strong id="solCentral">—</strong></div>
-              <div class="solar-bd-row solar-bd-credit"><span data-i18n="sol.stateSub2">State subsidy</span><strong id="solState2">—</strong></div>
-              <div class="solar-bd-row solar-bd-total"><span data-i18n="sol.netCost">Net cost to you</span><strong id="solNet">—</strong></div>
-              <div class="solar-bd-row solar-bd-save"><span data-i18n="sol.monthlySave">Monthly savings</span><strong id="solMonthlySave">—</strong></div>
-              <div class="solar-bd-row solar-bd-save"><span data-i18n="sol.lifetime">Net savings over 25 years</span><strong id="solLifetime">—</strong></div>
-              <div class="solar-bd-row"><span data-i18n="sol.co2">CO₂ avoided</span><strong id="solCo2">—</strong></div>
+              <div class="solar-bd-row"><span data-i18n="sol.gen">Estimated generation</span><strong id="solGen">â€”</strong></div>
+              <div class="solar-bd-row"><span data-i18n="sol.grossCost">System cost (before subsidy)</span><strong id="solGross">â€”</strong></div>
+              <div class="solar-bd-row solar-bd-credit"><span data-i18n="sol.centralSub">PM Surya Ghar central subsidy</span><strong id="solCentral">â€”</strong></div>
+              <div class="solar-bd-row solar-bd-credit"><span data-i18n="sol.stateSub2">State subsidy</span><strong id="solState2">â€”</strong></div>
+              <div class="solar-bd-row solar-bd-total"><span data-i18n="sol.netCost">Net cost to you</span><strong id="solNet">â€”</strong></div>
+              <div class="solar-bd-row solar-bd-save"><span data-i18n="sol.monthlySave">Monthly savings</span><strong id="solMonthlySave">â€”</strong></div>
+              <div class="solar-bd-row solar-bd-save"><span data-i18n="sol.lifetime">Net savings over 25 years</span><strong id="solLifetime">â€”</strong></div>
+              <div class="solar-bd-row"><span data-i18n="sol.co2">COâ‚‚ avoided</span><strong id="solCo2">â€”</strong></div>
             </div>
           </div>
         </aside>
@@ -267,18 +267,18 @@
       <div class="solar-proj-card reveal">
         <h2 class="solar-proj-title">More solar tools on TheDiscomBill</h2>
         <p class="solar-proj-note" style="margin-top:0">
-          <a href="/solar-panel-size-calculator/">Solar Panel Size Calculator (2026)</a> — how many kW and panels your ACs and load need, plus roof area. &nbsp;·&nbsp;
-          <a href="/solar-battery-backup-calculator/">Solar Battery Backup Calculator (2026)</a> — size a LiFePO4 or lead-acid bank to ride through power cuts.
+          <a href="/solar-panel-size-calculator/">Solar Panel Size Calculator (2026)</a> â€” how many kW and panels your ACs and load need, plus roof area. &nbsp;Â·&nbsp;
+          <a href="/solar-battery-backup-calculator/">Solar Battery Backup Calculator (2026)</a> â€” size a LiFePO4 or lead-acid bank to ride through power cuts.
         </p>
       </div>
 
       <p class="comparison-note reveal" data-i18n-html="sol.note">
         Estimates use India-average generation (~4 units per kW per day) and the PM Surya Ghar
-        residential central subsidy (₹30,000/kW up to 2 kW, ₹18,000 for the 3rd kW, capped at
-        ₹78,000). Actual generation, cost and state subsidy vary with location, roof orientation,
+        residential central subsidy (â‚¹30,000/kW up to 2 kW, â‚¹18,000 for the 3rd kW, capped at
+        â‚¹78,000). Actual generation, cost and state subsidy vary with location, roof orientation,
         shading and your DISCOM's net-metering policy. Treat this as a planning guide and get a
         quote from an empanelled vendor on the
-        <a href="https://pmsuryaghar.gov.in" target="_blank" rel="noopener noreferrer">National Portal ↗</a>.
+        <a href="https://pmsuryaghar.gov.in" target="_blank" rel="noopener noreferrer">National Portal â†—</a>.
       </p>
     </div>
   </section>
@@ -319,14 +319,15 @@
         <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
         <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
-        <a href="/fuel-surcharge/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/database/">Tariff Database</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
       </div>
     </nav>
     <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span>
     &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
-    <!-- Social profiles — hrefs are placeholders until the accounts exist -->
+    <!-- Social profiles â€” hrefs are placeholders until the accounts exist -->
     <div class="soc-links" aria-label="Social media">
       <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
       <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>

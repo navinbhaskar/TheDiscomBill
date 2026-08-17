@@ -236,6 +236,8 @@ export async function initUnderstandBill() {
     const fig = document.querySelector('.meter-mini');
     const meterRight = fig ? fig.getBoundingClientRect().right - box.left : 0;
     const meterBottom = fig ? fig.getBoundingClientRect().bottom - box.top : 0;
+    const docEl = document.querySelector('.bill-doc');
+    const docLeft = docEl ? docEl.getBoundingClientRect().left - box.left : box.width;
     links.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
     links.setAttribute('width', box.width);
     links.setAttribute('height', box.height);
@@ -272,22 +274,31 @@ export async function initUnderstandBill() {
       pathEl.hidden = false;
       pathEl.removeAttribute('hidden');
       if (label) {
-        label.hidden = stacked;
-        if (stacked) label.setAttribute('hidden', '');
-        else label.removeAttribute('hidden');
+        label.hidden = false;
+        label.removeAttribute('hidden');
       }
 
       const x0 = stacked ? pb.left + pb.width / 2 - box.left : pb.right - box.left;
       const y0 = stacked ? pb.bottom - box.top : pb.top + pb.height / 2 - box.top;
-      const x1 = stacked ? mb.left + mb.width / 2 - box.left : mb.left - box.left - 5;
+      const x1 = stacked ? mb.right - box.left + 2 : mb.left - box.left - 5;
       const y1 = mb.top + mb.height / 2 - box.top;
 
       if (stacked) {
+        // Stacked, the meter sits hundreds of pixels above the bill, so every route is a long
+        // descent. It runs in the strip between the badges and the card — never over a badge —
+        // and each route gets its own lane and its own turn-off height so two never sit on top
+        // of one another. Only routes actually on screen consume a lane, so the single visible
+        // register route always takes the innermost one.
         const isLiveRegister = !pathEl.classList.contains('is-register') || pathEl.classList.contains('is-live');
         const laneIx = isLiveRegister ? visibleStackedRoute++ : i;
-        const laneY = Math.min(y1 - 16, meterBottom + 12 + laneIx * 18);
-        const laneX = Math.max(4, x1 - 30 - laneIx * 18);
+        const strip = Math.max(6, docLeft - 5 - x1);
+        const laneX = x1 + Math.min(strip, 6 + laneIx * 9);
+        const laneY = Math.min(y1 - 16, meterBottom + 10 + laneIx * 14);
         pathEl.setAttribute('d', `M${x0} ${y0} V${laneY} H${laneX} V${y1} H${x1}`);
+        if (label) {
+          label.setAttribute('x', laneX);
+          label.setAttribute('y', laneY + (y1 - laneY) * 0.5);
+        }
         return;
       }
 

@@ -3712,6 +3712,61 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
    bill renderer already uses for .bg-credit, so the two views agree. */
 .fs-bar-pos { fill: var(--err-text); }
 .fs-bar-neg { fill: var(--ok-text); }
+.trend-line {
+  fill: none;
+  stroke: var(--brand);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.trend-dot-pos {
+  fill: var(--err-text);
+  stroke: var(--surface-card);
+  stroke-width: 2;
+}
+.trend-dot-neg {
+  fill: var(--ok-text);
+  stroke: var(--surface-card);
+  stroke-width: 2;
+}
+.discom-trend-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.discom-trend-tabs > input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.discom-trend-tabs > label {
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  background: var(--surface-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 7px 12px;
+}
+.discom-trend-tabs > input:checked + label {
+  border-color: var(--brand);
+  background: rgba(37, 99, 235, .1);
+  color: var(--text-brand);
+}
+.discom-trend-panels {
+  flex-basis: 100%;
+  width: 100%;
+}
+.discom-trend-panels .trend-panel { display: none; }
+.discom-trend-tabs > input:nth-of-type(1):checked ~ .discom-trend-panels .trend-panel:nth-child(1),
+.discom-trend-tabs > input:nth-of-type(2):checked ~ .discom-trend-panels .trend-panel:nth-child(2),
+.discom-trend-tabs > input:nth-of-type(3):checked ~ .discom-trend-panels .trend-panel:nth-child(3) {
+  display: block;
+}
+.discom-trend-chart { margin-top: 10px; }
 .fs-grid { stroke: var(--border-default); stroke-width: 1; }
 .fs-grid-zero { stroke: var(--border-strong); stroke-width: 1.5; }
 /* Axis text is inside a 720-unit viewBox that scales to the container, so its RENDERED
@@ -3729,6 +3784,137 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   font-size: 14px; line-height: 1.7; color: var(--text-secondary);
   border-left: 3px solid var(--border-default); padding-left: 14px; margin-top: 16px;
 }
+.fs-state-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+.fs-state-card {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-height: 150px;
+  padding: 18px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(180deg, rgba(37, 99, 235, .055), rgba(37, 99, 235, 0) 42%),
+    var(--surface-card);
+  color: var(--text-primary);
+  text-decoration: none;
+  box-shadow: var(--shadow-xs);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast), background var(--t-fast);
+}
+.fs-state-card:hover {
+  border-color: var(--brand-border);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+.fs-state-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.fs-state-name { color: var(--text-primary); font-size: 17px; font-weight: 800; }
+.fs-state-open {
+  flex: 0 0 auto;
+  color: var(--brand);
+  background: rgba(37, 99, 235, .08);
+  border: 1px solid rgba(37, 99, 235, .16);
+  border-radius: 999px;
+  padding: 4px 9px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.fs-state-rate {
+  display: block;
+  color: var(--text-primary);
+  font-size: clamp(20px, 2.4vw, 26px);
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+.fs-state-meta { color: var(--text-secondary); font-size: 14px; line-height: 1.45; }
+.fs-state-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-tertiary);
+  font-size: 12px;
+  font-weight: 700;
+}
+.fs-up { color: var(--err-text); font-weight: 800; }
+.fs-down { color: var(--ok-text); font-weight: 800; }
+.fs-flat { color: var(--text-tertiary); font-weight: 800; }
+.fs-impact-note {
+  display: block;
+  margin-top: 2px;
+  color: var(--text-tertiary);
+  font-size: 11.5px;
+  line-height: 1.35;
+}
+.fs-archive-callout {
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, rgba(37, 99, 235, .055), rgba(37, 99, 235, .015));
+  padding: 18px;
+}
+.fs-archive-callout h2 { margin-top: 0; }
+.fs-archive-years {
+  justify-content: flex-start;
+  margin: 12px 0 0;
+}
+.fs-archive-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 20px 0 14px;
+}
+.fs-archive-stats span {
+  display: block;
+  padding: 12px 14px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.35;
+}
+.fs-archive-stats strong {
+  display: block;
+  color: var(--text-primary);
+  font-size: 20px;
+  line-height: 1.1;
+}
+.fs-archive-table { width: 100%; }
+.fs-change-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.fs-change-grid article {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  padding: 14px;
+}
+.fs-change-grid h3 {
+  margin: 0 0 8px;
+  color: var(--text-primary);
+  font-size: 15px;
+}
+.fs-change-grid p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.fs-change-grid p + p { margin-top: 8px; }
 
 /* Primary CTA into the calculator */
 .seo-cta-row { margin: 18px 0; }
@@ -3759,6 +3945,45 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .seo-link-card strong { font-size: 14.5px; color: var(--text-primary); }
 .seo-link-card span { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
 .seo-link-card small { font-size: 11px; color: var(--text-tertiary); line-height: 1.45; margin-top: 2px; }
+.discom-tool-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px;
+  border: 1px solid var(--brand-border);
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, rgba(37, 99, 235, .06), rgba(37, 99, 235, .02));
+}
+.discom-tool-panel h2 { margin-top: 0; }
+.discom-tool-panel p { margin-bottom: 0; }
+.discom-tool-panel .seo-cta { flex: 0 0 auto; white-space: nowrap; }
+.discom-explain-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+.discom-explain-grid article {
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  padding: 14px;
+}
+.discom-explain-grid h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+.discom-explain-grid p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.55;
+}
+@media (max-width: 640px) {
+  .discom-tool-panel { align-items: stretch; flex-direction: column; }
+  .discom-tool-panel .seo-cta { justify-content: center; width: 100%; white-space: normal; }
+}
 
 /* ── Blog-style guide cards (/guides/ index) ─────────────────────────────────── */
 .blog-grid {
@@ -7141,7 +7366,9 @@ html:not(.js) .m-btn-ring { display: none; }
     min-width: 0;
     justify-self: stretch;
     padding-right: 0;
-    padding-left: 28px;
+    /* Two gutters, not one: the badge sits hard left, and the routes coming down from the meter
+       get their own strip between the badges and the card so a descent never crosses a number. */
+    padding-left: 56px;
     overflow: visible;
   }
   .bill-doc {
@@ -7161,13 +7388,21 @@ html:not(.js) .m-btn-ring { display: none; }
     min-width: 0;
     font-size: 11.8px;
   }
-  .bill-row-k, .bill-row-v {
+  .bill-row-k {
     min-width: 0;
     overflow-wrap: anywhere;
     word-break: break-word;
   }
+  /* Values are figures. Breaking them mid-number to save a few pixels is what made the column
+     look ragged, so they wrap only between words and never inside one. */
+  .bill-row-v {
+    min-width: 0;
+    overflow-wrap: normal;
+    word-break: normal;
+    font-variant-numeric: tabular-nums;
+  }
   .bill-mark, .bill-mark.is-shared {
-    position: absolute; left: -26px; right: auto; top: 50%;
+    position: absolute; left: -52px; right: auto; top: 50%;
     width: 18px; transform: translateY(-50%);
     display: inline-flex; flex-direction: row; text-align: left;
     margin: 0; font-size: 10.5px;
@@ -7189,8 +7424,12 @@ html:not(.js) .m-btn-ring { display: none; }
     justify-self: stretch;
     text-align: right;
     white-space: normal;
-    hyphens: auto;
+    hyphens: none;
   }
+  /* The descents are long on a stacked layout — thinner and quieter so they read as a thread
+     back to the meter rather than as three bars down the side of the bill. */
+  .ub-link { stroke-width: 1.3; }
+  .ub-link-label { font-size: 9.5px; stroke-width: 2.5px; }
   .bill-row.is-grand .bill-row-k, .bill-row.is-grand .bill-row-v { font-size: 13.5px; }
   .bill-source, .bill-badge { overflow-wrap: anywhere; }
   .bill-row.is-marked { min-height: 0; }

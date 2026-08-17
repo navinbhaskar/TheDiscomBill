@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "generatedOn": "2026-08-17",
+  "stateCount": 34,
+  "discomCount": 65,
+  "categoryCount": 131,
+  "tariffRecordCount": 287,
+  "fppaTrackedDiscomCount": 11,
+  "tariffRecordsWithPreviousTariff": 55,
+  "tariffRecordsWithSubsidyNotes": 93,
+  "fields": [
+    "state",
+    "discom",
+    "tariffYear",
+    "consumerCategory",
+    "slabs",
+    "fixedCharge",
+    "electricityDuty",
+    "fppaFac",
+    "subsidy",
+    "meterCharge",
+    "minimumCharge",
+    "solarRules",
+    "effectiveDate",
+    "tariffOrder",
+    "sourceUrl",
+    "lastVerified",
+    "previousTariff"
+  ]
+}

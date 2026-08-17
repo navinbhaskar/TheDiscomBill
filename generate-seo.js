@@ -23,6 +23,7 @@ import { execSync } from 'child_process';
 
 import { TARIFF_DB, STATE_META, getStates, getDiscoms, tariffAge, ensureAll } from './js/tariffs/registry.js';
 import { buildTariffIndex } from './scripts/build-tariff-index.mjs';
+import { buildTariffDatabase } from './scripts/build-tariff-database.mjs';
 
 import { SMG } from './smart-meter-content.js';
 import { METER_SVG, METER_DEVICE } from './smart-meter-svg.js';
@@ -408,7 +409,8 @@ const FOOTER_SITEMAP = `
         <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
         <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
-        <a href="/fuel-surcharge/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/database/">Tariff Database</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
       </div>
@@ -944,7 +946,7 @@ function indicativeBillsHtml(state, discom, lang = 'en') {
   const cat = domesticCategory(discom);
   if (!cat) return '';
   const load = 2;            // assume a typical 2 kW domestic sanctioned load
-  const levels = [100, 200, 300, 500];
+  const levels = [200, 300, 500, 750];
   const unit = T(lang, { en: 'units', hi: 'यूनिट', mr: 'युनिट', ta: 'யூனிட்' });
   const rows = [];
   for (const units of levels) {
@@ -959,10 +961,10 @@ function indicativeBillsHtml(state, discom, lang = 'en') {
   const calcHref = `/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator`;
   const nm = esc(discom.name);
   const heading = T(lang, {
-    en: `Indicative monthly bill — ${nm}`, hi: `अनुमानित मासिक बिल — ${nm}`,
+    en: `Common ${nm} bill calculations`, hi: `अनुमानित मासिक बिल — ${nm}`,
     mr: `अंदाजित मासिक बिल — ${nm}`, ta: `தோராயமான மாதாந்திர கட்டணம் — ${nm}` });
   const intro = T(lang, {
-    en: `Estimated total monthly bill for a domestic (${esc(cat.name)}) connection at a ${load} kW sanctioned load, computed with the same engine as our calculator. Actual bills vary with your sub-category, fixed/fuel charges and local duties.`,
+    en: `Typical domestic examples for a ${load} kW ${esc(cat.name)} connection, computed with the same engine as the calculator. Use them as a quick sanity check; your actual bill changes with sub-category, arrears, FPPA, duty and billing-period length.`,
     hi: `${load} kW स्वीकृत भार पर घरेलू (${esc(cat.name)}) कनेक्शन का अनुमानित कुल मासिक बिल, हमारे कैलकुलेटर वाले ही इंजन से निकाला गया। वास्तविक बिल आपकी उप-श्रेणी, फिक्स्ड/ईंधन शुल्क और स्थानीय करों के अनुसार बदलते हैं।`,
     mr: `${load} kW मंजूर भारावर घरगुती (${esc(cat.name)}) जोडणीचे अंदाजित एकूण मासिक बिल, आमच्या कॅल्क्युलेटरच्याच इंजिनने काढलेले. प्रत्यक्ष बिल तुमच्या उप-श्रेणी, फिक्स्ड/इंधन शुल्क आणि स्थानिक करांनुसार बदलते.`,
     ta: `${load} kW அனுமதிக்கப்பட்ட சுமையில் வீட்டு (${esc(cat.name)}) இணைப்பிற்கான தோராயமான மொத்த மாதாந்திர கட்டணம், எங்கள் கால்குலேட்டரின் அதே இன்ஜினால் கணக்கிடப்பட்டது. உண்மையான கட்டணங்கள் உங்கள் துணை வகை, நிலையான/எரிபொருள் கட்டணங்கள் மற்றும் உள்ளூர் வரிகளுக்கு ஏற்ப மாறுபடும்.` });
@@ -1403,6 +1405,203 @@ function keyFactsHtml(state, discom, fy, lang = 'en') {
 // deep-linked with ?state=&discom= so the hub opens pre-selected on this DISCOM and on the right
 // tab. These are internal links to an existing page (not new thin per-DISCOM pages) — they improve
 // crawl depth and topical clustering without duplicate-content risk.
+function discomCalculatorPanelHtml(state, discom) {
+  const calcHref = `/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator`;
+  const nm = esc(discom.name);
+  return `
+    <section class="seo-section discom-tool-panel">
+      <div>
+        <h2>${nm} electricity bill calculator</h2>
+        <p>Enter units, sanctioned load and billing dates to get an itemised ${nm} estimate. The result breaks the bill into energy charge, fixed or demand charge, FPPA/FAC, duty, arrears and late-payment surcharge where applicable.</p>
+      </div>
+      <a class="seo-cta" href="${calcHref}">Calculate ${nm} bill</a>
+    </section>`;
+}
+
+function fppaTrendSeries(state, discom) {
+  const list = FPPA_BY_DISCOM[discom.id] || FPPA_BY_STATE[state] || [];
+  if (!list.length) return [];
+  const latestMode = list[0]?.mode;
+  return list
+    .filter(e => e && e.from && Number.isFinite(e.rate) && (!latestMode || e.mode === latestMode))
+    .sort((a, b) => a.from.localeCompare(b.from));
+}
+
+function fppaTrendRateLabel(e) {
+  if (!e) return '—';
+  if (e.mode === 'percent') return `${e.rate > 0 ? '+' : ''}${e.rate.toFixed(2)}%`;
+  return `${rupeeRate(e.rate)}/unit`;
+}
+
+function fppaTrendSvg(series, rangeMonths, discomName) {
+  const sliced = series.slice(-Math.min(series.length, rangeMonths));
+  const W = 720, H = 236, PAD_L = 54, PAD_R = 18, PAD_T = 20, PAD_B = 42;
+  const plotW = W - PAD_L - PAD_R, plotH = H - PAD_T - PAD_B;
+  if (!sliced.length) return '';
+  const vals = sliced.map(e => e.rate);
+  let min = Math.min(0, ...vals), max = Math.max(0, ...vals);
+  if (min === max) { min -= 1; max += 1; }
+  const span = max - min || 1;
+  const xAt = i => PAD_L + (sliced.length === 1 ? plotW / 2 : i * (plotW / (sliced.length - 1)));
+  const yAt = v => PAD_T + ((max - v) / span) * plotH;
+  const points = sliced.map((e, i) => [xAt(i), yAt(e.rate), e]);
+  const path = points.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`).join(' ');
+  const gridVals = [max, min + span * .75, min + span * .5, min + span * .25, min];
+  const unit = sliced[0].mode === 'percent' ? '%' : '/u';
+  const fmtAxis = v => sliced[0].mode === 'percent'
+    ? `${v > 0 ? '+' : ''}${v.toFixed(Math.abs(v) >= 10 ? 0 : 1)}%`
+    : `${rupeeRate(v)}${unit}`;
+  const labelEvery = Math.max(1, Math.ceil(sliced.length / 5));
+  const grid = gridVals.map(v => {
+    const y = yAt(v);
+    return `<line class="fs-grid${Math.abs(v) < .0001 ? ' fs-grid-zero' : ''}" x1="${PAD_L}" y1="${y.toFixed(1)}" x2="${W - PAD_R}" y2="${y.toFixed(1)}"/><text class="fs-axis" x="${PAD_L - 8}" y="${(y + 4).toFixed(1)}" text-anchor="end">${esc(fmtAxis(v))}</text>`;
+  }).join('');
+  const dots = points.map(([x, y, e]) => `<circle class="${e.rate >= 0 ? 'trend-dot-pos' : 'trend-dot-neg'}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.2"><title>${esc(fsMonth(e.from))}: ${esc(fppaTrendRateLabel(e))}</title></circle>`).join('');
+  const labels = points.map(([x, , e], i) => {
+    if (i !== 0 && i !== points.length - 1 && i % labelEvery !== 0) return '';
+    return `<text class="fs-axis" x="${x.toFixed(1)}" y="${H - 12}" text-anchor="middle">${esc(fsMonth(e.from).replace(' ', ' '))}</text>`;
+  }).join('');
+  const latest = sliced[sliced.length - 1];
+  return `<figure class="fs-chart-wrap discom-trend-chart">
+    <svg class="fs-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(discomName)} FPPA or FAC trend for the last ${rangeMonths} months">
+      ${grid}
+      <path class="trend-line" d="${path}"/>
+      ${dots}
+      ${labels}
+    </svg>
+    <figcaption>Latest point: ${esc(fsMonth(latest.from))} at <strong>${esc(fppaTrendRateLabel(latest))}</strong>. Positive values add to the bill; negative values are credits.</figcaption>
+  </figure>`;
+}
+
+function fppaTrendHtml(state, discom) {
+  const series = fppaTrendSeries(state, discom);
+  const nm = esc(discom.name);
+  if (!series.length) {
+    return `
+      <section class="seo-section">
+        <h2>${nm} FPPA/FAC trend</h2>
+        <p class="seo-note">We do not yet have a verified monthly FPPA/FAC series for ${nm}. When official notices are added, this section will show whether the surcharge is rising or falling.</p>
+      </section>`;
+  }
+  const id = `trend-${discom.id}`;
+  const oldest = fsMonth(series[0].from);
+  const newest = fsMonth(series[series.length - 1].from);
+  return `
+    <section class="seo-section">
+      <h2>${nm} FPPA/FAC trend</h2>
+      <p>Use the chart to see whether the variable surcharge is rising or falling. The selector switches between recent notices and the longer history currently available for ${nm}.</p>
+      <div class="discom-trend-tabs">
+        <input type="radio" name="${id}" id="${id}-6" checked>
+        <label for="${id}-6">6 months</label>
+        <input type="radio" name="${id}" id="${id}-12">
+        <label for="${id}-12">1 year</label>
+        <input type="radio" name="${id}" id="${id}-36">
+        <label for="${id}-36">3 years</label>
+        <div class="discom-trend-panels">
+          <div class="trend-panel">${fppaTrendSvg(series, 6, discom.name)}</div>
+          <div class="trend-panel">${fppaTrendSvg(series, 12, discom.name)}</div>
+          <div class="trend-panel">${fppaTrendSvg(series, 36, discom.name)}</div>
+        </div>
+      </div>
+      <p class="fs-legend">Available series: ${esc(oldest)} to ${esc(newest)}. Some DISCOMs publish DISCOM-specific data; others use a state-wide FPPA/FAC notice.</p>
+    </section>`;
+}
+
+function currentFppaHtml(state, discom) {
+  const discomList = FPPA_BY_DISCOM[discom.id];
+  const stateList = FPPA_BY_STATE[state];
+  const list = discomList || stateList || [];
+  const current = pickFppa(list, TODAY);
+  const latest = current || list[0] || null;
+  const period = latest
+    ? `${fsMonth(latest.from)}${latest.to ? ` - ${fsMonth(latest.to)}` : ' onward'}`
+    : 'No verified period in tracker';
+  const rate = latest ? fsRate(latest) : 'Not available';
+  const source = latest?.source || 'No verified FPPA/FAC source recorded yet';
+  const note = current
+    ? 'Current applicable entry for today.'
+    : latest ? `Latest published entry shown; ${fsMonth(TODAY.slice(0, 8) + '01')} may not be notified yet.` : 'Enter the surcharge printed on your bill manually in the calculator.';
+  const cls = latest?.rate >= 0 ? 'fs-pos' : latest ? 'fs-neg' : 'fs-pending';
+  const trackerHref = fppaCoverageStates().includes(state) ? `/fppa/${slugify(state)}/` : '/fppa/';
+  return `
+    <section class="seo-section">
+      <h2>Current ${esc(discom.name)} FPPA / FAC</h2>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <tbody>
+            <tr><th>Current applicable FPPA</th><td><strong class="${cls}">${esc(rate)}</strong></td></tr>
+            <tr><th>Applicable period</th><td>${esc(period)}</td></tr>
+            <tr><th>Last updated</th><td>${LASTMOD_TOKEN.en}</td></tr>
+            <tr><th>Official source</th><td>${esc(source)}</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="seo-note">${esc(note)} <a href="${trackerHref}">Open the surcharge tracker</a>.</p>
+    </section>`;
+}
+
+function billLineExplainerHtml(discom) {
+  const nm = esc(discom.name);
+  const items = [
+    ['Energy charge', 'The slab-wise price of the units consumed during the billing period. In telescopic slabs, each band is billed at its own rate.'],
+    ['Fixed charge', 'A monthly charge linked to sanctioned load, connected load, billing demand or consumer category. It applies even when usage is low.'],
+    ['Electricity duty', 'A statutory government levy. Depending on the state, it may apply on energy charges, fixed charges, or selected bill components.'],
+    ['FPPA / FAC', 'Fuel and power-purchase adjustment. It changes more often than the base tariff and may appear as a charge or a credit.'],
+    ['Arrears', 'Unpaid balance, corrections, security-deposit adjustments or previous-cycle amounts carried into the current bill.'],
+    ['LPSC', 'Late Payment Surcharge on overdue amounts. Check the due date and pay through the official DISCOM channel to avoid it.'],
+  ];
+  return `
+    <section class="seo-section">
+      <h2>Understanding your ${nm} bill</h2>
+      <div class="discom-explain-grid">
+        ${items.map(([title, body]) => `<article><h3>${title}</h3><p>${body}</p></article>`).join('')}
+      </div>
+    </section>`;
+}
+
+function officialServicesHtml(state, discom) {
+  const site = discom.website ? (/^https?:\/\//i.test(discom.website) ? discom.website : `https://${discom.website}`) : '';
+  const fallback = `/services/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}`;
+  const href = site || fallback;
+  const target = site ? ' target="_blank" rel="noopener"' : '';
+  const host = site ? String(site).replace(/^https?:\/\//, '').replace(/\/$/, '') : 'DISCOM services page';
+  const nm = esc(discom.name);
+  const links = [
+    ['View bill', 'Check the latest bill on the official consumer portal'],
+    ['Pay bill', 'Pay only through the official portal or a BBPS-enabled app'],
+    ['New connection', 'Apply for a new service connection with the DISCOM'],
+    ['Load change', 'Request sanctioned-load increase or reduction'],
+    ['Complaint', 'Register supply, billing or meter complaints'],
+    ['Smart meter', 'Recharge or check prepaid smart-meter service options'],
+  ];
+  return `
+    <section class="seo-section">
+      <h2>${nm} consumer services</h2>
+      <p>These services are provided by ${nm} or the official state/DISCOM portal, not by TheDiscomBill. Use the links below to reach the official website.</p>
+      <div class="seo-link-grid discom-service-grid">
+        ${links.map(([title, sub]) => `<a class="seo-link-card" href="${attr(href)}"${target}><strong>${title} ↗</strong><span>${sub}</span><small>${esc(host)}</small></a>`).join('')}
+      </div>
+    </section>`;
+}
+
+function discomSourcesHtml(state, discom, fy) {
+  const meta = STATE_META[state] || {};
+  const sources = [];
+  if (meta.sourceUrl) sources.push(['Tariff order / regulator', meta.sourceUrl]);
+  if (discom.website) sources.push([`${discom.name} official information`, discom.website]);
+  if (FPPA_BY_DISCOM[discom.id] || FPPA_BY_STATE[state]) sources.push(['FPPA / FAC tracker', `/fppa/${slugify(state)}/`]);
+  if (!sources.length) return '';
+  return `
+    <section class="seo-section">
+      <h2>Sources</h2>
+      <table class="seo-facts"><tbody>
+        ${sources.map(([label, href]) => `<tr><th>${esc(label)}</th><td><a href="${attr(href)}"${/^https?:/i.test(href) ? ' target="_blank" rel="noopener"' : ''}>${esc(String(href).replace(/^https?:\/\//, ''))}</a></td></tr>`).join('')}
+        <tr><th>Tariff effective from</th><td>${esc((ratesPhrase(meta, fy)?.label || fy))}</td></tr>
+        <tr><th>Last verified</th><td>${LASTMOD_TOKEN.en}</td></tr>
+      </tbody></table>
+    </section>`;
+}
+
 function discomServiceLinksHtml(state, discom, lang = 'en') {
   const qs = `?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}`;
   const pfx = lang === 'en' ? '' : `/${lang}`;
@@ -1472,7 +1671,23 @@ const guideHasBody = (g, lang) => (lang === 'en' ? !!g.sections : !!guideField(g
 function guideLinksHtml(state, discom, lang = 'en') {
   const tagged = GUIDES.filter(g => (g.states || []).includes(state));
   const evergreen = GUIDES.filter(g => !(g.states || []).length && !tagged.includes(g));
-  const picks = [...tagged, ...evergreen].slice(0, 3);
+  const pool = [...tagged, ...evergreen];
+  const guidePrefix = state === 'Uttar Pradesh' ? 'uppcl' : discom.id;
+  const priority = [
+    `how-to-read-${guidePrefix}-bill`,
+    `${guidePrefix}-smart-meter-readings-explained`,
+    `${guidePrefix}-new-connection-jhatpat`,
+    'how-fppa-fuel-surcharge-is-calculated',
+    'reduce-fixed-charges-sanctioned-load',
+    'why-did-my-electricity-bill-increase',
+  ];
+  const picks = [];
+  for (const slug of priority) {
+    const g = pool.find(x => x.slug === slug);
+    if (g && !picks.includes(g)) picks.push(g);
+  }
+  for (const g of pool) if (!picks.includes(g)) picks.push(g);
+  picks.length = Math.min(picks.length, 5);
   if (!picks.length) return '';
   const cards = picks.map(g => {
     const href = (lang !== 'en' && guideHasBody(g, lang)) ? `/${lang}/guides/${g.slug}/` : `/guides/${g.slug}/`;
@@ -1670,7 +1885,7 @@ function discomPage(state, discom, lang = 'en') {
   // Goa Electricity Dept., PDICL / Electricity Dept. — and the unguarded template gave them
   // "Adani Electricity Mumbai Electricity Tariff". Same class of redundancy nameGloss() already
   // guards against for the legal-name parenthetical.
-  const h1 = `${esc(cname)} ${tariffNoun(cname)} ${esc(fy)} — ${esc(h1Tail(region, state))}`;
+  const h1 = `${esc(cname)} Electricity Bill Calculator &amp; Tariff ${esc(fy)}`;
   const lead = variant(seed + 'l', [
     `Estimate your <strong>${esc(long)}</strong> bill in seconds and browse the full ${esc(fy)} tariff schedule — energy slabs, fixed/demand charges, fuel surcharge (FPPA) and electricity duty${cities.length ? ` for ${esc(cities.slice(0, 3).join(', '))} and the rest of ${esc(region || state)}` : ` across ${esc(region || state)}`}.`,
     `Get an instant, itemised <strong>${esc(discom.name)}</strong> electricity bill for ${esc(region || state)}. Below you'll find ${esc(discom.name)}'s ${esc(fy)} slab rates, fixed charges, an indicative monthly bill and a quick link to pay on the official portal.`,
@@ -1733,22 +1948,24 @@ function discomPage(state, discom, lang = 'en') {
     </div>
     <p class="guide-meta">Tariffs last updated: ${tariffUpdated(state, 'en')}${meta.verified ? ' · ✓ verified against real bills' : ''}</p>
     ${src ? `<p><a class="tariff-source" href="${attr(src)}" target="_blank" rel="noopener">Official ${esc(discom.name)} source ↗</a></p>` : ''}
-    <p class="seo-cta-row"><a class="seo-cta" href="/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator">Open the ${esc(discom.name)} bill calculator →</a></p>
-
-    ${discomServiceLinksHtml(state, discom)}
+    ${discomCalculatorPanelHtml(state, discom)}
 
     ${keyFactsHtml(state, discom, fy)}
-    ${areaServedHtml(discom)}
+    ${currentFppaHtml(state, discom)}
+    ${fppaTrendHtml(state, discom)}
     ${indicativeBillsHtml(state, discom)}
 
     <section class="seo-section">
-      <h2>${esc(discom.name)} tariff schedule (${esc(fy)})</h2>
+      <h2>Current ${esc(discom.name)} tariff (${esc(fy)})</h2>
       ${sharedNote}
       <div class="tariff-cards">${cards}</div>
     </section>
 
-    ${glossaryLinksHtml(discom)}
+    ${billLineExplainerHtml(discom)}
+    ${areaServedHtml(discom)}
+    ${officialServicesHtml(state, discom)}
     ${guideLinksHtml(state, discom)}
+    ${discomSourcesHtml(state, discom, fy)}
     ${siblingHtml}
     ${faqHtml(faqs)}
     <p class="seo-disclaimer">Figures are provisional estimates built on publicly available ${esc(state)} tariff orders. Always verify against your official ${esc(discom.name)} bill — rates vary by sub-category, slab and city.</p>
@@ -2716,7 +2933,7 @@ function guideRelatedToolCards(guide, lang = 'en') {
 
   if (/tariff|hike|surcharge|fppa|fppca|fuel/.test(slug)) {
     add('/#calculator', 'Electricity bill calculator', 'Estimate the impact on your own monthly bill');
-    add('/fuel-surcharge/', 'Fuel surcharge tracker', 'Check current FPPA and fuel surcharge rates');
+    add('/fppa/', 'Fuel surcharge tracker', 'Check current FPPA and fuel surcharge rates');
   }
   if (/how-to-read|bill-increase|tata-power-ddl-bill|what-is-a-unit|tod-billing/.test(slug)) {
     add('/understand-your-bill/', 'Understand your bill', 'Match meter readings, units and bill lines visually');
@@ -3250,6 +3467,306 @@ const fsRate = (e) => !e ? '—'
   : e.mode === 'percent' ? `${e.rate > 0 ? '+' : ''}${e.rate.toFixed(2)}%`
   : `${rupeeRate(e.rate)}/unit`;
 
+function fppaMetaByDiscom() {
+  const meta = {};
+  for (const st of getStates()) for (const d of getDiscoms(st)) meta[d.id] = { name: d.name, state: st };
+  return meta;
+}
+
+function fppaTrackerRows() {
+  const meta = fppaMetaByDiscom();
+  const rows = [];
+  for (const [state, list] of Object.entries(FPPA_BY_STATE)) {
+    rows.push({ who: state, slug: slugify(state), scope: 'All DISCOMs', state, cur: pickFppa(list, TODAY), list, type: 'state' });
+  }
+  for (const [id, list] of Object.entries(FPPA_BY_DISCOM)) {
+    const m = meta[id];
+    if (!m) continue;
+    rows.push({ who: m.name, code: id.toUpperCase(), slug: slugify(m.state), scope: m.state, state: m.state, cur: pickFppa(list, TODAY), list, type: 'discom' });
+  }
+  return rows.sort((a, b) => a.state.localeCompare(b.state) || a.who.localeCompare(b.who));
+}
+
+function fppaCoverageStates() {
+  return [...new Set(fppaTrackerRows().map(r => r.state))].sort((a, b) => a.localeCompare(b));
+}
+
+function fppaChange(series, idx) {
+  if (idx >= series.length - 1) return '—';
+  const cur = series[idx].rate;
+  const prev = series[idx + 1].rate;
+  if (cur > prev) return '<span class="fs-up">↑</span>';
+  if (cur < prev) return '<span class="fs-down">↓</span>';
+  return '<span class="fs-flat">→</span>';
+}
+
+function fppaPeriod(e) {
+  if (!e) return 'Not verified';
+  return `${fsMonth(e.from)}${e.to ? ` - ${fsMonth(e.to)}` : ' onward'}`;
+}
+
+function fppaMechanismName(state) {
+  if (state === 'Delhi') return 'PPAC / FPPAS';
+  if (state === 'Uttar Pradesh') return 'FPPAS';
+  if (state === 'Rajasthan') return 'Regulatory Surcharge / FPPAS';
+  return 'FPPA / FAC';
+}
+
+function fppaDirection(cur, prev) {
+  if (!cur || !prev) return '<span class="fs-flat">New</span>';
+  if (cur.mode !== prev.mode) return '<span class="fs-flat">Changed</span>';
+  if (cur.rate > prev.rate) return '<span class="fs-up">&uarr; Higher</span>';
+  if (cur.rate < prev.rate) return '<span class="fs-down">&darr; Lower</span>';
+  return '<span class="fs-flat">&rarr; Same</span>';
+}
+
+function fppaImpact(e) {
+  if (!e) return '<span class="fs-pending">Enter bill value manually</span>';
+  const amt = e.mode === 'percent' ? 3000 * e.rate / 100 : 300 * e.rate;
+  const cls = amt >= 0 ? 'fs-pos' : 'fs-neg';
+  const prefix = amt >= 0 ? '+' : '-';
+  const basis = e.mode === 'percent' ? 'on Rs 3,000 charges' : 'on 300 units';
+  return `<strong class="${cls}">${prefix}${rupee(Math.abs(amt))}</strong><span class="fs-impact-note">${basis}</span>`;
+}
+
+function fppaFmtDelta(n) {
+  return Number(Math.abs(n).toFixed(2)).toLocaleString('en-IN', { maximumFractionDigits: 2 });
+}
+
+function fppaDeltaUnit(mode, delta) {
+  if (mode === 'percent') {
+    const n = Math.abs(Number(delta.toFixed(2)));
+    return `percentage point${n === 1 ? '' : 's'}`;
+  }
+  return 'per unit';
+}
+
+function fppaWhatChangedCard(label, mechanism, cur, prev) {
+  if (!cur) {
+    return `<article>
+      <h3>${esc(label)}</h3>
+      <p>No current verified ${esc(mechanism)} value is archived for this DISCOM yet.</p>
+    </article>`;
+  }
+  if (!prev || cur.mode !== prev.mode) {
+    return `<article>
+      <h3>${esc(label)}</h3>
+      <p>${esc(mechanism)} is currently ${esc(fsRate(cur))} from ${esc(fsMonth(cur.from))}, but there is no previous same-method value in the archive yet.</p>
+    </article>`;
+  }
+  const delta = cur.rate - prev.rate;
+  const curMonth = fsMonth(cur.from);
+  const prevMonth = fsMonth(prev.from);
+  const changed = delta > 0 ? 'increased' : delta < 0 ? 'decreased' : 'remained unchanged';
+  const measure = cur.mode === 'percent'
+    ? `${fppaFmtDelta(delta)} ${fppaDeltaUnit(cur.mode, delta)}`
+    : `${rupeeRate(Math.abs(delta))} per unit`;
+  const first = delta === 0
+    ? `${esc(mechanism)} remained unchanged at ${esc(fsRate(cur))} in ${esc(curMonth)} compared with ${esc(prevMonth)}.`
+    : `${esc(mechanism)} ${changed} by ${esc(measure)} in ${esc(curMonth)} compared with ${esc(prevMonth)}.`;
+  let second;
+  if (cur.mode === 'percent') {
+    const impact = 3000 * delta / 100;
+    second = impact === 0
+      ? `For ${rupee(3000)} of applicable charges, this represents no additional surcharge change, subject to the applicable billing formula.`
+      : `For ${rupee(3000)} of applicable charges, this represents approximately <strong class="${impact > 0 ? 'fs-pos' : 'fs-neg'}">${rupee(Math.abs(impact))}</strong> ${impact > 0 ? 'additional' : 'lower'} surcharge, subject to the applicable billing formula.`;
+  } else {
+    const impact = 300 * delta;
+    second = impact === 0
+      ? `For 300 units, this represents no surcharge change, subject to the applicable billing formula.`
+      : `For 300 units, this represents approximately <strong class="${impact > 0 ? 'fs-pos' : 'fs-neg'}">${rupee(Math.abs(impact))}</strong> ${impact > 0 ? 'additional' : 'lower'} surcharge, subject to the applicable billing formula.`;
+  }
+  return `<article>
+    <h3>${esc(label)}</h3>
+    <p>${first}</p>
+    <p>${second}</p>
+  </article>`;
+}
+
+function fppaWhatChangedHtml(state, mechanism, comparison, hasDiscomSpecific, rows) {
+  const items = hasDiscomSpecific
+    ? comparison.filter(r => r.cur)
+    : [{ discom: { name: state }, cur: rows[0]?.cur || rows[0]?.list?.[0] || null, prev: rows[0]?.list?.slice(1).find(e => e.mode === (rows[0]?.cur || rows[0]?.list?.[0])?.mode) || null }];
+  if (!items.length) return '';
+  return `<section class="seo-section">
+    <h2>What changed?</h2>
+    <div class="fs-change-grid">
+      ${items.map(r => fppaWhatChangedCard(r.discom.name, mechanism, r.cur, r.prev)).join('')}
+    </div>
+  </section>`;
+}
+
+function fppaStateComparison(state) {
+  const discoms = getDiscoms(state);
+  const stateList = FPPA_BY_STATE[state] || [];
+  return discoms.map(d => {
+    const rawList = FPPA_BY_DISCOM[d.id] || stateList;
+    const list = [...rawList].sort((a, b) => b.from.localeCompare(a.from));
+    const cur = pickFppa(list, TODAY) || list[0] || null;
+    const idx = cur ? list.indexOf(cur) : -1;
+    const prev = cur ? list.slice(idx + 1).find(e => e.mode === cur.mode) || null : null;
+    return { discom: d, list, cur, prev };
+  });
+}
+
+function fppaStateWhyHtml(state, mechanism) {
+  if (state === 'Delhi') {
+    return `<p>Delhi is a useful example because ${esc(mechanism)} is not one state-wide number.
+    DERC handles PPAC/FPPAS through separate proceedings for each distribution licensee, so
+    BRPL, BYPL, TPDDL and NDMC can have different applicable rates and different historical
+    paths.</p>
+    <p>The 2026 PPAC-related orders relate to recovery of power-purchase cost variations from
+    earlier periods. When the approved recovery changes, the surcharge moves even if the base
+    tariff and your units remain the same.</p>`;
+  }
+  if (state === 'Uttar Pradesh') {
+    return `<p>UPPCL publishes the ${esc(mechanism)} rate monthly as a percentage of fixed plus
+    energy charges. The rate can be positive when fuel and power-purchase costs are recovered,
+    or negative when the adjustment is passed back as a credit.</p>`;
+  }
+  if (state === 'Rajasthan') {
+    return `<p>Rajasthan's current tracker entry is a per-unit regulatory surcharge that includes
+    the FPPAS mechanism under the tariff order. It is shown per DISCOM because the consumer is
+    still billed by JVVNL, AVVNL or JDVVNL, even where the published rate is aligned.</p>`;
+  }
+  return `<p>The surcharge changes when actual power-purchase cost diverges from the cost assumed
+  in the tariff order. We publish a value only when it is tied to an official notice or order.</p>`;
+}
+
+function fppaStateSourcesHtml(state, comparison) {
+  if (state === 'Delhi') {
+    return `<ul>
+      <li><a href="https://derc.gov.in/commissions-proceedings-orders/other-than-142/final-order">DERC final orders and PPAC proceedings</a></li>
+      <li><a href="https://www.bsesdelhi.com/web/brpl/fuel-power-purchase-adjustment-charges">BRPL fuel and power purchase adjustment charges page</a></li>
+      <li><a href="https://www.tatapower-ddl.com/regulations-and-compliances/tariff-related/derc-orders-and-letters-on-ppac">Tata Power-DDL DERC orders and letters on PPAC</a></li>
+    </ul>`;
+  }
+  const sources = [...new Set(comparison.flatMap(r => r.list.map(e => e.source).filter(Boolean)))];
+  if (!sources.length) return '<p class="fs-legend">Official source details are being added as each rate is verified.</p>';
+  return `<ul>${sources.map(s => `<li>${esc(s)}</li>`).join('')}</ul>`;
+}
+
+function fppaEntryCoversYear(e, year) {
+  const y = Number(year);
+  const fromYear = Number(e.from.slice(0, 4));
+  const currentYear = Number(TODAY.slice(0, 4));
+  const toYear = e.to ? Number(e.to.slice(0, 4)) : currentYear;
+  return fromYear <= y && y <= toYear;
+}
+
+function fppaArchiveRows(state) {
+  const mechanism = fppaMechanismName(state);
+  const trackerRows = fppaTrackerRows().filter(r => r.state === state);
+  const hasDiscomSpecific = trackerRows.some(r => r.type === 'discom');
+  if (hasDiscomSpecific) {
+    return fppaStateComparison(state).flatMap(r => {
+      const series = [...r.list].sort((a, b) => b.from.localeCompare(a.from));
+      return series.map((e, i) => ({
+        state,
+        discom: r.discom.name,
+        discomId: r.discom.id,
+        mechanism,
+        entry: e,
+        prev: series.slice(i + 1).find(x => x.mode === e.mode) || null,
+      }));
+    });
+  }
+  const list = [...(FPPA_BY_STATE[state] || [])].sort((a, b) => b.from.localeCompare(a.from));
+  return list.map((e, i) => ({
+    state,
+    discom: 'All DISCOMs',
+    discomId: null,
+    mechanism,
+    entry: e,
+    prev: list.slice(i + 1).find(x => x.mode === e.mode) || null,
+  }));
+}
+
+function fppaArchiveYears(state) {
+  const years = new Set();
+  const currentYear = Number(TODAY.slice(0, 4));
+  for (const row of fppaArchiveRows(state)) {
+    const fromYear = Number(row.entry.from.slice(0, 4));
+    const toYear = row.entry.to ? Number(row.entry.to.slice(0, 4)) : currentYear;
+    for (let y = fromYear; y <= toYear; y++) years.add(y);
+  }
+  return [...years].sort((a, b) => b - a);
+}
+
+function fppaArchiveYearLinks(state, activeYear = null) {
+  const stateSlug = slugify(state);
+  const links = fppaArchiveYears(state).map(y => {
+    const active = String(y) === String(activeYear) ? ' aria-current="page"' : '';
+    return `<a class="seo-lang-pill" href="/fppa/${stateSlug}/${y}/"${active}>${y}</a>`;
+  }).join('');
+  return links ? `<div class="seo-lang-row fs-archive-years"><span>Archive years</span>${links}</div>` : '';
+}
+
+function fppaSourceCell(e) {
+  if (e.sourceUrl) return `<a href="${esc(e.sourceUrl)}">${esc(e.source || 'Official source')}</a>`;
+  return esc(e.source || 'Source note pending');
+}
+
+function fppaArchiveTable(rows) {
+  if (!rows.length) return '<p class="fs-legend">No verified surcharge entries are archived for this period yet.</p>';
+  return `<div class="comparison-table-wrapper fs-archive-table">
+    <table class="comparison-table">
+      <thead><tr><th>Period</th><th>DISCOM</th><th>Mechanism</th><th>Rate</th><th>Direction</th><th>Notice / order</th><th>Source</th></tr></thead>
+      <tbody>${rows.map(r => {
+        const e = r.entry;
+        const cls = e.rate >= 0 ? 'fs-pos' : 'fs-neg';
+        return `<tr>
+          <td>${esc(fppaPeriod(e))}</td>
+          <td>${esc(r.discom)}</td>
+          <td>${esc(r.mechanism)}</td>
+          <td class="${cls}">${esc(fsRate(e))}</td>
+          <td>${fppaDirection(e, r.prev)}</td>
+          <td>${esc(e.label || '')}</td>
+          <td>${fppaSourceCell(e)}</td>
+        </tr>`;
+      }).join('')}</tbody>
+    </table>
+  </div>`;
+}
+
+function fppaArchiveSummary(rows) {
+  const current = rows.filter(r => r.entry.rate > 0).length;
+  const credits = rows.filter(r => r.entry.rate < 0).length;
+  const flat = rows.length - current - credits;
+  const discoms = new Set(rows.map(r => r.discom)).size;
+  return `<div class="fs-archive-stats">
+    <span><strong>${rows.length}</strong> archived entries</span>
+    <span><strong>${discoms}</strong> ${discoms === 1 ? 'scope' : 'DISCOM/scopes'}</span>
+    <span><strong>${current}</strong> charges</span>
+    <span><strong>${credits}</strong> credits</span>
+    ${flat ? `<span><strong>${flat}</strong> flat/zero</span>` : ''}
+  </div>`;
+}
+
+function fppaStateSummaryCard(state, rows) {
+  const stateSlug = slugify(state);
+  const current = rows.map(r => r.cur).filter(Boolean);
+  const latest = current[0] || rows[0]?.list?.[0] || null;
+  const mode = rows.some(r => r.type === 'discom') ? 'DISCOM-specific' : 'State-wide';
+  const countText = current.length > 1 ? `${current.length} current rates` : 'Current rate';
+  const latestText = latest ? `Latest: ${fsMonth(latest.from)}` : 'Awaiting notice';
+  const rateText = current.length
+    ? current.map(fsRate).join(' / ')
+    : latest ? `Last: ${fsRate(latest)}` : 'Not notified';
+  return `<a class="fs-state-card" href="/fppa/${stateSlug}/">
+    <span class="fs-state-card-top">
+      <span class="fs-state-name">${esc(state)}</span>
+      <span class="fs-state-open">Open</span>
+    </span>
+    <strong class="fs-state-rate">${esc(rateText)}</strong>
+    <span class="fs-state-meta">${esc(mode)} surcharge tracker</span>
+    <span class="fs-state-foot">
+      <span>${esc(countText)}</span>
+      <span>${esc(latestText)}</span>
+    </span>
+  </a>`;
+}
+
 // Bar chart of a monthly percent series. Inline SVG with no script and no library: it has
 // to survive being read by a crawler and by someone with JS off, and it is the one visual
 // that makes "this moves every month" obvious at a glance. Colours come from CSS classes
@@ -3294,44 +3811,33 @@ function fsChart(series) {
     </figure>`;
 }
 
-function fuelSurchargePage() {
-  const url = '/fuel-surcharge/';
-  const title = 'Electricity Fuel Surcharge Tracker — Current FPPA / PPAC Rates by State';
-  const description = 'Live fuel-surcharge rates (FPPA, FPPAS, PPAC) for Uttar Pradesh, Delhi and Rajasthan, '
+function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url } = {}) {
+  const title = 'India Electricity Surcharge Tracker — FPPA / FPPAS / FAC Rates';
+  const description = 'Live electricity surcharge rates (FPPA, FPPAS, PPAC, FAC) for Uttar Pradesh, Delhi and Rajasthan, '
     + 'with the full month-by-month history, what each rate adds to your bill, and the tariff regulation it is levied under.';
-
-  // DISCOM id → display name + state, so the per-DISCOM tables can name their state.
-  const meta = {};
-  for (const st of getStates()) for (const d of getDiscoms(st)) meta[d.id] = { name: d.name, state: st };
 
   // ── current standing rates ──────────────────────────────────────────────────
   // pick() resolves against today's date, which is what makes this a tracker rather than
   // an archive. A state whose current month has no notice yet resolves to null — that is
   // reported as "not yet notified", never silently as zero, because zero is a claim.
   const nowMonth = fsMonthLong(TODAY.slice(0, 8) + '01');
-  const rows = [];
-  for (const [state, list] of Object.entries(FPPA_BY_STATE)) {
-    rows.push({ who: state, scope: 'All DISCOMs', state, cur: pickFppa(list, TODAY), list });
-  }
-  for (const [id, list] of Object.entries(FPPA_BY_DISCOM)) {
-    const m = meta[id];
-    if (!m) continue;
-    rows.push({ who: m.name, code: id.toUpperCase(), scope: m.state, state: m.state, cur: pickFppa(list, TODAY), list });
-  }
-  rows.sort((a, b) => a.state.localeCompare(b.state) || a.who.localeCompare(b.who));
+  const rows = fppaTrackerRows();
+  const coverage = fppaCoverageStates();
 
   const currentRows = rows.map(r => {
     const latest = r.list[0];
     const cur = r.cur;
-    const val = cur ? `<strong class="${cur.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(cur))}</strong>` : '<span class="fs-pending">Not yet notified</span>';
+    const shown = cur || latest;
+    const val = shown ? `<strong class="${shown.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(shown))}</strong>` : '<span class="fs-pending">Not yet notified</span>';
     // Labels are authored for the bill line ("BRPL PPAC (from Jun 2026…)"), where the DISCOM
     // is not otherwise stated. Here column one already names it, so the prefix is dead weight
     // in a column that is the first to get squeezed on a phone.
     const note = cur
       ? esc(r.code && cur.label.startsWith(r.code + ' ') ? cur.label.slice(r.code.length + 1) : cur.label)
-      : `Last notified: ${esc(fsMonth(latest.from))} at ${esc(fsRate(latest))}`;
-    return `<tr><td>${esc(r.who)}</td><td>${esc(r.scope)}</td><td>${val}</td><td>${note}</td></tr>`;
+      : `Latest published: ${esc(fsMonth(latest.from))}; ${esc(nowMonth)} not yet notified`;
+    return `<tr><td><a href="/fppa/${esc(r.slug)}/">${esc(r.who)}</a></td><td>${esc(r.scope)}</td><td>${val}</td><td>${note}</td></tr>`;
   }).join('');
+  const stateCards = coverage.map(state => fppaStateSummaryCard(state, rows.filter(r => r.state === state))).join('');
 
   // ── UP monthly series (the only state with a true month-by-month history) ────
   const upSeries = [...FPPA_BY_STATE['Uttar Pradesh']].sort((a, b) => a.from.localeCompare(b.from));
@@ -3352,14 +3858,21 @@ function fuelSurchargePage() {
   const body = `
   <section class="seo-page container">
     ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Fuel Surcharge', url: null }])}
-    <h1>Electricity Fuel Surcharge Tracker</h1>
+    <h1>India Electricity Surcharge Tracker</h1>
     <p class="seo-lead">Your tariff is fixed for the year. Your <strong>fuel surcharge is not</strong> —
     it is renotified every month, it can double-digit your bill without any tariff hike, and it is the
     single most common reason a bill jumps with no change in your usage. This page tracks the
-    published rate for every state we have verified data for.</p>
+    published FPPA, FPPAS, PPAC and FAC rate for every state we have verified data for.</p>
     <p class="privacy-updated">Last updated ${LASTMOD_TOKEN.en} &middot; Rates as notified by the
     state regulator or DISCOM &middot; See also <a href="/guides/how-fppa-fuel-surcharge-is-calculated/">how
     the fuel surcharge is calculated</a></p>
+
+    <section class="seo-section fs-product-nav">
+      <h2>Track by state</h2>
+      <div class="fs-state-grid">${stateCards}</div>
+      <p class="fs-legend">Dedicated tracker pages are generated only for states where we have verified
+      surcharge notices. Maharashtra FAC/FPPCA and Telangana FPPCA are high-priority coverage targets.</p>
+    </section>
 
     <section class="seo-section">
       <h2>Current rates — ${esc(nowMonth)}</h2>
@@ -3461,8 +3974,8 @@ function fuelSurchargePage() {
   </section>`;
 
   return layout({
-    title, description, canonical: SITE + url, page: url, altLangs: [],
-    jsonld: [breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Fuel Surcharge', url }])],
+    title, description, canonical: SITE + canonicalUrl, page: url, altLangs: [],
+    jsonld: [breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Surcharge Tracker', url: canonicalUrl }])],
     body,
   });
 }
@@ -3473,6 +3986,301 @@ function fuelSurchargePage() {
 // more pages — get GitHub's bare default with no route back into the site. This branded
 // page reuses the shared chrome (so the header search works) and points at the main
 // tools. English-only: it must render for any path, so it can't assume a language prefix.
+function fppaStatePage(state) {
+  const stateSlug = slugify(state);
+  const url = `/fppa/${stateSlug}/`;
+  const rows = fppaTrackerRows().filter(r => r.state === state);
+  if (!rows.length) return null;
+
+  const mechanism = fppaMechanismName(state);
+  const comparison = fppaStateComparison(state);
+  const comparisonCurrent = comparison.filter(r => r.cur);
+  const title = `${state} Electricity ${mechanism} Tracker - Compare DISCOM Surcharge Rates`;
+  const description = `Compare current ${state} electricity surcharge rates by DISCOM: current charge, effective period, previous rate, direction, historical chart and official source notes.`;
+  const nowMonth = fsMonthLong(TODAY.slice(0, 8) + '01');
+  const archiveUrl = `/fppa/${stateSlug}/archive/`;
+  const archiveLinks = fppaArchiveYearLinks(state);
+  const currentRows = comparison.map(r => {
+    const cur = r.cur;
+    const prev = r.prev;
+    const val = cur ? `<strong class="${cur.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(cur))}</strong>` : '<span class="fs-pending">Not verified yet</span>';
+    const previous = prev ? esc(fsRate(prev)) : '<span class="fs-pending">No earlier rate</span>';
+    const tariffPath = `/tariffs/${stateSlug}/${r.discom.id}/`;
+    return `<tr>
+      <td><a href="${esc(tariffPath)}">${esc(r.discom.name)}</a></td>
+      <td>${val}</td>
+      <td>${esc(fppaPeriod(cur))}</td>
+      <td>${previous}</td>
+      <td>${fppaDirection(cur, prev)}</td>
+      <td>${fppaImpact(cur)}</td>
+    </tr>`;
+  }).join('');
+
+  const example = comparisonCurrent.find(r => r.cur?.mode === 'percent') || comparisonCurrent[0] || null;
+  const exampleAmt = example?.cur?.mode === 'percent' ? 3000 * example.cur.rate / 100 : null;
+  const exampleText = example && example.cur?.mode === 'percent'
+    ? `For an electricity energy/fixed-charge base of ${rupee(3000)}, ${esc(example.discom.name)}'s current ${esc(fsRate(example.cur))} adjustment equals about <strong class="${example.cur.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${example.cur.rate >= 0 ? '+' : '-'}${rupee(Math.abs(exampleAmt))}</strong> before electricity duty and any precise billing-rule adjustments.`
+    : `For percentage-based surcharges, multiply your fixed plus energy charges by the published percentage. For per-unit surcharges, multiply the rate by units consumed.`;
+
+  const hasDiscomSpecific = rows.some(r => r.type === 'discom');
+  const whatChangedHtml = fppaWhatChangedHtml(state, mechanism, comparison, hasDiscomSpecific, rows);
+  const historyItems = hasDiscomSpecific
+    ? comparison.filter(r => r.list.length)
+    : [{ discom: { name: state }, list: rows[0]?.list || [] }];
+  const historyBlocks = historyItems.map(r => {
+    const series = [...r.list].sort((a, b) => b.from.localeCompare(a.from));
+    const historyRows = series.map((e, i) =>
+      `<tr><td>${esc(fsMonth(e.from))}</td><td class="${e.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(e))}</td><td>${fppaChange(series, i)}</td><td>${esc(e.label || '')}</td></tr>`).join('');
+    const chartSeries = [...series].reverse().filter(e => e.mode === series[0].mode);
+    const chart = chartSeries.length >= 2 ? fppaTrendSvg(chartSeries, 36, r.discom.name) : '';
+    return `<section class="seo-section fs-state-history">
+      <h2>Historical chart: ${esc(r.discom.name)} ${esc(mechanism)}</h2>
+      ${chart}
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>Month</th><th>Rate</th><th>Change</th><th>Notice</th></tr></thead>
+          <tbody>${historyRows}</tbody>
+        </table>
+      </div>
+    </section>`;
+  }).join('');
+
+  const mechanismNote = hasDiscomSpecific
+    ? `${state} has DISCOM-specific ${mechanism} entries in our tracker, so the rate can differ by utility.`
+    : `${state} currently uses a state-wide ${mechanism} entry in our tracker, so the same rate applies across the covered DISCOMs.`;
+
+  const body = `
+  <section class="seo-page container">
+    ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Surcharge Tracker', url: '/fppa/' }, { name: state, url: null }])}
+    <h1>${esc(state)} Electricity ${esc(mechanism)} Tracker</h1>
+    <p class="seo-lead">Compare the current electricity surcharge across ${esc(state)} DISCOMs,
+    see whether the latest order moved the rate up or down, and use the historical chart to
+    understand why a bill can rise even when your units do not change.</p>
+    <p class="privacy-updated">Last updated ${LASTMOD_TOKEN.en} &middot; ${esc(mechanismNote)}</p>
+
+    <section class="seo-section">
+      <h2>Compare current ${esc(mechanism)} by DISCOM</h2>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>DISCOM</th><th>Current charge</th><th>Effective period</th><th>Previous</th><th>Direction</th><th>Example impact</th></tr></thead>
+          <tbody>${currentRows}</tbody>
+        </table>
+      </div>
+      <p class="fs-legend">Current month shown: ${esc(nowMonth)}. Negative rates are credits. "Not verified yet"
+      means we have not found an official current notice for that DISCOM; the calculator still lets
+      you enter the printed bill value manually.</p>
+    </section>
+
+    ${whatChangedHtml}
+
+    <section class="seo-section fs-archive-callout">
+      <h2>Historical archive</h2>
+      <p>We do not delete old ${esc(mechanism)} values when a new notice appears. Each verified
+      period remains archived with its rate, effective dates, direction and source note, so this
+      page grows into a clean long-term surcharge dataset.</p>
+      ${archiveLinks}
+      <p class="seo-cta-row"><a class="seo-cta" href="${esc(archiveUrl)}">View full ${esc(state)} surcharge archive</a></p>
+    </section>
+
+    <section class="seo-section">
+      <h2>What this means for consumers</h2>
+      <p>${exampleText}</p>
+      <p>Use this as a quick approximation only. Final bill impact depends on the exact base amount,
+      duty, rounding, billing period and the regulator's order.</p>
+    </section>
+
+    ${historyBlocks}
+
+    <section class="seo-section">
+      <h2>Why did it change?</h2>
+      ${fppaStateWhyHtml(state, mechanism)}
+    </section>
+
+    <section class="seo-section">
+      <h2>Official source</h2>
+      ${fppaStateSourcesHtml(state, comparison)}
+    </section>
+
+    <section class="seo-section">
+      <h2>Use this rate on your bill</h2>
+      <p>Open the calculator, choose your ${esc(state)} DISCOM, and keep <strong>Auto-fill from verified
+      government data</strong> enabled. The calculator applies the surcharge mode correctly: percentage
+      surcharges are applied on fixed plus energy charges, while per-unit surcharges multiply units.</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Calculate my bill with current surcharge</a></p>
+    </section>
+  </section>`;
+
+  return layout({
+    title, description, canonical: SITE + url, page: url, altLangs: [],
+    jsonld: [breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Surcharge Tracker', url: '/fppa/' }, { name: state, url }])],
+    body,
+  });
+}
+
+function fppaArchivePage(state) {
+  const stateSlug = slugify(state);
+  const url = `/fppa/${stateSlug}/archive/`;
+  const rows = fppaArchiveRows(state);
+  if (!rows.length) return null;
+  const mechanism = fppaMechanismName(state);
+  const title = `${state} ${mechanism} Historical Archive`;
+  const description = `Permanent ${state} electricity surcharge archive: historical ${mechanism} rates by DISCOM, effective period, direction, notice and source.`;
+  const yearLinks = fppaArchiveYearLinks(state);
+  const body = `
+  <section class="seo-page container">
+    ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Surcharge Tracker', url: '/fppa/' }, { name: state, url: `/fppa/${stateSlug}/` }, { name: 'Archive', url: null }])}
+    <h1>${esc(state)} ${esc(mechanism)} Historical Archive</h1>
+    <p class="seo-lead">A permanent record of verified electricity surcharge values for ${esc(state)}.
+    New notices are added as new periods; old values are kept with their effective dates and source
+    notes so the archive remains useful for consumers, researchers and journalists.</p>
+    <p class="privacy-updated">Last updated ${LASTMOD_TOKEN.en} &middot; Archive records are never overwritten by newer notices</p>
+
+    ${fppaArchiveSummary(rows)}
+    ${yearLinks}
+
+    <section class="seo-section">
+      <h2>All archived ${esc(mechanism)} entries</h2>
+      ${fppaArchiveTable(rows)}
+    </section>
+
+    <section class="seo-section">
+      <h2>Why this archive matters</h2>
+      <p>Most searches only need the current surcharge. But old surcharge values explain old bills,
+      complaint timelines, news reports and tariff changes. This archive preserves each historical
+      value instead of replacing it with the latest one.</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/fppa/${stateSlug}/">Back to current ${esc(state)} tracker</a></p>
+    </section>
+  </section>`;
+
+  return layout({
+    title, description, canonical: SITE + url, page: url, altLangs: [],
+    jsonld: [breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Surcharge Tracker', url: '/fppa/' }, { name: state, url: `/fppa/${stateSlug}/` }, { name: 'Archive', url }])],
+    body,
+  });
+}
+
+function fppaArchiveYearPage(state, year) {
+  const stateSlug = slugify(state);
+  const url = `/fppa/${stateSlug}/${year}/`;
+  const rows = fppaArchiveRows(state).filter(r => fppaEntryCoversYear(r.entry, year));
+  if (!rows.length) return null;
+  const mechanism = fppaMechanismName(state);
+  const title = `${state} ${mechanism} History ${year}`;
+  const description = `${state} ${mechanism} surcharge history for ${year}: historical electricity surcharge rates by DISCOM, effective period, previous rate direction and source.`;
+  const body = `
+  <section class="seo-page container">
+    ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Surcharge Tracker', url: '/fppa/' }, { name: state, url: `/fppa/${stateSlug}/` }, { name: 'Archive', url: `/fppa/${stateSlug}/archive/` }, { name: String(year), url: null }])}
+    <h1>${esc(state)} ${esc(mechanism)} History ${esc(year)}</h1>
+    <p class="seo-lead">Verified ${esc(state)} electricity surcharge values that applied at some
+    point during ${esc(year)}. A row may start before ${esc(year)} if that order continued into this year.</p>
+    <p class="privacy-updated">Last updated ${LASTMOD_TOKEN.en} &middot; Part of the permanent surcharge archive</p>
+
+    ${fppaArchiveSummary(rows)}
+    ${fppaArchiveYearLinks(state, year)}
+
+    <section class="seo-section">
+      <h2>${esc(year)} archived entries</h2>
+      ${fppaArchiveTable(rows)}
+    </section>
+
+    <section class="seo-section">
+      <h2>Use this history carefully</h2>
+      <p>Historical surcharge rates are useful for checking an old bill, but the payable amount still
+      depends on the bill period, units, fixed charges, duty, rounding and the exact DISCOM billing rules.</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/fppa/${stateSlug}/archive/">View full ${esc(state)} archive</a></p>
+    </section>
+  </section>`;
+
+  return layout({
+    title, description, canonical: SITE + url, page: url, altLangs: [],
+    jsonld: [breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Surcharge Tracker', url: '/fppa/' }, { name: state, url: `/fppa/${stateSlug}/` }, { name: 'Archive', url: `/fppa/${stateSlug}/archive/` }, { name: String(year), url }])],
+    body,
+  });
+}
+
+function tariffDatabasePage(summary) {
+  const title = "India Residential Electricity Tariff Database";
+  const description = "TheDiscomBill maintains a structured Indian residential electricity tariff database covering states, DISCOMs, categories, slabs, fixed charges, duty, FPPA, subsidy notes and tariff sources.";
+  const fieldRows = summary.fields.map((f) => `<tr><td><code>${esc(f)}</code></td><td>${esc(databaseFieldDescription(f))}</td></tr>`).join('');
+  const body = `
+  <section class="seo-page container">
+    ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Tariff Database', url: null }])}
+    <h1>India Residential Electricity Tariff Database</h1>
+    <p class="seo-lead">TheDiscomBill is built around a structured tariff database, not just a
+    collection of calculators and articles. Each calculator result, DISCOM page and surcharge
+    tracker pulls from the same maintained records for states, DISCOMs, consumer categories,
+    slab rates, fixed charges, duties, FPPA/FPPAS/FAC history and source notes.</p>
+    <p class="privacy-updated">Last updated ${LASTMOD_TOKEN.en} &middot; Generated from verified tariff modules</p>
+
+    <div class="fs-archive-stats database-stats">
+      <span><strong>${summary.stateCount}</strong> states / UTs</span>
+      <span><strong>${summary.discomCount}</strong> DISCOMs</span>
+      <span><strong>${summary.categoryCount}</strong> consumer categories</span>
+      <span><strong>${summary.tariffRecordCount}</strong> tariff records</span>
+      <span><strong>${summary.fppaTrackedDiscomCount}</strong> FPPA-linked DISCOMs</span>
+      <span><strong>${summary.tariffRecordsWithPreviousTariff}</strong> records with history</span>
+    </div>
+
+    <section class="seo-section">
+      <h2>What the database tracks</h2>
+      <div class="comparison-table-wrapper database-schema-table">
+        <table class="comparison-table">
+          <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+          <tbody>${fieldRows}</tbody>
+        </table>
+      </div>
+      <p class="fs-legend">The raw generated database is an internal TheDiscomBill data asset.
+      Public pages expose the useful consumer-facing views: calculators, DISCOM tariff pages,
+      FPPA archives and guides.</p>
+    </section>
+
+    <section class="seo-section">
+      <h2>Why this matters</h2>
+      <p>Electricity tariffs are not one number per state. A useful bill estimate needs the correct
+      DISCOM, category, load rule, slab ladder, fixed charge, duty method, surcharge method,
+      subsidy note and effective period. Keeping those fields structured makes the site easier
+      to verify, easier to update, and much harder to reproduce casually.</p>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/tariffs/states/"><strong>Browse tariff pages</strong><span>State and DISCOM views generated from the database</span></a>
+        <a class="seo-link-card" href="/fppa/"><strong>Open surcharge tracker</strong><span>Month-by-month FPPA, FPPAS, PPAC and FAC history</span></a>
+        <a class="seo-link-card" href="/methodology/"><strong>Read methodology</strong><span>How rates are verified and where estimates are labelled</span></a>
+      </div>
+    </section>
+
+    <p class="seo-disclaimer">The database is maintained for bill estimation and consumer education.
+    It is not affiliated with any DISCOM, regulator or government body, and official tariff orders
+    remain the legal source.</p>
+  </section>`;
+
+  return layout({
+    title, description, canonical: SITE + '/database/', page: '/database/', altLangs: [],
+    jsonld: [breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Tariff Database', url: '/database/' }])],
+    body,
+  });
+}
+
+function databaseFieldDescription(field) {
+  return ({
+    state: 'State or union territory name.',
+    discom: 'Distribution company identity, service area and official website where available.',
+    tariffYear: 'Financial year or tariff schedule year represented by the current record.',
+    consumerCategory: 'Domestic, commercial or other consumer category and any supply-type variant.',
+    slabs: 'Telescopic or flat energy charge slabs with cumulative limits.',
+    fixedCharge: 'Monthly fixed, demand or load-based charge rule.',
+    electricityDuty: 'Duty or tax line extracted from additional charges.',
+    fppaFac: 'Current and historical fuel/power purchase adjustment values linked by state or DISCOM.',
+    subsidy: 'Modelled subsidy schemes and subsidy notes where applicable.',
+    meterCharge: 'Meter rent or meter-related charge where explicitly modelled.',
+    minimumCharge: 'Minimum monthly charge or consumption guarantee where present.',
+    solarRules: 'Solar/net-metering rules where structured data has been added.',
+    effectiveDate: 'Date from which the current tariff record applies, where known.',
+    tariffOrder: 'Tariff order label or rates-as-of note.',
+    sourceUrl: 'Official regulator, DISCOM or tariff-order source URL.',
+    lastVerified: 'Verification date where explicitly stored.',
+    previousTariff: 'Historical rateHistory entries retained for old-bill checks.',
+  })[field] || 'Structured tariff field.';
+}
+
 function notFoundPage() {
   const body = `
   <section class="seo-page container">
@@ -4386,9 +5194,19 @@ function buildSitemap(states) {
     urls.push({ loc: `/guides/${g.slug}/`, priority: '0.7', changefreq: 'monthly', langs: VERNACULARS.filter(l => guideHasBody(g, l)) });
   }
   urls.push({ loc: '/glossary/', priority: '0.7', changefreq: 'monthly', langs: [...VERNACULARS] });
+  urls.push({ loc: '/database/', priority: '0.75', changefreq: 'monthly' });
   // No `langs`: the tracker has no vernacular twin. changefreq monthly is literal here —
   // the underlying FPPA notices are published month by month.
-  urls.push({ loc: '/fuel-surcharge/', priority: '0.8', changefreq: 'monthly' });
+  urls.push({ loc: '/fppa/', priority: '0.85', changefreq: 'monthly' });
+  urls.push({ loc: '/fuel-surcharge/', priority: '0.3', changefreq: 'monthly' });
+  for (const state of fppaCoverageStates()) {
+    const stateSlug = slugify(state);
+    urls.push({ loc: `/fppa/${stateSlug}/`, priority: '0.75', changefreq: 'monthly' });
+    urls.push({ loc: `/fppa/${stateSlug}/archive/`, priority: '0.65', changefreq: 'monthly' });
+    for (const year of fppaArchiveYears(state)) {
+      urls.push({ loc: `/fppa/${stateSlug}/${year}/`, priority: '0.55', changefreq: 'monthly' });
+    }
+  }
   urls.push({ loc: '/tariffs/states/', priority: '0.8', changefreq: 'monthly', langs: [...VERNACULARS] });
   urls.push({ loc: '/smart-meter/', priority: '0.7', changefreq: 'monthly', langs: [...VERNACULARS] });
   urls.push({ loc: '/smart-meter-recharge/', priority: '0.8', changefreq: 'monthly', langs: [...VERNACULARS] });
@@ -4580,13 +5398,33 @@ function writeSearchIndex(states) {
     ['Sanctioned Load Optimizer', 'स्वीकृत भार ऑप्टिमाइज़र', '/sanctioned-load-optimizer/', 'sanctioned load reduce fixed charge kw contracted demand md maximum demand optimizer'],
     ['Solar Subsidy Checker', 'सोलर सब्सिडी चेकर (PM सूर्य घर)', '/solar-subsidy-checker/', 'pm surya ghar rooftop solar subsidy muft bijli yojana system size payback kw 78000 eligibility'],
     ['Tenant Sub-Meter Calculator', 'किरायेदार सब-मीटर कैलकुलेटर', '/tenant-submeter-calculator/', 'tenant landlord submeter sub meter overcharging flat rate per unit pg rent electricity split share'],
-    ['Fuel Surcharge Tracker', 'ईंधन अधिभार ट्रैकर', '/fuel-surcharge/', 'fppa fppas ppac fuel surcharge fuel power purchase adjustment current rate this month uppcl derc delhi rajasthan monthly history bill increase'],
+    ['Tariff Database', 'टैरिफ डेटाबेस', '/database/', 'structured tariff database discom residential electricity slabs fixed charge duty fppa subsidy source'],
+    ['Fuel Surcharge Tracker', 'ईंधन अधिभार ट्रैकर', '/fppa/', 'fppa fppas ppac fac fuel surcharge fuel power purchase adjustment current rate this month uppcl derc delhi rajasthan monthly history bill increase'],
     ['Methodology', 'कार्यप्रणाली', '/methodology/', 'how rates verified sources'],
     ['Cookie Policy', 'कुकी नीति', '/cookies/', 'cookies cookie policy tracking analytics ga consent local storage banner'],
     ['Privacy Policy', 'गोपनीयता नीति', '/privacy/', 'privacy policy data dpdp personal information cookies analytics delete my data gdpr'],
     ['Contact', 'संपर्क करें', '/contact/', 'contact email get in touch report wrong tariff rate correction feedback partnership press support help'],
     ['Install offline app', 'ऑफ़लाइन ऐप इंस्टॉल करें', '/install/', 'install app pwa offline home screen android ios iphone desktop add to home screen download apk play store'],
   ].forEach(([t, h, u, k]) => entries.push({ t, h, u, k, g: 'tool' }));
+
+  for (const state of fppaCoverageStates()) {
+    const stateSlug = slugify(state);
+    const mechanism = fppaMechanismName(state);
+    entries.push({
+      t: `${state} ${mechanism} Archive`,
+      u: `/fppa/${stateSlug}/archive/`,
+      k: `${state} ${mechanism} historical archive surcharge old rates history fppa fppas ppac fac`,
+      g: 'tool',
+    });
+    for (const year of fppaArchiveYears(state)) {
+      entries.push({
+        t: `${state} ${mechanism} History ${year}`,
+        u: `/fppa/${stateSlug}/${year}/`,
+        k: `${state} ${mechanism} ${year} surcharge history old bill archive rates`,
+        g: 'tool',
+      });
+    }
+  }
 
   for (const guide of GUIDES) {
     entries.push({
@@ -4653,6 +5491,7 @@ function writeSearchIndex(states) {
 // ── run ───────────────────────────────────────────────────────────────────────
 export function generateSeo() {
   const states = getStates();
+  const tariffDatabase = buildTariffDatabase({ quiet: true });
   let pages = 0;
 
   // English at the canonical path; each vernacular twin under its /<lang>/ prefix — same
@@ -4682,7 +5521,24 @@ export function generateSeo() {
     pages++;
 
     // English-only (see the note on fuelSurchargePage) — emitted once, not per language.
-    if (lang === 'en') { emitPage('fuel-surcharge', fuelSurchargePage()); pages++; }
+    if (lang === 'en') {
+      emitPage('database', tariffDatabasePage(tariffDatabase.summary));
+      pages++;
+      emitPage('fppa', fuelSurchargePage());
+      pages++;
+      emitPage('fuel-surcharge', fuelSurchargePage({ url: '/fuel-surcharge/', canonicalUrl: '/fppa/' }));
+      pages++;
+      for (const state of fppaCoverageStates()) {
+        emitPage(`fppa/${slugify(state)}`, fppaStatePage(state));
+        pages++;
+        emitPage(`fppa/${slugify(state)}/archive`, fppaArchivePage(state));
+        pages++;
+        for (const year of fppaArchiveYears(state)) {
+          emitPage(`fppa/${slugify(state)}/${year}`, fppaArchiveYearPage(state, year));
+          pages++;
+        }
+      }
+    }
     emitPage(`${p}understand-your-bill`, understandBillPage(lang));
     pages++;
 

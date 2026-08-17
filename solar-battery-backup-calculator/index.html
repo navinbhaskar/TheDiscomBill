@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -15,30 +15,30 @@
       } catch (e) {}
     })();
   </script>
-  <title>Solar Battery Backup Calculator — LiFePO4 vs Lead-Acid</title>
+  <title>Solar Battery Backup Calculator â€” LiFePO4 vs Lead-Acid</title>
   <meta name="description" content="Enter AC tonnage, star rating and backup hours to size your battery bank in kWh and Ah, with LiFePO4 and lead-acid options costed side by side for Indian homes.">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the â‚¹ sign. -->
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
   <link rel="stylesheet" href="/fonts/fonts.css">
   <link rel="canonical" href="https://thediscombill.com/solar-battery-backup-calculator/">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="TheDiscomBill">
-  <meta property="og:title" content="Solar Battery Backup Calculator — LiFePO4 vs Lead-Acid – TheDiscomBill">
+  <meta property="og:title" content="Solar Battery Backup Calculator â€” LiFePO4 vs Lead-Acid â€“ TheDiscomBill">
   <meta property="og:description" content="Enter AC tonnage, star rating and backup hours to size your battery bank in kWh and Ah, with LiFePO4 and lead-acid options costed side by side for Indian homes.">
   <meta property="og:url" content="https://thediscombill.com/solar-battery-backup-calculator/">
   <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:image:alt" content="TheDiscomBill â€” electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
   <meta property="og:locale" content="en_IN">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Solar Battery Backup Calculator — LiFePO4 vs Lead-Acid – TheDiscomBill">
-  <meta name="twitter:description" content="Battery bank size in kWh and Ah for power-cut backup — LiFePO4 vs lead-acid.">
+  <meta name="twitter:title" content="Solar Battery Backup Calculator â€” LiFePO4 vs Lead-Acid â€“ TheDiscomBill">
+  <meta name="twitter:description" content="Battery bank size in kWh and Ah for power-cut backup â€” LiFePO4 vs lead-acid.">
   <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
   <link rel="stylesheet" href="../css/styles.min.css">
   <!-- Google tag (gtag.js) -->
@@ -72,7 +72,7 @@
 </head>
 <body>
 
-<!-- ── Header ───────────────────────────────────────────────────────────────── -->
+<!-- â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ -->
 <header class="site-header">
   <div class="header-inner">
     <a href="/" class="logo">
@@ -83,7 +83,7 @@
       </span>
       <div>
         <span class="logo-text">TheDiscomBill</span>
-        <span class="logo-tagline" data-i18n="tagline">Electricity Bill Calculator · All India</span>
+        <span class="logo-tagline" data-i18n="tagline">Electricity Bill Calculator Â· All India</span>
       </div>
     </a>
     <nav class="header-nav">
@@ -92,7 +92,7 @@
       <a href="/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
       <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
       <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
-           to the footer sitemap. The header now carries only the four primary destinations —
+           to the footer sitemap. The header now carries only the four primary destinations â€”
            the footer is shared chrome on every page, so nothing lost a link. -->
       <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
         <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
@@ -111,12 +111,12 @@
       <div class="lang-switch" id="langSwitch">
         <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
           <span class="lang-trigger-text" id="langTriggerText">EN</span>
-          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <span class="sr-only" id="langTriggerLabel">â€” change language / à¤­à¤¾à¤·à¤¾ à¤¬à¤¦à¤²à¥‡à¤‚</span>
           <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
           <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
-          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">à¤¹à¤¿à¤‚à¤¦à¥€</span><span class="lang-opt-code">HI</span></li>
         </ul>
       </div>
       <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
@@ -130,11 +130,11 @@
       <div class="solar-hero reveal">
         <div class="solar-hero-sun" aria-hidden="true"></div>
         <h1>Solar Battery Backup Calculator (2026)</h1>
-        <p class="solar-intro">Enter your AC, extra load and the backup hours you want, and get the <strong>battery bank size in kWh and Ah</strong> — with LiFePO4 and lead-acid options costed side by side for Indian homes.</p>
+        <p class="solar-intro">Enter your AC, extra load and the backup hours you want, and get the <strong>battery bank size in kWh and Ah</strong> â€” with LiFePO4 and lead-acid options costed side by side for Indian homes.</p>
         <div class="solar-chips" role="list">
           <span class="solar-chip" role="listitem">Overnight power-cut sizing</span>
           <span class="solar-chip" role="listitem">LiFePO4 vs lead-acid</span>
-          <span class="solar-chip" role="listitem">Free · no sign-up</span>
+          <span class="solar-chip" role="listitem">Free Â· no sign-up</span>
         </div>
       </div>
 
@@ -142,7 +142,7 @@
         <!-- Inputs -->
         <div class="solar-inputs">
           <div class="solar-field">
-            <label>Step 1 — Your AC</label>
+            <label>Step 1 â€” Your AC</label>
             <div class="psz-ac-card">
               <div class="psz-line"><span class="psz-line-label">Tonnage</span>
                 <div class="psz-chips" id="sbbTonChips">
@@ -155,44 +155,44 @@
               </div>
               <div class="psz-line"><span class="psz-line-label">Star rating</span>
                 <div class="psz-chips" id="sbbStarChips">
-                  <button type="button" class="psz-chip-btn" data-val="3">3★</button>
-                  <button type="button" class="psz-chip-btn is-active" data-val="5">5★</button>
+                  <button type="button" class="psz-chip-btn" data-val="3">3â˜…</button>
+                  <button type="button" class="psz-chip-btn is-active" data-val="5">5â˜…</button>
                 </div>
               </div>
             </div>
-            <span class="solar-hint">We use the AC's average overnight draw — an inverter AC holding a set temperature uses far less than its nameplate watts.</span>
+            <span class="solar-hint">We use the AC's average overnight draw â€” an inverter AC holding a set temperature uses far less than its nameplate watts.</span>
           </div>
           <div class="solar-field">
-            <label>Step 2 — Other load on backup</label>
+            <label>Step 2 â€” Other load on backup</label>
             <div class="psz-line"><span class="psz-line-label">Fans, lights, Wi-Fi, fridge</span>
               <div class="psz-step" id="sbbExtra" data-val="200">
-                <button type="button" class="psz-step-btn" data-d="-1" aria-label="decrease">−</button>
+                <button type="button" class="psz-step-btn" data-d="-1" aria-label="decrease">âˆ’</button>
                 <span class="psz-step-val">200 W</span>
                 <button type="button" class="psz-step-btn" data-d="1" aria-label="increase">+</button>
               </div>
             </div>
-            <span class="solar-hint">A typical bedroom set is 150–300 W.</span>
+            <span class="solar-hint">A typical bedroom set is 150â€“300 W.</span>
           </div>
           <div class="solar-field">
-            <label>Step 3 — Backup hours needed</label>
+            <label>Step 3 â€” Backup hours needed</label>
             <div class="psz-line"><span class="psz-line-label">Hours of power cut to cover</span>
               <div class="psz-step" id="sbbHours" data-val="8">
-                <button type="button" class="psz-step-btn" data-d="-1" aria-label="decrease">−</button>
+                <button type="button" class="psz-step-btn" data-d="-1" aria-label="decrease">âˆ’</button>
                 <span class="psz-step-val">8 h</span>
                 <button type="button" class="psz-step-btn" data-d="1" aria-label="increase">+</button>
               </div>
             </div>
-            <span class="solar-hint">Summer power cuts in much of India cluster overnight — 8 hours covers 10 PM to 6 AM.</span>
+            <span class="solar-hint">Summer power cuts in much of India cluster overnight â€” 8 hours covers 10 PM to 6 AM.</span>
           </div>
           <details class="solar-adv">
             <summary>Advanced</summary>
             <div class="solar-field-row">
               <div class="solar-field">
-                <label for="sbbLfpPrice">LiFePO4 price (₹/kWh)</label>
+                <label for="sbbLfpPrice">LiFePO4 price (â‚¹/kWh)</label>
                 <input id="sbbLfpPrice" type="number" min="0" step="1000" value="26000" inputmode="numeric">
               </div>
               <div class="solar-field">
-                <label for="sbbLaPrice">Lead-acid price (₹/kWh)</label>
+                <label for="sbbLaPrice">Lead-acid price (â‚¹/kWh)</label>
                 <input id="sbbLaPrice" type="number" min="0" step="500" value="11000" inputmode="numeric">
               </div>
             </div>
@@ -216,22 +216,22 @@
               <div class="solar-hero-label">Energy needed from the battery</div>
               <div class="solar-size"><span id="sbbEnergy">0</span><small> kWh</small></div>
               <div class="solar-size-note" id="sbbLoadNote"></div>
-              <div class="solar-payback-pill"><span>Total load:</span> <strong id="sbbLoad">—</strong></div>
+              <div class="solar-payback-pill"><span>Total load:</span> <strong id="sbbLoad">â€”</strong></div>
             </div>
             <div class="solar-breakdown">
-              <div class="solar-bd-row solar-bd-total"><span>LiFePO4 bank (80% usable depth)</span><strong id="sbbLfpSize">—</strong></div>
-              <div class="solar-bd-row"><span>≈ at bank voltage</span><strong id="sbbLfpAh">—</strong></div>
-              <div class="solar-bd-row"><span>LiFePO4 approx. cost</span><strong id="sbbLfpCost">—</strong></div>
-              <div class="solar-bd-row solar-bd-total"><span>Lead-acid bank (50% usable depth)</span><strong id="sbbLaSize">—</strong></div>
-              <div class="solar-bd-row"><span>≈ at bank voltage</span><strong id="sbbLaAh">—</strong></div>
-              <div class="solar-bd-row"><span>Lead-acid approx. cost</span><strong id="sbbLaCost">—</strong></div>
-              <div class="solar-bd-row solar-bd-save"><span>Lithium premium for this bank</span><strong id="sbbPremium">—</strong></div>
+              <div class="solar-bd-row solar-bd-total"><span>LiFePO4 bank (80% usable depth)</span><strong id="sbbLfpSize">â€”</strong></div>
+              <div class="solar-bd-row"><span>â‰ˆ at bank voltage</span><strong id="sbbLfpAh">â€”</strong></div>
+              <div class="solar-bd-row"><span>LiFePO4 approx. cost</span><strong id="sbbLfpCost">â€”</strong></div>
+              <div class="solar-bd-row solar-bd-total"><span>Lead-acid bank (50% usable depth)</span><strong id="sbbLaSize">â€”</strong></div>
+              <div class="solar-bd-row"><span>â‰ˆ at bank voltage</span><strong id="sbbLaAh">â€”</strong></div>
+              <div class="solar-bd-row"><span>Lead-acid approx. cost</span><strong id="sbbLaCost">â€”</strong></div>
+              <div class="solar-bd-row solar-bd-save"><span>Lithium premium for this bank</span><strong id="sbbPremium">â€”</strong></div>
             </div>
             <div class="solar-chart-card">
               <div class="solar-chart-title">Which one should you pick?</div>
               <p class="solar-proj-note" id="sbbVerdict" style="margin-top:0"></p>
             </div>
-            <a class="solar-share psz-next" href="/solar-panel-size-calculator/">Size the solar panels to recharge it →</a>
+            <a class="solar-share psz-next" href="/solar-panel-size-calculator/">Size the solar panels to recharge it â†’</a>
           </div>
         </aside>
       </div>
@@ -239,13 +239,13 @@
       <div class="solar-proj-card reveal">
         <h2 class="solar-proj-title">How the sizing works</h2>
         <p class="solar-proj-note" style="margin-top:0">
-          Your AC's average running draw = cooling capacity ÷ ISEER for its star rating — an inverter AC
+          Your AC's average running draw = cooling capacity Ã· ISEER for its star rating â€” an inverter AC
           holding a set temperature overnight draws well under its nameplate watts. Energy needed =
-          (AC draw + other load) × backup hours ÷ 90% inverter efficiency. The battery bank is then sized so
+          (AC draw + other load) Ã— backup hours Ã· 90% inverter efficiency. The battery bank is then sized so
           that energy fits inside the chemistry's usable depth of discharge: LiFePO4 can safely give back
-          ~80% of its rated kWh, flooded lead-acid only ~50% — which is why the same backup needs a much
+          ~80% of its rated kWh, flooded lead-acid only ~50% â€” which is why the same backup needs a much
           bigger (and heavier) lead-acid bank. Prices are 2026 India market ballparks for the battery alone,
-          excluding the inverter/PCU. LiFePO4 also lasts 4–6× more cycles, so its per-cycle cost is usually
+          excluding the inverter/PCU. LiFePO4 also lasts 4â€“6Ã— more cycles, so its per-cycle cost is usually
           lower despite the sticker premium.
         </p>
       </div>
@@ -253,9 +253,9 @@
       <div class="solar-proj-card reveal">
         <h2 class="solar-proj-title">More solar tools on TheDiscomBill</h2>
         <p class="solar-proj-note" style="margin-top:0">
-          <a href="/solar-panel-size-calculator/">Solar Panel Size Calculator</a> — panels, roof area and cost to run these loads in the daytime. &nbsp;·&nbsp;
-          <a href="/solar-calculator/">Rooftop Solar Savings Calculator</a> — PM Surya Ghar subsidy, monthly savings and payback. &nbsp;·&nbsp;
-          <a href="/electricity-cost-calculator/">Electricity Cost Calculator</a> — work out your full monthly consumption.
+          <a href="/solar-panel-size-calculator/">Solar Panel Size Calculator</a> â€” panels, roof area and cost to run these loads in the daytime. &nbsp;Â·&nbsp;
+          <a href="/solar-calculator/">Rooftop Solar Savings Calculator</a> â€” PM Surya Ghar subsidy, monthly savings and payback. &nbsp;Â·&nbsp;
+          <a href="/electricity-cost-calculator/">Electricity Cost Calculator</a> â€” work out your full monthly consumption.
         </p>
       </div>
     </div>
@@ -297,14 +297,15 @@
         <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
         <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
-        <a href="/fuel-surcharge/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/database/">Tariff Database</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
       </div>
     </nav>
     <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span>
     &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
-    <!-- Social profiles — hrefs are placeholders until the accounts exist -->
+    <!-- Social profiles â€” hrefs are placeholders until the accounts exist -->
     <div class="soc-links" aria-label="Social media">
       <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
       <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
