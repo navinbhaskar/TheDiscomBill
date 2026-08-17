@@ -4420,39 +4420,11 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   overflow: hidden;
   transition: border-color var(--t-fast), transform var(--t-fast), color var(--t-fast), box-shadow var(--t-fast), background-color var(--t-fast);
 }
-/* Region hue, the same six the tariff directory and the DISCOM cards use. A rail rather than a
-   badge here: this is a 34-item navigation list, and a code chip on every row would widen each
-   link enough to cost a column. The colour groups the list by geography at a glance and adds
-   no height at all. data-region is stamped on the links in index.html; anything unmapped keeps
-   the brand default. */
-.states-grid a[data-region] {
-  --dir-accent: var(--brand);
-  padding-left: 18px;
-  border-color: color-mix(in srgb, var(--dir-accent) 20%, var(--border-subtle));
-  background: linear-gradient(180deg,
-    color-mix(in srgb, var(--dir-accent) 6%, var(--surface-card)),
-    var(--surface-card) 62%);
-}
-.states-grid a[data-region]::before {
-  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-  background: var(--dir-accent); opacity: .85;
-}
-.states-grid a[data-region="north"]     { --dir-accent: #2563eb; }
-.states-grid a[data-region="south"]     { --dir-accent: #0d9488; }
-.states-grid a[data-region="west"]      { --dir-accent: #d97706; }
-.states-grid a[data-region="central"]   { --dir-accent: #7c3aed; }
-.states-grid a[data-region="east"]      { --dir-accent: #e11d48; }
-.states-grid a[data-region="northeast"] { --dir-accent: #0891b2; }
 .states-grid a:hover {
   border-color: var(--brand-border);
   color: var(--text-brand);
   transform: translateY(-2px);
   box-shadow: 0 3px 8px rgba(15, 23, 42, .06), 0 16px 28px -24px rgba(37, 99, 235, .42);
-}
-.states-grid a[data-region]:hover {
-  border-color: color-mix(in srgb, var(--dir-accent) 55%, var(--border-subtle));
-  box-shadow: 0 3px 8px rgba(15, 23, 42, .06),
-              0 16px 28px -24px color-mix(in srgb, var(--dir-accent) 60%, transparent);
 }
 
 @media (max-width: 560px) {
