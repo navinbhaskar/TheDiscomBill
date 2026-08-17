@@ -3846,7 +3846,10 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
      itself on the dark page instead of laying a grey film over it. */
   border: 1px solid color-mix(in srgb, var(--dir-accent, var(--brand)) 24%, var(--border-default));
   border-radius: 18px;
-  background: color-mix(in srgb, var(--dir-accent, var(--brand)) 12%, var(--surface-card));
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--dir-accent, var(--brand)) 19%, var(--surface-card)) 0%,
+    color-mix(in srgb, var(--dir-accent, var(--brand)) 10%, var(--surface-card)) 55%,
+    color-mix(in srgb, var(--dir-accent, var(--brand)) 3%, var(--surface-card)) 100%);
   color: var(--text-primary);
   text-decoration: none;
   box-shadow: var(--shadow-xs);
@@ -4082,20 +4085,38 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   padding: 16px 17px 15px;
   border: 1px solid transparent;
   border-radius: 18px;
-  background: color-mix(in srgb, var(--dir-accent) 13%, var(--surface-card));
+  /* Diagonal rather than flat: the hue gathers in the top-left corner and releases toward the
+     bottom-right, which is where the rate pill sits — so the figure reads off the calmest part
+     of the tile. Three stops, none of them strong enough to move the text contrast much. */
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--dir-accent) 20%, var(--surface-card)) 0%,
+    color-mix(in srgb, var(--dir-accent) 11%, var(--surface-card)) 52%,
+    color-mix(in srgb, var(--dir-accent) 4%, var(--surface-card)) 100%);
   box-shadow: none;
 }
 :root[data-theme="dark"] .seo-link-card.is-region {
-  /* The same 13% over a near-black surface barely registers, so the dark tile takes more hue. */
-  background: color-mix(in srgb, var(--dir-accent) 22%, var(--surface-card));
+  /* The same mix over a near-black surface barely registers, so the dark tile takes more hue. */
+  /* Top stop held at 24%, not 30: at 30 the service-area line measured exactly 4.50:1 against
+     the strongest corner - passing, but with no headroom at all, and one palette tweak from
+     failing. 24 buys back margin and the gradient still reads. */
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--dir-accent) 24%, var(--surface-card)) 0%,
+    color-mix(in srgb, var(--dir-accent) 16%, var(--surface-card)) 52%,
+    color-mix(in srgb, var(--dir-accent) 8%, var(--surface-card)) 100%);
 }
 .seo-link-card.is-region:hover {
   border-color: transparent;
-  background: color-mix(in srgb, var(--dir-accent) 20%, var(--surface-card));
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--dir-accent) 27%, var(--surface-card)) 0%,
+    color-mix(in srgb, var(--dir-accent) 17%, var(--surface-card)) 52%,
+    color-mix(in srgb, var(--dir-accent) 8%, var(--surface-card)) 100%);
   box-shadow: 0 12px 26px -14px color-mix(in srgb, var(--dir-accent) 70%, transparent);
 }
 :root[data-theme="dark"] .seo-link-card.is-region:hover {
-  background: color-mix(in srgb, var(--dir-accent) 30%, var(--surface-card));
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--dir-accent) 38%, var(--surface-card)) 0%,
+    color-mix(in srgb, var(--dir-accent) 25%, var(--surface-card)) 52%,
+    color-mix(in srgb, var(--dir-accent) 13%, var(--surface-card)) 100%);
 }
 .seo-link-card.is-region strong { color: var(--text-primary); font-size: 15.5px; letter-spacing: -0.2px; }
 .seo-link-card.is-region span { color: var(--text-secondary); }
@@ -4340,7 +4361,10 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
    its badge and hover, and now carries it the way every other state card on the site does. */
 .seo-dir-state {
   position: relative;
-  background: color-mix(in srgb, var(--dir-accent) 11%, var(--surface-card));
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--dir-accent) 18%, var(--surface-card)) 0%,
+    color-mix(in srgb, var(--dir-accent) 9%, var(--surface-card)) 55%,
+    color-mix(in srgb, var(--dir-accent) 3%, var(--surface-card)) 100%);
   border: 1px solid transparent;
   border-radius: 16px; padding: 13px 15px;
   transition: border-color .16s, box-shadow .16s, transform .16s;
