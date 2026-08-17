@@ -4003,8 +4003,55 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 
 .seo-discom-head { background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 16px 18px; box-shadow: var(--shadow-sm); margin-bottom: 12px; }
 
+/* ── Secondary link blocks ───────────────────────────────────────────────────
+   Guides, tools, quick links and sibling states are ways off the page, not the page. On the
+   Haryana state page they were 976px of a 2,135px document — 46% — against 272px for the
+   DISCOM picker the page exists for, because every one of them rendered at the same weight as
+   real content. They keep every link; they stop competing for the eye.                       */
+.seo-section.is-aside > h2 {
+  font-size: 15px; font-weight: 700; letter-spacing: 0;
+  color: var(--text-secondary); margin-bottom: 10px;
+}
+.seo-section.is-aside > h2::before { display: none; }   /* no accent bar on an aside */
+.seo-section.is-aside { margin-top: 26px; }
+
 /* Link cards (DISCOMs within a state, siblings) */
 .seo-link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.seo-link-grid.is-compact { grid-template-columns: repeat(auto-fill, minmax(205px, 1fr)); gap: 8px; }
+.seo-link-card.is-compact {
+  gap: 1px; padding: 9px 12px; border-radius: 11px;
+  background: var(--surface-card);
+}
+.seo-link-card.is-compact strong { font-size: 12.8px; font-weight: 600; line-height: 1.35; }
+.seo-link-card.is-compact span,
+.seo-link-card.is-compact small {
+  font-size: 11.5px; line-height: 1.4; color: var(--text-tertiary);
+  /* Two lines is enough to say where the link goes; a four-line description on a nav card is
+     what made these blocks as tall as the content. */
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+.seo-link-card.is-compact:hover { transform: none; border-color: var(--brand-border); background: var(--brand-faint); }
+
+/* Sibling states: a jump list, so it looks like one. */
+.seo-chip-row { display: flex; flex-wrap: wrap; gap: 7px; }
+.seo-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: var(--radius-full);
+  background: var(--surface-card); border: 1px solid var(--border-default);
+  font-size: 12.5px; font-weight: 600; color: var(--text-secondary); text-decoration: none;
+  transition: border-color var(--t-fast), color var(--t-fast), background var(--t-fast);
+}
+.seo-chip:hover { border-color: var(--brand); color: var(--text-brand); background: var(--brand-faint); text-decoration: none; }
+/* The DISCOM count, carried quietly — it is the one fact that distinguishes one state chip
+   from another, and it has a title attribute so the bare digit is never the only explanation. */
+/* --text-tertiary here measured 3.04:1 on the dark theme's sunken surface — this is a 10.5px
+   digit, so it gets no large-text exemption and has to clear 4.5. */
+.seo-chip b {
+  font-size: 10.5px; font-weight: 700; color: var(--text-secondary);
+  background: var(--surface-sunken); border-radius: var(--radius-full);
+  min-width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center;
+}
+.seo-chip.is-more { font-weight: 700; color: var(--text-brand); border-style: dashed; }
 .seo-link-card {
   display: flex; flex-direction: column; gap: 3px;
   background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-md);

@@ -1652,11 +1652,11 @@ function discomServiceLinksHtml(state, discom, lang = 'en') {
   ];
   const heading = T(lang, { en: `${nm} quick links`, hi: `${nm} त्वरित लिंक`, mr: `${nm} जलद दुवे`, ta: `${nm} விரைவு இணைப்புகள்` });
   return `
-    <section class="seo-section">
+    <section class="seo-section is-aside">
       <h2>${heading}</h2>
-      <div class="seo-link-grid">
+      <div class="seo-link-grid is-compact">
         ${links.map(([href, title, sub]) =>
-          `<a class="seo-link-card" href="${href}"><strong>${title}</strong><span>${sub}</span></a>`).join('')}
+          `<a class="seo-link-card is-compact" href="${href}"><strong>${title}</strong><span>${sub}</span></a>`).join('')}
       </div>
     </section>`;
 }
@@ -1722,15 +1722,15 @@ function guideLinksHtml(state, discom, lang = 'en') {
     const href = (lang !== 'en' && guideHasBody(g, lang)) ? `/${lang}/guides/${g.slug}/` : `/guides/${g.slug}/`;
     const title = guideField(g, 'title', lang) || g.title;
     const mins = T(lang, { en: `${g.minutes} min read`, hi: `${g.minutes} मिनट`, mr: `${g.minutes} मिनिटे`, ta: `${g.minutes} நிமிட வாசிப்பு` });
-    return `<a class="seo-link-card" href="${href}"><strong>${esc(title)}</strong><small>${mins}</small></a>`;
+    return `<a class="seo-link-card is-compact" href="${href}"><strong>${esc(title)}</strong><small>${mins}</small></a>`;
   }).join('');
   const allHref = `${lang === 'en' ? '' : '/' + lang}/guides/`;
   const heading = T(lang, { en: `Guides for ${esc(discom.name)} consumers`, hi: `${esc(discom.name)} बिल से जुड़ी गाइड`, mr: `${esc(discom.name)} ग्राहकांसाठी मार्गदर्शक`, ta: `${esc(discom.name)} நுகர்வோருக்கான வழிகாட்டிகள்` });
   const browseAll = T(lang, { en: 'Browse all guides →', hi: 'सभी गाइड देखें →', mr: 'सर्व मार्गदर्शक पहा →', ta: 'அனைத்து வழிகாட்டிகளையும் பார்க்கவும் →' });
   return `
-    <section class="seo-section">
+    <section class="seo-section is-aside">
       <h2>${heading}</h2>
-      <div class="seo-link-grid">${cards}</div>
+      <div class="seo-link-grid is-compact">${cards}</div>
       <p><a href="${allHref}">${browseAll}</a></p>
     </section>`;
 }
@@ -1745,7 +1745,7 @@ function stateGuideLinksHtml(state, lang = 'en') {
     const href = (lang !== 'en' && guideHasBody(g, lang)) ? `/${lang}/guides/${g.slug}/` : `/guides/${g.slug}/`;
     const title = guideField(g, 'title', lang) || g.title;
     const mins = T(lang, { en: `${g.minutes} min read`, hi: `${g.minutes} मिनट`, mr: `${g.minutes} मिनिटे`, ta: `${g.minutes} நிமிட வாசிப்பு` });
-    return `<a class="seo-link-card" href="${href}"><strong>${esc(title)}</strong><small>${mins}</small></a>`;
+    return `<a class="seo-link-card is-compact" href="${href}"><strong>${esc(title)}</strong><small>${mins}</small></a>`;
   }).join('');
   const heading = T(lang, {
     en: `Guides for ${esc(state)} consumers`, hi: `${esc(stateName(state, 'hi'))} के उपभोक्ताओं के लिए गाइड`,
@@ -1753,9 +1753,9 @@ function stateGuideLinksHtml(state, lang = 'en') {
   const allHref = `${lang === 'en' ? '' : '/' + lang}/guides/`;
   const browseAll = T(lang, { en: 'Browse all guides →', hi: 'सभी गाइड देखें →', mr: 'सर्व मार्गदर्शक पहा →', ta: 'அனைத்து வழிகாட்டிகளையும் பார்க்கவும் →' });
   return `
-    <section class="seo-section">
+    <section class="seo-section is-aside">
       <h2>${heading}</h2>
-      <div class="seo-link-grid">${cards}</div>
+      <div class="seo-link-grid is-compact">${cards}</div>
       <p><a href="${allHref}">${browseAll}</a></p>
     </section>`;
 }
@@ -1786,11 +1786,11 @@ function stateToolLinksHtml(state, lang = 'en') {
   ];
   const heading = T(lang, { en: `More ${sl} electricity tools`, hi: `${sl} बिजली से जुड़े और टूल`, mr: `${sl} विजेशी संबंधित आणखी साधने`, ta: `மேலும் ${sl} மின்சார கருவிகள்` });
   return `
-    <section class="seo-section">
+    <section class="seo-section is-aside">
       <h2>${heading}</h2>
-      <div class="seo-link-grid">
+      <div class="seo-link-grid is-compact">
         ${links.map(([href, title, sub]) =>
-          `<a class="seo-link-card" href="${href}"><strong>${title}</strong><span>${sub}</span></a>`).join('')}
+          `<a class="seo-link-card is-compact" href="${href}"><strong>${title}</strong><span>${sub}</span></a>`).join('')}
       </div>
     </section>`;
 }
@@ -1804,14 +1804,19 @@ function nearbyStatesHtml(state, lang = 'en') {
   const covered = new Set(getStates());
   const others = region.states.filter(s => s !== state && covered.has(s));
   if (!others.length) return '';
-  const cards = others.map(s => {
+  // Chips, not cards. As full cards this was 526px on the Haryana page — nearly twice the
+  // section the page exists for, spent on a list of somewhere else. It is a jump list: a state
+  // name and how many DISCOMs it has. Capped at 6, with the directory carrying the rest, and
+  // still ordinary links, so the lateral crawl mesh this block exists for is untouched.
+  const MAX_SIBLINGS = 6;
+  const shown = others.slice(0, MAX_SIBLINGS);
+  const chips = shown.map(s => {
     const pfx = (lang !== 'en' && langServesState(lang, s)) ? `/${lang}` : '';
     const nd = getDiscoms(s).length;
-    const sub = T(lang, {
-      en: `${nd} DISCOM${nd > 1 ? 's' : ''} · tariff & bill calculator`,
-      hi: `${nd} डिस्कॉम · टैरिफ व बिल कैलकुलेटर`, mr: `${nd} डिस्कॉम · टॅरिफ व बिल कॅल्क्युलेटर`,
-      ta: `${nd} DISCOM · கட்டணம் & பில் கணிப்பான்` });
-    return stateLinkCard(s, `${pfx}/tariffs/${slugify(s)}/`, esc(stateName(s, lang)), sub);
+    const ndTitle = T(lang, {
+      en: `${nd} DISCOM${nd > 1 ? 's' : ''}`, hi: `${nd} डिस्कॉम`, mr: `${nd} डिस्कॉम`, ta: `${nd} DISCOM` });
+    return `<a class="seo-chip" href="${pfx}/tariffs/${slugify(s)}/">`
+      + `${esc(stateName(s, lang))}<b title="${attr(ndTitle)}">${nd}</b></a>`;
   }).join('');
   const heading = T(lang, {
     en: `Electricity tariffs across ${region.en}`, hi: `${region.hi} की बिजली दरें`,
@@ -1819,10 +1824,9 @@ function nearbyStatesHtml(state, lang = 'en') {
   const allHref = `${lang === 'en' ? '' : '/' + lang}/tariffs/states/`;
   const allLabel = T(lang, { en: 'All states & UTs →', hi: 'सभी राज्य व केंद्रशासित प्रदेश →', mr: 'सर्व राज्ये व केंद्रशासित प्रदेश →', ta: 'அனைத்து மாநிலங்கள் & யூனியன் பிரதேசங்கள் →' });
   return `
-    <section class="seo-section">
+    <section class="seo-section is-aside">
       <h2>${heading}</h2>
-      <div class="seo-link-grid">${cards}</div>
-      <p><a href="${allHref}">${allLabel}</a></p>
+      <div class="seo-chip-row">${chips}<a class="seo-chip is-more" href="${allHref}">${allLabel}</a></div>
     </section>`;
 }
 
