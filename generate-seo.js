@@ -1507,13 +1507,11 @@ function fppaTrendSvg(series, rangeMonths, discomName) {
 function fppaTrendHtml(state, discom) {
   const series = fppaTrendSeries(state, discom);
   const nm = esc(discom.name);
-  if (!series.length) {
-    return `
-      <section class="seo-section">
-        <h2>${nm} FPPA/FAC trend</h2>
-        <p class="seo-note">We do not yet have a verified monthly FPPA/FAC series for ${nm}. When official notices are added, this section will show whether the surcharge is rising or falling.</p>
-      </section>`;
-  }
+  // No verified series, no section. This used to render a heading over a line saying the data
+  // did not exist yet, on 54 of the 65 DISCOM pages — a promise of a chart rather than a chart,
+  // and a section a reader had to get past to reach the tariff. The "current FPPA/FAC" block
+  // above already states the position honestly when nothing is notified.
+  if (!series.length) return '';
   const id = `trend-${discom.id}`;
   const oldest = fsMonth(series[0].from);
   const newest = fsMonth(series[series.length - 1].from);

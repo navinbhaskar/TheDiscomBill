@@ -6799,24 +6799,24 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
    register codes, find your AMISP — and someone arriving from "what does the tamper icon
    mean" should not have to scroll past a rollout-contractor table to reach it. */
 .page-toc {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
-  margin: 0 0 22px; padding: 12px 14px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+  margin: 0 0 16px; padding: 9px 11px;
   background: var(--surface-sunken); border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg); max-width: 760px;
+  border-radius: var(--radius-lg); max-width: var(--w-mid);
 }
 .page-toc-label {
-  font-size: 11.5px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase;
+  font-size: 11px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase;
   color: var(--text-tertiary); margin-right: 2px;
 }
 .page-toc a {
-  font-size: 13px; font-weight: 550; color: var(--text-secondary); text-decoration: none;
-  /* 44px tall, not the 30px these used to be. WCAG 2.5.8 wants a 44px target and these are the
-     one control on the page a reader taps before they have read anything — a missed tap here
-     scrolls them somewhere arbitrary in a 2,000-word article. Height rather than padding so the
-     pills stay a uniform row whatever the label length; the horizontal padding still grows the
-     hit area sideways. */
-  display: inline-flex; align-items: center; min-height: 44px;
-  padding: 0 14px; border-radius: 999px;
+  font-size: 12.5px; font-weight: 550; color: var(--text-secondary); text-decoration: none;
+  /* 32px, down from 44. The 44 was WCAG 2.5.5 Target Size (Enhanced), which is AAA; the AA bar
+     is 2.5.8 at 24x24 CSS px, so 32 clears it with room to spare and the index stops taking
+     three rows before the article starts. Height rather than padding so the pills stay a
+     uniform row whatever the label length; horizontal padding still grows the target sideways.
+     Do not drop below 24px here — that is the line where this stops being AA. */
+  display: inline-flex; align-items: center; min-height: 32px;
+  padding: 0 11px; border-radius: 999px;
   background: var(--surface-card); border: 1px solid var(--border-default);
   transition: color var(--t-fast), border-color var(--t-fast), background-color var(--t-fast);
 }
@@ -6828,7 +6828,7 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
 /* Mid-page CTA, placed where the reader has just taken a reading off their own meter. */
 .inline-cta {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-  gap: 14px; margin: 18px 0 0; padding: 16px 18px; max-width: 760px;
+  gap: 14px; margin: 18px 0 0; padding: 16px 18px; max-width: var(--w-mid);
   background: var(--surface-card-grad);
   border: 1px solid var(--border-default); border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
