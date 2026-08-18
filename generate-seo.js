@@ -2923,8 +2923,8 @@ function directoryPage(states, lang = 'en') {
       { name: bcHome, url: '/' },
       { name: crumbDir, url: null },
     ])}
+    <h1>${dirH1}</h1>
     <div class="seo-dir-hero">
-      <h1>${dirH1}</h1>
       <p class="seo-lead">${dirLead}</p>
       ${heroStats(statLabels)}
       <div class="seo-dir-search">
