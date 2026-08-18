@@ -4096,8 +4096,35 @@ function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url } = {}) {
   // most likely to be pulled into an AI answer or a featured snippet, and neither reads JS.
   const exBase = 1500, exPct = 10, exAmt = exBase * exPct / 100;
 
-  const delhiRows = rows.filter(r => r.state === 'Delhi').map(r =>
-    `<tr><td>${esc(r.who)}</td><td class="fs-pos">${esc(fsRate(r.cur))}</td><td>${esc(r.cur ? r.cur.label : '—')}</td></tr>`).join('');
+  // Three DISCOMs with one rate each is not a table's worth of data, and as a table it was
+  // stating things twice: the Notice column repeated the DISCOM name already in column one
+  // ("BRPL PPAC (Jul 2026…)" on the row labelled BRPL), and repeated the same month on all
+  // three rows. As cards each says its own name once, shows the figure at a size worth reading,
+  // and carries the one fact the table never did — how far it moved from the previous notice,
+  // computed from the series rather than read out of a label.
+  const delhiCards = rows.filter(r => r.state === 'Delhi').map(r => {
+    const cur = r.cur;
+    if (!cur) return '';
+    // The lists are not stored newest-first throughout, so the previous notice is the latest
+    // entry that starts before this one rather than simply the next array slot.
+    const prev = r.list
+      .filter(e => e && e.from < cur.from && Number.isFinite(e.rate))
+      .sort((x, y) => y.from.localeCompare(x.from))[0] || null;
+    const delta = prev ? +(cur.rate - prev.rate).toFixed(2) : null;
+    const dir = delta == null ? 'flat' : delta > 0.005 ? 'up' : delta < -0.005 ? 'down' : 'flat';
+    const move = delta == null
+      ? 'First recorded notice'
+      : dir === 'flat'
+        ? `Unchanged from ${esc(fsMonth(prev.from))}`
+        : `${dir === 'up' ? '▲' : '▼'} ${Math.abs(delta).toFixed(2)} pts from ${esc(prev.rate.toFixed(2))}%`;
+    return `
+      <article class="fs-delhi-card">
+        <span class="fs-delhi-name">${esc(r.who)}</span>
+        <strong class="fs-delhi-rate">${esc(fsRate(cur))}</strong>
+        <span class="fs-delhi-move is-${dir}">${move}</span>
+        <span class="fs-delhi-when">${esc(fsMonth(cur.from))} notice</span>
+      </article>`;
+  }).join('');
 
   const body = `
   <section class="seo-page container">
@@ -4168,12 +4195,7 @@ function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url } = {}) {
       <p>Delhi calls it PPAC (Power Purchase Adjustment Cost) and sets it <strong>per DISCOM</strong>,
       so two neighbours on different networks pay different surcharges on identical usage. DERC
       moved from periodic to monthly revisions in June 2026 and sanctioned sharply higher rates.</p>
-      <div class="comparison-table-wrapper">
-        <table class="comparison-table">
-          <thead><tr><th>DISCOM</th><th>Current PPAC</th><th>Notice</th></tr></thead>
-          <tbody>${delhiRows}</tbody>
-        </table>
-      </div>
+      <div class="fs-delhi-grid">${delhiCards}</div>
     </section>
 
     <section class="seo-section">

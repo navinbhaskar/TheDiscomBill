@@ -4008,6 +4008,35 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 }
 .fs-archive-table { width: 100%; }
 
+/* ── Delhi PPAC cards ────────────────────────────────────────────────────────
+   One card per DISCOM: the figure is the point, so it gets the size, and the movement since
+   the last notice sits under it as the thing a reader actually wants to know. Direction is
+   coloured AND carries an arrow plus the words, so colour is never the only signal. */
+.fs-delhi-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px;
+}
+.fs-delhi-card {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 14px 16px 13px; border-radius: 16px;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--brand) 9%, var(--surface-card)) 0%,
+    var(--surface-card) 70%);
+  border: 1px solid color-mix(in srgb, var(--brand) 18%, var(--border-default));
+}
+.fs-delhi-name { font-size: 12.5px; font-weight: 700; color: var(--text-secondary); }
+.fs-delhi-rate {
+  font-size: 27px; font-weight: 800; letter-spacing: -0.8px; line-height: 1.1;
+  color: var(--text-primary); font-variant-numeric: tabular-nums;
+}
+.fs-delhi-move {
+  margin-top: 3px; font-size: 11.5px; font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.fs-delhi-move.is-up   { color: var(--err-text); }
+.fs-delhi-move.is-down { color: var(--ok-text); }
+.fs-delhi-move.is-flat { color: var(--text-tertiary); }
+.fs-delhi-when { font-size: 11px; color: var(--text-tertiary); }
+
 /* ── Tariff database page ────────────────────────────────────────────────────
    The counts are the page's evidence, so they get the weight: this is the one page whose whole
    claim is "there is a real dataset behind the calculators". */
