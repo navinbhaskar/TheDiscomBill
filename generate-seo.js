@@ -4086,8 +4086,18 @@ function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url } = {}) {
   // ── UP monthly series (the only state with a true month-by-month history) ────
   const upSeries = [...FPPA_BY_STATE['Uttar Pradesh']].sort((a, b) => a.from.localeCompare(b.from));
   const upChart = fsChart(upSeries);
-  const upRows = [...upSeries].reverse().map(e =>
-    `<tr><td>${esc(fsMonth(e.from))}</td><td class="${e.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(e))}</td><td>${e.rate >= 0 ? 'Charge' : 'Credit'}</td></tr>`).join('');
+  // A grid of months rather than a table. Seventeen rows of three narrow columns came out
+  // 248px wide inside a 760px column - a tall ribbon stranded against the left edge, directly
+  // under a chart plotting the same series. The figures are worth keeping (the chart shows
+  // shape, not values), so they stay; only the shape of the block changes.
+  const upRows = [...upSeries].reverse().map(e => {
+    const credit = e.rate < 0;
+    return `<div class="fs-month${credit ? ' is-credit' : ''}">
+      <span class="fs-month-when">${esc(fsMonth(e.from))}</span>
+      <strong class="fs-month-rate">${esc(fsRate(e))}</strong>
+      <span class="fs-month-kind">${credit ? 'Credit' : 'Charge'}</span>
+    </div>`;
+  }).join('');
   const upCharges = upSeries.filter(e => e.rate > 0).length;
   const upCredits = upSeries.length - upCharges;
   const upAvg = upSeries.reduce((s, e) => s + e.rate, 0) / upSeries.length;
@@ -4147,7 +4157,7 @@ function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url } = {}) {
 
     <section class="seo-section">
       <h2>Current rates — ${esc(nowMonth)}</h2>
-      <div class="comparison-table-wrapper">
+      <div class="comparison-table-wrapper fs-current-table">
         <table class="comparison-table">
           <thead><tr><th>State / DISCOM</th><th>Applies to</th><th>Current rate</th><th>Notice</th></tr></thead>
           <tbody>${currentRows}</tbody>
@@ -4167,12 +4177,7 @@ function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url } = {}) {
       Of the ${upSeries.length} months we have verified, ${upCharges} were a charge and
       ${upCredits} were a credit, averaging ${upAvg > 0 ? '+' : ''}${upAvg.toFixed(2)}%.</p>
       ${upChart}
-      <div class="comparison-table-wrapper">
-        <table class="comparison-table">
-          <thead><tr><th>Month</th><th>FPPAS</th><th>Effect</th></tr></thead>
-          <tbody>${upRows}</tbody>
-        </table>
-      </div>
+      <div class="fs-month-grid">${upRows}</div>
     </section>
 
     <section class="seo-section">

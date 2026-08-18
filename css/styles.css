@@ -4059,6 +4059,33 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .smr-steps strong { display: block; font-size: 14px; color: var(--text-primary); line-height: 1.35; }
 .smr-steps span { display: block; margin-top: 2px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; }
 
+/* ── UP monthly FPPAS ────────────────────────────────────────────────────────
+   One tile per notified month. The chart above shows the shape of the series; these carry the
+   figures it cannot. Credit and charge differ by colour AND by the word, so the distinction
+   never rests on colour alone. */
+.fs-month-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(116px, 1fr)); gap: 8px; }
+.fs-month {
+  display: flex; flex-direction: column; gap: 1px;
+  padding: 9px 11px; border-radius: 12px;
+  background: color-mix(in srgb, var(--err-text) 7%, var(--surface-card));
+  border: 1px solid color-mix(in srgb, var(--err-text) 16%, var(--border-subtle));
+}
+.fs-month.is-credit {
+  background: color-mix(in srgb, var(--ok-text) 8%, var(--surface-card));
+  border-color: color-mix(in srgb, var(--ok-text) 18%, var(--border-subtle));
+}
+.fs-month-when { font-size: 10.5px; font-weight: 700; color: var(--text-tertiary); letter-spacing: .02em; }
+.fs-month-rate {
+  font-size: 15.5px; font-weight: 800; color: var(--err-text);
+  font-variant-numeric: tabular-nums; line-height: 1.2;
+}
+.fs-month.is-credit .fs-month-rate { color: var(--ok-text); }
+.fs-month-kind { font-size: 10.5px; font-weight: 600; color: var(--text-secondary); }
+
+/* The current-rates table has four columns and seven rows; fit-content left it at 652 inside
+   760. Filling the column stops it reading as a fragment dropped in the corner. */
+.seo-page .fs-current-table { width: 100%; }
+
 /* ── Tariff database page ────────────────────────────────────────────────────
    The counts are the page's evidence, so they get the weight: this is the one page whose whole
    claim is "there is a real dataset behind the calculators". */
