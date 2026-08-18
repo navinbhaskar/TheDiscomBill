@@ -4709,8 +4709,12 @@ function smartMeterGuidePage(lang = 'en') {
   const threePoints = S.threePoints.map(p =>
     `<li><strong>${esc(T(lang, p.t))}</strong> ${t(p.d)}</li>`).join('\n        ');
 
+  // Every other link card on the site carries a line icon; these three sections were the only
+  // ones still running on text alone. The icon comes from the content file so it can say what
+  // the card is ABOUT - four guides that all live under /guides/ would otherwise take the same
+  // generic glyph and add nothing. cardIcon stays as the fallback.
   const card = (href, node) =>
-    `<a class="seo-link-card" href="${href}"><strong>${esc(T(lang, node.t))}</strong><span>${esc(T(lang, node.d))}</span></a>`;
+    `<a class="seo-link-card" data-icon="${node.icon || cardIcon('', href)}" href="${href}"><strong>${esc(T(lang, node.t))}</strong><span>${esc(T(lang, node.d))}</span></a>`;
 
   const wrongCards = S.wrongCards.map(c =>
     card(c.href.replace('%GUIDES%', guides), c)).join('\n        ');
