@@ -3097,8 +3097,11 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
   font-size: 9.5px; font-weight: 500; letter-spacing: 0; text-transform: none;
   color: var(--text-tertiary);
 }
+/* Not sticky. A sticky header needs a scroll container, and these tables sit in page flow
+   inside a wrapper with no height limit — so it resolved against the viewport, detached from
+   its own table and parked over the rows, hiding the second and third of them for most of the
+   scroll. On a seven-row table it hid more than it helped. */
 .comparison-table thead th {
-  position: sticky; top: 0; z-index: 2;
   background: var(--surface-sunken); color: var(--text-secondary);
   font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
   border-bottom: 1.5px solid var(--border-default);
@@ -3129,7 +3132,6 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 @media (min-width: 720px) {
   .comparison-table-wrapper { overflow-x: visible; }
   .comparison-table { min-width: 0; }
-  .comparison-table thead th { top: 60px; }
   /* overflow:visible no longer clips the corners — round the thead itself */
   .comparison-table thead th:first-child { border-top-left-radius: var(--radius-lg); }
   .comparison-table thead th:last-child { border-top-right-radius: var(--radius-lg); }
@@ -4084,7 +4086,9 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 
 /* The current-rates table has four columns and seven rows; fit-content left it at 652 inside
    760. Filling the column stops it reading as a fragment dropped in the corner. */
-.seo-page .fs-current-table { width: 100%; }
+/* The wrapper AND the table: setting only the wrapper left the table at its fit-content 651
+   inside a 760 box, which just moved the empty space rather than removing it. */
+.seo-page .fs-current-table, .seo-page .fs-current-table > .comparison-table { width: 100%; }
 
 /* ── Tariff database page ────────────────────────────────────────────────────
    The counts are the page's evidence, so they get the weight: this is the one page whose whole
@@ -4105,7 +4109,9 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 }
 /* Coverage table: 34 rows, so the head sticks and the identity column stays put while the
    figures scroll on a narrow screen. */
-.database-coverage th { position: sticky; top: 0; z-index: 1; background: var(--surface-sunken); }
+/* Same reasoning as .comparison-table: no scroll box, so this stuck to the viewport and
+   covered its own rows rather than heading them. */
+.database-coverage th { background: var(--surface-sunken); }
 .database-coverage td, .database-coverage th { white-space: nowrap; }
 .database-coverage td:first-child { font-weight: 600; }
 .database-coverage tbody tr:hover { background: var(--brand-faint); }
