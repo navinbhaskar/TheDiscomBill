@@ -7592,6 +7592,11 @@ html:not(.js) .m-btn-ring { display: none; }
   --label-w: 178px;      /* callout column: wide enough for "Late payment surcharge" on one line */
   --shared-w: 116px;     /* the three markers the meter shares, in the gap between the two */
   --gut-l: 168px;        /* that gap: marker plus both its leaders */
+  /* Trimming these does NOT widen the bill. The figure is shrink-to-fit, so smaller gutters
+     shrink the whole figure rather than handing the space over - measured at 633->556 for a
+     bill that went 261->246, i.e. slightly worse. The bill is narrow because .ub-stage splits
+     992px as 492 meter / 500 bill; widening it means taking the space from the meter, which is
+     a design decision about this page, not a tuning problem here. */
   margin: 0 0 8px;
   padding-right: calc(var(--lead) + var(--label-w));
   padding-left: var(--gut-l);
