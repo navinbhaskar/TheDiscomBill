@@ -6998,6 +6998,13 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
 .bc-step.is-done { color: var(--text-secondary); }
 .bc-step.is-done .bc-step-n { background: #16a34a; color: #fff; }
 
+/* The three stages are direct children of .seo-page, so the reading-measure rule
+   ".seo-section > *" never reached them and the dropzone painted the full 992 while the prose
+   above it stopped at 760. One column for the whole page, stages included: this is a form the
+   reader works down, and a target that overhangs its own instructions reads as a different
+   page element rather than the next step. */
+.check-bill-page > * { max-width: var(--w-text); }
+
 /* Dropzone. Dashed rather than solid so it reads as a target, not a card. */
 .bc-drop {
   display: flex; flex-direction: column; align-items: center; gap: 6px;
