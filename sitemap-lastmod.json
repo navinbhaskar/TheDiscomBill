@@ -4,40 +4,40 @@
     "lastmod": "2026-08-17"
   },
   "/bill-review/": {
-    "hash": "06f0405c5bb5eabd",
-    "lastmod": "2026-08-17"
+    "hash": "63e92ffaaf945f55",
+    "lastmod": "2026-08-18"
   },
   "/bill-review/sample-report/": {
-    "hash": "0e8c58b0fc9d45c4",
-    "lastmod": "2026-08-17"
+    "hash": "f0b9afd6878c322d",
+    "lastmod": "2026-08-18"
   },
   "/check-my-bill/": {
-    "hash": "5f3704fc73f4c5ba",
-    "lastmod": "2026-08-17"
+    "hash": "cfc426703d5a693f",
+    "lastmod": "2026-08-18"
   },
   "/compare/": {
-    "hash": "3227c9c4061f763a",
-    "lastmod": "2026-08-17"
+    "hash": "c212f94a6d33c84c",
+    "lastmod": "2026-08-18"
   },
   "/contact/": {
-    "hash": "6dcebfd5e4408511",
-    "lastmod": "2026-08-17"
+    "hash": "d6a4473fae05edd0",
+    "lastmod": "2026-08-18"
   },
   "/cookies/": {
-    "hash": "b9dac46908102554",
-    "lastmod": "2026-08-17"
+    "hash": "1247e9c800318d6e",
+    "lastmod": "2026-08-18"
   },
   "/database/": {
     "hash": "f867ffc644771b3a",
     "lastmod": "2026-08-17"
   },
   "/electricity-cost-calculator/": {
-    "hash": "bd982e8f3d37c979",
-    "lastmod": "2026-08-17"
+    "hash": "17991e1aa81dd238",
+    "lastmod": "2026-08-18"
   },
   "/ev-charging-calculator/": {
-    "hash": "118cabd557c1fb29",
-    "lastmod": "2026-08-17"
+    "hash": "3e0c584274d3682f",
+    "lastmod": "2026-08-18"
   },
   "/fppa/": {
     "hash": "c2549e5d21fd9e18",
@@ -1084,12 +1084,12 @@
     "lastmod": "2026-08-18"
   },
   "/install/": {
-    "hash": "2a756344fddfed46",
-    "lastmod": "2026-08-17"
+    "hash": "c523607cc2ffc2d9",
+    "lastmod": "2026-08-18"
   },
   "/methodology/": {
-    "hash": "4cf7ce76fee68aff",
-    "lastmod": "2026-08-17"
+    "hash": "c34be6c879a17be0",
+    "lastmod": "2026-08-18"
   },
   "/mr/glossary/": {
     "hash": "2213f887aeb26603",
@@ -1244,20 +1244,20 @@
     "lastmod": "2026-08-18"
   },
   "/privacy/": {
-    "hash": "a1e22ad719027a09",
-    "lastmod": "2026-08-17"
+    "hash": "9901fac1836c30ff",
+    "lastmod": "2026-08-18"
   },
   "/recharge-calculator/": {
-    "hash": "39fdf782a65f8d3f",
-    "lastmod": "2026-08-17"
+    "hash": "fa6253c293aee636",
+    "lastmod": "2026-08-18"
   },
   "/sanctioned-load-optimizer/": {
-    "hash": "6127e7e5b47bd4b9",
-    "lastmod": "2026-08-17"
+    "hash": "ab68716569e17e5e",
+    "lastmod": "2026-08-18"
   },
   "/services/": {
-    "hash": "ffed29ca2fb87289",
-    "lastmod": "2026-08-17"
+    "hash": "13065edf30963194",
+    "lastmod": "2026-08-18"
   },
   "/smart-meter-recharge/": {
     "hash": "4a5f34ae21501476",
@@ -1528,24 +1528,24 @@
     "lastmod": "2026-08-17"
   },
   "/smart-meter/amisp-list/": {
-    "hash": "40c1be3331189575",
-    "lastmod": "2026-08-17"
+    "hash": "ba1d6a45a74f0233",
+    "lastmod": "2026-08-18"
   },
   "/solar-battery-backup-calculator/": {
-    "hash": "9e33dc324166b45d",
-    "lastmod": "2026-08-17"
+    "hash": "64c323e6d894f564",
+    "lastmod": "2026-08-18"
   },
   "/solar-calculator/": {
-    "hash": "00d6f1d1f5c7873a",
-    "lastmod": "2026-08-17"
+    "hash": "610b70e45e68a801",
+    "lastmod": "2026-08-18"
   },
   "/solar-panel-size-calculator/": {
-    "hash": "03790a4206e4dd47",
-    "lastmod": "2026-08-17"
+    "hash": "b225354e179f22e7",
+    "lastmod": "2026-08-18"
   },
   "/solar-subsidy-checker/": {
-    "hash": "09ba35b7188fc1ea",
-    "lastmod": "2026-08-17"
+    "hash": "d2be770d39cb27c5",
+    "lastmod": "2026-08-18"
   },
   "/ta/glossary/": {
     "hash": "8e5d95956a3c3475",
@@ -1640,8 +1640,8 @@
     "lastmod": "2026-08-18"
   },
   "/tariffs/": {
-    "hash": "191fced3cb9d0a6c",
-    "lastmod": "2026-08-17"
+    "hash": "c1499bc1dd4ce8d3",
+    "lastmod": "2026-08-18"
   },
   "/tariffs/andhra-pradesh/": {
     "hash": "54c6eb449f8fc115",
@@ -2044,8 +2044,8 @@
     "lastmod": "2026-08-18"
   },
   "/tenant-submeter-calculator/": {
-    "hash": "da005a39d6b2b752",
-    "lastmod": "2026-08-17"
+    "hash": "b7025f3afd5a916f",
+    "lastmod": "2026-08-18"
   },
   "/understand-your-bill/": {
     "hash": "f19cd4cfce226457",

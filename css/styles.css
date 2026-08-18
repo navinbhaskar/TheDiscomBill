@@ -2912,7 +2912,11 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
   padding: 32px 24px 56px;   /* compact top padding — sticky header already reserves its space */
   border-top: 1px solid var(--border-default);
 }
-.comparison-section .container { max-width: var(--w-page); margin: 0 auto; }
+/* --w-page includes the shell's own 24px gutters everywhere else: .seo-page is 1040 wide
+   with padding, so its content lands on 992. Here the section supplies the gutters and the
+   container sat at the full 1040 inside them, which put /compare/ 48px wider than every other
+   page. Subtracting the pair lines its content up with the rest. */
+.comparison-section .container { max-width: calc(var(--w-page) - 48px); margin: 0 auto; }
 .comparison-section h1, .comparison-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; letter-spacing: -0.5px; text-align: center; }
 
 /* Spark divider — centered section/page titles get a small blue→amber current
@@ -3162,6 +3166,15 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 .comp-na { color: var(--text-tertiary); font-weight: 400; }
 /* Tariff-fact columns (slab rates, fixed charge, free units) — quieter than the bill amounts */
 .comparison-table td.comp-fact { color: var(--text-secondary); font-size: 12.5px; }
+/* Free units read as a property of the state's subsidy, not as a column to sort — so it
+   rides with the state name instead of occupying a cell that is blank for most rows. */
+.comp-free-tag {
+  display: inline-block; margin-left: 6px; padding: 1px 7px;
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--ok-text) 13%, transparent);
+  color: var(--ok-text); border: 1px solid color-mix(in srgb, var(--ok-text) 28%, transparent);
+  font-size: 10px; font-weight: 700; white-space: nowrap; vertical-align: 1px;
+}
 .comp-free { color: var(--success, #15803d); font-weight: 600; }
 
 .comp-loading { text-align: center !important; color: var(--text-tertiary); font-style: italic; padding: 30px !important; }

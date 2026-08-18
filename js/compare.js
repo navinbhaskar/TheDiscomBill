@@ -42,7 +42,7 @@ const MAJOR_DISCOMS = [
 // Flatten all state DISCOM arrays into a single lookup list.
 const ALL_DISCOMS = Object.values(TARIFF_DB).flat();
 
-const UNIT_TIERS = [200, 500, 1000];
+const UNIT_TIERS = [200, 500];
 
 // Fixed 1 kW sanctioned/connected load for every tier, so the comparison isolates the
 // per-unit energy + fixed charge differences between DISCOMs on a like-for-like basis.
@@ -128,8 +128,7 @@ function generateComparisonRows(categoryTarget) {
     const factCells =
       `<td class="num comp-fact">${f.firstSlab != null ? fmtRate(f.firstSlab) : '<span class="comp-na">—</span>'}</td>` +
       `<td class="num comp-fact">${f.topSlab != null ? fmtRate(f.topSlab) : '<span class="comp-na">—</span>'}</td>` +
-      `<td class="num comp-fact">${r.fixed != null ? fmt(r.fixed) : '<span class="comp-na">—</span>'}</td>` +
-      `<td class="num comp-fact">${f.freeUnits != null ? `<span class="comp-free">${f.freeUnits}</span>` : '<span class="comp-na">—</span>'}</td>`;
+      `<td class="num comp-fact">${r.fixed != null ? fmt(r.fixed) : '<span class="comp-na">—</span>'}</td>`;
     const cells = r.amounts.map((amt, col) => {
       if (amt === null) return `<td class="num comp-na">—</td>`;
       const isBest = columnMin[col] !== null && amt === columnMin[col];
@@ -145,7 +144,7 @@ function generateComparisonRows(categoryTarget) {
         <label class="comp-pick">
           <input type="checkbox" class="comp-pick-box" value="${escHtml(r.id)}"
                  aria-label="Compare ${escHtml(r.discom)} in detail">
-          <span><span class="comp-state">${r.state}</span><span class="comp-code">${r.discom}</span></span>
+          <span><span class="comp-state">${r.state}${f.freeUnits != null ? ` <span class="comp-free-tag" title="First ${f.freeUnits} units free under the state subsidy">${f.freeUnits} free</span>` : ''}</span><span class="comp-code">${r.discom}</span></span>
         </label>
       </td>
       ${factCells}
@@ -220,7 +219,7 @@ export function initComparisonTable() {
       tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-pressed', 'false'); });
       tab.classList.add('active');
       tab.setAttribute('aria-pressed', 'true');
-      tbody.innerHTML = `<tr><td colspan="8" class="comp-loading">Calculating…</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="6" class="comp-loading">Calculating…</td></tr>`;
       setTimeout(() => renderTable(tab.dataset.target), 30); // tiny timeout for the loading flash
     });
   });
