@@ -268,6 +268,8 @@ function render() {
   if (sum) sum.innerHTML = S.summary(r);
 }
 
+let syncing = false;   // guards the bill <-> units write-back, see init()
+
 function init() {
   if (!$('solMonthly')) return; // not on the solar page
 
@@ -278,6 +280,21 @@ function init() {
     if (sel && STATE_SUBS[sel.value]) sel.value = 'custom';
     const hint = $('solStateHint');
     if (hint) hint.hidden = true;
+  });
+
+  // Changing the tariff re-derives units FROM the bill, not the other way round. The bill is
+  // the fact the visitor supplied; the tariff is an assumption about it. Left alone, the two
+  // fields ended up contradicting each other - 250 units at ₹8 next to a ₹1,750 bill.
+  $('solRate').addEventListener('input', () => {
+    const amt = readNum('solBillAmt');
+    if (amt <= 0) return;
+    const rate = readNum('solRate', 7) || 7;
+    const units = Math.round(amt / rate);
+    const hint = $('solBillHint');
+    syncing = true;
+    $('solMonthly').value = units;
+    syncing = false;
+    if (hint) hint.textContent = SOL_STR[lang()].billConv(units);
   });
 
   ['solMonthly', 'solRoof', 'solRate', 'solState', 'solCost'].forEach(id =>
@@ -302,15 +319,30 @@ function init() {
     });
   });
 
-  // "I only know my bill amount" — one-way conversion: ₹ → units via the tariff rate.
-  // Typing units directly never touches this field, so there's no feedback loop.
+  // Bill and units are two views of one number, joined by the tariff. Either can be typed and
+  // the other follows. `syncing` is what stops that from looping: the write below fires an
+  // input event on the partner field, whose handler would write straight back.
+  $('solMonthly').addEventListener('input', () => {
+    if (syncing) return;
+    const units = readNum('solMonthly');
+    const rate = readNum('solRate', 7) || 7;
+    const hint = $('solBillHint');
+    syncing = true;
+    $('solBillAmt').value = units > 0 ? Math.round(units * rate) : '';
+    syncing = false;
+    if (hint) hint.textContent = units > 0 ? SOL_STR[lang()].billConv(units) : '';
+  });
+
   $('solBillAmt')?.addEventListener('input', () => {
+    if (syncing) return;
     const amt = readNum('solBillAmt');
     const rate = readNum('solRate', 7) || 7;
     const hint = $('solBillHint');
     if (amt > 0) {
       const units = Math.round(amt / rate);
+      syncing = true;
       $('solMonthly').value = units;
+      syncing = false;
       if (hint) hint.textContent = SOL_STR[lang()].billConv(units);
     }
     // Keep the slider under the thumb the user isn't holding. Clamped, because someone can
