@@ -1142,7 +1142,15 @@ function fitText(s, budget) {
   // A whole sentence is self-contained, so it earns a lower floor than a mid-clause cut:
   // Delhi's "…निकालें। 4 डिस्कॉम (BRPL (BSES Rajdhani), BYPL …" reads far better stopped at
   // the danda than carved out of the DISCOM list, even though the sentence is shorter.
-  const sentenceFloor = budget * 0.45;
+  //
+  // Raised from 0.45. At that floor a first sentence of 70 units satisfied a 155-unit budget
+  // and everything after it was discarded, which is how /tariffs/odisha/tpnodl/ came to ship
+  // "TPNODL electricity bill calculator for Odisha (Balasore, Bhadrak, Jajpur)" and nothing
+  // else - no year, no rates, no in-force date - across less than half the SERP line. 42 of
+  // the 101 English tariff pages were under three quarters of budget for this reason. A tidy
+  // half-empty snippet is not better than a full one that stops at a comma: the reader is
+  // choosing between results, not reading prose.
+  const sentenceFloor = budget * 0.75;
 
   // 1. Whole sentences. Handles Latin "." / "?" / "!" and the Devanagari danda "।".
   const parts = text.split(/(?<=[.?!।])\s+/);
@@ -2002,21 +2010,27 @@ function discomPage(state, discom, lang = 'en') {
   // a searcher at position 9 something no competing result does, where "— Tariff & Rates"
   // restates the query back at them. fitTitle() steps down to the old rotation for the long
   // DISCOM names ("Adani Electricity Mumbai") where the rate tag will not fit.
+  // The title leads with Tariff, not Bill Calculator. The Aug 2026 GSC export that prompted the
+  // H1 rewrite (see the note under it) put rate-intent queries at 2,359 impressions against 543
+  // for calculator-intent, with most of the rate queries at 0.00% CTR from page one - and that
+  // finding was applied to the H1 while the <title>, which is the thing a searcher actually
+  // reads in the SERP, kept leading with the losing noun.
+  //
+  // "Bill Calculator" stays in the string wherever it fits, because the calculator queries are
+  // small but they match this page exactly. Only the longest DISCOM names drop it.
+  //
+  // Year follows the site convention rather than breaking it: the calendar year belongs with
+  // "Bill Calculator" and the tariff-order FY with "Tariff", so leading with Tariff means the
+  // FY leads too - which is also the more precise claim, and the one the H1 already makes.
   const rt = rateTag(dr);
   const title = fitTitle(rt
-    ? `${cname} Bill Calculator ${TITLE_YEAR} — ${rt}`
-    : variant(seed, [
-      `${cname} Bill Calculator ${TITLE_YEAR} — Tariff & Rates`,
-      `${cname} Bill Calculator ${TITLE_YEAR} — ${state} Tariff`,
-      `${cname} Electricity Bill Calculator ${TITLE_YEAR}`,
-    ]), [
-    variant(seed, [
-      `${cname} Bill Calculator ${TITLE_YEAR} — Tariff & Rates`,
-      `${cname} Bill Calculator ${TITLE_YEAR} — ${state} Tariff`,
-      `${cname} Electricity Bill Calculator ${TITLE_YEAR}`,
-    ]),
-    `${cname} Bill Calculator ${TITLE_YEAR}`,
-    `${cname} Bill Calculator`,
+    ? `${cname} Tariff & Bill Calculator ${fy} — ${rt}`
+    : `${cname} Tariff & Bill Calculator ${fy}`, [
+    rt ? `${cname} Tariff ${fy} — ${rt}` : `${cname} Tariff ${fy} — Rates & Slabs`,
+    `${cname} Tariff & Bill Calculator ${fy}`,
+    `${cname} Tariff ${fy}`,
+    `${cname} Tariff & Bill Calculator`,
+    `${cname} Tariff`,
   ]);
   // "In force from 1 October 2025" replaces the "Free, no sign-up." sign-off wherever we know
   // the date. Tariff searches are freshness-sensitive and the SERP is full of pages quoting
