@@ -3078,13 +3078,31 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
    in the first column - 319px of it, holding names like "BESCOM" - while the rate columns
    stayed narrow. The table now sizes to its own content inside the column, so the gaps close
    instead of being distributed. */
-.comparison-section .container > * { max-width: var(--w-text); }
-/* max-width has to be restated: the column rule above outranks the wrapper's own
-   max-width:100%, and without this the card kept its 552px desktop width on a 327px phone. */
+/* margin-inline is part of the same statement: the intro paragraph and the head-to-head card
+   carry `margin: 0 auto` from when they were the page's centred hero content. Once the column
+   made them 760 wide inside a 992 box, that centring pushed exactly those two 116px right of
+   the H1, the tabs and the table - the page had two left edges. */
+.comparison-section .container > * { max-width: var(--w-text); margin-inline: 0 auto; }
+/* The card fills the column - shrink-to-fit left it 150px short of the H1, the tabs and the
+   head-to-head card above and below it, which is a notch in the page's right edge. What must
+   not come back is the old behaviour of handing all that width to the first column. So the
+   table is laid out on fixed proportions instead: every column gets a share, and the name
+   column gets the largest but not the remainder. */
 .comparison-section .comparison-table-wrapper {
-  margin-inline: 0; width: fit-content; max-width: min(var(--w-text), 100%);
+  margin-inline: 0; width: 100%; max-width: min(var(--w-text), 100%);
 }
-.comparison-section .comparison-table { width: auto; }
+.comparison-section .comparison-table { width: 100%; table-layout: fixed; }
+.comparison-section .comparison-table th:nth-child(1) { width: 26%; }
+.comparison-section .comparison-table th:nth-child(2) { width: 14%; }
+.comparison-section .comparison-table th:nth-child(3) { width: 15%; }
+.comparison-section .comparison-table th:nth-child(4) { width: 12%; }
+.comparison-section .comparison-table th:nth-child(5) { width: 16%; }
+.comparison-section .comparison-table th:nth-child(6) { width: 17%; }
+/* Fixed layout ignores content, so the phone needs a real floor or the six columns divide
+   327px into unreadable slivers. Below that the wrapper scrolls, as it did before. */
+@media (max-width: 720px) {
+  .comparison-section .comparison-table { min-width: 560px; }
+}
 /* Compact only here: this table is six columns of short numbers, and at the shared 8px/13px
    it was taller than the screen for seven rows. Scoped, so the guide tables that hold
    sentences keep their roomier cells. */
