@@ -5404,6 +5404,13 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   background-image: radial-gradient(ellipse 90% 60% at 50% 0%, rgba(59, 130, 246, .12), transparent 68%);
 }
 .about-section .container { max-width: var(--w-prose); margin: 0 auto; }
+
+/* The homepage FAQ is a .seo-section nested inside .about-section, so ".seo-section > *"
+   was capping its cards at --w-text (760) inside a 900px column — the accordion ended
+   short of the disclaimer directly above it. Let it use the whole about column instead.
+   Scoped to .about-section so FAQ blocks on content pages keep the reading measure. */
+.about-section .seo-section > *,
+.about-section .seo-section p { max-width: none; }
 .about-section h2 { font-size: 23px; font-weight: 600; color: var(--text-primary); margin-bottom: 14px; letter-spacing: -0.5px; }
 .about-section p { color: var(--text-secondary); margin-bottom: 18px; line-height: 1.75; }
 
