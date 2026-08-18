@@ -450,6 +450,65 @@ console.log('\n• advertised coverage matches the database');
   }
 }
 
+// ── 10. every NEW surcharge rate shows its source ─────────────────────────────
+// The rates in js/tariffs/fppa.js decide real money, and provenance for them lives in one
+// free-text `source` string — so a figure read off the regulator's order and one read off a
+// news report look identical. 26 of the 32 entries carry no order URL at all.
+//
+// Backfilling those is research, not code, so they are grandfathered below by name. The point
+// of this group is that the list may only ever shrink: any entry added from today has to carry
+// a sourceUrl and a verifiedOn, and an entry that gains one must be struck off the list. That
+// stops the gap growing while the backfill happens at whatever pace it happens.
+console.log('\n• new surcharge rates carry provenance');
+{
+  const GRANDFATHERED = new Set([
+    'state:Uttar Pradesh:2026-08-01', 'state:Uttar Pradesh:2026-07-01',
+    'state:Uttar Pradesh:2026-06-01', 'state:Uttar Pradesh:2026-05-01',
+    'state:Uttar Pradesh:2026-04-01', 'state:Uttar Pradesh:2026-03-01',
+    'state:Uttar Pradesh:2026-02-01', 'state:Uttar Pradesh:2026-01-01',
+    'state:Uttar Pradesh:2025-12-01', 'state:Uttar Pradesh:2025-11-01',
+    'state:Uttar Pradesh:2025-10-01', 'state:Uttar Pradesh:2025-09-01',
+    'state:Uttar Pradesh:2025-08-01', 'state:Uttar Pradesh:2025-07-01',
+    'state:Uttar Pradesh:2025-06-01', 'state:Uttar Pradesh:2025-05-01',
+    'state:Uttar Pradesh:2025-04-01',
+    'discom:brpl:2025-05-09',  'discom:brpl:2025-07-01',
+    'discom:bypl:2025-05-09',  'discom:bypl:2025-07-01',
+    'discom:tpddl:2025-05-09', 'discom:tpddl:2025-07-01',
+    'discom:jvvnl:2025-10-01', 'discom:avvnl:2025-10-01', 'discom:jdvvnl:2025-10-01',
+  ]);
+
+  const FPPA = await import(pathToFileURL(path.join(ROOT, 'js', 'tariffs', 'fppa.js')).href);
+  const entries = [
+    ...Object.entries(FPPA.FPPA_BY_STATE).flatMap(([k, l]) => l.map(e => ['state', k, e])),
+    ...Object.entries(FPPA.FPPA_BY_DISCOM).flatMap(([k, l]) => l.map(e => ['discom', k, e])),
+  ];
+
+  const problems = [];
+  for (const [scope, key, e] of entries) {
+    const id = scope + ':' + key + ':' + e.from;
+    const sourced = !!e.sourceUrl && !!e.verifiedOn;
+    if (sourced) {
+      // A rate that has since been sourced must leave the list, or the list stops meaning much.
+      if (GRANDFATHERED.has(id)) problems.push(id + ' — now sourced; remove it from GRANDFATHERED');
+      continue;
+    }
+    if (GRANDFATHERED.has(id)) continue;
+    const missing = [!e.sourceUrl && 'sourceUrl', !e.verifiedOn && 'verifiedOn'].filter(Boolean);
+    problems.push(id + ' — new rate, missing ' + missing.join(' + '));
+  }
+  // An entry that no longer exists should not linger on the list either.
+  const ids = new Set(entries.map(([s, k, e]) => s + ':' + k + ':' + e.from));
+  for (const id of GRANDFATHERED) if (!ids.has(id)) problems.push(id + ' — gone from fppa.js; remove it from GRANDFATHERED');
+
+  if (problems.length) {
+    fail('surcharge rates need a source:\n    ' + problems.join('\n    '));
+  } else {
+    passed++;
+    console.log('  ✓ ' + (entries.length - GRANDFATHERED.size) + '/' + entries.length
+      + ' rates carry an order URL + verification date; ' + GRANDFATHERED.size + ' grandfathered, none added');
+  }
+}
+
 // ── summary ───────────────────────────────────────────────────────────────────
 console.log(`\n${failed ? '✗' : '✓'} site checks — ${passed} groups passed, ${failed} failures\n`);
 process.exit(failed ? 1 : 0);
