@@ -35,7 +35,7 @@ const SOL_STR = {
     years: ' years', unitsMo: ' units/mo', capped: ' (capped at 3 kW)', perMo: '/mo', tPerYr: ' t/yr',
     pullEst: (n) => `Use my estimate (${n} units)`,
     pullTitle: 'Build an estimate on the Electricity Cost Calculator page first',
-    billConv: (u) => `≈ ${u} units at your tariff — filled in above.`,
+    billConv: (u) => `≈ ${u} units a month at your tariff. Change the tariff under Adjust assumptions.`,
     upNote: 'UPNEDA top-up: ₹15,000/kW up to ₹30,000 — limited to the first 1,00,000 installations.',
     asNote: 'Assam state top-up: ₹15,000/kW, capped at ₹45,000 (3 kW and above).',
     // The one-sentence version of the whole result card. Deliberately concrete: size, what it
@@ -61,7 +61,7 @@ const SOL_STR = {
     years: ' वर्ष', unitsMo: ' यूनिट/माह', capped: ' (3 kW पर कैप)', perMo: '/माह', tPerYr: ' टन/वर्ष',
     pullEst: (n) => `मेरा अनुमान इस्तेमाल करें (${n} यूनिट)`,
     pullTitle: 'पहले बिजली लागत कैलकुलेटर पेज पर अनुमान बनाएँ',
-    billConv: (u) => `≈ ${u} यूनिट आपके टैरिफ पर — ऊपर भर दिया गया।`,
+    billConv: (u) => `≈ ${u} यूनिट प्रति माह आपके टैरिफ पर। टैरिफ बदलने के लिए 'अनुमान बदलें' खोलें।`,
     upNote: 'UPNEDA टॉप-अप: ₹15,000/kW, अधिकतम ₹30,000 — पहले 1,00,000 इंस्टॉलेशन तक सीमित।',
     asNote: 'असम राज्य टॉप-अप: ₹15,000/kW, अधिकतम ₹45,000 (3 kW और ऊपर)।',
     summary: (r) => {
