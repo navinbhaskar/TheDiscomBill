@@ -1444,6 +1444,10 @@ function cardIcon(title, href = '') {
   if (/fppa|fuel-surcharge/.test(h)) return 'trend';
   if (/tariffs/.test(h)) return 'table';
   if (/guides/.test(h)) return 'guide';
+  if (/glossary/.test(h)) return 'guide';
+  if (/sanctioned-load|load-optimizer/.test(h)) return 'gauge';
+  if (/check-my-bill|bill-review/.test(h)) return 'doc';
+  if (/#calculator|estimator|electricity-cost/.test(h)) return 'calc';
   return 'doc';
 }
 
@@ -4945,7 +4949,7 @@ function understandBillPage(lang = 'en') {
     })),
   };
 
-  const card = (c) => `<a class="seo-link-card" href="${attr(c.href)}">`
+  const card = (c) => `<a class="seo-link-card" data-icon="${cardIcon('', c.href)}" href="${attr(c.href)}">`
     + `<strong>${esc(T(lang, c.t))}</strong><span>${esc(T(lang, c.d))}</span></a>`;
 
   const body = `

@@ -592,12 +592,14 @@ export function billHtml(r) {
     `<tr><td>${esc(s.label)}</td><td class="num">${esc(s.units)}</td>`
     + `<td class="num">${esc(s.rate)}</td><td class="num">${esc(s.amount)}</td></tr>`).join('');
 
+  // The badge only. This line used to also print r.source.label and a link to r.source.url —
+  // but label IS b.tariffAsOf, which the <dl> below prints as "Last verified", and the same URL
+  // is its "Official source". Two of the footer's three facts were being stated twice.
   const src = r.source.label
-    ? `<p class="bill-source">${esc(r.source.label)}`
+    ? `<p class="bill-source">`
       + (r.source.verified
-        ? ` <span class="bill-badge is-ok">${esc(r.S.verified)}</span>`
-        : ` <span class="bill-badge">${esc(r.S.representative)}</span>`)
-      + (r.source.url ? ` · <a href="${esc(r.source.url)}" target="_blank" rel="noopener">${esc(r.S.source)}</a>` : '')
+        ? `<span class="bill-badge is-ok">${esc(r.S.verified)}</span>`
+        : `<span class="bill-badge">${esc(r.S.representative)}</span>`)
       + `</p>${tariffProvenanceHtml(r.source)}`
     : '';
 
