@@ -4388,6 +4388,16 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   background: color-mix(in srgb, var(--surface-card) 55%, transparent);
 }
 .seo-link-tick { color: var(--ok-text); font-weight: 800; }
+/* DISCOM pages sit in the same 1040 shell as every other content page, but these three
+   blocks are direct children of .seo-page, so the reading-measure rule ".seo-section > *"
+   never reached them and they painted the full 992 while the article below them stopped at
+   979. That 13px overhang is what made the page read as wider than its neighbours. Same
+   measure for the meta lines under the H1, which were wrapping at 992. */
+.seo-page > .seo-discom-head,
+.seo-page > .discom-tool-panel,
+.seo-page > .discom-portal-actions,
+.seo-page > p { max-width: var(--w-text); }
+
 .discom-tool-panel {
   display: flex;
   align-items: center;
