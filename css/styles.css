@@ -203,6 +203,8 @@
   --w-text:    760px;
   --w-narrow:  620px;
 
+  /* Card icon glyphs — see the Card icons block below for how they are used. */
+
   /* ── Legacy aliases — keeps existing CSS references working ── */
   --blue:       var(--p-blue-700);
   --blue-dark:  var(--p-blue-900);
@@ -4061,6 +4063,67 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .seo-cta:hover { background: var(--brand-hover); transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 12px 28px -8px rgba(29, 78, 216, .65); }
 
 .seo-discom-head { background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 16px 18px; box-shadow: var(--shadow-sm); margin-bottom: 12px; }
+
+/* ── Card icons ──────────────────────────────────────────────────────────────
+   Line glyphs drawn as CSS masks rather than inline <svg>, so the whole set is defined once
+   here and cached, instead of ~2KB of markup repeating on each of the 476 DISCOM pages. A mask
+   also lets one glyph take any hue, which inline paths with baked-in stroke colours cannot.
+
+   Bare icon, no tinted chip behind it: nine of these sit together on a DISCOM page and a
+   container around each is what tips the block from scannable into busy.
+
+   Decorative — every card still carries its own text label, so no icon is the sole carrier of
+   meaning and none needs an accessible name. */
+:root {
+  --ic-calc: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='2' width='16' height='20' rx='2'/%3E%3Cpath d='M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h8'/%3E%3C/svg%3E");
+  --ic-table: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Cpath d='M3 10h18M3 15h18M9 4v16'/%3E%3C/svg%3E");
+  --ic-trend: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 17l6-6 4 4 8-8'/%3E%3Cpath d='M15 7h6v6'/%3E%3C/svg%3E");
+  --ic-doc: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpath d='M14 2v6h6M8 13h8M8 17h5'/%3E%3C/svg%3E");
+  --ic-cash: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='6' width='20' height='12' rx='2'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='M6 12h.01M18 12h.01'/%3E%3C/svg%3E");
+  --ic-chat: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'/%3E%3C/svg%3E");
+  --ic-gauge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 14l4-4'/%3E%3Cpath d='M20.5 15a9 9 0 1 0-17 0'/%3E%3C/svg%3E");
+  --ic-sun: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4'/%3E%3C/svg%3E");
+  --ic-globe: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M2 12h20'/%3E%3Cpath d='M12 2a15 15 0 0 1 0 20'/%3E%3Cpath d='M12 2a15 15 0 0 0 0 20'/%3E%3C/svg%3E");
+  --ic-guide: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'/%3E%3Cpath d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'/%3E%3C/svg%3E");
+  --ic-compare: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v18M6 8l-4 4 4 4M18 8l4 4-4 4'/%3E%3C/svg%3E");
+  --ic-plug: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-12 0z'/%3E%3Cpath d='M12 18v4'/%3E%3C/svg%3E");
+}
+.discom-action-card[data-icon]::before,
+.seo-link-card.is-compact[data-icon]::before {
+  content: ''; display: block; flex: none;
+  width: 19px; height: 19px; margin-bottom: 7px;
+  background: var(--card-icon, var(--brand));
+  -webkit-mask: var(--ic) center / contain no-repeat;
+          mask: var(--ic) center / contain no-repeat;
+}
+.seo-link-card.is-compact[data-icon]::before { width: 16px; height: 16px; margin-bottom: 5px; }
+
+[data-icon="calc"]    { --ic: var(--ic-calc);    --card-icon: #2563eb; }
+[data-icon="table"]   { --ic: var(--ic-table);   --card-icon: #6366f1; }
+[data-icon="trend"]   { --ic: var(--ic-trend);   --card-icon: #b45309; }
+[data-icon="doc"]     { --ic: var(--ic-doc);     --card-icon: #0d9488; }
+[data-icon="cash"]    { --ic: var(--ic-cash);    --card-icon: #15803d; }
+[data-icon="chat"]    { --ic: var(--ic-chat);    --card-icon: #be123c; }
+[data-icon="gauge"]   { --ic: var(--ic-gauge);   --card-icon: #0891b2; }
+[data-icon="sun"]     { --ic: var(--ic-sun);     --card-icon: #d97706; }
+[data-icon="globe"]   { --ic: var(--ic-globe);   --card-icon: #64748b; }
+[data-icon="guide"]   { --ic: var(--ic-guide);   --card-icon: #7c3aed; }
+[data-icon="compare"] { --ic: var(--ic-compare); --card-icon: #0ea5e9; }
+[data-icon="plug"]    { --ic: var(--ic-plug);    --card-icon: #059669; }
+/* The 600-weight hues are chosen for white; on the dark page they sit too dark against the
+   card, so each lifts toward its lighter neighbour. */
+:root[data-theme="dark"] [data-icon="calc"]    { --card-icon: #60a5fa; }
+:root[data-theme="dark"] [data-icon="table"]   { --card-icon: #a5b4fc; }
+:root[data-theme="dark"] [data-icon="trend"]   { --card-icon: #fbbf24; }
+:root[data-theme="dark"] [data-icon="doc"]     { --card-icon: #5eead4; }
+:root[data-theme="dark"] [data-icon="cash"]    { --card-icon: #4ade80; }
+:root[data-theme="dark"] [data-icon="chat"]    { --card-icon: #fb7185; }
+:root[data-theme="dark"] [data-icon="gauge"]   { --card-icon: #67e8f9; }
+:root[data-theme="dark"] [data-icon="sun"]     { --card-icon: #fbbf24; }
+:root[data-theme="dark"] [data-icon="globe"]   { --card-icon: #cbd5e1; }
+:root[data-theme="dark"] [data-icon="guide"]   { --card-icon: #c4b5fd; }
+:root[data-theme="dark"] [data-icon="compare"] { --card-icon: #7dd3fc; }
+:root[data-theme="dark"] [data-icon="plug"]    { --card-icon: #6ee7b7; }
 
 /* ── Secondary link blocks ───────────────────────────────────────────────────
    Guides, tools, quick links and sibling states are ways off the page, not the page. On the

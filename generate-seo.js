@@ -1419,6 +1419,34 @@ function servicesHubUrl(state, discom, tab = 'pay') {
   return `/services/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#${tab}`;
 }
 
+
+// ── Card icons ───────────────────────────────────────────────────────────────
+// A line glyph per destination, drawn in CSS as a mask so one SVG can take any hue (see
+// --ic-* in styles.css). Deliberately a bare icon rather than a tinted chip: nine of these
+// sit together on a DISCOM page, and a container around each one is what tips the block from
+// scannable into busy. Decorative only — every card still carries its own text label, so the
+// icon is never the sole carrier of meaning and needs no accessible name.
+const CARD_ICONS = {
+  'Calculate bill': 'calc', 'Current tariff': 'table', 'Latest FPPA/FAC': 'trend',
+  'Bill examples': 'doc', 'Pay or view bill': 'cash', 'Complaint': 'chat',
+  'Smart meter': 'gauge', 'Solar': 'sun', 'Official site': 'globe',
+  'View bill': 'doc', 'Pay bill': 'cash', 'New connection': 'plug', 'Load change': 'gauge',
+};
+// Open-ended lists (guides, tools) cannot be keyed by title, so they are keyed by where the
+// link goes — the one thing that is always known — and fall back to a neutral glyph.
+function cardIcon(title, href = '') {
+  if (CARD_ICONS[title]) return CARD_ICONS[title];
+  const h = String(href);
+  if (/solar/.test(h)) return 'sun';
+  if (/compare/.test(h)) return 'compare';
+  if (/smart-meter/.test(h)) return 'gauge';
+  if (/new-connection|services/.test(h)) return 'plug';
+  if (/fppa|fuel-surcharge/.test(h)) return 'trend';
+  if (/tariffs/.test(h)) return 'table';
+  if (/guides/.test(h)) return 'guide';
+  return 'doc';
+}
+
 function discomPortalActionsHtml(state, discom) {
   const stateSlug = slugify(state);
   const nm = esc(discom.name);
@@ -1438,7 +1466,7 @@ function discomPortalActionsHtml(state, discom) {
   return `
     <nav class="discom-portal-actions" aria-label="${attr(discom.name)} consumer portal shortcuts">
       ${actions.map(([title, href, sub, external]) =>
-        `<a class="discom-action-card" href="${attr(href)}"${external ? ' target="_blank" rel="noopener"' : ''}><strong>${title}</strong><span>${sub}</span></a>`).join('')}
+        `<a class="discom-action-card" data-icon="${cardIcon(title, href)}" href="${attr(href)}"${external ? ' target="_blank" rel="noopener"' : ''}><strong>${title}</strong><span>${sub}</span></a>`).join('')}
     </nav>`;
 }
 
@@ -1758,7 +1786,7 @@ function discomServiceLinksHtml(state, discom, lang = 'en') {
       <h2>${heading}</h2>
       <div class="seo-link-grid is-compact">
         ${links.map(([href, title, sub]) =>
-          `<a class="seo-link-card is-compact" href="${href}"><strong>${title}</strong><span>${sub}</span></a>`).join('')}
+          `<a class="seo-link-card is-compact" data-icon="${cardIcon(title, href)}" href="${href}"><strong>${title}</strong><span>${sub}</span></a>`).join('')}
       </div>
     </section>`;
 }
@@ -1824,7 +1852,7 @@ function guideLinksHtml(state, discom, lang = 'en') {
     const href = (lang !== 'en' && guideHasBody(g, lang)) ? `/${lang}/guides/${g.slug}/` : `/guides/${g.slug}/`;
     const title = guideField(g, 'title', lang) || g.title;
     const mins = T(lang, { en: `${g.minutes} min read`, hi: `${g.minutes} मिनट`, mr: `${g.minutes} मिनिटे`, ta: `${g.minutes} நிமிட வாசிப்பு` });
-    return `<a class="seo-link-card is-compact" href="${href}"><strong>${esc(title)}</strong><small>${mins}</small></a>`;
+    return `<a class="seo-link-card is-compact" data-icon="guide" href="${href}"><strong>${esc(title)}</strong><small>${mins}</small></a>`;
   }).join('');
   const allHref = `${lang === 'en' ? '' : '/' + lang}/guides/`;
   const heading = T(lang, { en: `Guides for ${esc(discom.name)} consumers`, hi: `${esc(discom.name)} बिल से जुड़ी गाइड`, mr: `${esc(discom.name)} ग्राहकांसाठी मार्गदर्शक`, ta: `${esc(discom.name)} நுகர்வோருக்கான வழிகாட்டிகள்` });
@@ -1847,7 +1875,7 @@ function stateGuideLinksHtml(state, lang = 'en') {
     const href = (lang !== 'en' && guideHasBody(g, lang)) ? `/${lang}/guides/${g.slug}/` : `/guides/${g.slug}/`;
     const title = guideField(g, 'title', lang) || g.title;
     const mins = T(lang, { en: `${g.minutes} min read`, hi: `${g.minutes} मिनट`, mr: `${g.minutes} मिनिटे`, ta: `${g.minutes} நிமிட வாசிப்பு` });
-    return `<a class="seo-link-card is-compact" href="${href}"><strong>${esc(title)}</strong><small>${mins}</small></a>`;
+    return `<a class="seo-link-card is-compact" data-icon="guide" href="${href}"><strong>${esc(title)}</strong><small>${mins}</small></a>`;
   }).join('');
   const heading = T(lang, {
     en: `Guides for ${esc(state)} consumers`, hi: `${esc(stateName(state, 'hi'))} के उपभोक्ताओं के लिए गाइड`,
@@ -1892,7 +1920,7 @@ function stateToolLinksHtml(state, lang = 'en') {
       <h2>${heading}</h2>
       <div class="seo-link-grid is-compact">
         ${links.map(([href, title, sub]) =>
-          `<a class="seo-link-card is-compact" href="${href}"><strong>${title}</strong><span>${sub}</span></a>`).join('')}
+          `<a class="seo-link-card is-compact" data-icon="${cardIcon(title, href)}" href="${href}"><strong>${title}</strong><span>${sub}</span></a>`).join('')}
       </div>
     </section>`;
 }
