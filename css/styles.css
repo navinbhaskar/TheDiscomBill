@@ -5198,9 +5198,16 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .solar-pull { flex-shrink: 0; padding: 0 12px; height: 40px; border: 1px solid var(--brand); background: var(--brand-faint); color: var(--text-brand); border-radius: var(--radius-md); font-size: 12.5px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background var(--t-fast); }
 .solar-pull:hover { background: var(--brand-subtle); }
 .solar-pull.is-disabled { border-color: var(--border-default); background: var(--surface-sunken); color: var(--text-tertiary); }
-.solar-adv { margin-top: 14px; border-top: 1px solid var(--border-subtle); padding-top: 12px; }
-.solar-adv summary { font-size: 12.5px; font-weight: 600; color: var(--text-secondary); cursor: pointer; }
-.solar-adv .solar-field { margin-top: 12px; }
+/* Assumptions, shown rather than hidden behind a summary. Kept visually subordinate to the
+   one question above it - smaller labels, a rule instead of a card - so it reads as the fine
+   print of that field and not as a second form. */
+.solar-assume { margin-top: 18px; border-top: 1px solid var(--border-subtle); padding-top: 14px; }
+.solar-assume-title {
+  margin: 0 0 12px; font-size: 11.5px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--text-tertiary);
+}
+.solar-assume .solar-field { margin-top: 12px; }
+.solar-assume .solar-field > label { font-size: 12px; }
 
 .solar-results { position: sticky; top: 92px; }
 .solar-empty { background: var(--surface-card); border: 1px dashed var(--border-default); border-radius: var(--radius-lg); padding: 28px 18px; text-align: center; color: var(--text-tertiary); font-size: 13.5px; font-style: italic; }
@@ -5238,12 +5245,12 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .solar-how-steps { counter-reset: solstep; list-style: none; margin: 14px 0 0; padding: 0; }
 .solar-how-steps li {
   counter-increment: solstep; position: relative;
-  padding: 0 0 14px 38px; font-size: 13.5px; line-height: 1.6; color: var(--text-secondary);
+  padding: 0 0 11px 34px; font-size: 13.5px; line-height: 1.6; color: var(--text-secondary);
 }
 .solar-how-steps li:last-child { padding-bottom: 0; }
 .solar-how-steps li::before {
-  content: counter(solstep); position: absolute; left: 0; top: -1px;
-  width: 25px; height: 25px; border-radius: 50%;
+  content: counter(solstep); position: absolute; left: 0; top: 0;
+  width: 22px; height: 22px; border-radius: 50%;
   display: grid; place-items: center;
   font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums;
   color: var(--sol-step-fg); background: var(--sol-step-bg);
@@ -5251,7 +5258,7 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 /* The rule joining the steps: the chain is the point, so the numbers are linked rather than
    left floating beside their paragraphs. Stops short of the last marker. */
 .solar-how-steps li:not(:last-child)::after {
-  content: ''; position: absolute; left: 12px; top: 27px; bottom: 4px;
+  content: ''; position: absolute; left: 11px; top: 24px; bottom: 3px;
   width: 1px; background: var(--border-default);
 }
 .solar-how-steps strong { color: var(--text-primary); font-weight: 650; }
@@ -5344,17 +5351,6 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .solar-or::before, .solar-or::after { content: ''; flex: 1; height: 1px; background: var(--border-subtle); }
 
 /* 25-year savings chart */
-.solar-chart-card { background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 14px 16px 10px; margin-top: 14px; box-shadow: var(--shadow-sm); }
-.solar-chart-title { font-size: 12.5px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; }
-.solar-chart-be { text-align: center; font-size: 12px; font-weight: 600; color: var(--success-text); padding: 4px 0 2px; }
-/* Full-width variant: the chart/bars sit below the two-column form+results (not inside the
-   340px results rail), so the graph gets real horizontal room instead of being squeezed. */
-.solar-chart-card-wide {
-  margin-top: 18px; padding: 20px 24px 18px;
-}
-.solar-chart-card-wide .solar-chart-title { font-size: 14px; margin-bottom: 14px; }
-.solar-chart-card-wide .solar-share { max-width: 360px; margin-left: auto; margin-right: auto; }
-
 /* Year-by-year savings projection table — deliberately quiet: thin weights,
    hairline rules, tabular figures, colour reserved for the net position only. */
 .solar-proj-card { background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 22px 24px 16px; margin-top: 22px; box-shadow: var(--shadow-sm); }
@@ -7011,12 +7007,6 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
    you actually hold. Track colours come from the palette so both themes work unstyled. */
 /* Selector carries .solar-field so it outranks `.solar-field input`, which otherwise paints
    the range track as a 40px bordered box. */
-.solar-field input.solar-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; margin: 12px 0 4px; padding: 0; border: 0; border-radius: var(--radius-full); background: var(--border-default); cursor: pointer; }
-.solar-field input.solar-slider:focus { box-shadow: none; }
-.solar-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--brand); border: 2px solid var(--surface-card); box-shadow: var(--shadow-sm); cursor: grab; }
-.solar-slider::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--brand); border: 2px solid var(--surface-card); box-shadow: var(--shadow-sm); cursor: grab; }
-.solar-slider:focus-visible { outline: 2px solid var(--brand); outline-offset: 4px; }
-.solar-slider-scale { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; margin-bottom: 6px; }
 
 .solar-summary { margin: 12px 0 0; padding: 12px 14px; border: 1px solid var(--border-subtle); border-left: 3px solid var(--brand); border-radius: var(--radius-md); background: var(--brand-faint); font-size: 14.5px; line-height: 1.6; color: var(--text-secondary); }
 .solar-summary strong { color: var(--text-primary); font-weight: 700; }
