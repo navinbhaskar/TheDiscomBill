@@ -4633,6 +4633,14 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 }
 
 @media (max-width: 560px) {
+  /* The label column is nowrap so a fact and its value stay on one line, but at 375px that
+     forces the table min-content wider than the column - 334px inside 327 - and max-width:100%
+     cannot shrink a table below its min-content. It has no scroll wrapper, so it simply spilled.
+     Wrapping the labels is better here than a sideways scroll on a two-column facts table. */
+  .seo-facts th, .seo-facts td { white-space: normal; overflow-wrap: anywhere; }
+  .seo-facts { width: 100%; }
+}
+@media (max-width: 560px) {
   .seo-page h1 { font-size: 22px; }
   .seo-lead { font-size: 15px; }
 }
