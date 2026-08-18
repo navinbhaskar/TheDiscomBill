@@ -7663,11 +7663,6 @@ html:not(.js) .m-btn-ring { display: none; }
 }
 .ub-hint { font-size: 12px; color: var(--text-tertiary); padding-left: 25px; }
 .ub-hint-md { grid-column: 1 / -1; margin: -4px 0 0; padding-left: 0; }
-/* Maximum demand sits on its own row rather than beside the load: it is optional, and
-   putting it third in a row of three read as a required field like the two before it.
-   Capped in width because a number input the width of the card looks like it wants an
-   essay. */
-.ub-field-own-row { grid-column: 1 / -1; max-width: 280px; }
 .ub-optional {
   margin-left: 5px; padding: 1px 6px; border-radius: var(--radius-full);
   font-size: 10px; font-weight: 700; letter-spacing: .3px; text-transform: uppercase;

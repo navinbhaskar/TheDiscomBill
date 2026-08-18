@@ -5011,7 +5011,7 @@ function understandBillPage(lang = 'en') {
           <label for="ubLoad">${esc(T(lang, U.ctl.load))}</label>
           <input type="number" id="ubLoad" name="load" min="0.5" max="150" step="0.5" value="${scenario.connectedLoadKw}" inputmode="decimal">
         </div>
-        <div class="ub-field ub-field-own-row">
+        <div class="ub-field">
           <label for="ubMd">${esc(T(lang, U.ctl.md))} <span class="ub-optional">${esc(T(lang, U.ctl.optional))}</span></label>
           <input type="number" id="ubMd" name="md" min="0" max="500" step="0.1" placeholder="${attr(scenario.md)}" inputmode="decimal">
         </div>
