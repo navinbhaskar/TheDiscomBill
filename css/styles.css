@@ -150,6 +150,12 @@
   --success-border: var(--p-green-600);
   --success-faint: color-mix(in srgb, var(--p-green-600) 8%, var(--surface-card));
   --success-text: var(--p-green-800);
+  /* Meter-to-bill route hues (understand-your-bill). Blue / amber / violet: blue and amber
+     already differ in lightness as well as hue, and violet stays clear of both under
+     red-green colour blindness. */
+  --ub-route-read: var(--brand);
+  --ub-route-md:   #b45309;
+  --ub-route-id:   #7c3aed;
   --warn-bg:  var(--p-amber-50);
   --warn-text:var(--p-amber-700);
   --err-bg:   var(--p-red-50);
@@ -274,6 +280,7 @@
 
   --ok-bg: #10311e; --ok-text: #5fd089; --ok-border: #1c5234;
   --success-text: var(--ok-text);   /* fills stay green-700; only the text role inverts */
+  --ub-route-read: #60a5fa; --ub-route-md: #fbbf24; --ub-route-id: #c4b5fd;
   --warn-bg: #3a2e10; --warn-text: #f1b54a;
   --err-bg: #3a1618; --err-text: #f3868a;
 
@@ -7720,17 +7727,23 @@ html:not(.js) .m-btn-ring { display: none; }
   transition: stroke var(--t-base), stroke-width var(--t-base), opacity var(--t-base);
   filter: drop-shadow(0 1px 0 var(--surface-page)) drop-shadow(0 -1px 0 var(--surface-page));
 }
-.ub-link[data-link="present-reading"] { stroke: var(--brand); }
-.ub-link[data-link="md"] { stroke: #b45309; stroke-dasharray: 5 5; }
-.ub-link[data-link="meter-number"] { stroke: var(--text-tertiary); stroke-dasharray: 1.5 4; opacity: .72; }
+/* Three solid routes, told apart by hue alone. The dash patterns went because they were doing
+   no work colour was not already doing, and the finest of them - meter number, dotted 1.5/4 at
+   72% opacity - measured 2.06:1 against the page, under the 3:1 that WCAG 1.4.11 asks of a
+   graphic carrying meaning. Hue is safe as the only channel here because every route also
+   carries its numbered label at the midpoint, so identity never rests on colour.
+   Each hue has a dark-mode value: the light ones are chosen against the page, not the ink. */
+.ub-link[data-link="present-reading"] { stroke: var(--ub-route-read); }
+.ub-link[data-link="md"] { stroke: var(--ub-route-md); }
+.ub-link[data-link="meter-number"] { stroke: var(--ub-route-id); }
 .ub-link-label {
   font-size: 10px; font-weight: 800; text-anchor: middle; dominant-baseline: central;
   fill: #fff; stroke: var(--surface-page); stroke-width: 3px; paint-order: stroke fill;
   pointer-events: none; opacity: .9;
 }
-.ub-link-label[data-link-label="present-reading"] { fill: var(--brand); }
-.ub-link-label[data-link-label="md"] { fill: #b45309; }
-.ub-link-label[data-link-label="meter-number"] { fill: var(--text-tertiary); }
+.ub-link-label[data-link-label="present-reading"] { fill: var(--ub-route-read); }
+.ub-link-label[data-link-label="md"] { fill: var(--ub-route-md); }
+.ub-link-label[data-link-label="meter-number"] { fill: var(--ub-route-id); }
 /* Every route is drawn the same. is-live decides only WHETHER a register's route is shown —
    the display holds one at a time, so press the meter and 7 gives way to 9 — never how it
    looks. The markers themselves stay put; they are links to the explanations, and moving or
