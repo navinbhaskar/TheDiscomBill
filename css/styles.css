@@ -3693,11 +3693,16 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 
 /* Glossary (/glossary/) */
 .glossary-index {
-  display: flex; flex-wrap: wrap; gap: 8px;
-  margin: 4px 0 32px; padding: 16px;
+  /* Sits directly under .seo-page rather than inside a .seo-section, so ".seo-section > *"
+     never capped it and the index ran the full 992px content box while the lead above it
+     stopped at 760 — the one block on the page with a different right edge. */
+  max-width: var(--w-text);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  margin: 4px 0 32px; padding: 13px 15px;
   background: var(--surface-sunken); border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg); scroll-margin-top: 76px;
 }
+.glossary-index .page-toc-label { flex: 0 0 100%; margin: 0 0 2px; }
 .glossary-chip {
   font-size: 13px; font-weight: 600; color: var(--text-brand); text-decoration: none;
   padding: 6px 12px; border-radius: var(--radius-full);

@@ -3646,7 +3646,7 @@ function glossaryPage(lang = 'en') {
     ${breadcrumbs([{ name: bcHome, url: '/' }, { name: crumbName, url: null, i18n: 'gloss.crumb' }])}
     <h1 data-i18n="gloss.h1">${h1}</h1>
     <p class="seo-lead" data-i18n-html="gloss.lead">${lead}</p>
-    <nav class="glossary-index" id="glossary-index" aria-label="Glossary terms">${index}</nav>
+    <nav class="glossary-index" id="glossary-index" aria-label="${attr(T(lang, { en: 'On this page', hi: 'इस पेज पर', mr: 'या पानावर', ta: 'இந்தப் பக்கத்தில்' }))}"><span class="page-toc-label">${esc(T(lang, { en: 'On this page', hi: 'इस पेज पर', mr: 'या पानावर', ta: 'இந்தப் பக்கத்தில்' }))}</span>${index}</nav>
     ${terms}
     <section class="seo-section">
       <h2 data-i18n="gloss.work.h2">${workH2}</h2>
