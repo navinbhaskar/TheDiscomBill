@@ -74,6 +74,7 @@
   --p-green-100: #dcfce7;
   --p-green-600: #16a34a;
   --p-green-700: #15803d;
+  --p-green-800: #166534;
 
   --p-red-50:    #fef2f2;
   --p-red-100:   #fee2e2;
@@ -140,6 +141,15 @@
   --ok-bg:    var(--p-green-50);
   --ok-text:  var(--p-green-700);
   --ok-border:var(--p-green-100);
+  /* --success was referenced 19 times and defined nowhere, so every one of those rules fell
+     back to a hard-coded light green that never changed in dark mode - the cheapest-rate cell
+     and the "Verified rates" badge came out at 2.98:1 on a dark card. Two roles, because they
+     have different jobs: --success is a FILL that carries white text (green-700 keeps white at
+     4.6:1 in both themes), --success-text is TEXT and tints, and follows the theme. */
+  --success: var(--p-green-700);
+  --success-border: var(--p-green-600);
+  --success-faint: color-mix(in srgb, var(--p-green-600) 8%, var(--surface-card));
+  --success-text: var(--p-green-800);
   --warn-bg:  var(--p-amber-50);
   --warn-text:var(--p-amber-700);
   --err-bg:   var(--p-red-50);
@@ -263,6 +273,7 @@
   --border-strong:  #3b4d68;
 
   --ok-bg: #10311e; --ok-text: #5fd089; --ok-border: #1c5234;
+  --success-text: var(--ok-text);   /* fills stay green-700; only the text role inverts */
   --warn-bg: #3a2e10; --warn-text: #f1b54a;
   --err-bg: #3a1618; --err-text: #f3868a;
 
@@ -3023,7 +3034,7 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 .cc-breakdown > div { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
 .cc-breakdown dt { font-size: 12.5px; color: var(--text-secondary); margin: 0; }
 .cc-breakdown dd { font-size: 12.5px; color: var(--text-primary); margin: 0; font-variant-numeric: tabular-nums; }
-.cc-subsidy-row dt, .cc-subsidy-row dd { color: var(--success, #16a34a); font-weight: 600; }
+.cc-subsidy-row dt, .cc-subsidy-row dd { color: var(--success-text); font-weight: 600; }
 .cc-subsidy-tag { cursor: help; opacity: 0.7; }
 .cc-deep { font-size: 12px; font-weight: 600; color: var(--text-brand); text-decoration: none; margin-top: 2px; }
 .cc-deep:hover { text-decoration: underline; }
@@ -3208,17 +3219,17 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
   color: var(--ok-text); border: 1px solid color-mix(in srgb, var(--ok-text) 28%, transparent);
   font-size: 10px; font-weight: 700; white-space: nowrap; vertical-align: 1px;
 }
-.comp-free { color: var(--success, #15803d); font-weight: 600; }
+.comp-free { color: var(--success-text); font-weight: 600; }
 
 .comp-loading { text-align: center !important; color: var(--text-tertiary); font-style: italic; padding: 30px !important; }
 
 /* Cheapest DISCOM in each consumption column — green highlight + tick. */
 /* Cheapest DISCOM per column — emphasised by colour + tick + tint, not heavy bold. */
 .comparison-table td.comp-best {
-  color: var(--success, #15803d); font-weight: 500;
-  background: color-mix(in srgb, var(--success, #15803d) 12%, transparent);
+  color: var(--success-text); font-weight: 500;
+  background: color-mix(in srgb, var(--success-text) 12%, transparent);
 }
-.comparison-table tbody tr:hover td.comp-best { background: color-mix(in srgb, var(--success, #15803d) 18%, transparent); }
+.comparison-table tbody tr:hover td.comp-best { background: color-mix(in srgb, var(--success-text) 18%, transparent); }
 .comp-tick { display: inline-block; margin-right: 5px; font-size: 11px; font-weight: 700;
   color: #fff; background: var(--success, #15803d); width: 15px; height: 15px; line-height: 15px;
   text-align: center; border-radius: 50%; vertical-align: 1px; }
@@ -3519,7 +3530,7 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 .tariff-discom-area { font-size: 12.5px; color: var(--text-tertiary); margin-top: 3px; line-height: 1.5; }
 .tariff-badges { display: flex; gap: 6px; flex-wrap: wrap; }
 .tariff-badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: var(--radius-full); background: var(--surface-sunken); color: var(--text-secondary); border: 1px solid var(--border-subtle); white-space: nowrap; }
-.tariff-badge.verified { background: color-mix(in srgb, var(--success, #15803d) 14%, transparent); color: var(--success, #15803d); border-color: transparent; }
+.tariff-badge.verified { background: color-mix(in srgb, var(--success-text) 14%, transparent); color: var(--success-text); border-color: transparent; }
 .tariff-source { display: inline-block; margin-top: 10px; font-size: 12.5px; font-weight: 500; color: var(--text-brand); text-decoration: none; }
 .tariff-source:hover { text-decoration: underline; }
 .tariff-meta-links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 10px; }
@@ -4790,7 +4801,7 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .seo-dir-count { font-size: 11px; font-weight: 500; color: var(--text-tertiary); }
 /* Per-state stat line (domestic rate span + verified tick) on directory cards */
 .seo-dir-rate { color: var(--text-tertiary); }
-.seo-dir-verified { color: var(--success, #16a34a); font-weight: 700; margin-left: 4px; }
+.seo-dir-verified { color: var(--success-text); font-weight: 700; margin-left: 4px; }
 .seo-dir-discoms { display: flex; flex-wrap: wrap; gap: 5px; }
 .seo-dir-discoms a { font-size: 11.5px; color: var(--text-secondary); text-decoration: none; background: var(--surface-sunken); border: 1px solid var(--border-subtle); border-radius: var(--radius-full); padding: 2px 9px; transition: border-color .15s, background .15s, color .15s; }
 .seo-dir-discoms a:hover { border-color: color-mix(in srgb, var(--dir-accent) 55%, transparent); background: color-mix(in srgb, var(--dir-accent) 9%, transparent); color: var(--dir-accent); }
@@ -4941,7 +4952,7 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 
 .billcheck-todo { list-style: none; margin: 18px 0 0; padding: 16px 0 0; border-top: 1px solid var(--border-subtle); display: grid; grid-template-columns: 1fr 1fr; gap: 9px 16px; }
 .billcheck-todo li { position: relative; padding-left: 22px; font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
-.billcheck-todo li::before { content: '✓'; position: absolute; left: 0; top: 0; color: var(--success, #15803d); font-weight: 700; }
+.billcheck-todo li::before { content: '✓'; position: absolute; left: 0; top: 0; color: var(--success-text); font-weight: 700; }
 .billcheck-safety { font-size: 12px; color: var(--text-tertiary); line-height: 1.55; margin: 16px 0 0; padding: 11px 13px; background: var(--surface-sunken); border-radius: var(--radius-md); border: 1px solid var(--border-subtle); }
 
 @media (max-width: 480px) {
@@ -5189,10 +5200,10 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .solar-bd-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border-subtle); font-size: 13px; color: var(--text-secondary); }
 .solar-bd-row:last-child { border-bottom: none; }
 .solar-bd-row strong { color: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
-.solar-bd-credit strong { color: var(--success, #15803d); }
+.solar-bd-credit strong { color: var(--success-text); }
 .solar-bd-total { background: var(--surface-sunken); margin: 4px -16px; padding: 12px 16px; }
 .solar-bd-total strong { font-size: 16px; font-weight: 700; }
-.solar-bd-save strong { color: var(--success, #15803d); }
+.solar-bd-save strong { color: var(--success-text); }
 
 /* Solar hero band — sun-warmed intro above the calculator */
 .solar-hero {
@@ -5271,7 +5282,7 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 /* 25-year savings chart */
 .solar-chart-card { background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 14px 16px 10px; margin-top: 14px; box-shadow: var(--shadow-sm); }
 .solar-chart-title { font-size: 12.5px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; }
-.solar-chart-be { text-align: center; font-size: 12px; font-weight: 600; color: var(--success, #15803d); padding: 4px 0 2px; }
+.solar-chart-be { text-align: center; font-size: 12px; font-weight: 600; color: var(--success-text); padding: 4px 0 2px; }
 /* Full-width variant: the chart/bars sit below the two-column form+results (not inside the
    340px results rail), so the graph gets real horizontal room instead of being squeezed. */
 .solar-chart-card-wide {
@@ -5291,10 +5302,10 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .solar-proj-table tr:last-child td { border-bottom: 0; }
 .solar-proj-table th:last-child, .solar-proj-table td:last-child { text-align: right; padding-right: 0; }
 .solar-proj-table .sp-year { color: var(--text-primary); font-weight: 500; }
-.solar-proj-table .sp-net-pos { color: var(--success, #15803d); font-weight: 500; }
+.solar-proj-table .sp-net-pos { color: var(--success-text); font-weight: 500; }
 .solar-proj-table .sp-net-neg { color: #dc2626; font-weight: 500; }
 .sp-chip { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 11px; font-weight: 500; letter-spacing: 0.01em; border: 1px solid; background: transparent; }
-.sp-chip-profit { color: var(--success, #15803d); border-color: rgba(22, 163, 74, 0.35); border-color: color-mix(in srgb, var(--success, #15803d) 35%, transparent); }
+.sp-chip-profit { color: var(--success-text); border-color: rgba(22, 163, 74, 0.35); border-color: color-mix(in srgb, var(--success-text) 35%, transparent); }
 .sp-chip-recover { color: #dc2626; border-color: rgba(220, 38, 38, 0.3); }
 .solar-proj-note { font-size: 12px; color: var(--text-tertiary); margin: 12px 0 0; line-height: 1.55; }
 
@@ -5319,8 +5330,8 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .psz-zone strong { font-size: 13.5px; color: var(--text-primary); }
 .psz-zone span { font-size: 12px; color: var(--text-tertiary); }
 .psz-zone:hover { border-color: var(--brand); }
-.psz-zone.is-active { border-color: var(--success, #16a34a); box-shadow: 0 0 0 1px var(--success, #16a34a) inset; }
-.psz-zone.is-active strong { color: var(--success, #15803d); }
+.psz-zone.is-active { border-color: var(--success-text); box-shadow: 0 0 0 1px var(--success-text) inset; }
+.psz-zone.is-active strong { color: var(--success-text); }
 .psz-next { text-decoration: none; }
 .sol-quick { margin-top: 7px; }
 
@@ -6201,7 +6212,7 @@ html:not([lang="en"]) .footer-col-title {
   padding: 0 12px; font-size: 13px; color: var(--text-secondary); cursor: pointer; transition: background var(--t-fast); }
 .br-back:hover { background: var(--surface-sunken); }
 .br-resolve { margin-top: 14px; height: 40px; padding: 0 18px; font-size: 14px; font-weight: 600; color: #fff;
-  background: var(--success, #15803d); border: none; border-radius: 12px; cursor: pointer;
+  background: var(--success); border: none; border-radius: 12px; cursor: pointer;
   box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 8px 24px -8px rgba(21,128,61,.55);
   transition: filter var(--t-fast), box-shadow var(--t-fast); }
 .br-resolve:hover { filter: brightness(1.08); box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 12px 28px -8px rgba(21,128,61,.6); }
@@ -7862,7 +7873,9 @@ html:not(.js) .m-btn-ring { display: none; }
 
 .bill-block { padding: 12px var(--bill-pad); border-top: 1px solid var(--border-subtle); }
 .bill-block:first-of-type { border-top: 0; }
-.bill-block h4 {
+/* h3, not h4: these label sections of the sample bill and follow an h2, so h4 skipped a
+   level - a screen reader user tabbing headings heard a subsection that had no parent. */
+.bill-block h3 {
   margin: 0 0 8px; font-size: 10px; font-weight: 700; letter-spacing: .7px;
   text-transform: uppercase; color: var(--text-tertiary);
 }

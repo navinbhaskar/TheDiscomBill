@@ -567,7 +567,7 @@ function fieldRows(rows, counter) {
 }
 
 function block(title, rows, counter, cls) {
-  return `<section class="bill-block${cls ? ' ' + cls : ''}"><h4>${esc(title)}</h4>`
+  return `<section class="bill-block${cls ? ' ' + cls : ''}"><h3>${esc(title)}</h3>`
     + `<div class="bill-rows">${fieldRows(rows, counter)}</div></section>`;
 }
 
@@ -615,7 +615,7 @@ export function billHtml(r) {
         ${periodBlock}
         ${readingBlock}
         <section class="bill-block bill-block-slabs">
-          <h4>${esc(r.S.blkSlabs)}</h4>
+          <h3>${esc(r.S.blkSlabs)}</h3>
           <div class="bill-scroll"><table class="bill-slabs">
             <thead><tr><th scope="col">${esc(r.S.thSlab)}</th><th scope="col">${esc(r.S.thUnits)}</th><th scope="col">${esc(r.S.thRate)}</th><th scope="col">${esc(r.S.thAmount)}</th></tr></thead>
             <tbody>${slabRows}</tbody>
