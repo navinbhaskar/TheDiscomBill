@@ -199,6 +199,8 @@
   --w-page:   1040px;
   --w-prose:   900px;
   --w-mid:     760px;
+  /* The reading column. Everything in a section sits on it unless it explicitly breaks out. */
+  --w-text:    760px;
   --w-narrow:  620px;
 
   /* ── Legacy aliases — keeps existing CSS references working ── */
@@ -3622,6 +3624,24 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   box-shadow: inset 0 0 0 1px var(--brand); cursor: default;
 }
 .seo-section { margin-top: 34px; }
+/* ── One reading column ──────────────────────────────────────────────────────
+   Prose was capped at 760 while every panel beside it ran the full 992 content box, so text
+   stopped 232px short of the cards above and below it and the right edge came out ragged with
+   no reason a reader could see. Widening the prose was the wrong fix - 992px of 15px text is
+   about 125 characters a line - so the column comes to the text instead.
+
+   Everything in a section shares --w-text. The things that genuinely need the full width say
+   so below: wide tables, the bill/meter stage, and the calculator embed. A breakout then reads
+   as a decision rather than as misalignment. */
+.seo-section > * { max-width: var(--w-text); }
+.seo-section > .comparison-table-wrapper,
+.seo-section > .ub-stage,
+.seo-section > .discom-service-panels,
+.seo-section > .tariff-cards,
+.seo-section > .discom-explain-grid,
+.seo-section > .discom-trend-tabs,
+.seo-section > figure,
+.seo-section > .seo-facts { max-width: none; }
 .seo-section > h2 { font-size: 20px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.3px; margin: 0 0 14px; }
 .seo-section p { color: var(--text-secondary); line-height: 1.65; margin: 0 0 14px; max-width: 760px; }
 .seo-section ul, .seo-section ol { color: var(--text-secondary); line-height: 1.65; margin: 0 0 14px; padding-left: 24px; max-width: 760px; }
