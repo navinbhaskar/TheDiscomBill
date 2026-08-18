@@ -3636,14 +3636,13 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
    so below: wide tables, the bill/meter stage, and the calculator embed. A breakout then reads
    as a decision rather than as misalignment. */
 .seo-section > * { max-width: var(--w-text); }
-.seo-section > .comparison-table-wrapper,
-.seo-section > .ub-stage,
-.seo-section > .discom-service-panels,
-.seo-section > .tariff-cards,
-.seo-section > .discom-explain-grid,
-.seo-section > .discom-trend-tabs,
-.seo-section > figure,
-.seo-section > .seo-facts { max-width: none; }
+/* Only the bill-and-meter stage breaks out. Everything else - tables, charts, card grids -
+   stays on the column, because a block that is merely wide is not the same as a block that
+   needs to be wide, and each exception buys another ragged right edge. Wide tables keep the
+   horizontal scroll their wrapper already has, so nothing is lost by holding them here. */
+.seo-section > .ub-stage { max-width: none; }
+/* The tables that stay: give them the scroll they now rely on. */
+.seo-section > .comparison-table-wrapper { overflow-x: auto; }
 .seo-section > h2 { font-size: 20px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.3px; margin: 0 0 14px; }
 .seo-section p { color: var(--text-secondary); line-height: 1.65; margin: 0 0 14px; max-width: 760px; }
 .seo-section ul, .seo-section ol { color: var(--text-secondary); line-height: 1.65; margin: 0 0 14px; padding-left: 24px; max-width: 760px; }
@@ -3655,7 +3654,11 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .seo-page .comparison-table { min-width: 0; }
 /* Content-page tables shrink to their content instead of stretching columns across
    the full article width — keeps them compact; long tables still scroll sideways. */
-.seo-page .comparison-table-wrapper { width: fit-content; max-width: 100%; }
+/* 100% here meant 100% of the section, i.e. the full 992 content box, at (0,2,0) — which
+   outranks ".seo-section > *" (0,1,0) and was why the coverage tables kept breaking the
+   column after everything else had joined it. Capped to the column; the wrapper's own
+   overflow-x carries any table too wide for it. */
+.seo-page .comparison-table-wrapper { width: fit-content; max-width: var(--w-text); }
 .seo-page .comparison-table { width: auto; }
 /* Cap cell width so prose cells wrap instead of blowing the column out sideways.
    38ch squeezed full sentences into 5-line rows; 52ch is still a comfortable measure
