@@ -4219,6 +4219,94 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 }
 .discom-tool-panel p { margin-bottom: 0; font-size: 13.5px; line-height: 1.55; }
 .discom-tool-panel .seo-cta { flex: 0 0 auto; white-space: nowrap; }
+.discom-portal-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 9px;
+  margin: 18px 0 4px;
+}
+.discom-action-card {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-height: 84px;
+  padding: 12px 13px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  color: var(--text-primary);
+  text-decoration: none;
+  box-shadow: var(--shadow-xs);
+  transition: border-color var(--t-fast), background-color var(--t-fast), box-shadow var(--t-fast);
+}
+.discom-action-card:hover {
+  border-color: var(--brand-border);
+  background: var(--brand-faint);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+}
+.discom-action-card strong {
+  font-size: 13.5px;
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+.discom-action-card span {
+  font-size: 11.7px;
+  line-height: 1.42;
+  color: var(--text-secondary);
+}
+.discom-service-panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+.discom-service-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  padding: 15px;
+  box-shadow: var(--shadow-xs);
+}
+.discom-service-panel h3 {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+.discom-service-panel p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.58;
+  color: var(--text-secondary);
+}
+.discom-service-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: auto;
+}
+.discom-service-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 5px 10px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  background: var(--surface-sunken);
+  color: var(--text-brand);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.discom-service-links a:hover {
+  border-color: var(--brand-border);
+  background: var(--brand-faint);
+  text-decoration: none;
+}
 .discom-explain-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -4242,6 +4330,8 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   line-height: 1.55;
 }
 @media (max-width: 640px) {
+  .discom-portal-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .discom-action-card { min-height: 0; padding: 10px 11px; }
   .discom-tool-panel { align-items: stretch; flex-direction: column; }
   .discom-tool-panel .seo-cta { justify-content: center; width: 100%; white-space: normal; }
 }

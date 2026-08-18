@@ -974,7 +974,7 @@ function indicativeBillsHtml(state, discom, lang = 'en') {
     en: `Calculate my exact ${nm} bill →`, hi: `मेरा सटीक ${nm} बिल निकालें →`,
     mr: `माझे नेमके ${nm} बिल काढा →`, ta: `என் சரியான ${nm} கட்டணத்தைக் கணக்கிடு →` });
   return `
-    <section class="seo-section">
+    <section class="seo-section" id="common-calculations">
       <h2>${heading}</h2>
       <p>${intro}</p>
       <div class="comparison-table-wrapper">
@@ -1405,11 +1405,48 @@ function keyFactsHtml(state, discom, fy, lang = 'en') {
 // deep-linked with ?state=&discom= so the hub opens pre-selected on this DISCOM and on the right
 // tab. These are internal links to an existing page (not new thin per-DISCOM pages) — they improve
 // crawl depth and topical clustering without duplicate-content risk.
+function discomWebsiteUrl(discom) {
+  if (!discom.website) return '';
+  return /^https?:\/\//i.test(discom.website) ? discom.website : `https://${discom.website}`;
+}
+
+function discomWebsiteHost(discom) {
+  const site = discomWebsiteUrl(discom);
+  return site ? String(site).replace(/^https?:\/\//, '').replace(/\/$/, '') : '';
+}
+
+function servicesHubUrl(state, discom, tab = 'pay') {
+  return `/services/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#${tab}`;
+}
+
+function discomPortalActionsHtml(state, discom) {
+  const stateSlug = slugify(state);
+  const nm = esc(discom.name);
+  const official = discomWebsiteUrl(discom);
+  const officialHost = discomWebsiteHost(discom);
+  const actions = [
+    ['Calculate bill', `/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator`, `Estimate an itemised ${nm} bill with tariff, duty and surcharge`],
+    ['Current tariff', '#current-tariff', 'Open the slab table, fixed charge and category rules'],
+    ['Latest FPPA/FAC', '#latest-fppa', 'Check the current variable surcharge and history'],
+    ['Bill examples', '#common-calculations', 'Compare 200, 300, 500 and 750 unit examples'],
+    ['Pay or view bill', servicesHubUrl(state, discom, 'pay'), 'Use the official portal or payment channel'],
+    ['Complaint', servicesHubUrl(state, discom, 'complaint'), 'Find complaint route and escalation reminders'],
+    ['Smart meter', `/smart-meter-recharge/${stateSlug}/${discom.id}/`, 'Recharge prepaid smart meter and estimate units'],
+    ['Solar', '/solar-calculator/', 'Estimate rooftop solar savings before applying officially'],
+  ];
+  if (official) actions.push(['Official site', official, `Open ${officialHost}`, 'external']);
+  return `
+    <nav class="discom-portal-actions" aria-label="${attr(discom.name)} consumer portal shortcuts">
+      ${actions.map(([title, href, sub, external]) =>
+        `<a class="discom-action-card" href="${attr(href)}"${external ? ' target="_blank" rel="noopener"' : ''}><strong>${title}</strong><span>${sub}</span></a>`).join('')}
+    </nav>`;
+}
+
 function discomCalculatorPanelHtml(state, discom) {
   const calcHref = `/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator`;
   const nm = esc(discom.name);
   return `
-    <section class="seo-section discom-tool-panel">
+    <section class="seo-section discom-tool-panel" id="calculate">
       <div>
         <h2>${nm} electricity bill calculator</h2>
         <p>Enter units, sanctioned load and billing dates to get an itemised ${nm} estimate. The result breaks the bill into energy charge, fixed or demand charge, FPPA/FAC, duty, arrears and late-payment surcharge where applicable.</p>
@@ -1553,7 +1590,7 @@ function currentFppaHtml(state, discom) {
   const cls = latest?.rate >= 0 ? 'fs-pos' : latest ? 'fs-neg' : 'fs-pending';
   const trackerHref = fppaCoverageStates().includes(state) ? `/fppa/${slugify(state)}/` : '/fppa/';
   return `
-    <section class="seo-section">
+    <section class="seo-section" id="latest-fppa">
       <h2>Current ${esc(discom.name)} FPPA / FAC</h2>
       <div class="comparison-table-wrapper">
         <table class="comparison-table">
@@ -1588,7 +1625,7 @@ function billLineExplainerHtml(discom) {
     </section>`;
 }
 
-function officialServicesHtml(state, discom) {
+function officialServicesHtmlLegacy(state, discom) {
   const site = discom.website ? (/^https?:\/\//i.test(discom.website) ? discom.website : `https://${discom.website}`) : '';
   const fallback = `/services/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}`;
   const href = site || fallback;
@@ -1609,6 +1646,71 @@ function officialServicesHtml(state, discom) {
       <p>These services are provided by ${nm} or the official state/DISCOM portal, not by TheDiscomBill. Use the links below to reach the official website.</p>
       <div class="seo-link-grid discom-service-grid">
         ${links.map(([title, sub]) => `<a class="seo-link-card" href="${attr(href)}"${target}><strong>${title} ↗</strong><span>${sub}</span><small>${esc(host)}</small></a>`).join('')}
+      </div>
+    </section>`;
+}
+
+function officialServicesHtml(state, discom) {
+  const stateSlug = slugify(state);
+  const site = discomWebsiteUrl(discom);
+  const host = discomWebsiteHost(discom) || 'official DISCOM portal';
+  const nm = esc(discom.name);
+  const siteLink = site
+    ? `<a href="${attr(site)}" target="_blank" rel="noopener">${esc(host)}</a>`
+    : `<a href="${servicesHubUrl(state, discom, 'pay')}">DISCOM services helper</a>`;
+  const cards = [
+    {
+      title: 'Pay bill or download bill',
+      body: `Use ${siteLink} for the final bill, receipt and payment status. The calculator here is only for checking whether the charge lines look reasonable.`,
+      links: [
+        ['Open payment helper', servicesHubUrl(state, discom, 'pay'), false],
+        ...(site ? [['Official portal', site, true]] : []),
+      ],
+    },
+    {
+      title: 'Complaint numbers and escalation',
+      body: `For supply, billing or meter complaints, use the official complaint portal first and keep the complaint number. The common electricity helpline in India is 1912 where supported by the state or DISCOM.`,
+      links: [
+        ['Complaint helper', servicesHubUrl(state, discom, 'complaint'), false],
+        ...(site ? [['Official complaint route', site, true]] : []),
+      ],
+    },
+    {
+      title: 'New connection and load change',
+      body: `Apply for a new connection, ownership update or sanctioned-load change through the official portal. Match the load you apply for with the fixed-charge section in the tariff table below.`,
+      links: [
+        ['New connection guide', servicesHubUrl(state, discom, 'new-connection'), false],
+        ...(site ? [['Official application site', site, true]] : []),
+      ],
+    },
+    {
+      title: 'Smart meter and prepaid recharge',
+      body: `If your ${nm} connection has a prepaid smart meter, check recharge channels, low-balance rules and unit estimates before topping up.`,
+      links: [
+        ['Smart meter recharge guide', `/smart-meter-recharge/${stateSlug}/${discom.id}/`, false],
+      ],
+    },
+    {
+      title: 'Solar and net metering',
+      body: `Estimate rooftop-solar savings here, then use the official DISCOM or PM Surya Ghar process for the actual net-metering application.`,
+      links: [
+        ['Solar savings calculator', '/solar-calculator/', false],
+        ...(site ? [['Official DISCOM site', site, true]] : []),
+      ],
+    },
+  ];
+  return `
+    <section class="seo-section" id="consumer-services">
+      <h2>${nm} consumer services</h2>
+      <p>These services are provided by ${nm} or the official state/DISCOM portal, not by TheDiscomBill. Use this block as a practical route map before you leave for the official site.</p>
+      <div class="discom-service-panels">
+        ${cards.map(card => `<article class="discom-service-panel">
+          <h3>${card.title}</h3>
+          <p>${card.body}</p>
+          <div class="discom-service-links">
+            ${card.links.map(([label, href, external]) => `<a href="${attr(href)}"${external ? ' target="_blank" rel="noopener"' : ''}>${label}${external ? ' &nearr;' : ''}</a>`).join('')}
+          </div>
+        </article>`).join('')}
       </div>
     </section>`;
 }
@@ -1981,6 +2083,7 @@ function discomPage(state, discom, lang = 'en') {
     </div>
     <p class="guide-meta">Tariffs last updated: ${tariffUpdated(state, 'en')}${meta.verified ? ' · ✓ verified against real bills' : ''}</p>
     ${src ? `<p><a class="tariff-source" href="${attr(src)}" target="_blank" rel="noopener">Official ${esc(discom.name)} source ↗</a></p>` : ''}
+    ${discomPortalActionsHtml(state, discom)}
     ${discomCalculatorPanelHtml(state, discom)}
 
     ${keyFactsHtml(state, discom, fy)}
@@ -1988,7 +2091,7 @@ function discomPage(state, discom, lang = 'en') {
     ${fppaTrendHtml(state, discom)}
     ${indicativeBillsHtml(state, discom)}
 
-    <section class="seo-section">
+    <section class="seo-section" id="current-tariff">
       <h2>Current ${esc(discom.name)} tariff (${esc(fy)})</h2>
       ${sharedNote}
       <div class="tariff-cards">${cards}</div>
