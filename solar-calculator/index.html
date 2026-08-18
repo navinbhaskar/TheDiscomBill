@@ -236,22 +236,26 @@
               <div class="solar-size"><span id="solLifetime">—</span></div>
               <div class="solar-hero-facts">
                 <span><strong id="solSize">0</strong> kW <span data-i18n="sol.heroSystem">system</span></span>
-                <span class="solar-hero-dot" aria-hidden="true">·</span>
-                <span><span data-i18n="sol.paysFor">pays for itself in</span> <strong id="solPayback">—</strong></span>
               </div>
               <div class="solar-size-note" id="solSizeNote"></div>
             </div>
             <!-- The numbers below are all correct and all separate; this reassembles them into
                  the one sentence a first-time visitor is actually looking for. -->
             <p class="solar-summary" id="solSummary"></p>
+            <!-- Money first, in the order it happens: what it costs, what comes off, what you
+                 pay, then what it gives back. Yearly rather than monthly, because payback and
+                 the 25-year figure are both annual and mixing the two units made the reader do
+                 the conversion. -->
             <div class="solar-breakdown">
-              <div class="solar-bd-row"><span data-i18n="sol.gen">Estimated generation</span><strong id="solGen">—</strong></div>
-              <div class="solar-bd-row"><span data-i18n="sol.grossCost">System cost (before subsidy)</span><strong id="solGross">—</strong></div>
-              <div class="solar-bd-row solar-bd-credit"><span data-i18n="sol.centralSub">PM Surya Ghar central subsidy</span><strong id="solCentral">—</strong></div>
-              <div class="solar-bd-row solar-bd-credit"><span data-i18n="sol.stateSub2">State subsidy</span><strong id="solState2">—</strong></div>
+              <div class="solar-bd-row"><span data-i18n="sol.grossCost">Upfront cost</span><strong id="solGross">—</strong></div>
+              <div class="solar-bd-row solar-bd-credit"><span data-i18n="sol.centralSub">PM Surya Ghar subsidy</span><strong id="solCentral">—</strong></div>
+              <!-- Hidden unless a state top-up actually applies: a row reading "₹0" is a row
+                   that costs a line and says nothing. -->
+              <div class="solar-bd-row solar-bd-credit" id="solStateRow" hidden><span data-i18n="sol.stateSub2">State subsidy</span><strong id="solState2">—</strong></div>
               <div class="solar-bd-row solar-bd-total"><span data-i18n="sol.netCost">Net cost to you</span><strong id="solNet">—</strong></div>
-              <div class="solar-bd-row solar-bd-save"><span data-i18n="sol.monthlySave">Monthly savings</span><strong id="solMonthlySave">—</strong></div>
-              <div class="solar-bd-row"><span data-i18n="sol.co2">CO₂ avoided</span><strong id="solCo2">—</strong></div>
+              <div class="solar-bd-row"><span data-i18n="sol.gen">Yearly units generated</span><strong id="solGen">—</strong></div>
+              <div class="solar-bd-row solar-bd-save"><span data-i18n="sol.monthlySave">Yearly savings</span><strong id="solMonthlySave">—</strong></div>
+              <div class="solar-bd-row"><span data-i18n="sol.payback">Payback period</span><strong id="solPaybackRow">—</strong></div>
             </div>
             <!-- Kept from the removed 25-year chart card: sharing the estimate is a separate
                  job from drawing it, and this is where the numbers being shared live. -->

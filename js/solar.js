@@ -32,7 +32,7 @@ const SOL_STR = {
   en: {
     roofNote: 'Limited by your roof area — a bigger system would need more shadow-free space.',
     usageNote: 'Sized to cover your monthly usage.',
-    years: ' years', unitsMo: ' units/mo', capped: ' (capped at 3 kW)', perMo: '/mo', tPerYr: ' t/yr',
+    years: ' years', unitsMo: ' units/mo', unitsYr: ' kWh', capped: ' (capped at 3 kW)', perMo: '/mo', perYr: '/yr', tPerYr: ' t/yr',
     pullEst: (n) => `Use my estimate (${n} units)`,
     pullTitle: 'Build an estimate on the Electricity Cost Calculator page first',
     billConv: (u) => `≈ ${u} units a month at your tariff.`,
@@ -58,7 +58,7 @@ const SOL_STR = {
   hi: {
     roofNote: 'आपकी छत के क्षेत्रफल से सीमित — बड़े सिस्टम के लिए और छाया-रहित जगह चाहिए।',
     usageNote: 'आपकी मासिक खपत के हिसाब से साइज़ किया गया।',
-    years: ' वर्ष', unitsMo: ' यूनिट/माह', capped: ' (3 kW पर कैप)', perMo: '/माह', tPerYr: ' टन/वर्ष',
+    years: ' वर्ष', unitsMo: ' यूनिट/माह', unitsYr: ' kWh', capped: ' (3 kW पर कैप)', perMo: '/माह', perYr: '/वर्ष', tPerYr: ' टन/वर्ष',
     pullEst: (n) => `मेरा अनुमान इस्तेमाल करें (${n} यूनिट)`,
     pullTitle: 'पहले बिजली लागत कैलकुलेटर पेज पर अनुमान बनाएँ',
     billConv: (u) => `≈ ${u} यूनिट प्रति माह आपके टैरिफ पर।`,
@@ -248,16 +248,21 @@ function render() {
   const S = SOL_STR[lang()];
   $('solSize').textContent = num(r.size, r.size % 1 ? 1 : 0);
   $('solSizeNote').textContent = r.roofLimited ? S.roofNote : S.usageNote;
-  $('solPayback').textContent = isFinite(r.paybackYears) ? num(r.paybackYears, 1) + S.years : '—';
+  const payback = isFinite(r.paybackYears) ? num(r.paybackYears, 1) + S.years : '—';
+  $('solPaybackRow').textContent = payback;
 
-  $('solGen').textContent = num(r.monthlyGen) + S.unitsMo;
+  // Yearly throughout: payback and the 25-year headline are both annual, and a monthly figure
+  // in the middle of them made the reader convert before they could check the arithmetic.
   $('solGross').textContent = rs(r.gross);
   $('solCentral').textContent = '– ' + rs(r.central) + (r.capped ? S.capped : '');
-  $('solState2').textContent = r.stateSub > 0 ? '– ' + rs(r.stateSub) : '₹0';
+  // The state row only exists when a state top-up does.
+  const stateRow = $('solStateRow');
+  if (stateRow) stateRow.hidden = !(r.stateSub > 0);
+  $('solState2').textContent = '– ' + rs(r.stateSub);
   $('solNet').textContent = rs(r.net);
-  $('solMonthlySave').textContent = rs(r.monthlySavings) + S.perMo;
+  $('solGen').textContent = num(r.annualGen) + S.unitsYr;
+  $('solMonthlySave').textContent = rs(r.annualSavings);   // the label already says yearly
   $('solLifetime').textContent = rs(r.lifetimeSavings);
-  $('solCo2').textContent = num(r.co2Tonnes, 1) + S.tPerYr;
 
   const sum = $('solSummary');
   if (sum) sum.innerHTML = S.summary(r);
