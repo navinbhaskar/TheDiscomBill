@@ -5399,21 +5399,44 @@ function smartMeterHubPage(states, lang = 'en') {
     ta: 'ப்ரீபெய்டு ஸ்மார்ட் மீட்டரை ஆன்லைனில் ரீசார்ஜ் செய்யும் DISCOM-வாரி வழிகாட்டி: அதிகாரப்பூர்வ போர்ட்டல்கள், UPI/BBPS, ரீசார்ஜுக்கான யூனிட்கள் மற்றும் குறைந்த-பேலன்ஸ் விதிகள் — அனைத்து மாநிலங்களுக்கும்.',
     en: 'DISCOM-wise guides to recharging a prepaid smart meter online: official portals, UPI/BBPS, units per recharge and low-balance rules — for every Indian state.' });
 
-  const stateBlocks = states.map(state => {
+  // Grouped by region, the way the tariff directory is. These cards carry --dir-accent, but
+  // this page never wrapped them in a region, so every one of the 34 fell back to the same
+  // brand blue — the colour machinery was present and doing nothing.
+  const stateCard = (state) => {
     const discoms = getDiscoms(state);
     if (!discoms.length) return '';
     const b = sbase(state);
     const links = discoms.map(d => `<a href="${b}${slugify(state)}/${d.id}/">${esc(d.name)}</a>`).join('');
+    const nd = T(lang, {
+      en: `${discoms.length} DISCOM${discoms.length > 1 ? 's' : ''}`,
+      hi: `${discoms.length} डिस्कॉम`, mr: `${discoms.length} डिस्कॉम`, ta: `${discoms.length} DISCOM` });
     return `
       <div class="seo-dir-state">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">${esc(stateCode(state))}</span>
           <!-- span, not a heading — same reasoning as the tariff state directory above. -->
-          <span class="seo-dir-state-meta"><span class="seo-dir-state-name">${esc(stateName(state, lang))}</span></span>
+          <span class="seo-dir-state-meta">
+            <span class="seo-dir-state-name">${esc(stateName(state, lang))}</span>
+            <span class="seo-dir-count">${esc(nd)}</span>
+          </span>
         </div>
         <div class="seo-dir-discoms">${links}</div>
       </div>`;
-  }).join('');
+  };
+  const covered = new Set(states);
+  const grouped = REGIONS
+    .map(r => ({ ...r, states: r.states.filter(s => covered.has(s)) }))
+    .filter(r => r.states.length);
+  const leftovers = states.filter(s => !REGIONS.some(r => r.states.includes(s)));
+  if (leftovers.length) grouped.push({ ...REGION_FALLBACK, states: leftovers });
+  const stateBlocks = grouped.map(r => `
+    <section class="seo-dir-region" style="--dir-accent:${r.color || REGION_FALLBACK.color}">
+      <h3 class="seo-dir-region-title">
+        <span class="seo-dir-region-dot" aria-hidden="true"></span>${esc(T(lang, r))}
+        <span class="seo-dir-region-count">${r.states.length}</span>
+      </h3>
+      <div class="seo-directory">${r.states.map(stateCard).join('')}</div>
+    </section>`).join('');
 
   const faqs = [
     { q: T(lang, { hi: 'स्मार्ट मीटर रिचार्ज कैसे होता है?', mr: 'स्मार्ट मीटर रिचार्ज कसे होते?', ta: 'ஸ்மார்ட் மீட்டர் ரீசார்ஜ் எப்படி வேலை செய்கிறது?', en: 'How does a smart meter recharge work?' }),
@@ -5440,12 +5463,12 @@ function smartMeterHubPage(states, lang = 'en') {
   const bcSmr = T(lang, { hi: 'स्मार्ट मीटर रिचार्ज', mr: 'स्मार्ट मीटर रिचार्ज', ta: 'ஸ்மார்ட் மீட்டர் ரீசார்ஜ்', en: 'Smart Meter Recharge' });
   const trail = [{ name: bcHome, url: '/' }, { name: bcSmr, url: null }];
   const smGuides = [
-    ['/recharge-calculator/', T(lang, { hi: 'रिचार्ज कैलकुलेटर — ₹500 कितने दिन चलेगा?', mr: 'रिचार्ज कॅल्क्युलेटर — ₹500 किती दिवस पुरेल?', ta: 'ரீசார்ஜ் கணிப்பான் — ₹500 எத்தனை நாள்?', en: 'Recharge calculator — how long will ₹500 last?' })],
-    [`${guideBase}smart-meter-running-fast/`, T(lang, { hi: 'क्या स्मार्ट मीटर तेज़ चलता है?', mr: 'स्मार्ट मीटर वेगात चालतो का?', ta: 'ஸ்மார்ட் மீட்டர் வேகமாக ஓடுகிறதா?', en: 'Is your smart meter running fast?' })],
-    [`${guideBase}smart-meter-prepaid-disconnection/`, T(lang, { hi: 'प्रीपेड कटौती व बहाली के नियम', mr: 'प्रीपेड खंडित व पूर्ववत नियम', ta: 'ப்ரீபெய்டு துண்டிப்பு & மீட்டமைப்பு விதிகள்', en: 'Prepaid disconnection & restoration rules' })],
-    [`${guideBase}smart-meter-recharge-failed/`, T(lang, { hi: 'रिचार्ज फेल / बैलेंस अपडेट नहीं हुआ?', mr: 'रिचार्ज फेल / बॅलन्स अपडेट झाला नाही?', ta: 'ரீசார்ஜ் தோல்வி / பேலன்ஸ் புதுப்பிக்கவில்லையா?', en: 'Recharge failed or balance not updated?' })],
-    [`${guideBase}smart-meter-balance-check/`, T(lang, { hi: 'बैलेंस कैसे देखें (डिस्प्ले, ऐप, SMS)', mr: 'बॅलन्स कसा पाहावा (डिस्प्ले, अ‍ॅप, SMS)', ta: 'பேலன்ஸை எப்படிப் பார்ப்பது (திரை, ஆப், SMS)', en: 'How to check your balance (display, app, SMS)' })],
-    [`${guideBase}prepaid-vs-postpaid-smart-meter/`, T(lang, { hi: 'प्रीपेड बनाम पोस्टपेड — कौन बेहतर?', mr: 'प्रीपेड विरुद्ध पोस्टपेड — कोणते चांगले?', ta: 'ப்ரீபெய்டு vs போஸ்ட்பெய்டு — எது சிறந்தது?', en: 'Prepaid vs postpaid — which is better?' })],
+    ['/recharge-calculator/', T(lang, { hi: 'रिचार्ज कैलकुलेटर — ₹500 कितने दिन चलेगा?', mr: 'रिचार्ज कॅल्क्युलेटर — ₹500 किती दिवस पुरेल?', ta: 'ரீசார்ஜ் கணிப்பான் — ₹500 எத்தனை நாள்?', en: 'Recharge calculator — how long will ₹500 last?' }), T(lang, { hi: 'अपने डिस्कॉम की असली दरों से दैनिक ख़र्च', mr: 'तुमच्या डिस्कॉमच्या खऱ्या दरांवरून दैनिक खर्च', ta: 'உங்கள் DISCOM-இன் உண்மையான விகிதங்களில் தினசரி செலவு', en: 'Daily burn rate from your DISCOM’s real tariff' }), 'calc'],
+    [`${guideBase}smart-meter-running-fast/`, T(lang, { hi: 'क्या स्मार्ट मीटर तेज़ चलता है?', mr: 'स्मार्ट मीटर वेगात चालतो का?', ta: 'ஸ்மார்ட் மீட்டர் வேகமாக ஓடுகிறதா?', en: 'Is your smart meter running fast?' }), T(lang, { hi: 'ज़्यादा रीडिंग की असली वजहें और जाँच का तरीक़ा', mr: 'जास्त रीडिंगची खरी कारणे आणि तपासण्याची पद्धत', ta: 'அதிக ரீடிங்கின் உண்மையான காரணங்கள்', en: 'The real reasons readings jump, and how to test it' }), 'gauge'],
+    [`${guideBase}smart-meter-prepaid-disconnection/`, T(lang, { hi: 'प्रीपेड कटौती व बहाली के नियम', mr: 'प्रीपेड खंडित व पूर्ववत नियम', ta: 'ப்ரீபெய்டு துண்டிப்பு & மீட்டமைப்பு விதிகள்', en: 'Prepaid disconnection & restoration rules' }), T(lang, { hi: 'कब कटती है सप्लाई, कब नहीं — और बहाली कैसे', mr: 'पुरवठा कधी खंडित होतो आणि पूर्ववत कसा', ta: 'எப்போது துண்டிக்கப்படும், மீட்டமைப்பு எப்படி', en: 'When supply is cut, when it is not, and how it comes back' }), 'plug'],
+    [`${guideBase}smart-meter-recharge-failed/`, T(lang, { hi: 'रिचार्ज फेल / बैलेंस अपडेट नहीं हुआ?', mr: 'रिचार्ज फेल / बॅलन्स अपडेट झाला नाही?', ta: 'ரீசார்ஜ் தோல்வி / பேலன்ஸ் புதுப்பிக்கவில்லையா?', en: 'Recharge failed or balance not updated?' }), T(lang, { hi: 'पैसा कट गया पर बैलेंस नहीं आया — क्या करें', mr: 'पैसे कापले पण बॅलन्स आला नाही — काय करावे', ta: 'பணம் கழிந்தும் பேலன்ஸ் வரவில்லை — என்ன செய்வது', en: 'Money debited but no balance — what to do next' }), 'chat'],
+    [`${guideBase}smart-meter-balance-check/`, T(lang, { hi: 'बैलेंस कैसे देखें (डिस्प्ले, ऐप, SMS)', mr: 'बॅलन्स कसा पाहावा (डिस्प्ले, अ‍ॅप, SMS)', ta: 'பேலன்ஸை எப்படிப் பார்ப்பது (திரை, ஆப், SMS)', en: 'How to check your balance (display, app, SMS)' }), T(lang, { hi: 'मीटर डिस्प्ले, ऐप और SMS तीनों तरीक़े', mr: 'मीटर डिस्प्ले, अ‍ॅप आणि SMS तिन्ही मार्ग', ta: 'மீட்டர் திரை, ஆப், SMS — மூன்று வழிகள்', en: 'All three routes: meter display, app and SMS' }), 'doc'],
+    [`${guideBase}prepaid-vs-postpaid-smart-meter/`, T(lang, { hi: 'प्रीपेड बनाम पोस्टपेड — कौन बेहतर?', mr: 'प्रीपेड विरुद्ध पोस्टपेड — कोणते चांगले?', ta: 'ப்ரீபெய்டு vs போஸ்ட்பெய்டு — எது சிறந்தது?', en: 'Prepaid vs postpaid — which is better?' }), T(lang, { hi: 'दोनों के फ़ायदे-नुक़सान, बिना प्रचार के', mr: 'दोन्हींचे फायदे-तोटे, प्रचाराशिवाय', ta: 'இரண்டின் நன்மை தீமைகள், விளம்பரமின்றி', en: 'The trade-offs on both sides, without the marketing' }), 'compare'],
   ];
 
   const body = `
@@ -5457,11 +5480,31 @@ function smartMeterHubPage(states, lang = 'en') {
       mr: 'भारतात प्रीपेड स्मार्ट मीटर वेगाने बसवले जात आहेत. तुमचा डिस्कॉम निवडा — अधिकृत रिचार्ज पोर्टल, टप्प्याटप्प्याने पद्धत, आणि खऱ्या टॅरिफ दरांवरून काढलेला अंदाज की प्रत्येक रिचार्जमध्ये किती युनिट मिळतात.',
       ta: 'இந்தியாவில் ப்ரீபெய்டு ஸ்மார்ட் மீட்டர்கள் வேகமாக பொருத்தப்படுகின்றன. உங்கள் DISCOM-ஐத் தேர்ந்தெடுங்கள் — அதன் அதிகாரப்பூர்வ ரீசார்ஜ் போர்ட்டல், படிப்படியான வழிமுறை, மற்றும் உண்மையான கட்டண விகிதங்களிலிருந்து கணக்கிடப்பட்ட ஒவ்வொரு ரீசார்ஜுக்கும் எத்தனை யூனிட் என்ற மதிப்பீடு.',
       en: 'Prepaid smart meters are rolling out fast across India. Pick your DISCOM for its official recharge portal, step-by-step instructions, and a units-per-recharge estimate computed from its real tariff rates.' })}</p>
-    <div class="seo-directory">${stateBlocks}</div>
+    <div class="fs-archive-stats database-stats">
+      <span><strong>${states.length}</strong>${esc(T(lang, { hi: ' राज्य / केंद्रशासित', mr: ' राज्ये / केंद्रशासित', ta: ' மாநிலங்கள் / UT', en: ' states / UTs' }))}</span>
+      <span><strong>${states.reduce((n, s) => n + getDiscoms(s).length, 0)}</strong>${esc(T(lang, { hi: ' डिस्कॉम पेज', mr: ' डिस्कॉम पाने', ta: ' DISCOM பக்கங்கள்', en: ' DISCOM pages' }))}</span>
+      <span><strong>${smGuides.length}</strong>${esc(T(lang, { hi: ' गाइड व टूल', mr: ' मार्गदर्शक व साधने', ta: ' வழிகாட்டிகள் & கருவிகள்', en: ' guides & tools' }))}</span>
+    </div>
+
+    <section class="seo-section">
+      <h2>${esc(T(lang, { hi: 'रिचार्ज कैसे काम करता है', mr: 'रिचार्ज कसे काम करते', ta: 'ரீசார்ஜ் எப்படி வேலை செய்கிறது', en: 'How a prepaid recharge works' }))}</h2>
+      <p>${T(lang, {
+        hi: 'तरीक़ा हर डिस्कॉम में लगभग एक जैसा है; फ़र्क़ सिर्फ़ पोर्टल और कम-बैलेंस के नियमों का है। नीचे अपना डिस्कॉम चुनें तो वही जानकारी उसके हिसाब से मिलेगी।',
+        mr: 'पद्धत प्रत्येक डिस्कॉममध्ये जवळपास सारखीच आहे; फरक फक्त पोर्टल आणि कमी-बॅलन्स नियमांचा. खाली तुमचा डिस्कॉम निवडा म्हणजे तीच माहिती त्याप्रमाणे मिळेल.',
+        ta: 'முறை எல்லா DISCOM-களிலும் கிட்டத்தட்ட ஒன்றே; வேறுபாடு போர்ட்டல் மற்றும் குறைந்த-பேலன்ஸ் விதிகளில் மட்டுமே. கீழே உங்கள் DISCOM-ஐத் தேர்ந்தெடுத்தால் அதே தகவல் அதற்கேற்ப கிடைக்கும்.',
+        en: 'The mechanics are much the same at every DISCOM — what differs is the portal and the low-balance rules. Pick yours below for the same steps written against its own portal.' })}</p>
+      <ol class="smr-steps">
+        <li><strong>${esc(T(lang, { hi: 'अपना उपभोक्ता या मीटर नंबर लें', mr: 'तुमचा ग्राहक किंवा मीटर क्रमांक घ्या', ta: 'உங்கள் நுகர்வோர் அல்லது மீட்டர் எண்ணை எடுங்கள்', en: 'Find your consumer or meter number' }))}</strong><span>${esc(T(lang, { hi: 'मीटर की डिस्प्ले पर या पिछले बिल के ऊपर लिखा होता है।', mr: 'मीटरच्या डिस्प्लेवर किंवा मागील बिलाच्या वर असतो.', ta: 'மீட்டர் திரையிலோ அல்லது கடந்த பில்லின் மேலோ இருக்கும்.', en: 'It is on the meter display, or at the top of your last bill.' }))}</span></li>
+        <li><strong>${esc(T(lang, { hi: 'आधिकारिक चैनल चुनें', mr: 'अधिकृत चॅनेल निवडा', ta: 'அதிகாரப்பூர்வ சேனலைத் தேர்ந்தெடுங்கள்', en: 'Use an official channel' }))}</strong><span>${esc(T(lang, { hi: 'डिस्कॉम का अपना पोर्टल/ऐप, या BBPS-समर्थित UPI ऐप।', mr: 'डिस्कॉमचे स्वतःचे पोर्टल/अ‍ॅप, किंवा BBPS-समर्थित UPI अ‍ॅप.', ta: 'DISCOM-இன் சொந்த போர்ட்டல்/ஆப், அல்லது BBPS-இயக்கப்பட்ட UPI ஆப்.', en: 'The DISCOM’s own portal or app, or a BBPS-enabled UPI app.' }))}</span></li>
+        <li><strong>${esc(T(lang, { hi: 'भुगतान करें और बैलेंस जाँचें', mr: 'पैसे भरा आणि बॅलन्स तपासा', ta: 'பணம் செலுத்தி பேலன்ஸைப் பாருங்கள்', en: 'Pay, then check the balance' }))}</strong><span>${esc(T(lang, { hi: 'बैलेंस आमतौर पर कुछ मिनटों में मीटर पर दिखने लगता है।', mr: 'बॅलन्स सहसा काही मिनिटांत मीटरवर दिसतो.', ta: 'பேலன்ஸ் பொதுவாக சில நிமிடங்களில் மீட்டரில் தெரியும்.', en: 'It usually appears on the meter within minutes.' }))}</span></li>
+        <li><strong>${esc(T(lang, { hi: 'थोड़ा बफ़र रखें', mr: 'थोडा बफर ठेवा', ta: 'சிறிது இருப்பு வையுங்கள்', en: 'Keep a buffer' }))}</strong><span>${esc(T(lang, { hi: 'शून्य पर पहुँचने से पहले रिचार्ज करें — कटौती के नियम डिस्कॉम-वार अलग हैं।', mr: 'शून्यावर येण्याआधी रिचार्ज करा — खंडित करण्याचे नियम डिस्कॉमनुसार वेगळे आहेत.', ta: 'பூஜ்ஜியத்தை அடைவதற்கு முன் ரீசார்ஜ் செய்யுங்கள் — துண்டிப்பு விதிகள் DISCOM-வாரி மாறும்.', en: 'Recharge before it reaches zero — disconnection rules vary by DISCOM.' }))}</span></li>
+      </ol>
+    </section>
+    ${stateBlocks}
     <section class="seo-section">
       <h2>${T(lang, { hi: 'स्मार्ट मीटर गाइड व टूल', mr: 'स्मार्ट मीटर मार्गदर्शक व टूल', ta: 'ஸ்மார்ட் மீட்டர் வழிகாட்டிகள் & கருவிகள்', en: 'Smart meter guides & tools' })}</h2>
       <div class="seo-link-grid">
-        ${smGuides.map(([href, label]) => `<a class="seo-link-card" href="${href}"><strong>${label}</strong></a>`).join('')}
+        ${smGuides.map(([href, label, sub, icon]) => `<a class="seo-link-card" data-icon="${icon || cardIcon('', href)}" href="${href}"><strong>${label}</strong>${sub ? `<span>${sub}</span>` : ''}</a>`).join('')}
       </div>
     </section>
     ${faqHtml(faqs, lang)}
