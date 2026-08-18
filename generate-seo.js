@@ -1641,7 +1641,7 @@ function officialServicesHtmlLegacy(state, discom) {
     ['Smart meter', 'Recharge or check prepaid smart-meter service options'],
   ];
   return `
-    <section class="seo-section">
+    <section class="seo-section is-aside">
       <h2>${nm} consumer services</h2>
       <p>These services are provided by ${nm} or the official state/DISCOM portal, not by TheDiscomBill. Use the links below to reach the official website.</p>
       <div class="seo-link-grid discom-service-grid">
@@ -1700,7 +1700,7 @@ function officialServicesHtml(state, discom) {
     },
   ];
   return `
-    <section class="seo-section" id="consumer-services">
+    <section class="seo-section is-aside" id="consumer-services">
       <h2>${nm} consumer services</h2>
       <p>These services are provided by ${nm} or the official state/DISCOM portal, not by TheDiscomBill. Use this block as a practical route map before you leave for the official site.</p>
       <div class="discom-service-panels">
@@ -2038,7 +2038,7 @@ function discomPage(state, discom, lang = 'en') {
   // Sibling DISCOMs in the same state
   const siblings = getDiscoms(state).filter(d => d.id !== discom.id);
   const siblingHtml = siblings.length ? `
-    <section class="seo-section">
+    <section class="seo-section is-aside">
       <h2>Other DISCOMs in ${esc(state)}</h2>
       <div class="seo-link-grid">
         ${siblings.map((d, i) => discomLinkCard(state, d, `/tariffs/${stateSlug}/${d.id}/`, i)).join('')}
@@ -2191,7 +2191,7 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
   const siblings = getDiscoms(state).filter(d => d.id !== discom.id);
   const siblingHead = T(lang, { hi: `${esc(sl)} के अन्य डिस्कॉम`, mr: `${esc(sl)} मधील इतर डिस्कॉम`, ta: `${esc(sl)} இல் உள்ள பிற DISCOM-கள்`, en: `Other DISCOMs in ${esc(sl)}` });
   const siblingHtml = siblings.length ? `
-    <section class="seo-section">
+    <section class="seo-section is-aside">
       <h2>${siblingHead}</h2>
       <div class="seo-link-grid">
         ${siblings.map((d, i) => discomLinkCard(state, d, `${pfx}/tariffs/${stateSlug}/${d.id}/`, i)).join('')}

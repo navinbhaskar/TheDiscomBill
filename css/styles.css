@@ -4051,7 +4051,10 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   font-size: 15px; font-weight: 700; letter-spacing: 0;
   color: var(--text-secondary); margin-bottom: 10px;
 }
-.seo-section.is-aside > h2::before { display: none; }   /* no accent bar on an aside */
+/* Scoped to .seo-page to outrank `.seo-page .seo-section > h2::before` (0,2,2), which draws
+   the accent bar — an aside is not a section of the article and should not wear its marker. */
+.seo-page .seo-section.is-aside > h2::before { content: none; display: none; }
+.seo-page .seo-section.is-aside > h2 { display: block; }
 .seo-section.is-aside { margin-top: 26px; }
 
 /* Link cards (DISCOMs within a state, siblings) */
