@@ -4790,9 +4790,15 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 }
 .seo-dir-state:hover .seo-dir-badge { background: color-mix(in srgb, var(--dir-accent) 20%, transparent); transform: scale(1.04); }
 .seo-dir-state-meta { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
-.seo-dir-state-name { display: inline-flex; align-items: center; gap: 6px; font-size: 14.5px; font-weight: 600; color: var(--text-primary); margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Wraps rather than truncating. "Dadra & Nagar Haveli and Daman & Diu" needs 271px and had
+   163, so the ellipsis cut it to "...and Dam" - a reader could not tell which UT it was, and
+   the name is the one thing the row exists to say. Two lines cost less than that. */
+.seo-dir-state-name { display: block; font-size: 14.5px; font-weight: 600; color: var(--text-primary); margin: 0; }
 .seo-dir-state-head:hover .seo-dir-state-name { color: var(--dir-accent); }
-.seo-dir-arrow { font-size: 12px; color: var(--dir-accent); opacity: 0; transform: translateX(-4px); transition: opacity .15s, transform .15s; }
+/* Inline, so it follows the last word of a name that wraps instead of being a flex item that
+   drops to a line of its own - which is what a three-line "Dadra & Nagar Haveli and Daman &
+   Diu" did to it. */
+.seo-dir-arrow { display: inline; margin-left: 6px; font-size: 12px; color: var(--dir-accent); opacity: 0; transform: translateX(-4px); transition: opacity .15s, transform .15s; }
 .seo-dir-state:hover .seo-dir-arrow { opacity: 1; transform: none; }
 /* Wraps. It used to be nowrap, which held "2 DISCOMs · Domestic ₹2.2–₹7.5/unit" on one
    178px line inside a 166px column and pushed it clean out of the card — a phone-width
