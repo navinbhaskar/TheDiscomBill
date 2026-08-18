@@ -1641,18 +1641,18 @@ function currentFppaHtml(state, discom) {
 function billLineExplainerHtml(discom) {
   const nm = esc(discom.name);
   const items = [
-    ['Energy charge', 'The slab-wise price of the units consumed during the billing period. In telescopic slabs, each band is billed at its own rate.'],
-    ['Fixed charge', 'A monthly charge linked to sanctioned load, connected load, billing demand or consumer category. It applies even when usage is low.'],
-    ['Electricity duty', 'A statutory government levy. Depending on the state, it may apply on energy charges, fixed charges, or selected bill components.'],
-    ['FPPA / FAC', 'Fuel and power-purchase adjustment. It changes more often than the base tariff and may appear as a charge or a credit.'],
-    ['Arrears', 'Unpaid balance, corrections, security-deposit adjustments or previous-cycle amounts carried into the current bill.'],
-    ['LPSC', 'Late Payment Surcharge on overdue amounts. Check the due date and pay through the official DISCOM channel to avoid it.'],
+    ['Energy charge', 'The slab-wise price of the units consumed during the billing period. In telescopic slabs, each band is billed at its own rate.', 'gauge'],
+    ['Fixed charge', 'A monthly charge linked to sanctioned load, connected load, billing demand or consumer category. It applies even when usage is low.', 'plug'],
+    ['Electricity duty', 'A statutory government levy. Depending on the state, it may apply on energy charges, fixed charges, or selected bill components.', 'gov'],
+    ['FPPA / FAC', 'Fuel and power-purchase adjustment. It changes more often than the base tariff and may appear as a charge or a credit.', 'trend'],
+    ['Arrears', 'Unpaid balance, corrections, security-deposit adjustments or previous-cycle amounts carried into the current bill.', 'cash'],
+    ['LPSC', 'Late Payment Surcharge on overdue amounts. Check the due date and pay through the official DISCOM channel to avoid it.', 'clock'],
   ];
   return `
     <section class="seo-section">
       <h2>Understanding your ${nm} bill</h2>
       <div class="discom-explain-grid">
-        ${items.map(([title, body]) => `<article><h3>${title}</h3><p>${body}</p></article>`).join('')}
+        ${items.map(([title, body, icon]) => `<article data-icon="${icon}"><h3>${title}</h3><p>${body}</p></article>`).join('')}
       </div>
     </section>`;
 }

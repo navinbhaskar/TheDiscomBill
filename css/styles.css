@@ -4192,6 +4192,8 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   --ic-guide: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'/%3E%3Cpath d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'/%3E%3C/svg%3E");
   --ic-compare: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3v18M6 8l-4 4 4 4M18 8l4 4-4 4'/%3E%3C/svg%3E");
   --ic-plug: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 2v6M15 2v6M6 8h12v4a6 6 0 0 1-12 0z'/%3E%3Cpath d='M12 18v4'/%3E%3C/svg%3E");
+  --ic-gov: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 10h18L12 3z'/%3E%3Cpath d='M6 10v8M10 10v8M14 10v8M18 10v8'/%3E%3Cpath d='M3 21h18'/%3E%3C/svg%3E");
+  --ic-clock: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3.5 2'/%3E%3C/svg%3E");
 }
 .discom-action-card[data-icon]::before,
 .seo-link-card[data-icon]::before {
@@ -4215,6 +4217,8 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 [data-icon="guide"]   { --ic: var(--ic-guide);   --card-icon: #7c3aed; }
 [data-icon="compare"] { --ic: var(--ic-compare); --card-icon: #0ea5e9; }
 [data-icon="plug"]    { --ic: var(--ic-plug);    --card-icon: #059669; }
+[data-icon="gov"]     { --ic: var(--ic-gov);     --card-icon: #4f46e5; }
+[data-icon="clock"]   { --ic: var(--ic-clock);   --card-icon: #db2777; }
 /* The 600-weight hues are chosen for white; on the dark page they sit too dark against the
    card, so each lifts toward its lighter neighbour. */
 :root[data-theme="dark"] [data-icon="calc"]    { --card-icon: #60a5fa; }
@@ -4229,6 +4233,8 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 :root[data-theme="dark"] [data-icon="guide"]   { --card-icon: #c4b5fd; }
 :root[data-theme="dark"] [data-icon="compare"] { --card-icon: #7dd3fc; }
 :root[data-theme="dark"] [data-icon="plug"]    { --card-icon: #6ee7b7; }
+:root[data-theme="dark"] [data-icon="gov"]     { --card-icon: #a5b4fc; }
+:root[data-theme="dark"] [data-icon="clock"]   { --card-icon: #f9a8d4; }
 
 /* ── Secondary link blocks ───────────────────────────────────────────────────
    Guides, tools, quick links and sibling states are ways off the page, not the page. On the
@@ -4519,10 +4525,19 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   background: var(--surface-card);
   padding: 14px;
 }
+/* Icon rides on the heading line rather than on a row of its own: six tiles in a 3-up grid
+   pay for an extra 26px band six times over, and these are definitions, not destinations. */
 .discom-explain-grid h3 {
   margin: 0 0 6px;
   font-size: 15px;
   color: var(--text-primary);
+  display: flex; align-items: center; gap: 8px;
+}
+.discom-explain-grid article[data-icon] h3::before {
+  content: ''; flex: none; width: 16px; height: 16px;
+  background: var(--card-icon, var(--brand));
+  -webkit-mask: var(--ic) center / contain no-repeat;
+          mask: var(--ic) center / contain no-repeat;
 }
 .discom-explain-grid p {
   margin: 0;
