@@ -460,11 +460,15 @@
           <!-- Each shared marker's route is drawn to one of these, so the anchors have to sit on
                the part actually being named: the digit field for the reading, the register-code row
                for the demand (the code is what tells you WHICH register is on screen), and the
-               nameplate block for the serial. They double as the highlight wash. -->
+               serial LINE for the meter number. That last one used to be the whole 232x70
+               nameplate block, so the route left it from the right edge of the block at its
+               vertical centre - 25 units below the serial and 115 to the right of where the
+               digits end, pointing at the ratings text instead. They double as the highlight
+               wash, which is the second reason to keep them tight to what they name. -->
           <g class="meter-mini-parts">
             <rect data-mm="present-reading" class="is-live" x="292" y="242" width="168" height="38" rx="3"/>
             <rect data-mm="md" x="292" y="282" width="168" height="18" rx="3"/>
-            <rect data-mm="meter-number" x="180" y="368" width="232" height="70" rx="3"/>
+            <rect data-mm="meter-number" x="182" y="367" width="121" height="16" rx="3"/>
           </g>
         </svg>
         </div>
