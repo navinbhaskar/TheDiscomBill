@@ -126,6 +126,15 @@
 <div class="page-body" role="main">
   <section class="svc-section">
     <div class="container container-mid">
+      <!-- The BreadcrumbList JSON-LD in <head> already described this trail; the visible
+           nav every content page carries was simply never added here. -->
+      <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol>
+        <li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li>
+        <li class="crumb-sep" aria-hidden="true">›</li>
+        <li class="crumb"><a href="/bill-review/">Bill Review by Experts</a></li>
+        <li class="crumb-sep" aria-hidden="true">›</li>
+        <li class="crumb"><span aria-current="page">Sample Audit Report</span></li>
+      </ol></nav>
       <!-- H1, not H2: this was the only page of 477 with no H1 at all. -->
       <h1 class="reveal">Sample Audit Report</h1>
       <p class="svc-intro reveal">This is what you get back from a <a href="/bill-review/">free expert bill review</a> —

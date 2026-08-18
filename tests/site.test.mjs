@@ -509,6 +509,33 @@ console.log('\n• new surcharge rates carry provenance');
   }
 }
 
+// ── 11. a page that claims a breadcrumb trail shows one ───────────────────────
+// The BreadcrumbList JSON-LD tells Google the page sits in a hierarchy. If no visible nav
+// carries the same trail, that is a claim the page does not honour - and it cost readers the
+// one control that gets them back up a level. Eight pages had drifted that way.
+{
+  const problems = [];
+  for (const rel of htmlPages) {
+    const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    const m = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+      .map(x => x[1]).find(x => x.includes('BreadcrumbList'));
+    if (!m) continue;
+    let names;
+    try { names = JSON.parse(m).itemListElement.map(i => i.name); } catch { continue; }
+    const nav = /<nav class="seo-breadcrumbs"[\s\S]*?<\/nav>/.exec(html);
+    if (!nav) { problems.push(rel + ' — declares a BreadcrumbList but shows no trail'); continue; }
+    const shown = nav[0].replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ')
+      .split('›').map(t => t.replace(/\s+/g, ' ').trim()).filter(Boolean);
+    // The visible trail may translate at runtime, so compare shape, not every word: same
+    // number of steps, and the last one naming the page the JSON-LD ends on.
+    if (shown.length !== names.length) {
+      problems.push(`${rel} — trail has ${shown.length} steps, JSON-LD declares ${names.length}`);
+    }
+  }
+  if (problems.length) fail('breadcrumbs:\n    ' + problems.join('\n    '));
+  else { passed++; console.log('  ✓ every page declaring a BreadcrumbList shows a matching trail'); }
+}
+
 // ── summary ───────────────────────────────────────────────────────────────────
 console.log(`\n${failed ? '✗' : '✓'} site checks — ${passed} groups passed, ${failed} failures\n`);
 process.exit(failed ? 1 : 0);

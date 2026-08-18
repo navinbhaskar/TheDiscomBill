@@ -128,6 +128,13 @@
 <div class="page-body" role="main">
   <section class="estimator-section">
     <div class="container">
+      <!-- The BreadcrumbList JSON-LD in <head> already described this trail; the visible
+           nav every content page carries was simply never added here. -->
+      <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol>
+        <li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li>
+        <li class="crumb-sep" aria-hidden="true">›</li>
+        <li class="crumb"><span aria-current="page">Electricity Cost Calculator</span></li>
+      </ol></nav>
       <div class="est-hero">
         <h1 data-i18n="est.title">Electricity Cost Calculator</h1>
         <p class="est-intro" data-i18n-html="est.intro">Add the appliances you use, set how many you own and how long they run each day. We'll estimate your <strong>monthly units (kWh)</strong> and approximate cost in real time.</p>
