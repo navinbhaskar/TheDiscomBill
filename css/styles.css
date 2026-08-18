@@ -7056,6 +7056,11 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
    page element rather than the next step. */
 .check-bill-page > * { max-width: var(--w-text); }
 
+/* Same story on the subsidy checker: the state/DISCOM controls and the result card are direct
+   children of .seo-page, so they painted the full 992 while the lead, the two explanation
+   sections and the disclaimer all stopped at 760. One column, as on every other page. */
+.solar-subsidy-page > * { max-width: var(--w-text); }
+
 /* Dropzone. Dashed rather than solid so it reads as a target, not a card. */
 .bc-drop {
   display: flex; flex-direction: column; align-items: center; gap: 6px;
