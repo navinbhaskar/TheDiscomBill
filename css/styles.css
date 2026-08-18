@@ -3073,11 +3073,24 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
   overflow-x: auto;
   box-shadow: var(--shadow-sm);
 }
-/* Exception — /compare/ only (.comparison-section appears on no other page): that table is
-   the page's centred hero content, not a figure sitting beside prose, so it fills the same
-   1000px frame as the head-to-head card and the note cards below it. */
-.comparison-section .comparison-table-wrapper { margin-inline: auto; width: 100%; }
-.comparison-section .comparison-table { width: 100%; }
+/* /compare/ takes the same reading column as every other page. It used to run the full 992
+   box, and because the table was additionally forced to width:100% all of that slack landed
+   in the first column - 319px of it, holding names like "BESCOM" - while the rate columns
+   stayed narrow. The table now sizes to its own content inside the column, so the gaps close
+   instead of being distributed. */
+.comparison-section .container > * { max-width: var(--w-text); }
+/* max-width has to be restated: the column rule above outranks the wrapper's own
+   max-width:100%, and without this the card kept its 552px desktop width on a 327px phone. */
+.comparison-section .comparison-table-wrapper {
+  margin-inline: 0; width: fit-content; max-width: min(var(--w-text), 100%);
+}
+.comparison-section .comparison-table { width: auto; }
+/* Compact only here: this table is six columns of short numbers, and at the shared 8px/13px
+   it was taller than the screen for seven rows. Scoped, so the guide tables that hold
+   sentences keep their roomier cells. */
+.comparison-section .comparison-table th,
+.comparison-section .comparison-table td { padding: 6px 10px; }
+.comparison-section .comparison-table td { font-size: 12.5px; }
 /* The head-to-head card follows the table directly and neither carried a margin, so the
    two cards sat edge to edge and read as one broken container. */
 .comparison-section .comparison-table-wrapper + .custom-compare { margin-top: 34px; }
