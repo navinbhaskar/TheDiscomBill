@@ -3562,7 +3562,11 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
    the text on all generated pages runs flush against the screen edge on mobile. */
 .seo-page { max-width: var(--w-page); margin: 0 auto; padding: 28px 24px 56px; }
 .seo-page h1 { font-size: 27px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.6px; line-height: 1.2; margin: 6px 0 12px; }
-.seo-lead { font-size: 16px; color: var(--text-secondary); line-height: 1.65; max-width: 760px; margin: 0 0 18px; }
+/* Same size as the body text it introduces. At 16px the lead was the largest run of prose on
+   the page after the H1, and on the state pages it is a 240-character paragraph, not a
+   one-line standfirst - so the size read as emphasis the sentence had not earned. It stays
+   distinct through its position and its 18px trailing space, not through scale. */
+.seo-lead { font-size: 15px; color: var(--text-secondary); line-height: 1.65; max-width: 760px; margin: 0 0 18px; }
 /* Cross-link between the English and Hindi variants of a page */
 /* ─── Translation availability capsules ────────────────────────────────────────
    Sits under the breadcrumbs. The header's language switcher offers every language;
@@ -4855,7 +4859,6 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 }
 @media (max-width: 560px) {
   .seo-page h1 { font-size: 22px; }
-  .seo-lead { font-size: 15px; }
 }
 
 /* ─── Bill Check page (/bill-check/) ─────────────────────────────────────────── */
