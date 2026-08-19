@@ -18,6 +18,142 @@
 
 export const GUIDES = [
   {
+    slug: 'md-penalty-excess-demand-charge',
+    published: "2026-08-20",
+    title: 'MD Penalty and Excess Demand Charge, Explained',
+    metaTitle: 'MD Penalty / Excess Demand Charge Explained — Rules by State',
+    description: 'What the maximum demand penalty on an Indian electricity bill actually is, why it appears when your units have not changed, how each state charges it (2×, 1.5×, flat ₹/kVA or a % of energy charges), and the three ways to make it stop.',
+    minutes: 8,
+    toc: true,
+    intro: `An <strong>MD penalty</strong> — also printed as excess demand charge, exceeding demand
+      charge or penal demand charge — is what a DISCOM levies when the maximum power you drew in a
+      billing cycle went above the load you contracted for. It is charged on the
+      <strong>excess only</strong>, not on your whole demand, and it is one of the few bill lines
+      that can appear even when your units barely moved. This page explains the mechanism, then
+      compares how the rule differs by state.`,
+    sections: `
+      <section class="seo-section">
+        <h2>What maximum demand actually measures</h2>
+        <p>Units (kWh) measure how much energy you used over a month. <strong>Maximum demand</strong>
+        measures the highest rate you drew it at — the worst single interval in the cycle, almost
+        always a rolling <strong>30-minute block</strong>, recorded by the meter and reset each cycle.</p>
+        <p>The distinction is the whole point. Running a 10 kW load for 20 hours and a 40 kW load for
+        5 hours can produce a similar unit count, but the second one forces the network to be built
+        for 40 kW. Demand charges pay for that capacity; energy charges pay for the electricity.</p>
+        <p>So <strong>one bad half-hour sets your MD for the entire month.</strong> A compressor, a
+        lift motor and an air-conditioning bank all starting together at 9:05 a.m. on one Monday is
+        enough. Nothing you do for the remaining 719 hours brings that number back down.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Sanctioned load, contract demand and billed demand</h2>
+        <p>Three numbers get confused constantly, and the penalty depends on which is which:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Term</th><th>What it is</th><th>Where it comes from</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Sanctioned load</strong></td><td>The connected load the DISCOM approved for you, in kW.</td><td>Your connection agreement. Printed on the bill.</td></tr>
+            <tr><td><strong>Contract demand</strong></td><td>The maximum demand you agreed to draw, in kVA. On HT connections this is the number that matters.</td><td>Your agreement; changing it is an application, not a phone call.</td></tr>
+            <tr><td><strong>Recorded MD</strong></td><td>The highest 30-minute demand the meter actually saw this cycle.</td><td>The meter. It is a measurement, not a decision.</td></tr>
+            <tr><td><strong>Billed demand</strong></td><td>What you are charged demand on — usually the higher of recorded MD and a floor (commonly 75% of contract demand on HT).</td><td>The tariff order.</td></tr>
+          </tbody>
+        </table></div>
+        <p>The penalty triggers on <strong>recorded MD above sanctioned load or contract demand</strong>.
+        The billing-demand floor is a separate rule and works the other way: it stops your demand
+        charge falling below a minimum, which is why a month with almost no usage can still carry a
+        substantial demand charge.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>How the penalty is calculated</h2>
+        <p>Every Indian formulation reduces to the same shape:</p>
+        <p><strong>Penalty = (recorded MD − sanctioned demand) × penal rate</strong></p>
+        <p>What differs between states is only the penal rate, and there are four ways it is expressed:</p>
+        <ul>
+          <li><strong>A multiple of the normal demand rate.</strong> The most common. The excess kW or kVA is billed at, say, 1.5× or 2× what a normal unit of demand costs.</li>
+          <li><strong>A flat ₹ per excess kVA.</strong> A fixed penal figure per unit of excess, independent of your ordinary demand rate.</li>
+          <li><strong>A percentage of energy charges per excess kW.</strong> Unusual, and it means the penalty scales with your consumption as well as your overshoot.</li>
+          <li><strong>A surcharge on the fixed charge for the excess load</strong>, rather than on the demand rate.</li>
+        </ul>
+        <p>Two details decide whether the number on your bill matches your arithmetic. First,
+        <strong>the penalty applies only to the excess</strong> — the portion up to your sanctioned
+        load is billed normally. Second, in most states the penalty lands
+        <em>before</em> the fuel surcharge and electricity duty are computed, so ₹1,000 of penalty
+        costs more than ₹1,000 by the time the bill totals. Our
+        <a href="/#calculator">bill calculator</a> applies it in that order.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>MD penalty rules by state</h2>
+        <p>Generated from the same tariff data the calculator runs on, so it cannot drift away from
+        what the site actually charges.</p>
+        {{EXCESS_DEMAND_TABLE}}
+      </section>
+
+      <section class="seo-section">
+        <h2>Why it appeared this month when nothing changed</h2>
+        <p>The usual causes, in rough order of how often they turn out to be the answer:</p>
+        <ol>
+          <li><strong>One new load, switched on at the wrong moment.</strong> A single added motor or AC that happens to start while everything else is running sets a new peak.</li>
+          <li><strong>Nothing changed — the season did.</strong> Cooling load in summer and heating in winter push simultaneous demand up without changing your habits.</li>
+          <li><strong>A power cut and the restart after it.</strong> When supply returns, every thermostatic load in the building starts at once. This is one of the most common causes of a one-off MD spike, and it is not really your doing.</li>
+          <li><strong>Your sanctioned load was always too low.</strong> Common on connections that were sized years ago and never revised. It is not a spike; you have been over the line for a while and are only now being charged for it.</li>
+          <li><strong>Capacitor bank failure on a kVA tariff.</strong> If you are billed on kVA and your power factor collapses, recorded demand rises even though the actual work done did not. Worth checking before assuming the load grew.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>The three ways to make it stop</h2>
+        <p>In the order most people should try them:</p>
+        <ol>
+          <li><strong>Stagger the starts.</strong> The cheapest fix, and often enough on its own. If the penalty comes from three loads starting together, sequencing them by a few minutes removes the peak without reducing anything you actually use. A time switch on the largest motor costs a fraction of one month's penalty.</li>
+          <li><strong>Fix the power factor, if you are on a kVA tariff.</strong> Correcting a poor power factor lowers recorded kVA demand directly, and in many states also earns a power-factor incentive — so it can pay twice.</li>
+          <li><strong>Raise the sanctioned load.</strong> The right answer when the overshoot is structural rather than occasional. It is not free: a higher sanctioned load means a higher fixed or demand charge every month, forever. Compare that increase against what the penalty is actually costing you before applying — our <a href="/sanctioned-load-optimizer/">sanctioned load optimizer</a> does that comparison.</li>
+        </ol>
+        <p>Raising the load first is the common mistake. If the penalty appears in two months out of
+        twelve, a permanent fixed-charge increase can cost more per year than the penalty did.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Checking the charge on your own bill</h2>
+        <ol>
+          <li><strong>Find your sanctioned load or contract demand</strong> on the bill, and confirm it matches your agreement. A clerical error here is worth ruling out first.</li>
+          <li><strong>Find recorded MD</strong> — usually labelled MD, Max Demand or Rec. Demand, in kW or kVA.</li>
+          <li><strong>Subtract.</strong> If recorded MD is at or below sanctioned, there should be no penalty line at all.</li>
+          <li><strong>Multiply the excess by the penal rate</strong> from the table above, and compare with the line on the bill.</li>
+          <li><strong>Check the units.</strong> A penalty computed in kW against a limit stated in kVA (or the reverse) is a real and recurring billing error, and on a poor power factor the gap between the two is large.</li>
+        </ol>
+        <p>If your arithmetic and the bill disagree, that is worth raising —
+        <a href="/check-my-bill/">upload the bill</a> and we will recompute it from the tariff.</p>
+      </section>
+    `,
+    faqs: [
+      {
+        q: 'Is MD penalty the same as excess demand charge?',
+        a: 'Yes. The same charge is printed as MD penalty, excess demand charge, exceeding demand charge, penal demand charge or demand surcharge depending on the DISCOM. All of them mean the recorded maximum demand went above your sanctioned load or contract demand, and the excess is being billed at a penal rate.'
+      },
+      {
+        q: 'Does the penalty apply to my whole demand or only the excess?',
+        a: 'Only the excess. Demand up to your sanctioned load or contract demand is charged at the normal rate, and only the portion above it attracts the penal rate. A bill charging the penal rate on the full recorded demand is wrong.'
+      },
+      {
+        q: 'Can one half-hour really set the penalty for the whole month?',
+        a: 'Yes, and that is the usual reason the charge feels disproportionate. Maximum demand is the highest 30-minute average in the cycle, so a single simultaneous start-up sets it, and nothing later in the month reduces it. It resets at the start of the next cycle.'
+      },
+      {
+        q: 'Do domestic connections get an MD penalty?',
+        a: 'Usually not, because most domestic tariffs bill a fixed charge on sanctioned load rather than a demand charge on recorded MD. It mainly affects commercial, industrial and HT connections. Some states do levy a surcharge on domestic connections that exceed sanctioned load, so check your own schedule rather than assuming.'
+      },
+      {
+        q: 'Should I just increase my sanctioned load?',
+        a: 'Only if the overshoot is regular. A higher sanctioned load raises your fixed or demand charge every month permanently, so if the penalty appears occasionally it can be cheaper to stagger start-ups instead. Compare the annual cost of both before applying.'
+      },
+      {
+        q: 'Is electricity duty charged on the penalty as well?',
+        a: 'In most states, yes. The excess-demand penalty is part of the charges that duty and the fuel surcharge are computed on, so the actual increase to your bill is larger than the penalty line itself.'
+      }
+    ]
+  },
+  {
     slug: 'how-to-read-uppcl-bill',
     published: "2026-07-16",
     states: ['Uttar Pradesh'],

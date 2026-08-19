@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en" data-i18n-twins-only>
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      
+    })();
+  </script>
+  <title>MD Penalty / Excess Demand Charge Explained — Rules by State</title>
+  <meta name="description" content="What the maximum demand penalty on an Indian electricity bill actually is, why it appears when your units have not changed, how each state charges it (2×)">
+  <link rel="canonical" href="https://thediscombill.com/guides/md-penalty-excess-demand-charge/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="MD Penalty / Excess Demand Charge Explained — Rules by State">
+  <meta property="og:description" content="What the maximum demand penalty on an Indian electricity bill actually is, why it appears when your units have not changed, how each state charges it (2×, 1.5×, flat ₹/kVA or a % of energy charges), and the three ways to make it stop.">
+  <meta property="og:url" content="https://thediscombill.com/guides/md-penalty-excess-demand-charge/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="MD Penalty / Excess Demand Charge Explained — Rules by State">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:locale:alternate" content="hi_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MD Penalty / Excess Demand Charge Explained — Rules by State">
+  <meta name="twitter:description" content="What the maximum demand penalty on an Indian electricity bill actually is, why it appears when your units have not changed, how each state charges it (2×, 1.5×, flat ₹/kVA or a % of energy charges), and the three ways to make it stop.">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/guides/md-penalty-excess-demand-charge/","name":"MD Penalty / Excess Demand Charge Explained — Rules by State","description":"What the maximum demand penalty on an Indian electricity bill actually is, why it appears when your units have not changed, how each state charges it (2×, 1.5×, flat ₹/kVA or a % of energy charges), and the three ways to make it stop.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-19"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"MD Penalty and Excess Demand Charge, Explained","description":"What the maximum demand penalty on an Indian electricity bill actually is, why it appears when your units have not changed, how each state charges it (2×, 1.5×, flat ₹/kVA or a % of energy charges), and the three ways to make it stop.","image":"https://thediscombill.com/og-image.jpg","mainEntityOfPage":"https://thediscombill.com/guides/md-penalty-excess-demand-charge/","datePublished":"2026-08-20","dateModified":"2026-08-19","inLanguage":"en-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://thediscombill.com/guides/"},{"@type":"ListItem","position":3,"name":"MD Penalty and Excess Demand Charge, Explained"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is MD penalty the same as excess demand charge?","acceptedAnswer":{"@type":"Answer","text":"Yes. The same charge is printed as MD penalty, excess demand charge, exceeding demand charge, penal demand charge or demand surcharge depending on the DISCOM. All of them mean the recorded maximum demand went above your sanctioned load or contract demand, and the excess is being billed at a penal rate."}},{"@type":"Question","name":"Does the penalty apply to my whole demand or only the excess?","acceptedAnswer":{"@type":"Answer","text":"Only the excess. Demand up to your sanctioned load or contract demand is charged at the normal rate, and only the portion above it attracts the penal rate. A bill charging the penal rate on the full recorded demand is wrong."}},{"@type":"Question","name":"Can one half-hour really set the penalty for the whole month?","acceptedAnswer":{"@type":"Answer","text":"Yes, and that is the usual reason the charge feels disproportionate. Maximum demand is the highest 30-minute average in the cycle, so a single simultaneous start-up sets it, and nothing later in the month reduces it. It resets at the start of the next cycle."}},{"@type":"Question","name":"Do domestic connections get an MD penalty?","acceptedAnswer":{"@type":"Answer","text":"Usually not, because most domestic tariffs bill a fixed charge on sanctioned load rather than a demand charge on recorded MD. It mainly affects commercial, industrial and HT connections. Some states do levy a surcharge on domestic connections that exceed sanctioned load, so check your own schedule rather than assuming."}},{"@type":"Question","name":"Should I just increase my sanctioned load?","acceptedAnswer":{"@type":"Answer","text":"Only if the overshoot is regular. A higher sanctioned load raises your fixed or demand charge every month permanently, so if the penalty appears occasionally it can be cheaper to stagger start-ups instead. Compare the annual cost of both before applying."}},{"@type":"Question","name":"Is electricity duty charged on the penalty as well?","acceptedAnswer":{"@type":"Answer","text":"In most states, yes. The excess-demand penalty is part of the charges that duty and the fuel surcharge are computed on, so the actual increase to your bill is larger than the penalty line itself."}}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <a href="/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">Smart Meter</a>
+      <a href="/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/#calculator" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">Smart Meter</span></a>
+            <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <!-- aria-labelledby, not aria-label: the accessible name has to CONTAIN the visible
+             text ("EN"), or speech input cannot activate the button and a screen reader never
+             announces which language is active (WCAG 2.5.3). Referencing the live span also
+             keeps the name in step when syncLangUI() rewrites the badge. -->
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- A plain list of links, not a listbox. These rows navigate, so they are anchors:
+             that makes them crawlable, middle-clickable and keyboard-operable for free,
+             none of which a role="option" <li> with a click handler ever was. Rows that
+             translate in place (no twin URL to point at) stay <button>s. -->
+        <ul class="lang-menu" id="langMenu" aria-label="Select language">
+          <li><span class="lang-opt" data-lang="en" aria-current="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></span></li>
+          <li><button type="button" class="lang-opt" data-lang="hi"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">हिं</span></button></li>
+        </ul>
+      </div>
+      <button type="button" id="siteSearchBtn" class="site-search-btn" aria-label="Search the site (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body" role="main">
+
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><a href="/guides/">Guides</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">MD Penalty and Excess Demand Charge, Explained</span></li></ol></nav>
+    <div class="seo-article-tools"><p class="seo-lang-pills"><svg class="seo-lang-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span class="sr-only">Available in</span><span class="seo-lang-pill is-current" lang="en" aria-current="page">English</span></p><button type="button" class="seo-share-btn" data-share-article hidden data-copied="Link copied" data-failed="Copy failed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span class="seo-share-label" data-share-label>Share</span></button></div>
+    <h1>MD Penalty and Excess Demand Charge, Explained</h1>
+    <p class="guide-meta">8 min read · Updated 19 August 2026 · TheDiscomBill Editorial · <a href="/methodology/">How we source our rates</a></p>
+    <p class="seo-lead">An <strong>MD penalty</strong> — also printed as excess demand charge, exceeding demand
+      charge or penal demand charge — is what a DISCOM levies when the maximum power you drew in a
+      billing cycle went above the load you contracted for. It is charged on the
+      <strong>excess only</strong>, not on your whole demand, and it is one of the few bill lines
+      that can appear even when your units barely moved. This page explains the mechanism, then
+      compares how the rule differs by state.</p>
+    
+    
+    <nav class="page-toc" aria-label="On this page">
+      <span class="page-toc-label">On this page</span>
+      <a href="#what-maximum-demand-actually-measures">What maximum demand actually measures</a>
+        <a href="#sanctioned-load-contract-demand-and-billed-demand">Sanctioned load, contract demand and billed demand</a>
+        <a href="#how-the-penalty-is-calculated">How the penalty is calculated</a>
+        <a href="#md-penalty-rules-by-state">MD penalty rules by state</a>
+        <a href="#why-it-appeared-this-month-when-nothing-changed">Why it appeared this month when nothing changed</a>
+        <a href="#the-three-ways-to-make-it-stop">The three ways to make it stop</a>
+        <a href="#checking-the-charge-on-your-own-bill">Checking the charge on your own bill</a>
+    </nav>
+    
+      <section class="seo-section" id="what-maximum-demand-actually-measures">
+        <h2>What maximum demand actually measures</h2>
+        <p>Units (kWh) measure how much energy you used over a month. <strong>Maximum demand</strong>
+        measures the highest rate you drew it at — the worst single interval in the cycle, almost
+        always a rolling <strong>30-minute block</strong>, recorded by the meter and reset each cycle.</p>
+        <p>The distinction is the whole point. Running a 10 kW load for 20 hours and a 40 kW load for
+        5 hours can produce a similar unit count, but the second one forces the network to be built
+        for 40 kW. Demand charges pay for that capacity; energy charges pay for the electricity.</p>
+        <p>So <strong>one bad half-hour sets your MD for the entire month.</strong> A compressor, a
+        lift motor and an air-conditioning bank all starting together at 9:05 a.m. on one Monday is
+        enough. Nothing you do for the remaining 719 hours brings that number back down.</p>
+      </section>
+
+      <section class="seo-section" id="sanctioned-load-contract-demand-and-billed-demand">
+        <h2>Sanctioned load, contract demand and billed demand</h2>
+        <p>Three numbers get confused constantly, and the penalty depends on which is which:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Term</th><th>What it is</th><th>Where it comes from</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Sanctioned load</strong></td><td>The connected load the DISCOM approved for you, in kW.</td><td>Your connection agreement. Printed on the bill.</td></tr>
+            <tr><td><strong>Contract demand</strong></td><td>The maximum demand you agreed to draw, in kVA. On HT connections this is the number that matters.</td><td>Your agreement; changing it is an application, not a phone call.</td></tr>
+            <tr><td><strong>Recorded MD</strong></td><td>The highest 30-minute demand the meter actually saw this cycle.</td><td>The meter. It is a measurement, not a decision.</td></tr>
+            <tr><td><strong>Billed demand</strong></td><td>What you are charged demand on — usually the higher of recorded MD and a floor (commonly 75% of contract demand on HT).</td><td>The tariff order.</td></tr>
+          </tbody>
+        </table></div>
+        <p>The penalty triggers on <strong>recorded MD above sanctioned load or contract demand</strong>.
+        The billing-demand floor is a separate rule and works the other way: it stops your demand
+        charge falling below a minimum, which is why a month with almost no usage can still carry a
+        substantial demand charge.</p>
+      </section>
+
+      <section class="seo-section" id="how-the-penalty-is-calculated">
+        <h2>How the penalty is calculated</h2>
+        <p>Every Indian formulation reduces to the same shape:</p>
+        <p><strong>Penalty = (recorded MD − sanctioned demand) × penal rate</strong></p>
+        <p>What differs between states is only the penal rate, and there are four ways it is expressed:</p>
+        <ul>
+          <li><strong>A multiple of the normal demand rate.</strong> The most common. The excess kW or kVA is billed at, say, 1.5× or 2× what a normal unit of demand costs.</li>
+          <li><strong>A flat ₹ per excess kVA.</strong> A fixed penal figure per unit of excess, independent of your ordinary demand rate.</li>
+          <li><strong>A percentage of energy charges per excess kW.</strong> Unusual, and it means the penalty scales with your consumption as well as your overshoot.</li>
+          <li><strong>A surcharge on the fixed charge for the excess load</strong>, rather than on the demand rate.</li>
+        </ul>
+        <p>Two details decide whether the number on your bill matches your arithmetic. First,
+        <strong>the penalty applies only to the excess</strong> — the portion up to your sanctioned
+        load is billed normally. Second, in most states the penalty lands
+        <em>before</em> the fuel surcharge and electricity duty are computed, so ₹1,000 of penalty
+        costs more than ₹1,000 by the time the bill totals. Our
+        <a href="/#calculator">bill calculator</a> applies it in that order.</p>
+      </section>
+
+      <section class="seo-section" id="md-penalty-rules-by-state">
+        <h2>MD penalty rules by state</h2>
+        <p>Generated from the same tariff data the calculator runs on, so it cannot drift away from
+        what the site actually charges.</p>
+        <div class="comparison-table-wrapper md-penalty-table"><table class="comparison-table">
+      <thead><tr><th>State / UT</th><th>How the penalty is charged</th><th>Tolerance</th><th>Basis</th></tr></thead>
+      <tbody>
+        <tr>
+      <td><a href="/tariffs/delhi/">Delhi</a></td>
+      <td>30% surcharge on the demand charge for the excess load</td>
+      <td>None</td>
+      <td><span class="ol-kind is-doc">sourced</span> <a href="https://www.derc.gov.in/tarriff-orders" rel="nofollow">the order</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/gujarat/">Gujarat</a></td>
+      <td>Flat ₹360.00 per unit of excess demand</td>
+      <td>None</td>
+      <td><span class="ol-kind is-doc">sourced</span> <a href="https://gercin.org/order-category/tariff-orders/" rel="nofollow">the order</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/karnataka/">Karnataka</a></td>
+      <td>1.5× the normal demand rate, on the excess only</td>
+      <td>None</td>
+      <td><span class="ol-kind is-doc">sourced</span> <a href="/orders/kerc-tariff-2025/">KERC order</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/maharashtra/">Maharashtra</a></td>
+      <td>1.5× the normal demand rate, on the excess only</td>
+      <td>None</td>
+      <td><span class="ol-kind is-doc">sourced</span> <a href="/orders/merc-217-2024-msedcl/">MERC order</a></td>
+    </tr><tr>
+      <td><a href="/tariffs/tamil-nadu/">Tamil Nadu</a></td>
+      <td>1% of energy charges, per excess kW</td>
+      <td>None</td>
+      <td><span class="ol-kind is-doc">sourced</span> <a href="/orders/tnerc-to-6-2025/">TNERC order</a></td>
+    </tr>
+        <tr>
+      <td><a href="/tariffs/uttar-pradesh/">Uttar Pradesh</a> <small>(ST-20)</small></td>
+      <td>Flat ₹660.00 per unit of excess demand</td>
+      <td>None</td>
+      <td><span class="ol-kind is-doc">sourced</span> set on the tariff itself</td>
+    </tr>
+        <tr class="md-fallback">
+          <td><em>29 other states &amp; UTs</em></td>
+          <td>2× the normal demand rate, on the excess only</td>
+          <td>None</td>
+          <td><span class="ol-kind is-page">our default</span> no state rule recorded yet</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <p class="fs-legend"><strong>Read the last column before you use a number.</strong> Rows marked
+    <em>sourced</em> come from that state's own tariff order or schedule. The final row is not a rule
+    anybody published — it is the modelling default this site applies where the state's rule is not
+    yet sourced, chosen because 2× the demand rate is the most common Indian formulation. If your
+    state is in that group, take the figure from your own tariff schedule rather than from here.</p>
+      </section>
+
+      <section class="seo-section" id="why-it-appeared-this-month-when-nothing-changed">
+        <h2>Why it appeared this month when nothing changed</h2>
+        <p>The usual causes, in rough order of how often they turn out to be the answer:</p>
+        <ol>
+          <li><strong>One new load, switched on at the wrong moment.</strong> A single added motor or AC that happens to start while everything else is running sets a new peak.</li>
+          <li><strong>Nothing changed — the season did.</strong> Cooling load in summer and heating in winter push simultaneous demand up without changing your habits.</li>
+          <li><strong>A power cut and the restart after it.</strong> When supply returns, every thermostatic load in the building starts at once. This is one of the most common causes of a one-off MD spike, and it is not really your doing.</li>
+          <li><strong>Your sanctioned load was always too low.</strong> Common on connections that were sized years ago and never revised. It is not a spike; you have been over the line for a while and are only now being charged for it.</li>
+          <li><strong>Capacitor bank failure on a kVA tariff.</strong> If you are billed on kVA and your power factor collapses, recorded demand rises even though the actual work done did not. Worth checking before assuming the load grew.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section" id="the-three-ways-to-make-it-stop">
+        <h2>The three ways to make it stop</h2>
+        <p>In the order most people should try them:</p>
+        <ol>
+          <li><strong>Stagger the starts.</strong> The cheapest fix, and often enough on its own. If the penalty comes from three loads starting together, sequencing them by a few minutes removes the peak without reducing anything you actually use. A time switch on the largest motor costs a fraction of one month's penalty.</li>
+          <li><strong>Fix the power factor, if you are on a kVA tariff.</strong> Correcting a poor power factor lowers recorded kVA demand directly, and in many states also earns a power-factor incentive — so it can pay twice.</li>
+          <li><strong>Raise the sanctioned load.</strong> The right answer when the overshoot is structural rather than occasional. It is not free: a higher sanctioned load means a higher fixed or demand charge every month, forever. Compare that increase against what the penalty is actually costing you before applying — our <a href="/sanctioned-load-optimizer/">sanctioned load optimizer</a> does that comparison.</li>
+        </ol>
+        <p>Raising the load first is the common mistake. If the penalty appears in two months out of
+        twelve, a permanent fixed-charge increase can cost more per year than the penalty did.</p>
+      </section>
+
+      <section class="seo-section" id="checking-the-charge-on-your-own-bill">
+        <h2>Checking the charge on your own bill</h2>
+        <ol>
+          <li><strong>Find your sanctioned load or contract demand</strong> on the bill, and confirm it matches your agreement. A clerical error here is worth ruling out first.</li>
+          <li><strong>Find recorded MD</strong> — usually labelled MD, Max Demand or Rec. Demand, in kW or kVA.</li>
+          <li><strong>Subtract.</strong> If recorded MD is at or below sanctioned, there should be no penalty line at all.</li>
+          <li><strong>Multiply the excess by the penal rate</strong> from the table above, and compare with the line on the bill.</li>
+          <li><strong>Check the units.</strong> A penalty computed in kW against a limit stated in kVA (or the reverse) is a real and recurring billing error, and on a poor power factor the gap between the two is large.</li>
+        </ol>
+        <p>If your arithmetic and the bill disagree, that is worth raising —
+        <a href="/check-my-bill/">upload the bill</a> and we will recompute it from the tariff.</p>
+      </section>
+    
+    <section class="seo-section"><h2>Frequently asked questions</h2>
+    <details class="seo-faq-item">
+      <summary>Is MD penalty the same as excess demand charge?</summary>
+      <div class="seo-faq-a">Yes. The same charge is printed as MD penalty, excess demand charge, exceeding demand charge, penal demand charge or demand surcharge depending on the DISCOM. All of them mean the recorded maximum demand went above your sanctioned load or contract demand, and the excess is being billed at a penal rate.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Does the penalty apply to my whole demand or only the excess?</summary>
+      <div class="seo-faq-a">Only the excess. Demand up to your sanctioned load or contract demand is charged at the normal rate, and only the portion above it attracts the penal rate. A bill charging the penal rate on the full recorded demand is wrong.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Can one half-hour really set the penalty for the whole month?</summary>
+      <div class="seo-faq-a">Yes, and that is the usual reason the charge feels disproportionate. Maximum demand is the highest 30-minute average in the cycle, so a single simultaneous start-up sets it, and nothing later in the month reduces it. It resets at the start of the next cycle.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Do domestic connections get an MD penalty?</summary>
+      <div class="seo-faq-a">Usually not, because most domestic tariffs bill a fixed charge on sanctioned load rather than a demand charge on recorded MD. It mainly affects commercial, industrial and HT connections. Some states do levy a surcharge on domestic connections that exceed sanctioned load, so check your own schedule rather than assuming.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Should I just increase my sanctioned load?</summary>
+      <div class="seo-faq-a">Only if the overshoot is regular. A higher sanctioned load raises your fixed or demand charge every month permanently, so if the penalty appears occasionally it can be cheaper to stagger start-ups instead. Compare the annual cost of both before applying.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Is electricity duty charged on the penalty as well?</summary>
+      <div class="seo-faq-a">In most states, yes. The excess-demand penalty is part of the charges that duty and the fuel surcharge are computed on, so the actual increase to your bill is larger than the penalty line itself.</div>
+    </details></section>
+    <section class="seo-section guide-calc-cta">
+      <h2>Now check your own bill</h2>
+      <p>Reading is half the job — run your own units through your DISCOM's real slab rates, fixed charges and FPPA and get an itemised bill in seconds. Free, no sign-up.</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Open the electricity bill calculator →</a></p>
+    </section>
+    
+    <section class="seo-section guide-more">
+      <h2>Related guides</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/guides/how-to-read-uppcl-bill/">
+          <strong>How to Read Your UPPCL Electricity Bill</strong>
+          <small>6 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/why-did-my-electricity-bill-increase/">
+          <strong>Why Did My Electricity Bill Suddenly Increase?</strong>
+          <small>7 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/tod-billing-explained/">
+          <strong>Time-of-Day (ToD) Electricity Billing Explained</strong>
+          <small>5 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/how-to-read-bses-delhi-bill/">
+          <strong>How to Read Your BSES / Delhi Electricity Bill</strong>
+          <small>6 min read</small>
+        </a>
+      </div>
+      <p class="guide-more-all"><a href="/guides/">Browse all guides →</a></p>
+    </section>
+    <p class="seo-disclaimer">General guidance based on publicly available tariff orders and
+    regulations; specifics vary by state, DISCOM and consumer category. Verify against your DISCOM's
+    official schedule or your printed bill.</p>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+        <a href="/compare/" data-i18n="nav.compare">Compare</a>
+        <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator</a>
+        <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/smart-meter/" data-i18n="ql.meterDisplay">Smart Meter Guide</a>
+        <a href="/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/database/">Tariff Database</a>
+        <a href="/orders/">Order Library</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/contact/" data-i18n="ql.contact">Contact</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

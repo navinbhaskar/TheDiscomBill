@@ -23,6 +23,8 @@ import { execSync } from 'child_process';
 
 import { TARIFF_DB, STATE_META, getStates, getDiscoms, tariffAge, ensureAll } from './js/tariffs/registry.js';
 import { surchargeTerm, surchargeAliases, surchargeLabel } from './js/tariffs/surcharge-terms.js';
+import { ORDERS, ORDER_TYPES } from './js/tariffs/orders.js';
+import { DEFAULT_EXCESS_DEMAND } from './js/engine.js';
 import { buildTariffIndex } from './scripts/build-tariff-index.mjs';
 import { buildTariffDatabase } from './scripts/build-tariff-database.mjs';
 
@@ -102,7 +104,7 @@ function saveManifest() {
   const m = loadManifest();
   const out = {};
   for (const k of Object.keys(m).sort()) if (_seenUrls.has(k)) out[k] = m[k];  // prune + sort
-  fs.writeFileSync(MANIFEST_PATH, JSON.stringify(out, null, 2) + '\n', 'utf8');
+  writeWithRetry(MANIFEST_PATH, JSON.stringify(out, null, 2) + '\n');
 }
 // Resolve + write a generated page: hash the tokenised HTML for a date-independent
 // signature, then substitute the resolved date into all three token slots.
@@ -151,10 +153,27 @@ const rupeeRate = (n) => '₹' + Number(n).toLocaleString('en-IN', { minimumFrac
 const slugify = (s) => String(s).toLowerCase().trim()
   .replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
+// Retries a transient Windows UNKNOWN (see writeWithRetry) rather than losing the build.
 function writePage(relDir, html) {
   const dir = path.join(ROOT, relDir);
   fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, 'index.html'), html, 'utf8');
+  writeWithRetry(path.join(dir, 'index.html'), html);
+}
+
+// On Windows a write can fail with UNKNOWN mid-run — a different file each time, and fine on
+// the next attempt: something else (search indexer, antivirus) is holding the handle for a
+// moment. Backing off briefly and retrying turns a dead build into a pause nobody notices.
+// The backoff is synchronous because every caller here is, and a page write is not worth
+// making async for.
+function writeWithRetry(abs, contents) {
+  for (let attempt = 0; ; attempt++) {
+    try { fs.writeFileSync(abs, contents, 'utf8'); return; }
+    catch (err) {
+      if (attempt === 4 || (err.code !== 'UNKNOWN' && err.code !== 'EBUSY' && err.code !== 'EPERM')) throw err;
+      const until = Date.now() + 40 * (attempt + 1);
+      while (Date.now() < until) { /* short synchronous backoff */ }
+    }
+  }
 }
 
 // ── Vernacular (/hi/, /mr/, /ta/) variants ────────────────────────────────────
@@ -411,6 +430,7 @@ const FOOTER_SITEMAP = `
         <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
         <a href="/database/">Tariff Database</a>
+        <a href="/orders/">Order Library</a>
         <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
@@ -1648,7 +1668,8 @@ function niceTickStep(span, targetTicks = 4) {
   return mult * mag;
 }
 
-function fppaTrendSvg(series, rangeMonths, discomName, termCode = 'FPPA') {
+function fppaTrendSvg(series, rangeMonths, discomName, termCode = 'FPPA', lang = 'en') {
+  const t = fsT(lang);
   const sliced = series.slice(-Math.min(series.length, rangeMonths));
   const W = 720, H = 188, PAD_L = 48, PAD_R = 14, PAD_T = 14, PAD_B = 32;
   const plotW = W - PAD_L - PAD_R, plotH = H - PAD_T - PAD_B;
@@ -1684,12 +1705,12 @@ function fppaTrendSvg(series, rangeMonths, discomName, termCode = 'FPPA') {
   // No fill under the line. The signed area was tinted red above zero and green below, and at
   // the low opacity it needed it read as a wash of orange rather than as a charge/credit cue.
   // The zero line, the round ticks and the per-point colours already carry the sign.
-  const dots = points.map(([x, y, e]) => `<circle class="${e.rate >= 0 ? 'trend-dot-pos' : 'trend-dot-neg'}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.4"><title>${esc(fsMonth(e.from))}: ${esc(fppaTrendRateLabel(e))}</title></circle>`).join('');
+  const dots = points.map(([x, y, e]) => `<circle class="${e.rate >= 0 ? 'trend-dot-pos' : 'trend-dot-neg'}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.4"><title>${esc(fsMonth(e.from, lang))}: ${esc(fppaTrendRateLabel(e))}</title></circle>`).join('');
   const labels = points.map(([x, , e], i) => {
     const last = i === points.length - 1;
     // The final month is always labelled, so drop any regular tick that would crowd it.
     if (!last && (i % labelEvery !== 0 || points.length - 1 - i < labelEvery)) return '';
-    return `<text class="fs-axis" x="${x.toFixed(1)}" y="${H - 10}" text-anchor="middle">${esc(fsMonth(e.from).replace(' ', ' '))}</text>`;
+    return `<text class="fs-axis" x="${x.toFixed(1)}" y="${H - 10}" text-anchor="middle">${esc(fsMonth(e.from, lang).replace(' ', ' '))}</text>`;
   }).join('');
   // The newest reading is the one people came for: ring it and print its value beside it, on
   // whichever side of the point has room so the label never sits on top of the line.
@@ -1698,14 +1719,14 @@ function fppaTrendSvg(series, rangeMonths, discomName, termCode = 'FPPA') {
     + `<text class="trend-latest-label" x="${lx.toFixed(1)}" y="${(ly > PAD_T + plotH / 2 ? ly - 11 : ly + 18).toFixed(1)}" text-anchor="end">${esc(fppaTrendRateLabel(le))}</text>`;
   const latest = sliced[sliced.length - 1];
   return `<figure class="fs-chart-wrap discom-trend-chart">
-    <svg class="fs-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(discomName)} ${esc(termCode)} trend for the last ${rangeMonths} months">
+    <svg class="fs-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t(`${discomName} ${termCode} trend for the last ${rangeMonths} months`, `पिछले ${rangeMonths} महीनों में ${discomName} ${termCode} का रुझान`))}">
       ${grid}
       <path class="trend-line" d="${path}"/>
       ${dots}
       ${latestMark}
       ${labels}
     </svg>
-    <figcaption>Latest point: ${esc(fsMonth(latest.from))} at <strong>${esc(fppaTrendRateLabel(latest))}</strong>. Positive values add to the bill; negative values are credits.</figcaption>
+    <figcaption>${t(`Latest point: ${esc(fsMonth(latest.from, lang))} at <strong>${esc(fppaTrendRateLabel(latest))}</strong>. Positive values add to the bill; negative values are credits.`, `नवीनतम बिंदु: ${esc(fsMonth(latest.from, lang))} में <strong>${esc(fppaTrendRateLabel(latest))}</strong>. धनात्मक मान बिल में जुड़ते हैं; ऋणात्मक मान क्रेडिट हैं।`)}</figcaption>
   </figure>`;
 }
 
@@ -3434,6 +3455,112 @@ function relatedGuides(guide, limit = 4) {
     .reduce((all, g) => all.concat(g), seeded);
 }
 
+// ── Excess-demand (MD penalty) comparison ────────────────────────────────────
+// Read straight out of STATE_META.excessDemand and the engine's own default, so the table
+// states what the calculator will actually do rather than being a second, hand-kept copy.
+//
+// The distinction the table has to carry, and the reason it is generated: five states have a
+// rule sourced from their order, two supply types carry an explicit ₹/kVA rate, and every
+// other state falls back to the engine's 2× modelling default. Printing all of those in one
+// column as though they were equally well-established would be exactly the overclaim this
+// site keeps removing — so "basis" is a first-class column, not a footnote.
+function excessDemandRules() {
+  const rules = [];
+  for (const state of getStates()) {
+    const cfg = (STATE_META[state] || {}).excessDemand;
+    if (cfg) rules.push({ state, cfg });
+  }
+  // A supply type may override the state rule with an explicit ₹ per excess kW/kVA.
+  const overrides = [];
+  for (const state of getStates()) {
+    for (const d of getDiscoms(state)) {
+      for (const cat of d.categories || []) {
+        const rows = Array.isArray(cat.supplyTypes) && cat.supplyTypes.length ? cat.supplyTypes : [cat];
+        for (const row of rows) {
+          if (row.excessDemandRate) overrides.push({ state, name: row.name || cat.name, rate: row.excessDemandRate });
+        }
+      }
+    }
+  }
+  return { rules: rules.sort((a, b) => a.state.localeCompare(b.state)), overrides };
+}
+
+function excessDemandHow(cfg) {
+  // The unit is deliberately not named. The engine multiplies the excess by this rate in
+  // whatever unit that tariff bills demand in — kW on most LT schedules, kVA on HT — so
+  // asserting one of them here would be wrong for some of the rows.
+  if (cfg.rate != null) return `Flat ${rupeeRate(cfg.rate)} per unit of excess demand`;
+  if (cfg.pctEnergyPerKw != null) return `${cfg.pctEnergyPerKw}% of energy charges, per excess kW`;
+  // A multiplier below 1 is not a "multiple" in any useful sense: Delhi's rule is a 30%
+  // surcharge on the fixed charge for the excess load, and "0.3× the demand rate" reads like
+  // a discount. Same arithmetic, phrased the way the order phrases it.
+  if (cfg.multiplier != null && cfg.multiplier < 1) {
+    return `${+(cfg.multiplier * 100).toFixed(0)}% surcharge on the demand charge for the excess load`;
+  }
+  if (cfg.multiplier != null) return `${cfg.multiplier}× the normal demand rate, on the excess only`;
+  return 'Not modelled';
+}
+
+function excessDemandTableHtml() {
+  const { rules, overrides } = excessDemandRules();
+  const sourcedRows = rules.map((r) => {
+    const meta = STATE_META[r.state] || {};
+    // Prefer the Order Library entry: it is a page we control, carrying the document, its
+    // date and an archived snapshot. Fall back to the state's bare source URL, then to a
+    // stated gap. Maharashtra is the case that matters — its orders are held per licensee,
+    // so STATE_META has no sourceUrl and the row used to read "no link recorded" despite
+    // four MERC orders sitting in the library.
+    const libraryOrder = ORDERS.find((o) => o.state === r.state && o.type !== 'fuel-surcharge');
+    const src = libraryOrder
+      ? `<a href="/orders/${libraryOrder.id}/">${esc(libraryOrder.regulator)} order</a>`
+      : meta.sourceUrl
+        ? `<a href="${esc(meta.sourceUrl)}" rel="nofollow">the order</a>`
+        : '<span class="db-gap">no link recorded</span>';
+    return `<tr>
+      <td><a href="/tariffs/${slugify(r.state)}/">${esc(r.state)}</a></td>
+      <td>${esc(excessDemandHow(r.cfg))}</td>
+      <td>${r.cfg.tolerancePct ? esc(r.cfg.tolerancePct + '%') : 'None'}</td>
+      <td><span class="ol-kind is-doc">sourced</span> ${src}</td>
+    </tr>`;
+  }).join('');
+
+  // Deduplicate: UP's two ST-20 bands carry the same ₹660, and one row makes the point.
+  const seen = new Set();
+  const overrideRows = overrides.filter((o) => {
+    const k = o.state + '|' + o.rate;
+    if (seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  }).map((o) => `<tr>
+      <td><a href="/tariffs/${slugify(o.state)}/">${esc(o.state)}</a> <small>(${esc(splitTariffName(o.name).code || 'specific tariff')})</small></td>
+      <td>${esc(excessDemandHow({ rate: o.rate }))}</td>
+      <td>None</td>
+      <td><span class="ol-kind is-doc">sourced</span> set on the tariff itself</td>
+    </tr>`).join('');
+
+  const covered = new Set(rules.map((r) => r.state));
+  const fallback = getStates().filter((s) => !covered.has(s)).length;
+
+  return `<div class="comparison-table-wrapper md-penalty-table"><table class="comparison-table">
+      <thead><tr><th>State / UT</th><th>How the penalty is charged</th><th>Tolerance</th><th>Basis</th></tr></thead>
+      <tbody>
+        ${sourcedRows}
+        ${overrideRows}
+        <tr class="md-fallback">
+          <td><em>${fallback} other states &amp; UTs</em></td>
+          <td>${DEFAULT_EXCESS_DEMAND.multiplier}× the normal demand rate, on the excess only</td>
+          <td>None</td>
+          <td><span class="ol-kind is-page">our default</span> no state rule recorded yet</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <p class="fs-legend"><strong>Read the last column before you use a number.</strong> Rows marked
+    <em>sourced</em> come from that state's own tariff order or schedule. The final row is not a rule
+    anybody published — it is the modelling default this site applies where the state's rule is not
+    yet sourced, chosen because 2× the demand rate is the most common Indian formulation. If your
+    state is in that group, take the figure from your own tariff schedule rather than from here.</p>`;
+}
+
 function guidePage(guide, lang = 'en') {
   // A guide only renders in a vernacular when its body is translated in the data file;
   // otherwise fall back to English (the driver also guards emission, so this is belt-and-braces).
@@ -3442,7 +3569,11 @@ function guidePage(guide, lang = 'en') {
   const url = langUrl(enUrl, L);
   const title = guideField(guide, 'title', L) || guide.title;
   const intro = guideField(guide, 'intro', L) || guide.intro;
-  const rawSections = guideField(guide, 'sections', L) || guide.sections;
+  // Guides are hand-written HTML, but a couple of blocks must not be hand-kept — the file's own
+  // rules say never to hard-code a rate that drifts. A token lets the article stay prose while
+  // the data-derived part is generated from the same modules the calculator uses.
+  const rawSections = (guideField(guide, 'sections', L) || guide.sections)
+    .replace('{{EXCESS_DEMAND_TABLE}}', () => excessDemandTableHtml());
   // Opt-in: only guides that set `toc: true` get the jump-link row, so adding the feature does
   // not silently restyle 100-odd existing articles that are short enough not to want one.
   const { toc: tocHtml, sections } = guide.toc
@@ -3836,16 +3967,45 @@ function glossaryPage(lang = 'en') {
 // English-only, deliberately. Vernacular twins are scoped per-state via langServesState(),
 // and this page is pan-India in framing but three-state in data — a combination the
 // existing hreflang logic has no honest answer for. Revisit when coverage is national.
-const fsMonth = (iso) => new Date(iso + 'T00:00:00Z')
-  .toLocaleDateString('en-IN', { month: 'short', year: 'numeric', timeZone: 'UTC' });
-const fsMonthLong = (iso) => new Date(iso + 'T00:00:00Z')
-  .toLocaleDateString('en-IN', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+// "Jul 2026" / "जुल॰ 2026". The tracker is a page of dates, so a Hindi twin that kept English
+// month names would read as a half-translation in the one column the eye lands on first.
+const fsLocale = (lang) => DATE_LOCALE[lang] || 'en-IN';
+const fsMonth = (iso, lang = 'en') => new Date(iso + 'T00:00:00Z')
+  .toLocaleDateString(fsLocale(lang), { month: 'short', year: 'numeric', timeZone: 'UTC' });
+const fsMonthLong = (iso, lang = 'en') => new Date(iso + 'T00:00:00Z')
+  .toLocaleDateString(fsLocale(lang), { month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+// Local translator for the surcharge tracker. The prose here is dense with interpolated
+// figures, so a key-based dictionary would have meant inventing ~90 keys used once each;
+// the English and Hindi sit side by side at the point of use instead, which is what makes
+// them reviewable together. Falls back to English whenever a string has no twin yet.
+const fsT = (lang) => (en, hi) => (lang === 'hi' && hi != null ? hi : en);
 
 // "+10.00%" / "-4.43%" / "₹1.00/unit" — the sign is load-bearing here, because a negative
 // FPPA is a CREDIT on the bill, not a charge, and readers consistently misread that.
-const fsRate = (e) => !e ? '—'
+// Month forms match Intl's hi-IN short names, so a notice label and the date column beside
+// it spell the same month the same way. "Sept" is en-IN's four-letter form; the data file
+// uses "Sep", so both are listed.
+const FS_LABEL_HI = {
+  Jan: 'जन॰', Feb: 'फ़र॰', Mar: 'मार्च', Apr: 'अप्रैल', May: 'मई', Jun: 'जून',
+  Jul: 'जुल॰', Aug: 'अग॰', Sep: 'सित॰', Sept: 'सित॰', Oct: 'अक्टू॰', Nov: 'नव॰', Dec: 'दिस॰',
+  credit: 'क्रेडिट', unchanged: 'अपरिवर्तित', reduced: 'घटाई गई', cap: 'सीमा',
+  summer: 'ग्रीष्म', Regulatory: 'नियामक', Surcharge: 'अधिभार',
+};
+// "(incl. FPPAS)" inverts in Hindi — the qualifier follows its object — so it is handled as a
+// phrase before the word-by-word pass rather than being translated token by token.
+const FS_LABEL_PHRASES_HI = [[/\(incl\. ([^)]+)\)/g, '($1 सहित)']];
+function fsNoticeLabel(label, lang = 'en') {
+  if (lang !== 'hi' || !label) return label || '';
+  let out = label;
+  for (const [re, to] of FS_LABEL_PHRASES_HI) out = out.replace(re, to);
+  // \b on both sides so "May" inside a longer word is left alone.
+  return out.replace(/\b[A-Za-z]+\b/g, (w) => FS_LABEL_HI[w] || w);
+}
+
+const fsRate = (e, lang = 'en') => !e ? '—'
   : e.mode === 'percent' ? `${e.rate > 0 ? '+' : ''}${e.rate.toFixed(2)}%`
-  : `${rupeeRate(e.rate)}/unit`;
+  : `${rupeeRate(e.rate)}/${lang === 'hi' ? 'यूनिट' : 'unit'}`;
 
 function fppaMetaByDiscom() {
   const meta = {};
@@ -3880,9 +4040,10 @@ function fppaChange(series, idx) {
   return '<span class="fs-flat">→</span>';
 }
 
-function fppaPeriod(e) {
-  if (!e) return 'Not verified';
-  return `${fsMonth(e.from)}${e.to ? ` - ${fsMonth(e.to)}` : ' onward'}`;
+function fppaPeriod(e, lang = 'en') {
+  const t = fsT(lang);
+  if (!e) return t('Not verified', 'सत्यापित नहीं');
+  return `${fsMonth(e.from, lang)}${e.to ? ` - ${fsMonth(e.to, lang)}` : t(' onward', ' से आगे')}`;
 }
 
 // The name this state's own regulator and bills use, from js/tariffs/surcharge-terms.js.
@@ -3898,20 +4059,24 @@ function fppaMechanismName(state) {
   return surchargeAliases(state).slice(0, 2).join(' / ');
 }
 
-function fppaDirection(cur, prev) {
-  if (!cur || !prev) return '<span class="fs-flat">New</span>';
-  if (cur.mode !== prev.mode) return '<span class="fs-flat">Changed</span>';
-  if (cur.rate > prev.rate) return '<span class="fs-up">&uarr; Higher</span>';
-  if (cur.rate < prev.rate) return '<span class="fs-down">&darr; Lower</span>';
-  return '<span class="fs-flat">&rarr; Same</span>';
+function fppaDirection(cur, prev, lang = 'en') {
+  const t = fsT(lang);
+  if (!cur || !prev) return `<span class="fs-flat">${t('New', 'नया')}</span>`;
+  if (cur.mode !== prev.mode) return `<span class="fs-flat">${t('Changed', 'बदला')}</span>`;
+  if (cur.rate > prev.rate) return `<span class="fs-up">&uarr; ${t('Higher', 'अधिक')}</span>`;
+  if (cur.rate < prev.rate) return `<span class="fs-down">&darr; ${t('Lower', 'कम')}</span>`;
+  return `<span class="fs-flat">&rarr; ${t('Same', 'वही')}</span>`;
 }
 
-function fppaImpact(e) {
-  if (!e) return '<span class="fs-pending">Enter bill value manually</span>';
+function fppaImpact(e, lang = 'en') {
+  const t = fsT(lang);
+  if (!e) return `<span class="fs-pending">${t('Enter bill value manually', 'बिल का मान स्वयं भरें')}</span>`;
   const amt = e.mode === 'percent' ? 3000 * e.rate / 100 : 300 * e.rate;
   const cls = amt >= 0 ? 'fs-pos' : 'fs-neg';
   const prefix = amt >= 0 ? '+' : '-';
-  const basis = e.mode === 'percent' ? 'on Rs 3,000 charges' : 'on 300 units';
+  const basis = e.mode === 'percent'
+    ? t('on Rs 3,000 charges', '₹3,000 के शुल्कों पर')
+    : t('on 300 units', '300 यूनिट पर');
   return `<strong class="${cls}">${prefix}${rupee(Math.abs(amt))}</strong><span class="fs-impact-note">${basis}</span>`;
 }
 
@@ -3919,48 +4084,60 @@ function fppaFmtDelta(n) {
   return Number(Math.abs(n).toFixed(2)).toLocaleString('en-IN', { maximumFractionDigits: 2 });
 }
 
-function fppaDeltaUnit(mode, delta) {
+function fppaDeltaUnit(mode, delta, lang = 'en') {
+  const t = fsT(lang);
   if (mode === 'percent') {
     const n = Math.abs(Number(delta.toFixed(2)));
-    return `percentage point${n === 1 ? '' : 's'}`;
+    // Hindi does not inflect this the way English does, so the plural branch is English-only.
+    return t(`percentage point${n === 1 ? '' : 's'}`, 'प्रतिशत अंक');
   }
-  return 'per unit';
+  return t('per unit', 'प्रति यूनिट');
 }
 
-function fppaWhatChangedCard(label, mechanism, cur, prev) {
+function fppaWhatChangedCard(label, mechanism, cur, prev, lang = 'en') {
+  const t = fsT(lang);
   if (!cur) {
     return `<article>
       <h3>${esc(label)}</h3>
-      <p>No current verified ${esc(mechanism)} value is archived for this DISCOM yet.</p>
+      <p>${t(`No current verified ${esc(mechanism)} value is archived for this DISCOM yet.`,
+             `इस डिस्कॉम के लिए अभी कोई सत्यापित ${esc(mechanism)} दर संग्रह में नहीं है।`)}</p>
     </article>`;
   }
   if (!prev || cur.mode !== prev.mode) {
     return `<article>
       <h3>${esc(label)}</h3>
-      <p>${esc(mechanism)} is currently ${esc(fsRate(cur))} from ${esc(fsMonth(cur.from))}, but there is no previous same-method value in the archive yet.</p>
+      <p>${t(`${esc(mechanism)} is currently ${esc(fsRate(cur, lang))} from ${esc(fsMonth(cur.from, lang))}, but there is no previous same-method value in the archive yet.`,
+             `${esc(fsMonth(cur.from, lang))} से ${esc(mechanism)} ${esc(fsRate(cur, lang))} है, लेकिन संग्रह में इसी पद्धति की कोई पिछली दर अभी नहीं है।`)}</p>
     </article>`;
   }
   const delta = cur.rate - prev.rate;
-  const curMonth = fsMonth(cur.from);
-  const prevMonth = fsMonth(prev.from);
-  const changed = delta > 0 ? 'increased' : delta < 0 ? 'decreased' : 'remained unchanged';
+  const curMonth = fsMonth(cur.from, lang);
+  const prevMonth = fsMonth(prev.from, lang);
+  const changed = t(delta > 0 ? 'increased' : delta < 0 ? 'decreased' : 'remained unchanged',
+                    delta > 0 ? 'बढ़ा' : delta < 0 ? 'घटा' : 'अपरिवर्तित रहा');
   const measure = cur.mode === 'percent'
-    ? `${fppaFmtDelta(delta)} ${fppaDeltaUnit(cur.mode, delta)}`
-    : `${rupeeRate(Math.abs(delta))} per unit`;
+    ? `${fppaFmtDelta(delta)} ${fppaDeltaUnit(cur.mode, delta, lang)}`
+    : `${rupeeRate(Math.abs(delta))} ${t('per unit', 'प्रति यूनिट')}`;
   const first = delta === 0
-    ? `${esc(mechanism)} remained unchanged at ${esc(fsRate(cur))} in ${esc(curMonth)} compared with ${esc(prevMonth)}.`
-    : `${esc(mechanism)} ${changed} by ${esc(measure)} in ${esc(curMonth)} compared with ${esc(prevMonth)}.`;
+    ? t(`${esc(mechanism)} remained unchanged at ${esc(fsRate(cur, lang))} in ${esc(curMonth)} compared with ${esc(prevMonth)}.`,
+        `${esc(prevMonth)} की तुलना में ${esc(curMonth)} में ${esc(mechanism)} ${esc(fsRate(cur, lang))} पर अपरिवर्तित रहा।`)
+    : t(`${esc(mechanism)} ${changed} by ${esc(measure)} in ${esc(curMonth)} compared with ${esc(prevMonth)}.`,
+        `${esc(prevMonth)} की तुलना में ${esc(curMonth)} में ${esc(mechanism)} ${esc(measure)} ${changed}।`);
   let second;
   if (cur.mode === 'percent') {
     const impact = 3000 * delta / 100;
     second = impact === 0
-      ? `For ${rupee(3000)} of applicable charges, this represents no additional surcharge change, subject to the applicable billing formula.`
-      : `For ${rupee(3000)} of applicable charges, this represents approximately <strong class="${impact > 0 ? 'fs-pos' : 'fs-neg'}">${rupee(Math.abs(impact))}</strong> ${impact > 0 ? 'additional' : 'lower'} surcharge, subject to the applicable billing formula.`;
+      ? t(`For ${rupee(3000)} of applicable charges, this represents no additional surcharge change, subject to the applicable billing formula.`,
+          `${rupee(3000)} के लागू शुल्कों पर इससे अधिभार में कोई अंतर नहीं पड़ता — लागू बिलिंग सूत्र के अधीन।`)
+      : t(`For ${rupee(3000)} of applicable charges, this represents approximately <strong class="${impact > 0 ? 'fs-pos' : 'fs-neg'}">${rupee(Math.abs(impact))}</strong> ${impact > 0 ? 'additional' : 'lower'} surcharge, subject to the applicable billing formula.`,
+          `${rupee(3000)} के लागू शुल्कों पर यह लगभग <strong class="${impact > 0 ? 'fs-pos' : 'fs-neg'}">${rupee(Math.abs(impact))}</strong> ${impact > 0 ? 'अधिक' : 'कम'} अधिभार है — लागू बिलिंग सूत्र के अधीन।`);
   } else {
     const impact = 300 * delta;
     second = impact === 0
-      ? `For 300 units, this represents no surcharge change, subject to the applicable billing formula.`
-      : `For 300 units, this represents approximately <strong class="${impact > 0 ? 'fs-pos' : 'fs-neg'}">${rupee(Math.abs(impact))}</strong> ${impact > 0 ? 'additional' : 'lower'} surcharge, subject to the applicable billing formula.`;
+      ? t(`For 300 units, this represents no surcharge change, subject to the applicable billing formula.`,
+          `300 यूनिट पर इससे अधिभार में कोई अंतर नहीं पड़ता — लागू बिलिंग सूत्र के अधीन।`)
+      : t(`For 300 units, this represents approximately <strong class="${impact > 0 ? 'fs-pos' : 'fs-neg'}">${rupee(Math.abs(impact))}</strong> ${impact > 0 ? 'additional' : 'lower'} surcharge, subject to the applicable billing formula.`,
+          `300 यूनिट पर यह लगभग <strong class="${impact > 0 ? 'fs-pos' : 'fs-neg'}">${rupee(Math.abs(impact))}</strong> ${impact > 0 ? 'अधिक' : 'कम'} अधिभार है — लागू बिलिंग सूत्र के अधीन।`);
   }
   return `<article>
     <h3>${esc(label)}</h3>
@@ -3969,15 +4146,16 @@ function fppaWhatChangedCard(label, mechanism, cur, prev) {
   </article>`;
 }
 
-function fppaWhatChangedHtml(state, mechanism, comparison, hasDiscomSpecific, rows) {
+function fppaWhatChangedHtml(state, mechanism, comparison, hasDiscomSpecific, rows, lang = 'en') {
+  const t = fsT(lang);
   const items = hasDiscomSpecific
     ? comparison.filter(r => r.cur)
     : [{ discom: { name: state }, cur: rows[0]?.cur || rows[0]?.list?.[0] || null, prev: rows[0]?.list?.slice(1).find(e => e.mode === (rows[0]?.cur || rows[0]?.list?.[0])?.mode) || null }];
   if (!items.length) return '';
   return `<section class="seo-section">
-    <h2>What changed?</h2>
+    <h2>${t('What changed?', 'क्या बदला?')}</h2>
     <div class="fs-change-grid">
-      ${items.map(r => fppaWhatChangedCard(r.discom.name, mechanism, r.cur, r.prev)).join('')}
+      ${items.map(r => fppaWhatChangedCard(r.discom.name, mechanism, r.cur, r.prev, lang)).join('')}
     </div>
   </section>`;
 }
@@ -3995,31 +4173,46 @@ function fppaStateComparison(state) {
   });
 }
 
-function fppaStateWhyHtml(state, mechanism) {
+function fppaStateWhyHtml(state, mechanism, lang = 'en') {
+  const t = fsT(lang);
   if (state === 'Delhi') {
-    return `<p>Delhi is a useful example because ${esc(mechanism)} is not one state-wide number.
+    return t(`<p>Delhi is a useful example because ${esc(mechanism)} is not one state-wide number.
     DERC handles PPAC/FPPAS through separate proceedings for each distribution licensee, so
     BRPL, BYPL, TPDDL and NDMC can have different applicable rates and different historical
     paths.</p>
     <p>The 2026 PPAC-related orders relate to recovery of power-purchase cost variations from
     earlier periods. When the approved recovery changes, the surcharge moves even if the base
-    tariff and your units remain the same.</p>`;
+    tariff and your units remain the same.</p>`,
+    `<p>दिल्ली एक अच्छा उदाहरण है, क्योंकि ${esc(mechanism)} पूरे राज्य के लिए एक ही संख्या नहीं है।
+    DERC हर वितरण लाइसेंसधारी के लिए PPAC/FPPAS अलग-अलग कार्यवाही से तय करता है, इसलिए BRPL, BYPL,
+    TPDDL और NDMC की लागू दरें और उनका इतिहास अलग-अलग हो सकते हैं।</p>
+    <p>2026 के PPAC आदेश पिछली अवधियों की बिजली-खरीद लागत में अंतर की वसूली से जुड़े हैं। जब स्वीकृत
+    वसूली बदलती है, तो आधार टैरिफ और आपकी यूनिट वही रहने पर भी अधिभार बदल जाता है।</p>`);
   }
   if (state === 'Uttar Pradesh') {
-    return `<p>UPPCL publishes the ${esc(mechanism)} rate monthly as a percentage of fixed plus
+    return t(`<p>UPPCL publishes the ${esc(mechanism)} rate monthly as a percentage of fixed plus
     energy charges. The rate can be positive when fuel and power-purchase costs are recovered,
-    or negative when the adjustment is passed back as a credit.</p>`;
+    or negative when the adjustment is passed back as a credit.</p>`,
+    `<p>UPPCL हर महीने ${esc(mechanism)} दर को फिक्स्ड और ऊर्जा शुल्क के प्रतिशत के रूप में जारी करता है।
+    जब ईंधन और बिजली-खरीद लागत वसूली जाती है तो दर धनात्मक होती है, और जब समायोजन वापस दिया जाता है
+    तो ऋणात्मक — यानी क्रेडिट।</p>`);
   }
   if (state === 'Rajasthan') {
-    return `<p>Rajasthan's current tracker entry is a per-unit regulatory surcharge that includes
+    return t(`<p>Rajasthan's current tracker entry is a per-unit regulatory surcharge that includes
     the FPPAS mechanism under the tariff order. It is shown per DISCOM because the consumer is
-    still billed by JVVNL, AVVNL or JDVVNL, even where the published rate is aligned.</p>`;
+    still billed by JVVNL, AVVNL or JDVVNL, even where the published rate is aligned.</p>`,
+    `<p>राजस्थान की मौजूदा प्रविष्टि प्रति-यूनिट नियामक अधिभार है, जिसमें टैरिफ आदेश के तहत FPPAS
+    तंत्र शामिल है। यह डिस्कॉम-वार दिखाया जाता है क्योंकि बिल फिर भी JVVNL, AVVNL या JDVVNL ही भेजते
+    हैं — भले प्रकाशित दर एक जैसी हो।</p>`);
   }
-  return `<p>The surcharge changes when actual power-purchase cost diverges from the cost assumed
-  in the tariff order. We publish a value only when it is tied to an official notice or order.</p>`;
+  return t(`<p>The surcharge changes when actual power-purchase cost diverges from the cost assumed
+  in the tariff order. We publish a value only when it is tied to an official notice or order.</p>`,
+  `<p>जब वास्तविक बिजली-खरीद लागत टैरिफ आदेश में मानी गई लागत से अलग होती है, तब अधिभार बदलता है।
+  हम कोई दर तभी प्रकाशित करते हैं जब वह किसी आधिकारिक सूचना या आदेश से जुड़ी हो।</p>`);
 }
 
-function fppaStateSourcesHtml(state, comparison) {
+function fppaStateSourcesHtml(state, comparison, lang = 'en') {
+  const t = fsT(lang);
   if (state === 'Delhi') {
     return `<ul>
       <li><a href="https://derc.gov.in/commissions-proceedings-orders/other-than-142/final-order">DERC final orders and PPAC proceedings</a></li>
@@ -4028,7 +4221,7 @@ function fppaStateSourcesHtml(state, comparison) {
     </ul>`;
   }
   const sources = [...new Set(comparison.flatMap(r => r.list.map(e => e.source).filter(Boolean)))];
-  if (!sources.length) return '<p class="fs-legend">Official source details are being added as each rate is verified.</p>';
+  if (!sources.length) return `<p class="fs-legend">${t('Official source details are being added as each rate is verified.', 'हर दर के सत्यापन के साथ आधिकारिक स्रोत का विवरण जोड़ा जा रहा है।')}</p>`;
   return `<ul>${sources.map(s => `<li>${esc(s)}</li>`).join('')}</ul>`;
 }
 
@@ -4079,76 +4272,89 @@ function fppaArchiveYears(state) {
   return [...years].sort((a, b) => b - a);
 }
 
-function fppaArchiveYearLinks(state, activeYear = null) {
+function fppaArchiveYearLinks(state, activeYear = null, lang = 'en') {
+  const t = fsT(lang);
   const stateSlug = slugify(state);
   const links = fppaArchiveYears(state).map(y => {
     const active = String(y) === String(activeYear) ? ' aria-current="page"' : '';
-    return `<a class="seo-lang-pill" href="/fppa/${stateSlug}/${y}/"${active}>${y}</a>`;
+    return `<a class="seo-lang-pill" href="${langUrl(`/fppa/${stateSlug}/${y}/`, lang)}"${active}>${y}</a>`;
   }).join('');
-  return links ? `<div class="seo-lang-row fs-archive-years"><span>Archive years</span>${links}</div>` : '';
+  return links ? `<div class="seo-lang-row fs-archive-years"><span>${t('Archive years', 'संग्रह वर्ष')}</span>${links}</div>` : '';
 }
 
-function fppaSourceCell(e) {
-  if (e.sourceUrl) return `<a href="${esc(e.sourceUrl)}">${esc(e.source || 'Official source')}</a>`;
-  return esc(e.source || 'Source note pending');
+function fppaSourceCell(e, lang = 'en') {
+  const t = fsT(lang);
+  // The source strings themselves are the regulator's own titles and stay as published.
+  if (e.sourceUrl) return `<a href="${esc(e.sourceUrl)}">${esc(e.source || t('Official source', 'आधिकारिक स्रोत'))}</a>`;
+  return esc(e.source || t('Source note pending', 'स्रोत विवरण प्रतीक्षित'));
 }
 
-function fppaArchiveTable(rows) {
-  if (!rows.length) return '<p class="fs-legend">No verified surcharge entries are archived for this period yet.</p>';
+function fppaArchiveTable(rows, lang = 'en') {
+  const t = fsT(lang);
+  if (!rows.length) return `<p class="fs-legend">${t('No verified surcharge entries are archived for this period yet.', 'इस अवधि के लिए अभी कोई सत्यापित अधिभार प्रविष्टि संग्रह में नहीं है।')}</p>`;
   return `<div class="comparison-table-wrapper fs-archive-table">
     <table class="comparison-table">
-      <thead><tr><th>Period</th><th>DISCOM</th><th>Mechanism</th><th>Rate</th><th>Direction</th><th>Notice / order</th><th>Source</th></tr></thead>
+      <thead><tr><th>${t('Period', 'अवधि')}</th><th>${t('DISCOM', 'डिस्कॉम')}</th><th>${t('Mechanism', 'तंत्र')}</th><th>${t('Rate', 'दर')}</th><th>${t('Direction', 'दिशा')}</th><th>${t('Notice / order', 'सूचना / आदेश')}</th><th>${t('Source', 'स्रोत')}</th></tr></thead>
       <tbody>${rows.map(r => {
         const e = r.entry;
         const cls = e.rate >= 0 ? 'fs-pos' : 'fs-neg';
         return `<tr>
-          <td>${esc(fppaPeriod(e))}</td>
-          <td>${esc(r.discom)}</td>
+          <td>${esc(fppaPeriod(e, lang))}</td>
+          <td>${esc(r.discom === 'All DISCOMs' ? t('All DISCOMs', 'सभी डिस्कॉम') : r.discom)}</td>
           <td>${esc(r.mechanism)}</td>
-          <td class="${cls}">${esc(fsRate(e))}</td>
-          <td>${fppaDirection(e, r.prev)}</td>
-          <td>${esc(e.label || '')}</td>
-          <td>${fppaSourceCell(e)}</td>
+          <td class="${cls}">${esc(fsRate(e, lang))}</td>
+          <td>${fppaDirection(e, r.prev, lang)}</td>
+          <td>${esc(fsNoticeLabel(e.label, lang))}</td>
+          <td>${fppaSourceCell(e, lang)}</td>
         </tr>`;
       }).join('')}</tbody>
     </table>
   </div>`;
 }
 
-function fppaArchiveSummary(rows) {
+function fppaArchiveSummary(rows, lang = 'en') {
+  const t = fsT(lang);
   const current = rows.filter(r => r.entry.rate > 0).length;
   const credits = rows.filter(r => r.entry.rate < 0).length;
   const flat = rows.length - current - credits;
   const discoms = new Set(rows.map(r => r.discom)).size;
   return `<div class="fs-archive-stats">
-    <span><strong>${rows.length}</strong> archived entries</span>
-    <span><strong>${discoms}</strong> ${discoms === 1 ? 'scope' : 'DISCOM/scopes'}</span>
-    <span><strong>${current}</strong> charges</span>
-    <span><strong>${credits}</strong> credits</span>
-    ${flat ? `<span><strong>${flat}</strong> flat/zero</span>` : ''}
+    <span><strong>${rows.length}</strong> ${t('archived entries', 'संग्रहित प्रविष्टियाँ')}</span>
+    <span><strong>${discoms}</strong> ${t(discoms === 1 ? 'scope' : 'DISCOM/scopes', discoms === 1 ? 'दायरा' : 'डिस्कॉम/दायरे')}</span>
+    <span><strong>${current}</strong> ${t('charges', 'शुल्क')}</span>
+    <span><strong>${credits}</strong> ${t('credits', 'क्रेडिट')}</span>
+    ${flat ? `<span><strong>${flat}</strong> ${t('flat/zero', 'स्थिर/शून्य')}</span>` : ''}
   </div>`;
 }
 
-function fppaStateSummaryCard(state, rows, i = 0) {
+function fppaStateSummaryCard(state, rows, i = 0, lang = 'en') {
+  const t = fsT(lang);
   const stateSlug = slugify(state);
   const current = rows.map(r => r.cur).filter(Boolean);
   const latest = current[0] || rows[0]?.list?.[0] || null;
-  const mode = rows.some(r => r.type === 'discom') ? 'DISCOM-specific' : 'State-wide';
-  const latestText = latest ? `Latest: ${fsMonth(latest.from)}` : 'Awaiting notice';
+  const mode = rows.some(r => r.type === 'discom')
+    ? t('DISCOM-specific', 'डिस्कॉम-वार')
+    : t('State-wide', 'राज्यव्यापी');
+  const latestText = latest
+    ? t(`Latest: ${fsMonth(latest.from, lang)}`, `नवीनतम: ${fsMonth(latest.from, lang)}`)
+    : t('Awaiting notice', 'सूचना प्रतीक्षित');
   // A state's DISCOMs often carry different rates, and the card used to join them into one
   // display-size run: "+17.94% / +17.43% / +12.21%", with no way to tell whose is whose, or
   // — Rajasthan — "₹1.00/unit / ₹1.00/unit / ₹1.00/unit", the same figure printed three times
   // at 26px across two lines. Big type is for one number. So: one rate (or several that agree)
   // keeps the headline and says how far it reaches; rates that differ become labelled chips.
   const withCur = rows.filter(r => r.cur);
-  const rateStrs = withCur.map(r => fsRate(r.cur));
+  const rateStrs = withCur.map(r => fsRate(r.cur, lang));
   const allSame = rateStrs.length > 1 && rateStrs.every(s => s === rateStrs[0]);
   const countText = allSame
-    ? `Same across ${rateStrs.length} DISCOMs`
-    : rateStrs.length > 1 ? `${rateStrs.length} current rates` : 'Current rate';
+    ? t(`Same across ${rateStrs.length} DISCOMs`, `${rateStrs.length} डिस्कॉम में समान`)
+    : rateStrs.length > 1
+      ? t(`${rateStrs.length} current rates`, `${rateStrs.length} मौजूदा दरें`)
+      : t('Current rate', 'मौजूदा दर');
   let rateBlock;
   if (!rateStrs.length) {
-    rateBlock = `<strong class="fs-state-rate is-quiet">${esc(latest ? `Last: ${fsRate(latest)}` : 'Not notified')}</strong>`;
+    const quiet = latest ? t(`Last: ${fsRate(latest, lang)}`, `अंतिम: ${fsRate(latest, lang)}`) : t('Not notified', 'सूचित नहीं');
+    rateBlock = `<strong class="fs-state-rate is-quiet">${esc(quiet)}</strong>`;
   } else if (rateStrs.length === 1 || allSame) {
     rateBlock = `<strong class="fs-state-rate">${esc(rateStrs[0])}</strong>`;
   } else {
@@ -4157,14 +4363,14 @@ function fppaStateSummaryCard(state, rows, i = 0) {
   }
   // Indexed, not region-keyed: the tracker currently covers Delhi, Rajasthan and Uttar Pradesh,
   // all North India, so the region hue painted all three the same blue and said nothing.
-  return `<a class="fs-state-card" style="--dir-accent:${TILE_HUES[i % TILE_HUES.length]}" href="/fppa/${stateSlug}/">
+  return `<a class="fs-state-card" style="--dir-accent:${TILE_HUES[i % TILE_HUES.length]}" href="${langUrl(`/fppa/${stateSlug}/`, lang)}">
     <span class="fs-state-card-top">
       <span class="seo-link-badge" aria-hidden="true">${esc(stateCode(state))}</span>
-      <span class="fs-state-name">${esc(state)}</span>
-      <span class="fs-state-open">Open</span>
+      <span class="fs-state-name">${esc(stateName(state, lang))}</span>
+      <span class="fs-state-open">${t('Open', 'खोलें')}</span>
     </span>
     ${rateBlock}
-    <span class="fs-state-meta">${esc(mode)} surcharge tracker</span>
+    <span class="fs-state-meta">${esc(t(`${mode} surcharge tracker`, `${mode} अधिभार ट्रैकर`))}</span>
     <span class="fs-state-foot">
       <span>${esc(countText)}</span>
       <span>${esc(latestText)}</span>
@@ -4176,7 +4382,8 @@ function fppaStateSummaryCard(state, rows, i = 0) {
 // to survive being read by a crawler and by someone with JS off, and it is the one visual
 // that makes "this moves every month" obvious at a glance. Colours come from CSS classes
 // so the chart follows the light/dark theme.
-function fsChart(series) {
+function fsChart(series, lang = 'en') {
+  const t = fsT(lang);
   const W = 720, H = 210, PAD_L = 38, PAD_T = 14, PAD_B = 30;
   const plotW = W - PAD_L - 10, plotH = H - PAD_T - PAD_B;
   const max = Math.max(10, ...series.map(e => Math.abs(e.rate)));
@@ -4192,9 +4399,9 @@ function fsChart(series) {
     const cls = e.rate >= 0 ? 'fs-bar fs-bar-pos' : 'fs-bar fs-bar-neg';
     // Label every third month, else the axis is unreadable below ~600px.
     const lbl = i % 3 === 0
-      ? `<text class="fs-axis" x="${cx.toFixed(1)}" y="${H - 10}" text-anchor="middle">${esc(fsMonth(e.from).replace(' ', ' '))}</text>`
+      ? `<text class="fs-axis" x="${cx.toFixed(1)}" y="${H - 10}" text-anchor="middle">${esc(fsMonth(e.from, lang).replace(' ', ' '))}</text>`
       : '';
-    return `<rect class="${cls}" x="${(cx - bw / 2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(1, h).toFixed(1)}" rx="2"><title>${esc(fsMonth(e.from))}: ${esc(fsRate(e))}</title></rect>${lbl}`;
+    return `<rect class="${cls}" x="${(cx - bw / 2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(1, h).toFixed(1)}" rx="2"><title>${esc(fsMonth(e.from, lang))}: ${esc(fsRate(e, lang))}</title></rect>${lbl}`;
   }).join('');
 
   const gridLines = [max, max / 2, 0, -max / 2, -max].map(v => {
@@ -4204,28 +4411,38 @@ function fsChart(series) {
       + `<text class="fs-axis" x="${PAD_L - 6}" y="${(y + 3.5).toFixed(1)}" text-anchor="end">${v > 0 ? '+' : ''}${v.toFixed(0)}%</text>`;
   }).join('');
 
-  const first = fsMonth(series[0].from), last = fsMonth(series[series.length - 1].from);
+  const first = fsMonth(series[0].from, lang), last = fsMonth(series[series.length - 1].from, lang);
+  const label = t(
+    `Monthly UPPCL fuel surcharge from ${esc(first)} to ${esc(last)}. Bars above the zero line are charges, bars below are credits.`,
+    `${esc(first)} से ${esc(last)} तक UPPCL का मासिक ईंधन अधिभार। शून्य रेखा से ऊपर की पट्टियाँ शुल्क हैं, नीचे की क्रेडिट।`);
   return `<figure class="fs-chart-wrap">
       <svg class="fs-chart" viewBox="0 0 ${W} ${H}" role="img"
-           aria-label="Monthly UPPCL fuel surcharge from ${esc(first)} to ${esc(last)}. Bars above the zero line are charges, bars below are credits.">
+           aria-label="${esc(label)}">
         ${gridLines}${bars}
       </svg>
-      <figcaption>Bars above the line are a <strong>charge</strong>; bars below are a
+      <figcaption>${t(`Bars above the line are a <strong>charge</strong>; bars below are a
       <strong>credit</strong> back to you. The two spikes at +10% are the regulation's
-      monthly ceiling — the excess is carried into later months, not written off.</figcaption>
+      monthly ceiling — the excess is carried into later months, not written off.`,
+      `रेखा से ऊपर की पट्टियाँ <strong>शुल्क</strong> हैं; नीचे की पट्टियाँ आपको वापस मिलने वाला
+      <strong>क्रेडिट</strong>। +10% पर दो शिखर विनियम की मासिक सीमा हैं — अतिरिक्त राशि माफ़ नहीं
+      होती, आगे के महीनों में ले जाई जाती है।`)}</figcaption>
     </figure>`;
 }
 
-function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url } = {}) {
-  const title = 'India Electricity Surcharge Tracker — FPPA / FPPAS / FAC Rates';
-  const description = 'Live electricity surcharge rates (FPPA, FPPAS, PPAC, FAC) for Uttar Pradesh, Delhi and Rajasthan, '
-    + 'with the full month-by-month history, what each rate adds to your bill, and the tariff regulation it is levied under.';
+function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url, lang = 'en' } = {}) {
+  const t = fsT(lang);
+  const title = t('India Electricity Surcharge Tracker — FPPA / FPPAS / FAC Rates',
+                  'भारत बिजली अधिभार ट्रैकर — FPPA / FPPAS / FAC दरें');
+  const description = t('Live electricity surcharge rates (FPPA, FPPAS, PPAC, FAC) for Uttar Pradesh, Delhi and Rajasthan, '
+    + 'with the full month-by-month history, what each rate adds to your bill, and the tariff regulation it is levied under.',
+    'उत्तर प्रदेश, दिल्ली और राजस्थान की मौजूदा बिजली अधिभार दरें (FPPA, FPPAS, PPAC, FAC) — पूरा महीना-दर-महीना '
+    + 'इतिहास, हर दर आपके बिल में कितना जोड़ती है, और यह किस टैरिफ़ विनियम के तहत लगती है।');
 
   // ── current standing rates ──────────────────────────────────────────────────
   // pick() resolves against today's date, which is what makes this a tracker rather than
   // an archive. A state whose current month has no notice yet resolves to null — that is
   // reported as "not yet notified", never silently as zero, because zero is a claim.
-  const nowMonth = fsMonthLong(TODAY.slice(0, 8) + '01');
+  const nowMonth = fsMonthLong(TODAY.slice(0, 8) + '01', lang);
   const rows = fppaTrackerRows();
   const coverage = fppaCoverageStates();
 
@@ -4233,20 +4450,21 @@ function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url } = {}) {
     const latest = r.list[0];
     const cur = r.cur;
     const shown = cur || latest;
-    const val = shown ? `<strong class="${shown.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(shown))}</strong>` : '<span class="fs-pending">Not yet notified</span>';
+    const val = shown ? `<strong class="${shown.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(shown, lang))}</strong>` : `<span class="fs-pending">${t('Not yet notified', 'अभी सूचित नहीं')}</span>`;
     // Labels are authored for the bill line ("BRPL PPAC (from Jun 2026…)"), where the DISCOM
     // is not otherwise stated. Here column one already names it, so the prefix is dead weight
     // in a column that is the first to get squeezed on a phone.
     const note = cur
-      ? esc(r.code && cur.label.startsWith(r.code + ' ') ? cur.label.slice(r.code.length + 1) : cur.label)
-      : `Latest published: ${esc(fsMonth(latest.from))}; ${esc(nowMonth)} not yet notified`;
-    return `<tr><td><a href="/fppa/${esc(r.slug)}/">${esc(r.who)}</a></td><td>${esc(r.scope)}</td><td>${val}</td><td>${note}</td></tr>`;
+      ? esc(fsNoticeLabel(r.code && cur.label.startsWith(r.code + ' ') ? cur.label.slice(r.code.length + 1) : cur.label, lang))
+      : t(`Latest published: ${esc(fsMonth(latest.from, lang))}; ${esc(nowMonth)} not yet notified`,
+          `अंतिम प्रकाशित: ${esc(fsMonth(latest.from, lang))}; ${esc(nowMonth)} अभी सूचित नहीं`);
+    return `<tr><td><a href="${langUrl(`/fppa/${r.slug}/`, lang)}">${esc(r.type === 'state' ? stateName(r.who, lang) : r.who)}</a></td><td>${esc(r.type === 'state' ? t('All DISCOMs', 'सभी डिस्कॉम') : stateName(r.scope, lang))}</td><td>${val}</td><td>${note}</td></tr>`;
   }).join('');
-  const stateCards = coverage.map((state, i) => fppaStateSummaryCard(state, rows.filter(r => r.state === state), i)).join('');
+  const stateCards = coverage.map((state, i) => fppaStateSummaryCard(state, rows.filter(r => r.state === state), i, lang)).join('');
 
   // ── UP monthly series (the only state with a true month-by-month history) ────
   const upSeries = [...FPPA_BY_STATE['Uttar Pradesh']].sort((a, b) => a.from.localeCompare(b.from));
-  const upChart = fsChart(upSeries);
+  const upChart = fsChart(upSeries, lang);
   // A grid of months rather than a table. Seventeen rows of three narrow columns came out
   // 248px wide inside a 760px column - a tall ribbon stranded against the left edge, directly
   // under a chart plotting the same series. The figures are worth keeping (the chart shows
@@ -4254,9 +4472,9 @@ function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url } = {}) {
   const upRows = [...upSeries].reverse().map(e => {
     const credit = e.rate < 0;
     return `<div class="fs-month${credit ? ' is-credit' : ''}">
-      <span class="fs-month-when">${esc(fsMonth(e.from))}</span>
-      <strong class="fs-month-rate">${esc(fsRate(e))}</strong>
-      <span class="fs-month-kind">${credit ? 'Credit' : 'Charge'}</span>
+      <span class="fs-month-when">${esc(fsMonth(e.from, lang))}</span>
+      <strong class="fs-month-rate">${esc(fsRate(e, lang))}</strong>
+      <span class="fs-month-kind">${credit ? t('Credit', 'क्रेडिट') : t('Charge', 'शुल्क')}</span>
     </div>`;
   }).join('');
   const upCharges = upSeries.filter(e => e.rate > 0).length;
@@ -4284,130 +4502,170 @@ function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url } = {}) {
     const delta = prev ? +(cur.rate - prev.rate).toFixed(2) : null;
     const dir = delta == null ? 'flat' : delta > 0.005 ? 'up' : delta < -0.005 ? 'down' : 'flat';
     const move = delta == null
-      ? 'First recorded notice'
+      ? t('First recorded notice', 'पहली दर्ज सूचना')
       : dir === 'flat'
-        ? `Unchanged from ${esc(fsMonth(prev.from))}`
-        : `${dir === 'up' ? '▲' : '▼'} ${Math.abs(delta).toFixed(2)} pts from ${esc(prev.rate.toFixed(2))}%`;
+        ? t(`Unchanged from ${esc(fsMonth(prev.from, lang))}`, `${esc(fsMonth(prev.from, lang))} से अपरिवर्तित`)
+        : t(`${dir === 'up' ? '▲' : '▼'} ${Math.abs(delta).toFixed(2)} pts from ${esc(prev.rate.toFixed(2))}%`,
+            `${dir === 'up' ? '▲' : '▼'} ${esc(prev.rate.toFixed(2))}% से ${Math.abs(delta).toFixed(2)} अंक`);
     return `
       <article class="fs-delhi-card">
         <span class="fs-delhi-name">${esc(r.who)}</span>
-        <strong class="fs-delhi-rate">${esc(fsRate(cur))}</strong>
+        <strong class="fs-delhi-rate">${esc(fsRate(cur, lang))}</strong>
         <span class="fs-delhi-move is-${dir}">${move}</span>
-        <span class="fs-delhi-when">${esc(fsMonth(cur.from))} notice</span>
+        <span class="fs-delhi-when">${esc(t(`${fsMonth(cur.from, lang)} notice`, `${fsMonth(cur.from, lang)} की सूचना`))}</span>
       </article>`;
   }).join('');
 
   const body = `
   <section class="seo-page container">
-    ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Fuel Surcharge', url: null }])}
-    <h1>India Electricity Surcharge Tracker</h1>
-    <p class="seo-lead">Your tariff is fixed for the year. Your <strong>fuel surcharge is not</strong> —
+    ${breadcrumbs([{ name: t('Home', 'होम'), url: '/' }, { name: t('Fuel Surcharge', 'ईंधन अधिभार'), url: null }])}
+    <h1>${t('India Electricity Surcharge Tracker', 'भारत बिजली अधिभार ट्रैकर')}</h1>
+    <p class="seo-lead">${t(`Your tariff is fixed for the year. Your <strong>fuel surcharge is not</strong> —
     it is renotified every month, it can double-digit your bill without any tariff hike, and it is the
     single most common reason a bill jumps with no change in your usage. This page tracks the
-    published FPPA, FPPAS, PPAC and FAC rate for every state we have verified data for.</p>
-    <p class="privacy-updated">Last updated ${LASTMOD_TOKEN.en} &middot; Rates as notified by the
-    state regulator or DISCOM &middot; See also <a href="/guides/how-fppa-fuel-surcharge-is-calculated/">how
-    the fuel surcharge is calculated</a></p>
+    published FPPA, FPPAS, PPAC and FAC rate for every state we have verified data for.`,
+    `आपका टैरिफ़ साल भर के लिए तय होता है। आपका <strong>ईंधन अधिभार नहीं</strong> — यह हर महीने फिर से
+    अधिसूचित होता है, बिना किसी टैरिफ़ बढ़ोतरी के भी आपके बिल को दहाई अंकों में बढ़ा सकता है, और खपत न
+    बदलने पर बिल बढ़ने की सबसे आम वजह यही है। यह पृष्ठ हर उस राज्य की प्रकाशित FPPA, FPPAS, PPAC और FAC
+    दर पर नज़र रखता है जिसका डेटा हमने सत्यापित किया है।`)}</p>
+    <p class="privacy-updated">${t('Last updated', 'अंतिम अद्यतन')} ${LASTMOD_TOKEN[lang] || LASTMOD_TOKEN.en} &middot; ${t('Rates as notified by the state regulator or DISCOM', 'दरें राज्य नियामक या डिस्कॉम द्वारा अधिसूचित')} &middot; ${t('See also', 'यह भी देखें')} <a href="${langUrl('/guides/how-fppa-fuel-surcharge-is-calculated/', lang)}">${t('how the fuel surcharge is calculated', 'ईंधन अधिभार की गणना कैसे होती है')}</a></p>
 
     <section class="seo-section fs-product-nav">
-      <h2>Track by state</h2>
+      <h2>${t('Track by state', 'राज्यवार ट्रैक करें')}</h2>
       <div class="fs-state-grid">${stateCards}</div>
-      <p class="fs-legend">Dedicated tracker pages are generated only for states where we have verified
-      surcharge notices. Maharashtra FAC/FPPCA and Telangana FPPCA are high-priority coverage targets.</p>
+      <p class="fs-legend">${t(`Dedicated tracker pages are generated only for states where we have verified
+      surcharge notices. Maharashtra FAC/FPPCA and Telangana FPPCA are high-priority coverage targets.`,
+      `अलग ट्रैकर पृष्ठ केवल उन राज्यों के लिए बनते हैं जिनकी अधिभार सूचनाएँ हमने सत्यापित की हैं।
+      महाराष्ट्र FAC/FPPCA और तेलंगाना FPPCA हमारी प्राथमिकता सूची में हैं।`)}</p>
     </section>
 
     <section class="seo-section">
-      <h2>Current rates — ${esc(nowMonth)}</h2>
+      <h2>${t(`Current rates — ${esc(nowMonth)}`, `मौजूदा दरें — ${esc(nowMonth)}`)}</h2>
       <div class="comparison-table-wrapper fs-current-table">
         <table class="comparison-table">
-          <thead><tr><th>State / DISCOM</th><th>Applies to</th><th>Current rate</th><th>Notice</th></tr></thead>
+          <thead><tr><th>${t('State / DISCOM', 'राज्य / डिस्कॉम')}</th><th>${t('Applies to', 'किस पर लागू')}</th><th>${t('Current rate', 'मौजूदा दर')}</th><th>${t('Notice', 'सूचना')}</th></tr></thead>
           <tbody>${currentRows}</tbody>
         </table>
       </div>
-      <p class="fs-legend"><strong>A negative rate is a credit</strong>, not a charge — when fuel
+      <p class="fs-legend">${t(`<strong>A negative rate is a credit</strong>, not a charge — when fuel
       costs fall below what the tariff assumed, the difference comes back to you. Where a month
       shows "not yet notified", the regulator has not published that month's figure at the time
-      of writing; we leave it blank rather than assume zero.</p>
+      of writing; we leave it blank rather than assume zero.`,
+      `<strong>ऋणात्मक दर क्रेडिट होती है</strong>, शुल्क नहीं — जब ईंधन लागत टैरिफ़ में मानी गई लागत से
+      कम रहती है, तो अंतर आपको वापस मिलता है। जहाँ "अभी सूचित नहीं" लिखा है, वहाँ लिखे जाने तक नियामक ने
+      उस महीने का आँकड़ा प्रकाशित नहीं किया था; हम उसे शून्य मान लेने के बजाय खाली छोड़ते हैं।`)}</p>
     </section>
 
     <section class="seo-section">
-      <h2>Uttar Pradesh: 16 months of FPPAS</h2>
-      <p>UPPCL notifies a Fuel and Power Purchase Adjustment Surcharge every month as a
+      <h2>${t(`Uttar Pradesh: ${upSeries.length} months of FPPAS`, `उत्तर प्रदेश: FPPAS के ${upSeries.length} महीने`)}</h2>
+      <p>${t(`UPPCL notifies a Fuel and Power Purchase Adjustment Surcharge every month as a
       <strong>percentage of your fixed + energy charges</strong>, under
-      <a href="/guides/how-fppa-fuel-surcharge-is-calculated/">UPERC MYT Regulations 2025</a>.
+      <a href="${langUrl('/guides/how-fppa-fuel-surcharge-is-calculated/', lang)}">UPERC MYT Regulations 2025</a>.
       Of the ${upSeries.length} months we have verified, ${upCharges} were a charge and
-      ${upCredits} were a credit, averaging ${upAvg > 0 ? '+' : ''}${upAvg.toFixed(2)}%.</p>
+      ${upCredits} were a credit, averaging ${upAvg > 0 ? '+' : ''}${upAvg.toFixed(2)}%.`,
+      `UPPCL हर महीने ईंधन एवं विद्युत क्रय समायोजन अधिभार को आपके <strong>फिक्स्ड + ऊर्जा शुल्क के
+      प्रतिशत</strong> के रूप में अधिसूचित करता है, <a href="${langUrl('/guides/how-fppa-fuel-surcharge-is-calculated/', lang)}">UPERC
+      MYT विनियम 2025</a> के तहत। हमारे सत्यापित ${upSeries.length} महीनों में से ${upCharges} में शुल्क
+      लगा और ${upCredits} में क्रेडिट मिला; औसत ${upAvg > 0 ? '+' : ''}${upAvg.toFixed(2)}% रहा।`)}</p>
       ${upChart}
       <div class="fs-month-grid">${upRows}</div>
     </section>
 
     <section class="seo-section">
-      <h2>What does 10% actually cost you?</h2>
-      <p>The surcharge is applied to your <strong>fixed charges plus energy charges</strong> —
+      <h2>${t('What does 10% actually cost you?', '10% का असल में कितना खर्च आता है?')}</h2>
+      <p>${t(`The surcharge is applied to your <strong>fixed charges plus energy charges</strong> —
       not to the bill total, and not after taxes. So on a bill where those come to
       ${rupee(exBase)}, a ${exPct}% surcharge adds <strong>${rupee(exAmt)}</strong>, and
-      electricity duty is then charged on the larger figure.</p>
-      <p>That ordering matters and is frequently got wrong: duty applies <em>after</em> the
+      electricity duty is then charged on the larger figure.`,
+      `अधिभार आपके <strong>फिक्स्ड शुल्क और ऊर्जा शुल्क</strong> पर लगता है — बिल के कुल योग पर नहीं,
+      और करों के बाद नहीं। तो जिस बिल में ये ${rupee(exBase)} बनते हैं, वहाँ ${exPct}% अधिभार
+      <strong>${rupee(exAmt)}</strong> जोड़ता है, और फिर बिजली शुल्क (ड्यूटी) इसी बड़ी राशि पर लगता है।`)}</p>
+      <p>${t(`That ordering matters and is frequently got wrong: duty applies <em>after</em> the
       surcharge, so the money leaving your pocket is more than the surcharge line itself. On a real
       UP domestic bill of 300 units at 2&nbsp;kW, the surcharge line reads ₹194.50 — but the bill
       rises by ₹204, because 5% electricity duty is charged on the surcharge too. Our
-      <a href="/#calculator">bill calculator</a> applies the correct rate for your DISCOM and
-      billing month automatically — you do not need to look it up here first.</p>
-      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Calculate my bill with this month's surcharge</a></p>
+      <a href="${'/'}#calculator">bill calculator</a> applies the correct rate for your DISCOM and
+      billing month automatically — you do not need to look it up here first.`,
+      `यह क्रम मायने रखता है और अक्सर ग़लत समझा जाता है: ड्यूटी अधिभार के <em>बाद</em> लगती है, इसलिए जेब
+      से जाने वाली रकम अधिभार की पंक्ति से ज़्यादा होती है। 2&nbsp;kW पर 300 यूनिट के असली यूपी घरेलू बिल
+      में अधिभार की पंक्ति ₹194.50 दिखती है — पर बिल ₹204 बढ़ता है, क्योंकि 5% बिजली शुल्क अधिभार पर भी
+      लगता है। हमारा <a href="${'/'}#calculator">बिल कैलकुलेटर</a> आपके डिस्कॉम और बिलिंग महीने की सही दर
+      अपने आप लगाता है — आपको यहाँ पहले देखने की ज़रूरत नहीं।`)}</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="${'/'}#calculator">${t("Calculate my bill with this month's surcharge", 'इस महीने के अधिभार के साथ बिल जोड़ें')}</a></p>
     </section>
 
     <section class="seo-section">
-      <h2>Delhi: PPAC, revised monthly since June 2026</h2>
-      <p>Delhi calls it PPAC (Power Purchase Adjustment Cost) and sets it <strong>per DISCOM</strong>,
+      <h2>${t('Delhi: PPAC, revised monthly since June 2026', 'दिल्ली: PPAC, जून 2026 से हर महीने संशोधित')}</h2>
+      <p>${t(`Delhi calls it PPAC (Power Purchase Adjustment Cost) and sets it <strong>per DISCOM</strong>,
       so two neighbours on different networks pay different surcharges on identical usage. DERC
-      moved from periodic to monthly revisions in June 2026 and sanctioned sharply higher rates.</p>
+      moved from periodic to monthly revisions in June 2026 and sanctioned sharply higher rates.`,
+      `दिल्ली में इसे PPAC (Power Purchase Adjustment Cost) कहा जाता है और यह <strong>हर डिस्कॉम के लिए
+      अलग</strong> तय होता है — इसलिए अलग-अलग नेटवर्क पर रहने वाले दो पड़ोसी एक जैसी खपत पर अलग अधिभार
+      चुकाते हैं। DERC ने जून 2026 में आवधिक के बजाय मासिक संशोधन अपनाया और दरें काफ़ी बढ़ाईं।`)}</p>
       <div class="fs-delhi-grid">${delhiCards}</div>
     </section>
 
     <section class="seo-section">
-      <h2>Why it changes every month</h2>
-      <p>A tariff order fixes what you pay per unit for a year, based on an assumption about what
+      <h2>${t('Why it changes every month', 'यह हर महीने क्यों बदलता है')}</h2>
+      <p>${t(`A tariff order fixes what you pay per unit for a year, based on an assumption about what
       power will cost the DISCOM to buy. Fuel prices do not respect that assumption. The fuel
       surcharge is the true-up: when actual power-purchase cost runs above the assumed figure,
-      the gap is passed through to you; when it runs below, you get a credit.</p>
-      <p>Most states cap how much can be recovered in one cycle — Uttar Pradesh at 10% — and carry
+      the gap is passed through to you; when it runs below, you get a credit.`,
+      `टैरिफ़ आदेश एक साल के लिए प्रति यूनिट दर तय करता है, इस अनुमान पर कि डिस्कॉम को बिजली ख़रीदने में
+      कितना खर्च आएगा। ईंधन की क़ीमतें उस अनुमान को नहीं मानतीं। ईंधन अधिभार वही हिसाब बराबर करता है: जब
+      वास्तविक बिजली-खरीद लागत अनुमान से ऊपर जाती है, अंतर आप तक पहुँचता है; जब नीचे रहती है, आपको
+      क्रेडिट मिलता है।`)}</p>
+      <p>${t(`Most states cap how much can be recovered in one cycle — Uttar Pradesh at 10% — and carry
       the excess forward. That is why you can see two consecutive months pinned at exactly the
-      ceiling: the underlying gap was larger than the cap allowed.</p>
+      ceiling: the underlying gap was larger than the cap allowed.`,
+      `ज़्यादातर राज्य एक चक्र में वसूली की सीमा तय करते हैं — उत्तर प्रदेश में 10% — और बाकी रकम आगे ले
+      जाते हैं। इसीलिए लगातार दो महीने ठीक उसी सीमा पर टिके दिख सकते हैं: असल अंतर सीमा से बड़ा था।`)}</p>
       <div class="seo-link-grid">
-        <a class="seo-link-card" href="/guides/how-fppa-fuel-surcharge-is-calculated/"><strong>How FPPA is calculated</strong><span>The formula, both methods, and where it lands on your bill</span></a>
-        <a class="seo-link-card" href="/guides/msedcl-fppa-charges-explained/"><strong>FPPA on an MSEDCL bill</strong><span>Maharashtra's version, line by line</span></a>
-        <a class="seo-link-card" href="/guides/why-did-my-electricity-bill-increase/"><strong>Why did my bill go up?</strong><span>Fuel surcharge is one of nine common causes</span></a>
+        <a class="seo-link-card" href="${langUrl('/guides/how-fppa-fuel-surcharge-is-calculated/', lang)}"><strong>${t('How FPPA is calculated', 'FPPA की गणना कैसे होती है')}</strong><span>${t('The formula, both methods, and where it lands on your bill', 'सूत्र, दोनों पद्धतियाँ, और यह बिल में कहाँ आता है')}</span></a>
+        <a class="seo-link-card" href="${langUrl('/guides/msedcl-fppa-charges-explained/', lang)}"><strong>${t('FPPA on an MSEDCL bill', 'MSEDCL बिल पर FPPA')}</strong><span>${t("Maharashtra's version, line by line", 'महाराष्ट्र का रूप, पंक्ति-दर-पंक्ति')}</span></a>
+        <a class="seo-link-card" href="${langUrl('/guides/why-did-my-electricity-bill-increase/', lang)}"><strong>${t('Why did my bill go up?', 'मेरा बिल क्यों बढ़ा?')}</strong><span>${t('Fuel surcharge is one of nine common causes', 'ईंधन अधिभार नौ आम वजहों में से एक है')}</span></a>
       </div>
     </section>
 
     <section class="seo-section">
-      <h2>Coverage and sources</h2>
-      <p>We publish a rate only where we have the regulator's or DISCOM's own notice. That
+      <h2>${t('Coverage and sources', 'कवरेज और स्रोत')}</h2>
+      <p>${t(`We publish a rate only where we have the regulator's or DISCOM's own notice. That
       currently means <strong>Uttar Pradesh, Delhi and Rajasthan</strong>. For every other state
       the calculator defaults the surcharge to zero and lets you type in the figure printed on
-      your own bill — an honest blank rather than a plausible guess.</p>
+      your own bill — an honest blank rather than a plausible guess.`,
+      `हम कोई दर तभी प्रकाशित करते हैं जब हमारे पास नियामक या डिस्कॉम की अपनी सूचना हो। फ़िलहाल इसका
+      मतलब है <strong>उत्तर प्रदेश, दिल्ली और राजस्थान</strong>। बाकी हर राज्य के लिए कैलकुलेटर अधिभार
+      शून्य रखता है और आपको अपने बिल पर छपा आँकड़ा भरने देता है — अनुमान लगाने के बजाय ईमानदार ख़ाली जगह।`)}</p>
       <div class="comparison-table-wrapper">
         <table class="comparison-table">
-          <thead><tr><th>State</th><th>Mechanism</th><th>Basis</th><th>Source</th></tr></thead>
+          <thead><tr><th>${t('State', 'राज्य')}</th><th>${t('Mechanism', 'तंत्र')}</th><th>${t('Basis', 'आधार')}</th><th>${t('Source', 'स्रोत')}</th></tr></thead>
           <tbody>
-            <tr><td>Uttar Pradesh</td><td>FPPAS</td><td>% of fixed + energy charges, capped at 10%/cycle</td><td>UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</td></tr>
-            <tr><td>Delhi</td><td>PPAC</td><td>% of fixed + energy charges, set per DISCOM</td><td>DERC PPAC approvals</td></tr>
-            <tr><td>Rajasthan</td><td>Regulatory Surcharge (incl. FPPAS)</td><td>Flat per-unit</td><td>Tariff for Supply of Electricity-2025 §32 (RERC)</td></tr>
+            <tr><td>${t('Uttar Pradesh', 'उत्तर प्रदेश')}</td><td>FPPAS</td><td>${t('% of fixed + energy charges, capped at 10%/cycle', 'फिक्स्ड + ऊर्जा शुल्क का %, प्रति चक्र 10% की सीमा')}</td><td>${t('UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)', 'UPPCL मासिक FPPAS सूचना (UPERC MYT विनियम 2025)')}</td></tr>
+            <tr><td>${t('Delhi', 'दिल्ली')}</td><td>PPAC</td><td>${t('% of fixed + energy charges, set per DISCOM', 'फिक्स्ड + ऊर्जा शुल्क का %, हर डिस्कॉम के लिए अलग')}</td><td>${t('DERC PPAC approvals', 'DERC की PPAC स्वीकृतियाँ')}</td></tr>
+            <tr><td>${t('Rajasthan', 'राजस्थान')}</td><td>${t('Regulatory Surcharge (incl. FPPAS)', 'नियामक अधिभार (FPPAS सहित)')}</td><td>${t('Flat per-unit', 'सपाट प्रति-यूनिट')}</td><td>${t('Tariff for Supply of Electricity-2025 §32 (RERC)', 'Tariff for Supply of Electricity-2025 §32 (RERC)')}</td></tr>
           </tbody>
         </table>
       </div>
-      <p>Spotted a rate that does not match your bill? That is a bug worth fixing —
-      <a href="/contact/">tell us</a> and include the month and DISCOM.</p>
+      <p>${t(`Spotted a rate that does not match your bill? That is a bug worth fixing —
+      <a href="${'/contact/'}">tell us</a> and include the month and DISCOM.`,
+      `कोई दर आपके बिल से मेल नहीं खाती? यह ठीक करने लायक ख़ामी है —
+      <a href="${'/contact/'}">हमें बताइए</a>, महीना और डिस्कॉम ज़रूर लिखिए।`)}</p>
     </section>
 
-    <p class="seo-disclaimer">Fuel-surcharge rates are published by state regulators and DISCOMs and
+    <p class="seo-disclaimer">${t(`Fuel-surcharge rates are published by state regulators and DISCOMs and
     change monthly. Figures here are transcribed from those notices and are indicative, not a
-    substitute for your printed bill. Not affiliated with any DISCOM, SERC or government body.</p>
+    substitute for your printed bill. Not affiliated with any DISCOM, SERC or government body.`,
+    `ईंधन अधिभार की दरें राज्य नियामक और डिस्कॉम प्रकाशित करते हैं और ये हर महीने बदलती हैं। यहाँ दिए
+    आँकड़े उन्हीं सूचनाओं से लिए गए हैं और सांकेतिक हैं — आपके छपे बिल का विकल्प नहीं। हम किसी डिस्कॉम,
+    SERC या सरकारी निकाय से संबद्ध नहीं हैं।`)}</p>
   </section>`;
 
   return layout({
-    title, description, canonical: SITE + canonicalUrl, page: url, altLangs: [],
-    jsonld: [breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Surcharge Tracker', url: canonicalUrl }])],
+    title, description, canonical: SITE + langUrl(canonicalUrl, lang), page: canonicalUrl, lang,
+    // /fuel-surcharge/ canonicalises here and gets no alternates of its own; the tracker itself
+    // now has a Hindi twin, and an alternate set must agree with the canonical it points at.
+    altLangs: canonicalUrl === url ? ['hi'] : [],
+    jsonld: [breadcrumbJsonLd([{ name: t('Home', 'होम'), url: '/' }, { name: t('Surcharge Tracker', 'अधिभार ट्रैकर'), url: langUrl(canonicalUrl, lang) }])],
     body,
   });
 }
@@ -4418,59 +4676,69 @@ function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url } = {}) {
 // more pages — get GitHub's bare default with no route back into the site. This branded
 // page reuses the shared chrome (so the header search works) and points at the main
 // tools. English-only: it must render for any path, so it can't assume a language prefix.
-function fppaStatePage(state) {
+function fppaStatePage(state, lang = 'en') {
+  const t = fsT(lang);
   const stateSlug = slugify(state);
-  const url = `/fppa/${stateSlug}/`;
+  const enUrl = `/fppa/${stateSlug}/`;
+  const url = langUrl(enUrl, lang);
   const rows = fppaTrackerRows().filter(r => r.state === state);
   if (!rows.length) return null;
 
+  // The mechanism code (FPPAS, PPAC, "Regulatory Surcharge") is the regulator's own term and
+  // is never translated — it is the string a reader is matching against their printed bill.
   const mechanism = fppaMechanismName(state);
+  const nm = stateName(state, lang);
   const comparison = fppaStateComparison(state);
   const comparisonCurrent = comparison.filter(r => r.cur);
-  const title = `${state} Electricity ${mechanism} Tracker - Compare DISCOM Surcharge Rates`;
-  const description = `Compare current ${state} electricity surcharge rates by DISCOM: current charge, effective period, previous rate, direction, historical chart and official source notes.`;
-  const nowMonth = fsMonthLong(TODAY.slice(0, 8) + '01');
-  const archiveUrl = `/fppa/${stateSlug}/archive/`;
-  const archiveLinks = fppaArchiveYearLinks(state);
+  const title = t(`${state} Electricity ${mechanism} Tracker - Compare DISCOM Surcharge Rates`,
+                  `${nm} बिजली ${mechanism} ट्रैकर — डिस्कॉम-वार अधिभार दरें`);
+  const description = t(`Compare current ${state} electricity surcharge rates by DISCOM: current charge, effective period, previous rate, direction, historical chart and official source notes.`,
+                        `${nm} की मौजूदा बिजली अधिभार दरें डिस्कॉम-वार देखें: वर्तमान शुल्क, प्रभावी अवधि, पिछली दर, दिशा, ऐतिहासिक चार्ट और आधिकारिक स्रोत।`);
+  const nowMonth = fsMonthLong(TODAY.slice(0, 8) + '01', lang);
+  const archiveUrl = langUrl(`/fppa/${stateSlug}/archive/`, lang);
+  const archiveLinks = fppaArchiveYearLinks(state, null, lang);
   const currentRows = comparison.map(r => {
     const cur = r.cur;
     const prev = r.prev;
-    const val = cur ? `<strong class="${cur.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(cur))}</strong>` : '<span class="fs-pending">Not verified yet</span>';
-    const previous = prev ? esc(fsRate(prev)) : '<span class="fs-pending">No earlier rate</span>';
-    const tariffPath = `/tariffs/${stateSlug}/${r.discom.id}/`;
+    const val = cur ? `<strong class="${cur.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(cur, lang))}</strong>` : `<span class="fs-pending">${t('Not verified yet', 'अभी सत्यापित नहीं')}</span>`;
+    const previous = prev ? esc(fsRate(prev, lang)) : `<span class="fs-pending">${t('No earlier rate', 'पिछली दर नहीं')}</span>`;
+    // /tariffs/ has a Hindi twin, so this link follows the reader's language.
+    const tariffPath = langUrl(`/tariffs/${stateSlug}/${r.discom.id}/`, lang);
     return `<tr>
       <td><a href="${esc(tariffPath)}">${esc(r.discom.name)}</a></td>
       <td>${val}</td>
-      <td>${esc(fppaPeriod(cur))}</td>
+      <td>${esc(fppaPeriod(cur, lang))}</td>
       <td>${previous}</td>
-      <td>${fppaDirection(cur, prev)}</td>
-      <td>${fppaImpact(cur)}</td>
+      <td>${fppaDirection(cur, prev, lang)}</td>
+      <td>${fppaImpact(cur, lang)}</td>
     </tr>`;
   }).join('');
 
   const example = comparisonCurrent.find(r => r.cur?.mode === 'percent') || comparisonCurrent[0] || null;
   const exampleAmt = example?.cur?.mode === 'percent' ? 3000 * example.cur.rate / 100 : null;
   const exampleText = example && example.cur?.mode === 'percent'
-    ? `For an electricity energy/fixed-charge base of ${rupee(3000)}, ${esc(example.discom.name)}'s current ${esc(fsRate(example.cur))} adjustment equals about <strong class="${example.cur.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${example.cur.rate >= 0 ? '+' : '-'}${rupee(Math.abs(exampleAmt))}</strong> before electricity duty and any precise billing-rule adjustments.`
-    : `For percentage-based surcharges, multiply your fixed plus energy charges by the published percentage. For per-unit surcharges, multiply the rate by units consumed.`;
+    ? t(`For an electricity energy/fixed-charge base of ${rupee(3000)}, ${esc(example.discom.name)}'s current ${esc(fsRate(example.cur, lang))} adjustment equals about <strong class="${example.cur.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${example.cur.rate >= 0 ? '+' : '-'}${rupee(Math.abs(exampleAmt))}</strong> before electricity duty and any precise billing-rule adjustments.`,
+        `${rupee(3000)} के ऊर्जा + फिक्स्ड शुल्क आधार पर ${esc(example.discom.name)} का मौजूदा ${esc(fsRate(example.cur, lang))} समायोजन लगभग <strong class="${example.cur.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${example.cur.rate >= 0 ? '+' : '-'}${rupee(Math.abs(exampleAmt))}</strong> बैठता है — बिजली शुल्क (ड्यूटी) और सटीक बिलिंग नियमों से पहले।`)
+    : t(`For percentage-based surcharges, multiply your fixed plus energy charges by the published percentage. For per-unit surcharges, multiply the rate by units consumed.`,
+        `प्रतिशत-आधारित अधिभार के लिए अपने फिक्स्ड और ऊर्जा शुल्क को प्रकाशित प्रतिशत से गुणा करें। प्रति-यूनिट अधिभार के लिए दर को खपत यूनिट से गुणा करें।`);
 
   const hasDiscomSpecific = rows.some(r => r.type === 'discom');
-  const whatChangedHtml = fppaWhatChangedHtml(state, mechanism, comparison, hasDiscomSpecific, rows);
+  const whatChangedHtml = fppaWhatChangedHtml(state, mechanism, comparison, hasDiscomSpecific, rows, lang);
   const historyItems = hasDiscomSpecific
     ? comparison.filter(r => r.list.length)
-    : [{ discom: { name: state }, list: rows[0]?.list || [] }];
+    : [{ discom: { name: nm }, list: rows[0]?.list || [] }];
   const historyBlocks = historyItems.map(r => {
     const series = [...r.list].sort((a, b) => b.from.localeCompare(a.from));
     const historyRows = series.map((e, i) =>
-      `<tr><td>${esc(fsMonth(e.from))}</td><td class="${e.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(e))}</td><td>${fppaChange(series, i)}</td><td>${esc(e.label || '')}</td></tr>`).join('');
+      `<tr><td>${esc(fsMonth(e.from, lang))}</td><td class="${e.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(e, lang))}</td><td>${fppaChange(series, i)}</td><td>${esc(fsNoticeLabel(e.label, lang))}</td></tr>`).join('');
     const chartSeries = [...series].reverse().filter(e => e.mode === series[0].mode);
-    const chart = chartSeries.length >= 2 ? fppaTrendSvg(chartSeries, 36, r.discom.name, surchargeTerm(state).code) : '';
+    const chart = chartSeries.length >= 2 ? fppaTrendSvg(chartSeries, 36, r.discom.name, surchargeTerm(state).code, lang) : '';
     return `<section class="seo-section fs-state-history">
-      <h2>Historical chart: ${esc(r.discom.name)} ${esc(mechanism)}</h2>
+      <h2>${t(`Historical chart: ${esc(r.discom.name)} ${esc(mechanism)}`, `ऐतिहासिक चार्ट: ${esc(r.discom.name)} ${esc(mechanism)}`)}</h2>
       ${chart}
       <div class="comparison-table-wrapper">
         <table class="comparison-table">
-          <thead><tr><th>Month</th><th>Rate</th><th>Change</th><th>Notice</th></tr></thead>
+          <thead><tr><th>${t('Month', 'महीना')}</th><th>${t('Rate', 'दर')}</th><th>${t('Change', 'बदलाव')}</th><th>${t('Notice', 'सूचना')}</th></tr></thead>
           <tbody>${historyRows}</tbody>
         </table>
       </div>
@@ -4478,154 +4746,436 @@ function fppaStatePage(state) {
   }).join('');
 
   const mechanismNote = hasDiscomSpecific
-    ? `${state} has DISCOM-specific ${mechanism} entries in our tracker, so the rate can differ by utility.`
-    : `${state} currently uses a state-wide ${mechanism} entry in our tracker, so the same rate applies across the covered DISCOMs.`;
+    ? t(`${state} has DISCOM-specific ${mechanism} entries in our tracker, so the rate can differ by utility.`,
+        `हमारे ट्रैकर में ${nm} की ${mechanism} प्रविष्टियाँ डिस्कॉम-वार हैं, इसलिए दर हर वितरण कंपनी में अलग हो सकती है।`)
+    : t(`${state} currently uses a state-wide ${mechanism} entry in our tracker, so the same rate applies across the covered DISCOMs.`,
+        `हमारे ट्रैकर में फ़िलहाल ${nm} की ${mechanism} प्रविष्टि राज्यव्यापी है, इसलिए शामिल सभी डिस्कॉम पर एक ही दर लागू होती है।`);
 
   const body = `
   <section class="seo-page container">
-    ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Surcharge Tracker', url: '/fppa/' }, { name: state, url: null }])}
-    <h1>${esc(state)} Electricity ${esc(mechanism)} Tracker</h1>
-    <p class="seo-lead">Compare the current electricity surcharge across ${esc(state)} DISCOMs,
+    ${breadcrumbs([{ name: t('Home', 'होम'), url: '/' }, { name: t('Surcharge Tracker', 'अधिभार ट्रैकर'), url: langUrl('/fppa/', lang) }, { name: nm, url: null }])}
+    <h1>${esc(nm)} ${t(`Electricity ${esc(mechanism)} Tracker`, `बिजली ${esc(mechanism)} ट्रैकर`)}</h1>
+    <p class="seo-lead">${t(`Compare the current electricity surcharge across ${esc(nm)} DISCOMs,
     see whether the latest order moved the rate up or down, and use the historical chart to
-    understand why a bill can rise even when your units do not change.</p>
-    <p class="privacy-updated">Last updated ${LASTMOD_TOKEN.en} &middot; ${esc(mechanismNote)}</p>
+    understand why a bill can rise even when your units do not change.`,
+    `${esc(nm)} की डिस्कॉम कंपनियों में मौजूदा बिजली अधिभार की तुलना कीजिए, देखिए कि नवीनतम आदेश
+    से दर बढ़ी या घटी, और ऐतिहासिक चार्ट से समझिए कि यूनिट न बदलने पर भी बिल क्यों बढ़ सकता है।`)}</p>
+    <p class="privacy-updated">${t('Last updated', 'अंतिम अद्यतन')} ${LASTMOD_TOKEN[lang] || LASTMOD_TOKEN.en} &middot; ${esc(mechanismNote)}</p>
 
     <section class="seo-section">
-      <h2>Compare current ${esc(mechanism)} by DISCOM</h2>
+      <h2>${t(`Compare current ${esc(mechanism)} by DISCOM`, `डिस्कॉम-वार मौजूदा ${esc(mechanism)} की तुलना`)}</h2>
       <div class="comparison-table-wrapper">
         <table class="comparison-table">
-          <thead><tr><th>DISCOM</th><th>Current charge</th><th>Effective period</th><th>Previous</th><th>Direction</th><th>Example impact</th></tr></thead>
+          <thead><tr><th>${t('DISCOM', 'डिस्कॉम')}</th><th>${t('Current charge', 'मौजूदा शुल्क')}</th><th>${t('Effective period', 'प्रभावी अवधि')}</th><th>${t('Previous', 'पिछली')}</th><th>${t('Direction', 'दिशा')}</th><th>${t('Example impact', 'उदाहरण असर')}</th></tr></thead>
           <tbody>${currentRows}</tbody>
         </table>
       </div>
-      <p class="fs-legend">Current month shown: ${esc(nowMonth)}. Negative rates are credits. "Not verified yet"
+      <p class="fs-legend">${t(`Current month shown: ${esc(nowMonth)}. Negative rates are credits. "Not verified yet"
       means we have not found an official current notice for that DISCOM; the calculator still lets
-      you enter the printed bill value manually.</p>
+      you enter the printed bill value manually.`,
+      `दिखाया गया महीना: ${esc(nowMonth)}. ऋणात्मक दरें क्रेडिट होती हैं। "अभी सत्यापित नहीं" का अर्थ है
+      कि उस डिस्कॉम के लिए हमें मौजूदा आधिकारिक सूचना नहीं मिली है; कैलकुलेटर में आप बिल पर छपा मान
+      स्वयं भर सकते हैं।`)}</p>
     </section>
 
     ${whatChangedHtml}
 
     <section class="seo-section fs-archive-callout">
-      <h2>Historical archive</h2>
-      <p>We do not delete old ${esc(mechanism)} values when a new notice appears. Each verified
+      <h2>${t('Historical archive', 'ऐतिहासिक संग्रह')}</h2>
+      <p>${t(`We do not delete old ${esc(mechanism)} values when a new notice appears. Each verified
       period remains archived with its rate, effective dates, direction and source note, so this
-      page grows into a clean long-term surcharge dataset.</p>
+      page grows into a clean long-term surcharge dataset.`,
+      `नई सूचना आने पर हम पुरानी ${esc(mechanism)} दरें मिटाते नहीं हैं। हर सत्यापित अवधि अपनी दर,
+      प्रभावी तिथियों, दिशा और स्रोत के साथ संग्रह में बनी रहती है, जिससे यह पृष्ठ एक साफ़-सुथरे
+      दीर्घकालिक अधिभार डेटासेट में बदलता जाता है।`)}</p>
       ${archiveLinks}
-      <p class="seo-cta-row"><a class="seo-cta" href="${esc(archiveUrl)}">View full ${esc(state)} surcharge archive</a></p>
+      <p class="seo-cta-row"><a class="seo-cta" href="${esc(archiveUrl)}">${t(`View full ${esc(nm)} surcharge archive`, `${esc(nm)} का पूरा अधिभार संग्रह देखें`)}</a></p>
     </section>
 
     <section class="seo-section">
-      <h2>What this means for consumers</h2>
+      <h2>${t('What this means for consumers', 'उपभोक्ता के लिए इसका क्या मतलब है')}</h2>
       <p>${exampleText}</p>
-      <p>Use this as a quick approximation only. Final bill impact depends on the exact base amount,
-      duty, rounding, billing period and the regulator's order.</p>
+      <p>${t(`Use this as a quick approximation only. Final bill impact depends on the exact base amount,
+      duty, rounding, billing period and the regulator's order.`,
+      `इसे केवल मोटे अनुमान की तरह लें। बिल पर असल असर आधार राशि, ड्यूटी, राउंडिंग, बिलिंग अवधि और
+      नियामक के आदेश पर निर्भर करता है।`)}</p>
     </section>
 
     ${historyBlocks}
 
     <section class="seo-section">
-      <h2>Why did it change?</h2>
-      ${fppaStateWhyHtml(state, mechanism)}
+      <h2>${t('Why did it change?', 'यह क्यों बदला?')}</h2>
+      ${fppaStateWhyHtml(state, mechanism, lang)}
     </section>
 
     <section class="seo-section">
-      <h2>Official source</h2>
-      ${fppaStateSourcesHtml(state, comparison)}
+      <h2>${t('Official source', 'आधिकारिक स्रोत')}</h2>
+      ${fppaStateSourcesHtml(state, comparison, lang)}
     </section>
 
     <section class="seo-section">
-      <h2>Use this rate on your bill</h2>
-      <p>Open the calculator, choose your ${esc(state)} DISCOM, and keep <strong>Auto-fill from verified
+      <h2>${t('Use this rate on your bill', 'इस दर का अपने बिल पर उपयोग')}</h2>
+      <p>${t(`Open the calculator, choose your ${esc(nm)} DISCOM, and keep <strong>Auto-fill from verified
       government data</strong> enabled. The calculator applies the surcharge mode correctly: percentage
-      surcharges are applied on fixed plus energy charges, while per-unit surcharges multiply units.</p>
-      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Calculate my bill with current surcharge</a></p>
+      surcharges are applied on fixed plus energy charges, while per-unit surcharges multiply units.`,
+      `कैलकुलेटर खोलिए, अपना ${esc(nm)} डिस्कॉम चुनिए और <strong>सत्यापित सरकारी डेटा से स्वतः भरें</strong>
+      चालू रहने दीजिए। कैलकुलेटर अधिभार की पद्धति सही तरीके से लगाता है: प्रतिशत अधिभार फिक्स्ड और ऊर्जा
+      शुल्क पर लगता है, जबकि प्रति-यूनिट अधिभार यूनिट से गुणा होता है।`)}</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="${'/'}#calculator">${t('Calculate my bill with current surcharge', 'मौजूदा अधिभार के साथ बिल जोड़ें')}</a></p>
     </section>
   </section>`;
 
   return layout({
-    title, description, canonical: SITE + url, page: url, altLangs: [],
-    jsonld: [breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Surcharge Tracker', url: '/fppa/' }, { name: state, url }])],
+    title, description, canonical: SITE + url, page: enUrl, lang, altLangs: ['hi'],
+    jsonld: [breadcrumbJsonLd([{ name: t('Home', 'होम'), url: '/' }, { name: t('Surcharge Tracker', 'अधिभार ट्रैकर'), url: langUrl('/fppa/', lang) }, { name: nm, url }])],
     body,
   });
 }
 
-function fppaArchivePage(state) {
+function fppaArchivePage(state, lang = 'en') {
+  const t = fsT(lang);
   const stateSlug = slugify(state);
-  const url = `/fppa/${stateSlug}/archive/`;
+  const enUrl = `/fppa/${stateSlug}/archive/`;
+  const url = langUrl(enUrl, lang);
   const rows = fppaArchiveRows(state);
   if (!rows.length) return null;
   const mechanism = fppaMechanismName(state);
-  const title = `${state} ${mechanism} Historical Archive`;
-  const description = `Permanent ${state} electricity surcharge archive: historical ${mechanism} rates by DISCOM, effective period, direction, notice and source.`;
-  const yearLinks = fppaArchiveYearLinks(state);
+  const nm = stateName(state, lang);
+  const title = t(`${state} ${mechanism} Historical Archive`, `${nm} ${mechanism} ऐतिहासिक संग्रह`);
+  const description = t(`Permanent ${state} electricity surcharge archive: historical ${mechanism} rates by DISCOM, effective period, direction, notice and source.`,
+                        `${nm} का स्थायी बिजली अधिभार संग्रह: डिस्कॉम-वार ऐतिहासिक ${mechanism} दरें, प्रभावी अवधि, दिशा, सूचना और स्रोत।`);
+  const yearLinks = fppaArchiveYearLinks(state, null, lang);
   const body = `
   <section class="seo-page container">
-    ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Surcharge Tracker', url: '/fppa/' }, { name: state, url: `/fppa/${stateSlug}/` }, { name: 'Archive', url: null }])}
-    <h1>${esc(state)} ${esc(mechanism)} Historical Archive</h1>
-    <p class="seo-lead">A permanent record of verified electricity surcharge values for ${esc(state)}.
+    ${breadcrumbs([{ name: t('Home', 'होम'), url: '/' }, { name: t('Surcharge Tracker', 'अधिभार ट्रैकर'), url: langUrl('/fppa/', lang) }, { name: nm, url: langUrl(`/fppa/${stateSlug}/`, lang) }, { name: t('Archive', 'संग्रह'), url: null }])}
+    <h1>${esc(nm)} ${esc(mechanism)} ${t('Historical Archive', 'ऐतिहासिक संग्रह')}</h1>
+    <p class="seo-lead">${t(`A permanent record of verified electricity surcharge values for ${esc(nm)}.
     New notices are added as new periods; old values are kept with their effective dates and source
-    notes so the archive remains useful for consumers, researchers and journalists.</p>
-    <p class="privacy-updated">Last updated ${LASTMOD_TOKEN.en} &middot; Archive records are never overwritten by newer notices</p>
+    notes so the archive remains useful for consumers, researchers and journalists.`,
+    `${esc(nm)} के सत्यापित बिजली अधिभार मानों का स्थायी रिकॉर्ड। नई सूचनाएँ नई अवधि के रूप में जुड़ती
+    हैं; पुराने मान अपनी प्रभावी तिथियों और स्रोत के साथ बने रहते हैं, ताकि यह संग्रह उपभोक्ताओं,
+    शोधकर्ताओं और पत्रकारों के काम आता रहे।`)}</p>
+    <p class="privacy-updated">${t('Last updated', 'अंतिम अद्यतन')} ${LASTMOD_TOKEN[lang] || LASTMOD_TOKEN.en} &middot; ${t('Archive records are never overwritten by newer notices', 'नई सूचनाओं से संग्रह के रिकॉर्ड कभी अधिलेखित नहीं होते')}</p>
 
-    ${fppaArchiveSummary(rows)}
+    ${fppaArchiveSummary(rows, lang)}
     ${yearLinks}
 
     <section class="seo-section">
-      <h2>All archived ${esc(mechanism)} entries</h2>
-      ${fppaArchiveTable(rows)}
+      <h2>${t(`All archived ${esc(mechanism)} entries`, `सभी संग्रहित ${esc(mechanism)} प्रविष्टियाँ`)}</h2>
+      ${fppaArchiveTable(rows, lang)}
     </section>
 
     <section class="seo-section">
-      <h2>Why this archive matters</h2>
-      <p>Most searches only need the current surcharge. But old surcharge values explain old bills,
+      <h2>${t('Why this archive matters', 'यह संग्रह क्यों मायने रखता है')}</h2>
+      <p>${t(`Most searches only need the current surcharge. But old surcharge values explain old bills,
       complaint timelines, news reports and tariff changes. This archive preserves each historical
-      value instead of replacing it with the latest one.</p>
-      <p class="seo-cta-row"><a class="seo-cta" href="/fppa/${stateSlug}/">Back to current ${esc(state)} tracker</a></p>
+      value instead of replacing it with the latest one.`,
+      `ज़्यादातर खोजों में सिर्फ़ मौजूदा अधिभार चाहिए होता है। लेकिन पुराने मान पुराने बिल, शिकायत की
+      समय-रेखा, समाचार रिपोर्ट और टैरिफ़ बदलावों को समझाते हैं। यह संग्रह हर पुराने मान को नए से बदलने
+      के बजाय सुरक्षित रखता है।`)}</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="${langUrl(`/fppa/${stateSlug}/`, lang)}">${t(`Back to current ${esc(nm)} tracker`, `${esc(nm)} के मौजूदा ट्रैकर पर लौटें`)}</a></p>
     </section>
   </section>`;
 
   return layout({
-    title, description, canonical: SITE + url, page: url, altLangs: [],
-    jsonld: [breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Surcharge Tracker', url: '/fppa/' }, { name: state, url: `/fppa/${stateSlug}/` }, { name: 'Archive', url }])],
+    title, description, canonical: SITE + url, page: enUrl, lang, altLangs: ['hi'],
+    jsonld: [breadcrumbJsonLd([{ name: t('Home', 'होम'), url: '/' }, { name: t('Surcharge Tracker', 'अधिभार ट्रैकर'), url: langUrl('/fppa/', lang) }, { name: nm, url: langUrl(`/fppa/${stateSlug}/`, lang) }, { name: t('Archive', 'संग्रह'), url }])],
     body,
   });
 }
 
-function fppaArchiveYearPage(state, year) {
+function fppaArchiveYearPage(state, year, lang = 'en') {
+  const t = fsT(lang);
   const stateSlug = slugify(state);
-  const url = `/fppa/${stateSlug}/${year}/`;
+  const enUrl = `/fppa/${stateSlug}/${year}/`;
+  const url = langUrl(enUrl, lang);
   const rows = fppaArchiveRows(state).filter(r => fppaEntryCoversYear(r.entry, year));
   if (!rows.length) return null;
   const mechanism = fppaMechanismName(state);
-  const title = `${state} ${mechanism} History ${year}`;
-  const description = `${state} ${mechanism} surcharge history for ${year}: historical electricity surcharge rates by DISCOM, effective period, previous rate direction and source.`;
+  const nm = stateName(state, lang);
+  const title = t(`${state} ${mechanism} History ${year}`, `${nm} ${mechanism} इतिहास ${year}`);
+  const description = t(`${state} ${mechanism} surcharge history for ${year}: historical electricity surcharge rates by DISCOM, effective period, previous rate direction and source.`,
+                        `${year} के लिए ${nm} ${mechanism} अधिभार इतिहास: डिस्कॉम-वार ऐतिहासिक दरें, प्रभावी अवधि, पिछली दर की दिशा और स्रोत।`);
   const body = `
   <section class="seo-page container">
-    ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Surcharge Tracker', url: '/fppa/' }, { name: state, url: `/fppa/${stateSlug}/` }, { name: 'Archive', url: `/fppa/${stateSlug}/archive/` }, { name: String(year), url: null }])}
-    <h1>${esc(state)} ${esc(mechanism)} History ${esc(year)}</h1>
-    <p class="seo-lead">Verified ${esc(state)} electricity surcharge values that applied at some
-    point during ${esc(year)}. A row may start before ${esc(year)} if that order continued into this year.</p>
-    <p class="privacy-updated">Last updated ${LASTMOD_TOKEN.en} &middot; Part of the permanent surcharge archive</p>
+    ${breadcrumbs([{ name: t('Home', 'होम'), url: '/' }, { name: t('Surcharge Tracker', 'अधिभार ट्रैकर'), url: langUrl('/fppa/', lang) }, { name: nm, url: langUrl(`/fppa/${stateSlug}/`, lang) }, { name: t('Archive', 'संग्रह'), url: langUrl(`/fppa/${stateSlug}/archive/`, lang) }, { name: String(year), url: null }])}
+    <h1>${esc(nm)} ${esc(mechanism)} ${t('History', 'इतिहास')} ${esc(year)}</h1>
+    <p class="seo-lead">${t(`Verified ${esc(nm)} electricity surcharge values that applied at some
+    point during ${esc(year)}. A row may start before ${esc(year)} if that order continued into this year.`,
+    `${esc(year)} के दौरान किसी न किसी समय लागू रहे ${esc(nm)} के सत्यापित बिजली अधिभार मान। कोई पंक्ति
+    ${esc(year)} से पहले भी शुरू हो सकती है, यदि वह आदेश इस वर्ष तक चलता रहा।`)}</p>
+    <p class="privacy-updated">${t('Last updated', 'अंतिम अद्यतन')} ${LASTMOD_TOKEN[lang] || LASTMOD_TOKEN.en} &middot; ${t('Part of the permanent surcharge archive', 'स्थायी अधिभार संग्रह का हिस्सा')}</p>
 
-    ${fppaArchiveSummary(rows)}
-    ${fppaArchiveYearLinks(state, year)}
+    ${fppaArchiveSummary(rows, lang)}
+    ${fppaArchiveYearLinks(state, year, lang)}
 
     <section class="seo-section">
-      <h2>${esc(year)} archived entries</h2>
-      ${fppaArchiveTable(rows)}
+      <h2>${t(`${esc(year)} archived entries`, `${esc(year)} की संग्रहित प्रविष्टियाँ`)}</h2>
+      ${fppaArchiveTable(rows, lang)}
     </section>
 
     <section class="seo-section">
-      <h2>Use this history carefully</h2>
-      <p>Historical surcharge rates are useful for checking an old bill, but the payable amount still
-      depends on the bill period, units, fixed charges, duty, rounding and the exact DISCOM billing rules.</p>
-      <p class="seo-cta-row"><a class="seo-cta" href="/fppa/${stateSlug}/archive/">View full ${esc(state)} archive</a></p>
+      <h2>${t('Use this history carefully', 'इस इतिहास का सावधानी से उपयोग करें')}</h2>
+      <p>${t(`Historical surcharge rates are useful for checking an old bill, but the payable amount still
+      depends on the bill period, units, fixed charges, duty, rounding and the exact DISCOM billing rules.`,
+      `पुरानी अधिभार दरें किसी पुराने बिल की जाँच में उपयोगी हैं, लेकिन देय राशि फिर भी बिल अवधि, यूनिट,
+      फिक्स्ड शुल्क, ड्यूटी, राउंडिंग और डिस्कॉम के सटीक बिलिंग नियमों पर निर्भर करती है।`)}</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="${langUrl(`/fppa/${stateSlug}/archive/`, lang)}">${t(`View full ${esc(nm)} archive`, `${esc(nm)} का पूरा संग्रह देखें`)}</a></p>
     </section>
   </section>`;
 
   return layout({
-    title, description, canonical: SITE + url, page: url, altLangs: [],
-    jsonld: [breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Surcharge Tracker', url: '/fppa/' }, { name: state, url: `/fppa/${stateSlug}/` }, { name: 'Archive', url: `/fppa/${stateSlug}/archive/` }, { name: String(year), url }])],
+    title, description, canonical: SITE + url, page: enUrl, lang, altLangs: ['hi'],
+    jsonld: [breadcrumbJsonLd([{ name: t('Home', 'होम'), url: '/' }, { name: t('Surcharge Tracker', 'अधिभार ट्रैकर'), url: langUrl('/fppa/', lang) }, { name: nm, url: langUrl(`/fppa/${stateSlug}/`, lang) }, { name: t('Archive', 'संग्रह'), url: langUrl(`/fppa/${stateSlug}/archive/`, lang) }, { name: String(year), url }])],
+    body,
+  });
+}
+
+// ── Official Order Library ───────────────────────────────────────────────────
+// Provenance used to be a single link hanging off a state. Here each order is its own page,
+// which is also the SEO argument for building it: "TNERC T.O. No. 6 of 2025" and "MERC Case
+// 217 of 2024" are things people type, and nothing on the site answered them.
+
+const orderUrl = (o) => `/orders/${o.id}/`;
+const ORDER_SORT = (a, b) => (b.orderDate || b.effectiveFrom || '').localeCompare(a.orderDate || a.effectiveFrom || '')
+  || a.state.localeCompare(b.state);
+
+// A Wayback URL embeds its capture date: /web/20250426140100/https://…
+function archiveStamp(url) {
+  const m = /\/web\/(\d{4})(\d{2})(\d{2})/.exec(url || '');
+  return m ? `${m[1]}-${m[2]}-${m[3]}` : null;
+}
+// A snapshot captured BEFORE the order was issued cannot contain that order. Saying "archived"
+// without checking would be exactly the kind of citation that looks solid and proves nothing.
+function archiveIsUseful(o) {
+  const stamp = archiveStamp(o.archiveUrl);
+  if (!stamp) return null;
+  const ref = o.orderDate || o.effectiveFrom;
+  return { stamp, stale: !!(ref && stamp < ref) };
+}
+
+function orderDiscomNames(o) {
+  const names = [];
+  for (const id of o.discomIds || []) {
+    const d = getDiscoms(o.state).find(x => x.id === id);
+    if (d) names.push({ id, name: d.name });
+  }
+  return names;
+}
+
+const orderDate = (iso) => (iso ? humanDate(iso, 'en') : null);
+
+function orderSourceCell(o) {
+  const kind = o.isPdf
+    ? '<span class="ol-kind is-doc">PDF</span>'
+    : '<span class="ol-kind is-page">page</span>';
+  const arch = archiveIsUseful(o);
+  const archBit = arch
+    ? ` <a class="ol-arch${arch.stale ? ' is-stale' : ''}" href="${esc(o.archiveUrl)}"${arch.stale
+        ? ' title="This snapshot predates the order, so it does not contain it"' : ''}>archived ${esc(arch.stamp)}</a>`
+    : ' <span class="ol-arch is-none">no snapshot</span>';
+  return `<a href="${esc(o.sourceUrl)}" rel="nofollow">${esc(new URL(o.sourceUrl).hostname.replace(/^www\./, ''))}</a> ${kind}${archBit}`;
+}
+
+function ordersHubPage() {
+  const title = 'Indian Electricity Tariff Order Library — Source Documents by DISCOM';
+  const description = 'Every tariff order, MYT order and fuel-surcharge notice behind the rates on TheDiscomBill: '
+    + 'state, DISCOM, order type, effective date, the regulator\'s own document and an archived snapshot.';
+  const sorted = [...ORDERS].sort(ORDER_SORT);
+  const docs = sorted.filter(o => o.isPdf).length;
+  const archived = sorted.filter(o => o.archiveUrl).length;
+  const byType = Object.entries(ORDER_TYPES)
+    .map(([k, v]) => [k, v, sorted.filter(o => o.type === k).length])
+    .filter(([, , n]) => n > 0);
+
+  const rows = sorted.map(o => {
+    const names = orderDiscomNames(o);
+    const who = names.length === 0 ? '<span class="db-gap">not linked</span>'
+      : names.length > 2 ? `${esc(names[0].name)} +${names.length - 1} more`
+      : names.map(n => esc(n.name)).join(', ');
+    return `<tr>
+      <td><a href="${orderUrl(o)}">${esc(o.title)}</a>${o.orderRef ? `<small class="ol-ref">${esc(o.orderRef)}</small>` : ''}</td>
+      <td><a href="/tariffs/${slugify(o.state)}/">${esc(o.state)}</a></td>
+      <td>${who}</td>
+      <td><span class="ol-type is-${esc(o.type)}">${esc(ORDER_TYPES[o.type].label)}</span></td>
+      <td>${o.effectiveFrom ? esc(orderDate(o.effectiveFrom)) : '<span class="db-gap">not recorded</span>'}</td>
+      <td>${orderSourceCell(o)}</td>
+    </tr>`;
+  }).join('');
+
+  const typeRows = byType.map(([k, v, n]) => `<tr>
+      <td><span class="ol-type is-${esc(k)}">${esc(v.label)}</span></td>
+      <td class="num">${n}</td>
+      <td>${esc(v.blurb)}</td>
+    </tr>`).join('');
+
+  const body = `
+  <section class="seo-page container">
+    ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Order Library', url: null }])}
+    <h1>Official Tariff Order Library</h1>
+    <p class="seo-lead">Every rate on this site comes from a document a regulator published. This
+    is that pile of documents, listed rather than described: which order, which DISCOMs it binds,
+    when it took effect, and a link to the regulator's own copy. Where we hold an order date but
+    not the document, the row says so instead of quietly linking a homepage.</p>
+    <p class="privacy-updated">Last updated ${LASTMOD_TOKEN.en} &middot; ${ORDERS.length} orders recorded &middot;
+    See also the <a href="/database/">tariff database</a> these orders back</p>
+
+    <div class="fs-archive-stats database-stats">
+      <span><strong>${ORDERS.length}</strong> orders</span>
+      <span><strong>${docs}</strong> link the document itself</span>
+      <span><strong>${archived}</strong> with an archived snapshot</span>
+      <span><strong>${new Set(ORDERS.map(o => o.state)).size}</strong> states / UTs</span>
+    </div>
+
+    <section class="seo-section">
+      <h2>All recorded orders</h2>
+      <div class="comparison-table-wrapper order-library">
+        <table class="comparison-table">
+          <thead><tr>
+            <th>Order</th><th>State</th><th>DISCOMs</th><th>Type</th><th>Effective from</th><th>Source</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      <p class="fs-legend"><strong>PDF</strong> means the link is the document. <strong>page</strong>
+      means it is a regulator or licensee page that carries the schedule — useful, but not a
+      citation, and we would rather label it than dress it up. A snapshot marked stale was captured
+      before the order was issued, so it cannot contain it.</p>
+    </section>
+
+    <section class="seo-section is-aside">
+      <h2>What the types mean</h2>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>Type</th><th class="num">Count</th><th>What it does</th></tr></thead>
+          <tbody>${typeRows}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="seo-section">
+      <h2>Why link the order at all</h2>
+      <p>A tariff figure with no document behind it is a claim. Two sites can print different
+      numbers for the same DISCOM and a reader has no way to tell which is stale — unless one of
+      them shows the order. That is the entire argument for this page.</p>
+      <p>It also fails honestly. ${ORDERS.length - docs} of the ${ORDERS.length} rows link a page
+      rather than a document, and ${ORDERS.length - archived} have no archived snapshot. Those are
+      not hidden; they are the work queue.</p>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" data-icon="table" href="/database/"><strong>The tariff database</strong><span>The rates these orders set, in one machine-readable file</span></a>
+        <a class="seo-link-card" data-icon="trend" href="/fppa/"><strong>Surcharge tracker</strong><span>The fuel-surcharge notices, month by month</span></a>
+        <a class="seo-link-card" data-icon="doc" href="/methodology/"><strong>Methodology</strong><span>How a published order becomes a number on this site</span></a>
+      </div>
+    </section>
+
+    <p class="seo-disclaimer">Documents are linked at the regulator's or licensee's own address and
+    are not hosted here. Titles, case numbers and dates are transcribed from those documents.
+    Not affiliated with any DISCOM, SERC or government body.</p>
+  </section>`;
+
+  return layout({
+    title, description, canonical: `${SITE}/orders/`, page: '/orders/', altLangs: [],
+    jsonld: [breadcrumbJsonLd([{ name: 'Home', url: '/' }, { name: 'Order Library', url: '/orders/' }])],
+    body,
+  });
+}
+
+function orderPage(o) {
+  const names = orderDiscomNames(o);
+  const typeMeta = ORDER_TYPES[o.type];
+  const title = `${o.title}${o.orderRef ? ` (${o.orderRef})` : ''} — ${o.regulator}`;
+  const description = `${o.regulator} ${typeMeta.label.toLowerCase()} for ${o.state}`
+    + `${o.orderRef ? `, ${o.orderRef}` : ''}${o.effectiveFrom ? `, effective ${orderDate(o.effectiveFrom)}` : ''}`
+    + `: what it covers, which DISCOMs it binds, and a link to the regulator's own document.`;
+  const arch = archiveIsUseful(o);
+
+  const facts = [
+    ['Regulator', esc(o.regulator)],
+    ['State / UT', `<a href="/tariffs/${slugify(o.state)}/">${esc(o.state)}</a>`],
+    ['Order type', `<span class="ol-type is-${esc(o.type)}">${esc(typeMeta.label)}</span> — ${esc(typeMeta.blurb)}`],
+    ['Order reference', o.orderRef ? esc(o.orderRef) : '<span class="db-gap">not recorded</span>'],
+    ['Order date', o.orderDate ? esc(orderDate(o.orderDate)) : '<span class="db-gap">not recorded</span>'],
+    ['Effective from', o.effectiveFrom ? esc(orderDate(o.effectiveFrom)) : '<span class="db-gap">not recorded</span>'],
+    ['Effective to', o.effectiveTo ? esc(orderDate(o.effectiveTo)) : 'Still in force, or until superseded'],
+  ].map(([k, v]) => `<tr><th scope="row">${k}</th><td>${v}</td></tr>`).join('');
+
+  // What the order actually sets, read out of the tariff modules rather than restated here —
+  // so this section cannot drift away from the rates the calculator uses.
+  const covers = names.map(({ id, name }) => {
+    const d = getDiscoms(o.state).find(x => x.id === id);
+    const rows = tariffRows(d.categories);
+    // The slab array is `energySlabs`, and a category can front a supply type that carries no
+    // slabs of its own, so take the first domestic row that actually has rates to quote.
+    const dom = rows.find(r => r.cat.id === 'domestic' && r.obj.energySlabs?.length)
+      || rows.find(r => r.obj.energySlabs?.length) || null;
+    const range = dom ? rateRangeShort(dom.obj.energySlabs) : null;
+    return `<a class="seo-link-card" data-icon="table" href="/tariffs/${slugify(o.state)}/${id}/">
+      <strong>${esc(name)}</strong>
+      <span>${range ? `Domestic ${range}` : 'Tariff schedule'} &middot; ${rows.length} tariff row${rows.length === 1 ? '' : 's'}</span>
+    </a>`;
+  }).join('');
+
+  const mirrors = (o.mirrors || []).map(m =>
+    `<li><a href="${esc(m.url)}" rel="nofollow">${esc(m.who)}</a> also publishes this rate</li>`).join('');
+
+  const body = `
+  <section class="seo-page container">
+    ${breadcrumbs([{ name: 'Home', url: '/' }, { name: 'Order Library', url: '/orders/' }, { name: o.state, url: null }])}
+    <h1>${esc(o.title)}</h1>
+    <p class="seo-lead">${esc(o.regulator)}${o.orderRef ? `, ${esc(o.orderRef)}` : ''}. ${esc(typeMeta.blurb)}
+    ${names.length ? `It sets the schedule used on this site for ${esc(names.map(n => n.name).join(', '))}.` : ''}</p>
+    <p class="privacy-updated">Last updated ${LASTMOD_TOKEN.en} &middot; Transcribed from the document linked below</p>
+
+    <section class="seo-section">
+      <h2>The record</h2>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table order-facts"><tbody>${facts}</tbody></table>
+      </div>
+      ${o.notes ? `<p class="fs-legend">${esc(o.notes)}</p>` : ''}
+    </section>
+
+    <section class="seo-section">
+      <h2>The document</h2>
+      <p class="seo-cta-row">
+        <a class="seo-cta" href="${esc(o.sourceUrl)}" rel="nofollow">${o.isPdf ? 'Open the order (PDF)' : 'Open the source page'}</a>
+        ${o.archiveUrl ? `<a class="seo-cta seo-cta-quiet" href="${esc(o.archiveUrl)}">Archived copy</a>` : ''}
+      </p>
+      <p class="fs-legend">${o.isPdf
+        ? 'This link is the document itself, at the regulator\'s or licensee\'s own address. It is not hosted here.'
+        : 'This is a regulator or licensee page carrying the schedule, not the order document. We label it rather than present it as a citation.'}
+      ${arch
+        ? (arch.stale
+          ? `The archived snapshot is from ${esc(arch.stamp)}, which is <strong>before</strong> this order — so it does not contain it. Kept as a record of the page, not as evidence of the order.`
+          : `Archived snapshot taken ${esc(arch.stamp)}, after the order, so it survives the regulator moving the file.`)
+        : 'No Wayback snapshot exists for this URL yet, so if the regulator moves it, the link dies. That is a gap, and it is listed here rather than papered over.'}</p>
+      ${mirrors ? `<ul class="ol-mirrors">${mirrors}</ul>` : ''}
+    </section>
+
+    ${covers ? `<section class="seo-section">
+      <h2>What this order sets</h2>
+      <p>Read live from the tariff modules, so this cannot drift from the rates the calculator
+      actually applies.</p>
+      <div class="seo-link-grid">${covers}</div>
+    </section>` : ''}
+
+    <section class="seo-section">
+      <h2>Check it against your own bill</h2>
+      <p>The fastest way to test whether this order is being applied to you correctly is to
+      recompute the bill from it. Pick your DISCOM and enter your units.</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Calculate my bill</a></p>
+    </section>
+
+    <p class="seo-disclaimer">Transcribed from the linked document and indicative, not a substitute
+    for your printed bill or the order itself. Not affiliated with any DISCOM, SERC or government body.</p>
+  </section>`;
+
+  return layout({
+    title, description, canonical: SITE + orderUrl(o), page: orderUrl(o), altLangs: [],
+    jsonld: [breadcrumbJsonLd([
+      { name: 'Home', url: '/' },
+      { name: 'Order Library', url: '/orders/' },
+      { name: o.title, url: orderUrl(o) },
+    ])],
     body,
   });
 }
@@ -4695,6 +5245,9 @@ function tariffDatabasePage(summary, dbStates = []) {
       <span><strong>${summary.fppaTrackedDiscomCount}</strong> FPPA-linked DISCOMs</span>
       <span><strong>${summary.tariffRecordsWithPreviousTariff}</strong> records with history</span>
     </div>
+
+    <p class="fs-legend">Every rate here traces to a published document — those are listed in
+    the <a href="/orders/">order library</a>, with the gaps named.</p>
 
     <section class="seo-section">
       <h2>Coverage, state by state</h2>
@@ -5751,16 +6304,20 @@ function buildSitemap(states) {
   }
   urls.push({ loc: '/glossary/', priority: '0.7', changefreq: 'monthly', langs: [...VERNACULARS] });
   urls.push({ loc: '/database/', priority: '0.75', changefreq: 'monthly' });
-  // No `langs`: the tracker has no vernacular twin. changefreq monthly is literal here —
-  // the underlying FPPA notices are published month by month.
-  urls.push({ loc: '/fppa/', priority: '0.85', changefreq: 'monthly' });
+  urls.push({ loc: '/orders/', priority: '0.8', changefreq: 'monthly' });
+  for (const order of ORDERS) {
+    urls.push({ loc: `/orders/${order.id}/`, priority: '0.6', changefreq: 'yearly' });
+  }
+  // changefreq monthly is literal here — the underlying FPPA notices are published month by
+  // month. The tracker has a Hindi twin (and only Hindi: see the emit block).
+  urls.push({ loc: '/fppa/', priority: '0.85', changefreq: 'monthly', langs: ['hi'] });
   urls.push({ loc: '/fuel-surcharge/', priority: '0.3', changefreq: 'monthly' });
   for (const state of fppaCoverageStates()) {
     const stateSlug = slugify(state);
-    urls.push({ loc: `/fppa/${stateSlug}/`, priority: '0.75', changefreq: 'monthly' });
-    urls.push({ loc: `/fppa/${stateSlug}/archive/`, priority: '0.65', changefreq: 'monthly' });
+    urls.push({ loc: `/fppa/${stateSlug}/`, priority: '0.75', changefreq: 'monthly', langs: ['hi'] });
+    urls.push({ loc: `/fppa/${stateSlug}/archive/`, priority: '0.65', changefreq: 'monthly', langs: ['hi'] });
     for (const year of fppaArchiveYears(state)) {
-      urls.push({ loc: `/fppa/${stateSlug}/${year}/`, priority: '0.55', changefreq: 'monthly' });
+      urls.push({ loc: `/fppa/${stateSlug}/${year}/`, priority: '0.55', changefreq: 'monthly', langs: ['hi'] });
     }
   }
   urls.push({ loc: '/tariffs/states/', priority: '0.8', changefreq: 'monthly', langs: [...VERNACULARS] });
@@ -5899,6 +6456,7 @@ ${GUIDES.map(g => `- [${g.title}](${SITE}/guides/${g.slug}/): ${g.description.sp
 
 ${stateLinks}
 
+
 ## Notes
 
 - All amounts are in Indian Rupees (INR). "Units" are kWh.
@@ -5920,6 +6478,55 @@ ${stateLinks}
 // fonts.css changed. Re-deriving it each build makes drift impossible - the same reasoning
 // content.min.css already follows.
 const FONT_CSS_MARK = 'data-inline="fonts"';
+// The homepage quotes its coverage in fourteen places — <title>, og:title, twitter:title,
+// the JSON-LD description and FAQ answers, the hero stat trio, the coverage strip and the
+// About stat cards — and every one of them was a typed literal. They were correct on the day
+// they were typed and had no way to stay correct: adding DISCOM 66 would have left the whole
+// page quietly claiming 65. These are the same counts /database/ publishes, so they are
+// stamped from the same summary that builds it.
+//
+// Must run after every page is on disk but before inlineFontCss() and buildContentCss(),
+// which read this markup and must see its final form.
+function stampHomepageCoverage(summary) {
+  const file = path.join(ROOT, 'index.html');
+  const before = fs.readFileSync(file, 'utf8');
+  const { stateCount: S, discomCount: D, categoryCount: C, tariffRecordCount: T } = summary;
+
+  // Anchored on the i18n key, not on the current number, so a rule can never drift onto some
+  // other figure on the page.
+  const statNum = (key, n) => [
+    new RegExp(`(hero-stat-num">)\\d+(</span><span class="hero-stat-label" data-i18n="${key}")`, 'g'),
+    `$1${n}$2`,
+  ];
+  const statCard = (key, n) => [
+    new RegExp(`(<div class="stat-number">)\\d+(</div>\\s*<div class="stat-label" data-i18n="${key}")`, 'g'),
+    `$1${n}$2`,
+  ];
+
+  const rules = [
+    [/\b\d+ DISCOMs\b/g, `${D} DISCOMs`],
+    [/across \d+ states/g, `across ${S} states`],
+    [/across \d+ Indian states/g, `across ${S} Indian states`],
+    [/\d+ states &amp; UTs/g, `${S} states &amp; UTs`],
+    [/\d+ consumer categories/g, `${C} consumer categories`],
+    statNum('hero.stat.states', S),
+    statNum('hero.stat.discoms', D),
+    statNum('hero.stat.records', T),
+    statCard('about.stat.states', S),
+    statCard('about.stat.discoms', D),
+    statCard('about.stat.categories', C),
+  ];
+
+  let out = before;
+  for (const [re, to] of rules) {
+    if (!re.test(out)) throw new Error(`stampHomepageCoverage: no match for ${re} — index.html markup changed`);
+    re.lastIndex = 0;
+    out = out.replace(re, to);
+  }
+  if (out !== before) writeWithRetry(file, out);
+  return { changed: out !== before, S, D, C, T };
+}
+
 function inlineFontCss() {
   const src = fs.readFileSync(path.join(ROOT, 'fonts', 'fonts.css'), 'utf8');
   const min = src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ')
@@ -5975,7 +6582,7 @@ function writeMinifiedCss() {
     .replace(/\s*([{};,])\s*/g, '$1')       // no space around structural punctuation
     .replace(/;}/g, '}')                    // trailing semicolons
     .trim();
-  fs.writeFileSync(path.join(ROOT, 'css', 'styles.min.css'), min, 'utf8');
+  writeWithRetry(path.join(ROOT, 'css', 'styles.min.css'), min);
   return `${Math.round(min.length / 1024)} KB from ${Math.round(src.length / 1024)} KB`;
 }
 
@@ -6003,7 +6610,7 @@ function stampServiceWorker() {
   const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
   const version = `discombill-${date}-${hash.digest('hex').slice(0, 8)}`;
   const updated = sw.replace(/const CACHE = '[^']*';/, `const CACHE = '${version}';`);
-  if (updated !== sw) fs.writeFileSync(swPath, updated, 'utf8');
+  if (updated !== sw) writeWithRetry(swPath, updated);
   return { version, hashed };
 }
 
@@ -6127,7 +6734,7 @@ function writeSearchIndex(states) {
     + 'export const SEARCH_INDEX = '
     + JSON.stringify(entries)
     + ';\n';
-  fs.writeFileSync(path.join(ROOT, 'js', 'search-index.js'), body, 'utf8');
+  writeWithRetry(path.join(ROOT, 'js', 'search-index.js'), body);
   return entries.length;
 }
 
@@ -6163,21 +6770,38 @@ export function generateSeo() {
     emitPage(`${p}smart-meter-recharge`, smartMeterHubPage(states, lang));
     pages++;
 
-    // English-only (see the note on fuelSurchargePage) — emitted once, not per language.
+    // /database/ stays English-only: it documents a machine-readable schema whose field names
+    // are English by definition.
     if (lang === 'en') {
       emitPage('database', tariffDatabasePage(tariffDatabase.summary, tariffDatabase.db.states));
       pages++;
-      emitPage('fppa', fuelSurchargePage());
+      // English-only, and HTML-only: no orders.json. See the note on ordersHubPage().
+      emitPage('orders', ordersHubPage());
       pages++;
+      for (const order of ORDERS) {
+        emitPage(`orders/${order.id}`, orderPage(order));
+        pages++;
+      }
+      // The /fuel-surcharge/ alias canonicalises to /fppa/ and is English-only — a second
+      // language twin of a page that already points its canonical elsewhere would give Google
+      // two contradictory instructions about the same content.
       emitPage('fuel-surcharge', fuelSurchargePage({ url: '/fuel-surcharge/', canonicalUrl: '/fppa/' }));
       pages++;
+    }
+    // The surcharge tracker is the one page where a bill can jump double digits with no tariff
+    // change, and UP — the largest block of Hindi-first consumers on the site — is also the
+    // state with the deepest series here. Hindi only: Maharashtra FAC and Tamil Nadu are not
+    // yet covered by the tracker, so mr/ta twins would be pages about three other states.
+    if (lang === 'en' || lang === 'hi') {
+      emitPage(`${p}fppa`, fuelSurchargePage({ lang }));
+      pages++;
       for (const state of fppaCoverageStates()) {
-        emitPage(`fppa/${slugify(state)}`, fppaStatePage(state));
+        emitPage(`${p}fppa/${slugify(state)}`, fppaStatePage(state, lang));
         pages++;
-        emitPage(`fppa/${slugify(state)}/archive`, fppaArchivePage(state));
+        emitPage(`${p}fppa/${slugify(state)}/archive`, fppaArchivePage(state, lang));
         pages++;
         for (const year of fppaArchiveYears(state)) {
-          emitPage(`fppa/${slugify(state)}/${year}`, fppaArchiveYearPage(state, year));
+          emitPage(`${p}fppa/${slugify(state)}/${year}`, fppaArchiveYearPage(state, year, lang));
           pages++;
         }
       }
@@ -6202,12 +6826,13 @@ export function generateSeo() {
   // buildSitemap() resolves the hand-written static routes too, so save the manifest after it.
   const sitemap = buildSitemap(states);
   saveManifest();
-  fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
-  fs.writeFileSync(path.join(ROOT, 'robots.txt'), ROBOTS, 'utf8');
-  fs.writeFileSync(path.join(ROOT, 'llms.txt'), buildLlmsTxt(states, tariffDatabase.db.states), 'utf8');
-  fs.writeFileSync(path.join(ROOT, '404.html'), notFoundPage(), 'utf8');
+  writeWithRetry(path.join(ROOT, 'sitemap.xml'), sitemap);
+  writeWithRetry(path.join(ROOT, 'robots.txt'), ROBOTS);
+  writeWithRetry(path.join(ROOT, 'llms.txt'), buildLlmsTxt(states, tariffDatabase.db.states));
+  writeWithRetry(path.join(ROOT, '404.html'), notFoundPage());
   // After every page is on disk - 404.html included - and before buildContentCss(), which
   // derives content.min.css from this markup and must see its final form.
+  const coverage = stampHomepageCoverage(tariffDatabase.summary);
   const fontPages = inlineFontCss();
   const searchEntries = writeSearchIndex(states);
   const cssKb = writeMinifiedCss();
@@ -6215,7 +6840,7 @@ export function generateSeo() {
   const content = buildContentCss({ quiet: true });
   const sw = stampServiceWorker();
 
-  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + inline @font-face on ${fontPages} pages + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + content.min.css (${(content.bytes/1024).toFixed(0)} KB) + sw ${sw.version} (${sw.hashed} assets)`);
+  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + homepage coverage ${coverage.S}/${coverage.D}/${coverage.C}/${coverage.T} + inline @font-face on ${fontPages} pages + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + content.min.css (${(content.bytes/1024).toFixed(0)} KB) + sw ${sw.version} (${sw.hashed} assets)`);
   return { pages, states: states.length };
 }
 

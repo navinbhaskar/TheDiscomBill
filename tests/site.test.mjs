@@ -354,7 +354,7 @@ console.log('\n• tariff index fresh, and off the homepage critical path');
     const stateFiles = new Set(fs.readdirSync(path.join(ROOT, 'js', 'tariffs'))
       .filter((f) => f.endsWith('.js') &&
         // Keep in step with NOT_A_STATE in scripts/build-tariff-index.mjs.
-        !['registry.js', 'index.js', 'fppa.js', 'fppa-resolve.js', 'subsidy.js', 'surcharge-terms.js'].includes(f))
+        !['registry.js', 'index.js', 'fppa.js', 'fppa-resolve.js', 'subsidy.js', 'surcharge-terms.js', 'orders.js'].includes(f))
       .map((f) => `tariffs/${f}`));
 
     const home = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
@@ -396,8 +396,8 @@ console.log('\n• tariff index fresh, and off the homepage critical path');
 // the JSON snapshot stale.
 console.log('\n• tariff database fresh');
 {
-  const dbPath = path.join(ROOT, 'data', 'tariff-database.json');
-  const summaryPath = path.join(ROOT, 'data', 'tariff-database-summary.json');
+  const dbPath = path.join(ROOT, '.build', 'tariff-database.json');
+  const summaryPath = path.join(ROOT, '.build', 'tariff-database-summary.json');
   if (!fs.existsSync(dbPath) || !fs.existsSync(summaryPath)) {
     fail('tariff database files missing — run `npm run seo`');
   } else {
@@ -439,7 +439,7 @@ console.log('\n• tariff database fresh');
 // Every count must appear as a bare figure, never "65+", because "+" asserts more than we have.
 console.log('\n• advertised coverage matches the database');
 {
-  const summaryPath = path.join(ROOT, 'data', 'tariff-database-summary.json');
+  const summaryPath = path.join(ROOT, '.build', 'tariff-database-summary.json');
   if (!fs.existsSync(summaryPath)) {
     fail('tariff-database-summary.json missing — run `npm run seo`');
   } else {
@@ -596,6 +596,58 @@ console.log('\n• new surcharge rates carry provenance');
   } else {
     passed++;
     console.log(`  ✓ all ${htmlPages.length} pages: every indexable one is declared in sitemap.xml`);
+  }
+}
+
+// ── 13. the homepage sample bills still come out of the engine ────────────────
+// The hero rotates five DISCOM bills whose every figure is calculateBill() output. They were
+// verified once by hand, and index.html carries a comment telling the next person to
+// "re-verify every slide after any tariff order" — a manual step with nothing behind it. A
+// tariff update could silently leave five wrong bills on the most-visited page on the site.
+// Now it fails here instead.
+//
+// The five parameter sets are the ones the comment in index.html documents: 250 units, 2 kW,
+// 30 days, 2026-07-15, each DISCOM at its own documented surcharge (UP FPPAS -4.43%, BRPL
+// PPAC 17.94%; BESCOM, MSEDCL and TNPDCL have none on record). MVVNL is ST-10B, NOT ST-10A,
+// which caps at 1 kW / 100 units and cannot produce a 250-unit bill at all.
+console.log('\n• homepage sample bills match the engine');
+{
+  const { ensureAll } = await import(pathToFileURL(path.join(ROOT, 'js', 'tariffs', 'registry.js')).href);
+  const { calculateBill } = await import(pathToFileURL(path.join(ROOT, 'js', 'engine.js')).href);
+  await ensureAll();
+
+  const BASE = { categoryId: 'domestic', units: 250, connectedLoadKw: 2, billingPeriodDays: 30, billingDate: '2026-07-15' };
+  const SLIDES = [
+    ['UPPCL · Lucknow',      { discomId: 'mvvnl', supplyTypeId: '10B', facRate: -4.43, facMode: 'percent' }],
+    ['BSES Rajdhani · Delhi',{ discomId: 'brpl', facRate: 17.94, facMode: 'percent' }],
+    ['BESCOM · Bengaluru',   { discomId: 'bescom' }],
+    ['MSEDCL · Maharashtra', { discomId: 'msedcl' }],
+    ['TNPDCL · Tamil Nadu',  { discomId: 'tangedco' }],
+  ];
+
+  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const shown = [...html.matchAll(/<span class="hbc-hero-amount">₹([\d,]+)<\/span>/g)].map((m) => Number(m[1].replace(/,/g, '')));
+  const problems = [];
+
+  if (shown.length !== SLIDES.length) {
+    problems.push(`index.html shows ${shown.length} sample bills, this check knows ${SLIDES.length} — add the new slide's parameters here`);
+  } else {
+    for (let i = 0; i < SLIDES.length; i++) {
+      const [label, params] = SLIDES[i];
+      let net;
+      try { net = calculateBill({ ...BASE, ...params }).currentNet; }
+      catch (err) { problems.push(`${label}: calculateBill threw — ${err.message}`); continue; }
+      if (Math.round(net) !== shown[i]) {
+        problems.push(`${label}: homepage shows ₹${shown[i].toLocaleString('en-IN')}, engine now returns ₹${Math.round(net).toLocaleString('en-IN')}`);
+      }
+    }
+  }
+
+  if (problems.length) {
+    fail(`homepage hero bills are out of step with the engine:\n    ${problems.join('\n    ')}`);
+  } else {
+    passed++;
+    console.log(`  ✓ all ${SLIDES.length} hero sample bills reproduce from calculateBill()`);
   }
 }
 

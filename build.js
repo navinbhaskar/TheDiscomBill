@@ -18,6 +18,9 @@ const assets = [
   'compare', 'electricity-cost-calculator', 'solar-calculator', 'tariffs', 'guides', 'glossary', 'database', 'methodology', 'services', 'bill-check', 'bill-review', 'expert', 'admin', 'login', 'my-bills', 'new-connection', 'complaint', 'sanctioned-load-optimizer', 'solar-subsidy-checker', 'tenant-submeter-calculator', 'check-my-bill', 'tenant-submeter-calculator', 'smart-meter',
   // Hindi pre-rendered variants of tariffs/guides/glossary (generated into hi/ by generate-seo.js)
   'hi',
+
+  // Official Order Library: hub + a page per order.
+  'orders',
   'index.html', 'editor.html', '404.html',
   'sw.js', 'manifest.webmanifest',
   'icon.svg', 'icon-maskable.svg',

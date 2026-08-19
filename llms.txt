@@ -24,6 +24,7 @@ Tariff data is compiled from publicly available tariff orders: FY 2026-27 for 19
 
 ## Guides
 
+- [MD Penalty and Excess Demand Charge, Explained](https://thediscombill.com/guides/md-penalty-excess-demand-charge/): What the maximum demand penalty on an Indian electricity bill actually is, why it appears when your units have not changed, how each state charges it (2×, 1.5×, flat ₹/kVA or a % of energy charges), and the three ways to make it stop
 - [How to Read Your UPPCL Electricity Bill](https://thediscombill.com/guides/how-to-read-uppcl-bill/): Every line of a UPPCL bill (MVVNL, PVVNL, DVVNL, PuVVNL, KESCO) decoded: LMV-1 category, units × slab rates, fixed charge per kW, FPPA and electricity duty — plus the 4 fields behind most wrong bills (category, MF, IDF estimated readings, arrears) and how to verify the total yourself
 - [Why Did My Electricity Bill Suddenly Increase?](https://thediscombill.com/guides/why-did-my-electricity-bill-increase/): The 8 most common reasons an Indian electricity bill jumps — slab escalation, catch-up after estimated readings, FPPA revisions, seasonal AC load, arrears with LPSC, meter faults, excess-load penalties — and exactly how to check each one
 - [Time-of-Day (ToD) Electricity Billing Explained](https://thediscombill.com/guides/tod-billing-explained/): What Time-of-Day (ToD) electricity billing is, who it applies to in India, how peak and off-peak rates work with smart meters, what kVAh billing means, and practical ways to cut your bill by shifting load
@@ -113,6 +114,7 @@ Tariff data is compiled from publicly available tariff orders: FY 2026-27 for 19
 - [Uttar Pradesh electricity tariffs](https://thediscombill.com/tariffs/uttar-pradesh/): DISCOMs, slab rates, fixed charges and indicative bills for Uttar Pradesh
 - [Uttarakhand electricity tariffs](https://thediscombill.com/tariffs/uttarakhand/): DISCOMs, slab rates, fixed charges and indicative bills for Uttarakhand
 - [West Bengal electricity tariffs](https://thediscombill.com/tariffs/west-bengal/): DISCOMs, slab rates, fixed charges and indicative bills for West Bengal
+
 
 ## Notes
 

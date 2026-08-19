@@ -204,7 +204,16 @@ export function buildContentCss({ quiet = false } = {}) {
   text = text.replace(/\s*([{}:;,>])\s*/g, '$1').replace(/;}/g, '}').replace(/\n+/g, '\n').trim();
 
   const dest = path.join(ROOT, 'css', 'content.min.css');
-  fs.writeFileSync(dest, text, 'utf8');
+  // Windows intermittently fails this write with UNKNOWN while something else holds the
+  // handle for a moment — a running preview server is enough. Retrying beats losing the run.
+  for (let attempt = 0; ; attempt++) {
+    try { fs.writeFileSync(dest, text, 'utf8'); break; }
+    catch (err) {
+      if (attempt === 4 || !['UNKNOWN', 'EBUSY', 'EPERM'].includes(err.code)) throw err;
+      const until = Date.now() + 40 * (attempt + 1);
+      while (Date.now() < until) { /* short synchronous backoff */ }
+    }
+  }
 
   const full = fs.statSync(path.join(ROOT, 'css', 'styles.min.css')).size;
   if (!quiet) {

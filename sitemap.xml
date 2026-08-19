@@ -177,6 +177,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/guides/md-penalty-excess-demand-charge/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/guides/how-to-read-uppcl-bill/</loc>
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/how-to-read-uppcl-bill/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/how-to-read-uppcl-bill/"/>
@@ -1331,7 +1337,121 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/orders/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/berc-tariff-fy2026-27/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/jerc-jk-tariff-fy2025-26/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/kerc-tariff-2025/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/merc-217-2024-msedcl/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/merc-211-2024-aeml/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/merc-207-2024-best/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/merc-210-2024-tpc/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/oerc-rst-fy2026-27/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/sserc-tariff-fy2025-26/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/tnerc-to-6-2025/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/uperc-2026-07-02-retained/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/wberc-fy2025-26-wbsedcl/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/wberc-2025-03-25-cesc/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/wberc-2025-03-20-dpl/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/derc-ppac-2026-07-10/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/derc-ppac-2026-06/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/fppa/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/"/>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/fppa/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/"/>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
@@ -1344,72 +1464,216 @@
   </url>
   <url>
     <loc>https://thediscombill.com/fppa/delhi/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/delhi/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/delhi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/delhi/"/>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/fppa/delhi/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/delhi/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/delhi/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/delhi/"/>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/fppa/delhi/archive/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/delhi/archive/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/delhi/archive/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/delhi/archive/"/>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/fppa/delhi/archive/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/delhi/archive/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/delhi/archive/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/delhi/archive/"/>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/fppa/delhi/2026/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/delhi/2026/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/delhi/2026/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/delhi/2026/"/>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/fppa/delhi/2026/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/delhi/2026/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/delhi/2026/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/delhi/2026/"/>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/fppa/delhi/2025/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/delhi/2025/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/delhi/2025/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/delhi/2025/"/>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/fppa/delhi/2025/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/delhi/2025/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/delhi/2025/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/delhi/2025/"/>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/fppa/rajasthan/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/rajasthan/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/rajasthan/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/rajasthan/"/>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/fppa/rajasthan/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/rajasthan/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/rajasthan/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/rajasthan/"/>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/fppa/rajasthan/archive/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/rajasthan/archive/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/rajasthan/archive/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/rajasthan/archive/"/>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/fppa/rajasthan/archive/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/rajasthan/archive/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/rajasthan/archive/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/rajasthan/archive/"/>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/fppa/rajasthan/2026/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/rajasthan/2026/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/rajasthan/2026/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/rajasthan/2026/"/>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/fppa/rajasthan/2026/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/rajasthan/2026/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/rajasthan/2026/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/rajasthan/2026/"/>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/fppa/rajasthan/2025/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/rajasthan/2025/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/rajasthan/2025/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/rajasthan/2025/"/>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/fppa/rajasthan/2025/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/rajasthan/2025/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/rajasthan/2025/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/rajasthan/2025/"/>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/fppa/uttar-pradesh/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/uttar-pradesh/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/uttar-pradesh/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/uttar-pradesh/"/>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/fppa/uttar-pradesh/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/uttar-pradesh/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/uttar-pradesh/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/uttar-pradesh/"/>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/fppa/uttar-pradesh/archive/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/uttar-pradesh/archive/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/uttar-pradesh/archive/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/uttar-pradesh/archive/"/>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/fppa/uttar-pradesh/archive/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/uttar-pradesh/archive/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/uttar-pradesh/archive/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/uttar-pradesh/archive/"/>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/fppa/uttar-pradesh/2026/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/uttar-pradesh/2026/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/uttar-pradesh/2026/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/uttar-pradesh/2026/"/>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/fppa/uttar-pradesh/2026/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/uttar-pradesh/2026/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/uttar-pradesh/2026/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/uttar-pradesh/2026/"/>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/fppa/uttar-pradesh/2025/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/uttar-pradesh/2025/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/uttar-pradesh/2025/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/uttar-pradesh/2025/"/>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/fppa/uttar-pradesh/2025/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/uttar-pradesh/2025/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/uttar-pradesh/2025/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/uttar-pradesh/2025/"/>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>

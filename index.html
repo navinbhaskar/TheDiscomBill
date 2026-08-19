@@ -263,9 +263,13 @@
 
   <!-- Coverage at a glance -->
   <div class="hero-stats reveal">
-    <div class="hero-stat"><span class="hero-stat-num">34</span><span class="hero-stat-label" data-i18n="hero.stat.states">States &amp; UTs</span></div>
-    <div class="hero-stat"><span class="hero-stat-num">65</span><span class="hero-stat-label" data-i18n="hero.stat.discoms">DISCOMs</span></div>
-    <div class="hero-stat"><span class="hero-stat-num">136</span><span class="hero-stat-label" data-i18n="hero.stat.categories">Categories</span></div>
+    <a class="hero-stat hero-stat-link" href="/tariffs/"><span class="hero-stat-num">34</span><span class="hero-stat-label" data-i18n="hero.stat.states">States &amp; UTs</span></a>
+    <a class="hero-stat hero-stat-link" href="/tariffs/states/"><span class="hero-stat-num">65</span><span class="hero-stat-label" data-i18n="hero.stat.discoms">DISCOMs</span></a>
+    <!-- The third stat is a door, not a footnote. "136 categories" is a number nobody
+         searches for; the open tariff database behind it is the one thing here a competitor
+         cannot copy, and it was reachable from this page only via a footer link. Same three
+         digits, same label height at 375px and 1280px, so the hero does not move. -->
+    <a class="hero-stat hero-stat-link" href="/database/"><span class="hero-stat-num">312</span><span class="hero-stat-label" data-i18n="hero.stat.records">Tariff records</span></a>
   </div>
   </div><!-- /hero-left -->
 
@@ -1239,6 +1243,7 @@
         <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
         <a href="/database/">Tariff Database</a>
+        <a href="/orders/">Order Library</a>
         <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>

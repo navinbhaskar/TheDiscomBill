@@ -1,6 +1,13 @@
 # Dependencies
 node_modules/
 
+# Generated tariff dataset — build artifact, deliberately NOT published.
+# The site is served from the repo root and the repo is public, so a committed copy would be
+# live at two public URLs at once. It lives in a dot-directory so that Jekyll would skip it
+# even if this rule were ever removed. CI regenerates it with `npm run seo` before the tests
+# that read it, so nothing depends on it being committed.
+.build/
+
 # Build output
 dist/
 

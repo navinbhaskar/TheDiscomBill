@@ -20,7 +20,7 @@ const DIR = path.join(ROOT, 'js', 'tariffs');
 const OUT = path.join(DIR, 'index.js');
 
 // Files in js/tariffs/ that are not per-state tariff data.
-const NOT_A_STATE = new Set(['registry.js', 'index.js', 'fppa.js', 'fppa-resolve.js', 'subsidy.js', 'surcharge-terms.js']);
+const NOT_A_STATE = new Set(['registry.js', 'index.js', 'fppa.js', 'fppa-resolve.js', 'subsidy.js', 'surcharge-terms.js', 'orders.js']);
 
 export async function buildTariffIndex({ quiet = false } = {}) {
   const files = fs.readdirSync(DIR)

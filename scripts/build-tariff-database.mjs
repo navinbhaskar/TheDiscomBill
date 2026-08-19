@@ -10,7 +10,11 @@ import { FPPA_BY_STATE, FPPA_BY_DISCOM, pick as pickFppa } from '../js/tariffs/f
 import { DOMESTIC_SUBSIDY } from '../js/tariffs/subsidy.js';
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const OUT_DIR = path.join(ROOT, 'data');
+// NOT a web path. This dataset is a build artifact, not a published asset: the site is served
+// from the repo root, so anything under a normal directory here is one accidental commit away
+// from being live. A gitignored dot-directory is excluded by .gitignore, by Jekyll, and by
+// simply not looking like something to serve.
+const OUT_DIR = path.join(ROOT, '.build');
 const DB_PATH = path.join(OUT_DIR, 'tariff-database.json');
 const SUMMARY_PATH = path.join(OUT_DIR, 'tariff-database-summary.json');
 const TODAY = new Date().toISOString().slice(0, 10);
@@ -197,7 +201,10 @@ export function buildTariffDatabase({ quiet = false } = {}) {
     schemaVersion: 1,
     generatedOn: TODAY,
     name: "TheDiscomBill structured Indian residential electricity tariff database",
-    licenseNote: "Internal TheDiscomBill data asset. Do not treat this generated file as an official tariff order.",
+    // Internal build artifact. It is gitignored and never published — see .gitignore — so
+    // "internal" is an accurate description of it again. The /database/ page reports the
+    // same coverage from the in-process summary rather than from this file.
+    licenseNote: "Internal TheDiscomBill data asset, not published. Do not treat this generated file as an official tariff order.",
     fields: [
       'state', 'discom', 'tariffYear', 'consumerCategory', 'slabs', 'fixedCharge',
       'electricityDuty', 'fppaFac', 'subsidy', 'meterCharge', 'minimumCharge',

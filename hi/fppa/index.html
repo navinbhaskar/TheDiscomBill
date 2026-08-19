@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      try { localStorage.setItem('lang', 'hi'); } catch (e) {}
+    })();
+  </script>
+  <title>भारत बिजली अधिभार ट्रैकर — FPPA / FPPAS / FAC दरें</title>
+  <meta name="description" content="उत्तर प्रदेश, दिल्ली और राजस्थान की मौजूदा बिजली अधिभार दरें (FPPA, FPPAS, PPAC, FAC) — पूरा महीना-दर-महीना इतिहास, हर दर आपके बिल में कितना जोड़ती है">
+  <link rel="canonical" href="https://thediscombill.com/hi/fppa/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/fppa/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/fppa/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/fppa/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="भारत बिजली अधिभार ट्रैकर — FPPA / FPPAS / FAC दरें">
+  <meta property="og:description" content="उत्तर प्रदेश, दिल्ली और राजस्थान की मौजूदा बिजली अधिभार दरें (FPPA, FPPAS, PPAC, FAC) — पूरा महीना-दर-महीना इतिहास, हर दर आपके बिल में कितना जोड़ती है, और यह किस टैरिफ़ विनियम के तहत लगती है।">
+  <meta property="og:url" content="https://thediscombill.com/hi/fppa/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="भारत बिजली अधिभार ट्रैकर — FPPA / FPPAS / FAC दरें">
+  <meta property="og:locale" content="hi_IN">
+  <meta property="og:locale:alternate" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="भारत बिजली अधिभार ट्रैकर — FPPA / FPPAS / FAC दरें">
+  <meta name="twitter:description" content="उत्तर प्रदेश, दिल्ली और राजस्थान की मौजूदा बिजली अधिभार दरें (FPPA, FPPAS, PPAC, FAC) — पूरा महीना-दर-महीना इतिहास, हर दर आपके बिल में कितना जोड़ती है, और यह किस टैरिफ़ विनियम के तहत लगती है।">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/fppa/","name":"भारत बिजली अधिभार ट्रैकर — FPPA / FPPAS / FAC दरें","description":"उत्तर प्रदेश, दिल्ली और राजस्थान की मौजूदा बिजली अधिभार दरें (FPPA, FPPAS, PPAC, FAC) — पूरा महीना-दर-महीना इतिहास, हर दर आपके बिल में कितना जोड़ती है, और यह किस टैरिफ़ विनियम के तहत लगती है।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-19"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"अधिभार ट्रैकर","item":"https://thediscombill.com/hi/fppa/"}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <a href="/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">Smart Meter</a>
+      <a href="/hi/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/hi/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/#calculator" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">Smart Meter</span></a>
+            <a href="/hi/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/hi/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <!-- aria-labelledby, not aria-label: the accessible name has to CONTAIN the visible
+             text ("EN"), or speech input cannot activate the button and a screen reader never
+             announces which language is active (WCAG 2.5.3). Referencing the live span also
+             keeps the name in step when syncLangUI() rewrites the badge. -->
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- A plain list of links, not a listbox. These rows navigate, so they are anchors:
+             that makes them crawlable, middle-clickable and keyboard-operable for free,
+             none of which a role="option" <li> with a click handler ever was. Rows that
+             translate in place (no twin URL to point at) stay <button>s. -->
+        <ul class="lang-menu" id="langMenu" aria-label="Select language">
+          <li><a class="lang-opt" href="/fppa/" hreflang="en-IN" lang="en" data-lang="en"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></a></li>
+          <li><span class="lang-opt" data-lang="hi" aria-current="true"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">हिं</span></span></li>
+        </ul>
+      </div>
+      <button type="button" id="siteSearchBtn" class="site-search-btn" aria-label="Search the site (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body" role="main">
+
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/">होम</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">ईंधन अधिभार</span></li></ol></nav>
+    <h1>भारत बिजली अधिभार ट्रैकर</h1>
+    <p class="seo-lead">आपका टैरिफ़ साल भर के लिए तय होता है। आपका <strong>ईंधन अधिभार नहीं</strong> — यह हर महीने फिर से
+    अधिसूचित होता है, बिना किसी टैरिफ़ बढ़ोतरी के भी आपके बिल को दहाई अंकों में बढ़ा सकता है, और खपत न
+    बदलने पर बिल बढ़ने की सबसे आम वजह यही है। यह पृष्ठ हर उस राज्य की प्रकाशित FPPA, FPPAS, PPAC और FAC
+    दर पर नज़र रखता है जिसका डेटा हमने सत्यापित किया है।</p>
+    <p class="privacy-updated">अंतिम अद्यतन 19 अगस्त 2026 &middot; दरें राज्य नियामक या डिस्कॉम द्वारा अधिसूचित &middot; यह भी देखें <a href="/hi/guides/how-fppa-fuel-surcharge-is-calculated/">ईंधन अधिभार की गणना कैसे होती है</a></p>
+
+    <section class="seo-section fs-product-nav">
+      <h2>राज्यवार ट्रैक करें</h2>
+      <div class="fs-state-grid"><a class="fs-state-card" style="--dir-accent:#8b7ad6" href="/hi/fppa/delhi/">
+    <span class="fs-state-card-top">
+      <span class="seo-link-badge" aria-hidden="true">DL</span>
+      <span class="fs-state-name">दिल्ली</span>
+      <span class="fs-state-open">खोलें</span>
+    </span>
+    <span class="fs-state-rates"><span class="fs-state-chip"><b>BRPL</b>+17.94%</span><span class="fs-state-chip"><b>BYPL</b>+17.43%</span><span class="fs-state-chip"><b>TPDDL</b>+12.21%</span></span>
+    <span class="fs-state-meta">डिस्कॉम-वार अधिभार ट्रैकर</span>
+    <span class="fs-state-foot">
+      <span>3 मौजूदा दरें</span>
+      <span>नवीनतम: जुल॰ 2026</span>
+    </span>
+  </a><a class="fs-state-card" style="--dir-accent:#cf8fa3" href="/hi/fppa/rajasthan/">
+    <span class="fs-state-card-top">
+      <span class="seo-link-badge" aria-hidden="true">RJ</span>
+      <span class="fs-state-name">राजस्थान</span>
+      <span class="fs-state-open">खोलें</span>
+    </span>
+    <strong class="fs-state-rate">₹1.00/यूनिट</strong>
+    <span class="fs-state-meta">डिस्कॉम-वार अधिभार ट्रैकर</span>
+    <span class="fs-state-foot">
+      <span>3 डिस्कॉम में समान</span>
+      <span>नवीनतम: अक्टू॰ 2025</span>
+    </span>
+  </a><a class="fs-state-card" style="--dir-accent:#5fa3a0" href="/hi/fppa/uttar-pradesh/">
+    <span class="fs-state-card-top">
+      <span class="seo-link-badge" aria-hidden="true">UP</span>
+      <span class="fs-state-name">उत्तर प्रदेश</span>
+      <span class="fs-state-open">खोलें</span>
+    </span>
+    <strong class="fs-state-rate">-2.92%</strong>
+    <span class="fs-state-meta">राज्यव्यापी अधिभार ट्रैकर</span>
+    <span class="fs-state-foot">
+      <span>मौजूदा दर</span>
+      <span>नवीनतम: अग॰ 2026</span>
+    </span>
+  </a></div>
+      <p class="fs-legend">अलग ट्रैकर पृष्ठ केवल उन राज्यों के लिए बनते हैं जिनकी अधिभार सूचनाएँ हमने सत्यापित की हैं।
+      महाराष्ट्र FAC/FPPCA और तेलंगाना FPPCA हमारी प्राथमिकता सूची में हैं।</p>
+    </section>
+
+    <section class="seo-section">
+      <h2>मौजूदा दरें — अगस्त 2026</h2>
+      <div class="comparison-table-wrapper fs-current-table">
+        <table class="comparison-table">
+          <thead><tr><th>राज्य / डिस्कॉम</th><th>किस पर लागू</th><th>मौजूदा दर</th><th>सूचना</th></tr></thead>
+          <tbody><tr><td><a href="/hi/fppa/delhi/">BRPL (BSES Rajdhani)</a></td><td>दिल्ली</td><td><strong class="fs-pos">+17.94%</strong></td><td>PPAC (जुल॰ 2026, अपरिवर्तित)</td></tr><tr><td><a href="/hi/fppa/delhi/">BYPL (BSES Yamuna)</a></td><td>दिल्ली</td><td><strong class="fs-pos">+17.43%</strong></td><td>PPAC (जुल॰ 2026, अपरिवर्तित)</td></tr><tr><td><a href="/hi/fppa/delhi/">Tata Power-DDL (TPDDL)</a></td><td>दिल्ली</td><td><strong class="fs-pos">+12.21%</strong></td><td>PPAC (जुल॰ 2026, घटाई गई)</td></tr><tr><td><a href="/hi/fppa/rajasthan/">AVVNL</a></td><td>राजस्थान</td><td><strong class="fs-pos">₹1.00/यूनिट</strong></td><td>नियामक अधिभार (FPPAS सहित)</td></tr><tr><td><a href="/hi/fppa/rajasthan/">JdVVNL</a></td><td>राजस्थान</td><td><strong class="fs-pos">₹1.00/यूनिट</strong></td><td>नियामक अधिभार (FPPAS सहित)</td></tr><tr><td><a href="/hi/fppa/rajasthan/">JVVNL</a></td><td>राजस्थान</td><td><strong class="fs-pos">₹1.00/यूनिट</strong></td><td>नियामक अधिभार (FPPAS सहित)</td></tr><tr><td><a href="/hi/fppa/uttar-pradesh/">उत्तर प्रदेश</a></td><td>सभी डिस्कॉम</td><td><strong class="fs-neg">-2.92%</strong></td><td>अग॰ 2026 FPPAS (क्रेडिट)</td></tr></tbody>
+        </table>
+      </div>
+      <p class="fs-legend"><strong>ऋणात्मक दर क्रेडिट होती है</strong>, शुल्क नहीं — जब ईंधन लागत टैरिफ़ में मानी गई लागत से
+      कम रहती है, तो अंतर आपको वापस मिलता है। जहाँ "अभी सूचित नहीं" लिखा है, वहाँ लिखे जाने तक नियामक ने
+      उस महीने का आँकड़ा प्रकाशित नहीं किया था; हम उसे शून्य मान लेने के बजाय खाली छोड़ते हैं।</p>
+    </section>
+
+    <section class="seo-section">
+      <h2>उत्तर प्रदेश: FPPAS के 17 महीने</h2>
+      <p>UPPCL हर महीने ईंधन एवं विद्युत क्रय समायोजन अधिभार को आपके <strong>फिक्स्ड + ऊर्जा शुल्क के
+      प्रतिशत</strong> के रूप में अधिसूचित करता है, <a href="/hi/guides/how-fppa-fuel-surcharge-is-calculated/">UPERC
+      MYT विनियम 2025</a> के तहत। हमारे सत्यापित 17 महीनों में से 10 में शुल्क
+      लगा और 7 में क्रेडिट मिला; औसत +1.26% रहा।</p>
+      <figure class="fs-chart-wrap">
+      <svg class="fs-chart" viewBox="0 0 720 210" role="img"
+           aria-label="अप्रैल 2025 से अग॰ 2026 तक UPPCL का मासिक ईंधन अधिभार। शून्य रेखा से ऊपर की पट्टियाँ शुल्क हैं, नीचे की क्रेडिट।">
+        <line class="fs-grid" x1="38" y1="14.0" x2="710" y2="14.0"/><text class="fs-axis" x="32" y="17.5" text-anchor="end">+10%</text><line class="fs-grid" x1="38" y1="55.5" x2="710" y2="55.5"/><text class="fs-axis" x="32" y="59.0" text-anchor="end">+5%</text><line class="fs-grid fs-grid-zero" x1="38" y1="97.0" x2="710" y2="97.0"/><text class="fs-axis" x="32" y="100.5" text-anchor="end">0%</text><line class="fs-grid" x1="38" y1="138.5" x2="710" y2="138.5"/><text class="fs-axis" x="32" y="142.0" text-anchor="end">-5%</text><line class="fs-grid" x1="38" y1="180.0" x2="710" y2="180.0"/><text class="fs-axis" x="32" y="183.5" text-anchor="end">-10%</text><rect class="fs-bar fs-bar-pos" x="46.9" y="86.7" width="21.7" height="10.3" rx="2"><title>अप्रैल 2025: +1.24%</title></rect><text class="fs-axis" x="57.8" y="200" text-anchor="middle">अप्रैल 2025</text><rect class="fs-bar fs-bar-neg" x="86.4" y="97.0" width="21.7" height="16.6" rx="2"><title>मई 2025: -2.00%</title></rect><rect class="fs-bar fs-bar-pos" x="126.0" y="61.6" width="21.7" height="35.4" rx="2"><title>जून 2025: +4.27%</title></rect><rect class="fs-bar fs-bar-pos" x="165.5" y="80.6" width="21.7" height="16.4" rx="2"><title>जुल॰ 2025: +1.97%</title></rect><text class="fs-axis" x="176.4" y="200" text-anchor="middle">जुल॰ 2025</text><rect class="fs-bar fs-bar-pos" x="205.0" y="95.0" width="21.7" height="2.0" rx="2"><title>अग॰ 2025: +0.24%</title></rect><rect class="fs-bar fs-bar-pos" x="244.5" y="77.6" width="21.7" height="19.4" rx="2"><title>सित॰ 2025: +2.34%</title></rect><rect class="fs-bar fs-bar-neg" x="284.1" y="97.0" width="21.7" height="13.5" rx="2"><title>अक्टू॰ 2025: -1.63%</title></rect><text class="fs-axis" x="294.9" y="200" text-anchor="middle">अक्टू॰ 2025</text><rect class="fs-bar fs-bar-pos" x="323.6" y="81.8" width="21.7" height="15.2" rx="2"><title>नव॰ 2025: +1.83%</title></rect><rect class="fs-bar fs-bar-pos" x="363.1" y="50.9" width="21.7" height="46.1" rx="2"><title>दिस॰ 2025: +5.56%</title></rect><rect class="fs-bar fs-bar-neg" x="402.7" y="97.0" width="21.7" height="19.3" rx="2"><title>जन॰ 2026: -2.33%</title></rect><text class="fs-axis" x="413.5" y="200" text-anchor="middle">जन॰ 2026</text><rect class="fs-bar fs-bar-pos" x="442.2" y="14.0" width="21.7" height="83.0" rx="2"><title>फ़र॰ 2026: +10.00%</title></rect><rect class="fs-bar fs-bar-neg" x="481.7" y="97.0" width="21.7" height="20.1" rx="2"><title>मार्च 2026: -2.42%</title></rect><rect class="fs-bar fs-bar-pos" x="521.2" y="86.7" width="21.7" height="10.3" rx="2"><title>अप्रैल 2026: +1.24%</title></rect><text class="fs-axis" x="532.1" y="200" text-anchor="middle">अप्रैल 2026</text><rect class="fs-bar fs-bar-neg" x="560.8" y="97.0" width="21.7" height="12.6" rx="2"><title>मई 2026: -1.52%</title></rect><rect class="fs-bar fs-bar-pos" x="600.3" y="14.0" width="21.7" height="83.0" rx="2"><title>जून 2026: +10.00%</title></rect><rect class="fs-bar fs-bar-neg" x="639.8" y="97.0" width="21.7" height="36.8" rx="2"><title>जुल॰ 2026: -4.43%</title></rect><text class="fs-axis" x="650.7" y="200" text-anchor="middle">जुल॰ 2026</text><rect class="fs-bar fs-bar-neg" x="679.4" y="97.0" width="21.7" height="24.2" rx="2"><title>अग॰ 2026: -2.92%</title></rect>
+      </svg>
+      <figcaption>रेखा से ऊपर की पट्टियाँ <strong>शुल्क</strong> हैं; नीचे की पट्टियाँ आपको वापस मिलने वाला
+      <strong>क्रेडिट</strong>। +10% पर दो शिखर विनियम की मासिक सीमा हैं — अतिरिक्त राशि माफ़ नहीं
+      होती, आगे के महीनों में ले जाई जाती है।</figcaption>
+    </figure>
+      <div class="fs-month-grid"><div class="fs-month is-credit">
+      <span class="fs-month-when">अग॰ 2026</span>
+      <strong class="fs-month-rate">-2.92%</strong>
+      <span class="fs-month-kind">क्रेडिट</span>
+    </div><div class="fs-month is-credit">
+      <span class="fs-month-when">जुल॰ 2026</span>
+      <strong class="fs-month-rate">-4.43%</strong>
+      <span class="fs-month-kind">क्रेडिट</span>
+    </div><div class="fs-month">
+      <span class="fs-month-when">जून 2026</span>
+      <strong class="fs-month-rate">+10.00%</strong>
+      <span class="fs-month-kind">शुल्क</span>
+    </div><div class="fs-month is-credit">
+      <span class="fs-month-when">मई 2026</span>
+      <strong class="fs-month-rate">-1.52%</strong>
+      <span class="fs-month-kind">क्रेडिट</span>
+    </div><div class="fs-month">
+      <span class="fs-month-when">अप्रैल 2026</span>
+      <strong class="fs-month-rate">+1.24%</strong>
+      <span class="fs-month-kind">शुल्क</span>
+    </div><div class="fs-month is-credit">
+      <span class="fs-month-when">मार्च 2026</span>
+      <strong class="fs-month-rate">-2.42%</strong>
+      <span class="fs-month-kind">क्रेडिट</span>
+    </div><div class="fs-month">
+      <span class="fs-month-when">फ़र॰ 2026</span>
+      <strong class="fs-month-rate">+10.00%</strong>
+      <span class="fs-month-kind">शुल्क</span>
+    </div><div class="fs-month is-credit">
+      <span class="fs-month-when">जन॰ 2026</span>
+      <strong class="fs-month-rate">-2.33%</strong>
+      <span class="fs-month-kind">क्रेडिट</span>
+    </div><div class="fs-month">
+      <span class="fs-month-when">दिस॰ 2025</span>
+      <strong class="fs-month-rate">+5.56%</strong>
+      <span class="fs-month-kind">शुल्क</span>
+    </div><div class="fs-month">
+      <span class="fs-month-when">नव॰ 2025</span>
+      <strong class="fs-month-rate">+1.83%</strong>
+      <span class="fs-month-kind">शुल्क</span>
+    </div><div class="fs-month is-credit">
+      <span class="fs-month-when">अक्टू॰ 2025</span>
+      <strong class="fs-month-rate">-1.63%</strong>
+      <span class="fs-month-kind">क्रेडिट</span>
+    </div><div class="fs-month">
+      <span class="fs-month-when">सित॰ 2025</span>
+      <strong class="fs-month-rate">+2.34%</strong>
+      <span class="fs-month-kind">शुल्क</span>
+    </div><div class="fs-month">
+      <span class="fs-month-when">अग॰ 2025</span>
+      <strong class="fs-month-rate">+0.24%</strong>
+      <span class="fs-month-kind">शुल्क</span>
+    </div><div class="fs-month">
+      <span class="fs-month-when">जुल॰ 2025</span>
+      <strong class="fs-month-rate">+1.97%</strong>
+      <span class="fs-month-kind">शुल्क</span>
+    </div><div class="fs-month">
+      <span class="fs-month-when">जून 2025</span>
+      <strong class="fs-month-rate">+4.27%</strong>
+      <span class="fs-month-kind">शुल्क</span>
+    </div><div class="fs-month is-credit">
+      <span class="fs-month-when">मई 2025</span>
+      <strong class="fs-month-rate">-2.00%</strong>
+      <span class="fs-month-kind">क्रेडिट</span>
+    </div><div class="fs-month">
+      <span class="fs-month-when">अप्रैल 2025</span>
+      <strong class="fs-month-rate">+1.24%</strong>
+      <span class="fs-month-kind">शुल्क</span>
+    </div></div>
+    </section>
+
+    <section class="seo-section">
+      <h2>10% का असल में कितना खर्च आता है?</h2>
+      <p>अधिभार आपके <strong>फिक्स्ड शुल्क और ऊर्जा शुल्क</strong> पर लगता है — बिल के कुल योग पर नहीं,
+      और करों के बाद नहीं। तो जिस बिल में ये ₹1,500 बनते हैं, वहाँ 10% अधिभार
+      <strong>₹150</strong> जोड़ता है, और फिर बिजली शुल्क (ड्यूटी) इसी बड़ी राशि पर लगता है।</p>
+      <p>यह क्रम मायने रखता है और अक्सर ग़लत समझा जाता है: ड्यूटी अधिभार के <em>बाद</em> लगती है, इसलिए जेब
+      से जाने वाली रकम अधिभार की पंक्ति से ज़्यादा होती है। 2&nbsp;kW पर 300 यूनिट के असली यूपी घरेलू बिल
+      में अधिभार की पंक्ति ₹194.50 दिखती है — पर बिल ₹204 बढ़ता है, क्योंकि 5% बिजली शुल्क अधिभार पर भी
+      लगता है। हमारा <a href="/#calculator">बिल कैलकुलेटर</a> आपके डिस्कॉम और बिलिंग महीने की सही दर
+      अपने आप लगाता है — आपको यहाँ पहले देखने की ज़रूरत नहीं।</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">इस महीने के अधिभार के साथ बिल जोड़ें</a></p>
+    </section>
+
+    <section class="seo-section">
+      <h2>दिल्ली: PPAC, जून 2026 से हर महीने संशोधित</h2>
+      <p>दिल्ली में इसे PPAC (Power Purchase Adjustment Cost) कहा जाता है और यह <strong>हर डिस्कॉम के लिए
+      अलग</strong> तय होता है — इसलिए अलग-अलग नेटवर्क पर रहने वाले दो पड़ोसी एक जैसी खपत पर अलग अधिभार
+      चुकाते हैं। DERC ने जून 2026 में आवधिक के बजाय मासिक संशोधन अपनाया और दरें काफ़ी बढ़ाईं।</p>
+      <div class="fs-delhi-grid">
+      <article class="fs-delhi-card">
+        <span class="fs-delhi-name">BRPL (BSES Rajdhani)</span>
+        <strong class="fs-delhi-rate">+17.94%</strong>
+        <span class="fs-delhi-move is-flat">जून 2026 से अपरिवर्तित</span>
+        <span class="fs-delhi-when">जुल॰ 2026 की सूचना</span>
+      </article>
+      <article class="fs-delhi-card">
+        <span class="fs-delhi-name">BYPL (BSES Yamuna)</span>
+        <strong class="fs-delhi-rate">+17.43%</strong>
+        <span class="fs-delhi-move is-flat">जून 2026 से अपरिवर्तित</span>
+        <span class="fs-delhi-when">जुल॰ 2026 की सूचना</span>
+      </article>
+      <article class="fs-delhi-card">
+        <span class="fs-delhi-name">Tata Power-DDL (TPDDL)</span>
+        <strong class="fs-delhi-rate">+12.21%</strong>
+        <span class="fs-delhi-move is-down">▼ 15.99% से 3.78 अंक</span>
+        <span class="fs-delhi-when">जुल॰ 2026 की सूचना</span>
+      </article></div>
+    </section>
+
+    <section class="seo-section">
+      <h2>यह हर महीने क्यों बदलता है</h2>
+      <p>टैरिफ़ आदेश एक साल के लिए प्रति यूनिट दर तय करता है, इस अनुमान पर कि डिस्कॉम को बिजली ख़रीदने में
+      कितना खर्च आएगा। ईंधन की क़ीमतें उस अनुमान को नहीं मानतीं। ईंधन अधिभार वही हिसाब बराबर करता है: जब
+      वास्तविक बिजली-खरीद लागत अनुमान से ऊपर जाती है, अंतर आप तक पहुँचता है; जब नीचे रहती है, आपको
+      क्रेडिट मिलता है।</p>
+      <p>ज़्यादातर राज्य एक चक्र में वसूली की सीमा तय करते हैं — उत्तर प्रदेश में 10% — और बाकी रकम आगे ले
+      जाते हैं। इसीलिए लगातार दो महीने ठीक उसी सीमा पर टिके दिख सकते हैं: असल अंतर सीमा से बड़ा था।</p>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/hi/guides/how-fppa-fuel-surcharge-is-calculated/"><strong>FPPA की गणना कैसे होती है</strong><span>सूत्र, दोनों पद्धतियाँ, और यह बिल में कहाँ आता है</span></a>
+        <a class="seo-link-card" href="/hi/guides/msedcl-fppa-charges-explained/"><strong>MSEDCL बिल पर FPPA</strong><span>महाराष्ट्र का रूप, पंक्ति-दर-पंक्ति</span></a>
+        <a class="seo-link-card" href="/hi/guides/why-did-my-electricity-bill-increase/"><strong>मेरा बिल क्यों बढ़ा?</strong><span>ईंधन अधिभार नौ आम वजहों में से एक है</span></a>
+      </div>
+    </section>
+
+    <section class="seo-section">
+      <h2>कवरेज और स्रोत</h2>
+      <p>हम कोई दर तभी प्रकाशित करते हैं जब हमारे पास नियामक या डिस्कॉम की अपनी सूचना हो। फ़िलहाल इसका
+      मतलब है <strong>उत्तर प्रदेश, दिल्ली और राजस्थान</strong>। बाकी हर राज्य के लिए कैलकुलेटर अधिभार
+      शून्य रखता है और आपको अपने बिल पर छपा आँकड़ा भरने देता है — अनुमान लगाने के बजाय ईमानदार ख़ाली जगह।</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>राज्य</th><th>तंत्र</th><th>आधार</th><th>स्रोत</th></tr></thead>
+          <tbody>
+            <tr><td>उत्तर प्रदेश</td><td>FPPAS</td><td>फिक्स्ड + ऊर्जा शुल्क का %, प्रति चक्र 10% की सीमा</td><td>UPPCL मासिक FPPAS सूचना (UPERC MYT विनियम 2025)</td></tr>
+            <tr><td>दिल्ली</td><td>PPAC</td><td>फिक्स्ड + ऊर्जा शुल्क का %, हर डिस्कॉम के लिए अलग</td><td>DERC की PPAC स्वीकृतियाँ</td></tr>
+            <tr><td>राजस्थान</td><td>नियामक अधिभार (FPPAS सहित)</td><td>सपाट प्रति-यूनिट</td><td>Tariff for Supply of Electricity-2025 §32 (RERC)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>कोई दर आपके बिल से मेल नहीं खाती? यह ठीक करने लायक ख़ामी है —
+      <a href="/contact/">हमें बताइए</a>, महीना और डिस्कॉम ज़रूर लिखिए।</p>
+    </section>
+
+    <p class="seo-disclaimer">ईंधन अधिभार की दरें राज्य नियामक और डिस्कॉम प्रकाशित करते हैं और ये हर महीने बदलती हैं। यहाँ दिए
+    आँकड़े उन्हीं सूचनाओं से लिए गए हैं और सांकेतिक हैं — आपके छपे बिल का विकल्प नहीं। हम किसी डिस्कॉम,
+    SERC या सरकारी निकाय से संबद्ध नहीं हैं।</p>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+        <a href="/compare/" data-i18n="nav.compare">Compare</a>
+        <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator</a>
+        <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/hi/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/smart-meter/" data-i18n="ql.meterDisplay">Smart Meter Guide</a>
+        <a href="/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/hi/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/hi/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/hi/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/database/">Tariff Database</a>
+        <a href="/orders/">Order Library</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/contact/" data-i18n="ql.contact">Contact</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>
