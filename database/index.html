@@ -53,7 +53,7 @@
        per family covers every weight — there is nothing left to preload per weight. -->
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
-  <link rel="stylesheet" href="/fonts/fonts.css">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
   <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
        the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
        the datepicker — none of which a guide or tariff page ever shows. content.min.css is
@@ -86,7 +86,7 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/database/","name":"India Residential Electricity Tariff Database","description":"TheDiscomBill maintains a structured Indian residential electricity tariff database covering states, DISCOMs, categories, slabs, fixed charges, duty, FPPA, subsidy notes and tariff sources.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-17"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/database/","name":"India Residential Electricity Tariff Database","description":"TheDiscomBill maintains a structured Indian residential electricity tariff database covering states, DISCOMs, categories, slabs, fixed charges, duty, FPPA, subsidy notes and tariff sources.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-19"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Tariff Database","item":"https://thediscombill.com/database/"}]}</script>
 </head>
 <body>
@@ -158,13 +158,13 @@
     collection of calculators and articles. Each calculator result, DISCOM page and surcharge
     tracker pulls from the same maintained records for states, DISCOMs, consumer categories,
     slab rates, fixed charges, duties, FPPA/FPPAS/FAC history and source notes.</p>
-    <p class="privacy-updated">Last updated 17 August 2026 &middot; Generated from verified tariff modules</p>
+    <p class="privacy-updated">Last updated 19 August 2026 &middot; Generated from verified tariff modules</p>
 
     <div class="fs-archive-stats database-stats">
       <span><strong>34</strong> states / UTs</span>
       <span><strong>65</strong> DISCOMs</span>
-      <span><strong>131</strong> consumer categories</span>
-      <span><strong>287</strong> tariff records</span>
+      <span><strong>136</strong> consumer categories</span>
+      <span><strong>312</strong> tariff records</span>
       <span><strong>11</strong> FPPA-linked DISCOMs</span>
       <span><strong>55</strong> records with history</span>
     </div>
@@ -172,8 +172,8 @@
     <section class="seo-section">
       <h2>Coverage, state by state</h2>
       <p>Every row is generated from the database itself, so this page cannot claim coverage the
-      data does not have. 26 of the 34 states and UTs carry a link to
-      the regulator's own order; the remaining 8 are modelled from
+      data does not have. 27 of the 34 states and UTs carry a link to
+      the regulator's own order; the remaining 7 are modelled from
       published schedules with no order URL recorded yet, and say so.
       One state is additionally marked ✓ — checked line by line against real consumer bills.</p>
       <div class="comparison-table-wrapper">
@@ -191,9 +191,9 @@
     </tr><tr>
       <td><a href="/tariffs/arunachal-pradesh/">Arunachal Pradesh</a></td>
       <td class="num">1</td>
-      <td class="num">2</td>
-      <td><span class="db-gap">not recorded</span></td>
-      <td><span class="db-gap">—</span></td>
+      <td class="num">7</td>
+      <td><span title="FY 2024-25 APSERC retail supply tariff order for APDOP">FY 2024-25</span></td>
+      <td><a href="https://apserc.nic.in" target="_blank" rel="noopener nofollow">Order ↗</a></td>
     </tr><tr>
       <td><a href="/tariffs/assam/">Assam</a></td>
       <td class="num">1</td>
@@ -444,9 +444,9 @@
       </div>
       <div class="footer-col">
         <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
-        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</a>
-        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</a>
-        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</a>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator</a>
         <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
       </div>
       <div class="footer-col">

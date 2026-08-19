@@ -52,7 +52,12 @@ export const STATE_INFO = {
       "sourceUrl": "https://aperc.gov.in"
     },
     "Arunachal Pradesh": {
-      "state": "Arunachal Pradesh"
+      "state": "Arunachal Pradesh",
+      "ratesAsOf": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+      "currentRatesFrom": "2024-07-01",
+      "verifiedOn": "2026-08-19",
+      "sourceUrl": "https://apserc.nic.in",
+      "notes": "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Post-paid consumers receive a 3% rebate on current bills paid within the due date. Prepaid consumers receive a 5% rebate on recharge amount. Rebates are not automatically deducted by this calculator. Prepaid consumers have nil monthly energy meter rent under Schedule-II."
     },
     "Assam": {
       "state": "Assam",
@@ -252,11 +257,14 @@ export const DISCOM_INDEX = {
     "Arunachal Pradesh": [
       {
         "id": "appdcl",
-        "name": "APPDCL / Dept. of Power",
-        "fullName": "Arunachal Pradesh Power Distribution Corporation Ltd.",
+        "name": "APDOP / Dept. of Power",
+        "fullName": "Department of Power, Government of Arunachal Pradesh",
         "area": "Entire Arunachal Pradesh",
         "tariffYear": "2024-25",
-        "website": "https://appdcl.in"
+        "website": "https://appdcl.in",
+        "sourceUrl": "https://apserc.nic.in",
+        "lpscRate": 2,
+        "notes": "Late payment penalty is simple interest at 2% for each successive 30-day period or part thereof until the bill is paid."
       }
     ],
     "Assam": [

@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedOn": "2026-08-18",
+  "generatedOn": "2026-08-19",
   "stateCount": 34,
   "discomCount": 65,
-  "categoryCount": 131,
-  "tariffRecordCount": 287,
+  "categoryCount": 136,
+  "tariffRecordCount": 312,
   "fppaTrackedDiscomCount": 11,
   "tariffRecordsWithPreviousTariff": 55,
-  "tariffRecordsWithSubsidyNotes": 93,
+  "tariffRecordsWithSubsidyNotes": 98,
   "fields": [
     "state",
     "discom",

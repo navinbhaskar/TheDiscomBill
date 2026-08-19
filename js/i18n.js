@@ -107,7 +107,7 @@ export const STRINGS = {
     'hero.feat.demand': 'Excess demand penalty',
     'hero.feat.duty': 'Electricity duty & state levies',
     'hero.discoms.label': 'Tariffs for 65 DISCOMs across 34 states & UTs — including',
-    'hero.trust1': 'Every tariff slab verified against official SERC & DISCOM orders — updated for FY 2026-27',
+    'hero.trust1': 'Every tariff slab verified against SERC & DISCOM orders — each page shows its tariff year and check date',
     // Hero sample-bill card — five slides, one per DISCOM (see index.html for the
     // calculateBill() calls each set of figures comes from)
     'hero.card.cmpLink': 'Compare rates',
@@ -167,7 +167,7 @@ export const STRINGS = {
     'small.billedAmount': "We'll compare it with our calculation and tell you if your bill looks right.",
 
     // Solar calculator (/solar/)
-    'sol.title': 'Rooftop Solar Savings Calculator (2026)',
+    'sol.title': 'Rooftop Solar Savings Calculator',
     'sol.intro': 'Tell us your monthly electricity bill. We size the system, apply the <strong>PM Surya Ghar</strong> subsidy, and show what you save over 25 years.',
     'sol.chip1': 'Up to ₹78,000 central subsidy',
     'sol.chip2': '25-year panel life',
@@ -208,9 +208,9 @@ export const STRINGS = {
     'sol.lifetime': 'Net savings over 25 years',
     'sol.co2': 'CO₂ avoided',
     'nav.solar': 'Solar',
-    'nav.solarSavings': 'Rooftop Solar Savings Calculator 2026',
-    'nav.solarSize': 'Solar Panel Size Calculator (2026)',
-    'nav.solarBattery': 'Solar Battery Backup Calculator (2026)',
+    'nav.solarSavings': 'Rooftop Solar Savings Calculator',
+    'nav.solarSize': 'Solar Panel Size Calculator',
+    'nav.solarBattery': 'Solar Battery Backup Calculator',
     'sol.projTitle': 'Year-by-Year Savings Projection',
     'sol.projYear': 'Year',
     'sol.projAnnual': 'Annual savings',
@@ -436,7 +436,7 @@ export const STRINGS = {
     'meth.s1.h2': '1. Where the numbers come from',
     'meth.s1.p1': 'There is no "typical" or invented rate anywhere in the tool. Every slab rate, fixed charge, duty and surcharge is taken from a primary source:',
     'meth.s1.ul': '<li><strong>SERC tariff orders</strong> — the annual (or multi-year) tariff order issued by each State Electricity Regulatory Commission, which is the legal document that sets what a DISCOM may charge.</li><li><strong>DISCOM tariff schedules &amp; FPPA circulars</strong> — the rate cards and the monthly/quarterly fuel-surcharge (FPPA/FPPCA/FAC) notifications that DISCOMs publish under those orders.</li><li><strong>Real consumer bills</strong> — actual printed bills, used both to confirm how the order is applied in practice and to verify our output (see section 3).</li>',
-    'meth.s1.p2': 'When a new order or FPPA circular is published, the corresponding rates in the tool are updated to match it. The current tariff figures reflect the <strong>2025-26</strong> orders, with the FPPA refreshed for July 2026.',
+    'meth.s1.p2': 'When a new order or FPPA circular is published, the corresponding rates in the tool are updated to match it. Tariff years differ by state, because regulators do not revise on a common calendar: each DISCOM page states the <strong>tariff year in force</strong> for that utility and the date we last verified it, and the <a href="/database/">tariff database</a> lists all of them side by side. FPPA is tracked separately and refreshed monthly.',
     'meth.s2.h2': '2. How a tariff order becomes a calculation',
     'meth.s2.p1': 'A tariff order is prose and tables; a bill is arithmetic applied in a specific order. Our engine encodes that arithmetic exactly as the order specifies, rather than approximating it:',
     'meth.s2.ul': '<li><strong>Slab-wise rates</strong> — each slab rate applies only to the units that fall within its band, so a higher rate never applies to your whole consumption (see <a href="/glossary/#telescopic-slabs">slab-wise rates</a>). "Slab-benefit-lost" tariffs, where crossing a threshold re-rates every unit, are modelled where a DISCOM uses them.</li><li><strong>Fixed / demand charges</strong> — billed per kW of sanctioned load, per kVA of demand, or as a flat amount, following the category. For demand-billed categories the <a href="/glossary/#maximum-demand">billed demand</a> and any excess-demand penalty over the sanctioned/contract limit are computed.</li><li><strong>FPPA (fuel surcharge)</strong> — applied by whichever method the order specifies: a flat <em>per-unit</em> paise amount, or a <em>percentage</em> of the supply and demand charges (as under the UP MYT Regulations 2025). It can be a negative credit.</li><li><strong>Electricity duty and levies</strong> — the state duty is applied on the correct base and in the correct sequence (it is charged on the energy/fuel component, not on itself), because the ordering changes the final figure.</li><li><strong>kVAh billing</strong> — where a meter and tariff use apparent energy, energy is metered in <a href="/glossary/#kvah">kVAh</a> and demand in kVA, so a poor <a href="/glossary/#power-factor">power factor</a> raises the bill directly instead of through a separate penalty.</li><li><strong>Time-of-Day, subsidies, net metering, LPSC and arrears</strong> — peak/off-peak blocks, eligible government subsidy, rooftop-solar net import, and late-payment surcharge are each applied where they apply.</li>',

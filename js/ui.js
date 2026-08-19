@@ -1740,6 +1740,7 @@ export function doCalculate() {
   // own mini-ledger renderer, which made the two modes look like two different products.
   const html = simple ? renderBill({
     result,
+    state: document.getElementById('stateSelect').value,
     compact: true,
     billingMonth: document.getElementById('billingMonth').value,
     billingYear:  document.getElementById('billingYear').value,
@@ -1748,6 +1749,7 @@ export function doCalculate() {
     fppaSource:   verifiedFppa ? `${verifiedFppa.label} — ${verifiedFppa.source}` : null,
   }) : renderBill({
     result,
+    state: document.getElementById('stateSelect').value,
     consumerName: document.getElementById('consumerName').value.trim(),
     accountNo:    document.getElementById('accountNo').value.trim(),
     address:      document.getElementById('address').value.trim(),

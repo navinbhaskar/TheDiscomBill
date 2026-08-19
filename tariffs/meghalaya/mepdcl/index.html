@@ -54,7 +54,7 @@
        per family covers every weight — there is nothing left to preload per weight. -->
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
-  <link rel="stylesheet" href="/fonts/fonts.css">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
   <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
        the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
        the datepicker — none of which a guide or tariff page ever shows. content.min.css is
@@ -87,7 +87,7 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/tariffs/meghalaya/mepdcl/","name":"MePDCL Tariff & Bill Calculator 2026-27 — ₹4.57–5.10/unit","description":"MePDCL electricity bill calculator for Meghalaya (Entire Meghalaya). 2026-27 domestic & commercial slab rates, fixed/demand charges and an instant itemised estimate.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-18"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/tariffs/meghalaya/mepdcl/","name":"MePDCL Tariff & Bill Calculator 2026-27 — ₹4.57–5.10/unit","description":"MePDCL electricity bill calculator for Meghalaya (Entire Meghalaya). 2026-27 domestic & commercial slab rates, fixed/demand charges and an instant itemised estimate.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-19"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Tariffs","item":"https://thediscombill.com/tariffs/states/"},{"@type":"ListItem","position":3,"name":"Meghalaya","item":"https://thediscombill.com/tariffs/meghalaya/"},{"@type":"ListItem","position":4,"name":"MePDCL","item":"https://thediscombill.com/tariffs/meghalaya/mepdcl/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I calculate my MePDCL electricity bill?","acceptedAnswer":{"@type":"Answer","text":"Open the <a href=\"/?state=Meghalaya&amp;discom=mepdcl#calculator\">MePDCL bill calculator</a>, enter your units consumed and sanctioned load, and it applies the 2026-27 MePDCL slab rates, fixed charge and other charges to produce an itemised provisional bill."}},{"@type":"Question","name":"What is the cheapest domestic electricity rate on MePDCL?","acceptedAnswer":{"@type":"Answer","text":"MePDCL's domestic energy charge starts at ₹4.57 per unit and rises to ₹5.1 per unit in the highest slab (Domestic (Low Tension)), plus a monthly fixed charge (latest available estimate). The full slab table is above."}},{"@type":"Question","name":"How do I pay my MePDCL electricity bill online?","acceptedAnswer":{"@type":"Answer","text":"Pay on the official MePDCL portal at <a href=\"https://www.mepdcl.in\" target=\"_blank\" rel=\"noopener\">www.mepdcl.in</a>. Use this page first to check what your bill should be, then pay on the authentic source."}}]}</script>
 </head>
@@ -169,13 +169,13 @@
     <p><a class="tariff-source" href="https://www.mepdcl.in" target="_blank" rel="noopener">Official MePDCL source ↗</a></p>
     
     <nav class="discom-portal-actions" aria-label="MePDCL consumer portal shortcuts">
-      <a class="discom-action-card" data-icon="calc" href="/?state=Meghalaya&amp;amp;discom=mepdcl#calculator"><strong>Calculate bill</strong><span>Estimate an itemised MePDCL bill with tariff, duty and surcharge</span></a><a class="discom-action-card" data-icon="table" href="#current-tariff"><strong>Current tariff</strong><span>Open the slab table, fixed charge and category rules</span></a><a class="discom-action-card" data-icon="trend" href="#latest-fppa"><strong>Latest FPPA/FAC</strong><span>Check the current variable surcharge and history</span></a><a class="discom-action-card" data-icon="doc" href="#common-calculations"><strong>Bill examples</strong><span>Compare 200, 300, 500 and 750 unit examples</span></a><a class="discom-action-card" data-icon="cash" href="/services/?state=Meghalaya&amp;amp;discom=mepdcl#pay"><strong>Pay or view bill</strong><span>Use the official portal or payment channel</span></a><a class="discom-action-card" data-icon="chat" href="/services/?state=Meghalaya&amp;amp;discom=mepdcl#complaint"><strong>Complaint</strong><span>Find complaint route and escalation reminders</span></a><a class="discom-action-card" data-icon="gauge" href="/smart-meter-recharge/meghalaya/mepdcl/"><strong>Smart meter</strong><span>Recharge prepaid smart meter and estimate units</span></a><a class="discom-action-card" data-icon="sun" href="/solar-calculator/"><strong>Solar</strong><span>Estimate rooftop solar savings before applying officially</span></a><a class="discom-action-card" data-icon="globe" href="https://www.mepdcl.in" target="_blank" rel="noopener"><strong>Official site</strong><span>Open www.mepdcl.in</span></a>
+      <a class="discom-action-card" data-icon="calc" href="/?state=Meghalaya&amp;amp;discom=mepdcl#calculator"><strong>Calculate bill</strong><span>Estimate an itemised MePDCL bill with tariff, duty and surcharge</span></a><a class="discom-action-card" data-icon="table" href="#current-tariff"><strong>Current tariff</strong><span>Open the slab table, fixed charge and category rules</span></a><a class="discom-action-card" data-icon="trend" href="#latest-fppa"><strong>Latest FPPA</strong><span>Check the current variable surcharge and history</span></a><a class="discom-action-card" data-icon="doc" href="#common-calculations"><strong>Bill examples</strong><span>Compare 200, 300, 500 and 750 unit examples</span></a><a class="discom-action-card" data-icon="cash" href="/services/?state=Meghalaya&amp;amp;discom=mepdcl#pay"><strong>Pay or view bill</strong><span>Use the official portal or payment channel</span></a><a class="discom-action-card" data-icon="chat" href="/services/?state=Meghalaya&amp;amp;discom=mepdcl#complaint"><strong>Complaint</strong><span>Find complaint route and escalation reminders</span></a><a class="discom-action-card" data-icon="gauge" href="/smart-meter-recharge/meghalaya/mepdcl/"><strong>Smart meter</strong><span>Recharge prepaid smart meter and estimate units</span></a><a class="discom-action-card" data-icon="sun" href="/solar-calculator/"><strong>Solar</strong><span>Estimate rooftop solar savings before applying officially</span></a><a class="discom-action-card" data-icon="globe" href="https://www.mepdcl.in" target="_blank" rel="noopener"><strong>Official site</strong><span>Open www.mepdcl.in</span></a>
     </nav>
     
     <section class="seo-section discom-tool-panel" id="calculate">
       <div>
         <h2>MePDCL electricity bill calculator</h2>
-        <p>Enter units, sanctioned load and billing dates to get an itemised MePDCL estimate. The result breaks the bill into energy charge, fixed or demand charge, FPPA/FAC, duty, arrears and late-payment surcharge where applicable.</p>
+        <p>Enter units, sanctioned load and billing dates to get an itemised MePDCL estimate. The result breaks the bill into energy charge, fixed or demand charge, FPPA, duty, arrears and late-payment surcharge where applicable.</p>
       </div>
       <a class="seo-cta" href="/?state=Meghalaya&amp;discom=mepdcl#calculator">Calculate MePDCL bill</a>
     </section>
@@ -187,14 +187,14 @@
     </section>
     
     <section class="seo-section" id="latest-fppa">
-      <h2>Current MePDCL FPPA / FAC</h2>
+      <h2>Current MePDCL FPPA (Fuel and Power Purchase Adjustment)</h2>
       <div class="comparison-table-wrapper">
         <table class="comparison-table">
           <tbody>
             <tr><th>Current applicable FPPA</th><td><strong class="fs-pending">Not available</strong></td></tr>
             <tr><th>Applicable period</th><td>No verified period in tracker</td></tr>
-            <tr><th>Last updated</th><td>18 August 2026</td></tr>
-            <tr><th>Official source</th><td>No verified FPPA/FAC source recorded yet</td></tr>
+            <tr><th>Last updated</th><td>19 August 2026</td></tr>
+            <tr><th>Official source</th><td>No verified FPPA source recorded yet</td></tr>
           </tbody>
         </table>
       </div>
@@ -217,6 +217,47 @@
     <section class="seo-section" id="current-tariff">
       <h2>Current MePDCL tariff (2026-27)</h2>
       
+      <div class="tariff-summary">
+      <p class="tariff-summary-cap">Find your supply type to see its rate. Tap a row for the full slab breakdown.</p>
+      <div class="tariff-summary-scroll">
+        <table class="tariff-summary-table">
+          <thead><tr><th scope="col">Supply type</th><th scope="col" class="num">Fixed charge</th><th scope="col" class="num">Energy rate<span class="ts-th-sub">per unit</span></th></tr></thead>
+          <tbody><tr>
+        <td class="ts-name">
+          <a href="#rate-domestic-domestic">Domestic (DLT)</a>
+          
+          <span class="ts-parent">Domestic (Low Tension)</span>
+        </td>
+        <td class="num ts-fixed">₹90<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></td>
+        <td class="num ts-rate">₹5.00<span class="ts-dash">–</span>5.10</td>
+      </tr><tr>
+        <td class="ts-name">
+          <a href="#rate-domestic-kutir-jyoti">Kutir Jyoti / BPL — metered, up to 30 units</a>
+          
+          <span class="ts-parent">Domestic (Low Tension)</span>
+        </td>
+        <td class="num ts-fixed">₹90<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></td>
+        <td class="num ts-rate">₹4.57</td>
+      </tr><tr>
+        <td class="ts-name">
+          <a href="#rate-domestic-kutir-jyoti-unmetered">Kutir Jyoti — unmetered</a>
+          
+          <span class="ts-parent">Domestic (Low Tension)</span>
+        </td>
+        <td class="num ts-fixed">₹210<span class="tx-muted">/mo</span></td>
+        <td class="num ts-rate"><span class="ts-free">Free</span></td>
+      </tr><tr>
+        <td class="ts-name">
+          <a href="#rate-commercial">Non-Domestic / Commercial (Low Tension)</a>
+          
+          
+        </td>
+        <td class="num ts-fixed">₹170<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></td>
+        <td class="num ts-rate">₹7.45</td>
+      </tr></tbody>
+        </table>
+      </div>
+    </div>
       <div class="tariff-cards">
     <article class="tariff-card">
       <header class="tariff-card-head">
@@ -227,10 +268,14 @@
         </div>
       </header>
       
-      <div class="tariff-supplytype">
-        <div class="tariff-st-name">Domestic (DLT)</div>
-        <p class="tariff-st-desc">Three telescopic slabs on ₹90 per kVA per month. The slabs barely differ — ₹5.00, ₹5.04 and ₹5.10 — so consumption has almost no effect on the rate you pay.</p>
-        
+      <details class="tariff-supplytype" id="rate-domestic-domestic" open>
+        <summary class="tariff-st-name">
+          <span class="tariff-st-label">Domestic (DLT)</span>
+          
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Three telescopic slabs on ₹90 per kVA per month. The slabs barely differ — ₹5.00, ₹5.04 and ₹5.10 — so consumption has almost no effect on the rate you pay.</p>
+          
     <div class="tariff-block">
       <div class="tariff-field">
         <div class="tariff-field-label">Fixed charge</div>
@@ -242,11 +287,16 @@
       </div>
       
     </div>
-      </div>
-      <div class="tariff-supplytype">
-        <div class="tariff-st-name">Kutir Jyoti / BPL — metered, up to 30 units</div>
-        <p class="tariff-st-desc">₹4.57/unit for BPL metered connections, for consumption up to 30 units a month. Beyond 30 units the excess is billed at ordinary domestic slab rates.</p>
-        
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-domestic-kutir-jyoti">
+        <summary class="tariff-st-name">
+          <span class="tariff-st-label">Kutir Jyoti / BPL — metered, up to 30 units</span>
+          
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">₹4.57/unit for BPL metered connections, for consumption up to 30 units a month. Beyond 30 units the excess is billed at ordinary domestic slab rates.</p>
+          
     <div class="tariff-block">
       <div class="tariff-field">
         <div class="tariff-field-label">Fixed charge</div>
@@ -258,11 +308,16 @@
       </div>
       
     </div>
-      </div>
-      <div class="tariff-supplytype">
-        <div class="tariff-st-name">Kutir Jyoti — unmetered</div>
-        <p class="tariff-st-desc">A flat ₹210 per connection per month, with no metering and no energy charge.</p>
-        
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-domestic-kutir-jyoti-unmetered">
+        <summary class="tariff-st-name">
+          <span class="tariff-st-label">Kutir Jyoti — unmetered</span>
+          
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">A flat ₹210 per connection per month, with no metering and no energy charge.</p>
+          
     <div class="tariff-block">
       <div class="tariff-field">
         <div class="tariff-field-label">Fixed charge</div>
@@ -274,7 +329,8 @@
       </div>
       
     </div>
-      </div>
+        </div>
+      </details>
       <p class="tariff-card-note">ℹ️ Meghalaya's domestic slabs are almost flat — ₹5.00, ₹5.04 and ₹5.10 — so unlike most states, cutting consumption to stay under a slab boundary saves you essentially nothing here. What matters instead is the fixed charge, which is levied per kVA of load rather than per kW, so it is your sanctioned load and power factor that drive the standing cost. The domestic category is broad: it also covers places of worship, non-profit hospitals and schools, hostels, dharamshalas and community halls. Electricity duty and other State levies are charged in addition.</p>
     </article>
     <article class="tariff-card">
@@ -285,7 +341,7 @@
           
         </div>
       </header>
-      
+      <div id="rate-commercial">
     <div class="tariff-block">
       <div class="tariff-field">
         <div class="tariff-field-label">Fixed charge</div>
@@ -296,7 +352,7 @@
         <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹7.45<span class="tx-muted">/unit</span></td></tr></tbody></table>
       </div>
       
-    </div>
+    </div></div>
       <p class="tariff-card-note">ℹ️ Non-domestic is a single rate on every unit — ₹7.45 — with no slabs at all, against a ₹170 per kVA monthly fixed charge. That is nearly twice the domestic energy rate and nearly twice the domestic fixed charge, so the commercial/domestic classification of a connection matters far more in Meghalaya than any consumption threshold. Electricity duty and other State levies are charged in addition.</p>
     </article></div>
     </section>
@@ -305,7 +361,7 @@
     <section class="seo-section">
       <h2>Understanding your MePDCL bill</h2>
       <div class="discom-explain-grid">
-        <article data-icon="gauge"><h3>Energy charge</h3><p>The slab-wise price of the units consumed during the billing period. In telescopic slabs, each band is billed at its own rate.</p></article><article data-icon="plug"><h3>Fixed charge</h3><p>A monthly charge linked to sanctioned load, connected load, billing demand or consumer category. It applies even when usage is low.</p></article><article data-icon="gov"><h3>Electricity duty</h3><p>A statutory government levy. Depending on the state, it may apply on energy charges, fixed charges, or selected bill components.</p></article><article data-icon="trend"><h3>FPPA / FAC</h3><p>Fuel and power-purchase adjustment. It changes more often than the base tariff and may appear as a charge or a credit.</p></article><article data-icon="cash"><h3>Arrears</h3><p>Unpaid balance, corrections, security-deposit adjustments or previous-cycle amounts carried into the current bill.</p></article><article data-icon="clock"><h3>LPSC</h3><p>Late Payment Surcharge on overdue amounts. Check the due date and pay through the official DISCOM channel to avoid it.</p></article>
+        <article data-icon="gauge"><h3>Energy charge</h3><p>The slab-wise price of the units consumed during the billing period. In telescopic slabs, each band is billed at its own rate.</p></article><article data-icon="plug"><h3>Fixed charge</h3><p>A monthly charge linked to sanctioned load, connected load, billing demand or consumer category. It applies even when usage is low.</p></article><article data-icon="gov"><h3>Electricity duty</h3><p>A statutory government levy. Depending on the state, it may apply on energy charges, fixed charges, or selected bill components.</p></article><article data-icon="trend"><h3>FPPA (Fuel and Power Purchase Adjustment)</h3><p>Fuel and power-purchase adjustment. It changes more often than the base tariff and may appear as a charge or a credit.</p></article><article data-icon="cash"><h3>Arrears</h3><p>Unpaid balance, corrections, security-deposit adjustments or previous-cycle amounts carried into the current bill.</p></article><article data-icon="clock"><h3>LPSC</h3><p>Late Payment Surcharge on overdue amounts. Check the due date and pay through the official DISCOM channel to avoid it.</p></article>
       </div>
     </section>
     
@@ -364,7 +420,7 @@
       <table class="seo-facts"><tbody>
         <tr><th>Tariff order / regulator</th><td><a href="https://mserc.gov.in/tarifforders.html" target="_blank" rel="noopener">mserc.gov.in/tarifforders.html</a></td></tr><tr><th>MePDCL official information</th><td><a href="https://www.mepdcl.in" target="_blank" rel="noopener">www.mepdcl.in</a></td></tr>
         <tr><th>Tariff effective from</th><td>2026-27</td></tr>
-        <tr><th>Last verified</th><td>18 August 2026</td></tr>
+        <tr><th>Last verified</th><td>19 August 2026</td></tr>
       </tbody></table>
     </section>
     
@@ -400,9 +456,9 @@
       </div>
       <div class="footer-col">
         <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
-        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</a>
-        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</a>
-        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</a>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator</a>
         <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
       </div>
       <div class="footer-col">

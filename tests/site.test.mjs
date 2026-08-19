@@ -213,10 +213,37 @@ console.log('\n• content.min.css matches its sources');
         const c = html.includes('css/content.min.css'), f = html.includes('css/styles.min.css');
         if (c && f) { bad++; fail(`${page}: links both stylesheets`); }
       }
-      if (!bad) {
+      // A selector that names no class or id at all - `table`, `time`, `:root`, `a:hover` -
+      // applies to every page by definition, so it must survive into the slim sheet. The
+      // splitter used to judge a whole comma-separated LIST as one unit, so grouping such a
+      // selector with a tool-only class threw the element selector away too: `table,
+      // .stat-number, time { font-variant-numeric: tabular-nums }` vanished, and every rate
+      // table on every tariff and guide page silently lost its tabular figures.
+      const bareSelectors = new Set();
+      const full = fs.readFileSync(path.join(ROOT, 'css', 'styles.css'), 'utf8')
+        .replace(/\/\*[\s\S]*?\*\//g, '');
+      for (const m of full.matchAll(/(^|[};])\s*([^{};@]+)\{/g)) {
+        for (const part of m[2].split(',')) {
+          const sel = part.trim();
+          // Bare element selectors only, and only simple ones - compound and functional
+          // forms bring their own matching rules that this check has no business asserting.
+          if (!sel || /[.#[(]/.test(sel)) continue;
+          if (!/^[a-z][a-z0-9-]*(\s*:{1,2}[a-z-]+)?$/i.test(sel)) continue;
+          if (/^(from|to)$/i.test(sel)) continue;            // @keyframes stops
+          bareSelectors.add(sel.replace(/\s+/g, ''));
+        }
+      }
+      const dropped = [...bareSelectors].filter(sel => {
+        const re = new RegExp(`(^|[},])${sel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[,{]`);
+        return !re.test(onDisk);
+      });
+      if (dropped.length) {
+        fail(`content.min.css dropped class-free selectors that apply to every page:\n    `
+          + dropped.slice(0, 12).join(', '));
+      } else if (!bad) {
         passed++;
         const pct = Math.round(100 - (onDisk.length / fs.statSync(path.join(ROOT, 'css', 'styles.min.css')).size) * 100);
-        console.log(`  ✓ rebuilt byte-for-byte; ${pct}% smaller than the full sheet`);
+        console.log(`  ✓ rebuilt byte-for-byte; ${pct}% smaller; all ${bareSelectors.size} class-free selectors kept`);
       }
     }
   }
@@ -326,7 +353,8 @@ console.log('\n• tariff index fresh, and off the homepage critical path');
     // assert no per-state tariff module is reachable without a dynamic import().
     const stateFiles = new Set(fs.readdirSync(path.join(ROOT, 'js', 'tariffs'))
       .filter((f) => f.endsWith('.js') &&
-        !['registry.js', 'index.js', 'fppa.js', 'fppa-resolve.js', 'subsidy.js'].includes(f))
+        // Keep in step with NOT_A_STATE in scripts/build-tariff-index.mjs.
+        !['registry.js', 'index.js', 'fppa.js', 'fppa-resolve.js', 'subsidy.js', 'surcharge-terms.js'].includes(f))
       .map((f) => `tariffs/${f}`));
 
     const home = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
@@ -534,6 +562,41 @@ console.log('\n• new surcharge rates carry provenance');
   }
   if (problems.length) fail('breadcrumbs:\n    ' + problems.join('\n    '));
   else { passed++; console.log('  ✓ every page declaring a BreadcrumbList shows a matching trail'); }
+}
+
+// ── 12. every indexable page is declared in the sitemap ──────────────────────
+// /understand-your-bill/ and its three twins were indexable, self-canonical and linked from
+// the footer of all 509 pages — and absent from sitemap.xml. Nothing failed, because nothing
+// looked. This inverts the check: start from what is on disk, not from what the route table
+// remembers. A page that is deliberately undeclared must say so via noindex or a canonical
+// pointing elsewhere — which is exactly what the existing exclusions already do.
+{
+  const sitemap = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
+  const ORIGIN = 'https://thediscombill.com';
+  const declared = new Set();
+  // <loc> carries the canonical URL; xhtml:link carries each hreflang twin as an attribute.
+  // Both count as declared — a twin reachable only through its parent's alternate set is
+  // still a URL we have handed to Google.
+  for (const m of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) declared.add(m[1].trim());
+  for (const m of sitemap.matchAll(/href="([^"]+)"/g)) declared.add(m[1].trim());
+
+  const missing = [];
+  for (const rel of htmlPages) {
+    if (!rel.endsWith('index.html')) continue;         // 404.html, verification stubs
+    const html = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    if (/<meta[^>]+name="robots"[^>]+noindex/i.test(html)) continue;
+    const url = ORIGIN + '/' + rel.slice(0, -'index.html'.length);
+    const canon = /<link[^>]+rel="canonical"[^>]+href="([^"]+)"/i.exec(html);
+    // Canonicalised elsewhere → correctly excluded, e.g. /fuel-surcharge/ → /fppa/.
+    if (canon && canon[1].replace(/\/?$/, '/') !== url) continue;
+    if (!declared.has(url)) missing.push(url.slice(ORIGIN.length));
+  }
+  if (missing.length) {
+    fail(`indexable but absent from sitemap.xml:\n    ` + missing.join('\n    '));
+  } else {
+    passed++;
+    console.log(`  ✓ all ${htmlPages.length} pages: every indexable one is declared in sitemap.xml`);
+  }
 }
 
 // ── summary ───────────────────────────────────────────────────────────────────

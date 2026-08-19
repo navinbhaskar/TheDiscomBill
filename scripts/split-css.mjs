@@ -45,11 +45,18 @@ export function buildContentCss({ quiet = false } = {}) {
   // Vocabulary the content pages can possibly use. Static markup is not enough on its own:
   // the header search button (.site-search-btn) is injected at runtime by js/search.js and
   // appears in no HTML file, so deriving from HTML alone silently dropped its styles. The
-  // corpus therefore also includes every JS module reachable from the one entry point these
+  // corpus therefore also includes every JS module reachable from the entry points these
   // pages load, resolved transitively rather than hand-listed.
-  const ENTRY = 'js/main.js';
+  //
+  // The entry points are READ FROM THE PAGES, not hardcoded. This used to assume js/main.js
+  // was the only one, which held while every page on the slim sheet was a generated content
+  // page. The moment a page with its own module joined - /services/ loads bill-check.js,
+  // new-connection.js and complaint.js - everything those modules inject at runtime became
+  // invisible to this scan, and their styles were dropped. The page then rendered with
+  // .billcheck-card stripped of its background, padding and border. Deriving the entry list
+  // from the same page set that defines the corpus makes that impossible by construction.
   const jsSeen = new Set();
-  (function resolve(rel) {
+  const resolve = (rel) => {
     if (jsSeen.has(rel)) return;
     const abs = path.join(ROOT, rel);
     if (!fs.existsSync(abs)) return;
@@ -59,7 +66,18 @@ export function buildContentCss({ quiet = false } = {}) {
     for (const m of src.matchAll(/(?:from|import)\s*\(?\s*['"](\.{1,2}\/[^'"]+)['"]/g)) {
       resolve(path.posix.normalize(path.posix.join(path.posix.dirname(rel), m[1])));
     }
-  })(ENTRY);
+  };
+  for (const page of pages) {
+    const html = fs.readFileSync(path.join(ROOT, page), 'utf8');
+    for (const m of html.matchAll(/<script[^>]*\bsrc="([^"]+\.m?js)"/g)) {
+      const href = m[1];
+      if (/^https?:/.test(href)) continue;                    // gtag and friends
+      const rel = href.startsWith('/')
+        ? href.slice(1)
+        : path.posix.normalize(path.posix.join(path.posix.dirname(page), href));
+      resolve(rel);
+    }
+  }
 
   // Tokenise both corpora the same way: class names are word-like with hyphens.
   const vocab = new Set();
@@ -96,15 +114,46 @@ export function buildContentCss({ quiet = false } = {}) {
 
   const css = fs.readFileSync(path.join(ROOT, 'css', 'styles.css'), 'utf8');
 
-  // A selector is kept when every one of its class tokens is unknown to the corpus ONLY if
-  // it has no class tokens at all (bare element/attribute selectors are always cheap to keep).
-  const keepSelector = (sel) => {
+  // Split a selector LIST on its top-level commas. Commas also appear inside :is(), :not(),
+  // :where() and attribute values, where they do not separate selectors, so this tracks
+  // bracket depth rather than calling sel.split(',').
+  const splitSelectorList = (sel) => {
+    const parts = [];
+    let depth = 0, start = 0, quote = null;
+    for (let k = 0; k < sel.length; k++) {
+      const c = sel[k];
+      if (quote) { if (c === quote && sel[k - 1] !== '\\') quote = null; continue; }
+      if (c === '"' || c === "'") { quote = c; continue; }
+      if (c === '(' || c === '[') depth++;
+      else if (c === ')' || c === ']') depth--;
+      else if (c === ',' && depth === 0) { parts.push(sel.slice(start, k)); start = k + 1; }
+    }
+    parts.push(sel.slice(start));
+    return parts.map(x => x.trim()).filter(Boolean);
+  };
+
+  // One selector - not a list. Kept if it names no class/id at all (bare element, :root,
+  // attribute selectors: always cheap), or if any class/id it names is in the corpus.
+  const keepOne = (sel) => {
     const cls = [...sel.matchAll(/\.(-?[_a-zA-Z][\w-]*)/g)].map(m => m[1]);
     const idl = [...sel.matchAll(/#(-?[_a-zA-Z][\w-]*)/g)].map(m => m[1]);
     if (!cls.length && !idl.length) return true;              // :root, html, body, a, table…
     if (cls.some(c => classes.has(c))) return true;           // generous on purpose
     if (idl.some(i => ids.has(i))) return true;
     return false;
+  };
+
+  // Judge each part of the list on its own, and rebuild the rule from the survivors.
+  //
+  // This used to test the whole list as one string, which quietly dropped rules that grouped
+  // a bare element selector with a class the content pages happen not to use. The real case:
+  // `table, .stat-number, time { font-variant-numeric: tabular-nums }` was thrown away in its
+  // entirety because .stat-number is tool-only - so every rate table on every tariff and
+  // guide page lost its tabular figures, and the digit columns stopped lining up. Nothing
+  // looked broken enough to notice; the numbers were just very slightly ragged.
+  const keepSelector = (sel) => {
+    const kept = splitSelectorList(sel).filter(keepOne);
+    return kept.length === 0 ? null : kept.join(',');
   };
 
   // Walk the sheet at brace depth, preserving @media/@supports wrappers. Conditional
@@ -133,8 +182,9 @@ export function buildContentCss({ quiet = false } = {}) {
 
       if (head.startsWith('@')) {
         sink().push(`${head}{${body}}`);       // @font-face / @keyframes / @page — verbatim
-      } else if (keepSelector(head)) {
-        sink().push(`${head}{${body}}`);
+      } else {
+        const kept = keepSelector(head);
+        if (kept) sink().push(`${kept}{${body}}`);
       }
       i = j; continue;
     }

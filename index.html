@@ -51,7 +51,7 @@
   <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/sora-var-latin.woff2">
-  <link rel="stylesheet" href="/fonts/fonts.css">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
   <link rel="stylesheet" href="css/styles.min.css">
   <!-- Calculator modules are loaded after first paint/idle; do not preload them into the LCP path. -->
   <script type="application/ld+json">
@@ -129,7 +129,7 @@
           {
             "@type": "Question",
             "name": "Which DISCOMs and states are supported?",
-            "acceptedAnswer": { "@type": "Answer", "text": "65 DISCOMs across 34 Indian states and union territories, including UPPCL (MVVNL, PVVNL, DVVNL, PuVVNL, KESCO), BESCOM, MSEDCL, TANGEDCO, PSPCL, Tata Power-DDL, BSES, Adani Electricity, CESC, KSEB, WBSEDCL and more, with 131 consumer categories." }
+            "acceptedAnswer": { "@type": "Answer", "text": "65 DISCOMs across 34 Indian states and union territories, including UPPCL (MVVNL, PVVNL, DVVNL, PuVVNL, KESCO), BESCOM, MSEDCL, TANGEDCO, PSPCL, Tata Power-DDL, BSES, Adani Electricity, CESC, KSEB, WBSEDCL and more, with 136 consumer categories." }
           },
           {
             "@type": "Question",
@@ -265,7 +265,7 @@
   <div class="hero-stats reveal">
     <div class="hero-stat"><span class="hero-stat-num">34</span><span class="hero-stat-label" data-i18n="hero.stat.states">States &amp; UTs</span></div>
     <div class="hero-stat"><span class="hero-stat-num">65</span><span class="hero-stat-label" data-i18n="hero.stat.discoms">DISCOMs</span></div>
-    <div class="hero-stat"><span class="hero-stat-num">131</span><span class="hero-stat-label" data-i18n="hero.stat.categories">Categories</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">136</span><span class="hero-stat-label" data-i18n="hero.stat.categories">Categories</span></div>
   </div>
   </div><!-- /hero-left -->
 
@@ -483,7 +483,7 @@
     <p class="hero-trust">
       <span class="trust-item trust-verified">
         <svg class="trust-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
-        <span data-i18n="hero.trust1">Every tariff slab verified against official SERC &amp; DISCOM orders — updated for FY 2026-27</span>
+        <span data-i18n="hero.trust1">Every tariff slab verified against SERC &amp; DISCOM orders — each page shows its tariff year and check date</span>
       </span>
     </p>
   </div>
@@ -1037,9 +1037,9 @@
       <div class="tools-group">
         <h3 data-i18n="tools.g3.title">Is solar worth it?</h3>
         <p data-i18n="tools.g3.sub">Size a system, check the subsidy, and see the payback on your own bill.</p>
-        <a href="/solar-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-sun"/></svg><span data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</span></a>
-        <a href="/solar-panel-size-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-panel"/></svg><span data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</span></a>
-        <a href="/solar-battery-backup-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-battery"/></svg><span data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</span></a>
+        <a href="/solar-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-sun"/></svg><span data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator</span></a>
+        <a href="/solar-panel-size-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-panel"/></svg><span data-i18n="nav.solarSize">Solar Panel Size Calculator</span></a>
+        <a href="/solar-battery-backup-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-battery"/></svg><span data-i18n="nav.solarBattery">Solar Battery Backup Calculator</span></a>
         <a href="/solar-subsidy-checker/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-subsidy"/></svg><span data-i18n="nav.solarSubsidy">Solar Subsidy Checker</span></a>
       </div>
     </div>
@@ -1075,7 +1075,7 @@
         <div class="stat-label" data-i18n="about.stat.discoms">DISCOMs supported</div>
       </div>
       <div class="stat-card reveal">
-        <div class="stat-number">131</div>
+        <div class="stat-number">136</div>
         <div class="stat-label" data-i18n="about.stat.categories">Consumer categories</div>
       </div>
       <div class="stat-card reveal">
@@ -1131,7 +1131,7 @@
         <summary>Which DISCOMs and states are supported?</summary>
         <div class="seo-faq-a">65 DISCOMs across 34 Indian states and union territories, including
           UPPCL (MVVNL, PVVNL, DVVNL, PuVVNL, KESCO), BESCOM, MSEDCL, TANGEDCO, PSPCL, Tata Power-DDL, BSES,
-          Adani Electricity, CESC, KSEB, WBSEDCL and more, with 131 consumer categories. See the full
+          Adani Electricity, CESC, KSEB, WBSEDCL and more, with 136 consumer categories. See the full
           <a href="/tariffs/states/">state &amp; DISCOM directory</a>.</div>
       </details>
       <details class="seo-faq-item">
@@ -1217,9 +1217,9 @@
       </div>
       <div class="footer-col">
         <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
-        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</a>
-        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</a>
-        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</a>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator</a>
         <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
       </div>
       <div class="footer-col">

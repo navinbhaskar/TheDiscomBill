@@ -644,7 +644,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Remote FPPA rates (Supabase, cached + offline-safe). When fresh rows land after the
   // form has rendered, re-run the auto prefill so the visible rate updates too.
   onIdle(() => { import('./rates.js').then(m => m.initRemoteRates()).catch(() => {}); }, 2200);
-  onIdle(() => { import('./i18n.js').then(m => m.initI18n()).catch(() => {}); }, 700);   // apply saved/default language + wire the EN/हिंदी switcher
+  onIdle(() => { import('./i18n.js').then(m => m.initI18n()).catch(() => {}); }, 700);
+  openTargetedTariffRow();   // honour a #rate-… deep link on first paint   // apply saved/default language + wire the EN/हिंदी switcher
   // /compare/ and the homepage only — initComparisonTable() no-ops without #compTableBody,
   // but the import alone pulled the whole tariff registry onto every page.
   if (document.getElementById('compTableBody')) {
@@ -738,3 +739,26 @@ document.addEventListener('DOMContentLoaded', () => {
     import('./share-article.js').catch(() => {});
   }
 });
+
+// ── open the tariff row a link points at ──────────────────────────────────────
+// The "find your rate" summary on a DISCOM page links each row to its own <details>.
+// Without this the browser scrolls to a collapsed block and the reader has to tap again
+// to see the thing they just asked for. Progressive, not required: with JS off the jump
+// still lands in the right place, it just arrives closed.
+function openTargetedTariffRow() {
+  const id = decodeURIComponent(location.hash.replace(/^#/, ''));
+  if (!id) return;
+  let el;
+  try { el = document.getElementById(id); } catch { return; }
+  if (!el) return;
+  // Open it and every <details> it sits inside, so a nested row is actually revealed.
+  for (let n = el; n; n = n.parentElement) {
+    if (n.tagName === 'DETAILS' && !n.open) n.open = true;
+  }
+  // Re-scroll: the browser aimed at the collapsed height and lands short once it expands.
+  requestAnimationFrame(() => el.scrollIntoView({
+    block: 'start',
+    behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+  }));
+}
+addEventListener('hashchange', openTargetedTariffRow);

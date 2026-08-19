@@ -39,8 +39,8 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
   <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
-  <link rel="stylesheet" href="/fonts/fonts.css">
-  <link rel="stylesheet" href="/css/styles.min.css">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
+  <link rel="stylesheet" href="/css/content.min.css">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"AboutPage","url":"https://thediscombill.com/methodology/","name":"Methodology & Accuracy — How We Calculate Your Bill","description":"How TheDiscomBill sources electricity tariffs from SERC and DISCOM tariff orders, encodes them into its billing engine, and verifies the output against real consumer bills — matched to the paisa.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-07-04"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Methodology","item":"https://thediscombill.com/methodology/"}]}</script>
   <!-- Google tag (gtag.js) -->
@@ -147,8 +147,10 @@
         order is applied in practice and to verify our output (see section 3).</li>
       </ul>
       <p data-i18n-html="meth.s1.p2">When a new order or FPPA circular is published, the corresponding rates in the tool are
-      updated to match it. The current tariff figures reflect the <strong>2025-26</strong> orders,
-      with the FPPA refreshed for July 2026.</p>
+      updated to match it. Tariff years differ by state, because regulators do not revise on a
+      common calendar: each DISCOM page states the <strong>tariff year in force</strong> for that
+      utility and the date we last verified it, and the <a href="/database/">tariff database</a>
+      lists all of them side by side. FPPA is tracked separately and refreshed monthly.</p>
     </section>
 
     <section class="seo-section" id="engine">

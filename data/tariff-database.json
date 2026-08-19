@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedOn": "2026-08-18",
+  "generatedOn": "2026-08-19",
   "name": "TheDiscomBill structured Indian residential electricity tariff database",
   "licenseNote": "Internal TheDiscomBill data asset. Do not treat this generated file as an official tariff order.",
   "fields": [
@@ -714,68 +714,306 @@
     {
       "state": "Arunachal Pradesh",
       "tariffYear": null,
-      "effectiveDate": null,
-      "ratesAsOf": null,
-      "sourceUrl": null,
+      "effectiveDate": "2024-07-01",
+      "ratesAsOf": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+      "sourceUrl": "https://apserc.nic.in",
       "discomCount": 1,
-      "categoryCount": 2,
-      "tariffRecordCount": 2,
+      "categoryCount": 7,
+      "tariffRecordCount": 27,
       "discoms": [
         {
           "state": "Arunachal Pradesh",
           "id": "appdcl",
-          "name": "APPDCL / Dept. of Power",
-          "fullName": "Arunachal Pradesh Power Distribution Corporation Ltd.",
+          "name": "APDOP / Dept. of Power",
+          "fullName": "Department of Power, Government of Arunachal Pradesh",
           "area": "Entire Arunachal Pradesh",
           "website": "https://appdcl.in",
           "tariffYear": "2024-25",
-          "effectiveDate": null,
-          "ratesAsOf": null,
-          "tariffOrder": null,
-          "sourceUrl": null,
-          "lastVerified": null,
-          "lpscRate": null,
+          "effectiveDate": "2024-07-01",
+          "ratesAsOf": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+          "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+          "sourceUrl": "https://apserc.nic.in",
+          "lastVerified": "2026-08-19",
+          "lpscRate": 2,
           "excessDemand": null,
           "fppaFac": {
             "current": null,
             "history": []
           },
-          "categoryCount": 2,
-          "tariffCount": 2,
+          "categoryCount": 7,
+          "tariffCount": 27,
           "categories": [
             {
               "id": "domestic",
-              "name": "LT Domestic",
-              "consumerCategory": "LT Domestic",
-              "notes": "First 30 units subsidized. Subject to state government schemes.",
-              "tariffCount": 1,
+              "name": "Category 1 - Residential / Domestic",
+              "consumerCategory": "Category 1 - Residential / Domestic",
+              "notes": "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Kutir Jyoti and BPL connections have a separate lower energy rate. Post-paid consumers receive a 3% rebate on current bills paid within the due date. Prepaid consumers receive a 5% rebate on recharge amount. Rebates are not automatically deducted by this calculator.",
+              "tariffCount": 5,
               "tariffs": [
                 {
-                  "id": "domestic",
-                  "name": "LT Domestic",
-                  "isSupplyType": false,
-                  "description": null,
-                  "effectiveDate": null,
-                  "tariffOrder": null,
-                  "sourceUrl": null,
-                  "lastVerified": null,
+                  "id": "domestic_lt_single_phase",
+                  "name": "Domestic LT - 1-phase 230 V",
+                  "isSupplyType": true,
+                  "description": "Domestic and non-commercial LT single-phase consumers.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
                   "slabs": [
                     {
-                      "limit": 30,
-                      "rate": 0,
-                      "label": "Subsidised",
-                      "unbounded": false
-                    },
+                      "limit": null,
+                      "rate": 4,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": [
+                      "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Kutir Jyoti and BPL connections have a separate lower energy rate. Post-paid consumers receive a 3% rebate on current bills paid within the due date. Prepaid consumers receive a 5% rebate on recharge amount. Rebates are not automatically deducted by this calculator."
+                    ]
+                  },
+                  "meterCharge": [
                     {
-                      "limit": 100,
-                      "rate": 2,
-                      "unbounded": false
-                    },
+                      "name": "Post-paid meter rent - LT single phase",
+                      "type": "flat_monthly",
+                      "rate": 20
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Kutir Jyoti and BPL connections have a separate lower energy rate. Post-paid consumers receive a 3% rebate on current bills paid within the due date. Prepaid consumers receive a 5% rebate on recharge amount. Rebates are not automatically deducted by this calculator.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "domestic_lt_three_phase",
+                  "name": "Domestic LT - 3-phase 400 V",
+                  "isSupplyType": true,
+                  "description": "Domestic and non-commercial LT three-phase consumers.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
                     {
-                      "limit": 200,
-                      "rate": 3.5,
-                      "unbounded": false
-                    },
+                      "limit": null,
+                      "rate": 4,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": [
+                      "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Kutir Jyoti and BPL connections have a separate lower energy rate. Post-paid consumers receive a 3% rebate on current bills paid within the due date. Prepaid consumers receive a 5% rebate on recharge amount. Rebates are not automatically deducted by this calculator."
+                    ]
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - LT three phase without CT",
+                      "type": "flat_monthly",
+                      "rate": 50
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Kutir Jyoti and BPL connections have a separate lower energy rate. Post-paid consumers receive a 3% rebate on current bills paid within the due date. Prepaid consumers receive a 5% rebate on recharge amount. Rebates are not automatically deducted by this calculator.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "domestic_kjp_bpl",
+                  "name": "Kutir Jyoti / BPL connection",
+                  "isSupplyType": true,
+                  "description": "Kutir Jyoti and BPL domestic connections.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 2.65,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": [
+                      "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Kutir Jyoti and BPL connections have a separate lower energy rate. Post-paid consumers receive a 3% rebate on current bills paid within the due date. Prepaid consumers receive a 5% rebate on recharge amount. Rebates are not automatically deducted by this calculator."
+                    ]
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - LT single phase",
+                      "type": "flat_monthly",
+                      "rate": 20
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Kutir Jyoti and BPL connections have a separate lower energy rate. Post-paid consumers receive a 3% rebate on current bills paid within the due date. Prepaid consumers receive a 5% rebate on recharge amount. Rebates are not automatically deducted by this calculator.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "domestic_ht_11kv",
+                  "name": "Domestic HT - 11 kV",
+                  "isSupplyType": true,
+                  "description": "Domestic and non-commercial consumers supplied at 11 kV.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 3.4,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": [
+                      "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Kutir Jyoti and BPL connections have a separate lower energy rate. Post-paid consumers receive a 3% rebate on current bills paid within the due date. Prepaid consumers receive a 5% rebate on recharge amount. Rebates are not automatically deducted by this calculator."
+                    ]
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - HT 11 kV",
+                      "type": "flat_monthly",
+                      "rate": 500
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Kutir Jyoti and BPL connections have a separate lower energy rate. Post-paid consumers receive a 3% rebate on current bills paid within the due date. Prepaid consumers receive a 5% rebate on recharge amount. Rebates are not automatically deducted by this calculator.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "domestic_ht_33kv",
+                  "name": "Domestic HT - 33 kV",
+                  "isSupplyType": true,
+                  "description": "Domestic and non-commercial consumers supplied at 33 kV.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 3.25,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": [
+                      "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Kutir Jyoti and BPL connections have a separate lower energy rate. Post-paid consumers receive a 3% rebate on current bills paid within the due date. Prepaid consumers receive a 5% rebate on recharge amount. Rebates are not automatically deducted by this calculator."
+                    ]
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - HT 33 kV",
+                      "type": "flat_monthly",
+                      "rate": 750
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Kutir Jyoti and BPL connections have a separate lower energy rate. Post-paid consumers receive a 3% rebate on current bills paid within the due date. Prepaid consumers receive a 5% rebate on recharge amount. Rebates are not automatically deducted by this calculator.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "commercial",
+              "name": "Category 2 - Commercial / Non-industrial",
+              "consumerCategory": "Category 2 - Commercial / Non-industrial",
+              "notes": "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Mixed domestic and commercial premises are treated as commercial when commercial load exceeds 10% of total connected load.",
+              "tariffCount": 4,
+              "tariffs": [
+                {
+                  "id": "commercial_lt_single_phase",
+                  "name": "Commercial LT - 1-phase 230 V",
+                  "isSupplyType": true,
+                  "description": "Commercial and non-industrial LT single-phase consumers.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
                     {
                       "limit": null,
                       "rate": 5,
@@ -784,23 +1022,11 @@
                   ],
                   "fixedCharge": {
                     "type": "flat",
-                    "rate": 30,
+                    "rate": 0,
                     "unit": "month"
                   },
-                  "electricityDuty": [
-                    {
-                      "name": "Electricity Duty",
-                      "type": "percent_energy",
-                      "rate": 5
-                    }
-                  ],
-                  "additionalCharges": [
-                    {
-                      "name": "Electricity Duty",
-                      "type": "percent_energy",
-                      "rate": 5
-                    }
-                  ],
+                  "electricityDuty": [],
+                  "additionalCharges": [],
                   "fppaFac": {
                     "legacyFacPerUnit": null,
                     "current": null,
@@ -810,64 +1036,44 @@
                     "schemes": [],
                     "notes": []
                   },
-                  "meterCharge": [],
-                  "minimumCharge": null,
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - LT single phase",
+                      "type": "flat_monthly",
+                      "rate": 20
+                    }
+                  ],
+                  "minimumCharge": 0,
                   "solarRules": null,
                   "previousTariff": [],
                   "notes": [
-                    "First 30 units subsidized. Subject to state government schemes.",
-                    "First 30 units subsidized. Subject to state government schemes."
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Mixed domestic and commercial premises are treated as commercial when commercial load exceeds 10% of total connected load.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
                   ]
-                }
-              ]
-            },
-            {
-              "id": "commercial",
-              "name": "LT Commercial",
-              "consumerCategory": "LT Commercial",
-              "notes": null,
-              "tariffCount": 1,
-              "tariffs": [
+                },
                 {
-                  "id": "commercial",
-                  "name": "LT Commercial",
-                  "isSupplyType": false,
-                  "description": null,
-                  "effectiveDate": null,
-                  "tariffOrder": null,
-                  "sourceUrl": null,
-                  "lastVerified": null,
+                  "id": "commercial_lt_three_phase",
+                  "name": "Commercial LT - 3-phase 400 V",
+                  "isSupplyType": true,
+                  "description": "Commercial and non-industrial LT three-phase consumers.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
                   "slabs": [
                     {
-                      "limit": 100,
-                      "rate": 4.5,
-                      "unbounded": false
-                    },
-                    {
                       "limit": null,
-                      "rate": 6,
+                      "rate": 5,
                       "unbounded": true
                     }
                   ],
                   "fixedCharge": {
                     "type": "flat",
-                    "rate": 50,
+                    "rate": 0,
                     "unit": "month"
                   },
-                  "electricityDuty": [
-                    {
-                      "name": "Electricity Duty",
-                      "type": "percent_energy",
-                      "rate": 5
-                    }
-                  ],
-                  "additionalCharges": [
-                    {
-                      "name": "Electricity Duty",
-                      "type": "percent_energy",
-                      "rate": 5
-                    }
-                  ],
+                  "electricityDuty": [],
+                  "additionalCharges": [],
                   "fppaFac": {
                     "legacyFacPerUnit": null,
                     "current": null,
@@ -877,11 +1083,1005 @@
                     "schemes": [],
                     "notes": []
                   },
-                  "meterCharge": [],
-                  "minimumCharge": null,
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - LT three phase without CT",
+                      "type": "flat_monthly",
+                      "rate": 50
+                    }
+                  ],
+                  "minimumCharge": 0,
                   "solarRules": null,
                   "previousTariff": [],
-                  "notes": []
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Mixed domestic and commercial premises are treated as commercial when commercial load exceeds 10% of total connected load.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "commercial_ht_11kv",
+                  "name": "Commercial HT - 11 kV",
+                  "isSupplyType": true,
+                  "description": "Commercial and non-industrial consumers supplied at 11 kV.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 4.2,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - HT 11 kV",
+                      "type": "flat_monthly",
+                      "rate": 500
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Mixed domestic and commercial premises are treated as commercial when commercial load exceeds 10% of total connected load.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "commercial_ht_33kv",
+                  "name": "Commercial HT - 33 kV",
+                  "isSupplyType": true,
+                  "description": "Commercial and non-industrial consumers supplied at 33 kV.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 4,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - HT 33 kV",
+                      "type": "flat_monthly",
+                      "rate": 750
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Mixed domestic and commercial premises are treated as commercial when commercial load exceeds 10% of total connected load.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "public_lighting_water",
+              "name": "Category 3 - Public lighting and water supply",
+              "consumerCategory": "Category 3 - Public lighting and water supply",
+              "notes": "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.",
+              "tariffCount": 4,
+              "tariffs": [
+                {
+                  "id": "public_lt_single_phase",
+                  "name": "Public lighting / water LT - 1-phase 230 V",
+                  "isSupplyType": true,
+                  "description": "Public lighting and water supply LT single-phase consumers.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 5.1,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - LT single phase",
+                      "type": "flat_monthly",
+                      "rate": 20
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "public_lt_three_phase",
+                  "name": "Public lighting / water LT - 3-phase 400 V",
+                  "isSupplyType": true,
+                  "description": "Public lighting and water supply LT three-phase consumers.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 5.1,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - LT three phase without CT",
+                      "type": "flat_monthly",
+                      "rate": 50
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "public_ht_11kv",
+                  "name": "Public lighting / water HT - 11 kV",
+                  "isSupplyType": true,
+                  "description": "Public lighting and water supply consumers supplied at 11 kV.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 4.2,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - HT 11 kV",
+                      "type": "flat_monthly",
+                      "rate": 500
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "public_ht_33kv",
+                  "name": "Public lighting / water HT - 33 kV",
+                  "isSupplyType": true,
+                  "description": "Public lighting and water supply consumers supplied at 33 kV.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 4,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - HT 33 kV",
+                      "type": "flat_monthly",
+                      "rate": 750
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "agricultural",
+              "name": "Category 4 - Agricultural",
+              "consumerCategory": "Category 4 - Agricultural",
+              "notes": "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.",
+              "tariffCount": 4,
+              "tariffs": [
+                {
+                  "id": "agriculture_lt_single_phase",
+                  "name": "Agricultural LT - 1-phase 230 V",
+                  "isSupplyType": true,
+                  "description": "Agricultural LT single-phase consumers.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 3.1,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - LT single phase",
+                      "type": "flat_monthly",
+                      "rate": 20
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "agriculture_lt_three_phase",
+                  "name": "Agricultural LT - 3-phase 400 V",
+                  "isSupplyType": true,
+                  "description": "Agricultural LT three-phase consumers.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 3.1,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - LT three phase without CT",
+                      "type": "flat_monthly",
+                      "rate": 50
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "agriculture_ht_11kv",
+                  "name": "Agricultural HT - 11 kV",
+                  "isSupplyType": true,
+                  "description": "Agricultural consumers supplied at 11 kV.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 2.75,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - HT 11 kV",
+                      "type": "flat_monthly",
+                      "rate": 500
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "agriculture_ht_33kv",
+                  "name": "Agricultural HT - 33 kV",
+                  "isSupplyType": true,
+                  "description": "Agricultural consumers supplied at 33 kV.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 2.65,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - HT 33 kV",
+                      "type": "flat_monthly",
+                      "rate": 750
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "industrial",
+              "name": "Category 5 - Industrial",
+              "consumerCategory": "Category 5 - Industrial",
+              "notes": "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Non-industrial or commercial use within an industrial premises is treated as industrial only when it is below 10% of total connected load; otherwise separate metering/tariff applies.",
+              "tariffCount": 5,
+              "tariffs": [
+                {
+                  "id": "industrial_lt_single_phase",
+                  "name": "Industrial LT - 1-phase 230 V",
+                  "isSupplyType": true,
+                  "description": "Industrial LT single-phase consumers.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 4.3,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - LT single phase",
+                      "type": "flat_monthly",
+                      "rate": 20
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Non-industrial or commercial use within an industrial premises is treated as industrial only when it is below 10% of total connected load; otherwise separate metering/tariff applies.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "industrial_lt_three_phase",
+                  "name": "Industrial LT - 3-phase 400 V",
+                  "isSupplyType": true,
+                  "description": "Industrial LT three-phase consumers.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 4.3,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - LT three phase without CT",
+                      "type": "flat_monthly",
+                      "rate": 50
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Non-industrial or commercial use within an industrial premises is treated as industrial only when it is below 10% of total connected load; otherwise separate metering/tariff applies.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "industrial_ht_11kv",
+                  "name": "Industrial HT - 11 kV",
+                  "isSupplyType": true,
+                  "description": "Industrial consumers supplied at 11 kV.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 3.85,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - HT 11 kV",
+                      "type": "flat_monthly",
+                      "rate": 500
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Non-industrial or commercial use within an industrial premises is treated as industrial only when it is below 10% of total connected load; otherwise separate metering/tariff applies.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "industrial_ht_33kv",
+                  "name": "Industrial HT - 33 kV",
+                  "isSupplyType": true,
+                  "description": "Industrial consumers supplied at 33 kV.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 3.5,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - HT 33 kV",
+                      "type": "flat_monthly",
+                      "rate": 750
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Non-industrial or commercial use within an industrial premises is treated as industrial only when it is below 10% of total connected load; otherwise separate metering/tariff applies.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "industrial_ht_132kv",
+                  "name": "Industrial HT - 132 kV",
+                  "isSupplyType": true,
+                  "description": "Industrial consumers supplied at 132 kV.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 3.35,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - HT 132 kV",
+                      "type": "flat_monthly",
+                      "rate": 1000
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Non-industrial or commercial use within an industrial premises is treated as industrial only when it is below 10% of total connected load; otherwise separate metering/tariff applies.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "bulk_mixed",
+              "name": "Category 6 - Bulk mixed consumers",
+              "consumerCategory": "Category 6 - Bulk mixed consumers",
+              "notes": "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.",
+              "tariffCount": 3,
+              "tariffs": [
+                {
+                  "id": "bulk_mixed_ht_11kv",
+                  "name": "Bulk mixed HT - 11 kV",
+                  "isSupplyType": true,
+                  "description": "Bulk mixed consumers supplied at 11 kV.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 3.75,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - HT 11 kV",
+                      "type": "flat_monthly",
+                      "rate": 500
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "bulk_mixed_ht_33kv",
+                  "name": "Bulk mixed HT - 33 kV",
+                  "isSupplyType": true,
+                  "description": "Bulk mixed consumers supplied at 33 kV.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 3.4,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - HT 33 kV",
+                      "type": "flat_monthly",
+                      "rate": 750
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "bulk_mixed_ht_132kv",
+                  "name": "Bulk mixed HT - 132 kV and above",
+                  "isSupplyType": true,
+                  "description": "Bulk mixed consumers supplied at 132 kV and above.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 3.25,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - HT 132 kV",
+                      "type": "flat_monthly",
+                      "rate": 1000
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "temporary",
+              "name": "Category 7 - Temporary consumers",
+              "consumerCategory": "Category 7 - Temporary consumers",
+              "notes": "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Temporary supply is for construction, repairs, ceremonies, exhibitions and similar short-duration uses normally not exceeding 90 days.",
+              "tariffCount": 2,
+              "tariffs": [
+                {
+                  "id": "temporary_lt_single_phase",
+                  "name": "Temporary LT - 1-phase 230 V",
+                  "isSupplyType": true,
+                  "description": "Temporary LT single-phase consumers.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 6.5,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - LT single phase",
+                      "type": "flat_monthly",
+                      "rate": 20
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Temporary supply is for construction, repairs, ceremonies, exhibitions and similar short-duration uses normally not exceeding 90 days.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
+                },
+                {
+                  "id": "temporary_lt_three_phase",
+                  "name": "Temporary LT - 3-phase 400 V",
+                  "isSupplyType": true,
+                  "description": "Temporary LT three-phase consumers.",
+                  "effectiveDate": "2024-07-01",
+                  "tariffOrder": "FY 2024-25 APSERC retail supply tariff order for APDOP",
+                  "sourceUrl": "https://apserc.nic.in",
+                  "lastVerified": "2026-08-19",
+                  "slabs": [
+                    {
+                      "limit": null,
+                      "rate": 6.5,
+                      "unbounded": true
+                    }
+                  ],
+                  "fixedCharge": {
+                    "type": "flat",
+                    "rate": 0,
+                    "unit": "month"
+                  },
+                  "electricityDuty": [],
+                  "additionalCharges": [],
+                  "fppaFac": {
+                    "legacyFacPerUnit": null,
+                    "current": null,
+                    "history": []
+                  },
+                  "subsidy": {
+                    "schemes": [],
+                    "notes": []
+                  },
+                  "meterCharge": [
+                    {
+                      "name": "Post-paid meter rent - LT three phase without CT",
+                      "type": "flat_monthly",
+                      "rate": 50
+                    }
+                  ],
+                  "minimumCharge": 0,
+                  "solarRules": null,
+                  "previousTariff": [],
+                  "notes": [
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Temporary supply is for construction, repairs, ceremonies, exhibitions and similar short-duration uses normally not exceeding 90 days.",
+                    "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model."
+                  ]
                 }
               ]
             }

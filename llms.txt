@@ -2,7 +2,7 @@
 
 > Free, browser-based electricity bill calculator for India. Covers 65 distribution companies (DISCOMs) across 34 states and union territories with slab-wise energy charges, fixed/demand charges, FPPA fuel surcharge, electricity duty, solar net metering and Time-of-Day billing. Independent — not affiliated with any DISCOM, SERC or government body. Estimates are provisional; official bills come from the DISCOM.
 
-Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025-26) and the calculation engine applies each DISCOM's published methodology: slab-wise rates, sanctioned-load-based fixed charges, then surcharges and duty.
+Tariff data is compiled from publicly available tariff orders: FY 2026-27 for 19 of 34 states, FY 2025-26 for 4, FY 2024-25 for 1, an order date rather than a financial year for 3. 7 states have no published basis recorded yet. The calculation engine applies each DISCOM's published methodology: slab-wise rates, sanctioned-load-based fixed charges, then surcharges and duty.
 
 ## Tools
 
@@ -71,6 +71,8 @@ Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025
 
 ## Reference
 
+- [Tariff Database](https://thediscombill.com/database/): the full machine-readable dataset behind every calculation — per-state DISCOM counts, category counts, the tariff year in force, and a link to the originating regulator's order where one is recorded
+- [Fuel Surcharge (FPPA) Tracker](https://thediscombill.com/fppa/): current and historical fuel-surcharge rates by state and DISCOM, with the month each came into force
 - [Electricity Bill Glossary](https://thediscombill.com/glossary/): definitions of billing terms — Connected Load, ED, Fixed Charge, FPPA, kVAh, LPSC, Maximum Demand, MMC, MF, Net Metering, PF, Sanctioned Load, Slab-wise Rates, ToD
 
 ## Tariff reference

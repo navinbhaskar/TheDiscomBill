@@ -22,6 +22,7 @@ import { buildContentCss } from './scripts/split-css.mjs';
 import { execSync } from 'child_process';
 
 import { TARIFF_DB, STATE_META, getStates, getDiscoms, tariffAge, ensureAll } from './js/tariffs/registry.js';
+import { surchargeTerm, surchargeAliases, surchargeLabel } from './js/tariffs/surcharge-terms.js';
 import { buildTariffIndex } from './scripts/build-tariff-index.mjs';
 import { buildTariffDatabase } from './scripts/build-tariff-database.mjs';
 
@@ -388,9 +389,9 @@ const FOOTER_SITEMAP = `
       </div>
       <div class="footer-col">
         <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
-        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator 2026</a>
-        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator (2026)</a>
-        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator (2026)</a>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator</a>
         <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
       </div>
       <div class="footer-col">
@@ -908,18 +909,143 @@ function tariffCategoryIconSvg(cat) {
   };
   return `<span class="tariff-card-icon tariff-card-icon-${kind}" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false">${paths[kind]}</svg></span>`;
 }
+// ── the "find your rate" summary ─────────────────────────────────────────────
+// Measured on MVVNL before this existed: the tariff section ran 3,417px on a 375px phone -
+// 4.2 screens - and did not begin until 4.7 screens down. A reader on ST-17 met their own
+// rate 5.8 screens in; ST-27 at 8.5. Since 68% of impressions are mobile and rate-intent
+// queries outnumber calculator-intent 2,359 to 543, the single number most visitors came
+// for was the hardest thing on the page to reach.
+//
+// The cause was structural, not cosmetic: a reader is exactly ONE of these supply types,
+// and the page made them scan every other one first, disambiguating by tariff code. This
+// table answers the lookup in one screen and leaves the full slab detail below it.
+
+// Names arrive as "ST-10A – Urban Life Line (Sanctioned Load ≤ 1 kW)": a code the reader
+// does not know about themselves, leading a description they would recognise. Split them so
+// the description can lead and the code can follow as a tag. Odisha's names carry no code
+// at all ("Domestic (other than Kutir Jyoti)"), so the whole thing has to stay optional.
+function splitTariffName(name) {
+  const m = /^\s*([A-Z]{1,4}-?\s?\d+[A-Z]?)\s*[–—-]\s*(.+)$/.exec(String(name || ''));
+  return m ? { code: m[1].replace(/\s+/g, ''), label: m[2].trim() } : { code: '', label: String(name || '').trim() };
+}
+
+// The rate column is a RANGE, not the slab list: scannable at a glance, with the exact
+// slabs one tap away in the detail below. A single-slab tariff shows one figure, not a
+// range of one. A wholly free tariff (Kutir Jyoti) says so in words rather than "₹0.00".
+function rateRangeShort(slabs, lang = 'en') {
+  if (!Array.isArray(slabs) || !slabs.length) return '<span class="tx-muted">—</span>';
+  const rates = slabs.map(x => x.rate).filter(r => typeof r === 'number');
+  if (!rates.length) return '<span class="tx-muted">—</span>';
+  const lo = Math.min(...rates), hi = Math.max(...rates);
+  if (hi === 0) return `<span class="ts-free">${T(lang, { en: 'Free', hi: 'नि:शुल्क', mr: 'नि:शुल्क', ta: 'இலவசம்' })}</span>`;
+  // One currency symbol per range: "₹2.75-5.50", not "₹2.75-₹5.50". The second symbol adds
+  // nothing and makes the cell read as two separate figures.
+  if (lo === hi) return rupeeRate(lo);
+  return `${rupeeRate(lo)}<span class="ts-dash">–</span>${rupeeRate(hi).replace('₹', '')}`;
+}
+
+// Fixed charge compressed to one cell. Anything with bands collapses to its own range -
+// the bands themselves are in the detail block, and repeating them here would rebuild the
+// wall this table exists to replace.
+function fixedChargeShort(fc, lang = 'en') {
+  const kw = '<span class="tx-muted">/kW</span>', mo = '<span class="tx-muted">/mo</span>';
+  if (fc == null) return '<span class="tx-muted">—</span>';
+  if (typeof fc === 'number') return rupee(fc) + mo;
+  if (fc.type === 'per_kw')  return rupee(fc.rate) + kw + mo;
+  if (fc.type === 'per_kva') return rupee(fc.rate) + '<span class="tx-muted">/kVA</span>' + mo;
+  if (fc.type === 'flat')    return rupee(fc.rate) + mo;
+  if (Array.isArray(fc.slabs) && fc.slabs.length) {
+    const rates = fc.slabs.map(x => x.rate).filter(r => typeof r === 'number');
+    if (!rates.length) return '<span class="tx-muted">—</span>';
+    const lo = Math.min(...rates), hi = Math.max(...rates);
+    const suffix = (fc.type === 'slab_per_kw' || fc.perKw) ? kw + mo : mo;
+    return (lo === hi ? rupee(lo) : `${rupee(lo)}<span class="ts-dash">–</span>${rupee(hi).replace('₹', '')}`) + suffix;
+  }
+  if (typeof fc.rate === 'number') return rupee(fc.rate) + mo;
+  return '<span class="tx-muted">—</span>';
+}
+
+// Stable, readable anchor for a supply type, so a summary row can jump to its detail.
+function tariffRowId(cat, st) {
+  const raw = `${cat.id || cat.name || 'cat'}-${st ? (st.id || st.name || '') : ''}`;
+  return 'rate-' + slugify(raw).slice(0, 60);
+}
+
+// Flatten categories → one row per supply type (or one per category when it has none).
+function tariffRows(categories) {
+  const rows = [];
+  for (const cat of categories || []) {
+    const sts = Array.isArray(cat.supplyTypes) && cat.supplyTypes.length ? cat.supplyTypes : null;
+    if (sts) for (const st of sts) rows.push({ cat, st, obj: st, id: tariffRowId(cat, st) });
+    else rows.push({ cat, st: null, obj: cat, id: tariffRowId(cat, null) });
+  }
+  return rows;
+}
+
+function tariffSummaryHtml(categories, lang = 'en') {
+  const rows = tariffRows(categories);
+  // With one or two rows there is nothing to scan past, and a summary would just repeat the
+  // detail immediately below it. The table earns its place only where the wall exists.
+  if (rows.length < 3) return '';
+  const hCat  = T(lang, { en: 'Supply type', hi: 'आपूर्ति प्रकार', mr: 'पुरवठा प्रकार', ta: 'விநியோக வகை' });
+  const hFix  = T(lang, { en: 'Fixed charge', hi: 'फिक्स्ड चार्ज', mr: 'फिक्स्ड चार्ज', ta: 'நிலையான கட்டணம்' });
+  const hRate = T(lang, { en: 'Energy rate', hi: 'ऊर्जा दर', mr: 'ऊर्जा दर', ta: 'மின் கட்டணம்' });
+  const perUnit = T(lang, { en: 'per unit', hi: 'प्रति यूनिट', mr: 'प्रति युनिट', ta: 'ஒரு யூனிட்' });
+  const cap = T(lang, {
+    en: 'Find your supply type to see its rate. Tap a row for the full slab breakdown.',
+    hi: 'अपना आपूर्ति प्रकार चुनें और दर देखें। पूरी स्लैब जानकारी के लिए पंक्ति पर टैप करें।',
+    mr: 'तुमचा पुरवठा प्रकार शोधा आणि दर पहा. संपूर्ण स्लॅब तपशिलासाठी ओळीवर टॅप करा.',
+    ta: 'உங்கள் விநியோக வகையைக் கண்டறிந்து கட்டணத்தைப் பாருங்கள். முழு அடுக்கு விவரங்களுக்கு வரிசையைத் தட்டவும்.' });
+
+  const body = rows.map(r => {
+    const { code, label } = splitTariffName(r.st ? (r.st.name || r.st.id) : (r.cat.name || r.cat.id));
+    const parent = r.st ? splitTariffName(r.cat.name || r.cat.id).label : '';
+    return `<tr>
+        <td class="ts-name">
+          <a href="#${r.id}">${esc(label)}</a>
+          ${code ? `<span class="ts-code">${esc(code)}</span>` : ''}
+          ${parent ? `<span class="ts-parent">${esc(parent)}</span>` : ''}
+        </td>
+        <td class="num ts-fixed">${fixedChargeShort(r.obj.fixedCharge, lang)}</td>
+        <td class="num ts-rate">${rateRangeShort(r.obj.energySlabs, lang)}</td>
+      </tr>`;
+  }).join('');
+
+  return `<div class="tariff-summary">
+      <p class="tariff-summary-cap">${cap}</p>
+      <div class="tariff-summary-scroll">
+        <table class="tariff-summary-table">
+          <thead><tr><th scope="col">${hCat}</th><th scope="col" class="num">${hFix}</th><th scope="col" class="num">${hRate}<span class="ts-th-sub">${perUnit}</span></th></tr></thead>
+          <tbody>${body}</tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
 function categoryCardHtml(cat, lang = 'en') {
   const hasSupplyTypes = Array.isArray(cat.supplyTypes) && cat.supplyTypes.length > 0;
   let body;
   if (hasSupplyTypes) {
-    body = cat.supplyTypes.map(st => `
-      <div class="tariff-supplytype">
-        <div class="tariff-st-name">${esc(st.name || st.id)}</div>
-        ${st.description ? `<p class="tariff-st-desc">${esc(st.description)}</p>` : ''}
-        ${tariffBlockHtml(st, lang)}
-      </div>`).join('');
+    // Collapsed by default, first one open. The slab detail stays in the DOM either way -
+    // closed <details> content is still indexed - so this costs nothing for crawling and
+    // takes roughly 70% off the section's height on a phone. Without JS the summary link
+    // still scrolls here; the reader taps to open, which is an acceptable degradation.
+    body = cat.supplyTypes.map((st, i) => {
+      const { code, label } = splitTariffName(st.name || st.id);
+      return `
+      <details class="tariff-supplytype" id="${tariffRowId(cat, st)}"${i === 0 ? ' open' : ''}>
+        <summary class="tariff-st-name">
+          <span class="tariff-st-label">${esc(label)}</span>
+          ${code ? `<span class="tariff-st-code">${esc(code)}</span>` : ''}
+        </summary>
+        <div class="tariff-st-body">
+          ${st.description ? `<p class="tariff-st-desc">${esc(st.description)}</p>` : ''}
+          ${tariffBlockHtml(st, lang)}
+        </div>
+      </details>`;
+    }).join('');
   } else {
-    body = tariffBlockHtml(cat, lang);
+    body = `<div id="${tariffRowId(cat, null)}">${tariffBlockHtml(cat, lang)}</div>`;
   }
   return `
     <article class="tariff-card">
@@ -1435,7 +1561,9 @@ function servicesHubUrl(state, discom, tab = 'pay') {
 // scannable into busy. Decorative only — every card still carries its own text label, so the
 // icon is never the sole carrier of meaning and needs no accessible name.
 const CARD_ICONS = {
-  'Calculate bill': 'calc', 'Current tariff': 'table', 'Latest FPPA/FAC': 'trend',
+  'Calculate bill': 'calc', 'Current tariff': 'table',
+  // The surcharge card's label is per-state now ("Latest FAC", "Latest PPAC"), so it cannot
+  // be keyed by title. The href rule below (/fppa|fuel-surcharge/ → 'trend') covers it.
   'Bill examples': 'doc', 'Pay or view bill': 'cash', 'Complaint': 'chat',
   'Smart meter': 'gauge', 'Solar': 'sun', 'Official site': 'globe',
   'View bill': 'doc', 'Pay bill': 'cash', 'New connection': 'plug', 'Load change': 'gauge',
@@ -1467,7 +1595,7 @@ function discomPortalActionsHtml(state, discom) {
   const actions = [
     ['Calculate bill', `/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator`, `Estimate an itemised ${nm} bill with tariff, duty and surcharge`],
     ['Current tariff', '#current-tariff', 'Open the slab table, fixed charge and category rules'],
-    ['Latest FPPA/FAC', '#latest-fppa', 'Check the current variable surcharge and history'],
+    [`Latest ${surchargeTerm(state).code}`, '#latest-fppa', 'Check the current variable surcharge and history'],
     ['Bill examples', '#common-calculations', 'Compare 200, 300, 500 and 750 unit examples'],
     ['Pay or view bill', servicesHubUrl(state, discom, 'pay'), 'Use the official portal or payment channel'],
     ['Complaint', servicesHubUrl(state, discom, 'complaint'), 'Find complaint route and escalation reminders'],
@@ -1489,7 +1617,7 @@ function discomCalculatorPanelHtml(state, discom) {
     <section class="seo-section discom-tool-panel" id="calculate">
       <div>
         <h2>${nm} electricity bill calculator</h2>
-        <p>Enter units, sanctioned load and billing dates to get an itemised ${nm} estimate. The result breaks the bill into energy charge, fixed or demand charge, FPPA/FAC, duty, arrears and late-payment surcharge where applicable.</p>
+        <p>Enter units, sanctioned load and billing dates to get an itemised ${nm} estimate. The result breaks the bill into energy charge, fixed or demand charge, ${surchargeTerm(state).code}, duty, arrears and late-payment surcharge where applicable.</p>
       </div>
       <a class="seo-cta" href="${calcHref}">Calculate ${nm} bill</a>
     </section>`;
@@ -1520,7 +1648,7 @@ function niceTickStep(span, targetTicks = 4) {
   return mult * mag;
 }
 
-function fppaTrendSvg(series, rangeMonths, discomName) {
+function fppaTrendSvg(series, rangeMonths, discomName, termCode = 'FPPA') {
   const sliced = series.slice(-Math.min(series.length, rangeMonths));
   const W = 720, H = 188, PAD_L = 48, PAD_R = 14, PAD_T = 14, PAD_B = 32;
   const plotW = W - PAD_L - PAD_R, plotH = H - PAD_T - PAD_B;
@@ -1570,7 +1698,7 @@ function fppaTrendSvg(series, rangeMonths, discomName) {
     + `<text class="trend-latest-label" x="${lx.toFixed(1)}" y="${(ly > PAD_T + plotH / 2 ? ly - 11 : ly + 18).toFixed(1)}" text-anchor="end">${esc(fppaTrendRateLabel(le))}</text>`;
   const latest = sliced[sliced.length - 1];
   return `<figure class="fs-chart-wrap discom-trend-chart">
-    <svg class="fs-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(discomName)} FPPA or FAC trend for the last ${rangeMonths} months">
+    <svg class="fs-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(discomName)} ${esc(termCode)} trend for the last ${rangeMonths} months">
       ${grid}
       <path class="trend-line" d="${path}"/>
       ${dots}
@@ -1594,7 +1722,7 @@ function fppaTrendHtml(state, discom) {
   const newest = fsMonth(series[series.length - 1].from);
   return `
     <section class="seo-section">
-      <h2>${nm} FPPA/FAC trend</h2>
+      <h2>${nm} ${surchargeTerm(state).code} trend</h2>
       <p>Use the chart to see whether the variable surcharge is rising or falling. The selector switches between recent notices and the longer history currently available for ${nm}.</p>
       <div class="discom-trend-tabs">
         <input type="radio" name="${id}" id="${id}-6" checked>
@@ -1604,12 +1732,12 @@ function fppaTrendHtml(state, discom) {
         <input type="radio" name="${id}" id="${id}-36">
         <label for="${id}-36">3 years</label>
         <div class="discom-trend-panels">
-          <div class="trend-panel">${fppaTrendSvg(series, 6, discom.name)}</div>
-          <div class="trend-panel">${fppaTrendSvg(series, 12, discom.name)}</div>
-          <div class="trend-panel">${fppaTrendSvg(series, 36, discom.name)}</div>
+          <div class="trend-panel">${fppaTrendSvg(series, 6, discom.name, surchargeTerm(state).code)}</div>
+          <div class="trend-panel">${fppaTrendSvg(series, 12, discom.name, surchargeTerm(state).code)}</div>
+          <div class="trend-panel">${fppaTrendSvg(series, 36, discom.name, surchargeTerm(state).code)}</div>
         </div>
       </div>
-      <p class="fs-legend">Available series: ${esc(oldest)} to ${esc(newest)}. Some DISCOMs publish DISCOM-specific data; others use a state-wide FPPA/FAC notice.</p>
+      <p class="fs-legend">Available series: ${esc(oldest)} to ${esc(newest)}. Some DISCOMs publish DISCOM-specific data; others use a state-wide ${surchargeTerm(state).code} notice.</p>
     </section>`;
 }
 
@@ -1623,7 +1751,7 @@ function currentFppaHtml(state, discom) {
     ? `${fsMonth(latest.from)}${latest.to ? ` - ${fsMonth(latest.to)}` : ' onward'}`
     : 'No verified period in tracker';
   const rate = latest ? fsRate(latest) : 'Not available';
-  const source = latest?.source || 'No verified FPPA/FAC source recorded yet';
+  const source = latest?.source || `No verified ${surchargeTerm(state).code} source recorded yet`;
   const note = current
     ? 'Current applicable entry for today.'
     : latest ? `Latest published entry shown; ${fsMonth(TODAY.slice(0, 8) + '01')} may not be notified yet.` : 'Enter the surcharge printed on your bill manually in the calculator.';
@@ -1631,7 +1759,7 @@ function currentFppaHtml(state, discom) {
   const trackerHref = fppaCoverageStates().includes(state) ? `/fppa/${slugify(state)}/` : '/fppa/';
   return `
     <section class="seo-section" id="latest-fppa">
-      <h2>Current ${esc(discom.name)} FPPA / FAC</h2>
+      <h2>Current ${esc(discom.name)} ${esc(surchargeLabel(state))}</h2>
       <div class="comparison-table-wrapper">
         <table class="comparison-table">
           <tbody>
@@ -1646,13 +1774,15 @@ function currentFppaHtml(state, discom) {
     </section>`;
 }
 
-function billLineExplainerHtml(discom) {
+// `state` decides what the surcharge tile is called — the reader is matching these tiles
+// against the lines printed on their own bill, so the tile has to use their word for it.
+function billLineExplainerHtml(discom, state = null) {
   const nm = esc(discom.name);
   const items = [
     ['Energy charge', 'The slab-wise price of the units consumed during the billing period. In telescopic slabs, each band is billed at its own rate.', 'gauge'],
     ['Fixed charge', 'A monthly charge linked to sanctioned load, connected load, billing demand or consumer category. It applies even when usage is low.', 'plug'],
     ['Electricity duty', 'A statutory government levy. Depending on the state, it may apply on energy charges, fixed charges, or selected bill components.', 'gov'],
-    ['FPPA / FAC', 'Fuel and power-purchase adjustment. It changes more often than the base tariff and may appear as a charge or a credit.', 'trend'],
+    [surchargeLabel(state), 'Fuel and power-purchase adjustment. It changes more often than the base tariff and may appear as a charge or a credit.', 'trend'],
     ['Arrears', 'Unpaid balance, corrections, security-deposit adjustments or previous-cycle amounts carried into the current bill.', 'cash'],
     ['LPSC', 'Late Payment Surcharge on overdue amounts. Check the due date and pay through the official DISCOM channel to avoid it.', 'clock'],
   ];
@@ -1760,7 +1890,7 @@ function discomSourcesHtml(state, discom, fy) {
   const sources = [];
   if (meta.sourceUrl) sources.push(['Tariff order / regulator', meta.sourceUrl]);
   if (discom.website) sources.push([`${discom.name} official information`, discom.website]);
-  if (FPPA_BY_DISCOM[discom.id] || FPPA_BY_STATE[state]) sources.push(['FPPA / FAC tracker', `/fppa/${slugify(state)}/`]);
+  if (FPPA_BY_DISCOM[discom.id] || FPPA_BY_STATE[state]) sources.push([`${surchargeTerm(state).code} tracker`, `/fppa/${slugify(state)}/`]);
   if (!sources.length) return '';
   return `
     <section class="seo-section">
@@ -1806,11 +1936,18 @@ function discomServiceLinksHtml(state, discom, lang = 'en') {
 // Contextual glossary links from each DISCOM page. Real anchor text into /glossary/#<term>
 // (stronger topical signal than nav/footer boilerplate) that also genuinely helps a reader
 // decode the charge lines they just saw in the tariff schedule above.
-function glossaryLinksHtml(discom, lang = 'en') {
+// `state` is needed for the surcharge term: a Maharashtra reader is looking for FAC, not
+// FPPA, and the anchor text is what makes the page findable for the words they actually type.
+function glossaryLinksHtml(discom, lang = 'en', state = null) {
   const base = `${lang === 'en' ? '' : '/' + lang}/glossary/`;
   const nm = esc(discom.name);
   const terms = [
-    ['fppa', T(lang, { en: 'FPPA (fuel surcharge)', hi: 'FPPA (ईंधन अधिभार)', mr: 'FPPA (इंधन अधिभार)', ta: 'FPPA (எரிபொருள் கட்டணம்)' })],
+    ['fppa', (() => {
+      // The glossary entry is still #fppa - one concept, one anchor - but the LINK TEXT is
+      // whatever this state calls it, so the sentence reads the way the bill reads.
+      const code = surchargeTerm(state).code;
+      return T(lang, { en: `${code} (fuel surcharge)`, hi: `${code} (ईंधन अधिभार)`, mr: `${code} (इंधन अधिभार)`, ta: `${code} (எரிபொருள் கட்டணம்)` });
+    })()],
     ['fixed-charge', T(lang, { en: 'fixed charges', hi: 'फिक्स्ड चार्ज', mr: 'फिक्स्ड चार्ज', ta: 'நிலையான கட்டணங்கள்' })],
     ['telescopic-slabs', T(lang, { en: 'slab-wise rates', hi: 'स्लैब-वार दरें', mr: 'स्लॅबनिहाय दर', ta: 'அடுக்கு வாரியான விகிதங்கள்' })],
     ['sanctioned-load', T(lang, { en: 'sanctioned load', hi: 'स्वीकृत भार', mr: 'मंजूर भार', ta: 'அனுமதிக்கப்பட்ட சுமை' })],
@@ -2080,6 +2217,7 @@ function discomPage(state, discom, lang = 'en') {
   const src = discom.website || meta.sourceUrl;
 
   const cards = (discom.categories || []).map(c => categoryCardHtml(c)).join('') || '<p class="tx-muted">No categories listed.</p>';
+  const rateSummary = tariffSummaryHtml(discom.categories || []);
 
   // Sibling DISCOMs in the same state
   const siblings = getDiscoms(state).filter(d => d.id !== discom.id);
@@ -2140,10 +2278,11 @@ function discomPage(state, discom, lang = 'en') {
     <section class="seo-section" id="current-tariff">
       <h2>Current ${esc(discom.name)} tariff (${esc(fy)})</h2>
       ${sharedNote}
+      ${rateSummary}
       <div class="tariff-cards">${cards}</div>
     </section>
 
-    ${billLineExplainerHtml(discom)}
+    ${billLineExplainerHtml(discom, state)}
     ${areaServedHtml(discom)}
     ${officialServicesHtml(state, discom)}
     ${guideLinksHtml(state, discom)}
@@ -2233,6 +2372,7 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
 
   const noCats = T(lang, { hi: 'कोई श्रेणी सूचीबद्ध नहीं।', mr: 'कोणतीही श्रेणी सूचीबद्ध नाही.', ta: 'எந்த வகையும் பட்டியலிடப்படவில்லை.', en: 'No categories listed.' });
   const cards = (discom.categories || []).map(c => categoryCardHtml(c, lang)).join('') || `<p class="tx-muted">${noCats}</p>`;
+  const rateSummary = tariffSummaryHtml(discom.categories || [], lang);
 
   const siblings = getDiscoms(state).filter(d => d.id !== discom.id);
   const siblingHead = T(lang, { hi: `${esc(sl)} के अन्य डिस्कॉम`, mr: `${esc(sl)} मधील इतर डिस्कॉम`, ta: `${esc(sl)} இல் உள்ள பிற DISCOM-கள்`, en: `Other DISCOMs in ${esc(sl)}` });
@@ -2338,10 +2478,11 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
     <section class="seo-section">
       <h2>${schedHead}</h2>
       ${sharedNote}
+      ${rateSummary}
       <div class="tariff-cards">${cards}</div>
     </section>
 
-    ${glossaryLinksHtml(discom, lang)}
+    ${glossaryLinksHtml(discom, lang, state)}
     ${guideLinksHtml(state, discom, lang)}
     ${siblingHtml}
     ${faqHtml(faqs, lang)}
@@ -3744,11 +3885,17 @@ function fppaPeriod(e) {
   return `${fsMonth(e.from)}${e.to ? ` - ${fsMonth(e.to)}` : ' onward'}`;
 }
 
+// The name this state's own regulator and bills use, from js/tariffs/surcharge-terms.js.
+//
+// This used to be a hardcoded if-chain ending in `return 'FPPA / FAC'`, which asserted "FAC"
+// for every state that had not been special-cased — including states that call it something
+// else entirely. Worse, it meant a Maharashtra page, where the bill really does say FAC,
+// carried the same generic string as everywhere else and competed for nothing.
+//
+// Two aliases at most: these strings go into <title>, which is measured against a pixel
+// budget, and "Regulatory Surcharge / FPPAS" is already long.
 function fppaMechanismName(state) {
-  if (state === 'Delhi') return 'PPAC / FPPAS';
-  if (state === 'Uttar Pradesh') return 'FPPAS';
-  if (state === 'Rajasthan') return 'Regulatory Surcharge / FPPAS';
-  return 'FPPA / FAC';
+  return surchargeAliases(state).slice(0, 2).join(' / ');
 }
 
 function fppaDirection(cur, prev) {
@@ -4317,7 +4464,7 @@ function fppaStatePage(state) {
     const historyRows = series.map((e, i) =>
       `<tr><td>${esc(fsMonth(e.from))}</td><td class="${e.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(e))}</td><td>${fppaChange(series, i)}</td><td>${esc(e.label || '')}</td></tr>`).join('');
     const chartSeries = [...series].reverse().filter(e => e.mode === series[0].mode);
-    const chart = chartSeries.length >= 2 ? fppaTrendSvg(chartSeries, 36, r.discom.name) : '';
+    const chart = chartSeries.length >= 2 ? fppaTrendSvg(chartSeries, 36, r.discom.name, surchargeTerm(state).code) : '';
     return `<section class="seo-section fs-state-history">
       <h2>Historical chart: ${esc(r.discom.name)} ${esc(mechanism)}</h2>
       ${chart}
@@ -5156,7 +5303,11 @@ ${section('totals', 'totals')}
   return layout({
     title: T(lang, U.title),
     description: T(lang, U.description),
-    canonical: `${SITE}${enUrl}`,
+    // Self-canonical per language. This hardcoded enUrl, so all three vernacular twins
+    // canonicalised to the English page while simultaneously advertising themselves as
+    // hreflang alternates - two contradictory instructions, and Google resolves that by
+    // dropping the twins. Every other twinned page already uses langUrl() this way.
+    canonical: `${SITE}${langUrl(enUrl, lang)}`,
     lang, page: enUrl, altLangs: VERNACULARS,
     jsonld: [faqLd],
     body,
@@ -5615,6 +5766,10 @@ function buildSitemap(states) {
   urls.push({ loc: '/tariffs/states/', priority: '0.8', changefreq: 'monthly', langs: [...VERNACULARS] });
   urls.push({ loc: '/smart-meter/', priority: '0.7', changefreq: 'monthly', langs: [...VERNACULARS] });
   urls.push({ loc: '/smart-meter-recharge/', priority: '0.8', changefreq: 'monthly', langs: [...VERNACULARS] });
+  // Emitted unconditionally for every language in the page loop, so all four twins always
+  // exist. It was footer-linked and indexable but never declared here, which is the one
+  // combination Google cannot recover from on its own. Test group 12 now guards it.
+  urls.push({ loc: '/understand-your-bill/', priority: '0.7', changefreq: 'monthly', langs: [...VERNACULARS] });
   for (const state of states) {
     const stateSlug = slugify(state);
     const sLangs = VERNACULARS.filter(l => langServesState(l, state));
@@ -5672,7 +5827,35 @@ Sitemap: ${SITE}/sitemap.xml
 `;
 
 // ── llms.txt (https://llmstxt.org) — a curated, markdown site map for LLMs ────
-function buildLlmsTxt(states) {
+// `dbStates` is the tariff database's own per-state records. The FY sentence below is
+// derived from them rather than written by hand: the hardcoded "FY 2024-25 / 2025-26" sat
+// here through two tariff-year rollovers, telling every answer engine the data was two
+// years stale while the pages themselves served FY 2026-27.
+function buildLlmsTxt(states, dbStates = []) {
+  // Same rule as the /database/ coverage table: only a note that *opens* with the FY states
+  // it. Assam's note mentions FY 2026-27 as a pending petition, which is not a tariff basis.
+  const fyOf = (st) => {
+    const m = /^FY\s*20\d\d-\d\d/.exec((st.ratesAsOf || '').trim());
+    if (m) return m[0].replace(/\s+/g, ' ');
+    return /^FY\s*20\d\d-\d\d$/.test(st.tariffYear || '') ? st.tariffYear : '';
+  };
+  const tally = new Map();
+  let datedByOrder = 0, unrecorded = 0;
+  for (const st of dbStates) {
+    const fy = fyOf(st);
+    if (fy) tally.set(fy, (tally.get(fy) || 0) + 1);
+    else if ((st.ratesAsOf || '').trim()) datedByOrder++;
+    else unrecorded++;
+  }
+  // Report the gaps as well as the coverage. An answer engine that cites this file should be
+  // able to see which states have no published basis recorded, exactly as /database/ shows it.
+  const ranked = [...tally.entries()].sort((a, b) => b[1] - a[1] || b[0].localeCompare(a[0]));
+  const n = dbStates.length;
+  const parts = ranked.map(([fy, c], i) => i === 0 ? `${fy} for ${c} of ${n} states` : `${fy} for ${c}`);
+  if (datedByOrder) parts.push(`an order date rather than a financial year for ${datedByOrder}`);
+  const fyPhrase = parts.length ? parts.join(', ') : 'no financial year recorded';
+  const gapNote = unrecorded ? ` ${unrecorded} states have no published basis recorded yet.` : '';
+
   const stateLinks = states.map(s =>
     `- [${s} electricity tariffs](${SITE}/tariffs/${slugify(s)}/): DISCOMs, slab rates, fixed charges and indicative bills for ${s}`
   ).join('\n');
@@ -5680,7 +5863,7 @@ function buildLlmsTxt(states) {
 
 > Free, browser-based electricity bill calculator for India. Covers 65 distribution companies (DISCOMs) across 34 states and union territories with slab-wise energy charges, fixed/demand charges, FPPA fuel surcharge, electricity duty, solar net metering and Time-of-Day billing. Independent — not affiliated with any DISCOM, SERC or government body. Estimates are provisional; official bills come from the DISCOM.
 
-Tariff data is compiled from publicly available tariff orders (FY 2024-25 / 2025-26) and the calculation engine applies each DISCOM's published methodology: slab-wise rates, sanctioned-load-based fixed charges, then surcharges and duty.
+Tariff data is compiled from publicly available tariff orders: ${fyPhrase}.${gapNote} The calculation engine applies each DISCOM's published methodology: slab-wise rates, sanctioned-load-based fixed charges, then surcharges and duty.
 
 ## Tools
 
@@ -5706,6 +5889,8 @@ ${GUIDES.map(g => `- [${g.title}](${SITE}/guides/${g.slug}/): ${g.description.sp
 
 ## Reference
 
+- [Tariff Database](${SITE}/database/): the full machine-readable dataset behind every calculation — per-state DISCOM counts, category counts, the tariff year in force, and a link to the originating regulator's order where one is recorded
+- [Fuel Surcharge (FPPA) Tracker](${SITE}/fppa/): current and historical fuel-surcharge rates by state and DISCOM, with the month each came into force
 - [Electricity Bill Glossary](${SITE}/glossary/): definitions of billing terms — ${GLOSSARY.map(t => t.abbr || t.term.replace(/\s*\(.*?\)\s*/g, '').trim()).join(', ')}
 
 ## Tariff reference
@@ -5720,6 +5905,59 @@ ${stateLinks}
 - FPPA (Fuel and Power Purchase Adjustment) is applied per-unit or as a percentage of energy charges, whichever the state's tariff order specifies.
 - Slab calculations are slab-wise: each rate applies only to units within its slab.
 `;
+}
+
+// ── inline the @font-face block ───────────────────────────────────────────────
+// fonts/fonts.css is 2.8 KB of nothing but @font-face rules, and it was the FIRST of two
+// render-blocking stylesheets in the head. A separate file for it costs a full round-trip
+// before any text can paint, and on a cold mobile connection that round-trip is worth more
+// than the bytes it carries. Inlining it removes the request outright; the two woff2
+// preloads above it already start the font downloads, so nothing is delayed by the move.
+//
+// This rewrites every page in the repo, generated and hand-written alike, on every build.
+// Doing it as a post-pass rather than in layout() is deliberate: the hand-written tool
+// pages carry their own <head>, and a one-time sed over them would go stale the next time
+// fonts.css changed. Re-deriving it each build makes drift impossible - the same reasoning
+// content.min.css already follows.
+const FONT_CSS_MARK = 'data-inline="fonts"';
+function inlineFontCss() {
+  const src = fs.readFileSync(path.join(ROOT, 'fonts', 'fonts.css'), 'utf8');
+  const min = src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ')
+    .replace(/\s*([{};,:])\s*/g, '$1').replace(/;}/g, '}').trim();
+  const block = `<style ${FONT_CSS_MARK}>${min}</style>`;
+  // Matches the <link> on first run and the <style> we wrote on every run after, so the
+  // step is idempotent and always reflects the current fonts.css.
+  const re = new RegExp(
+    `<link rel="stylesheet" href="\\/?fonts\\/fonts\\.css">|<style ${FONT_CSS_MARK}>[\\s\\S]*?<\\/style>`, 'g');
+  let touched = 0;
+  (function walk(dir) {
+    for (const name of fs.readdirSync(dir)) {
+      if (name === 'node_modules' || name === '.git' || name === 'dist' || name === '.wrangler') continue;
+      const abs = path.join(dir, name);
+      if (fs.statSync(abs).isDirectory()) { walk(abs); continue; }
+      if (!name.endsWith('.html')) continue;
+      const html = fs.readFileSync(abs, 'utf8');
+      if (!re.test(html)) continue;
+      re.lastIndex = 0;
+      const out = html.replace(re, block);
+      if (out === html) continue;
+      // Windows throws a transient UNKNOWN/EBUSY here when a scanner or a dev server still
+      // holds a handle on a file this build just wrote - and this step rewrites 500 of them
+      // back to back, so it hits that window regularly. Retry briefly rather than failing a
+      // whole generation over a lock that clears in milliseconds.
+      let wrote = false;
+      for (let attempt = 0; attempt < 5 && !wrote; attempt++) {
+        try { fs.writeFileSync(abs, out, 'utf8'); wrote = true; }
+        catch (err) {
+          if (attempt === 4) throw err;
+          const until = Date.now() + 40 * (attempt + 1);
+          while (Date.now() < until) { /* short synchronous backoff */ }
+        }
+      }
+      touched++;
+    }
+  })(ROOT);
+  return touched;
 }
 
 // ── minified CSS ──────────────────────────────────────────────────────────────
@@ -5966,15 +6204,18 @@ export function generateSeo() {
   saveManifest();
   fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap, 'utf8');
   fs.writeFileSync(path.join(ROOT, 'robots.txt'), ROBOTS, 'utf8');
-  fs.writeFileSync(path.join(ROOT, 'llms.txt'), buildLlmsTxt(states), 'utf8');
+  fs.writeFileSync(path.join(ROOT, 'llms.txt'), buildLlmsTxt(states, tariffDatabase.db.states), 'utf8');
   fs.writeFileSync(path.join(ROOT, '404.html'), notFoundPage(), 'utf8');
+  // After every page is on disk - 404.html included - and before buildContentCss(), which
+  // derives content.min.css from this markup and must see its final form.
+  const fontPages = inlineFontCss();
   const searchEntries = writeSearchIndex(states);
   const cssKb = writeMinifiedCss();
   // Must run after the pages are on disk: it reads their markup to decide what to keep.
   const content = buildContentCss({ quiet: true });
   const sw = stampServiceWorker();
 
-  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + content.min.css (${(content.bytes/1024).toFixed(0)} KB) + sw ${sw.version} (${sw.hashed} assets)`);
+  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + inline @font-face on ${fontPages} pages + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + content.min.css (${(content.bytes/1024).toFixed(0)} KB) + sw ${sw.version} (${sw.hashed} assets)`);
   return { pages, states: states.length };
 }
 

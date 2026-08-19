@@ -2,6 +2,7 @@
 
 import { displayDate, escHtml } from './utils.js';
 import { tariffProvenanceHtml } from './tariff-provenance.js';
+import { surchargeTerm } from './tariffs/surcharge-terms.js';
 export { displayDate };
 
 /**
@@ -187,7 +188,7 @@ export function renderBill(params) {
   // the point: the two previews should not look like two different products.
   const { result, consumerName, accountNo, address, meterNo,
           billingMonth, billingYear, prevReading, currReading,
-          fromDate, toDate, fppaSource, compact = false } = params;
+          fromDate, toDate, fppaSource, state, compact = false } = params;
 
   const { discom, category, supplyTypeName,
           units, billingBasis, energyUnit,
@@ -292,9 +293,14 @@ export function renderBill(params) {
       <td class="num amt">− ${formatINR(todOffPeakRebate)}</td>
     </tr>` : ''}` : '';
 
+  // Name the charge the way this state's bill names it: FAC in Maharashtra, PPAC in Delhi,
+  // FPPAS in UP. The reader is matching our line against a printed bill, and "FPPA" is not
+  // the word on that bill. Falls back to the generic FPPA where no term is recorded.
+  const facTerm = surchargeTerm(state, discom && discom.id);
+  const facName = facTerm.generic ? 'FPPA Surcharge' : facTerm.code;
   const facLabel = facMode === 'percent'
-    ? `FPPA Surcharge @ ${Math.abs(facRate)}% of charges${facRate < 0 ? ' (credit)' : ''}`
-    : `FPPA Surcharge @ ₹ ${Math.abs(facRate).toFixed(2)}/unit${facRate < 0 ? ' (credit)' : ''}`;
+    ? `${facName} @ ${Math.abs(facRate)}% of charges${facRate < 0 ? ' (credit)' : ''}`
+    : `${facName} @ ₹ ${Math.abs(facRate).toFixed(2)}/unit${facRate < 0 ? ' (credit)' : ''}`;
   const facRow = facAmount !== 0 ? `
     <tr class="fac-row">
       <td>${facLabel}</td>
@@ -403,11 +409,11 @@ export function renderBill(params) {
   const fppaBody = `
     <div class="acc-meta">Method: <strong>${facMode === 'percent' ? '% of charges' : '₹ per unit'}</strong> · Applied: <strong>${facMode === 'percent' ? Math.abs(facRate) + '%' : '₹ ' + Math.abs(facRate).toFixed(2) + '/unit'}</strong>${facRate < 0 ? ' (credit)' : ''}</div>
     <div class="acc-note">Formula: <code>${facMode === 'percent' ? `${Math.abs(facRate)}% × (Fixed + Energy)` : `₹${Math.abs(facRate).toFixed(2)} × ${units} units`}</code></div>
-    <table class="acc-table"><tr><td>This bill's FPPA</td><td class="num"><strong>${facAmount < 0 ? '− ' + formatINR(-facAmount) : formatINR(facAmount)}</strong></td></tr></table>
+    <table class="acc-table"><tr><td>This bill's ${facName}</td><td class="num"><strong>${facAmount < 0 ? '− ' + formatINR(-facAmount) : formatINR(facAmount)}</strong></td></tr></table>
     ${fppaSource
       ? `<div class="acc-note acc-verified">✓ Source: ${fppaSource}</div>`
       : `<div class="acc-note acc-muted">No verified FPPA on record for this period — defaulted to ${facMode === 'percent' ? facRate + '%' : '₹' + facRate}. Enter the value from your bill if it differs.</div>`}
-    <div class="acc-note acc-muted">FPPA / FPPAS is notified each billing cycle (often a ~3-month lag) to recover the gap between actual and approved power-purchase cost. Some states cap it (e.g. UP: 10%/cycle, excess carried forward).</div>`;
+    <div class="acc-note acc-muted">${facTerm.generic ? 'The fuel surcharge' : `${facTerm.code} (${facTerm.full})`} is notified each billing cycle (often a ~3-month lag) to recover the gap between actual and approved power-purchase cost. Some states cap it (e.g. UP: 10%/cycle, excess carried forward). Different states name this charge differently.</div>`;
 
   // The rates/LPSC/FPPA accordions are the Detailed mode's depth. Simple mode keeps the
   // rates badge (provenance) but drops the drill-downs.
@@ -416,7 +422,7 @@ export function renderBill(params) {
       <div class="bill-extras-title">Rates &amp; Surcharge Details</div>
       ${accordionItem('Tariff Details', 'Applicable rates and full calculation breakdown', tariffBody)}
       ${accordionItem('Late Payment Surcharge', 'How LPSC is applied and calculated for your bill', lpscBody)}
-      ${accordionItem('FPPAS Rates', 'The monthly Fuel &amp; Power Purchase Adjustment surcharge applied', fppaBody)}
+      ${accordionItem(`${facName} Rates`, `The monthly fuel-surcharge adjustment applied`, fppaBody)}
     </div>`;
 
   return `

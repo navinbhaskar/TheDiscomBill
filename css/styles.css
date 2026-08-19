@@ -3608,6 +3608,108 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
   .tariff-cards { grid-template-columns: 1fr; }
 }
 
+/* ─── "Find your rate" summary ─────────────────────────────────────────────────
+   Sits above the detail cards and answers the lookup the page actually gets asked.
+   The detail below is the reference; this is the answer. */
+.tariff-summary { margin: 0 0 18px; }
+.tariff-summary-cap {
+  font-size: 12px; color: var(--text-tertiary); line-height: 1.5; margin: 0 0 8px;
+}
+/* Wide content scrolls inside its own box — the page body must never scroll sideways. */
+.tariff-summary-scroll {
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border-default); border-radius: var(--radius-lg);
+  background: var(--surface-card); box-shadow: var(--shadow-sm);
+}
+.tariff-summary-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.tariff-summary-table th {
+  text-align: left; font-size: 10.5px; font-weight: 700; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--text-tertiary);
+  padding: 10px 14px; border-bottom: 1px solid var(--border-default);
+  background: var(--surface-sunken); white-space: nowrap;
+}
+.tariff-summary-table th.num, .tariff-summary-table td.num { text-align: right; }
+.ts-th-sub {
+  display: block; font-size: 9.5px; font-weight: 500; letter-spacing: 0;
+  text-transform: none; color: var(--text-tertiary); opacity: .8;
+}
+.tariff-summary-table td {
+  padding: 11px 14px; border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary); vertical-align: top;
+}
+.tariff-summary-table tr:last-child td { border-bottom: none; }
+.tariff-summary-table tbody tr:hover td { background: var(--surface-sunken); }
+
+/* The description leads; the tariff code follows as a tag. A reader recognises
+   "Rural life line", not "ST-17". */
+.ts-name a {
+  font-weight: 600; color: var(--text-primary); text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.ts-name a:hover, .ts-name a:focus-visible { color: var(--text-brand); border-bottom-color: currentColor; }
+.ts-code {
+  display: inline-block; margin-left: 7px; padding: 1px 6px;
+  font-size: 10px; font-weight: 700; font-variant-numeric: tabular-nums;
+  color: var(--text-brand); background: var(--brand-faint);
+  border: 1px solid var(--brand-border); border-radius: 999px; white-space: nowrap;
+}
+.ts-parent { display: block; font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+.ts-fixed { color: var(--text-secondary); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ts-rate {
+  font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+/* An en dash set tight, so a range reads as one figure rather than two. */
+.ts-dash { margin: 0 1px; color: var(--text-tertiary); font-weight: 500; }
+.ts-free { font-weight: 700; color: var(--success-text); }
+
+/* ─── Supply types as disclosure blocks ──────────────────────────────────────── */
+.tariff-supplytype > summary {
+  display: flex; align-items: center; align-content: center; gap: 8px; flex-wrap: wrap;
+  cursor: pointer; list-style: none; margin: 0;
+  /* A single-line summary came out 21px tall - half the 44px minimum, and this is now the
+     control a reader uses to open every rate on the page. Height, not padding, so a
+     two-line label still grows naturally instead of being padded past its content. */
+  min-height: 44px;
+}
+.tariff-supplytype > summary::-webkit-details-marker { display: none; }
+/* Chevron drawn from a border so it needs no asset and inherits currentColor. */
+.tariff-supplytype > summary::after {
+  content: ''; margin-left: auto; flex-shrink: 0;
+  width: 7px; height: 7px; align-self: center;
+  border-right: 2px solid var(--text-tertiary); border-bottom: 2px solid var(--text-tertiary);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform .18s ease;
+}
+.tariff-supplytype[open] > summary::after { transform: rotate(-135deg) translate(-2px, -2px); }
+.tariff-supplytype > summary:focus-visible {
+  outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 4px;
+}
+.tariff-st-label { font-size: 13px; font-weight: 700; color: var(--text-brand); }
+.tariff-st-code {
+  padding: 1px 6px; font-size: 10px; font-weight: 700; font-variant-numeric: tabular-nums;
+  color: var(--text-tertiary); background: var(--surface-card);
+  border: 1px solid var(--border-subtle); border-radius: 999px; white-space: nowrap;
+}
+.tariff-st-body { padding-top: 9px; }
+/* A row jumped to from the summary gets a moment of emphasis, so the reader can see
+   where they landed in a long list. */
+.tariff-supplytype:target {
+  border-color: var(--brand-border);
+  box-shadow: 0 0 0 3px var(--brand-faint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tariff-supplytype > summary::after { transition: none; }
+}
+
+@media (max-width: 560px) {
+  .tariff-summary-table th, .tariff-summary-table td { padding: 9px 11px; }
+  .tariff-summary-table { font-size: 12.5px; }
+  .ts-parent { display: none; }
+}
+
+
 /* ── Programmatic SEO landing pages (state / DISCOM / directory) ──────────────── */
 /* Side padding matters below ~1050px: unlike the homepage sections (which carry
    their own 24px gutters), .seo-page sits directly in .page-body, so without it
