@@ -1967,7 +1967,13 @@ function discomSourcesHtml(state, discom, fy) {
       <table class="seo-facts"><tbody>
         ${sources.map(([label, href]) => `<tr><th>${esc(label)}</th><td><a href="${attr(href)}"${/^https?:/i.test(href) ? ' target="_blank" rel="noopener"' : ''}>${esc(String(href).replace(/^https?:\/\//, ''))}</a></td></tr>`).join('')}
         <tr><th>Tariff effective from</th><td>${esc((ratesPhrase(meta, fy)?.label || fy))}</td></tr>
-        <tr><th>Last verified</th><td>${LASTMOD_TOKEN.en}</td></tr>
+        ${meta.ratesAsOf
+          ? `<tr><th>Tariff basis</th><td>${esc(meta.ratesAsOf)}</td></tr>`
+          : `<tr><th>Tariff basis</th><td class="db-gap">No published order recorded for this state yet — these rates are not yet tied to a document we hold. <a href="/methodology/">How we source and verify</a></td></tr>`}
+        ${meta.verifiedOn
+          ? `<tr><th>Checked against the order</th><td>${esc(meta.verifiedOn)}</td></tr>`
+          : ''}
+        <tr><th>Page updated</th><td>${LASTMOD_TOKEN.en}</td></tr>
       </tbody></table>
     </section>`;
 }
