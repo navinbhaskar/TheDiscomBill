@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      try { localStorage.setItem('lang', 'hi'); } catch (e) {}
+    })();
+  </script>
+  <title>MD पेनल्टी / अतिरिक्त मांग शुल्क — राज्यवार नियम</title>
+  <meta name="description" content="बिजली बिल पर लगने वाली अधिकतम मांग (MD) पेनल्टी क्या है, यूनिट न बदलने पर भी यह क्यों आती है, हर राज्य इसे कैसे वसूलता है (2×, 1.5×, सपाट ₹/kVA या ऊर्जा शुल्क का %)">
+  <link rel="canonical" href="https://thediscombill.com/hi/guides/md-penalty-excess-demand-charge/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/md-penalty-excess-demand-charge/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/md-penalty-excess-demand-charge/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/md-penalty-excess-demand-charge/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="MD पेनल्टी / अतिरिक्त मांग शुल्क — राज्यवार नियम">
+  <meta property="og:description" content="बिजली बिल पर लगने वाली अधिकतम मांग (MD) पेनल्टी क्या है, यूनिट न बदलने पर भी यह क्यों आती है, हर राज्य इसे कैसे वसूलता है (2×, 1.5×, सपाट ₹/kVA या ऊर्जा शुल्क का %), और इसे रोकने के तीन तरीके।">
+  <meta property="og:url" content="https://thediscombill.com/hi/guides/md-penalty-excess-demand-charge/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="MD पेनल्टी / अतिरिक्त मांग शुल्क — राज्यवार नियम">
+  <meta property="og:locale" content="hi_IN">
+  <meta property="og:locale:alternate" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MD पेनल्टी / अतिरिक्त मांग शुल्क — राज्यवार नियम">
+  <meta name="twitter:description" content="बिजली बिल पर लगने वाली अधिकतम मांग (MD) पेनल्टी क्या है, यूनिट न बदलने पर भी यह क्यों आती है, हर राज्य इसे कैसे वसूलता है (2×, 1.5×, सपाट ₹/kVA या ऊर्जा शुल्क का %), और इसे रोकने के तीन तरीके।">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/guides/md-penalty-excess-demand-charge/","name":"MD पेनल्टी / अतिरिक्त मांग शुल्क — राज्यवार नियम","description":"बिजली बिल पर लगने वाली अधिकतम मांग (MD) पेनल्टी क्या है, यूनिट न बदलने पर भी यह क्यों आती है, हर राज्य इसे कैसे वसूलता है (2×, 1.5×, सपाट ₹/kVA या ऊर्जा शुल्क का %), और इसे रोकने के तीन तरीके।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-20"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"MD पेनल्टी और अतिरिक्त मांग शुल्क — पूरी जानकारी","description":"बिजली बिल पर लगने वाली अधिकतम मांग (MD) पेनल्टी क्या है, यूनिट न बदलने पर भी यह क्यों आती है, हर राज्य इसे कैसे वसूलता है (2×, 1.5×, सपाट ₹/kVA या ऊर्जा शुल्क का %), और इसे रोकने के तीन तरीके।","image":"https://thediscombill.com/og-image.jpg","mainEntityOfPage":"https://thediscombill.com/hi/guides/md-penalty-excess-demand-charge/","datePublished":"2026-08-20","dateModified":"2026-08-20","inLanguage":"hi-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"गाइड","item":"https://thediscombill.com/hi/guides/"},{"@type":"ListItem","position":3,"name":"MD पेनल्टी और अतिरिक्त मांग शुल्क — पूरी जानकारी"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"क्या MD पेनल्टी और अतिरिक्त मांग शुल्क एक ही चीज़ हैं?","acceptedAnswer":{"@type":"Answer","text":"हाँ। डिस्कॉम के हिसाब से यही शुल्क MD पेनल्टी, अतिरिक्त मांग शुल्क, एक्सीडिंग डिमांड चार्ज, पेनल डिमांड चार्ज या डिमांड सरचार्ज लिखा जाता है। सबका मतलब एक है: दर्ज अधिकतम मांग आपके स्वीकृत लोड या अनुबंधित मांग से ऊपर गई, और अतिरिक्त हिस्से पर पेनल दर लग रही है।"}},{"@type":"Question","name":"पेनल्टी पूरी मांग पर लगती है या सिर्फ़ अतिरिक्त पर?","acceptedAnswer":{"@type":"Answer","text":"सिर्फ़ अतिरिक्त पर। स्वीकृत लोड या अनुबंधित मांग तक की मांग सामान्य दर पर ही बिलती है, और केवल उससे ऊपर के हिस्से पर पेनल दर लगती है। पूरी दर्ज मांग पर पेनल दर लगाने वाला बिल ग़लत है।"}},{"@type":"Question","name":"क्या सच में आधा घंटा पूरे महीने की पेनल्टी तय कर सकता है?","acceptedAnswer":{"@type":"Answer","text":"हाँ, और आमतौर पर इसी वजह से यह शुल्क अनुपात से बाहर लगता है। अधिकतम मांग चक्र का सबसे ऊँचा 30-मिनट औसत होती है, इसलिए एक बार का एक-साथ चालू होना उसे तय कर देता है और महीने में आगे कुछ भी उसे घटाता नहीं। अगले चक्र की शुरुआत में यह रीसेट हो जाती है।"}},{"@type":"Question","name":"क्या घरेलू कनेक्शनों पर MD पेनल्टी लगती है?","acceptedAnswer":{"@type":"Answer","text":"आमतौर पर नहीं, क्योंकि ज़्यादातर घरेलू टैरिफ़ दर्ज MD पर मांग शुल्क के बजाय स्वीकृत लोड पर फिक्स्ड शुल्क लेते हैं। यह मुख्यतः वाणिज्यिक, औद्योगिक और HT कनेक्शनों पर लागू होती है। कुछ राज्य स्वीकृत लोड पार करने वाले घरेलू कनेक्शनों पर भी अधिभार लगाते हैं, इसलिए मान लेने के बजाय अपनी अनुसूची देख लीजिए।"}},{"@type":"Question","name":"क्या मुझे बस स्वीकृत लोड बढ़वा लेना चाहिए?","acceptedAnswer":{"@type":"Answer","text":"तभी, जब ओवरशूट नियमित हो। ज़्यादा स्वीकृत लोड आपका फिक्स्ड या मांग शुल्क हर महीने स्थायी रूप से बढ़ा देता है, इसलिए अगर पेनल्टी कभी-कभार आती है तो चालू होने का समय अलग करना सस्ता पड़ सकता है। आवेदन से पहले दोनों की सालाना लागत की तुलना कीजिए।"}},{"@type":"Question","name":"क्या पेनल्टी पर बिजली शुल्क (ड्यूटी) भी लगता है?","acceptedAnswer":{"@type":"Answer","text":"ज़्यादातर राज्यों में हाँ। अतिरिक्त मांग पेनल्टी उन शुल्कों का हिस्सा होती है जिन पर ड्यूटी और ईंधन अधिभार जोड़े जाते हैं, इसलिए बिल में असल बढ़ोतरी पेनल्टी की लाइन से बड़ी होती है।"}}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <a href="/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">Smart Meter</a>
+      <a href="/hi/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/hi/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/#calculator" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">Smart Meter</span></a>
+            <a href="/hi/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/hi/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <!-- aria-labelledby, not aria-label: the accessible name has to CONTAIN the visible
+             text ("EN"), or speech input cannot activate the button and a screen reader never
+             announces which language is active (WCAG 2.5.3). Referencing the live span also
+             keeps the name in step when syncLangUI() rewrites the badge. -->
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- A plain list of links, not a listbox. These rows navigate, so they are anchors:
+             that makes them crawlable, middle-clickable and keyboard-operable for free,
+             none of which a role="option" <li> with a click handler ever was. Rows that
+             translate in place (no twin URL to point at) stay <button>s. -->
+        <ul class="lang-menu" id="langMenu" aria-label="Select language">
+          <li><a class="lang-opt" href="/guides/md-penalty-excess-demand-charge/" hreflang="en-IN" lang="en" data-lang="en"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></a></li>
+          <li><span class="lang-opt" data-lang="hi" aria-current="true"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">हिं</span></span></li>
+        </ul>
+      </div>
+      <button type="button" id="siteSearchBtn" class="site-search-btn" aria-label="Search the site (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body" role="main">
+
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/">होम</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><a href="/hi/guides/">गाइड</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">MD पेनल्टी और अतिरिक्त मांग शुल्क — पूरी जानकारी</span></li></ol></nav>
+    <div class="seo-article-tools"><p class="seo-lang-pills"><svg class="seo-lang-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span class="sr-only">Available in</span><a class="seo-lang-pill" href="/guides/md-penalty-excess-demand-charge/" hreflang="en-IN" lang="en">English</a><span class="seo-lang-pill is-current" lang="hi" aria-current="page">हिंदी</span></p><button type="button" class="seo-share-btn" data-share-article hidden data-copied="लिंक कॉपी हुआ" data-failed="कॉपी नहीं हुआ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span class="seo-share-label" data-share-label>शेयर</span></button></div>
+    <h1>MD पेनल्टी और अतिरिक्त मांग शुल्क — पूरी जानकारी</h1>
+    <p class="guide-meta">8 मिनट · अपडेट: 20 अगस्त 2026 · TheDiscomBill संपादकीय · <a href="/methodology/">दरें कहाँ से आती हैं</a></p>
+    <p class="seo-lead"><strong>MD पेनल्टी</strong> — बिल पर इसे अतिरिक्त मांग शुल्क, एक्सीडिंग डिमांड चार्ज या पेनल डिमांड
+      चार्ज भी लिखा जाता है — तब लगती है जब बिलिंग चक्र में आपकी अधिकतम खपत-दर उस लोड से ऊपर चली जाती है
+      जिसका आपने अनुबंध किया है। यह <strong>सिर्फ़ अतिरिक्त हिस्से</strong> पर लगती है, पूरी मांग पर नहीं,
+      और यह उन गिनी-चुनी लाइनों में से है जो आपकी यूनिट लगभग न बदलने पर भी बिल में आ सकती है। यह पृष्ठ पहले
+      तंत्र समझाता है, फिर बताता है कि राज्य-दर-राज्य नियम कैसे अलग होते हैं।</p>
+    
+    
+    <nav class="page-toc" aria-label="इस पेज पर">
+      <span class="page-toc-label">इस पेज पर</span>
+      <a href="#section-1">अधिकतम मांग असल में मापती क्या है</a>
+        <a href="#section-2">स्वीकृत लोड, अनुबंधित मांग और बिल्ड डिमांड</a>
+        <a href="#section-3">पेनल्टी की गणना कैसे होती है</a>
+        <a href="#md">राज्यवार MD पेनल्टी नियम</a>
+        <a href="#section-5">कुछ नहीं बदला, फिर इस महीने यह क्यों आई</a>
+        <a href="#section-6">इसे रोकने के तीन तरीक़े</a>
+        <a href="#section-7">अपने बिल पर इस शुल्क की जाँच</a>
+    </nav>
+    
+      <section class="seo-section" id="section-1">
+        <h2>अधिकतम मांग असल में मापती क्या है</h2>
+        <p>यूनिट (kWh) बताती हैं कि महीने भर में आपने कुल कितनी ऊर्जा इस्तेमाल की।
+        <strong>अधिकतम मांग</strong> बताती है कि आपने उसे सबसे तेज़ किस दर से खींचा — चक्र का सबसे भारी
+        अंतराल, जो लगभग हमेशा <strong>30 मिनट</strong> का रोलिंग ब्लॉक होता है, मीटर उसे दर्ज करता है और
+        हर चक्र में रीसेट कर देता है।</p>
+        <p>यह अंतर ही पूरी बात है। 10 kW का लोड 20 घंटे चलाना और 40 kW का लोड 5 घंटे चलाना — दोनों में
+        यूनिट लगभग बराबर बन सकती हैं, लेकिन दूसरी स्थिति में नेटवर्क को 40 kW के लिए बनाना पड़ता है।
+        मांग शुल्क उसी क्षमता का दाम है; ऊर्जा शुल्क बिजली का।</p>
+        <p>इसलिए <strong>एक बुरा आधा घंटा पूरे महीने की MD तय कर देता है।</strong> किसी एक सोमवार को
+        9:05 बजे कंप्रेसर, लिफ़्ट मोटर और एसी बैंक का एक साथ चालू हो जाना काफ़ी है। बाकी 719 घंटे आप जो भी
+        करें, वह आँकड़ा नीचे नहीं आता।</p>
+      </section>
+
+      <section class="seo-section" id="section-2">
+        <h2>स्वीकृत लोड, अनुबंधित मांग और बिल्ड डिमांड</h2>
+        <p>तीन संख्याएँ लगातार आपस में गड्डमड्ड होती हैं, और पेनल्टी इसी पर निर्भर करती है कि कौन-सी कौन है:</p>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>शब्द</th><th>इसका मतलब</th><th>यह कहाँ से आता है</th></tr></thead>
+          <tbody>
+            <tr><td><strong>स्वीकृत लोड</strong></td><td>डिस्कॉम ने आपके लिए जितना कनेक्टेड लोड मंज़ूर किया, kW में।</td><td>आपका कनेक्शन एग्रीमेंट। बिल पर छपा होता है।</td></tr>
+            <tr><td><strong>अनुबंधित मांग</strong></td><td>आपने अधिकतम जितनी मांग खींचने का अनुबंध किया, kVA में। HT कनेक्शनों पर यही संख्या मायने रखती है।</td><td>आपका एग्रीमेंट; इसे बदलना आवेदन का काम है, फ़ोन कॉल का नहीं।</td></tr>
+            <tr><td><strong>दर्ज MD</strong></td><td>इस चक्र में मीटर ने जो सबसे ऊँची 30-मिनट मांग देखी।</td><td>मीटर। यह माप है, कोई निर्णय नहीं।</td></tr>
+            <tr><td><strong>बिल्ड डिमांड</strong></td><td>जिस पर आपसे मांग शुल्क लिया जाता है — आमतौर पर दर्ज MD और एक न्यूनतम सीमा (HT पर अक्सर अनुबंधित मांग का 75%) में से जो ज़्यादा हो।</td><td>टैरिफ़ आदेश।</td></tr>
+          </tbody>
+        </table></div>
+        <p>पेनल्टी तब लगती है जब <strong>दर्ज MD स्वीकृत लोड या अनुबंधित मांग से ऊपर</strong> जाती है।
+        बिलिंग-डिमांड की न्यूनतम सीमा अलग नियम है और उल्टी दिशा में काम करती है: वह आपके मांग शुल्क को एक
+        न्यूनतम से नीचे नहीं गिरने देती — इसीलिए लगभग बिना खपत वाले महीने में भी अच्छा-ख़ासा मांग शुल्क आ सकता है।</p>
+      </section>
+
+      <section class="seo-section" id="section-3">
+        <h2>पेनल्टी की गणना कैसे होती है</h2>
+        <p>भारत में हर रूप घूम-फिरकर एक ही आकार पर आता है:</p>
+        <p><strong>पेनल्टी = (दर्ज MD − स्वीकृत मांग) × पेनल दर</strong></p>
+        <p>राज्यों के बीच फ़र्क़ सिर्फ़ पेनल दर का है, और उसे लिखने के चार तरीक़े हैं:</p>
+        <ul>
+          <li><strong>सामान्य मांग दर का गुणक।</strong> सबसे आम। अतिरिक्त kW या kVA पर सामान्य दर का, मान लीजिए, 1.5× या 2× वसूला जाता है।</li>
+          <li><strong>प्रति अतिरिक्त kVA सपाट ₹।</strong> एक तय पेनल राशि, जो आपकी सामान्य मांग दर से स्वतंत्र होती है।</li>
+          <li><strong>प्रति अतिरिक्त kW, ऊर्जा शुल्क का प्रतिशत।</strong> कम प्रचलित, और इसमें पेनल्टी आपकी खपत के साथ भी बढ़ती है, सिर्फ़ ओवरशूट के साथ नहीं।</li>
+          <li><strong>अतिरिक्त लोड के फिक्स्ड शुल्क पर अधिभार</strong>, मांग दर पर नहीं।</li>
+        </ul>
+        <p>दो बातें तय करती हैं कि बिल पर छपी संख्या आपके हिसाब से मेल खाएगी या नहीं। पहली,
+        <strong>पेनल्टी सिर्फ़ अतिरिक्त हिस्से पर लगती है</strong> — स्वीकृत लोड तक का हिस्सा सामान्य दर पर
+        ही बिलता है। दूसरी, ज़्यादातर राज्यों में पेनल्टी ईंधन अधिभार और बिजली शुल्क (ड्यूटी) की गणना से
+        <em>पहले</em> जुड़ती है, इसलिए ₹1,000 की पेनल्टी बिल के कुल में ₹1,000 से ज़्यादा पड़ती है। हमारा
+        <a href="/#calculator">बिल कैलकुलेटर</a> इसे इसी क्रम में लगाता है।</p>
+      </section>
+
+      <section class="seo-section" id="md">
+        <h2>राज्यवार MD पेनल्टी नियम</h2>
+        <p>यह तालिका उसी टैरिफ़ डेटा से बनती है जिस पर कैलकुलेटर चलता है, इसलिए यह साइट जो असल में वसूलती
+        है उससे कभी अलग नहीं हो सकती।</p>
+        <div class="comparison-table-wrapper md-penalty-table"><table class="comparison-table">
+      <thead><tr>
+        <th>राज्य / केंद्रशासित</th><th>टैरिफ़</th><th class="num">उदाहरण लोड</th>
+        <th class="num">मांग शुल्क</th><th>हर अतिरिक्त kW की क़ीमत</th>
+      </tr></thead>
+      <tbody><tr class="md-state-first">
+      <td><a href="/hi/tariffs/delhi/">दिल्ली</a><small class="md-src"><a href="https://www.derc.gov.in/tarriff-orders" rel="nofollow">आदेश</a></small></td>
+      <td><strong>LT-I (Domestic)</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹10.00</td>
+      <td><strong>₹3.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>LT-II (Commercial / Non-Domestic)</strong></td>
+      <td class="num">5 kW</td>
+      <td class="num">₹25.00</td>
+      <td><strong>₹7.50</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/gujarat/">गुजरात</a><small class="md-src"><a href="https://gercin.org/order-category/tariff-orders/" rel="nofollow">आदेश</a></small></td>
+      <td><strong>RGP — Urban / non-Gram-Panchayat</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹7.50</td>
+      <td><strong>₹360.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>Contracted load up to 10 kW</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹50.00</td>
+      <td><strong>₹360.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>Contracted load above 10 kW</strong></td>
+      <td class="num">20 kW</td>
+      <td class="num">₹67.50</td>
+      <td><strong>₹360.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/karnataka/">कर्नाटक</a><small class="md-src"><a href="/orders/kerc-tariff-2025/">KERC आदेश</a></small></td>
+      <td><strong>LT-1 (Domestic / Residential)</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹150.00</td>
+      <td><strong>₹225.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>LT-3(a) (Commercial / Non-Domestic LT)</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹215.00</td>
+      <td><strong>₹322.50</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/maharashtra/">महाराष्ट्र</a><small class="md-src"><a href="/orders/merc-217-2024-msedcl/">MERC आदेश</a></small></td>
+      <td><strong>LT-I(B) (Residential)</strong></td>
+      <td class="num">5 kW</td>
+      <td class="num">₹26.00</td>
+      <td><strong>₹39.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>LT-II(A) — up to 20 kW</strong></td>
+      <td class="num">20 kW</td>
+      <td class="num">₹26.25</td>
+      <td><strong>₹39.38</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>LT-II(B) — 20 to 50 kW</strong></td>
+      <td class="num">35 kW</td>
+      <td class="num">₹525.00</td>
+      <td><strong>₹787.50</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/tamil-nadu/">तमिलनाडु</a><small class="md-src"><a href="/orders/tnerc-to-6-2025/">TNERC आदेश</a></small></td>
+      <td><strong>LT-IA (Domestic)</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">—</td>
+      <td><span class="md-formula">प्रति अतिरिक्त kW, ऊर्जा शुल्क का 1%</span></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>LT-V – Above 50 units/month (100 bi-monthly)</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹110.00</td>
+      <td><span class="md-formula">प्रति अतिरिक्त kW, ऊर्जा शुल्क का 1%</span></td>
+    </tr></tbody>
+    </table></div>
+    <p class="fs-legend"><strong>हर आँकड़ा कैलकुलेटर से निकला है, यहाँ दोबारा लिखा नहीं गया।</strong> हर पंक्ति उदाहरण लोड से
+    एक kW ऊपर का असली बिल जोड़ती है, इसलिए "हर अतिरिक्त kW की क़ीमत" वही है जो उस टैरिफ़ पर आपसे वसूली
+    जाएगी। मांग शुल्क का कॉलम इसलिए है कि पेनल्टी आमतौर पर उसी का गुणक होती है — यही वजह है कि एक ही
+    राज्य अलग-अलग टैरिफ़ पर अलग पेनल्टी दिखा सकता है।</p>
+
+    <details class="md-default-group">
+      <summary>बाक़ी 29 राज्य व केंद्रशासित — हमारे 2× डिफ़ॉल्ट पर</summary>
+      <p class="fs-legend">इन राज्यों के लिए हमने अतिरिक्त-मांग नियम स्रोत से नहीं लिया है, इसलिए कैलकुलेटर मांग शुल्क का
+      2× लगाता है — भारत में सबसे आम रूप। नीचे के रुपये असली हैं: वे ऊपर
+      वाली तालिका जैसी ही गणना से, हर राज्य के असल टैरिफ़ पर निकले हैं। अनुमान <em>गुणक</em> है, गणित नहीं।
+      भरोसा करने से पहले अपनी टैरिफ़ अनुसूची से मिला लीजिए।</p>
+      <div class="comparison-table-wrapper md-penalty-table"><table class="comparison-table">
+        <thead><tr>
+        <th>राज्य / केंद्रशासित</th><th>टैरिफ़</th><th class="num">उदाहरण लोड</th>
+        <th class="num">मांग शुल्क</th><th>हर अतिरिक्त kW की क़ीमत</th>
+      </tr></thead>
+        <tbody><tr class="md-state-first">
+      <td><a href="/hi/tariffs/andhra-pradesh/">आंध्र प्रदेश</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>LT-I (Domestic)</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹10.00</td>
+      <td><strong>₹20.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>II-A(i) — Commercial</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹75.00</td>
+      <td><strong>₹150.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/arunachal-pradesh/">अरुणाचल प्रदेश</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>Domestic LT - 1-phase 230 V</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">—</td>
+      <td><span class="db-gap">इस टैरिफ़ पर मांग शुल्क नहीं</span></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/assam/">असम</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>Domestic-A — above 0.5 kW to below 5 kW</strong></td>
+      <td class="num">1 kW</td>
+      <td class="num">₹70.00</td>
+      <td><strong>₹140.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>LT Commercial — above 0.5 kW to 30 kW</strong></td>
+      <td class="num">1 kW</td>
+      <td class="num">₹150.00</td>
+      <td><strong>₹300.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/bihar/">बिहार</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>Kutir Jyoti (BPL)</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹10.00</td>
+      <td><strong>₹20.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>NDS-I (Rural, metered)</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹60.00</td>
+      <td><strong>₹120.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/chandigarh/">चंडीगढ़</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>LTDS-II — ordinary domestic</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹30.00</td>
+      <td><strong>₹60.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>NDS-I — non-domestic service</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹120.00</td>
+      <td><strong>₹240.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/chhattisgarh/">छत्तीसगढ़</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>LV-1 (Domestic)</strong></td>
+      <td class="num">5 kW</td>
+      <td class="num">₹20.00</td>
+      <td><strong>₹40.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>LV-2.1 — Single phase non-domestic (up to 5 kW)</strong></td>
+      <td class="num">5 kW</td>
+      <td class="num">₹60.00</td>
+      <td><strong>₹120.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/">Dadra &amp; Nagar Haveli and Daman &amp; Diu</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>LT Domestic</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹15.00</td>
+      <td><strong>₹30.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>LT Commercial</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹6.00</td>
+      <td><strong>₹12.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/goa/">गोवा</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>LTDS-II — ordinary domestic (up to 85 kW / 100 kVA)</strong></td>
+      <td class="num">85 kW</td>
+      <td class="num">₹25.00</td>
+      <td><strong>₹50.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>NDS-I — non-domestic service</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹60.00</td>
+      <td><strong>₹120.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/haryana/">हरियाणा</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>DS Category I — sanctioned load up to 2 kW</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">—</td>
+      <td><span class="db-gap">इस टैरिफ़ पर मांग शुल्क नहीं</span></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>LT Supply — up to 10 kW</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹100.00</td>
+      <td><strong>₹200.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/himachal-pradesh/">हिमाचल प्रदेश</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>DS — Other (ordinary) domestic consumers</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹42.50</td>
+      <td><strong>₹85.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>CS — Commercial, contract demand up to 20 kVA</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹14.50</td>
+      <td><strong>₹29.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/jammu-and-kashmir/">Jammu &amp; Kashmir</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>Domestic — metered</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹8.00</td>
+      <td><strong>₹16.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>Non-domestic / commercial — single phase</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹60.00</td>
+      <td><strong>₹120.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/jharkhand/">झारखंड</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>DS Urban — areas under a Nagar Nigam, Parishad or Panchayat</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹50.00</td>
+      <td><strong>₹100.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>CS Urban — commercial in municipal areas</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹200.00</td>
+      <td><strong>₹400.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/kerala/">केरल</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>LT-I Domestic — single phase</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">—</td>
+      <td><span class="db-gap">इस टैरिफ़ पर मांग शुल्क नहीं</span></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>LT-VII(A) Commercial — single phase</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹95.00</td>
+      <td><strong>₹190.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/ladakh/">लद्दाख</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>LT Domestic</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹10.00</td>
+      <td><strong>₹20.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/madhya-pradesh/">मध्य प्रदेश</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>LV-1.2 Domestic — Urban</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">—</td>
+      <td><span class="db-gap">इस टैरिफ़ पर मांग शुल्क नहीं</span></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/manipur/">मणिपुर</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>LT-I (Domestic)</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹20.00</td>
+      <td><strong>₹40.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>LT-II (Commercial)</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹6.00</td>
+      <td><strong>₹12.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/meghalaya/">मेघालय</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>Domestic (DLT)</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹90.00</td>
+      <td><strong>₹180.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>Non-Domestic / Commercial (Low Tension)</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹170.00</td>
+      <td><strong>₹340.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/mizoram/">मिज़ोरम</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>LT Domestic</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹15.00</td>
+      <td><strong>₹30.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/nagaland/">नागालैंड</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>LT Domestic</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹17.50</td>
+      <td><strong>₹35.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/odisha/">ओडिशा</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>Domestic (other than Kutir Jyoti)</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹20.00</td>
+      <td><strong>₹40.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>LT General Purpose (&lt; 110 kVA)</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹30.00</td>
+      <td><strong>₹60.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/puducherry/">पुदुचेरी</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>LTDS-II — domestic (demand based)</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹35.00</td>
+      <td><strong>₹70.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>NDS-I — commercial</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹200.00</td>
+      <td><strong>₹400.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/punjab/">पंजाब</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>DS — sanctioned load up to 2 kW</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹50.00</td>
+      <td><strong>₹100.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>NRS — sanctioned load up to 7 kW</strong></td>
+      <td class="num">7 kW</td>
+      <td class="num">₹70.00</td>
+      <td><strong>₹140.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/rajasthan/">राजस्थान</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>DS/LT-1 (Domestic Service)</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">—</td>
+      <td><span class="db-gap">इस टैरिफ़ पर मांग शुल्क नहीं</span></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/sikkim/">सिक्किम</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>Domestic — single phase</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">—</td>
+      <td><span class="db-gap">इस टैरिफ़ पर मांग शुल्क नहीं</span></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/telangana/">तेलंगाना</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>LT-I (Domestic)</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">—</td>
+      <td><span class="db-gap">इस टैरिफ़ पर मांग शुल्क नहीं</span></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/tripura/">त्रिपुरा</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>Domestic (rural and urban)</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹70.00</td>
+      <td><strong>₹140.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>Commercial — single phase</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹150.00</td>
+      <td><strong>₹300.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/uttar-pradesh/">उत्तर प्रदेश</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>ST-10A</strong> <small>Urban Life Line (Sanctioned Load ≤ 1 kW)</small></td>
+      <td class="num">1 kW</td>
+      <td class="num">₹50.00</td>
+      <td><strong>₹100.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>ST-20</strong> <small>Urban / Non-Rural (Sanctioned Load ≤ 4 kW)</small></td>
+      <td class="num">4 kW</td>
+      <td class="num">₹330.00</td>
+      <td><strong>₹660.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/uttarakhand/">उत्तराखंड</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>RTS-1</strong> <small>Other Domestic Consumers</small></td>
+      <td class="num">1 kW</td>
+      <td class="num">₹75.00</td>
+      <td><strong>₹150.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>RTS-2</strong> <small>Up to 4 kW and up to 60 units/month</small></td>
+      <td class="num">4 kW</td>
+      <td class="num">₹90.00</td>
+      <td><strong>₹180.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-first">
+      <td><a href="/hi/tariffs/west-bengal/">पश्चिम बंगाल</a><small class="md-src"><span class="md-basis-default">हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं</span></small></td>
+      <td><strong>Domestic (Urban) — Rate A(DM-U)</strong></td>
+      <td class="num">2 kW</td>
+      <td class="num">₹30.00</td>
+      <td><strong>₹60.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr><tr class="md-state-cont">
+      <td></td>
+      <td><strong>Rate A (CM) — Commercial</strong></td>
+      <td class="num">10 kW</td>
+      <td class="num">₹60.00</td>
+      <td><strong>₹120.00</strong> <small>प्रति अतिरिक्त kW</small></td>
+    </tr></tbody>
+      </table></div>
+    </details>
+      </section>
+
+      <section class="seo-section" id="section-5">
+        <h2>कुछ नहीं बदला, फिर इस महीने यह क्यों आई</h2>
+        <p>आम वजहें, मोटे तौर पर उसी क्रम में जिसमें वे अक्सर सही निकलती हैं:</p>
+        <ol>
+          <li><strong>एक नया लोड, ग़लत क्षण पर चालू।</strong> एक अतिरिक्त मोटर या एसी जो तब चालू हो जाए जब बाकी सब पहले से चल रहा हो — नया शिखर बन जाता है।</li>
+          <li><strong>कुछ नहीं बदला — मौसम बदला।</strong> गर्मियों में कूलिंग और सर्दियों में हीटिंग आपकी आदत बदले बिना एक-साथ चलने वाला लोड बढ़ा देती है।</li>
+          <li><strong>बिजली कटौती और उसके बाद की रीस्टार्ट।</strong> सप्लाई लौटते ही इमारत के सारे थर्मोस्टैटिक लोड एक साथ चालू होते हैं। यह MD के एकबारगी उछाल की सबसे आम वजहों में है, और इसमें आपका दोष नहीं।</li>
+          <li><strong>आपका स्वीकृत लोड हमेशा से कम था।</strong> उन कनेक्शनों पर आम है जिनका आकार वर्षों पहले तय हुआ और फिर कभी नहीं बदला। यह उछाल नहीं है; आप काफ़ी समय से सीमा के ऊपर थे और अब उसका शुल्क लग रहा है।</li>
+          <li><strong>kVA टैरिफ़ पर कैपेसिटर बैंक की ख़राबी।</strong> अगर आपका बिल kVA पर बनता है और पावर फ़ैक्टर गिर जाए, तो असल काम बढ़े बिना भी दर्ज मांग बढ़ जाती है। लोड बढ़ा मान लेने से पहले यह जाँच लेना बेहतर है।</li>
+        </ol>
+      </section>
+
+      <section class="seo-section" id="section-6">
+        <h2>इसे रोकने के तीन तरीक़े</h2>
+        <p>उसी क्रम में जिसमें ज़्यादातर लोगों को आज़माने चाहिए:</p>
+        <ol>
+          <li><strong>चालू होने का समय अलग-अलग कीजिए।</strong> सबसे सस्ता उपाय, और अक्सर अकेले ही काफ़ी। अगर पेनल्टी तीन लोड के एक साथ चालू होने से आ रही है, तो उन्हें कुछ मिनटों के अंतर पर चलाने से शिखर हट जाता है और आपका असल इस्तेमाल घटता भी नहीं। सबसे बड़ी मोटर पर एक टाइम स्विच एक महीने की पेनल्टी के अंश जितना पड़ता है।</li>
+          <li><strong>kVA टैरिफ़ पर हैं तो पावर फ़ैक्टर सुधारिए।</strong> ख़राब पावर फ़ैक्टर ठीक करने से दर्ज kVA मांग सीधे घटती है, और कई राज्यों में पावर-फ़ैक्टर प्रोत्साहन भी मिलता है — यानी फ़ायदा दो बार।</li>
+          <li><strong>स्वीकृत लोड बढ़वाइए।</strong> यह तब सही है जब ओवरशूट कभी-कभार का नहीं, ढाँचागत हो। यह मुफ़्त नहीं है: ज़्यादा स्वीकृत लोड का मतलब हर महीने, हमेशा के लिए ज़्यादा फिक्स्ड या मांग शुल्क। आवेदन से पहले इस बढ़ोतरी की तुलना उससे कीजिए जो पेनल्टी असल में ले जा रही है — हमारा <a href="/sanctioned-load-optimizer/">स्वीकृत लोड ऑप्टिमाइज़र</a> यही तुलना करता है।</li>
+        </ol>
+        <p>पहले लोड बढ़वा लेना आम ग़लती है। अगर पेनल्टी बारह में से दो महीने आती है, तो फिक्स्ड शुल्क की
+        स्थायी बढ़ोतरी साल भर में पेनल्टी से ज़्यादा पड़ सकती है।</p>
+      </section>
+
+      <section class="seo-section" id="section-7">
+        <h2>अपने बिल पर इस शुल्क की जाँच</h2>
+        <ol>
+          <li><strong>बिल पर अपना स्वीकृत लोड या अनुबंधित मांग खोजिए</strong> और देखिए कि वह आपके एग्रीमेंट से मेल खाता है। यहाँ की लिपिकीय ग़लती सबसे पहले ख़ारिज कर लेनी चाहिए।</li>
+          <li><strong>दर्ज MD खोजिए</strong> — आमतौर पर MD, Max Demand या Rec. Demand लिखा होता है, kW या kVA में।</li>
+          <li><strong>घटाइए।</strong> अगर दर्ज MD स्वीकृत लोड के बराबर या उससे कम है, तो पेनल्टी की लाइन होनी ही नहीं चाहिए।</li>
+          <li><strong>अतिरिक्त को ऊपर दी तालिका की पेनल दर से गुणा कीजिए</strong> और बिल की लाइन से मिलाइए।</li>
+          <li><strong>इकाई जाँचिए।</strong> kVA में बताई गई सीमा के मुक़ाबले kW में जोड़ी गई पेनल्टी (या उल्टा) एक असली और बार-बार होने वाली बिलिंग ग़लती है — और ख़राब पावर फ़ैक्टर पर दोनों के बीच का फ़र्क़ बड़ा होता है।</li>
+        </ol>
+        <p>अगर आपका हिसाब और बिल आपस में मेल न खाएँ, तो यह उठाने लायक़ बात है —
+        <a href="/check-my-bill/">बिल अपलोड कीजिए</a>, हम उसे टैरिफ़ से दोबारा जोड़ देंगे।</p>
+      </section>
+    
+    <section class="seo-section"><h2>अक्सर पूछे जाने वाले सवाल</h2>
+    <details class="seo-faq-item">
+      <summary>क्या MD पेनल्टी और अतिरिक्त मांग शुल्क एक ही चीज़ हैं?</summary>
+      <div class="seo-faq-a">हाँ। डिस्कॉम के हिसाब से यही शुल्क MD पेनल्टी, अतिरिक्त मांग शुल्क, एक्सीडिंग डिमांड चार्ज, पेनल डिमांड चार्ज या डिमांड सरचार्ज लिखा जाता है। सबका मतलब एक है: दर्ज अधिकतम मांग आपके स्वीकृत लोड या अनुबंधित मांग से ऊपर गई, और अतिरिक्त हिस्से पर पेनल दर लग रही है।</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>पेनल्टी पूरी मांग पर लगती है या सिर्फ़ अतिरिक्त पर?</summary>
+      <div class="seo-faq-a">सिर्फ़ अतिरिक्त पर। स्वीकृत लोड या अनुबंधित मांग तक की मांग सामान्य दर पर ही बिलती है, और केवल उससे ऊपर के हिस्से पर पेनल दर लगती है। पूरी दर्ज मांग पर पेनल दर लगाने वाला बिल ग़लत है।</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>क्या सच में आधा घंटा पूरे महीने की पेनल्टी तय कर सकता है?</summary>
+      <div class="seo-faq-a">हाँ, और आमतौर पर इसी वजह से यह शुल्क अनुपात से बाहर लगता है। अधिकतम मांग चक्र का सबसे ऊँचा 30-मिनट औसत होती है, इसलिए एक बार का एक-साथ चालू होना उसे तय कर देता है और महीने में आगे कुछ भी उसे घटाता नहीं। अगले चक्र की शुरुआत में यह रीसेट हो जाती है।</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>क्या घरेलू कनेक्शनों पर MD पेनल्टी लगती है?</summary>
+      <div class="seo-faq-a">आमतौर पर नहीं, क्योंकि ज़्यादातर घरेलू टैरिफ़ दर्ज MD पर मांग शुल्क के बजाय स्वीकृत लोड पर फिक्स्ड शुल्क लेते हैं। यह मुख्यतः वाणिज्यिक, औद्योगिक और HT कनेक्शनों पर लागू होती है। कुछ राज्य स्वीकृत लोड पार करने वाले घरेलू कनेक्शनों पर भी अधिभार लगाते हैं, इसलिए मान लेने के बजाय अपनी अनुसूची देख लीजिए।</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>क्या मुझे बस स्वीकृत लोड बढ़वा लेना चाहिए?</summary>
+      <div class="seo-faq-a">तभी, जब ओवरशूट नियमित हो। ज़्यादा स्वीकृत लोड आपका फिक्स्ड या मांग शुल्क हर महीने स्थायी रूप से बढ़ा देता है, इसलिए अगर पेनल्टी कभी-कभार आती है तो चालू होने का समय अलग करना सस्ता पड़ सकता है। आवेदन से पहले दोनों की सालाना लागत की तुलना कीजिए।</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>क्या पेनल्टी पर बिजली शुल्क (ड्यूटी) भी लगता है?</summary>
+      <div class="seo-faq-a">ज़्यादातर राज्यों में हाँ। अतिरिक्त मांग पेनल्टी उन शुल्कों का हिस्सा होती है जिन पर ड्यूटी और ईंधन अधिभार जोड़े जाते हैं, इसलिए बिल में असल बढ़ोतरी पेनल्टी की लाइन से बड़ी होती है।</div>
+    </details></section>
+    <section class="seo-section guide-calc-cta">
+      <h2>अब अपना असली बिल जाँचें</h2>
+      <p>पढ़ना काफ़ी नहीं — अपने डिस्कॉम की असली स्लैब दरों, फिक्स्ड चार्ज और FPPA के साथ अपना मदवार बिल सेकंडों में निकालें। मुफ़्त, बिना साइन-अप।</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">बिजली बिल कैलकुलेटर खोलें →</a></p>
+    </section>
+    
+    <section class="seo-section guide-more">
+      <h2>संबंधित गाइड</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/hi/guides/how-to-read-uppcl-bill/">
+          <strong>अपना UPPCL बिजली बिल कैसे पढ़ें</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/why-did-my-electricity-bill-increase/">
+          <strong>मेरा बिजली बिल अचानक क्यों बढ़ गया?</strong>
+          <small>7 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/tod-billing-explained/">
+          <strong>टाइम-ऑफ़-डे (ToD) बिजली बिलिंग, आसान भाषा में</strong>
+          <small>5 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/how-to-read-bses-delhi-bill/">
+          <strong>अपना BSES / दिल्ली बिजली बिल कैसे पढ़ें</strong>
+          <small>6 मिनट</small>
+        </a>
+      </div>
+      <p class="guide-more-all"><a href="/hi/guides/">सभी गाइड देखें →</a></p>
+    </section>
+    <p class="seo-disclaimer">सार्वजनिक रूप से उपलब्ध टैरिफ आदेशों और विनियमों पर आधारित सामान्य मार्गदर्शन; विवरण राज्य, डिस्कॉम और उपभोक्ता श्रेणी के अनुसार बदलते हैं। अपने डिस्कॉम की आधिकारिक अनुसूची या छपे बिल से मिलान करें।</p>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+        <a href="/compare/" data-i18n="nav.compare">Compare</a>
+        <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator</a>
+        <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/hi/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/smart-meter/" data-i18n="ql.meterDisplay">Smart Meter Guide</a>
+        <a href="/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/hi/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/hi/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/hi/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/database/">Tariff Database</a>
+        <a href="/orders/">Order Library</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/contact/" data-i18n="ql.contact">Contact</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

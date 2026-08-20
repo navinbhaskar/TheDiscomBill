@@ -3860,7 +3860,11 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
    outranks ".seo-section > *" (0,1,0) and was why the coverage tables kept breaking the
    column after everything else had joined it. Capped to the column; the wrapper's own
    overflow-x carries any table too wide for it. */
-.seo-page .comparison-table-wrapper { width: fit-content; max-width: var(--w-text); }
+/* min() matters, not just --w-text: fit-content lets the wrapper grow to its table, and a
+   548px table inside a 327px phone column then spilled 221px past it. page-body clips rather
+   than scrolls, so the overflowing columns were unreachable — overflow-x: auto on the wrapper
+   never engaged because the wrapper itself was never the thing being constrained. */
+.seo-page .comparison-table-wrapper { width: fit-content; max-width: min(var(--w-text), 100%); }
 .seo-page .comparison-table { width: auto; }
 /* Cap cell width so prose cells wrap instead of blowing the column out sideways.
    38ch squeezed full sentences into 5-line rows; 52ch is still a comfortable measure
@@ -3895,6 +3899,35 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   display: flex; align-items: center; justify-content: center; transition: transform var(--t-fast); }
 .guide-tool-cta:hover .guide-tool-cta-go { transform: translateX(2px); }
 .guide-more { border-top: 1px solid var(--border-subtle); padding-top: 26px; }
+
+/* ── Related guides ──────────────────────────────────────────────────────────
+   Four cards, no icons, so the tint is positional rather than semantic: hue by nth-child,
+   cycling every four. Same 5% mix into --surface-card as the [data-icon] cards use, so the
+   two grids read as one system and dark mode follows the tokens. */
+.guide-more .seo-link-card { --gm-hue: var(--brand); }
+.guide-more .seo-link-card:nth-child(4n + 1) { --gm-hue: #7c3aed; }
+.guide-more .seo-link-card:nth-child(4n + 2) { --gm-hue: #2563eb; }
+.guide-more .seo-link-card:nth-child(4n + 3) { --gm-hue: #0d9488; }
+.guide-more .seo-link-card:nth-child(4n + 4) { --gm-hue: #b45309; }
+.guide-more .seo-link-card {
+  background:
+    linear-gradient(150deg, color-mix(in srgb, var(--gm-hue) 6%, var(--surface-card)) 0%,
+                            var(--surface-card) 72%);
+  border-color: color-mix(in srgb, var(--gm-hue) 16%, var(--border-default));
+}
+.guide-more .seo-link-card:hover,
+.guide-more .seo-link-card:focus-visible {
+  border-color: color-mix(in srgb, var(--gm-hue) 45%, var(--border-default));
+  background:
+    linear-gradient(150deg, color-mix(in srgb, var(--gm-hue) 11%, var(--surface-card)) 0%,
+                            var(--surface-card) 72%);
+}
+/* The minutes-to-read line is metadata, not part of the title — it takes the card hue so it
+   reads as belonging to this card rather than as another line of grey text. */
+.guide-more .seo-link-card small {
+  color: color-mix(in srgb, var(--gm-hue) 55%, var(--text-tertiary));
+  font-weight: 500;
+}
 
 /* Glossary (/glossary/) */
 .glossary-index {
@@ -4366,6 +4399,43 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 }
 .seo-cta-quiet:hover { background: var(--surface-card); border-color: var(--brand); box-shadow: var(--shadow-sm); }
 
+/* ── MD penalty comparison (guides/md-penalty-excess-demand-charge) ───────────
+   Rows are grouped by state and the state is named once, so the group boundary has to be
+   drawn rather than repeated. A single rule above each state's first row is enough; the
+   continuation rows then read as belonging to the name above them. */
+.md-penalty-table tbody .md-state-first > td { border-top: 2px solid var(--border-default); }
+.md-penalty-table tbody tr:first-child > td { border-top: 0; }
+.md-penalty-table td small { color: var(--text-tertiary); }
+/* The source link sits under the state name: supporting evidence, not a second heading. */
+.md-src { display: block; margin-top: 3px; font-size: 11.5px; }
+/* Where the penalty is a formula rather than a figure, it should not masquerade as one. */
+.md-formula { font-size: 13px; color: var(--text-secondary); font-style: italic; }
+/* The default row is a statement about what we do NOT know, so it is set apart from the
+   sourced rows above it rather than reading as one more state. */
+.md-penalty-table .md-fallback > td {
+  background: color-mix(in srgb, var(--text-tertiary) 6%, var(--surface-card));
+  color: var(--text-secondary);
+}
+.md-penalty-table table { min-width: 620px; }
+
+/* The 29 states on the default. Collapsed because it is 51 rows, not because it is secondary —
+   native <details> keeps it indexed and findable with Ctrl-F, which a JS toggle would not. */
+.md-default-group { margin: 18px 0 0; border: 1px solid var(--border-default); border-radius: var(--radius-md); background: var(--surface-sunken); }
+.md-default-group > summary {
+  cursor: pointer; padding: 13px 16px; font-weight: 600; font-size: 14.5px;
+  color: var(--text-primary); list-style: none; display: flex; align-items: center; gap: 8px;
+  min-height: 44px;
+}
+.md-default-group > summary::-webkit-details-marker { display: none; }
+.md-default-group > summary::before {
+  content: ""; width: 0; height: 0; flex: none;
+  border-left: 6px solid currentColor; border-top: 4px solid transparent; border-bottom: 4px solid transparent;
+  transition: transform var(--t-fast);
+}
+.md-default-group[open] > summary::before { transform: rotate(90deg); }
+.md-default-group > *:not(summary) { margin: 0 16px 16px; }
+/* The basis badge on a default row is a caveat, not a citation — it must not look like a link. */
+.md-basis-default { color: var(--text-tertiary); font-style: italic; }
 /* ── Official Order Library ───────────────────────────────────────────────────
    The library's whole claim is that its citations can be checked, so the parts that qualify
    a citation — is this the document or a page about it, is there a snapshot, is that snapshot
@@ -4403,9 +4473,22 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .ol-mirrors li { margin: 4px 0; }
 
 /* Six columns is a lot for a phone; the wrapper already scrolls, so just stop the cells
-   collapsing into two-character columns inside it. */
-.order-library table { min-width: 780px; }
-.order-library td:first-child { min-width: 220px; }
+   collapsing into two-character columns inside it.
+
+   Fixed layout, not auto: the columns are pinned by these percentages rather than solved
+   from content, so Source can be widened without the other five re-solving and moving the
+   table's total width. They sum to 100%, and 880px is what auto layout had settled on. */
+/* Specificity has to match the wrapper rules above (.seo-page .comparison-table-wrapper),
+   or the table keeps the widths the auto algorithm solved and none of this applies. */
+.seo-page .comparison-table-wrapper.order-library table { width: 880px; table-layout: fixed; }
+.seo-page .comparison-table-wrapper.order-library th:nth-child(1), .seo-page .comparison-table-wrapper.order-library td:nth-child(1) { width: 24%; }   /* Order */
+.seo-page .comparison-table-wrapper.order-library th:nth-child(2), .seo-page .comparison-table-wrapper.order-library td:nth-child(2) { width: 10.5%; } /* State */
+.seo-page .comparison-table-wrapper.order-library th:nth-child(3), .seo-page .comparison-table-wrapper.order-library td:nth-child(3) { width: 11.5%; } /* DISCOMs */
+.seo-page .comparison-table-wrapper.order-library th:nth-child(4), .seo-page .comparison-table-wrapper.order-library td:nth-child(4) { width: 16.5%; } /* Type */
+.seo-page .comparison-table-wrapper.order-library th:nth-child(5), .seo-page .comparison-table-wrapper.order-library td:nth-child(5) { width: 10%; }   /* Effective from */
+/* The widest of the six, because it is three separate facts — host, document kind, and
+   whether an archived copy exists — and splitting them across lines cost the row 60px. */
+.seo-page .comparison-table-wrapper.order-library th:nth-child(6), .seo-page .comparison-table-wrapper.order-library td:nth-child(6) { width: 27.5%; } /* Source */
 
 /* Key/value record table: the label column is a <th scope="row">, not a heading row. */
 .order-facts th[scope="row"] {
@@ -7278,6 +7361,13 @@ button.nav-subgroup-trigger { width: 100%; background: none; border: none; font:
    children of .seo-page, so they painted the full 992 while the lead, the two explanation
    sections and the disclaimer all stopped at 760. One column, as on every other page. */
 .solar-subsidy-page > * { max-width: var(--w-text); }
+
+/* And again on the two remaining tool pages. The sub-meter calculator put its controls, its
+   verdict cards and the report footer at the full width; the load optimizer does the same with
+   its controls and result panel. Both are forms a reader works down, and a panel that overhangs
+   the sentence explaining it reads as a different page rather than the next step. */
+.tenant-submeter-page > *,
+.sanctioned-load-page > * { max-width: var(--w-text); }
 
 /* Dropzone. Dashed rather than solid so it reads as a target, not a card. */
 .bc-drop {

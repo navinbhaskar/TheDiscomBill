@@ -2892,6 +2892,54 @@ function stateDomesticStats(state) {
   return { min, max, fy, verified: !!(STATE_META[state] || {}).verified };
 }
 
+// Shared by the tariff directory and the smart-meter hub, which render the same state cards.
+// Keeping one blob builder is the point: the two filters cannot end up disagreeing about what
+// "UP" matches, which is exactly the bug the code + aliases were added to fix.
+// Tiny progressive-enhancement filter: hides cards (and emptied regions) as you type. Shared,
+// so the tariff directory and the smart-meter hub behave identically — including the
+// two-letter rule, which exists because a bare substring test lets "dl" match any state whose
+// DISCOM names happen to contain those letters.
+function dirFilterScript() {
+  return `
+  <script>(function(){
+    var q=document.getElementById('dirSearch'); if(!q) return;
+    var cards=[].slice.call(document.querySelectorAll('.seo-dir-state'));
+    var regions=[].slice.call(document.querySelectorAll('.seo-dir-region'));
+    var empty=document.getElementById('dirEmpty');
+    q.addEventListener('input',function(){
+      var t=q.value.trim().toLowerCase(), shown=0;
+      cards.forEach(function(c){
+        var blob=c.getAttribute('data-search')||'', hit;
+        if(!t) hit=true;
+        else if(t.length<=2) hit=blob.split(/[^a-z0-9]+/).some(function(w){return w.indexOf(t)===0;});
+        else hit=blob.indexOf(t)>-1;
+        c.hidden=!hit; if(hit)shown++;
+      });
+      regions.forEach(function(r){r.hidden=!r.querySelector('.seo-dir-state:not([hidden])');});
+      if(empty)empty.hidden=shown>0;
+    });
+  })();</script>`;
+}
+
+function dirSearchBlob(state, discoms) {
+  return [
+    state, stateName(state, 'hi'), stateName(state, 'mr'), stateName(state, 'ta'),
+    stateCode(state),                    // the code already printed on the card's badge
+    ...(STATE_ALIASES[state] || []),     // UPPCL, TNEB, MSEDCL, Orissa, Pondicherry, …
+    ...discoms.map((d) => d.name),
+  ].join(' ').toLowerCase();
+}
+
+// The search box itself. `id="dirSearch"` is what dirFilterScript() binds to, so a page gets
+// both or neither.
+function dirSearchBox(placeholder) {
+  return `
+      <div class="seo-dir-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="dirSearch" type="search" placeholder="${attr(placeholder)}" aria-label="${attr(placeholder)}" autocomplete="off">
+      </div>`;
+}
+
 function directoryPage(states, lang = 'en') {
   const hi = lang === 'hi';
   const enUrl = '/tariffs/states/';
@@ -2933,12 +2981,7 @@ function directoryPage(states, lang = 'en') {
     // Both sources already existed and are what the site-wide search indexes (see the `k` field
     // built further down) — the directory filter simply was not using them. Sharing them is the
     // point: the two searches can no longer disagree about what "UP" means.
-    const searchBlob = [
-      state, stateName(state, 'hi'), stateName(state, 'mr'), stateName(state, 'ta'),
-      stateCode(state),                    // the code already printed on the card's badge
-      ...(STATE_ALIASES[state] || []),     // UPPCL, TNEB, MSEDCL, Orissa, Pondicherry, …
-      ...discoms.map(d => d.name),
-    ].join(' ').toLowerCase();
+    const searchBlob = dirSearchBlob(state, discoms);
     const nDiscoms = `${discoms.length} ${T(lang, { hi: 'डिस्कॉम', mr: 'डिस्कॉम', ta: 'DISCOM', en: (discoms.length === 1 ? 'DISCOM' : 'DISCOMs') })}`;
     // Unique per-state stat line: real domestic rate span pulled from the tariff DB
     // (plus the verified badge), so no two state cards read the same.
@@ -3034,30 +3077,7 @@ function directoryPage(states, lang = 'en') {
         en: 'Sometimes. In many states (like Uttar Pradesh) the regulator applies one state-wide schedule to every DISCOM; in others (Delhi, Maharashtra, Odisha) each company has its own approved rates. Each DISCOM page on this site states clearly whether its schedule is shared.' }) },
   ];
 
-  // Tiny progressive-enhancement filter: hides cards (and emptied regions) as you type.
-  const filterScript = `
-  <script>(function(){
-    var q=document.getElementById('dirSearch'); if(!q) return;
-    var cards=[].slice.call(document.querySelectorAll('.seo-dir-state'));
-    var regions=[].slice.call(document.querySelectorAll('.seo-dir-region'));
-    var empty=document.getElementById('dirEmpty');
-    q.addEventListener('input',function(){
-      var t=q.value.trim().toLowerCase(), shown=0;
-      // Two-letter queries are state codes, not fragments — match them at word starts only.
-      // Now that every blob carries its code, a bare substring test would let "dl" pull in any
-      // state whose DISCOM names happen to contain those letters. Same rule the site-wide
-      // search applies, for the same reason.
-      cards.forEach(function(c){
-        var blob=c.getAttribute('data-search'), hit;
-        if(!t) hit=true;
-        else if(t.length<=2) hit=blob.split(/[^a-z0-9]+/).some(function(w){return w.indexOf(t)===0;});
-        else hit=blob.indexOf(t)>-1;
-        c.hidden=!hit; if(hit)shown++;
-      });
-      regions.forEach(function(r){r.hidden=!r.querySelector('.seo-dir-state:not([hidden])');});
-      if(empty)empty.hidden=shown>0;
-    });
-  })();</script>`;
+  const filterScript = dirFilterScript();
 
   const heroStats = (labels) => `
       <div class="seo-dir-stats" role="list">
@@ -3103,10 +3123,7 @@ function directoryPage(states, lang = 'en') {
     <div class="seo-dir-hero">
       <p class="seo-lead">${dirLead}</p>
       ${heroStats(statLabels)}
-      <div class="seo-dir-search">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input id="dirSearch" type="search" placeholder="${attr(searchPlaceholder)}" aria-label="${attr(searchPlaceholder)}" autocomplete="off">
-      </div>
+      ${dirSearchBox(searchPlaceholder)}
     </div>
     ${sections}
     <p id="dirEmpty" class="seo-dir-empty" hidden>${emptyMsg}</p>
@@ -3456,109 +3473,233 @@ function relatedGuides(guide, limit = 4) {
 }
 
 // ── Excess-demand (MD penalty) comparison ────────────────────────────────────
-// Read straight out of STATE_META.excessDemand and the engine's own default, so the table
-// states what the calculator will actually do rather than being a second, hand-kept copy.
+// One row per supply type per state, not one row per state. The penal rate is not a property
+// of a state — it is a multiple of the demand charge, and the demand charge changes with the
+// tariff you are on and the load you contracted for. A single row per state hid that: it could
+// say "1.5x the demand rate" without ever showing what that came to in rupees, which is the
+// only thing a reader can check against their own bill.
 //
-// The distinction the table has to carry, and the reason it is generated: five states have a
-// rule sourced from their order, two supply types carry an explicit ₹/kVA rate, and every
-// other state falls back to the engine's 2× modelling default. Printing all of those in one
-// column as though they were equally well-established would be exactly the overclaim this
-// site keeps removing — so "basis" is a first-class column, not a footnote.
+// Every figure here is calculateBill() output, probed at a 1 kW overshoot on a representative
+// load for that supply type. Nothing is restated by hand, so the table cannot drift from what
+// the calculator charges — and where a state's rule and its tariff disagree, the table shows it
+// rather than smoothing it over.
+// A state qualifies on either kind of evidence: a state-wide rule in STATE_META, or an
+// explicit per-excess-kW rate set on one of its supply types. Uttar Pradesh has only the
+// second kind, and keying off the first alone dropped it from the table entirely.
 function excessDemandRules() {
   const rules = [];
   for (const state of getStates()) {
-    const cfg = (STATE_META[state] || {}).excessDemand;
-    if (cfg) rules.push({ state, cfg });
+    const cfg = (STATE_META[state] || {}).excessDemand || null;
+    const onTariff = getDiscoms(state).some((d) => (d.categories || []).some((c) => {
+      const types = Array.isArray(c.supplyTypes) && c.supplyTypes.length ? c.supplyTypes : [c];
+      return types.some((t) => t.excessDemandRate);
+    }));
+    if (cfg || onTariff) rules.push({ state, cfg });
   }
-  // A supply type may override the state rule with an explicit ₹ per excess kW/kVA.
-  const overrides = [];
-  for (const state of getStates()) {
-    for (const d of getDiscoms(state)) {
-      for (const cat of d.categories || []) {
-        const rows = Array.isArray(cat.supplyTypes) && cat.supplyTypes.length ? cat.supplyTypes : [cat];
-        for (const row of rows) {
-          if (row.excessDemandRate) overrides.push({ state, name: row.name || cat.name, rate: row.excessDemandRate });
-        }
+  return rules.sort((a, b) => a.state.localeCompare(b.state));
+}
+
+// The load a supply type is actually for, read out of its own definition rather than assumed.
+// Order matters: an explicit bound in the name beats the fixed-charge bands, because UP writes
+// its bands into the name ("Sanctioned Load > 4 kW") while its fixed charge is a flat per-kW.
+function excessDemandLoad(name, fc, catId) {
+  const n = String(name || '');
+  const range = /([\d.]+)\s*(?:to|–|—|-)\s*([\d.]+)\s*kW/i.exec(n);
+  if (range) return Math.round((Number(range[1]) + Number(range[2])) / 2);
+  const above = /(?:above|over|greater than|>)\s*([\d.]+)\s*kW/i.exec(n);
+  if (above) return Number(above[1]) * 2;
+  const upto = /(?:up ?to|≤|<=)\s*([\d.]+)\s*kW/i.exec(n);
+  if (upto) return Number(upto[1]);
+  if (fc && Array.isArray(fc.slabs)) {
+    const banded = fc.slabs.find((s) => s.maxLoad);
+    if (banded) return banded.maxLoad;
+  }
+  return catId === 'domestic' ? 2 : catId === 'commercial' ? 10 : 25;
+}
+
+// Categories worth showing, in the order a reader cares about them. Domestic is first because
+// it is the commonest question even though it is the least likely to carry a demand charge —
+// showing that it usually does not is itself the answer.
+const EXCESS_DEMAND_CATS = ['domestic', 'commercial', 'industrial'];
+const EXCESS_DEMAND_MAX_ROWS = 4;
+const EXCESS_DEMAND_MAX_PER_CAT = 2;
+
+function excessDemandRows(state, maxPerCat = EXCESS_DEMAND_MAX_PER_CAT, maxRows = EXCESS_DEMAND_MAX_ROWS) {
+  const discom = getDiscoms(state)[0];
+  if (!discom) return [];
+  const out = [];
+  for (const catId of EXCESS_DEMAND_CATS) {
+    for (const cat of (discom.categories || []).filter((c) => c.id === catId)) {
+      const types = Array.isArray(cat.supplyTypes) && cat.supplyTypes.length ? cat.supplyTypes : [null];
+      for (const st of types) {
+        const obj = st || cat;
+        const load = excessDemandLoad(obj.name || cat.name, obj.fixedCharge ?? cat.fixedCharge, cat.id);
+        const probe = (demand) => calculateBill({
+          discomId: discom.id, categoryId: cat.id, supplyTypeId: st ? st.id : undefined,
+          units: 500, connectedLoadKw: load, billedDemandKw: demand,
+          billingPeriodDays: 30, billingDate: TODAY, facRate: 0, lpscApplicable: false,
+        });
+        let res, base;
+        try { base = probe(load); res = probe(load + 1); }
+        catch (err) { continue; }
+        // No penalty line means this tariff is not demand-billed at all — worth one row to say
+        // so, but never more than one, or the table fills with absences.
+        const perKw = res.excessDemand > 0 ? res.excessDemandPenalty / res.excessDemand : 0;
+        // A by_consumption fixed charge is keyed by units, not load — there is no per-kW
+        // demand rate for a multiplier to act on, so the row states that rather than dividing
+        // a units-based charge by a load and printing the result as a rate.
+        const fc = obj.fixedCharge ?? cat.fixedCharge;
+        const unitsKeyed = !!fc && typeof fc === 'object' && fc.type === 'by_consumption';
+        out.push({
+          discom, cat, st, load,
+          demandRate: unitsKeyed || load <= 0 ? 0 : base.fixedCharge / load,
+          perKw: unitsKeyed ? 0 : perKw,
+          mode: unitsKeyed ? 'none' : (res.excessDemandRate ? 'rate' : (perKw > 0 ? 'energy' : 'none')),
+          label: splitTariffName(obj.name || cat.name),
+        });
       }
     }
   }
-  return { rules: rules.sort((a, b) => a.state.localeCompare(b.state)), overrides };
-}
-
-function excessDemandHow(cfg) {
-  // The unit is deliberately not named. The engine multiplies the excess by this rate in
-  // whatever unit that tariff bills demand in — kW on most LT schedules, kVA on HT — so
-  // asserting one of them here would be wrong for some of the rows.
-  if (cfg.rate != null) return `Flat ${rupeeRate(cfg.rate)} per unit of excess demand`;
-  if (cfg.pctEnergyPerKw != null) return `${cfg.pctEnergyPerKw}% of energy charges, per excess kW`;
-  // A multiplier below 1 is not a "multiple" in any useful sense: Delhi's rule is a 30%
-  // surcharge on the fixed charge for the excess load, and "0.3× the demand rate" reads like
-  // a discount. Same arithmetic, phrased the way the order phrases it.
-  if (cfg.multiplier != null && cfg.multiplier < 1) {
-    return `${+(cfg.multiplier * 100).toFixed(0)}% surcharge on the demand charge for the excess load`;
-  }
-  if (cfg.multiplier != null) return `${cfg.multiplier}× the normal demand rate, on the excess only`;
-  return 'Not modelled';
-}
-
-function excessDemandTableHtml() {
-  const { rules, overrides } = excessDemandRules();
-  const sourcedRows = rules.map((r) => {
-    const meta = STATE_META[r.state] || {};
-    // Prefer the Order Library entry: it is a page we control, carrying the document, its
-    // date and an archived snapshot. Fall back to the state's bare source URL, then to a
-    // stated gap. Maharashtra is the case that matters — its orders are held per licensee,
-    // so STATE_META has no sourceUrl and the row used to read "no link recorded" despite
-    // four MERC orders sitting in the library.
-    const libraryOrder = ORDERS.find((o) => o.state === r.state && o.type !== 'fuel-surcharge');
-    const src = libraryOrder
-      ? `<a href="/orders/${libraryOrder.id}/">${esc(libraryOrder.regulator)} order</a>`
-      : meta.sourceUrl
-        ? `<a href="${esc(meta.sourceUrl)}" rel="nofollow">the order</a>`
-        : '<span class="db-gap">no link recorded</span>';
-    return `<tr>
-      <td><a href="/tariffs/${slugify(r.state)}/">${esc(r.state)}</a></td>
-      <td>${esc(excessDemandHow(r.cfg))}</td>
-      <td>${r.cfg.tolerancePct ? esc(r.cfg.tolerancePct + '%') : 'None'}</td>
-      <td><span class="ol-kind is-doc">sourced</span> ${src}</td>
-    </tr>`;
-  }).join('');
-
-  // Deduplicate: UP's two ST-20 bands carry the same ₹660, and one row makes the point.
+  // Prefer rows that differ: same load AND same penalty twice teaches nothing the first did not.
   const seen = new Set();
-  const overrideRows = overrides.filter((o) => {
-    const k = o.state + '|' + o.rate;
+  const distinct = out.filter((r) => {
+    const k = `${r.load}|${r.demandRate.toFixed(2)}|${r.mode}|${r.mode === 'rate' ? r.perKw.toFixed(2) : ''}`;
     if (seen.has(k)) return false;
     seen.add(k);
     return true;
-  }).map((o) => `<tr>
-      <td><a href="/tariffs/${slugify(o.state)}/">${esc(o.state)}</a> <small>(${esc(splitTariffName(o.name).code || 'specific tariff')})</small></td>
-      <td>${esc(excessDemandHow({ rate: o.rate }))}</td>
-      <td>None</td>
-      <td><span class="ol-kind is-doc">sourced</span> set on the tariff itself</td>
-    </tr>`).join('');
+  });
+  // Two per category before the overall cap, so a state with many domestic bands still shows
+  // its commercial tariff. Rows that carry no demand charge at all are worth one line as an
+  // answer ("this tariff cannot attract the penalty") but never more.
+  const perCat = new Map();
+  const picked = [];
+  for (const r of distinct) {
+    const n = perCat.get(r.cat.id) || 0;
+    if (n >= maxPerCat) continue;
+    perCat.set(r.cat.id, n + 1);
+    picked.push(r);
+  }
+  const charged = picked.filter((r) => r.mode !== 'none');
+  const free = picked.filter((r) => r.mode === 'none').slice(0, 1);
+  const order = (r) => EXCESS_DEMAND_CATS.indexOf(r.cat.id);
+  return [...charged, ...free].sort((a, b) => order(a) - order(b) || a.load - b.load)
+    .slice(0, maxRows);
+}
 
+function excessDemandHow(cfg, lang = 'en') {
+  const t = fsT(lang);
+  if (cfg.rate != null) return t(`Flat ${rupeeRate(cfg.rate)} per unit of excess demand`,
+                                 `अतिरिक्त मांग की प्रति इकाई सपाट ${rupeeRate(cfg.rate)}`);
+  if (cfg.pctEnergyPerKw != null) return t(`${cfg.pctEnergyPerKw}% of energy charges, per excess kW`,
+                                           `प्रति अतिरिक्त kW, ऊर्जा शुल्क का ${cfg.pctEnergyPerKw}%`);
+  // A multiplier below 1 is not a "multiple" in any useful sense: Delhi's rule is a 30%
+  // surcharge on the fixed charge for the excess load, and "0.3x the demand rate" reads like
+  // a discount. Same arithmetic, phrased the way the order phrases it.
+  if (cfg.multiplier != null && cfg.multiplier < 1) {
+    return t(`${+(cfg.multiplier * 100).toFixed(0)}% surcharge on the demand charge for the excess load`,
+             `अतिरिक्त लोड के मांग शुल्क पर ${+(cfg.multiplier * 100).toFixed(0)}% अधिभार`);
+  }
+  if (cfg.multiplier != null) return t(`${cfg.multiplier}× the normal demand rate, on the excess only`,
+                                       `सामान्य मांग दर का ${cfg.multiplier}×, केवल अतिरिक्त पर`);
+  return t('Not modelled', 'मॉडल नहीं किया गया');
+}
+
+// Renders one state's rows. `basis` is the badge shown under the state name — a link to the
+// order where we have one, a plain statement of the default where we do not. It is never
+// omitted, because the difference between those two is the whole point of the table.
+function excessDemandStateRows(state, cfg, rows, basisHtml, lang) {
+  const t = fsT(lang);
+  return rows.map((r, i) => {
+    const cost = r.mode === 'energy'
+      ? `<span class="md-formula">${esc(cfg ? excessDemandHow(cfg, lang) : t('A share of the energy charges, per excess kW', 'प्रति अतिरिक्त kW, ऊर्जा शुल्क का एक हिस्सा'))}</span>`
+      : r.mode === 'none'
+        ? `<span class="db-gap">${t('no demand charge on this tariff', 'इस टैरिफ़ पर मांग शुल्क नहीं')}</span>`
+        : `<strong>${rupeeRate(r.perKw)}</strong> <small>${t('per excess kW', 'प्रति अतिरिक्त kW')}</small>`;
+    const tariff = r.label.code
+      ? `<strong>${esc(r.label.code)}</strong> <small>${esc(r.label.label)}</small>`
+      : `<strong>${esc(r.label.label)}</strong>`;
+    return `<tr class="${i === 0 ? 'md-state-first' : 'md-state-cont'}">
+      <td>${i === 0
+        ? `<a href="${langUrl(`/tariffs/${slugify(state)}/`, lang)}">${esc(stateName(state, lang))}</a><small class="md-src">${basisHtml}</small>`
+        : ''}</td>
+      <td>${tariff}</td>
+      <td class="num">${r.load} kW</td>
+      <td class="num">${r.demandRate > 0 ? rupeeRate(r.demandRate) : '—'}</td>
+      <td>${cost}</td>
+    </tr>`;
+  }).join('');
+}
+
+function excessDemandHead(t) {
+  return `<thead><tr>
+        <th>${t('State / UT', 'राज्य / केंद्रशासित')}</th><th>${t('Tariff', 'टैरिफ़')}</th><th class="num">${t('Example load', 'उदाहरण लोड')}</th>
+        <th class="num">${t('Demand charge', 'मांग शुल्क')}</th><th>${t('Each excess kW costs', 'हर अतिरिक्त kW की क़ीमत')}</th>
+      </tr></thead>`;
+}
+
+function excessDemandTableHtml(lang = 'en') {
+  const t = fsT(lang);
+  const rules = excessDemandRules();
+
+  // The basis badge under each state name. A link to the order where one exists; the plain
+  // truth where it does not. Never omitted — the gap between those two is the point.
+  const sourcedBasis = (state) => {
+    const libraryOrder = ORDERS.find((o) => o.state === state && o.type !== 'fuel-surcharge');
+    const meta = STATE_META[state] || {};
+    if (libraryOrder) return `<a href="${langUrl(`/orders/${libraryOrder.id}/`, 'en')}">${esc(libraryOrder.regulator)} ${t('order', 'आदेश')}</a>`;
+    if (meta.sourceUrl) return `<a href="${esc(meta.sourceUrl)}" rel="nofollow">${t('the order', 'आदेश')}</a>`;
+    return `<span class="db-gap">${t('no link recorded', 'कोई लिंक दर्ज नहीं')}</span>`;
+  };
+  const defaultBasis = `<span class="md-basis-default">${t('our default, not a published rule', 'हमारा डिफ़ॉल्ट, कोई प्रकाशित नियम नहीं')}</span>`;
+
+  const sourcedBody = rules.map(({ state, cfg }) => {
+    const rows = excessDemandRows(state);
+    return rows.length ? excessDemandStateRows(state, cfg, rows, sourcedBasis(state), lang) : '';
+  }).join('');
+
+  // Everything else. These states have no sourced rule, but the calculator still charges them
+  // something — the 2× default — and until now the page said "2×" and left the reader to work
+  // out what that came to. Same columns, same probes, basis stated on every row. Collapsed
+  // because it is long, not because it is secondary: <details> content is still indexed and
+  // still reachable with Ctrl-F.
   const covered = new Set(rules.map((r) => r.state));
-  const fallback = getStates().filter((s) => !covered.has(s)).length;
+  const others = getStates().filter((s) => !covered.has(s));
+  const defaultBody = others.map((state) => {
+    const rows = excessDemandRows(state, 1, 2);
+    return rows.length ? excessDemandStateRows(state, null, rows, defaultBasis, lang) : '';
+  }).join('');
 
   return `<div class="comparison-table-wrapper md-penalty-table"><table class="comparison-table">
-      <thead><tr><th>State / UT</th><th>How the penalty is charged</th><th>Tolerance</th><th>Basis</th></tr></thead>
-      <tbody>
-        ${sourcedRows}
-        ${overrideRows}
-        <tr class="md-fallback">
-          <td><em>${fallback} other states &amp; UTs</em></td>
-          <td>${DEFAULT_EXCESS_DEMAND.multiplier}× the normal demand rate, on the excess only</td>
-          <td>None</td>
-          <td><span class="ol-kind is-page">our default</span> no state rule recorded yet</td>
-        </tr>
-      </tbody>
+      ${excessDemandHead(t)}
+      <tbody>${sourcedBody}</tbody>
     </table></div>
-    <p class="fs-legend"><strong>Read the last column before you use a number.</strong> Rows marked
-    <em>sourced</em> come from that state's own tariff order or schedule. The final row is not a rule
-    anybody published — it is the modelling default this site applies where the state's rule is not
-    yet sourced, chosen because 2× the demand rate is the most common Indian formulation. If your
-    state is in that group, take the figure from your own tariff schedule rather than from here.</p>`;
+    <p class="fs-legend">${t(`<strong>Every figure is computed by the calculator, not restated here.</strong>
+    Each row probes a real bill at one kW over the example load, so the "each excess kW costs"
+    column is what you would actually be charged on that tariff. The demand charge column is
+    there because the penalty is usually a multiple of it — which is why the same state can show
+    different penalties on different tariffs.`,
+    `<strong>हर आँकड़ा कैलकुलेटर से निकला है, यहाँ दोबारा लिखा नहीं गया।</strong> हर पंक्ति उदाहरण लोड से
+    एक kW ऊपर का असली बिल जोड़ती है, इसलिए "हर अतिरिक्त kW की क़ीमत" वही है जो उस टैरिफ़ पर आपसे वसूली
+    जाएगी। मांग शुल्क का कॉलम इसलिए है कि पेनल्टी आमतौर पर उसी का गुणक होती है — यही वजह है कि एक ही
+    राज्य अलग-अलग टैरिफ़ पर अलग पेनल्टी दिखा सकता है।`)}</p>
+
+    <details class="md-default-group">
+      <summary>${t(`The other ${others.length} states &amp; UTs — on our ${DEFAULT_EXCESS_DEMAND.multiplier}× default`,
+                    `बाक़ी ${others.length} राज्य व केंद्रशासित — हमारे ${DEFAULT_EXCESS_DEMAND.multiplier}× डिफ़ॉल्ट पर`)}</summary>
+      <p class="fs-legend">${t(`We have not sourced an excess-demand rule for these states, so the calculator
+      applies ${DEFAULT_EXCESS_DEMAND.multiplier}× the demand charge — the most common Indian formulation.
+      The rupee figures below are real: they come from the same probes as the table above, against each
+      state's actual tariff. The <em>multiplier</em> is the assumption, not the arithmetic. Check the
+      figure against your own tariff schedule before relying on it.`,
+      `इन राज्यों के लिए हमने अतिरिक्त-मांग नियम स्रोत से नहीं लिया है, इसलिए कैलकुलेटर मांग शुल्क का
+      ${DEFAULT_EXCESS_DEMAND.multiplier}× लगाता है — भारत में सबसे आम रूप। नीचे के रुपये असली हैं: वे ऊपर
+      वाली तालिका जैसी ही गणना से, हर राज्य के असल टैरिफ़ पर निकले हैं। अनुमान <em>गुणक</em> है, गणित नहीं।
+      भरोसा करने से पहले अपनी टैरिफ़ अनुसूची से मिला लीजिए।`)}</p>
+      <div class="comparison-table-wrapper md-penalty-table"><table class="comparison-table">
+        ${excessDemandHead(t)}
+        <tbody>${defaultBody}</tbody>
+      </table></div>
+    </details>`;
 }
 
 function guidePage(guide, lang = 'en') {
@@ -3573,7 +3714,7 @@ function guidePage(guide, lang = 'en') {
   // rules say never to hard-code a rate that drifts. A token lets the article stay prose while
   // the data-derived part is generated from the same modules the calculator uses.
   const rawSections = (guideField(guide, 'sections', L) || guide.sections)
-    .replace('{{EXCESS_DEMAND_TABLE}}', () => excessDemandTableHtml());
+    .replace('{{EXCESS_DEMAND_TABLE}}', () => excessDemandTableHtml(L));
   // Opt-in: only guides that set `toc: true` get the jump-link row, so adding the feature does
   // not silently restyle 100-odd existing articles that are short enough not to want one.
   const { toc: tocHtml, sections } = guide.toc
@@ -6142,7 +6283,7 @@ function smartMeterHubPage(states, lang = 'en') {
       en: `${discoms.length} DISCOM${discoms.length > 1 ? 's' : ''}`,
       hi: `${discoms.length} डिस्कॉम`, mr: `${discoms.length} डिस्कॉम`, ta: `${discoms.length} DISCOM` });
     return `
-      <div class="seo-dir-state">
+      <div class="seo-dir-state" data-search="${esc(dirSearchBlob(state, discoms))}">
         <div class="seo-dir-state-head">
           <span class="seo-dir-badge" aria-hidden="true">${esc(stateCode(state))}</span>
           <!-- span, not a heading — same reasoning as the tariff state directory above. -->
@@ -6160,6 +6301,17 @@ function smartMeterHubPage(states, lang = 'en') {
     .filter(r => r.states.length);
   const leftovers = states.filter(s => !REGIONS.some(r => r.states.includes(s)));
   if (leftovers.length) grouped.push({ ...REGION_FALLBACK, states: leftovers });
+  const smSearchPlaceholder = T(lang, {
+    hi: 'राज्य या डिस्कॉम खोजें — जैसे दिल्ली, UP, MVVNL…',
+    mr: 'राज्य किंवा डिस्कॉम शोधा — उदा. महाराष्ट्र, MSEDCL…',
+    ta: 'மாநிலம் அல்லது DISCOM தேடுங்கள் — எ.கா. தமிழ்நாடு, TNPDCL…',
+    en: 'Search state or DISCOM — e.g. UP, MVVNL, Tata…' });
+  const smEmptyMsg = T(lang, {
+    hi: 'इस खोज से कोई राज्य या डिस्कॉम मेल नहीं खाता। कोई दूसरा नाम आज़माइए।',
+    mr: 'या शोधाशी कोणतेही राज्य किंवा डिस्कॉम जुळत नाही. दुसरे नाव वापरून पहा.',
+    ta: 'இந்தத் தேடலுக்கு மாநிலமோ DISCOM-ஓ பொருந்தவில்லை. வேறு பெயரை முயலுங்கள்.',
+    en: 'No state or DISCOM matches that search. Try another name.' });
+
   const stateBlocks = grouped.map(r => `
     <section class="seo-dir-region" style="--dir-accent:${r.color || REGION_FALLBACK.color}">
       <h3 class="seo-dir-region-title">
@@ -6231,7 +6383,9 @@ function smartMeterHubPage(states, lang = 'en') {
         <li><strong>${esc(T(lang, { hi: 'थोड़ा बफ़र रखें', mr: 'थोडा बफर ठेवा', ta: 'சிறிது இருப்பு வையுங்கள்', en: 'Keep a buffer' }))}</strong><span>${esc(T(lang, { hi: 'शून्य पर पहुँचने से पहले रिचार्ज करें — कटौती के नियम डिस्कॉम-वार अलग हैं।', mr: 'शून्यावर येण्याआधी रिचार्ज करा — खंडित करण्याचे नियम डिस्कॉमनुसार वेगळे आहेत.', ta: 'பூஜ்ஜியத்தை அடைவதற்கு முன் ரீசார்ஜ் செய்யுங்கள் — துண்டிப்பு விதிகள் DISCOM-வாரி மாறும்.', en: 'Recharge before it reaches zero — disconnection rules vary by DISCOM.' }))}</span></li>
       </ol>
     </section>
+    ${dirSearchBox(smSearchPlaceholder)}
     ${stateBlocks}
+    <p id="dirEmpty" class="seo-dir-empty" hidden>${smEmptyMsg}</p>
     <section class="seo-section">
       <h2>${T(lang, { hi: 'स्मार्ट मीटर गाइड व टूल', mr: 'स्मार्ट मीटर मार्गदर्शक व टूल', ta: 'ஸ்மார்ட் மீட்டர் வழிகாட்டிகள் & கருவிகள்', en: 'Smart meter guides & tools' })}</h2>
       <div class="seo-link-grid">
@@ -6239,7 +6393,7 @@ function smartMeterHubPage(states, lang = 'en') {
       </div>
     </section>
     ${faqHtml(faqs, lang)}
-  </section>`;
+  </section>${dirFilterScript()}`;
 
   return layout({
     title, description, canonical: SITE + url, page: enUrl, lang,

@@ -168,7 +168,9 @@ function makeCategories() {
           name: "ST-20 – Urban / Non-Rural (Sanctioned Load ≤ 4 kW)",
           description: "Metered commercial consumers with sanctioned load up to 4 kW, non-rural (urban) schedule. Fixed charge ₹330/kW/month.",
           fixedCharge: { type: "per_kw", rate: 330 },
-          excessDemandRate: 660,
+          // Excess demand: no explicit rate. The engine applies DEFAULT_EXCESS_DEMAND (2x the
+          // band s own fixed charge), which is what the previous hardcoded 660 encoded for the
+          // <= 4 kW band and got wrong for the > 4 kW band, where 2 x 450 is 900.
           energySlabs: [
             { limit: 300, rate: 7.50 },
             { limit: Infinity, rate: 8.40 }
@@ -183,7 +185,9 @@ function makeCategories() {
           name: "ST-20 – Urban / Non-Rural (Sanctioned Load > 4 kW)",
           description: "Metered commercial consumers with sanctioned load above 4 kW, non-rural (urban) schedule. Fixed charge ₹450/kW/month.",
           fixedCharge: { type: "per_kw", rate: 450 },
-          excessDemandRate: 660,
+          // Excess demand: no explicit rate. The engine applies DEFAULT_EXCESS_DEMAND (2x the
+          // band s own fixed charge), which is what the previous hardcoded 660 encoded for the
+          // <= 4 kW band and got wrong for the > 4 kW band, where 2 x 450 is 900.
           energySlabs: [
             { limit: 1000, rate: 7.50 },
             { limit: Infinity, rate: 8.75 }
