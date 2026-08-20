@@ -102,6 +102,10 @@ function calc() {
   const petrol   = readNum('evPetrol', DEFAULT_PETROL) || DEFAULT_PETROL;
   const mileage  = readNum('evMileage', DEFAULT_MILEAGE) || DEFAULT_MILEAGE;
   const pubRate  = readNum('evPublicRate', DEFAULT_PUBLIC_RATE) || DEFAULT_PUBLIC_RATE;
+  // 0 (or blank) means 'not interested in CNG' — the row and the bar drop out rather than
+  // showing a ₹0 comparison that looks like a result.
+  const cngRate  = Math.max(0, readNum('evCng', 0));
+  const cngKmKg  = readNum('evCngMileage', 0);
 
   if (battery <= 0 || range <= 0 || monthlyKm <= 0) return { haveInput: false };
 
@@ -129,6 +133,13 @@ function calc() {
   const publicPerKm  = (wallPerFull * pubRate) / range;
   const publicMonthly = publicPerKm * monthlyKm;
 
+  // CNG is sold by the kilogram, so mileage is km/kg — the arithmetic is the same shape as
+  // petrol, only the unit differs.
+  const haveCng      = cngRate > 0 && cngKmKg > 0;
+  const cngPerKm     = haveCng ? cngRate / cngKmKg : 0;
+  const cngMonthly   = cngPerKm * monthlyKm;
+  const cngSaveMo    = haveCng ? cngMonthly - monthlyCost : 0;
+
   // Time to reach the chosen charge level (approx; ignores end-of-charge taper).
   const slowHours    = (battery * depth) / SLOW_KW;
   const wallboxHours = (battery * depth) / WALLBOX_KW;
@@ -143,14 +154,16 @@ function calc() {
     wallPerSession, costPerCharge, evPerKm, kmPer100, unitsPerMonth, monthlyCost, chargesPerMonth,
     petrolPerKm, petrolMonthly, monthlySave, yearlySave, cheaperPct,
     publicPerKm, publicMonthly, slowHours, wallboxHours,
+    haveCng, cngPerKm, cngMonthly, cngSaveMo,
   };
 }
 
-// Monthly-cost comparison: three horizontal bars (EV home / public DC / petrol).
+// Monthly-cost comparison: horizontal bars (EV home / public DC / CNG / petrol). CNG only
+// appears when a price was given, so the chart never shows an empty comparison.
 function renderBars(r) {
   const box = $('evBars');
   if (!box) return;
-  const maxVal = Math.max(r.petrolMonthly, r.publicMonthly, r.monthlyCost) || 1;
+  const maxVal = Math.max(r.petrolMonthly, r.publicMonthly, r.monthlyCost, r.haveCng ? r.cngMonthly : 0) || 1;
   const bar = (cls, label, val) => {
     const w = Math.max(2, (val / maxVal) * 100);
     return `<div class="ev-bar-row">
@@ -160,11 +173,15 @@ function renderBars(r) {
     </div>`;
   };
   const L = {
-    en: { home: 'EV · home', pub: 'EV · public DC', pet: 'Petrol' },
-    hi: { home: 'EV · घर', pub: 'EV · पब्लिक DC', pet: 'पेट्रोल' },
+    en: { home: 'EV · home', pub: 'EV · public DC', cng: 'CNG', pet: 'Petrol' },
+    hi: { home: 'EV · घर', pub: 'EV · पब्लिक DC', cng: 'CNG', pet: 'पेट्रोल' },
   }[lang()];
+  // Fixed order, not sorted by value: the two EV rows stay adjacent so a reader compares their
+  // own two charging options first and the alternatives second. Sorting would also make the bars
+  // jump around while typing, and CNG vs public DC can swap either way depending on the inputs.
   box.innerHTML = bar('ev-bar-home', L.home, r.monthlyCost)
     + bar('ev-bar-public', L.pub, r.publicMonthly)
+    + (r.haveCng ? bar('ev-bar-cng', L.cng, r.cngMonthly) : '')
     + bar('ev-bar-petrol', L.pet, r.petrolMonthly);
 }
 
@@ -187,6 +204,9 @@ function render() {
   $('evRUnits').textContent = num(r.unitsPerMonth) + S.unitsMo;
   $('evRMonthly').textContent = rs(r.monthlyCost) + S.perMo;
   $('evRPetrol').textContent = rs(r.petrolMonthly) + S.perMo;
+  const cngRow = $('evRCngRow');
+  if (cngRow) cngRow.hidden = !r.haveCng;
+  if (r.haveCng) $('evRCng').textContent = rs(r.cngMonthly) + S.perMo + ' · ₹' + r.cngPerKm.toFixed(2) + S.perKm;
   $('evRSaveMo').textContent = rs(r.monthlySave) + S.perMo;
   $('evRSaveYr').textContent = rs(r.yearlySave) + S.perYr;
   $('evRTime33').textContent = S.hrs(r.slowHours);
@@ -207,7 +227,8 @@ function init() {
   const depthLabel = () => { const v = $('evDepthVal'); if (v) v.textContent = ($('evDepth').value || 80) + '%'; };
   $('evDepth')?.addEventListener('input', () => { depthLabel(); render(); });
   depthLabel();
-  ['evBattery', 'evRange', 'evKm', 'evRate', 'evLoss', 'evPetrol', 'evMileage', 'evPublicRate']
+  ['evBattery', 'evRange', 'evKm', 'evRate', 'evLoss', 'evPetrol', 'evMileage', 'evPublicRate',
+   'evCng', 'evCngMileage']
     .forEach(id => $(id)?.addEventListener('input', () => {
       // Editing battery/range detaches from the preset (it no longer matches).
       if ((id === 'evBattery' || id === 'evRange')) {

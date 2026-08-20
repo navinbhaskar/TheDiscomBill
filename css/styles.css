@@ -5626,6 +5626,9 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .ev-bar-home { background: linear-gradient(90deg, #0d9488, #2dd4bf); }
 .ev-bar-public { background: linear-gradient(90deg, #2563eb, #60a5fa); }
 .ev-bar-petrol { background: linear-gradient(90deg, #dc2626, #f97316); }
+/* CNG sits between the two EV rows and petrol on cost, so it takes a hue between them —
+   amber reads as "cheaper than petrol, dearer than home charging" without a legend. */
+.ev-bar-cng { background: linear-gradient(90deg, #b45309, #f59e0b); }
 .ev-bar-val { color: var(--text-primary); font-weight: 600; font-variant-numeric: tabular-nums; }
 
 /* Charge-level slider */
@@ -5706,6 +5709,10 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   transition: background var(--t-fast), transform var(--t-fast);
 }
 .solar-share:hover { background: #1fb457; transform: translateY(-1px); }
+/* On the EV page the chart card moved into the input column, and a full-bleed green bar there
+   became the widest element on the page — a 620px target for a secondary action. Scoped to
+   this card so the solar calculators keep their full-width results-column button. */
+#evChartCard .solar-share { display: inline-flex; width: auto; max-width: 100%; }
 .solar-share svg { width: 18px; height: 18px; flex-shrink: 0; }
 
 /* Desktop: let the calculator two-column layout breathe. The 760px container-mid frame
