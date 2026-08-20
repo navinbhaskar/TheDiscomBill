@@ -59,9 +59,9 @@ export function discomFactsHtml(state, discom) {
     <div class="svc-facts">
       <div class="svc-facts-row">${facts.join('')}</div>
       <div class="svc-facts-links">
-        <a href="${esc(tariffUrl)}">Full ${esc(discom.name)} tariff &amp; rates →</a>
-        <a href="${esc(calcUrl)}">Calculate a ${esc(discom.name)} bill →</a>
-        <a href="/smart-meter-recharge/${slugify(state)}/${encodeURIComponent(discom.id)}/">Smart meter recharge guide →</a>
+        <a href="${esc(tariffUrl)}">Full ${esc(discom.name)} tariff &amp; rates <span class="ico ico-arrow" aria-hidden="true"></span></a>
+        <a href="${esc(calcUrl)}">Calculate a ${esc(discom.name)} bill <span class="ico ico-arrow" aria-hidden="true"></span></a>
+        <a href="/smart-meter-recharge/${slugify(state)}/${encodeURIComponent(discom.id)}/">Smart meter recharge guide <span class="ico ico-arrow" aria-hidden="true"></span></a>
       </div>
     </div>`;
 }

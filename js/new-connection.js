@@ -30,7 +30,7 @@ function renderResult(box, state, discom) {
   box.innerHTML = `
     <div class="svc-card">
       <div class="svc-discom">
-        <span class="svc-icon">🔌</span>
+        <span class="svc-icon"><span class="ico ico-plug" aria-hidden="true"></span></span>
         <div>
           <div class="svc-name">${esc(discom.fullName || discom.name)}</div>
           ${discom.area ? `<div class="svc-area">${esc(discom.area)}</div>` : ''}
@@ -38,7 +38,7 @@ function renderResult(box, state, discom) {
       </div>
       <a class="svc-cta" href="${esc(url)}" target="_blank" rel="noopener noreferrer">
         Apply for a new connection on the official ${esc(discom.name)} portal
-        <span class="svc-cta-arrow" aria-hidden="true">↗</span>
+        <span class="svc-cta-arrow" aria-hidden="true"><span class="ico ico-external"></span></span>
       </a>
       <div class="svc-host">Opens <strong>${esc(hostOf(url))}</strong> in a new tab</div>
       ${discomFactsHtml(state, discom)}
@@ -52,7 +52,7 @@ function renderResult(box, state, discom) {
       <div class="svc-info-card">
         <h2 class="svc-info-title">Documents you'll need</h2>
         <ul class="svc-docs">${docs}</ul>
-        <p class="svc-charge-note">💡 Charges (security deposit, processing fee, meter cost) vary by load,
+        <p class="svc-charge-note"><span class="ico ico-bulb" aria-hidden="true"></span> Charges (security deposit, processing fee, meter cost) vary by load,
         category and state. See indicative <a href="/tariffs/">fixed charges &amp; tariffs</a>; the exact
         demand note comes from your DISCOM.</p>
       </div>

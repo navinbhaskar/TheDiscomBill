@@ -29,7 +29,7 @@ function renderResult(state, discomId) {
   box.innerHTML = `
     <div class="billcheck-card">
       <div class="billcheck-discom">
-        <span class="billcheck-icon">🔍</span>
+        <span class="billcheck-icon"><span class="ico ico-search" aria-hidden="true"></span></span>
         <div>
           <div class="billcheck-name">${esc(discom.fullName || discom.name)}</div>
           ${discom.area ? `<div class="billcheck-area">${esc(discom.area)}</div>` : ''}
@@ -38,7 +38,7 @@ function renderResult(state, discomId) {
 
       <a class="billcheck-cta" href="${esc(url)}" target="_blank" rel="noopener noreferrer">
         Check &amp; Pay your bill on the official ${esc(discom.name)} portal
-        <span class="billcheck-cta-arrow" aria-hidden="true">↗</span>
+        <span class="billcheck-cta-arrow" aria-hidden="true"><span class="ico ico-external"></span></span>
       </a>
       <div class="billcheck-host">Opens <strong>${esc(host)}</strong> in a new tab</div>
 
@@ -50,7 +50,7 @@ function renderResult(state, discomId) {
       </ul>
       ${discomFactsHtml(state, discom)}
 
-      <p class="billcheck-safety">🔒 You'll be taken to the DISCOM's own website. TheDiscomBill never asks for your
+      <p class="billcheck-safety"><span class="ico ico-lock" aria-hidden="true"></span> You'll be taken to the DISCOM's own website. TheDiscomBill never asks for your
       account number, OTP or password — only enter those on the official portal.</p>
     </div>`;
 }

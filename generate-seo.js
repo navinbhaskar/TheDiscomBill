@@ -4078,9 +4078,13 @@ function glossaryPage(lang = 'en') {
     <section class="seo-section">
       <h2 data-i18n="gloss.work.h2">${workH2}</h2>
       <div class="seo-link-grid">
-        <a class="seo-link-card" href="/#calculator" data-i18n-html="gloss.card1">${card1}</a>
-        <a class="seo-link-card" href="${guidesHref}" data-i18n-html="gloss.card2">${card2}</a>
-        <a class="seo-link-card" href="${tariffsHref}" data-i18n-html="gloss.card3">${card3}</a>
+        <!-- These three were the only seo-link-cards on the site with no data-icon, so they got
+             neither the glyph nor the accent tint that keys off it — three identical flat boxes
+             at the foot of a long page. The attribute supplies both, from the palette every
+             other card grid already uses. -->
+        <a class="seo-link-card" data-icon="calc" href="/#calculator" data-i18n-html="gloss.card1">${card1}</a>
+        <a class="seo-link-card" data-icon="guide" href="${guidesHref}" data-i18n-html="gloss.card2">${card2}</a>
+        <a class="seo-link-card" data-icon="table" href="${tariffsHref}" data-i18n-html="gloss.card3">${card3}</a>
       </div>
     </section>
     <p class="seo-disclaimer" data-i18n="gloss.disclaimer">${disclaimer}</p>

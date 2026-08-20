@@ -4,13 +4,21 @@
 
 import { initPortalPage, esc, portalUrl, hostOf, discomFactsHtml } from './portal-page.js';
 
+// Each row carries its icon as complete markup rather than a name to build a class from.
+// split-css keeps a CSS rule only when it finds the class as a literal — in page markup, or
+// in a `class="..."` attribute inside JS — and deliberately does not sweep bare strings,
+// because that drags the i18n tables in and inflates the sheet. So `class="ico ${name}"` left
+// all six of these unpainted in content.min.css while looking correct in styles.min.css.
+//
+// The icons are chosen for meaning, replacing emoji that were approximations: the old
+// "new-connection delay" glyph was a sewing needle, and "hanging wires" was a tree.
 const COMPLAINT_TYPES = [
-  ['⚡', 'No power supply / outage'],
-  ['🧾', 'Wrong or excessive bill'],
-  ['🔢', 'Faulty / fast-running meter'],
-  ['📉', 'Low or fluctuating voltage'],
-  ['🪡', 'New-connection delay'],
-  ['🌳', 'Hanging wires / safety hazard'],
+  ['<span class="ico ico-bolt" aria-hidden="true"></span>', 'No power supply / outage'],
+  ['<span class="ico ico-receipt" aria-hidden="true"></span>', 'Wrong or excessive bill'],
+  ['<span class="ico ico-gauge" aria-hidden="true"></span>', 'Faulty / fast-running meter'],
+  ['<span class="ico ico-voltdown" aria-hidden="true"></span>', 'Low or fluctuating voltage'],
+  ['<span class="ico ico-clock" aria-hidden="true"></span>', 'New-connection delay'],
+  ['<span class="ico ico-alert" aria-hidden="true"></span>', 'Hanging wires / safety hazard'],
 ];
 
 function renderResult(box, state, discom) {
@@ -22,7 +30,7 @@ function renderResult(box, state, discom) {
   box.innerHTML = `
     <div class="svc-card">
       <div class="svc-discom">
-        <span class="svc-icon">📢</span>
+        <span class="svc-icon"><span class="ico ico-megaphone" aria-hidden="true"></span></span>
         <div>
           <div class="svc-name">${esc(discom.fullName || discom.name)}</div>
           ${discom.area ? `<div class="svc-area">${esc(discom.area)}</div>` : ''}
@@ -30,7 +38,7 @@ function renderResult(box, state, discom) {
       </div>
       <a class="svc-cta" href="${esc(url)}" target="_blank" rel="noopener noreferrer">
         Register a complaint on the official ${esc(discom.name)} portal
-        <span class="svc-cta-arrow" aria-hidden="true">↗</span>
+        <span class="svc-cta-arrow" aria-hidden="true"><span class="ico ico-external"></span></span>
       </a>
       <div class="svc-host">Opens <strong>${esc(hostOf(url))}</strong> in a new tab</div>
 

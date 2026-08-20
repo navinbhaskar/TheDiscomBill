@@ -403,7 +403,7 @@ export const STRINGS = {
     'svc.step1': '<strong>DISCOM complaint portal / 1912</strong><span>File the complaint first with your DISCOM and note the complaint number and the notified resolution time.</span>',
     'svc.step2': '<strong>Consumer Grievance Redressal Forum (CGRF)</strong><span>If it isn\'t resolved in time, escalate to your DISCOM\'s CGRF — a statutory forum for consumer complaints.</span>',
     'svc.step3': '<strong>Electricity Ombudsman</strong><span>Still unresolved? Approach the Electricity Ombudsman of your State Electricity Regulatory Commission — the final appellate authority.</span>',
-    'svc.chargeNote': '💡 Keep your consumer / account number and the DISCOM complaint number handy at every step.',
+    'svc.chargeNote': 'Keep your consumer / account number and the DISCOM complaint number handy at every step.',
     'svc.note': 'TheDiscomBill is independent and not affiliated with any DISCOM. We link only to official portals and helplines — we never ask for your account number, OTP or password. For an estimate of your charges before paying, use the <a href="/#calculator">bill calculator</a>.',
     // Compare page (/compare/)
     'cmp.h2': 'Electricity Rate Comparison {year} (Major Providers)',
