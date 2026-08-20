@@ -3759,6 +3759,98 @@ function excessDemandTableHtml(lang = 'en') {
     </details>`;
 }
 
+// ── Security deposit: what two months of a bill actually comes to ────────────
+// The rule is "roughly two months of your consumption", which is easy to state and hard to
+// picture. This runs the real UPPCL LMV-1 urban schedule at three usage levels so the reader
+// sees the order of magnitude rather than a number written once and left to age.
+//
+// It is an ILLUSTRATION of the rule, not a quote from anyone's DISCOM: the actual demand is
+// worked out from that consumer's own past year, and every state's supply code words it
+// slightly differently. The legend under the table says so.
+function securityDepositTableHtml(lang = 'en') {
+  const t = fsT(lang);
+  const rows = [100, 200, 300].map((units) => {
+    const r = calculateBill({
+      discomId: 'mvvnl', categoryId: 'domestic', supplyTypeId: '10B',
+      units, connectedLoadKw: 2, billingPeriodDays: 30, billingDate: TODAY,
+      facRate: 0, facMode: 'percent', lpscApplicable: false,
+    });
+    return `<tr>
+      <td class="num">${units}</td>
+      <td class="num">${rupee(r.currentNet)}</td>
+      <td class="num"><strong>${rupee(r.currentNet * 2)}</strong></td>
+    </tr>`;
+  }).join('');
+
+  return `<div class="comparison-table-wrapper"><table class="comparison-table">
+      <thead><tr>
+        <th class="num">${t('Units a month', 'महीने की यूनिट')}</th>
+        <th class="num">${t('Monthly bill', 'मासिक बिल')}</th>
+        <th class="num">${t('Two months — the deposit’s shape', 'दो महीने — जमा का अनुमान')}</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    <p class="fs-legend">${t(`Computed live from the UPPCL LMV-1 urban domestic schedule at 2 kW, with the
+    fuel surcharge set to zero so the arithmetic stays readable. This shows the <em>shape</em> of the
+    rule, not a figure anyone will quote at you: your DISCOM works the demand out from your own
+    consumption over the previous financial year, and every state words its supply code differently.`,
+    `2 kW पर UPPCL LMV-1 शहरी घरेलू अनुसूची से लाइव गणना, ईंधन अधिभार शून्य रखकर ताकि गणित साफ़ दिखे।
+    यह नियम का <em>स्वरूप</em> दिखाता है, कोई ऐसा आँकड़ा नहीं जो आपसे माँगा जाएगा: आपका डिस्कॉम यह राशि
+    आपकी पिछले वित्त वर्ष की खपत से निकालता है, और हर राज्य की आपूर्ति संहिता के शब्द अलग हैं।`)}</p>`;
+}
+
+// ── PM Surya Ghar: what a plant size costs you in sanctioned load ────────────
+// The eligibility gate most applications trip over is arithmetic, not paperwork: the sanctioned
+// load has to be at least the plant capacity. So the useful thing is not "you need more load",
+// it is what that load costs every month once you have it — which is exactly what the engine
+// already knows.
+//
+// UPPCL LMV-1 urban at ₹110/kW is the worked example because it is the schedule this site has
+// reconciled against real printed bills. Every state's fixed charge differs; the legend says so
+// and points at the calculator for the reader's own DISCOM.
+function solarLoadTableHtml(lang = 'en') {
+  const t = fsT(lang);
+  const fixedAt = (kw) => calculateBill({
+    discomId: 'mvvnl', categoryId: 'domestic', supplyTypeId: '10B',
+    units: 250, connectedLoadKw: kw, billingPeriodDays: 30, billingDate: TODAY,
+    facRate: 0, facMode: 'percent', lpscApplicable: false,
+  }).fixedCharge;
+
+  const base = fixedAt(2);
+  const rows = [1, 2, 3, 5].map((kw) => {
+    const fc = fixedAt(kw);
+    const delta = fc - base;
+    return `<tr>
+      <td class="num"><strong>${kw} kW</strong></td>
+      <td class="num">${kw} kW</td>
+      <td class="num">${rupee(fc)}</td>
+      <td class="num">${delta > 0 ? `+${rupee(delta)}` : '—'}</td>
+      <td class="num">${delta > 0 ? `+${rupee(delta * 12)}` : '—'}</td>
+    </tr>`;
+  }).join('');
+
+  return `<div class="comparison-table-wrapper"><table class="comparison-table">
+      <thead><tr>
+        <th class="num">${t('Plant you want', 'जो प्लांट चाहिए')}</th>
+        <th class="num">${t('Minimum load', 'न्यूनतम भार')}</th>
+        <th class="num">${t('Fixed charge / month', 'फिक्स्ड शुल्क / माह')}</th>
+        <th class="num">${t('Extra vs 2 kW', '2 kW से अधिक')}</th>
+        <th class="num">${t('Extra a year', 'सालाना अधिक')}</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    <p class="fs-legend">${t(`Fixed charges computed live from the UPPCL LMV-1 urban domestic schedule, against a
+    2 kW starting point. <strong>A load enhancement is permanent</strong>: the higher fixed charge is billed
+    every month afterwards, in months you generate plenty and months you do not. Your own DISCOM's fixed
+    charge will differ — put your numbers into the <a href="/#calculator">bill calculator</a> before you
+    apply, and check the load you actually need with the
+    <a href="/sanctioned-load-optimizer/">sanctioned load optimizer</a>.`,
+    `फिक्स्ड शुल्क UPPCL LMV-1 शहरी घरेलू अनुसूची से लाइव गणना, 2 kW को आधार मानकर।
+    <strong>भार वृद्धि स्थायी होती है</strong>: ऊँचा फिक्स्ड शुल्क हर महीने लगेगा — चाहे उत्पादन ज़्यादा हो या कम।
+    आपके डिस्कॉम का शुल्क अलग होगा — आवेदन से पहले <a href="/#calculator">बिल कैलकुलेटर</a> में अपने आँकड़े डालिए
+    और <a href="/sanctioned-load-optimizer/">स्वीकृत भार ऑप्टिमाइज़र</a> से ज़रूरी भार जाँचिए।`)}</p>`;
+}
+
 function guidePage(guide, lang = 'en') {
   // A guide only renders in a vernacular when its body is translated in the data file;
   // otherwise fall back to English (the driver also guards emission, so this is belt-and-braces).
@@ -3771,7 +3863,9 @@ function guidePage(guide, lang = 'en') {
   // rules say never to hard-code a rate that drifts. A token lets the article stay prose while
   // the data-derived part is generated from the same modules the calculator uses.
   const rawSections = (guideField(guide, 'sections', L) || guide.sections)
-    .replace('{{EXCESS_DEMAND_TABLE}}', () => excessDemandTableHtml(L));
+    .replace('{{EXCESS_DEMAND_TABLE}}', () => excessDemandTableHtml(L))
+    .replace('{{SECURITY_DEPOSIT_TABLE}}', () => securityDepositTableHtml(L))
+    .replace('{{SOLAR_LOAD_TABLE}}', () => solarLoadTableHtml(L));
   // Opt-in: only guides that set `toc: true` get the jump-link row, so adding the feature does
   // not silently restyle 100-odd existing articles that are short enough not to want one.
   const { toc: tocHtml, sections } = guide.toc

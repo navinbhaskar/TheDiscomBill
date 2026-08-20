@@ -18,6 +18,292 @@
 
 export const GUIDES = [
   {
+    slug: 'electricity-security-deposit-explained',
+    published: "2026-08-20",
+    title: 'Security Deposit on an Electricity Connection, Explained',
+    metaTitle: 'Electricity Security Deposit — How Much, When It Rises, and the Interest',
+    description: 'What the security deposit on an Indian electricity connection is, why it is about two months of your consumption, when a DISCOM can demand more, why only the difference is payable on a load increase, and the interest your deposit earns.',
+    minutes: 7,
+    toc: true,
+    intro: `Almost every electricity connection in India carries a <strong>security deposit</strong> —
+      money the DISCOM holds against the bills you have not paid yet. Most people pay it once at
+      connection, never think about it again, and then one day a bill arrives with a lump sum on it
+      labelled "additional security". This explains what the deposit is, how the amount is arrived
+      at, the two situations that make it go up, the fact that <strong>it earns you interest</strong>,
+      and what to do when the demand looks wrong.`,
+    sections: `
+      <section class="seo-section">
+        <h2>What the deposit actually is</h2>
+        <p>You consume electricity first and pay for it afterwards. That gap — a month of supply
+        already delivered, plus however long the bill takes to fall due — is credit the DISCOM has
+        extended to you. The security deposit covers it.</p>
+        <p>It is <strong>not a fee</strong>. It is your money, held by the licensee, refundable when
+        the connection is closed and adjusted against your final bill. That distinction matters
+        because it drives everything else on this page: the amount tracks how much credit you are
+        actually using, so it moves when your consumption moves.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>How much: roughly two months of your consumption</h2>
+        <p>State supply codes differ in wording, but the common shape is <strong>about two months of
+        your average consumption</strong>. In Uttar Pradesh that is clause 4.20(a) of the
+        U.P. Electricity Supply Code; other states use a comparable multiple.</p>
+        <p>The important detail is <em>which</em> two months. It is not a guess about your future
+        usage — it is worked out from what you actually used, typically your
+        <strong>average monthly consumption over the preceding financial year</strong>. A single
+        heavy summer does not reset your deposit on its own.</p>
+        <p>To make the rule concrete rather than abstract:</p>
+        {{SECURITY_DEPOSIT_TABLE}}
+      </section>
+
+      <section class="seo-section">
+        <h2>Your deposit earns interest — check that you are getting it</h2>
+        <p>Because the deposit is your money, the licensee pays <strong>interest on it</strong>. The
+        rate is set by the state regulator and is usually tied to the bank rate. It is normally
+        credited once a year, and it should appear on your bill as a credit line rather than arriving
+        as a cheque.</p>
+        <p>This is the single most-missed line on an Indian electricity bill. If you have held a
+        connection for years and have never seen an interest credit, that is worth asking about —
+        <a href="/understand-your-bill/">read your bill line by line</a> and look for it around the
+        start of the financial year.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>When the DISCOM can ask for more</h2>
+        <p>Two situations, and they are different:</p>
+        <ol>
+          <li><strong>Your consumption grew.</strong> Codes generally allow an annual review: if two
+          months of your current usage now exceeds what you deposited, the shortfall can be
+          demanded.</li>
+          <li><strong>Your sanctioned load went up.</strong> A higher load implies a higher expected
+          bill, so the required deposit rises with it. In UP this has affected a very large number of
+          consumers at once — see
+          <a href="/guides/uppcl-sanctioned-load-increased/">why your sanctioned load suddenly increased</a>,
+          which works through the load side in detail.</li>
+        </ol>
+        <p>Both are demands for a <strong>top-up</strong>, not a fresh deposit. That is the point most
+        worth knowing on this page, so it gets its own section.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Only the difference is payable — not the whole amount again</h2>
+        <p>If you already hold a deposit and your required amount rises, what you owe is the
+        <strong>gap between the two</strong>. You do not deposit from zero again.</p>
+        <p>In Uttar Pradesh this is explicit: clause 4.20(c) of the Supply Code provides that on an
+        enhancement of load, only the <em>additional</em> security covering the additional load needs
+        to be deposited. Other states word it differently but the principle is the same, because the
+        deposit is a running balance rather than a per-event charge.</p>
+        <p>Two consequences worth holding on to:</p>
+        <ul>
+          <li><strong>Small revisions often produce no demand at all.</strong> UP's clause 4.20(e)(iii)
+          raises a demand only where the additional security exceeds <strong>10%</strong> of the
+          existing deposit. A modest change can fall entirely inside that threshold.</li>
+          <li><strong>A bill charging the full new amount is worth questioning.</strong> If your
+          required deposit moved from ₹1,600 to ₹2,800, the payable figure is ₹1,200 — not ₹2,800.
+          Ask the DISCOM in writing to show the existing deposit it credited and the arithmetic
+          behind the demand.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>Checking a demand on your own bill</h2>
+        <ol>
+          <li><strong>Find what you already hold.</strong> The existing security deposit is usually
+          printed on the bill or visible in the DISCOM's consumer portal. You cannot check a top-up
+          without it.</li>
+          <li><strong>Work out two months of your own average.</strong> Use your last twelve months,
+          not your worst month. Our <a href="/#calculator">bill calculator</a> gives you a monthly
+          figure for your DISCOM and usage; double it for the rough requirement.</li>
+          <li><strong>Subtract.</strong> Required minus held is the most the demand should be.</li>
+          <li><strong>Check the threshold.</strong> If the gap is small relative to what you hold,
+          ask whether the minimum-demand rule applies in your state.</li>
+          <li><strong>Ask for the working.</strong> A demand should be reducible to: required amount,
+          existing deposit, difference. If the DISCOM cannot show those three numbers, that is the
+          basis of your complaint.</li>
+        </ol>
+        <p>If it still looks wrong, <a href="/services/">the complaint route for your DISCOM</a> is one
+        click away, and the escalation path runs to the CGRF and then the Electricity Ombudsman.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>When you close or transfer the connection</h2>
+        <p>On permanent disconnection the deposit is adjusted against your final bill and the balance
+        refunded. When a connection changes hands, the deposit does not simply follow the property —
+        it is settled with the outgoing consumer and re-established by the incoming one, which is why
+        a transfer application asks for the deposit to be re-deposited or formally transferred.</p>
+        <p>Keep the receipt. A deposit you cannot evidence is a deposit that is difficult to reclaim
+        years later.</p>
+      </section>
+    `,
+    faqs: [
+      {
+        q: 'Is the electricity security deposit refundable?',
+        a: 'Yes. It is your money held by the DISCOM as cover for unpaid consumption, not a fee. On permanent disconnection it is adjusted against your final bill and the balance is refunded to you.'
+      },
+      {
+        q: 'How much security deposit should I have paid?',
+        a: 'The common rule across Indian state supply codes is about two months of your average consumption, worked out from your usage over the preceding financial year rather than an estimate of future usage. The exact multiple and wording is set by your state regulator.'
+      },
+      {
+        q: 'Do I have to pay the whole security deposit again when my load is increased?',
+        a: 'No. Only the difference between the new required amount and the deposit you already hold is payable. In Uttar Pradesh clause 4.20(c) of the Supply Code says exactly this: on enhancement of load, only the additional security covering the additional load needs to be deposited. If a bill charges the full new amount, ask the DISCOM in writing to show the existing deposit it credited.'
+      },
+      {
+        q: 'Does my electricity security deposit earn interest?',
+        a: 'Yes. The licensee pays interest on the deposit at a rate set by the state regulator, usually linked to the bank rate, and it is normally credited to your bill once a year. If you have never seen an interest credit on a long-held connection, it is worth asking about.'
+      },
+      {
+        q: 'Can a DISCOM demand additional security every year?',
+        a: 'Codes generally allow an annual review against your actual consumption, so a demand is possible in any year your usage has grown. Many states also set a minimum threshold — in UP no demand is raised unless the additional security exceeds 10% of the existing deposit — so small revisions often produce nothing at all.'
+      },
+      {
+        q: 'What happens to the security deposit when a connection is transferred?',
+        a: 'It is settled with the outgoing consumer and re-established by the incoming one rather than passing automatically with the property. That is why transfer applications ask for the deposit to be transferred or re-deposited. Keep the original receipt — a deposit you cannot evidence is hard to reclaim later.'
+      }
+    ]
+  },
+  {
+    slug: 'pm-surya-ghar-eligibility-checklist',
+    published: "2026-08-21",
+    title: 'PM Surya Ghar: What Gets an Application Rejected',
+    metaTitle: 'PM Surya Ghar Eligibility — Sanctioned Load, Name Match & Fixes',
+    description: 'The checks that decide a PM Surya Ghar rooftop solar application before the subsidy is ever calculated: sanctioned load against plant size, the name on the connection, ownership and meter status — and the DISCOM request that fixes each one.',
+    minutes: 8,
+    toc: true,
+    toolCta: {
+      href: '/solar-subsidy-checker/',
+      title: { en: 'Work out the subsidy and payback', hi: 'सब्सिडी और पेबैक निकालिए' },
+      sub: { en: 'Once you clear these checks, size the plant and see what the subsidy leaves you paying.', hi: 'ये जाँचें पूरी होने के बाद प्लांट का आकार और सब्सिडी के बाद की लागत देखिए।' },
+    },
+    intro: `Most guides to <strong>PM Surya Ghar</strong> explain the subsidy. Almost none explain the
+      checks that happen <em>before</em> anyone works the subsidy out — and those are where
+      applications actually stall. Two of them are the usual culprits: your
+      <strong>sanctioned load must be at least the size of the plant</strong> you are applying for,
+      and the <strong>name on the electricity connection has to match</strong> the name you are
+      applying and banking under. Both are fixable, both are fixed at your DISCOM rather than on the
+      solar portal, and both are much cheaper to fix before you apply than after.`,
+    sections: `
+      <section class="seo-section">
+        <h2>The checks, in the order they bite</h2>
+        <div class="comparison-table-wrapper"><table class="comparison-table">
+          <thead><tr><th>Check</th><th>What it means</th><th>Where it is fixed</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Sanctioned load ≥ plant size</strong></td><td>A 3 kW plant generally needs at least 3 kW of sanctioned load on the connection.</td><td>DISCOM — load enhancement</td></tr>
+            <tr><td><strong>Name match</strong></td><td>The consumer name on the connection should match your identity and bank records — spelling included.</td><td>DISCOM — name change</td></tr>
+            <tr><td><strong>You are the consumer</strong></td><td>If the connection is still in a previous owner's or a relative's name, it is not yours to apply on.</td><td>DISCOM — transfer of connection</td></tr>
+            <tr><td><strong>Live, regular connection</strong></td><td>A domestic connection in good standing, not disconnected and not in arrears.</td><td>DISCOM — clear dues first</td></tr>
+            <tr><td><strong>Roof you control</strong></td><td>Ownership or documented permission for the roof the plant sits on.</td><td>Society / owner NOC</td></tr>
+          </tbody>
+        </table></div>
+        <p class="fs-legend">The precise wording differs by state and is set by your DISCOM, not by us.
+        Treat this as the shape of the gate — the authoritative checklist is the one your DISCOM shows
+        during the application.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Sanctioned load against plant size — and what fixing it costs</h2>
+        <p>This is the check people are most surprised by, because nothing about buying panels
+        suggests your electricity contract is involved. The reasoning is straightforward: a rooftop
+        plant can push its full rated output back through your connection, so the connection has to
+        be contracted for at least that much.</p>
+        <p>If your load is short, the fix is a <strong>load enhancement</strong> request at your
+        DISCOM. It is routine. What it is not is free — and this is the part worth seeing before you
+        commit, because the higher fixed charge is billed <em>every month, permanently</em>:</p>
+        {{SOLAR_LOAD_TABLE}}
+        <p>There is a second cost that arrives later and separately: a higher sanctioned load raises
+        your <strong>security deposit</strong>, and the difference is demanded as a lump on a
+        subsequent bill. Only the difference is payable, not the whole amount again — see
+        <a href="/guides/electricity-security-deposit-explained/">how the security deposit works</a>
+        before you pay a demand you have not checked.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>The name has to match — exactly</h2>
+        <p>Subsidy is disbursed to a bank account, against an application, against an electricity
+        connection. Those three names are compared, and a mismatch is one of the more common reasons
+        a file sits unresolved: an initial where the bank has a full name, a maiden name, a
+        transliteration that differs by one letter, or a connection still in a parent's name.</p>
+        <p>Two different problems hide here, and they need different requests:</p>
+        <ul>
+          <li><strong>Same person, wrong spelling</strong> — a <strong>name correction</strong> on the
+          connection. Usually the lighter process.</li>
+          <li><strong>Different person</strong> — a <strong>transfer of connection</strong> into your
+          name. This is the heavier one, and it also re-settles the security deposit, so start it
+          early.</li>
+        </ul>
+        <p>Check the spelling on your latest bill against your bank passbook before you do anything
+        else. It costs nothing and it is the single most common avoidable rejection.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>What you will be asked for</h2>
+        <p>Document lists are set by each DISCOM and change; your DISCOM's own portal is the only
+        authoritative list. What is asked for almost everywhere falls into four groups:</p>
+        <ul>
+          <li><strong>Identity</strong> — the applicant's government identity document.</li>
+          <li><strong>The connection</strong> — a recent electricity bill, which carries the consumer
+          number, the sanctioned load and the name that has to match.</li>
+          <li><strong>The premises</strong> — ownership proof, or permission for the roof where the
+          applicant is not the owner.</li>
+          <li><strong>The bank account</strong> — for the subsidy transfer, in the same name.</li>
+        </ul>
+        <p>Do not send documents to anyone who contacts you offering to "get the subsidy approved".
+        The subsidy is disbursed to your own account through the official process, and the vendor list
+        is published on the national portal.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Fix it at your DISCOM, then apply</h2>
+        <p>All three of the fixes above — load enhancement, name correction, transfer of connection —
+        are DISCOM requests, not solar-portal ones. Pick your state and DISCOM and go straight to its
+        official portal:</p>
+        <p class="seo-cta-row"><a class="seo-cta" href="/services/">Open my DISCOM's services</a></p>
+        <p>The order that saves the most time: check the name on your bill, check the sanctioned load
+        against the plant you want, raise whichever request you need, and only then start the solar
+        application. Doing it the other way round means an application waiting on a DISCOM process
+        that had not been started.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Then work out whether it is worth it</h2>
+        <p>Eligibility is a gate, not a reason. Once you know you can apply, the questions that
+        actually decide it are how big a plant your roof and your consumption justify, and what the
+        subsidy leaves you paying:</p>
+        <div class="seo-link-grid">
+          <a class="seo-link-card" data-icon="sun" href="/solar-subsidy-checker/"><strong>Subsidy and payback</strong><span>What the plant costs after subsidy, and how long it takes to pay back</span></a>
+          <a class="seo-link-card" data-icon="calc" href="/solar-panel-size-calculator/"><strong>What size do I need?</strong><span>Panel count and roof area for the output you want</span></a>
+          <a class="seo-link-card" data-icon="gauge" href="/sanctioned-load-optimizer/"><strong>Is my load right?</strong><span>Compare sanctioned load against the demand you actually record</span></a>
+        </div>
+      </section>
+    `,
+    faqs: [
+      {
+        q: 'Does my sanctioned load have to match my solar panel size?',
+        a: 'Your sanctioned load generally has to be at least the capacity of the plant — a 3 kW system on a connection sanctioned for 2 kW will usually need a load enhancement first. The requirement is set by your DISCOM, and the enhancement is a routine request, but the higher fixed charge that follows is permanent and billed every month.'
+      },
+      {
+        q: 'What happens if the name on my electricity bill does not match my bank account?',
+        a: 'It is one of the most common reasons an application stalls, because the subsidy is paid to a bank account matched against the connection. If it is the same person with a spelling difference, ask your DISCOM for a name correction. If the connection is in someone else\'s name, you need a transfer of connection, which takes longer and also re-settles the security deposit — start it early.'
+      },
+      {
+        q: 'Will increasing my sanctioned load raise my bill even if I generate my own power?',
+        a: 'Yes. The fixed charge is billed on sanctioned load regardless of how much you consume or generate, so it applies in every month including your best generating months. Work out the monthly increase before you enhance, and keep the load no higher than the plant actually requires.'
+      },
+      {
+        q: 'Does a load enhancement mean paying the security deposit again?',
+        a: 'No — only the difference between the new required deposit and the one you already hold. A demand for the entire new amount is worth questioning in writing.'
+      },
+      {
+        q: 'Can I apply for PM Surya Ghar if I live in a rented house?',
+        a: 'The applicant needs to be the electricity consumer and to control the roof, so a tenant generally cannot apply on a connection in the landlord\'s name. Where the arrangement is genuinely yours, the connection has to be transferred into your name first, with the owner\'s permission for the roof.'
+      },
+      {
+        q: 'Should I fix these things before applying or after?',
+        a: 'Before. Load enhancement, name correction and transfer are all DISCOM processes with their own timelines, and an application waiting on one of them is simply an application waiting. Checking the name on your latest bill and the sanctioned load against your intended plant size costs nothing and takes a minute.'
+      }
+    ]
+  },
+  {
     slug: 'md-penalty-excess-demand-charge',
     published: "2026-08-20",
     title: 'MD Penalty and Excess Demand Charge, Explained',
