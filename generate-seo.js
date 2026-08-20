@@ -429,8 +429,8 @@ const FOOTER_SITEMAP = `
         <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
         <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
-        <a href="/database/">Tariff Database</a>
-        <a href="/orders/">Order Library</a>
+        <a href="/database/" data-i18n="ql.tariffDatabase">Tariff Database</a>
+        <a href="/orders/" data-i18n="ql.orderLibrary">Order Library</a>
         <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
@@ -1797,21 +1797,69 @@ function currentFppaHtml(state, discom) {
 
 // `state` decides what the surcharge tile is called — the reader is matching these tiles
 // against the lines printed on their own bill, so the tile has to use their word for it.
-function billLineExplainerHtml(discom, state = null) {
+// The six lines every Indian electricity bill has, whatever the DISCOM calls them.
+//
+// This used to be English-only and was rendered by discomPage() alone, so every /hi/, /mr/ and
+// /ta/ DISCOM page — the pages for the readers least likely to be reading a bill in English —
+// was missing the block that explains what the charges are. That is the wrong way round.
+//
+// The fourth title is surchargeLabel(state) and stays in the regulator's own words (FPPAS in
+// UP, PPAC in Delhi, FAC in Maharashtra): it is the string printed on the reader's bill, and
+// translating it would break the match they are trying to make. The description around it
+// translates; the name does not.
+function billLineExplainerHtml(discom, state = null, lang = 'en') {
   const nm = esc(discom.name);
+  const code = surchargeLabel(state);
   const items = [
-    ['Energy charge', 'The slab-wise price of the units consumed during the billing period. In telescopic slabs, each band is billed at its own rate.', 'gauge'],
-    ['Fixed charge', 'A monthly charge linked to sanctioned load, connected load, billing demand or consumer category. It applies even when usage is low.', 'plug'],
-    ['Electricity duty', 'A statutory government levy. Depending on the state, it may apply on energy charges, fixed charges, or selected bill components.', 'gov'],
-    [surchargeLabel(state), 'Fuel and power-purchase adjustment. It changes more often than the base tariff and may appear as a charge or a credit.', 'trend'],
-    ['Arrears', 'Unpaid balance, corrections, security-deposit adjustments or previous-cycle amounts carried into the current bill.', 'cash'],
-    ['LPSC', 'Late Payment Surcharge on overdue amounts. Check the due date and pay through the official DISCOM channel to avoid it.', 'clock'],
+    [{ en: 'Energy charge', hi: 'ऊर्जा शुल्क', mr: 'ऊर्जा शुल्क', ta: 'மின்சாரக் கட்டணம்' },
+     { en: 'The slab-wise price of the units consumed during the billing period. In telescopic slabs, each band is billed at its own rate.',
+       hi: 'बिलिंग अवधि में खपत यूनिट की स्लैब-वार कीमत। टेलिस्कोपिक स्लैब में हर बैंड अपनी दर से बिल होता है।',
+       mr: 'बिलिंग कालावधीत वापरलेल्या युनिटची स्लॅबनिहाय किंमत. टेलिस्कोपिक स्लॅबमध्ये प्रत्येक बँड स्वतःच्या दराने आकारला जातो.',
+       ta: 'கட்டணக் காலத்தில் பயன்படுத்திய யூனிட்டுகளின் ஸ்லாப் வாரியான விலை. டெலஸ்கோபிக் ஸ்லாப்பில் ஒவ்வொரு பிரிவும் அதன் சொந்த விகிதத்தில் கணக்கிடப்படும்.' },
+     'bolt'],
+    [{ en: 'Fixed charge', hi: 'फिक्स्ड शुल्क', mr: 'फिक्स्ड शुल्क', ta: 'நிலையான கட்டணம்' },
+     { en: 'A monthly charge linked to sanctioned load, connected load, billing demand or consumer category. It applies even when usage is low.',
+       hi: 'स्वीकृत भार, कनेक्टेड लोड, बिलिंग डिमांड या उपभोक्ता श्रेणी से जुड़ा मासिक शुल्क। खपत कम होने पर भी यह लगता है।',
+       mr: 'मंजूर भार, कनेक्टेड लोड, बिलिंग डिमांड किंवा ग्राहक श्रेणीशी जोडलेले मासिक शुल्क. वापर कमी असतानाही ते लागू होते.',
+       ta: 'அனுமதிக்கப்பட்ட சுமை, இணைப்புச் சுமை, கட்டணத் தேவை அல்லது நுகர்வோர் வகையுடன் இணைந்த மாதாந்திரக் கட்டணம். பயன்பாடு குறைவாக இருந்தாலும் இது பொருந்தும்.' },
+     'plug'],
+    [{ en: 'Electricity duty', hi: 'बिजली शुल्क (ड्यूटी)', mr: 'वीज शुल्क (ड्युटी)', ta: 'மின் வரி' },
+     { en: 'A statutory government levy. Depending on the state, it may apply on energy charges, fixed charges, or selected bill components.',
+       hi: 'सरकार द्वारा लगाया गया वैधानिक कर। राज्य के अनुसार यह ऊर्जा शुल्क, फिक्स्ड शुल्क या बिल के चुनिंदा हिस्सों पर लग सकता है।',
+       mr: 'सरकारने लावलेला वैधानिक कर. राज्यानुसार तो ऊर्जा शुल्क, फिक्स्ड शुल्क किंवा बिलाच्या निवडक घटकांवर लागू होऊ शकतो.',
+       ta: 'அரசின் சட்டப்பூர்வ வரி. மாநிலத்தைப் பொறுத்து இது மின்சாரக் கட்டணம், நிலையான கட்டணம் அல்லது பில்லின் சில பகுதிகளுக்குப் பொருந்தலாம்.' },
+     'gov'],
+    [{ en: code, hi: code, mr: code, ta: code },
+     { en: 'Fuel and power-purchase adjustment. It changes more often than the base tariff and may appear as a charge or a credit.',
+       hi: 'ईंधन एवं विद्युत क्रय समायोजन। यह आधार टैरिफ़ से कहीं ज़्यादा बार बदलता है और शुल्क या क्रेडिट, दोनों रूप में आ सकता है।',
+       mr: 'इंधन व वीज खरेदी समायोजन. हे मूळ दरापेक्षा जास्त वेळा बदलते आणि शुल्क किंवा क्रेडिट म्हणून येऊ शकते.',
+       ta: 'எரிபொருள் மற்றும் மின் கொள்முதல் சரிசெய்தல். இது அடிப்படைக் கட்டணத்தை விட அடிக்கடி மாறும், கட்டணமாகவோ வரவாகவோ வரலாம்.' },
+     'trend'],
+    [{ en: 'Arrears', hi: 'बकाया', mr: 'थकबाकी', ta: 'நிலுவைத் தொகை' },
+     { en: 'Unpaid balance, corrections, security-deposit adjustments or previous-cycle amounts carried into the current bill.',
+       hi: 'पिछला बकाया, सुधार, सुरक्षा जमा समायोजन या पिछले चक्र की रकम जो इस बिल में जोड़ी गई है।',
+       mr: 'न भरलेली रक्कम, दुरुस्त्या, सुरक्षा ठेव समायोजन किंवा मागील चक्रातील रक्कम या बिलात समाविष्ट.',
+       ta: 'செலுத்தப்படாத தொகை, திருத்தங்கள், பாதுகாப்பு வைப்புத்தொகை சரிசெய்தல் அல்லது முந்தைய சுழற்சியின் தொகை இந்தப் பில்லில் சேர்க்கப்பட்டது.' },
+     'cash'],
+    [{ en: 'LPSC', hi: 'विलंब भुगतान अधिभार (LPSC)', mr: 'विलंब भरणा अधिभार (LPSC)', ta: 'தாமதக் கட்டணம் (LPSC)' },
+     { en: 'Late Payment Surcharge on overdue amounts. Check the due date and pay through the official DISCOM channel to avoid it.',
+       hi: 'देय तिथि निकल जाने पर लगने वाला विलंब भुगतान अधिभार। इससे बचने के लिए देय तिथि देखिए और आधिकारिक डिस्कॉम माध्यम से भुगतान कीजिए।',
+       mr: 'मुदतीनंतरच्या रकमेवरील विलंब भरणा अधिभार. हे टाळण्यासाठी देय तारीख पाहा आणि अधिकृत डिस्कॉम मार्गाने भरणा करा.',
+       ta: 'தவணை தாண்டிய தொகைக்கான தாமதக் கட்டணம். இதைத் தவிர்க்க கடைசி தேதியைப் பார்த்து அதிகாரப்பூர்வ டிஸ்காம் வழியில் செலுத்துங்கள்.' },
+     'clock'],
   ];
+  const heading = T(lang, {
+    en: `Understanding your ${nm} bill`,
+    hi: `${nm} का बिल समझिए`,
+    mr: `${nm} चे बिल समजून घ्या`,
+    ta: `${nm} பில்லைப் புரிந்துகொள்ளுங்கள்`,
+  });
   return `
     <section class="seo-section">
-      <h2>Understanding your ${nm} bill</h2>
+      <h2>${heading}</h2>
       <div class="discom-explain-grid">
-        ${items.map(([title, body, icon]) => `<article data-icon="${icon}"><h3>${title}</h3><p>${body}</p></article>`).join('')}
+        ${items.map(([title, body, icon]) =>
+          `<article data-icon="${icon}"><h3>${esc(T(lang, title))}</h3><p>${esc(T(lang, body))}</p></article>`).join('')}
       </div>
     </section>`;
 }
@@ -2303,7 +2351,7 @@ function discomPage(state, discom, lang = 'en') {
       <div class="tariff-cards">${cards}</div>
     </section>
 
-    ${billLineExplainerHtml(discom, state)}
+    ${billLineExplainerHtml(discom, state, lang)}
     ${areaServedHtml(discom)}
     ${officialServicesHtml(state, discom)}
     ${guideLinksHtml(state, discom)}
@@ -2503,6 +2551,9 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
       <div class="tariff-cards">${cards}</div>
     </section>
 
+    <!-- Was English-only, and only on discomPage(): the six charges every bill carries were
+         explained on /tariffs/<state>/<discom>/ but not on its /hi/, /mr/ or /ta/ twin. -->
+    ${billLineExplainerHtml(discom, state, lang)}
     ${glossaryLinksHtml(discom, lang, state)}
     ${guideLinksHtml(state, discom, lang)}
     ${siblingHtml}

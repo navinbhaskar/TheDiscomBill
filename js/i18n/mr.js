@@ -18,6 +18,8 @@ export default {
     'ql.tools': 'टूल्स',
     'ql.solarTools': 'सोलर टूल्स',
     'ql.tariffs': 'टॅरिफ',
+    'ql.tariffDatabase': 'टॅरिफ डेटाबेस',
+    'ql.orderLibrary': 'आदेश ग्रंथालय',
     'ql.fuelSurcharge': 'इंधन अधिभार ट्रॅकर',
     'tools.title': 'फक्त बिल कॅल्क्युलेटर नाही',
     'tools.sub': 'येथील प्रत्येक साधन त्याच पडताळलेल्या टॅरिफ दरांवर चालते — तुमच्या कामाचे असेल तेच निवडा.',

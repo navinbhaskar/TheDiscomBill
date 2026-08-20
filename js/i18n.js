@@ -45,6 +45,8 @@ export const STRINGS = {
     'ql.glossary': 'Bill Glossary',
     'ql.understandBill': 'Understand Your Bill',
     'ql.methodology': 'Methodology & Accuracy',
+    'ql.tariffDatabase': 'Tariff Database',
+    'ql.orderLibrary': 'Order Library',
     'ql.fuelSurcharge': 'Fuel Surcharge Tracker',
     // Homepage "More tools" section. Only the headings live here — every tool LABEL in that
     // section reuses the footer's existing ql.*/nav.* keys, so the two can never disagree.

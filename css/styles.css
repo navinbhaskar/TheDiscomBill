@@ -1268,6 +1268,13 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
      doesn't break the sticky header, which lives outside .page-body. */
   overflow-x: clip;
 }
+/* Devanagari and Tamil carry marks above and below the baseline that Latin does not, so the
+   1.12 the hero title is tuned to clips them against .hero { overflow: hidden }. Measured:
+   58px of ink in a 51.52px line box. Scoped by language so the English hero is untouched. */
+:root[lang="hi"] .hero h1,
+:root[lang="mr"] .hero h1,
+:root[lang="ta"] .hero h1 { line-height: 1.28; }
+
 .hero-badge {
   display: inline-flex; align-items: center; gap: 6px;
   background: var(--brand-faint);
@@ -4598,6 +4605,7 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 [data-icon="plug"]    { --ic: var(--ic-plug);    --card-icon: #059669; }
 [data-icon="gov"]     { --ic: var(--ic-gov);     --card-icon: #4f46e5; }
 [data-icon="clock"]   { --ic: var(--ic-clock);   --card-icon: #db2777; }
+[data-icon="bolt"]    { --ic: var(--ic-bolt);    --card-icon: #ca8a04; }
 /* The 600-weight hues are chosen for white; on the dark page they sit too dark against the
    card, so each lifts toward its lighter neighbour. */
 :root[data-theme="dark"] [data-icon="calc"]    { --card-icon: #60a5fa; }
@@ -4614,6 +4622,7 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 :root[data-theme="dark"] [data-icon="plug"]    { --card-icon: #6ee7b7; }
 :root[data-theme="dark"] [data-icon="gov"]     { --card-icon: #a5b4fc; }
 :root[data-theme="dark"] [data-icon="clock"]   { --card-icon: #f9a8d4; }
+:root[data-theme="dark"] [data-icon="bolt"]    { --card-icon: #fde047; }
 
 /* ── Secondary link blocks ───────────────────────────────────────────────────
    Guides, tools, quick links and sibling states are ways off the page, not the page. On the
@@ -5808,7 +5817,7 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   font-size: 21px; font-weight: 600; color: var(--text-primary);
   letter-spacing: -0.4px; margin: 0 0 6px;
 }
-.tools-lead { color: var(--text-secondary); margin: 0 0 22px; line-height: 1.6; max-width: 620px; }
+.tools-lead { color: var(--text-secondary); margin: 0 0 22px; line-height: 1.6; max-width: 820px; }
 .tools-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
 .tools-group {
   display: flex; flex-direction: column; min-width: 0;
