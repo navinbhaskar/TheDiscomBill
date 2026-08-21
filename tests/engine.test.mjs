@@ -240,6 +240,38 @@ group('excess demand penalty', () => {
   check('penalty 20 × 600', r.excessDemandPenalty, 12000);
 });
 
+
+// ── by_consumption tariffs have no per-kW demand rate ────────────────────────
+// Two defects lived in one line. resolveFixedCharge() was called without `units`, which
+// defaults to 0, so every by_consumption tariff resolved into its LOWEST consumption band.
+// And the result was then divided by the sanctioned load and treated as a demand rate — but
+// these charges are banded by units, not load, so that number means nothing. Kerala LT-I
+// reported a ₹142.50 "demand charge" alongside a ₹50 excess-demand penalty: two incompatible
+// readings of the same field.
+group('by_consumption — no fake demand rate', () => {
+  // Kerala LT-I: banded by units, no perKw flag, so no demand rate and no multiplier penalty.
+  const kl = calculateBill({ discomId: 'kseb', categoryId: 'domestic',
+    units: 500, connectedLoadKw: 2, billedDemandKw: 3, billingPeriodDays: 30,
+    billingDate: DATE, facRate: 0, lpscApplicable: false });
+  check('kerala fixed charge is the 500-unit band', kl.fixedCharge, 285);
+  check('kerala has no per-kW demand rate', kl.excessDemandRate, 0);
+  check('so no excess-demand penalty', kl.excessDemandPenalty, 0);
+
+  // Telangana LT-I IS perKw: the band picks a RATE and the load scales it, so a demand rate
+  // genuinely exists — and must come from the band the consumption actually falls in.
+  const tsLow = calculateBill({ discomId: 'tsspdcl', categoryId: 'domestic',
+    units: 500, connectedLoadKw: 2, billedDemandKw: 3, billingPeriodDays: 30,
+    billingDate: DATE, facRate: 0, lpscApplicable: false });
+  check('telangana ≤800 units → ₹10/kW', tsLow.fixedCharge, 20);
+  check('excess rate is 2× that', tsLow.excessDemandRate, 20);
+
+  const tsHigh = calculateBill({ discomId: 'tsspdcl', categoryId: 'domestic',
+    units: 1000, connectedLoadKw: 2, billedDemandKw: 3, billingPeriodDays: 30,
+    billingDate: DATE, facRate: 0, lpscApplicable: false });
+  check('telangana >800 units → ₹50/kW', tsHigh.fixedCharge, 100);
+  // The old code passed units=0 and always landed in the lowest band, so this read 20.
+  check('excess rate follows the right band', tsHigh.excessDemandRate, 100);
+});
 // ── Net metering (rooftop solar) ─────────────────────────────────────────────
 group('net metering', () => {
   // import 400, export 150, opening credit 50 → net 200 billed; no surplus

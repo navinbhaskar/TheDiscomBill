@@ -3670,7 +3670,11 @@ function excessDemandStateRows(state, cfg, rows, basisHtml, lang) {
     const cost = r.mode === 'energy'
       ? `<span class="md-formula">${esc(cfg ? excessDemandHow(cfg, lang) : t('A share of the energy charges, per excess kW', 'प्रति अतिरिक्त kW, ऊर्जा शुल्क का एक हिस्सा'))}</span>`
       : r.mode === 'none'
-        ? `<span class="db-gap">${t('no demand charge on this tariff', 'इस टैरिफ़ पर मांग शुल्क नहीं')}</span>`
+        // A by_consumption tariff has no demand charge at all; a tariff that has one but no
+        // applicable penalty is a different statement. Gujarat domestic is the second kind.
+        ? `<span class="db-gap">${r.demandRate > 0
+            ? t('no excess-demand penalty on this tariff', 'इस टैरिफ़ पर अतिरिक्त-मांग पेनल्टी नहीं')
+            : t('no demand charge on this tariff', 'इस टैरिफ़ पर मांग शुल्क नहीं')}</span>`
         : `<strong>${rupeeRate(r.perKw)}</strong> <small>${t('per excess kW', 'प्रति अतिरिक्त kW')}</small>`;
     const tariff = r.label.code
       ? `<strong>${esc(r.label.code)}</strong> <small>${esc(r.label.label)}</small>`
@@ -3809,7 +3813,8 @@ function securityDepositTableHtml(lang = 'en') {
 // reconciled against real printed bills. Every state's fixed charge differs; the legend says so
 // and points at the calculator for the reader's own DISCOM.
 function solarLoadTableHtml(lang = 'en') {
-  const t = fsT(lang);
+  // Four languages, not two: this table sits inside a guide translated into all of them.
+  const t = (m) => T(lang, m);
   const fixedAt = (kw) => calculateBill({
     discomId: 'mvvnl', categoryId: 'domestic', supplyTypeId: '10B',
     units: 250, connectedLoadKw: kw, billingPeriodDays: 30, billingDate: TODAY,
@@ -3831,24 +3836,36 @@ function solarLoadTableHtml(lang = 'en') {
 
   return `<div class="comparison-table-wrapper"><table class="comparison-table">
       <thead><tr>
-        <th class="num">${t('Plant you want', 'जो प्लांट चाहिए')}</th>
-        <th class="num">${t('Minimum load', 'न्यूनतम भार')}</th>
-        <th class="num">${t('Fixed charge / month', 'फिक्स्ड शुल्क / माह')}</th>
-        <th class="num">${t('Extra vs 2 kW', '2 kW से अधिक')}</th>
-        <th class="num">${t('Extra a year', 'सालाना अधिक')}</th>
+        <th class="num">${t({ en: 'Plant you want', hi: 'जो प्लांट चाहिए', mr: 'हवा असलेला प्लांट', ta: 'நீங்கள் விரும்பும் ஆலை' })}</th>
+        <th class="num">${t({ en: 'Minimum load', hi: 'न्यूनतम भार', mr: 'किमान भार', ta: 'குறைந்தபட்ச சுமை' })}</th>
+        <th class="num">${t({ en: 'Fixed charge / month', hi: 'फिक्स्ड शुल्क / माह', mr: 'फिक्स्ड शुल्क / महिना', ta: 'நிலையான கட்டணம் / மாதம்' })}</th>
+        <th class="num">${t({ en: 'Extra vs 2 kW', hi: '2 kW से अधिक', mr: '2 kW पेक्षा जास्त', ta: '2 kW-ஐ விட கூடுதல்' })}</th>
+        <th class="num">${t({ en: 'Extra a year', hi: 'सालाना अधिक', mr: 'वर्षाला जास्त', ta: 'ஆண்டுக்கு கூடுதல்' })}</th>
       </tr></thead>
       <tbody>${rows}</tbody>
     </table></div>
-    <p class="fs-legend">${t(`Fixed charges computed live from the UPPCL LMV-1 urban domestic schedule, against a
+    <p class="fs-legend">${t({
+      en: `Fixed charges computed live from the UPPCL LMV-1 urban domestic schedule, against a
     2 kW starting point. <strong>A load enhancement is permanent</strong>: the higher fixed charge is billed
     every month afterwards, in months you generate plenty and months you do not. Your own DISCOM's fixed
     charge will differ — put your numbers into the <a href="/#calculator">bill calculator</a> before you
     apply, and check the load you actually need with the
     <a href="/sanctioned-load-optimizer/">sanctioned load optimizer</a>.`,
-    `फिक्स्ड शुल्क UPPCL LMV-1 शहरी घरेलू अनुसूची से लाइव गणना, 2 kW को आधार मानकर।
+      hi: `फिक्स्ड शुल्क UPPCL LMV-1 शहरी घरेलू अनुसूची से लाइव गणना, 2 kW को आधार मानकर।
     <strong>भार वृद्धि स्थायी होती है</strong>: ऊँचा फिक्स्ड शुल्क हर महीने लगेगा — चाहे उत्पादन ज़्यादा हो या कम।
     आपके डिस्कॉम का शुल्क अलग होगा — आवेदन से पहले <a href="/#calculator">बिल कैलकुलेटर</a> में अपने आँकड़े डालिए
-    और <a href="/sanctioned-load-optimizer/">स्वीकृत भार ऑप्टिमाइज़र</a> से ज़रूरी भार जाँचिए।`)}</p>`;
+    और <a href="/sanctioned-load-optimizer/">स्वीकृत भार ऑप्टिमाइज़र</a> से ज़रूरी भार जाँचिए।`,
+      mr: `फिक्स्ड शुल्क UPPCL LMV-1 शहरी घरगुती अनुसूचीवरून थेट मोजलेले, 2 kW हा आधार धरून.
+    <strong>भारवाढ कायमस्वरूपी असते</strong>: वाढलेले फिक्स्ड शुल्क नंतर दर महिन्याला लागते — निर्मिती भरपूर
+    असलेल्या महिन्यांतही. तुमच्या डिस्कॉमचे शुल्क वेगळे असेल — अर्ज करण्यापूर्वी
+    <a href="/#calculator">बिल कॅल्क्युलेटर</a>मध्ये तुमचे आकडे टाका आणि
+    <a href="/sanctioned-load-optimizer/">मंजूर भार ऑप्टिमायझर</a>ने खरोखर लागणारा भार तपासा.`,
+      ta: `நிலையான கட்டணங்கள் UPPCL LMV-1 நகர்ப்புற வீட்டு அட்டவணையிலிருந்து நேரடியாகக்
+    கணக்கிடப்பட்டவை, 2 kW-ஐ அடிப்படையாகக் கொண்டு. <strong>சுமை உயர்வு நிரந்தரமானது</strong>: உயர்ந்த நிலையான
+    கட்டணம் அதன் பிறகு ஒவ்வொரு மாதமும் வசூலிக்கப்படும் — அதிக மின்சாரம் உற்பத்தி செய்யும் மாதங்களிலும். உங்கள்
+    டிஸ்காமின் கட்டணம் வேறுபடும் — விண்ணப்பிக்கும் முன் <a href="/#calculator">பில் கால்குலேட்டரில்</a> உங்கள்
+    எண்களை இடுங்கள், <a href="/sanctioned-load-optimizer/">அனுமதி சுமை ஆப்டிமைசரில்</a> தேவையான சுமையைச் சரிபாருங்கள்.`,
+    })}</p>`;
 }
 
 function guidePage(guide, lang = 'en') {

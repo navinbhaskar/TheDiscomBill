@@ -150,7 +150,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -161,7 +161,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -172,7 +172,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -184,7 +184,45 @@
   </url>
   <url>
     <loc>https://thediscombill.com/guides/pm-surya-ghar-eligibility-checklist/</loc>
-    <lastmod>2026-08-20</lastmod>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/guides/pm-surya-ghar-eligibility-checklist/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/mr/guides/pm-surya-ghar-eligibility-checklist/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/ta/guides/pm-surya-ghar-eligibility-checklist/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/pm-surya-ghar-eligibility-checklist/"/>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -193,7 +231,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/md-penalty-excess-demand-charge/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/md-penalty-excess-demand-charge/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/md-penalty-excess-demand-charge/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -202,7 +240,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/md-penalty-excess-demand-charge/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/md-penalty-excess-demand-charge/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/md-penalty-excess-demand-charge/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -580,7 +618,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/solar-net-metering-savings/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/solar-net-metering-savings/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/solar-net-metering-savings/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -591,7 +629,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/solar-net-metering-savings/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/solar-net-metering-savings/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/solar-net-metering-savings/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -602,7 +640,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/solar-net-metering-savings/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/solar-net-metering-savings/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/solar-net-metering-savings/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1910,7 +1948,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/andhra-pradesh/apspdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/andhra-pradesh/apspdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/andhra-pradesh/apspdcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -1946,7 +1984,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/andhra-pradesh/apepdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/andhra-pradesh/apepdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/andhra-pradesh/apepdcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2000,7 +2038,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/arunachal-pradesh/appdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/arunachal-pradesh/appdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/arunachal-pradesh/appdcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2054,7 +2092,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/assam/apdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/assam/apdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/assam/apdcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2108,7 +2146,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/bihar/nbpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/bihar/nbpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/bihar/nbpdcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2144,7 +2182,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/bihar/sbpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/bihar/sbpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/bihar/sbpdcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2198,7 +2236,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/chandigarh/chandigarh_ed/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/chandigarh/chandigarh_ed/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/chandigarh/chandigarh_ed/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2306,7 +2344,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2522,7 +2560,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/goa/ged/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/goa/ged/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/goa/ged/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2576,7 +2614,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/gujarat/ugvcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/gujarat/ugvcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/gujarat/ugvcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2612,7 +2650,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/gujarat/mgvcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/gujarat/mgvcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/gujarat/mgvcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2648,7 +2686,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/gujarat/pgvcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/gujarat/pgvcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/gujarat/pgvcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2684,7 +2722,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/gujarat/dgvcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/gujarat/dgvcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/gujarat/dgvcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2828,7 +2866,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/himachal-pradesh/hpsebl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/himachal-pradesh/hpsebl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/himachal-pradesh/hpsebl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2972,7 +3010,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/jharkhand/jbvnl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/jharkhand/jbvnl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/jharkhand/jbvnl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3278,7 +3316,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/ladakh/lpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/ladakh/lpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/ladakh/lpdcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3332,7 +3370,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/madhya-pradesh/mppkvvcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/madhya-pradesh/mppkvvcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/madhya-pradesh/mppkvvcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3368,7 +3406,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/madhya-pradesh/mpmkvvcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/madhya-pradesh/mpmkvvcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/madhya-pradesh/mpmkvvcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3404,7 +3442,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/madhya-pradesh/mpez/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/madhya-pradesh/mpez/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/madhya-pradesh/mpez/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3728,7 +3766,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/manipur/mspdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/manipur/mspdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/manipur/mspdcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3782,7 +3820,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/meghalaya/mepdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/meghalaya/mepdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/meghalaya/mepdcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3836,7 +3874,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/mizoram/ped_mizoram/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/mizoram/ped_mizoram/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/mizoram/ped_mizoram/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3890,7 +3928,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/nagaland/doe_nagaland/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/nagaland/doe_nagaland/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/nagaland/doe_nagaland/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4106,7 +4144,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/puducherry/pdicl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/puducherry/pdicl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/puducherry/pdicl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4214,7 +4252,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/rajasthan/jvvnl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/rajasthan/jvvnl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/rajasthan/jvvnl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4250,7 +4288,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/rajasthan/avvnl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/rajasthan/avvnl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/rajasthan/avvnl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4286,7 +4324,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/rajasthan/jdvvnl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/rajasthan/jdvvnl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/rajasthan/jdvvnl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4340,7 +4378,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/sikkim/energy_sikkim/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/sikkim/energy_sikkim/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/sikkim/energy_sikkim/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4484,7 +4522,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/telangana/tsspdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/telangana/tsspdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/telangana/tsspdcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4520,7 +4558,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/telangana/tsnpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/telangana/tsnpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/telangana/tsnpdcl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4574,7 +4612,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/tripura/tsecl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/tripura/tsecl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/tripura/tsecl/"/>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

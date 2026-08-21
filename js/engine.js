@@ -277,15 +277,36 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
   // Per-kW demand rate to multiply: for per_kw fixed charges this is exactly the rate; for
   // tiered/flat charges it's the fixed charge expressed per sanctioned kW (so a multiplier still
   // applies, and e.g. Delhi's "30% of the fixed charge for the excess load" comes out correct).
-  const perKwDemandRate = connectedLoadKw > 0
-    ? resolveFixedCharge(eff.fixedCharge, connectedLoadKw) / connectedLoadKw
+  //
+  // by_consumption is the exception, and it used to be got wrong twice over. Those tariffs band
+  // the monthly charge by UNITS, not by load, so dividing the resolved amount by the sanctioned
+  // load does not yield a demand rate at all — there is nothing for a multiplier to multiply,
+  // and Kerala LT-I ended up reporting a ₹142.50 "demand charge" against a ₹50 penalty. The
+  // call also omitted `units`, which defaults to 0, so every by_consumption tariff resolved
+  // into its lowest consumption band regardless of what the consumer actually used.
+  //
+  // `perKw: true` is the real per-kW case (Telangana LT-I is ₹10/kW up to 800 units, ₹50/kW
+  // above): there the band picks a RATE and the load scales it, so a demand rate exists — and
+  // it is now resolved against the real units instead of zero.
+  const fc = eff.fixedCharge;
+  const unitsBanded = !!fc && typeof fc === 'object' && fc.type === 'by_consumption';
+  const hasDemandRate = connectedLoadKw > 0 && (!unitsBanded || fc.perKw);
+  const perKwDemandRate = hasDemandRate
+    ? resolveFixedCharge(fc, connectedLoadKw, units) / connectedLoadKw
     : 0;
   const exCfg = eff.excessDemand || (stateMeta && stateMeta.excessDemand) || DEFAULT_EXCESS_DEMAND;
   const excessTolerancePct = (eff.excessDemandRate != null) ? 0 : (exCfg.tolerancePct || 0);
   let excessDemandRate = 0, excessDemandMultiplier = null, excessPctEnergyPerKw = null;
   if (eff.excessDemandRate) {
     excessDemandRate = eff.excessDemandRate;
-  } else if (exCfg.rate) {
+  } else if (exCfg.rate && isDemandBilled) {
+    // A flat ₹-per-excess-kVA figure is quoted in an order for consumers billed on CONTRACT
+    // DEMAND, so it only applies where the tariff is demand-billed. Gujarat used to levy its
+    // ₹360/kVA on a 2 kW domestic RGP connection whose demand charge is ₹7.50/kW — 48× — because
+    // the state-level rule was applied to every category regardless of how the tariff bills.
+    // Multiplier rules below are deliberately NOT scoped this way: a multiple of the demand
+    // charge you already pay scales to any tariff, which is how Delhi's 30% surcharge reaches
+    // domestic consumers correctly.
     excessDemandRate = exCfg.rate;
   } else if (exCfg.multiplier && perKwDemandRate > 0) {
     excessDemandRate = +(exCfg.multiplier * perKwDemandRate).toFixed(2);
