@@ -14,17 +14,22 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // Force HTTPS: 301-redirect any plain-HTTP request to its https:// equivalent, preserving the
-    // host, path and query. Cloudflare terminates TLS at the edge, so the original client scheme is
-    // reported via the `x-forwarded-proto` header (url.protocol may already read "https" internally).
-    const proto = request.headers.get('x-forwarded-proto') || url.protocol.replace(':', '');
-    if (proto === 'http' || url.hostname === 'www.thediscombill.com') {
-      url.protocol = 'https:';
-      if (url.hostname === 'www.thediscombill.com') {
-        url.hostname = 'thediscombill.com';
-      }
-      return Response.redirect(url.toString(), 301);
-    }
+    // Canonical origin: https, apex host. 301 anything else to its equivalent there, preserving
+    // path and query.
+    //
+    // The scheme is read from request.url and nothing else. This used to prefer an
+    // `x-forwarded-proto` header, but a Worker sits at the edge rather than behind a proxy —
+    // there is no trusted hop to set that header, so its only real source is the client, which
+    // means a client could put this handler into a redirect loop by claiming "http" over a
+    // connection that is already https. request.url carries the scheme the request actually
+    // arrived on, so it is both correct and unspoofable.
+    url.protocol = 'https:';
+    if (url.hostname === 'www.thediscombill.com') url.hostname = 'thediscombill.com';
+
+    // Compare against the original rather than tracking which rules fired: whatever the reason,
+    // a redirect to the URL we were just asked for is a loop, so only redirect on a real change.
+    const canonical = url.toString();
+    if (canonical !== request.url) return Response.redirect(canonical, 301);
 
     // Permanent moves (Jul 2026): descriptive calculator slugs. Old paths 301 to the new
     // ones (query string preserved) so existing backlinks and indexed URLs keep their equity.

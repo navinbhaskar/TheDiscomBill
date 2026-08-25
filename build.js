@@ -1,54 +1,104 @@
 import fs from 'fs';
 import path from 'path';
+import { execFileSync } from 'child_process';
 import { generateSeo } from './generate-seo.js';
 
 // Pre-render the programmatic SEO landing pages (state / DISCOM / directory) and refresh
-// sitemap.xml + robots.txt into the source tree BEFORE copying, so the recursive copy of
-// tariffs/ picks them up and the sitemap is always current on every deploy.
+// sitemap.xml + robots.txt into the source tree BEFORE copying, so the recursive copy picks
+// them up and the sitemap is always current on every deploy.
 generateSeo();
 
 const dist = 'dist';
-if (!fs.existsSync(dist)) fs.mkdirSync(dist);
 
-const assets = [
-  'css', 'js', 'fonts',
-  // Route pages (each is its own folder with an index.html) — must be copied or
-  // the Quick Links destinations 404 in production. tariffs/ also contains the
-  // generated per-state and per-DISCOM landing pages (copied recursively).
-  'compare', 'electricity-cost-calculator', 'solar-calculator', 'tariffs', 'guides', 'glossary', 'database', 'methodology', 'services', 'bill-check', 'bill-review', 'expert', 'admin', 'login', 'my-bills', 'new-connection', 'complaint', 'sanctioned-load-optimizer', 'solar-subsidy-checker', 'tenant-submeter-calculator', 'check-my-bill', 'tenant-submeter-calculator', 'smart-meter',
-  // Hindi pre-rendered variants of tariffs/guides/glossary (generated into hi/ by generate-seo.js)
-  'hi',
+// What ships is decided by EXCLUSION, not by an inventory.
+//
+// This used to be a hand-written list of directories to copy. It silently fell behind the
+// site: `mr/`, `ta/`, `smart-meter-recharge/`, `fppa/`, `usage/`, `install/` and a dozen more
+// were never added, so 410 of 565 pages reached dist and the other 155 would have 404'd on
+// any host fed from it. Nothing failed — the missing pages simply were not there.
+//
+// An inventory of what to include has to be updated every time a page is added, and forgetting
+// is invisible. An inventory of what to leave out only changes when the toolchain changes, and
+// the check at the bottom catches a mistake either way.
+const EXCLUDE_DIRS = new Set([
+  'node_modules', 'dist', '.build',
+  'tests', 'scripts', 'docs', 'supabase',       // build-time and reference only
+  'graphify-out', 'thediscombill.com-audit',
+]);
 
-  // Official Order Library: hub + a page per order.
-  'orders',
-  'index.html', 'editor.html', '404.html',
-  'sw.js', 'manifest.webmanifest',
-  'icon.svg', 'icon-maskable.svg',
-  'icon-192.png', 'icon-512.png',
-  'og-image.jpg',   // 1200×630 default social card (og:image / twitter:image)
-  'og',             // per-page social cards (scripts/og-images.mjs) — default is the fallback
-  // SEO / hosting files — previously omitted, so they never reached production.
-  'sitemap.xml', 'robots.txt', 'llms.txt', 'CNAME'
-];
+// Build-time sources and repo furniture. These sit at the root next to the pages, so they
+// cannot be excluded by directory.
+const EXCLUDE_FILES = new Set([
+  'build.js', 'generate-seo.js',
+  'guides-content.js', 'glossary-content.js', 'smart-meter-content.js',
+  'smart-meter-svg.js', 'understand-bill-content.js',
+  'worker.js', 'wrangler.jsonc',                // Cloudflare entry point, not an asset
+  'package.json', 'package-lock.json',
+  'README.md', 'CONTRIBUTING.md', 'TARIFF_GUIDE.md',
+  'sitemap-lastmod.json',                       // build bookkeeping, not served
+]);
 
-function copyRecursiveSync(src, dest) {
-  const stats = fs.statSync(src);
-  const isDirectory = stats.isDirectory();
-  if (isDirectory) {
-    if (!fs.existsSync(dest)) fs.mkdirSync(dest);
-    fs.readdirSync(src).forEach(childItemName => {
-      copyRecursiveSync(path.join(src, childItemName), path.join(dest, childItemName));
-    });
-  } else {
-    fs.copyFileSync(src, dest);
+// GitHub Pages already ignores dot- and underscore-prefixed entries, so matching that keeps
+// dist equivalent to what the current host serves.
+//
+// The two exceptions are Cloudflare's own asset-config files. They are underscore-prefixed
+// precisely so the current host ignores them, which means the blanket rule above would also
+// stop them from ever reaching the deploy that needs them.
+const ASSET_CONFIG = new Set(['_headers', '_redirects']);
+const isHidden = name => !ASSET_CONFIG.has(name) && (name.startsWith('.') || name.startsWith('_'));
+
+function copyTree(src, dest) {
+  let files = 0;
+  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+    const name = entry.name;
+    if (isHidden(name)) continue;
+    const from = path.join(src, name);
+    const to = path.join(dest, name);
+    if (entry.isDirectory()) {
+      if (src === '.' && EXCLUDE_DIRS.has(name)) continue;
+      fs.mkdirSync(to, { recursive: true });
+      files += copyTree(from, to);
+    } else {
+      if (src === '.' && EXCLUDE_FILES.has(name)) continue;
+      fs.copyFileSync(from, to);
+      files++;
+    }
   }
+  return files;
 }
 
-assets.forEach(asset => {
-  if (fs.existsSync(asset)) {
-    copyRecursiveSync(asset, path.join(dist, asset));
-    console.log(`Copied ${asset} to ${dist}/`);
-  }
-});
+fs.rmSync(dist, { recursive: true, force: true });   // no stale files from a previous shape
+fs.mkdirSync(dist, { recursive: true });
+const copied = copyTree('.', dist);
 
-console.log('Build complete. Assets are in the dist/ folder.');
+// ── the check that makes the exclusion safe ─────────────────────────────────
+// Copying by exclusion can still lose pages — a bad EXCLUDE entry, a rename, a partial write.
+// Every HTML page git tracks must exist in dist, and the build fails naming the ones that do
+// not. This is the part the old list never had.
+const countHtml = dir => fs.readdirSync(dir, { withFileTypes: true }).reduce((n, e) =>
+  n + (e.isDirectory() ? countHtml(path.join(dir, e.name)) : e.name.endsWith('.html') ? 1 : 0), 0);
+
+// Deliberately UNFILTERED. Filtering this list by EXCLUDE_DIRS made the check self-fulfilling:
+// excluding a directory also removed it from what was expected, so dropping mr/ and ta/ still
+// reported "all present". Every tracked .html is a page of this site, so the expectation is
+// simply all of them — and adding an EXCLUDE entry can no longer quietly lower the bar.
+let tracked = [];
+try {
+  tracked = execFileSync('git', ['ls-files', '*.html'], { encoding: 'utf8' })
+    .split('\n').filter(Boolean);
+} catch {
+  console.warn('  (git unavailable — skipping the page-coverage check)');
+}
+
+if (tracked.length) {
+  const missing = tracked.filter(p => !fs.existsSync(path.join(dist, p)));
+  if (missing.length) {
+    console.error(`\nBuild failed: ${missing.length} tracked page(s) missing from ${dist}/`);
+    for (const p of missing.slice(0, 20)) console.error('  ' + p);
+    if (missing.length > 20) console.error(`  …and ${missing.length - 20} more`);
+    process.exit(1);
+  }
+  console.log(`  ${tracked.length} tracked pages, all present in ${dist}/`);
+}
+
+console.log(`Build complete. ${copied} files (${countHtml(dist)} HTML) in ${dist}/.`);
