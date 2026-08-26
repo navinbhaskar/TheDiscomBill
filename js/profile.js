@@ -68,7 +68,7 @@ function render(profile) {
       <form id="pfForm" class="pf-form">
         <div class="form-group">
           <label for="pfName">Display name</label>
-          <input type="text" id="pfName" maxlength="60" value="${esc(name)}" placeholder="e.g. Navin Bhaskar" autocomplete="name">
+          <input type="text" id="pfName" maxlength="60" value="${esc(name)}" placeholder="e.g. Priya S." autocomplete="name">
           <small>Shown on your community posts and bill-review conversations.</small>
         </div>
         <div class="form-group">

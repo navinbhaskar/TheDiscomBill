@@ -1,7 +1,8 @@
 // my-bills.js — account bill history page (/my-bills/).
 // Lists the bills synced by ui.js's syncBillToCloud whenever a signed-in user
-// calculates one. "Open" reloads the bill in the calculator via its share-link
-// params; "Delete" removes the row (RLS restricts everything to the owner).
+// calculates one. "View" opens it on /bill/, which renders the provisional bill and
+// offers a link into the calculator with every input restored; "Delete" removes the
+// row (RLS restricts everything to the owner).
 
 import { isConfigured, getSupabase, clearStoredSession } from './supabase-config.js';
 import { accountBarHtml, renderSetupNotice, esc, fmtWhen } from './support-common.js';
@@ -84,7 +85,7 @@ async function renderBills() {
           </div>
           <span class="mb-amt">₹ ${esc(b.amount)}</span>
           <span class="mb-actions">
-            <a class="br-back mb-open" href="/?${esc(b.params)}#calculator">Open</a>
+            <a class="br-back mb-open" href="/bill/?id=${esc(b.id)}">View</a>
             <button type="button" class="br-back mb-delete" data-id="${esc(b.id)}" aria-label="Delete this bill">🗑</button>
           </span>
         </div>`).join('')}

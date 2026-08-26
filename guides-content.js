@@ -18,6 +18,176 @@
 
 export const GUIDES = [
   {
+    slug: 'free-electricity-units-by-state',
+    published: "2026-08-26",
+    category: 'charges',
+    title: 'Free Electricity Units by State: How the Subsidy Actually Works',
+    metaTitle: 'Free Electricity Units by State — What You Actually Get, and the Traps',
+    description: 'Free-unit schemes are set by state governments, not by the regulator, which is why the terms are so hard to pin down. What Delhi and Karnataka actually give, why Karnataka is not a flat 200 units, and what to check on your own bill.',
+    minutes: 8,
+    toc: true,
+    intro: `Several Indian states give domestic consumers a block of electricity free every month.
+      The figures you see quoted — 200 units here, 100 there — are mostly repeated from other
+      websites rather than read off the order that grants them, and at least one of the popular
+      numbers is <strong>simply wrong</strong>: Karnataka's Gruha Jyothi is not a flat 200 free
+      units, and treating it as one is how households lose an entire month's subsidy. This page
+      explains where these schemes actually come from, the three shapes they take, and what to
+      check on your own bill.`,
+    sections: `
+      <section class="seo-section">
+        <h2>Why nobody can tell you the rules</h2>
+        <p>Every other figure on this site comes from a State Electricity Regulatory Commission
+        tariff order — a public, numbered, dated document. <strong>Free-unit schemes do not.</strong>
+        They are executive decisions of the state government: cabinet orders, budget announcements
+        and subsidy notifications, applied on top of the tariff the regulator set.</p>
+        <p>That single fact explains why the information is so poor. The regulator publishes the
+        rates and stops. In Tamil Nadu's tariff order the domestic schedule is printed in full and
+        then footnoted <em>"LT-IA, IB, IE, IIC, IIIA(2), IIIB and IV to be partly/fully subsidized
+        by the Government"</em> — the subsidy is acknowledged and never stated. Punjab's tariff
+        order for FY 2025-26 carries the complete domestic slabs and does not mention a domestic
+        free-unit subsidy anywhere in it.</p>
+        <p>So the terms live in government orders, scheme portals and DISCOM consumer FAQs rather than in
+        one place. Everything below is traced to a specific order or an official scheme page.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>The three shapes a scheme can take</h2>
+        <p>The differences matter more than the headline number, because they change what happens
+        at the edges.</p>
+        <ol>
+          <li><strong>A banded full-bill subsidy.</strong> Your <em>whole</em> bill is waived if
+          total consumption stays under a threshold, with a smaller capped benefit in a second
+          band. Delhi works this way.</li>
+          <li><strong>An entitlement based on your own history.</strong> Your free allowance is
+          computed from what <em>you</em> used in a reference year, not from a figure that is the
+          same for everybody. Karnataka works this way, and it surprises people.</li>
+          <li><strong>A free block off the top.</strong> The first N units are free and you pay
+          normal slab rates on the rest. This is what most people assume every scheme does. It is
+          the most forgiving shape, because going over costs you only the excess.</li>
+        </ol>
+        <p>Shapes 1 and 2 have a cliff. Shape 3 does not. That is the single most important thing
+        to know about your state's scheme.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Karnataka: your entitlement is probably not 200 units</h2>
+        <p>Gruha Jyothi is quoted everywhere as "200 free units". The Government of Karnataka's own
+        FAQ says something different:</p>
+        <blockquote><p>"The benefit is calculated based on average consumption for Financial Year
+        2022-23 + 10% increase (total amounting to less than 200 units)"</p></blockquote>
+        <p>Your entitlement is <strong>your own household's average from FY 2022-23, plus 10%</strong>.
+        The 200 is a ceiling, not a grant. A household that averaged 90 units is entitled to about
+        99 — not 200.</p>
+        <p>And there is a cliff. Asked what happens if consumption exceeds the entitlement, the same
+        FAQ answers:</p>
+        <blockquote><p>"Yes for that particular month alone you will have to pay the entire bill
+        amount."</p></blockquote>
+        <p>Not the excess — <strong>the entire bill</strong>. A household entitled to 99 units that
+        uses 105 pays for all 105, at full tariff, plus fixed charges and duty. Six units of
+        carelessness can cost several hundred rupees. Stay under and the FAQ is equally clear: you
+        get a "Zero bill".</p>
+        <p>Other conditions worth knowing: registration through Seva Sindhu is mandatory and Aadhaar
+        must be linked to the account; only <strong>one meter per household</strong> qualifies;
+        tenants are eligible on a rental agreement or Voter ID plus Aadhaar; commercial premises are
+        excluded. <em>Source: Government of Karnataka Gruha Jyothi FAQ, read 26 August 2026.</em></p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Delhi: unusually broad, and it covers more than the energy charge</h2>
+        <p>Delhi's scheme is banded on total monthly consumption:</p>
+        <ul>
+          <li><strong>Up to 200 units</strong> — the entire current bill amount</li>
+          <li><strong>201 to 400 units</strong> — subsidy up to ₹800 per month</li>
+          <li><strong>Above 400 units</strong> — none</li>
+        </ul>
+        <p>The detail most summaries miss is what "the entire current bill" includes. BSES states the
+        benefit against the current bill value <em>inclusive of PPAC, electricity tax and pension
+        surcharge</em>. Most schemes subsidise the energy charge only and leave you paying the fuel
+        surcharge and duty on top; Delhi's does not. Given that Delhi's
+        <a href="/fppa/">PPAC</a> has run in double digits, that is a material difference.</p>
+        <p>It is applied automatically by the DISCOM rather than claimed, and an opt-out is offered.
+        Because it is banded on total consumption, the same cliff logic applies at 200 units as in
+        Karnataka. <em>Source: BSES Rajdhani consumer FAQ, read 26 August 2026; underlying order
+        GoNCTD No. F.11(111)/2012/Power/Vol-III/1417-1427.</em></p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Tamil Nadu: the figure is per two-month cycle, not per month</h2>
+        <p>Tamil Nadu bills domestic supply <strong>bi-monthly</strong>, and its slabs are written
+        per two-month cycle — the LT-IA schedule starts at 0&ndash;400 kWh, not 0&ndash;200. The free-unit
+        entitlement is written the same way.</p>
+        <p>Under G.O.(Ms) No.50 dated 10 May 2026, read with TNERC Order No.5 of 2026, a domestic
+        consumer billing <strong>up to 500 units in the two-month cycle gets 200 units free per
+        cycle</strong>. Above that, the older allowance of <strong>100 units per cycle</strong>
+        continues. Note what that means at the boundary: it is a taper rather than a cliff — cross
+        500 units and you keep a smaller allowance instead of losing it entirely.</p>
+        <p>This is where most published comparisons fall apart. A figure that is per billing cycle
+        gets reprinted as if it were per month, doubling the apparent benefit. If you are comparing
+        Tamil Nadu against a monthly-billed state, halve the bi-monthly figure first: 200 units per
+        cycle is 100 units a month.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>What to check on your own bill</h2>
+        <ol>
+          <li><strong>Find the subsidy line.</strong> It appears as a deduction, often near the
+          bottom, labelled subsidy, concession or rebate. If it is absent and you believe you
+          qualify, that is the thing to raise — not the tariff.</li>
+          <li><strong>Check whether you had to register.</strong> Karnataka's requires registration
+          and Aadhaar linking. Delhi's is automatic. A scheme you never enrolled in will never
+          appear on a bill.</li>
+          <li><strong>Find your entitlement, not the headline number.</strong> Where the scheme is
+          history-based, the figure that matters is on your own account, not in a news report.</li>
+          <li><strong>Work out where your cliff is</strong> and how close you run to it. Our
+          <a href="/">bill calculator</a> will show you what a month just over the line actually
+          costs at your DISCOM's rates — which is usually the argument for a small behaviour change
+          rather than a large one.</li>
+          <li><strong>Re-check after a state budget.</strong> These schemes are annual spending
+          decisions. They get extended, narrowed and re-scoped far more often than tariffs do.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section">
+        <h2>Why this page does not list all 34 states</h2>
+        <p>Because most states do not have a domestic free-unit scheme, and for those that do the
+        terms have to be traced to a specific order before we will print a number. Our calculator
+        currently models schemes for <strong>Bihar, Delhi, Punjab, Karnataka, Telangana and Tamil
+        Nadu</strong>, each against a cited order.</p>
+        <p>A table of every state’s free units would be easy to assemble from other websites, and
+        we would have no idea which entries were current, which were the launch terms of a scheme
+        since revised, and which were repeated errors &mdash; the Karnataka example above being one
+        that has spread widely. Where we cannot find the document, we say so rather than fill the
+        gap. If you have the notification for your state, we will read it and add it.</p>
+      </section>
+    `,
+    faqs: [
+      {
+        q: 'How many free electricity units does Karnataka give?',
+        a: 'Not a flat 200. The Government of Karnataka FAQ states the Gruha Jyothi benefit is calculated as your household average consumption for FY 2022-23 plus 10%, capped below 200 units. A household that averaged 90 units is entitled to roughly 99, not 200.'
+      },
+      {
+        q: 'What happens if I use more than my free units in Karnataka?',
+        a: 'You pay the entire bill for that month, not just the excess. The official FAQ is explicit: "for that particular month alone you will have to pay the entire bill amount." The subsidy resumes the following month if you are back under your entitlement.'
+      },
+      {
+        q: 'Does the Delhi subsidy cover the fuel surcharge and electricity tax?',
+        a: 'Yes. BSES describes the benefit against the current bill value inclusive of PPAC, electricity tax and pension surcharge. That is broader than most state schemes, which subsidise the energy charge only and leave the surcharge and duty payable.'
+      },
+      {
+        q: 'Do I have to apply for free electricity units?',
+        a: 'It depends on the state. Delhi applies its subsidy automatically and offers an opt-out. Karnataka requires registration through Seva Sindhu with Aadhaar linked to the consumer account. A scheme you have not enrolled in where enrolment is required will never show on your bill.'
+      },
+      {
+        q: 'Can tenants claim free electricity units?',
+        a: 'In Karnataka, yes — the FAQ allows a tenant to register with a rental or lease agreement, or a Voter ID showing the premise address, together with Aadhaar. Only one meter per household qualifies. Rules differ by state, and a connection billed in the owner’s name is usually the sticking point.'
+      },
+      {
+        q: 'Why do different websites give different free-unit figures for the same state?',
+        a: 'Because the schemes are state government decisions rather than regulator tariff orders, so there is no single numbered document to cite. Figures also get copied without checking whether they are per month or per billing cycle — Tamil Nadu bills bi-monthly, so a figure quoted there means something different from the same figure in a monthly-billed state.'
+      }
+    ]
+  },
+  {
     slug: 'electricity-security-deposit-explained',
     published: "2026-08-20",
     title: 'Security Deposit on an Electricity Connection, Explained',

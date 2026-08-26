@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" data-i18n-twins-only>
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      
+    })();
+  </script>
+  <title>Free Electricity Units by State — What You Actually Get, and the Traps</title>
+  <meta name="description" content="Free-unit schemes are set by state governments, not by the regulator, which is why the terms are so hard to pin down. What Delhi and Karnataka actually give">
+  <link rel="canonical" href="https://thediscombill.com/guides/free-electricity-units-by-state/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="Free Electricity Units by State — What You Actually Get, and the Traps">
+  <meta property="og:description" content="Free-unit schemes are set by state governments, not by the regulator, which is why the terms are so hard to pin down. What Delhi and Karnataka actually give, why Karnataka is not a flat 200 units, and what to check on your own bill.">
+  <meta property="og:url" content="https://thediscombill.com/guides/free-electricity-units-by-state/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="Free Electricity Units by State — What You Actually Get, and the Traps">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:locale:alternate" content="hi_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free Electricity Units by State — What You Actually Get, and the Traps">
+  <meta name="twitter:description" content="Free-unit schemes are set by state governments, not by the regulator, which is why the terms are so hard to pin down. What Delhi and Karnataka actually give, why Karnataka is not a flat 200 units, and what to check on your own bill.">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/guides/free-electricity-units-by-state/","name":"Free Electricity Units by State — What You Actually Get, and the Traps","description":"Free-unit schemes are set by state governments, not by the regulator, which is why the terms are so hard to pin down. What Delhi and Karnataka actually give, why Karnataka is not a flat 200 units, and what to check on your own bill.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-26"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Free Electricity Units by State: How the Subsidy Actually Works","description":"Free-unit schemes are set by state governments, not by the regulator, which is why the terms are so hard to pin down. What Delhi and Karnataka actually give, why Karnataka is not a flat 200 units, and what to check on your own bill.","image":"https://thediscombill.com/og-image.jpg","mainEntityOfPage":"https://thediscombill.com/guides/free-electricity-units-by-state/","datePublished":"2026-08-26","dateModified":"2026-08-26","inLanguage":"en-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://thediscombill.com/guides/"},{"@type":"ListItem","position":3,"name":"Free Electricity Units by State: How the Subsidy Actually Works"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How many free electricity units does Karnataka give?","acceptedAnswer":{"@type":"Answer","text":"Not a flat 200. The Government of Karnataka FAQ states the Gruha Jyothi benefit is calculated as your household average consumption for FY 2022-23 plus 10%, capped below 200 units. A household that averaged 90 units is entitled to roughly 99, not 200."}},{"@type":"Question","name":"What happens if I use more than my free units in Karnataka?","acceptedAnswer":{"@type":"Answer","text":"You pay the entire bill for that month, not just the excess. The official FAQ is explicit: \"for that particular month alone you will have to pay the entire bill amount.\" The subsidy resumes the following month if you are back under your entitlement."}},{"@type":"Question","name":"Does the Delhi subsidy cover the fuel surcharge and electricity tax?","acceptedAnswer":{"@type":"Answer","text":"Yes. BSES describes the benefit against the current bill value inclusive of PPAC, electricity tax and pension surcharge. That is broader than most state schemes, which subsidise the energy charge only and leave the surcharge and duty payable."}},{"@type":"Question","name":"Do I have to apply for free electricity units?","acceptedAnswer":{"@type":"Answer","text":"It depends on the state. Delhi applies its subsidy automatically and offers an opt-out. Karnataka requires registration through Seva Sindhu with Aadhaar linked to the consumer account. A scheme you have not enrolled in where enrolment is required will never show on your bill."}},{"@type":"Question","name":"Can tenants claim free electricity units?","acceptedAnswer":{"@type":"Answer","text":"In Karnataka, yes — the FAQ allows a tenant to register with a rental or lease agreement, or a Voter ID showing the premise address, together with Aadhaar. Only one meter per household qualifies. Rules differ by state, and a connection billed in the owner’s name is usually the sticking point."}},{"@type":"Question","name":"Why do different websites give different free-unit figures for the same state?","acceptedAnswer":{"@type":"Answer","text":"Because the schemes are state government decisions rather than regulator tariff orders, so there is no single numbered document to cite. Figures also get copied without checking whether they are per month or per billing cycle — Tamil Nadu bills bi-monthly, so a figure quoted there means something different from the same figure in a monthly-billed state."}}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+      <a href="/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">Smart Meter</a>
+      <a href="/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/#calculator" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">Smart Meter</span></a>
+            <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <!-- aria-labelledby, not aria-label: the accessible name has to CONTAIN the visible
+             text ("EN"), or speech input cannot activate the button and a screen reader never
+             announces which language is active (WCAG 2.5.3). Referencing the live span also
+             keeps the name in step when syncLangUI() rewrites the badge. -->
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- A plain list of links, not a listbox. These rows navigate, so they are anchors:
+             that makes them crawlable, middle-clickable and keyboard-operable for free,
+             none of which a role="option" <li> with a click handler ever was. Rows that
+             translate in place (no twin URL to point at) stay <button>s. -->
+        <ul class="lang-menu" id="langMenu" aria-label="Select language">
+          <li><span class="lang-opt" data-lang="en" aria-current="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></span></li>
+          <li><button type="button" class="lang-opt" data-lang="hi"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">हिं</span></button></li>
+        </ul>
+      </div>
+      <button type="button" id="siteSearchBtn" class="site-search-btn" aria-label="Search the site (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body" role="main">
+
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><a href="/guides/">Guides</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">Free Electricity Units by State: How the Subsidy Actually Works</span></li></ol></nav>
+    <div class="seo-article-tools"><p class="seo-lang-pills"><svg class="seo-lang-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span class="sr-only">Available in</span><span class="seo-lang-pill is-current" lang="en" aria-current="page">English</span></p><button type="button" class="seo-share-btn" data-share-article hidden data-copied="Link copied" data-failed="Copy failed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span class="seo-share-label" data-share-label>Share</span></button></div>
+    <h1>Free Electricity Units by State: How the Subsidy Actually Works</h1>
+    <p class="guide-meta">8 min read · Updated 26 August 2026 · TheDiscomBill Editorial · <a href="/methodology/">How we source our rates</a></p>
+    <p class="seo-lead">Several Indian states give domestic consumers a block of electricity free every month.
+      The figures you see quoted — 200 units here, 100 there — are mostly repeated from other
+      websites rather than read off the order that grants them, and at least one of the popular
+      numbers is <strong>simply wrong</strong>: Karnataka's Gruha Jyothi is not a flat 200 free
+      units, and treating it as one is how households lose an entire month's subsidy. This page
+      explains where these schemes actually come from, the three shapes they take, and what to
+      check on your own bill.</p>
+    
+    
+    <nav class="page-toc" aria-label="On this page">
+      <span class="page-toc-label">On this page</span>
+      <a href="#why-nobody-can-tell-you-the-rules">Why nobody can tell you the rules</a>
+        <a href="#the-three-shapes-a-scheme-can-take">The three shapes a scheme can take</a>
+        <a href="#karnataka-your-entitlement-is-probably-not-200-units">Karnataka</a>
+        <a href="#delhi-unusually-broad-and-it-covers-more-than-the-energy-charge">Delhi</a>
+        <a href="#tamil-nadu-the-figure-is-per-two-month-cycle-not-per-month">Tamil Nadu</a>
+        <a href="#what-to-check-on-your-own-bill">What to check on your own bill</a>
+        <a href="#why-this-page-does-not-list-all-34-states">Why this page does not list all 34 states</a>
+    </nav>
+    
+      <section class="seo-section" id="why-nobody-can-tell-you-the-rules">
+        <h2>Why nobody can tell you the rules</h2>
+        <p>Every other figure on this site comes from a State Electricity Regulatory Commission
+        tariff order — a public, numbered, dated document. <strong>Free-unit schemes do not.</strong>
+        They are executive decisions of the state government: cabinet orders, budget announcements
+        and subsidy notifications, applied on top of the tariff the regulator set.</p>
+        <p>That single fact explains why the information is so poor. The regulator publishes the
+        rates and stops. In Tamil Nadu's tariff order the domestic schedule is printed in full and
+        then footnoted <em>"LT-IA, IB, IE, IIC, IIIA(2), IIIB and IV to be partly/fully subsidized
+        by the Government"</em> — the subsidy is acknowledged and never stated. Punjab's tariff
+        order for FY 2025-26 carries the complete domestic slabs and does not mention a domestic
+        free-unit subsidy anywhere in it.</p>
+        <p>So the terms live in government orders, scheme portals and DISCOM consumer FAQs rather than in
+        one place. Everything below is traced to a specific order or an official scheme page.</p>
+      </section>
+
+      <section class="seo-section" id="the-three-shapes-a-scheme-can-take">
+        <h2>The three shapes a scheme can take</h2>
+        <p>The differences matter more than the headline number, because they change what happens
+        at the edges.</p>
+        <ol>
+          <li><strong>A banded full-bill subsidy.</strong> Your <em>whole</em> bill is waived if
+          total consumption stays under a threshold, with a smaller capped benefit in a second
+          band. Delhi works this way.</li>
+          <li><strong>An entitlement based on your own history.</strong> Your free allowance is
+          computed from what <em>you</em> used in a reference year, not from a figure that is the
+          same for everybody. Karnataka works this way, and it surprises people.</li>
+          <li><strong>A free block off the top.</strong> The first N units are free and you pay
+          normal slab rates on the rest. This is what most people assume every scheme does. It is
+          the most forgiving shape, because going over costs you only the excess.</li>
+        </ol>
+        <p>Shapes 1 and 2 have a cliff. Shape 3 does not. That is the single most important thing
+        to know about your state's scheme.</p>
+      </section>
+
+      <section class="seo-section" id="karnataka-your-entitlement-is-probably-not-200-units">
+        <h2>Karnataka: your entitlement is probably not 200 units</h2>
+        <p>Gruha Jyothi is quoted everywhere as "200 free units". The Government of Karnataka's own
+        FAQ says something different:</p>
+        <blockquote><p>"The benefit is calculated based on average consumption for Financial Year
+        2022-23 + 10% increase (total amounting to less than 200 units)"</p></blockquote>
+        <p>Your entitlement is <strong>your own household's average from FY 2022-23, plus 10%</strong>.
+        The 200 is a ceiling, not a grant. A household that averaged 90 units is entitled to about
+        99 — not 200.</p>
+        <p>And there is a cliff. Asked what happens if consumption exceeds the entitlement, the same
+        FAQ answers:</p>
+        <blockquote><p>"Yes for that particular month alone you will have to pay the entire bill
+        amount."</p></blockquote>
+        <p>Not the excess — <strong>the entire bill</strong>. A household entitled to 99 units that
+        uses 105 pays for all 105, at full tariff, plus fixed charges and duty. Six units of
+        carelessness can cost several hundred rupees. Stay under and the FAQ is equally clear: you
+        get a "Zero bill".</p>
+        <p>Other conditions worth knowing: registration through Seva Sindhu is mandatory and Aadhaar
+        must be linked to the account; only <strong>one meter per household</strong> qualifies;
+        tenants are eligible on a rental agreement or Voter ID plus Aadhaar; commercial premises are
+        excluded. <em>Source: Government of Karnataka Gruha Jyothi FAQ, read 26 August 2026.</em></p>
+      </section>
+
+      <section class="seo-section" id="delhi-unusually-broad-and-it-covers-more-than-the-energy-charge">
+        <h2>Delhi: unusually broad, and it covers more than the energy charge</h2>
+        <p>Delhi's scheme is banded on total monthly consumption:</p>
+        <ul>
+          <li><strong>Up to 200 units</strong> — the entire current bill amount</li>
+          <li><strong>201 to 400 units</strong> — subsidy up to ₹800 per month</li>
+          <li><strong>Above 400 units</strong> — none</li>
+        </ul>
+        <p>The detail most summaries miss is what "the entire current bill" includes. BSES states the
+        benefit against the current bill value <em>inclusive of PPAC, electricity tax and pension
+        surcharge</em>. Most schemes subsidise the energy charge only and leave you paying the fuel
+        surcharge and duty on top; Delhi's does not. Given that Delhi's
+        <a href="/fppa/">PPAC</a> has run in double digits, that is a material difference.</p>
+        <p>It is applied automatically by the DISCOM rather than claimed, and an opt-out is offered.
+        Because it is banded on total consumption, the same cliff logic applies at 200 units as in
+        Karnataka. <em>Source: BSES Rajdhani consumer FAQ, read 26 August 2026; underlying order
+        GoNCTD No. F.11(111)/2012/Power/Vol-III/1417-1427.</em></p>
+      </section>
+
+      <section class="seo-section" id="tamil-nadu-the-figure-is-per-two-month-cycle-not-per-month">
+        <h2>Tamil Nadu: the figure is per two-month cycle, not per month</h2>
+        <p>Tamil Nadu bills domestic supply <strong>bi-monthly</strong>, and its slabs are written
+        per two-month cycle — the LT-IA schedule starts at 0&ndash;400 kWh, not 0&ndash;200. The free-unit
+        entitlement is written the same way.</p>
+        <p>Under G.O.(Ms) No.50 dated 10 May 2026, read with TNERC Order No.5 of 2026, a domestic
+        consumer billing <strong>up to 500 units in the two-month cycle gets 200 units free per
+        cycle</strong>. Above that, the older allowance of <strong>100 units per cycle</strong>
+        continues. Note what that means at the boundary: it is a taper rather than a cliff — cross
+        500 units and you keep a smaller allowance instead of losing it entirely.</p>
+        <p>This is where most published comparisons fall apart. A figure that is per billing cycle
+        gets reprinted as if it were per month, doubling the apparent benefit. If you are comparing
+        Tamil Nadu against a monthly-billed state, halve the bi-monthly figure first: 200 units per
+        cycle is 100 units a month.</p>
+      </section>
+
+      <section class="seo-section" id="what-to-check-on-your-own-bill">
+        <h2>What to check on your own bill</h2>
+        <ol>
+          <li><strong>Find the subsidy line.</strong> It appears as a deduction, often near the
+          bottom, labelled subsidy, concession or rebate. If it is absent and you believe you
+          qualify, that is the thing to raise — not the tariff.</li>
+          <li><strong>Check whether you had to register.</strong> Karnataka's requires registration
+          and Aadhaar linking. Delhi's is automatic. A scheme you never enrolled in will never
+          appear on a bill.</li>
+          <li><strong>Find your entitlement, not the headline number.</strong> Where the scheme is
+          history-based, the figure that matters is on your own account, not in a news report.</li>
+          <li><strong>Work out where your cliff is</strong> and how close you run to it. Our
+          <a href="/">bill calculator</a> will show you what a month just over the line actually
+          costs at your DISCOM's rates — which is usually the argument for a small behaviour change
+          rather than a large one.</li>
+          <li><strong>Re-check after a state budget.</strong> These schemes are annual spending
+          decisions. They get extended, narrowed and re-scoped far more often than tariffs do.</li>
+        </ol>
+      </section>
+
+      <section class="seo-section" id="why-this-page-does-not-list-all-34-states">
+        <h2>Why this page does not list all 34 states</h2>
+        <p>Because most states do not have a domestic free-unit scheme, and for those that do the
+        terms have to be traced to a specific order before we will print a number. Our calculator
+        currently models schemes for <strong>Bihar, Delhi, Punjab, Karnataka, Telangana and Tamil
+        Nadu</strong>, each against a cited order.</p>
+        <p>A table of every state’s free units would be easy to assemble from other websites, and
+        we would have no idea which entries were current, which were the launch terms of a scheme
+        since revised, and which were repeated errors &mdash; the Karnataka example above being one
+        that has spread widely. Where we cannot find the document, we say so rather than fill the
+        gap. If you have the notification for your state, we will read it and add it.</p>
+      </section>
+    
+    <section class="seo-section"><h2>Frequently asked questions</h2>
+    <details class="seo-faq-item">
+      <summary>How many free electricity units does Karnataka give?</summary>
+      <div class="seo-faq-a">Not a flat 200. The Government of Karnataka FAQ states the Gruha Jyothi benefit is calculated as your household average consumption for FY 2022-23 plus 10%, capped below 200 units. A household that averaged 90 units is entitled to roughly 99, not 200.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>What happens if I use more than my free units in Karnataka?</summary>
+      <div class="seo-faq-a">You pay the entire bill for that month, not just the excess. The official FAQ is explicit: "for that particular month alone you will have to pay the entire bill amount." The subsidy resumes the following month if you are back under your entitlement.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Does the Delhi subsidy cover the fuel surcharge and electricity tax?</summary>
+      <div class="seo-faq-a">Yes. BSES describes the benefit against the current bill value inclusive of PPAC, electricity tax and pension surcharge. That is broader than most state schemes, which subsidise the energy charge only and leave the surcharge and duty payable.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Do I have to apply for free electricity units?</summary>
+      <div class="seo-faq-a">It depends on the state. Delhi applies its subsidy automatically and offers an opt-out. Karnataka requires registration through Seva Sindhu with Aadhaar linked to the consumer account. A scheme you have not enrolled in where enrolment is required will never show on your bill.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Can tenants claim free electricity units?</summary>
+      <div class="seo-faq-a">In Karnataka, yes — the FAQ allows a tenant to register with a rental or lease agreement, or a Voter ID showing the premise address, together with Aadhaar. Only one meter per household qualifies. Rules differ by state, and a connection billed in the owner’s name is usually the sticking point.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Why do different websites give different free-unit figures for the same state?</summary>
+      <div class="seo-faq-a">Because the schemes are state government decisions rather than regulator tariff orders, so there is no single numbered document to cite. Figures also get copied without checking whether they are per month or per billing cycle — Tamil Nadu bills bi-monthly, so a figure quoted there means something different from the same figure in a monthly-billed state.</div>
+    </details></section>
+    <section class="seo-section guide-calc-cta">
+      <h2>Now check your own bill</h2>
+      <p>Reading is half the job — run your own units through your DISCOM's real slab rates, fixed charges and FPPA and get an itemised bill in seconds. Free, no sign-up.</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Open the electricity bill calculator →</a></p>
+    </section>
+    
+    <section class="seo-section guide-more">
+      <h2>Related guides</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/guides/how-fppa-fuel-surcharge-is-calculated/">
+          <strong>How FPPA (Fuel Surcharge) Is Calculated on Your Electricity Bill</strong>
+          <small>6 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/electricity-duty-explained/">
+          <strong>Electricity Duty on Your Bill: What It Is and How States Differ</strong>
+          <small>4 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/msedcl-fppa-charges-explained/">
+          <strong>How to Calculate MSEDCL FPPCA (Fuel Adjustment) Charges</strong>
+          <small>6 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/power-factor-kvah-billing-explained/">
+          <strong>Power Factor, kVAh Billing and PF Penalty Explained</strong>
+          <small>6 min read</small>
+        </a>
+      </div>
+      <p class="guide-more-all"><a href="/guides/">Browse all guides →</a></p>
+    </section>
+    <p class="seo-disclaimer">General guidance based on publicly available tariff orders and
+    regulations; specifics vary by state, DISCOM and consumer category. Verify against your DISCOM's
+    official schedule or your printed bill.</p>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/#calculator" data-i18n="nav.calculator">Calculator</a>
+        <a href="/compare/" data-i18n="nav.compare">Compare</a>
+        <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator</a>
+        <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/smart-meter/" data-i18n="ql.meterDisplay">Smart Meter Guide</a>
+        <a href="/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/database/" data-i18n="ql.tariffDatabase">Tariff Database</a>
+        <a href="/orders/" data-i18n="ql.orderLibrary">Order Library</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/contact/" data-i18n="ql.contact">Contact</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

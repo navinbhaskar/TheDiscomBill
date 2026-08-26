@@ -652,6 +652,37 @@ console.log('\n• new surcharge rates carry provenance');
 // 30 days, 2026-07-15, each DISCOM at its own documented surcharge (UP FPPAS -4.43%, BRPL
 // PPAC 17.94%; BESCOM, MSEDCL and TNPDCL have none on record). MVVNL is ST-10B, NOT ST-10A,
 // which caps at 1 kW / 100 units and cannot produce a 250-unit bill at all.
+console.log('\n• saved-bill links stay readable by the bill viewer');
+{
+  // buildShareUrl() in ui.js decides what a saved bill carries; paramsToInputs() in
+  // bill-params.js decides what /bill/ can read back. If someone adds a field to the
+  // share link and not to the parser, a viewed bill silently drops it and stops matching
+  // the same bill opened in the calculator — the exact disagreement /bill/ was built to
+  // avoid. Compare the two key sets rather than trusting anyone to remember.
+  const ui = fs.readFileSync(path.join(ROOT, 'js', 'ui.js'), 'utf8');
+  const parser = fs.readFileSync(path.join(ROOT, 'js', 'bill-params.js'), 'utf8');
+
+  const start = ui.indexOf('export function buildShareUrl');
+  const objStart = ui.indexOf('const params = {', start);
+  const objEnd = ui.indexOf('\n  };', objStart);
+  if (start < 0 || objStart < 0 || objEnd < 0) {
+    fail('could not find buildShareUrl\'s params object in js/ui.js — markup changed');
+  } else {
+    const body = ui.slice(objStart, objEnd);
+    const emitted = [...body.matchAll(/^\s{4}(\w+):/gm)].map(m => m[1]);
+    // Personal fields are attached conditionally, after the literal above.
+    const conditional = ['name', 'acc', 'addr', 'meter'];
+    const keys = [...new Set([...emitted, ...conditional])];
+    const missing = keys.filter(k => !new RegExp(`p\\.get\\('${k}'\\)`).test(parser));
+    if (missing.length) {
+      fail(`js/bill-params.js does not read ${missing.length} share-link key(s): ${missing.join(', ')}`
+        + ' — /bill/ would drop them and disagree with the calculator');
+    } else {
+      passed++;
+      console.log(`  ✓ all ${keys.length} share-link keys are read back by the bill viewer`);
+    }
+  }
+}
 console.log('\n• homepage sample bills match the engine');
 {
   const { ensureAll } = await import(pathToFileURL(path.join(ROOT, 'js', 'tariffs', 'registry.js')).href);

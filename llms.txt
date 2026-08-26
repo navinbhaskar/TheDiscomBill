@@ -24,6 +24,7 @@ Tariff data is compiled from publicly available tariff orders: FY 2026-27 for 19
 
 ## Guides
 
+- [Free Electricity Units by State: How the Subsidy Actually Works](https://thediscombill.com/guides/free-electricity-units-by-state/): Free-unit schemes are set by state governments, not by the regulator, which is why the terms are so hard to pin down
 - [Security Deposit on an Electricity Connection, Explained](https://thediscombill.com/guides/electricity-security-deposit-explained/): What the security deposit on an Indian electricity connection is, why it is about two months of your consumption, when a DISCOM can demand more, why only the difference is payable on a load increase, and the interest your deposit earns
 - [PM Surya Ghar: What Gets an Application Rejected](https://thediscombill.com/guides/pm-surya-ghar-eligibility-checklist/): The checks that decide a PM Surya Ghar rooftop solar application before the subsidy is ever calculated: sanctioned load against plant size, the name on the connection, ownership and meter status — and the DISCOM request that fixes each one
 - [MD Penalty and Excess Demand Charge, Explained](https://thediscombill.com/guides/md-penalty-excess-demand-charge/): What the maximum demand penalty on an Indian electricity bill actually is, why it appears when your units have not changed, how each state charges it (2×, 1.5×, flat ₹/kVA or a % of energy charges), and the three ways to make it stop

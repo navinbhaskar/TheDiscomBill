@@ -3750,8 +3750,22 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
    content box while every paragraph under them stopped at 760, so the page opened with a
    heading that overhung its own article by 232px and no reader could see a reason for it.
    One right edge from the breadcrumb down. Long titles wrap; that is the cheaper cost. */
+/* The H1 stays on the --w-text column with everything else. Letting it take the full
+   container was wrong: measured across a state page, 760 is the real column (breadcrumb,
+   meta, lead and every .seo-section child sit there — 21 elements), while the 992 boxes are
+   transparent section wrappers with nothing painted. An uncapped H1 became the only visible
+   thing on the page at 992 and read as sticking out past the content.
+
+   What actually looked broken was the wrap, not the width. These titles overrun 760 by a
+   little — Karnataka needs 808px — and the global "text-wrap: balance" on headings then
+   split the overflow evenly, giving two short lines (421 over 352) both ending well short
+   of the column edge. Balance is right for a short heading, where it stops a lone orphan;
+   on a title that just overruns, it reads as a heading floating loose in the column.
+   "pretty" fills the first line to the measure, so the block anchors to the same right edge
+   as the text beneath it, and still avoids a one-word last line. */
 .seo-page > h1,
 .seo-page > .seo-breadcrumbs { max-width: var(--w-text); }
+.seo-page > h1 { text-wrap: pretty; }
 /* Prose-adjacent panels come to the column too. Card GRIDS and interactive result panels
    deliberately keep the full width - see the reading-column note below - because a grid that
    is wide is doing work, whereas these two are a definition and a footer. */
@@ -8648,6 +8662,101 @@ html:not(.js) .m-btn-ring { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .bill-mark { transition: none; }
   .bill-mark:hover, .bill-mark:focus-visible { transform: none; }
+}
+
+
+
+
+/* ─── /bill/ — a saved or shared bill on its own page ───────────────────────
+   The bill document itself is renderer.js output, identical to what the calculator
+   produces, so there is nothing to style here beyond the frame around it. */
+.bv-crumb { margin: 0 0 10px; font-size: 13.5px; }
+.bv-crumb a { color: var(--text-brand); text-decoration: none; }
+.bv-crumb a:hover { text-decoration: underline; }
+.bv-main { margin-top: 22px; }
+
+/* The one action on the page, so it gets to look like one rather than a link in a row
+   of them. The note sits beside it because "open in the calculator" does not, on its
+   own, tell you that your inputs survive the trip. */
+.bv-cta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px;
+  margin: 20px 0 0; padding: 18px 0 0; border-top: 1px solid var(--border-subtle);
+}
+.bv-open { display: inline-flex; align-items: center; gap: 8px; }
+.bv-cta-note { flex: 1 1 240px; font-size: 13px; line-height: 1.55; color: var(--text-tertiary); }
+@media (max-width: 560px) {
+  .bv-cta { gap: 10px; }
+  .bv-open { width: 100%; justify-content: center; }
+}
+
+/* ─── Homepage FAQ: questions left, one call to action right ────────────────
+   Collapsed, the accordion left roughly 592x420px empty to the right of the questions at
+   the 1040px column, and an opened answer ran about 110 characters a line. A real second
+   column fixes both at once: the answers land near 70 characters because the column edge
+   is genuine, rather than a max-width cap that produced the zigzag right edge this section
+   had earlier.
+
+   One card, not two. The section is where a reader decides whether to trust the number the
+   calculator gave them, so the only card with real adjacency is the one that answers "is
+   this an official bill?" — a human reading the actual bill. A second card also costs
+   another ~150px stacked on phones, which is the whole budget this layout has. */
+.faq-split {
+  display: grid; grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 28px; align-items: start;
+}
+.faq-aside {
+  background: var(--surface-card);
+  border: 1px solid var(--border-default); border-radius: var(--radius-lg);
+  padding: 22px 20px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 10px 22px -20px rgba(15, 23, 42, .22);
+}
+.faq-aside-ico {
+  display: grid; place-items: center; width: 42px; height: 42px;
+  border-radius: 11px; background: var(--brand); color: var(--text-inverse);
+  margin-bottom: 14px;
+}
+.faq-aside-ico svg { width: 22px; height: 22px; }
+.faq-aside h3 {
+  margin: 0 0 8px; font-size: 16.5px; font-weight: 600; line-height: 1.3;
+  color: var(--text-primary); letter-spacing: -.2px; text-align: left;
+}
+.faq-aside p { margin: 0 0 15px; font-size: 13.5px; line-height: 1.6; color: var(--text-secondary); }
+.faq-aside-cta {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 13.5px; font-weight: 600; color: var(--text-inverse);
+  background: var(--brand); text-decoration: none;
+  padding: 10px 15px; border-radius: var(--radius-md);
+  transition: background-color var(--t-fast);
+}
+.faq-aside-cta svg { width: 15px; height: 15px; }
+.faq-aside-cta:hover { background: var(--brand-strong, var(--brand)); text-decoration: none; }
+.faq-aside-cta:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; }
+
+/* Below the full column the aside has nowhere useful to sit beside, so it follows the
+   questions. That is ~150px added on a phone — the reason this is one card and not two. */
+@media (max-width: 1080px) {
+  .faq-split { grid-template-columns: 1fr; gap: 20px; }
+}
+
+/* ─── Mobile hero: get the calculator into the first screen ─────────────────
+   Measured at 375px, the hero ran 1141px and the first field of the calculator sat
+   1434px down — 1.8 screens of scrolling before a visitor can touch the tool the whole
+   site is for. Two things paid for most of that height and neither earns it on a phone.
+
+   The three hero stats repeat the About stats-row further down the same page, so hiding
+   them here loses no claim, only a duplicate.
+
+   The sample-bill card keeps its headline claim — the rotating DISCOM chip, the amount and
+   what it was computed from — and drops the line-by-line working. The working is the best
+   thing on the page at desktop width, but it is 301px of the 449px card, and on a phone it
+   sits between the reader and the form that produces the same breakdown live. */
+@media (max-width: 760px) {
+  .hero-stats { display: none; }
+  .hbc-lines, .hbc-note, .hbc-foot { display: none; }
+  /* The min-height exists so the card does not jump as slides with different line counts
+     rotate through. With the lines hidden every slide is the same height, so it has
+     nothing left to hold open — and it was pinning the card at 372px regardless. */
+  .hero-bill-card { min-height: 0; }
 }
 
 /* ═══ Homepage coverage strip ═══════════════════════════════════════════════
