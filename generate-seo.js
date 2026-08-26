@@ -3139,7 +3139,7 @@ function directoryPage(states, lang = 'en') {
   const heroStats = (labels) => `
       <div class="seo-dir-stats" role="list">
         <span class="seo-dir-stat" role="listitem"><strong>${states.length}</strong> ${labels.states}</span>
-        <span class="seo-dir-stat" role="listitem"><strong>${totalDiscoms}+</strong> ${labels.discoms}</span>
+        <span class="seo-dir-stat" role="listitem"><strong>${totalDiscoms}</strong> ${labels.discoms}</span>
         <span class="seo-dir-stat" role="listitem"><strong>100%</strong> ${labels.free}</span>
       </div>`;
 
@@ -6813,6 +6813,85 @@ const FONT_CSS_MARK = 'data-inline="fonts"';
 //
 // Must run after every page is on disk but before inlineFontCss() and buildContentCss(),
 // which read this markup and must see its final form.
+// ── Homepage state directory ────────────────────────────────────────────────
+// The homepage grid was 34 links carrying a state name and nothing else: no reason to open
+// one rather than another, and one undifferentiated alphabetical block of 34 to scan. It is
+// now grouped into the same six REGIONS the /tariffs/states/ directory uses, and each card
+// says how many DISCOMs the state has and what a household actually pays there.
+//
+// Generated rather than hand-written because both figures move whenever a tariff order
+// lands. A hand-kept copy on the homepage would be wrong within a month and nothing would
+// catch it — the same failure the old hand-maintained build.js asset list had.
+function stampHomepageStates(states) {
+  const file = path.join(ROOT, 'index.html');
+  const before = fs.readFileSync(file, 'utf8');
+
+  const REGION_KEY = {
+    'North India': 'north', 'South India': 'south', 'West India': 'west',
+    'Central India': 'central', 'East India': 'east', 'North-East India': 'northeast',
+  };
+
+  const card = (state) => {
+    const st = stateDomesticStats(state);
+    const n = getDiscoms(state).length;
+    // A flat-rate state has min === max, and "₹7.42–₹7.42" reads as a bug on a one-line card
+    // even though it is correct — Bihar has a single unbounded slab and KERC merged
+    // Karnataka's domestic slabs into one rate. Collapsed here only; /tariffs/states/ still
+    // prints the span, which is what it was reverted to on purpose.
+    const rate = st ? (st.min === st.max ? rupee(st.min) : `${rupee(st.min)}–${rupee(st.max)}`) : '';
+    const one = n === 1;
+    // Count and noun are separate elements on purpose. stampHomepageCoverage rewrites the
+    // bare phrase /\b\d+ DISCOMs\b/ to the site-wide total everywhere it appears, so a card
+    // reading "4 DISCOMs" as contiguous text would be silently rewritten to "65 DISCOMs".
+    // The intervening tag keeps these per-state counts out of that rule's reach.
+    const bits = [`<b>${n}</b> <span data-i18n="states.${one ? 'discom' : 'discoms'}">`
+      + `${one ? 'DISCOM' : 'DISCOMs'}</span>`];
+    if (rate) bits.push(`${rate}<span data-i18n="states.perUnit">/unit</span>`);
+    return `        <a href="/tariffs/${slugify(state)}/">`
+      + `<span class="sg-name">${esc(state)}</span>`
+      + `<span class="sg-meta">${bits.join(' &middot; ')}</span></a>`;
+  };
+
+  const grouped = REGIONS
+    .map(r => ({ ...r, states: r.states.filter(x => states.includes(x)) }))
+    .filter(r => r.states.length);
+  const leftovers = states.filter(x => !REGIONS.some(r => r.states.includes(x)));
+  if (leftovers.length) {
+    grouped.push({ en: 'Other', color: '#64748b', states: leftovers });
+  }
+
+  const bands = grouped.map(r => {
+    const key = REGION_KEY[r.en];
+    // "Other" has no i18n key: it only appears if a state is added to the database and not
+    // to REGIONS, which is a bug to notice rather than a label to translate.
+    const label = key
+      ? `<span data-i18n="states.region.${key}">${esc(r.en)}</span>`
+      : `<span>${esc(r.en)}</span>`;
+    return '\n' + `      <div class="sg-region" style="--sg-accent:${r.color}">`
+      + '\n' + `        <h3 class="sg-region-head"><span class="sg-dot" aria-hidden="true"></span>${label}`
+      + `<span class="sg-region-n">${r.states.length}</span></h3>`
+      + '\n' + '        <div class="sg-cards">'
+      + '\n' + r.states.map(card).join('\n')
+      + '\n' + '        </div>'
+      + '\n' + '      </div>';
+  }).join('');
+
+  const nav = `<nav class="states-grid reveal" aria-label="Electricity tariffs by state">`
+    + bands + '\n' + '    </nav>';
+
+  if (/\b\d+ DISCOMs\b/.test(nav)) {
+    throw new Error('stampHomepageStates: emitted a bare "N DISCOMs" phrase, which '
+      + 'stampHomepageCoverage would rewrite to the site-wide total');
+  }
+
+  const re = /<nav class="states-grid[^>]*>[\s\S]*?<\/nav>/;
+  if (!re.test(before)) {
+    throw new Error('stampHomepageStates: no .states-grid nav in index.html — markup changed');
+  }
+  const out = before.replace(re, nav);
+  if (out !== before) writeWithRetry(file, out);
+  return { changed: out !== before, regions: grouped.length, cards: states.length };
+}
 function stampHomepageCoverage(summary) {
   const file = path.join(ROOT, 'index.html');
   const before = fs.readFileSync(file, 'utf8');
@@ -6829,12 +6908,20 @@ function stampHomepageCoverage(summary) {
     `$1${n}$2`,
   ];
 
-  const rules = [
+  // Free-text phrases: rewritten wherever they appear, but not required to appear. The old
+  // coverage strip said "34 states &amp; UTs" and has since been replaced, so the page is
+  // allowed to stop using a phrase. What must not happen is a phrase quietly surviving with
+  // a stale number, which the rewrite below still prevents.
+  const phraseRules = [
     [/\b\d+ DISCOMs\b/g, `${D} DISCOMs`],
     [/across \d+ states/g, `across ${S} states`],
     [/across \d+ Indian states/g, `across ${S} Indian states`],
     [/\d+ states &amp; UTs/g, `${S} states &amp; UTs`],
     [/\d+ consumer categories/g, `${C} consumer categories`],
+  ];
+
+  // Anchored rules target one specific element each, so a miss really is markup drift.
+  const rules = [
     statNum('hero.stat.states', S),
     statNum('hero.stat.discoms', D),
     statNum('hero.stat.records', T),
@@ -6844,6 +6931,20 @@ function stampHomepageCoverage(summary) {
   ];
 
   let out = before;
+
+  let phraseHits = 0;
+  for (const [re, to] of phraseRules) {
+    re.lastIndex = 0;
+    if (!re.test(out)) continue;   // the page may legitimately no longer use this phrase
+    phraseHits++;
+    re.lastIndex = 0;
+    out = out.replace(re, to);
+  }
+  // Every phrase disappearing at once is markup drift, not an editorial decision.
+  if (!phraseHits) {
+    throw new Error('stampHomepageCoverage: index.html quotes none of the coverage phrases — markup changed');
+  }
+
   for (const [re, to] of rules) {
     if (!re.test(out)) throw new Error(`stampHomepageCoverage: no match for ${re} — index.html markup changed`);
     re.lastIndex = 0;
@@ -7158,6 +7259,7 @@ export function generateSeo() {
   writeWithRetry(path.join(ROOT, '404.html'), notFoundPage());
   // After every page is on disk - 404.html included - and before buildContentCss(), which
   // derives content.min.css from this markup and must see its final form.
+  const homeStates = stampHomepageStates(states);
   const coverage = stampHomepageCoverage(tariffDatabase.summary);
   const fontPages = inlineFontCss();
   const searchEntries = writeSearchIndex(states);
@@ -7166,7 +7268,7 @@ export function generateSeo() {
   const content = buildContentCss({ quiet: true });
   const sw = stampServiceWorker();
 
-  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + homepage coverage ${coverage.S}/${coverage.D}/${coverage.C}/${coverage.T} + inline @font-face on ${fontPages} pages + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + content.min.css (${(content.bytes/1024).toFixed(0)} KB) + sw ${sw.version} (${sw.hashed} assets)`);
+  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + homepage states ${homeStates.cards} in ${homeStates.regions} regions + homepage coverage ${coverage.S}/${coverage.D}/${coverage.C}/${coverage.T} + inline @font-face on ${fontPages} pages + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + content.min.css (${(content.bytes/1024).toFixed(0)} KB) + sw ${sw.version} (${sw.hashed} assets)`);
   return { pages, states: states.length };
 }
 

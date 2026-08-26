@@ -445,7 +445,12 @@ console.log('\n• advertised coverage matches the database');
   } else {
     const s = JSON.parse(fs.readFileSync(summaryPath, 'utf8'));
     const problems = [];
-    const sources = ['index.html', 'llms.txt', path.join('js', 'i18n.js')];
+    // js/i18n/<lang>.js was never in this list, so three languages quietly carried
+    // "35+ states / 65+ DISCOMs" — inflated AND wrong — for as long as the English copy
+    // has been correct. The rule only ever applied to the language nobody had to translate.
+    const sources = ['index.html', 'llms.txt', path.join('js', 'i18n.js'),
+      ...fs.readdirSync(path.join(ROOT, 'js', 'i18n'))
+        .filter(f => f.endsWith('.js')).map(f => path.join('js', 'i18n', f))];
 
     for (const rel of sources) {
       const p = path.join(ROOT, rel);
@@ -453,6 +458,16 @@ console.log('\n• advertised coverage matches the database');
       const text = fs.readFileSync(p, 'utf8');
 
       // An inflated "N+" next to one of these nouns is the exact shape of the old bug.
+      // The noun-anchored rule below cannot fire on a translated string — the noun is in
+      // Devanagari or Tamil, so an inflated count there slipped through for as long as it
+      // existed. Inside a string table the policy is simpler and stricter: exact counts
+      // only, so any "N+" is the defect regardless of which script follows it.
+      if (rel.startsWith(path.join('js', 'i18n') + path.sep)) {
+        for (const m of text.matchAll(/'([^']+)':\s*'([^']*\d+\+[^']*)'/g)) {
+          problems.push(`${rel}: ${m[1]} — advertise the exact count, not "N+"`);
+        }
+      }
+
       for (const m of text.matchAll(/(\d+)\+\s*(?:Indian\s+)?(DISCOM|consumer categor|categor|states?\s*&|states?\s+and|states?\b)/gi)) {
         problems.push(`${rel}: "${m[1]}+ ${m[2]}…" — advertise the exact count, not "${m[1]}+"`);
       }
@@ -469,6 +484,33 @@ console.log('\n• advertised coverage matches the database');
       }
     }
 
+    // The tariff directory hero carried "65+ DISCOMs" in all four languages for as long as
+    // it existed, and nothing here looked at it: the loop above scans index.html, llms.txt
+    // and the string tables, none of which is where that row is built. A whole-file scan of
+    // the directory page is not the fix either — it legitimately prints per-state counts
+    // ("1 DISCOM", "4 DISCOMs") that would fail against the site total. So the check is
+    // scoped to the hero row, where every figure is a site-wide total by definition, and
+    // inside it any "N+" is wrong in every script: these numbers come from the database and
+    // are exact. That also covers hi/mr/ta, whose nouns the noun-anchored rule cannot match.
+    const dirPages = [null, 'hi', 'mr', 'ta'].map(l => l
+      ? path.join(l, 'tariffs', 'states', 'index.html')
+      : path.join('tariffs', 'states', 'index.html'));
+    for (const rel of dirPages) {
+      const p = path.join(ROOT, rel);
+      if (!fs.existsSync(p)) continue;
+      const row = /<div class="seo-dir-stats"[\s\S]*?<\/div>/.exec(fs.readFileSync(p, 'utf8'));
+      if (!row) { problems.push(`${rel}: hero stat row not found — markup changed`); continue; }
+      for (const hit of row[0].matchAll(/(\d+)\+/g)) {
+        problems.push(`${rel}: hero stat "${hit[1]}+" — advertise the exact count, not "${hit[1]}+"`);
+      }
+      const nums = [...row[0].matchAll(/<strong>(\d+)\+?<\/strong>/g)].map(x => Number(x[1]));
+      if (nums[0] !== undefined && nums[0] !== s.stateCount) {
+        problems.push(`${rel}: hero claims ${nums[0]} states, database has ${s.stateCount}`);
+      }
+      if (nums[1] !== undefined && nums[1] !== s.discomCount) {
+        problems.push(`${rel}: hero claims ${nums[1]} DISCOMs, database has ${s.discomCount}`);
+      }
+    }
     if (problems.length) {
       fail(`advertised coverage is out of step with the database:\n    ${[...new Set(problems)].join('\n    ')}`);
     } else {

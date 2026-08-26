@@ -1416,7 +1416,11 @@ a.hero-stat-link:focus-visible .hero-stat-label { color: var(--text-brand-dark, 
    this one had none and the DISCOM chips ran the full viewport while the About copy right
    below them stopped at 900px. Same measure as .about-section .container: the chips and
    the prose they introduce are one column, and the eye reads the ragged edge otherwise. */
-.coverage-strip .container { max-width: var(--w-prose); margin: 0 auto; }
+/* --w-page, not --w-prose: this strip is a band of cards, and it sat 140px narrower
+   than the #states and #tools sections directly below it, so the page stepped in and
+   back out again for one section. Card bands take the standard column; prose keeps
+   the short one. */
+.coverage-strip .container { max-width: var(--w-page); margin: 0 auto; }
 .coverage-strip .hero-features { margin-top: 0; }
 .coverage-strip .hero-discoms-list { margin-top: 0; }
 
@@ -5241,11 +5245,22 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .states-section h2 { font-size: 21px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.4px; text-align: center; margin: 0 0 8px; }
 .states-section > .container > p { color: var(--text-secondary); text-align: center; margin: 0 auto 22px; max-width: 620px; line-height: 1.6; }
 .states-section a { color: var(--text-brand); text-decoration: none; }
-.states-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
+/* Region bands. The grid moved down to .sg-cards so .states-grid can stack the six
+   regions; every .states-grid a rule below still applies to the cards inside them. */
+.states-grid { display: flex; flex-direction: column; gap: 20px; }
+.sg-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
+.sg-region-head {
+  display: flex; align-items: center; gap: 8px; margin: 0 0 9px;
+  font-size: 13px; font-weight: 600; color: var(--text-primary); letter-spacing: -.2px;
+}
+/* The dot is the only place the region hue appears. It rides alongside the name rather
+   than replacing it, so the colour never carries the meaning on its own. */
+.sg-dot { flex: 0 0 auto; width: 7px; height: 7px; border-radius: 50%; background: var(--sg-accent); }
+.sg-region-n { font-size: 12px; font-weight: 500; color: var(--text-tertiary); }
 .states-grid a {
   position: relative;
   display: block;
-  min-height: 46px;
+  min-height: 58px;   /* two lines now: name over the data line */
   font-size: 13.5px; font-weight: 600; color: var(--text-secondary);
   background: var(--surface-card);
   border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
@@ -5254,6 +5269,31 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   overflow: hidden;
   transition: border-color var(--t-fast), transform var(--t-fast), color var(--t-fast), box-shadow var(--t-fast), background-color var(--t-fast);
 }
+.sg-name { display: block; }
+/* The data line is the point of the card, but it must not compete with the name it
+   qualifies: one step down in size, one step lighter in colour, with the DISCOM count
+   pulled back up because it is the figure people scan for. */
+.sg-meta {
+  display: block; margin-top: 3px;
+  font-size: 11.5px; font-weight: 500; color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums; letter-spacing: -.1px;
+}
+.sg-meta b { font-weight: 600; color: var(--text-secondary); }
+
+/* One column at phone width means 34 stacked two-line cards — about 1,300px more homepage
+   than the single-line grid this replaced, on the device least able to afford it. The card
+   becomes one row instead: name left, data right. Same information, roughly the same height
+   the section had before. The name wraps rather than truncating, so the one very long name
+   (Dadra & Nagar Haveli and Daman & Diu) grows its card instead of losing characters. */
+@media (max-width: 560px) {
+  .states-grid a {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+    min-height: 0; padding: 10px 13px;
+  }
+  .sg-meta { margin-top: 0; flex: 0 0 auto; }
+}
+.states-grid a:hover .sg-meta, .states-grid a:focus-visible .sg-meta { color: var(--text-secondary); }
+
 .states-grid a:hover {
   border-color: var(--brand-border);
   color: var(--text-brand);
@@ -5916,7 +5956,23 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 :root[data-theme="dark"] .about-section {
   background-image: radial-gradient(ellipse 90% 60% at 50% 0%, rgba(59, 130, 246, .12), transparent 68%);
 }
-.about-section .container { max-width: var(--w-prose); margin: 0 auto; }
+/* --w-page, matching #tools, #states and the coverage strip. This one container holds all
+   three of About / How the calculator works / the FAQ, so at --w-prose those three headings
+   started 70px inside every other section and the page edge stepped in and back out twice.
+
+   The prose is capped separately below. Widening the column alone would have taken the body
+   text from about 95 characters a line to about 110; it is a reading measure, not a layout
+   width, and the two stopped being the same thing once the column got wider than prose wants. */
+.about-section .container { max-width: var(--w-page); margin: 0 auto; }
+/* No max-width on the prose. Capping it at --w-text inside a 1040 column made the right
+   edge zigzag down the section — heading 1235, paragraph 955, paragraph 955, stats row
+   1235, heading 1235 — which reads as broken alignment, and it is. One column edge beats a
+   better measure here: the section is scanned far more than it is read end to end.
+   The cost is real and worth naming: the body text runs long at this width. */
+
+/* Heading and lead centred, matching .states-section. Body copy stays left — centred running
+   text gives every line a different starting point and is markedly harder to read. */
+.about-section h2, .about-section .seo-section h2 { text-align: center; }
 
 /* The homepage FAQ is a .seo-section nested inside .about-section, so ".seo-section > *"
    was capping its cards at --w-text (760) inside a 900px column — the accordion ended
@@ -8593,3 +8649,170 @@ html:not(.js) .m-btn-ring { display: none; }
   .bill-mark { transition: none; }
   .bill-mark:hover, .bill-mark:focus-visible { transform: none; }
 }
+
+/* ═══ Homepage coverage strip ═══════════════════════════════════════════════
+   Trust card, capability checklist and the Popular DISCOMs grid. A separate block
+   from the state directory, kept when that was reverted to the deployed design. */
+/* ─── Coverage strip: trust card + capability card + DISCOM grid ─────────────
+   The strip used to be a centred run-on sentence of six capability labels over a blob of
+   fifteen pills. The capabilities had a :hover state and no destination — an affordance the
+   page offered and then did nothing with. Both rows are links now, and the two cards are
+   deliberately NOT the same treatment: the trust card is brand-tinted because it is the
+   claim, the capability card is a plain surface because it is the inventory. Two identical
+   blue panels stacked would have read as one repeated thing. */
+
+/* The green tick now means exactly one thing on this page: an item in the capability
+   inventory. The trust card was using the same glyph for a different kind of claim. */
+.cap-list svg {
+  flex: 0 0 auto; width: 15px; height: 15px; margin-top: 3px; color: var(--p-green-600);
+}
+.trust-list svg {
+  /* --text-brand, not --brand: the solid brand fill is a background token and falls to
+     2.6:1 against the card in dark mode. These icons carry meaning, so they hold 3:1. */
+  flex: 0 0 auto; width: 17px; height: 17px; margin-top: 1px; color: var(--text-brand);
+}
+
+/* trust card */
+/* Header row (shield + title) over a three-across proof band. This was a vertical tick
+   list beside the shield: the title was clamped to 26ch so it wrapped to two lines, the
+   list ran down a narrow column, and roughly 40% of the card sat empty on the right.
+   With the capability card directly below it also a green tick list, the section said
+   "checklist" twice in the same grammar. Same three claims and the same strings - one
+   distinct icon each, so they can be told apart without reading all three. */
+.trust-card {
+  /* .coverage-strip still centres its text — it was a centred run-on sentence once. A
+     three-column band of sentences must not inherit that: centred claims rag on both
+     edges and strand each icon away from the text it labels. */
+  text-align: left;
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 18px 22px 20px; margin: 0 0 18px;
+  background: var(--surface-brand-subtle);
+  border: 1px solid var(--brand-border); border-radius: var(--radius-lg);
+}
+.trust-ico {
+  flex: 0 0 auto; display: grid; place-items: center; width: 44px; height: 44px;
+  border-radius: 12px; background: var(--brand); color: var(--text-inverse);
+}
+.trust-ico svg { width: 24px; height: 24px; }
+.trust-body { flex: 1 1 auto; min-width: 0; }
+.trust-title {
+  margin: 3px 0 14px; max-width: none;
+  font-size: 17px; font-weight: 700; line-height: 1.3; color: var(--text-brand-dark);
+}
+.trust-list {
+  list-style: none; margin: 0; padding: 14px 0 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;
+  border-top: 1px solid var(--brand-border);
+}
+.trust-list li { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; line-height: 1.5; color: var(--text-secondary); }
+.trust-list a { color: var(--text-brand); }
+
+/* two-column band */
+.cov-split { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 20px; align-items: start; }
+
+/* capability card — plain surface, so it does not compete with the trust card above it */
+.cap-card {
+  padding: 18px 20px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 10px 22px -20px rgba(15, 23, 42, .22);
+}
+.cap-title {
+  margin: 0 0 13px; font-size: 15px; font-weight: 600; line-height: 1.3;
+  color: var(--text-primary); letter-spacing: -.2px;
+}
+.cap-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.cap-list a {
+  display: flex; gap: 8px; align-items: flex-start;
+  font-size: 13px; line-height: 1.45; color: var(--text-secondary); text-decoration: none;
+  transition: color var(--t-fast);
+}
+.cap-list a:hover, .cap-list a:focus-visible { color: var(--text-brand); }
+
+/* DISCOM grid */
+.cov-dhead { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 0 0 11px; }
+.cov-dhead b { font-size: 15px; font-weight: 600; color: var(--text-primary); letter-spacing: -.2px; }
+.cov-dhead a { font-size: 12.5px; color: var(--text-brand); text-decoration: none; white-space: nowrap; }
+.cov-dhead a:hover { text-decoration: underline; }
+/* Four columns, so the fifteen names land in four rows (4+4+4+3) instead of five. Fixed
+   rather than auto-fill: auto-fill would give three columns at this width and the row count
+   would drift with the viewport, which is the thing being pinned down here. */
+.cov-dgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.cov-dgrid a {
+  display: flex; align-items: center; gap: 8px; min-height: 42px; padding: 9px 12px;
+  font-size: 12.5px; font-weight: 600; color: var(--text-primary); text-decoration: none;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+  transition: border-color var(--t-fast), color var(--t-fast), transform var(--t-fast);
+}
+.cov-dgrid a:hover, .cov-dgrid a:focus-visible {
+  border-color: var(--brand-border); color: var(--text-brand); transform: translateY(-1px);
+}
+/* chevron, drawn from borders so it needs no asset and inherits colour */
+.cov-go {
+  flex: 0 0 auto; width: 6px; height: 6px; margin-left: auto;
+  border-right: 1.7px solid var(--text-tertiary); border-top: 1.7px solid var(--text-tertiary);
+  transform: rotate(45deg); transition: border-color var(--t-fast);
+}
+.cov-dgrid a:hover .cov-go { border-color: var(--brand); }
+
+/* Below the full shell the capability card and the grid stop sharing a row. Stacking here
+   rather than at 760 is what keeps the DISCOM grid at four columns — beside a 360px card it
+   would have ~370px to hold four names, which is not enough for "Adani Electricity". Full
+   width, it holds four columns comfortably down to phone sizes. */
+@media (max-width: 1080px) {
+  .cov-split { grid-template-columns: 1fr; gap: 16px; }
+}
+@media (max-width: 560px) {
+  .cov-dgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+/* The three claims are sentences, not labels; below the full shell they have too little
+   width to stay on one row without each becoming five lines. Two-up first, then one. */
+@media (max-width: 1080px) {
+  .trust-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  .trust-list { grid-template-columns: 1fr; gap: 10px; }
+}
+@media (max-width: 560px) {
+  .trust-card { padding: 16px; gap: 14px; }
+  .trust-ico { width: 38px; height: 38px; }
+  .trust-title { font-size: 15.5px; }
+  /* two columns at phone width — see the 560 block above */
+}
+@media (prefers-reduced-motion: reduce) {
+  .cov-dgrid a, .cov-go, .cap-list a { transition: none; }
+  .cov-dgrid a:hover { transform: none; }
+}
+
+/* ─── Keyboard focus ────────────────────────────────────────────────────────
+   This project has no global :focus-visible rule; each component declares its own, so a
+   component that omits it simply has no focus indicator. These are the controls added or
+   restyled for the state directory across the homepage and /tariffs/states/.
+
+   Offset is outward where the control sits on the page background, and inward where it
+   fills its own tile — an outward ring on a tile that meets its neighbour at 8px would
+   collide with the next card. */
+.cap-list a:focus-visible,
+.cov-dgrid a:focus-visible,
+.trust-list a:focus-visible,
+.cov-dhead a:focus-visible,
+.seo-dir-discoms a:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
+}
+/* Focus should read at least as strongly as hover, not weaker: the card lifts and its
+   silhouette comes up to full strength, exactly as it does under the pointer. */
+.cov-dgrid a:focus-visible { border-color: var(--brand-border); color: var(--text-brand); }
+.cov-dgrid a:focus-visible .cov-go { border-color: var(--brand); }
+
+/* The global `a:hover { text-decoration: underline }` reaches every link in these grids,
+   so hovering a state card underlined the whole card — name, count and rate together. On a
+   row-shaped link the card's own hover treatment (border, lift, colour) already says it is
+   interactive; an underline across a data line just makes it harder to read.
+
+   Inline prose links keep theirs: "every source listed" and "View all 65" sit inside
+   sentences, where the underline is the only thing marking them as links. */
+.cap-list a:hover,
+.cov-dgrid a:hover,

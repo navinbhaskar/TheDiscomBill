@@ -968,25 +968,59 @@
      form — the copy is unchanged, so nothing was lost for search. -->
 <section class="coverage-strip">
   <div class="container">
-    <div class="hero-features reveal">
-      <span class="hero-feature" data-i18n="hero.feat.slab">Slab-wise energy charges</span>
-      <span class="hero-feature" data-i18n="hero.feat.fppa">Fixed &amp; fuel surcharge (FPPA)</span>
-      <span class="hero-feature" data-i18n="hero.feat.solar">Solar net metering</span>
-      <span class="hero-feature" data-i18n="hero.feat.tod">Time-of-Day &amp; kVAh billing</span>
-      <span class="hero-feature" data-i18n="hero.feat.demand">Excess demand penalty</span>
-      <span class="hero-feature" data-i18n="hero.feat.duty">Electricity duty &amp; state levies</span>
+    <!-- Trust card. The three claims are the ones the site can actually back: the first
+         links to the order library, the third states the real privacy position rather
+         than an absolute — photo and scanned-PDF OCR is cloud-first, on consent. -->
+    <div class="trust-card reveal">
+      <span class="trust-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.4-3 8.3-7 9-4-.7-7-4.6-7-9V6Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <div class="trust-body">
+        <p class="trust-title" data-i18n="trust.title">Your trusted electricity bill calculator</p>
+        <ul class="trust-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7Z"/><path d="M14 3v4h4"/><path d="M9.5 13h5M9.5 16.5h3"/></svg><span data-i18n-html="trust.orders">Rates taken from published SERC tariff orders &mdash; <a href="/orders/">every source listed</a></span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 7.7-1.5"/></svg><span data-i18n="trust.free">Free to use &mdash; every calculator works without an account</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2"/><path d="M3 9.5h18"/><path d="M6.5 7h.01M9.5 7h.01"/></svg><span data-i18n="trust.local">Your bill is calculated in your browser; a photo goes to OCR only if you allow it</span></li>
+        </ul>
+      </div>
     </div>
-    <div class="hero-discoms-label" data-i18n="hero.discoms.label">Tariffs for 65 DISCOMs across 34 states &amp; UTs — including</div>
-    <!-- These were spans with a :hover state and no link — the page offered an affordance and
-         then did nothing with it. UPPCL points at the state page because it is a holding
-         company whose five licensees each have their own; CESC is labelled Kolkata because the
-         abbreviation is shared with Chamundeshwari ESC in Karnataka. Torrent Power was dropped:
-         it appears in no state module, so the strip was naming coverage that does not exist. -->
-    <div class="hero-discoms-list">
-      <a href="/tariffs/uttar-pradesh/">UPPCL</a><a href="/tariffs/karnataka/bescom/">BESCOM</a><a href="/tariffs/maharashtra/msedcl/">MSEDCL</a><a href="/tariffs/tamil-nadu/tangedco/">TANGEDCO</a>
-      <a href="/tariffs/punjab/pspcl/">PSPCL</a><a href="/tariffs/telangana/tsspdcl/">TSSPDCL</a><a href="/tariffs/andhra-pradesh/apspdcl/">APSPDCL</a><a href="/tariffs/delhi/brpl/">BSES Rajdhani</a>
-      <a href="/tariffs/delhi/tpddl/">Tata Power-DDL</a><a href="/tariffs/maharashtra/adani_mumbai/">Adani Electricity</a><a href="/tariffs/west-bengal/cesc_kolkata/">CESC Kolkata</a><a href="/tariffs/kerala/kseb/">KSEB</a>
-      <a href="/tariffs/west-bengal/wbsedcl/">WBSEDCL</a><a href="/tariffs/rajasthan/jvvnl/">JVVNL</a><a href="/tariffs/madhya-pradesh/mppkvvcl/">MPPKVVCL</a>
+
+    <div class="cov-split reveal">
+      <!-- The six capabilities were spans with a hover state and no destination. Each now
+           links to the page that explains it; all six were verified to exist. -->
+      <div class="cap-card">
+        <p class="cap-title" data-i18n="cap.title">Every charge on your bill, modelled</p>
+        <ul class="cap-list">
+          <li><a href="/understand-your-bill/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.feat.slab">Slab-wise energy charges</span></a></li>
+          <li><a href="/fppa/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.feat.fppa">Fixed &amp; fuel surcharge (FPPA)</span></a></li>
+          <li><a href="/guides/solar-net-metering-savings/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.feat.solar">Solar net metering</span></a></li>
+          <li><a href="/guides/tod-billing-explained/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.feat.tod">Time-of-Day &amp; kVAh billing</span></a></li>
+          <li><a href="/guides/md-penalty-excess-demand-charge/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.feat.demand">Excess demand penalty</span></a></li>
+          <li><a href="/guides/electricity-duty-explained/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.feat.duty">Electricity duty &amp; state levies</span></a></li>
+        </ul>
+      </div>
+      <div class="cov-discoms">
+        <div class="cov-dhead">
+          <b data-i18n="discoms.popular">Popular DISCOMs</b>
+          <a href="/tariffs/states/" data-i18n="discoms.viewAll">View all 65 &rarr;</a>
+        </div>
+        <div class="cov-dgrid">
+          <a href="/tariffs/uttar-pradesh/">UPPCL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/karnataka/bescom/">BESCOM<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/maharashtra/msedcl/">MSEDCL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/tamil-nadu/tangedco/">TANGEDCO<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/punjab/pspcl/">PSPCL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/telangana/tsspdcl/">TSSPDCL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/andhra-pradesh/apspdcl/">APSPDCL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/delhi/brpl/">BSES Rajdhani<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/delhi/tpddl/">Tata Power-DDL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/maharashtra/adani_mumbai/">Adani Electricity<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/west-bengal/cesc_kolkata/">CESC Kolkata<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/kerala/kseb/">KSEB<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/west-bengal/wbsedcl/">WBSEDCL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/rajasthan/jvvnl/">JVVNL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/madhya-pradesh/mppkvvcl/">MPPKVVCL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/gujarat/pgvcl/">PGVCL<span class="cov-go" aria-hidden="true"></span></a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1177,40 +1211,70 @@
     <h2 class="reveal">Electricity Tariffs by State</h2>
     <p class="reveal">Open the tariff page for your state — slab rates, fixed charges and every DISCOM — or browse the <a href="/tariffs/states/">full directory of all DISCOMs</a>.</p>
     <nav class="states-grid reveal" aria-label="Electricity tariffs by state">
-      <a href="/tariffs/andhra-pradesh/">Andhra Pradesh</a>
-      <a href="/tariffs/arunachal-pradesh/">Arunachal Pradesh</a>
-      <a href="/tariffs/assam/">Assam</a>
-      <a href="/tariffs/bihar/">Bihar</a>
-      <a href="/tariffs/chandigarh/">Chandigarh</a>
-      <a href="/tariffs/chhattisgarh/">Chhattisgarh</a>
-      <a href="/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/">Dadra &amp; Nagar Haveli and Daman &amp; Diu</a>
-      <a href="/tariffs/delhi/">Delhi</a>
-      <a href="/tariffs/goa/">Goa</a>
-      <a href="/tariffs/gujarat/">Gujarat</a>
-      <a href="/tariffs/haryana/">Haryana</a>
-      <a href="/tariffs/himachal-pradesh/">Himachal Pradesh</a>
-      <a href="/tariffs/jammu-and-kashmir/">Jammu &amp; Kashmir</a>
-      <a href="/tariffs/jharkhand/">Jharkhand</a>
-      <a href="/tariffs/karnataka/">Karnataka</a>
-      <a href="/tariffs/kerala/">Kerala</a>
-      <a href="/tariffs/ladakh/">Ladakh</a>
-      <a href="/tariffs/madhya-pradesh/">Madhya Pradesh</a>
-      <a href="/tariffs/maharashtra/">Maharashtra</a>
-      <a href="/tariffs/manipur/">Manipur</a>
-      <a href="/tariffs/meghalaya/">Meghalaya</a>
-      <a href="/tariffs/mizoram/">Mizoram</a>
-      <a href="/tariffs/nagaland/">Nagaland</a>
-      <a href="/tariffs/odisha/">Odisha</a>
-      <a href="/tariffs/puducherry/">Puducherry</a>
-      <a href="/tariffs/punjab/">Punjab</a>
-      <a href="/tariffs/rajasthan/">Rajasthan</a>
-      <a href="/tariffs/sikkim/">Sikkim</a>
-      <a href="/tariffs/tamil-nadu/">Tamil Nadu</a>
-      <a href="/tariffs/telangana/">Telangana</a>
-      <a href="/tariffs/tripura/">Tripura</a>
-      <a href="/tariffs/uttar-pradesh/">Uttar Pradesh</a>
-      <a href="/tariffs/uttarakhand/">Uttarakhand</a>
-      <a href="/tariffs/west-bengal/">West Bengal</a>
+      <div class="sg-region" style="--sg-accent:#2563eb">
+        <h3 class="sg-region-head"><span class="sg-dot" aria-hidden="true"></span><span data-i18n="states.region.north">North India</span><span class="sg-region-n">10</span></h3>
+        <div class="sg-cards">
+        <a href="/tariffs/delhi/"><span class="sg-name">Delhi</span><span class="sg-meta"><b>4</b> <span data-i18n="states.discoms">DISCOMs</span> &middot; ₹3–₹8<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/haryana/"><span class="sg-name">Haryana</span><span class="sg-meta"><b>2</b> <span data-i18n="states.discoms">DISCOMs</span> &middot; ₹2.2–₹7.5<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/himachal-pradesh/"><span class="sg-name">Himachal Pradesh</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹4.71–₹5.89<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/jammu-and-kashmir/"><span class="sg-name">Jammu &amp; Kashmir</span><span class="sg-meta"><b>2</b> <span data-i18n="states.discoms">DISCOMs</span> &middot; ₹1.4–₹4.35<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/ladakh/"><span class="sg-name">Ladakh</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹0.5–₹2.5<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/punjab/"><span class="sg-name">Punjab</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹3.85–₹7.05<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/chandigarh/"><span class="sg-name">Chandigarh</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹2.9–₹5.45<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/rajasthan/"><span class="sg-name">Rajasthan</span><span class="sg-meta"><b>3</b> <span data-i18n="states.discoms">DISCOMs</span> &middot; ₹4.75–₹7.5<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/uttar-pradesh/"><span class="sg-name">Uttar Pradesh</span><span class="sg-meta"><b>5</b> <span data-i18n="states.discoms">DISCOMs</span> &middot; ₹2.75–₹6.5<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/uttarakhand/"><span class="sg-name">Uttarakhand</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹1.85–₹7.8<span data-i18n="states.perUnit">/unit</span></span></a>
+        </div>
+      </div>
+      <div class="sg-region" style="--sg-accent:#0d9488">
+        <h3 class="sg-region-head"><span class="sg-dot" aria-hidden="true"></span><span data-i18n="states.region.south">South India</span><span class="sg-region-n">6</span></h3>
+        <div class="sg-cards">
+        <a href="/tariffs/andhra-pradesh/"><span class="sg-name">Andhra Pradesh</span><span class="sg-meta"><b>2</b> <span data-i18n="states.discoms">DISCOMs</span> &middot; ₹1.9–₹9.75<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/karnataka/"><span class="sg-name">Karnataka</span><span class="sg-meta"><b>5</b> <span data-i18n="states.discoms">DISCOMs</span> &middot; ₹5.8<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/kerala/"><span class="sg-name">Kerala</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹1.5–₹8.5<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/puducherry/"><span class="sg-name">Puducherry</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹2.65–₹7.95<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/tamil-nadu/"><span class="sg-name">Tamil Nadu</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹4.95–₹12.15<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/telangana/"><span class="sg-name">Telangana</span><span class="sg-meta"><b>2</b> <span data-i18n="states.discoms">DISCOMs</span> &middot; ₹5.1–₹10<span data-i18n="states.perUnit">/unit</span></span></a>
+        </div>
+      </div>
+      <div class="sg-region" style="--sg-accent:#d97706">
+        <h3 class="sg-region-head"><span class="sg-dot" aria-hidden="true"></span><span data-i18n="states.region.west">West India</span><span class="sg-region-n">4</span></h3>
+        <div class="sg-cards">
+        <a href="/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/"><span class="sg-name">Dadra &amp; Nagar Haveli and Daman &amp; Diu</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹1.5–₹4.5<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/goa/"><span class="sg-name">Goa</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹1.5–₹6.7<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/gujarat/"><span class="sg-name">Gujarat</span><span class="sg-meta"><b>4</b> <span data-i18n="states.discoms">DISCOMs</span> &middot; ₹2.65–₹5.2<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/maharashtra/"><span class="sg-name">Maharashtra</span><span class="sg-meta"><b>4</b> <span data-i18n="states.discoms">DISCOMs</span> &middot; ₹1.9–₹13.97<span data-i18n="states.perUnit">/unit</span></span></a>
+        </div>
+      </div>
+      <div class="sg-region" style="--sg-accent:#7c3aed">
+        <h3 class="sg-region-head"><span class="sg-dot" aria-hidden="true"></span><span data-i18n="states.region.central">Central India</span><span class="sg-region-n">2</span></h3>
+        <div class="sg-cards">
+        <a href="/tariffs/chhattisgarh/"><span class="sg-name">Chhattisgarh</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹4.4–₹8.8<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/madhya-pradesh/"><span class="sg-name">Madhya Pradesh</span><span class="sg-meta"><b>3</b> <span data-i18n="states.discoms">DISCOMs</span> &middot; ₹3.72–₹7.24<span data-i18n="states.perUnit">/unit</span></span></a>
+        </div>
+      </div>
+      <div class="sg-region" style="--sg-accent:#e11d48">
+        <h3 class="sg-region-head"><span class="sg-dot" aria-hidden="true"></span><span data-i18n="states.region.east">East India</span><span class="sg-region-n">5</span></h3>
+        <div class="sg-cards">
+        <a href="/tariffs/bihar/"><span class="sg-name">Bihar</span><span class="sg-meta"><b>2</b> <span data-i18n="states.discoms">DISCOMs</span> &middot; ₹7.42<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/jharkhand/"><span class="sg-name">Jharkhand</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹7.2–₹7.4<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/odisha/"><span class="sg-name">Odisha</span><span class="sg-meta"><b>4</b> <span data-i18n="states.discoms">DISCOMs</span> &middot; ₹2.9–₹6.1<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/sikkim/"><span class="sg-name">Sikkim</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹1.6–₹4.6<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/west-bengal/"><span class="sg-name">West Bengal</span><span class="sg-meta"><b>3</b> <span data-i18n="states.discoms">DISCOMs</span> &middot; ₹2.5–₹9.22<span data-i18n="states.perUnit">/unit</span></span></a>
+        </div>
+      </div>
+      <div class="sg-region" style="--sg-accent:#0891b2">
+        <h3 class="sg-region-head"><span class="sg-dot" aria-hidden="true"></span><span data-i18n="states.region.northeast">North-East India</span><span class="sg-region-n">7</span></h3>
+        <div class="sg-cards">
+        <a href="/tariffs/arunachal-pradesh/"><span class="sg-name">Arunachal Pradesh</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹2.65–₹4<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/assam/"><span class="sg-name">Assam</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹3.35–₹8.19<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/manipur/"><span class="sg-name">Manipur</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹2.35–₹5.95<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/meghalaya/"><span class="sg-name">Meghalaya</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹4.57–₹5.1<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/mizoram/"><span class="sg-name">Mizoram</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹2.5–₹6<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/nagaland/"><span class="sg-name">Nagaland</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹2.5–₹6<span data-i18n="states.perUnit">/unit</span></span></a>
+        <a href="/tariffs/tripura/"><span class="sg-name">Tripura</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">DISCOM</span> &middot; ₹2.31–₹8.52<span data-i18n="states.perUnit">/unit</span></span></a>
+        </div>
+      </div>
     </nav>
   </div>
 </section>
