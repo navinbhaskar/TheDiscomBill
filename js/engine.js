@@ -386,7 +386,26 @@ export function calculateBill({ discomId, categoryId, supplyTypeId, units, conne
 
   const extraCharges = [];
   let totalExtra = 0;
+  // A charge may be banded. Several states levy electricity duty only above a consumption
+  // threshold (West Bengal: nothing to 300 units a month, 10% above) or at a rate that steps
+  // with sanctioned load (Uttarakhand: 15 paise to 10 kW, 30 paise above). Without this the
+  // only options were to charge everyone the higher rate or model the state as duty-free, and
+  // both are wrong for most of the consumers involved.
+  //
+  // Bands are tested against MONTHLY consumption, not the period total — a two-month bill of
+  // 400 units is 200 units/month and must not be pushed over a 300-unit threshold by the
+  // length of the billing period. minUnits/minLoadKw are exclusive (charge applies ABOVE the
+  // figure), maxUnits/maxLoadKw inclusive, so a pair like {maxUnits: 100} and {minUnits: 100}
+  // covers every bill exactly once.
+  const chargeApplies = (c) => {
+    if (c.minUnits   != null && !(perMonthUnits    >  c.minUnits))   return false;
+    if (c.maxUnits   != null && !(perMonthUnits    <= c.maxUnits))   return false;
+    if (c.minLoadKw  != null && !(connectedLoadKw  >  c.minLoadKw))  return false;
+    if (c.maxLoadKw  != null && !(connectedLoadKw  <= c.maxLoadKw))  return false;
+    return true;
+  };
   for (const charge of (eff.additionalCharges || [])) {
+    if (!chargeApplies(charge)) continue;
     let amount = 0;
     if (charge.type === 'percent_energy') {
       amount = +(totalEnergy * charge.rate / 100).toFixed(2);

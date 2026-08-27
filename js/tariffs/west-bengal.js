@@ -43,14 +43,16 @@ export default {
             { limit: 300,      rate: 7.69 },
             { limit: Infinity, rate: 9.22 },
           ],
+          // The order says statutory levies are imposed by the State Govt and sit outside the
+          // tariff schedule (note 12), so the rate is not in it. This was carried as a flat 4%
+          // and flagged unverified; West Bengal actually charges nothing on the first 300 units
+          // a month and 10% above that, so the flat rate overcharged small households and
+          // undercharged large ones. West Bengal is not in CEA's energy-charge-only list, so
+          // the base is the wider bill.
+          // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
+          // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
           additionalCharges: [
-            {
-              name: "Electricity Duty (ED)",
-              type: "percent_energy",
-              // UNVERIFIED — carried from the previous data. The order says statutory levies
-              // are imposed by the State Govt and sit outside the tariff schedule (note 12).
-              rate: 4,
-            },
+            { name: "Electricity Duty (ED)", type: "percent_total", rate: 10, minUnits: 300 },
           ],
           supplyTypes: [
             {
@@ -66,7 +68,7 @@ export default {
                 { limit: 300,      rate: 7.69 },
                 { limit: Infinity, rate: 9.22 },
               ],
-              additionalCharges: [{ name: "Electricity Duty (ED)", type: "percent_energy", rate: 4 }],
+              additionalCharges: [{ name: "Electricity Duty (ED)", type: "percent_total", rate: 10, minUnits: 300 }],
             },
             {
               id: "rural",
@@ -81,7 +83,7 @@ export default {
                 { limit: 300,      rate: 7.61 },
                 { limit: Infinity, rate: 9.22 },
               ],
-              additionalCharges: [{ name: "Electricity Duty (ED)", type: "percent_energy", rate: 4 }],
+              additionalCharges: [{ name: "Electricity Duty (ED)", type: "percent_total", rate: 10, minUnits: 300 }],
             },
             {
               id: "lifeline",
@@ -92,7 +94,7 @@ export default {
               // nil for this scheme, so an eligible household pays zero — the gross rate is
               // modelled here and the subsidy is not applied automatically.
               energySlabs: [{ limit: Infinity, rate: 3.68 }],
-              additionalCharges: [{ name: "Electricity Duty (ED)", type: "percent_energy", rate: 4 }],
+              additionalCharges: [{ name: "Electricity Duty (ED)", type: "percent_total", rate: 10, minUnits: 300 }],
             },
           ],
           notes: "WBSEDCL bills quarterly; the slabs above are the published quarterly bands (102 / 78 / 120 / 300 / 300 / above 900 kWh) expressed as monthly equivalents. Lifeline consumers under the Hasir Alo scheme pay nothing after the State subsidy. Bills also carry a Monthly Variable Cost Adjustment (MVCA), which WBERC revises month to month and which is not modelled here.",

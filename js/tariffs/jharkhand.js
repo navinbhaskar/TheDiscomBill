@@ -69,6 +69,11 @@ export default {
       categories: [
         {
           id: "domestic",
+          // Domestic electricity duty: 6% of energy. CEA records duty on the energy charge only for this state.
+          // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply
+          // in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
+          // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+          additionalCharges: [{ name: "Electricity Duty", type: "percent_energy", rate: 6 }],
           name: "DS (Domestic Service)",
           supplyTypes: JH_DOMESTIC_TYPES,
           fixedCharge: JH_DOMESTIC_TYPES[0].fixedCharge,

@@ -8,6 +8,11 @@
 const HP_DOMESTIC_TYPES = [
   {
     id: "domestic",
+    // Domestic electricity duty: 3% of energy. CEA records duty on the energy charge only for this state.
+    // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply
+    // in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
+    // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+    additionalCharges: [{ name: "Electricity Duty", type: "percent_energy", rate: 3 }],
     name: "DS — Other (ordinary) domestic consumers",
     description: "₹5.44/unit up to 125 units a month and ₹5.89 beyond, on a flat ₹85/month fixed charge that does not vary with load.",
     fixedCharge: { type: "flat", rate: 85 },
@@ -66,7 +71,7 @@ const HP_COMMERCIAL_TYPES = [
   },
 ];
 
-const HP_LEVY_NOTE = "Clause B of HPERC's Schedule states the rates are exclusive of electricity duty, so duty is billed in addition to the figures here. HPSEBL also applies a prepaid-meter rebate and, for two-part consumers, a Lower Voltage Supply Surcharge — neither is modelled.";
+const HP_LEVY_NOTE = "Clause B of HPERC's Schedule states the rates are exclusive of electricity duty, so it is billed on top of the tariff; domestic bills here add it at 3% of the energy charge. HPSEBL also applies a prepaid-meter rebate and, for two-part consumers, a Lower Voltage Supply Surcharge — neither is modelled.";
 
 export default {
   state: "Himachal Pradesh",

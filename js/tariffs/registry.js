@@ -243,7 +243,14 @@ export function getEffectiveTariff(discomId, categoryId, supplyTypeId) {
     const st = supplyTypeId
       ? (cat.supplyTypes.find(s => s.id === supplyTypeId) || cat.supplyTypes[0])
       : cat.supplyTypes[0];
-    return { ...st, categoryId: cat.id, categoryName: cat.name };
+    // Electricity duty is a state levy, not a property of a supply type, so it belongs on the
+    // category once rather than copied onto every band. Existing data copies it onto each
+    // supply type as well (all 16 such categories did), so inheriting only when the supply type
+    // is silent changes nothing today and stops the next state duplicating it N times.
+    const inherited = (st.additionalCharges && st.additionalCharges.length)
+      ? st.additionalCharges
+      : (cat.additionalCharges || []);
+    return { ...st, additionalCharges: inherited, categoryId: cat.id, categoryName: cat.name };
   }
   return { ...cat, categoryId: cat.id, categoryName: cat.name };
 }

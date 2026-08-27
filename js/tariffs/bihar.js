@@ -29,7 +29,7 @@ function makeCategories() {
           fixedCharge: 20,
           energySlabs: [{ limit: Infinity, rate: 7.42 }],
           additionalCharges: [
-            { name: "Electricity Duty", type: "percent_energy", rate: 5 }
+            { name: "Electricity Duty", type: "percent_total", rate: 6 }
           ]
         },
         {
@@ -39,7 +39,7 @@ function makeCategories() {
           fixedCharge: { type: "per_kw", rate: 40 },
           energySlabs: [{ limit: Infinity, rate: 7.42 }],
           additionalCharges: [
-            { name: "Electricity Duty", type: "percent_energy", rate: 5 }
+            { name: "Electricity Duty", type: "percent_total", rate: 6 }
           ],
           // The pre-restructure slabs our data carried for FY 2024-25 (never bill-verified).
           rateHistory: [
@@ -71,7 +71,7 @@ function makeCategories() {
           fixedCharge: { type: "per_kw", rate: 80 },
           energySlabs: [{ limit: Infinity, rate: 7.42 }],
           additionalCharges: [
-            { name: "Electricity Duty", type: "percent_energy", rate: 5 }
+            { name: "Electricity Duty", type: "percent_total", rate: 6 }
           ],
           rateHistory: [
             {
@@ -109,7 +109,7 @@ function makeCategories() {
           fixedCharge: { type: "per_kva", rate: 60 },
           energySlabs: [{ limit: Infinity, rate: 7.79 }],
           additionalCharges: [
-            { name: "Electricity Duty", type: "percent_energy", rate: 5 }
+            { name: "Electricity Duty", type: "percent_total", rate: 6 }
           ],
           // FY 2025-26 still had the >100-unit step, per the chart's "Existing" column.
           rateHistory: [
@@ -132,7 +132,7 @@ function makeCategories() {
           fixedCharge: 150,
           energySlabs: [{ limit: Infinity, rate: 7.73 }],
           additionalCharges: [
-            { name: "Electricity Duty", type: "percent_energy", rate: 5 }
+            { name: "Electricity Duty", type: "percent_total", rate: 6 }
           ],
           rateHistory: [
             {
@@ -152,7 +152,7 @@ function makeCategories() {
           fixedCharge: { type: "per_kva", rate: 300 },
           energySlabs: [{ limit: Infinity, rate: 7.73 }],
           additionalCharges: [
-            { name: "Electricity Duty", type: "percent_energy", rate: 5 }
+            { name: "Electricity Duty", type: "percent_total", rate: 6 }
           ],
           rateHistory: [
             {

@@ -42,11 +42,18 @@ const DS_ENERGY = [
   { limit: Infinity, rate: 7.50 },
 ];
 
-// Rajasthan levies ED on the fixed + energy charges; the tariff schedule itself is explicitly
-// "exclusive of Electricity Duty, Taxes and Other Charges" (§4 of the general conditions), so
-// the rate is not in the order. UNVERIFIED — carried from the previous data. Confirm from the
-// Rajasthan Electricity (Duty) Act schedule or a real bill before relying on it.
-const RJ_ED = { name: "Electricity Duty (ED)", type: "percent_total", rate: 5 };
+// The tariff schedule is explicitly "exclusive of Electricity Duty, Taxes and Other Charges"
+// (§4 of the general conditions), so the rate is not in the order.
+//
+// Carried here as 5% of the total and flagged unverified; it is levied per unit, not as a
+// percentage. CEA records 40 P/kWh for domestic in both its FY2021-22 and FY2023-24 editions.
+//
+// Rajasthan also charges a 15 P/kWh urban cess, but only on connections in a municipal area
+// consuming more than 100 units a month. The engine has no way to express that condition yet,
+// so the cess is deliberately NOT modelled rather than applied to everyone.
+// Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge
+// https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+const RJ_ED = { name: "Electricity Duty (ED)", type: "per_unit", rate: 0.40 };
 
 const rajasthanCategories = () => [
   {

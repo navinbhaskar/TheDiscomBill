@@ -33,12 +33,19 @@ const RGP_FIXED = {
   ],
 };
 
-// UNVERIFIED — carried over from the previous data. The GERC order explicitly puts ED outside
-// its scope ("These tariffs are exclusive of Electricity Duty…", schedule notes §2), and the
-// Gujarat Electricity Duty Act PDF on the state CEI site is a scan with no text layer.
-// Secondary sources disagree (10 / 15 / 20%). Confirm from the Act's schedule or a real
-// Gujarat bill before treating this figure as sound.
-const GUJARAT_ED = { name: "Electricity Duty (ED)", type: "percent_energy", rate: 20 };
+// The GERC order puts ED outside its scope ("These tariffs are exclusive of Electricity Duty…",
+// schedule notes §2), and the Gujarat Electricity Duty Act PDF on the state CEI site is a scan
+// with no text layer — which is why this was carried unverified, with secondary sources
+// disagreeing between 10, 15 and 20%.
+//
+// CEA resolves it: 20% is the COMMERCIAL rate, and it was being applied to domestic bills too.
+// Domestic is banded by area — 15% urban, 7.5% rural — which is why the split lives on the two
+// supply types rather than on the category. Source: CEA, "Electricity Tariff & Duty and Average
+// Rates of Electricity Supply in India" (FY 2023-24), Table: Details of electricity duty/taxes/
+// cess/surcharge. https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+const GUJARAT_ED_COMMERCIAL = { name: "Electricity Duty (ED)", type: "percent_energy", rate: 20 };
+const GUJARAT_ED_URBAN      = { name: "Electricity Duty (ED)", type: "percent_energy", rate: 15 };
+const GUJARAT_ED_RURAL      = { name: "Electricity Duty (ED)", type: "percent_energy", rate: 7.5 };
 
 // Order §4.1 — MARGINAL per-kW bands: ₹50/kW on the first 10 kW, ₹85/kW on the next 30, so a
 // 15 kW connection pays 10×50 + 5×85 = ₹925. Not `tiered`, which would bill all 15 kW at ₹85.
@@ -63,10 +70,13 @@ const gujaratCategories = () => [
       { limit: 250,      rate: 4.15 },
       { limit: Infinity, rate: 5.20 },
     ],
-    additionalCharges: [GUJARAT_ED],
-    // getEffectiveTariff REPLACES the category with the chosen supply type rather than
-    // merging, so each one carries its own complete schedule. The category-level slabs above
-    // stay as the fallback for a call that passes no supplyTypeId.
+    // Urban, as the domestic fallback for a call that passes no supplyTypeId — the same
+    // reasoning as the category-level slabs above, and the more common case of the two.
+    additionalCharges: [GUJARAT_ED_URBAN],
+    // getEffectiveTariff REPLACES the category with the chosen supply type rather than merging,
+    // so each one carries its own complete schedule; the one exception is additionalCharges,
+    // which a supply type inherits from the category when it declares none of its own. The
+    // category-level slabs above stay as the fallback for a call that passes no supplyTypeId.
     supplyTypes: [
       {
         id: "urban",
@@ -79,7 +89,7 @@ const gujaratCategories = () => [
           { limit: 250,      rate: 4.15 },
           { limit: Infinity, rate: 5.20 },
         ],
-        additionalCharges: [GUJARAT_ED],
+        additionalCharges: [GUJARAT_ED_URBAN],
       },
       {
         id: "rural",
@@ -93,7 +103,7 @@ const gujaratCategories = () => [
           { limit: 250,      rate: 3.75 },
           { limit: Infinity, rate: 4.90 },
         ],
-        additionalCharges: [GUJARAT_ED],
+        additionalCharges: [GUJARAT_ED_RURAL],
       },
     ],
     notes: "Smart-meter consumers get a 60 paise/unit Time-of-Use concession for consumption between 1100 and 1700 hrs. BPL households pay ₹5/month fixed and 150 paise/unit on the first 50 units.",
@@ -107,7 +117,7 @@ const gujaratCategories = () => [
     // used for Tamil Nadu's non-telescopic LT-V.
     energySlabs: [{ limit: Infinity, rate: 4.35 }],
     additionalCharges: [
-      GUJARAT_ED,
+      GUJARAT_ED_COMMERCIAL,
     ],
     supplyTypes: [
       {
@@ -116,7 +126,7 @@ const gujaratCategories = () => [
         description: "Entire monthly consumption at 435 paise per unit",
         fixedCharge: NON_RGP_FIXED,
         energySlabs: [{ limit: Infinity, rate: 4.35 }],
-        additionalCharges: [GUJARAT_ED],
+        additionalCharges: [GUJARAT_ED_COMMERCIAL],
       },
       {
         id: "above10kw",
@@ -124,7 +134,7 @@ const gujaratCategories = () => [
         description: "Entire monthly consumption at 465 paise per unit, plus a 45 paise/unit peak-hour charge",
         fixedCharge: NON_RGP_FIXED,
         energySlabs: [{ limit: Infinity, rate: 4.65 }],
-        additionalCharges: [GUJARAT_ED],
+        additionalCharges: [GUJARAT_ED_COMMERCIAL],
       },
     ],
     notes: "Above 10 kW, consumption during the two peak windows (0700–1100 and 1800–2200 hrs) carries an extra 45 paise/unit. Connections above 40 kW fall under LTMD instead.",

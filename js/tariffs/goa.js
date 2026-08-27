@@ -81,7 +81,7 @@ const GOA_COMMERCIAL_TYPES = [
   },
 ];
 
-const GOA_LEVY_NOTE = "JERC's schedule is the tariff alone; electricity duty and other State levies are charged on the bill in addition. Goa's fixed charge is levied per kW (or kVA) 'or part thereof', so a fractional sanctioned load is rounded up to the next whole unit before the charge is worked out — the calculator does not round, so check your sanctioned load if the fixed charge looks a rupee or two light.";
+const GOA_LEVY_NOTE = "JERC's schedule is the tariff alone. Domestic bills here include Goa's 20 paise/unit electricity duty; other State levies are charged on the bill in addition. Goa's fixed charge is levied per kW (or kVA) 'or part thereof', so a fractional sanctioned load is rounded up to the next whole unit before the charge is worked out — the calculator does not round, so check your sanctioned load if the fixed charge looks a rupee or two light.";
 
 export default {
   state: "Goa",
@@ -98,6 +98,11 @@ export default {
       categories: [
         {
           id: "domestic",
+          // Domestic electricity duty: 20 paise/unit. CEA does not list this state as energy-charge-only, so duty applies to the wider bill.
+          // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply
+          // in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
+          // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+          additionalCharges: [{ name: "Electricity Duty", type: "per_unit", rate: 0.2 }],
           name: "LTDS (Domestic Service)",
           supplyTypes: GOA_DOMESTIC_TYPES,
           fixedCharge: GOA_DOMESTIC_TYPES[0].fixedCharge,

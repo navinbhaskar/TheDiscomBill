@@ -85,9 +85,14 @@ const LT2_FIXED = {
 };
 
 // The schedule is explicitly "exclusive of the Electricity duty payable as per the provisions
-// of the Telangana State Electricity Duty Act, 1939". UNVERIFIED — carried from the previous
-// data; confirm from the Act's schedule or a real bill.
-const TG_ED = { name: "Electricity Duty (ED)", type: "percent_energy", rate: 6 };
+// of the Telangana State Electricity Duty Act, 1939".
+//
+// This was carried as 6 PERCENT of the energy charge, flagged unverified. It is 6 PAISE per
+// unit — a unit error, not a stale rate, and CEA records 6 P/kWh in both its FY2021-22 and
+// FY2023-24 editions. On a 200-unit bill the old figure overstated duty by roughly ten times.
+// Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge
+// https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+const TG_ED = { name: "Electricity Duty (ED)", type: "per_unit", rate: 0.06 };
 
 const telanganaCategories = () => [
   {

@@ -70,7 +70,7 @@ const CH_COMMERCIAL_TYPES = [
   },
 ];
 
-const CH_LEVY_NOTE = "JERC's schedule is the tariff alone; electricity duty and other levies are charged on the bill in addition. The fixed charge is per kW (or kVA) 'or part thereof', so a fractional sanctioned load is rounded up to the next whole unit on a real bill — the calculator does not round.";
+const CH_LEVY_NOTE = "JERC's schedule is the tariff alone. Domestic bills here include Chandigarh's 9 paise/unit electricity duty; other State levies are charged on the bill in addition. The fixed charge is per kW (or kVA) 'or part thereof', so a fractional sanctioned load is rounded up to the next whole unit on a real bill — the calculator does not round.";
 
 export default {
   state: "Chandigarh",
@@ -87,6 +87,11 @@ export default {
       categories: [
         {
           id: "domestic",
+          // Domestic electricity duty: 9 paise/unit. CEA does not list this state as energy-charge-only, so duty applies to the wider bill.
+          // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply
+          // in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
+          // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+          additionalCharges: [{ name: "Electricity Duty", type: "per_unit", rate: 0.09 }],
           name: "LTDS (Domestic Service)",
           supplyTypes: CH_DOMESTIC_TYPES,
           fixedCharge: CH_DOMESTIC_TYPES[0].fixedCharge,

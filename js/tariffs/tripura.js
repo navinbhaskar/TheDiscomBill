@@ -11,6 +11,11 @@
 const TR_DOMESTIC_TYPES = [
   {
     id: "domestic",
+    // Domestic electricity duty: 5% of the bill. CEA does not list this state as energy-charge-only, so duty applies to the wider bill.
+    // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply
+    // in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
+    // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+    additionalCharges: [{ name: "Electricity Duty", type: "percent_total", rate: 5 }],
     name: "Domestic (rural and urban)",
     description: "The ordinary household category: four telescopic slabs from ₹4.86 to ₹8.52 after subsidy, on ₹70 per kW per month.",
     fixedCharge: { type: "per_kw", rate: 70 },

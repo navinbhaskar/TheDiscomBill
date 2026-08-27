@@ -99,6 +99,11 @@ export default {
       categories: [
         {
           id: "domestic",
+          // Domestic electricity duty: 5% of the bill. CEA does not list this state as energy-charge-only, so duty applies to the wider bill.
+          // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply
+          // in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
+          // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+          additionalCharges: [{ name: "Electricity Duty", type: "percent_total", rate: 5 }],
           name: "LT Domestic",
           supplyTypes: AS_DOMESTIC_TYPES,
           fixedCharge: AS_DOMESTIC_TYPES[0].fixedCharge,

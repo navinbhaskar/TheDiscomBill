@@ -24,12 +24,19 @@ function makeCategories() {
   return [
     {
       id: "domestic",
+      // Electricity Tax, 9% of the energy charge. Karnataka calls it a tax, not a duty, which is why
+      // it reads differently from the other states here. KERC does not set the rate — the Karnataka
+      // Electricity (Taxation on Consumption) Act does — but Tariff Order 2025 Annexure-9 clause 16
+      // confirms it is billed separately from electricity charges, so it is not inside the slabs.
+      // CEA lists Karnataka among the states charging duty on the energy charge only.
+      // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply in India"
+      // (FY 2023-24). https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+      additionalCharges: [{ name: "Electricity Tax", type: "percent_energy", rate: 9 }],
       name: "LT-1 (Domestic / Residential)",
       // Single slab for both fixed and energy charges (FY 2026-27, eff. 1 Apr 2026).
       fixedCharge: { type: "per_kw", rate: 150 },
       energySlabs: [{ limit: Infinity, rate: 5.80 }],
-      additionalCharges: [],
-      notes: "KERC merged the old domestic slabs into a single flat rate — every unit costs the same. Tariff is inclusive of duties (no separate electricity-duty line). BESCOM bills also carry a separate 'FY25 True up Charges' line from May 2026 to Apr 2027, calculated from your FY2024-25 consumption and spread over 12 instalments; it is not a per-unit charge on this bill, so it is not included here. Gruha Jyoti (200 free units/month) applies via the Government Subsidy option.",
+      notes: "KERC merged the old domestic slabs into a single flat rate — every unit costs the same. Karnataka bills Electricity Tax as a separate line: Annexure-9 clause 16 of the Tariff Order 2025 sets a payment priority that distinguishes 'Arrears of Electricity Tax' from 'Arrears of Electricity charges', so the tariff is not tax-inclusive. The rate is set by the Karnataka Electricity (Taxation on Consumption) Act rather than by KERC, so it is not in the order; CEA records 9% on the energy charge. BESCOM bills also carry a separate 'FY25 True up Charges' line from May 2026 to Apr 2027, calculated from your FY2024-25 consumption and spread over 12 instalments; it is not a per-unit charge on this bill, so it is not included here. Gruha Jyoti (200 free units/month) applies via the Government Subsidy option.",
       rateHistory: [
         {
           from: "2025-04-01",

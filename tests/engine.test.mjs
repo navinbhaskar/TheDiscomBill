@@ -469,7 +469,9 @@ group('resolveFixedCharge — by_consumption with a consumption-derived load', (
 
 // Gujarat — GERC orders dt. 25-03-2026, all four GUVNL discoms on one schedule.
 // Hand-computed from the order: 50x3.05 + 50x3.50 + 150x4.15 = 950 energy; 2 kW sits in the
-// first fixed band (15); ED is percent_energy so 20% of 950 = 190. Total 1155.
+// first fixed band (15). ED is percent_energy and BANDED BY AREA: 15% urban, 7.5% rural. The
+// 20% this once used is Gujarat's commercial rate, which was being charged to homes too.
+// Urban: 950 + 15 + 15% of 950 (142.50) = 1107.50 -> 1108.
 group('Gujarat RGP — from the FY2026-27 GERC order', () => {
   const bill = (discomId, supplyTypeId, units, kw) => calculateBill({
     discomId, categoryId: 'domestic', supplyTypeId, units, connectedLoadKw: kw,
@@ -477,7 +479,7 @@ group('Gujarat RGP — from the FY2026-27 GERC order', () => {
   const urban = bill('ugvcl', 'urban', 250, 2);
   check('RGP urban 250u energy', urban.totalEnergy, 950);
   check('RGP urban fixed at 2 kW', urban.fixedCharge, 15);
-  check('RGP urban total', urban.totalPayable, 1155);
+  check('RGP urban total', urban.totalPayable, 1108);
 
   // Rural is a genuinely cheaper schedule, not a discount on the urban one.
   check('RGP rural 250u energy', bill('ugvcl', 'rural', 250, 2).totalEnergy, 850);
@@ -531,8 +533,11 @@ group('Rajasthan DS/LT-1 — from the 2025 RERC schedule', () => {
   // 237.50 + 600 + 2450 + 750 = 4037.50 across all four slabs.
   check('600u energy uses the top slab', bill('jvvnl', 600, 2).totalEnergy, 4037.50);
 
-  // ED is 5% of fixed + energy + surcharge: (300 + 1537.50 + 250) x 0.05 = 104.38
-  check('250u total incl. surcharge and ED', bill('jvvnl', 250, 2).totalPayable, 2192);
+  // ED is 40 paise/unit, not a percentage: 250 x 0.40 = 100. The old expectation encoded a
+  // 5%-of-total guess that the tariff file itself flagged as unverified; CEA records
+  // 40 P/kWh for Rajasthan domestic in both its FY2021-22 and FY2023-24 compilations.
+  // 300 + 1537.50 + 250 + 100 = 2187.50
+  check('250u total incl. surcharge and ED', bill('jvvnl', 250, 2).totalPayable, 2188);
 
   // One RERC tariff serves all three discoms.
   const totals = ['jvvnl', 'avvnl', 'jdvvnl'].map(d => bill(d, 250, 2).totalPayable);
@@ -610,6 +615,34 @@ group('CESC and erstwhile-DPL — monthly bands', () => {
 // Telangana — TGERC retail schedule, retained for FY2026-27 by the order of 30-03-2026.
 // The defining feature: consumption picks a whole LADDER, and crossing a threshold re-rates
 // the bill from the first unit. Every figure below is hand-computed from the schedule.
+// Electricity duty that steps with consumption or load. The bands must cover every bill exactly
+// once — a gap silently drops the duty, an overlap charges it twice — and the consumption test
+// must run on MONTHLY units, so a two-month bill is not pushed over a threshold by its length.
+group('banded electricity duty', () => {
+  const duty = (a) => calculateBill(a).extraCharges.filter(c => /duty/i.test(c.name));
+  const wb = (units, days) => duty({ discomId: 'wbsedcl', categoryId: 'domestic',
+    supplyTypeId: 'urban', units, connectedLoadKw: 2, billingPeriodDays: days });
+  const mp = (units) => duty({ discomId: 'mppkvvcl', categoryId: 'domestic',
+    supplyTypeId: 'urban', units, connectedLoadKw: 2, billingPeriodDays: 30 });
+  const uk = (kw) => duty({ discomId: 'upcl', categoryId: 'domestic',
+    supplyTypeId: 'domestic', units: 300, connectedLoadKw: kw, billingPeriodDays: 30 });
+
+  // West Bengal: nil to 300 units a month, 10% above.
+  check('WB 300u is exempt', wb(300, 30).length, 0);
+  check('WB 301u is charged', wb(301, 30).length, 1);
+  // 500 units across two months is 250/month, so it stays under the threshold.
+  check('WB bands on monthly units, not the period total', wb(500, 60).length, 0);
+
+  // Madhya Pradesh: 9% to 100 units, 12% above — exactly one band either side.
+  check('MP 100u takes the lower band', mp(100).map(c => c.rate).join(), '9');
+  check('MP 101u takes the upper band', mp(101).map(c => c.rate).join(), '12');
+  check('MP never charges two bands', mp(101).length, 1);
+
+  // Uttarakhand: 15 paise to 10 kW, 30 above.
+  check('UK 10 kW takes the lower band', uk(10).map(c => c.rate).join(), '0.15');
+  check('UK 10.1 kW takes the upper band', uk(10.1).map(c => c.rate).join(), '0.3');
+});
+
 group('Telangana LT-I — consumption-selected slab ladders', () => {
   const bill = (units, kw = 2, categoryId = 'domestic') => calculateBill({
     discomId: 'tsspdcl', categoryId, units, connectedLoadKw: kw,
@@ -633,7 +666,9 @@ group('Telangana LT-I — consumption-selected slab ladders', () => {
   check('fixed steps above 800 units', bill(900, 2).fixedCharge, 100);
 
   // Domestic has no customer charge; commercial does.
-  check('250u total', bill(250).totalPayable, 1509);
+  // ED is 6 paise/unit, not 6% of energy: 1405 + 20 + (250 x 0.06) = 1440. The old
+  // expectation carried the same unit error the tariff file did.
+  check('250u total', bill(250).totalPayable, 1440);
 
   // LT-II: crossing 50 units swaps Rs 7.00 flat for the Rs 8.50 ladder.
   check('50u commercial', bill(50, 3, 'commercial').totalEnergy, 350);

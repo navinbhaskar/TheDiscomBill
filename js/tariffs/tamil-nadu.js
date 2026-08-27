@@ -51,13 +51,11 @@ export default {
             { limit: 500, rate: 11.05 },    // 401–500      · 801–1000
             { limit: Infinity, rate: 12.15 } // 501+        · 1001+
           ],
-          additionalCharges: [
-            {
-              name: "Electricity Duty",
-              type: "percent_energy",
-              rate: 5
-            }
-          ],
+          // No domestic electricity duty. CEA records Nil for Tamil Nadu in both the FY2021-22 and
+          // FY2023-24 editions of its duty compilation, so the 5% we carried here was not a rate
+          // that has since changed — it was never levied. Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge
+          // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+          additionalCharges: [],
           notes: "TNPDCL bills bi-monthly; rates here are the order's monthly-equivalent bands. Free units (GoTN G.O.(Ms) No.50, 10-05-2026): 200 units free per 2-month cycle if you bill ≤500 units bi-monthly, otherwise 100 units per cycle — tick the Government Subsidy box to apply it. Fixed charge is Nil for this category.",
           // Pre-revision rates from the same order's comparison table
           // ("Existing Tariff - FY 2024-25 (Suo-Motu T.O.6 / 2024)").

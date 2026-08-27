@@ -67,6 +67,11 @@ const AP_COMMERCIAL_NOTE = `The commercial ladder is telescopic across five slab
 const apCategories = () => [
   {
     id: "domestic",
+    // Domestic electricity duty: 6 paise/unit. CEA does not list this state as energy-charge-only, so duty applies to the wider bill.
+    // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply
+    // in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
+    // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+    additionalCharges: [{ name: "Electricity Duty", type: "per_unit", rate: 0.06 }],
     name: "LT-I (Domestic)",
     fixedCharge: { type: "per_kw", rate: 10 },
     energySlabs: AP_DOMESTIC_SLABS,

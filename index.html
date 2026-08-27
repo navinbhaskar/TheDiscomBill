@@ -283,7 +283,7 @@
          calculateBill({ discomId:'mvvnl', categoryId:'domestic', supplyTypeId:'10B',
            units:250, connectedLoadKw:2, billingPeriodDays:30, billingDate:'2026-07-15',
            facRate:-4.43, facMode:'percent' })  →  currentNet 1651
-       and the same call for brpl (1038), bescom (1750), msedcl (2567), tangedco (1389). -->
+       and the same call for brpl (1038), bescom (1881), msedcl (2567), tangedco (1323). -->
   <div class="hero-right reveal">
     <div class="hero-bill-card" id="heroBillCard">
       <div class="hbc-head">
@@ -379,7 +379,7 @@
 
         <div class="hbc-face" id="hbcSlide2" role="tabpanel" aria-labelledby="hbcDot2" tabindex="0" data-chip="BESCOM · Bengaluru" inert>
           <div class="hbc-hero">
-            <span class="hbc-hero-amount">₹1,750</span>
+            <span class="hbc-hero-amount">₹1,881</span>
             <span class="hbc-hero-sub" data-i18n="hero.card.sub2">250 units · 2 kW · LT-1 domestic</span>
           </div>
           <dl class="hbc-lines">
@@ -396,12 +396,16 @@
               <dt><span data-i18n="hero.card.fac">Fuel surcharge (FAC)</span> <em data-i18n="hero.card.none">none notified</em></dt>
               <dd>₹0.00</dd>
             </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.tax">Electricity tax</span> <em>9%</em></dt>
+              <dd>₹130.50</dd>
+            </div>
             <div class="hbc-line hbc-line-total">
               <dt data-i18n="hero.card.totalPayable">Total payable</dt>
-              <dd>₹1,750.00</dd>
+              <dd>₹1,881.00</dd>
             </div>
           </dl>
-          <p class="hbc-note" data-i18n="hero.card.note2">Karnataka has one flat domestic rate and no fuel line.</p>
+          <p class="hbc-note" data-i18n="hero.card.note2">Karnataka has one flat domestic rate and no fuel line, but bills electricity tax separately.</p>
         </div>
 
         <div class="hbc-face" id="hbcSlide3" role="tabpanel" aria-labelledby="hbcDot3" tabindex="0" data-chip="MSEDCL · Maharashtra" inert>
@@ -441,7 +445,7 @@
 
         <div class="hbc-face" id="hbcSlide4" role="tabpanel" aria-labelledby="hbcDot4" tabindex="0" data-chip="TNPDCL · Tamil Nadu" inert>
           <div class="hbc-hero">
-            <span class="hbc-hero-amount">₹1,389</span>
+            <span class="hbc-hero-amount">₹1,323</span>
             <span class="hbc-hero-sub" data-i18n="hero.card.sub4">250 units · 2 kW · LT-IA domestic</span>
           </div>
           <dl class="hbc-lines">
@@ -454,20 +458,16 @@
               <dt><span data-i18n="hero.card.fixed">Fixed charge</span> <em data-i18n="hero.card.noneLevied">none levied</em></dt>
               <dd>₹0.00</dd>
             </div>
-            <div class="hbc-line">
-              <dt><span data-i18n="hero.card.duty">Electricity duty</span> <em>5%</em></dt>
-              <dd>₹66.13</dd>
-            </div>
             <div class="hbc-line hbc-line-quiet">
               <dt><span data-i18n="hero.card.rounding">Rounding</span></dt>
-              <dd>+₹0.37</dd>
+              <dd>+₹0.50</dd>
             </div>
             <div class="hbc-line hbc-line-total">
               <dt data-i18n="hero.card.totalPayable">Total payable</dt>
-              <dd>₹1,389.00</dd>
+              <dd>₹1,323.00</dd>
             </div>
           </dl>
-          <p class="hbc-note" data-i18n="hero.card.note4">Tamil Nadu levies no fixed charge on LT-IA homes.</p>
+          <p class="hbc-note" data-i18n="hero.card.note4">Tamil Nadu levies no fixed charge on LT-IA homes, and no electricity duty on domestic supply.</p>
         </div>
       </div>
 

@@ -91,7 +91,7 @@ const KL_COMMERCIAL_TYPES = [
   },
 ];
 
-const KL_LEVY_NOTE = "The KSERC schedule is expressly exclusive of Electricity Duty, cesses and other State levies, which are notified separately and are not included in this calculation — your printed bill will carry them in addition.";
+const KL_LEVY_NOTE = "The KSERC schedule is expressly exclusive of Electricity Duty, cesses and other State levies, which are notified separately. Domestic bills here add the 10% duty; cesses and other levies are not modelled, so your printed bill may carry a little more.";
 
 export default {
   state: "Kerala",
@@ -108,6 +108,11 @@ export default {
       categories: [
         {
           id: "domestic",
+          // Domestic electricity duty: 10% of energy. CEA records duty on the energy charge only for
+          // this state. Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply
+          // in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
+          // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+          additionalCharges: [{ name: "Electricity Duty", type: "percent_energy", rate: 10 }],
           name: "LT-I (Domestic)",
           supplyTypes: KL_DOMESTIC_TYPES,
           fixedCharge: KL_DOMESTIC_TYPES[0].fixedCharge,

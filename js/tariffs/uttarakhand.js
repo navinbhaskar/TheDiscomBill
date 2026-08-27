@@ -119,6 +119,15 @@ export default {
         {
           id: "domestic",
           name: "RTS-1 (Domestic)",
+          // Domestic electricity duty steps with sanctioned load: 15 paise/unit up to 10 kW,
+          // 30 paise above. Uttarakhand levies a Green Energy Cess on some categories, but CEA does
+          // not list one for domestic, so none is modelled.
+          // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
+          // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+          additionalCharges: [
+            { name: "Electricity Duty", type: "per_unit", rate: 0.15, maxLoadKw: 10 },
+            { name: "Electricity Duty", type: "per_unit", rate: 0.30, minLoadKw: 10 },
+          ],
           supplyTypes: UK_DOMESTIC_TYPES,
           fixedCharge: UK_DOMESTIC_FIXED,
           energySlabs: UK_DOMESTIC_SLABS,

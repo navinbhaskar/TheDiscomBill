@@ -27,6 +27,11 @@ function makeCategories() {
   return [
     {
       id: "domestic",
+      // Domestic electricity duty: 4% of energy. CEA records duty on the energy charge only for this state.
+      // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply
+      // in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
+      // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+      additionalCharges: [{ name: "Electricity Duty", type: "percent_energy", rate: 4 }],
       name: "LT Domestic",
       supplyTypes: [
         {
@@ -40,7 +45,7 @@ function makeCategories() {
             { limit: 400, rate: 5.70 },
             { limit: Infinity, rate: 6.10 }
           ],
-          notes: "Rates unchanged since 01-04-2024 (OERC cut every slab by 10 paise for FY 2024-25 and has retained the schedule in FY 2025-26 and FY 2026-27). Prompt-payment (10 p/unit) and 4% digital-payment rebates, and the 10 p/unit rural discount, are not included. Electricity duty (a few paise per unit under the Odisha Electricity (Duty) Act) is extra and not modelled.",
+          notes: "Rates unchanged since 01-04-2024 (OERC cut every slab by 10 paise for FY 2024-25 and has retained the schedule in FY 2025-26 and FY 2026-27). Prompt-payment (10 p/unit) and 4% digital-payment rebates, and the 10 p/unit rural discount, are not included. Electricity duty under the Odisha Electricity (Duty) Act is included for domestic supply at 4% of the energy charge.",
           rateHistory: [
             {
               from: "2023-04-01",

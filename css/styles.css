@@ -5119,7 +5119,13 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .blog-card-desc {
   font-size: 14px; color: var(--text-secondary); line-height: 1.55;
   flex: 1;                                   /* push the footer to the bottom, cards align */
-  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  /* Five lines, not three. A line holds ~30 characters at this width, so three lines cut most
+     descriptions off mid-sentence. The card had the room: .blog-card-desc is flex:1 and the
+     grid already stretches every card to the tallest in its row.
+     The clamp is a safety net — generate-seo.js trims to a word boundary first, so the ellipsis
+     is a real character rather than one the browser may or may not paint on a blockified
+     -webkit-box (a flex item, which is what this is). */
+  display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
 }
 .blog-card-foot {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
@@ -5194,7 +5200,15 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 }
 
 /* Directory hub — state cards */
-.seo-directory { display: grid; grid-template-columns: repeat(auto-fill, minmax(238px, 1fr)); gap: 12px; }
+/* align-items:start so a tile is as tall as its own content. Grid stretches by default, which
+   meant one state with four chip rows set the height for everything beside it — Goa and Dadra &
+   Nagar Haveli each carry a single chip and were still 210px tall because Maharashtra shared
+   their row. The cards have their own border and shadow, so uneven bottoms read as a card grid
+   rather than as breakage. */
+.seo-directory {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(238px, 1fr));
+  gap: 12px; align-items: start;
+}
 /* Same rail and wash as .seo-link-card.is-region — this card already had the region accent on
    its badge and hover, and now carries it the way every other state card on the site does. */
 .seo-dir-state {

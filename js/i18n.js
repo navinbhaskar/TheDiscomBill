@@ -151,9 +151,10 @@ export const STRINGS = {
     'hero.card.sub4': '250 units · 2 kW · LT-IA domestic',
     'hero.card.note0': "UP's fuel surcharge is monthly — July 2026 was a credit.",
     'hero.card.note1': "Delhi's PPAC went monthly in June 2026 — BRPL's is 17.94%.",
-    'hero.card.note2': 'Karnataka has one flat domestic rate and no fuel line.',
+    'hero.card.tax': 'Electricity tax',
+    'hero.card.note2': 'Karnataka has one flat domestic rate and no fuel line, but bills electricity tax separately.',
     'hero.card.note3': '16% duty plus a wheeling line — the steepest of the five.',
-    'hero.card.note4': 'Tamil Nadu levies no fixed charge on LT-IA homes.',
+    'hero.card.note4': 'Tamil Nadu levies no fixed charge on LT-IA homes, and no electricity duty on domestic supply.',
     // Calculator form
     'calc.title': 'Bill Calculator',
     'legend.required': 'Marks a required field',

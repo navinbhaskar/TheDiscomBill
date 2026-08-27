@@ -1449,6 +1449,18 @@ function ratesPhrase(meta, fy) {
 // the qualifier is dropped rather than echoed back. Vernacular headings take the same guard:
 // "Adani Electricity Mumbai बिजली टैरिफ" repeats the word across two scripts, which is no less
 // redundant for being harder to spot.
+// Directory chips carry the DISCOM's short name — the part before the parenthetical.
+//
+// Delhi forced it: "BRPL (BSES Rajdhani)", "BYPL (BSES Yamuna)" and "Tata Power-DDL (TPDDL)"
+// measure 139, 137 and 158px inside a 206px chip row, so no two could share a line. Four
+// DISCOMs became four rows and the tile stood 210px against a 122px median, stretching its
+// whole grid row. The short forms fit two to a line.
+//
+// Nothing is lost: the full name is the link's title, both the state and DISCOM pages print it,
+// and data-search on the tile still holds every alias, so typing "BSES Rajdhani" still finds
+// Delhi. The parenthetical is the one part a 206px chip cannot afford.
+const discomChipName = (name) => String(name || '').replace(/\s*\([^)]*\)\s*$/, '').trim() || String(name || '');
+
 const tariffNoun = (name) => (/electricity/i.test(name) ? 'Tariff' : 'Electricity Tariff');
 
 // The H1 tail: a service-region LABEL if the data has one, otherwise the state.
@@ -3197,7 +3209,7 @@ function directoryPage(states, lang = 'en') {
     totalDiscoms += discoms.length;
     const displayName = stateName(state, lang);
     const b = sbase(state);
-    const links = discoms.map(d => `<a href="${b}${stateSlug}/${d.id}/">${esc(d.name)}</a>`).join('');
+    const links = discoms.map(d => `<a href="${b}${stateSlug}/${d.id}/" title="${attr(d.name)}">${esc(discomChipName(d.name))}</a>`).join('');
     // data-search carries every script's name + discom names so the filter box matches everything.
     //
     // It must also carry the state CODE and the aliases, and for a long time it did not — so
@@ -4212,10 +4224,23 @@ function guidesIndexPage(lang = 'en') {
     const href = translated ? `/${lang}/guides/${g.slug}/` : `/guides/${g.slug}/`;
     const gt = guideField(g, 'title', lang) || g.title;
     const gd = guideField(g, 'description', lang) || g.description;
-    // First sentence only. Split on a Devanagari danda or a period that actually ends a
-    // sentence (followed by whitespace or end-of-string) so decimals like "1.5 ton" don't
-    // truncate the snippet mid-number.
-    const snip = gd.split(/[।](?:\s|$)|\.(?:\s|$)/)[0];
+    // The whole description, clamped to four lines by .blog-card-desc rather than trimmed here.
+    //
+    // This used to take the first sentence and stop, which left most of the card empty when the
+    // opener was short — the on-grid-vs-hybrid guide showed 39 characters of a 149-character
+    // description. Budgeting whole sentences to a character count was no better: a long closing
+    // sentence still gets dropped whole, so the card stays half full and the reader loses the
+    // part that says what the guide actually covers.
+    //
+    // Letting the CSS clamp decide means the card is always as full as it can be, and the worst
+    // case is a line ending mid-sentence, which reads as 'there is more' rather than as a
+    // truncation bug. The description is written as a meta description, so it is short anyway.
+    // Trim to a word boundary so the cut is clean and the ellipsis is a real character.
+    const MAX = 175;                       // ~5 lines at this card width
+    const full = gd.trim().replace(/[।.]\s*$/, '');
+    const snip = full.length <= MAX
+      ? full
+      : full.slice(0, full.lastIndexOf(' ', MAX)).replace(/[,;:।.]$/, '') + '…';
     const end = T(lang, { hi: '।', mr: '.', ta: '.', en: '.' });
     const gm = T(lang, { hi: `${g.minutes} मिनट`, mr: `${g.minutes} मिनिटे`, ta: `${g.minutes} நிமிடம்`, en: `${g.minutes} min read` });
     const cat = guideCategoryLabel(g, lang);
@@ -4228,7 +4253,7 @@ function guidesIndexPage(lang = 'en') {
         <span class="blog-read">${gm}</span>
       </div>
       <strong class="blog-card-title">${esc(gt)}</strong>
-      <span class="blog-card-desc">${esc(snip)}${end}</span>
+      <span class="blog-card-desc">${esc(snip)}${snip.endsWith('…') ? '' : end}</span>
       <span class="blog-card-foot">
         <span class="blog-date">${date}</span>
         <span class="blog-read-link">${readMore}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span>
@@ -6622,7 +6647,7 @@ function smartMeterHubPage(states, lang = 'en') {
     const discoms = getDiscoms(state);
     if (!discoms.length) return '';
     const b = sbase(state);
-    const links = discoms.map(d => `<a href="${b}${slugify(state)}/${d.id}/">${esc(d.name)}</a>`).join('');
+    const links = discoms.map(d => `<a href="${b}${slugify(state)}/${d.id}/" title="${attr(d.name)}">${esc(discomChipName(d.name))}</a>`).join('');
     const nd = T(lang, {
       en: `${discoms.length} DISCOM${discoms.length > 1 ? 's' : ''}`,
       hi: `${discoms.length} डिस्कॉम`, mr: `${discoms.length} डिस्कॉम`, ta: `${discoms.length} DISCOM` });

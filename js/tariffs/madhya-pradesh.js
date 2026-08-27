@@ -99,6 +99,14 @@ const MP_NOTE_LEVIES = "Electricity duty and cess are notified separately by the
 const mpCategories = () => [
   {
     id: "domestic",
+    // Domestic electricity duty steps with monthly consumption: 9% to 100 units, 12% above.
+    // MP is not in CEA's energy-charge-only list, so the base is the wider bill.
+    // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
+    // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+    additionalCharges: [
+      { name: "Electricity Duty", type: "percent_total", rate: 9,  maxUnits: 100 },
+      { name: "Electricity Duty", type: "percent_total", rate: 12, minUnits: 100 },
+    ],
     name: "LV-1 (Domestic)",
     supplyTypes: MP_DOMESTIC_TYPES,
     fixedCharge: MP_DOMESTIC_TYPES[0].fixedCharge,
