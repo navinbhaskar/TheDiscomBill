@@ -711,8 +711,13 @@
   display: flex; align-items: center; justify-content: space-between; gap: 8px;
 }
 .alerts-nav-tags time { font-size: 11px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
+/* Not bold. Five headlines at 600 in a 380px panel read as five competing shouts; at regular
+   weight the eye gets the list instead of six separate emphases, and the category pill and the
+   date keep the only accents in the row. Full-strength ink and a slight negative tracking hold
+   the crispness that the weight was doing badly. */
 .alerts-nav-link strong {
-  font-size: 13.5px; line-height: 1.35; color: var(--text-primary); font-weight: 600;
+  font-size: 13.5px; line-height: 1.4; color: var(--text-primary);
+  font-weight: 450; letter-spacing: -0.005em;
 }
 .alerts-nav-state { font-size: 11.5px; color: var(--text-secondary); }
 /* Sits at the end of the list, not pinned over it. As a sticky footer it hovered above the
@@ -3317,6 +3322,21 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 .billcheck-section h1, .billcheck-section h2, .svc-section h1, .svc-section h2, .solar-section h1, .solar-section h2 {
   font-family: var(--font-display);
 }
+/* …but not once a .seo-section starts. /bill-calculator/ and the three solar tools wrap their
+   explainer article in a SECOND portal section, so the centring and the spark divider above
+   were reaching the article's own H2s — a centred heading with a gradient bar under it,
+   sitting over left-aligned body prose, which is what made the bottom of those pages read as
+   a different layout from their own paragraphs. The portal treatment is for a portal title;
+   inside an article a heading is an article heading. */
+.comparison-section .seo-section h2, .estimator-section .seo-section h2,
+.tariff-section .seo-section h2, .billcheck-section .seo-section h2,
+.svc-section .seo-section h2, .solar-section .seo-section h2 {
+  text-align: left;
+  font-family: inherit;
+}
+.comparison-section .seo-section h2::after, .estimator-section .seo-section h2::after,
+.tariff-section .seo-section h2::after, .billcheck-section .seo-section h2::after,
+.svc-section .seo-section h2::after, .solar-section .seo-section h2::after { content: none; }
 .comparison-section p { color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; text-align: center; max-width: 700px; margin-left: auto; margin-right: auto; }
 
 /* ── Custom head-to-head comparison ─────────────────────────────────────────── */
@@ -5846,8 +5866,18 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   gap: 2px 34px; margin: 0 auto 20px; max-width: 880px; text-align: left;
 }
 .bc-cap {
-  padding: 11px 0 12px;
+  position: relative;
+  padding: 11px 0 12px 19px;
   border-top: 1px solid var(--border-subtle);
+}
+/* A bullet, not a number. These six are the fields the form covers, in no order that means
+   anything — numbering them would assert a sequence the reader would then look for and not
+   find. The marker sits on the term's own optical centre rather than its box top, so it holds
+   the line when a term wraps to two on a narrow screen. */
+.bc-cap::before {
+  content: ''; position: absolute; left: 2px; top: 1.32em;
+  width: 6px; height: 6px; border-radius: var(--radius-full);
+  background: var(--brand);
 }
 /* The first item of each column keeps the rule; every column after the first would otherwise
    start without one and the two columns would not line up at the top. */
@@ -5879,7 +5909,8 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
      calculator to y=842 on an 844px phone -- past the fold on the page whose whole point is
      the form. The descriptions stay; the air between them goes. */
   .bc-caps { grid-template-columns: 1fr; gap: 0; margin-bottom: 14px; max-width: 100%; }
-  .bc-cap { padding: 7px 0 8px; }
+  .bc-cap { padding: 7px 0 8px 17px; }
+  .bc-cap::before { top: 1.15em; }
   .bc-caps dt { font-size: 13.5px; margin-bottom: 2px; }
   .bc-caps dd { font-size: 12.5px; line-height: 1.45; }
 }
