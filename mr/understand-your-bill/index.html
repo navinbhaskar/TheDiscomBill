@@ -66,7 +66,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -76,9 +85,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -89,7 +96,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/mr/understand-your-bill/","name":"तुमचे वीज बिल समजून घ्या: प्रत्येक ओळीचे स्पष्टीकरण","description":"बदलता येणारे एक इंटरअ‍ॅक्टिव्ह वीज बिल. DISCOM, युनिट आणि मंजूर भार बदला आणि प्रत्येक ओळीचा अर्थ पाहा — स्थिर आकार, स्लॅब, FPPA, शुल्क, मागणी दंड.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/mr/understand-your-bill/","url":"https://thediscombill.com/mr/understand-your-bill/","name":"तुमचे वीज बिल समजून घ्या: प्रत्येक ओळीचे स्पष्टीकरण","description":"बदलता येणारे एक इंटरअ‍ॅक्टिव्ह वीज बिल. DISCOM, युनिट आणि मंजूर भार बदला आणि प्रत्येक ओळीचा अर्थ पाहा — स्थिर आकार, स्लॅब, FPPA, शुल्क, मागणी दंड.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"वीज वापरलीच नाही, तरी बिलावर स्थिर आकार का?","acceptedAnswer":{"@type":"Answer","text":"कारण स्थिर आकार जोडणीची किंमत आहे, वापराची नव्हे — तुमच्या जागेपर्यंतची लाइन, मीटर, आणि तुमच्यासाठी राखून ठेवलेली क्षमता. तो मंजूर भाराच्या प्रत्येक kW वर लागतो आणि बंद घरालाही लागतो. तो थांबवण्याचा एकच मार्ग म्हणजे जोडणी रीतसर परत करणे; केवळ वीज न वापरल्याने तो थांबत नाही."}},{"@type":"Question","name":"वीज बिलावरील FPPA म्हणजे काय?","acceptedAnswer":{"@type":"Answer","text":"Fuel and Power Purchase Adjustment: DISCOM ने विजेसाठी प्रत्यक्षात जे भरले आणि तुमचा टॅरिफ ठरवताना नियामकाने जे गृहीत धरले, या दोहोंतील फरक — जो तुमच्यापर्यंत पोहोचवला जातो. तो वेळोवेळी पुन्हा ठरतो, त्यामुळे तुमचा वापर न बदलताही तो दरमहा बदलतो. काही राज्ये तो प्रति युनिट पैशांत घेतात, काही ऊर्जा आकाराच्या टक्केवारीत."}},{"@type":"Question","name":"वीज बिलावर GST लागतो का?","acceptedAnswer":{"@type":"Answer","text":"नाही. घरगुती ग्राहकाला विजेचा पुरवठा GST मधून वगळलेला आहे. तुम्हाला दिसते ते वीज शुल्क आहे, एक राज्य कर, जी वेगळी गोष्ट आहे. DISCOM जे स्वतंत्रपणे बिल करते त्यावर GST येऊ शकतो — नव्या जोडणीचे शुल्क, मीटर तपासणीचा आकार — पण विजेच्या पुरवठ्यावर नाही."}},{"@type":"Question","name":"माझ्या बिलावर \"Average\" किंवा \"Provisional\" लिहिले आहे. याचा अर्थ काय?","acceptedAnswer":{"@type":"Answer","text":"त्या महिन्यात कुणीही मीटर वाचले नाही, म्हणून DISCOM ने तुमच्या मागील नोंदींवरून वापराचा अंदाज लावला. पुढच्या खऱ्या रीडिंगला त्याचा हिशोब बरोबर होतो — म्हणूनच अंदाजाच्या महिन्यानंतर बरेचदा एक असामान्यपणे मोठा महिना येतो. स्वतःची रीडिंग घ्या आणि तक्रार करताना तीच नमूद करा — ही दुरुस्ती नेहमीचीच आहे."}},{"@type":"Question","name":"मी माझी टॅरिफ श्रेणी बदलू शकतो का?","acceptedAnswer":{"@type":"Answer","text":"होय, जागेचा वापर कसा आहे याचा पुरावा देऊन DISCOM कडे अर्ज करून. हे महत्त्वाचे आहे: व्यावसायिक अनुसूचीवर बिल होणारे घर जवळपास दुप्पट भरू शकते. बदल सहसा पुढच्या काळासाठी लागू होतो, त्यामुळे चुकीची श्रेणी जितक्या लवकर लक्षात येईल तितका तोटा कमी."}}]}</script>
 </head>
 <body>

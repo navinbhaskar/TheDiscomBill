@@ -66,7 +66,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -76,9 +85,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -89,7 +96,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/understand-your-bill/","name":"Understand Your Electricity Bill: Every Line Explained","description":"An interactive electricity bill you can change. Switch DISCOM, units and sanctioned load and see what every line means — fixed charge, slabs, FPPA, duty, demand penalty.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/understand-your-bill/","url":"https://thediscombill.com/understand-your-bill/","name":"Understand Your Electricity Bill: Every Line Explained","description":"An interactive electricity bill you can change. Switch DISCOM, units and sanctioned load and see what every line means — fixed charge, slabs, FPPA, duty, demand penalty.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why does my bill have a fixed charge when I used no electricity?","acceptedAnswer":{"@type":"Answer","text":"Because the fixed charge pays for the connection, not the consumption — the line to your premises, the meter, and the capacity kept available for you. It is levied per kW of sanctioned load and applies to a locked house. The only way to stop it is to surrender the connection formally; simply not using power does not."}},{"@type":"Question","name":"What is FPPA on my electricity bill?","acceptedAnswer":{"@type":"Answer","text":"Fuel and Power Purchase Adjustment: the difference between what the DISCOM actually paid for power and what the regulator assumed when your tariff was fixed, passed through to you. It is recalculated periodically, so it varies month to month even when your usage does not. Some states charge it in paise per unit, others as a percentage of the energy charge."}},{"@type":"Question","name":"Is GST charged on an electricity bill?","acceptedAnswer":{"@type":"Answer","text":"No. The supply of electricity to a domestic consumer is exempt from GST. What you see is electricity duty, a state tax, which is a different thing. GST can appear on ancillary items a DISCOM bills separately — a new connection fee, a meter testing charge — but not on the energy supply itself."}},{"@type":"Question","name":"My bill says \"Average\" or \"Provisional\". What does that mean?","acceptedAnswer":{"@type":"Answer","text":"Nobody read the meter that month, so the DISCOM estimated the consumption from your history. It is trued up on the next actual reading, which is why an estimated month is often followed by an unusually large one. Take your own reading and quote it when you raise it — the adjustment is routine."}},{"@type":"Question","name":"Can I change my tariff category?","acceptedAnswer":{"@type":"Answer","text":"Yes, by applying to the DISCOM with evidence of how the premises is used. It matters: a home billed under a commercial schedule can pay close to double. The change is normally prospective, so the sooner a wrong category is caught the less it costs."}}]}</script>
 </head>
 <body>

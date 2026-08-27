@@ -64,7 +64,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -74,9 +83,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -87,7 +94,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/smart-meter-recharge/west-bengal/cesc_kolkata/","name":"CESC (Kolkata) स्मार्ट मीटर रिचार्ज कैसे करें — ऑनलाइन","description":"CESC (Kolkata) (CESC Ltd., Calcutta Electric Supply Corporation) प्रीपेड स्मार्ट मीटर ऑनलाइन रिचार्ज करें — आधिकारिक पोर्टल, UPI/BBPS के तरीक़े, और ₹500 में लगभग कितनी यूनिट मिलती हैं (₹4.07–₹9.21/यूनिट दर पर)। कम बैलेंस व कटौती के नियम भी।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/hi/smart-meter-recharge/west-bengal/cesc_kolkata/","url":"https://thediscombill.com/hi/smart-meter-recharge/west-bengal/cesc_kolkata/","name":"CESC (Kolkata) स्मार्ट मीटर रिचार्ज कैसे करें — ऑनलाइन","description":"CESC (Kolkata) (CESC Ltd., Calcutta Electric Supply Corporation) प्रीपेड स्मार्ट मीटर ऑनलाइन रिचार्ज करें — आधिकारिक पोर्टल, UPI/BBPS के तरीक़े, और ₹500 में लगभग कितनी यूनिट मिलती हैं (₹4.07–₹9.21/यूनिट दर पर)। कम बैलेंस व कटौती के नियम भी।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"स्मार्ट मीटर रिचार्ज","item":"https://thediscombill.com/hi/smart-meter-recharge/"},{"@type":"ListItem","position":3,"name":"CESC (Kolkata)","item":"https://thediscombill.com/hi/smart-meter-recharge/west-bengal/cesc_kolkata/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"CESC (Kolkata) स्मार्ट मीटर रिचार्ज कैसे करें?","acceptedAnswer":{"@type":"Answer","text":"CESC (Kolkata) के आधिकारिक पोर्टल/ऐप से, या BBPS-समर्थित UPI ऐप्स (PhonePe, Google Pay, Paytm आदि) में \"CESC (Kolkata)\" चुनकर रिचार्ज करें। भुगतान UPI, कार्ड या नेट-बैंकिंग से करें; बैलेंस आमतौर पर कुछ मिनटों में अपडेट हो जाता है।"}},{"@type":"Question","name":"₹500 के रिचार्ज में CESC (Kolkata) पर कितनी यूनिट मिलती हैं?","acceptedAnswer":{"@type":"Answer","text":"CESC (Kolkata) की घरेलू दर ₹4.07–₹9.21 प्रति यूनिट है, इसलिए ₹500 में मोटे तौर पर 54–122 यूनिट मिलती हैं — फिक्स्ड चार्ज, FPPA व शुल्क कटने के बाद कुछ कम।"}},{"@type":"Question","name":"न्यूनतम रिचार्ज राशि कितनी है?","acceptedAnswer":{"@type":"Answer","text":"न्यूनतम राशि डिस्कॉम के अनुसार अलग-अलग है — सटीक सीमा आधिकारिक पोर्टल/ऐप पर रिचार्ज करते समय दिखती है। बार-बार छोटे रिचार्ज से बेहतर है महीने की अनुमानित खपत के बराबर एक रिचार्ज करना।"}},{"@type":"Question","name":"रिचार्ज के बाद भी बिजली नहीं आई तो?","acceptedAnswer":{"@type":"Answer","text":"भुगतान सफल होने पर सप्लाई आमतौर पर अपने-आप बहाल हो जाती है; कुछ मिनट रुकें। न आए तो मीटर की डिस्प्ले पर बैलेंस देखें, रसीद संभालें और 1912 या डिस्कॉम हेल्पलाइन पर शिकायत करें।"}}]}</script>
 </head>

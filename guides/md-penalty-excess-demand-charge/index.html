@@ -64,7 +64,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -74,9 +83,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -87,7 +94,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/guides/md-penalty-excess-demand-charge/","name":"MD Penalty / Excess Demand Charge Explained — Rules by State","description":"What the maximum demand penalty on an Indian electricity bill actually is, why it appears when your units have not changed, how each state charges it (2×, 1.5×, flat ₹/kVA or a % of energy charges), and the three ways to make it stop.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/guides/md-penalty-excess-demand-charge/","url":"https://thediscombill.com/guides/md-penalty-excess-demand-charge/","name":"MD Penalty / Excess Demand Charge Explained — Rules by State","description":"What the maximum demand penalty on an Indian electricity bill actually is, why it appears when your units have not changed, how each state charges it (2×, 1.5×, flat ₹/kVA or a % of energy charges), and the three ways to make it stop.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"MD Penalty and Excess Demand Charge, Explained","description":"What the maximum demand penalty on an Indian electricity bill actually is, why it appears when your units have not changed, how each state charges it (2×, 1.5×, flat ₹/kVA or a % of energy charges), and the three ways to make it stop.","image":"https://thediscombill.com/og/guide-md-penalty-excess-demand-charge.jpg","mainEntityOfPage":"https://thediscombill.com/guides/md-penalty-excess-demand-charge/","datePublished":"2026-08-20","dateModified":"2026-08-27","inLanguage":"en-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://thediscombill.com/guides/"},{"@type":"ListItem","position":3,"name":"MD Penalty and Excess Demand Charge, Explained"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is MD penalty the same as excess demand charge?","acceptedAnswer":{"@type":"Answer","text":"Yes. The same charge is printed as MD penalty, excess demand charge, exceeding demand charge, penal demand charge or demand surcharge depending on the DISCOM. All of them mean the recorded maximum demand went above your sanctioned load or contract demand, and the excess is being billed at a penal rate."}},{"@type":"Question","name":"Does the penalty apply to my whole demand or only the excess?","acceptedAnswer":{"@type":"Answer","text":"Only the excess. Demand up to your sanctioned load or contract demand is charged at the normal rate, and only the portion above it attracts the penal rate. A bill charging the penal rate on the full recorded demand is wrong."}},{"@type":"Question","name":"Can one half-hour really set the penalty for the whole month?","acceptedAnswer":{"@type":"Answer","text":"Yes, and that is the usual reason the charge feels disproportionate. Maximum demand is the highest 30-minute average in the cycle, so a single simultaneous start-up sets it, and nothing later in the month reduces it. It resets at the start of the next cycle."}},{"@type":"Question","name":"Do domestic connections get an MD penalty?","acceptedAnswer":{"@type":"Answer","text":"Usually not, because most domestic tariffs bill a fixed charge on sanctioned load rather than a demand charge on recorded MD. It mainly affects commercial, industrial and HT connections. Some states do levy a surcharge on domestic connections that exceed sanctioned load, so check your own schedule rather than assuming."}},{"@type":"Question","name":"Should I just increase my sanctioned load?","acceptedAnswer":{"@type":"Answer","text":"Only if the overshoot is regular. A higher sanctioned load raises your fixed or demand charge every month permanently, so if the penalty appears occasionally it can be cheaper to stagger start-ups instead. Compare the annual cost of both before applying."}},{"@type":"Question","name":"Is electricity duty charged on the penalty as well?","acceptedAnswer":{"@type":"Answer","text":"In most states, yes. The excess-demand penalty is part of the charges that duty and the fuel surcharge are computed on, so the actual increase to your bill is larger than the penalty line itself."}}]}</script>

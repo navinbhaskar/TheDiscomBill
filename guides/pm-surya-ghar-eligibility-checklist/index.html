@@ -66,7 +66,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -76,9 +85,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -89,7 +96,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/guides/pm-surya-ghar-eligibility-checklist/","name":"PM Surya Ghar Eligibility — Sanctioned Load, Name Match & Fixes","description":"The checks that decide a PM Surya Ghar rooftop solar application before the subsidy is ever calculated: sanctioned load against plant size, the name on the connection, ownership and meter status — and the DISCOM request that fixes each one.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/guides/pm-surya-ghar-eligibility-checklist/","url":"https://thediscombill.com/guides/pm-surya-ghar-eligibility-checklist/","name":"PM Surya Ghar Eligibility — Sanctioned Load, Name Match & Fixes","description":"The checks that decide a PM Surya Ghar rooftop solar application before the subsidy is ever calculated: sanctioned load against plant size, the name on the connection, ownership and meter status — and the DISCOM request that fixes each one.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"PM Surya Ghar: What Gets an Application Rejected","description":"The checks that decide a PM Surya Ghar rooftop solar application before the subsidy is ever calculated: sanctioned load against plant size, the name on the connection, ownership and meter status — and the DISCOM request that fixes each one.","image":"https://thediscombill.com/og/guide-pm-surya-ghar-eligibility-checklist.jpg","mainEntityOfPage":"https://thediscombill.com/guides/pm-surya-ghar-eligibility-checklist/","datePublished":"2026-08-21","dateModified":"2026-08-27","inLanguage":"en-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://thediscombill.com/guides/"},{"@type":"ListItem","position":3,"name":"PM Surya Ghar: What Gets an Application Rejected"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does my sanctioned load have to match my solar panel size?","acceptedAnswer":{"@type":"Answer","text":"Your sanctioned load generally has to be at least the capacity of the plant — a 3 kW system on a connection sanctioned for 2 kW will usually need a load enhancement first. The requirement is set by your DISCOM, and the enhancement is a routine request, but the higher fixed charge that follows is permanent and billed every month."}},{"@type":"Question","name":"What happens if the name on my electricity bill does not match my bank account?","acceptedAnswer":{"@type":"Answer","text":"It is one of the most common reasons an application stalls, because the subsidy is paid to a bank account matched against the connection. If it is the same person with a spelling difference, ask your DISCOM for a name correction. If the connection is in someone else's name, you need a transfer of connection, which takes longer and also re-settles the security deposit — start it early."}},{"@type":"Question","name":"Will increasing my sanctioned load raise my bill even if I generate my own power?","acceptedAnswer":{"@type":"Answer","text":"Yes. The fixed charge is billed on sanctioned load regardless of how much you consume or generate, so it applies in every month including your best generating months. Work out the monthly increase before you enhance, and keep the load no higher than the plant actually requires."}},{"@type":"Question","name":"Does a load enhancement mean paying the security deposit again?","acceptedAnswer":{"@type":"Answer","text":"No — only the difference between the new required deposit and the one you already hold. A demand for the entire new amount is worth questioning in writing."}},{"@type":"Question","name":"Can I apply for PM Surya Ghar if I live in a rented house?","acceptedAnswer":{"@type":"Answer","text":"The applicant needs to be the electricity consumer and to control the roof, so a tenant generally cannot apply on a connection in the landlord's name. Where the arrangement is genuinely yours, the connection has to be transferred into your name first, with the owner's permission for the roof."}},{"@type":"Question","name":"Should I fix these things before applying or after?","acceptedAnswer":{"@type":"Answer","text":"Before. Load enhancement, name correction and transfer are all DISCOM processes with their own timelines, and an application waiting on one of them is simply an application waiting. Checking the name on your latest bill and the sanctioned load against your intended plant size costs nothing and takes a minute."}}]}</script>

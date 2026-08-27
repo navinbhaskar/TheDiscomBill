@@ -65,7 +65,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -75,9 +84,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -88,7 +95,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/mr/tariffs/maharashtra/tata_power_mumbai/","name":"Tata Power Mumbai वीज टॅरिफ 2026-27 — ₹1.90–10.24/युनिट","description":"Tata Power Mumbai (Tata Power Company Ltd. – Mumbai Distribution) चे वीज बिल 2026-27 साठी काढा — Dharavi, Wadala, parts of Kurla. स्लॅब दर, फिक्स्ड चार्ज, FPPA व शुल्क. घरगुती दर ₹1.9/युनिट पासून. मोफत, साइन-अप शिवाय.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/mr/tariffs/maharashtra/tata_power_mumbai/","url":"https://thediscombill.com/mr/tariffs/maharashtra/tata_power_mumbai/","name":"Tata Power Mumbai वीज टॅरिफ 2026-27 — ₹1.90–10.24/युनिट","description":"Tata Power Mumbai (Tata Power Company Ltd. – Mumbai Distribution) चे वीज बिल 2026-27 साठी काढा — Dharavi, Wadala, parts of Kurla. स्लॅब दर, फिक्स्ड चार्ज, FPPA व शुल्क. घरगुती दर ₹1.9/युनिट पासून. मोफत, साइन-अप शिवाय.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"टॅरिफ","item":"https://thediscombill.com/mr/tariffs/states/"},{"@type":"ListItem","position":3,"name":"महाराष्ट्र","item":"https://thediscombill.com/mr/tariffs/maharashtra/"},{"@type":"ListItem","position":4,"name":"Tata Power Mumbai","item":"https://thediscombill.com/mr/tariffs/maharashtra/tata_power_mumbai/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Tata Power Mumbai वीज बिल कसे काढावे?","acceptedAnswer":{"@type":"Answer","text":"<a href=\"/?state=Maharashtra&amp;discom=tata_power_mumbai#calculator\">Tata Power Mumbai बिल कॅल्क्युलेटर</a> उघडा, तुमचा वापर (युनिट) आणि मंजूर भार टाका — हे 2026-27 च्या Tata Power Mumbai स्लॅब दर, फिक्स्ड चार्ज आणि इतर शुल्क लावून तपशीलवार अंदाजित बिल देते."}},{"@type":"Question","name":"Tata Power Mumbai कोणत्या भागात व शहरांत वीज पुरवते?","acceptedAnswer":{"@type":"Answer","text":"Tata Power Mumbai (Tata Power Company Ltd. – Mumbai Distribution) Parts of Mumbai — Dharavi, Wadala, parts of Kurla, Chembur, etc. मध्ये वीज पुरवते."}},{"@type":"Question","name":"Tata Power Mumbai वर सर्वात स्वस्त घरगुती वीज दर किती आहे?","acceptedAnswer":{"@type":"Answer","text":"Tata Power Mumbai चे घरगुती ऊर्जा शुल्क ₹1.9 प्रति युनिटपासून सुरू होऊन सर्वात वरच्या स्लॅबमध्ये ₹10.24 प्रति युनिटपर्यंत जाते (LT-I(B) (Residential)), सोबत मासिक फिक्स्ड चार्ज (नवीनतम उपलब्ध अंदाज). संपूर्ण स्लॅब तक्ता वर आहे."}},{"@type":"Question","name":"Tata Power Mumbai वीज बिल ऑनलाइन कसे भरावे?","acceptedAnswer":{"@type":"Answer","text":"अधिकृत Tata Power Mumbai पोर्टल <a href=\"https://www.tatapower.com\" target=\"_blank\" rel=\"noopener\">www.tatapower.com</a> वर भरा. आधी या पेजवरून तपासा की बिल किती असावे, मग अधिकृत स्रोतावर भरा."}}]}</script>
 </head>

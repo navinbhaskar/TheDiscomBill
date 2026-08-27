@@ -66,7 +66,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -76,9 +85,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -89,7 +96,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/ta/understand-your-bill/","name":"உங்கள் மின் பில்லைப் புரிந்துகொள்ளுங்கள்: ஒவ்வொரு வரியும் விளக்கம்","description":"நீங்கள் மாற்றக்கூடிய ஊடாடும் மின் பில். DISCOM, யூனிட், அனுமதிக்கப்பட்ட சுமையை மாற்றி ஒவ்வொரு வரியின் பொருளையும் பாருங்கள் — நிலையான கட்டணம், ஸ்லாப், FPPA, வரி, தேவை அபராதம்.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/ta/understand-your-bill/","url":"https://thediscombill.com/ta/understand-your-bill/","name":"உங்கள் மின் பில்லைப் புரிந்துகொள்ளுங்கள்: ஒவ்வொரு வரியும் விளக்கம்","description":"நீங்கள் மாற்றக்கூடிய ஊடாடும் மின் பில். DISCOM, யூனிட், அனுமதிக்கப்பட்ட சுமையை மாற்றி ஒவ்வொரு வரியின் பொருளையும் பாருங்கள் — நிலையான கட்டணம், ஸ்லாப், FPPA, வரி, தேவை அபராதம்.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"மின்சாரமே பயன்படுத்தவில்லை, பிறகு ஏன் பில்லில் நிலையான கட்டணம்?","acceptedAnswer":{"@type":"Answer","text":"ஏனெனில் நிலையான கட்டணம் இணைப்பின் விலை, நுகர்வின் அல்ல — உங்கள் இடம் வரையிலான வழி, மீட்டர், உங்களுக்காக ஒதுக்கி வைக்கப்பட்ட கொள்ளளவு. இது அனுமதிக்கப்பட்ட சுமையின் ஒவ்வொரு kW-க்கும் விதிக்கப்படுகிறது, பூட்டிய வீட்டுக்கும் பொருந்தும். இதை நிறுத்த ஒரே வழி இணைப்பை முறையாகச் சரணடைவதுதான்; வெறுமனே மின்சாரம் பயன்படுத்தாமல் இருப்பதால் நிற்காது."}},{"@type":"Question","name":"மின் பில்லில் FPPA என்றால் என்ன?","acceptedAnswer":{"@type":"Answer","text":"Fuel and Power Purchase Adjustment: மின்சாரத்திற்காக DISCOM உண்மையில் செலுத்தியதற்கும், உங்கள் கட்டணம் நிர்ணயிக்கப்பட்டபோது ஒழுங்குமுறை ஆணையம் கருதியதற்கும் உள்ள வித்தியாசம் — அது உங்களுக்குக் கடத்தப்படுகிறது. இது அவ்வப்போது மறுகணக்கிடப்படுகிறது, எனவே உங்கள் பயன்பாடு மாறாவிட்டாலும் மாதந்தோறும் மாறும். சில மாநிலங்கள் யூனிட்டுக்கு பைசாவில் வசூலிக்கின்றன, சில ஆற்றல் கட்டணத்தின் சதவீதமாக."}},{"@type":"Question","name":"மின் பில்லில் GST வசூலிக்கப்படுகிறதா?","acceptedAnswer":{"@type":"Answer","text":"இல்லை. வீட்டு நுகர்வோருக்கு மின்சார விநியோகம் GST-இலிருந்து விலக்கு பெற்றது. நீங்கள் பார்ப்பது மின் வரி, ஒரு மாநில வரி, அது வேறு விஷயம். DISCOM தனியாகப் பில் செய்யும் இதர விஷயங்களில் GST வரலாம் — புதிய இணைப்புக் கட்டணம், மீட்டர் சோதனைக் கட்டணம் — ஆனால் மின் விநியோகத்தின் மீது அல்ல."}},{"@type":"Question","name":"என் பில்லில் \"Average\" அல்லது \"Provisional\" என்று உள்ளது. அதன் பொருள் என்ன?","acceptedAnswer":{"@type":"Answer","text":"அந்த மாதம் யாரும் மீட்டரைப் படிக்கவில்லை, எனவே DISCOM உங்கள் முந்தைய பதிவுகளிலிருந்து நுகர்வை மதிப்பிட்டது. அடுத்த உண்மையான ரீடிங்கில் அது சரிசெய்யப்படுகிறது — அதனால்தான் மதிப்பீட்டு மாதத்திற்குப் பிறகு பெரும்பாலும் வழக்கத்திற்கு மாறாக ஒரு பெரிய மாதம் வருகிறது. நீங்களே ரீடிங் எடுத்து, புகார் அளிக்கும்போது அதைக் குறிப்பிடுங்கள் — இந்தத் திருத்தம் வழக்கமானது."}},{"@type":"Question","name":"என் கட்டண வகையை மாற்ற முடியுமா?","acceptedAnswer":{"@type":"Answer","text":"ஆம், இடம் எப்படிப் பயன்படுத்தப்படுகிறது என்பதற்கான ஆதாரத்துடன் DISCOM-இடம் விண்ணப்பித்து. இது முக்கியம்: வணிக அட்டவணையில் பில் செய்யப்படும் வீடு கிட்டத்தட்ட இரு மடங்கு செலுத்த நேரிடும். மாற்றம் பொதுவாக எதிர்காலத்திற்கே பொருந்தும், எனவே தவறான வகை எவ்வளவு விரைவில் கண்டறியப்படுகிறதோ அவ்வளவு நஷ்டம் குறையும்."}}]}</script>
 </head>
 <body>

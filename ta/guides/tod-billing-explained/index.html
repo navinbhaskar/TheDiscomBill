@@ -66,7 +66,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -76,9 +85,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -89,7 +96,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/ta/guides/tod-billing-explained/","name":"இந்தியாவில் நேர-அடிப்படை (ToD) மின் பட்டியலிடல், எளிய விளக்கம்","description":"நேர-அடிப்படை (ToD) மின் பட்டியலிடல் என்றால் என்ன, இந்தியாவில் இது யாருக்குப் பொருந்தும், ஸ்மார்ட் மீட்டர்களுடன் உச்ச மற்றும் உச்சமல்லாத விகிதங்கள் எப்படி வேலை செய்கின்றன, kVAh பட்டியலிடல் என்றால் என்ன, மற்றும் சுமையை மாற்றி பில்லைக் குறைக்க நடைமுறை வழிகள்.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/ta/guides/tod-billing-explained/","url":"https://thediscombill.com/ta/guides/tod-billing-explained/","name":"இந்தியாவில் நேர-அடிப்படை (ToD) மின் பட்டியலிடல், எளிய விளக்கம்","description":"நேர-அடிப்படை (ToD) மின் பட்டியலிடல் என்றால் என்ன, இந்தியாவில் இது யாருக்குப் பொருந்தும், ஸ்மார்ட் மீட்டர்களுடன் உச்ச மற்றும் உச்சமல்லாத விகிதங்கள் எப்படி வேலை செய்கின்றன, kVAh பட்டியலிடல் என்றால் என்ன, மற்றும் சுமையை மாற்றி பில்லைக் குறைக்க நடைமுறை வழிகள்.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"நேர-அடிப்படை (ToD) மின் பட்டியலிடல் விளக்கம்","description":"நேர-அடிப்படை (ToD) மின் பட்டியலிடல் என்றால் என்ன, இந்தியாவில் இது யாருக்குப் பொருந்தும், ஸ்மார்ட் மீட்டர்களுடன் உச்ச மற்றும் உச்சமல்லாத விகிதங்கள் எப்படி வேலை செய்கின்றன, kVAh பட்டியலிடல் என்றால் என்ன, மற்றும் சுமையை மாற்றி பில்லைக் குறைக்க நடைமுறை வழிகள்.","image":"https://thediscombill.com/og/guide-tod-billing-explained.jpg","mainEntityOfPage":"https://thediscombill.com/ta/guides/tod-billing-explained/","datePublished":"2026-07-06","dateModified":"2026-08-27","inLanguage":"ta-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"முகப்பு","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"வழிகாட்டிகள்","item":"https://thediscombill.com/ta/guides/"},{"@type":"ListItem","position":3,"name":"நேர-அடிப்படை (ToD) மின் பட்டியலிடல் விளக்கம்"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"ToD பட்டியலிடல் வீட்டு (குடியிருப்பு) இணைப்புகளுக்குப் பொருந்துமா?","acceptedAnswer":{"@type":"Answer","text":"பெருகிய முறையில், ஆம். ToD பெரும்பாலான வணிக மற்றும் தொழில்துறை நுகர்வோருக்கு நீண்ட காலமாகக் கட்டாயமானது; இந்தியாவின் ஸ்மார்ட்-மீட்டரிங் கட்டமைப்பின் கீழ் ஸ்மார்ட் மீட்டர் பொருத்தப்பட்டவுடன் இது வீட்டு நுகர்வோருக்கும் விரிவடைகிறது, உச்ச கூடுதல் கட்டணங்களும் சூரிய-நேர தள்ளுபடிகளும் ஒவ்வொரு மாநிலத்தின் கட்டண ஆணையிலும் வரையறுக்கப்படுகின்றன."}},{"@type":"Question","name":"இந்தியாவில் மின்சாரத்திற்கான வழக்கமான உச்ச நேரங்கள் என்ன?","acceptedAnswer":{"@type":"Answer","text":"மாலை உச்சம் பொதுவாக மாலை 6 முதல் இரவு 10 மணி வரை இருக்கும், மேலும் பல மாநிலங்கள் காலை உச்சத்தையும் வரையறுக்கின்றன. சூரிய நேரங்கள் (தோராயமாக காலை 9 முதல் மாலை 4 வரை) பெருகிய முறையில் மலிவான இடைவெளியாகக் கருதப்படுகின்றன. சரியான இடைவெளிகள் ஒவ்வொரு மாநில நియாமகராலும் நிர்ணயிக்கப்பட்டு கட்டண ஆணையில் அச்சிடப்படுகின்றன."}},{"@type":"Question","name":"kWh மற்றும் kVAh பட்டியலிடலுக்கு இடையே உள்ள வேறுபாடு என்ன?","acceptedAnswer":{"@type":"Answer","text":"kWh உண்மையான நுகரப்பட்ட ஆற்றலை அளக்கிறது; kVAh தோற்ற ஆற்றலை அளக்கிறது, இது மோட்டார்கள் மற்றும் மோசமான-பவர்-ஃபேக்டர் உபகரணங்களால் இழுக்கப்படும் ரியாக்டிவ் திறனையும் பிரதிபலிக்கிறது. kVAh பட்டியலிடலின் கீழ், 1-ஐ விடக் குறைந்த பவர் ஃபேக்டர் பில் செய்யக்கூடிய யூனிட்களை அதிகரிக்கிறது — பவர் ஃபேக்டரை மேம்படுத்துவது (எ.கா. மின்தேக்கிகளுடன்) நேரடியாக பில்லைக் குறைக்கிறது."}},{"@type":"Question","name":"ToD பட்டியலிடல் எனது பில்லைக் குறைக்குமா?","acceptedAnswer":{"@type":"Answer","text":"ஆம் — நெகிழ்வான சுமைகளை (EV சார்ஜிங், பம்பிங், துணி துவைத்தல், தண்ணீர் சூடாக்குதல்) உச்சமல்லாத அல்லது சூரிய-தள்ளுபடி இடைவெளிகளுக்கு மாற்றினால், அதே மொத்த நுகர்வு குறைவாக செலவாகும். மாலை நேரங்களிலிருந்து எந்த சுமையையும் மாற்ற முடியாத நுகர்வோர் சிறிது அதிகரிப்பைக் காணக்கூடும்."}}]}</script>

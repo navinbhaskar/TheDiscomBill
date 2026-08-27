@@ -66,7 +66,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -76,9 +85,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -89,7 +96,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/ta/guides/pm-surya-ghar-eligibility-checklist/","name":"PM சூர்யா கர் தகுதி — அனுமதி சுமை, பெயர் பொருத்தம், தீர்வுகள்","description":"மானியம் கணக்கிடப்படும் முன்பே உங்கள் PM சூர்யா கர் விண்ணப்பத்தை முடிவு செய்யும் சோதனைகள்: ஆலை அளவுக்கு எதிரான அனுமதி சுமை, இணைப்பில் உள்ள பெயர், உரிமை மற்றும் மீட்டர் நிலை — ஒவ்வொன்றையும் சரிசெய்யும் டிஸ்காம் கோரிக்கையுடன்.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/ta/guides/pm-surya-ghar-eligibility-checklist/","url":"https://thediscombill.com/ta/guides/pm-surya-ghar-eligibility-checklist/","name":"PM சூர்யா கர் தகுதி — அனுமதி சுமை, பெயர் பொருத்தம், தீர்வுகள்","description":"மானியம் கணக்கிடப்படும் முன்பே உங்கள் PM சூர்யா கர் விண்ணப்பத்தை முடிவு செய்யும் சோதனைகள்: ஆலை அளவுக்கு எதிரான அனுமதி சுமை, இணைப்பில் உள்ள பெயர், உரிமை மற்றும் மீட்டர் நிலை — ஒவ்வொன்றையும் சரிசெய்யும் டிஸ்காம் கோரிக்கையுடன்.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"PM சூர்யா கர்: விண்ணப்பம் எதனால் நிராகரிக்கப்படுகிறது","description":"மானியம் கணக்கிடப்படும் முன்பே உங்கள் PM சூர்யா கர் விண்ணப்பத்தை முடிவு செய்யும் சோதனைகள்: ஆலை அளவுக்கு எதிரான அனுமதி சுமை, இணைப்பில் உள்ள பெயர், உரிமை மற்றும் மீட்டர் நிலை — ஒவ்வொன்றையும் சரிசெய்யும் டிஸ்காம் கோரிக்கையுடன்.","image":"https://thediscombill.com/og/guide-pm-surya-ghar-eligibility-checklist.jpg","mainEntityOfPage":"https://thediscombill.com/ta/guides/pm-surya-ghar-eligibility-checklist/","datePublished":"2026-08-21","dateModified":"2026-08-27","inLanguage":"ta-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"முகப்பு","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"வழிகாட்டிகள்","item":"https://thediscombill.com/ta/guides/"},{"@type":"ListItem","position":3,"name":"PM சூர்யா கர்: விண்ணப்பம் எதனால் நிராகரிக்கப்படுகிறது"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"என் அனுமதி சுமை சோலார் பேனல் அளவுக்குச் சமமாக இருக்க வேண்டுமா?","acceptedAnswer":{"@type":"Answer","text":"பொதுவாக அனுமதி சுமை குறைந்தது ஆலையின் திறனுக்குச் சமமாக இருக்க வேண்டும் — 2 kW அனுமதிக்கப்பட்ட இணைப்பில் 3 kW அமைப்புக்கு முதலில் சுமை உயர்வு தேவை. இந்த நிபந்தனையை உங்கள் டிஸ்காம் நிர்ணயிக்கிறது, சுமை உயர்வு வழக்கமான நடைமுறைதான், ஆனால் அதன் பிறகு வரும் உயர்ந்த நிலையான கட்டணம் நிரந்தரமானது, ஒவ்வொரு மாதமும் வசூலிக்கப்படும்."}},{"@type":"Question","name":"என் மின் பில்லில் உள்ள பெயர் வங்கிக் கணக்குடன் பொருந்தவில்லை என்றால் என்ன ஆகும்?","acceptedAnswer":{"@type":"Answer","text":"விண்ணப்பம் தேங்குவதற்கான மிகப் பொதுவான காரணங்களில் இதுவும் ஒன்று, ஏனெனில் மானியம் இணைப்புடன் ஒப்பிடப்பட்ட வங்கிக் கணக்கிற்கே செலுத்தப்படுகிறது. அதே நபர், எழுத்துக்கூட்டல் மட்டும் வேறுபட்டால் டிஸ்காமிடம் பெயர் திருத்தம் கேளுங்கள். இணைப்பு வேறு ஒருவர் பெயரில் இருந்தால் இணைப்பு மாற்றம் தேவை, அதற்கு அதிக நேரம் ஆகும், பாதுகாப்பு வைப்புத்தொகையும் மீண்டும் நிர்ணயிக்கப்படும் — சீக்கிரம் தொடங்குங்கள்."}},{"@type":"Question","name":"நானே மின்சாரம் உற்பத்தி செய்தாலும் சுமை உயர்வு என் பில்லை உயர்த்துமா?","acceptedAnswer":{"@type":"Answer","text":"ஆம். நிலையான கட்டணம் அனுமதி சுமையின் மீது வசூலிக்கப்படுகிறது, நீங்கள் எவ்வளவு பயன்படுத்தினாலும் உற்பத்தி செய்தாலும் — எனவே சிறந்த உற்பத்தி மாதங்களிலும் இது பொருந்தும். சுமையை உயர்த்தும் முன் மாதாந்திர அதிகரிப்பைக் கணக்கிடுங்கள், ஆலைக்கு உண்மையில் தேவையானதற்கு மேல் சுமையை வைக்க வேண்டாம்."}},{"@type":"Question","name":"சுமை உயர்வுக்கு பாதுகாப்பு வைப்புத்தொகையை மீண்டும் முழுமையாகச் செலுத்த வேண்டுமா?","acceptedAnswer":{"@type":"Answer","text":"இல்லை — புதிதாகத் தேவைப்படும் தொகைக்கும் ஏற்கெனவே உங்களிடம் உள்ள வைப்புத்தொகைக்கும் இடையிலான வித்தியாசம் மட்டுமே. முழுப் புதிய தொகையும் கோரப்பட்டால் அதை எழுத்துப்பூர்வமாகக் கேள்வி கேட்பது நியாயம்."}},{"@type":"Question","name":"வாடகை வீட்டில் இருந்து PM சூர்யா கர்-க்கு விண்ணப்பிக்க முடியுமா?","acceptedAnswer":{"@type":"Answer","text":"விண்ணப்பதாரர் மின் நுகர்வோராக இருக்க வேண்டும், கூரையும் அவர் கட்டுப்பாட்டில் இருக்க வேண்டும், எனவே வீட்டு உரிமையாளர் பெயரில் உள்ள இணைப்பில் வாடகைதாரர் பொதுவாக விண்ணப்பிக்க முடியாது. ஏற்பாடு உண்மையில் உங்களுடையதாக இருந்தால், முதலில் இணைப்பை உங்கள் பெயருக்கு மாற்ற வேண்டும், உரிமையாளரின் கூரை அனுமதியுடன்."}},{"@type":"Question","name":"இவற்றை விண்ணப்பிப்பதற்கு முன் சரிசெய்வதா, பின்பா?","acceptedAnswer":{"@type":"Answer","text":"முன்பே. சுமை உயர்வு, பெயர் திருத்தம், இணைப்பு மாற்றம் — மூன்றும் டிஸ்காம் நடைமுறைகள், மூன்றுக்கும் தனித்தனி கால அவகாசம் உண்டு; இவற்றில் ஒன்றுக்காகக் காத்திருக்கும் விண்ணப்பம் காத்திருப்பதோடு சரி. சமீபத்திய பில்லில் பெயரையும், விரும்பும் ஆலைக்கு எதிராக அனுமதி சுமையையும் சரிபார்க்க செலவே இல்லை, ஒரு நிமிடம் போதும்."}}]}</script>

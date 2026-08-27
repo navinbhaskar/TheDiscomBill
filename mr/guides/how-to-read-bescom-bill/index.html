@@ -65,7 +65,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -75,9 +84,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -88,7 +95,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/mr/guides/how-to-read-bescom-bill/","name":"तुमचे BESCOM बिल कसे वाचावे — गृह ज्योती, स्लॅब व स्थिर आकार","description":"BESCOM (बेंगळुरू) वीज बिलांची ओळ-दर-ओळ माहिती: 30 युनिटपासून सुरू होणारे LT-1 स्लॅब, शुल्क-समावेशक टॅरिफ, मंजूर-भार स्थिर आकार, आणि गृह ज्योती मोफत-वीज योजना तुम्ही बिल भरता की नाही हे कसे ठरवते.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/mr/guides/how-to-read-bescom-bill/","url":"https://thediscombill.com/mr/guides/how-to-read-bescom-bill/","name":"तुमचे BESCOM बिल कसे वाचावे — गृह ज्योती, स्लॅब व स्थिर आकार","description":"BESCOM (बेंगळुरू) वीज बिलांची ओळ-दर-ओळ माहिती: 30 युनिटपासून सुरू होणारे LT-1 स्लॅब, शुल्क-समावेशक टॅरिफ, मंजूर-भार स्थिर आकार, आणि गृह ज्योती मोफत-वीज योजना तुम्ही बिल भरता की नाही हे कसे ठरवते.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"तुमचे BESCOM वीज बिल कसे वाचावे","description":"BESCOM (बेंगळुरू) वीज बिलांची ओळ-दर-ओळ माहिती: 30 युनिटपासून सुरू होणारे LT-1 स्लॅब, शुल्क-समावेशक टॅरिफ, मंजूर-भार स्थिर आकार, आणि गृह ज्योती मोफत-वीज योजना तुम्ही बिल भरता की नाही हे कसे ठरवते.","image":"https://thediscombill.com/og/guide-how-to-read-bescom-bill.jpg","mainEntityOfPage":"https://thediscombill.com/mr/guides/how-to-read-bescom-bill/","datePublished":"2026-05-13","dateModified":"2026-08-27","inLanguage":"mr-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"मार्गदर्शक","item":"https://thediscombill.com/mr/guides/"},{"@type":"ListItem","position":3,"name":"तुमचे BESCOM वीज बिल कसे वाचावे"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"माझे BESCOM बिल अचानक शून्यावरून पूर्ण रकमेवर का गेले?","acceptedAnswer":{"@type":"Answer","text":"गृह ज्योती फक्त तुमच्या पात्रतेपर्यंत (ऐतिहासिक सरासरी वापरावर आधारित, सुमारे 200 युनिटवर मर्यादित) मोफत वीज देते. त्याहून जास्त झाल्यास संपूर्ण महिन्याचा वापर सामान्य स्लॅब दरांनी बिल होतो — फक्त मर्यादेवरील युनिटे नव्हे. बिलावर छापलेल्या तुमच्या पात्रतेशी तुमची युनिटे तपासा."}},{"@type":"Question","name":"माझ्या BESCOM बिलावर वीज शुल्क ओळ का नाही?","acceptedAnswer":{"@type":"Answer","text":"कर्नाटक शुल्क-समावेशक टॅरिफ प्रकाशित करते: KERC स्लॅब दरांत राज्य आकारण्या आधीच समाविष्ट आहेत, म्हणून बिलाच्या तळाशी वेगळी ED टक्केवारी जोडली जात नाही. म्हणून हेडलाइन दर महाराष्ट्रासारख्या राज्यांपेक्षा तुमच्या खऱ्या प्रति-युनिट किमतीच्या जास्त जवळ आहे."}},{"@type":"Question","name":"सर्व कर्नाटक डिस्कॉम BESCOM सारखेच दर घेतात का?","acceptedAnswer":{"@type":"Answer","text":"होय — BESCOM, MESCOM, CESC, GESCOM आणि HESCOM सर्व एकाच KERC-मंजूर राज्य अनुसूचीवर बिल करतात. जे वेगळे आहे ते सेवा क्षेत्र व बिलिंग पोर्टल, टॅरिफ नव्हे."}},{"@type":"Question","name":"गृह ज्योतीसाठी नोंदणी कशी करावी?","acceptedAnswer":{"@type":"Answer","text":"नोंदणी कर्नाटक सरकारच्या सेवा सिंधू पोर्टलद्वारे तुमच्या ग्राहक क्रमांक व आधारने होते. नोंदणीनंतर पात्रता (तुमचा सरासरी वापर, मर्यादित) बिलावर छापली जाते आणि तिथपर्यंतचा वापर दर महिन्याला मोफत असतो."}}]}</script>

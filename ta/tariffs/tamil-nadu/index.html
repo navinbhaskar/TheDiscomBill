@@ -65,7 +65,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -75,9 +84,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -88,7 +95,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/ta/tariffs/tamil-nadu/","name":"தமிழ்நாடு மின் கட்டணம் 2025-26 — ₹4.95–12.15/யூனிட்","description":"தமிழ்நாடு இன் 2025-26 அடுக்கு விகிதங்களைப் பாருங்கள், 30 விநாடிகளில் உங்கள் சரியான மின் கட்டணத்தைக் கணக்கிடுங்கள். 1 DISCOM (TNPDCL (TANGEDCO)) — நிலையான கட்டணம் & FPPA உடன். வீட்டு கட்டணம் ₹4.95/யூனிட் முதல். இலவசம், பதிவு தேவையில்லை.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/ta/tariffs/tamil-nadu/","url":"https://thediscombill.com/ta/tariffs/tamil-nadu/","name":"தமிழ்நாடு மின் கட்டணம் 2025-26 — ₹4.95–12.15/யூனிட்","description":"தமிழ்நாடு இன் 2025-26 அடுக்கு விகிதங்களைப் பாருங்கள், 30 விநாடிகளில் உங்கள் சரியான மின் கட்டணத்தைக் கணக்கிடுங்கள். 1 DISCOM (TNPDCL (TANGEDCO)) — நிலையான கட்டணம் & FPPA உடன். வீட்டு கட்டணம் ₹4.95/யூனிட் முதல். இலவசம், பதிவு தேவையில்லை.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"முகப்பு","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"கட்டணங்கள்","item":"https://thediscombill.com/ta/tariffs/states/"},{"@type":"ListItem","position":3,"name":"தமிழ்நாடு","item":"https://thediscombill.com/ta/tariffs/tamil-nadu/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"தமிழ்நாடு இல் மின் கட்டணம் எப்படிக் கணக்கிடப்படுகிறது?","acceptedAnswer":{"@type":"Answer","text":"தமிழ்நாடு பில்களில் அடுக்கு வாரியான மின் கட்டணம், ஒரு kW (அல்லது kVA)-க்கு நிலையான/தேவை கட்டணம், எரிபொருள் & மின் கொள்முதல் சரிசெய்தல் (FPPA) மற்றும் மின் வரி சேர்க்கப்படுகின்றன. உங்கள் DISCOM-க்கான விவரமான தோராயமான பில்லைப் பெற எங்கள் <a href=\"/#calculator\">இலவச கணிப்பானை</a> பயன்படுத்துங்கள்."}},{"@type":"Question","name":"தமிழ்நாடு இல் என் பகுதியில் எந்த மின் விநியோக நிறுவனம் உள்ளது?","acceptedAnswer":{"@type":"Answer","text":"தமிழ்நாடு இல் 1 DISCOM உள்ளன: <strong>TNPDCL (TANGEDCO)</strong> (Entire Tamil Nadu). முழு கட்டணம் மற்றும் தோராயமான பில்லுக்கு மேலே உங்கள் DISCOM-ஐத் திறக்கவும்."}},{"@type":"Question","name":"தமிழ்நாடு இல் மலிவான வீட்டு மின் கட்டணம் என்ன?","acceptedAnswer":{"@type":"Answer","text":"தமிழ்நாடு DISCOM-களில் மிகக் குறைந்த வீட்டு மின் கட்டணம் சுமார் ₹4.95 ஒரு யூனிட்டுக்கு (குறைந்த அடுக்கு) தொடங்குகிறது — நிலையான கட்டணம், FPPA மற்றும் வரி தனி. சரியான விகிதங்கள் உங்கள் DISCOM மற்றும் நுகர்வு அடுக்கைப் பொறுத்தது."}},{"@type":"Question","name":"தமிழ்நாடு இன் தற்போதைய மின் கட்டண ஆண்டு எது?","acceptedAnswer":{"@type":"Answer","text":"காட்டப்பட்ட விகிதங்கள் 2025-26-ஐச் சேர்ந்தவை (சமீபத்திய கிடைக்கும்)."}}]}</script>
 </head>

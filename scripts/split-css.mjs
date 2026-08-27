@@ -1,11 +1,27 @@
-// scripts/split-css.mjs — build css/content.min.css: the subset of the sheet that the
-// generated content pages (guides, tariffs, glossary, smart-meter-recharge, and their
-// vernacular twins) actually use.
+// scripts/split-css.mjs — build the trimmed stylesheets: the subset of styles.css that a
+// given family of pages actually uses.
 //
-// Why this exists: styles.css is one sheet serving both the calculator app and 466 static
-// content pages. Measured, 78% of it is tool-only — the bill renderer, the comparison tool,
-// the Bill Review portal, the datepicker — none of which a guide page ever shows. Those
-// pages were downloading 39 KB gzipped to use about 9 KB of it.
+// Why this exists: styles.css is one sheet serving the calculator app AND 543 static content
+// pages. Measured, 78% of it is tool-only — the bill renderer, the comparison tool, the Bill
+// Review portal, the datepicker — none of which a guide page ever shows. Those pages were
+// downloading 39 KB gzipped to use about 9 KB of it.
+//
+// Two sheets are built from the same machinery:
+//
+//   content.min.css  — guides, tariffs, glossary, smart-meter-recharge + vernacular twins
+//   home.min.css     — the homepage, and only the homepage
+//
+// The homepage got its own sheet because it is the highest-traffic page on the site and the
+// one whose Core Web Vitals were worst. Measured on the full sheet: 49,148 of 58,633
+// transferred bytes went unused — 84%. Everything the page needs finished downloading at
+// ~750 ms while LCP landed at 2,177 ms, and that 1.4 s gap is not network. It is the browser
+// parsing 335 KB of CSS and matching its selectors against 1,347 elements on a throttled
+// phone. Cutting rule count is the lever; cutting transfer size barely matters here.
+//
+// The homepage is deliberately ALONE on its sheet rather than sharing one with the other 22
+// tool pages. The corpus is a union: the more pages share a sheet, the closer its vocabulary
+// creeps back to the full sheet, and those 22 pages between them use nearly all of it. One
+// page, one narrow vocabulary. The other tool pages keep loading the full styles.min.css.
 //
 // The subset is DERIVED, not hand-listed, because a hand-list goes stale the moment someone
 // adds a section. Every selector in the sheet is tested against the class/id/tag vocabulary
@@ -13,8 +29,6 @@
 // generous — a selector survives if ANY of its class tokens appears anywhere in the corpus —
 // so runtime-only state classes (.is-open, .active) ride along with their base component.
 // Over-keeping costs bytes; under-keeping breaks a page. This errs at the safe end.
-//
-// Tool pages are untouched: they keep loading the full styles.min.css.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -22,10 +36,10 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 
-// Which pages this sheet has to cover is not a list to maintain — it is exactly the set of
+// Which pages a sheet has to cover is not a list to maintain — it is exactly the set of
 // pages that link it. Deriving the corpus from that set means a new page template can never
-// drift out of the vocabulary: if it links content.min.css, its markup shaped content.min.css.
-const MARKER = 'css/content.min.css';
+// drift out of the vocabulary: if it links the sheet, its markup shaped the sheet. It also
+// means the marker IS the configuration; adding a third sheet is a call, not a code change.
 
 function walk(dir, out = []) {
   for (const name of fs.readdirSync(dir)) {
@@ -38,9 +52,9 @@ function walk(dir, out = []) {
   return out;
 }
 
-export function buildContentCss({ quiet = false } = {}) {
-  const pages = walk(ROOT).filter(p => fs.readFileSync(path.join(ROOT, p), 'utf8').includes(MARKER));
-  if (!pages.length) throw new Error(`split-css: no page links ${MARKER} — generate pages first`);
+export function buildSubsetCss({ marker, dest, label, quiet = false }) {
+  const pages = walk(ROOT).filter(p => fs.readFileSync(path.join(ROOT, p), 'utf8').includes(marker));
+  if (!pages.length) throw new Error(`split-css: no page links ${marker} — generate pages first`);
 
   // Vocabulary the content pages can possibly use. Static markup is not enough on its own:
   // the header search button (.site-search-btn) is injected at runtime by js/search.js and
@@ -203,11 +217,11 @@ export function buildContentCss({ quiet = false } = {}) {
   // Same minification the main build applies.
   text = text.replace(/\s*([{}:;,>])\s*/g, '$1').replace(/;}/g, '}').replace(/\n+/g, '\n').trim();
 
-  const dest = path.join(ROOT, 'css', 'content.min.css');
+  const destAbs = path.join(ROOT, 'css', dest);
   // Windows intermittently fails this write with UNKNOWN while something else holds the
   // handle for a moment — a running preview server is enough. Retrying beats losing the run.
   for (let attempt = 0; ; attempt++) {
-    try { fs.writeFileSync(dest, text, 'utf8'); break; }
+    try { fs.writeFileSync(destAbs, text, 'utf8'); break; }
     catch (err) {
       if (attempt === 4 || !['UNKNOWN', 'EBUSY', 'EPERM'].includes(err.code)) throw err;
       const until = Date.now() + 40 * (attempt + 1);
@@ -217,13 +231,20 @@ export function buildContentCss({ quiet = false } = {}) {
 
   const full = fs.statSync(path.join(ROOT, 'css', 'styles.min.css')).size;
   if (!quiet) {
-    console.log(`split-css: content.min.css ${(text.length / 1024).toFixed(0)} KB ` +
-      `(from ${(full / 1024).toFixed(0)} KB full sheet) across ${pages.length} content pages`);
+    console.log(`split-css: ${dest} ${(text.length / 1024).toFixed(0)} KB ` +
+      `(from ${(full / 1024).toFixed(0)} KB full sheet) across ${pages.length} ${label} pages`);
   }
   return { bytes: text.length, pages: pages.length, classes: classes.size };
 }
 
-if (import.meta.url === pathToFileURLSafe(process.argv[1])) buildContentCss();
+export const buildContentCss = (o = {}) =>
+  buildSubsetCss({ marker: 'css/content.min.css', dest: 'content.min.css', label: 'content', ...o });
+
+// The homepage links this with a root-relative href; the marker matches either spelling.
+export const buildHomeCss = (o = {}) =>
+  buildSubsetCss({ marker: 'css/home.min.css', dest: 'home.min.css', label: 'homepage', ...o });
+
+if (import.meta.url === pathToFileURLSafe(process.argv[1])) { buildContentCss(); buildHomeCss(); }
 
 function pathToFileURLSafe(p) {
   try { return new URL('file://' + path.resolve(p).replace(/\\/g, '/')).href; } catch { return ''; }

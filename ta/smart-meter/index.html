@@ -66,7 +66,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -76,9 +85,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -89,7 +96,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/ta/smart-meter/","name":"ஸ்மார்ட் மீட்டர் வழிகாட்டி: டிஸ்ப்ளே சின்னங்கள், ரெஜிஸ்டர் குறியீடுகள்","description":"ப்ரீபெய்டு ஸ்மார்ட் மீட்டரின் ஒவ்வொரு சின்னத்தின் பொருள் — சிக்னல், டேம்பர், ரிலே, குறைந்த-பேலன்ஸ் ஐகான்கள், OBIS குறியீடுகள்.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/ta/smart-meter/","url":"https://thediscombill.com/ta/smart-meter/","name":"ஸ்மார்ட் மீட்டர் வழிகாட்டி: டிஸ்ப்ளே சின்னங்கள், ரெஜிஸ்டர் குறியீடுகள்","description":"ப்ரீபெய்டு ஸ்மார்ட் மீட்டரின் ஒவ்வொரு சின்னத்தின் பொருள் — சிக்னல், டேம்பர், ரிலே, குறைந்த-பேலன்ஸ் ஐகான்கள், OBIS குறியீடுகள்.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"என் ஸ்மார்ட் மீட்டரின் சிவப்பு விளக்கு ஏன் சிமிட்டுகிறது?","acceptedAnswer":{"@type":"Answer","text":"இது இயல்பானது — இது பல்ஸ் LED, அளக்கப்படும் ஒவ்வொரு யூனிட் ஆற்றலுக்கும் ஒருமுறை ஒளிரும் (பொதுவாக kWh-க்கு 1000 அல்லது 3200, அருகிலேயே அச்சிடப்பட்டிருக்கும்). இது கோளாறு விளக்கு அல்ல, நேரடி லோட் காட்டி: இப்போது அதிக மின்சாரம் எடுத்தால் வேகமாகச் சிமிட்டும். அனைத்தையும் அணைத்தால் கிட்டத்தட்ட நின்றுவிடும்."}},{"@type":"Question","name":"ரீசார்ஜ் செய்தும் பேலன்ஸ் மாறவில்லை — பணம் போய்விட்டதா?","acceptedAnswer":{"@type":"Answer","text":"கிட்டத்தட்ட ஒருபோதும் இல்லை. பணம் உடனே DISCOM-ஐ அடையும், ஆனால் டோக்கன் நெட்வொர்க் வழியாக மீட்டரை அடைய வேண்டும், சிக்னல் பலவீனமாக இருந்தால் தாமதமாகும் — பொதுவாக நிமிடங்கள், சில சமயம் மணிநேரம். இதற்கிடையில் பேலன்ஸ் வழக்கம்போல் குறையும், அதாவது தொகை தொலையவில்லை, இன்னும் சேரவில்லை. பரிவர்த்தனை ID-ஐ வைத்திருங்கள்."}},{"@type":"Question","name":"பேலன்ஸ் இருந்தும் மின்சாரம் துண்டிக்கப்பட்டது. ஏன்?","acceptedAnswer":{"@type":"Answer","text":"பொதுவாக இது பேலன்ஸ் பிரச்சினை அல்ல, லோட்-லிமிட்: அனுமதிக்கப்பட்ட லோட்டைவிட அதிகமாக எடுத்தால் மீட்டரில் பணம் இருந்தாலும் ரிலே திறக்கும். லோட்டைக் குறையுங்கள் — பெரும்பாலான மீட்டர்கள் தானாகவோ பொத்தானை அழுத்தியவுடனோ மீண்டும் இணையும். வேறு நிலுவைத் தொகைக்காக தொலைவிலிருந்து துண்டித்திருக்கவும் கூடும்."}},{"@type":"Question","name":"டிஸ்ப்ளேயில் எந்த எண் என் உண்மையான மீட்டர் ரீடிங்?","acceptedAnswer":{"@type":"Answer","text":"ரெஜிஸ்டர் குறியீடு 1.8.0 உடன் காட்டப்படுவது — மொத்த இறக்குமதி ஆற்றல், kWh-ல். டிஸ்ப்ளே பல மதிப்புகளை மாற்றிக் காட்டும், எனவே பெரிய எண் எப்போதும் ரீடிங் அல்ல; அருகில் உள்ள சிறிய குறியீட்டைப் பாருங்கள்."}},{"@type":"Question","name":"காந்தம் அல்லது டேம்பர் சின்னத்தின் பொருள் என்ன?","acceptedAnswer":{"@type":"Answer","text":"மீட்டர் வெளிப்புற வலுவான காந்தப் புலம், அகற்றப்பட்ட டெர்மினல் மூடி, அல்லது தலைகீழ் இணைப்பைக் கண்டறிந்து, நேரத்துடன் பதிவுசெய்து DISCOM-க்கு அனுப்பியுள்ளது. இது தானாக நீங்காது. யாரும் மீட்டரைத் தொடாமல் இது தோன்றினால் உடனே புகார் அளியுங்கள் — அந்தப் பதிவே ஆதாரம்."}},{"@type":"Question","name":"என் ஸ்மார்ட் மீட்டர் பழைய மீட்டரைவிட வேகமாக ஓடுகிறதா?","acceptedAnswer":{"@type":"Answer","text":"பொதுவாக தவறு மீட்டரில் இல்லை. பழைய மின்னியந்திர மீட்டர்கள் காலப்போக்கில் குறைவாகப் பதிவு செய்யத் தொடங்கின, எனவே அதே நுகர்வுக்கு துல்லியமான புதிய மீட்டர் அதிகமாகக் காட்டும்; ப்ரீபெய்டில் செலவு மாதத்திற்குப் பதிலாக தினமும் தெரியும். ஸ்மார்ட் மீட்டர்கள் IS 16444 கிளாஸ் 1.0 படி சோதிக்கப்படுகின்றன, அதாவது ±1% துல்லியம்."}}]}</script>
 </head>
 <body>

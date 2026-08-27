@@ -65,7 +65,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -75,9 +84,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -88,7 +95,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/mr/guides/how-to-read-bses-delhi-bill/","name":"तुमचे BSES दिल्ली बिल कसे वाचावे — अनुदान, PPAC व प्रत्येक ओळ","description":"BSES राजधानी (BRPL), BSES यमुना (BYPL) आणि Tata Power-DDL च्या दिल्ली वीज बिलांची ओळ-दर-ओळ माहिती: LT-I स्लॅब, श्रेणीबद्ध स्थिर आकार, PPAC, 5% वीज शुल्क, आणि GNCTD अनुदान बिल नेमके शून्य कसे करते.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/mr/guides/how-to-read-bses-delhi-bill/","url":"https://thediscombill.com/mr/guides/how-to-read-bses-delhi-bill/","name":"तुमचे BSES दिल्ली बिल कसे वाचावे — अनुदान, PPAC व प्रत्येक ओळ","description":"BSES राजधानी (BRPL), BSES यमुना (BYPL) आणि Tata Power-DDL च्या दिल्ली वीज बिलांची ओळ-दर-ओळ माहिती: LT-I स्लॅब, श्रेणीबद्ध स्थिर आकार, PPAC, 5% वीज शुल्क, आणि GNCTD अनुदान बिल नेमके शून्य कसे करते.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"तुमचे BSES / दिल्ली वीज बिल कसे वाचावे","description":"BSES राजधानी (BRPL), BSES यमुना (BYPL) आणि Tata Power-DDL च्या दिल्ली वीज बिलांची ओळ-दर-ओळ माहिती: LT-I स्लॅब, श्रेणीबद्ध स्थिर आकार, PPAC, 5% वीज शुल्क, आणि GNCTD अनुदान बिल नेमके शून्य कसे करते.","image":"https://thediscombill.com/og/guide-how-to-read-bses-delhi-bill.jpg","mainEntityOfPage":"https://thediscombill.com/mr/guides/how-to-read-bses-delhi-bill/","datePublished":"2026-06-05","dateModified":"2026-08-27","inLanguage":"mr-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"मार्गदर्शक","item":"https://thediscombill.com/mr/guides/"},{"@type":"ListItem","position":3,"name":"तुमचे BSES / दिल्ली वीज बिल कसे वाचावे"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"माझे दिल्ली वीज बिल शून्य का आहे?","acceptedAnswer":{"@type":"Answer","text":"GNCTD घरगुती अनुदानामुळे: महिन्याला 200 युनिटपर्यंत वापरणाऱ्या ग्राहकांना 100% अनुदान मिळते, म्हणून मोजलेले शुल्क बिलावर पूर्णपणे उलटवले जातात. 201+ युनिट वापरल्यास अनुदान घटून पहिल्या 200 युनिटवर 50% सूट राहते; 400 युनिटांहून जास्त कोणतेही अनुदान नाही."}},{"@type":"Question","name":"BSES किंवा Tata Power-DDL बिलावर PPAC म्हणजे काय?","acceptedAnswer":{"@type":"Answer","text":"PPAC (Power Purchase Adjustment Cost) हा दिल्लीचा इंधन-खर्च अधिभार आहे — ऊर्जा व स्थिर शुल्कांवर लागू एक DERC-मंजूर टक्केवारी, BRPL, BYPL व Tata Power-DDL साठी वेगळी मंजूर व वेळोवेळी सुधारित. म्हणूनच सारख्या वापरावरही बिले महिन्या-महिन्याला बदलतात."}},{"@type":"Question","name":"BRPL, BYPL आणि Tata Power-DDL चे टॅरिफ वेगळे आहेत का?","acceptedAnswer":{"@type":"Answer","text":"DERC टॅरिफ अनुसूची (स्लॅब, स्थिर आकार, शुल्क) दिल्लीच्या खाजगी डिस्कॉममध्ये एकसारखी आहे; जे वेगळे आहे ते सेवा क्षेत्र, लागू PPAC टक्केवारी आणि बिलिंग पोर्टल. तुमचा डिस्कॉम तुमच्या राहण्याच्या जागेवरून ठरतो, निवडीने नव्हे."}},{"@type":"Question","name":"एका अतिरिक्त युनिटने माझे दिल्ली बिल का उसळले?","acceptedAnswer":{"@type":"Answer","text":"अनुदानाला 200 व 400 युनिटवर कठोर कट-ऑफ आहेत. 201 युनिटवर तुम्ही 100% अनुदान गमावता (फक्त पहिल्या 200 वर 50% सूट ठेवत), आणि 401 युनिटवर अनुदान पूर्णपणे जाते — म्हणून एक युनिट कित्येक शंभर रुपये जोडू शकते. कट-ऑफभोवतीची काही युनिटे पुढील महिन्यात सरकवणे खरोखर फायद्याचे."}}]}</script>

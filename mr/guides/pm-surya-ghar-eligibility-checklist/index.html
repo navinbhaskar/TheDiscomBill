@@ -66,7 +66,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -76,9 +85,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -89,7 +96,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/mr/guides/pm-surya-ghar-eligibility-checklist/","name":"PM सूर्य घर पात्रता — मंजूर भार, नाव जुळणी आणि उपाय","description":"सबसिडीची गणना होण्याआधीच तुमचा PM सूर्य घर अर्ज ठरवणाऱ्या तपासण्या: प्लांटच्या आकाराच्या तुलनेत मंजूर भार, कनेक्शनवरील नाव, मालकी आणि मीटरची स्थिती — आणि प्रत्येक गोष्ट दुरुस्त करणारी डिस्कॉम विनंती.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/mr/guides/pm-surya-ghar-eligibility-checklist/","url":"https://thediscombill.com/mr/guides/pm-surya-ghar-eligibility-checklist/","name":"PM सूर्य घर पात्रता — मंजूर भार, नाव जुळणी आणि उपाय","description":"सबसिडीची गणना होण्याआधीच तुमचा PM सूर्य घर अर्ज ठरवणाऱ्या तपासण्या: प्लांटच्या आकाराच्या तुलनेत मंजूर भार, कनेक्शनवरील नाव, मालकी आणि मीटरची स्थिती — आणि प्रत्येक गोष्ट दुरुस्त करणारी डिस्कॉम विनंती.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"PM सूर्य घर: अर्ज कशामुळे अडतो","description":"सबसिडीची गणना होण्याआधीच तुमचा PM सूर्य घर अर्ज ठरवणाऱ्या तपासण्या: प्लांटच्या आकाराच्या तुलनेत मंजूर भार, कनेक्शनवरील नाव, मालकी आणि मीटरची स्थिती — आणि प्रत्येक गोष्ट दुरुस्त करणारी डिस्कॉम विनंती.","image":"https://thediscombill.com/og/guide-pm-surya-ghar-eligibility-checklist.jpg","mainEntityOfPage":"https://thediscombill.com/mr/guides/pm-surya-ghar-eligibility-checklist/","datePublished":"2026-08-21","dateModified":"2026-08-27","inLanguage":"mr-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"मार्गदर्शक","item":"https://thediscombill.com/mr/guides/"},{"@type":"ListItem","position":3,"name":"PM सूर्य घर: अर्ज कशामुळे अडतो"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"माझा मंजूर भार सोलर पॅनेलच्या आकाराएवढा असणे आवश्यक आहे का?","acceptedAnswer":{"@type":"Answer","text":"साधारणपणे मंजूर भार किमान प्लांटच्या क्षमतेएवढा हवा — 2 kW मंजूर असलेल्या कनेक्शनवर 3 kW सिस्टिमसाठी आधी भारवाढ करावी लागेल. ही अट तुमचा डिस्कॉम ठरवतो, आणि भारवाढ ही नेहमीची प्रक्रिया आहे, पण त्यानंतरचे वाढलेले फिक्स्ड शुल्क कायमस्वरूपी असते आणि दर महिन्याला लागते."}},{"@type":"Question","name":"वीज बिलावरील नाव बँक खात्याशी जुळले नाही तर काय होते?","acceptedAnswer":{"@type":"Answer","text":"अर्ज अडकण्याच्या सर्वात सामान्य कारणांपैकी हे एक आहे, कारण सबसिडी कनेक्शनशी ताडून पाहिलेल्या बँक खात्यात जमा होते. व्यक्ती तीच असून फक्त स्पेलिंगचा फरक असेल तर डिस्कॉमकडून नाव दुरुस्ती करून घ्या. कनेक्शन दुसऱ्याच्या नावावर असेल तर कनेक्शन हस्तांतरण लागते, ज्याला जास्त वेळ लागतो आणि सुरक्षा ठेवही पुन्हा ठरते — ते लवकर सुरू करा."}},{"@type":"Question","name":"मी स्वतः वीज तयार करत असूनही भारवाढीने बिल वाढेल का?","acceptedAnswer":{"@type":"Answer","text":"होय. फिक्स्ड शुल्क मंजूर भारावर आकारले जाते, तुम्ही कितीही वापरा किंवा निर्माण करा — त्यामुळे सर्वोत्तम निर्मितीच्या महिन्यांतही ते लागते. भार वाढवण्याआधी मासिक वाढ काढून पाहा, आणि भार प्लांटला खरोखर लागतो तेवढाच ठेवा."}},{"@type":"Question","name":"भारवाढीत सुरक्षा ठेव पुन्हा पूर्ण भरावी लागते का?","acceptedAnswer":{"@type":"Answer","text":"नाही — फक्त नव्या आवश्यक ठेवीतील आणि तुमच्याकडे आधीच असलेल्या ठेवीतील फरक. पूर्ण नवी रक्कम मागितली गेल्यास ती लेखी विचारणा करण्याजोगी आहे."}},{"@type":"Question","name":"भाड्याच्या घरात राहून PM सूर्य घरसाठी अर्ज करता येतो का?","acceptedAnswer":{"@type":"Answer","text":"अर्जदार वीज ग्राहक असावा लागतो आणि छत त्याच्या ताब्यात हवी, त्यामुळे घरमालकाच्या नावावरील कनेक्शनवर भाडेकरू सहसा अर्ज करू शकत नाही. जिथे व्यवस्था खरोखर तुमची आहे, तिथे आधी कनेक्शन तुमच्या नावावर करावे लागते, सोबत मालकाची छतासाठी परवानगी."}},{"@type":"Question","name":"या गोष्टी अर्जाआधी दुरुस्त कराव्यात की नंतर?","acceptedAnswer":{"@type":"Answer","text":"आधी. भारवाढ, नाव दुरुस्ती आणि हस्तांतरण — तिन्ही डिस्कॉम प्रक्रिया आहेत आणि तिन्हींना स्वतःचा कालावधी आहे; यापैकी कशाची वाट पाहणारा अर्ज फक्त वाटच पाहत राहतो. ताज्या बिलावरील नाव आणि हव्या असलेल्या प्लांटच्या तुलनेत मंजूर भार तपासायला खर्च शून्य आणि एक मिनिट लागतो."}}]}</script>

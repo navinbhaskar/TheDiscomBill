@@ -1,7 +1,7 @@
 // sw.js — Service Worker (network-first, cache fallback)
 // CACHE is stamped automatically by generate-seo.js (stampServiceWorker) from a
 // content hash of the CORE assets below — do not hand-edit it; run `npm run seo`.
-const CACHE = 'discombill-20260827-ce5c9d2b';
+const CACHE = 'discombill-20260827-76455516';
 
 const CORE = [
   './', './index.html', './compare/', './compare/index.html',
@@ -28,6 +28,7 @@ const CORE = [
   // every weight: precaching the two Latin faces plus the ₹ subset covers the whole UI.
   // Sora (logo + hero heading) is cached on demand by the fetch handler.
   './css/styles.min.css',
+  './css/home.min.css',
   './fonts/fonts.css',
   './fonts/inter-var-latin.woff2', './fonts/space-grotesk-var-latin.woff2',
   './fonts/inter-var-rupee.woff2',

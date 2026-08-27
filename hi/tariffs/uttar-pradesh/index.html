@@ -64,7 +64,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -74,9 +83,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -87,7 +94,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/tariffs/uttar-pradesh/","name":"उत्तर प्रदेश बिजली टैरिफ 2026-27 — ₹2.75–6.50/यूनिट","description":"उत्तर प्रदेश की 2026-27 स्लैब दरें देखें और 30 सेकंड में अपना सटीक बिजली बिल निकालें। 5 डिस्कॉम (DVVNL, MVVNL, PVVNL, PuVVNL, KESCO) — फिक्स्ड चार्ज व FPPA सहित। घरेलू दर ₹2.75/यूनिट से। मुफ़्त, बिना साइन-अप।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/hi/tariffs/uttar-pradesh/","url":"https://thediscombill.com/hi/tariffs/uttar-pradesh/","name":"उत्तर प्रदेश बिजली टैरिफ 2026-27 — ₹2.75–6.50/यूनिट","description":"उत्तर प्रदेश की 2026-27 स्लैब दरें देखें और 30 सेकंड में अपना सटीक बिजली बिल निकालें। 5 डिस्कॉम (DVVNL, MVVNL, PVVNL, PuVVNL, KESCO) — फिक्स्ड चार्ज व FPPA सहित। घरेलू दर ₹2.75/यूनिट से। मुफ़्त, बिना साइन-अप।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"टैरिफ","item":"https://thediscombill.com/hi/tariffs/states/"},{"@type":"ListItem","position":3,"name":"उत्तर प्रदेश","item":"https://thediscombill.com/hi/tariffs/uttar-pradesh/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"उत्तर प्रदेश में बिजली बिल कैसे निकाला जाता है?","acceptedAnswer":{"@type":"Answer","text":"उत्तर प्रदेश के बिल में स्लैब-वार ऊर्जा शुल्क, प्रति kW (या kVA) फिक्स्ड/डिमांड चार्ज, ईंधन व विद्युत क्रय समायोजन (FPPA) और बिजली शुल्क जुड़ते हैं। अपने डिस्कॉम का मदवार अनुमानित बिल पाने के लिए हमारा <a href=\"/#calculator\">मुफ़्त कैलकुलेटर</a> इस्तेमाल करें।"}},{"@type":"Question","name":"उत्तर प्रदेश में मेरे इलाक़े में कौन-सी बिजली वितरण कंपनी है?","acceptedAnswer":{"@type":"Answer","text":"उत्तर प्रदेश में 5 डिस्कॉम हैं: <strong>DVVNL</strong> (South UP — Agra, Mathura, Aligarh); <strong>MVVNL</strong> (Central UP — Lucknow, Sitapur, Hardoi); <strong>PVVNL</strong> (West UP — Meerut, Ghaziabad, Noida); <strong>PuVVNL</strong> (East UP — Varanasi, Prayagraj, Gorakhpur); <strong>KESCO</strong> (Kanpur city and district)। पूरी टैरिफ और अनुमानित बिल के लिए ऊपर अपना डिस्कॉम खोलें।"}},{"@type":"Question","name":"उत्तर प्रदेश में सबसे सस्ती घरेलू बिजली दर क्या है?","acceptedAnswer":{"@type":"Answer","text":"उत्तर प्रदेश के डिस्कॉम में सबसे कम घरेलू ऊर्जा शुल्क लगभग ₹2.75 प्रति यूनिट (सबसे निचला स्लैब) से शुरू होता है — फिक्स्ड चार्ज, FPPA और शुल्क अलग। सटीक दरें आपके डिस्कॉम और खपत स्लैब पर निर्भर हैं।"}},{"@type":"Question","name":"उत्तर प्रदेश का वर्तमान बिजली टैरिफ वर्ष क्या है?","acceptedAnswer":{"@type":"Answer","text":"दिखाई गई दरें 2026-27 की हैं, प्रकाशित टैरिफ आदेश से सत्यापित।"}}]}</script>
 </head>

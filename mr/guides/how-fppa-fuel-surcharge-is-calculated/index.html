@@ -65,7 +65,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -75,9 +84,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -88,7 +95,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/mr/guides/how-fppa-fuel-surcharge-is-calculated/","name":"वीज बिलावर FPPA / इंधन अधिभार — तो कसा मोजला जातो","description":"भारतीय वीज बिलावरील FPPA / FPPCA / FPPAS / PPAC ओळ म्हणजे काय, डिस्कॉम ती कोणत्या दोन पद्धतींनी (प्रति-युनिट आणि टक्केवारी) मोजतात, ती दर महिन्याला का बदलते, ऋण का असू शकते, आणि रक्कम स्वतः कशी तपासावी.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/mr/guides/how-fppa-fuel-surcharge-is-calculated/","url":"https://thediscombill.com/mr/guides/how-fppa-fuel-surcharge-is-calculated/","name":"वीज बिलावर FPPA / इंधन अधिभार — तो कसा मोजला जातो","description":"भारतीय वीज बिलावरील FPPA / FPPCA / FPPAS / PPAC ओळ म्हणजे काय, डिस्कॉम ती कोणत्या दोन पद्धतींनी (प्रति-युनिट आणि टक्केवारी) मोजतात, ती दर महिन्याला का बदलते, ऋण का असू शकते, आणि रक्कम स्वतः कशी तपासावी.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"तुमच्या वीज बिलावर FPPA (इंधन अधिभार) कसा मोजला जातो","description":"भारतीय वीज बिलावरील FPPA / FPPCA / FPPAS / PPAC ओळ म्हणजे काय, डिस्कॉम ती कोणत्या दोन पद्धतींनी (प्रति-युनिट आणि टक्केवारी) मोजतात, ती दर महिन्याला का बदलते, ऋण का असू शकते, आणि रक्कम स्वतः कशी तपासावी.","image":"https://thediscombill.com/og/guide-how-fppa-fuel-surcharge-is-calculated.jpg","mainEntityOfPage":"https://thediscombill.com/mr/guides/how-fppa-fuel-surcharge-is-calculated/","datePublished":"2026-07-01","dateModified":"2026-08-27","inLanguage":"mr-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"मार्गदर्शक","item":"https://thediscombill.com/mr/guides/"},{"@type":"ListItem","position":3,"name":"तुमच्या वीज बिलावर FPPA (इंधन अधिभार) कसा मोजला जातो"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"वीज बिलावर FPPA म्हणजे काय?","acceptedAnswer":{"@type":"Answer","text":"FPPA (Fuel and Power Purchase Adjustment) हा एक अधिभार आहे जो डिस्कॉमच्या प्रत्यक्ष वीज-खरेदी खर्च आणि टॅरिफ आदेशात गृहीत धरलेल्या खर्चातील फरक ग्राहकांपर्यंत पोहोचवतो. राज्यानुसार तो FPPA, FPPCA, FPPAS, FAC किंवा PPAC असा दिसतो, आणि मासिक किंवा त्रैमासिक सुधारला जातो."}},{"@type":"Question","name":"FPPA ऋण असू शकतो का?","acceptedAnswer":{"@type":"Answer","text":"होय. जेव्हा डिस्कॉम टॅरिफ आदेशात गृहीत धरल्यापेक्षा स्वस्त वीज खरेदी करतो — किंवा आधीच्या जास्त-वसुलीचे ट्रू-अप होते — तेव्हा हे समायोजन क्रेडिट बनते आणि त्या महिन्यात तुमचे बिल कमी करते."}},{"@type":"Question","name":"FPPA वीज शुल्कापूर्वी लागतो की नंतर?","acceptedAnswer":{"@type":"Answer","text":"आधी. FPPA प्रथम ऊर्जा व स्थिर आकारात जोडला जातो, आणि वीज शुल्क नंतर त्या मोठ्या आधाराच्या टक्केवारीने मोजले जाते — म्हणून जास्त FPPA तुमचे शुल्कही थोडे वाढवते."}},{"@type":"Question","name":"दुसऱ्या राज्यातील माझ्या शेजाऱ्यापेक्षा माझा FPPA वेगळा का आहे?","acceptedAnswer":{"@type":"Answer","text":"प्रत्येक राज्य नियामक स्वतःची पद्धत (प्रति-युनिट किंवा टक्केवारी), स्वतःचे दर आणि स्वतःचे सुधारणा चक्र अधिसूचित करतो, आणि बहु-डिस्कॉम राज्यांत दर डिस्कॉमनुसारही वेगळा असू शकतो — उदा. दिल्लीचा PPAC BRPL, BYPL व Tata Power-DDL साठी वेगळा मंजूर होतो."}}]}</script>

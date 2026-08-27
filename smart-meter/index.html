@@ -66,7 +66,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -76,9 +85,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -89,7 +96,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/smart-meter/","name":"Smart Meter Guide: Display Symbols, Register Codes & AMISP List","description":"What every symbol on an Indian prepaid smart meter means — signal, tamper, relay and low-balance icons, OBIS register codes and the pulse LED.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/smart-meter/","url":"https://thediscombill.com/smart-meter/","name":"Smart Meter Guide: Display Symbols, Register Codes & AMISP List","description":"What every symbol on an Indian prepaid smart meter means — signal, tamper, relay and low-balance icons, OBIS register codes and the pulse LED.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why is the red light on my smart meter blinking?","acceptedAnswer":{"@type":"Answer","text":"That is normal — it is the pulse LED, and it flashes once per unit of energy measured (usually 1000 or 3200 flashes per kWh, printed next to it). It is a live load indicator, not a fault light: the more you are drawing right now, the faster it blinks. Switch everything off and it should slow almost to a stop."}},{"@type":"Question","name":"I recharged but my smart meter balance has not updated — is my money lost?","acceptedAnswer":{"@type":"Answer","text":"Almost never. The payment reaches the DISCOM instantly, but the token has to travel to the meter over the network, and a weak signal delays that — minutes usually, occasionally hours. Your balance keeps depleting normally in the meantime, so the credit is not missing, just not yet delivered. Keep the transaction ID."}},{"@type":"Question","name":"My supply was cut but the meter still shows a balance. Why?","acceptedAnswer":{"@type":"Answer","text":"Usually a load-limit trip rather than a credit problem: drawing more than your sanctioned load opens the relay even with money on the meter. Reduce the load and most meters reconnect on their own or after a button press. It can also be a remote disconnection for a separate arrear."}},{"@type":"Question","name":"Which number on the display is my actual meter reading?","acceptedAnswer":{"@type":"Answer","text":"The one shown against register code 1.8.0 — total active energy imported, in kWh. The display cycles through several values, so the largest number is not always the reading; check the small code beside it."}},{"@type":"Question","name":"What does the magnet or tamper symbol mean?","acceptedAnswer":{"@type":"Answer","text":"The meter has detected a strong external magnetic field, a removed terminal cover, or a reversed connection, and has logged it with a timestamp and reported it to the DISCOM. It does not clear by itself. If it appeared without anyone touching the meter, raise a complaint straight away — the timestamped log is the evidence."}},{"@type":"Question","name":"Is my smart meter running faster than my old meter?","acceptedAnswer":{"@type":"Answer","text":"Usually it is not the meter. Old electromechanical meters commonly under-recorded as they aged, so an accurate new meter reads higher for the same usage, and prepaid billing makes the cost visible daily rather than monthly. Smart meters are tested to IS 16444 Class 1.0, meaning ±1% accuracy."}}]}</script>
 </head>
 <body>

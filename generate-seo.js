@@ -18,7 +18,7 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import { fileURLToPath } from 'url';
-import { buildContentCss } from './scripts/split-css.mjs';
+import { buildContentCss, buildHomeCss } from './scripts/split-css.mjs';
 import { execSync } from 'child_process';
 
 import { TARIFF_DB, STATE_META, getStates, getDiscoms, tariffAge, ensureAll } from './js/tariffs/registry.js';
@@ -512,12 +512,46 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
   // referencing an image that hasn't been rendered yet falls back, never 404s a card.
   const ogImg = (ogImage && fs.existsSync(path.join(ROOT, 'og', `${ogImage}.jpg`)))
     ? `${SITE}/og/${ogImage}.jpg` : `${SITE}/og-image.jpg`;
+  // The #org and #website entities every generated page references below. JSON-LD @id
+  // resolution is per-document: a page that references #org without carrying it hands the
+  // parser a dangling pointer, and `publisher` is a REQUIRED property on Article — so the
+  // 121 Article pages were failing it, not just losing a nicety.
+  //
+  // Compact by design. The homepage carries the full Organization node (sameAs, knowsAbout,
+  // publishingPrinciples, contactPoint) and stays the canonical description of the entity;
+  // these stubs exist to make the reference resolve, not to restate it. The @id is what ties
+  // them to the same entity, so duplicating the detail 556 times would buy nothing and cost
+  // ~2 KB a page.
+  //
+  // index.html is hand-authored and never passes through layout(), so there is no
+  // double-definition today. The guard is here in case a generated page ever becomes the
+  // homepage — two nodes with one @id in one document is the defect this function exists to
+  // prevent, and it would be an easy one to reintroduce by accident.
+  const isHome = canonical === `${SITE}/`;
+  const orgNode = isHome ? null : {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${SITE}/#org`,
+    name: 'TheDiscomBill',
+    url: `${SITE}/`,
+    logo: { '@type': 'ImageObject', url: `${SITE}/icon-512.png`, width: 512, height: 512 }
+  };
+  const siteNode = isHome ? null : {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE}/#website`,
+    name: 'TheDiscomBill',
+    url: `${SITE}/`,
+    publisher: { '@id': `${SITE}/#org` },
+    inLanguage: LANG_LOCALE[lang] || 'en-IN'
+  };
   // Every generated page carries a WebPage node with freshness + publisher links —
   // GEO signal for AI crawlers (entity graph anchored to the #org / #website ids
-  // declared on the homepage).
+  // now declared on the page itself).
   const webPage = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
+    '@id': canonical,   // so sibling nodes on the page can point at it by reference
     url: canonical,
     name: title,
     description,
@@ -526,7 +560,7 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
     inLanguage: LANG_LOCALE[lang] || 'en-IN',
     dateModified: LASTMOD_ISO   // resolved to the content-derived date by emitPage()
   };
-  const ld = [webPage, ...jsonld].filter(Boolean)
+  const ld = [orgNode, siteNode, webPage, ...jsonld].filter(Boolean)
     .map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n  ');
   // SERP-facing copy is clamped HERE rather than at each of the ~30 call sites, so a new page
   // template cannot ship an over-long title by forgetting to call fitTitle().
@@ -620,7 +654,16 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -630,9 +673,7 @@ function layout({ title, description, canonical, jsonld = [], body, lang = 'en',
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -7353,6 +7394,100 @@ function stampFooter() {
   }
   return { changed, scanned: files.length };
 }
+// ── Entity graph stamp ───────────────────────────────────────────────────────
+// layout() gives every generated page its own #org and #website nodes, so the publisher /
+// isPartOf / author references on those pages resolve. The ~20 hand-authored pages —
+// bill-calculator, the standalone tools, the legal pages, tariffs/index.html — write their
+// JSON-LD by hand and reference the same two ids without carrying them. Same defect, same
+// fix, different delivery: stamped rather than hand-kept, like the footer.
+//
+// Skipped deliberately:
+//   • index.html — it defines the FULL Organization node (sameAs, knowsAbout,
+//     publishingPrinciples, contactPoint). Stamping a compact copy alongside it would put two
+//     nodes with one @id in one document, which is worse than the dangling reference.
+//   • Any page that already carries both nodes — this pass is idempotent and re-running the
+//     build must not accumulate duplicates.
+//   • Pages with no JSON-LD at all — the noindex app screens have nothing to anchor.
+const ENTITY_GRAPH_MARK = '<!-- entity-graph -->';
+function entityGraphBlock(lang = 'en') {
+  const org = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${SITE}/#org`,
+    name: 'TheDiscomBill',
+    url: `${SITE}/`,
+    logo: { '@type': 'ImageObject', url: `${SITE}/icon-512.png`, width: 512, height: 512 }
+  };
+  const site = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE}/#website`,
+    name: 'TheDiscomBill',
+    url: `${SITE}/`,
+    publisher: { '@id': `${SITE}/#org` },
+    inLanguage: LANG_LOCALE[lang] || 'en-IN'
+  };
+  return ENTITY_GRAPH_MARK
+    + [org, site].map(o => `\n  <script type="application/ld+json">${JSON.stringify(o)}</script>`).join('')
+    + `\n  ${ENTITY_GRAPH_MARK.replace('<!--', '<!-- /')}`;
+}
+// Does this page already carry the site Organization entity itself (rather than merely
+// referencing it, or describing some other organisation)?
+function definesOrg(html) {
+  const re = /<script[^>]+application\/ld\+json[^>]*>([\s\S]*?)<\/script>/gi;
+  let m, found = false;
+  const visit = (n) => {
+    if (Array.isArray(n)) { n.forEach(visit); return; }
+    if (!n || typeof n !== 'object') return;
+    if (n['@id'] === `${SITE}/#org` && [].concat(n['@type'] || []).includes('Organization')) found = true;
+    if (n['@graph']) visit(n['@graph']);
+  };
+  while ((m = re.exec(html))) {
+    // A page with unparseable JSON-LD is a different defect; do not let it crash the build.
+    try { visit(JSON.parse(m[1])); } catch { /* ignore */ }
+  }
+  return found;
+}
+function stampEntityGraph() {
+  const files = execSync('git ls-files "*.html"', { encoding: 'utf8' })
+    .split(/\r?\n/).filter(Boolean);
+
+  let changed = 0, skipped = 0;
+  for (const rel of files) {
+    const abs = path.join(ROOT, rel);
+    if (!fs.existsSync(abs)) continue;
+    let before = fs.readFileSync(abs, 'utf8');
+
+    // Drop any previous stamp first, so the pass is idempotent and a changed block replaces
+    // the old one rather than sitting next to it.
+    const open = before.indexOf(ENTITY_GRAPH_MARK);
+    if (open >= 0) {
+      const closeMark = ENTITY_GRAPH_MARK.replace('<!--', '<!-- /');
+      const close = before.indexOf(closeMark, open);
+      if (close < 0) throw new Error(`stampEntityGraph: unclosed entity-graph block in ${rel}`);
+      before = before.slice(0, open) + before.slice(close + closeMark.length);
+      before = before.replace(/\n[ \t]*\n(?=[ \t]*<)/, '\n');
+    }
+
+    // Does this page reference the ids, and does it already define them itself?
+    if (!before.includes(`${SITE}/#org`) && !before.includes(`${SITE}/#website`)) { skipped++; continue; }
+    // Must find the #org DEFINITION, not any Organization node, and the two are easy to
+    // confuse: amisp-list describes the AMISP companies themselves as Organizations inside
+    // its ItemList. A substring test read those as "this page already has the site entity"
+    // and skipped the one page that needed the stamp most, so this parses instead of
+    // pattern-matching. Key order and whitespace differ between the hand-authored pages and
+    // JSON.stringify output anyway, which no regex over raw markup would survive.
+    if (definesOrg(before)) { skipped++; continue; }
+
+    const anchor = before.indexOf('<script type="application/ld+json">');
+    if (anchor < 0) { skipped++; continue; }
+
+    const lang = (/^(hi|mr|ta)\//.exec(rel) || [])[1] || 'en';
+    const out = before.slice(0, anchor) + entityGraphBlock(lang) + '\n  ' + before.slice(anchor);
+    if (out !== fs.readFileSync(abs, 'utf8')) { writeWithRetry(abs, out); changed++; }
+  }
+  return { changed, skipped, scanned: files.length };
+}
 function stampBillCalculator() {
   const target = path.join(ROOT, 'bill-calculator', 'index.html');
   if (!fs.existsSync(target)) return { changed: false, skipped: true };
@@ -7757,14 +7892,21 @@ export function generateSeo() {
   // After the homepage is final — this copies its calculator verbatim.
   const billCalc = stampBillCalculator();
   const footer = stampFooter();
+  // After stampBillCalculator, which rewrites a hand-authored page wholesale, and before
+  // inlineFontCss/buildContentCss, which read the final markup.
+  const graph = stampEntityGraph();
   const fontPages = inlineFontCss();
   const searchEntries = writeSearchIndex(states);
   const cssKb = writeMinifiedCss();
   // Must run after the pages are on disk: it reads their markup to decide what to keep.
   const content = buildContentCss({ quiet: true });
+  // The homepage gets its own sheet, derived from its own markup. Runs here for the same
+  // reason content.min.css does: stampHomepageStates and stampHomepageCoverage both rewrite
+  // index.html, and this reads the finished markup to decide what to keep.
+  const homeCss = buildHomeCss({ quiet: true });
   const sw = stampServiceWorker();
 
-  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + homepage states ${homeStates.cards} in ${homeStates.regions} regions + /bill-calculator/ ${(billCalc.bytes/1024).toFixed(0)} KB + footer ${footer.changed}/${footer.scanned} + homepage coverage ${coverage.S}/${coverage.D}/${coverage.C}/${coverage.T} + inline @font-face on ${fontPages} pages + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + content.min.css (${(content.bytes/1024).toFixed(0)} KB) + sw ${sw.version} (${sw.hashed} assets)`);
+  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + homepage states ${homeStates.cards} in ${homeStates.regions} regions + /bill-calculator/ ${(billCalc.bytes/1024).toFixed(0)} KB + footer ${footer.changed}/${footer.scanned} + entity graph ${graph.changed}/${graph.scanned} + homepage coverage ${coverage.S}/${coverage.D}/${coverage.C}/${coverage.T} + inline @font-face on ${fontPages} pages + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + content.min.css (${(content.bytes/1024).toFixed(0)} KB) + home.min.css (${(homeCss.bytes/1024).toFixed(0)} KB) + sw ${sw.version} (${sw.hashed} assets)`);
   return { pages, states: states.length };
 }
 

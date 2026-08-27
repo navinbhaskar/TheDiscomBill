@@ -66,7 +66,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -76,9 +85,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -89,7 +96,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/guides/pm-surya-ghar-eligibility-checklist/","name":"PM सूर्य घर पात्रता — स्वीकृत भार, नाम मिलान और उनका समाधान","description":"सब्सिडी की गणना से पहले जो जाँचें आपका PM सूर्य घर आवेदन तय करती हैं: प्लांट के आकार के मुक़ाबले स्वीकृत भार, कनेक्शन पर दर्ज नाम, स्वामित्व और मीटर की स्थिति — और हर एक को ठीक करने वाला डिस्कॉम अनुरोध।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/hi/guides/pm-surya-ghar-eligibility-checklist/","url":"https://thediscombill.com/hi/guides/pm-surya-ghar-eligibility-checklist/","name":"PM सूर्य घर पात्रता — स्वीकृत भार, नाम मिलान और उनका समाधान","description":"सब्सिडी की गणना से पहले जो जाँचें आपका PM सूर्य घर आवेदन तय करती हैं: प्लांट के आकार के मुक़ाबले स्वीकृत भार, कनेक्शन पर दर्ज नाम, स्वामित्व और मीटर की स्थिति — और हर एक को ठीक करने वाला डिस्कॉम अनुरोध।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"PM सूर्य घर: आवेदन किस वजह से अटकता है","description":"सब्सिडी की गणना से पहले जो जाँचें आपका PM सूर्य घर आवेदन तय करती हैं: प्लांट के आकार के मुक़ाबले स्वीकृत भार, कनेक्शन पर दर्ज नाम, स्वामित्व और मीटर की स्थिति — और हर एक को ठीक करने वाला डिस्कॉम अनुरोध।","image":"https://thediscombill.com/og/guide-pm-surya-ghar-eligibility-checklist.jpg","mainEntityOfPage":"https://thediscombill.com/hi/guides/pm-surya-ghar-eligibility-checklist/","datePublished":"2026-08-21","dateModified":"2026-08-27","inLanguage":"hi-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"गाइड","item":"https://thediscombill.com/hi/guides/"},{"@type":"ListItem","position":3,"name":"PM सूर्य घर: आवेदन किस वजह से अटकता है"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"क्या मेरा स्वीकृत भार सोलर पैनल के आकार जितना होना ज़रूरी है?","acceptedAnswer":{"@type":"Answer","text":"आम तौर पर स्वीकृत भार कम से कम प्लांट की क्षमता जितना होना चाहिए — 2 kW पर स्वीकृत कनेक्शन पर 3 kW का सिस्टम लगवाने के लिए पहले भार वृद्धि करानी होगी। यह शर्त आपका डिस्कॉम तय करता है, और भार वृद्धि सामान्य प्रक्रिया है, लेकिन उसके बाद बढ़ा हुआ फिक्स्ड शुल्क स्थायी होता है और हर महीने लगता है।"}},{"@type":"Question","name":"बिजली बिल का नाम बैंक खाते से न मिले तो क्या होता है?","acceptedAnswer":{"@type":"Answer","text":"यह आवेदन अटकने की सबसे आम वजहों में है, क्योंकि सब्सिडी उसी बैंक खाते में जाती है जिसका मिलान कनेक्शन से होता है। व्यक्ति वही हो और सिर्फ़ वर्तनी अलग हो तो डिस्कॉम से नाम सुधार कराइए। कनेक्शन किसी और के नाम हो तो कनेक्शन हस्तांतरण चाहिए, जिसमें ज़्यादा समय लगता है और सुरक्षा जमा भी दोबारा तय होती है — इसे जल्दी शुरू कीजिए।"}},{"@type":"Question","name":"क्या भार बढ़ाने से बिल बढ़ेगा, जबकि बिजली मैं खुद बना रहा हूँ?","acceptedAnswer":{"@type":"Answer","text":"हाँ। फिक्स्ड शुल्क स्वीकृत भार पर लगता है, चाहे आप कितनी भी खपत या उत्पादन करें — इसलिए यह सबसे अच्छे उत्पादन वाले महीनों में भी लगेगा। भार बढ़ाने से पहले मासिक बढ़ोतरी निकाल लीजिए, और भार उतना ही रखिए जितना प्लांट के लिए वाक़ई ज़रूरी है।"}},{"@type":"Question","name":"क्या भार वृद्धि पर सुरक्षा जमा दोबारा पूरी देनी होती है?","acceptedAnswer":{"@type":"Answer","text":"नहीं — सिर्फ़ नई ज़रूरी जमा और आपकी मौजूदा जमा का अंतर। पूरी नई राशि की माँग आए तो उसे लिखित में चुनौती देना बनता है।"}},{"@type":"Question","name":"क्या किराए के मकान में रहते हुए PM सूर्य घर के लिए आवेदन कर सकते हैं?","acceptedAnswer":{"@type":"Answer","text":"आवेदक को बिजली उपभोक्ता होना चाहिए और छत उसके नियंत्रण में होनी चाहिए, इसलिए मकान-मालिक के नाम वाले कनेक्शन पर किरायेदार आम तौर पर आवेदन नहीं कर सकता। जहाँ व्यवस्था वाक़ई आपकी है, वहाँ पहले कनेक्शन आपके नाम कराना होगा, साथ में छत के उपयोग की मालिक से अनुमति।"}},{"@type":"Question","name":"ये चीज़ें आवेदन से पहले ठीक करूँ या बाद में?","acceptedAnswer":{"@type":"Answer","text":"पहले। भार वृद्धि, नाम सुधार और हस्तांतरण — तीनों डिस्कॉम प्रक्रियाएँ हैं और तीनों की अपनी समय-सीमा है; इनमें से किसी का इंतज़ार कर रहा आवेदन बस इंतज़ार ही कर रहा होता है। ताज़ा बिल पर नाम और चाहे गए प्लांट के मुक़ाबले स्वीकृत भार जाँचने में कोई खर्च नहीं और एक मिनट लगता है।"}}]}</script>

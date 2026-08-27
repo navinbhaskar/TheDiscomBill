@@ -66,7 +66,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -76,9 +85,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -89,7 +96,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/mr/smart-meter/","name":"स्मार्ट मीटर मार्गदर्शक: डिस्प्ले चिन्हे, रजिस्टर कोड आणि AMISP यादी","description":"प्रीपेड स्मार्ट मीटरवरील प्रत्येक चिन्हाचा अर्थ — सिग्नल, टॅम्पर, रिले आणि कमी-बॅलन्स आयकॉन, OBIS रजिस्टर कोड आणि पल्स LED.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/mr/smart-meter/","url":"https://thediscombill.com/mr/smart-meter/","name":"स्मार्ट मीटर मार्गदर्शक: डिस्प्ले चिन्हे, रजिस्टर कोड आणि AMISP यादी","description":"प्रीपेड स्मार्ट मीटरवरील प्रत्येक चिन्हाचा अर्थ — सिग्नल, टॅम्पर, रिले आणि कमी-बॅलन्स आयकॉन, OBIS रजिस्टर कोड आणि पल्स LED.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"माझ्या स्मार्ट मीटरचा लाल दिवा का लुकलुकतो?","acceptedAnswer":{"@type":"Answer","text":"हे सामान्य आहे — हा पल्स LED आहे, जो मोजलेल्या प्रत्येक युनिट ऊर्जेवर एकदा चमकतो (सामान्यतः 1000 किंवा 3200 फ्लॅश प्रति kWh, जे शेजारी लिहिलेले असते). हा बिघाडाचा दिवा नाही, थेट लोड दर्शवतो: आत्ता जितकी वीज वापरली जाते तितका वेगाने लुकलुकतो. सर्व बंद केल्यास तो जवळपास थांबतो."}},{"@type":"Question","name":"रिचार्ज केले पण स्मार्ट मीटरचा बॅलन्स वाढला नाही — पैसे बुडाले का?","acceptedAnswer":{"@type":"Answer","text":"जवळपास कधीच नाही. पैसे डिस्कॉमपर्यंत लगेच पोहोचतात, पण टोकनला नेटवर्कमधून मीटरपर्यंत जावे लागते, आणि सिग्नल कमकुवत असल्यास उशीर होतो — सहसा काही मिनिटे, कधी तास. दरम्यान तुमचा बॅलन्स नेहमीप्रमाणे कमी होत राहतो, म्हणजे क्रेडिट हरवलेले नाही, फक्त अजून पोहोचलेले नाही. ट्रान्झॅक्शन ID जपून ठेवा."}},{"@type":"Question","name":"बॅलन्स दिसत असूनही वीज गेली. का?","acceptedAnswer":{"@type":"Answer","text":"सहसा हा बॅलन्सचा नव्हे तर लोड-लिमिटचा प्रश्न असतो: मंजूर लोडपेक्षा जास्त वीज ओढल्यास मीटरमध्ये पैसे असूनही रिले उघडतो. लोड कमी करा — बहुतेक मीटर आपोआप किंवा बटण दाबल्यावर पुन्हा जोडले जातात. हा वेगळ्या थकबाकीमुळे दूरवरून केलेला खंडही असू शकतो."}},{"@type":"Question","name":"डिस्प्लेवरील कोणता आकडा माझे खरे मीटर रीडिंग आहे?","acceptedAnswer":{"@type":"Answer","text":"जो रजिस्टर कोड 1.8.0 सोबत दिसतो तो — एकूण घेतलेली सक्रिय ऊर्जा, kWh मध्ये. डिस्प्ले अनेक मूल्ये आळीपाळीने दाखवतो, त्यामुळे सर्वात मोठा आकडा नेहमीच रीडिंग नसतो; शेजारचा छोटा कोड पाहा."}},{"@type":"Question","name":"मॅग्नेट किंवा टॅम्पर चिन्हाचा अर्थ काय?","acceptedAnswer":{"@type":"Answer","text":"मीटरने बाहेरून तीव्र चुंबकीय क्षेत्र, काढलेले टर्मिनल कव्हर किंवा उलटे कनेक्शन ओळखले आहे, आणि ते वेळेसह नोंदवून डिस्कॉमला पाठवले आहे. हे आपोआप जात नाही. कोणी मीटरला हात लावला नसताना हे दिसले तर लगेच तक्रार करा — वेळेसह नोंदलेला तोच रेकॉर्ड पुरावा असतो."}},{"@type":"Question","name":"माझा स्मार्ट मीटर जुन्या मीटरपेक्षा वेगात चालतो का?","acceptedAnswer":{"@type":"Answer","text":"सहसा दोष मीटरचा नसतो. जुने इलेक्ट्रोमेकॅनिकल मीटर वयानुसार कमी नोंदवू लागत, त्यामुळे तेवढ्याच वापरावर अचूक नवा मीटर जास्त दाखवतो; आणि प्रीपेड बिलिंगमध्ये खर्च महिन्याऐवजी रोज दिसतो. स्मार्ट मीटर IS 16444 क्लास 1.0 वर तपासले जातात, म्हणजे ±1% अचूकता."}}]}</script>
 </head>
 <body>

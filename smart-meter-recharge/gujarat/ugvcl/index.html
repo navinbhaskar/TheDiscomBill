@@ -64,7 +64,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -74,9 +83,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -87,7 +94,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/smart-meter-recharge/gujarat/ugvcl/","name":"UGVCL Smart Meter Recharge Online — Steps & Rates","description":"Recharge your UGVCL (Uttar Gujarat Vij Company Ltd.) prepaid smart meter online — official portal, UPI/BBPS options, and roughly how many units ₹500 buys at ₹2.65–₹5.2/unit. Plus low-balance and disconnection rules.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/smart-meter-recharge/gujarat/ugvcl/","url":"https://thediscombill.com/smart-meter-recharge/gujarat/ugvcl/","name":"UGVCL Smart Meter Recharge Online — Steps & Rates","description":"Recharge your UGVCL (Uttar Gujarat Vij Company Ltd.) prepaid smart meter online — official portal, UPI/BBPS options, and roughly how many units ₹500 buys at ₹2.65–₹5.2/unit. Plus low-balance and disconnection rules.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Smart Meter Recharge","item":"https://thediscombill.com/smart-meter-recharge/"},{"@type":"ListItem","position":3,"name":"UGVCL","item":"https://thediscombill.com/smart-meter-recharge/gujarat/ugvcl/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I recharge my UGVCL smart meter?","acceptedAnswer":{"@type":"Answer","text":"Recharge on the official UGVCL portal at <a href=\"https://www.ugvcl.com\" target=\"_blank\" rel=\"noopener\">www.ugvcl.com</a>, or through BBPS-enabled UPI apps (PhonePe, Google Pay, Paytm etc.) by selecting \"UGVCL\". Pay by UPI, card or net-banking; the balance usually updates within minutes."}},{"@type":"Question","name":"How many units does a ₹500 recharge give on UGVCL?","acceptedAnswer":{"@type":"Answer","text":"UGVCL's domestic rate spans ₹2.65–₹5.2 per unit, so ₹500 buys roughly 96–188 units — a little less after fixed charges, FPPA and duty are deducted."}},{"@type":"Question","name":"What is the minimum recharge amount?","acceptedAnswer":{"@type":"Answer","text":"The minimum varies by DISCOM — the exact limit is shown on the official portal/app at recharge time. Rather than many small top-ups, one recharge sized to your typical monthly consumption is usually more convenient."}},{"@type":"Question","name":"I recharged but power hasn't come back — what now?","acceptedAnswer":{"@type":"Answer","text":"After a successful payment, supply is normally restored automatically; give it a few minutes. If not, check the balance on the meter display, keep your receipt, and raise a complaint on 1912 or your DISCOM helpline."}}]}</script>
 </head>

@@ -64,7 +64,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -74,9 +83,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -87,7 +94,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/tariffs/delhi/ndmc_delhi/","name":"NDMC बिजली टैरिफ 2025-26 — ₹3.00–8.00/यूनिट","description":"NDMC (New Delhi Municipal Council) का बिजली बिल 2025-26 के लिए निकालें — Central Government area। स्लैब दरें, फिक्स्ड चार्ज, FPPA व शुल्क। घरेलू दर ₹3/यूनिट से। मुफ़्त, बिना साइन-अप।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/hi/tariffs/delhi/ndmc_delhi/","url":"https://thediscombill.com/hi/tariffs/delhi/ndmc_delhi/","name":"NDMC बिजली टैरिफ 2025-26 — ₹3.00–8.00/यूनिट","description":"NDMC (New Delhi Municipal Council) का बिजली बिल 2025-26 के लिए निकालें — Central Government area। स्लैब दरें, फिक्स्ड चार्ज, FPPA व शुल्क। घरेलू दर ₹3/यूनिट से। मुफ़्त, बिना साइन-अप।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"टैरिफ","item":"https://thediscombill.com/hi/tariffs/states/"},{"@type":"ListItem","position":3,"name":"दिल्ली","item":"https://thediscombill.com/hi/tariffs/delhi/"},{"@type":"ListItem","position":4,"name":"NDMC","item":"https://thediscombill.com/hi/tariffs/delhi/ndmc_delhi/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"NDMC बिजली बिल कैसे निकालें?","acceptedAnswer":{"@type":"Answer","text":"<a href=\"/?state=Delhi&amp;discom=ndmc_delhi#calculator\">NDMC बिल कैलकुलेटर</a> खोलें, अपनी खपत (यूनिट) और स्वीकृत भार डालें — यह 2025-26 की NDMC स्लैब दरें, फिक्स्ड चार्ज और अन्य शुल्क लगाकर मदवार अनुमानित बिल देता है।"}},{"@type":"Question","name":"NDMC किन क्षेत्रों और शहरों में बिजली देती है?","acceptedAnswer":{"@type":"Answer","text":"NDMC (New Delhi Municipal Council) Lutyens' Delhi — Central Government area में बिजली आपूर्ति करती है।"}},{"@type":"Question","name":"NDMC पर सबसे सस्ती घरेलू बिजली दर क्या है?","acceptedAnswer":{"@type":"Answer","text":"NDMC का घरेलू ऊर्जा शुल्क ₹3 प्रति यूनिट से शुरू होकर सबसे ऊँचे स्लैब में ₹8 प्रति यूनिट तक जाता है (LT Domestic), साथ में मासिक फिक्स्ड चार्ज (नवीनतम उपलब्ध अनुमान)। पूरी स्लैब तालिका ऊपर है।"}},{"@type":"Question","name":"NDMC बिजली बिल ऑनलाइन कैसे भरें?","acceptedAnswer":{"@type":"Answer","text":"आधिकारिक NDMC पोर्टल <a href=\"https://www.ndmc.gov.in\" target=\"_blank\" rel=\"noopener\">www.ndmc.gov.in</a> पर भुगतान करें। पहले इस पेज से जाँचें कि बिल कितना होना चाहिए, फिर आधिकारिक स्रोत पर भरें।"}}]}</script>
 </head>

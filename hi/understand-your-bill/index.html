@@ -66,7 +66,16 @@
   <!-- Google tag (gtag.js) -->
   <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
        eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
-       to idle (or the first interaction, whichever lands first) loses no events. -->
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
   <script>
     (function () {
       var done = false;
@@ -76,9 +85,7 @@
         s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
         document.head.appendChild(s);
       }
-      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
-        addEventListener(e, load, { once: true, passive: true });
-      });
+      addEventListener("scroll", load, { once: true, passive: true });
       if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
       else addEventListener("load", function () { setTimeout(load, 2000); });
     })();
@@ -89,7 +96,9 @@
     gtag('js', new Date());
     if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
   </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/hi/understand-your-bill/","name":"अपना बिजली बिल समझें: हर पंक्ति की व्याख्या","description":"एक इंटरैक्टिव बिजली बिल जिसे आप बदल सकते हैं। DISCOM, यूनिट और स्वीकृत भार बदलिए और देखिए हर पंक्ति का मतलब — नियत प्रभार, स्लैब, FPPA, शुल्क, मांग शास्ति।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/hi/understand-your-bill/","url":"https://thediscombill.com/hi/understand-your-bill/","name":"अपना बिजली बिल समझें: हर पंक्ति की व्याख्या","description":"एक इंटरैक्टिव बिजली बिल जिसे आप बदल सकते हैं। DISCOM, यूनिट और स्वीकृत भार बदलिए और देखिए हर पंक्ति का मतलब — नियत प्रभार, स्लैब, FPPA, शुल्क, मांग शास्ति।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-27"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"बिजली इस्तेमाल ही नहीं की, फिर बिल पर नियत प्रभार क्यों है?","acceptedAnswer":{"@type":"Answer","text":"क्योंकि नियत प्रभार कनेक्शन का दाम है, खपत का नहीं — आपके परिसर तक की लाइन, मीटर, और आपके लिए तैयार रखी गई क्षमता। यह स्वीकृत भार के हर kW पर लगता है और बंद पड़े घर पर भी लगता है। इसे रोकने का एक ही तरीक़ा है, कनेक्शन विधिवत सरेंडर करना; सिर्फ़ बिजली न इस्तेमाल करने से यह नहीं रुकता।"}},{"@type":"Question","name":"बिजली के बिल पर FPPA क्या है?","acceptedAnswer":{"@type":"Answer","text":"Fuel and Power Purchase Adjustment: DISCOM ने बिजली के लिए असल में जो चुकाया और आपका टैरिफ़ तय करते समय नियामक ने जो मान लिया था, उन दोनों का अंतर — जो आप तक पहुँचाया जाता है। यह समय-समय पर दोबारा तय होता है, इसलिए आपकी खपत न बदले तब भी महीने-दर-महीने बदलता रहता है। कुछ राज्य इसे प्रति यूनिट पैसे में लेते हैं, कुछ ऊर्जा प्रभार के प्रतिशत के रूप में।"}},{"@type":"Question","name":"क्या बिजली के बिल पर GST लगता है?","acceptedAnswer":{"@type":"Answer","text":"नहीं। घरेलू उपभोक्ता को बिजली की आपूर्ति GST से मुक्त है। आपको जो दिखता है वह विद्युत शुल्क है, एक राज्य कर, जो अलग चीज़ है। DISCOM जो चीज़ें अलग से बिल करता है उन पर GST आ सकता है — नए कनेक्शन का शुल्क, मीटर जाँच का प्रभार — पर बिजली की आपूर्ति पर नहीं।"}},{"@type":"Question","name":"मेरे बिल पर \"Average\" या \"Provisional\" लिखा है। इसका क्या मतलब?","acceptedAnswer":{"@type":"Answer","text":"उस महीने किसी ने मीटर पढ़ा ही नहीं, इसलिए DISCOM ने आपके पिछले रिकॉर्ड से खपत का अनुमान लगाया। अगली असली रीडिंग पर इसका हिसाब बराबर होता है — इसीलिए अनुमान वाले महीने के बाद अक्सर एक असामान्य रूप से बड़ा महीना आता है। अपनी रीडिंग खुद लीजिए और शिकायत करते समय वही बताइए — यह सुधार आम बात है।"}},{"@type":"Question","name":"क्या मैं अपनी टैरिफ़ श्रेणी बदल सकता हूँ?","acceptedAnswer":{"@type":"Answer","text":"हाँ, DISCOM को आवेदन देकर, इस प्रमाण के साथ कि परिसर का उपयोग कैसा है। यह मायने रखता है: व्यावसायिक अनुसूची पर बिल बनने वाला घर लगभग दोगुना चुका सकता है। बदलाव आमतौर पर आगे के लिए होता है, इसलिए ग़लत श्रेणी जितनी जल्दी पकड़ी जाए, उतना कम नुक़सान।"}}]}</script>
 </head>
 <body>
