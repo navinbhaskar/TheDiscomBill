@@ -180,16 +180,50 @@ function summarize(db) {
   };
 }
 
+// A state whose licensees are each on their own order has no single state-level basis to
+// record, so Maharashtra and West Bengal carried theirs per DISCOM and the database's state
+// row reported "not recorded" for both — Maharashtra with four MERC orders on file and West
+// Bengal with three WBERC ones. The gap was in the rollup, not in the data.
+//
+// Only reported when EVERY licensee agrees on the year: a state that is half updated is a
+// state whose basis really is mixed, and flattening that to one confident year is the failure
+// this column exists to avoid.
+function rollUpBasis(stateMeta, discoms) {
+  if (stateMeta.ratesAsOf) return { ratesAsOf: stateMeta.ratesAsOf, basisFrom: 'state' };
+  const years = [...new Set(discoms.map((d) => d.tariffYear).filter(Boolean))];
+  const bases = discoms.map((d) => d.ratesAsOf).filter(Boolean);
+  if (years.length !== 1 || bases.length !== discoms.length) return { ratesAsOf: null, basisFrom: null };
+  // The note names each licensee, so hovering the year shows which order covers which.
+  const detail = discoms.map((d) => `${d.name}: ${d.ratesAsOf}`).join(' · ');
+  return { ratesAsOf: `FY ${years[0]} — per licensee (${detail})`, basisFrom: 'discoms' };
+}
+
+// One shared URL becomes the state's source. Several distinct ones cannot honestly collapse
+// into a single "Order ↗", so the count travels instead and the page links the state's own
+// tariff page, which lists every licensee's official source.
+function rollUpSource(stateMeta, discoms) {
+  if (stateMeta.sourceUrl) return { sourceUrl: stateMeta.sourceUrl, sourceCount: 1, sourceFrom: 'state' };
+  const urls = [...new Set(discoms.map((d) => d.sourceUrl).filter(Boolean))];
+  if (!urls.length) return { sourceUrl: null, sourceCount: 0, sourceFrom: null };
+  if (urls.length === 1) return { sourceUrl: urls[0], sourceCount: 1, sourceFrom: 'discoms' };
+  return { sourceUrl: null, sourceCount: urls.length, sourceFrom: 'discoms' };
+}
+
 export function buildTariffDatabase({ quiet = false } = {}) {
   const states = getStates().map((state) => {
     const stateMeta = STATE_META[state] || {};
     const discoms = getDiscoms(state).map((discom) => normalizeDiscom(state, stateMeta, discom));
+    const basis = rollUpBasis(stateMeta, discoms);
+    const source = rollUpSource(stateMeta, discoms);
     return {
       state,
       tariffYear: stateMeta.tariffYear || null,
       effectiveDate: stateMeta.currentRatesFrom || null,
-      ratesAsOf: stateMeta.ratesAsOf || null,
-      sourceUrl: stateMeta.sourceUrl || null,
+      ratesAsOf: basis.ratesAsOf,
+      basisFrom: basis.basisFrom,
+      sourceUrl: source.sourceUrl,
+      sourceCount: source.sourceCount,
+      sourceFrom: source.sourceFrom,
       discomCount: discoms.length,
       categoryCount: discoms.reduce((n, d) => n + d.categoryCount, 0),
       tariffRecordCount: discoms.reduce((n, d) => n + d.tariffCount, 0),

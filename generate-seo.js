@@ -6071,10 +6071,15 @@ function tariffDatabasePage(summary, dbStates = []) {
       <td>${fy ? `<span title="${attr(basis)}">${esc(fy)}</span>` : '<span class="db-gap">not recorded</span>'}</td>
       <td>${s.sourceUrl
         ? `<a href="${attr(s.sourceUrl)}" target="_blank" rel="noopener nofollow">Order ↗</a>`
-        : '<span class="db-gap">—</span>'}</td>
+        : s.sourceCount > 1
+          // Several licensees, several orders: linking one would misrepresent the rest. No
+          // #sources anchor is promised here because the state page has no such section —
+          // it lists the licensees, and each licensee's own page carries its official source.
+          ? `<a href="/tariffs/${slugify(s.state)}/" title="${attr(`${s.state} has ${s.sourceCount} separate tariff orders, one per licensee — open a DISCOM for its own source`)}">${s.sourceCount} orders</a>`
+          : '<span class="db-gap">—</span>'}</td>
     </tr>`;
   }).join('');
-  const withSource = sorted.filter((s) => s.sourceUrl).length;
+  const withSource = sorted.filter((s) => s.sourceUrl || s.sourceCount > 1).length;
   const verifiedCount = sorted.filter((s) => (STATE_META[s.state] || {}).verified).length;
   const body = `
   <section class="seo-page container">

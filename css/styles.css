@@ -688,7 +688,7 @@
    stand in for the tag line, the headline and the state. No shimmer: this is on screen for
    about 150ms on a warm load, and a sweeping animation that brief reads as a flicker. */
 .alerts-skeleton { pointer-events: none; }
-.alerts-skel-item { display: grid; gap: 7px; padding: 11px 10px 12px; }
+.alerts-skel-item { display: grid; gap: 8px; padding: 13px 10px 14px; }
 .alerts-skel-line {
   display: block; height: 9px; border-radius: var(--radius-full);
   background: var(--surface-sunken);
@@ -715,11 +715,14 @@
   font-size: 13.5px; line-height: 1.35; color: var(--text-primary); font-weight: 600;
 }
 .alerts-nav-state { font-size: 11.5px; color: var(--text-secondary); }
+/* Sits at the end of the list, not pinned over it. As a sticky footer it hovered above the
+   last notice and read as a bar the list ran underneath; the reader reaches it by finishing
+   the five, which is the point at which "see all" is the natural next move. */
 .alerts-see-all {
   display: block; padding: 12px 14px; text-align: center;
   font-size: 13px; font-weight: 600; color: var(--text-brand);
   border-top: 1px solid var(--border-subtle);
-  position: sticky; bottom: 0; background: var(--surface-card);
+  background: var(--surface-card);
 }
 .alerts-see-all:hover { background: var(--brand-faint); text-decoration: none; }
 
