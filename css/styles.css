@@ -5892,6 +5892,18 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   margin: 0; font-size: 13px; line-height: 1.5; color: var(--text-secondary);
 }
 
+/* The seven field explainers below the calculator, marked to match the hero spec. The
+   paragraph takes the same indent as its heading so the two share a text edge and the bullet
+   is the only thing hanging in the margin — a heading indented over a flush paragraph reads
+   as a mistake rather than as a list. */
+.bc-fields h3 { position: relative; padding-left: 20px; }
+.bc-fields h3::before {
+  content: ''; position: absolute; left: 3px; top: 0.62em;
+  width: 6px; height: 6px; border-radius: var(--radius-full);
+  background: var(--brand);
+}
+.bc-fields h3 + p { padding-left: 20px; }
+
 /* The "same engine as the home page" note is orientation, not the pitch — it sits below the
    chips at meta weight so it stops competing with them. */
 .bc-meta {
