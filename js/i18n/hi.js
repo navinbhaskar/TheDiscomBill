@@ -32,6 +32,7 @@ export default {
     'ql.services': 'सेवाएँ',
     'ql.learn': 'जानें',
     'ql.compare': 'डिस्कॉम टैरिफ तुलना',
+    'ql.advancedCalc': 'एडवांस्ड बिल कैलकुलेटर',
     'ql.usage': 'बिजली लागत कैलकुलेटर',
     'ql.solar': 'रूफटॉप सोलर बचत',
     'ql.ev': 'EV चार्जिंग लागत',
