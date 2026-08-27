@@ -37,3 +37,6 @@ supabase/functions/calc/bundle.ts
 
 # SEO audit artifacts (32MB of screenshots + crawl data) — local analysis, never deployed
 *-audit/
+# The audit write-up itself. Local working notes, not website content: the repo root is served
+# publicly, so a committed copy would be live at thediscombill.com/FULL-AUDIT-REPORT.md.
+FULL-AUDIT-REPORT.md
