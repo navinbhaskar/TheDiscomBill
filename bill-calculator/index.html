@@ -133,10 +133,12 @@
 <div class="page-body" role="main">
   <section class="svc-section bc-hero">
     <div class="container container-mid">
-      <nav class="seo-breadcrumbs" aria-label="Breadcrumb">
-        <a href="/">Home</a> <span aria-hidden="true">›</span>
-        <span aria-current="page">Advanced bill calculator</span>
-      </nav>
+      <!-- Canonical crumb markup, matching /services/ and every generated page. It was a bare
+           <a> and two <span>s, and the sizing rule is `.seo-breadcrumbs ol { font-size: 12.5px }`
+           — with no <ol> the trail inherited 15px body copy and lost the flex row's 7px gaps,
+           which is why this one page's breadcrumbs read larger and sat differently from the
+           rest of the site. -->
+      <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">Advanced bill calculator</span></li></ol></nav>
       <h1 class="reveal">Advanced electricity bill calculator</h1>
       <p class="svc-intro reveal">Every field the tariff orders actually define — not a
       simplified estimate.</p>
