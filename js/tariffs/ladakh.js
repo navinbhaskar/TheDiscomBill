@@ -37,7 +37,6 @@ export default {
               rate: 2.5
             }
           ],
-          additionalCharges: [],
           notes: "Heavily subsidized by UT Administration."
         }
       ]

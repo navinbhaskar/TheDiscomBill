@@ -805,6 +805,59 @@ console.log('\n• PFC integrated ratings are internally consistent');
   }
 }
 
+console.log('\n• electricity duty reaches every band it should');
+{
+  // Two silent ways a duty entry can read correctly and do nothing:
+  //
+  //   1. A second `additionalCharges` later in the same object literal wins, because duplicate
+  //      keys are legal JS. Karnataka's 9% and Ladakh's 15% were both lost this way.
+  //   2. It lands on a supply type that happens to be called "domestic" instead of on the
+  //      domestic CATEGORY, so one band gets it and the rest do not. Himachal Pradesh,
+  //      Meghalaya and Tripura each charged one band out of three or four.
+  //
+  // Neither shows up in the data — only in a computed bill. So this computes one.
+  const { getStates, getDiscoms, ensureAll, getDefaultCategory } = await import(
+    pathToFileURL(path.join(ROOT, 'js', 'tariffs', 'registry.js')).href);
+  const { calculateBill } = await import(pathToFileURL(path.join(ROOT, 'js', 'engine.js')).href);
+  await ensureAll();
+
+  const isDuty = (c) => /duty|tax|cess/i.test(c.name || '');
+  const problems = [];
+  let evenStates = 0;
+
+  for (const state of getStates()) {
+    const d = getDiscoms(state)[0];
+    const cat = getDefaultCategory(d.id);
+    if (!cat) continue;
+    const bands = (cat.supplyTypes || []).map((s) => s.id);
+    const dutyFor = (supplyTypeId) => {
+      const bill = calculateBill({ discomId: d.id, categoryId: cat.id, supplyTypeId,
+        units: 300, connectedLoadKw: 2, billingPeriodDays: 30 });
+      return bill.extraCharges.filter(isDuty).map((c) => c.name).sort().join('|');
+    };
+    if (!bands.length) continue;              // nothing to be uneven about
+    const seen = bands.map(dutyFor);
+    // The test is whether a band carries duty AT ALL, not whether every band carries the same
+    // set. Rajasthan is the reason: its urban band adds the municipal cess on top of the same
+    // duty, which is deliberate. A band with nothing while its siblings are charged is the bug.
+    const some = seen.some(Boolean);
+    const all = seen.every(Boolean);
+    if (some && !all) {
+      const detail = bands.map((b, i) => `${b}=${seen[i] || 'none'}`).join(', ');
+      problems.push(`${state}: some bands of ${cat.id} carry no duty (${detail})`);
+    } else if (all) {
+      evenStates++;
+    }
+  }
+
+  if (problems.length) {
+    fail(`duty does not reach every band:\n    ${problems.join('\n    ')}`);
+  } else {
+    passed++;
+    console.log(`  ✓ ${evenStates} banded states charge duty on every band`);
+  }
+}
+
 // ── summary ───────────────────────────────────────────────────────────────────
 console.log(`\n${failed ? '✗' : '✓'} site checks — ${passed} groups passed, ${failed} failures\n`);
 process.exit(failed ? 1 : 0);

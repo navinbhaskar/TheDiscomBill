@@ -8,11 +8,6 @@
 const ML_DOMESTIC_TYPES = [
   {
     id: "domestic",
-    // Domestic electricity duty: 5 paise/unit. CEA does not list this state as energy-charge-only, so duty applies to the wider bill.
-    // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply
-    // in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
-    // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
-    additionalCharges: [{ name: "Electricity Duty", type: "per_unit", rate: 0.05 }],
     name: "Domestic (DLT)",
     description: "Three telescopic slabs on ₹90 per kVA per month. The slabs barely differ — ₹5.00, ₹5.04 and ₹5.10 — so consumption has almost no effect on the rate you pay.",
     fixedCharge: { type: "per_kva", rate: 90 },
@@ -53,6 +48,11 @@ export default {
       categories: [
         {
           id: "domestic",
+          // Domestic electricity duty: 5 paise/unit. CEA does not list this state as energy-charge-only, so duty applies to the wider bill.
+          // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply
+          // in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
+          // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+          additionalCharges: [{ name: "Electricity Duty", type: "per_unit", rate: 0.05 }],
           name: "Domestic (Low Tension)",
           supplyTypes: ML_DOMESTIC_TYPES,
           fixedCharge: ML_DOMESTIC_TYPES[0].fixedCharge,

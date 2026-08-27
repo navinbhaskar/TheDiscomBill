@@ -55,14 +55,44 @@ const DS_ENERGY = [
 // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
 const RJ_ED = { name: "Electricity Duty (ED)", type: "per_unit", rate: 0.40 };
 
+// The urban cess: 15 paise a unit, but only for a connection in a municipal area consuming more
+// than 100 units a month. Both halves of that are now expressible — the consumption half by the
+// charge band, the municipal half by making the area a supply type. Rajasthan had no supply
+// types, so this adds the first ones rather than multiplying an existing list, which is exactly
+// why it can be done here and not in Punjab, whose supply types are already load bands.
+//
+// The two share one tariff: same slabs, same fixed charge. They differ only in the cess, which
+// is the same shape Gujarat, Madhya Pradesh and West Bengal already use for urban/rural.
+const RJ_URBAN_CESS = { name: "Urban Cess", type: "per_unit", rate: 0.15, minUnits: 100 };
+
 const rajasthanCategories = () => [
   {
     id: "domestic",
     name: "DS/LT-1 (Domestic Service)",
     fixedCharge: DS_FIXED,
     energySlabs: DS_ENERGY,
+    // Rural is the fallback for a call that passes no supplyTypeId: it is the tariff without the
+    // cess, so an unanswered question never invents a charge the consumer may not owe.
     additionalCharges: [RJ_ED],
-    notes: "Fixed charges are banded on average monthly consumption, not sanctioned load. A Regulatory Surcharge of ₹1.00/unit applies (₹0.70/unit for households consuming up to 100 units a month) — it is a combined ceiling that already includes the Fuel and Power Purchase Adjustment Surcharge, so FPPAS is not charged on top of it. BPL and Astha card holders and silicosis patients pay 475 paise on the first 50 units with a ₹150 fixed charge.",
+    supplyTypes: [
+      {
+        id: "rural",
+        name: "Rural / non-municipal area",
+        description: "Outside a municipal area. Electricity duty applies; the urban cess does not.",
+        fixedCharge: DS_FIXED,
+        energySlabs: DS_ENERGY,
+        additionalCharges: [RJ_ED],
+      },
+      {
+        id: "urban",
+        name: "Urban / municipal area",
+        description: "Inside a municipal area. Adds the 15 paise/unit urban cess once consumption passes 100 units a month.",
+        fixedCharge: DS_FIXED,
+        energySlabs: DS_ENERGY,
+        additionalCharges: [RJ_ED, RJ_URBAN_CESS],
+      },
+    ],
+    notes: "Fixed charges are banded on average monthly consumption, not sanctioned load. A Regulatory Surcharge of ₹1.00/unit applies (₹0.70/unit for households consuming up to 100 units a month) — it is a combined ceiling that already includes the Fuel and Power Purchase Adjustment Surcharge, so FPPAS is not charged on top of it. BPL and Astha card holders and silicosis patients pay 475 paise on the first 50 units with a ₹150 fixed charge. The urban and rural options carry the same tariff and differ only in the urban cess, which is charged at 15 paise a unit on municipal-area connections using more than 100 units a month.",
   },
   {
     id: "commercial",

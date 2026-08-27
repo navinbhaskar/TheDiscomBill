@@ -8,11 +8,6 @@
 const HP_DOMESTIC_TYPES = [
   {
     id: "domestic",
-    // Domestic electricity duty: 3% of energy. CEA records duty on the energy charge only for this state.
-    // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply
-    // in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
-    // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
-    additionalCharges: [{ name: "Electricity Duty", type: "percent_energy", rate: 3 }],
     name: "DS — Other (ordinary) domestic consumers",
     description: "₹5.44/unit up to 125 units a month and ₹5.89 beyond, on a flat ₹85/month fixed charge that does not vary with load.",
     fixedCharge: { type: "flat", rate: 85 },
@@ -88,6 +83,11 @@ export default {
       categories: [
         {
           id: "domestic",
+          // Domestic electricity duty: 3% of energy. CEA records duty on the energy charge only for this state.
+          // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply
+          // in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
+          // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+          additionalCharges: [{ name: "Electricity Duty", type: "percent_energy", rate: 3 }],
           name: "DS (Domestic Supply)",
           supplyTypes: HP_DOMESTIC_TYPES,
           fixedCharge: HP_DOMESTIC_TYPES[0].fixedCharge,

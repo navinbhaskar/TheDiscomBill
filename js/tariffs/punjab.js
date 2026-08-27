@@ -8,6 +8,31 @@
 
 // Domestic Supply (Schedule DS-SVI). The band is chosen by SANCTIONED LOAD; within a band
 // the slabs are telescopic (first 300 units at the lower rate, the rest at ₹7.05).
+// Electricity duty, at the RURAL rate.
+//
+// Punjab charges 15% in rural areas and 13% in urban ones, and nothing in a bill estimate tells
+// us which a consumer is in. The three ways out were all worse than this one:
+//
+//   - Leave it unmodelled, as before. That understated every Punjab bill by 13-15%, which is a
+//     bigger error for everyone than 2 points is for half of them.
+//   - Cross the five load bands with the two areas. Ten supply types, and the ids would have to
+//     change: an existing share link carrying st=ds20 would then miss and fall back to the first
+//     supply type — a different band, and a materially wrong bill, with nothing on screen saying
+//     so. Gujarat and Rajasthan could take urban/rural as supply types precisely because theirs
+//     were free; Punjab's already carry the load bands.
+//   - Add an urban/rural input to the calculator. The right answer eventually, but it reaches the
+//     form, the share-link writer and reader, page-calc and four dictionaries — too much surface
+//     to bolt on for one state, and it needs a design decision rather than a data one.
+//
+// So: the rural rate, which applies to the larger share of Punjab connections, with the page
+// saying plainly that urban consumers pay two points less. An estimate 2% high for some readers
+// beats one 15% low for all of them, and the note makes the difference checkable.
+//
+// Punjab is not in CEA's energy-charge-only list, so duty applies to the wider bill.
+// Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
+// https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+const PB_ED = { name: "Electricity Duty", type: "percent_total", rate: 15 };
+
 const PB_DOMESTIC_TYPES = [
   {
     id: "ds2",
@@ -121,7 +146,10 @@ export default {
           supplyTypes: PB_DOMESTIC_TYPES,
           fixedCharge: PB_DOMESTIC_TYPES[1].fixedCharge,
           energySlabs: PB_DOMESTIC_TYPES[1].energySlabs,
-          notes: "Punjab picks the domestic band by sanctioned load, not by consumption, and the slabs inside a band are telescopic — the first 300 units at the band's own rate, everything above at ₹7.05. PSERC reduced rates across every band for FY 2026-27. The State's 300 free units a month still apply on top, so many domestic bills settle at zero. Statutory levies (electricity duty, cow cess, infrastructure development fee) are notified by the State Government rather than by PSERC and are NOT included in this calculation — your actual bill will carry them.",
+          // On the category, so every load band inherits it — duty is a state levy, not a
+          // property of the band.
+          additionalCharges: [PB_ED],
+          notes: "Punjab picks the domestic band by sanctioned load, not by consumption, and the slabs inside a band are telescopic — the first 300 units at the band's own rate, everything above at ₹7.05. PSERC reduced rates across every band for FY 2026-27. The State's 300 free units a month still apply on top, so many domestic bills settle at zero. Statutory levies are notified by the State Government rather than by PSERC. Electricity duty is included here at the rural rate of 15%; if your connection is in a municipal area the rate is 13%, so your bill will be about two points lower than this estimate. Cow cess and the infrastructure development fee are still not modelled, so your actual bill will carry a little more.",
         },
         {
           id: "commercial",

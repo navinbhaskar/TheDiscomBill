@@ -178,7 +178,7 @@
       the bill into energy charge, fixed or demand charge, Regulatory Surcharge, duty,
       and late-payment surcharge where applicable.</p>
       
-      <div class="pcalc" data-state="Rajasthan" data-types="{&quot;jdvvnl&quot;:[]}">
+      <div class="pcalc" data-state="Rajasthan" data-types="{&quot;jdvvnl&quot;:[[&quot;rural&quot;,&quot;Rural / non-municipal area&quot;],[&quot;urban&quot;,&quot;Urban / municipal area&quot;]]}">
       <form class="pcalc-form" id="pcalcForm">
         <input type="hidden" id="pcDiscom" value="jdvvnl">
         <!-- Not every DISCOM bands its domestic tariff. BESCOM has a single flat rate and no
@@ -188,8 +188,8 @@
              control below it. Disabled also says why it is inactive, which hiding cannot. -->
         <div class="pcalc-field pcalc-field-wide" id="pcSupplyField">
           <label for="pcSupply">Supply type</label>
-          <select id="pcSupply" disabled>
-            <option value="">Not applicable — single domestic tariff</option>
+          <select id="pcSupply" required>
+            <option value="">Select your supply type…</option><option value="rural">Rural / non-municipal area</option><option value="urban">Urban / municipal area</option>
           </select>
         </div>
         <div class="pcalc-field">
@@ -330,7 +330,25 @@
           
         </div>
       </header>
-      <div id="rate-domestic">
+      <div class="tariff-rows">
+      <div class="tariff-rows-head" aria-hidden="true">
+        <span>Supply type</span>
+        <span class="num">Fixed charge</span>
+        <span class="num">Energy rate<small>per unit</small></span>
+        <span></span>
+      </div>
+      <details class="tariff-supplytype" id="rate-domestic-rural" open>
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Rural / non-municipal area</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹150<span class="ts-dash">–</span>800<span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹4.75<span class="ts-dash">–</span>7.50</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Outside a municipal area. Electricity duty applies; the urban cess does not.</p>
+          
     <div class="tariff-block">
       <div class="tariff-field">
         <div class="tariff-field-label">Fixed charge</div>
@@ -341,8 +359,35 @@
         <table class="tariff-slab-table"><tbody><tr><td>0 – 50 <span class="tx-muted">units</span></td><td class="num">₹4.75<span class="tx-muted">/unit</span></td></tr><tr><td>50 – 150 <span class="tx-muted">units</span></td><td class="num">₹6.00<span class="tx-muted">/unit</span></td></tr><tr><td>150 – 500 <span class="tx-muted">units</span></td><td class="num">₹7.00<span class="tx-muted">/unit</span></td></tr><tr><td>Above 500 <span class="tx-muted">units</span></td><td class="num">₹7.50<span class="tx-muted">/unit</span></td></tr></tbody></table>
       </div>
       <div class="tariff-field"><div class="tariff-field-label">Additional charges</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>₹0.4</strong></li></ul></div>
-    </div></div>
-      <p class="tariff-card-note">ℹ️ Fixed charges are banded on average monthly consumption, not sanctioned load. A Regulatory Surcharge of ₹1.00/unit applies (₹0.70/unit for households consuming up to 100 units a month) — it is a combined ceiling that already includes the Fuel and Power Purchase Adjustment Surcharge, so FPPAS is not charged on top of it. BPL and Astha card holders and silicosis patients pay 475 paise on the first 50 units with a ₹150 fixed charge.</p>
+    </div>
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-domestic-urban">
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Urban / municipal area</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹150<span class="ts-dash">–</span>800<span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹4.75<span class="ts-dash">–</span>7.50</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Inside a municipal area. Adds the 15 paise/unit urban cess once consumption passes 100 units a month.</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">Fixed charge</div>
+        <div class="tariff-field-value"><table class="tariff-slab-table"><tbody><tr><td>up to 150 units/month</td><td class="num">₹150<span class="tx-muted">/mo</span></td></tr><tr><td>up to 300 units/month</td><td class="num">₹300<span class="tx-muted">/mo</span></td></tr><tr><td>up to 500 units/month</td><td class="num">₹500<span class="tx-muted">/mo</span></td></tr><tr><td>above 500 units/month</td><td class="num">₹800<span class="tx-muted">/mo</span></td></tr></tbody></table></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">Energy charges</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 50 <span class="tx-muted">units</span></td><td class="num">₹4.75<span class="tx-muted">/unit</span></td></tr><tr><td>50 – 150 <span class="tx-muted">units</span></td><td class="num">₹6.00<span class="tx-muted">/unit</span></td></tr><tr><td>150 – 500 <span class="tx-muted">units</span></td><td class="num">₹7.00<span class="tx-muted">/unit</span></td></tr><tr><td>Above 500 <span class="tx-muted">units</span></td><td class="num">₹7.50<span class="tx-muted">/unit</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">Additional charges</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>₹0.4</strong></li><li><span>Urban Cess</span><strong>₹0.15</strong></li></ul></div>
+    </div>
+        </div>
+      </details></div>
+      <p class="tariff-card-note">ℹ️ Fixed charges are banded on average monthly consumption, not sanctioned load. A Regulatory Surcharge of ₹1.00/unit applies (₹0.70/unit for households consuming up to 100 units a month) — it is a combined ceiling that already includes the Fuel and Power Purchase Adjustment Surcharge, so FPPAS is not charged on top of it. BPL and Astha card holders and silicosis patients pay 475 paise on the first 50 units with a ₹150 fixed charge. The urban and rural options carry the same tariff and differ only in the urban cess, which is charged at 15 paise a unit on municipal-area connections using more than 100 units a month.</p>
     </article>
     <article class="tariff-card">
       <header class="tariff-card-head">
