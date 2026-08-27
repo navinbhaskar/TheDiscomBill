@@ -431,6 +431,13 @@ async function syncAccountRole(currentRole) {
 // jump. Disabled for users who prefer reduced motion (they keep native scrolling).
 async function initSmoothScroll() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  // Wheel devices only. This is configured with smoothWheel and deliberately leaves touch
+  // on native scrolling (see the constructor below), so on a phone it was fetching 24KB of
+  // library to run nothing at all — on exactly the devices whose Core Web Vitals are the
+  // ones Google scores. Anchor links keep their glide without it: `html { scroll-behavior:
+  // smooth }` in styles.css already does that, and is only switched off by `html.lenis`,
+  // which is added when Lenis attaches. No Lenis, no override, native easing.
+  if (!window.matchMedia('(pointer: fine)').matches) return;
   const { default: Lenis } = await import('./vendor/lenis.mjs');
   const lenis = new Lenis({
     duration: 1.1,
@@ -724,11 +731,37 @@ document.addEventListener('DOMContentLoaded', () => {
   // site 514KB of JS (ui.js -> renderer/engine + the registry's 37 state modules +
   // datepicker) for code a guide or tariff page never runs. See js/calculator-init.js.
   if (document.getElementById('stateSelect')) {
+    let started = false;
     const initCalculatorWhenCalm = () => {
+      if (started) return;
+      started = true;
       import('./calculator-init.js').then(m => m.initCalculator()).catch(() => {});
     };
-    if ('requestIdleCallback' in window) requestIdleCallback(initCalculatorWhenCalm, { timeout: 1500 });
-    else setTimeout(initCalculatorWhenCalm, 0);
+
+    // Intent beats any timer. Touching or tabbing into the form is the earliest honest signal
+    // that this reader is about to use it, and it is the same trigger the compact calculator
+    // on the generated pages already uses. Capture phase so it fires before anything inside
+    // the form can stop the event.
+    const form = document.getElementById('calculator')
+      || document.getElementById('stateSelect').closest('section');
+    if (form) {
+      form.addEventListener('pointerdown', initCalculatorWhenCalm, { once: true, capture: true });
+      form.addEventListener('focusin', initCalculatorWhenCalm, { once: true });
+    }
+
+    // Otherwise: after the page has finished loading, not merely when the main thread first
+    // goes quiet. This import pulls ~294KB (ui.js -> renderer/engine/registry/datepicker) and
+    // on idle alone it began at ~1.9s — while LCP was still landing at 2.2s, so the two were
+    // competing for the same main thread. Waiting for `load` puts it after the paint that
+    // gets measured, at no cost to anyone who has not reached the form yet. The selects are
+    // server-rendered with their options, so the form looks and reads complete throughout;
+    // this only wires up its behaviour.
+    const schedule = () => {
+      if ('requestIdleCallback' in window) requestIdleCallback(initCalculatorWhenCalm, { timeout: 3000 });
+      else setTimeout(initCalculatorWhenCalm, 200);
+    };
+    if (document.readyState === 'complete') schedule();
+    else addEventListener('load', schedule, { once: true });
   }
 
   // Guide articles only — the Share control. Loaded the same way and for the same reason:
