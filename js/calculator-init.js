@@ -292,7 +292,10 @@ export function initCalculator() {
     // is a legacy ?q= share link, which opens Detailed so every field it carries (arrears, TOD,
     // dates…) stays visible.
     const hasSharePayload = new URLSearchParams(location.search).has('q');
-    setCalcMode(hasSharePayload ? 'detailed' : 'simple');
+    // /bill-calculator/ marks itself detailed: it exists for the fields Simple mode hides, so
+    // opening it stripped-down would hide the only reason to be on that page.
+    const pageDefault = document.getElementById('calculator')?.dataset.defaultMode;
+    setCalcMode(hasSharePayload || pageDefault === 'detailed' ? 'detailed' : 'simple');
 
     // "Show the full bill breakdown" on the Simple result: switch to Detailed and
     // re-render the same inputs as the full facsimile, then scroll to it.

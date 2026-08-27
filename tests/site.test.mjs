@@ -12,7 +12,10 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const IGNORE = new Set(['node_modules', '.git', 'dist', '.wrangler', 'graphify-out', 'supabase']);
+// .build holds generated scratch (the tariff DB, hub snapshots) rather than site pages, and
+// its stale copies were failing the footer-consistency check for links added since they were
+// written. Nothing there is served.
+const IGNORE = new Set(['node_modules', '.git', 'dist', '.wrangler', 'graphify-out', 'supabase', '.build']);
 
 let passed = 0, failed = 0;
 const fail = (msg) => { failed++; console.error(`  ✗ ${msg}`); };
@@ -354,7 +357,7 @@ console.log('\n• tariff index fresh, and off the homepage critical path');
     const stateFiles = new Set(fs.readdirSync(path.join(ROOT, 'js', 'tariffs'))
       .filter((f) => f.endsWith('.js') &&
         // Keep in step with NOT_A_STATE in scripts/build-tariff-index.mjs.
-        !['registry.js', 'index.js', 'fppa.js', 'fppa-resolve.js', 'subsidy.js', 'surcharge-terms.js', 'orders.js'].includes(f))
+        !['registry.js', 'index.js', 'fppa.js', 'fppa-resolve.js', 'subsidy.js', 'surcharge-terms.js', 'orders.js', 'ratings.js'].includes(f))
       .map((f) => `tariffs/${f}`));
 
     const home = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
@@ -721,6 +724,63 @@ console.log('\n• homepage sample bills match the engine');
   } else {
     passed++;
     console.log(`  ✓ all ${SLIDES.length} hero sample bills reproduce from calculateBill()`);
+  }
+}
+
+console.log('\n• PFC integrated ratings are internally consistent');
+{
+  const { DISCOM_RATING, UNRATED, RATING_REPORT } = await import(
+    pathToFileURL(path.join(ROOT, 'js', 'tariffs', 'ratings.js')).href);
+  const { getStates, getDiscoms } = await import(
+    pathToFileURL(path.join(ROOT, 'js', 'tariffs', 'registry.js')).href);
+
+  const ids = new Set();
+  for (const st of getStates()) for (const d of getDiscoms(st)) ids.add(d.id);
+
+  const GRADES = new Set(['A+', 'A', 'B', 'B-', 'C', 'C-', 'D']);
+  const problems = [];
+
+  // Every key must name a DISCOM we actually publish, or the grade renders nowhere and the
+  // mapping has silently drifted from the tariff data.
+  for (const id of Object.keys(DISCOM_RATING)) {
+    if (!ids.has(id)) problems.push(`DISCOM_RATING.${id} is not a known DISCOM id`);
+  }
+  for (const id of Object.keys(UNRATED)) {
+    if (!ids.has(id)) problems.push(`UNRATED.${id} is not a known DISCOM id`);
+    if (DISCOM_RATING[id]) problems.push(`${id} is listed both as rated and as unrated`);
+  }
+
+  // Rated + unrated must account for every DISCOM. If a new one is added to the tariff data and
+  // nobody touches ratings.js, this is what says so.
+  const covered = new Set([...Object.keys(DISCOM_RATING), ...Object.keys(UNRATED)]);
+  for (const id of ids) {
+    if (!covered.has(id)) problems.push(`${id} is neither rated nor recorded as unrated in ratings.js`);
+  }
+
+  const seenReportNames = new Map();
+  for (const [id, r] of Object.entries(DISCOM_RATING)) {
+    if (!GRADES.has(r.grade)) problems.push(`${id}: grade ${r.grade} is not a report grade`);
+    // Rank is only meaningful inside its own cohort; a rank past the cohort size means the two
+    // ranking tables have been conflated, which is the exact error the page copy guards against.
+    if (!(r.rank >= 1 && r.rank <= r.rankOf)) problems.push(`${id}: rank ${r.rank} outside 1..${r.rankOf}`);
+    if (!(r.score >= 0 && r.score <= 100)) problems.push(`${id}: score ${r.score} outside 0..100`);
+    if (r.kind === 'power-dept' && r.rankOf !== 11) problems.push(`${id}: power-dept cohort should be 11`);
+    if (r.kind === 'utility' && r.rankOf !== 54) problems.push(`${id}: utility cohort should be 54`);
+    // Two of our DISCOMs mapped to one report row would double-count a grade.
+    if (seenReportNames.has(r.reportName)) {
+      problems.push(`${r.reportName} is mapped to both ${seenReportNames.get(r.reportName)} and ${id}`);
+    }
+    seenReportNames.set(r.reportName, id);
+  }
+
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(RATING_REPORT.verifiedOn)) problems.push('RATING_REPORT.verifiedOn is not a date');
+  if (!/^https:\/\//.test(RATING_REPORT.sourceUrl)) problems.push('RATING_REPORT.sourceUrl is not an https URL');
+
+  if (problems.length) {
+    fail(`js/tariffs/ratings.js is inconsistent:\n    ${problems.join('\n    ')}`);
+  } else {
+    passed++;
+    console.log(`  ✓ ${Object.keys(DISCOM_RATING).length} rated + ${Object.keys(UNRATED).length} unrated = all ${ids.size} DISCOMs, ranks within cohort`);
   }
 }
 

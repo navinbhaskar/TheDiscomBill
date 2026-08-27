@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en" data-i18n-twins-only>
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      
+    })();
+  </script>
+  <title>On-Grid vs Hybrid Solar in India — Backup, Subsidy and Real Costs</title>
+  <meta name="description" content="On-grid solar shuts down in a power cut. Hybrid keeps running but costs more. How the two differ on backup, subsidy and payback, and how to pick one.">
+  <link rel="canonical" href="https://thediscombill.com/guides/on-grid-vs-hybrid-solar/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="On-Grid vs Hybrid Solar in India — Backup, Subsidy and Real Costs">
+  <meta property="og:description" content="On-grid solar shuts down in a power cut. Hybrid keeps running but costs more. How the two differ on backup, subsidy and payback, and how to pick one.">
+  <meta property="og:url" content="https://thediscombill.com/guides/on-grid-vs-hybrid-solar/">
+  <meta property="og:image" content="https://thediscombill.com/og/guide-on-grid-vs-hybrid-solar.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="On-Grid vs Hybrid Solar in India — Backup, Subsidy and Real Costs">
+  <meta property="og:locale" content="en_IN">
+  <meta property="og:locale:alternate" content="hi_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="On-Grid vs Hybrid Solar in India — Backup, Subsidy and Real Costs">
+  <meta name="twitter:description" content="On-grid solar shuts down in a power cut. Hybrid keeps running but costs more. How the two differ on backup, subsidy and payback, and how to pick one.">
+  <meta name="twitter:image" content="https://thediscombill.com/og/guide-on-grid-vs-hybrid-solar.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","url":"https://thediscombill.com/guides/on-grid-vs-hybrid-solar/","name":"On-Grid vs Hybrid Solar in India — Backup, Subsidy and Real Costs","description":"On-grid solar shuts down in a power cut. Hybrid keeps running but costs more. How the two differ on backup, subsidy and payback, and how to pick one.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"On-Grid vs Hybrid Solar: Which One Your House Actually Needs","description":"On-grid solar shuts down in a power cut. Hybrid keeps running but costs more. How the two differ on backup, subsidy and payback, and how to pick one.","image":"https://thediscombill.com/og/guide-on-grid-vs-hybrid-solar.jpg","mainEntityOfPage":"https://thediscombill.com/guides/on-grid-vs-hybrid-solar/","datePublished":"2026-08-27","dateModified":"2026-08-27","inLanguage":"en-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://thediscombill.com/guides/"},{"@type":"ListItem","position":3,"name":"On-Grid vs Hybrid Solar: Which One Your House Actually Needs"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does on-grid solar work during a power cut?","acceptedAnswer":{"@type":"Answer","text":"No. A grid-tied inverter is required to shut down when the grid fails — a safety rule called anti-islanding, which prevents your system energising lines that a lineman has switched off. It also has no voltage and frequency reference to follow once the grid is gone. Only a hybrid or off-grid system keeps supplying power during an outage."}},{"@type":"Question","name":"Is a hybrid solar system eligible for the PM Surya Ghar subsidy?","acceptedAnswer":{"@type":"Answer","text":"The subsidy is calculated on rooftop generating capacity in kW — ₹30,000/kW for the first 2 kW, ₹18,000/kW for the third, capped at ₹78,000 — so it never pays for the battery, which is an out-of-pocket addition either way. Whether a hybrid installation is accepted on the same terms as a plain grid-tied one is something we could not confirm from an official document, so get it in writing from your DISCOM and a portal-registered vendor before committing."}},{"@type":"Question","name":"Is a solar battery worth the money?","acceptedAnswer":{"@type":"Answer","text":"It depends what you want from it. A battery buys availability during outages, not extra savings: under net metering an exported unit is already credited at your top slab rate, so storing it rather than exporting it captures roughly the same value minus losses and the battery's own cost. Where it does pay is in states that credit exports at a low rate instead of netting them one-for-one, and in areas with frequent long outages."}},{"@type":"Question","name":"Can I add a battery to my on-grid system later?","acceptedAnswer":{"@type":"Answer","text":"Usually not without changing hardware. A standard grid-tied inverter is not built to charge or discharge storage, so adding a battery generally means replacing it with a hybrid inverter or bolting on a separate AC-coupled unit. If you think storage is likely within a few years, it is far cheaper to specify a hybrid-capable inverter at the start, even if you buy the battery later."}},{"@type":"Question","name":"What size battery do I need for backup?","acceptedAnswer":{"@type":"Answer","text":"Size it to a defined backup circuit, not to your whole house. List what genuinely must keep running — typically lights, fans, router and the fridge — add up their draw, and multiply by the number of hours you need to cover. Running air conditioning through an outage is a different order of cost, and is what turns a modest hybrid system into an expensive one."}},{"@type":"Question","name":"Is hybrid solar more expensive than on-grid?","acceptedAnswer":{"@type":"Answer","text":"Yes, on both counts. Hybrid costs more upfront because it adds a battery and a hybrid inverter, and more over time because the battery will need replacing at least once within the panels' service life. The subsidy does not narrow that gap, since it is paid per kW of panel capacity. The extra cost buys backup power, so judge it against what an outage costs you rather than against the payback period."}}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/bill-calculator/" data-i18n="nav.calculator">Calculator</a>
+      <a href="/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">Smart Meter</a>
+      <a href="/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/bill-calculator/" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">Smart Meter</span></a>
+            <a href="/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <!-- aria-labelledby, not aria-label: the accessible name has to CONTAIN the visible
+             text ("EN"), or speech input cannot activate the button and a screen reader never
+             announces which language is active (WCAG 2.5.3). Referencing the live span also
+             keeps the name in step when syncLangUI() rewrites the badge. -->
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- A plain list of links, not a listbox. These rows navigate, so they are anchors:
+             that makes them crawlable, middle-clickable and keyboard-operable for free,
+             none of which a role="option" <li> with a click handler ever was. Rows that
+             translate in place (no twin URL to point at) stay <button>s. -->
+        <ul class="lang-menu" id="langMenu" aria-label="Select language">
+          <li><span class="lang-opt" data-lang="en" aria-current="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></span></li>
+          <li><button type="button" class="lang-opt" data-lang="hi"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">हिं</span></button></li>
+        </ul>
+      </div>
+      <button type="button" id="siteSearchBtn" class="site-search-btn" aria-label="Search the site (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body" role="main">
+
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><a href="/guides/">Guides</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">On-Grid vs Hybrid Solar: Which One Your House Actually Needs</span></li></ol></nav>
+    <div class="seo-article-tools"><p class="seo-lang-pills"><svg class="seo-lang-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span class="sr-only">Available in</span><span class="seo-lang-pill is-current" lang="en" aria-current="page">English</span></p><button type="button" class="seo-share-btn" data-share-article hidden data-copied="Link copied" data-failed="Copy failed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span class="seo-share-label" data-share-label>Share</span></button></div>
+    <h1>On-Grid vs Hybrid Solar: Which One Your House Actually Needs</h1>
+    <p class="guide-meta">8 min read · Updated 27 August 2026 · TheDiscomBill Editorial · <a href="/methodology/">How we source our rates</a></p>
+    <p class="seo-lead">Most people buy rooftop solar expecting two things: a smaller bill, and lights that
+      stay on when the area goes dark. A standard on-grid system delivers the first and
+      <strong>not the second</strong> — during a power cut it shuts down completely, even at noon
+      in full sun. That surprise is the single biggest reason buyers end up unhappy with an
+      otherwise well-installed system. Here is what actually separates on-grid from hybrid, what
+      the difference costs, and how to tell which one your house needs.</p>
+    
+    <a class="guide-tool-cta" href="/solar-calculator/">
+      <span class="guide-tool-cta-kicker">Interactive tool</span>
+      <strong>Rooftop solar savings calculator</strong>
+      <span class="guide-tool-cta-sub">Size a system and see the payback on your own bill</span>
+      <span class="guide-tool-cta-go" aria-hidden="true">→</span>
+    </a>
+    
+    <figure class="guide-fig guide-example">
+      <div class="guide-example-label">Example to look for</div>
+      <div class="gbill" role="img" aria-label="Sample net meter bill with export units highlighted">
+        <div class="gbill-head">SAMPLE SOLAR BILL <span>Net meter</span></div>
+        <div class="gbill-row"><span>Import units <small>From grid</small></span><b>210 kWh</b></div>
+        <div class="gbill-row is-hl"><span>Export units <small>Sent to grid</small></span><span class="gbill-tag">CHECK THIS</span><b>136 kWh</b></div>
+        <div class="gbill-row"><span>Net billable units</span><b>74 kWh</b></div>
+        <div class="gbill-total"><span>Estimated saving</span><span>₹920</span></div>
+      </div>
+      <figcaption>Use this sample as a quick visual map, then match the highlighted line with your own bill or meter.</figcaption>
+    </figure>
+    <nav class="page-toc" aria-label="On this page">
+      <span class="page-toc-label">On this page</span>
+      <a href="#why-on-grid-solar-dies-in-a-power-cut">Why on-grid solar dies in a power cut</a>
+        <a href="#the-three-system-types-honestly-compared">The three system types, honestly compared</a>
+        <a href="#what-the-battery-actually-buys-you">What the battery actually buys you</a>
+        <a href="#where-the-subsidy-sits">Where the subsidy sits</a>
+        <a href="#how-to-decide">How to decide</a>
+        <a href="#what-to-ask-before-you-sign">What to ask before you sign</a>
+    </nav>
+    
+      <section class="seo-section" id="why-on-grid-solar-dies-in-a-power-cut">
+        <h2>Why on-grid solar dies in a power cut</h2>
+        <p>It is not a fault, and it is not your inverter being cheap. A grid-tied inverter is
+        required to disconnect the moment the grid goes down. The behaviour is called
+        <strong>anti-islanding</strong>, and it exists for a hard safety reason: if your panels
+        kept pushing power into the local network during an outage, they would energise lines that
+        a lineman has switched off and believes are dead.</p>
+        <p>There is a second, more practical reason. A plain grid-tied inverter is
+        <em>grid-following</em> — it uses the grid's own voltage and frequency as the reference it
+        synchronises to. Remove the grid and it has nothing to follow. It cannot simply carry on
+        running your house, because nothing is left to tell it what "230 V, 50 Hz" looks like.</p>
+        <p>So an on-grid system is best understood as a <strong>bill-reduction machine, not a
+        backup machine</strong>. On a normal day it is excellent at the first job. During an
+        outage it contributes nothing at all.</p>
+      </section>
+
+      <section class="seo-section" id="the-three-system-types-honestly-compared">
+        <h2>The three system types, honestly compared</h2>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr><th>&nbsp;</th><th>On-grid</th><th>Hybrid</th><th>Off-grid</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Runs during a power cut</th><td>No</td><td>Yes, up to the battery's capacity</td><td>Yes</td></tr>
+              <tr><th scope="row">Battery</th><td>None</td><td>Required</td><td>Required, and larger</td></tr>
+              <tr><th scope="row">Exports surplus to the grid</th><td>Yes</td><td>Yes</td><td>No — not connected</td></tr>
+              <tr><th scope="row">Net metering credit</th><td>Yes</td><td>Yes</td><td>Not applicable</td></tr>
+              <tr><th scope="row">Upfront cost</th><td>Lowest</td><td>Higher — battery plus a hybrid inverter</td><td>Highest per usable unit</td></tr>
+              <tr><th scope="row">Ongoing replacement</th><td>Inverter, eventually</td><td>Inverter and battery</td><td>Inverter and a bigger battery bank</td></tr>
+              <tr><th scope="row">Suits</th><td>Reliable supply; the goal is the bill</td><td>Frequent or long outages; the goal is the bill <em>and</em> availability</td><td>No grid connection at all</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>For a house that already has a DISCOM connection, off-grid is almost never the right
+        answer. You would be paying for a large battery bank to replace a grid you are connected
+        to anyway, and giving up export credit to do it. The real decision is on-grid versus
+        hybrid.</p>
+      </section>
+
+      <section class="seo-section" id="what-the-battery-actually-buys-you">
+        <h2>What the battery actually buys you</h2>
+        <p>This is where the maths gets misread. A battery does not generate anything. It shifts
+        units you already generated from the afternoon to the evening, and it keeps a few circuits
+        alive when the grid drops. Both are real benefits. Neither is usually a large
+        <em>financial</em> return.</p>
+        <p>Under net metering, an exported unit is already credited against an imported one, and
+        because netting removes your most expensive units first, that credit is worth your top slab
+        rate — see <a href="/guides/solar-net-metering-savings/">how net metering savings actually
+        work</a>. Storing a unit instead of exporting it therefore does not create new value; at
+        best it captures roughly the same value, minus round-trip losses, minus the battery's share
+        of its own cost. The gap that a battery genuinely closes is where your state pays a low
+        rate for exports rather than netting them one-for-one.</p>
+        <p>The other cost people miss is replacement timing. Panels are typically warranted for
+        decades; batteries are not. Assume the storage will need replacing at least once inside the
+        life of the panels, and put that replacement into your sums at the start rather than
+        discovering it later.</p>
+        <p class="seo-note"><strong>The honest framing:</strong> buy a battery to buy
+        <em>availability</em>, not savings. If your area rarely loses power, the money usually does
+        more work as extra panel capacity than as storage.</p>
+      </section>
+
+      <section class="seo-section" id="where-the-subsidy-sits">
+        <h2>Where the subsidy sits</h2>
+        <p>Under PM Surya Ghar: Muft Bijli Yojana, the central subsidy for residential consumers is
+        set per kilowatt of rooftop capacity:</p>
+        <ul>
+          <li><strong>₹30,000 per kW</strong> for the first 2 kW</li>
+          <li><strong>₹18,000 per kW</strong> for additional capacity up to 3 kW</li>
+          <li><strong>₹78,000</strong> total cap for anything larger than 3 kW</li>
+          <li>Special-category states get an <strong>additional 10% per kW</strong></li>
+        </ul>
+        <p>The portal also publishes indicative sizing: 1–2 kW for a household averaging up to 150
+        units a month, 2–3 kW for 150–300 units, and above 3 kW beyond that. The scheme is open to
+        residential consumers and resident welfare associations only, and is currently scheduled to
+        close on <strong>31 March 2027</strong>. Our
+        <a href="/guides/pm-surya-ghar-solar-subsidy/">PM Surya Ghar guide</a> walks through the
+        application flow and the payback maths in detail.</p>
+        <p>The point that matters for this decision: the subsidy is calculated on
+        <strong>generating capacity in kW</strong>. It is not a contribution towards storage. A
+        battery is an out-of-pocket addition on top of a subsidised system, so the subsidy improves
+        the economics of the panels and leaves the hybrid premium untouched.</p>
+        <p class="seo-note">⚠️ <strong>One thing to confirm yourself.</strong> We could not verify
+        from an official MNRE or portal document whether a hybrid installation is accepted under
+        the scheme on the same terms as a plain grid-tied one, and several vendor sites state this
+        with more confidence than we could source. Before you commit to a hybrid design, confirm
+        the treatment with your DISCOM and with a portal-registered vendor in writing. Do not take
+        a sales claim about subsidy eligibility on trust.</p>
+      </section>
+
+      <section class="seo-section" id="how-to-decide">
+        <h2>How to decide</h2>
+        <p>Answer these in order. The first two settle most cases.</p>
+        <ol>
+          <li><strong>How often does your supply actually fail, and for how long?</strong> Not your
+          impression — check a few months of experience honestly. Occasional short cuts do not
+          justify storage. Daily or multi-hour outages do.</li>
+          <li><strong>What must stay running?</strong> There is a large difference between keeping
+          lights, fans, the router and a fridge alive, and running air conditioning through an
+          outage. The first is a modest battery. The second is a different budget entirely.</li>
+          <li><strong>What do you use today for backup?</strong> If you already run an inverter and
+          battery, a hybrid system can often replace that whole arrangement rather than sit
+          alongside it — which changes the comparison, because part of the hybrid cost is replacing
+          something you were going to renew anyway.</li>
+          <li><strong>Is your roof or budget the binding constraint?</strong> If either limits you,
+          spend on panel capacity first. Generation you do not have cannot be stored.</li>
+        </ol>
+        <p>A reasonable default for most urban homes on a stable supply: <strong>on-grid, sized to
+        your consumption</strong>. A reasonable default where outages are routine:
+        <strong>hybrid, with the battery sized to a defined backup circuit</strong> rather than to
+        the whole house.</p>
+      </section>
+
+      <section class="seo-section" id="what-to-ask-before-you-sign">
+        <h2>What to ask before you sign</h2>
+        <ul>
+          <li>Which loads exactly will run during an outage, and for how long on a full battery?</li>
+          <li>Is the inverter hybrid-capable now, or would adding storage later mean replacing it?
+          A plain grid-tied inverter usually cannot simply take a battery afterwards.</li>
+          <li>What is the expected replacement point for the battery, and what would that cost at
+          today's prices?</li>
+          <li>What is quoted with the subsidy already deducted, and what is the full price before
+          it? Ask for both, separately.</li>
+          <li>Who handles the DISCOM net-metering application, and what happens to the timeline if
+          approval is delayed?</li>
+          <li>Is the vendor registered on the national portal, and will the quoted panels meet the
+          scheme's content requirements?</li>
+        </ul>
+        <p>Once you have a quote, run your current usage through our
+        <a href="/bill-calculator/">bill calculator</a> to see what you are actually paying per
+        unit at your top slab — that number, not the headline tariff, is what each solar unit is
+        worth to you.</p>
+      </section>
+    <section class="seo-section"><h2>Frequently asked questions</h2>
+    <details class="seo-faq-item">
+      <summary>Does on-grid solar work during a power cut?</summary>
+      <div class="seo-faq-a">No. A grid-tied inverter is required to shut down when the grid fails — a safety rule called anti-islanding, which prevents your system energising lines that a lineman has switched off. It also has no voltage and frequency reference to follow once the grid is gone. Only a hybrid or off-grid system keeps supplying power during an outage.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Is a hybrid solar system eligible for the PM Surya Ghar subsidy?</summary>
+      <div class="seo-faq-a">The subsidy is calculated on rooftop generating capacity in kW — ₹30,000/kW for the first 2 kW, ₹18,000/kW for the third, capped at ₹78,000 — so it never pays for the battery, which is an out-of-pocket addition either way. Whether a hybrid installation is accepted on the same terms as a plain grid-tied one is something we could not confirm from an official document, so get it in writing from your DISCOM and a portal-registered vendor before committing.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Is a solar battery worth the money?</summary>
+      <div class="seo-faq-a">It depends what you want from it. A battery buys availability during outages, not extra savings: under net metering an exported unit is already credited at your top slab rate, so storing it rather than exporting it captures roughly the same value minus losses and the battery's own cost. Where it does pay is in states that credit exports at a low rate instead of netting them one-for-one, and in areas with frequent long outages.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Can I add a battery to my on-grid system later?</summary>
+      <div class="seo-faq-a">Usually not without changing hardware. A standard grid-tied inverter is not built to charge or discharge storage, so adding a battery generally means replacing it with a hybrid inverter or bolting on a separate AC-coupled unit. If you think storage is likely within a few years, it is far cheaper to specify a hybrid-capable inverter at the start, even if you buy the battery later.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>What size battery do I need for backup?</summary>
+      <div class="seo-faq-a">Size it to a defined backup circuit, not to your whole house. List what genuinely must keep running — typically lights, fans, router and the fridge — add up their draw, and multiply by the number of hours you need to cover. Running air conditioning through an outage is a different order of cost, and is what turns a modest hybrid system into an expensive one.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Is hybrid solar more expensive than on-grid?</summary>
+      <div class="seo-faq-a">Yes, on both counts. Hybrid costs more upfront because it adds a battery and a hybrid inverter, and more over time because the battery will need replacing at least once within the panels' service life. The subsidy does not narrow that gap, since it is paid per kW of panel capacity. The extra cost buys backup power, so judge it against what an outage costs you rather than against the payback period.</div>
+    </details></section>
+    <section class="seo-section guide-calc-cta">
+      <h2>Now check your own bill</h2>
+      <p>Reading is half the job — run your own units through your DISCOM's real slab rates, fixed charges and FPPA and get an itemised bill in seconds. Free, no sign-up.</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Open the electricity bill calculator →</a></p>
+    </section>
+    
+    <section class="seo-section">
+      <h2>Related on TheDiscomBill</h2>
+      <div class="seo-link-grid"><a class="seo-link-card" href="/solar-calculator/"><strong>Rooftop solar savings calculator</strong><span>Estimate payback from your monthly units and tariff</span></a><a class="seo-link-card" href="/solar-subsidy-checker/"><strong>Solar subsidy checker</strong><span>Check subsidy eligibility before sizing a system</span></a></div>
+    </section>
+    <section class="seo-section guide-more">
+      <h2>Related guides</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/guides/solar-net-metering-savings/">
+          <strong>Solar Net Metering: How the Savings Actually Work</strong>
+          <small>6 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/pm-surya-ghar-solar-subsidy/">
+          <strong>PM Surya Ghar Explained: The Rooftop Solar Subsidy, Rupee by Rupee</strong>
+          <small>7 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/pm-surya-ghar-eligibility-checklist/">
+          <strong>PM Surya Ghar: What Gets an Application Rejected</strong>
+          <small>8 min read</small>
+        </a>
+        <a class="seo-link-card" href="/guides/free-electricity-units-by-state/">
+          <strong>Free Electricity Units by State: How the Subsidy Actually Works</strong>
+          <small>8 min read</small>
+        </a>
+      </div>
+      <p class="guide-more-all"><a href="/guides/">Browse all guides →</a></p>
+    </section>
+    <p class="seo-disclaimer">General guidance based on publicly available tariff orders and
+    regulations; specifics vary by state, DISCOM and consumer category. Verify against your DISCOM's
+    official schedule or your printed bill.</p>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/bill-calculator/" data-i18n="nav.calculator">Calculator</a>
+        <a href="/bill-calculator/" data-i18n="ql.advancedCalc">Advanced Bill Calculator</a>
+        <a href="/compare/" data-i18n="nav.compare">Compare</a>
+        <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator</a>
+        <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/smart-meter/" data-i18n="ql.meterDisplay">Smart Meter Guide</a>
+        <a href="/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/database/" data-i18n="ql.tariffDatabase">Tariff Database</a>
+        <a href="/orders/" data-i18n="ql.orderLibrary">Order Library</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/contact/" data-i18n="ql.contact">Contact</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

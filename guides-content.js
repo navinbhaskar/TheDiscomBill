@@ -18,6 +18,169 @@
 
 export const GUIDES = [
   {
+    slug: "on-grid-vs-hybrid-solar",
+    published: "2026-08-27",
+    title: "On-Grid vs Hybrid Solar: Which One Your House Actually Needs",
+    metaTitle: "On-Grid vs Hybrid Solar in India — Backup, Subsidy and Real Costs",
+    description: "On-grid solar shuts down in a power cut. Hybrid keeps running but costs more. How the two differ on backup, subsidy and payback, and how to pick one.",
+    minutes: 8,
+    toc: true,
+    intro: `Most people buy rooftop solar expecting two things: a smaller bill, and lights that
+      stay on when the area goes dark. A standard on-grid system delivers the first and
+      <strong>not the second</strong> — during a power cut it shuts down completely, even at noon
+      in full sun. That surprise is the single biggest reason buyers end up unhappy with an
+      otherwise well-installed system. Here is what actually separates on-grid from hybrid, what
+      the difference costs, and how to tell which one your house needs.`,
+    sections: `
+      <section class="seo-section">
+        <h2>Why on-grid solar dies in a power cut</h2>
+        <p>It is not a fault, and it is not your inverter being cheap. A grid-tied inverter is
+        required to disconnect the moment the grid goes down. The behaviour is called
+        <strong>anti-islanding</strong>, and it exists for a hard safety reason: if your panels
+        kept pushing power into the local network during an outage, they would energise lines that
+        a lineman has switched off and believes are dead.</p>
+        <p>There is a second, more practical reason. A plain grid-tied inverter is
+        <em>grid-following</em> — it uses the grid's own voltage and frequency as the reference it
+        synchronises to. Remove the grid and it has nothing to follow. It cannot simply carry on
+        running your house, because nothing is left to tell it what "230 V, 50 Hz" looks like.</p>
+        <p>So an on-grid system is best understood as a <strong>bill-reduction machine, not a
+        backup machine</strong>. On a normal day it is excellent at the first job. During an
+        outage it contributes nothing at all.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>The three system types, honestly compared</h2>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr><th>&nbsp;</th><th>On-grid</th><th>Hybrid</th><th>Off-grid</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Runs during a power cut</th><td>No</td><td>Yes, up to the battery's capacity</td><td>Yes</td></tr>
+              <tr><th scope="row">Battery</th><td>None</td><td>Required</td><td>Required, and larger</td></tr>
+              <tr><th scope="row">Exports surplus to the grid</th><td>Yes</td><td>Yes</td><td>No — not connected</td></tr>
+              <tr><th scope="row">Net metering credit</th><td>Yes</td><td>Yes</td><td>Not applicable</td></tr>
+              <tr><th scope="row">Upfront cost</th><td>Lowest</td><td>Higher — battery plus a hybrid inverter</td><td>Highest per usable unit</td></tr>
+              <tr><th scope="row">Ongoing replacement</th><td>Inverter, eventually</td><td>Inverter and battery</td><td>Inverter and a bigger battery bank</td></tr>
+              <tr><th scope="row">Suits</th><td>Reliable supply; the goal is the bill</td><td>Frequent or long outages; the goal is the bill <em>and</em> availability</td><td>No grid connection at all</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>For a house that already has a DISCOM connection, off-grid is almost never the right
+        answer. You would be paying for a large battery bank to replace a grid you are connected
+        to anyway, and giving up export credit to do it. The real decision is on-grid versus
+        hybrid.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>What the battery actually buys you</h2>
+        <p>This is where the maths gets misread. A battery does not generate anything. It shifts
+        units you already generated from the afternoon to the evening, and it keeps a few circuits
+        alive when the grid drops. Both are real benefits. Neither is usually a large
+        <em>financial</em> return.</p>
+        <p>Under net metering, an exported unit is already credited against an imported one, and
+        because netting removes your most expensive units first, that credit is worth your top slab
+        rate — see <a href="/guides/solar-net-metering-savings/">how net metering savings actually
+        work</a>. Storing a unit instead of exporting it therefore does not create new value; at
+        best it captures roughly the same value, minus round-trip losses, minus the battery's share
+        of its own cost. The gap that a battery genuinely closes is where your state pays a low
+        rate for exports rather than netting them one-for-one.</p>
+        <p>The other cost people miss is replacement timing. Panels are typically warranted for
+        decades; batteries are not. Assume the storage will need replacing at least once inside the
+        life of the panels, and put that replacement into your sums at the start rather than
+        discovering it later.</p>
+        <p class="seo-note"><strong>The honest framing:</strong> buy a battery to buy
+        <em>availability</em>, not savings. If your area rarely loses power, the money usually does
+        more work as extra panel capacity than as storage.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Where the subsidy sits</h2>
+        <p>Under PM Surya Ghar: Muft Bijli Yojana, the central subsidy for residential consumers is
+        set per kilowatt of rooftop capacity:</p>
+        <ul>
+          <li><strong>₹30,000 per kW</strong> for the first 2 kW</li>
+          <li><strong>₹18,000 per kW</strong> for additional capacity up to 3 kW</li>
+          <li><strong>₹78,000</strong> total cap for anything larger than 3 kW</li>
+          <li>Special-category states get an <strong>additional 10% per kW</strong></li>
+        </ul>
+        <p>The portal also publishes indicative sizing: 1–2 kW for a household averaging up to 150
+        units a month, 2–3 kW for 150–300 units, and above 3 kW beyond that. The scheme is open to
+        residential consumers and resident welfare associations only, and is currently scheduled to
+        close on <strong>31 March 2027</strong>. Our
+        <a href="/guides/pm-surya-ghar-solar-subsidy/">PM Surya Ghar guide</a> walks through the
+        application flow and the payback maths in detail.</p>
+        <p>The point that matters for this decision: the subsidy is calculated on
+        <strong>generating capacity in kW</strong>. It is not a contribution towards storage. A
+        battery is an out-of-pocket addition on top of a subsidised system, so the subsidy improves
+        the economics of the panels and leaves the hybrid premium untouched.</p>
+        <p class="seo-note">⚠️ <strong>One thing to confirm yourself.</strong> We could not verify
+        from an official MNRE or portal document whether a hybrid installation is accepted under
+        the scheme on the same terms as a plain grid-tied one, and several vendor sites state this
+        with more confidence than we could source. Before you commit to a hybrid design, confirm
+        the treatment with your DISCOM and with a portal-registered vendor in writing. Do not take
+        a sales claim about subsidy eligibility on trust.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>How to decide</h2>
+        <p>Answer these in order. The first two settle most cases.</p>
+        <ol>
+          <li><strong>How often does your supply actually fail, and for how long?</strong> Not your
+          impression — check a few months of experience honestly. Occasional short cuts do not
+          justify storage. Daily or multi-hour outages do.</li>
+          <li><strong>What must stay running?</strong> There is a large difference between keeping
+          lights, fans, the router and a fridge alive, and running air conditioning through an
+          outage. The first is a modest battery. The second is a different budget entirely.</li>
+          <li><strong>What do you use today for backup?</strong> If you already run an inverter and
+          battery, a hybrid system can often replace that whole arrangement rather than sit
+          alongside it — which changes the comparison, because part of the hybrid cost is replacing
+          something you were going to renew anyway.</li>
+          <li><strong>Is your roof or budget the binding constraint?</strong> If either limits you,
+          spend on panel capacity first. Generation you do not have cannot be stored.</li>
+        </ol>
+        <p>A reasonable default for most urban homes on a stable supply: <strong>on-grid, sized to
+        your consumption</strong>. A reasonable default where outages are routine:
+        <strong>hybrid, with the battery sized to a defined backup circuit</strong> rather than to
+        the whole house.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>What to ask before you sign</h2>
+        <ul>
+          <li>Which loads exactly will run during an outage, and for how long on a full battery?</li>
+          <li>Is the inverter hybrid-capable now, or would adding storage later mean replacing it?
+          A plain grid-tied inverter usually cannot simply take a battery afterwards.</li>
+          <li>What is the expected replacement point for the battery, and what would that cost at
+          today's prices?</li>
+          <li>What is quoted with the subsidy already deducted, and what is the full price before
+          it? Ask for both, separately.</li>
+          <li>Who handles the DISCOM net-metering application, and what happens to the timeline if
+          approval is delayed?</li>
+          <li>Is the vendor registered on the national portal, and will the quoted panels meet the
+          scheme's content requirements?</li>
+        </ul>
+        <p>Once you have a quote, run your current usage through our
+        <a href="/bill-calculator/">bill calculator</a> to see what you are actually paying per
+        unit at your top slab — that number, not the headline tariff, is what each solar unit is
+        worth to you.</p>
+      </section>`,
+    faqs: [
+      { q: "Does on-grid solar work during a power cut?",
+        a: "No. A grid-tied inverter is required to shut down when the grid fails — a safety rule called anti-islanding, which prevents your system energising lines that a lineman has switched off. It also has no voltage and frequency reference to follow once the grid is gone. Only a hybrid or off-grid system keeps supplying power during an outage." },
+      { q: "Is a hybrid solar system eligible for the PM Surya Ghar subsidy?",
+        a: "The subsidy is calculated on rooftop generating capacity in kW — ₹30,000/kW for the first 2 kW, ₹18,000/kW for the third, capped at ₹78,000 — so it never pays for the battery, which is an out-of-pocket addition either way. Whether a hybrid installation is accepted on the same terms as a plain grid-tied one is something we could not confirm from an official document, so get it in writing from your DISCOM and a portal-registered vendor before committing." },
+      { q: "Is a solar battery worth the money?",
+        a: "It depends what you want from it. A battery buys availability during outages, not extra savings: under net metering an exported unit is already credited at your top slab rate, so storing it rather than exporting it captures roughly the same value minus losses and the battery's own cost. Where it does pay is in states that credit exports at a low rate instead of netting them one-for-one, and in areas with frequent long outages." },
+      { q: "Can I add a battery to my on-grid system later?",
+        a: "Usually not without changing hardware. A standard grid-tied inverter is not built to charge or discharge storage, so adding a battery generally means replacing it with a hybrid inverter or bolting on a separate AC-coupled unit. If you think storage is likely within a few years, it is far cheaper to specify a hybrid-capable inverter at the start, even if you buy the battery later." },
+      { q: "What size battery do I need for backup?",
+        a: "Size it to a defined backup circuit, not to your whole house. List what genuinely must keep running — typically lights, fans, router and the fridge — add up their draw, and multiply by the number of hours you need to cover. Running air conditioning through an outage is a different order of cost, and is what turns a modest hybrid system into an expensive one." },
+      { q: "Is hybrid solar more expensive than on-grid?",
+        a: "Yes, on both counts. Hybrid costs more upfront because it adds a battery and a hybrid inverter, and more over time because the battery will need replacing at least once within the panels' service life. The subsidy does not narrow that gap, since it is paid per kW of panel capacity. The extra cost buys backup power, so judge it against what an outage costs you rather than against the payback period." },
+    ],
+  },
+  {
     slug: 'free-electricity-units-by-state',
     published: "2026-08-26",
     category: 'charges',

@@ -27,6 +27,7 @@ export const STRINGS = {
     'ql.services': 'Services',
     'ql.learn': 'Learn',
     'ql.compare': 'Compare DISCOM Tariffs',
+'ql.advancedCalc': 'Advanced Bill Calculator',
     'ql.usage': 'Electricity Cost Calculator',
     'ql.solar': 'Rooftop Solar Savings',
     'ql.ev': 'EV Charging Cost',

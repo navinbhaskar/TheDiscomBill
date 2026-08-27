@@ -7,6 +7,7 @@ Tariff data is compiled from publicly available tariff orders: FY 2026-27 for 19
 ## Tools
 
 - [Bill Calculator](https://thediscombill.com/): instant provisional electricity bill for any Indian DISCOM with a full slab-wise breakdown
+- [Advanced Bill Calculator](https://thediscombill.com/bill-calculator/): the full detail form — time-of-day, kVAh and power factor, solar export, arrears and late-payment surcharge, multi-meter connections
 - [Tariff Comparison](https://thediscombill.com/compare/): major DISCOMs compared at 200/400/600/1000 units for domestic and commercial
 - [Electricity Cost Calculator](https://thediscombill.com/electricity-cost-calculator/): estimate monthly kWh and cost from household appliances
 - [Rooftop Solar Savings](https://thediscombill.com/solar-calculator/): system sizing, payback and net-metering savings
@@ -24,6 +25,7 @@ Tariff data is compiled from publicly available tariff orders: FY 2026-27 for 19
 
 ## Guides
 
+- [On-Grid vs Hybrid Solar: Which One Your House Actually Needs](https://thediscombill.com/guides/on-grid-vs-hybrid-solar/): On-grid solar shuts down in a power cut
 - [Free Electricity Units by State: How the Subsidy Actually Works](https://thediscombill.com/guides/free-electricity-units-by-state/): Free-unit schemes are set by state governments, not by the regulator, which is why the terms are so hard to pin down
 - [Security Deposit on an Electricity Connection, Explained](https://thediscombill.com/guides/electricity-security-deposit-explained/): What the security deposit on an Indian electricity connection is, why it is about two months of your consumption, when a DISCOM can demand more, why only the difference is payable on a load increase, and the interest your deposit earns
 - [PM Surya Ghar: What Gets an Application Rejected](https://thediscombill.com/guides/pm-surya-ghar-eligibility-checklist/): The checks that decide a PM Surya Ghar rooftop solar application before the subsidy is ever calculated: sanctioned load against plant size, the name on the connection, ownership and meter status — and the DISCOM request that fixes each one
