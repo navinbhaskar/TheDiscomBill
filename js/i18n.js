@@ -35,6 +35,7 @@ export const STRINGS = {
     'ql.tenantMeter': 'Tenant Sub-Meter Calculator',
     'ql.checkBill': 'Check My Bill (upload)',
     'nav.solarSubsidy': 'Solar Subsidy Checker',
+    'nav.solarOnGridHybrid': 'On-Grid vs Hybrid Solar',
     'ql.tariffsByState': 'Tariffs by State & DISCOM',
     'ql.discomServices': 'DISCOM Services',
     'ql.smartMeter': 'Smart Meter Recharge',
@@ -66,6 +67,7 @@ export const STRINGS = {
     // they show you your own numbers. The other eleven are self-describing.
     'tools.d.understandBill': 'A working bill you can change',
     'tools.d.smartMeter': 'A meter display you can step through',
+    'tools.d.onGridHybrid': 'Which system type, before you size one',
     'ql.contact': 'Contact',
     'ql.privacy': 'Privacy Policy',
     'ql.cookies': 'Cookie Policy',

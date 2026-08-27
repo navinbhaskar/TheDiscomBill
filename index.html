@@ -284,7 +284,7 @@
            units:250, connectedLoadKw:2, billingPeriodDays:30, billingDate:'2026-07-15',
            facRate:-4.43, facMode:'percent' })  →  currentNet 1651
        and the same call for brpl (1038), bescom (1881), msedcl (2567), tangedco (1323). -->
-  <div class="hero-right reveal" id="heroProof">
+  <div class="hero-right reveal">
     <div class="hero-bill-card" id="heroBillCard">
       <div class="hbc-head">
         <!-- Dots sit above the DISCOM chip and double as the autoplay progress bar: the
@@ -961,56 +961,6 @@
 
   </div><!-- /.calculator-grid -->
 </section><!-- /#calculator -->
-<!-- Below 760px the sample-bill card moves out of the hero and lands here, under the form.
-     In the hero it was 175px of preamble between the only button that matters and the first
-     field — the reason its line-by-line working had to be hidden to fit. Below the calculator
-     it has the room to keep the working, and it answers "is that number right?" at the moment
-     the reader has a number of their own to compare.
-
-     This runs during parse, while the calculator is closed and the card is still the next
-     thing the parser has NOT reached — so the node is in its final place before the first
-     paint and the move costs no layout shift. Desktop is untouched: the query has to match,
-     and if it stops matching (a tablet rotating past 760px) the card goes back. -->
-<script>(function(){
-  var mq; try { mq = window.matchMedia('(max-width: 760px)'); } catch (e) { return; }
-  var calc = document.getElementById('calculator');
-  // The trust line rides along. It is a sourcing claim ("every slab verified against SERC
-  // orders"), and a claim answers a doubt — which the reader does not have yet at the top of
-  // the page, and does have the moment a number appears. It is styled for the hero's frosted
-  // panel, so it carries a class out and takes page-surface ink with it.
-  function place(){
-    var card = document.getElementById('heroProof');
-    var trust = document.querySelector('.hero-discoms');
-    var home = document.querySelector('.hero-grid');
-    var glass = document.querySelector('.hero-glass');
-    if (!card || !home || !calc || !calc.parentNode) return;
-    if (mq.matches) {
-      if (card.previousElementSibling !== calc) calc.parentNode.insertBefore(card, calc.nextSibling);
-      if (trust && trust.previousElementSibling !== card) {
-        calc.parentNode.insertBefore(trust, card.nextSibling);
-        trust.classList.add('is-unhoused');
-      }
-      // Inside .hero these two were exempt from the scroll-reveal entrance, because the hero
-      // is the LCP candidate and must paint immediately. Out here they would inherit it, and
-      // an element that starts at opacity 0 and waits for an observer is a bad bet for the
-      // one thing on the page that proves the number is real. Marked revealed up front: the
-      // observer firing later is then a no-op, and nothing depends on it having fired.
-      card.classList.add('is-visible');
-      if (trust) trust.classList.add('is-visible');
-    } else {
-      if (card.parentNode !== home) home.appendChild(card);
-      if (trust && glass && trust.parentNode !== glass) {
-        glass.appendChild(trust);
-        trust.classList.remove('is-unhoused');
-      }
-    }
-  }
-  place();
-  // addListener is the pre-2019 Safari spelling; both are cheap to try.
-  if (mq.addEventListener) mq.addEventListener('change', place);
-  else if (mq.addListener) mq.addListener(place);
-})();</script>
-
 <!-- ── Coverage & capability strip ────────────────────────────────────────────────
      Both blocks used to sit inside the hero, above the calculator. They are proof a
      visitor reads *after* deciding to try the tool, not before, so they now follow the
@@ -1205,6 +1155,16 @@
       <div class="tools-group">
         <h3 data-i18n="tools.g3.title">Is solar worth it?</h3>
         <p data-i18n="tools.g3.sub">Size a system, check the subsidy, and see the payback on your own bill.</p>
+        <!-- The only guide in this section, and first because the four calculators below it all
+             presuppose an answer it gives. Size, subsidy and payback are all questions about a
+             system you have already chosen; nothing here asked which kind to choose, so a reader
+             who did not know ran the Savings Calculator on a system they might not want.
+             It takes .tool-rich for the same reason /understand-your-bill/ does: an entry that
+             is not a calculator has to say what it does for you. If another guide is proposed
+             for this section, the test it has to pass is this one - the tools presuppose a
+             decision the reader has not made. The subsidy and net-metering guides do not pass
+             it: their calculators already answer them. -->
+        <a href="/guides/on-grid-vs-hybrid-solar/" class="tool-rich"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-compare"/></svg><span class="tool-label"><span data-i18n="nav.solarOnGridHybrid">On-Grid vs Hybrid Solar</span><small data-i18n="tools.d.onGridHybrid">Which system type, before you size one</small></span></a>
         <a href="/solar-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-sun"/></svg><span data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator</span></a>
         <a href="/solar-panel-size-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-panel"/></svg><span data-i18n="nav.solarSize">Solar Panel Size Calculator</span></a>
         <a href="/solar-battery-backup-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-battery"/></svg><span data-i18n="nav.solarBattery">Solar Battery Backup Calculator</span></a>

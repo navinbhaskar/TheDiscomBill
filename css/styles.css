@@ -1188,8 +1188,7 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
 /* One line per slide on what makes this DISCOM's bill read the way it does — the reason
    the card is worth watching rotate rather than a single frozen example. slate-500, not
    400: 400 on this white card is 2.55:1 and fails AA. */
-.hero .hbc-note,
-.hbc-note {
+.hero .hbc-note {
   margin: 10px 0 0; max-width: none;
   font-size: 10.5px; font-weight: 400; line-height: 1.45; letter-spacing: .15px;
   color: var(--p-slate-500);
@@ -1223,7 +1222,7 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
 :root[data-theme="dark"] .hbc-title,
 :root[data-theme="dark"] .hbc-hero-sub,
 :root[data-theme="dark"] .hbc-foot,
-:root[data-theme="dark"] .hbc-note,
+:root[data-theme="dark"] .hero .hbc-note,
 :root[data-theme="dark"] .hbc-line { color: var(--text-secondary); }
 :root[data-theme="dark"] .hbc-line dd,
 :root[data-theme="dark"] .hbc-line-total dt { color: var(--text-primary); }
@@ -1487,8 +1486,7 @@ html:not([lang="en"]) .hero-discoms-label {
   color: var(--text-brand-dark, var(--brand-dark));
 }
 /* Trust row — two quiet proof chips under the DISCOM strip */
-.hero .hero-trust,
-.hero-trust {
+.hero .hero-trust {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
   gap: 8px 10px; margin: 28px auto 0;
 }
@@ -1497,8 +1495,7 @@ html:not([lang="en"]) .hero-discoms-label {
    breaks this one in half. Released from the cap it sits on one line at any
    desktop width, and still wraps on its own if a translation runs long. */
 @media (min-width: 601px) {
-  .hero .hero-trust,
-  .hero-trust { max-width: none; }
+  .hero .hero-trust { max-width: none; }
 }
 .trust-item {
   display: inline-flex; align-items: center; gap: 7px;
@@ -8956,12 +8953,13 @@ html:not(.js) .m-btn-ring { display: none; }
    Measured at 375px, the hero ran 1141px and the first field of the calculator sat 1434px
    down — 1.8 screens before a visitor could touch the tool the whole site is for. The first
    pass at this hid the three hero stats and the bill card's line-by-line working, which
-   bought ~370px and cost the two things that make a stranger believe the number. The card
-   moves out of the hero instead (see the script under #calculator in index.html), and both
-   come back.
+   bought ~370px and cost the two things that make a stranger believe the number. Both are
+   back: the stats at a third of their height, and the card's working in full.
 
-   What is actually cut here is what the h1 already says and what a second button was
-   competing for. */
+   The card stays in the hero, above the calculator, which is where it reads as the promise
+   the form then keeps. That costs the fold — the first field no longer clears 812px — and
+   it is a deliberate trade, not an oversight. What is still cut is what the h1 already says
+   and what a second button was competing for. */
 @media (max-width: 760px) {
   /* "See what your bill should be, what every charge on it means, and whether yours adds
      up." The badge says free/instant, the h1 says what this is; at 375px this was two more
@@ -8997,19 +8995,6 @@ html:not(.js) .m-btn-ring { display: none; }
   .hero-stat-num { font-size: 18px; }
   .hero-stat-label { font-size: 10px; margin-top: 3px; letter-spacing: .4px; }
 
-  /* Out of the hero grid it has no container, so it brings its own gutter. */
-  .hero-right {
-    width: calc(100% - 32px); max-width: 400px; margin: 22px auto 0;
-  }
-  /* .hbc-faces stacks every slide in one grid cell, so the card is always the tallest
-     slide's height and no rotation can change it. Nothing left for a floor to hold open. */
-  .hero-bill-card { min-height: 0; }
-
-  /* The trust line follows the card down. Its hero colours are mixed for the frosted panel
-     over the blue gradient; on the page surface they are the wrong ink, so it takes the
-     ordinary secondary token and its own gutter instead of inheriting the hero's. */
-  .hero-discoms.is-unhoused { margin: 14px auto 4px; padding: 0 20px; }
-  .hero-discoms.is-unhoused .hero-trust { margin-top: 0; }
 }
 
 /* ═══ Homepage coverage strip ═══════════════════════════════════════════════
