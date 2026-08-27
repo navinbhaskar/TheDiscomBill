@@ -29,6 +29,9 @@
 // and it imports the engine and registry only at that point. A visitor who reads the tariff
 // table and leaves downloads none of it.
 
+const esc = (v) => String(v).replace(/[&<>"]/g, c =>
+  ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
 let engine = null;   // { calculateBill, renderBill, ensureDiscom, resolveFppa, subsidy }
 
 async function loadEngine() {
@@ -57,6 +60,20 @@ export async function initPageCalc() {
   const btn = form.querySelector('.pcalc-go');
   const section = form.closest('.pcalc');
   const state = section ? section.dataset.state : '';
+  // Every string this module writes into the page comes from the server-rendered element, so
+  // the /hi/, /mr/ and /ta/ twins get their own copy from the one table in generate-seo.js
+  // rather than a second set of translations living here. English is the fallback, which is
+  // also what an older cached page without data-msgs gets.
+  const M = {
+    pick: 'Select your supply type…', na: 'Not applicable — single domestic tariff',
+    busy: 'Calculating…',
+    errUnits: 'Enter how many units you used this month.',
+    errSupply: 'Choose your supply type — the rates differ sharply between them, so there is'
+      + ' no safe default. It is printed on your bill.',
+    errTariff: 'That tariff is unavailable.',
+    errLoad: 'Could not load the tariff data. Check your connection and try again.',
+  };
+  try { Object.assign(M, JSON.parse((section && section.dataset.msgs) || '{}')); } catch { /* keep English */ }
   // Tells the inline bootstrap to stop intercepting: this module owns submit now.
   form.dataset.ready = '1';
 
@@ -70,10 +87,8 @@ export async function initPageCalc() {
   const supplyField = document.getElementById('pcSupplyField');
   function fillSupply() {
     const list = types[discomEl.value] || [];
-    supply.innerHTML = '<option value="">Select your supply type…</option>'
-      + list.map(([id, name]) =>
-          `<option value="${id}">${String(name).replace(/[&<>"]/g, c =>
-            ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))}</option>`).join('');
+    supply.innerHTML = `<option value="">${esc(M.pick)}</option>`
+      + list.map(([id, name]) => `<option value="${id}">${esc(name)}</option>`).join('');
     // A DISCOM with a single undifferentiated domestic tariff (BESCOM, for one) has no supply
     // types. Asking for one there is not just noise — a required empty select cannot be
     // satisfied, so the form would never submit. Disable rather than hide: the DISCOM can
@@ -81,7 +96,7 @@ export async function initPageCalc() {
     const has = list.length > 0;
     supply.required = has;
     supply.disabled = !has;
-    if (!has) supply.innerHTML = '<option value="">Not applicable — single domestic tariff</option>';
+    if (!has) supply.innerHTML = `<option value="">${esc(M.na)}</option>`;
   }
   if (discomEl && discomEl.tagName === 'SELECT') discomEl.addEventListener('change', fillSupply);
 
@@ -95,22 +110,21 @@ export async function initPageCalc() {
     // Validate before doing any work — an empty box should say so, not silently do nothing.
     if (!Number.isFinite(units) || units <= 0) {
       out.hidden = false;
-      out.innerHTML = '<p class="pcalc-err">Enter how many units you used this month.</p>';
+      out.innerHTML = `<p class="pcalc-err">${esc(M.errUnits)}</p>`;
       document.getElementById('pcUnits').focus();
       return;
     }
     // Refuse rather than default. Picking one for them is what produced a 37% error.
     if (supply && supply.required && !supplyTypeId) {
       out.hidden = false;
-      out.innerHTML = '<p class="pcalc-err">Choose your supply type — the rates differ sharply'
-        + ' between them, so there is no safe default. It is printed on your bill.</p>';
+      out.innerHTML = `<p class="pcalc-err">${esc(M.errSupply)}</p>`;
       supply.focus();
       return;
     }
 
     btn.disabled = true;
     const label = btn.textContent;
-    btn.textContent = 'Calculating…';
+    btn.textContent = M.busy;
     try {
       const E = await loadEngine();
       await E.ensureDiscom(discomId);
@@ -130,7 +144,7 @@ export async function initPageCalc() {
 
       if (!result || result.error) {
         out.hidden = false;
-        out.innerHTML = `<p class="pcalc-err">${(result && result.message) || 'That tariff is unavailable.'}</p>`;
+        out.innerHTML = `<p class="pcalc-err">${esc((result && result.message) || M.errTariff)}</p>`;
         return;
       }
 
@@ -147,7 +161,7 @@ export async function initPageCalc() {
       out.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } catch (err) {
       out.hidden = false;
-      out.innerHTML = '<p class="pcalc-err">Could not load the tariff data. Check your connection and try again.</p>';
+      out.innerHTML = `<p class="pcalc-err">${esc(M.errLoad)}</p>`;
       console.warn('page-calc:', err && err.message);
     } finally {
       btn.disabled = false;

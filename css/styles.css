@@ -1188,7 +1188,8 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
 /* One line per slide on what makes this DISCOM's bill read the way it does — the reason
    the card is worth watching rotate rather than a single frozen example. slate-500, not
    400: 400 on this white card is 2.55:1 and fails AA. */
-.hero .hbc-note {
+.hero .hbc-note,
+.hbc-note {
   margin: 10px 0 0; max-width: none;
   font-size: 10.5px; font-weight: 400; line-height: 1.45; letter-spacing: .15px;
   color: var(--p-slate-500);
@@ -1222,7 +1223,7 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
 :root[data-theme="dark"] .hbc-title,
 :root[data-theme="dark"] .hbc-hero-sub,
 :root[data-theme="dark"] .hbc-foot,
-:root[data-theme="dark"] .hero .hbc-note,
+:root[data-theme="dark"] .hbc-note,
 :root[data-theme="dark"] .hbc-line { color: var(--text-secondary); }
 :root[data-theme="dark"] .hbc-line dd,
 :root[data-theme="dark"] .hbc-line-total dt { color: var(--text-primary); }
@@ -1426,13 +1427,23 @@ a.hero-stat-link:focus-visible .hero-stat-label { color: var(--text-brand-dark, 
 @supports (content-visibility: auto) {
   .coverage-strip,
   .tools-section,
-  .about-section,
   .states-section,
   footer {
     content-visibility: auto;
     contain-intrinsic-size: auto 520px;
   }
-  .seo-section {
+  /* .about-section renders at ~1070px, not 520px, because it carries the homepage FAQ as
+     well as the About copy. At 520px the placeholder was less than half the real box and
+     the scrollbar jumped every time the section painted. `auto` means the browser keeps
+     the last real measurement anyway — this number only has to be right the first time. */
+  .about-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 1070px;
+  }
+  /* Not .about-section's nested FAQ: it is already inside a skipped subtree, so a second
+     containment context there buys nothing and gives the parent a wrong height to guess
+     from. Content-page FAQs, which are not nested, keep it. */
+  .seo-section:not(.about-section .seo-section) {
     content-visibility: auto;
     contain-intrinsic-size: auto 420px;
   }
@@ -1476,7 +1487,8 @@ html:not([lang="en"]) .hero-discoms-label {
   color: var(--text-brand-dark, var(--brand-dark));
 }
 /* Trust row — two quiet proof chips under the DISCOM strip */
-.hero .hero-trust {
+.hero .hero-trust,
+.hero-trust {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
   gap: 8px 10px; margin: 28px auto 0;
 }
@@ -1485,7 +1497,8 @@ html:not([lang="en"]) .hero-discoms-label {
    breaks this one in half. Released from the cap it sits on one line at any
    desktop width, and still wraps on its own if a translation runs long. */
 @media (min-width: 601px) {
-  .hero .hero-trust { max-width: none; }
+  .hero .hero-trust,
+  .hero-trust { max-width: none; }
 }
 .trust-item {
   display: inline-flex; align-items: center; gap: 7px;
@@ -5259,7 +5272,26 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .seo-dir-rate { color: var(--text-tertiary); }
 .seo-dir-verified { color: var(--success-text); font-weight: 700; margin-left: 4px; }
 .seo-dir-discoms { display: flex; flex-wrap: wrap; gap: 5px; }
-.seo-dir-discoms a { font-size: 11.5px; color: var(--text-secondary); text-decoration: none; background: var(--surface-sunken); border: 1px solid var(--border-subtle); border-radius: var(--radius-full); padding: 2px 9px; transition: border-color .15s, background .15s, color .15s; }
+/* The cap stops one long name owning a whole row. Maharashtra is the case: MSEDCL, Adani
+   Electricity Mumbai, BEST Mumbai and Tata Power Mumbai measure 68/155/96/128px in a 206px row,
+   which packs to four rows and a 207px tile against a 122px median.
+
+   130px rather than a 50% rule: half a row (100px) does get Maharashtra down to two rows, but it
+   also clips Delhi's "Tata Power-DDL", which fits today. At 130 only "Adani Electricity Mumbai"
+   is clipped anywhere in the directory, and Maharashtra comes down to three rows. The full name
+   stays in the link title, and the state page prints it in full. */
+.seo-dir-discoms a {
+  font-size: 11.5px; color: var(--text-secondary); text-decoration: none;
+  background: var(--surface-sunken); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full); padding: 2px 9px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  transition: border-color .15s, background .15s, color .15s;
+}
+/* The cap only applies where there is something to pack. A state with one or two DISCOMs has a
+   row to itself either way, so clipping "Energy & Power Dept., Sikkim" there would cost a name
+   and save no height. Three or more chips is where a long one starts pushing the others down. */
+.seo-dir-discoms:has(a:nth-child(3)) a { max-width: 130px; }
+
 .seo-dir-discoms a:hover { border-color: color-mix(in srgb, var(--dir-accent) 55%, transparent); background: color-mix(in srgb, var(--dir-accent) 9%, transparent); color: var(--dir-accent); }
 .seo-dir-empty { color: var(--text-secondary); text-align: center; padding: 30px 0; }
 @media (max-width: 560px) { .seo-dir-hero { padding: 20px 16px; } }
@@ -8921,24 +8953,63 @@ html:not(.js) .m-btn-ring { display: none; }
 }
 
 /* ─── Mobile hero: get the calculator into the first screen ─────────────────
-   Measured at 375px, the hero ran 1141px and the first field of the calculator sat
-   1434px down — 1.8 screens of scrolling before a visitor can touch the tool the whole
-   site is for. Two things paid for most of that height and neither earns it on a phone.
+   Measured at 375px, the hero ran 1141px and the first field of the calculator sat 1434px
+   down — 1.8 screens before a visitor could touch the tool the whole site is for. The first
+   pass at this hid the three hero stats and the bill card's line-by-line working, which
+   bought ~370px and cost the two things that make a stranger believe the number. The card
+   moves out of the hero instead (see the script under #calculator in index.html), and both
+   come back.
 
-   The three hero stats repeat the About stats-row further down the same page, so hiding
-   them here loses no claim, only a duplicate.
-
-   The sample-bill card keeps its headline claim — the rotating DISCOM chip, the amount and
-   what it was computed from — and drops the line-by-line working. The working is the best
-   thing on the page at desktop width, but it is 301px of the 449px card, and on a phone it
-   sits between the reader and the form that produces the same breakdown live. */
+   What is actually cut here is what the h1 already says and what a second button was
+   competing for. */
 @media (max-width: 760px) {
-  .hero-stats { display: none; }
-  .hbc-lines, .hbc-note, .hbc-foot { display: none; }
-  /* The min-height exists so the card does not jump as slides with different line counts
-     rotate through. With the lines hidden every slide is the same height, so it has
-     nothing left to hold open — and it was pinning the card at 372px regardless. */
+  /* "See what your bill should be, what every charge on it means, and whether yours adds
+     up." The badge says free/instant, the h1 says what this is; at 375px this was two more
+     lines of agreement between the headline and the only button that matters. */
+  .hero-left > p { display: none; }
+
+  /* One button, not two 48px slabs stacked. "Check my bill for errors" is a different job
+     for a different visitor — it keeps its full label and its destination, and gives up
+     only the weight it was using to compete with the primary action. */
+  .hero-ctas { flex-direction: column; align-items: stretch; gap: 0; }
+  .hero-ctas .hero-cta { margin-top: 18px; }
+  .hero-ctas .review-chooser-wrap { display: flex; justify-content: center; }
+  .hero-ctas .hero-cta-secondary {
+    margin-top: 2px; padding: 0 6px; min-height: 44px;
+    background: none; border: 0; box-shadow: none;
+    font-size: 14px; font-weight: 600;
+    color: var(--text-brand-dark, var(--brand-dark));
+    text-decoration: underline; text-underline-offset: 4px;
+  }
+  .hero-ctas .hero-cta-secondary:hover {
+    background: none; border: 0; box-shadow: none;
+  }
+  /* The caret was a button affordance. On a text link the underline is the affordance. */
+  .hero-ctas .hero-cta-secondary .rc-caret { display: none; }
+
+  /* Restored at a third of the height — 31px instead of 96px. Hiding these was paid for by
+     the About stats-row, which sits ~3,000px further down the same page; that is not where
+     someone decides whether to trust a money figure. Same three numbers, same three
+     destinations, one tight row. */
+  .hero-stats { margin-top: 16px; }
+  .hero-stat { padding: 0 13px; }
+  .hero-left .hero-stat:first-child { padding-left: 13px; }
+  .hero-stat-num { font-size: 18px; }
+  .hero-stat-label { font-size: 10px; margin-top: 3px; letter-spacing: .4px; }
+
+  /* Out of the hero grid it has no container, so it brings its own gutter. */
+  .hero-right {
+    width: calc(100% - 32px); max-width: 400px; margin: 22px auto 0;
+  }
+  /* .hbc-faces stacks every slide in one grid cell, so the card is always the tallest
+     slide's height and no rotation can change it. Nothing left for a floor to hold open. */
   .hero-bill-card { min-height: 0; }
+
+  /* The trust line follows the card down. Its hero colours are mixed for the frosted panel
+     over the blue gradient; on the page surface they are the wrong ink, so it takes the
+     ordinary secondary token and its own gutter instead of inheriting the hero's. */
+  .hero-discoms.is-unhoused { margin: 14px auto 4px; padding: 0 20px; }
+  .hero-discoms.is-unhoused .hero-trust { margin-top: 0; }
 }
 
 /* ═══ Homepage coverage strip ═══════════════════════════════════════════════
@@ -9107,3 +9178,37 @@ html:not(.js) .m-btn-ring { display: none; }
    sentences, where the underline is the only thing marking them as links. */
 .cap-list a:hover,
 .cov-dgrid a:hover,
+.states-grid a:hover { text-decoration: none; }
+
+/* ─── Header hit areas on touch ─────────────────────────────────────────────
+   Every control in the header renders between 33px and 39px tall. The visual sizes are
+   right for a 61px bar — what is wrong is that the tappable box stopped at the visible
+   edge, under both the 44px iOS and 48px Android minimums.
+
+   The bar has 61px of height and these controls have no vertical neighbours, so the hit
+   area grows downward and upward from the middle without colliding with anything. It grows
+   vertically ONLY: horizontally they sit a few pixels apart, and 44px-wide boxes would
+   overlap into whichever one happened to paint last. Width stays the header's business.
+
+   The dropdown menus are a different case — their items are stacked, so there is nothing
+   to overlap sideways and the real box can simply get taller. */
+@media (pointer: coarse) {
+  .site-header .logo,
+  .site-header .nav-dropdown-trigger,
+  .site-header .lang-trigger,
+  .site-header .site-search-btn,
+  .site-header .theme-toggle,
+  .site-header .login-btn { position: relative; }
+  .site-header .logo::after,
+  .site-header .nav-dropdown-trigger::after,
+  .site-header .lang-trigger::after,
+  .site-header .site-search-btn::after,
+  .site-header .theme-toggle::after,
+  .site-header .login-btn::after {
+    content: ''; position: absolute; left: 0; right: 0;
+    top: 50%; height: 44px; transform: translateY(-50%);
+  }
+  /* Stacked items: no sideways neighbour, so the box itself grows. */
+  .nav-dropdown-item,
+  .lang-opt { min-height: 44px; }
+}

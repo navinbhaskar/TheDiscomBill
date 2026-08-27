@@ -178,6 +178,56 @@
         <a class="seo-link-card is-compact" data-icon="plug" href="/services/?state=Maharashtra&amp;discom=best_mumbai#pay"><strong>BEST Mumbai बिल पाहा व भरा</strong><span>तुमचे ताजे बिल पाहा आणि अधिकृत पोर्टलवर भरा</span></a><a class="seo-link-card is-compact" data-icon="plug" href="/services/?state=Maharashtra&amp;discom=best_mumbai#new-connection"><strong>नवीन BEST Mumbai जोडणी</strong><span>शुल्क, कागदपत्रे आणि टप्प्याटप्प्याने अर्ज प्रक्रिया</span></a><a class="seo-link-card is-compact" data-icon="plug" href="/services/?state=Maharashtra&amp;discom=best_mumbai#complaint"><strong>BEST Mumbai तक्रार नोंदवा</strong><span>वीज खंडित, बिलिंग किंवा मीटरची तक्रार डिस्कॉमकडे नोंदवा</span></a><a class="seo-link-card is-compact" data-icon="gauge" href="/mr/smart-meter-recharge/maharashtra/best_mumbai/"><strong>BEST Mumbai स्मार्ट मीटर रिचार्ज</strong><span>प्रीपेड स्मार्ट मीटर ऑनलाइन रिचार्ज कसे करावे, युनिट-अंदाजासह</span></a>
       </div>
     </section>
+    
+    <section class="seo-section" id="calculate">
+      <h2>BEST Mumbai बिलाचा अंदाज घ्या</h2>
+      <p>तुमचे युनिट आणि मंजूर भार टाका — तपशीलवार BEST Mumbai अंदाज मिळेल. निकाल बिलाचे ऊर्जा
+      शुल्क, फिक्स्ड किंवा डिमांड चार्ज, FAC, वीज शुल्क आणि लागू असल्यास विलंब अधिभार असे
+      भाग करून दाखवतो.</p>
+      
+      <div class="pcalc" data-state="Maharashtra" data-types="{&quot;best_mumbai&quot;:[]}" data-msgs="{&quot;pick&quot;:&quot;तुमचा सप्लाय प्रकार निवडा…&quot;,&quot;na&quot;:&quot;लागू नाही — एकच घरगुती टॅरिफ&quot;,&quot;busy&quot;:&quot;गणना सुरू आहे…&quot;,&quot;errUnits&quot;:&quot;या महिन्यात किती युनिट वापरले ते भरा.&quot;,&quot;errSupply&quot;:&quot;तुमचा सप्लाय प्रकार निवडा — यांचे दर बरेच वेगळे आहेत, त्यामुळे सुरक्षित डिफॉल्ट नाही. तो तुमच्या बिलावर छापलेला असतो.&quot;,&quot;errTariff&quot;:&quot;तो टॅरिफ उपलब्ध नाही.&quot;,&quot;errLoad&quot;:&quot;टॅरिफ डेटा लोड होऊ शकला नाही. तुमचे कनेक्शन तपासून पुन्हा प्रयत्न करा.&quot;}">
+      <form class="pcalc-form" id="pcalcForm">
+        <input type="hidden" id="pcDiscom" value="best_mumbai">
+        <!-- Not every DISCOM bands its domestic tariff. BESCOM has a single flat rate and no
+             supply types at all, and a required select with nothing in it made the form
+             impossible to submit. It is disabled rather than removed: on a state page the
+             DISCOM can change under it, and a field that appears and vanishes moves every
+             control below it. Disabled also says why it is inactive, which hiding cannot. -->
+        <div class="pcalc-field pcalc-field-wide" id="pcSupplyField">
+          <label for="pcSupply">सप्लाय प्रकार</label>
+          <select id="pcSupply" disabled>
+            <option value="">लागू नाही — एकच घरगुती टॅरिफ</option>
+          </select>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcUnits">वापर (युनिट)</label>
+          <input type="number" id="pcUnits" inputmode="numeric" min="0" step="1" placeholder="250" required>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcLoad">मंजूर भार (kW)</label>
+          <input type="number" id="pcLoad" inputmode="decimal" min="0" step="0.5" value="2">
+        </div>
+        <button type="submit" class="pcalc-go">बिल काढा</button>
+      </form>
+      <p class="pcalc-note">घरगुती सप्लाय. प्रत्येक पर्यायातील कंसातील मर्यादा ही पात्रता मर्यादा आहे — तुमचे
+      कनेक्शन ज्यात खरोखर येते तोच निवडा, कारण यांचे दर बरेच वेगळे आहेत. कमर्शियल सप्लाय,
+      टाइम-ऑफ-डे, सोलर एक्सपोर्ट किंवा थकबाकीसाठी
+      <a href="/bill-calculator/">संपूर्ण कॅल्क्युलेटर</a> प्रत्येक फील्ड ठेवते.</p>
+      <div class="pcalc-out" id="pcOut" hidden></div>
+      <script>(function(){
+        var f=document.getElementById("pcalcForm"); if(!f) return; var p=null;
+        function load(){ return p || (p = import("/js/page-calc.js")); }
+        // Focus is the earliest honest signal of intent: start fetching while they type, so
+        // the engine is usually already there by the time they press the button.
+        f.addEventListener("focusin", load, { once: true });
+        f.addEventListener("submit", function(e){
+          if (f.dataset.ready) return;   // the module owns submit once it has attached
+          e.preventDefault();
+          load().then(function(){ f.requestSubmit(); });
+        });
+      })();</script>
+      </div>
+    </section>
 
     
     <section class="seo-section">
@@ -328,6 +378,7 @@
         <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
         <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
         <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/install/" data-i18n="ql.install">Install Offline App</a>
       </div>
       <div class="footer-col">
@@ -355,7 +406,6 @@
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
         <a href="/database/" data-i18n="ql.tariffDatabase">Tariff Database</a>
         <a href="/orders/" data-i18n="ql.orderLibrary">Order Library</a>
-        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
       </div>

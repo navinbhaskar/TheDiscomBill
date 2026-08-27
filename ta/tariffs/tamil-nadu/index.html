@@ -161,7 +161,164 @@
     <h1>தமிழ்நாடு மின் கட்டணம் 2025-26 — DISCOM வாரியாக அடுக்கு விகிதங்கள்</h1>
     <p class="guide-meta">கட்டணங்கள் கடைசியாக புதுப்பிக்கப்பட்டது: 27 ஆகஸ்ட், 2026</p>
     <p class="seo-lead">தமிழ்நாடு இன் 1 விநியோக நிறுவனங்களில் — TNPDCL (TANGEDCO) — எதற்கும் தோராயமான மின் கட்டணத்தைக் கணக்கிடுங்கள், 2025-26 இன் முழு அடுக்கு வாரியான விவரங்களுடன்.</p>
-    <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">தமிழ்நாடு கட்டண கணிப்பானைத் திறக்கவும் →</a></p>
+    
+    <section class="seo-section" id="calculate">
+      <h2>தமிழ்நாடு மின் கட்டணத்தைக் கணக்கிடுங்கள்</h2>
+      <p>2025-26 இன் அடுக்கு விகிதங்கள், நிலையான கட்டணம், எரிபொருள் கட்டணம் மற்றும்
+      மின் வரி — உங்கள் சொந்த யூனிட்களுக்குப் பொருத்தப்படுகிறது. நீங்கள் உள்ளிடுவது எதுவும்
+      உங்கள் உலாவியை விட்டு வெளியேறாது.</p>
+      
+      <div class="pcalc" data-state="Tamil Nadu" data-types="{&quot;tangedco&quot;:[]}" data-msgs="{&quot;pick&quot;:&quot;உங்கள் வழங்கல் வகையைத் தேர்ந்தெடுங்கள்…&quot;,&quot;na&quot;:&quot;பொருந்தாது — ஒரே வீட்டு கட்டணம்&quot;,&quot;busy&quot;:&quot;கணக்கிடுகிறது…&quot;,&quot;errUnits&quot;:&quot;இந்த மாதம் எத்தனை யூனிட் பயன்படுத்தினீர்கள் என்பதை உள்ளிடுங்கள்.&quot;,&quot;errSupply&quot;:&quot;உங்கள் வழங்கல் வகையைத் தேர்ந்தெடுங்கள் — விகிதங்கள் கூர்மையாக வேறுபடுவதால் பாதுகாப்பான இயல்புநிலை இல்லை. இது உங்கள் பில்லில் அச்சிடப்பட்டிருக்கும்.&quot;,&quot;errTariff&quot;:&quot;அந்தக் கட்டணம் கிடைக்கவில்லை.&quot;,&quot;errLoad&quot;:&quot;கட்டணத் தரவை ஏற்ற முடியவில்லை. இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.&quot;}">
+      <form class="pcalc-form" id="pcalcForm">
+        <input type="hidden" id="pcDiscom" value="tangedco">
+        <!-- Not every DISCOM bands its domestic tariff. BESCOM has a single flat rate and no
+             supply types at all, and a required select with nothing in it made the form
+             impossible to submit. It is disabled rather than removed: on a state page the
+             DISCOM can change under it, and a field that appears and vanishes moves every
+             control below it. Disabled also says why it is inactive, which hiding cannot. -->
+        <div class="pcalc-field pcalc-field-wide" id="pcSupplyField">
+          <label for="pcSupply">வழங்கல் வகை</label>
+          <select id="pcSupply" disabled>
+            <option value="">பொருந்தாது — ஒரே வீட்டு கட்டணம்</option>
+          </select>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcUnits">பயன்படுத்திய யூனிட்கள்</label>
+          <input type="number" id="pcUnits" inputmode="numeric" min="0" step="1" placeholder="250" required>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcLoad">அனுமதிக்கப்பட்ட சுமை (kW)</label>
+          <input type="number" id="pcLoad" inputmode="decimal" min="0" step="0.5" value="2">
+        </div>
+        <button type="submit" class="pcalc-go">கட்டணத்தைக் கணக்கிடு</button>
+      </form>
+      <p class="pcalc-note">வீட்டு வழங்கல். ஒவ்வொரு விருப்பத்திலும் அடைப்புக்குள் இருப்பது தகுதி வரம்பு —
+      உங்கள் இணைப்பு உண்மையில் எதில் வருகிறதோ அதைத் தேர்ந்தெடுங்கள், ஏனெனில் விகிதங்கள்
+      கூர்மையாக வேறுபடுகின்றன. வணிக வழங்கல், நேர அடிப்படையிலான கட்டணம், சூரிய ஏற்றுமதி
+      அல்லது நிலுவைத் தொகைக்கு <a href="/bill-calculator/">முழு கணிப்பான்</a> ஒவ்வொரு
+      புலத்தையும் கொண்டுள்ளது.</p>
+      <div class="pcalc-out" id="pcOut" hidden></div>
+      <script>(function(){
+        var f=document.getElementById("pcalcForm"); if(!f) return; var p=null;
+        function load(){ return p || (p = import("/js/page-calc.js")); }
+        // Focus is the earliest honest signal of intent: start fetching while they type, so
+        // the engine is usually already there by the time they press the button.
+        f.addEventListener("focusin", load, { once: true });
+        f.addEventListener("submit", function(e){
+          if (f.dataset.ready) return;   // the module owns submit once it has attached
+          e.preventDefault();
+          load().then(function(){ f.requestSubmit(); });
+        });
+      })();</script>
+      </div>
+    </section>
+    
+    <section class="seo-section" id="tariff">
+      <h2>தமிழ்நாடு மின் கட்டணம் (2025-26)</h2>
+      
+      <div class="tariff-cards">
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
+        <div>
+          <h3>LT-IA (Domestic)</h3>
+          
+        </div>
+      </header>
+      <div id="rate-domestic">
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">நிலையான கட்டணம்</div>
+        <div class="tariff-field-value"><strong>₹0</strong> <span class="tx-muted">/ மாதம் (நிலையானது)</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">மின் கட்டணம்</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 200 <span class="tx-muted">யூனிட்</span></td><td class="num">₹4.95<span class="tx-muted">/யூனிட்</span></td></tr><tr><td>200 – 250 <span class="tx-muted">யூனிட்</span></td><td class="num">₹6.65<span class="tx-muted">/யூனிட்</span></td></tr><tr><td>250 – 300 <span class="tx-muted">யூனிட்</span></td><td class="num">₹8.80<span class="tx-muted">/யூனிட்</span></td></tr><tr><td>300 – 400 <span class="tx-muted">யூனிட்</span></td><td class="num">₹9.95<span class="tx-muted">/யூனிட்</span></td></tr><tr><td>400 – 500 <span class="tx-muted">யூனிட்</span></td><td class="num">₹11.05<span class="tx-muted">/யூனிட்</span></td></tr><tr><td>500-க்கு மேல் <span class="tx-muted">யூனிட்</span></td><td class="num">₹12.15<span class="tx-muted">/யூனிட்</span></td></tr></tbody></table>
+      </div>
+      
+    </div></div>
+      <p class="tariff-card-note">ℹ️ TNPDCL bills bi-monthly; rates here are the order's monthly-equivalent bands. Free units (GoTN G.O.(Ms) No.50, 10-05-2026): 200 units free per 2-month cycle if you bill ≤500 units bi-monthly, otherwise 100 units per cycle — tick the Government Subsidy box to apply it. Fixed charge is Nil for this category.</p>
+    </article>
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
+        <div>
+          <h3>LT-V (Commercial / General Purpose)</h3>
+          
+        </div>
+      </header>
+      <div class="tariff-rows">
+      <div class="tariff-rows-head" aria-hidden="true">
+        <span>விநியோக வகை</span>
+        <span class="num">நிலையான கட்டணம்</span>
+        <span class="num">மின் கட்டணம்<small>ஒரு யூனிட்</small></span>
+        <span></span>
+      </div>
+      <details class="tariff-supplytype" id="rate-commercial-v-general" open>
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">LT-V – Above 50 units/month (100 bi-monthly)</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹110<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹10.45</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Commercial / general-purpose supply billing more than 50 units a month (100 units bi-monthly). The higher rate applies to ALL units, not just those above the threshold — this is the normal case for almost every commercial connection. Fixed charge ₹110/kW/month applies up to 50 kW; above 50–112 kW it is ₹332/kW/month and above 112 kW ₹608/kW/month.</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">நிலையான கட்டணம்</div>
+        <div class="tariff-field-value"><strong>₹110</strong> <span class="tx-muted">/ kW / மாதம்</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">மின் கட்டணம்</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0-க்கு மேல் <span class="tx-muted">யூனிட்</span></td><td class="num">₹10.45<span class="tx-muted">/யூனிட்</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">கூடுதல் கட்டணங்கள்</div><ul class="tariff-addl"><li><span>Electricity Duty</span><strong>5%</strong></li></ul></div>
+    </div>
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-commercial-v-low">
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">LT-V – Up to 50 units/month (100 bi-monthly)</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹110<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹6.65</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Commercial / general-purpose supply billing 50 units a month (100 bi-monthly) or less — a small shop or kiosk. Fixed charge ₹110/kW/month up to 50 kW.</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">நிலையான கட்டணம்</div>
+        <div class="tariff-field-value"><strong>₹110</strong> <span class="tx-muted">/ kW / மாதம்</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">மின் கட்டணம்</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0-க்கு மேல் <span class="tx-muted">யூனிட்</span></td><td class="num">₹6.65<span class="tx-muted">/யூனிட்</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">கூடுதல் கட்டணங்கள்</div><ul class="tariff-addl"><li><span>Electricity Duty</span><strong>5%</strong></li></ul></div>
+    </div>
+        </div>
+      </details></div>
+      
+    </article></div>
+    </section>
+    
+    <section class="seo-section" id="common-calculations">
+      <h2>தோராயமான மாதாந்திர கட்டணம் — தமிழ்நாடு</h2>
+      <p>2 kW அனுமதிக்கப்பட்ட சுமையில் வீட்டு (LT-IA (Domestic)) இணைப்பிற்கான தோராயமான மொத்த மாதாந்திர கட்டணம், எங்கள் கால்குலேட்டரின் அதே இன்ஜினால் கணக்கிடப்பட்டது. உண்மையான கட்டணங்கள் உங்கள் துணை வகை, நிலையான/எரிபொருள் கட்டணங்கள் மற்றும் உள்ளூர் வரிகளுக்கு ஏற்ப மாறுபடும்.</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>மாதாந்திர நுகர்வு</th><th class="num">தோராயமான கட்டணம்</th></tr></thead>
+          <tbody><tr><td>200 யூனிட்</td><td class="num">₹990</td></tr><tr><td>300 யூனிட்</td><td class="num">₹1,763</td></tr><tr><td>500 யூனிட்</td><td class="num">₹3,863</td></tr><tr><td>750 யூனிட்</td><td class="num">₹6,900</td></tr></tbody>
+        </table>
+      </div>
+      <p class="seo-cta-row"><a class="seo-cta" href="/?state=Tamil%20Nadu&amp;discom=tangedco#calculator">என் சரியான தமிழ்நாடு கட்டணத்தைக் கணக்கிடு →</a></p>
+    </section>
 
     <section class="seo-section">
       <h2>தமிழ்நாடு இல் மின் DISCOM-கள்</h2>
@@ -226,6 +383,7 @@
         <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
         <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
         <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/install/" data-i18n="ql.install">Install Offline App</a>
       </div>
       <div class="footer-col">
@@ -253,7 +411,6 @@
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
         <a href="/database/" data-i18n="ql.tariffDatabase">Tariff Database</a>
         <a href="/orders/" data-i18n="ql.orderLibrary">Order Library</a>
-        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
       </div>

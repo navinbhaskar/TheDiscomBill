@@ -405,6 +405,7 @@ const FOOTER_SITEMAP = `
         <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
         <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
         <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/install/" data-i18n="ql.install">Install Offline App</a>
       </div>
       <div class="footer-col">
@@ -432,7 +433,6 @@ const FOOTER_SITEMAP = `
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
         <a href="/database/" data-i18n="ql.tariffDatabase">Tariff Database</a>
         <a href="/orders/" data-i18n="ql.orderLibrary">Order Library</a>
-        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
       </div>
@@ -1459,7 +1459,12 @@ function ratesPhrase(meta, fy) {
 // Nothing is lost: the full name is the link's title, both the state and DISCOM pages print it,
 // and data-search on the tile still holds every alias, so typing "BSES Rajdhani" still finds
 // Delhi. The parenthetical is the one part a 206px chip cannot afford.
-const discomChipName = (name) => String(name || '').replace(/\s*\([^)]*\)\s*$/, '').trim() || String(name || '');
+const discomChipName = (name) => {
+  // Two shapes of long name: a parenthetical — "BRPL (BSES Rajdhani)" — and a slash pair,
+  // "LPDCL / Ladakh Power Dept.". Both put the acronym first, which is the part that fits.
+  const short = String(name || '').replace(/\s*\([^)]*\)\s*$/, '').split(' / ')[0].trim();
+  return short || String(name || '');
+};
 
 const tariffNoun = (name) => (/electricity/i.test(name) ? 'Tariff' : 'Electricity Tariff');
 
@@ -1691,15 +1696,32 @@ function discomPortalActionsHtml(state, discom) {
 // The form is here, but the heading no longer announces the page as a calculator: the page is
 // a DISCOM tariff reference that happens to carry a tool. "Estimate your <DISCOM> bill" says
 // what the tool does without competing with the tariff intent the title now leads on.
-function discomCalculatorPanelHtml(state, discom) {
+function discomCalculatorPanelHtml(state, discom, lang = 'en') {
   const nm = esc(discom.name);
+  const sc = surchargeTerm(state).code;
+  const head = T(lang, {
+    hi: `${nm} बिल का अनुमान लगाएँ`,
+    mr: `${nm} बिलाचा अंदाज घ्या`,
+    ta: `${nm} கட்டணத்தை மதிப்பிடுங்கள்`,
+    en: `Estimate your ${nm} bill` });
+  const intro = T(lang, {
+    hi: `अपनी यूनिट और स्वीकृत भार डालें — मदवार ${nm} अनुमान मिलेगा। नतीजा बिल को ऊर्जा
+      शुल्क, फिक्स्ड या डिमांड चार्ज, ${sc}, बिजली शुल्क और लागू होने पर विलंब अधिभार में
+      तोड़कर दिखाता है।`,
+    mr: `तुमचे युनिट आणि मंजूर भार टाका — तपशीलवार ${nm} अंदाज मिळेल. निकाल बिलाचे ऊर्जा
+      शुल्क, फिक्स्ड किंवा डिमांड चार्ज, ${sc}, वीज शुल्क आणि लागू असल्यास विलंब अधिभार असे
+      भाग करून दाखवतो.`,
+    ta: `உங்கள் யூனிட்களையும் அனுமதிக்கப்பட்ட சுமையையும் உள்ளிடுங்கள் — விவரமான ${nm}
+      மதிப்பீடு கிடைக்கும். முடிவு பில்லை மின் கட்டணம், நிலையான அல்லது தேவை கட்டணம்,
+      ${sc}, மின் வரி, மற்றும் பொருந்தும்போது தாமதக் கட்டணம் எனப் பிரித்துக் காட்டுகிறது.`,
+    en: `Enter your units and sanctioned load for an itemised ${nm} estimate. The result breaks
+      the bill into energy charge, fixed or demand charge, ${sc}, duty,
+      and late-payment surcharge where applicable.` });
   return `
     <section class="seo-section" id="calculate">
-      <h2>Estimate your ${nm} bill</h2>
-      <p>Enter your units and sanctioned load for an itemised ${nm} estimate. The result breaks
-      the bill into energy charge, fixed or demand charge, ${surchargeTerm(state).code}, duty,
-      and late-payment surcharge where applicable.</p>
-      ${calcFormBlock(state, [discom])}
+      <h2>${head}</h2>
+      <p>${intro}</p>
+      ${calcFormBlock(state, [discom], lang)}
     </section>`;
 }
 
@@ -2410,7 +2432,7 @@ function discomPage(state, discom, lang = 'en') {
     <p class="guide-meta">Tariffs last updated: ${tariffUpdated(state, 'en')}${meta.verified ? ' · ✓ verified against real bills' : ''}</p>
     ${src ? `<p><a class="tariff-source" href="${attr(src)}" target="_blank" rel="noopener">Official ${esc(discom.name)} source ↗</a></p>` : ''}
     ${discomPortalActionsHtml(state, discom)}
-    ${discomCalculatorPanelHtml(state, discom)}
+    ${discomCalculatorPanelHtml(state, discom, 'en')}
 
     ${keyFactsHtml(state, discom, fy)}
     ${discomRatingHtml(discom)}
@@ -2621,6 +2643,7 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
     <p class="seo-cta-row"><a class="seo-cta" href="${calcHref}">${openCta}</a></p>
 
     ${discomServiceLinksHtml(state, discom, lang)}
+    ${discomCalculatorPanelHtml(state, discom, lang)}
 
     ${keyFactsHtml(state, discom, fy, lang)}
     ${discomRatingHtml(discom, lang)}
@@ -2685,7 +2708,74 @@ const PAGE_CALC_STATES = null;   // null = all states
 // caps live only in the prose of `name`/`description`; there is no numeric field to validate
 // against, so parsing them would just invent a different wrong answer. The tool asks instead,
 // and the option label carries the cap so the choice can be made correctly.
-function calcFormBlock(state, discoms) {
+// Every string the compact calculator shows, in one place. The form is server-rendered here
+// and page-calc.js re-renders two of them (the supply placeholder and its "not applicable"
+// fallback) when the DISCOM changes, plus the button and error copy at runtime — so the same
+// table is emitted onto the element as data-msgs and read back by the module. One source, no
+// second set of translations drifting inside the JS.
+const PCALC_STR = {
+  en: {
+    discom: 'Your DISCOM', supply: 'Supply type',
+    pick: 'Select your supply type…', na: 'Not applicable — single domestic tariff',
+    units: 'Units consumed', load: 'Sanctioned load (kW)', go: 'Calculate bill',
+    busy: 'Calculating…',
+    errUnits: 'Enter how many units you used this month.',
+    errSupply: 'Choose your supply type — the rates differ sharply between them, so there is no safe default. It is printed on your bill.',
+    errTariff: 'That tariff is unavailable.',
+    errLoad: 'Could not load the tariff data. Check your connection and try again.',
+    note: `Domestic supply. The bracket in each option is the eligibility
+      limit — pick the one your connection actually falls under, because the rates differ
+      sharply between them. For commercial supply, time-of-day, solar export or arrears, the
+      <a href="/bill-calculator/">full calculator</a> carries every field.`,
+  },
+  hi: {
+    discom: 'आपका डिस्कॉम', supply: 'सप्लाई प्रकार',
+    pick: 'अपना सप्लाई प्रकार चुनें…', na: 'लागू नहीं — एकल घरेलू टैरिफ',
+    units: 'खपत (यूनिट)', load: 'स्वीकृत भार (kW)', go: 'बिल निकालें',
+    busy: 'गणना हो रही है…',
+    errUnits: 'इस महीने कितनी यूनिट इस्तेमाल हुईं, यह भरें।',
+    errSupply: 'अपना सप्लाई प्रकार चुनें — इनकी दरें काफ़ी अलग हैं, इसलिए कोई सुरक्षित डिफ़ॉल्ट नहीं है। यह आपके बिल पर छपा होता है।',
+    errTariff: 'वह टैरिफ उपलब्ध नहीं है।',
+    errLoad: 'टैरिफ डेटा लोड नहीं हो सका। अपना कनेक्शन जाँचकर दोबारा कोशिश करें।',
+    note: `घरेलू सप्लाई। हर विकल्प में कोष्ठक की संख्या पात्रता सीमा है — वही चुनें जिसमें
+      आपका कनेक्शन वाकई आता है, क्योंकि इनकी दरें काफ़ी अलग हैं। कमर्शियल सप्लाई,
+      टाइम-ऑफ-डे, सोलर एक्सपोर्ट या बकाया के लिए
+      <a href="/bill-calculator/">पूरा कैलकुलेटर</a> हर फ़ील्ड रखता है।`,
+  },
+  mr: {
+    discom: 'तुमचा डिस्कॉम', supply: 'सप्लाय प्रकार',
+    pick: 'तुमचा सप्लाय प्रकार निवडा…', na: 'लागू नाही — एकच घरगुती टॅरिफ',
+    units: 'वापर (युनिट)', load: 'मंजूर भार (kW)', go: 'बिल काढा',
+    busy: 'गणना सुरू आहे…',
+    errUnits: 'या महिन्यात किती युनिट वापरले ते भरा.',
+    errSupply: 'तुमचा सप्लाय प्रकार निवडा — यांचे दर बरेच वेगळे आहेत, त्यामुळे सुरक्षित डिफॉल्ट नाही. तो तुमच्या बिलावर छापलेला असतो.',
+    errTariff: 'तो टॅरिफ उपलब्ध नाही.',
+    errLoad: 'टॅरिफ डेटा लोड होऊ शकला नाही. तुमचे कनेक्शन तपासून पुन्हा प्रयत्न करा.',
+    note: `घरगुती सप्लाय. प्रत्येक पर्यायातील कंसातील मर्यादा ही पात्रता मर्यादा आहे — तुमचे
+      कनेक्शन ज्यात खरोखर येते तोच निवडा, कारण यांचे दर बरेच वेगळे आहेत. कमर्शियल सप्लाय,
+      टाइम-ऑफ-डे, सोलर एक्सपोर्ट किंवा थकबाकीसाठी
+      <a href="/bill-calculator/">संपूर्ण कॅल्क्युलेटर</a> प्रत्येक फील्ड ठेवते.`,
+  },
+  ta: {
+    discom: 'உங்கள் DISCOM', supply: 'வழங்கல் வகை',
+    pick: 'உங்கள் வழங்கல் வகையைத் தேர்ந்தெடுங்கள்…', na: 'பொருந்தாது — ஒரே வீட்டு கட்டணம்',
+    units: 'பயன்படுத்திய யூனிட்கள்', load: 'அனுமதிக்கப்பட்ட சுமை (kW)', go: 'கட்டணத்தைக் கணக்கிடு',
+    busy: 'கணக்கிடுகிறது…',
+    errUnits: 'இந்த மாதம் எத்தனை யூனிட் பயன்படுத்தினீர்கள் என்பதை உள்ளிடுங்கள்.',
+    errSupply: 'உங்கள் வழங்கல் வகையைத் தேர்ந்தெடுங்கள் — விகிதங்கள் கூர்மையாக வேறுபடுவதால் பாதுகாப்பான இயல்புநிலை இல்லை. இது உங்கள் பில்லில் அச்சிடப்பட்டிருக்கும்.',
+    errTariff: 'அந்தக் கட்டணம் கிடைக்கவில்லை.',
+    errLoad: 'கட்டணத் தரவை ஏற்ற முடியவில்லை. இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.',
+    note: `வீட்டு வழங்கல். ஒவ்வொரு விருப்பத்திலும் அடைப்புக்குள் இருப்பது தகுதி வரம்பு —
+      உங்கள் இணைப்பு உண்மையில் எதில் வருகிறதோ அதைத் தேர்ந்தெடுங்கள், ஏனெனில் விகிதங்கள்
+      கூர்மையாக வேறுபடுகின்றன. வணிக வழங்கல், நேர அடிப்படையிலான கட்டணம், சூரிய ஏற்றுமதி
+      அல்லது நிலுவைத் தொகைக்கு <a href="/bill-calculator/">முழு கணிப்பான்</a> ஒவ்வொரு
+      புலத்தையும் கொண்டுள்ளது.`,
+  },
+};
+const pcalcStr = (lang) => PCALC_STR[lang] || PCALC_STR.en;
+
+function calcFormBlock(state, discoms, lang = 'en') {
+  const t = pcalcStr(lang);
   const types = {};
   for (const d of discoms) {
     const cat = (d.categories || []).find(c => c.id === 'domestic');
@@ -2699,12 +2789,15 @@ function calcFormBlock(state, discoms) {
     .map(([id, name]) => `<option value="${esc(id)}">${esc(name)}</option>`).join('');
   const multi = discoms.length > 1;
   const opts = discoms.map(d => `<option value="${esc(d.id)}">${esc(d.name)}</option>`).join('');
+  // Only the strings the module re-renders travel to the client; the rest are already markup.
+  const msgs = { pick: t.pick, na: t.na, busy: t.busy, errUnits: t.errUnits,
+                 errSupply: t.errSupply, errTariff: t.errTariff, errLoad: t.errLoad };
 
   return `
-      <div class="pcalc" data-state="${esc(state)}" data-types="${esc(JSON.stringify(types))}">
+      <div class="pcalc" data-state="${esc(state)}" data-types="${esc(JSON.stringify(types))}" data-msgs="${esc(JSON.stringify(msgs))}">
       <form class="pcalc-form" id="pcalcForm">
         ${multi ? `<div class="pcalc-field">
-          <label for="pcDiscom">Your DISCOM</label>
+          <label for="pcDiscom">${esc(t.discom)}</label>
           <select id="pcDiscom">${opts}</select>
         </div>` : `<input type="hidden" id="pcDiscom" value="${esc(first)}">`}
         <!-- Not every DISCOM bands its domestic tariff. BESCOM has a single flat rate and no
@@ -2713,27 +2806,24 @@ function calcFormBlock(state, discoms) {
              DISCOM can change under it, and a field that appears and vanishes moves every
              control below it. Disabled also says why it is inactive, which hiding cannot. -->
         <div class="pcalc-field pcalc-field-wide" id="pcSupplyField">
-          <label for="pcSupply">Supply type</label>
+          <label for="pcSupply">${esc(t.supply)}</label>
           <select id="pcSupply"${(types[first] || []).length ? ' required' : ' disabled'}>
             ${(types[first] || []).length
-              ? `<option value="">Select your supply type…</option>${firstOpts}`
-              : `<option value="">Not applicable — single domestic tariff</option>`}
+              ? `<option value="">${esc(t.pick)}</option>${firstOpts}`
+              : `<option value="">${esc(t.na)}</option>`}
           </select>
         </div>
         <div class="pcalc-field">
-          <label for="pcUnits">Units consumed</label>
+          <label for="pcUnits">${esc(t.units)}</label>
           <input type="number" id="pcUnits" inputmode="numeric" min="0" step="1" placeholder="250" required>
         </div>
         <div class="pcalc-field">
-          <label for="pcLoad">Sanctioned load (kW)</label>
+          <label for="pcLoad">${esc(t.load)}</label>
           <input type="number" id="pcLoad" inputmode="decimal" min="0" step="0.5" value="2">
         </div>
-        <button type="submit" class="pcalc-go">Calculate bill</button>
+        <button type="submit" class="pcalc-go">${esc(t.go)}</button>
       </form>
-      <p class="pcalc-note">Domestic supply. The bracket in each option is the eligibility
-      limit — pick the one your connection actually falls under, because the rates differ
-      sharply between them. For commercial supply, time-of-day, solar export or arrears, the
-      <a href="/bill-calculator/">full calculator</a> carries every field.</p>
+      <p class="pcalc-note">${t.note}</p>
       <div class="pcalc-out" id="pcOut" hidden></div>
       <script>(function(){
         var f=document.getElementById("pcalcForm"); if(!f) return; var p=null;
@@ -2751,14 +2841,30 @@ function calcFormBlock(state, discoms) {
 }
 
 // State page: the state is known, the DISCOM is not.
-function pageCalculator(state, discoms) {
+function pageCalculator(state, discoms, lang = 'en') {
   if (PAGE_CALC_STATES && !PAGE_CALC_STATES.has(state)) return '';
+  const sl = stateName(state, lang);
+  const fyL = fyLabel(fyOf(discoms), lang);
+  const head = T(lang, {
+    hi: `${esc(sl)} का बिजली बिल निकालें`,
+    mr: `${esc(sl)} चे वीज बिल काढा`,
+    ta: `${esc(sl)} மின் கட்டணத்தைக் கணக்கிடுங்கள்`,
+    en: `Calculate your ${esc(state)} electricity bill` });
+  const intro = T(lang, {
+    hi: `${esc(fyL)} की स्लैब दरें, फिक्स्ड चार्ज, ईंधन अधिभार और बिजली शुल्क — आपकी अपनी
+      यूनिट पर लागू। आपका डाला हुआ कुछ भी ब्राउज़र से बाहर नहीं जाता।`,
+    mr: `${esc(fyL)} चे स्लॅब दर, फिक्स्ड चार्ज, इंधन अधिभार आणि वीज शुल्क — तुमच्याच
+      युनिटवर लावलेले. तुम्ही टाकलेले काहीही ब्राउझरबाहेर जात नाही.`,
+    ta: `${esc(fyL)} இன் அடுக்கு விகிதங்கள், நிலையான கட்டணம், எரிபொருள் கட்டணம் மற்றும்
+      மின் வரி — உங்கள் சொந்த யூனிட்களுக்குப் பொருத்தப்படுகிறது. நீங்கள் உள்ளிடுவது எதுவும்
+      உங்கள் உலாவியை விட்டு வெளியேறாது.`,
+    en: `Slab rates, fixed charge, fuel surcharge and duty for ${esc(fyOf(discoms))}, applied to
+      your own units. Nothing you enter leaves your browser.` });
   return `
     <section class="seo-section" id="calculate">
-      <h2>Calculate your ${esc(state)} electricity bill</h2>
-      <p>Slab rates, fixed charge, fuel surcharge and duty for ${esc(fyOf(discoms))}, applied to
-      your own units. Nothing you enter leaves your browser.</p>
-      ${calcFormBlock(state, discoms)}
+      <h2>${head}</h2>
+      <p>${intro}</p>
+      ${calcFormBlock(state, discoms, lang)}
     </section>`;
 }
 // The tariff year to quote in the calculator intro — the same one the page header uses.
@@ -2848,7 +2954,6 @@ function statePage(state, lang = 'en') {
       mr: `${esc(sl)} च्या ${nd} वितरण कंपन${many ? '्यांपैकी' : 'ीपैकी'} — ${esc(names)} — कोणत्याही एकाचे अंदाजित वीज बिल काढा, ${esc(fyL)} च्या संपूर्ण स्लॅब-निहाय तपशिलासह${cityLine ? ` — ${esc(cityLine)} सह` : ''}.`,
       ta: `${esc(sl)} இன் ${nd} விநியோக நிறுவனங்களில் — ${esc(names)} — எதற்கும் தோராயமான மின் கட்டணத்தைக் கணக்கிடுங்கள், ${esc(fyL)} இன் முழு அடுக்கு வாரியான விவரங்களுடன்${cityLine ? ` — ${esc(cityLine)} உட்பட` : ''}.`,
       en: '' });
-    const cta = T(lang, { hi: `${esc(sl)} बिल कैलकुलेटर खोलें →`, mr: `${esc(sl)} बिल कॅल्क्युलेटर उघडा →`, ta: `${esc(sl)} கட்டண கணிப்பானைத் திறக்கவும் →`, en: '' });
     const discomsHead = T(lang, { hi: `${esc(sl)} के बिजली डिस्कॉम`, mr: `${esc(sl)} मधील वीज डिस्कॉम`, ta: `${esc(sl)} இல் மின் DISCOM-கள்`, en: '' });
     const discomsIntro = T(lang, {
       hi: `अपनी वितरण कंपनी चुनें — उसकी ${esc(fyL)} टैरिफ अनुसूची, सेवा क्षेत्र और अनुमानित मासिक बिल देखें।`,
@@ -2876,7 +2981,8 @@ function statePage(state, lang = 'en') {
     <h1>${h1}</h1>
     <p class="guide-meta">${updated}</p>
     <p class="seo-lead">${lead}</p>
-    <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">${cta}</a></p>
+    ${pageCalculator(state, discoms, lang)}
+    ${stateTariffSection(state, discoms, fyL, lang)}
 
     <section class="seo-section">
       <h2>${discomsHead}</h2>
@@ -2965,7 +3071,7 @@ function statePage(state, lang = 'en') {
     <p class="seo-lead">Calculate your provisional electricity bill for any of ${esc(state)}'s ${discoms.length} distribution compan${discoms.length > 1 ? 'ies' : 'y'} — ${esc(names)} — with a full slab-wise breakdown for ${esc(fy)}${cityLine ? `, covering ${esc(cityLine)} and more` : ''}.</p>
     ${!PAGE_CALC_STATES || PAGE_CALC_STATES.has(state) ? '' : `<p class="seo-cta-row"><a class="seo-cta" href="/#calculator">Open the ${esc(state)} bill calculator →</a></p>`}
     ${pageCalculator(state, discoms)}
-    ${stateTariffSection(state, discoms, fy)}
+    ${stateTariffSection(state, discoms, fy, 'en')}
 
     <section class="seo-section">
       <h2>Electricity DISCOMs in ${esc(state)}</h2>
@@ -7022,26 +7128,42 @@ const FONT_CSS_MARK = 'data-inline="fonts"';
 // more every DISCOM bills domestic supply identically. Those pages can simply show it. Only
 // Delhi, Maharashtra and West Bengal have DISCOMs that genuinely differ, and there a
 // per-DISCOM comparison is the honest answer rather than one table pretending to be the state.
-function stateTariffSection(state, discoms, fy) {
+function stateTariffSection(state, discoms, fy, lang = 'en') {
   if (!discoms.length) return '';
   const sigs = new Set(discoms.map(d => JSON.stringify(d.categories)));
   const one = sigs.size === 1;
+  const sl = stateName(state, lang);
+  const pfx = lang === 'en' ? '' : `/${lang}`;
+  const n = discoms.length;
+  const head = T(lang, {
+    hi: `${esc(sl)} बिजली टैरिफ (${esc(fy)})`,
+    mr: `${esc(sl)} वीज टॅरिफ (${esc(fy)})`,
+    ta: `${esc(sl)} மின் கட்டணம் (${esc(fy)})`,
+    en: `${esc(state)} electricity tariff (${esc(fy)})` });
 
   if (one) {
     const d = discoms[0];
-    const cards = (d.categories || []).map(c => categoryCardHtml(c)).join('');
+    const cards = (d.categories || []).map(c => categoryCardHtml(c, lang)).join('');
     if (!cards) return '';
-    const note = discoms.length > 1
-      ? `<p>All ${discoms.length} DISCOMs in ${esc(state)} bill on the same schedule, set by the
-         state regulator — so the rates below apply whichever company serves you.</p>`
+    const note = n > 1
+      ? `<p>${T(lang, {
+          hi: `${esc(sl)} के सभी ${n} डिस्कॉम राज्य नियामक की तय की हुई एक ही अनुसूची पर बिल
+             बनाते हैं — इसलिए नीचे दी गई दरें लागू होती हैं, चाहे कोई भी कंपनी आपको सप्लाई देती हो।`,
+          mr: `${esc(sl)} मधील सर्व ${n} डिस्कॉम राज्य नियामकाने ठरवलेल्या एकाच अनुसूचीवर बिल
+             करतात — त्यामुळे खालील दर लागू होतात, तुम्हाला कोणतीही कंपनी वीज देत असली तरी.`,
+          ta: `${esc(sl)} இல் உள்ள ${n} DISCOM-களும் மாநில ஒழுங்குமுறையாளர் நிர்ணயித்த ஒரே
+             அட்டவணையிலேயே கட்டணம் விதிக்கின்றன — எனவே எந்த நிறுவனம் உங்களுக்கு வழங்கினாலும்
+             கீழே உள்ள விகிதங்களே பொருந்தும்.`,
+          en: `All ${n} DISCOMs in ${esc(state)} bill on the same schedule, set by the
+             state regulator — so the rates below apply whichever company serves you.` })}</p>`
       : '';
     return `
     <section class="seo-section" id="tariff">
-      <h2>${esc(state)} electricity tariff (${esc(fy)})</h2>
+      <h2>${head}</h2>
       ${note}
       <div class="tariff-cards">${cards}</div>
     </section>
-    ${indicativeBillsHtml(state, d, 'en', state)}`;
+    ${indicativeBillsHtml(state, d, lang, sl)}`;
   }
 
   // Differing schedules — show what each company charges instead of averaging them away.
@@ -7051,31 +7173,56 @@ function stateTariffSection(state, discoms, fy) {
   const rows = discoms.map(d => {
     const dr = domesticRates(d);
     return `<tr><td><a href="#tariff-${esc(d.id)}">${esc(d.name)}</a></td>
-      <td>${dr ? esc(rateTag(dr)) : '—'}</td>
-      <td>${esc(d.tariffYear || fy)}</td></tr>`;
+      <td>${dr ? esc(rateTag(dr, lang)) : '—'}</td>
+      <td>${esc(fyLabel(d.tariffYear || fy, lang))}</td></tr>`;
   }).join('');
 
+  const intro = T(lang, {
+    hi: `${esc(sl)} के ${n} डिस्कॉम अलग-अलग अनुसूचियों पर हैं, इसलिए दर इस पर निर्भर है कि आपके
+      पते पर कौन-सी कंपनी सप्लाई देती है। नीचे घरेलू स्लैब रेंज की तुलना, और उसके बाद हर पूरी अनुसूची:`,
+    mr: `${esc(sl)} मधील ${n} डिस्कॉम वेगवेगळ्या अनुसूचींवर आहेत, त्यामुळे दर तुमच्या पत्त्यावर
+      कोणती कंपनी वीज देते यावर अवलंबून आहे. खाली घरगुती स्लॅब रेंजची तुलना, आणि त्यानंतर प्रत्येक
+      संपूर्ण अनुसूची:`,
+    ta: `${esc(sl)} இன் ${n} DISCOM-கள் தனித்தனி அட்டவணைகளில் உள்ளன, எனவே விகிதம் உங்கள்
+      முகவரிக்கு எந்த நிறுவனம் வழங்குகிறது என்பதைப் பொறுத்தது. கீழே வீட்டு அடுக்கு வரம்புகளின்
+      ஒப்பீடு, அதைத் தொடர்ந்து ஒவ்வொரு முழு அட்டவணையும்:`,
+    en: `${esc(state)}'s ${n} DISCOMs are on separate schedules, so the rate depends
+      on which one serves your address. Domestic slab ranges compared, with each full schedule
+      below:` });
+  const thDiscom = T(lang, { hi: 'डिस्कॉम', mr: 'डिस्कॉम', ta: 'DISCOM', en: 'DISCOM' });
+  const thRange = T(lang, { hi: 'घरेलू स्लैब रेंज', mr: 'घरगुती स्लॅब रेंज', ta: 'வீட்டு அடுக்கு வரம்பு', en: 'Domestic slab range' });
+  const thYear = T(lang, { hi: 'टैरिफ वर्ष', mr: 'टॅरिफ वर्ष', ta: 'கட்டண ஆண்டு', en: 'Tariff year' });
+
   const detail = discoms.map(d => {
-    const cards = (d.categories || []).map(c => categoryCardHtml(c)).join('');
+    const cards = (d.categories || []).map(c => categoryCardHtml(c, lang)).join('');
     if (!cards) return '';
+    const yr = esc(fyLabel(d.tariffYear || fy, lang));
+    const h3 = T(lang, {
+      hi: `${esc(d.name)} टैरिफ (${yr})`,
+      mr: `${esc(d.name)} टॅरिफ (${yr})`,
+      ta: `${esc(d.name)} கட்டணம் (${yr})`,
+      en: `${esc(d.name)} tariff (${yr})` });
+    const more = T(lang, {
+      hi: `पूरा ${esc(d.name)} पेज — ईंधन अधिभार, सेवा क्षेत्र और बिल गाइड →`,
+      mr: `संपूर्ण ${esc(d.name)} पेज — इंधन अधिभार, सेवा क्षेत्र आणि बिल मार्गदर्शक →`,
+      ta: `முழு ${esc(d.name)} பக்கம் — எரிபொருள் கட்டணம், சேவைப் பகுதி மற்றும் பில் வழிகாட்டி →`,
+      en: `Full ${esc(d.name)} page —
+        fuel surcharge, service area and bill guide →` });
     return `
       <div class="tariff-discom" id="tariff-${esc(d.id)}">
-        <h3>${esc(d.name)} tariff (${esc(d.tariffYear || fy)})</h3>
+        <h3>${h3}</h3>
         <div class="tariff-cards">${cards}</div>
-        <p><a href="/tariffs/${slugify(state)}/${esc(d.id)}/">Full ${esc(d.name)} page —
-        fuel surcharge, service area and bill guide →</a></p>
+        <p><a href="${pfx}/tariffs/${slugify(state)}/${esc(d.id)}/">${more}</a></p>
       </div>`;
   }).join('');
 
   return `
     <section class="seo-section" id="tariff">
-      <h2>${esc(state)} electricity tariff (${esc(fy)})</h2>
-      <p>${esc(state)}'s ${discoms.length} DISCOMs are on separate schedules, so the rate depends
-      on which one serves your address. Domestic slab ranges compared, with each full schedule
-      below:</p>
+      <h2>${head}</h2>
+      <p>${intro}</p>
       <div class="comparison-table-wrapper">
         <table class="comparison-table">
-          <thead><tr><th>DISCOM</th><th>Domestic slab range</th><th>Tariff year</th></tr></thead>
+          <thead><tr><th>${thDiscom}</th><th>${thRange}</th><th>${thYear}</th></tr></thead>
           <tbody>${rows}</tbody>
         </table>
       </div>
@@ -7213,10 +7360,14 @@ function stampBillCalculator() {
   const home = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const a = home.indexOf('<section id="calculator"');
   if (a < 0) throw new Error('stampBillCalculator: no #calculator section in index.html');
-  // The section ends where the next top-level section begins.
-  const b = home.indexOf('<section class="coverage-strip"', a);
+  // Ends at the section's own closing marker, not at whatever section happens to follow it.
+  // It used to run to `<section class="coverage-strip"`, which meant anything parked between
+  // the two — the inline script that relocates the hero bill card below the form on mobile —
+  // was copied onto /bill-calculator/, a page with no hero and no card for it to move.
+  const CALC_END = '</section><!-- /#calculator -->';
+  const b = home.indexOf(CALC_END, a);
   if (b < 0) throw new Error('stampBillCalculator: could not find the end of #calculator');
-  let calc = home.slice(a, b).trimEnd();
+  let calc = home.slice(a, b + CALC_END.length).trimEnd();
 
   // Detailed by default here, Simple on the homepage. calculator-init.js reads this.
   calc = calc.replace('<section id="calculator"', '<section id="calculator" data-default-mode="detailed"');

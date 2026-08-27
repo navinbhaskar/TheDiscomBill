@@ -159,7 +159,121 @@
     <h1>तेलंगाना बिजली टैरिफ 2026-27 — डिस्कॉम के अनुसार स्लैब दरें</h1>
     <p class="guide-meta">टैरिफ अंतिम अपडेट: 27 अगस्त 2026</p>
     <p class="seo-lead">तेलंगाना की 2 वितरण कंपनियों — TGSPDCL, TGNPDCL — में से किसी का भी अनुमानित बिजली बिल निकालें, 2026-27 के पूरे स्लैब-वार विवरण के साथ — Hyderabad, Rangareddy, Mahbubnagar, Nalgonda, Medak, Sangareddy समेत।</p>
-    <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">तेलंगाना बिल कैलकुलेटर खोलें →</a></p>
+    
+    <section class="seo-section" id="calculate">
+      <h2>तेलंगाना का बिजली बिल निकालें</h2>
+      <p>2026-27 की स्लैब दरें, फिक्स्ड चार्ज, ईंधन अधिभार और बिजली शुल्क — आपकी अपनी
+      यूनिट पर लागू। आपका डाला हुआ कुछ भी ब्राउज़र से बाहर नहीं जाता।</p>
+      
+      <div class="pcalc" data-state="Telangana" data-types="{&quot;tsspdcl&quot;:[],&quot;tsnpdcl&quot;:[]}" data-msgs="{&quot;pick&quot;:&quot;अपना सप्लाई प्रकार चुनें…&quot;,&quot;na&quot;:&quot;लागू नहीं — एकल घरेलू टैरिफ&quot;,&quot;busy&quot;:&quot;गणना हो रही है…&quot;,&quot;errUnits&quot;:&quot;इस महीने कितनी यूनिट इस्तेमाल हुईं, यह भरें।&quot;,&quot;errSupply&quot;:&quot;अपना सप्लाई प्रकार चुनें — इनकी दरें काफ़ी अलग हैं, इसलिए कोई सुरक्षित डिफ़ॉल्ट नहीं है। यह आपके बिल पर छपा होता है।&quot;,&quot;errTariff&quot;:&quot;वह टैरिफ उपलब्ध नहीं है।&quot;,&quot;errLoad&quot;:&quot;टैरिफ डेटा लोड नहीं हो सका। अपना कनेक्शन जाँचकर दोबारा कोशिश करें।&quot;}">
+      <form class="pcalc-form" id="pcalcForm">
+        <div class="pcalc-field">
+          <label for="pcDiscom">आपका डिस्कॉम</label>
+          <select id="pcDiscom"><option value="tsspdcl">TGSPDCL</option><option value="tsnpdcl">TGNPDCL</option></select>
+        </div>
+        <!-- Not every DISCOM bands its domestic tariff. BESCOM has a single flat rate and no
+             supply types at all, and a required select with nothing in it made the form
+             impossible to submit. It is disabled rather than removed: on a state page the
+             DISCOM can change under it, and a field that appears and vanishes moves every
+             control below it. Disabled also says why it is inactive, which hiding cannot. -->
+        <div class="pcalc-field pcalc-field-wide" id="pcSupplyField">
+          <label for="pcSupply">सप्लाई प्रकार</label>
+          <select id="pcSupply" disabled>
+            <option value="">लागू नहीं — एकल घरेलू टैरिफ</option>
+          </select>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcUnits">खपत (यूनिट)</label>
+          <input type="number" id="pcUnits" inputmode="numeric" min="0" step="1" placeholder="250" required>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcLoad">स्वीकृत भार (kW)</label>
+          <input type="number" id="pcLoad" inputmode="decimal" min="0" step="0.5" value="2">
+        </div>
+        <button type="submit" class="pcalc-go">बिल निकालें</button>
+      </form>
+      <p class="pcalc-note">घरेलू सप्लाई। हर विकल्प में कोष्ठक की संख्या पात्रता सीमा है — वही चुनें जिसमें
+      आपका कनेक्शन वाकई आता है, क्योंकि इनकी दरें काफ़ी अलग हैं। कमर्शियल सप्लाई,
+      टाइम-ऑफ-डे, सोलर एक्सपोर्ट या बकाया के लिए
+      <a href="/bill-calculator/">पूरा कैलकुलेटर</a> हर फ़ील्ड रखता है।</p>
+      <div class="pcalc-out" id="pcOut" hidden></div>
+      <script>(function(){
+        var f=document.getElementById("pcalcForm"); if(!f) return; var p=null;
+        function load(){ return p || (p = import("/js/page-calc.js")); }
+        // Focus is the earliest honest signal of intent: start fetching while they type, so
+        // the engine is usually already there by the time they press the button.
+        f.addEventListener("focusin", load, { once: true });
+        f.addEventListener("submit", function(e){
+          if (f.dataset.ready) return;   // the module owns submit once it has attached
+          e.preventDefault();
+          load().then(function(){ f.requestSubmit(); });
+        });
+      })();</script>
+      </div>
+    </section>
+    
+    <section class="seo-section" id="tariff">
+      <h2>तेलंगाना बिजली टैरिफ (2026-27)</h2>
+      <p>तेलंगाना के सभी 2 डिस्कॉम राज्य नियामक की तय की हुई एक ही अनुसूची पर बिल
+             बनाते हैं — इसलिए नीचे दी गई दरें लागू होती हैं, चाहे कोई भी कंपनी आपको सप्लाई देती हो।</p>
+      <div class="tariff-cards">
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
+        <div>
+          <h3>LT-I (Domestic)</h3>
+          
+        </div>
+      </header>
+      <div id="rate-domestic">
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><table class="tariff-slab-table"><tbody><tr><td>up to 800 units/month</td><td class="num">₹10<span class="tx-muted">/kW/माह</span></td></tr><tr><td>above 800 units/month</td><td class="num">₹50<span class="tx-muted">/kW/माह</span></td></tr></tbody></table></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 200 <span class="tx-muted">यूनिट</span></td><td class="num">₹5.10<span class="tx-muted">/यूनिट</span></td></tr><tr><td>200 – 300 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.70<span class="tx-muted">/यूनिट</span></td></tr><tr><td>300 – 400 <span class="tx-muted">यूनिट</span></td><td class="num">₹9.00<span class="tx-muted">/यूनिट</span></td></tr><tr><td>400 – 800 <span class="tx-muted">यूनिट</span></td><td class="num">₹9.50<span class="tx-muted">/यूनिट</span></td></tr><tr><td>800 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹10.00<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>₹0.06</strong></li></ul></div>
+    </div></div>
+      <p class="tariff-card-note">ℹ️ Telangana re-rates the whole bill when consumption crosses 100 or 200 units a month, so a 101-unit bill costs noticeably more than a 100-unit one. There is no separate customer charge for domestic connections. The fixed charge is ₹10 per kW per month, rising to ₹50 per kW above 800 units.</p>
+    </article>
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
+        <div>
+          <h3>LT-II (Non-Domestic / Commercial)</h3>
+          
+        </div>
+      </header>
+      <div id="rate-commercial">
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><table class="tariff-slab-table"><tbody><tr><td>up to 50 units/month</td><td class="num">₹30<span class="tx-muted">/kW/माह</span></td></tr><tr><td>up to 300 units/month</td><td class="num">₹70<span class="tx-muted">/kW/माह</span></td></tr><tr><td>above 300 units/month</td><td class="num">₹100<span class="tx-muted">/kW/माह</span></td></tr></tbody></table></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹8.50<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 300 <span class="tx-muted">यूनिट</span></td><td class="num">₹9.90<span class="tx-muted">/यूनिट</span></td></tr><tr><td>300 – 500 <span class="tx-muted">यूनिट</span></td><td class="num">₹10.40<span class="tx-muted">/यूनिट</span></td></tr><tr><td>500 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹11.00<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Customer charge</span><strong>₹50</strong></li><li><span>Electricity Duty (ED)</span><strong>₹0.06</strong></li></ul></div>
+    </div></div>
+      <p class="tariff-card-note">ℹ️ Crossing 50 units a month re-rates the entire bill from ₹7.00 to the ₹8.50 ladder. Single-phase connections pay a ₹50/month customer charge; three-phase pay ₹100. Advertising hoardings (LT-II(C)) are billed separately at ₹13.00/unit.</p>
+    </article></div>
+    </section>
+    
+    <section class="seo-section" id="common-calculations">
+      <h2>अनुमानित मासिक बिल — तेलंगाना</h2>
+      <p>2 kW स्वीकृत भार पर घरेलू (LT-I (Domestic)) कनेक्शन का अनुमानित कुल मासिक बिल, हमारे कैलकुलेटर वाले ही इंजन से निकाला गया। वास्तविक बिल आपकी उप-श्रेणी, फिक्स्ड/ईंधन शुल्क और स्थानीय करों के अनुसार बदलते हैं।</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>मासिक खपत</th><th class="num">अनुमानित बिल</th></tr></thead>
+          <tbody><tr><td>200 यूनिट</td><td class="num">₹852</td></tr><tr><td>300 यूनिट</td><td class="num">₹1,828</td></tr><tr><td>500 यूनिट</td><td class="num">₹3,690</td></tr><tr><td>750 यूनिट</td><td class="num">₹6,080</td></tr></tbody>
+        </table>
+      </div>
+      <p class="seo-cta-row"><a class="seo-cta" href="/?state=Telangana&amp;discom=tsspdcl#calculator">मेरा सटीक तेलंगाना बिल निकालें →</a></p>
+    </section>
 
     <section class="seo-section">
       <h2>तेलंगाना के बिजली डिस्कॉम</h2>
@@ -226,6 +340,7 @@
         <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
         <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
         <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/install/" data-i18n="ql.install">Install Offline App</a>
       </div>
       <div class="footer-col">
@@ -253,7 +368,6 @@
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
         <a href="/database/" data-i18n="ql.tariffDatabase">Tariff Database</a>
         <a href="/orders/" data-i18n="ql.orderLibrary">Order Library</a>
-        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
       </div>

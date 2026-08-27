@@ -161,7 +161,302 @@
     <h1>महाराष्ट्र वीज टॅरिफ 2026-27 — डिस्कॉमनुसार स्लॅब दर</h1>
     <p class="guide-meta">टॅरिफ शेवटचे अपडेट: २० जुलै, २०२६</p>
     <p class="seo-lead">महाराष्ट्र च्या 4 वितरण कंपन्यांपैकी — MSEDCL, Adani Electricity Mumbai, BEST Mumbai, Tata Power Mumbai — कोणत्याही एकाचे अंदाजित वीज बिल काढा, 2026-27 च्या संपूर्ण स्लॅब-निहाय तपशिलासह — except Mumbai city area served by Adani/BEST/Tata Power, Bandra, Andheri, Kurla, Borivali, Malad सह.</p>
-    <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">महाराष्ट्र बिल कॅल्क्युलेटर उघडा →</a></p>
+    
+    <section class="seo-section" id="calculate">
+      <h2>महाराष्ट्र चे वीज बिल काढा</h2>
+      <p>2026-27 चे स्लॅब दर, फिक्स्ड चार्ज, इंधन अधिभार आणि वीज शुल्क — तुमच्याच
+      युनिटवर लावलेले. तुम्ही टाकलेले काहीही ब्राउझरबाहेर जात नाही.</p>
+      
+      <div class="pcalc" data-state="Maharashtra" data-types="{&quot;msedcl&quot;:[],&quot;adani_mumbai&quot;:[],&quot;best_mumbai&quot;:[],&quot;tata_power_mumbai&quot;:[]}" data-msgs="{&quot;pick&quot;:&quot;तुमचा सप्लाय प्रकार निवडा…&quot;,&quot;na&quot;:&quot;लागू नाही — एकच घरगुती टॅरिफ&quot;,&quot;busy&quot;:&quot;गणना सुरू आहे…&quot;,&quot;errUnits&quot;:&quot;या महिन्यात किती युनिट वापरले ते भरा.&quot;,&quot;errSupply&quot;:&quot;तुमचा सप्लाय प्रकार निवडा — यांचे दर बरेच वेगळे आहेत, त्यामुळे सुरक्षित डिफॉल्ट नाही. तो तुमच्या बिलावर छापलेला असतो.&quot;,&quot;errTariff&quot;:&quot;तो टॅरिफ उपलब्ध नाही.&quot;,&quot;errLoad&quot;:&quot;टॅरिफ डेटा लोड होऊ शकला नाही. तुमचे कनेक्शन तपासून पुन्हा प्रयत्न करा.&quot;}">
+      <form class="pcalc-form" id="pcalcForm">
+        <div class="pcalc-field">
+          <label for="pcDiscom">तुमचा डिस्कॉम</label>
+          <select id="pcDiscom"><option value="msedcl">MSEDCL</option><option value="adani_mumbai">Adani Electricity Mumbai</option><option value="best_mumbai">BEST Mumbai</option><option value="tata_power_mumbai">Tata Power Mumbai</option></select>
+        </div>
+        <!-- Not every DISCOM bands its domestic tariff. BESCOM has a single flat rate and no
+             supply types at all, and a required select with nothing in it made the form
+             impossible to submit. It is disabled rather than removed: on a state page the
+             DISCOM can change under it, and a field that appears and vanishes moves every
+             control below it. Disabled also says why it is inactive, which hiding cannot. -->
+        <div class="pcalc-field pcalc-field-wide" id="pcSupplyField">
+          <label for="pcSupply">सप्लाय प्रकार</label>
+          <select id="pcSupply" disabled>
+            <option value="">लागू नाही — एकच घरगुती टॅरिफ</option>
+          </select>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcUnits">वापर (युनिट)</label>
+          <input type="number" id="pcUnits" inputmode="numeric" min="0" step="1" placeholder="250" required>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcLoad">मंजूर भार (kW)</label>
+          <input type="number" id="pcLoad" inputmode="decimal" min="0" step="0.5" value="2">
+        </div>
+        <button type="submit" class="pcalc-go">बिल काढा</button>
+      </form>
+      <p class="pcalc-note">घरगुती सप्लाय. प्रत्येक पर्यायातील कंसातील मर्यादा ही पात्रता मर्यादा आहे — तुमचे
+      कनेक्शन ज्यात खरोखर येते तोच निवडा, कारण यांचे दर बरेच वेगळे आहेत. कमर्शियल सप्लाय,
+      टाइम-ऑफ-डे, सोलर एक्सपोर्ट किंवा थकबाकीसाठी
+      <a href="/bill-calculator/">संपूर्ण कॅल्क्युलेटर</a> प्रत्येक फील्ड ठेवते.</p>
+      <div class="pcalc-out" id="pcOut" hidden></div>
+      <script>(function(){
+        var f=document.getElementById("pcalcForm"); if(!f) return; var p=null;
+        function load(){ return p || (p = import("/js/page-calc.js")); }
+        // Focus is the earliest honest signal of intent: start fetching while they type, so
+        // the engine is usually already there by the time they press the button.
+        f.addEventListener("focusin", load, { once: true });
+        f.addEventListener("submit", function(e){
+          if (f.dataset.ready) return;   // the module owns submit once it has attached
+          e.preventDefault();
+          load().then(function(){ f.requestSubmit(); });
+        });
+      })();</script>
+      </div>
+    </section>
+    
+    <section class="seo-section" id="tariff">
+      <h2>महाराष्ट्र वीज टॅरिफ (2026-27)</h2>
+      <p>महाराष्ट्र मधील 4 डिस्कॉम वेगवेगळ्या अनुसूचींवर आहेत, त्यामुळे दर तुमच्या पत्त्यावर
+      कोणती कंपनी वीज देते यावर अवलंबून आहे. खाली घरगुती स्लॅब रेंजची तुलना, आणि त्यानंतर प्रत्येक
+      संपूर्ण अनुसूची:</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>डिस्कॉम</th><th>घरगुती स्लॅब रेंज</th><th>टॅरिफ वर्ष</th></tr></thead>
+          <tbody><tr><td><a href="#tariff-msedcl">MSEDCL</a></td>
+      <td>₹4.32–13.97/युनिट</td>
+      <td>2026-27</td></tr><tr><td><a href="#tariff-adani_mumbai">Adani Electricity Mumbai</a></td>
+      <td>₹2.65–8.35/युनिट</td>
+      <td>2026-27</td></tr><tr><td><a href="#tariff-best_mumbai">BEST Mumbai</a></td>
+      <td>₹2.02–11.25/युनिट</td>
+      <td>2026-27</td></tr><tr><td><a href="#tariff-tata_power_mumbai">Tata Power Mumbai</a></td>
+      <td>₹1.90–10.24/युनिट</td>
+      <td>2026-27</td></tr></tbody>
+        </table>
+      </div>
+      
+      <div class="tariff-discom" id="tariff-msedcl">
+        <h3>MSEDCL टॅरिफ (2026-27)</h3>
+        <div class="tariff-cards">
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
+        <div>
+          <h3>LT-I(B) (Residential)</h3>
+          
+        </div>
+      </header>
+      <div id="rate-domestic">
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><table class="tariff-slab-table"><tbody><tr><td>Single phase (≤ 5 kW)</td><td class="num">₹130<span class="tx-muted">/महिना</span></td></tr><tr><td>Three phase (&gt; 5 kW)</td><td class="num">₹435<span class="tx-muted">/महिना</span></td></tr></tbody></table></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">युनिट</span></td><td class="num">₹4.32<span class="tx-muted">/युनिट</span></td></tr><tr><td>100 – 300 <span class="tx-muted">युनिट</span></td><td class="num">₹9.40<span class="tx-muted">/युनिट</span></td></tr><tr><td>300 – 500 <span class="tx-muted">युनिट</span></td><td class="num">₹12.51<span class="tx-muted">/युनिट</span></td></tr><tr><td>500 पेक्षा जास्त <span class="tx-muted">युनिट</span></td><td class="num">₹13.97<span class="tx-muted">/युनिट</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>16%</strong></li></ul></div>
+    </div></div>
+      
+    </article>
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
+        <div>
+          <h3>LT-II (Commercial / Non-Residential)</h3>
+          
+        </div>
+      </header>
+      <div class="tariff-rows">
+      <div class="tariff-rows-head" aria-hidden="true">
+        <span>पुरवठा प्रकार</span>
+        <span class="num">फिक्स्ड चार्ज</span>
+        <span class="num">ऊर्जा दर<small>प्रति युनिट</small></span>
+        <span></span>
+      </div>
+      <details class="tariff-supplytype" id="rate-commercial-ii-a" open>
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">LT-II(A) — up to 20 kW</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹525<span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹6.44</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Commercial / non-residential supply with sanctioned load up to 20 kW. Billed on kWh; fixed charge is a flat ₹525 per connection per month (FY 2026-27).</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹525</strong> <span class="tx-muted">/ महिना (स्थिर)</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 पेक्षा जास्त <span class="tx-muted">युनिट</span></td><td class="num">₹6.44<span class="tx-muted">/युनिट</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>16%</strong></li></ul></div>
+    </div>
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-commercial-ii-b">
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">LT-II(B) — 20 to 50 kW</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹525<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹10.07</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Commercial supply with sanctioned load above 20 kW and up to 50 kW. Billed on kVA demand and kVAh (apparent energy): a poor power factor raises the bill directly. Demand charge ₹525/kVA/month (FY 2026-27).</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹525</strong> <span class="tx-muted">/ kVA / महिना</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 पेक्षा जास्त <span class="tx-muted">युनिट</span></td><td class="num">₹10.07<span class="tx-muted">/युनिट</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>16%</strong></li></ul></div>
+    </div>
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-commercial-ii-c">
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">LT-II(C) — above 50 kW</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹525<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹12.16</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Commercial supply with sanctioned load above 50 kW. Billed on kVA demand and kVAh (apparent energy). Demand charge ₹525/kVA/month (FY 2026-27).</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹525</strong> <span class="tx-muted">/ kVA / महिना</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 पेक्षा जास्त <span class="tx-muted">युनिट</span></td><td class="num">₹12.16<span class="tx-muted">/युनिट</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>16%</strong></li></ul></div>
+    </div>
+        </div>
+      </details></div>
+      
+    </article></div>
+        <p><a href="/mr/tariffs/maharashtra/msedcl/">संपूर्ण MSEDCL पेज — इंधन अधिभार, सेवा क्षेत्र आणि बिल मार्गदर्शक →</a></p>
+      </div>
+      <div class="tariff-discom" id="tariff-adani_mumbai">
+        <h3>Adani Electricity Mumbai टॅरिफ (2026-27)</h3>
+        <div class="tariff-cards">
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
+        <div>
+          <h3>LT-I (Residential)</h3>
+          
+        </div>
+      </header>
+      <div id="rate-domestic">
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><table class="tariff-slab-table"><tbody><tr><td>Up to 100 units</td><td class="num">₹90<span class="tx-muted">/महिना</span></td></tr><tr><td>101 – 500 units</td><td class="num">₹135<span class="tx-muted">/महिना</span></td></tr><tr><td>Above 500 units</td><td class="num">₹160<span class="tx-muted">/महिना</span></td></tr></tbody></table></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">युनिट</span></td><td class="num">₹2.65<span class="tx-muted">/युनिट</span></td></tr><tr><td>100 – 300 <span class="tx-muted">युनिट</span></td><td class="num">₹5.85<span class="tx-muted">/युनिट</span></td></tr><tr><td>300 – 500 <span class="tx-muted">युनिट</span></td><td class="num">₹7.10<span class="tx-muted">/युनिट</span></td></tr><tr><td>500 पेक्षा जास्त <span class="tx-muted">युनिट</span></td><td class="num">₹8.35<span class="tx-muted">/युनिट</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>16%</strong></li></ul></div>
+    </div></div>
+      
+    </article>
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-industrial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3.5 20V9.5l5.2 3V9.5l5.2 3V7.8L20.5 5v15h-17Z"/><path d="M7 16h1.8"/><path d="M11.2 16H13"/><path d="M15.4 16h1.8"/><path d="M18.5 5V3.5"/><path d="M14 12.5h6.5"/></svg></span>
+        <div>
+          <h3>HT-I Industrial (HT · kVAh)</h3>
+          
+        </div>
+      </header>
+      <div id="rate-ht-industrial">
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹400</strong> <span class="tx-muted">/ kVA / महिना</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 पेक्षा जास्त <span class="tx-muted">युनिट</span></td><td class="num">₹5.73<span class="tx-muted">/युनिट</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>9.3%</strong></li></ul></div>
+    </div></div>
+      <p class="tariff-card-note">ℹ️ HT-I industrial supply, kVAh based (MERC Case 211/2024, FY 2026-27) — demand charge ₹400/kVA/month on the recorded MD (floored at 75% of contract demand), energy ₹5.73 per kVAh plus ₹0.57 wheeling (apparent units = kWh ÷ power factor, so a poor PF raises the bill directly). Demand above contract demand is charged at 150% (state rule).</p>
+    </article></div>
+        <p><a href="/mr/tariffs/maharashtra/adani_mumbai/">संपूर्ण Adani Electricity Mumbai पेज — इंधन अधिभार, सेवा क्षेत्र आणि बिल मार्गदर्शक →</a></p>
+      </div>
+      <div class="tariff-discom" id="tariff-best_mumbai">
+        <h3>BEST Mumbai टॅरिफ (2026-27)</h3>
+        <div class="tariff-cards">
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
+        <div>
+          <h3>LT-I(B) (Residential)</h3>
+          
+        </div>
+      </header>
+      <div id="rate-domestic">
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><table class="tariff-slab-table"><tbody><tr><td>Up to 100 units</td><td class="num">₹90<span class="tx-muted">/महिना</span></td></tr><tr><td>101 – 500 units</td><td class="num">₹135<span class="tx-muted">/महिना</span></td></tr><tr><td>Above 500 units</td><td class="num">₹160<span class="tx-muted">/महिना</span></td></tr></tbody></table></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">युनिट</span></td><td class="num">₹2.02<span class="tx-muted">/युनिट</span></td></tr><tr><td>100 – 300 <span class="tx-muted">युनिट</span></td><td class="num">₹5.35<span class="tx-muted">/युनिट</span></td></tr><tr><td>300 – 500 <span class="tx-muted">युनिट</span></td><td class="num">₹10.04<span class="tx-muted">/युनिट</span></td></tr><tr><td>500 पेक्षा जास्त <span class="tx-muted">युनिट</span></td><td class="num">₹11.25<span class="tx-muted">/युनिट</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>16%</strong></li></ul></div>
+    </div></div>
+      
+    </article></div>
+        <p><a href="/mr/tariffs/maharashtra/best_mumbai/">संपूर्ण BEST Mumbai पेज — इंधन अधिभार, सेवा क्षेत्र आणि बिल मार्गदर्शक →</a></p>
+      </div>
+      <div class="tariff-discom" id="tariff-tata_power_mumbai">
+        <h3>Tata Power Mumbai टॅरिफ (2026-27)</h3>
+        <div class="tariff-cards">
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
+        <div>
+          <h3>LT-I(B) (Residential)</h3>
+          
+        </div>
+      </header>
+      <div id="rate-domestic">
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><table class="tariff-slab-table"><tbody><tr><td>Up to 100 units</td><td class="num">₹90<span class="tx-muted">/महिना</span></td></tr><tr><td>101 – 500 units</td><td class="num">₹135<span class="tx-muted">/महिना</span></td></tr><tr><td>Above 500 units</td><td class="num">₹160<span class="tx-muted">/महिना</span></td></tr></tbody></table></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">युनिट</span></td><td class="num">₹1.90<span class="tx-muted">/युनिट</span></td></tr><tr><td>100 – 300 <span class="tx-muted">युनिट</span></td><td class="num">₹4.70<span class="tx-muted">/युनिट</span></td></tr><tr><td>300 – 500 <span class="tx-muted">युनिट</span></td><td class="num">₹9.24<span class="tx-muted">/युनिट</span></td></tr><tr><td>500 पेक्षा जास्त <span class="tx-muted">युनिट</span></td><td class="num">₹10.24<span class="tx-muted">/युनिट</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>16%</strong></li></ul></div>
+    </div></div>
+      
+    </article></div>
+        <p><a href="/mr/tariffs/maharashtra/tata_power_mumbai/">संपूर्ण Tata Power Mumbai पेज — इंधन अधिभार, सेवा क्षेत्र आणि बिल मार्गदर्शक →</a></p>
+      </div>
+    </section>
 
     <section class="seo-section">
       <h2>महाराष्ट्र मधील वीज डिस्कॉम</h2>
@@ -247,6 +542,7 @@
         <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
         <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
         <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/install/" data-i18n="ql.install">Install Offline App</a>
       </div>
       <div class="footer-col">
@@ -274,7 +570,6 @@
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
         <a href="/database/" data-i18n="ql.tariffDatabase">Tariff Database</a>
         <a href="/orders/" data-i18n="ql.orderLibrary">Order Library</a>
-        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
       </div>

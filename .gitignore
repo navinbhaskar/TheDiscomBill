@@ -40,3 +40,7 @@ supabase/functions/calc/bundle.ts
 # The audit write-up itself. Local working notes, not website content: the repo root is served
 # publicly, so a committed copy would be live at thediscombill.com/FULL-AUDIT-REPORT.md.
 FULL-AUDIT-REPORT.md
+
+# Impeccable design-critique snapshots — local notes, and this repo is served publicly
+# from its root, so they must not become live URLs.
+.impeccable/

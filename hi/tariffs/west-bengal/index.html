@@ -159,7 +159,529 @@
     <h1>पश्चिम बंगाल बिजली टैरिफ 2025-26 — डिस्कॉम के अनुसार स्लैब दरें</h1>
     <p class="guide-meta">टैरिफ अंतिम अपडेट: 27 अगस्त 2026</p>
     <p class="seo-lead">पश्चिम बंगाल की 3 वितरण कंपनियों — WBSEDCL, CESC (Kolkata), Erstwhile DPL area — में से किसी का भी अनुमानित बिजली बिल निकालें, 2025-26 के पूरे स्लैब-वार विवरण के साथ — parts, billed by WBSEDCL on the frozen erstwhile-DPL schedule समेत।</p>
-    <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">पश्चिम बंगाल बिल कैलकुलेटर खोलें →</a></p>
+    
+    <section class="seo-section" id="calculate">
+      <h2>पश्चिम बंगाल का बिजली बिल निकालें</h2>
+      <p>2025-26 की स्लैब दरें, फिक्स्ड चार्ज, ईंधन अधिभार और बिजली शुल्क — आपकी अपनी
+      यूनिट पर लागू। आपका डाला हुआ कुछ भी ब्राउज़र से बाहर नहीं जाता।</p>
+      
+      <div class="pcalc" data-state="West Bengal" data-types="{&quot;wbsedcl&quot;:[[&quot;urban&quot;,&quot;Domestic (Urban) — Rate A(DM-U)&quot;],[&quot;rural&quot;,&quot;Domestic (Rural) — Rate A(DM-R)&quot;],[&quot;lifeline&quot;,&quot;Lifeline (Domestic) — Rate A(DM-LL), \&quot;Hasir Alo\&quot;&quot;]],&quot;cesc_kolkata&quot;:[[&quot;urban&quot;,&quot;Domestic (Urban) — Rate G&quot;],[&quot;lifeline&quot;,&quot;Life Line (Domestic) — Rate G(LL)&quot;]],&quot;dpl&quot;:[[&quot;normal&quot;,&quot;Domestic (Rural or Urban) — Rate C(3)&quot;],[&quot;prepaid&quot;,&quot;Domestic prepaid — Rate C(3)pp&quot;],[&quot;lifeline&quot;,&quot;Life Line (Domestic) — Rate C(3-LL)&quot;]]}" data-msgs="{&quot;pick&quot;:&quot;अपना सप्लाई प्रकार चुनें…&quot;,&quot;na&quot;:&quot;लागू नहीं — एकल घरेलू टैरिफ&quot;,&quot;busy&quot;:&quot;गणना हो रही है…&quot;,&quot;errUnits&quot;:&quot;इस महीने कितनी यूनिट इस्तेमाल हुईं, यह भरें।&quot;,&quot;errSupply&quot;:&quot;अपना सप्लाई प्रकार चुनें — इनकी दरें काफ़ी अलग हैं, इसलिए कोई सुरक्षित डिफ़ॉल्ट नहीं है। यह आपके बिल पर छपा होता है।&quot;,&quot;errTariff&quot;:&quot;वह टैरिफ उपलब्ध नहीं है।&quot;,&quot;errLoad&quot;:&quot;टैरिफ डेटा लोड नहीं हो सका। अपना कनेक्शन जाँचकर दोबारा कोशिश करें।&quot;}">
+      <form class="pcalc-form" id="pcalcForm">
+        <div class="pcalc-field">
+          <label for="pcDiscom">आपका डिस्कॉम</label>
+          <select id="pcDiscom"><option value="wbsedcl">WBSEDCL</option><option value="cesc_kolkata">CESC (Kolkata)</option><option value="dpl">Erstwhile DPL area</option></select>
+        </div>
+        <!-- Not every DISCOM bands its domestic tariff. BESCOM has a single flat rate and no
+             supply types at all, and a required select with nothing in it made the form
+             impossible to submit. It is disabled rather than removed: on a state page the
+             DISCOM can change under it, and a field that appears and vanishes moves every
+             control below it. Disabled also says why it is inactive, which hiding cannot. -->
+        <div class="pcalc-field pcalc-field-wide" id="pcSupplyField">
+          <label for="pcSupply">सप्लाई प्रकार</label>
+          <select id="pcSupply" required>
+            <option value="">अपना सप्लाई प्रकार चुनें…</option><option value="urban">Domestic (Urban) — Rate A(DM-U)</option><option value="rural">Domestic (Rural) — Rate A(DM-R)</option><option value="lifeline">Lifeline (Domestic) — Rate A(DM-LL), &quot;Hasir Alo&quot;</option>
+          </select>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcUnits">खपत (यूनिट)</label>
+          <input type="number" id="pcUnits" inputmode="numeric" min="0" step="1" placeholder="250" required>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcLoad">स्वीकृत भार (kW)</label>
+          <input type="number" id="pcLoad" inputmode="decimal" min="0" step="0.5" value="2">
+        </div>
+        <button type="submit" class="pcalc-go">बिल निकालें</button>
+      </form>
+      <p class="pcalc-note">घरेलू सप्लाई। हर विकल्प में कोष्ठक की संख्या पात्रता सीमा है — वही चुनें जिसमें
+      आपका कनेक्शन वाकई आता है, क्योंकि इनकी दरें काफ़ी अलग हैं। कमर्शियल सप्लाई,
+      टाइम-ऑफ-डे, सोलर एक्सपोर्ट या बकाया के लिए
+      <a href="/bill-calculator/">पूरा कैलकुलेटर</a> हर फ़ील्ड रखता है।</p>
+      <div class="pcalc-out" id="pcOut" hidden></div>
+      <script>(function(){
+        var f=document.getElementById("pcalcForm"); if(!f) return; var p=null;
+        function load(){ return p || (p = import("/js/page-calc.js")); }
+        // Focus is the earliest honest signal of intent: start fetching while they type, so
+        // the engine is usually already there by the time they press the button.
+        f.addEventListener("focusin", load, { once: true });
+        f.addEventListener("submit", function(e){
+          if (f.dataset.ready) return;   // the module owns submit once it has attached
+          e.preventDefault();
+          load().then(function(){ f.requestSubmit(); });
+        });
+      })();</script>
+      </div>
+    </section>
+    
+    <section class="seo-section" id="tariff">
+      <h2>पश्चिम बंगाल बिजली टैरिफ (2025-26)</h2>
+      <p>पश्चिम बंगाल के 3 डिस्कॉम अलग-अलग अनुसूचियों पर हैं, इसलिए दर इस पर निर्भर है कि आपके
+      पते पर कौन-सी कंपनी सप्लाई देती है। नीचे घरेलू स्लैब रेंज की तुलना, और उसके बाद हर पूरी अनुसूची:</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>डिस्कॉम</th><th>घरेलू स्लैब रेंज</th><th>टैरिफ वर्ष</th></tr></thead>
+          <tbody><tr><td><a href="#tariff-wbsedcl">WBSEDCL</a></td>
+      <td>₹3.68–9.22/यूनिट</td>
+      <td>2025-26</td></tr><tr><td><a href="#tariff-cesc_kolkata">CESC (Kolkata)</a></td>
+      <td>₹4.07–9.21/यूनिट</td>
+      <td>2025-26</td></tr><tr><td><a href="#tariff-dpl">Erstwhile DPL area</a></td>
+      <td>₹2.50–4.99/यूनिट</td>
+      <td>2025-26</td></tr></tbody>
+        </table>
+      </div>
+      
+      <div class="tariff-discom" id="tariff-wbsedcl">
+        <h3>WBSEDCL टैरिफ (2025-26)</h3>
+        <div class="tariff-cards">
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
+        <div>
+          <h3>Rate A (DM) — Domestic</h3>
+          
+        </div>
+      </header>
+      <div class="tariff-rows">
+      <div class="tariff-rows-head" aria-hidden="true">
+        <span>आपूर्ति प्रकार</span>
+        <span class="num">फिक्स्ड चार्ज</span>
+        <span class="num">ऊर्जा दर<small>प्रति यूनिट</small></span>
+        <span></span>
+      </div>
+      <details class="tariff-supplytype" id="rate-domestic-urban" open>
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Domestic (Urban) — Rate A(DM-U)</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹30<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹5.04<span class="ts-dash">–</span>9.22</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Domestic supply in municipal areas</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹30</strong> <span class="tx-muted">/ kVA / माह</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 34 <span class="tx-muted">यूनिट</span></td><td class="num">₹5.04<span class="tx-muted">/यूनिट</span></td></tr><tr><td>34 – 60 <span class="tx-muted">यूनिट</span></td><td class="num">₹6.33<span class="tx-muted">/यूनिट</span></td></tr><tr><td>60 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.12<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 200 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.52<span class="tx-muted">/यूनिट</span></td></tr><tr><td>200 – 300 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.69<span class="tx-muted">/यूनिट</span></td></tr><tr><td>300 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹9.22<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>10%</strong></li></ul></div>
+    </div>
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-domestic-rural">
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Domestic (Rural) — Rate A(DM-R)</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹30<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹5.00<span class="ts-dash">–</span>9.22</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Domestic supply outside municipal areas</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹30</strong> <span class="tx-muted">/ kVA / माह</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 34 <span class="tx-muted">यूनिट</span></td><td class="num">₹5.00<span class="tx-muted">/यूनिट</span></td></tr><tr><td>34 – 60 <span class="tx-muted">यूनिट</span></td><td class="num">₹6.24<span class="tx-muted">/यूनिट</span></td></tr><tr><td>60 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹6.89<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 200 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.44<span class="tx-muted">/यूनिट</span></td></tr><tr><td>200 – 300 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.61<span class="tx-muted">/यूनिट</span></td></tr><tr><td>300 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹9.22<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>10%</strong></li></ul></div>
+    </div>
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-domestic-lifeline">
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Lifeline (Domestic) — Rate A(DM-LL), &quot;Hasir Alo&quot;</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹10<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹3.68</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Up to 75 units a quarter (25 a month); fully covered by the State subsidy</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹10</strong> <span class="tx-muted">/ kVA / माह</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹3.68<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>10%</strong></li></ul></div>
+    </div>
+        </div>
+      </details></div>
+      <p class="tariff-card-note">ℹ️ WBSEDCL bills quarterly; the slabs above are the published quarterly bands (102 / 78 / 120 / 300 / 300 / above 900 kWh) expressed as monthly equivalents. Lifeline consumers under the Hasir Alo scheme pay nothing after the State subsidy. Bills also carry a Monthly Variable Cost Adjustment (MVCA), which WBERC revises month to month and which is not modelled here.</p>
+    </article>
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
+        <div>
+          <h3>Rate A (CM) — Commercial</h3>
+          
+        </div>
+      </header>
+      <div id="rate-commercial">
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹60</strong> <span class="tx-muted">/ kVA / माह</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 60 <span class="tx-muted">यूनिट</span></td><td class="num">₹5.77<span class="tx-muted">/यूनिट</span></td></tr><tr><td>60 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.52<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 150 <span class="tx-muted">यूनिट</span></td><td class="num">₹8.20<span class="tx-muted">/यूनिट</span></td></tr><tr><td>150 – 300 <span class="tx-muted">यूनिट</span></td><td class="num">₹8.51<span class="tx-muted">/यूनिट</span></td></tr><tr><td>300 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹9.02<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>4%</strong></li></ul></div>
+    </div></div>
+      <p class="tariff-card-note">ℹ️ Quarterly bands expressed as monthly equivalents. Excludes the MVCA.</p>
+    </article></div>
+        <p><a href="/hi/tariffs/west-bengal/wbsedcl/">पूरा WBSEDCL पेज — ईंधन अधिभार, सेवा क्षेत्र और बिल गाइड →</a></p>
+      </div>
+      <div class="tariff-discom" id="tariff-cesc_kolkata">
+        <h3>CESC (Kolkata) टैरिफ (2025-26)</h3>
+        <div class="tariff-cards">
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
+        <div>
+          <h3>Rate G — LT Domestic</h3>
+          
+        </div>
+      </header>
+      <div class="tariff-rows">
+      <div class="tariff-rows-head" aria-hidden="true">
+        <span>आपूर्ति प्रकार</span>
+        <span class="num">फिक्स्ड चार्ज</span>
+        <span class="num">ऊर्जा दर<small>प्रति यूनिट</small></span>
+        <span></span>
+      </div>
+      <details class="tariff-supplytype" id="rate-domestic-urban" open>
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Domestic (Urban) — Rate G</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹15<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹5.18<span class="ts-dash">–</span>9.21</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">The ordinary CESC household tariff: seven telescopic bands from ₹5.18 to ₹9.21, on a ₹15/kVA/month fixed charge.</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹15</strong> <span class="tx-muted">/ kVA / माह</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 25 <span class="tx-muted">यूनिट</span></td><td class="num">₹5.18<span class="tx-muted">/यूनिट</span></td></tr><tr><td>25 – 60 <span class="tx-muted">यूनिट</span></td><td class="num">₹5.69<span class="tx-muted">/यूनिट</span></td></tr><tr><td>60 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹6.70<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 150 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.45<span class="tx-muted">/यूनिट</span></td></tr><tr><td>150 – 200 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.62<span class="tx-muted">/यूनिट</span></td></tr><tr><td>200 – 300 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.62<span class="tx-muted">/यूनिट</span></td></tr><tr><td>300 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹9.21<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      
+    </div>
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-domestic-lifeline">
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Life Line (Domestic) — Rate G(LL)</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹5<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹4.07</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">For eligible low-consumption households only, capped at 25 units a month: ₹4.07/unit on a ₹5 fixed charge.</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹5</strong> <span class="tx-muted">/ kVA / माह</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹4.07<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      
+    </div>
+        </div>
+      </details></div>
+      <p class="tariff-card-note">ℹ️ CESC's domestic tariff is telescopic across seven published bands. The fixed charge is ₹15 per kVA per month — CESC states it in Rs/kVA, and it becomes a demand charge once contract demand reaches 50 kVA. Bills also carry a Monthly Variable Cost Adjustment (MVCA), which WBERC trues up and which is not modelled here, and statutory levies such as electricity duty which note 12 of the schedule places outside the tariff.</p>
+    </article>
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
+        <div>
+          <h3>Rate M — LT Commercial &amp; others</h3>
+          
+        </div>
+      </header>
+      <div class="tariff-rows">
+      <div class="tariff-rows-head" aria-hidden="true">
+        <span>आपूर्ति प्रकार</span>
+        <span class="num">फिक्स्ड चार्ज</span>
+        <span class="num">ऊर्जा दर<small>प्रति यूनिट</small></span>
+        <span></span>
+      </div>
+      <details class="tariff-supplytype" id="rate-commercial-commercial" open>
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Commercial (Urban) — Rate M(i)</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹24<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹6.57<span class="ts-dash">–</span>9.26</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Shops and offices: five telescopic bands from ₹6.57 to ₹9.26 on ₹24/kVA/month. An optional Time-of-Day scheme is available at the same fixed charge.</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹24</strong> <span class="tx-muted">/ kVA / माह</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 60 <span class="tx-muted">यूनिट</span></td><td class="num">₹6.57<span class="tx-muted">/यूनिट</span></td></tr><tr><td>60 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.24<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 150 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.93<span class="tx-muted">/यूनिट</span></td></tr><tr><td>150 – 300 <span class="tx-muted">यूनिट</span></td><td class="num">₹8.49<span class="tx-muted">/यूनिट</span></td></tr><tr><td>300 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹9.26<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      
+    </div>
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-commercial-cottage">
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Cottage industry / artisan / weavers — Rate M(ii)</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹24<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹5.82<span class="ts-dash">–</span>8.46</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Small production units not run by electricity as motive power: ₹5.82 for the first 100 units, ₹7.01 for the next 100, ₹8.46 above 200.</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹24</strong> <span class="tx-muted">/ kVA / माह</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹5.82<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 200 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.01<span class="tx-muted">/यूनिट</span></td></tr><tr><td>200 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹8.46<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      
+    </div>
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-commercial-schools">
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Government / Government-aided schools — Rate P1</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹12<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹5.24</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">₹5.24 on all units at a ₹12/kVA/month fixed charge — the cheapest non-lifeline rate CESC publishes.</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹12</strong> <span class="tx-muted">/ kVA / माह</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹5.24<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      
+    </div>
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-commercial-education-hospital">
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Private educational institutions and hospitals — Rate L</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹42<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹7.32</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">₹7.32 on all units at ₹42/kVA/month.</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹42</strong> <span class="tx-muted">/ kVA / माह</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹7.32<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      
+    </div>
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-commercial-industry">
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Industries (Urban) — Rate K</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹50<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹6.77<span class="ts-dash">–</span>8.07</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">₹6.77 for the first 500 units, ₹7.47 for the next 1500, ₹7.87 for the next 1500 and ₹8.07 above 3500, on ₹50/kVA/month.</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹50</strong> <span class="tx-muted">/ kVA / माह</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 500 <span class="tx-muted">यूनिट</span></td><td class="num">₹6.77<span class="tx-muted">/यूनिट</span></td></tr><tr><td>500 – 2,000 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.47<span class="tx-muted">/यूनिट</span></td></tr><tr><td>2,000 – 3,500 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.87<span class="tx-muted">/यूनिट</span></td></tr><tr><td>3,500 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹8.07<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      
+    </div>
+        </div>
+      </details></div>
+      <p class="tariff-card-note">ℹ️ CESC publishes a long list of LT categories; the ones modelled here are selectable above. Most non-domestic categories also offer an optional Time-of-Day or prepaid scheme at the same fixed charge, which is not modelled. MVCA and statutory levies are extra.</p>
+    </article></div>
+        <p><a href="/hi/tariffs/west-bengal/cesc_kolkata/">पूरा CESC (Kolkata) पेज — ईंधन अधिभार, सेवा क्षेत्र और बिल गाइड →</a></p>
+      </div>
+      <div class="tariff-discom" id="tariff-dpl">
+        <h3>Erstwhile DPL area टैरिफ (2025-26)</h3>
+        <div class="tariff-cards">
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
+        <div>
+          <h3>Rate C(3) — Domestic</h3>
+          
+        </div>
+      </header>
+      <div class="tariff-rows">
+      <div class="tariff-rows-head" aria-hidden="true">
+        <span>आपूर्ति प्रकार</span>
+        <span class="num">फिक्स्ड चार्ज</span>
+        <span class="num">ऊर्जा दर<small>प्रति यूनिट</small></span>
+        <span></span>
+      </div>
+      <details class="tariff-supplytype" id="rate-domestic-normal" open>
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Domestic (Rural or Urban) — Rate C(3)</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹15<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹3.45<span class="ts-dash">–</span>4.99</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Six telescopic bands from ₹3.45 to ₹4.99 on a ₹15/kVA/month fixed charge — frozen at 2018 levels, and about a third cheaper than a CESC household pays at the same consumption.</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹15</strong> <span class="tx-muted">/ kVA / माह</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 25 <span class="tx-muted">यूनिट</span></td><td class="num">₹3.45<span class="tx-muted">/यूनिट</span></td></tr><tr><td>25 – 50 <span class="tx-muted">यूनिट</span></td><td class="num">₹4.20<span class="tx-muted">/यूनिट</span></td></tr><tr><td>50 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹4.35<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 200 <span class="tx-muted">यूनिट</span></td><td class="num">₹4.67<span class="tx-muted">/यूनिट</span></td></tr><tr><td>200 – 300 <span class="tx-muted">यूनिट</span></td><td class="num">₹4.86<span class="tx-muted">/यूनिट</span></td></tr><tr><td>300 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹4.99<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      
+    </div>
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-domestic-prepaid">
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Domestic prepaid — Rate C(3)pp</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹15<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹4.18</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">A single ₹4.18/unit on all units for prepaid domestic consumers, at the same ₹15/kVA fixed charge. Better than the standard schedule above about 100 units a month.</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹15</strong> <span class="tx-muted">/ kVA / माह</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹4.18<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      
+    </div>
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-domestic-lifeline">
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Life Line (Domestic) — Rate C(3-LL)</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹5<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹2.50</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Up to 25 units a month at ₹2.50/unit on a ₹5 fixed charge. The State's Hasir Alo subsidy applies to this category.</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹5</strong> <span class="tx-muted">/ kVA / माह</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹2.50<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      
+    </div>
+        </div>
+      </details></div>
+      <p class="tariff-card-note">ℹ️ Durgapur Projects Ltd. stopped distributing electricity on 1 January 2019, when its distribution business passed to WBSEDCL. WBERC has since held the retail schedule for erstwhile-DPL consumers at its 31 December 2018 level, so these rates are markedly lower than either CESC's or WBSEDCL's own — 300 units costs about ₹1,392 here against roughly ₹2,142 on CESC's domestic schedule. Bills are issued by WBSEDCL. Unlike WBSEDCL's main schedule, these bands are monthly, not quarterly. MVCA and statutory levies are extra.</p>
+    </article>
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
+        <div>
+          <h3>Rate C(4) — Commercial</h3>
+          
+        </div>
+      </header>
+      <div id="rate-commercial">
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹30</strong> <span class="tx-muted">/ kVA / माह</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 60 <span class="tx-muted">यूनिट</span></td><td class="num">₹4.31<span class="tx-muted">/यूनिट</span></td></tr><tr><td>60 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹4.72<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 300 <span class="tx-muted">यूनिट</span></td><td class="num">₹4.92<span class="tx-muted">/यूनिट</span></td></tr><tr><td>300 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹5.05<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      
+    </div></div>
+      <p class="tariff-card-note">ℹ️ Four telescopic monthly bands from ₹4.31 to ₹5.05 on a ₹30/kVA/month fixed charge, frozen at the 31-12-2018 level. Optional Time-of-Day and prepaid schemes exist and are not modelled. MVCA and statutory levies are extra.</p>
+    </article></div>
+        <p><a href="/hi/tariffs/west-bengal/dpl/">पूरा Erstwhile DPL area पेज — ईंधन अधिभार, सेवा क्षेत्र और बिल गाइड →</a></p>
+      </div>
+    </section>
 
     <section class="seo-section">
       <h2>पश्चिम बंगाल के बिजली डिस्कॉम</h2>
@@ -238,6 +760,7 @@
         <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
         <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
         <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/install/" data-i18n="ql.install">Install Offline App</a>
       </div>
       <div class="footer-col">
@@ -265,7 +788,6 @@
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
         <a href="/database/" data-i18n="ql.tariffDatabase">Tariff Database</a>
         <a href="/orders/" data-i18n="ql.orderLibrary">Order Library</a>
-        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
       </div>

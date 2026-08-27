@@ -159,7 +159,162 @@
     <h1>सिक्किम बिजली टैरिफ 2025-26 — डिस्कॉम के अनुसार स्लैब दरें</h1>
     <p class="guide-meta">टैरिफ अंतिम अपडेट: 3 अगस्त 2026</p>
     <p class="seo-lead">सिक्किम की 1 वितरण कंपनी — Energy &amp; Power Dept., Sikkim — में से किसी का भी अनुमानित बिजली बिल निकालें, 2025-26 के पूरे स्लैब-वार विवरण के साथ।</p>
-    <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">सिक्किम बिल कैलकुलेटर खोलें →</a></p>
+    
+    <section class="seo-section" id="calculate">
+      <h2>सिक्किम का बिजली बिल निकालें</h2>
+      <p>2025-26 की स्लैब दरें, फिक्स्ड चार्ज, ईंधन अधिभार और बिजली शुल्क — आपकी अपनी
+      यूनिट पर लागू। आपका डाला हुआ कुछ भी ब्राउज़र से बाहर नहीं जाता।</p>
+      
+      <div class="pcalc" data-state="Sikkim" data-types="{&quot;energy_sikkim&quot;:[[&quot;single_phase&quot;,&quot;Domestic — single phase&quot;],[&quot;three_phase&quot;,&quot;Domestic — three phase&quot;]]}" data-msgs="{&quot;pick&quot;:&quot;अपना सप्लाई प्रकार चुनें…&quot;,&quot;na&quot;:&quot;लागू नहीं — एकल घरेलू टैरिफ&quot;,&quot;busy&quot;:&quot;गणना हो रही है…&quot;,&quot;errUnits&quot;:&quot;इस महीने कितनी यूनिट इस्तेमाल हुईं, यह भरें।&quot;,&quot;errSupply&quot;:&quot;अपना सप्लाई प्रकार चुनें — इनकी दरें काफ़ी अलग हैं, इसलिए कोई सुरक्षित डिफ़ॉल्ट नहीं है। यह आपके बिल पर छपा होता है।&quot;,&quot;errTariff&quot;:&quot;वह टैरिफ उपलब्ध नहीं है।&quot;,&quot;errLoad&quot;:&quot;टैरिफ डेटा लोड नहीं हो सका। अपना कनेक्शन जाँचकर दोबारा कोशिश करें।&quot;}">
+      <form class="pcalc-form" id="pcalcForm">
+        <input type="hidden" id="pcDiscom" value="energy_sikkim">
+        <!-- Not every DISCOM bands its domestic tariff. BESCOM has a single flat rate and no
+             supply types at all, and a required select with nothing in it made the form
+             impossible to submit. It is disabled rather than removed: on a state page the
+             DISCOM can change under it, and a field that appears and vanishes moves every
+             control below it. Disabled also says why it is inactive, which hiding cannot. -->
+        <div class="pcalc-field pcalc-field-wide" id="pcSupplyField">
+          <label for="pcSupply">सप्लाई प्रकार</label>
+          <select id="pcSupply" required>
+            <option value="">अपना सप्लाई प्रकार चुनें…</option><option value="single_phase">Domestic — single phase</option><option value="three_phase">Domestic — three phase</option>
+          </select>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcUnits">खपत (यूनिट)</label>
+          <input type="number" id="pcUnits" inputmode="numeric" min="0" step="1" placeholder="250" required>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcLoad">स्वीकृत भार (kW)</label>
+          <input type="number" id="pcLoad" inputmode="decimal" min="0" step="0.5" value="2">
+        </div>
+        <button type="submit" class="pcalc-go">बिल निकालें</button>
+      </form>
+      <p class="pcalc-note">घरेलू सप्लाई। हर विकल्प में कोष्ठक की संख्या पात्रता सीमा है — वही चुनें जिसमें
+      आपका कनेक्शन वाकई आता है, क्योंकि इनकी दरें काफ़ी अलग हैं। कमर्शियल सप्लाई,
+      टाइम-ऑफ-डे, सोलर एक्सपोर्ट या बकाया के लिए
+      <a href="/bill-calculator/">पूरा कैलकुलेटर</a> हर फ़ील्ड रखता है।</p>
+      <div class="pcalc-out" id="pcOut" hidden></div>
+      <script>(function(){
+        var f=document.getElementById("pcalcForm"); if(!f) return; var p=null;
+        function load(){ return p || (p = import("/js/page-calc.js")); }
+        // Focus is the earliest honest signal of intent: start fetching while they type, so
+        // the engine is usually already there by the time they press the button.
+        f.addEventListener("focusin", load, { once: true });
+        f.addEventListener("submit", function(e){
+          if (f.dataset.ready) return;   // the module owns submit once it has attached
+          e.preventDefault();
+          load().then(function(){ f.requestSubmit(); });
+        });
+      })();</script>
+      </div>
+    </section>
+    
+    <section class="seo-section" id="tariff">
+      <h2>सिक्किम बिजली टैरिफ (2025-26)</h2>
+      
+      <div class="tariff-cards">
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
+        <div>
+          <h3>DS (Domestic Supply)</h3>
+          
+        </div>
+      </header>
+      <div class="tariff-rows">
+      <div class="tariff-rows-head" aria-hidden="true">
+        <span>आपूर्ति प्रकार</span>
+        <span class="num">फिक्स्ड चार्ज</span>
+        <span class="num">ऊर्जा दर<small>प्रति यूनिट</small></span>
+        <span></span>
+      </div>
+      <details class="tariff-supplytype" id="rate-domestic-single-phase" open>
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Domestic — single phase</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹0<span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹1.60<span class="ts-dash">–</span>4.60</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">Five telescopic slabs from ₹1.60 to ₹4.60, with no fixed charge. A monthly minimum of ₹50 applies, so bills below that are rounded up to it.</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹0</strong> <span class="tx-muted">/ माह (स्थिर)</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 50 <span class="tx-muted">यूनिट</span></td><td class="num">₹1.60<span class="tx-muted">/यूनिट</span></td></tr><tr><td>50 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹2.60<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 200 <span class="tx-muted">यूनिट</span></td><td class="num">₹3.60<span class="tx-muted">/यूनिट</span></td></tr><tr><td>200 – 400 <span class="tx-muted">यूनिट</span></td><td class="num">₹4.10<span class="tx-muted">/यूनिट</span></td></tr><tr><td>400 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹4.60<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      
+    </div>
+        </div>
+      </details>
+      <details class="tariff-supplytype" id="rate-domestic-three-phase">
+        <summary class="tariff-st-row">
+          <span class="tsr-name">
+            <span class="tariff-st-label">Domestic — three phase</span>
+            
+          </span>
+          <span class="tsr-fixed num">₹0<span class="tx-muted">/mo</span></span>
+          <span class="tsr-rate num">₹1.60<span class="ts-dash">–</span>4.60</span>
+        </summary>
+        <div class="tariff-st-body">
+          <p class="tariff-st-desc">The same energy rates, but the monthly minimum rises to ₹200.</p>
+          
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹0</strong> <span class="tx-muted">/ माह (स्थिर)</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 50 <span class="tx-muted">यूनिट</span></td><td class="num">₹1.60<span class="tx-muted">/यूनिट</span></td></tr><tr><td>50 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹2.60<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 200 <span class="tx-muted">यूनिट</span></td><td class="num">₹3.60<span class="tx-muted">/यूनिट</span></td></tr><tr><td>200 – 400 <span class="tx-muted">यूनिट</span></td><td class="num">₹4.10<span class="tx-muted">/यूनिट</span></td></tr><tr><td>400 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹4.60<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      
+    </div>
+        </div>
+      </details></div>
+      <p class="tariff-card-note">ℹ️ Sikkim has some of the cheapest electricity in India — ₹1.60 for the first 50 units, on the back of the state's hydro generation — and levies no fixed charge at all. The ₹50 (single phase) or ₹200 (three phase) in the schedule is a monthly MINIMUM, not a standing charge: it only bites if your energy charges come to less than that, so a household using 100 units pays ₹210 in energy and nothing more. The Department allows a 5% rebate on energy charges for bills paid within the due date (10 days from issue), and charges a 10% annual surcharge on arrears outstanding at the end of March. Neither is applied automatically here. If electricity supplied to domestic premises is used for a commercial purpose, the Department charges the ENTIRE supply at commercial rates.</p>
+    </article>
+    <article class="tariff-card">
+      <header class="tariff-card-head">
+        <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
+        <div>
+          <h3>CS (Commercial Supply)</h3>
+          
+        </div>
+      </header>
+      <div id="rate-commercial">
+    <div class="tariff-block">
+      <div class="tariff-field">
+        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
+        <div class="tariff-field-value"><strong>₹0</strong> <span class="tx-muted">/ माह (स्थिर)</span></div>
+      </div>
+      <div class="tariff-field">
+        <div class="tariff-field-label">ऊर्जा शुल्क</div>
+        <table class="tariff-slab-table"><tbody><tr><td>0 – 50 <span class="tx-muted">यूनिट</span></td><td class="num">₹4.10<span class="tx-muted">/यूनिट</span></td></tr><tr><td>50 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹5.10<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 200 <span class="tx-muted">यूनिट</span></td><td class="num">₹6.10<span class="tx-muted">/यूनिट</span></td></tr><tr><td>200 – 400 <span class="tx-muted">यूनिट</span></td><td class="num">₹7.10<span class="tx-muted">/यूनिट</span></td></tr><tr><td>400 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹7.40<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      </div>
+      
+    </div></div>
+      <p class="tariff-card-note">ℹ️ Commercial supply runs from ₹4.10 to ₹7.40 across the same five slab boundaries as domestic, and likewise carries no fixed charge. Establishments with a sanctioned load above 25 kVA that run off a shared transformer pay a demand charge on top — ₹60/kVA/month in rural areas, ₹100/kVA/month in urban — which is not modelled here. A connection of 100 kVA or above must install its own transformer. The Department allows a 5% rebate on energy charges for bills paid within the due date (10 days from issue), and charges a 10% annual surcharge on arrears outstanding at the end of March. Neither is applied automatically here.</p>
+    </article></div>
+    </section>
+    
+    <section class="seo-section" id="common-calculations">
+      <h2>अनुमानित मासिक बिल — सिक्किम</h2>
+      <p>2 kW स्वीकृत भार पर घरेलू (DS (Domestic Supply)) कनेक्शन का अनुमानित कुल मासिक बिल, हमारे कैलकुलेटर वाले ही इंजन से निकाला गया। वास्तविक बिल आपकी उप-श्रेणी, फिक्स्ड/ईंधन शुल्क और स्थानीय करों के अनुसार बदलते हैं।</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>मासिक खपत</th><th class="num">अनुमानित बिल</th></tr></thead>
+          <tbody><tr><td>200 यूनिट</td><td class="num">₹570</td></tr><tr><td>300 यूनिट</td><td class="num">₹980</td></tr><tr><td>500 यूनिट</td><td class="num">₹1,850</td></tr><tr><td>750 यूनिट</td><td class="num">₹3,000</td></tr></tbody>
+        </table>
+      </div>
+      <p class="seo-cta-row"><a class="seo-cta" href="/?state=Sikkim&amp;discom=energy_sikkim#calculator">मेरा सटीक सिक्किम बिल निकालें →</a></p>
+    </section>
 
     <section class="seo-section">
       <h2>सिक्किम के बिजली डिस्कॉम</h2>
@@ -219,6 +374,7 @@
         <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
         <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
         <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/install/" data-i18n="ql.install">Install Offline App</a>
       </div>
       <div class="footer-col">
@@ -246,7 +402,6 @@
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
         <a href="/database/" data-i18n="ql.tariffDatabase">Tariff Database</a>
         <a href="/orders/" data-i18n="ql.orderLibrary">Order Library</a>
-        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
       </div>
