@@ -20,6 +20,7 @@ export const STRINGS = {
     'nav.solar': 'Solar',
     'nav.ev': 'EV Cost',
     'nav.blog': 'Blog',
+    'nav.alerts': 'Alerts',
     'nav.about': 'About',
     // Quick Links dropdown (shared chrome on every page)
     'nav.quickLinks': 'More',
@@ -51,6 +52,7 @@ export const STRINGS = {
     'ql.methodology': 'Methodology & Accuracy',
     'ql.tariffDatabase': 'Tariff Database',
     'ql.orderLibrary': 'Order Library',
+    'ql.alerts': 'Alerts',
     'ql.fuelSurcharge': 'Fuel Surcharge Tracker',
     // Homepage "More tools" section. Only the headings live here — every tool LABEL in that
     // section reuses the footer's existing ql.*/nav.* keys, so the two can never disagree.

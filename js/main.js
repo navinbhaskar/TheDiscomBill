@@ -641,6 +641,66 @@ function initDeferredHeaderSearch() {
   });
 }
 
+function initAlertsNavShell() {
+  const nav = document.querySelector('.header-nav');
+  if (!nav) return;
+
+  let wrap = document.getElementById('alertsDropdown');
+  if (!wrap) {
+    wrap = document.createElement('div');
+    wrap.className = 'nav-dropdown alerts-dropdown nav-promoted';
+    wrap.id = 'alertsDropdown';
+    wrap.dataset.alertsNav = 'true';
+    wrap.innerHTML = `
+      <button type="button" class="nav-dropdown-trigger alerts-trigger" id="alertsTrigger" aria-haspopup="true" aria-expanded="false">
+        <svg class="alerts-bell" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 21a2 2 0 0 0 3.4 0"/><path d="M18 8A6 6 0 0 0 6 8c0 7-3 7-3 9h18c0-2-3-2-3-9"/></svg>
+        <span data-i18n="nav.alerts">Alerts</span>
+        <span class="alerts-dot" aria-hidden="true"></span>
+      </button>
+      <div class="nav-dropdown-menu alerts-menu" id="alertsMenu" role="menu" aria-label="Recent public alerts" data-lenis-prevent>
+        <div class="alerts-loading">Loading alerts...</div>
+      </div>`;
+
+    const anchor = document.getElementById('quickLinksDropdown') || document.getElementById('langSwitch');
+    if (anchor) anchor.before(wrap); else nav.appendChild(wrap);
+  }
+  wrap.dataset.alertsNav = 'true';
+  if (location.pathname.replace(/^\/(hi|mr|ta)(?=\/|$)/, '').startsWith('/alerts/')) {
+    wrap.querySelector('.alerts-trigger')?.classList.add('nav-active');
+  }
+
+  const trigger = wrap.querySelector('#alertsTrigger');
+  const menu = wrap.querySelector('#alertsMenu');
+  menu?.setAttribute('data-lenis-prevent', '');
+  let hydrated = false;
+  const hydrate = () => {
+    if (hydrated) return;
+    hydrated = true;
+    import('./alerts-ui.js').then((m) => m.renderAlertsDropdown(menu)).catch(() => {
+      menu.innerHTML = '<div class="alerts-loading">Alerts are unavailable right now.</div><a href="/alerts/" class="alerts-see-all">Open alerts page</a>';
+    });
+  };
+  const close = () => {
+    wrap.classList.remove('open');
+    trigger.setAttribute('aria-expanded', 'false');
+  };
+  const open = () => {
+    window.__popups.closeOthers('alerts');
+    hydrate();
+    wrap.classList.add('open');
+    trigger.setAttribute('aria-expanded', 'true');
+  };
+  window.__popups.register('alerts', close);
+
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (wrap.classList.contains('open')) close(); else open();
+  });
+  trigger.addEventListener('pointerenter', hydrate, { once: true });
+  trigger.addEventListener('focus', hydrate, { once: true });
+  document.addEventListener('click', (e) => { if (!wrap.contains(e.target)) close(); });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   onIdle(() => { initSmoothScroll().catch(() => {}); }, 1800);   // Lenis momentum scrolling (skipped under prefers-reduced-motion)
   initScrollReveal();   // fade + rise elements as they enter the viewport
@@ -661,6 +721,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initLoginButton();     // top-right Login / My Account button
   completeOAuthRedirect();   // ...then correct it if we just came back from Google
   initDeferredHeaderSearch();    // header magnifier + Ctrl+K / '/' site search
+  initAlertsNavShell();   // public tariff/FPPA updates dropdown
+  if (document.getElementById('alertsPageRoot')) {
+    import('./alerts-ui.js').then(m => { m.initAlertsPage(); m.hydrateAlertIndex(); }).catch(() => {});
+  }
   initHeroBillCard();    // homepage hero card: estimate ⇄ across-India faces
   initGatedLinks();      // Bill Review CTAs open the auth modal, then redirect in
   initNavActive();       // highlight the current page's link in the top nav
@@ -689,7 +753,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Header dropdowns (Solar tools, Quick Links / More). One generic handler per
   // dropdown; the shared popup registry keeps only one open at a time. The account
   // dropdown is excluded — it has its own lifecycle (see renderAccountUi).
-  document.querySelectorAll('.header-nav .nav-dropdown').forEach((drop, i) => {
+  document.querySelectorAll('.header-nav .nav-dropdown:not([data-alerts-nav])').forEach((drop, i) => {
     const trigger = drop.querySelector(':scope > .nav-dropdown-trigger');
     if (!trigger) return;
     const key = drop.id || 'navDrop' + i;

@@ -157,7 +157,9 @@ export const STATE_INFO = {
       }
     },
     "Manipur": {
-      "state": "Manipur"
+      "state": "Manipur",
+      "ratesAsOf": "FY 2026-27 (MnERC MSPDCL tariff order dated 14-May-2026, effective from 01-May-2026)",
+      "sourceUrl": "https://mnerc.mn.gov.in/wp-content/uploads/2026/05/MSPDCL-Tariff-Order-FY-2026-27_compressed.pdf"
     },
     "Meghalaya": {
       "state": "Meghalaya",
@@ -603,8 +605,8 @@ export const DISCOM_INDEX = {
         "name": "MSPDCL",
         "fullName": "Manipur State Power Distribution Company Ltd.",
         "area": "Entire Manipur",
-        "tariffYear": "2024-25",
-        "website": "https://www.mspdcl.com"
+        "tariffYear": "2026-27",
+        "website": "https://mspdcl.in/"
       }
     ],
     "Meghalaya": [

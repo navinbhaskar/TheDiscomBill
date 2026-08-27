@@ -14,6 +14,7 @@ export default {
     'nav.solar': 'सोलर',
     'nav.ev': 'EV खर्च',
     'nav.blog': 'ब्लॉग',
+    'nav.alerts': 'अलर्ट',
     'nav.about': 'आमच्याबद्दल',
     // Quick Links dropdown (shared chrome on every page)
     'nav.quickLinks': 'अधिक',
@@ -22,6 +23,7 @@ export default {
     'ql.tariffs': 'टॅरिफ',
     'ql.tariffDatabase': 'टॅरिफ डेटाबेस',
     'ql.orderLibrary': 'आदेश ग्रंथालय',
+    'ql.alerts': 'अलर्ट',
     'ql.fuelSurcharge': 'इंधन अधिभार ट्रॅकर',
     'tools.title': 'फक्त बिल कॅल्क्युलेटर नाही',
     'tools.sub': 'येथील प्रत्येक साधन त्याच पडताळलेल्या टॅरिफ दरांवर चालते — तुमच्या कामाचे असेल तेच निवडा.',

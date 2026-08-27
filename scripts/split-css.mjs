@@ -223,7 +223,7 @@ export function buildSubsetCss({ marker, dest, label, quiet = false }) {
   for (let attempt = 0; ; attempt++) {
     try { fs.writeFileSync(destAbs, text, 'utf8'); break; }
     catch (err) {
-      if (attempt === 4 || !['UNKNOWN', 'EBUSY', 'EPERM'].includes(err.code)) throw err;
+      if (attempt === 14 || !['UNKNOWN', 'EBUSY', 'EPERM'].includes(err.code)) throw err;
       const until = Date.now() + 40 * (attempt + 1);
       while (Date.now() < until) { /* short synchronous backoff */ }
     }

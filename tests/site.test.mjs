@@ -65,7 +65,7 @@ else { passed++; console.log(`  ✓ all internal links resolve (${htmlPages.leng
 
 // ── 2. SEO-page structure (generated content pages only) ──────────────────────
 console.log('\n• SEO page structure');
-const SEO = /^(guides|tariffs|fppa|database|glossary|smart-meter-recharge|hi|mr|ta)\//;
+const SEO = /^(guides|tariffs|fppa|database|alerts|glossary|smart-meter-recharge|hi|mr|ta)\//;
 let seoChecked = 0, seoBad = 0;
 for (const page of htmlPages) {
   if (!SEO.test(page)) continue;
@@ -79,6 +79,21 @@ for (const page of htmlPages) {
   if (probs.length) { seoBad++; fail(`${page}: ${probs.join(', ')}`); }
 }
 if (!seoBad) { passed++; console.log(`  ✓ title / single-H1 / canonical present (${seoChecked} SEO pages)`); }
+
+// ── 2a. Manipur title freshness ──────────────────────────────────────────────
+// Manipur has a current FY2026-27 order now. A stale "2024-25" in page titles undercuts the
+// visible "checked against the official order" promise before a reader opens the source.
+console.log('\n• Manipur page titles use the current order year');
+{
+  const stale = [];
+  for (const page of htmlPages) {
+    const html = fs.readFileSync(path.join(ROOT, page), 'utf8');
+    const title = /<title>([^<]+)<\/title>/.exec(html)?.[1] || '';
+    if (/(Manipur|MSPDCL)/i.test(title) && /2024-25/.test(title)) stale.push(`${page}: ${title}`);
+  }
+  if (stale.length) fail('Manipur title year is stale:\n    ' + stale.join('\n    '));
+  else { passed++; console.log('  ✓ no Manipur/MSPDCL page title advertises FY 2024-25'); }
+}
 
 // ── 3. /fuel-surcharge/ is in step with js/tariffs/fppa.js ────────────────────
 // The tracker is pre-rendered at build time, so a new FPPA notice added to fppa.js does not
@@ -126,6 +141,36 @@ console.log('\n• /fuel-surcharge/ matches fppa.js');
     }
 
     if (!stale) { passed++; console.log(`  ✓ current rates and the ${bars}-month UP chart are in step`); }
+  }
+}
+
+// ── 3b. /alerts/ is derived from public order + surcharge data ───────────────
+console.log('\n• /alerts/ matches public tariff updates');
+{
+  const page = path.join(ROOT, 'alerts', 'index.html');
+  if (!fs.existsSync(page)) {
+    fail('alerts/index.html missing — run `npm run seo`');
+  } else {
+    const html = fs.readFileSync(page, 'utf8');
+    const { getPublicAlerts } =
+      await import(pathToFileURL(path.join(ROOT, 'js', 'alerts-data.js')).href);
+    const alerts = getPublicAlerts();
+    const cards = (html.match(/data-alert-card/g) || []).length;
+    const problems = [];
+
+    if (!alerts.length) problems.push('no public alerts derived from the tariff data');
+    if (cards !== alerts.length) problems.push(`page shows ${cards} alert cards, data has ${alerts.length}`);
+    for (const alert of alerts.slice(0, 5)) {
+      const title = alert.title.replace(/&/g, '&amp;');
+      if (!html.includes(title)) problems.push(`latest alert missing from page: ${alert.title}`);
+    }
+
+    if (problems.length) {
+      fail('/alerts/ is stale:\n    ' + problems.join('\n    '));
+    } else {
+      passed++;
+      console.log(`  ✓ ${alerts.length} public alerts rendered from order and surcharge data`);
+    }
   }
 }
 

@@ -559,6 +559,7 @@
   transition: background var(--t-fast), color var(--t-fast);
 }
 .nav-dropdown-trigger:hover { background: rgba(255,255,255,.08); color: var(--text-inverse); }
+.nav-dropdown-trigger.nav-active { color: var(--p-blue-400, #60a5fa); font-weight: 600; }
 .nav-caret { width: 10px; height: 10px; flex-shrink: 0; opacity: .8; transition: transform var(--t-fast); }
 .nav-dropdown.open .nav-caret { transform: rotate(180deg); }
 
@@ -651,6 +652,261 @@
     transform: translateY(-6px) scale(.98);
   }
   .header-nav .nav-dropdown.open .nav-menu-card { transform: none; }
+}
+
+/* Public alerts dropdown */
+.alerts-dropdown { position: relative; }
+.header-nav .alerts-dropdown.nav-promoted { padding: 0; }
+.alerts-trigger { gap: 6px; padding: 6px 14px; }
+.alerts-bell { flex: none; }
+.alerts-dot {
+  width: 7px; height: 7px; border-radius: var(--radius-full);
+  background: var(--p-amber-400); box-shadow: 0 0 0 2px rgba(15,23,42,.9);
+}
+/* Anchored to the trigger's RIGHT edge, not centred on it like the other nav menus: this
+   trigger sits near the end of the header, and a 380px menu centred there hangs 24px off the
+   side of a 1280px window. Both transforms are restated because setting one here would
+   otherwise drop the base rule's translateX(-50%) and leave the menu mispositioned. */
+.alerts-menu {
+  left: auto; right: 0;
+  width: 380px; max-width: calc(100vw - 24px);
+  max-height: min(72vh, 560px); overflow-y: auto; padding: 0;
+  transform: translateY(-6px) scale(.98);
+}
+.alerts-dropdown.open .alerts-menu { transform: none; }
+.alerts-nav-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+  padding: 13px 14px 11px; border-bottom: 1px solid var(--border-subtle);
+  position: sticky; top: 0; background: var(--surface-card); z-index: 1;
+}
+.alerts-nav-head strong { font-size: 14px; color: var(--text-primary); }
+.alerts-nav-head span { font-size: 11.5px; color: var(--text-tertiary); }
+.alerts-nav-list { margin: 0; padding: 6px; list-style: none; display: grid; gap: 2px; }
+.alerts-loading { padding: 18px 14px; color: var(--text-tertiary); font-size: 13px; }
+.alerts-nav-item { margin: 0; }
+.alerts-nav-link {
+  display: grid; gap: 5px; padding: 10px 10px 11px;
+  border-radius: var(--radius); color: inherit; text-decoration: none;
+  transition: background var(--t-fast);
+}
+.alerts-nav-link:hover,
+.alerts-nav-link:focus-visible { background: var(--surface-sunken); text-decoration: none; }
+.alerts-nav-tags {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+.alerts-nav-tags time { font-size: 11px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
+.alerts-nav-link strong {
+  font-size: 13.5px; line-height: 1.35; color: var(--text-primary); font-weight: 600;
+}
+.alerts-nav-state { font-size: 11.5px; color: var(--text-secondary); }
+.alerts-see-all {
+  display: block; padding: 12px 14px; text-align: center;
+  font-size: 13px; font-weight: 600; color: var(--text-brand);
+  border-top: 1px solid var(--border-subtle);
+  position: sticky; bottom: 0; background: var(--surface-card);
+}
+.alerts-see-all:hover { background: var(--brand-faint); text-decoration: none; }
+
+/* The category pill is shared by the dropdown and the feed, so it lives outside both. */
+.alert-pill {
+  display: inline-flex; align-items: center; padding: 2px 8px;
+  border-radius: var(--radius-full); font-size: 11px; font-weight: 700;
+  letter-spacing: .2px; white-space: nowrap;
+  background: var(--surface-sunken); color: var(--text-secondary);
+}
+.alert-pill.is-fuel-surcharge { background: var(--warn-bg); color: var(--warn-text); }
+.alert-pill.is-tariff { background: var(--brand-faint); color: var(--text-brand-dark); }
+.alert-pill.is-subsidy { background: var(--ok-bg); color: var(--ok-text); }
+.alert-pill.is-connection { background: var(--p-purple-50); color: var(--p-purple-700); }
+.alert-pill.is-policy,
+.alert-pill.is-true-up { background: var(--surface-sunken); color: var(--text-secondary); }
+
+@media (max-width: 900px) {
+  .alerts-trigger span:not(.alerts-dot) { display: none; }
+  .alerts-trigger { width: 36px; height: 34px; padding: 0; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.08); }
+  .alerts-dot { position: absolute; top: 7px; right: 8px; width: 6px; height: 6px; }
+}
+@media (max-width: 430px) {
+  .alerts-trigger .alerts-bell { display: none; }
+  .alerts-trigger .alerts-dot { width: 6px; height: 6px; margin-left: 1px; }
+}
+@media (max-width: 560px) {
+  .alerts-menu {
+    position: fixed; left: 12px; right: 12px; top: 70px; width: auto;
+    max-height: calc(100vh - 84px);
+  }
+}
+
+/* ── /alerts/ ─────────────────────────────────────────────────────────────────
+   A dated ledger, not a dashboard. The month is the spine and the date is a fixed rail down
+   the left, so a reader scanning for "what changed in July" tracks one column instead of
+   reading 49 cards. The first build opened with a kicker, a lead, a latest-notice card, four
+   summary tiles and two filter strips — 886px of preamble on a 720px viewport, which put the
+   entire subject of the page below the fold. Those counts now sit in one line under the h1. */
+/* No max-width override: the feed sits in the same 1040px column as every other content
+   page, so /alerts/ lines up with /guides/ and the tariff pages instead of running wider. */
+/* The heading block joins the same 760px reading column that .seo-page > h1 gives every other
+   content page, so /alerts/ opens on the identical measure as a guide article; only the feed
+   below it takes the full 992px section width. */
+.alerts-head { padding: 4px 0 18px; max-width: var(--w-text); }
+.alerts-head h1 { margin: 0 0 10px; font-size: clamp(28px, 3.4vw, 34px); line-height: 1.15; letter-spacing: -0.02em; }
+.alerts-head .seo-lead { margin: 0; }
+.alerts-context {
+  margin: 14px 0 0; font-size: 13px; line-height: 1.6; color: var(--text-tertiary);
+}
+.alerts-context strong { color: var(--text-secondary); font-weight: 650; font-variant-numeric: tabular-nums; }
+.alerts-context a { color: var(--text-brand); }
+
+/* Filters stay reachable while 49 notices scroll past. Sticky only where there is room for
+   it: under the 61px site header a second fixed bar costs a third of a short phone viewport,
+   so below 860px it scrolls away with the rest. */
+.alerts-controls {
+  display: grid; gap: 10px;
+  padding: 14px 0 12px;
+  background: var(--surface-page);
+  border-block: 1px solid var(--border-subtle);
+}
+@media (min-width: 861px) {
+  .alerts-controls { position: sticky; top: 61px; z-index: 20; }
+}
+.alerts-filterbar {
+  display: grid; gap: 10px;
+  grid-template-columns: minmax(220px, 1.6fr) repeat(3, minmax(120px, 1fr)) auto;
+  align-items: end;
+}
+.alerts-field { display: grid; gap: 5px; min-width: 0; }
+.alerts-field > span {
+  font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.alerts-field input,
+.alerts-field select {
+  width: 100%; min-height: 40px; padding: 0 11px;
+  font-size: 14px; font-family: inherit; color: var(--text-primary);
+  background: var(--surface-card);
+  border: 1px solid var(--border-default); border-radius: var(--radius);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.alerts-field input:focus-visible,
+.alerts-field select:focus-visible {
+  outline: none; border-color: var(--brand); box-shadow: var(--focus-ring);
+}
+.alerts-reset {
+  min-height: 40px; padding: 0 16px; white-space: nowrap;
+  font-size: 13px; font-weight: 600; font-family: inherit; color: var(--text-secondary);
+  background: var(--surface-card);
+  border: 1px solid var(--border-default); border-radius: var(--radius); cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+.alerts-reset:hover { background: var(--surface-sunken); color: var(--text-primary); border-color: var(--border-strong); }
+
+.alerts-chiprow { display: flex; flex-wrap: wrap; gap: 8px; }
+.alert-chip {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 12px 6px 9px;
+  font-size: 12.5px; font-weight: 600; font-family: inherit; color: var(--text-secondary);
+  background: var(--surface-card);
+  border: 1px solid var(--border-default); border-radius: var(--radius-full); cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+.alert-chip .alert-pill { width: 8px; height: 8px; padding: 0; border-radius: var(--radius-full); }
+.alert-chip-count {
+  font-size: 11px; font-weight: 700; color: var(--text-tertiary); font-variant-numeric: tabular-nums;
+}
+.alert-chip:hover { border-color: var(--border-strong); color: var(--text-primary); }
+.alert-chip.is-active {
+  background: var(--brand-faint); border-color: var(--brand-border); color: var(--text-brand-dark);
+}
+.alert-chip.is-active .alert-chip-count { color: var(--text-brand-dark); }
+
+.alerts-listwrap { padding-top: 18px; }
+.alerts-result-head {
+  margin: 0 0 4px; font-size: 12.5px; color: var(--text-tertiary);
+}
+.alerts-result-head strong { color: var(--text-primary); font-variant-numeric: tabular-nums; }
+
+.alerts-feed { list-style: none; margin: 0; padding: 0; }
+.alerts-month {
+  margin: 26px 0 2px;
+  font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+.alerts-month:first-child { margin-top: 10px; }
+.alerts-month span {
+  display: inline-block; padding-bottom: 7px;
+  border-bottom: 2px solid var(--border-strong);
+}
+
+.alert-row {
+  display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 18px;
+  padding: 15px 12px 16px; margin-inline: -12px;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  transition: background var(--t-fast);
+}
+.alert-row:hover { background: var(--surface-sunken); }
+.alert-row-rail {
+  font-size: 12px; font-weight: 650; line-height: 1.5; color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums; padding-top: 3px; white-space: nowrap;
+}
+.alert-row-body { display: grid; gap: 6px; min-width: 0; }
+.alert-row-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.alert-row-state { font-size: 11.5px; font-weight: 600; color: var(--text-secondary); }
+.alert-row-discom { font-size: 11.5px; color: var(--text-tertiary); }
+.alert-severity {
+  display: inline-flex; align-items: center; padding: 2px 8px;
+  border-radius: var(--radius-full); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .03em; text-transform: uppercase; white-space: nowrap;
+  background: var(--err-bg); color: var(--err-text);
+}
+.alert-row-title {
+  font-size: 15.5px; font-weight: 650; line-height: 1.35; color: var(--text-primary);
+  text-decoration: none;
+}
+.alert-row-title:hover { color: var(--text-brand); text-decoration: underline; text-underline-offset: 3px; }
+.alert-row-summary {
+  font-size: 13.5px; line-height: 1.5; color: var(--text-secondary); max-width: 74ch;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2;
+  overflow: hidden;
+}
+.alert-row-foot {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  font-size: 11.5px; color: var(--text-tertiary);
+}
+.alert-row-foot time { font-variant-numeric: tabular-nums; }
+.alert-source-link { color: var(--text-brand); }
+.alert-source-plain { color: var(--text-tertiary); }
+
+.alerts-empty {
+  margin-top: 20px; padding: 40px 16px; text-align: center; color: var(--text-tertiary);
+  border: 1px dashed var(--border-strong); border-radius: var(--radius-md);
+}
+.alerts-empty-reset {
+  margin-left: 4px; padding: 0; font: inherit; color: var(--text-brand);
+  background: none; border: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px;
+}
+
+@media (max-width: 860px) {
+  /* Two columns, and Reset pairs with Priority rather than taking a full row of its own —
+     that row was 65px of nothing but a button, on the viewport where the space is scarcest. */
+  .alerts-filterbar { grid-template-columns: 1fr 1fr; }
+  .alerts-field-search { grid-column: 1 / -1; }
+  .alerts-reset { align-self: end; }
+}
+@media (max-width: 560px) {
+  .alerts-head { padding-bottom: 14px; }
+  .alerts-head h1 { font-size: 28px; }
+  .alerts-listwrap { padding-top: 14px; }
+  .alert-row {
+    grid-template-columns: 1fr; gap: 8px;
+    padding: 14px 10px 15px; margin-inline: -10px;
+  }
+  /* The rail loses its column on a phone, so it rejoins the tag line as another chip rather
+     than sitting alone on a row of its own. */
+  .alert-row-rail {
+    padding-top: 0; font-size: 11.5px; order: -1;
+  }
+  .alert-row-summary { font-size: 13px; }
 }
 
 /* Custom language dropdown — a styled menu replacing the native <select> popup */
@@ -4643,9 +4899,22 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .seo-page .comparison-table-wrapper.order-library th:nth-child(6), .seo-page .comparison-table-wrapper.order-library td:nth-child(6) { width: 27.5%; } /* Source */
 
 /* Key/value record table: the label column is a <th scope="row">, not a heading row. */
+.order-facts th,
+.order-facts td {
+  padding: 7px 10px;
+  line-height: 1.35;
+}
 .order-facts th[scope="row"] {
-  width: 34%; text-align: left; font-weight: 600; color: var(--text-secondary);
+  width: 30%; text-align: left; font-size: 11px; font-weight: 800;
+  letter-spacing: .06em; text-transform: uppercase; color: var(--text-tertiary);
   white-space: nowrap; vertical-align: top;
+}
+.order-facts td {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+}
+.order-facts td a {
+  font-weight: 700;
 }
 
 .seo-discom-head { background: var(--surface-card); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 16px 18px; box-shadow: var(--shadow-sm); margin-bottom: 12px; }

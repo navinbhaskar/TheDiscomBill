@@ -506,6 +506,26 @@ group('Gujarat RGP — from the FY2026-27 GERC order', () => {
   check('Gujarat is not bill-verified', urban.tariffVerified, false);
 });
 
+// Manipur — MnERC MSPDCL retail tariff order for FY2026-27, effective from 01-05-2026.
+// 250 domestic units: 100x5.36 + 100x6.25 + 50x7.10 = 1516. Fixed charge is Rs 65/kW.
+group('Manipur MSPDCL — from the FY2026-27 MnERC order', () => {
+  const bill = (categoryId, units, kw) => calculateBill({
+    discomId: 'mspdcl', categoryId, units, connectedLoadKw: kw,
+    billingPeriodDays: 30, billingDate: '2026-07-15' });
+
+  const domestic = bill('domestic', 250, 2);
+  check('domestic 250u energy', domestic.totalEnergy, 1516);
+  check('domestic fixed is per kW', domestic.fixedCharge, 130);
+  check('domestic 250u total', domestic.totalPayable, 1646);
+  check('Manipur reads as current', domestic.tariffYearsBehind, 0);
+
+  // LT Category-3: 100x7.07 + 100x7.85 + 50x8.30 = 1907; fixed is Rs 85/kW.
+  const commercial = bill('commercial', 250, 3);
+  check('commercial 250u energy', commercial.totalEnergy, 1907);
+  check('commercial fixed is per kW', commercial.fixedCharge, 255);
+  check('commercial 250u total', commercial.totalPayable, 2162);
+});
+
 import { resolveFppaForDiscom } from '../js/tariffs/fppa-resolve.js';
 
 // Rajasthan — Tariff for Supply of Electricity-2025 (RERC 2303-2305/2025, from 01-10-2025).

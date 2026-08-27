@@ -14,6 +14,7 @@ export default {
     'nav.solar': 'சோலார்',
     'nav.ev': 'EV செலவு',
     'nav.blog': 'வலைப்பதிவு',
+    'nav.alerts': 'அலர்ட்கள்',
     'nav.about': 'எங்களைப் பற்றி',
     // Quick Links dropdown (shared chrome on every page)
     'nav.quickLinks': 'மேலும்',
@@ -22,6 +23,7 @@ export default {
     'ql.tariffs': 'கட்டண விகிதங்கள்',
     'ql.tariffDatabase': 'கட்டணத் தரவுத்தளம்',
     'ql.orderLibrary': 'ஆணை நூலகம்',
+    'ql.alerts': 'அலர்ட்கள்',
     'ql.fuelSurcharge': 'எரிபொருள் கூடுதல் கட்டண டிராக்கர்',
     'tools.title': 'பில் கணிப்பான் மட்டுமல்ல',
     'tools.sub': 'இங்குள்ள ஒவ்வொரு கருவியும் அதே சரிபார்க்கப்பட்ட கட்டண விவரங்களில் இயங்குகிறது — உங்களுக்குத் தேவையானதைத் தேர்ந்தெடுங்கள்.',

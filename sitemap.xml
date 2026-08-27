@@ -1455,6 +1455,12 @@
     <priority>0.75</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/alerts/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/orders/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -1498,6 +1504,12 @@
   </url>
   <url>
     <loc>https://thediscombill.com/orders/merc-210-2024-tpc/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/mnerc-mspdcl-tariff-fy2026-27/</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>

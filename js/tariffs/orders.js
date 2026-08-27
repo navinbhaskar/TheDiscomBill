@@ -122,6 +122,19 @@ export const ORDERS = [
     notes: 'Commission press note summarising the order, not the full order text.',
   },
 
+  // ── Manipur ────────────────────────────────────────────────────────────────
+  {
+    id: 'mnerc-mspdcl-tariff-fy2026-27',
+    state: 'Manipur', regulator: 'MnERC', discomIds: ['mspdcl'],
+    type: 'tariff-order',
+    title: 'MSPDCL tariff order for FY 2026-27',
+    orderRef: 'Petition (ARR & Tariff) No. 2 of 2025-26', orderDate: '2026-05-14',
+    effectiveFrom: '2026-05-01', effectiveTo: null,
+    sourceUrl: 'https://mnerc.mn.gov.in/wp-content/uploads/2026/05/MSPDCL-Tariff-Order-FY-2026-27_compressed.pdf',
+    isPdf: true, archiveUrl: null,
+    notes: 'Corrigendum dated 17-Jun-2026 changes pole/tower usage charges only; LT tariff rates remain as in the 14-May-2026 order.',
+  },
+
   // ── Odisha ─────────────────────────────────────────────────────────────────
   {
     id: 'oerc-rst-fy2026-27',

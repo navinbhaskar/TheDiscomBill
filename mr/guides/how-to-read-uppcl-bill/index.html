@@ -122,6 +122,17 @@
       <a href="/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">Smart Meter</a>
       <a href="/mr/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
       <a href="/mr/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <div class="nav-dropdown alerts-dropdown nav-promoted" id="alertsDropdown" data-alerts-nav="true">
+        <button type="button" class="nav-dropdown-trigger alerts-trigger" id="alertsTrigger" aria-haspopup="true" aria-expanded="false">
+          <svg class="alerts-bell" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 21a2 2 0 0 0 3.4 0"/><path d="M18 8A6 6 0 0 0 6 8c0 7-3 7-3 9h18c0-2-3-2-3-9"/></svg>
+          <span data-i18n="nav.alerts">Alerts</span>
+          <span class="alerts-dot" aria-hidden="true"></span>
+        </button>
+        <div class="nav-dropdown-menu alerts-menu" id="alertsMenu" role="menu" aria-label="Recent public alerts" data-lenis-prevent>
+          <div class="alerts-loading">Loading alerts...</div>
+          <a href="/alerts/" class="alerts-see-all">See all alerts</a>
+        </div>
+      </div>
       <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
            to the footer sitemap. The header now carries only the four primary destinations —
            see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
@@ -336,6 +347,7 @@
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
         <a href="/database/" data-i18n="ql.tariffDatabase">Tariff Database</a>
         <a href="/orders/" data-i18n="ql.orderLibrary">Order Library</a>
+        <a href="/alerts/" data-i18n="ql.alerts">Alerts</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
       </div>

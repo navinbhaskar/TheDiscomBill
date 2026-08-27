@@ -24,6 +24,7 @@ import { execSync } from 'child_process';
 import { TARIFF_DB, STATE_META, getStates, getDiscoms, tariffAge, ensureAll } from './js/tariffs/registry.js';
 import { surchargeTerm, surchargeAliases, surchargeLabel } from './js/tariffs/surcharge-terms.js';
 import { ORDERS, ORDER_TYPES } from './js/tariffs/orders.js';
+import { formatAlertDate, getAlertStates, getAlertSummary, getPublicAlerts, getUsedAlertCategories } from './js/alerts-data.js';
 import { DEFAULT_EXCESS_DEMAND } from './js/engine.js';
 import { buildTariffIndex } from './scripts/build-tariff-index.mjs';
 import { buildTariffDatabase } from './scripts/build-tariff-database.mjs';
@@ -170,7 +171,7 @@ function writeWithRetry(abs, contents) {
   for (let attempt = 0; ; attempt++) {
     try { fs.writeFileSync(abs, contents, 'utf8'); return; }
     catch (err) {
-      if (attempt === 4 || (err.code !== 'UNKNOWN' && err.code !== 'EBUSY' && err.code !== 'EPERM')) throw err;
+      if (attempt === 14 || (err.code !== 'UNKNOWN' && err.code !== 'EBUSY' && err.code !== 'EPERM')) throw err;
       const until = Date.now() + 40 * (attempt + 1);
       while (Date.now() < until) { /* short synchronous backoff */ }
     }
@@ -351,6 +352,17 @@ const HEADER = (langMenu) => `
       <a href="/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">Smart Meter</a>
       <a href="/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
       <a href="/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <div class="nav-dropdown alerts-dropdown nav-promoted" id="alertsDropdown" data-alerts-nav="true">
+        <button type="button" class="nav-dropdown-trigger alerts-trigger" id="alertsTrigger" aria-haspopup="true" aria-expanded="false">
+          <svg class="alerts-bell" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 21a2 2 0 0 0 3.4 0"/><path d="M18 8A6 6 0 0 0 6 8c0 7-3 7-3 9h18c0-2-3-2-3-9"/></svg>
+          <span data-i18n="nav.alerts">Alerts</span>
+          <span class="alerts-dot" aria-hidden="true"></span>
+        </button>
+        <div class="nav-dropdown-menu alerts-menu" id="alertsMenu" role="menu" aria-label="Recent public alerts" data-lenis-prevent>
+          <div class="alerts-loading">Loading alerts...</div>
+          <a href="/alerts/" class="alerts-see-all">See all alerts</a>
+        </div>
+      </div>
       <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
            to the footer sitemap. The header now carries only the four primary destinations —
            see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
@@ -433,6 +445,7 @@ const FOOTER_SITEMAP = `
         <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
         <a href="/database/" data-i18n="ql.tariffDatabase">Tariff Database</a>
         <a href="/orders/" data-i18n="ql.orderLibrary">Order Library</a>
+        <a href="/alerts/" data-i18n="ql.alerts">Alerts</a>
         <a href="/#about" data-i18n="nav.about">About</a>
         <a href="/contact/" data-i18n="ql.contact">Contact</a>
       </div>
@@ -5593,6 +5606,176 @@ function fppaArchiveYearPage(state, year, lang = 'en') {
   });
 }
 
+// ── Public Alerts ────────────────────────────────────────────────────────────
+// Alerts are a public view over existing data, not a separate editorial feed. A new tariff
+// order or FPPA row becomes an alert automatically the next time the site is generated.
+//
+// The page is a dated ledger, not a dashboard. What a reader wants here is "what changed that
+// touches my bill, and when" — so the month is the spine, the date is a fixed rail down the
+// left, and the notice text sits against it. The first version opened with a kicker, a lead,
+// a latest-notice card, four summary tiles and two filter strips, which put the first actual
+// notice 886px down a 720px viewport: the entire subject of the page was below the fold. The
+// counts that filled those tiles now sit in one line under the h1, where they cost 20px
+// instead of 190px and still say the same thing.
+
+function alertPillClass(category) {
+  return String(category).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+const ALERT_MONTH_FMT = new Intl.DateTimeFormat('en-IN', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+const ALERT_DAY_FMT = new Intl.DateTimeFormat('en-IN', { day: '2-digit', month: 'short', timeZone: 'UTC' });
+
+// The month heading a notice belongs under, and the short day label on its rail. Undated
+// records fall into their own trailing group rather than being silently dropped or dated today.
+function alertMonthGroup(iso) {
+  if (!iso) return 'Date not recorded';
+  const d = new Date(`${iso}T00:00:00Z`);
+  return Number.isNaN(d.getTime()) ? 'Date not recorded' : ALERT_MONTH_FMT.format(d);
+}
+function alertDayLabel(iso) {
+  if (!iso) return '—';
+  const d = new Date(`${iso}T00:00:00Z`);
+  return Number.isNaN(d.getTime()) ? '—' : ALERT_DAY_FMT.format(d);
+}
+
+function alertRowHtml(alert) {
+  const discom = alert.discoms?.length
+    ? `<span class="alert-row-discom">${esc(alert.discoms.slice(0, 2).join(', '))}${alert.discoms.length > 2 ? ` +${alert.discoms.length - 2}` : ''}</span>`
+    : '';
+  const source = alert.sourceUrl
+    ? `<a href="${attr(alert.sourceUrl)}" target="_blank" rel="noopener nofollow" class="alert-source-link">${esc(alert.sourceName || 'Source')} ↗</a>`
+    : (alert.sourceName ? `<span class="alert-source-plain">${esc(alert.sourceName)}</span>` : '');
+  const search = [alert.title, alert.summary, alert.state, alert.category, ...(alert.discoms || [])]
+    .join(' ').toLowerCase();
+  // aria-hidden on the rail: the full date is already announced by the <time> in the footer,
+  // and a screen reader reading "17 Aug" before every headline is noise.
+  return `
+        <li class="alert-row" id="${attr(alert.id)}"
+          data-alert-card data-state="${attr(alert.state)}" data-category="${attr(alert.category)}"
+          data-severity="${attr(alert.severity)}" data-search="${attr(search)}">
+          <span class="alert-row-rail" aria-hidden="true">${esc(alertDayLabel(alert.publishedDate))}</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-${attr(alertPillClass(alert.category))}">${esc(alert.category)}</span>
+              ${alert.severity === 'Important' ? '<span class="alert-severity is-important">Important</span>' : ''}
+              <span class="alert-row-state">${esc(alert.state)}</span>
+              ${discom}
+            </span>
+            <a href="${attr(alert.href || `#${alert.id}`)}" class="alert-row-title">${esc(alert.title)}</a>
+            <span class="alert-row-summary">${esc(alert.summary)}</span>
+            <span class="alert-row-foot">
+              <time datetime="${attr(alert.publishedDate || '')}">${esc(formatAlertDate(alert.publishedDate))}</time>
+              ${source}
+            </span>
+          </span>
+        </li>`;
+}
+
+// Month headings are list items inside the same <ol> as the notices, so the feed stays one
+// ordered list rather than a stack of sections the filter would have to keep in sync. Each
+// heading carries data-alert-group; alerts-ui.js hides one whose notices are all filtered out.
+function alertFeedHtml(alerts) {
+  let current = null;
+  return alerts.map((alert) => {
+    const group = alertMonthGroup(alert.publishedDate);
+    const heading = group === current ? '' : `
+        <li class="alerts-month" data-alert-group="${attr(group)}"><span>${esc(group)}</span></li>`;
+    current = group;
+    return heading + alertRowHtml(alert);
+  }).join('');
+}
+
+function alertsPage() {
+  const alerts = getPublicAlerts();
+  const summary = getAlertSummary(alerts);
+  const states = getAlertStates();
+  const used = getUsedAlertCategories(alerts);
+  const categoryChips = used.map((category) => {
+    const count = alerts.filter((a) => a.category === category).length;
+    return `
+          <button type="button" class="alert-chip" data-alert-index="${attr(category)}">
+            <span class="alert-pill is-${attr(alertPillClass(category))}" aria-hidden="true"></span>
+            ${esc(category)}<span class="alert-chip-count">${count}</span>
+          </button>`;
+  }).join('');
+  const stateOptions = states.map((state) => `<option value="${attr(state)}">${esc(state)}</option>`).join('');
+  // Only categories that actually occur — see getUsedAlertCategories. Offering the full
+  // vocabulary meant four options that could never return a result.
+  const categoryOptions = used.map((category) => `<option value="${attr(category)}">${esc(category)}</option>`).join('');
+  const latest = summary.latestDate ? formatAlertDate(summary.latestDate) : 'not recorded';
+
+  const body = `
+  <section class="seo-page container alerts-page" id="alertsPageRoot">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">Alerts</span></li></ol></nav>
+
+    <header class="alerts-head">
+      <h1>Electricity Alerts</h1>
+      <p class="seo-lead">Every tariff order and fuel-surcharge notice tracked on TheDiscomBill, newest first. Public regulatory updates only — not notifications about your own account.</p>
+      <p class="alerts-context">
+        <strong>${summary.total}</strong> notices across <strong>${summary.states}</strong> states
+        · latest <strong>${esc(latest)}</strong>
+        · compiled from the <a href="/fppa/">FPPA tracker</a> and <a href="/orders/">published orders</a>
+      </p>
+    </header>
+
+    <div class="alerts-controls">
+      <div class="alerts-filterbar" role="search" aria-label="Filter public electricity alerts">
+        <label class="alerts-field alerts-field-search">
+          <span>Search</span>
+          <input id="alertSearch" type="search" placeholder="FPPA, Delhi, MSEDCL…" autocomplete="off">
+        </label>
+        <label class="alerts-field">
+          <span>State</span>
+          <select id="alertState">
+            <option value="">All states</option>
+            ${stateOptions}
+          </select>
+        </label>
+        <label class="alerts-field">
+          <span>Category</span>
+          <select id="alertCategory">
+            <option value="">All categories</option>
+            ${categoryOptions}
+          </select>
+        </label>
+        <label class="alerts-field">
+          <span>Priority</span>
+          <select id="alertSeverity">
+            <option value="">All</option>
+            <option value="Important">Important</option>
+            <option value="Info">Info</option>
+          </select>
+        </label>
+        <button type="button" class="alerts-reset" data-alert-reset>Reset</button>
+      </div>
+      <div class="alerts-chiprow" aria-label="Filter by category">
+        ${categoryChips}
+      </div>
+    </div>
+
+    <section class="alerts-listwrap" id="alerts-list" aria-label="Public electricity alerts">
+      <p class="alerts-result-head"><strong data-alert-count>${alerts.length}</strong> of ${alerts.length} showing</p>
+      <ol class="alerts-feed" data-alert-list>
+        ${alertFeedHtml(alerts)}
+      </ol>
+      <p class="alerts-empty" data-alert-empty hidden>No notices match these filters. <button type="button" class="alerts-empty-reset" data-alert-reset>Clear filters</button></p>
+    </section>
+  </section>`;
+
+  return layout({
+    title: 'Electricity Alerts — Tariff, FPPA and DISCOM Updates',
+    description: 'Latest public electricity alerts for India: FPPA, PPAC, tariff orders, subsidy notices and policy changes filtered by state and category.',
+    canonical: SITE + '/alerts/',
+    page: '/alerts/',
+    altLangs: [],
+    jsonld: [breadcrumbJsonLd([
+      { name: 'Home', url: '/' },
+      { name: 'Alerts', url: '/alerts/' },
+    ])],
+    body,
+  });
+}
+
 // ── Official Order Library ───────────────────────────────────────────────────
 // Provenance used to be a single link hanging off a state. Here each order is its own page,
 // which is also the SEO argument for building it: "TNERC T.O. No. 6 of 2025" and "MERC Case
@@ -5633,10 +5816,10 @@ function orderSourceCell(o) {
     : '<span class="ol-kind is-page">page</span>';
   const arch = archiveIsUseful(o);
   const archBit = arch
-    ? ` <a class="ol-arch${arch.stale ? ' is-stale' : ''}" href="${esc(o.archiveUrl)}"${arch.stale
+    ? ` <a class="ol-arch${arch.stale ? ' is-stale' : ''}" href="${esc(o.archiveUrl)}" target="_blank" rel="noopener nofollow"${arch.stale
         ? ' title="This snapshot predates the order, so it does not contain it"' : ''}>archived ${esc(arch.stamp)}</a>`
     : ' <span class="ol-arch is-none">no snapshot</span>';
-  return `<a href="${esc(o.sourceUrl)}" rel="nofollow">${esc(new URL(o.sourceUrl).hostname.replace(/^www\./, ''))}</a> ${kind}${archBit}`;
+  return `<a href="${esc(o.sourceUrl)}" target="_blank" rel="noopener nofollow">${esc(new URL(o.sourceUrl).hostname.replace(/^www\./, ''))}</a> ${kind}${archBit}`;
 }
 
 function ordersHubPage() {
@@ -5799,8 +5982,8 @@ function orderPage(o) {
     <section class="seo-section">
       <h2>The document</h2>
       <p class="seo-cta-row">
-        <a class="seo-cta" href="${esc(o.sourceUrl)}" rel="nofollow">${o.isPdf ? 'Open the order (PDF)' : 'Open the source page'}</a>
-        ${o.archiveUrl ? `<a class="seo-cta seo-cta-quiet" href="${esc(o.archiveUrl)}">Archived copy</a>` : ''}
+        <a class="seo-cta" href="${esc(o.sourceUrl)}" target="_blank" rel="noopener nofollow">${o.isPdf ? 'Open the order (PDF)' : 'Open the source page'}</a>
+        ${o.archiveUrl ? `<a class="seo-cta seo-cta-quiet" href="${esc(o.archiveUrl)}" target="_blank" rel="noopener nofollow">Archived copy</a>` : ''}
       </p>
       <p class="fs-legend">${o.isPdf
         ? 'This link is the document itself, at the regulator\'s or licensee\'s own address. It is not hosted here.'
@@ -6980,6 +7163,7 @@ function buildSitemap(states) {
   }
   urls.push({ loc: '/glossary/', priority: '0.7', changefreq: 'monthly', langs: [...VERNACULARS] });
   urls.push({ loc: '/database/', priority: '0.75', changefreq: 'monthly' });
+  urls.push({ loc: '/alerts/', priority: '0.8', changefreq: 'monthly' });
   urls.push({ loc: '/orders/', priority: '0.8', changefreq: 'monthly' });
   for (const order of ORDERS) {
     urls.push({ loc: `/orders/${order.id}/`, priority: '0.6', changefreq: 'yearly' });
@@ -7127,6 +7311,7 @@ ${GUIDES.map(g => `- [${g.title}](${SITE}/guides/${g.slug}/): ${g.description.sp
 ## Reference
 
 - [Tariff Database](${SITE}/database/): the full machine-readable dataset behind every calculation — per-state DISCOM counts, category counts, the tariff year in force, and a link to the originating regulator's order where one is recorded
+- [Electricity Alerts](${SITE}/alerts/): public tariff, FPPA, PPAC, subsidy and policy updates derived from the order library and surcharge tracker, filterable by state
 - [Fuel Surcharge (FPPA) Tracker](${SITE}/fppa/): current and historical fuel-surcharge rates by state and DISCOM, with the month each came into force
 - [Electricity Bill Glossary](${SITE}/glossary/): definitions of billing terms — ${GLOSSARY.map(t => t.abbr || t.term.replace(/\s*\(.*?\)\s*/g, '').trim()).join(', ')}
 
@@ -7842,15 +8027,7 @@ function inlineFontCss() {
       // holds a handle on a file this build just wrote - and this step rewrites 500 of them
       // back to back, so it hits that window regularly. Retry briefly rather than failing a
       // whole generation over a lock that clears in milliseconds.
-      let wrote = false;
-      for (let attempt = 0; attempt < 5 && !wrote; attempt++) {
-        try { fs.writeFileSync(abs, out, 'utf8'); wrote = true; }
-        catch (err) {
-          if (attempt === 4) throw err;
-          const until = Date.now() + 40 * (attempt + 1);
-          while (Date.now() < until) { /* short synchronous backoff */ }
-        }
-      }
+      writeWithRetry(abs, out);
       touched++;
     }
   })(ROOT);
@@ -7940,6 +8117,7 @@ function writeSearchIndex(states) {
     ['Solar Subsidy Checker', 'सोलर सब्सिडी चेकर (PM सूर्य घर)', '/solar-subsidy-checker/', 'pm surya ghar rooftop solar subsidy muft bijli yojana system size payback kw 78000 eligibility'],
     ['Tenant Sub-Meter Calculator', 'किरायेदार सब-मीटर कैलकुलेटर', '/tenant-submeter-calculator/', 'tenant landlord submeter sub meter overcharging flat rate per unit pg rent electricity split share'],
     ['Tariff Database', 'टैरिफ डेटाबेस', '/database/', 'structured tariff database discom residential electricity slabs fixed charge duty fppa subsidy source'],
+    ['Electricity Alerts', 'बिजली अलर्ट', '/alerts/', 'alerts public updates tariff order fppa ppac fac subsidy policy state discom notification'],
     ['Fuel Surcharge Tracker', 'ईंधन अधिभार ट्रैकर', '/fppa/', 'fppa fppas ppac fac fuel surcharge fuel power purchase adjustment current rate this month uppcl derc delhi rajasthan monthly history bill increase'],
     ['Methodology', 'कार्यप्रणाली', '/methodology/', 'how rates verified sources'],
     ['Cookie Policy', 'कुकी नीति', '/cookies/', 'cookies cookie policy tracking analytics ga consent local storage banner'],
@@ -8065,6 +8243,8 @@ export function generateSeo() {
     // are English by definition.
     if (lang === 'en') {
       emitPage('database', tariffDatabasePage(tariffDatabase.summary, tariffDatabase.db.states));
+      pages++;
+      emitPage('alerts', alertsPage());
       pages++;
       // English-only, and HTML-only: no orders.json. See the note on ordersHubPage().
       emitPage('orders', ordersHubPage());
