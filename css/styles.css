@@ -5837,24 +5837,30 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 }
 .bc-hero .svc-intro { font-size: 16.5px; max-width: 560px; margin-bottom: 18px; }
 
-/* Capability chips. They are links, not decoration — each jumps to the field it names. */
-.bc-chips {
-  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
-  max-width: 660px; margin: 0 auto 16px;
+/* What the form covers, as a specification rather than a row of pills. Each term links to its
+   own explainer further down; the line under it is what that section says in one sentence.
+   Left-aligned inside a centred hero on purpose — the headline is an address and belongs on
+   the axis, the spec is read line by line and belongs on a left edge. */
+.bc-caps {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px 34px; margin: 0 auto 20px; max-width: 880px; text-align: left;
 }
-.bc-chip {
-  display: inline-flex; align-items: center; min-height: 32px; padding: 0 13px;
-  font-size: 13px; font-weight: 600; line-height: 1;
-  color: var(--text-secondary); text-decoration: none;
-  background: var(--surface-card); border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-full);
-  transition: color .15s ease, border-color .15s ease, background .15s ease;
+.bc-cap {
+  padding: 11px 0 12px;
+  border-top: 1px solid var(--border-subtle);
 }
-.bc-chip:hover, .bc-chip:focus-visible {
-  color: var(--text-brand); border-color: var(--brand-border);
-  background: var(--brand-faint);
+/* The first item of each column keeps the rule; every column after the first would otherwise
+   start without one and the two columns would not line up at the top. */
+.bc-caps dt { margin: 0 0 3px; font-size: 14px; font-weight: 650; line-height: 1.3; }
+.bc-caps dt a {
+  color: var(--text-primary); text-decoration: none;
+  border-bottom: 1px solid transparent; transition: color var(--t-fast), border-color var(--t-fast);
 }
-.bc-chip:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.bc-caps dt a:hover,
+.bc-caps dt a:focus-visible { color: var(--text-brand); border-bottom-color: currentColor; }
+.bc-caps dd {
+  margin: 0; font-size: 13px; line-height: 1.5; color: var(--text-secondary);
+}
 
 /* The "same engine as the home page" note is orientation, not the pitch — it sits below the
    chips at meta weight so it stops competing with them. */
@@ -5869,10 +5875,15 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   .bc-hero { padding-bottom: 22px; }
   .bc-hero h1 { margin-bottom: 10px; }
   .bc-hero .svc-intro { font-size: 15.5px; margin-bottom: 14px; }
-  .bc-chips { gap: 7px; margin-bottom: 12px; }
+  /* One column, and tighter rows. Six two-line entries at desktop spacing pushed the
+     calculator to y=842 on an 844px phone -- past the fold on the page whose whole point is
+     the form. The descriptions stay; the air between them goes. */
+  .bc-caps { grid-template-columns: 1fr; gap: 0; margin-bottom: 14px; max-width: 100%; }
+  .bc-cap { padding: 7px 0 8px; }
+  .bc-caps dt { font-size: 13.5px; margin-bottom: 2px; }
+  .bc-caps dd { font-size: 12.5px; line-height: 1.45; }
 }
 
-@media (prefers-reduced-motion: reduce) { .bc-chip { transition: none; } }
 
 /* DISCOM Services hub — tabbed panels (Pay Bill / New Connection / Complaint / Helplines) */
 .svc-tabs { flex-wrap: wrap; }

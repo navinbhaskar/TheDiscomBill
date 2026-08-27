@@ -142,17 +142,42 @@
       <h1 class="reveal">Advanced electricity bill calculator</h1>
       <p class="svc-intro reveal">Every field the tariff orders actually define — not a
       simplified estimate.</p>
-      <!-- The capabilities were a comma list inside the intro, which is where a value
-           proposition goes to be skimmed past. As chips they are scannable, and each one now
-           lands on the section further down that explains what the field does. -->
-      <div class="bc-chips reveal" aria-label="What this calculator handles">
-        <a class="bc-chip" href="#f-tod">Time-of-day slots</a>
-        <a class="bc-chip" href="#f-kvah">kVAh &amp; power factor</a>
-        <a class="bc-chip" href="#f-load">Sanctioned load &amp; demand</a>
-        <a class="bc-chip" href="#f-solar">Solar export</a>
-        <a class="bc-chip" href="#f-arrears">Arrears &amp; surcharges</a>
-        <a class="bc-chip" href="#f-multi">Multiple meters</a>
-      </div>
+      <!-- The capabilities were a comma list inside the intro, then a row of bare chips. Both
+           named the six fields without saying what any of them does, so the hero was a headline
+           and six pills floating in a lot of empty background — it read as unfinished because
+           there was nothing in it to read.
+
+           Each one now carries the sentence that makes it matter, condensed from its own
+           explainer further down the page, and every term still links to that section. A
+           definition list rather than six cards: this is a spec of what the form covers, and
+           "every field the tariff orders actually define" is a claim that should look like a
+           specification instead of a set of feature tiles. -->
+      <dl class="bc-caps reveal">
+        <div class="bc-cap">
+          <dt><a href="#f-tod">Time-of-day slots</a></dt>
+          <dd>Peak, normal and off-peak units priced separately — the evening surcharge and the solar-hour rebate.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-kvah">kVAh &amp; power factor</a></dt>
+          <dd>Billing on apparent energy, where a poor power factor inflates the units you are charged for.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-load">Sanctioned load &amp; demand</a></dt>
+          <dd>Fixed charges per kW of sanctioned load, and the penalty when recorded demand runs past it.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-solar">Solar export</a></dt>
+          <dd>Exported units netted against imported ones, with the surplus banked and carried forward.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-arrears">Arrears &amp; surcharges</a></dt>
+          <dd>Electricity duty in your state's order against the fuel surcharge, plus arrears and late-payment interest.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-multi">Multiple meters</a></dt>
+          <dd>Several meters on one premises, read separately but slabbed against the connection as a whole.</dd>
+        </div>
+      </dl>
       <p class="bc-meta reveal">Same engine and tariff data as the quick calculator on the home
       page — opened straight into the detailed form.</p>
     </div>
