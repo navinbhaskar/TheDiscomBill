@@ -5856,8 +5856,35 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 
    The display face and the gradient rule stay. Those are the shared signature of all six
    portal families, and dropping them on one page is a different inconsistency, not a fix. */
-.bc-hero h1 { margin-bottom: 14px; }
-.bc-hero .svc-intro { font-size: 16.5px; max-width: 560px; margin-bottom: 18px; }
+/* 27px, matching the H1 on /smart-meter/ and every other .seo-page content page, rather than
+   the 23px portal title its own family uses. This page opens like an article — left-aligned
+   heading over a left-aligned spec and seven explainer sections — so it takes the article
+   heading size. /services/ and the other hub pages keep 23px; they really are hubs. */
+.bc-hero h1 { font-size: 27px; margin-bottom: 14px; }
+
+/* The whole hero comes to the left edge, on the same column as the article below it.
+   .svc-section centres its heading, intro and divider — right for /services/, which is a hub
+   of links and nothing else, and wrong here, where the band is the opening of a page that
+   continues into seven left-aligned explainer sections. A centred hero over a left-aligned
+   article is defensible in the abstract; on this page it read as two layouts stapled together,
+   which is exactly what it was. Scoped to .bc-hero, so the rest of the family keeps its
+   centred treatment. */
+.bc-hero .seo-breadcrumbs,
+.bc-hero h1,
+.bc-hero .svc-intro,
+.bc-hero .bc-caps,
+.bc-hero .bc-meta {
+  text-align: left;
+  margin-left: 0;
+  margin-right: 0;
+  max-width: var(--w-text);
+}
+/* The spark divider is centred by `margin: 12px auto 0`; it follows the heading it belongs to. */
+.bc-hero h1::after { margin-left: 0; }
+/* max-width was 560px — a good measure for a lead, and a third right edge in a hero that has
+   two. On the column with everything else; the article's own lead paragraph below already
+   reads at this width, so this is the page's measure rather than a new one. */
+.bc-hero .svc-intro { font-size: 16.5px; max-width: var(--w-text); margin-bottom: 18px; }
 
 /* What the form covers, as a specification rather than a row of pills. Each term links to its
    own explainer further down; the line under it is what that section says in one sentence.
