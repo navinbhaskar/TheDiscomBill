@@ -100,10 +100,19 @@ export default {
   state: "Andhra Pradesh",
   ratesAsOf: "FY 2026-27 (APERC retail supply tariff order — FY 2025-26 schedule retained, no hike)",
   sourceUrl: "https://aperc.gov.in",
+  // Service areas are the operating circles each licensee publishes for itself:
+  //   APSPDCL  https://www.apspdcl.in/new-circles.php
+  //   APCPDCL  circle-wise SAIDI/SAIFI return, https://www.apcpdcl.in/saidisaifi/
+  // APCPDCL was carved out of APSPDCL in 2019, and our APSPDCL entry still carried the
+  // pre-split territory: it claimed Prakasam (which is an APCPDCL circle) and omitted
+  // Anantapuramu (which is not). Both corrected here against the circle lists above.
   discoms: [
     apDiscom("apspdcl", "APSPDCL", "Southern Power Distribution Company of Andhra Pradesh Ltd.",
-      "Southern AP (Kurnool, Nandyal, Nellore, Prakasam, Chittoor, Kadapa, Annamayya, Tirupati, Sri Sathya Sai)",
+      "Southern AP (Kurnool, Nandyal, Anantapuramu, Nellore, Chittoor, Kadapa, Annamayya, Tirupati, Sri Sathya Sai)",
       "https://www.apspdcl.in"),
+    apDiscom("apcpdcl", "APCPDCL", "Andhra Pradesh Central Power Distribution Corporation Ltd.",
+      "Central AP (Krishna, NTR, Guntur, Palnadu, Bapatla, Prakasam and the CRDA capital region)",
+      "https://www.apcpdcl.in"),
     apDiscom("apepdcl", "APEPDCL", "Eastern Power Distribution Company of Andhra Pradesh Ltd.",
       "Eastern AP (Visakhapatnam, Anakapalli, Vizianagaram, Srikakulam, Parvathipuram Manyam, Alluri Sitharama Raju, Kakinada, East Godavari, Konaseema, West Godavari)",
       "https://www.apepdcl.in"),

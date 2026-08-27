@@ -114,12 +114,16 @@ export const GUIDES = [
         <strong>generating capacity in kW</strong>. It is not a contribution towards storage. A
         battery is an out-of-pocket addition on top of a subsidised system, so the subsidy improves
         the economics of the panels and leaves the hybrid premium untouched.</p>
-        <p class="seo-note">⚠️ <strong>One thing to confirm yourself.</strong> We could not verify
-        from an official MNRE or portal document whether a hybrid installation is accepted under
-        the scheme on the same terms as a plain grid-tied one, and several vendor sites state this
-        with more confidence than we could source. Before you commit to a hybrid design, confirm
-        the treatment with your DISCOM and with a portal-registered vendor in writing. Do not take
-        a sales claim about subsidy eligibility on trust.</p>
+        <p class="seo-note"><strong>Hybrid systems do qualify.</strong> The scheme's operational
+        guidelines settle this directly: systems that are connected to the grid but not feeding
+        into it — the guidelines name <em>battery hybrid systems</em> explicitly — are eligible for
+        the subsidy, <strong>subject to approval by your state's Electricity Regulatory
+        Commission</strong>. That last clause is the one to check locally, because approval is a
+        state matter rather than a central one. What is not open to interpretation is how much you
+        get: the guidelines state that the subsidy is calculated on the capacity of the
+        <em>solar modules</em> installed, so adding storage never increases it.
+        <a href="https://cdnbbsr.s3waas.gov.in/s3716e1b8c6cd17b771da77391355749f3/uploads/2024/04/202404162127034309.pdf" target="_blank" rel="noopener">MNRE operational guidelines,
+        clauses 23(b) and 24(a) ↗</a></p>
       </section>
 
       <section class="seo-section">
@@ -159,6 +163,8 @@ export const GUIDES = [
           approval is delayed?</li>
           <li>Is the vendor registered on the national portal, and will the quoted panels meet the
           scheme's content requirements?</li>
+          <li>For a hybrid design: has your state's regulator approved the arrangement for subsidy
+          purposes? The central guidelines allow it; the approval is a state one.</li>
         </ul>
         <p>Once you have a quote, run your current usage through our
         <a href="/bill-calculator/">bill calculator</a> to see what you are actually paying per
@@ -169,7 +175,7 @@ export const GUIDES = [
       { q: "Does on-grid solar work during a power cut?",
         a: "No. A grid-tied inverter is required to shut down when the grid fails — a safety rule called anti-islanding, which prevents your system energising lines that a lineman has switched off. It also has no voltage and frequency reference to follow once the grid is gone. Only a hybrid or off-grid system keeps supplying power during an outage." },
       { q: "Is a hybrid solar system eligible for the PM Surya Ghar subsidy?",
-        a: "The subsidy is calculated on rooftop generating capacity in kW — ₹30,000/kW for the first 2 kW, ₹18,000/kW for the third, capped at ₹78,000 — so it never pays for the battery, which is an out-of-pocket addition either way. Whether a hybrid installation is accepted on the same terms as a plain grid-tied one is something we could not confirm from an official document, so get it in writing from your DISCOM and a portal-registered vendor before committing." },
+        a: "Yes. The scheme's operational guidelines name battery hybrid systems as eligible, provided your state's Electricity Regulatory Commission has approved the arrangement — worth confirming locally, since that approval is a state matter. The amount does not change, though: the subsidy is calculated on the capacity of the solar modules — ₹30,000/kW for the first 2 kW, ₹18,000/kW for the third, capped at ₹78,000 — so storage never adds to it and the battery stays an out-of-pocket cost." },
       { q: "Is a solar battery worth the money?",
         a: "It depends what you want from it. A battery buys availability during outages, not extra savings: under net metering an exported unit is already credited at your top slab rate, so storing it rather than exporting it captures roughly the same value minus losses and the battery's own cost. Where it does pay is in states that credit exports at a low rate instead of netting them one-for-one, and in areas with frequent long outages." },
       { q: "Can I add a battery to my on-grid system later?",

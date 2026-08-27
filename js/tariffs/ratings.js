@@ -61,6 +61,7 @@ export const DISCOM_RATING = {
   sbpdcl: { grade: "A", score: 67.37, rank: 20, rankOf: 54, kind: "utility", movement: "Upgrade", reportName: "SBPDCL" },
   uhbvn: { grade: "A", score: 66.32, rank: 21, rankOf: 54, kind: "utility", movement: "Downgrade", reportName: "UHBVNL" },
   wbsedcl: { grade: "A", score: 65.39, rank: 22, rankOf: 54, kind: "utility", movement: "Upgrade", reportName: "WBSEDCL" },
+  apcpdcl: { grade: "B", score: 67.53, rank: 23, rankOf: 54, kind: "utility", movement: "Upgrade", reportName: "APCPDCL" },
   kseb: { grade: "B", score: 63.25, rank: 24, rankOf: 54, kind: "utility", movement: null, reportName: "KSEBL" },
   upcl: { grade: "B", score: 60.97, rank: 25, rankOf: 54, kind: "utility", movement: null, reportName: "UPCL" },
   mescom: { grade: "B", score: 56.44, rank: 26, rankOf: 54, kind: "utility", movement: "Upgrade", reportName: "MESCOM" },

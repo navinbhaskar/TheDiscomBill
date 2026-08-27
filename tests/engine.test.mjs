@@ -373,7 +373,7 @@ import { getStates, getDiscoms, getCategories, getDefaultCategory, getDefaultSup
   from '../js/tariffs/registry.js';
 group('form defaults', () => {
   const allDiscoms = getStates().flatMap(s => getDiscoms(s));
-  check('65 DISCOMs in registry', allDiscoms.length, 65);
+  check('66 DISCOMs in registry', allDiscoms.length, 66);
 
   // Every DISCOM must resolve to a genuinely domestic category — "Non-Domestic" must not match.
   const badDomestic = allDiscoms.filter(d => {

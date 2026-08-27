@@ -241,9 +241,17 @@ export const DISCOM_INDEX = {
         "id": "apspdcl",
         "name": "APSPDCL",
         "fullName": "Southern Power Distribution Company of Andhra Pradesh Ltd.",
-        "area": "Southern AP (Kurnool, Nandyal, Nellore, Prakasam, Chittoor, Kadapa, Annamayya, Tirupati, Sri Sathya Sai)",
+        "area": "Southern AP (Kurnool, Nandyal, Anantapuramu, Nellore, Chittoor, Kadapa, Annamayya, Tirupati, Sri Sathya Sai)",
         "tariffYear": "2026-27",
         "website": "https://www.apspdcl.in"
+      },
+      {
+        "id": "apcpdcl",
+        "name": "APCPDCL",
+        "fullName": "Andhra Pradesh Central Power Distribution Corporation Ltd.",
+        "area": "Central AP (Krishna, NTR, Guntur, Palnadu, Bapatla, Prakasam and the CRDA capital region)",
+        "tariffYear": "2026-27",
+        "website": "https://www.apcpdcl.in"
       },
       {
         "id": "apepdcl",
@@ -887,6 +895,7 @@ export const STATES = [
 /** DISCOM id -> state name, so a DISCOM can be resolved without scanning every state. */
 export const DISCOM_STATE = {
     "apspdcl": "Andhra Pradesh",
+    "apcpdcl": "Andhra Pradesh",
     "apepdcl": "Andhra Pradesh",
     "appdcl": "Arunachal Pradesh",
     "apdcl": "Assam",

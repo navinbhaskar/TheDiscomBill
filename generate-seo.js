@@ -399,7 +399,6 @@ const FOOTER_SITEMAP = `
     <nav class="footer-map" aria-label="All pages">
       <div class="footer-col">
         <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
-        <a href="/bill-calculator/" data-i18n="nav.calculator">Calculator</a>
         <a href="/bill-calculator/" data-i18n="ql.advancedCalc">Advanced Bill Calculator</a>
         <a href="/compare/" data-i18n="nav.compare">Compare</a>
         <a href="/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
@@ -7147,6 +7146,41 @@ function stampHomepageStates(states) {
 // The markup is copied from index.html rather than hand-kept. A second copy of a 33 KB form
 // across 99 element ids would drift from the original the first time a field was added, and
 // the two would quietly disagree about what the calculator is.
+// ── Footer stamp ─────────────────────────────────────────────────────────────
+// Most pages are generated and get FOOTER_SITEMAP for free. Roughly two dozen are
+// hand-authored — index.html, the standalone tools, the legal pages, tariffs/index.html —
+// and each carried its own copy of the footer. Copies drift: 23 of them were still missing
+// the Advanced Bill Calculator link, 24 still carried "2026" suffixes on the solar labels
+// that the canonical footer had dropped, and amisp-list still said "Smart Meter Display
+// Guide". None of it broke a link, which is exactly why it went unnoticed.
+//
+// So the footer is stamped rather than hand-kept, the same way the calculator markup is.
+// Generated pages already match, so this is a no-op for them and the pass is idempotent.
+//
+// English only. The /hi/ /mr/ /ta/ footers legitimately differ — four of their hrefs point at
+// localised paths (/hi/guides/, /hi/glossary/ and so on) — and overwriting them with the
+// English block would silently send vernacular readers back to English pages.
+function stampFooter() {
+  const canon = FOOTER_SITEMAP.trim();
+  const OPEN = '<nav class="footer-map"';
+  const files = execSync('git ls-files "*.html"', { encoding: 'utf8' })
+    .split(/\r?\n/).filter(Boolean)
+    .filter((f) => !/^(hi|mr|ta)\//.test(f));
+
+  let changed = 0;
+  for (const rel of files) {
+    const abs = path.join(ROOT, rel);
+    if (!fs.existsSync(abs)) continue;
+    const before = fs.readFileSync(abs, 'utf8');
+    const i = before.indexOf(OPEN);
+    if (i < 0) continue;
+    const j = before.indexOf('</nav>', i);
+    if (j < 0) throw new Error(`stampFooter: unclosed footer-map in ${rel}`);
+    const out = before.slice(0, i) + canon + before.slice(j + '</nav>'.length);
+    if (out !== before) { writeWithRetry(abs, out); changed++; }
+  }
+  return { changed, scanned: files.length };
+}
 function stampBillCalculator() {
   const target = path.join(ROOT, 'bill-calculator', 'index.html');
   if (!fs.existsSync(target)) return { changed: false, skipped: true };
@@ -7546,6 +7580,7 @@ export function generateSeo() {
   const coverage = stampHomepageCoverage(tariffDatabase.summary);
   // After the homepage is final — this copies its calculator verbatim.
   const billCalc = stampBillCalculator();
+  const footer = stampFooter();
   const fontPages = inlineFontCss();
   const searchEntries = writeSearchIndex(states);
   const cssKb = writeMinifiedCss();
@@ -7553,7 +7588,7 @@ export function generateSeo() {
   const content = buildContentCss({ quiet: true });
   const sw = stampServiceWorker();
 
-  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + homepage states ${homeStates.cards} in ${homeStates.regions} regions + /bill-calculator/ ${(billCalc.bytes/1024).toFixed(0)} KB + homepage coverage ${coverage.S}/${coverage.D}/${coverage.C}/${coverage.T} + inline @font-face on ${fontPages} pages + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + content.min.css (${(content.bytes/1024).toFixed(0)} KB) + sw ${sw.version} (${sw.hashed} assets)`);
+  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + homepage states ${homeStates.cards} in ${homeStates.regions} regions + /bill-calculator/ ${(billCalc.bytes/1024).toFixed(0)} KB + footer ${footer.changed}/${footer.scanned} + homepage coverage ${coverage.S}/${coverage.D}/${coverage.C}/${coverage.T} + inline @font-face on ${fontPages} pages + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + content.min.css (${(content.bytes/1024).toFixed(0)} KB) + sw ${sw.version} (${sw.hashed} assets)`);
   return { pages, states: states.length };
 }
 
