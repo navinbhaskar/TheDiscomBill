@@ -2,6 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://thediscombill.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/"/>
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/"/>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/hi/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/"/>
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/"/>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/mr/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/"/>
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/"/>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/ta/</loc>
+    <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/"/>
+    <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/"/>
+    <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/"/>
     <lastmod>2026-08-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>

@@ -32,6 +32,11 @@
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="canonical" href="https://thediscombill.com/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/">
+  <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/">
+  <link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="TheDiscomBill">
@@ -193,7 +198,7 @@
   </script>
 </head>
 <body>
-<a class="skip-link" href="#calculator">Skip to calculator</a>
+<a class="skip-link" href="#calculator" data-i18n="a11y.skipToCalculator">Skip to calculator</a>
 
 <!-- ── Header ───────────────────────────────────────────────────────────────── -->
 <header class="site-header">
@@ -1043,7 +1048,7 @@
          here opens /tariffs/<state>/ — a tariff reference page with no calculator on it, which
          links back to the one on this page. The heading now names what actually loads. -->
     <h2 class="reveal">Electricity Tariffs by State</h2>
-    <p class="reveal">Open the tariff page for your state — slab rates, fixed charges and every DISCOM — or browse the <a href="/tariffs/states/">full directory of all DISCOMs</a>.</p>
+    <p class="reveal" data-i18n-html="states.lead">Open the tariff page for your state — slab rates, fixed charges and every DISCOM — or browse the <a href="/tariffs/states/">full directory of all DISCOMs</a>.</p>
     <nav class="states-grid reveal" aria-label="Electricity tariffs by state">
       <div class="sg-region" style="--sg-accent:#2563eb">
         <h3 class="sg-region-head"><span class="sg-dot" aria-hidden="true"></span><span data-i18n="states.region.north">North India</span><span class="sg-region-n">10</span></h3>

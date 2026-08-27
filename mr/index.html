@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <!-- Set the colour theme before first paint (no flash): stored choice, else OS preference. -->
+  <script>
+    (function () {
+      // Mark JS as available so scroll-reveal can hide-then-animate elements without a
+      // flash — and so content stays visible if JS is disabled (no `js` class → no hiding).
+      document.documentElement.classList.add('js');
+        try { localStorage.setItem('lang', 'mr'); } catch (e) {}
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light')
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+  <title>मोफत वीज बिल कॅल्क्युलेटर — भारतातील 66 डिस्कॉम</title>
+  <meta name="description" content="भारतातील 65 डिस्कॉमचे स्लॅब दर पाहा आणि तुमचे वीज बिल 30 सेकंदांत काढा — स्लॅबनिहाय तपशील, FPPA आणि वीज शुल्कासह.">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="canonical" href="https://thediscombill.com/mr/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/">
+  <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/">
+  <link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="मोफत वीज बिल कॅल्क्युलेटर — भारतातील 66 डिस्कॉम">
+  <meta property="og:description" content="कोणत्याही भारतीय डिस्कॉमसाठी तुमचे अंदाजे वीज बिल काढा. सर्व राज्ये व केंद्रशासित प्रदेश, स्लॅबनिहाय तपशील, FPPA, सोलर नेट मीटरिंग. मोफत, तात्काळ, साइन-अप नाही.">
+  <meta property="og:url" content="https://thediscombill.com/mr/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:locale" content="mr_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="मोफत वीज बिल कॅल्क्युलेटर — भारतातील 66 डिस्कॉम">
+  <meta name="twitter:description" content="कोणत्याही भारतीय डिस्कॉमसाठी तुमचे अंदाजे वीज बिल काढा. सर्व राज्ये व केंद्रशासित प्रदेश, स्लॅबनिहाय तपशील, FPPA, सोलर नेट मीटरिंग. मोफत, तात्काळ, साइन-अप नाही.">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/sora-var-latin.woff2">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
+  <!-- Not styles.min.css. This page used 16% of the full sheet — 49,148 of 58,633
+       transferred bytes went unused — and the sheet is the only render-blocking resource on
+       the site's highest-traffic page. The cost was not the download: everything finished
+       arriving at ~750 ms while LCP landed at 2,177 ms, and that gap is the browser parsing
+       335 KB of CSS and matching it against 1,347 elements on a throttled phone.
+       home.min.css is derived from this page's own markup by scripts/split-css.mjs, so it
+       cannot drift: change the homepage and the sheet changes with it. -->
+  <link rel="stylesheet" href="/css/home.min.css">
+  <!-- Calculator modules are loaded after first paint/idle; do not preload them into the LCP path. -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512},"description":"Independent, free electricity bill tools for Indian consumers: a provisional bill calculator covering 66 DISCOMs, tariff references, solar savings estimates and expert bill review. Not affiliated with any DISCOM, SERC or government body.","sameAs":["https://www.instagram.com/thediscombill/","https://x.com/thediscombill"],"knowsAbout":["electricity tariffs in India","DISCOM billing","slab-wise tariff calculation","FPPA fuel surcharge","solar net metering","Time-of-Day billing"],"publishingPrinciples":"https://thediscombill.com/methodology/","contactPoint":{"@type":"ContactPoint","contactType":"editorial","email":"support@thediscombill.com","availableLanguage":["en","hi","mr","ta"]}},{"@type":"WebSite","@id":"https://thediscombill.com/#website","url":"https://thediscombill.com/","name":"TheDiscomBill","publisher":{"@id":"https://thediscombill.com/#org"},"description":"Free electricity bill calculator for all Indian DISCOMs.","inLanguage":"en-IN"},{"@type":"WebApplication","@id":"https://thediscombill.com/#app","name":"TheDiscomBill Electricity Bill Calculator","url":"https://thediscombill.com/","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","browserRequirements":"Requires JavaScript","description":"Calculate a provisional electricity bill for any DISCOM in India with a slab-wise breakdown, fixed/demand charges, FPPA and solar net metering.","featureList":["Slab-wise energy charge breakdown","Fixed and demand charges by sanctioned load","FPPA fuel surcharge and electricity duty","Solar net metering credits","Time-of-Day and kVAh billing","Covers 66 DISCOMs across 34 states and union territories"],"offers":{"@type":"Offer","price":"0","priceCurrency":"INR"}}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      addEventListener("scroll", load, { once: true, passive: true });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+</head>
+<body>
+<a class="skip-link" href="#calculator" data-i18n="a11y.skipToCalculator">कॅल्क्युलेटरवर जा</a>
+
+<!-- ── Header ───────────────────────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/mr/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline" data-i18n="tagline">वीज बिल कॅल्क्युलेटर · संपूर्ण भारतासाठी</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="#calculator" data-i18n="nav.calculator">कॅल्क्युलेटर</a>
+      <a href="/mr/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">स्मार्ट मीटर</a>
+      <a href="/mr/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">टॅरिफ</a>
+      <a href="/mr/guides/" class="nav-promoted" data-i18n="nav.blog">ब्लॉग</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           the footer is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">अधिक</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/bill-calculator/" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">कॅल्क्युलेटर</span></a>
+            <a href="/mr/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">स्मार्ट मीटर</span></a>
+            <a href="/mr/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">टॅरिफ</span></a>
+            <a href="/mr/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">ब्लॉग</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- Buttons, not links: the homepage translates in place from the string tables and
+             has no /hi/ twin to point at. Generated pages that do have twins render anchors
+             here instead — see langMenuItems() in generate-seo.js. -->
+        <ul class="lang-menu" id="langMenu" aria-label="Select language">
+          <li><span class="lang-opt" data-lang="en" aria-current="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></span></li>
+          <li><button type="button" class="lang-opt" data-lang="hi"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">हिं</span></button></li>
+        </ul>
+      </div>
+      <button type="button" id="siteSearchBtn" class="site-search-btn" aria-label="Search the site (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<!-- ── Hero ─────────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <!-- Frosted glass panel over the soft blue gradient background -->
+  <div class="hero-glass">
+
+  <div class="hero-grid">
+  <div class="hero-left">
+  <div class="hero-badge reveal" data-i18n="hero.badge">मोफत · सर्व डिस्कॉम · त्वरित अंदाज</div>
+  <h1 class="reveal" data-i18n="hero.title">भारतातील प्रत्येक डिस्कॉमसाठी वीज बिल कॅल्क्युलेटर</h1>
+  <p class="reveal" data-i18n="hero.sub">तुमचे बिल किती यायला हवे, त्यातील प्रत्येक शुल्काचा अर्थ काय, आणि तुमचे बिल बरोबर आहे की नाही.</p>
+
+  <!-- Primary call to action (smooth-scrolls to the form via the Lenis anchor handler)
+       + secondary CTA to the expert Bill Review service -->
+  <div class="hero-ctas reveal">
+    <a href="#calculator" class="hero-cta"><span data-i18n="hero.cta">माझे बिल काढा</span> <svg class="rc-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+    <!-- Was a dropdown offering OCR self-check and expert review as two coequal choices. It
+         asked the user to pick a path before they had any information to pick with, and it hid
+         both options behind a click, which made the whole review product feel secondary. It is
+         now one door: upload a bill, get it recomputed, and escalate to a human from the result
+         if it still looks wrong (see #bcEscalate on /check-my-bill/). -->
+    <div class="review-chooser-wrap">
+      <a class="hero-cta hero-cta-secondary" href="/check-my-bill/" id="heroCheckBill"><span data-i18n="hero.cta2">माझ्या बिलातील चूक तपासा</span> <svg class="rc-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>    </div>
+  </div>
+
+  <!-- Coverage at a glance -->
+  <div class="hero-stats reveal">
+    <a class="hero-stat hero-stat-link" href="/tariffs/"><span class="hero-stat-num">34</span><span class="hero-stat-label" data-i18n="hero.stat.states">राज्ये व केंद्रशासित</span></a>
+    <a class="hero-stat hero-stat-link" href="/mr/tariffs/states/"><span class="hero-stat-num">66</span><span class="hero-stat-label" data-i18n="hero.stat.discoms">डिस्कॉम</span></a>
+    <!-- The third stat is a door, not a footnote. "136 categories" is a number nobody
+         searches for; the open tariff database behind it is the one thing here a competitor
+         cannot copy, and it was reachable from this page only via a footer link. Same three
+         digits, same label height at 375px and 1280px, so the hero does not move. -->
+    <a class="hero-stat hero-stat-link" href="/database/"><span class="hero-stat-num">321</span><span class="hero-stat-label" data-i18n="hero.stat.records">टॅरिफ नोंदी</span></a>
+  </div>
+  </div><!-- /hero-left -->
+
+  <!-- Right: one sample-bill card that rotates through five real DISCOM bills (5s apiece,
+       dots above the DISCOM chip). Every figure is calculateBill() output for 250 units /
+       2 kW / 30 days on 2026-07-15, each DISCOM at its own documented surcharge from
+       tariffs/fppa.js (UP FPPAS −4.43%, BRPL PPAC 17.94%; BESCOM, MSEDCL and TNPDCL have
+       none on record). MVVNL's supply type is ST-10B (Urban Domestic, >1 kW) — NOT ST-10A,
+       which is Urban Life Line and caps at 1 kW / 100 units, so 250 units on it is an
+       impossible bill. Re-verify every slide after any tariff order, e.g.
+         calculateBill({ discomId:'mvvnl', categoryId:'domestic', supplyTypeId:'10B',
+           units:250, connectedLoadKw:2, billingPeriodDays:30, billingDate:'2026-07-15',
+           facRate:-4.43, facMode:'percent' })  →  currentNet 1651
+       and the same call for brpl (1038), bescom (1881), msedcl (2567), tangedco (1323). -->
+  <div class="hero-right reveal">
+    <div class="hero-bill-card" id="heroBillCard">
+      <div class="hbc-head">
+        <!-- Dots sit above the DISCOM chip and double as the autoplay progress bar: the
+             active dot is a pill whose fill sweeps across over the 5s dwell. -->
+        <div class="hbc-dots" role="tablist" aria-label="Sample bills by DISCOM">
+          <button type="button" class="hbc-dot active" role="tab" aria-selected="true" id="hbcDot0"
+                  aria-controls="hbcSlide0"><span class="hbc-dot-fill" aria-hidden="true"></span><span class="sr-only">UPPCL · Lucknow</span></button>
+          <button type="button" class="hbc-dot" role="tab" aria-selected="false" tabindex="-1" id="hbcDot1"
+                  aria-controls="hbcSlide1"><span class="hbc-dot-fill" aria-hidden="true"></span><span class="sr-only">BSES Rajdhani · Delhi</span></button>
+          <button type="button" class="hbc-dot" role="tab" aria-selected="false" tabindex="-1" id="hbcDot2"
+                  aria-controls="hbcSlide2"><span class="hbc-dot-fill" aria-hidden="true"></span><span class="sr-only">BESCOM · Bengaluru</span></button>
+          <button type="button" class="hbc-dot" role="tab" aria-selected="false" tabindex="-1" id="hbcDot3"
+                  aria-controls="hbcSlide3"><span class="hbc-dot-fill" aria-hidden="true"></span><span class="sr-only">MSEDCL · Maharashtra</span></button>
+          <button type="button" class="hbc-dot" role="tab" aria-selected="false" tabindex="-1" id="hbcDot4"
+                  aria-controls="hbcSlide4"><span class="hbc-dot-fill" aria-hidden="true"></span><span class="sr-only">TNPDCL · Tamil Nadu</span></button>
+        </div>
+        <span class="hbc-chip" id="hbcChip">UPPCL · Lucknow</span>
+      </div>
+
+      <!-- Every slide is the same shape: the answer up top, then the bill line by line. The
+           slab split under Energy is the working a real bill hides — most print one total. -->
+      <div class="hbc-faces">
+        <div class="hbc-face active" id="hbcSlide0" role="tabpanel" aria-labelledby="hbcDot0" tabindex="0" data-chip="UPPCL · Lucknow">
+          <div class="hbc-hero">
+            <span class="hbc-hero-amount">₹1,651</span>
+            <span class="hbc-hero-sub" data-i18n="hero.card.sub0">250 युनिट · 2 kW · LMV-1 घरगुती</span>
+          </div>
+          <dl class="hbc-lines">
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.energy">ऊर्जा शुल्क</span>
+                <small>150 × ₹5.50 + 100 × ₹6.00</small></dt>
+              <dd>₹1,425.00</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.fixed">फिक्स्ड शुल्क</span> <em>2 kW × ₹110</em></dt>
+              <dd>₹220.00</dd>
+            </div>
+            <div class="hbc-line hbc-line-credit">
+              <dt><span data-i18n="hero.card.credit">FPPA क्रेडिट</span> <em>−4.43%</em></dt>
+              <dd>−₹72.87</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.duty">विद्युत शुल्क</span> <em>5%</em></dt>
+              <dd>₹78.61</dd>
+            </div>
+            <div class="hbc-line hbc-line-quiet">
+              <dt><span data-i18n="hero.card.rounding">राउंडिंग</span></dt>
+              <dd>+₹0.26</dd>
+            </div>
+            <div class="hbc-line hbc-line-total">
+              <dt data-i18n="hero.card.totalPayable">एकूण देय</dt>
+              <dd>₹1,651.00</dd>
+            </div>
+          </dl>
+          <p class="hbc-note" data-i18n="hero.card.note0">UP चा इंधन अधिभार मासिक — जुलै 2026 मध्ये क्रेडिट.</p>
+        </div>
+
+        <div class="hbc-face" id="hbcSlide1" role="tabpanel" aria-labelledby="hbcDot1" tabindex="0" data-chip="BSES Rajdhani · Delhi" inert>
+          <div class="hbc-hero">
+            <span class="hbc-hero-amount">₹1,038</span>
+            <span class="hbc-hero-sub" data-i18n="hero.card.sub1">250 युनिट · 2 kW · LT-I घरगुती</span>
+          </div>
+          <dl class="hbc-lines">
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.energy">ऊर्जा शुल्क</span>
+                <small>200 × ₹3.00 + 50 × ₹4.50</small></dt>
+              <dd>₹825.00</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.fixed">फिक्स्ड शुल्क</span> <em>≤ 2 kW slab</em></dt>
+              <dd>₹20.00</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.ppac">इंधन अधिभार (PPAC)</span> <em>+17.94%</em></dt>
+              <dd>₹151.59</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.duty">विद्युत शुल्क</span> <em>5%</em></dt>
+              <dd>₹41.25</dd>
+            </div>
+            <div class="hbc-line hbc-line-quiet">
+              <dt><span data-i18n="hero.card.rounding">राउंडिंग</span></dt>
+              <dd>+₹0.16</dd>
+            </div>
+            <div class="hbc-line hbc-line-total">
+              <dt data-i18n="hero.card.totalPayable">एकूण देय</dt>
+              <dd>₹1,038.00</dd>
+            </div>
+          </dl>
+          <p class="hbc-note" data-i18n="hero.card.note1">दिल्लीचा PPAC जून 2026 पासून मासिक — BRPL चा 17.94%.</p>
+        </div>
+
+        <div class="hbc-face" id="hbcSlide2" role="tabpanel" aria-labelledby="hbcDot2" tabindex="0" data-chip="BESCOM · Bengaluru" inert>
+          <div class="hbc-hero">
+            <span class="hbc-hero-amount">₹1,881</span>
+            <span class="hbc-hero-sub" data-i18n="hero.card.sub2">250 युनिट · 2 kW · LT-1 घरगुती</span>
+          </div>
+          <dl class="hbc-lines">
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.energy">ऊर्जा शुल्क</span>
+                <small>250 × ₹5.80 — one flat slab</small></dt>
+              <dd>₹1,450.00</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.fixed">फिक्स्ड शुल्क</span> <em>2 kW × ₹150</em></dt>
+              <dd>₹300.00</dd>
+            </div>
+            <div class="hbc-line hbc-line-quiet">
+              <dt><span data-i18n="hero.card.fac">इंधन अधिभार (FAC)</span> <em data-i18n="hero.card.none">अधिसूचित नाही</em></dt>
+              <dd>₹0.00</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.tax">वीज कर</span> <em>9%</em></dt>
+              <dd>₹130.50</dd>
+            </div>
+            <div class="hbc-line hbc-line-total">
+              <dt data-i18n="hero.card.totalPayable">एकूण देय</dt>
+              <dd>₹1,881.00</dd>
+            </div>
+          </dl>
+          <p class="hbc-note" data-i18n="hero.card.note2">कर्नाटकात एकच घरगुती दर, वेगळी इंधन ओळ नाही — पण वीज कर स्वतंत्रपणे आकारला जातो.</p>
+        </div>
+
+        <div class="hbc-face" id="hbcSlide3" role="tabpanel" aria-labelledby="hbcDot3" tabindex="0" data-chip="MSEDCL · Maharashtra" inert>
+          <div class="hbc-hero">
+            <span class="hbc-hero-amount">₹2,567</span>
+            <span class="hbc-hero-sub" data-i18n="hero.card.sub3">250 युनिट · 2 kW · LT-I(B) निवासी</span>
+          </div>
+          <dl class="hbc-lines">
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.energy">ऊर्जा शुल्क</span>
+                <small>100 × ₹4.32 + 150 × ₹9.40</small></dt>
+              <dd>₹1,842.00</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.fixed">फिक्स्ड शुल्क</span> <em>1-phase ≤ 5 kW</em></dt>
+              <dd>₹130.00</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.wheeling">व्हीलिंग शुल्क</span> <em>250 × ₹1.20</em></dt>
+              <dd>₹300.00</dd>
+            </div>
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.duty">विद्युत शुल्क</span> <em>16%</em></dt>
+              <dd>₹294.72</dd>
+            </div>
+            <div class="hbc-line hbc-line-quiet">
+              <dt><span data-i18n="hero.card.rounding">राउंडिंग</span></dt>
+              <dd>+₹0.28</dd>
+            </div>
+            <div class="hbc-line hbc-line-total">
+              <dt data-i18n="hero.card.totalPayable">एकूण देय</dt>
+              <dd>₹2,567.00</dd>
+            </div>
+          </dl>
+          <p class="hbc-note" data-i18n="hero.card.note3">16% शुल्क आणि व्हीलिंग — पाचांपैकी सर्वात महाग.</p>
+        </div>
+
+        <div class="hbc-face" id="hbcSlide4" role="tabpanel" aria-labelledby="hbcDot4" tabindex="0" data-chip="TNPDCL · Tamil Nadu" inert>
+          <div class="hbc-hero">
+            <span class="hbc-hero-amount">₹1,323</span>
+            <span class="hbc-hero-sub" data-i18n="hero.card.sub4">250 युनिट · 2 kW · LT-IA घरगुती</span>
+          </div>
+          <dl class="hbc-lines">
+            <div class="hbc-line">
+              <dt><span data-i18n="hero.card.energy">ऊर्जा शुल्क</span>
+                <small>200 × ₹4.95 + 50 × ₹6.65</small></dt>
+              <dd>₹1,322.50</dd>
+            </div>
+            <div class="hbc-line hbc-line-quiet">
+              <dt><span data-i18n="hero.card.fixed">फिक्स्ड शुल्क</span> <em data-i18n="hero.card.noneLevied">आकारले जात नाही</em></dt>
+              <dd>₹0.00</dd>
+            </div>
+            <div class="hbc-line hbc-line-quiet">
+              <dt><span data-i18n="hero.card.rounding">राउंडिंग</span></dt>
+              <dd>+₹0.50</dd>
+            </div>
+            <div class="hbc-line hbc-line-total">
+              <dt data-i18n="hero.card.totalPayable">एकूण देय</dt>
+              <dd>₹1,323.00</dd>
+            </div>
+          </dl>
+          <p class="hbc-note" data-i18n="hero.card.note4">तमिळनाडू LT-IA घरांवर फिक्स्ड शुल्क आकारत नाही, आणि घरगुती पुरवठ्यावर वीज शुल्कही नाही.</p>
+        </div>
+      </div>
+
+      <div class="hbc-foot">
+        <span data-i18n="hero.card.foot">लाइव्ह इंजिन · थेट टॅरिफ आदेशातून</span>
+        <a class="hbc-cmp-link" href="/compare/"><span data-i18n="hero.card.cmpLink">दर पाहा</span> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+  </div><!-- /hero-grid -->
+
+  <!-- The feature list and the DISCOM coverage strip used to sit here. They are proof, not
+       navigation, and together they pushed the calculator ~318px further down on mobile —
+       so they moved below the form (see .coverage-strip after #calculator). The verified-
+       tariffs line stays: it is the one credibility signal worth paying height for. -->
+  <div class="hero-discoms reveal">
+    <p class="hero-trust">
+      <span class="trust-item trust-verified">
+        <svg class="trust-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+        <span data-i18n="hero.trust1">प्रत्येक टॅरिफ स्लॅब SERC व DISCOM आदेशांशी पडताळलेला — प्रत्येक पानावर त्याचे टॅरिफ वर्ष व तपासणी तारीख दिली आहे</span>
+      </span>
+    </p>
+  </div>
+
+  </div><!-- /hero-glass -->
+</section>
+
+<div class="page-body" role="main">
+
+<!-- ── Calculator ───────────────────────────────────────────────────────────── -->
+<section id="calculator" class="calculator-section">
+  <div class="calculator-grid">
+
+    <!-- Left: Form -->
+    <div class="form-panel">
+      <h2>
+        <span class="h2-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="var(--brand)" stroke="var(--brand)" stroke-width="1.1" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span data-i18n="calc.title">बिल कॅल्क्युलेटर</span>
+      </h2>
+
+      <!-- Simple / Detailed mode. Simple = state, DISCOM, category, units, load — everything
+           else (personal details, tabs, TOD, dates, FPPA, net metering) stays at its default. -->
+      <div class="calc-mode-row">
+        <div class="calc-mode" id="calcMode" role="group" aria-label="Calculator mode">
+          <button type="button" class="calc-mode-btn" data-mode="simple" aria-pressed="false" data-i18n="mode.simple">⚡ सोपे</button>
+          <button type="button" class="calc-mode-btn" data-mode="detailed" aria-pressed="false" data-i18n="mode.detailed">सविस्तर</button>
+        </div>
+        <span class="calc-mode-hint" id="calcModeHint" data-i18n="mode.simpleHint">फक्त तुमचा डिस्कॉम व युनिट — बाकी आम्ही सांभाळतो.</span>
+      </div>
+
+      <p class="req-legend" data-i18n="legend.required">आवश्यक फील्ड दर्शवते</p>
+
+      <div class="form-row">
+        <!-- Step 1: State -->
+        <div class="form-group">
+          <label for="stateSelect" class="req" data-i18n="label.state">राज्य / केंद्रशासित प्रदेश</label>
+          <select id="stateSelect" aria-required="true">
+            <option value="" data-i18n="opt.selectState">— राज्य / UT निवडा —</option>
+          </select>
+        </div>
+
+        <!-- Step 2: DISCOM -->
+        <div class="form-group">
+          <label for="discomSelect" class="req" data-i18n="label.discom">वीज कंपनी (डिस्कॉम)</label>
+          <select id="discomSelect" disabled aria-required="true">
+            <option value="" data-i18n="opt.selectStateFirst">— आधी राज्य निवडा —</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- Step 3: Category. Simple mode swaps the select for the Home / Business chips
+             below — every DISCOM has exactly one domestic and (mostly) one commercial
+             category, so the tariff-code select is jargon wrapped around a binary. -->
+        <div class="form-group" id="categoryGroup">
+          <label for="categorySelect" class="req" data-i18n="label.category">ग्राहक श्रेणी</label>
+          <select id="categorySelect" disabled aria-required="true">
+            <option value="" data-i18n="opt.selectDiscomFirst">— आधी डिस्कॉम निवडा —</option>
+          </select>
+        </div>
+
+        <div class="form-group simple-only" id="purposeGroup">
+          <label class="req" data-i18n="label.purpose">कनेक्शन कशासाठी आहे?</label>
+          <div class="purpose-chips" id="purposeChips" role="group" aria-label="Connection purpose">
+            <button type="button" class="purpose-chip active" data-kind="domestic" aria-pressed="true">
+              <svg class="pc-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.4 12 3.2l9 7.2"/><path d="M5.5 9.6V19.8a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.6"/><path d="M9.8 20.8v-6h4.4v6"/></svg>
+              <span data-i18n="purpose.home">घर</span>
+            </button>
+            <button type="button" class="purpose-chip" data-kind="commercial" aria-pressed="false">
+              <svg class="pc-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.4 3.8h17.2l1.1 4.1a2.9 2.9 0 0 1-5.6 1.05 2.9 2.9 0 0 1-5.6 0 2.9 2.9 0 0 1-5.6 0 2.9 2.9 0 0 1-2.6-1.05Z"/><path d="M4.9 10.5v9.3a1 1 0 0 0 1 1h12.2a1 1 0 0 0 1-1v-9.3"/><path d="M9.6 20.8v-5.3h4.8v5.3"/></svg>
+              <span data-i18n="purpose.business">दुकान / व्यवसाय</span>
+            </button>
+          </div>
+          <small class="purpose-echo" id="purposeEcho"></small>
+        </div>
+
+        <!-- Step 4: Supply Type (shown only when applicable) -->
+        <div class="form-group" id="supplyTypeGroup" style="display:none">
+          <label for="supplyTypeSelect" class="req" data-i18n="label.supplyType">पुरवठा प्रकार / क्षेत्र</label>
+          <select id="supplyTypeSelect" aria-required="true">
+            <option value="">— Select Supply Type —</option>
+          </select>
+          <small id="supplyTypeDesc"></small>
+        </div>
+      </div>
+
+      <div class="form-row adv-only">
+        <div class="form-group">
+          <label for="consumerName" data-i18n="label.consumerName">ग्राहकाचे नाव</label>
+          <input type="text" id="consumerName" placeholder="उदा. राजेश कुमार" data-i18n-ph="ph.consumerName">
+        </div>
+        <div class="form-group">
+          <label for="accountNo" data-i18n="label.accountNo">खाते / ग्राहक क्रमांक</label>
+          <input type="text" id="accountNo" placeholder="ऐच्छिक" data-i18n-ph="ph.accountNo">
+        </div>
+      </div>
+
+      <div class="form-row adv-only">
+        <div class="form-group">
+          <label for="address" data-i18n="label.address">पत्ता</label>
+          <input type="text" id="address" placeholder="उदा. 12 मुख्य रस्ता, पुणे" data-i18n-ph="ph.address">
+        </div>
+
+        <div class="form-group">
+          <label for="billingMonthYear" data-i18n="label.billingMonth">बिलिंग महिना व वर्ष</label>
+          <div class="date-field-wrap">
+            <input type="text" id="billingMonthYear" class="date-field" data-datepicker data-my readonly placeholder="Select month">
+            <button type="button" class="date-field-btn" aria-label="Open month picker" tabindex="-1">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>
+            </button>
+          </div>
+          <input type="hidden" id="billingMonth">
+          <input type="hidden" id="billingYear">
+        </div>
+      </div>
+
+      <div class="tariff-period-hint" id="tariffPeriodHint" style="display:none"></div>
+
+      <!-- ── Tabbed billing inputs ──────────────────────────────────────────────── -->
+      <div class="bill-tabs-container">
+
+        <div class="bill-tabs" role="tablist">
+          <button class="bill-tab active" data-tab="meterread" type="button" role="tab" aria-selected="true" aria-controls="tab-meterread" id="bt-meterread" data-i18n="tab.meterread">मीटर रीडिंग</button>
+          <button class="bill-tab" data-tab="arrear" type="button" role="tab" aria-selected="false" aria-controls="tab-arrear" id="bt-arrear" data-i18n="tab.arrear">थकबाकी</button>
+          <button class="bill-tab" data-tab="payment" type="button" role="tab" aria-selected="false" aria-controls="tab-payment" id="bt-payment" data-i18n="tab.payment">भरणा</button>
+          <button class="bill-tab" data-tab="adjustment" type="button" role="tab" aria-selected="false" aria-controls="tab-adjustment" id="bt-adjustment" data-i18n="tab.adjustment">समायोजन</button>
+        </div>
+
+        <!-- ── Meter Read ── -->
+        <div class="bill-tab-panel active" id="tab-meterread" role="tabpanel" aria-labelledby="bt-meterread">
+          <!-- Billing period dates (Simple & TOD; auto-filled from the meter table in Advanced) -->
+          <div id="meterDatesRow" class="adv-only">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fromDate" data-i18n="label.fromDate">प्रारंभ दिनांक</label>
+                <div class="date-field-wrap">
+                  <input type="text" id="fromDate" class="date-field" data-datepicker data-cap-bill placeholder="DD-MM-YYYY">
+                  <button type="button" class="date-field-btn" aria-label="Open calendar" tabindex="-1">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>
+                  </button>
+                </div>
+                <small data-i18n="small.fromDate">बिलिंग कालावधीची सुरुवात</small>
+              </div>
+              <div class="form-group">
+                <label for="toDate" data-i18n="label.toDate">अंतिम दिनांक</label>
+                <div class="date-field-wrap">
+                  <input type="text" id="toDate" class="date-field" data-datepicker data-cap-bill placeholder="DD-MM-YYYY">
+                  <button type="button" class="date-field-btn" aria-label="Open calendar" tabindex="-1">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>
+                  </button>
+                </div>
+                <small data-i18n="small.toDate">बिलिंग कालावधीचा शेवट</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="units-display" id="billingPeriodDisplay" style="display:none">
+            <span data-i18n="lbl.billingPeriod">बिलिंग कालावधी:</span> <strong id="billingPeriodDaysDisplay">0</strong> <span data-i18n="lbl.days">दिवस</span>
+            &mdash; <strong id="billingPeriodMonthsDisplay">0.00</strong> <span data-i18n="lbl.months">महिने</span>
+          </div>
+
+          <!-- ── Meter Reading — one or more meters (single, replacement, or multiple) ── -->
+          <div class="meter-mode-panel" id="meterAdvanced">
+            <p class="tab-hint" id="advHint" data-i18n="hint.advanced">प्रत्येक मीटरची मागील → चालू रीडिंग भरा (युनिट = (चालू − मागील) × MF). मध्य-चक्र बदलासाठी किंवा अनेक मीटरसाठी &quot;+ मीटर जोडा&quot; वापरा — त्यांची युनिट बेरीज होते.</p>
+            <div id="advancedRows"></div>
+            <button class="btn-add-row adv-only" id="addMeterRowBtn" type="button" data-i18n="btn.addMeter">+ मीटर जोडा</button>
+            <div class="units-display" id="advancedTotalDisplay" style="display:none">
+              <span data-i18n="lbl.total">एकूण:</span> <strong id="advTotalUnits">0</strong> <span class="reading-unit">units</span> &mdash; <span data-i18n="lbl.period">कालावधी</span> <strong id="advTotalMonths">0.00</strong> <span data-i18n="lbl.months">महिने</span>
+            </div>
+          </div>
+
+          <!-- ── TOD ── -->
+          <div class="meter-mode-panel" id="meterTod" style="display:none">
+            <div class="form-group">
+              <label for="meterNoTod" data-i18n="label.meterNo">मीटर क्रमांक</label>
+              <input type="text" id="meterNoTod" placeholder="ऐच्छिक" data-i18n-ph="ph.meterNo">
+            </div>
+            <div class="tod-header">
+              <span class="tod-badge tod-badge-peak">Peak</span>
+              <span class="tod-slot">6AM – 10AM &amp; 6PM – 10PM</span>
+              <span class="tod-sep">·</span>
+              <span class="tod-badge tod-badge-normal">Normal</span>
+              <span class="tod-slot">10AM – 6PM</span>
+              <span class="tod-sep">·</span>
+              <span class="tod-badge tod-badge-offpeak">Off-Peak</span>
+              <span class="tod-slot">10PM – 6AM</span>
+            </div>
+            <div class="form-row tod-inputs">
+              <div class="form-group">
+                <label for="todPeak" data-i18n-html="label.todPeak">पीक युनिट <span class="tod-badge tod-badge-peak tod-badge-sm">+20%</span></label>
+                <input type="number" id="todPeak" placeholder="0" min="0" step="1">
+                <small data-i18n="small.todPeak">सकाळी 6–10 व सायं. 6–10</small>
+              </div>
+              <div class="form-group">
+                <label for="todNormal" data-i18n="label.todNormal">सामान्य युनिट</label>
+                <input type="number" id="todNormal" placeholder="0" min="0" step="1">
+                <small data-i18n="small.todNormal">सकाळी 10 – सायं. 6 (मूळ दर)</small>
+              </div>
+              <div class="form-group">
+                <label for="todOffPeak" data-i18n-html="label.todOffPeak">ऑफ-पीक युनिट <span class="tod-badge tod-badge-offpeak tod-badge-sm">−20%</span></label>
+                <input type="number" id="todOffPeak" placeholder="0" min="0" step="1">
+                <small data-i18n="small.todOffPeak">रात्री 10 – सकाळी 6</small>
+              </div>
+            </div>
+            <div class="units-display" id="todTotalDisplay" style="display:none">
+              <span data-i18n="lbl.todTotal">TOD एकूण:</span> <strong id="todTotalUnitsDisplay">0</strong> <span class="reading-unit">units</span>
+              &nbsp;(<span data-i18n="lbl.peak">पीक</span> <strong id="todPeakDisplay">0</strong> + <span data-i18n="lbl.normal">सामान्य</span> <strong id="todNormalDisplay">0</strong> + <span data-i18n="lbl.offPeak">ऑफ-पीक</span> <strong id="todOffPeakDisplay">0</strong>)
+            </div>
+          </div>
+
+          <!-- Maximum Demand — right after the units area; drives demand charge / excess-demand penalty -->
+          <div class="form-group" id="billedDemandGroup" style="display:none">
+            <label for="billedDemand"><span class="lbl-text" data-i18n="label.billedDemand">कमाल मागणी (MD) (kW)</span><span class="gloss" tabindex="0" role="img" aria-label="Maximum Demand: the highest power draw recorded in the period; for commercial / HT (kVA) supplies it drives the demand charge and any excess-demand penalty." data-tip="MD — Maximum Demand: the highest power draw recorded this period. For commercial / HT (kVA) supplies it drives the demand charge and the excess-demand penalty.">ⓘ</span></label>
+            <input type="number" id="billedDemand" placeholder="e.g., 4.33" min="0" step="1" inputmode="decimal">
+            <small data-i18n="small.billedDemand">या कालावधीत मीटरने नोंदवलेली सर्वोच्च मागणी. मागणी-आधारित (व्यावसायिक) श्रेणींत ती मागणी शुल्क ठरवते आणि मंजूर भारापेक्षा जास्त झाल्यास जादा-मागणी दंडही. मंजूर भारावर बिलासाठी रिकामे ठेवा.</small>
+          </div>
+
+          <div class="form-row form-row-uneven">
+            <div class="form-group">
+              <label for="connectedLoad"><span class="lbl-text req" data-i18n="label.sanctioned">मंजूर भार (kW)</span><span class="gloss" tabindex="0" role="img" aria-label="Sanctioned / contract demand: the load you have contracted with the utility; fixed / demand charges and the excess-demand check are based on it." data-tip="Sanctioned Load / Contract Demand: the load you've contracted with the utility. Fixed / demand charges and the excess-demand check are based on it.">ⓘ</span></label>
+              <!-- A plain number input, matching Maximum Demand beside it. step="1" so the
+                   native spinner moves in whole kW. Fractional loads (1.5 kW) stay typeable —
+                   nothing here validates against the step grid, and inputmode="decimal" keeps
+                   the decimal key on mobile.
+                   min is 0 and NOT 0.5 on purpose: HTML anchors the step grid to `min`, so
+                   min="0.5" would make the arrows land on 0.5 / 1.5 / 2.5 — stepping up from
+                   2 gives 2.5, not 3. The real 0.5 kW floor is enforced in js/ui.js
+                   (initLoadFloor); this attribute only stops the arrows going negative. -->
+              <input type="number" id="connectedLoad" placeholder="e.g., 2" min="0" max="500" step="1" value="1"
+                     inputmode="decimal" aria-describedby="loadHint">
+            </div>
+            <div class="form-group adv-only">
+              <label for="facRate" id="facRateLabel"><span class="lbl-text">FPPA / FAC Surcharge (₹/unit)</span><span class="gloss" tabindex="0" role="img" aria-label="FPPA: Fuel and Power Purchase Adjustment — a periodic surcharge passing the utility's varying fuel and power-purchase cost on to consumers. Per unit: (actual minus base power cost) times units, or a percentage of supply plus demand charges (UP MYT 2025)." data-tip="FPPA — Fuel &amp; Power Purchase Adjustment: a periodic surcharge passing the utility's varying fuel / power-purchase cost on to consumers. ₹/unit = (actual − base power cost) × units, or % of supply+demand charges (UP MYT 2025).">ⓘ</span></label>
+              <div class="fac-input-row">
+                <input type="number" id="facRate" placeholder="e.g., 0.20" step="0.01" value="0">
+                <!-- Hidden select stays the JS source of truth; the segmented pill mirrors it -->
+                <select id="facMode" hidden aria-hidden="true" tabindex="-1">
+                  <option value="per_unit">₹/unit</option>
+                  <option value="percent">% of charges</option>
+                </select>
+                <div class="basis-seg fac-seg" role="group" aria-label="How the surcharge is levied">
+                  <label class="basis-opt"><input type="radio" name="facModeSeg" value="per_unit" checked><span>₹/unit</span></label>
+                  <label class="basis-opt"><input type="radio" name="facModeSeg" value="percent"><span>%</span></label>
+                </div>
+              </div>
+              <label class="checkbox-label fppa-auto-label">
+                <input type="checkbox" id="fppaAuto" checked>
+                <span data-i18n="chk.fppaAuto">पडताळलेल्या सरकारी डेटामधून आपोआप भरा</span>
+              </label>
+              <small id="fppaSource" class="fppa-source" style="display:none"></small>
+              <small data-i18n="small.fppa">स्वतः भरण्यासाठी वर अनचेक करा (किंवा मूल्य टाका) · ऋण (क्रेडिट) असू शकतो.</small>
+            </div>
+            <!-- Sits at .form-row level, not inside the Sanctioned Load group: that column is
+                 ~153px wide, which wrapped this sentence to nine lines and pushed it into the
+                 FPPA controls beside it. As a row-level child it spans both columns. -->
+            <small class="load-hint" id="loadHint" data-i18n-html="small.sanctioned">तुमच्या जुन्या बिलाच्या वरच्या उजव्या कोपऱ्यात <strong>“Connected / Sanctioned Load”</strong> पहा. ही मर्यादा ओलांडल्यास यूपी, दिल्ली आणि महाराष्ट्रासारख्या राज्यांत जादा-मागणी दंड लागतो.</small>
+          </div>
+
+          <div class="form-group" id="delhiSubsidyGroup" style="display:none">
+            <label data-i18n="label.subsidy">सरकारी घरगुती अनुदान</label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="delhiSubsidyCheck" checked>
+              <span data-i18n="chk.applySubsidy">सरकारी अनुदान लागू करा</span>
+            </label>
+            <small id="subsidySmall">Applied on the domestic energy charge.</small>
+          </div>
+
+          <!-- ── Advanced billing options ──────────────────────────────────────────
+               ToD, kVAh basis, net metering and LPSC are engineering-grade switches most
+               domestic visitors never touch, so they fold away behind one summary. Native
+               <details> keeps the keyboard, screen-reader and find-in-page behaviour for free.
+               The badge lists whatever is non-default, and initAdvPanel() springs the panel
+               open when anything inside it is on — a folded switch must never silently change
+               the bill (the ToD toggle in particular drives the units area above it). -->
+          <details class="adv-panel adv-only" id="advOptions">
+            <summary class="adv-panel-sum">
+              <span class="adv-panel-ic" aria-hidden="true">⚙️</span>
+              <span class="adv-panel-txt">
+                <span class="adv-panel-title" data-i18n="adv.title">प्रगत बिलिंग पर्याय</span>
+                <span class="adv-panel-sub" data-i18n="adv.sub">सोलर नेट-मीटरिंग, ToD, थकबाकी आणि दंड</span>
+              </span>
+              <span class="adv-panel-badge" id="advOptionsBadge" hidden></span>
+              <svg class="adv-panel-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+
+            <div class="adv-panel-body">
+              <!-- TOD split — replaces the old Meter Reading / TOD second tab row with one switch -->
+              <label class="tod-split-label">
+                <input type="checkbox" id="todSplitChk">
+                <span class="switch" aria-hidden="true"></span>
+                <span class="switch-text" data-i18n="mode.todSplit">टीओडी विभागणी (पीक / सामान्य / ऑफ-पीक युनिट)</span>
+              </label>
+
+              <!-- Billing Basis — segmented kWh/kVAh toggle; sets reading & demand units (kWh/kW vs kVAh/kVA).
+                   Auto-set from the tariff (kVA tariffs default to kVAh), so it stays advanced-only. -->
+              <div class="form-group" id="billingBasisGroup" style="display:none">
+                <div class="basis-row">
+                  <span class="basis-label" id="billingBasisLabel" data-i18n="label.billingBasis">बिलिंग आधार</span>
+                  <div class="basis-seg" role="radiogroup" aria-labelledby="billingBasisLabel">
+                    <label class="basis-opt"><input type="radio" name="billingBasis" value="kwh" checked><span>kWh</span></label>
+                    <label class="basis-opt"><input type="radio" name="billingBasis" value="kvah"><span>kVAh</span></label>
+                  </div>
+                  <span class="gloss" tabindex="0" role="img" aria-label="kWh: meter read in kWh, demand in kW. kVAh: apparent energy equal to kWh divided by power factor, demand billed in kVA — a poor power factor raises the bill directly, so there is no separate PF penalty. Auto-set for kVA tariffs." data-tip="kWh: meter read in kWh, demand in kW (the usual case). kVAh: apparent energy = kWh ÷ power factor, demand billed in kVA — a poor power factor already shows up as more kVAh, so there is no separate PF penalty. Auto-set for kVA (HT/large-LT) tariffs — override as needed.">ⓘ</span>
+                </div>
+              </div>
+
+              <!-- Rooftop solar / net metering -->
+              <div class="form-group" id="netMeteringGroup">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="netMeteringChk">
+                  <span data-i18n-html="chk.netMetering"><strong>रूफटॉप सोलर / नेट मीटरिंग</strong> — निव्वळ आयातीवर बिल</span>
+                  <span class="gloss" tabindex="0" role="img" aria-label="Net metering: energy is billed on net import = imported units minus exported units minus any banked credit; surplus is banked for next month." data-tip="Net metering: energy billed on net import = imported − exported − banked credit. Surplus export is banked as a unit credit for next month. Fixed/demand charges still apply.">ⓘ</span>
+                </label>
+                <div id="netMeteringFields" style="display:none">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="exportUnits" data-i18n="label.exportUnits">निर्यात युनिट (kWh)</label>
+                      <input type="number" id="exportUnits" placeholder="e.g., 120" min="0" step="1">
+                    </div>
+                    <div class="form-group">
+                      <label for="openingCredit" data-i18n="label.openingCredit">सुरुवातीचे साठवलेले क्रेडिट (kWh)</label>
+                      <input type="number" id="openingCredit" placeholder="e.g., 0" min="0" step="1">
+                    </div>
+                  </div>
+                  <small data-i18n-html="small.netMetering">वर भरलेली युनिट म्हणजे तुमची ग्रिडमधून <strong>आयात</strong>. निव्वळ बिल = आयात − निर्यात − सुरुवातीचे क्रेडिट; शिल्लक निर्यात पुढील महिन्यासाठी क्रेडिट म्हणून साठवली जाते.</small>
+                </div>
+              </div>
+
+              <div class="form-group" id="lpscApplicableGroup">
+                <label class="checkbox-label lpsc-applicable-label">
+                  <input type="checkbox" id="lpscApplicable" checked>
+                  <span data-i18n-html="chk.lpsc"><strong>LPSC लागू</strong> — चालू बिलावर विलंब-भरणा अधिभार लावा</span>
+                  <span class="gloss" tabindex="0" role="img" aria-label="LPSC: Late Payment Surcharge — a percentage added for each month a bill remains unpaid." data-tip="LPSC — Late Payment Surcharge: a percentage added for each month a bill stays unpaid (it compounds on the running balance in a multi-month revision).">ⓘ</span>
+                </label>
+                <small data-i18n="small.lpscApplicable">दर व विलंब-महिने थकबाकी टॅबमध्ये ठरतात. या ग्राहक / कालावधीस विलंब-भरणा अधिभार लागू नसेल तर अनचेक करा.</small>
+              </div>
+            </div>
+          </details>
+        </div><!-- /#tab-meterread -->
+
+        <!-- ── Arrear ── -->
+        <div class="bill-tab-panel" id="tab-arrear" role="tabpanel" aria-labelledby="bt-arrear">
+          <p class="tab-hint" data-i18n="hint.arrear">मागील बिलात दाखवल्याप्रमाणेच रकमा भरा. मागील थकबाकीवरील LPSC ही थेट रक्कम आहे, गणना केलेली नाही.</p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="arrears" data-i18n="label.prevArrear">मागील थकबाकी (₹)</label>
+              <input type="number" id="arrears" placeholder="0" min="0" step="0.01" value="0">
+            </div>
+            <div class="form-group">
+              <label for="arrearLpsc" data-i18n="label.prevArrearLpsc">मागील थकबाकी LPSC (₹)</label>
+              <input type="number" id="arrearLpsc" placeholder="0" min="0" step="0.01" value="0">
+              <small data-i18n="small.arrearLpsc">मागील थकबाकीवरील LPSC रक्कम, तुमच्या मागील बिलात दाखवल्याप्रमाणे.</small>
+            </div>
+          </div>
+          <div class="tab-total"><span data-i18n="total.arrear">एकूण थकबाकी:</span> <strong id="arrearTotalDisplay">₹ 0.00</strong></div>
+
+          <hr>
+          <p class="tab-hint" data-i18n="hint.lpsc">LPSC मीटर रीडिंग टॅबवरील “LPSC लागू” टॉगलने सुरू होते. हे रकाने दर व चालू बिल किती महिने थकीत आहे ते ठरवतात.</p>
+
+          <div class="form-row" id="lpscFields">
+            <div class="form-group">
+              <label for="lpscRate" data-i18n="label.lpscRate">चालू बिल LPSC दर (% / महिना)</label>
+              <input type="number" id="lpscRate" placeholder="1.5" min="0" step="0.1" value="1.5">
+              <small data-i18n="small.lpscRate">SERC आदेशानुसार विलंब भरणा अधिभार. सहसा 1.5%.</small>
+            </div>
+            <div class="form-group">
+              <label for="currentLpscMonths" data-i18n="label.lpscMonths">चालू बिल विलंब (महिने)</label>
+              <input type="number" id="currentLpscMonths" placeholder="0" min="0" step="1" value="0">
+              <small data-i18n="small.lpscMonths">चालू बिल भरण्यातील विलंब (महिने). LPSC चालू निव्वळ रकमेवर लागू.</small>
+            </div>
+          </div>
+        </div><!-- /#tab-arrear -->
+
+        <!-- ── Payment ── -->
+        <div class="bill-tab-panel" id="tab-payment" role="tabpanel" aria-labelledby="bt-payment">
+          <p class="tab-hint" data-i18n="hint.payment">या बिलिंग कालावधीत आधीच केलेले भरणे — हे एकूण देय रक्कम कमी करतात.</p>
+          <div id="paymentRows"></div>
+          <div class="tab-total"><span data-i18n="total.payment">एकूण भरणा:</span> <strong id="paymentTotalDisplay">₹ 0.00</strong></div>
+          <button class="btn-add-row" id="addPaymentBtn" type="button" data-i18n="btn.addPayment">+ भरणा जोडा</button>
+        </div><!-- /#tab-payment -->
+
+        <!-- ── Adjustment ── -->
+        <div class="bill-tab-panel" id="tab-adjustment" role="tabpanel" aria-labelledby="bt-adjustment">
+          <p class="tab-hint" data-i18n="hint.adjustment">कोणतेही किरकोळ क्रेडिट वा शुल्क — उदा. मीटर किंमत, अनामत परतावा, किंवा सवलत. क्रेडिटसाठी ऋण मूल्य वापरा.</p>
+          <div id="adjustmentRows"></div>
+          <div class="tab-total"><span data-i18n="total.adjustment">एकूण समायोजन:</span> <strong id="adjustmentTotalDisplay">₹ 0.00</strong></div>
+          <button class="btn-add-row" id="addAdjustmentBtn" type="button" data-i18n="btn.addAdjustment">+ समायोजन जोडा</button>
+        </div><!-- /#tab-adjustment -->
+
+      </div><!-- /.bill-tabs-container -->
+
+      <!-- Lifeline Auto-Switch Notice -->
+      <div class="lifeline-notice" id="lifelineNotice" role="status" aria-live="polite" style="display:none">
+        <span class="fwb-icon">✅</span>
+        <span class="fwb-text" id="lifelineNoticeText"></span>
+      </div>
+
+      <div id="dateWarningBanner" class="form-warning-banner" style="display:none">
+        <span class="fwb-icon">🔴</span>
+        <span class="fwb-text" id="dateWarningText">Dates don't match. Please check them.</span>
+      </div>
+
+      <div id="requiredWarningBanner" class="form-warning-banner" style="display:none" role="alert" aria-live="assertive">
+        <span class="fwb-icon">🔴</span>
+        <span class="fwb-text" id="requiredWarningText"></span>
+      </div>
+
+      <!-- Optional bill-verification: compare the engine's total against the printed bill -->
+      <div class="form-group verify-group adv-only">
+        <label for="billedAmount"><span class="lbl-text" data-i18n="label.billedAmount">तुमच्या प्रत्यक्ष बिलावरील रक्कम (₹) — ऐच्छिक</span><span class="gloss" tabindex="0" role="img" aria-label="Enter the net payable total printed on your bill and we will tell you whether it matches our calculation." data-tip="Enter the net payable total printed on your bill and we'll tell you whether it matches our calculation.">ⓘ</span></label>
+        <input type="number" id="billedAmount" min="0" step="0.01" inputmode="decimal" placeholder="1240">
+        <small data-i18n="small.billedAmount">आम्ही ती आमच्या गणनेशी पडताळून तुमचे बिल बरोबर वाटते का ते सांगू.</small>
+      </div>
+
+      <!-- Calculate is the loud primary; Clear & Reset sits beside it as a quiet text button so
+           trying another consumption scenario doesn't mean backspacing every field. -->
+      <div class="calc-actions">
+        <button id="calculateBtn" class="btn-calculate" data-i18n="btn.calculate">⚡ अंदाजित बिल काढा</button>
+        <button id="resetBtn" class="btn-clear" type="button" data-i18n-html="btn.clear"><svg class="br-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg> साफ करा आणि रीसेट</button>
+      </div>
+      <div id="historyPanel" class="history-panel" style="display:none"></div>
+    </div>
+
+    <!-- Right: Bill Preview -->
+    <div class="bill-panel" id="billPanel">
+      <div class="bill-placeholder">
+        <!-- Ghost bill: a realistic sample bill, blurred out behind the message card.
+             Decorative only (aria-hidden) — numbers match the hero sample card. -->
+        <div class="bill-ghost" aria-hidden="true">
+          <div class="bg-head">
+            <div class="bg-head-left">
+              <span class="bg-title">Provisional Electricity Bill</span>
+              <span class="bg-sub">UPPCL — Lucknow &middot; LMV-1 Domestic</span>
+            </div>
+            <span class="bg-chip">FY 2025-26</span>
+          </div>
+          <div class="bg-body">
+            <div class="bg-meta">
+              <div><span class="bg-k">Billing month</span><span class="bg-v">June 2026</span></div>
+              <div><span class="bg-k">Units consumed</span><span class="bg-v">250 kWh</span></div>
+              <div><span class="bg-k">Sanctioned load</span><span class="bg-v">2 kW</span></div>
+              <div><span class="bg-k">Category</span><span class="bg-v">Domestic (Urban)</span></div>
+            </div>
+            <div class="bg-rows">
+              <div class="bg-row"><span>Energy charge (slab-wise)</span><b>₹1,100.00</b></div>
+              <div class="bg-row"><span>Fixed charge</span><b>₹100.00</b></div>
+              <div class="bg-row"><span>Electricity duty</span><b>₹57.00</b></div>
+              <div class="bg-row bg-credit"><span>FPPA adjustment</span><b>&minus;₹53.00</b></div>
+            </div>
+            <div class="bg-total"><span>Net payable</span><b>₹1,204</b></div>
+          </div>
+        </div>
+        <div class="bill-placeholder-msg">
+          <h3 data-i18n="placeholder.title">तुमचे अंदाजित बिल येथे दिसेल</h3>
+          <p data-i18n-html="placeholder.sub">तुमचा डिस्कॉम निवडा, तपशील भरा आणि क्लिक करा<br><strong>अंदाजित बिल काढा</strong></p>
+          <button id="sampleBtnPanel" type="button" class="btn-sample btn-sample-hero">
+            <span aria-hidden="true">✨</span> <span data-i18n="btn.sampleHero">एका क्लिकमध्ये नमुना बिल पाहा</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.calculator-grid -->
+</section><!-- /#calculator -->
+<!-- ── Coverage & capability strip ────────────────────────────────────────────────
+     Both blocks used to sit inside the hero, above the calculator. They are proof a
+     visitor reads *after* deciding to try the tool, not before, so they now follow the
+     form — the copy is unchanged, so nothing was lost for search. -->
+<section class="coverage-strip">
+  <div class="container">
+    <!-- Trust card. The three claims are the ones the site can actually back: the first
+         links to the order library, the third states the real privacy position rather
+         than an absolute — photo and scanned-PDF OCR is cloud-first, on consent. -->
+    <div class="trust-card reveal">
+      <span class="trust-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.4-3 8.3-7 9-4-.7-7-4.6-7-9V6Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+      <div class="trust-body">
+        <p class="trust-title" data-i18n="trust.title">तुमचा विश्वासार्ह वीज बिल कॅलक्युलेटर</p>
+        <ul class="trust-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7Z"/><path d="M14 3v4h4"/><path d="M9.5 13h5M9.5 16.5h3"/></svg><span data-i18n-html="trust.orders">दर प्रकाशित SERC टॅरिफ आदेशांमधून घेतले आहेत — <a href="/orders/">प्रत्येक स्रोत सूचीबद्ध</a></span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 7.7-1.5"/></svg><span data-i18n="trust.free">वापरण्यास विनामूल्य — प्रत्येक कॅल्क्युलेटर खात्याशिवाय चालतो</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2"/><path d="M3 9.5h18"/><path d="M6.5 7h.01M9.5 7h.01"/></svg><span data-i18n="trust.local">तुमचे बिल तुमच्या ब्राउझरमध्येच मोजले जाते; फोटो OCR ला तुम्ही परवानगी दिल्यासच पाठवला जातो</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cov-split reveal">
+      <!-- The six capabilities were spans with a hover state and no destination. Each now
+           links to the page that explains it; all six were verified to exist. -->
+      <div class="cap-card">
+        <p class="cap-title" data-i18n="cap.title">तुमच्या बिलावरील प्रत्येक शुल्क, गणनेत समाविष्ट</p>
+        <ul class="cap-list">
+          <li><a href="/mr/understand-your-bill/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.feat.slab">स्लॅबनिहाय ऊर्जा शुल्क</span></a></li>
+          <li><a href="/fppa/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.feat.fppa">फिक्स्ड व इंधन अधिभार (FPPA)</span></a></li>
+          <li><a href="/mr/guides/solar-net-metering-savings/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.feat.solar">सोलर नेट मीटरिंग</span></a></li>
+          <li><a href="/mr/guides/tod-billing-explained/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.feat.tod">टाइम-ऑफ-डे व kVAh बिलिंग</span></a></li>
+          <li><a href="/guides/md-penalty-excess-demand-charge/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.feat.demand">जादा मागणी दंड</span></a></li>
+          <li><a href="/mr/guides/electricity-duty-explained/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span data-i18n="hero.feat.duty">वीज शुल्क व राज्य कर</span></a></li>
+        </ul>
+      </div>
+      <div class="cov-discoms">
+        <div class="cov-dhead">
+          <b data-i18n="discoms.popular">प्रमुख डिस्कॉम</b>
+          <a href="/mr/tariffs/states/" data-i18n="discoms.viewAll">सर्व 65 पहा →</a>
+        </div>
+        <div class="cov-dgrid">
+          <a href="/tariffs/uttar-pradesh/">UPPCL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/karnataka/bescom/">BESCOM<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/mr/tariffs/maharashtra/msedcl/">MSEDCL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/tamil-nadu/tangedco/">TANGEDCO<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/punjab/pspcl/">PSPCL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/telangana/tsspdcl/">TSSPDCL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/andhra-pradesh/apspdcl/">APSPDCL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/delhi/brpl/">BSES Rajdhani<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/delhi/tpddl/">Tata Power-DDL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/mr/tariffs/maharashtra/adani_mumbai/">Adani Electricity<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/west-bengal/cesc_kolkata/">CESC Kolkata<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/kerala/kseb/">KSEB<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/west-bengal/wbsedcl/">WBSEDCL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/rajasthan/jvvnl/">JVVNL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/madhya-pradesh/mppkvvcl/">MPPKVVCL<span class="cov-go" aria-hidden="true"></span></a>
+          <a href="/tariffs/gujarat/pgvcl/">PGVCL<span class="cov-go" aria-hidden="true"></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="states" class="states-section">
+  <div class="container">
+    <!-- Said "Bill Calculator by State" and promised "a dedicated calculator", but every link
+         here opens /tariffs/<state>/ — a tariff reference page with no calculator on it, which
+         links back to the one on this page. The heading now names what actually loads. -->
+    <h2 class="reveal">Electricity Tariffs by State</h2>
+    <p class="reveal" data-i18n-html="states.lead">तुमच्या राज्याचे टॅरिफ पान उघडा — स्लॅब दर, फिक्स्ड चार्ज आणि प्रत्येक डिस्कॉम — किंवा <a href="/mr/tariffs/states/">सर्व डिस्कॉमची संपूर्ण यादी</a> पाहा.</p>
+    <nav class="states-grid reveal" aria-label="Electricity tariffs by state">
+      <div class="sg-region" style="--sg-accent:#2563eb">
+        <h3 class="sg-region-head"><span class="sg-dot" aria-hidden="true"></span><span data-i18n="states.region.north">उत्तर भारत</span><span class="sg-region-n">10</span></h3>
+        <div class="sg-cards">
+        <a href="/tariffs/delhi/"><span class="sg-name">Delhi</span><span class="sg-meta"><b>4</b> <span data-i18n="states.discoms">डिस्कॉम</span> &middot; ₹3–₹8<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/haryana/"><span class="sg-name">Haryana</span><span class="sg-meta"><b>2</b> <span data-i18n="states.discoms">डिस्कॉम</span> &middot; ₹2.2–₹7.5<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/himachal-pradesh/"><span class="sg-name">Himachal Pradesh</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹4.71–₹5.89<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/jammu-and-kashmir/"><span class="sg-name">Jammu &amp; Kashmir</span><span class="sg-meta"><b>2</b> <span data-i18n="states.discoms">डिस्कॉम</span> &middot; ₹1.4–₹4.35<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/ladakh/"><span class="sg-name">Ladakh</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹0.5–₹2.5<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/punjab/"><span class="sg-name">Punjab</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹3.85–₹7.05<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/chandigarh/"><span class="sg-name">Chandigarh</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹2.9–₹5.45<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/rajasthan/"><span class="sg-name">Rajasthan</span><span class="sg-meta"><b>3</b> <span data-i18n="states.discoms">डिस्कॉम</span> &middot; ₹4.75–₹7.5<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/uttar-pradesh/"><span class="sg-name">Uttar Pradesh</span><span class="sg-meta"><b>5</b> <span data-i18n="states.discoms">डिस्कॉम</span> &middot; ₹2.75–₹6.5<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/uttarakhand/"><span class="sg-name">Uttarakhand</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹1.85–₹7.8<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        </div>
+      </div>
+      <div class="sg-region" style="--sg-accent:#0d9488">
+        <h3 class="sg-region-head"><span class="sg-dot" aria-hidden="true"></span><span data-i18n="states.region.south">दक्षिण भारत</span><span class="sg-region-n">6</span></h3>
+        <div class="sg-cards">
+        <a href="/tariffs/andhra-pradesh/"><span class="sg-name">Andhra Pradesh</span><span class="sg-meta"><b>3</b> <span data-i18n="states.discoms">डिस्कॉम</span> &middot; ₹1.9–₹9.75<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/karnataka/"><span class="sg-name">Karnataka</span><span class="sg-meta"><b>5</b> <span data-i18n="states.discoms">डिस्कॉम</span> &middot; ₹5.8<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/kerala/"><span class="sg-name">Kerala</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹1.5–₹8.5<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/puducherry/"><span class="sg-name">Puducherry</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹2.65–₹7.95<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/tamil-nadu/"><span class="sg-name">Tamil Nadu</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹4.95–₹12.15<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/telangana/"><span class="sg-name">Telangana</span><span class="sg-meta"><b>2</b> <span data-i18n="states.discoms">डिस्कॉम</span> &middot; ₹5.1–₹10<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        </div>
+      </div>
+      <div class="sg-region" style="--sg-accent:#d97706">
+        <h3 class="sg-region-head"><span class="sg-dot" aria-hidden="true"></span><span data-i18n="states.region.west">पश्चिम भारत</span><span class="sg-region-n">4</span></h3>
+        <div class="sg-cards">
+        <a href="/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/"><span class="sg-name">Dadra &amp; Nagar Haveli and Daman &amp; Diu</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹1.5–₹4.5<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/goa/"><span class="sg-name">Goa</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹1.5–₹6.7<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/gujarat/"><span class="sg-name">Gujarat</span><span class="sg-meta"><b>4</b> <span data-i18n="states.discoms">डिस्कॉम</span> &middot; ₹2.65–₹5.2<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/mr/tariffs/maharashtra/"><span class="sg-name">Maharashtra</span><span class="sg-meta"><b>4</b> <span data-i18n="states.discoms">डिस्कॉम</span> &middot; ₹1.9–₹13.97<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        </div>
+      </div>
+      <div class="sg-region" style="--sg-accent:#7c3aed">
+        <h3 class="sg-region-head"><span class="sg-dot" aria-hidden="true"></span><span data-i18n="states.region.central">मध्य भारत</span><span class="sg-region-n">2</span></h3>
+        <div class="sg-cards">
+        <a href="/tariffs/chhattisgarh/"><span class="sg-name">Chhattisgarh</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹4.4–₹8.8<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/madhya-pradesh/"><span class="sg-name">Madhya Pradesh</span><span class="sg-meta"><b>3</b> <span data-i18n="states.discoms">डिस्कॉम</span> &middot; ₹3.72–₹7.24<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        </div>
+      </div>
+      <div class="sg-region" style="--sg-accent:#e11d48">
+        <h3 class="sg-region-head"><span class="sg-dot" aria-hidden="true"></span><span data-i18n="states.region.east">पूर्व भारत</span><span class="sg-region-n">5</span></h3>
+        <div class="sg-cards">
+        <a href="/tariffs/bihar/"><span class="sg-name">Bihar</span><span class="sg-meta"><b>2</b> <span data-i18n="states.discoms">डिस्कॉम</span> &middot; ₹7.42<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/jharkhand/"><span class="sg-name">Jharkhand</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹7.2–₹7.4<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/odisha/"><span class="sg-name">Odisha</span><span class="sg-meta"><b>4</b> <span data-i18n="states.discoms">डिस्कॉम</span> &middot; ₹2.9–₹6.1<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/sikkim/"><span class="sg-name">Sikkim</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹1.6–₹4.6<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/west-bengal/"><span class="sg-name">West Bengal</span><span class="sg-meta"><b>3</b> <span data-i18n="states.discoms">डिस्कॉम</span> &middot; ₹2.5–₹9.22<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        </div>
+      </div>
+      <div class="sg-region" style="--sg-accent:#0891b2">
+        <h3 class="sg-region-head"><span class="sg-dot" aria-hidden="true"></span><span data-i18n="states.region.northeast">ईशान्य भारत</span><span class="sg-region-n">7</span></h3>
+        <div class="sg-cards">
+        <a href="/tariffs/arunachal-pradesh/"><span class="sg-name">Arunachal Pradesh</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹2.65–₹4<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/assam/"><span class="sg-name">Assam</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹3.35–₹8.19<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/manipur/"><span class="sg-name">Manipur</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹2.35–₹5.95<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/meghalaya/"><span class="sg-name">Meghalaya</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹4.57–₹5.1<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/mizoram/"><span class="sg-name">Mizoram</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹2.5–₹6<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/nagaland/"><span class="sg-name">Nagaland</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹2.5–₹6<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        <a href="/tariffs/tripura/"><span class="sg-name">Tripura</span><span class="sg-meta"><b>1</b> <span data-i18n="states.discom">डिस्कॉम</span> &middot; ₹2.31–₹8.52<span data-i18n="states.perUnit">/युनिट</span></span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<!-- ── More tools ────────────────────────────────────────────────────────────────
+     The footer has listed all of this for a long time; the body never did, so a visitor
+     who came for the calculator had no way to learn the site does anything else. Grouped
+     by the JOB the reader is doing, not by our internal categories — plain link columns
+     rather than a wall of icon-heading-text cards, which is what a directory this size
+     actually wants. Every label reuses the footer's existing i18n key, so nothing here
+     needs translating twice or can drift out of step with it. -->
+<section id="tools" class="tools-section">
+  <div class="container">
+    <h2 data-i18n="tools.title">फक्त बिल कॅल्क्युलेटर नाही</h2>
+    <p class="tools-lead" data-i18n="tools.sub">येथील प्रत्येक साधन त्याच पडताळलेल्या टॅरिफ दरांवर चालते — तुमच्या कामाचे असेल तेच निवडा.</p>
+    <!-- Icons live in one inline sprite rather than 14 repeated <svg> blocks: same bytes as a
+         single icon, and every glyph stays editable in one place. `data-i18n` sits on the inner
+         <span>, never the <a> — i18n.js assigns textContent, which would erase the icon. -->
+    <svg class="tools-sprite" aria-hidden="true" focusable="false"><defs>
+      <symbol id="ti-scan" viewBox="0 0 24 24"><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/><path d="m9 12 2 2 4-4"/></symbol>
+      <symbol id="ti-review" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"/><path d="M14 3v4a1 1 0 0 0 1 1h4"/><circle cx="17" cy="16" r="3.2"/><path d="m19.4 18.4 2.1 2.1"/></symbol>
+      <symbol id="ti-glossary" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H19v3H6.5"/><path d="M8.5 8h6M8.5 11.5h4"/></symbol>
+      <symbol id="ti-annotate" viewBox="0 0 24 24"><rect x="3" y="3.5" width="11" height="17" rx="2"/><path d="M6.5 8h5M6.5 11.5h3.5M6.5 15h5"/><path d="M14 11.5h3.5"/><circle cx="19.5" cy="11.5" r="2"/></symbol>
+      <symbol id="ti-fuel" viewBox="0 0 24 24"><path d="M3 17.5 8.5 12l3.5 3.5L21 6.5"/><path d="M15.5 6.5H21v5.5"/></symbol>
+      <symbol id="ti-compare" viewBox="0 0 24 24"><path d="M3.5 20.5h17"/><rect x="6" y="10.5" width="4.5" height="7"/><rect x="13.5" y="5.5" width="4.5" height="12"/></symbol>
+      <symbol id="ti-calc" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16.5h.01M12 16.5h.01M15.5 16.5h.01"/></symbol>
+      <symbol id="ti-ev" viewBox="0 0 24 24"><path d="M3 16.5v-2.9l1.7-4A1.8 1.8 0 0 1 6.4 8.5h5.7a1.8 1.8 0 0 1 1.7 1.1l1.7 4v2.9"/><path d="M3 13.6h12.5"/><circle cx="5.8" cy="17" r="1.5"/><circle cx="12.7" cy="17" r="1.5"/><path d="m20.5 5-2.4 4.4h2.7L18.4 14"/></symbol>
+      <symbol id="ti-load" viewBox="0 0 24 24"><path d="M4.5 17.5a7.5 7.5 0 1 1 15 0"/><path d="m12 17.5 3.6-5.2"/><circle cx="12" cy="17.5" r="1.1"/></symbol>
+      <symbol id="ti-tenant" viewBox="0 0 24 24"><path d="M3 21V6.5L10 3v18"/><path d="M10 10h8a1 1 0 0 1 1 1v10"/><path d="M2 21h20"/><path d="M6 8.5h.01M6 12.5h.01M6 16.5h.01M14 14h.01M14 17.5h.01"/></symbol>
+      <symbol id="ti-meter" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></symbol>
+      <symbol id="ti-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></symbol>
+      <symbol id="ti-panel" viewBox="0 0 24 24"><path d="M4.5 4h15l2 11h-19z"/><path d="M12 4v11M3.2 9.5h17.6"/><path d="M12 15v5M9 20h6"/></symbol>
+      <symbol id="ti-battery" viewBox="0 0 24 24"><rect x="2.5" y="7" width="16" height="10" rx="2"/><path d="M21.5 10.5v3"/><path d="m11 9.5-2 3h2.8l-1.8 2.8"/></symbol>
+      <symbol id="ti-subsidy" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M9.4 8.4h5.2M9.4 11h5.2"/><path d="M13.1 8.4c1.5 1.7.4 4-2 4l3 3.4"/></symbol>
+    </defs></svg>
+    <div class="tools-groups">
+      <div class="tools-group">
+        <h3 data-i18n="tools.g1.title">माझे बिल बरोबर आहे का?</h3>
+        <p data-i18n="tools.g1.sub">बिल अपलोड करून लगेच तपासा, किंवा न ओळखीचे कोणतेही शुल्क इथे पाहा.</p>
+        <a href="/check-my-bill/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-scan"/></svg><span data-i18n="ql.ocrCheck">झटपट बिल स्व-तपासणी (OCR)</span></a>
+        <a href="/bill-review/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-review"/></svg><span data-i18n="ql.billReview">तज्ज्ञ बिल तपासणी</span></a>
+        <a href="/mr/understand-your-bill/" class="tool-rich"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-annotate"/></svg><span class="tool-label"><span data-i18n="ql.understandBill">तुमचे बिल समजून घ्या</span><small data-i18n="tools.d.understandBill">एक नमुना बिल, जे तुम्ही बदलू शकता</small></span></a>
+        <a href="/mr/smart-meter/" class="tool-rich"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-meter"/></svg><span class="tool-label"><span data-i18n="ql.meterDisplay">स्मार्ट मीटर मार्गदर्शक</span><small data-i18n="tools.d.smartMeter">मीटर डिस्प्ले, जो तुम्ही एक-एक करून पाहू शकता</small></span></a>
+        <a href="/mr/glossary/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-glossary"/></svg><span data-i18n="ql.glossary">बिल शब्दावली</span></a>
+        <a href="/fppa/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-fuel"/></svg><span data-i18n="ql.fuelSurcharge">इंधन अधिभार ट्रॅकर</span></a>
+      </div>
+      <div class="tools-group">
+        <h3 data-i18n="tools.g2.title">खर्च किती येईल?</h3>
+        <p data-i18n="tools.g2.sub">बिल येण्याआधीच हिशेब करा — उपकरणानुसार, टॅरिफनुसार, किंवा प्रत्येक भाडेकरूसाठी.</p>
+        <a href="/compare/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-compare"/></svg><span data-i18n="nav.compare">तुलना</span></a>
+        <a href="/bill-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-calc"/></svg><span data-i18n="ql.advancedCalc">प्रगत बिल कॅल्क्युलेटर</span></a>
+        <a href="/electricity-cost-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-calc"/></svg><span data-i18n="ql.usage">वीज खर्च कॅल्क्युलेटर</span></a>
+        <a href="/ev-charging-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-ev"/></svg><span data-i18n="ql.ev">EV चार्जिंग खर्च</span></a>
+        <a href="/sanctioned-load-optimizer/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-load"/></svg><span data-i18n="ql.loadOptimizer">मंजूर भार ऑप्टिमायझर</span></a>
+        <a href="/tenant-submeter-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-tenant"/></svg><span data-i18n="ql.tenantMeter">भाडेकरू सब-मीटर कॅल्क्युलेटर</span></a>
+        <a href="/mr/smart-meter-recharge/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-meter"/></svg><span data-i18n="ql.smartMeter">स्मार्ट मीटर रिचार्ज</span></a>
+      </div>
+      <div class="tools-group">
+        <h3 data-i18n="tools.g3.title">सोलर फायद्याचे आहे का?</h3>
+        <p data-i18n="tools.g3.sub">सिस्टिमचा आकार ठरवा, सबसिडी तपासा, आणि तुमच्या बिलावरील परतावा पाहा.</p>
+        <!-- The only guide in this section, and first because the four calculators below it all
+             presuppose an answer it gives. Size, subsidy and payback are all questions about a
+             system you have already chosen; nothing here asked which kind to choose, so a reader
+             who did not know ran the Savings Calculator on a system they might not want.
+             It takes .tool-rich for the same reason /understand-your-bill/ does: an entry that
+             is not a calculator has to say what it does for you. If another guide is proposed
+             for this section, the test it has to pass is this one - the tools presuppose a
+             decision the reader has not made. The subsidy and net-metering guides do not pass
+             it: their calculators already answer them. -->
+        <a href="/guides/on-grid-vs-hybrid-solar/" class="tool-rich"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-compare"/></svg><span class="tool-label"><span data-i18n="nav.solarOnGridHybrid">ऑन-ग्रिड विरुद्ध हायब्रिड सोलर</span><small data-i18n="tools.d.onGridHybrid">आकार ठरवण्याआधी — कोणती सिस्टिम घ्यावी</small></span></a>
+        <a href="/solar-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-sun"/></svg><span data-i18n="nav.solarSavings">रूफटॉप सोलर बचत कॅल्क्युलेटर</span></a>
+        <a href="/solar-panel-size-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-panel"/></svg><span data-i18n="nav.solarSize">सोलर पॅनेल साइझ कॅल्क्युलेटर</span></a>
+        <a href="/solar-battery-backup-calculator/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-battery"/></svg><span data-i18n="nav.solarBattery">सोलर बॅटरी बॅकअप कॅल्क्युलेटर</span></a>
+        <a href="/solar-subsidy-checker/"><svg class="tool-ico" aria-hidden="true" focusable="false"><use href="#ti-subsidy"/></svg><span data-i18n="nav.solarSubsidy">सोलर सबसिडी चेकर</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── About ─────────────────────────────────────────────────────────────────── -->
+<section id="about" class="about-section">
+  <div class="container">
+    <h2 class="reveal" data-i18n="about.title">TheDiscomBill विषयी</h2>
+    <p class="reveal" data-i18n-html="about.p1">TheDiscomBill हा एक मोफत, ब्राउझर-आधारित वीज बिल कॅल्क्युलेटर आहे जो <strong>संपूर्ण भारतातील सर्व वितरण कंपन्या (डिस्कॉम)</strong> कव्हर करतो — कर्नाटकच्या BESCOM पासून महाराष्ट्राच्या MSEDCL, पंजाबच्या PSPCL, तमिळनाडूच्या TANGEDCO आणि आणखी अनेकांपर्यंत. फक्त तुमचे राज्य निवडा, डिस्कॉम निवडा, ग्राहक श्रेणी निवडा, वापरलेली युनिट टाका, आणि संपूर्ण स्लॅबनिहाय तपशीलासह त्वरित अंदाजित बिल मिळवा.</p>
+    <p class="reveal" data-i18n-html="about.p1b">कॅल्क्युलेटरशिवाय, TheDiscomBill वर <a href="/tariffs/">प्रत्येक राज्याचे सध्याचे दर</a>, <a href="/mr/smart-meter/">स्मार्ट मीटर वाचण्याची मार्गदर्शिका</a>, <a href="/check-my-bill/">बिलाच्या फोटोवरून तात्काळ तपासणी</a>, आणि <a href="/solar-calculator/">रुफटॉप सोलर</a> व <a href="/ev-charging-calculator/">EV चार्जिंग</a>साठी कॅल्क्युलेटर आहेत — सर्व मोफत, इंग्रजी, हिंदी, मराठी आणि तमिळमध्ये.</p>
+
+    <div class="stats-row">
+      <div class="stat-card reveal">
+        <div class="stat-number">34</div>
+        <div class="stat-label" data-i18n="about.stat.states">राज्ये व केंद्रशासित प्रदेश</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="stat-number">66</div>
+        <div class="stat-label" data-i18n="about.stat.discoms">समर्थित डिस्कॉम</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="stat-number">139</div>
+        <div class="stat-label" data-i18n="about.stat.categories">ग्राहक श्रेणी</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="stat-number">Free</div>
+        <div class="stat-label" data-i18n="about.stat.free">साइन-अपची गरज नाही</div>
+      </div>
+      <div class="stat-card reveal">
+        <div class="stat-number">4</div>
+        <div class="stat-label" data-i18n="about.stat.languages">भाषा</div>
+      </div>
+    </div>
+
+    <h2 class="reveal" style="margin-top:28px" data-i18n="about.howTitle">कॅल्क्युलेटर कसे काम करते</h2>
+    <p class="reveal" data-i18n-html="about.p2">कॅल्क्युलेटर प्रत्येक डिस्कॉमच्या ताज्या सार्वजनिक टॅरिफ आदेशांचा वापर करतो. तो <strong>स्लॅबनिहाय (संचयी) पद्धतीने</strong> शुल्क मोजतो: प्रत्येक स्लॅबचा दर फक्त त्या स्लॅबमधील युनिटवर लागू होतो, संपूर्ण वापरावर नाही. फिक्स्ड / मागणी शुल्क तुमच्या मंजूर भारानुसार वेगळे लावले जाते.</p>
+    <p class="reveal" data-i18n-html="about.p3">वीज शुल्क (इलेक्ट्रिसिटी ड्युटी), इंधन समायोजन शुल्क आणि इतर राज्य कर प्रत्येक डिस्कॉमच्या टॅरिफ वेळापत्रकानुसार लावले जातात.</p>
+
+    <div class="disclaimer reveal" data-i18n-html="about.disclaimer"><strong>⚠ अस्वीकरण:</strong> हा केवळ संदर्भ व शैक्षणिक हेतूंसाठीचा <strong>अंदाजित बिल कॅल्क्युलेटर</strong> आहे. येथे वापरलेले टॅरिफ दर अंदाजे असून सार्वजनिक टॅरिफ आदेशांवर आधारित आहेत; ते ताजे बदल किंवा स्थानिक अधिभार दर्शवत नसतील. तुमच्या डिस्कॉमचे प्रत्यक्ष बिल वेगळे असू शकते. अचूक व अधिकृत बिलिंग माहितीसाठी नेहमी तुमच्या डिस्कॉमशी संपर्क साधा किंवा त्यांची अधिकृत वेबसाइट पाहा. TheDiscomBill कोणत्याही वीज कंपनीशी वा सरकारी संस्थेशी संलग्न नाही.</div>
+
+    <!-- FAQ — visible answers backing the FAQPage JSON-LD in <head> (kept in sync manually) -->
+    
+  </div>
+</section>
+
+<!-- ── Browse by state (internal links for SEO + discovery) ─────────────────────
+     Crawlable links to every state landing page; each state page in turn links to its
+     DISCOM pages. The full list lives in the directory hub at /tariffs/states/. -->
+
+<!-- ── Footer ───────────────────────────────────────────────────────────────── -->
+<footer>    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">टूल्स</span>
+        <a href="/bill-calculator/" data-i18n="ql.advancedCalc">प्रगत बिल कॅल्क्युलेटर</a>
+        <a href="/compare/" data-i18n="nav.compare">तुलना</a>
+        <a href="/electricity-cost-calculator/" data-i18n="ql.usage">वीज खर्च कॅल्क्युलेटर</a>
+        <a href="/ev-charging-calculator/" data-i18n="ql.ev">EV चार्जिंग खर्च</a>
+        <a href="/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">मंजूर भार ऑप्टिमायझर</a>
+        <a href="/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">भाडेकरू सब-मीटर कॅल्क्युलेटर</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">इंधन अधिभार ट्रॅकर</a>
+        <a href="/install/" data-i18n="ql.install">ऑफलाइन अ‍ॅप इंस्टॉल करा</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">सोलर टूल्स</span>
+        <a href="/solar-calculator/" data-i18n="nav.solarSavings">रूफटॉप सोलर बचत कॅल्क्युलेटर</a>
+        <a href="/solar-panel-size-calculator/" data-i18n="nav.solarSize">सोलर पॅनेल साइझ कॅल्क्युलेटर</a>
+        <a href="/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">सोलर बॅटरी बॅकअप कॅल्क्युलेटर</a>
+        <a href="/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">सोलर सबसिडी चेकर</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">सेवा</span>
+        <a href="/services/" data-i18n="ql.discomServices">डिस्कॉम सेवा</a>
+        <a href="/mr/smart-meter-recharge/" data-i18n="ql.smartMeter">स्मार्ट मीटर रिचार्ज</a>
+        <a href="/mr/smart-meter/" data-i18n="ql.meterDisplay">स्मार्ट मीटर मार्गदर्शक</a>
+        <a href="/check-my-bill/" data-i18n="ql.ocrCheck">झटपट बिल स्व-तपासणी (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">तज्ज्ञ बिल तपासणी</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">नवीन कनेक्शन</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">जाणून घ्या</span>
+        <a href="/mr/tariffs/states/" data-i18n="footer.allStates">सर्व राज्ये व डिस्कॉम</a>
+        <a href="/mr/guides/" data-i18n="nav.blog">ब्लॉग</a>
+        <a href="/mr/glossary/" data-i18n="ql.glossary">बिल शब्दावली</a>
+        <a href="/mr/understand-your-bill/" data-i18n="ql.understandBill">तुमचे बिल समजून घ्या</a>
+        <a href="/methodology/" data-i18n="ql.methodology">कार्यपद्धती व अचूकता</a>
+        <a href="/database/" data-i18n="ql.tariffDatabase">टॅरिफ डेटाबेस</a>
+        <a href="/orders/" data-i18n="ql.orderLibrary">आदेश ग्रंथालय</a>
+        <a href="/#about" data-i18n="nav.about">आमच्याबद्दल</a>
+        <a href="/contact/" data-i18n="ql.contact">संपर्क करा</a>
+      </div>
+    </nav>
+  <p data-i18n-html="footer.l1">&copy; 2026 TheDiscomBill &nbsp;·&nbsp; भारतासाठी मोफत वीज बिल कॅल्क्युलेटर</p>
+  <p data-i18n-html="footer.l2">टॅरिफ डेटा अंदाजे असून सार्वजनिकरीत्या उपलब्ध माहितीवर (2025-26) आधारित आहे. कोणत्याही डिस्कॉम, SERC वा सरकारी संस्थेशी संलग्न नाही. &nbsp;|&nbsp; <a href="#about">अस्वीकरण</a></p>
+  <!-- Facebook returns here once the account exists -->
+  <div class="soc-links" aria-label="Social media">
+    <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+    <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+    <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+  </div>
+</footer>
+
+</div><!-- /.page-body -->
+
+<script type="module" src="/js/main.js"></script>
+<!-- js/bill-ocr.js is deliberately NOT loaded here. The bill-upload UI it initialises
+     (#ocrUpload / #ocrFile) lives on /check-my-bill/, which loads it through its own
+     entry point; on this page both initialisers found nothing and returned. The tag was
+     left behind when the upload block moved, and it cost 19 KB plus — because bill-ocr
+     statically imported the tariff registry — all 34 state modules on every homepage
+     visit. Do not re-add it without the markup. -->
+</body>
+</html>

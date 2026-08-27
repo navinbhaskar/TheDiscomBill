@@ -81,6 +81,16 @@ Tariff data is compiled from publicly available tariff orders: FY 2026-27 for 19
 - [Fuel Surcharge (FPPA) Tracker](https://thediscombill.com/fppa/): current and historical fuel-surcharge rates by state and DISCOM, with the month each came into force
 - [Electricity Bill Glossary](https://thediscombill.com/glossary/): definitions of billing terms — Connected Load, ED, Fixed Charge, FPPA, kVAh, LPSC, Maximum Demand, MMC, MF, Net Metering, PF, Sanctioned Load, Slab-wise Rates, ToD
 
+## Other languages
+
+The whole calculator, and 281 pages of tariff, guide and glossary content, are published in
+Hindi, Marathi and Tamil. Each has its own homepage; a language's pages are complete only for
+the states that language serves, so they are a subset of the English set, not a mirror of it.
+
+- [Hindi homepage](https://thediscombill.com/hi/): बिजली बिल कैलकुलेटर — full calculator, tariff pages, guides and glossary in Hindi
+- [Marathi homepage](https://thediscombill.com/mr/): वीज बिल कॅल्क्युलेटर — calculator and Maharashtra-focused tariff and guide pages in Marathi
+- [Tamil homepage](https://thediscombill.com/ta/): மின் கட்டண கணிப்பான் — calculator and Tamil Nadu-focused tariff and guide pages in Tamil
+
 ## Tariff reference
 
 - [All states & DISCOMs directory](https://thediscombill.com/tariffs/states/): index of every state and DISCOM landing page

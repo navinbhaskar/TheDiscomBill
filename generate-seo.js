@@ -6925,7 +6925,7 @@ function smartMeterHubPage(states, lang = 'en') {
 
 // ── sitemap + robots ──────────────────────────────────────────────────────────
 const STATIC_ROUTES = [
-  { loc: '/', priority: '1.0', changefreq: 'weekly' },
+  { loc: '/', priority: '1.0', changefreq: 'weekly', langs: [...VERNACULARS] },
   { loc: '/compare/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/bill-calculator/', priority: '0.8', changefreq: 'monthly' },
   { loc: '/electricity-cost-calculator/', priority: '0.7', changefreq: 'monthly' },
@@ -7129,6 +7129,16 @@ ${GUIDES.map(g => `- [${g.title}](${SITE}/guides/${g.slug}/): ${g.description.sp
 - [Tariff Database](${SITE}/database/): the full machine-readable dataset behind every calculation — per-state DISCOM counts, category counts, the tariff year in force, and a link to the originating regulator's order where one is recorded
 - [Fuel Surcharge (FPPA) Tracker](${SITE}/fppa/): current and historical fuel-surcharge rates by state and DISCOM, with the month each came into force
 - [Electricity Bill Glossary](${SITE}/glossary/): definitions of billing terms — ${GLOSSARY.map(t => t.abbr || t.term.replace(/\s*\(.*?\)\s*/g, '').trim()).join(', ')}
+
+## Other languages
+
+The whole calculator, and 281 pages of tariff, guide and glossary content, are published in
+Hindi, Marathi and Tamil. Each has its own homepage; a language's pages are complete only for
+the states that language serves, so they are a subset of the English set, not a mirror of it.
+
+- [Hindi homepage](${SITE}/hi/): बिजली बिल कैलकुलेटर — full calculator, tariff pages, guides and glossary in Hindi
+- [Marathi homepage](${SITE}/mr/): वीज बिल कॅल्क्युलेटर — calculator and Maharashtra-focused tariff and guide pages in Marathi
+- [Tamil homepage](${SITE}/ta/): மின் கட்டண கணிப்பான் — calculator and Tamil Nadu-focused tariff and guide pages in Tamil
 
 ## Tariff reference
 
@@ -7402,6 +7412,224 @@ function stampFooter() {
   }
   return { changed, scanned: files.length };
 }
+// ── Vernacular homepages (/hi/, /mr/, /ta/) ──────────────────────────────────
+// 281 pages live under /hi/, /mr/ and /ta/ and none of them had a front door: no vernacular
+// homepage to land on, nothing for llms.txt to point at, and nowhere for the language
+// switcher to go. A Hindi reader could only ever arrive sideways, from a search that happened
+// to hit a deep page.
+//
+// Pre-rendered rather than hand-authored. index.html is ~1,300 lines that change most weeks;
+// three hand-kept copies would drift within one of them. The transform is the same one
+// js/i18n.js already runs in the browser — swap the text of every [data-i18n] element from
+// the language table — done at build time so a crawler sees the translated page without
+// executing JavaScript. That is the entire point: the runtime layer already translated these
+// words for a reader who clicked the switcher; it could not translate them for Google.
+//
+// Measured before this was written: the homepage carries 207 distinct keys and hi, mr and ta
+// cover all 207. Nothing here invents a translation.
+const HOME_META = {
+  hi: {
+    title: 'मुफ़्त बिजली बिल कैलकुलेटर — भारत के 66 डिस्कॉम',
+    desc: 'भारत के 65 डिस्कॉम की स्लैब दरें देखें और अपना बिजली बिल 30 सेकंड में निकालें — स्लैब-वार ब्यौरा, FPPA और बिजली शुल्क सहित।',
+    social: 'किसी भी भारतीय डिस्कॉम के लिए अपना अनुमानित बिजली बिल निकालें। सभी राज्य और केंद्र शासित प्रदेश, स्लैब-वार ब्यौरा, FPPA, सोलर नेट मीटरिंग। मुफ़्त, तुरंत, बिना साइन-अप।',
+  },
+  mr: {
+    title: 'मोफत वीज बिल कॅल्क्युलेटर — भारतातील 66 डिस्कॉम',
+    desc: 'भारतातील 65 डिस्कॉमचे स्लॅब दर पाहा आणि तुमचे वीज बिल 30 सेकंदांत काढा — स्लॅबनिहाय तपशील, FPPA आणि वीज शुल्कासह.',
+    social: 'कोणत्याही भारतीय डिस्कॉमसाठी तुमचे अंदाजे वीज बिल काढा. सर्व राज्ये व केंद्रशासित प्रदेश, स्लॅबनिहाय तपशील, FPPA, सोलर नेट मीटरिंग. मोफत, तात्काळ, साइन-अप नाही.',
+  },
+  ta: {
+    title: 'இலவச மின் கட்டண கணிப்பான் — இந்தியாவின் 66 DISCOM',
+    desc: 'இந்தியாவின் 65 DISCOM அடுக்கு விகிதங்கள். மின் கட்டணத்தை 30 வினாடிகளில் கணக்கிடுங்கள் — FPPA, மின் வரி உட்பட.',
+    social: 'எந்த இந்திய DISCOM-க்கும் உங்கள் தற்காலிக மின் கட்டணத்தைக் கணக்கிடுங்கள். அனைத்து மாநிலங்கள் மற்றும் யூனியன் பிரதேசங்கள், அடுக்கு வாரியான விவரம், FPPA, சூரிய நெட் மீட்டரிங். இலவசம், உடனடி, பதிவு தேவையில்லை.',
+  },
+};
+
+// Replace the inner content of every element carrying `attr`. Walks tags at depth rather than
+// regexing to the first close tag, because keyed elements here do contain nested markup (the
+// hero <dt>s wrap a <span> and an <em>) and stopping early would strand a closing tag.
+function replaceKeyedInner(html, attr, pick) {
+  const open = new RegExp(`<([a-z0-9]+)\\b[^>]*\\b${attr}="([^"]+)"[^>]*>`, 'gi');
+  const out = [];
+  let last = 0, m;
+  while ((m = open.exec(html))) {
+    const [full, tag, key] = m;
+    if (full.endsWith('/>')) continue;
+    const value = pick(key);
+    if (value == null) continue;
+
+    const walk = new RegExp(`<(/?)${tag}\\b[^>]*>`, 'gi');
+    walk.lastIndex = open.lastIndex;
+    let depth = 1, close = null, w;
+    while ((w = walk.exec(html))) {
+      depth += w[1] ? -1 : 1;
+      if (depth === 0) { close = w; break; }
+    }
+    if (!close) continue;                       // unbalanced — leave the element untouched
+
+    out.push(html.slice(last, open.lastIndex), value);
+    last = close.index;
+    open.lastIndex = close.index;
+  }
+  out.push(html.slice(last));
+  return out.join('');
+}
+
+// Remove a whole <section …> whose opening tag contains `marker`, matching its close by depth
+// so nested <section>s inside it cannot end it early.
+function stripSection(html, marker) {
+  const open = new RegExp(`<section\\b[^>]*${marker.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[^>]*>`, 'i');
+  const m = open.exec(html);
+  if (!m) return html;
+  const walk = /<(\/?)section\b[^>]*>/gi;
+  walk.lastIndex = m.index + m[0].length;
+  let depth = 1, w;
+  while ((w = walk.exec(html))) {
+    depth += w[1] ? -1 : 1;
+    if (depth === 0) return html.slice(0, m.index) + html.slice(w.index + w[0].length);
+  }
+  return html;                                   // unbalanced — leave the page intact
+}
+
+// Remove one node of a given @type from the page's JSON-LD, leaving everything else in place.
+//
+// Node, not block. The homepage keeps Organization, WebSite, WebApplication and FAQPage in a
+// SINGLE @graph, so dropping the script element to be rid of the FAQ would take the site's
+// entity definitions with it — the very nodes that were added so the other 556 pages could
+// resolve their publisher. Only when a block is left with nothing does the block itself go.
+function stripJsonLdNode(html, type) {
+  const re = /<script type="application\/ld\+json">([\s\S]*?)<\/script>\s*/gi;
+  return html.replace(re, (full, body) => {
+    let o;
+    try { o = JSON.parse(body); }
+    catch { return full; }                  // unparseable: not the place to fail a build
+    const is = (n) => [].concat(n['@type'] || []).includes(type);
+    if (Array.isArray(o['@graph'])) {
+      const kept = o['@graph'].filter(n => !is(n));
+      if (kept.length === o['@graph'].length) return full;
+      if (!kept.length) return '';
+      return `<script type="application/ld+json">${JSON.stringify({ ...o, '@graph': kept })}</script>\n  `;
+    }
+    return is(o) ? '' : full;
+  });
+}
+
+const homeAlternates = () => [
+  `  <link rel="alternate" hreflang="en-IN" href="${SITE}/">`,
+  ...VERNACULARS.map(l => `  <link rel="alternate" hreflang="${LANG_LOCALE[l]}" href="${SITE}/${l}/">`),
+  `  <link rel="alternate" hreflang="x-default" href="${SITE}/">`,
+].join('\n');
+
+function vernacularHomepage(lang, src, hasTwin) {
+  const dict = STRINGS[lang];
+  const meta = HOME_META[lang];
+  const YEAR = String(new Date().getFullYear());
+  const look = (key) => (dict[key] == null ? null : String(dict[key]).replace(/\{year\}/g, YEAR));
+
+  let h = src;
+
+  // 1. Body text, exactly as js/i18n.js does it: data-i18n sets textContent (so the value is
+  //    escaped), data-i18n-html sets innerHTML (so it is not), data-i18n-ph sets a placeholder.
+  h = replaceKeyedInner(h, 'data-i18n', k => { const v = look(k); return v == null ? null : esc(v); });
+  h = replaceKeyedInner(h, 'data-i18n-html', look);
+  h = h.replace(/<(input|textarea)\b([^>]*\bdata-i18n-ph="([^"]+)"[^>]*)>/gi, (full, tag, attrs, key) => {
+    const v = look(key);
+    if (v == null) return full;
+    const next = /\bplaceholder="[^"]*"/.test(attrs)
+      ? attrs.replace(/\bplaceholder="[^"]*"/, `placeholder="${esc(v)}"`)
+      : `${attrs} placeholder="${esc(v)}"`;
+    return `<${tag}${next}>`;
+  });
+
+  h = h.replace('<html lang="en"', `<html lang="${lang}"`);
+
+  // 2. Head metadata. The English page distinguishes SERP, og and twitter copy; the twins keep
+  //    one title and two descriptions, which is the honest amount of copy to hand-maintain.
+  const url = `${SITE}/${lang}/`;
+  h = h.replace(/<title>[^<]*<\/title>/, `<title>${esc(meta.title)}</title>`);
+  h = h.replace(/(<meta name="description" content=")[^"]*(">)/, `$1${esc(meta.desc)}$2`);
+  h = h.replace(/(<meta property="og:title" content=")[^"]*(">)/, `$1${esc(meta.title)}$2`);
+  h = h.replace(/(<meta property="og:description" content=")[^"]*(">)/, `$1${esc(meta.social)}$2`);
+  h = h.replace(/(<meta name="twitter:title" content=")[^"]*(">)/, `$1${esc(meta.title)}$2`);
+  h = h.replace(/(<meta name="twitter:description" content=")[^"]*(">)/, `$1${esc(meta.social)}$2`);
+  h = h.replace(/(<meta property="og:url" content=")[^"]*(">)/, `$1${url}$2`);
+  h = h.replace(/(<meta property="og:locale" content=")[^"]*(">)/, `$1${OG_LOCALE[lang]}$2`);
+  h = h.replace(/(<link rel="canonical" href=")[^"]*(">)/, `$1${url}$2`);
+
+  // 3. Assets. index.html references these RELATIVE to itself ("css/…", "js/…"); at a depth of
+  //    one they would resolve to /hi/css/… and 404, and the page would render unstyled and
+  //    inert rather than visibly broken. Rooted here.
+  h = h.replace(/\b(href|src)="(?!https?:|\/|#|data:|mailto:)([^"]+)"/g, (full, attr, rel) =>
+    /^(css|js|og|fonts|manifest\.webmanifest|sw\.js)\b/.test(rel) ? `${attr}="/${rel}"` : full);
+
+  // 4. Internal links point at the twin WHERE ONE EXISTS, and are left alone where it does not
+  //    — a /hi/ link to a page with no Hindi version is a 404, which is worse than an honest
+  //    switch back to English mid-journey. Existence is read off disk rather than inferred from
+  //    a path pattern, so this cannot claim a twin the build did not actually emit.
+  h = h.replace(/\bhref="(\/[^"#?]*)"/g, (full, href) =>
+    hasTwin(href, lang) ? `href="/${lang}${href}"` : full);
+
+  // 5. The four-way cluster, on every variant including itself — an alternate set that omits
+  //    the page declaring it is unconfirmed, and Google drops the lot.
+  //    Stripped before it is added: the source is the ALREADY-STAMPED English page, so simply
+  //    appending gave every twin the cluster twice.
+  h = h.replace(/\n\s*<link rel="alternate" hreflang="[^"]*" href="[^"]*">/g, '');
+  h = h.replace(/(<link rel="canonical"[^>]*>)/, `$1\n${homeAlternates()}`);
+
+  // 6. Persist the language before the i18n layer runs. Without this a reader whose stored
+  //    language is English lands on /hi/ from a search result, initI18n() reads 'en', finds the
+  //    en-IN alternate we just added, and redirects them straight back off the page. The same
+  //    line is what layout() writes on every other vernacular page.
+  h = h.replace('document.documentElement.classList.add(\'js\');',
+    `document.documentElement.classList.add('js');\n        try { localStorage.setItem('lang', '${lang}'); } catch (e) {}`);
+
+  // 7. The FAQ comes out of the twins entirely — the visible <section id="faq"> AND the
+  //    FAQPage JSON-LD that describes it, together, because they have to agree.
+  //
+  //    The six question-and-answer pairs are the only substantial prose on this page carrying
+  //    no data-i18n key: they are plain English in the markup, so the transform cannot reach
+  //    them. Leaving them in would ship a Hindi page with ~700 English words in the middle of
+  //    it, under an hreflang tag promising Hindi — which is worse for a reader and worse for
+  //    Google than a shorter page that is wholly Hindi. The twin still runs ~1,600 words.
+  //
+  //    Translating the pairs and keying them is the follow-up that brings the section back.
+  //    Note it also removes the "Still think your bill is wrong?" aside, which lives inside
+  //    the same section and is the page's link into /bill-review/.
+  h = stripSection(h, 'id="faq"');
+  h = stripJsonLdNode(h, 'FAQPage');
+
+  return h;
+}
+
+// Emits the three twins and stamps the same cluster onto the English homepage, which until now
+// declared no alternates at all.
+function buildVernacularHomepages() {
+  const srcPath = path.join(ROOT, 'index.html');
+  let src = fs.readFileSync(srcPath, 'utf8');
+
+  // The English page joins its own cluster. Idempotent: strip any previous block first.
+  src = src.replace(/\n\s*<link rel="alternate" hreflang="[^"]*" href="[^"]*">/g, '');
+  const stamped = src.replace(/(<link rel="canonical"[^>]*>)/, `$1\n${homeAlternates()}`);
+  if (stamped !== src) writeWithRetry(srcPath, stamped);
+  src = stamped;
+
+  const hasTwin = (href, lang) => {
+    if (href === '/') return true;                       // the homepage twin is what we are building
+    const rel = href.replace(/^\/+|\/+$/g, '');
+    if (!rel) return false;
+    return fs.existsSync(path.join(ROOT, lang, rel, 'index.html'))
+        || fs.existsSync(path.join(ROOT, lang, `${rel}.html`));
+  };
+
+  let written = 0;
+  for (const lang of VERNACULARS) {
+    const html = vernacularHomepage(lang, src, hasTwin);
+    emitPage(lang, html);
+    written++;
+  }
+  return { written };
+}
+
 // ── Entity graph stamp ───────────────────────────────────────────────────────
 // layout() gives every generated page its own #org and #website nodes, so the publisher /
 // isPartOf / author references on those pages resolve. The ~20 hand-authored pages —
@@ -7903,6 +8131,9 @@ export function generateSeo() {
   // After stampBillCalculator, which rewrites a hand-authored page wholesale, and before
   // inlineFontCss/buildContentCss, which read the final markup.
   const graph = stampEntityGraph();
+  // Reads the finished index.html, so it runs after every stamp that rewrites it and
+  // before the CSS builders, which derive their sheets from the markup on disk.
+  const vernHomes = buildVernacularHomepages();
   const fontPages = inlineFontCss();
   const searchEntries = writeSearchIndex(states);
   const cssKb = writeMinifiedCss();
@@ -7914,7 +8145,7 @@ export function generateSeo() {
   const homeCss = buildHomeCss({ quiet: true });
   const sw = stampServiceWorker();
 
-  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + homepage states ${homeStates.cards} in ${homeStates.regions} regions + /bill-calculator/ ${(billCalc.bytes/1024).toFixed(0)} KB + footer ${footer.changed}/${footer.scanned} + entity graph ${graph.changed}/${graph.scanned} + homepage coverage ${coverage.S}/${coverage.D}/${coverage.C}/${coverage.T} + inline @font-face on ${fontPages} pages + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + content.min.css (${(content.bytes/1024).toFixed(0)} KB) + home.min.css (${(homeCss.bytes/1024).toFixed(0)} KB) + sw ${sw.version} (${sw.hashed} assets)`);
+  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + homepage states ${homeStates.cards} in ${homeStates.regions} regions + /bill-calculator/ ${(billCalc.bytes/1024).toFixed(0)} KB + footer ${footer.changed}/${footer.scanned} + entity graph ${graph.changed}/${graph.scanned} + vernacular homepages ${vernHomes.written} + homepage coverage ${coverage.S}/${coverage.D}/${coverage.C}/${coverage.T} + inline @font-face on ${fontPages} pages + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + content.min.css (${(content.bytes/1024).toFixed(0)} KB) + home.min.css (${(homeCss.bytes/1024).toFixed(0)} KB) + sw ${sw.version} (${sw.hashed} assets)`);
   return { pages, states: states.length };
 }
 
