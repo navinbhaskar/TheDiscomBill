@@ -124,9 +124,13 @@
           <span data-i18n="nav.alerts">Alerts</span>
           <span class="alerts-dot" aria-hidden="true"></span>
         </button>
+        <!-- The placeholder mirrors the hydrated menu's shape on purpose. It used to be a
+             single "Loading alerts..." line plus the footer link, which made the closed menu
+             92px tall; hydration then took it to 549px and pushed "See all alerts" 461px down
+             the screen, out from under the pointer of anyone reaching for it. Same rows, same
+             box, nothing moves. -->
         <div class="nav-dropdown-menu alerts-menu" id="alertsMenu" role="menu" aria-label="Recent public alerts" data-lenis-prevent>
-          <div class="alerts-loading">Loading alerts...</div>
-          <a href="/alerts/" class="alerts-see-all">See all alerts</a>
+          <div class="alerts-nav-head"><strong>Latest updates</strong><span>Loading…</span></div><ol class="alerts-nav-list alerts-skeleton" aria-hidden="true"><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li></ol><a href="/alerts/" class="alerts-see-all">See all alerts</a>
         </div>
       </div>
       <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved

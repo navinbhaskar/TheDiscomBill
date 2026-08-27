@@ -658,7 +658,7 @@ function initAlertsNavShell() {
         <span class="alerts-dot" aria-hidden="true"></span>
       </button>
       <div class="nav-dropdown-menu alerts-menu" id="alertsMenu" role="menu" aria-label="Recent public alerts" data-lenis-prevent>
-        <div class="alerts-loading">Loading alerts...</div>
+        <div class="alerts-nav-head"><strong>Latest updates</strong><span>Loading…</span></div><ol class="alerts-nav-list alerts-skeleton" aria-hidden="true"><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li></ol><a href="/alerts/" class="alerts-see-all">See all alerts</a>
       </div>`;
 
     const anchor = document.getElementById('quickLinksDropdown') || document.getElementById('langSwitch');
@@ -677,7 +677,9 @@ function initAlertsNavShell() {
     if (hydrated) return;
     hydrated = true;
     import('./alerts-ui.js').then((m) => m.renderAlertsDropdown(menu)).catch(() => {
-      menu.innerHTML = '<div class="alerts-loading">Alerts are unavailable right now.</div><a href="/alerts/" class="alerts-see-all">Open alerts page</a>';
+      menu.innerHTML = '<div class="alerts-nav-head"><strong>Latest updates</strong></div>'
+        + '<p class="alerts-loading">Could not load the latest alerts. The full list still works.</p>'
+        + '<a href="/alerts/" class="alerts-see-all">Open the alerts page</a>';
     });
   };
   const close = () => {
