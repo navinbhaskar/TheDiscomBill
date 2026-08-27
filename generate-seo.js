@@ -5317,11 +5317,16 @@ function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url, lang = 'en' } =
     SERC या सरकारी निकाय से संबद्ध नहीं हैं।`)}</p>
   </section>`;
 
+  const isAlias = canonicalUrl !== url;
   return layout({
-    title, description, canonical: SITE + langUrl(canonicalUrl, lang), page: canonicalUrl, lang,
-    // /fuel-surcharge/ canonicalises here and gets no alternates of its own; the tracker itself
-    // now has a Hindi twin, and an alternate set must agree with the canonical it points at.
-    altLangs: canonicalUrl === url ? ['hi'] : [],
+    title, description, canonical: SITE + langUrl(canonicalUrl, lang), lang,
+    // The alias gets NO hreflang at all. Passing `page` here emitted the cluster belonging to
+    // the canonical target, so /fuel-surcharge/ was serving /fppa/'s alternate set — a set
+    // that does not name /fuel-surcharge/ anywhere, so nothing returned the reference. A
+    // page that canonicalises away has nothing to say about language variants: the canonical
+    // already hands Google to /fppa/, and /fppa/ carries the real cluster.
+    page: isAlias ? null : canonicalUrl,
+    altLangs: isAlias ? [] : ['hi'],
     jsonld: [breadcrumbJsonLd([{ name: t('Home', 'होम'), url: '/' }, { name: t('Surcharge Tracker', 'अधिभार ट्रैकर'), url: langUrl(canonicalUrl, lang) }])],
     body,
   });
@@ -6982,7 +6987,10 @@ function buildSitemap(states) {
   // changefreq monthly is literal here — the underlying FPPA notices are published month by
   // month. The tracker has a Hindi twin (and only Hindi: see the emit block).
   urls.push({ loc: '/fppa/', priority: '0.85', changefreq: 'monthly', langs: ['hi'] });
-  urls.push({ loc: '/fuel-surcharge/', priority: '0.3', changefreq: 'monthly' });
+  // /fuel-surcharge/ is deliberately NOT here. It canonicalises to /fppa/ and duplicates its
+  // title and description, so listing it asked Google to crawl a page whose only instruction
+  // is "index the other one instead". The URL still resolves 200 for anyone holding the old
+  // link; it just stops being advertised.
   for (const state of fppaCoverageStates()) {
     const stateSlug = slugify(state);
     urls.push({ loc: `/fppa/${stateSlug}/`, priority: '0.75', changefreq: 'monthly', langs: ['hi'] });
