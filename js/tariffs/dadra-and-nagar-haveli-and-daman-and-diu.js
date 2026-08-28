@@ -1,65 +1,72 @@
-// Dadra & Nagar Haveli and Daman & Diu — Electricity Tariff Data (2024-25)
-// Source: Publicly available tariff orders from the respective SERC.
-// To update rates: edit energySlabs, fixedCharge, or additionalCharges below.
-// See TARIFF_GUIDE.md for the complete field schema and step-by-step instructions.
+// Dadra & Nagar Haveli and Daman & Diu - Electricity Tariff Data (FY 2026-27)
+// Source: JERC Petition 145/2025, DNHDDPDCL MYT retail tariff order dated 17-Sep-2025.
 
 export default {
   state: "Dadra & Nagar Haveli and Daman & Diu",
+  ratesAsOf: "FY 2026-27 (JERC Petition 145/2025, DNHDDPDCL MYT tariff schedule)",
+  currentRatesFrom: "2026-04-01",
+  verifiedOn: "2026-08-28",
+  sourceUrl: "https://jercuts.gov.in/wp-content/uploads/2025/09/dnhddpdcl-ready-to-upload-order-1.pdf",
   discoms: [
     {
       id: "dnhpdcl",
-      name: "DNHPDCL",
-      fullName: "DNH Power Distribution Corporation Ltd.",
+      name: "DNHDDPDCL",
+      fullName: "DNH and DD Power Distribution Corporation Limited",
       area: "Dadra & Nagar Haveli and Daman & Diu",
-      tariffYear: "2024-25",
-      website: "https://www.dnhpdcl.co.in",
+      tariffYear: "2026-27",
+      website: "https://www.dnhddpcl.in",
+      sourceUrl: "https://jercuts.gov.in/wp-content/uploads/2025/09/dnhddpdcl-ready-to-upload-order-1.pdf",
+      ratesAsOf: "FY 2026-27 column of JERC Table 10-1",
       categories: [
         {
           id: "domestic",
-          name: "LT Domestic",
-          fixedCharge: 30,
+          name: "LTDS-II Domestic",
+          fixedCharge: { type: "per_kw", rate: 10 },
           energySlabs: [
             {
-              limit: 50,
-              rate: 1.5
-            },
-            {
               limit: 100,
-              rate: 2
+              rate: 1.85
             },
             {
               limit: 200,
-              rate: 3
+              rate: 2.5
+            },
+            {
+              limit: 300,
+              rate: 3.15
+            },
+            {
+              limit: 400,
+              rate: 3.25
             },
             {
               limit: Infinity,
-              rate: 4.5
+              rate: 3.8
             }
           ],
-          // No domestic electricity duty. CEA records Nil for Dadra & Nagar Haveli and Daman & Diu in both the FY2021-22 and
-          // FY2023-24 editions of its duty compilation, so the 5% we carried here was not a rate
-          // that has since changed — it was never levied. Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge
-          // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+          notes: "Demand-based domestic tariff from JERC Table 10-1. LTDS-I lifeline and LTDS-III mixed-use domestic premises are separate sub-categories not selected by default.",
           additionalCharges: []
         },
         {
           id: "commercial",
-          name: "LT Commercial",
-          fixedCharge: 60,
+          name: "NDS-I Non-Domestic",
+          demandUnit: "kVA",
+          fixedCharge: { type: "per_kva", rate: 25 },
           energySlabs: [
             {
               limit: 100,
-              rate: 4.5
+              rate: 3.75
+            },
+            {
+              limit: 200,
+              rate: 4.85
             },
             {
               limit: Infinity,
-              rate: 6
+              rate: 5
             }
           ],
-          // No domestic electricity duty. CEA records Nil for Dadra & Nagar Haveli and Daman & Diu in both the FY2021-22 and
-          // FY2023-24 editions of its duty compilation, so the 5% we carried here was not a rate
-          // that has since changed — it was never levied. Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge
-          // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+          notes: "NDS-I uses kVAh energy billing and a kVA demand charge in the JERC MYT schedule. Hotels, religious premises, government premises and EV charging have separate non-domestic sub-categories.",
           additionalCharges: []
         }
       ]

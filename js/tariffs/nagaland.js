@@ -1,41 +1,70 @@
-// Nagaland — Electricity Tariff Data (2024-25)
-// Source: Publicly available tariff orders from the respective SERC.
-// To update rates: edit energySlabs, fixedCharge, or additionalCharges below.
-// See TARIFF_GUIDE.md for the complete field schema and step-by-step instructions.
+// Nagaland - Electricity Tariff Data (FY 2025-26)
+// Source: Public FY 2025-26 tariff proposal notice and the official FY 2026-27 public notice
+// confirming a NERC MYT tariff order dated 28-Mar-2025. FY 2026-27 rates remain proposals until
+// NERC issues the final order.
 
 export default {
   state: "Nagaland",
+  ratesAsOf: "FY 2025-26 (NERC MYT tariff order dated 28-Mar-2025; FY 2026-27 petition pending)",
+  currentRatesFrom: "2025-04-01",
+  verifiedOn: "2026-08-28",
+  sourceUrl: "https://ipr.nagaland.gov.in/POWER-DEPARTMENT-ISSUES-PUBLIC-NOTICE-FOR-APPROVAL-OF-ARR",
+  notes: "The DIPR public notice dated 04-Aug-2026 says the FY 2026-27 tariff petition is only proposed, for 01-Oct-2026 to 31-Mar-2027, and may be amended by NERC. Those proposed rates are not used as current calculator rates.",
   discoms: [
     {
       id: "doe_nagaland",
       name: "DoE Nagaland",
       fullName: "Department of Electricity, Government of Nagaland",
       area: "Entire Nagaland",
-      tariffYear: "2024-25",
+      tariffYear: "2025-26",
       website: "https://nagaland.gov.in",
+      sourceUrl: "https://ipr.nagaland.gov.in/POWER-DEPARTMENT-ISSUES-PUBLIC-NOTICE-FOR-APPROVAL-OF-ARR",
+      ratesAsOf: "FY 2025-26 public tariff schedule pending direct final-order PDF access",
       categories: [
         {
           id: "domestic",
-          name: "LT Domestic",
-          fixedCharge: 35,
+          name: "Category A Domestic - Post-paid",
+          fixedCharge: 10,
           energySlabs: [
             {
-              limit: 50,
-              rate: 2.5
+              limit: 30,
+              rate: 5.9
             },
             {
               limit: 100,
-              rate: 4
+              rate: 6.4
+            },
+            {
+              limit: 250,
+              rate: 7.15
             },
             {
               limit: Infinity,
-              rate: 6
+              rate: 7.8
             }
           ],
-          // No domestic electricity duty. CEA records Nil for Nagaland in both the FY2021-22 and
-          // FY2023-24 editions of its duty compilation, so the 5% we carried here was not a rate
-          // that has since changed — it was never levied. Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge
-          // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+          notes: "Post-paid domestic energy tariff. Public-lighting recovery of Rs 10/connection/month for domestic consumers is modelled as the fixed charge because the public notice lists it as a monthly per-connection charge.",
+          additionalCharges: []
+        },
+        {
+          id: "commercial",
+          name: "Category D Commercial - Post-paid",
+          fixedCharge: 15,
+          energySlabs: [
+            {
+              limit: 60,
+              rate: 8.15
+            },
+            {
+              limit: 240,
+              rate: 9.45
+            },
+            {
+              limit: Infinity,
+              rate: 9.85
+            }
+          ],
+          notes: "Post-paid commercial energy tariff. Public-lighting recovery of Rs 15/connection/month for commercial consumers is modelled as the fixed charge.",
           additionalCharges: []
         }
       ]

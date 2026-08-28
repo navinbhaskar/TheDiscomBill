@@ -1,6 +1,6 @@
-// Arunachal Pradesh - Electricity Tariff Data (FY 2024-25)
-// Source analysed: APSERC retail supply tariff order for APDOP, issued 26-Jul-2024.
-// The order is effective from 01-Jul-2024 and remains in force until 31-Mar-2025 unless amended.
+// Arunachal Pradesh - Electricity Tariff Data (FY 2026-27)
+// Source analysed: APSERC order on Petition TP-10 of 2025, issued 31-Mar-2026.
+// APSERC carried forward the existing single-part retail tariff for FY 2026-27.
 // APSERC here is Arunachal Pradesh State Electricity Regulatory Commission.
 
 const flat = (rate) => [
@@ -14,7 +14,7 @@ const NO_FIXED_CHARGE = 0;
 const NO_MINIMUM_CHARGE = 0;
 
 const SINGLE_PART_NOTE =
-  "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.";
+  "APSERC continued a single-part retail tariff for FY 2026-27. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model.";
 
 const REBATE_NOTE =
   "Post-paid consumers receive a 3% rebate on current bills paid within the due date. Prepaid consumers receive a 5% rebate on recharge amount. Rebates are not automatically deducted by this calculator.";
@@ -62,10 +62,10 @@ const supply = (id, name, rate, meterCharge, description) => ({
 
 export default {
   state: "Arunachal Pradesh",
-  ratesAsOf: "FY 2024-25 APSERC retail supply tariff order for APDOP",
-  currentRatesFrom: "2024-07-01",
-  verifiedOn: "2026-08-19",
-  sourceUrl: "https://apserc.nic.in",
+  ratesAsOf: "FY 2026-27 APSERC order on Petition TP-10 of 2025 for APDOP",
+  currentRatesFrom: "2026-04-01",
+  verifiedOn: "2026-08-28",
+  sourceUrl: "https://apserc.nic.in/pdf/Orders/2026/Order%20on%20Petition%20TP%2010%20of%202025,APDOP.pdf",
   notes: `${SINGLE_PART_NOTE} ${REBATE_NOTE} Prepaid consumers have nil monthly energy meter rent under Schedule-II.`,
   discoms: [
     {
@@ -73,9 +73,9 @@ export default {
       name: "APDOP / Dept. of Power",
       fullName: "Department of Power, Government of Arunachal Pradesh",
       area: "Entire Arunachal Pradesh",
-      tariffYear: "2024-25",
+      tariffYear: "2026-27",
       website: "https://appdcl.in",
-      sourceUrl: "https://apserc.nic.in",
+      sourceUrl: "https://apserc.nic.in/pdf/Orders/2026/Order%20on%20Petition%20TP%2010%20of%202025,APDOP.pdf",
       lpscRate: 2,
       notes:
         "Late payment penalty is simple interest at 2% for each successive 30-day period or part thereof until the bill is paid.",
@@ -88,35 +88,35 @@ export default {
             supply(
               "domestic_lt_single_phase",
               "Domestic LT - 1-phase 230 V",
-              4.0,
+              4.4,
               ltSingleMeterRent,
               "Domestic and non-commercial LT single-phase consumers."
             ),
             supply(
               "domestic_lt_three_phase",
               "Domestic LT - 3-phase 400 V",
-              4.0,
+              4.4,
               ltThreeMeterRent,
               "Domestic and non-commercial LT three-phase consumers."
             ),
             supply(
               "domestic_kjp_bpl",
               "Kutir Jyoti / BPL connection",
-              2.65,
+              3.0,
               ltSingleMeterRent,
               "Kutir Jyoti and BPL domestic connections."
             ),
             supply(
               "domestic_ht_11kv",
               "Domestic HT - 11 kV",
-              3.4,
+              3.8,
               ht11MeterRent,
               "Domestic and non-commercial consumers supplied at 11 kV."
             ),
             supply(
               "domestic_ht_33kv",
               "Domestic HT - 33 kV",
-              3.25,
+              3.65,
               ht33MeterRent,
               "Domestic and non-commercial consumers supplied at 33 kV."
             )
@@ -130,28 +130,28 @@ export default {
             supply(
               "commercial_lt_single_phase",
               "Commercial LT - 1-phase 230 V",
-              5.0,
+              5.65,
               ltSingleMeterRent,
               "Commercial and non-industrial LT single-phase consumers."
             ),
             supply(
               "commercial_lt_three_phase",
               "Commercial LT - 3-phase 400 V",
-              5.0,
+              5.65,
               ltThreeMeterRent,
               "Commercial and non-industrial LT three-phase consumers."
             ),
             supply(
               "commercial_ht_11kv",
               "Commercial HT - 11 kV",
-              4.2,
+              4.85,
               ht11MeterRent,
               "Commercial and non-industrial consumers supplied at 11 kV."
             ),
             supply(
               "commercial_ht_33kv",
               "Commercial HT - 33 kV",
-              4.0,
+              4.65,
               ht33MeterRent,
               "Commercial and non-industrial consumers supplied at 33 kV."
             )
@@ -165,28 +165,28 @@ export default {
             supply(
               "public_lt_single_phase",
               "Public lighting / water LT - 1-phase 230 V",
-              5.1,
+              5.75,
               ltSingleMeterRent,
               "Public lighting and water supply LT single-phase consumers."
             ),
             supply(
               "public_lt_three_phase",
               "Public lighting / water LT - 3-phase 400 V",
-              5.1,
+              5.75,
               ltThreeMeterRent,
               "Public lighting and water supply LT three-phase consumers."
             ),
             supply(
               "public_ht_11kv",
               "Public lighting / water HT - 11 kV",
-              4.2,
+              4.85,
               ht11MeterRent,
               "Public lighting and water supply consumers supplied at 11 kV."
             ),
             supply(
               "public_ht_33kv",
               "Public lighting / water HT - 33 kV",
-              4.0,
+              4.65,
               ht33MeterRent,
               "Public lighting and water supply consumers supplied at 33 kV."
             )
@@ -200,28 +200,28 @@ export default {
             supply(
               "agriculture_lt_single_phase",
               "Agricultural LT - 1-phase 230 V",
-              3.1,
+              3.5,
               ltSingleMeterRent,
               "Agricultural LT single-phase consumers."
             ),
             supply(
               "agriculture_lt_three_phase",
               "Agricultural LT - 3-phase 400 V",
-              3.1,
+              3.5,
               ltThreeMeterRent,
               "Agricultural LT three-phase consumers."
             ),
             supply(
               "agriculture_ht_11kv",
               "Agricultural HT - 11 kV",
-              2.75,
+              3.15,
               ht11MeterRent,
               "Agricultural consumers supplied at 11 kV."
             ),
             supply(
               "agriculture_ht_33kv",
               "Agricultural HT - 33 kV",
-              2.65,
+              3.05,
               ht33MeterRent,
               "Agricultural consumers supplied at 33 kV."
             )
@@ -236,35 +236,35 @@ export default {
             supply(
               "industrial_lt_single_phase",
               "Industrial LT - 1-phase 230 V",
-              4.3,
+              4.95,
               ltSingleMeterRent,
               "Industrial LT single-phase consumers."
             ),
             supply(
               "industrial_lt_three_phase",
               "Industrial LT - 3-phase 400 V",
-              4.3,
+              4.95,
               ltThreeMeterRent,
               "Industrial LT three-phase consumers."
             ),
             supply(
               "industrial_ht_11kv",
               "Industrial HT - 11 kV",
-              3.85,
+              4.5,
               ht11MeterRent,
               "Industrial consumers supplied at 11 kV."
             ),
             supply(
               "industrial_ht_33kv",
               "Industrial HT - 33 kV",
-              3.5,
+              4.15,
               ht33MeterRent,
               "Industrial consumers supplied at 33 kV."
             ),
             supply(
               "industrial_ht_132kv",
               "Industrial HT - 132 kV",
-              3.35,
+              4.0,
               ht132MeterRent,
               "Industrial consumers supplied at 132 kV."
             )
@@ -278,21 +278,21 @@ export default {
             supply(
               "bulk_mixed_ht_11kv",
               "Bulk mixed HT - 11 kV",
-              3.75,
+              4.4,
               ht11MeterRent,
               "Bulk mixed consumers supplied at 11 kV."
             ),
             supply(
               "bulk_mixed_ht_33kv",
               "Bulk mixed HT - 33 kV",
-              3.4,
+              4.05,
               ht33MeterRent,
               "Bulk mixed consumers supplied at 33 kV."
             ),
             supply(
               "bulk_mixed_ht_132kv",
               "Bulk mixed HT - 132 kV and above",
-              3.25,
+              3.9,
               ht132MeterRent,
               "Bulk mixed consumers supplied at 132 kV and above."
             )
@@ -307,14 +307,14 @@ export default {
             supply(
               "temporary_lt_single_phase",
               "Temporary LT - 1-phase 230 V",
-              6.5,
+              9.0,
               ltSingleMeterRent,
               "Temporary LT single-phase consumers."
             ),
             supply(
               "temporary_lt_three_phase",
               "Temporary LT - 3-phase 400 V",
-              6.5,
+              9.0,
               ltThreeMeterRent,
               "Temporary LT three-phase consumers."
             )

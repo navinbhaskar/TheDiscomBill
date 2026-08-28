@@ -4804,6 +4804,44 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .db-tick { color: var(--ok-text); font-weight: 800; }
 /* A gap is stated, not hidden — but it should not shout either. */
 .db-gap { color: var(--text-tertiary); font-style: italic; }
+.database-refresh .database-refresh-table { margin-top: 4px; }
+.seo-page .comparison-table-wrapper.database-refresh-table {
+  width: 100%;
+  max-width: min(900px, 100%);
+}
+.seo-page .comparison-table-wrapper.database-refresh-table table {
+  width: 900px;
+  table-layout: fixed;
+}
+.database-refresh-table th:nth-child(1), .database-refresh-table td:nth-child(1) { width: 22%; }
+.database-refresh-table th:nth-child(2), .database-refresh-table td:nth-child(2) { width: 25%; }
+.database-refresh-table th:nth-child(3), .database-refresh-table td:nth-child(3) { width: 15%; }
+.database-refresh-table th:nth-child(4), .database-refresh-table td:nth-child(4) { width: 24%; }
+.database-refresh-table th:nth-child(5), .database-refresh-table td:nth-child(5) { width: 14%; }
+.database-refresh-table td {
+  vertical-align: middle;
+  white-space: normal;
+}
+.db-status {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.db-status.is-current {
+  color: var(--ok-text);
+  background: color-mix(in srgb, var(--ok-text) 10%, var(--surface-card));
+  border: 1px solid color-mix(in srgb, var(--ok-text) 20%, transparent);
+}
+.db-status.is-pending {
+  color: var(--warn-text);
+  background: color-mix(in srgb, var(--warn-text) 12%, var(--surface-card));
+  border: 1px solid color-mix(in srgb, var(--warn-text) 24%, transparent);
+}
 .database-schema > summary {
   cursor: pointer; padding: 9px 13px; border-radius: var(--radius-md);
   background: var(--surface-card); border: 1px solid var(--border-default);

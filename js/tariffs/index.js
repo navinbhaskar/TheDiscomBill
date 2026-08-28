@@ -53,11 +53,11 @@ export const STATE_INFO = {
     },
     "Arunachal Pradesh": {
       "state": "Arunachal Pradesh",
-      "ratesAsOf": "FY 2024-25 APSERC retail supply tariff order for APDOP",
-      "currentRatesFrom": "2024-07-01",
-      "verifiedOn": "2026-08-19",
-      "sourceUrl": "https://apserc.nic.in",
-      "notes": "APSERC continued a single-part retail tariff for FY 2024-25. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Post-paid consumers receive a 3% rebate on current bills paid within the due date. Prepaid consumers receive a 5% rebate on recharge amount. Rebates are not automatically deducted by this calculator. Prepaid consumers have nil monthly energy meter rent under Schedule-II."
+      "ratesAsOf": "FY 2026-27 APSERC order on Petition TP-10 of 2025 for APDOP",
+      "currentRatesFrom": "2026-04-01",
+      "verifiedOn": "2026-08-28",
+      "sourceUrl": "https://apserc.nic.in/pdf/Orders/2026/Order%20on%20Petition%20TP%2010%20of%202025,APDOP.pdf",
+      "notes": "APSERC continued a single-part retail tariff for FY 2026-27. The schedule has energy charges only; no fixed charge or minimum monthly charge is applied in this model. Post-paid consumers receive a 3% rebate on current bills paid within the due date. Prepaid consumers receive a 5% rebate on recharge amount. Rebates are not automatically deducted by this calculator. Prepaid consumers have nil monthly energy meter rent under Schedule-II."
     },
     "Assam": {
       "state": "Assam",
@@ -81,7 +81,11 @@ export const STATE_INFO = {
       "sourceUrl": "https://cserc.gov.in/Welcome/show_tariff_orders"
     },
     "Dadra & Nagar Haveli and Daman & Diu": {
-      "state": "Dadra & Nagar Haveli and Daman & Diu"
+      "state": "Dadra & Nagar Haveli and Daman & Diu",
+      "ratesAsOf": "FY 2026-27 (JERC Petition 145/2025, DNHDDPDCL MYT tariff schedule)",
+      "currentRatesFrom": "2026-04-01",
+      "verifiedOn": "2026-08-28",
+      "sourceUrl": "https://jercuts.gov.in/wp-content/uploads/2025/09/dnhddpdcl-ready-to-upload-order-1.pdf"
     },
     "Delhi": {
       "state": "Delhi",
@@ -142,7 +146,11 @@ export const STATE_INFO = {
       "sourceUrl": "https://erckerala.org/orderpage"
     },
     "Ladakh": {
-      "state": "Ladakh"
+      "state": "Ladakh",
+      "ratesAsOf": "FY 2026-27 (JERC Order No. 05 of 2026 for LPDD)",
+      "currentRatesFrom": "2026-09-01",
+      "verifiedOn": "2026-08-28",
+      "sourceUrl": "https://jercjkl.jk.gov.in/pdf/LPDD%20%20Tariff%20Order%20for%20FY%202026-27%20R1.pdf"
     },
     "Madhya Pradesh": {
       "state": "Madhya Pradesh",
@@ -167,10 +175,19 @@ export const STATE_INFO = {
       "sourceUrl": "https://mserc.gov.in/tarifforders.html"
     },
     "Mizoram": {
-      "state": "Mizoram"
+      "state": "Mizoram",
+      "ratesAsOf": "FY 2026-27 (MZERC P&ED tariff order, subsidised tariff schedule)",
+      "currentRatesFrom": "2026-04-01",
+      "verifiedOn": "2026-08-28",
+      "sourceUrl": "https://mzerc.mizoram.gov.in/uploads/attachments/2026/03/7be5860da7dbbda3560a7e255caff169/ped-to-26-27-khp27mar26-evng-with-sign.pdf"
     },
     "Nagaland": {
-      "state": "Nagaland"
+      "state": "Nagaland",
+      "ratesAsOf": "FY 2025-26 (NERC MYT tariff order dated 28-Mar-2025; FY 2026-27 petition pending)",
+      "currentRatesFrom": "2025-04-01",
+      "verifiedOn": "2026-08-28",
+      "sourceUrl": "https://ipr.nagaland.gov.in/POWER-DEPARTMENT-ISSUES-PUBLIC-NOTICE-FOR-APPROVAL-OF-ARR",
+      "notes": "The DIPR public notice dated 04-Aug-2026 says the FY 2026-27 tariff petition is only proposed, for 01-Oct-2026 to 31-Mar-2027, and may be amended by NERC. Those proposed rates are not used as current calculator rates."
     },
     "Odisha": {
       "state": "Odisha",
@@ -270,9 +287,9 @@ export const DISCOM_INDEX = {
         "name": "APDOP / Dept. of Power",
         "fullName": "Department of Power, Government of Arunachal Pradesh",
         "area": "Entire Arunachal Pradesh",
-        "tariffYear": "2024-25",
+        "tariffYear": "2026-27",
         "website": "https://appdcl.in",
-        "sourceUrl": "https://apserc.nic.in",
+        "sourceUrl": "https://apserc.nic.in/pdf/Orders/2026/Order%20on%20Petition%20TP%2010%20of%202025,APDOP.pdf",
         "lpscRate": 2,
         "notes": "Late payment penalty is simple interest at 2% for each successive 30-day period or part thereof until the bill is paid."
       }
@@ -328,11 +345,13 @@ export const DISCOM_INDEX = {
     "Dadra & Nagar Haveli and Daman & Diu": [
       {
         "id": "dnhpdcl",
-        "name": "DNHPDCL",
-        "fullName": "DNH Power Distribution Corporation Ltd.",
+        "name": "DNHDDPDCL",
+        "fullName": "DNH and DD Power Distribution Corporation Limited",
         "area": "Dadra & Nagar Haveli and Daman & Diu",
-        "tariffYear": "2024-25",
-        "website": "https://www.dnhpdcl.co.in"
+        "tariffYear": "2026-27",
+        "website": "https://www.dnhddpcl.in",
+        "sourceUrl": "https://jercuts.gov.in/wp-content/uploads/2025/09/dnhddpdcl-ready-to-upload-order-1.pdf",
+        "ratesAsOf": "FY 2026-27 column of JERC Table 10-1"
       }
     ],
     "Delhi": [
@@ -527,8 +546,10 @@ export const DISCOM_INDEX = {
         "name": "LPDCL / Ladakh Power Dept.",
         "fullName": "Ladakh Power Development Corp. / Power Development Dept., Ladakh",
         "area": "Leh, Kargil districts",
-        "tariffYear": "2024-25",
-        "website": "https://ladakh.gov.in"
+        "tariffYear": "2026-27",
+        "website": "https://ladakh.gov.in",
+        "sourceUrl": "https://jercjkl.jk.gov.in/pdf/LPDD%20%20Tariff%20Order%20for%20FY%202026-27%20R1.pdf",
+        "ratesAsOf": "Subsidised FY 2026-27 tariff schedule effective 01-Sep-2026"
       }
     ],
     "Madhya Pradesh": [
@@ -625,8 +646,10 @@ export const DISCOM_INDEX = {
         "name": "P&E Dept., Mizoram",
         "fullName": "Power & Electricity Department, Government of Mizoram",
         "area": "Entire Mizoram",
-        "tariffYear": "2024-25",
-        "website": "https://mizoram.gov.in"
+        "tariffYear": "2026-27",
+        "website": "https://mizoram.gov.in",
+        "sourceUrl": "https://mzerc.mizoram.gov.in/uploads/attachments/2026/03/7be5860da7dbbda3560a7e255caff169/ped-to-26-27-khp27mar26-evng-with-sign.pdf",
+        "ratesAsOf": "Subsidised tariff approved for FY 2026-27, effective 01-Apr-2026"
       }
     ],
     "Nagaland": [
@@ -635,8 +658,10 @@ export const DISCOM_INDEX = {
         "name": "DoE Nagaland",
         "fullName": "Department of Electricity, Government of Nagaland",
         "area": "Entire Nagaland",
-        "tariffYear": "2024-25",
-        "website": "https://nagaland.gov.in"
+        "tariffYear": "2025-26",
+        "website": "https://nagaland.gov.in",
+        "sourceUrl": "https://ipr.nagaland.gov.in/POWER-DEPARTMENT-ISSUES-PUBLIC-NOTICE-FOR-APPROVAL-OF-ARR",
+        "ratesAsOf": "FY 2025-26 public tariff schedule pending direct final-order PDF access"
       }
     ],
     "Odisha": [

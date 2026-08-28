@@ -1,43 +1,64 @@
-// Ladakh — Electricity Tariff Data (2024-25)
-// Source: Publicly available tariff orders from the respective SERC.
-// To update rates: edit energySlabs, fixedCharge, or additionalCharges below.
-// See TARIFF_GUIDE.md for the complete field schema and step-by-step instructions.
+// Ladakh - Electricity Tariff Data (FY 2026-27)
+// Source: JERC for the UT of J&K and Ladakh, Order No. 05 of 2026, issued 18-Aug-2026.
 
 export default {
   state: "Ladakh",
+  ratesAsOf: "FY 2026-27 (JERC Order No. 05 of 2026 for LPDD)",
+  currentRatesFrom: "2026-09-01",
+  verifiedOn: "2026-08-28",
+  sourceUrl: "https://jercjkl.jk.gov.in/pdf/LPDD%20%20Tariff%20Order%20for%20FY%202026-27%20R1.pdf",
   discoms: [
     {
       id: "lpdcl",
       name: "LPDCL / Ladakh Power Dept.",
       fullName: "Ladakh Power Development Corp. / Power Development Dept., Ladakh",
       area: "Leh, Kargil districts",
-      tariffYear: "2024-25",
+      tariffYear: "2026-27",
       website: "https://ladakh.gov.in",
+      sourceUrl: "https://jercjkl.jk.gov.in/pdf/LPDD%20%20Tariff%20Order%20for%20FY%202026-27%20R1.pdf",
+      ratesAsOf: "Subsidised FY 2026-27 tariff schedule effective 01-Sep-2026",
       categories: [
         {
           id: "domestic",
-          // Domestic electricity duty: 15% of energy. CEA records duty on the energy charge only for this state.
-          // Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply
-          // in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge.
-          // https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
           additionalCharges: [{ name: "Electricity Duty", type: "percent_energy", rate: 15 }],
-          name: "LT Domestic",
-          fixedCharge: 20,
+          name: "Metered Domestic",
+          fixedCharge: { type: "per_kw", rate: 13 },
           energySlabs: [
             {
-              limit: 50,
-              rate: 0.5
+              limit: 200,
+              rate: 2.35
             },
             {
-              limit: 100,
-              rate: 1
+              limit: 400,
+              rate: 4.1
             },
             {
               limit: Infinity,
-              rate: 2.5
+              rate: 4.5
             }
           ],
-          notes: "Heavily subsidized by UT Administration."
+          notes: "JERC directs LPDD to implement the subsidised tariff from 01-Sep-2026. BPL up to 30 units/month and non-domestic hotel/resort schedules are separate categories."
+        },
+        {
+          id: "commercial",
+          name: "Non-Domestic / Commercial - Single Phase",
+          fixedCharge: { type: "per_kw", rate: 66 },
+          energySlabs: [
+            {
+              limit: 200,
+              rate: 3.75
+            },
+            {
+              limit: 500,
+              rate: 5.6
+            },
+            {
+              limit: Infinity,
+              rate: 6.1
+            }
+          ],
+          notes: "For ordinary non-domestic/commercial supply other than hotels, guest houses, resorts and homestays. Three-phase non-domestic supply is billed separately on kVAh with a kVA fixed charge.",
+          additionalCharges: [{ name: "Electricity Duty", type: "percent_energy", rate: 15 }]
         }
       ]
     }

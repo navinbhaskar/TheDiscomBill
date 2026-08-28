@@ -95,7 +95,7 @@
   </script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/alerts/","url":"https://thediscombill.com/alerts/","name":"Electricity Alerts — Tariff, FPPA and DISCOM Updates","description":"Latest public electricity alerts for India: FPPA, PPAC, tariff orders, subsidy notices and policy changes filtered by state and category.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-27"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/alerts/","url":"https://thediscombill.com/alerts/","name":"Electricity Alerts — Tariff, FPPA and DISCOM Updates","description":"Latest public electricity alerts for India: FPPA, PPAC, tariff orders, subsidy notices and policy changes filtered by state and category.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN","dateModified":"2026-08-28"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Alerts","item":"https://thediscombill.com/alerts/"}]}</script>
 </head>
 <body>
@@ -182,8 +182,8 @@
       <h1>Electricity Alerts</h1>
       <p class="seo-lead">Every tariff order and fuel-surcharge notice tracked on TheDiscomBill, newest first. Public regulatory updates only — not notifications about your own account.</p>
       <p class="alerts-context">
-        <strong>49</strong> notices across <strong>12</strong> states
-        · latest <strong>17 Aug 2026</strong>
+        <strong>55</strong> notices across <strong>17</strong> states
+        · latest <strong>18 Aug 2026</strong>
         · compiled from the <a href="/fppa/">FPPA tracker</a> and <a href="/orders/">published orders</a>
       </p>
     </header>
@@ -198,14 +198,14 @@
           <span>State</span>
           <select id="alertState">
             <option value="">All states</option>
-            <option value="Bihar">Bihar</option><option value="Delhi">Delhi</option><option value="Jammu &amp; Kashmir">Jammu &amp; Kashmir</option><option value="Karnataka">Karnataka</option><option value="Maharashtra">Maharashtra</option><option value="Manipur">Manipur</option><option value="Odisha">Odisha</option><option value="Rajasthan">Rajasthan</option><option value="Sikkim">Sikkim</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Uttar Pradesh">Uttar Pradesh</option><option value="West Bengal">West Bengal</option>
+            <option value="Arunachal Pradesh">Arunachal Pradesh</option><option value="Bihar">Bihar</option><option value="Dadra &amp; Nagar Haveli and Daman &amp; Diu">Dadra &amp; Nagar Haveli and Daman &amp; Diu</option><option value="Delhi">Delhi</option><option value="Jammu &amp; Kashmir">Jammu &amp; Kashmir</option><option value="Karnataka">Karnataka</option><option value="Ladakh">Ladakh</option><option value="Maharashtra">Maharashtra</option><option value="Manipur">Manipur</option><option value="Mizoram">Mizoram</option><option value="Nagaland">Nagaland</option><option value="Odisha">Odisha</option><option value="Rajasthan">Rajasthan</option><option value="Sikkim">Sikkim</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Uttar Pradesh">Uttar Pradesh</option><option value="West Bengal">West Bengal</option>
           </select>
         </label>
         <label class="alerts-field">
           <span>Category</span>
           <select id="alertCategory">
             <option value="">All categories</option>
-            <option value="Fuel surcharge">Fuel surcharge</option><option value="Tariff">Tariff</option>
+            <option value="Fuel surcharge">Fuel surcharge</option><option value="Tariff">Tariff</option><option value="Policy">Policy</option>
           </select>
         </label>
         <label class="alerts-field">
@@ -226,16 +226,39 @@
           </button>
           <button type="button" class="alert-chip" data-alert-index="Tariff">
             <span class="alert-pill is-tariff" aria-hidden="true"></span>
-            Tariff<span class="alert-chip-count">15</span>
+            Tariff<span class="alert-chip-count">20</span>
+          </button>
+          <button type="button" class="alert-chip" data-alert-index="Policy">
+            <span class="alert-pill is-policy" aria-hidden="true"></span>
+            Policy<span class="alert-chip-count">1</span>
           </button>
       </div>
     </div>
 
     <section class="alerts-listwrap" id="alerts-list" aria-label="Public electricity alerts">
-      <p class="alerts-result-head"><strong data-alert-count>49</strong> of 49 showing</p>
+      <p class="alerts-result-head"><strong data-alert-count>55</strong> of 55 showing</p>
       <ol class="alerts-feed" data-alert-list>
         
         <li class="alerts-month" data-alert-group="August 2026"><span>August 2026</span></li>
+        <li class="alert-row" id="order-jerc-jkl-lpdd-fy2026-27"
+          data-alert-card data-state="Ladakh" data-category="Tariff"
+          data-severity="Info" data-search="lpdd arr and tariff for fy 2026-27 tariff order effective from 1 sept 2026. covers lpdcl / ladakh power dept.. jerc directs lpdd to implement the subsidised tariff schedule from 01-sep-2026. ladakh tariff lpdcl / ladakh power dept.">
+          <span class="alert-row-rail" aria-hidden="true">18 Aug</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">Tariff</span>
+              
+              <span class="alert-row-state">Ladakh</span>
+              <span class="alert-row-discom">LPDCL / Ladakh Power Dept.</span>
+            </span>
+            <a href="/orders/jerc-jkl-lpdd-fy2026-27/" class="alert-row-title">LPDD ARR and tariff for FY 2026-27</a>
+            <span class="alert-row-summary">Tariff order effective from 1 Sept 2026. Covers LPDCL / Ladakh Power Dept.. JERC directs LPDD to implement the subsidised tariff schedule from 01-Sep-2026.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-08-18">18 Aug 2026</time>
+              <a href="https://jercjkl.jk.gov.in/pdf/LPDD%20%20Tariff%20Order%20for%20FY%202026-27%20R1.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">JERC for the UT of J&amp;K and Ladakh ↗</a>
+            </span>
+          </span>
+        </li>
         <li class="alert-row" id="surcharge-discom-brpl-2026-06-01"
           data-alert-card data-state="Delhi" data-category="Fuel surcharge"
           data-severity="Important" data-search="brpl (bses rajdhani) ppac (power purchase adjustment cost) +17.94% brpl ppac (jun 2026) applies jun 2026 to jun 2026. this may add to affected bills for the period. delhi fuel surcharge brpl (bses rajdhani)">
@@ -290,6 +313,25 @@
             <span class="alert-row-foot">
               <time datetime="2026-08-17">17 Aug 2026</time>
               <a href="https://www.tatapower-ddl.com/regulations-and-compliances/tariff-related/derc-orders-and-letters-on-ppac" target="_blank" rel="noopener nofollow" class="alert-source-link">DERC PPAC approval, Jun 2026 ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-nerc-nagaland-fy2026-27-public-proposal"
+          data-alert-card data-state="Nagaland" data-category="Policy"
+          data-severity="Info" data-search="fy 2026-27 arr and tariff proposal for department of power nagaland tariff proposal effective from 1 oct 2026. covers doe nagaland. the notice says the rates are proposed and may be increased, decreased or amended by nerc; they are not used as current calculator rates. nagaland policy doe nagaland">
+          <span class="alert-row-rail" aria-hidden="true">04 Aug</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-policy">Policy</span>
+              
+              <span class="alert-row-state">Nagaland</span>
+              <span class="alert-row-discom">DoE Nagaland</span>
+            </span>
+            <a href="/orders/nerc-nagaland-fy2026-27-public-proposal/" class="alert-row-title">FY 2026-27 ARR and tariff proposal for Department of Power Nagaland</a>
+            <span class="alert-row-summary">Tariff proposal effective from 1 Oct 2026. Covers DoE Nagaland. The notice says the rates are proposed and may be increased, decreased or amended by NERC; they are not used as current calculator rates.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-08-04">4 Aug 2026</time>
+              <a href="https://ipr.nagaland.gov.in/index.php/department-of-power-issues-public-notice-in-respect-of-petition-for-approval-of-arr-tariff-proposal-for-the-fy-2026-27" target="_blank" rel="noopener nofollow" class="alert-source-link">NERC ↗</a>
             </span>
           </span>
         </li>
@@ -526,6 +568,44 @@
           </span>
         </li>
         <li class="alerts-month" data-alert-group="March 2026"><span>March 2026</span></li>
+        <li class="alert-row" id="order-apserc-tp-10-2025-apdop-fy2026-27"
+          data-alert-card data-state="Arunachal Pradesh" data-category="Tariff"
+          data-severity="Info" data-search="apdop arr and retail tariff order for fy 2026-27 tariff order effective from 1 apr 2026. covers apdop / dept. of power. apserc records no proposed tariff hike and computes fy 2026-27 revenue using the existing tariff structure. arunachal pradesh tariff apdop / dept. of power">
+          <span class="alert-row-rail" aria-hidden="true">31 Mar</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">Tariff</span>
+              
+              <span class="alert-row-state">Arunachal Pradesh</span>
+              <span class="alert-row-discom">APDOP / Dept. of Power</span>
+            </span>
+            <a href="/orders/apserc-tp-10-2025-apdop-fy2026-27/" class="alert-row-title">APDOP ARR and retail tariff order for FY 2026-27</a>
+            <span class="alert-row-summary">Tariff order effective from 1 Apr 2026. Covers APDOP / Dept. of Power. APSERC records no proposed tariff hike and computes FY 2026-27 revenue using the existing tariff structure.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-03-31">31 Mar 2026</time>
+              <a href="https://apserc.nic.in/pdf/Orders/2026/Order%20on%20Petition%20TP%2010%20of%202025,APDOP.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">APSERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-mzerc-ped-fy2026-27"
+          data-alert-card data-state="Mizoram" data-category="Tariff"
+          data-severity="Info" data-search="p&amp;e department retail tariff for fy 2026-27 tariff order effective from 1 apr 2026. covers p&amp;e dept., mizoram. the calculator uses the subsidised tariff schedule approved for fy 2026-27. mizoram tariff p&amp;e dept., mizoram">
+          <span class="alert-row-rail" aria-hidden="true">25 Mar</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">Tariff</span>
+              
+              <span class="alert-row-state">Mizoram</span>
+              <span class="alert-row-discom">P&amp;E Dept., Mizoram</span>
+            </span>
+            <a href="/orders/mzerc-ped-fy2026-27/" class="alert-row-title">P&amp;E Department retail tariff for FY 2026-27</a>
+            <span class="alert-row-summary">Tariff order effective from 1 Apr 2026. Covers P&amp;E Dept., Mizoram. The calculator uses the subsidised tariff schedule approved for FY 2026-27.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-03-25">25 Mar 2026</time>
+              <a href="https://mzerc.mizoram.gov.in/uploads/attachments/2026/03/7be5860da7dbbda3560a7e255caff169/ped-to-26-27-khp27mar26-evng-with-sign.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">MZERC ↗</a>
+            </span>
+          </span>
+        </li>
         <li class="alert-row" id="order-oerc-rst-fy2026-27"
           data-alert-card data-state="Odisha" data-category="Tariff"
           data-severity="Info" data-search="oerc retail supply tariff order for fy 2026-27 tariff order effective from 1 apr 2024. covers tpcodl, tpnodl +2 more. fy 2024-25 rates retained, which is why the effective date predates the order. odisha tariff tpcodl tpnodl tpwodl tpsodl">
@@ -741,6 +821,25 @@
           </span>
         </li>
         <li class="alerts-month" data-alert-group="September 2025"><span>September 2025</span></li>
+        <li class="alert-row" id="order-jerc-dnhddpdcl-p145-myt-fy2025-30"
+          data-alert-card data-state="Dadra &amp; Nagar Haveli and Daman &amp; Diu" data-category="Tariff"
+          data-severity="Info" data-search="dnhddpdcl myt retail tariff schedule for fy 2025-26 to fy 2029-30 myt order effective from 1 apr 2025. covers dnhddpdcl. the calculator uses the fy 2026-27 column of table 10-1. dadra &amp; nagar haveli and daman &amp; diu tariff dnhddpdcl">
+          <span class="alert-row-rail" aria-hidden="true">17 Sept</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">Tariff</span>
+              
+              <span class="alert-row-state">Dadra &amp; Nagar Haveli and Daman &amp; Diu</span>
+              <span class="alert-row-discom">DNHDDPDCL</span>
+            </span>
+            <a href="/orders/jerc-dnhddpdcl-p145-myt-fy2025-30/" class="alert-row-title">DNHDDPDCL MYT retail tariff schedule for FY 2025-26 to FY 2029-30</a>
+            <span class="alert-row-summary">MYT order effective from 1 Apr 2025. Covers DNHDDPDCL. The calculator uses the FY 2026-27 column of Table 10-1.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-09-17">17 Sept 2025</time>
+              <a href="https://jercuts.gov.in/wp-content/uploads/2025/09/dnhddpdcl-ready-to-upload-order-1.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">JERC ↗</a>
+            </span>
+          </span>
+        </li>
         <li class="alert-row" id="surcharge-state-uttar-pradesh-2025-09-01"
           data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
           data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) +2.34% sep 2025 fppas applies sept 2025 to sept 2025. this may add to affected bills for the period. uttar pradesh fuel surcharge">
@@ -1013,6 +1112,25 @@
           </span>
         </li>
         <li class="alerts-month" data-alert-group="March 2025"><span>March 2025</span></li>
+        <li class="alert-row" id="order-nerc-nagaland-fy2025-26-public-notice"
+          data-alert-card data-state="Nagaland" data-category="Tariff"
+          data-severity="Info" data-search="department of power nagaland tariff baseline for fy 2025-26 tariff order effective from 1 apr 2025. covers doe nagaland. public notice schedule used because a direct final-order pdf was not available online from an official portal. nagaland tariff doe nagaland">
+          <span class="alert-row-rail" aria-hidden="true">28 Mar</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">Tariff</span>
+              
+              <span class="alert-row-state">Nagaland</span>
+              <span class="alert-row-discom">DoE Nagaland</span>
+            </span>
+            <a href="/orders/nerc-nagaland-fy2025-26-public-notice/" class="alert-row-title">Department of Power Nagaland tariff baseline for FY 2025-26</a>
+            <span class="alert-row-summary">Tariff order effective from 1 Apr 2025. Covers DoE Nagaland. Public notice schedule used because a direct final-order PDF was not available online from an official portal.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-03-28">28 Mar 2025</time>
+              <a href="https://ipr.nagaland.gov.in/POWER-DEPARTMENT-ISSUES-PUBLIC-NOTICE-FOR-APPROVAL-OF-ARR" target="_blank" rel="noopener nofollow" class="alert-source-link">NERC ↗</a>
+            </span>
+          </span>
+        </li>
         <li class="alert-row" id="order-kerc-tariff-2025"
           data-alert-card data-state="Karnataka" data-category="Tariff"
           data-severity="Info" data-search="kerc tariff order 2025 tariff order effective from 1 apr 2026. covers bescom, mescom +3 more. karnataka tariff bescom mescom hescom gescom cesc mysuru">

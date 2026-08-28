@@ -26,6 +26,7 @@
 //   fuel-surcharge — a monthly/periodic FPPA, FPPAS, PPAC or FAC notice
 //   amendment      — a corrigendum or amendment to an order above
 //   subsidy        — a state subsidy notification affecting the payable amount
+//   proposal       — a public ARR/tariff petition notice, not yet an approved tariff
 
 export const ORDER_TYPES = {
   'tariff-order':  { label: 'Tariff order',        blurb: 'Sets the retail tariff schedule for a financial year.' },
@@ -34,9 +35,23 @@ export const ORDER_TYPES = {
   'fuel-surcharge':{ label: 'Fuel surcharge notice', blurb: 'Periodic FPPA / FPPAS / PPAC / FAC rate, revised far more often than the tariff.' },
   'amendment':     { label: 'Amendment',           blurb: 'Corrigendum or amendment to an earlier order.' },
   'subsidy':       { label: 'Subsidy notification', blurb: 'State subsidy that changes the amount actually payable.' },
+  'proposal':      { label: 'Tariff proposal',     blurb: 'Public ARR/tariff petition notice; rates are not final until the regulator issues an order.' },
 };
 
 export const ORDERS = [
+  // ── Arunachal Pradesh ─────────────────────────────────────────────────────
+  {
+    id: 'apserc-tp-10-2025-apdop-fy2026-27',
+    state: 'Arunachal Pradesh', regulator: 'APSERC', discomIds: ['appdcl'],
+    type: 'tariff-order',
+    title: 'APDOP ARR and retail tariff order for FY 2026-27',
+    orderRef: 'TP-10 of 2025', orderDate: '2026-03-31',
+    effectiveFrom: '2026-04-01', effectiveTo: null,
+    sourceUrl: 'https://apserc.nic.in/pdf/Orders/2026/Order%20on%20Petition%20TP%2010%20of%202025,APDOP.pdf',
+    isPdf: true, archiveUrl: null,
+    notes: 'APSERC records no proposed tariff hike and computes FY 2026-27 revenue using the existing tariff structure.',
+  },
+
   // ── Bihar ──────────────────────────────────────────────────────────────────
   {
     id: 'berc-tariff-fy2026-27',
@@ -50,6 +65,19 @@ export const ORDERS = [
     notes: null,
   },
 
+  // ── Dadra & Nagar Haveli and Daman & Diu ──────────────────────────────────
+  {
+    id: 'jerc-dnhddpdcl-p145-myt-fy2025-30',
+    state: 'Dadra & Nagar Haveli and Daman & Diu', regulator: 'JERC', discomIds: ['dnhpdcl'],
+    type: 'myt-order',
+    title: 'DNHDDPDCL MYT retail tariff schedule for FY 2025-26 to FY 2029-30',
+    orderRef: 'Petition No. 145/2025', orderDate: '2025-09-17',
+    effectiveFrom: '2025-04-01', effectiveTo: '2030-03-31',
+    sourceUrl: 'https://jercuts.gov.in/wp-content/uploads/2025/09/dnhddpdcl-ready-to-upload-order-1.pdf',
+    isPdf: true, archiveUrl: null,
+    notes: 'The calculator uses the FY 2026-27 column of Table 10-1.',
+  },
+
   // ── Jammu & Kashmir ────────────────────────────────────────────────────────
   {
     id: 'jerc-jk-tariff-fy2025-26',
@@ -61,6 +89,19 @@ export const ORDERS = [
     sourceUrl: 'https://www.jpdcl.co.in/downloads/tariff/JPDCL_KPDCL_Tariff_Order_2025_26.pdf',
     isPdf: true, archiveUrl: null,
     notes: 'Covers both J&K distribution licensees in one order.',
+  },
+
+  // ── Ladakh ─────────────────────────────────────────────────────────────────
+  {
+    id: 'jerc-jkl-lpdd-fy2026-27',
+    state: 'Ladakh', regulator: 'JERC for the UT of J&K and Ladakh', discomIds: ['lpdcl'],
+    type: 'tariff-order',
+    title: 'LPDD ARR and tariff for FY 2026-27',
+    orderRef: 'Order No. 05 of 2026', orderDate: '2026-08-18',
+    effectiveFrom: '2026-09-01', effectiveTo: '2027-03-31',
+    sourceUrl: 'https://jercjkl.jk.gov.in/pdf/LPDD%20%20Tariff%20Order%20for%20FY%202026-27%20R1.pdf',
+    isPdf: true, archiveUrl: null,
+    notes: 'JERC directs LPDD to implement the subsidised tariff schedule from 01-Sep-2026.',
   },
 
   // ── Karnataka ──────────────────────────────────────────────────────────────
@@ -133,6 +174,43 @@ export const ORDERS = [
     sourceUrl: 'https://mnerc.mn.gov.in/wp-content/uploads/2026/05/MSPDCL-Tariff-Order-FY-2026-27_compressed.pdf',
     isPdf: true, archiveUrl: null,
     notes: 'Corrigendum dated 17-Jun-2026 changes pole/tower usage charges only; LT tariff rates remain as in the 14-May-2026 order.',
+  },
+
+  // ── Mizoram ────────────────────────────────────────────────────────────────
+  {
+    id: 'mzerc-ped-fy2026-27',
+    state: 'Mizoram', regulator: 'MZERC', discomIds: ['ped_mizoram'],
+    type: 'tariff-order',
+    title: 'P&E Department retail tariff for FY 2026-27',
+    orderRef: 'Petition (ARR & Tariff) No. 1 of 2025', orderDate: '2026-03-25',
+    effectiveFrom: '2026-04-01', effectiveTo: '2027-03-31',
+    sourceUrl: 'https://mzerc.mizoram.gov.in/uploads/attachments/2026/03/7be5860da7dbbda3560a7e255caff169/ped-to-26-27-khp27mar26-evng-with-sign.pdf',
+    isPdf: true, archiveUrl: null,
+    notes: 'The calculator uses the subsidised tariff schedule approved for FY 2026-27.',
+  },
+
+  // ── Nagaland ───────────────────────────────────────────────────────────────
+  {
+    id: 'nerc-nagaland-fy2025-26-public-notice',
+    state: 'Nagaland', regulator: 'NERC', discomIds: ['doe_nagaland'],
+    type: 'tariff-order',
+    title: 'Department of Power Nagaland tariff baseline for FY 2025-26',
+    orderRef: null, orderDate: '2025-03-28',
+    effectiveFrom: '2025-04-01', effectiveTo: null,
+    sourceUrl: 'https://ipr.nagaland.gov.in/POWER-DEPARTMENT-ISSUES-PUBLIC-NOTICE-FOR-APPROVAL-OF-ARR',
+    isPdf: false, archiveUrl: null,
+    notes: 'Public notice schedule used because a direct final-order PDF was not available online from an official portal.',
+  },
+  {
+    id: 'nerc-nagaland-fy2026-27-public-proposal',
+    state: 'Nagaland', regulator: 'NERC', discomIds: ['doe_nagaland'],
+    type: 'proposal',
+    title: 'FY 2026-27 ARR and tariff proposal for Department of Power Nagaland',
+    orderRef: 'Petition No. 02/2026-27', orderDate: '2026-08-04',
+    effectiveFrom: '2026-10-01', effectiveTo: '2027-03-31',
+    sourceUrl: 'https://ipr.nagaland.gov.in/index.php/department-of-power-issues-public-notice-in-respect-of-petition-for-approval-of-arr-tariff-proposal-for-the-fy-2026-27',
+    isPdf: false, archiveUrl: null,
+    notes: 'The notice says the rates are proposed and may be increased, decreased or amended by NERC; they are not used as current calculator rates.',
   },
 
   // ── Odisha ─────────────────────────────────────────────────────────────────

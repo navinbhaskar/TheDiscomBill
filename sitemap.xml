@@ -7,7 +7,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -18,7 +18,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -29,7 +29,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -40,7 +40,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -287,7 +287,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/md-penalty-excess-demand-charge/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/md-penalty-excess-demand-charge/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/md-penalty-excess-demand-charge/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -296,7 +296,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/md-penalty-excess-demand-charge/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/md-penalty-excess-demand-charge/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/md-penalty-excess-demand-charge/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1450,21 +1450,27 @@
   </url>
   <url>
     <loc>https://thediscombill.com/database/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/alerts/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/orders/</loc>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/apserc-tp-10-2025-apdop-fy2026-27/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://thediscombill.com/orders/berc-tariff-fy2026-27/</loc>
@@ -1473,8 +1479,20 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://thediscombill.com/orders/jerc-dnhddpdcl-p145-myt-fy2025-30/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://thediscombill.com/orders/jerc-jk-tariff-fy2025-26/</loc>
     <lastmod>2026-08-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/jerc-jkl-lpdd-fy2026-27/</loc>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -1511,6 +1529,24 @@
   <url>
     <loc>https://thediscombill.com/orders/mnerc-mspdcl-tariff-fy2026-27/</loc>
     <lastmod>2026-08-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/mzerc-ped-fy2026-27/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/nerc-nagaland-fy2025-26-public-notice/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://thediscombill.com/orders/nerc-nagaland-fy2026-27-public-proposal/</loc>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -1809,7 +1845,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/states/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1820,7 +1856,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/states/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1831,7 +1867,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/states/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1842,7 +1878,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/tariffs/states/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/states/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1897,7 +1933,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1908,7 +1944,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1919,7 +1955,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1930,7 +1966,7 @@
     <xhtml:link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/smart-meter-recharge/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2109,7 +2145,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/arunachal-pradesh/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/arunachal-pradesh/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/arunachal-pradesh/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -2118,7 +2154,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/arunachal-pradesh/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/arunachal-pradesh/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/arunachal-pradesh/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -2127,7 +2163,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/arunachal-pradesh/appdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/arunachal-pradesh/appdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/arunachal-pradesh/appdcl/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2136,7 +2172,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/arunachal-pradesh/appdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/arunachal-pradesh/appdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/arunachal-pradesh/appdcl/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2145,7 +2181,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/arunachal-pradesh/appdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/arunachal-pradesh/appdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/arunachal-pradesh/appdcl/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2154,7 +2190,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/arunachal-pradesh/appdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/arunachal-pradesh/appdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/arunachal-pradesh/appdcl/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2415,7 +2451,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -2424,7 +2460,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -2433,7 +2469,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2442,7 +2478,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2451,7 +2487,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2460,7 +2496,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/dadra-and-nagar-haveli-and-daman-and-diu/dnhpdcl/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3387,7 +3423,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/ladakh/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/ladakh/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/ladakh/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -3396,7 +3432,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/ladakh/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/ladakh/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/ladakh/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -3405,7 +3441,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/ladakh/lpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/ladakh/lpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/ladakh/lpdcl/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3414,7 +3450,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/ladakh/lpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/ladakh/lpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/ladakh/lpdcl/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3423,7 +3459,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/ladakh/lpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/ladakh/lpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/ladakh/lpdcl/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3432,7 +3468,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/ladakh/lpdcl/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/ladakh/lpdcl/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/ladakh/lpdcl/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3945,7 +3981,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/mizoram/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/mizoram/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/mizoram/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -3954,7 +3990,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/mizoram/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/mizoram/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/mizoram/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -3963,7 +3999,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/mizoram/ped_mizoram/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/mizoram/ped_mizoram/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/mizoram/ped_mizoram/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3972,7 +4008,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/mizoram/ped_mizoram/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/mizoram/ped_mizoram/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/mizoram/ped_mizoram/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3981,7 +4017,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/mizoram/ped_mizoram/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/mizoram/ped_mizoram/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/mizoram/ped_mizoram/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3990,7 +4026,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/mizoram/ped_mizoram/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/mizoram/ped_mizoram/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/mizoram/ped_mizoram/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -3999,7 +4035,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/nagaland/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/nagaland/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/nagaland/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -4008,7 +4044,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/nagaland/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/nagaland/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/nagaland/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -4017,7 +4053,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/nagaland/doe_nagaland/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/nagaland/doe_nagaland/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/nagaland/doe_nagaland/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4026,7 +4062,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/tariffs/nagaland/doe_nagaland/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/tariffs/nagaland/doe_nagaland/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/tariffs/nagaland/doe_nagaland/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4035,7 +4071,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/nagaland/doe_nagaland/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/nagaland/doe_nagaland/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/nagaland/doe_nagaland/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -4044,7 +4080,7 @@
     <xhtml:link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/smart-meter-recharge/nagaland/doe_nagaland/"/>
     <xhtml:link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/smart-meter-recharge/nagaland/doe_nagaland/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thediscombill.com/smart-meter-recharge/nagaland/doe_nagaland/"/>
-    <lastmod>2026-08-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

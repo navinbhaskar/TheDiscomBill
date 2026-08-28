@@ -709,5 +709,43 @@ group('Telangana LT-I — consumption-selected slab ladders', () => {
   check('Telangana is not bill-verified', bill(250).tariffVerified, false);
 });
 
+group('refreshed small-state tariff schedules', () => {
+  const bill = (params) => calculateBill({
+    units: 250, connectedLoadKw: 2, billingPeriodDays: 30, billingDate: '2026-10-15',
+    facRate: 0, facMode: 'per_unit', lpscApplicable: false,
+    ...params
+  });
+
+  const ap = bill({
+    discomId: 'appdcl', categoryId: 'domestic', supplyTypeId: 'domestic_lt_single_phase'
+  });
+  check('Arunachal domestic carries FY 2026-27 rate', ap.tariffYear, '2026-27');
+  check('Arunachal domestic LT flat rate', ap.totalEnergy, 1100);
+
+  const dnh = bill({ discomId: 'dnhpdcl', categoryId: 'domestic', units: 450 });
+  check('DNHDD domestic year', dnh.tariffYear, '2026-27');
+  check('DNHDD domestic fixed is per kW', dnh.fixedCharge, 20);
+  check('DNHDD domestic energy', dnh.totalEnergy, 1265);
+
+  const dnhCom = bill({ discomId: 'dnhpdcl', categoryId: 'commercial', units: 250, connectedLoadKw: 5 });
+  check('DNHDD commercial bills on kVAh', dnhCom.billingBasis, 'kvah');
+  check('DNHDD commercial fixed is per kVA', dnhCom.fixedCharge, 125);
+  check('DNHDD commercial energy', dnhCom.totalEnergy, 1110);
+
+  const ladakh = bill({ discomId: 'lpdcl', categoryId: 'domestic', units: 600, connectedLoadKw: 3 });
+  check('Ladakh domestic year', ladakh.tariffYear, '2026-27');
+  check('Ladakh domestic fixed is per kW', ladakh.fixedCharge, 39);
+  check('Ladakh domestic energy', ladakh.totalEnergy, 2190);
+
+  const mz = bill({ discomId: 'ped_mizoram', categoryId: 'domestic', units: 250 });
+  check('Mizoram domestic year', mz.tariffYear, '2026-27');
+  check('Mizoram domestic fixed is per kW', mz.fixedCharge, 100);
+  check('Mizoram domestic energy', mz.totalEnergy, 1610);
+
+  const nl = bill({ discomId: 'doe_nagaland', categoryId: 'domestic', units: 300 });
+  check('Nagaland baseline moved off FY 2024-25', nl.tariffYear, '2025-26');
+  check('Nagaland domestic energy', nl.totalEnergy, 2087.50);
+});
+
 console.log(`\n${failed === 0 ? '✓ ALL PASSED' : '✗ FAILURES'} — ${passed} passed, ${failed} failed\n`);
 process.exit(failed === 0 ? 0 : 1);

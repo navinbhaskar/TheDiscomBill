@@ -6059,6 +6059,35 @@ function tariffDatabasePage(summary, dbStates = []) {
     return head.length > 30 ? `${head.slice(0, 29)}…` : head;
   };
   const sorted = [...dbStates].sort((a, b) => a.state.localeCompare(b.state));
+  const verifiedOnFor = (s) => (STATE_META[s.state] || {}).verifiedOn || '';
+  const isPendingPublicUpdate = (s) => /petition pending|proposal pending|public notice/i.test(s.ratesAsOf || '');
+  const sourceLinkText = (s) => isPendingPublicUpdate(s) ? 'Public source ↗' : 'Source ↗';
+  const effectiveLabel = (iso) => iso ? humanDate(iso, 'en') : 'not recorded';
+  const latestVerifiedOn = sorted.map(verifiedOnFor).filter(Boolean).sort().pop() || '';
+  const recentlyVerified = latestVerifiedOn
+    ? sorted.filter((s) => verifiedOnFor(s) === latestVerifiedOn)
+    : [];
+  const refreshStatus = (s) => {
+    const note = s.ratesAsOf || '';
+    if (/petition pending|proposal pending|public notice/i.test(note)) return 'FY 2026-27 proposal pending';
+    if (/retained|no hike|unchanged/i.test(note)) return 'Rates retained from earlier approved schedule';
+    if (s.effectiveDate) return `Effective ${effectiveLabel(s.effectiveDate)}`;
+    return 'Updated source recorded';
+  };
+  const recentRefreshRows = recentlyVerified.map((s) => {
+    const basis = s.ratesAsOf || '';
+    return `<tr>
+      <td><a href="/tariffs/${slugify(s.state)}/">${esc(s.state)}</a></td>
+      <td>${basis ? `<span title="${attr(basis)}">${esc(fyOf(s) || basis)}</span>` : '<span class="db-gap">not recorded</span>'}</td>
+      <td>${esc(effectiveLabel(s.effectiveDate))}</td>
+      <td><span class="${isPendingPublicUpdate(s) ? 'db-status is-pending' : 'db-status is-current'}">${esc(refreshStatus(s))}</span></td>
+      <td>${s.sourceUrl
+        ? `<a href="${attr(s.sourceUrl)}" target="_blank" rel="noopener nofollow">${sourceLinkText(s)}</a>`
+        : s.sourceCount > 1
+          ? `<a href="/tariffs/${slugify(s.state)}/">${s.sourceCount} sources</a>`
+          : '<span class="db-gap">—</span>'}</td>
+    </tr>`;
+  }).join('');
   const coverageRows = sorted.map((s) => {
     const verified = !!(STATE_META[s.state] || {}).verified;
     const fy = fyOf(s);
@@ -6070,12 +6099,12 @@ function tariffDatabasePage(summary, dbStates = []) {
       <td class="num">${s.categoryCount}</td>
       <td>${fy ? `<span title="${attr(basis)}">${esc(fy)}</span>` : '<span class="db-gap">not recorded</span>'}</td>
       <td>${s.sourceUrl
-        ? `<a href="${attr(s.sourceUrl)}" target="_blank" rel="noopener nofollow">Order ↗</a>`
+        ? `<a href="${attr(s.sourceUrl)}" target="_blank" rel="noopener nofollow">${sourceLinkText(s)}</a>`
         : s.sourceCount > 1
           // Several licensees, several orders: linking one would misrepresent the rest. No
           // #sources anchor is promised here because the state page has no such section —
           // it lists the licensees, and each licensee's own page carries its official source.
-          ? `<a href="/tariffs/${slugify(s.state)}/" title="${attr(`${s.state} has ${s.sourceCount} separate tariff orders, one per licensee — open a DISCOM for its own source`)}">${s.sourceCount} orders</a>`
+          ? `<a href="/tariffs/${slugify(s.state)}/" title="${attr(`${s.state} has ${s.sourceCount} separate tariff sources, one per licensee — open a DISCOM for its own source`)}">${s.sourceCount} sources</a>`
           : '<span class="db-gap">—</span>'}</td>
     </tr>`;
   }).join('');
@@ -6103,12 +6132,28 @@ function tariffDatabasePage(summary, dbStates = []) {
     <p class="fs-legend">Every rate here traces to a published document — those are listed in
     the <a href="/orders/">order library</a>, with the gaps named.</p>
 
+    ${recentRefreshRows ? `<section class="seo-section database-refresh">
+      <h2>Latest database refresh</h2>
+      <p>These records were checked in the newest tariff refresh batch, dated
+      ${esc(humanDate(latestVerifiedOn, 'en'))}. Public proposals are shown as alerts and source
+      evidence, but they do not replace approved calculator rates until the final order is available.</p>
+      <div class="comparison-table-wrapper database-refresh-table">
+        <table class="comparison-table">
+          <thead><tr>
+            <th>State / UT</th><th>Current basis</th><th>Effective from</th>
+            <th>Status</th><th>Source</th>
+          </tr></thead>
+          <tbody>${recentRefreshRows}</tbody>
+        </table>
+      </div>
+    </section>` : ''}
+
     <section class="seo-section">
       <h2>Coverage, state by state</h2>
       <p>Every row is generated from the database itself, so this page cannot claim coverage the
-      data does not have. ${withSource} of the ${summary.stateCount} states and UTs carry a link to
-      the regulator's own order; the remaining ${summary.stateCount - withSource} are modelled from
-      published schedules with no order URL recorded yet, and say so.
+      data does not have. ${withSource} of the ${summary.stateCount} states and UTs carry a public
+      source link; the remaining ${summary.stateCount - withSource} are modelled from published
+      schedules with no source URL recorded yet, and say so.
       ${verifiedCount === 1
         ? 'One state is additionally marked ✓ — checked line by line against real consumer bills.'
         : `${verifiedCount} states are additionally marked ✓ — checked line by line against real consumer bills.`}</p>
