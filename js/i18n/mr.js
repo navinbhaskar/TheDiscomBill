@@ -195,6 +195,100 @@ export default {
     'adv.sub': 'सोलर नेट-मीटरिंग, ToD, थकबाकी आणि दंड',
     'label.billedAmount': 'तुमच्या प्रत्यक्ष बिलावरील रक्कम (₹) — ऐच्छिक',
     'small.billedAmount': 'आम्ही ती आमच्या गणनेशी पडताळून तुमचे बिल बरोबर वाटते का ते सांगू.',
+    // Advanced bill calculator page
+    'bc.advCalc': 'प्रगत बिल कॅल्क्युलेटर',
+    'bc.heroTitle': 'प्रगत वीज बिल कॅल्क्युलेटर',
+    'bc.heroIntro': 'टॅरिफ आदेशांमध्ये खरोखर परिभाषित केलेली प्रत्येक field — फक्त साधा अंदाज नाही.',
+    'bc.capsHtml': `<div class="bc-cap">
+          <dt><a href="#f-tod">वेळेनुसार वापराचे स्लॉट</a></dt>
+          <dd>Peak, normal आणि off-peak units वेगवेगळ्या दरांनी — evening surcharge आणि solar-hour rebate.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-kvah">kVAh आणि power factor</a></dt>
+          <dd>Apparent energy वर billing, जिथे खराब power factor मुळे charged units वाढतात.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-load">मंजूर भार आणि demand</a></dt>
+          <dd>Sanctioned load च्या प्रत्येक kW वर fixed charges, आणि recorded demand जास्त गेल्यास penalty.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-solar">Solar export</a></dt>
+          <dd>Exported units imported units विरुद्ध net होतात; surplus bank होऊन पुढे carry होतो.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-arrears">थकबाकी आणि surcharge</a></dt>
+          <dd>Fuel surcharge सोबत तुमच्या state चा electricity duty order, plus arrears आणि late-payment interest.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-multi">Multiple meters</a></dt>
+          <dd>एका premises वर अनेक meters — reading वेगळी, पण slabs संपूर्ण connection वर.</dd>
+        </div>`,
+    'bc.heroMeta': 'Home page वरील quick calculator सारखेच engine आणि tariff data — पण थेट detailed form मध्ये उघडते.',
+    'bc.fieldsHtml': `<h2>Advanced fields कशासाठी आहेत</h2>
+        <p>Detailed form tariff orders खरोखर define करत असलेले प्रत्येक input दाखवतो. बहुतेक bills
+        साठी त्यातील काहीच fields पुरतात. प्रत्येक field काय बदलते आणि bill वरील एखाद्या line मुळे
+        तुम्ही येथे आलात तर पुढे काय वाचायचे ते इथे आहे.</p>
+        <h3 id="f-tod">वेळेनुसार वापराचे (ToD) स्लॉट</h3>
+        <p>काही connections मध्ये units कधी वापरले यानुसार वेगवेगळे rates लागतात — evening peak मध्ये
+        surcharge, आणि solar hours मध्ये rebate. तुमचा meter ToD record करत असेल, तर one total ऐवजी
+        slot-wise units भरल्याने estimate match होतो.
+        <a href="/guides/tod-billing-explained/">ToD billing कसे काम करते →</a></p>
+        <h3 id="f-kvah">kVAh आणि power factor</h3>
+        <p>kWh real energy मोजतो; kVAh motors आणि similar equipment मुळे येणारी reactive power देखील
+        मोजतो. kVAh-billed connection वर खराब power factor charged units वाढवतो, म्हणून consumption
+        बदलले नसले तरी bill वाढू शकते.
+        <a href="/guides/power-factor-kvah-billing-explained/">Power factor आणि kVAh billing →</a></p>
+        <h3 id="f-load">मंजूर भार आणि demand</h3>
+        <p>Fixed charges सहसा sanctioned load च्या प्रति kW वर लावले जातात, त्यामुळे zero units वापरलेल्या
+        महिन्यातही हे field bill बदलते. Maximum demand वर billed connections मध्ये sanctioned figure
+        ओलांडल्यास penalty लागू शकते.
+        <a href="/guides/reduce-fixed-charges-sanctioned-load/">Fixed charges आणि sanctioned load →</a>
+        &nbsp;·&nbsp;
+        <a href="/guides/md-penalty-excess-demand-charge/">Excess demand penalties →</a></p>
+        <h3 id="f-solar">Solar export आणि banked credit</h3>
+        <p>Net metering मध्ये exported units imported units offset करतात आणि surplus पुढे carry होतो.
+        Netting तुमचे सर्वात महाग units आधी कमी करते, म्हणून exported unit average नाही तर top slab
+        rate इतकी value ठेवते.
+        <a href="/guides/solar-net-metering-savings/">Net metering savings कशा काम करतात →</a></p>
+        <h3 id="f-fppa">Fuel surcharge (FPPA / FAC / PPAC)</h3>
+        <p>Utility च्या power-purchase cost सोबत बदलणारा separately notified charge. State नुसार तो
+        per-unit rate किंवा energy आणि fixed charges च्या percentage रूपात लागतो, आणि month to month बदलतो.
+        <a href="/guides/how-fppa-fuel-surcharge-is-calculated/">Fuel surcharge कसा calculate होतो →</a></p>
+        <h3 id="f-arrears">Electricity duty आणि arrears</h3>
+        <p>Duty हा tariff वर लागणारा state tax आहे, आणि fuel surcharge च्या relation मध्ये तो कोणत्या
+        order ने लागू होतो हे state-by-state बदलते. Arrears आणि late-payment surcharge carried amounts
+        आहेत; ते या महिन्याच्या units वरून derive होत नाहीत, म्हणून थेट भरले जातात.
+        <a href="/guides/electricity-duty-explained/">Electricity duty म्हणजे काय →</a></p>
+        <h3 id="f-multi">एका connection वर multiple meters</h3>
+        <p>एका premises ला एकापेक्षा जास्त meters असतील तर प्रत्येक reading वेगळी असते, पण tariff slabs
+        आणि fixed charges संपूर्ण connection वर लागू होऊ शकतात. प्रत्येक meter जोडा, म्हणजे slab
+        progression total वर एकदाच compute होईल.</p>`,
+    'bc.needHtml': `<h2>समोर काय ठेवावे</h2>
+        <p>Rough estimate साठी तुमचा DISCOM आणि consumed units पुरतात. Printed bill शी reconcile
+        करायचे असेल तर हे पाच figures घ्या:</p>
+        <ul>
+          <li><strong>Sanctioned load</strong> kW मध्ये — fixed charge ठरवतो.</li>
+          <li><strong>Billing period dates</strong> — clean month नसल्यास fixed charge days नुसार prorate होतो.</li>
+          <li><strong>Previous आणि current meter readings</strong> — rounded units figure पेक्षा चांगले.</li>
+          <li><strong>Consumer category आणि supply type</strong> बिलावर छापल्याप्रमाणे, कारण schedule त्यावर ठरते.</li>
+          <li><strong>Any arrears or adjustments</strong> जे वेगळ्या lines मध्ये दिसतात.</li>
+        </ul>
+        <p>Rates कुठून येतात, त्या कशा verify होतात, आणि newer tariff order audit झाला नसेल तर आम्ही
+        काय करतो हे <a href="/methodology/">methodology page</a> वर आहे. कोणत्याही state किंवा DISCOM ची
+        <a href="/tariffs/states/">पूर्ण tariff schedule</a> देखील पाहू शकता.</p>`,
+    'bc.faqHtml': `<h2>वारंवार विचारले जाणारे प्रश्न</h2>
+    <details class="seo-faq-item"><summary>हा calculator वापरायला माझे actual bill लागते का?</summary>
+      <div class="seo-faq-a">नाही, पण ते उपयोगी पडते. Estimate साठी consumed units आणि DISCOM पुरेसे आहेत. Printed bill शी जवळून match करायचे असेल तर sanctioned load, billing period dates आणि meter readingsही हव्या — fixed charge आणि per-day proration यांच्यावरच ते ठरते, आणि estimate व actual bill मधला gap अनेकदा यामुळेच येतो.</div></details>
+    <details class="seo-faq-item"><summary>Calculated bill printed bill पेक्षा थोडे वेगळे का दिसते?</summary>
+      <div class="seo-faq-a">साधारण चार कारणे असतात: billing period clean month नसतो; त्या month चा fuel surcharge अजून data मध्ये नसतो; bill मध्ये arrears किंवा one-off recovery असते जी per-unit formula derive करू शकत नाही; किंवा state subsidy तुमच्या past consumption वर depend करते. Detailed form पहिल्या तीन गोष्टी reconcile करण्यासाठी fields देतो.</div></details>
+    <details class="seo-faq-item"><summary>हे home page calculator पेक्षा कसे वेगळे आहे?</summary>
+      <div class="seo-faq-a">Engine आणि tariff data तोच आहे — हा page simplified form ऐवजी थेट detailed form उघडतो. Home page DISCOM आणि units विचारून बाकी infer करतो, जे बहुतेक domestic bills साठी पुरते. ToD slots, kVAh, solar export, arrears किंवा multi-meter connection असेल तर हा page वापरा.</div></details>
+    <details class="seo-faq-item"><summary>Commercial आणि industrial connections साठी हे काम करते का?</summary>
+      <div class="seo-faq-a">हो, जिथे आमच्या tariff data मध्ये category आहे. तुमच्या connection ला match होणारी category आणि supply type निवडा; form त्या category मध्ये खरोखर लागणारी fields दाखवेल — उदा. kVAh billed connections साठी demand charges आणि power factor. Supply-type eligibility options मध्ये words मध्ये दिली जाते, कारण tariff orders अनेकदा limits prose मध्ये define करतात.</div></details>
+    <details class="seo-faq-item"><summary>मी result save किंवा share करू शकतो का?</summary>
+      <div class="seo-faq-a">हो. Completed bill account मध्ये save करून नंतर स्वतःच्या page वर उघडता येते, आणि कोणताही result share link म्हणून पाठवता येतो जो तेच inputs पुन्हा उघडतो. Link उघडणाऱ्या व्यक्तीला account लागत नाही.</div></details>
+    <details class="seo-faq-item"><summary>Rates कोणत्या tariff year मधून येतात?</summary>
+      <div class="seo-faq-a">प्रत्येक DISCOM page rates कोणत्या tariff order मधून वाचल्या आहेत आणि त्या real bills विरुद्ध verify झाल्या आहेत का हे सांगतो. Newer order असेल पण audit बाकी असेल तर page ते स्पष्ट सांगतो. Methodology page sourcing आणि checking process समजावतो.</div></details>`,
 
     // Solar calculator (/solar/)
     'sol.title': 'रूफटॉप सोलर बचत कॅल्क्युलेटर',

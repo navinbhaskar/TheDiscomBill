@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      try { localStorage.setItem('lang', 'mr'); } catch (e) {}
+    })();
+  </script>
+  <title>भारतात ऑन-ग्रिड विरुद्ध हायब्रिड सोलर — बॅकअप, सबसिडी आणि खरा खर्च</title>
+  <meta name="description" content="ऑन-ग्रिड सोलर वीज गेल्यावर बंद होतो. हायब्रिड चालू राहतो, पण जास्त खर्चिक असतो. बॅकअप, सबसिडी, पेबॅक आणि योग्य निवड समजून घ्या.">
+  <link rel="canonical" href="https://thediscombill.com/mr/guides/on-grid-vs-hybrid-solar/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/on-grid-vs-hybrid-solar/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/on-grid-vs-hybrid-solar/">
+  <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/on-grid-vs-hybrid-solar/">
+  <link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/on-grid-vs-hybrid-solar/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/on-grid-vs-hybrid-solar/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="भारतात ऑन-ग्रिड विरुद्ध हायब्रिड सोलर — बॅकअप, सबसिडी आणि खरा खर्च">
+  <meta property="og:description" content="ऑन-ग्रिड सोलर वीज गेल्यावर बंद होतो. हायब्रिड चालू राहतो, पण जास्त खर्चिक असतो. बॅकअप, सबसिडी, पेबॅक आणि योग्य निवड समजून घ्या.">
+  <meta property="og:url" content="https://thediscombill.com/mr/guides/on-grid-vs-hybrid-solar/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="भारतात ऑन-ग्रिड विरुद्ध हायब्रिड सोलर — बॅकअप, सबसिडी आणि खरा खर्च">
+  <meta property="og:locale" content="mr_IN">
+  <meta property="og:locale:alternate" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="भारतात ऑन-ग्रिड विरुद्ध हायब्रिड सोलर — बॅकअप, सबसिडी आणि खरा खर्च">
+  <meta name="twitter:description" content="ऑन-ग्रिड सोलर वीज गेल्यावर बंद होतो. हायब्रिड चालू राहतो, पण जास्त खर्चिक असतो. बॅकअप, सबसिडी, पेबॅक आणि योग्य निवड समजून घ्या.">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      addEventListener("scroll", load, { once: true, passive: true });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/mr/guides/on-grid-vs-hybrid-solar/","url":"https://thediscombill.com/mr/guides/on-grid-vs-hybrid-solar/","name":"भारतात ऑन-ग्रिड विरुद्ध हायब्रिड सोलर — बॅकअप, सबसिडी आणि खरा खर्च","description":"ऑन-ग्रिड सोलर वीज गेल्यावर बंद होतो. हायब्रिड चालू राहतो, पण जास्त खर्चिक असतो. बॅकअप, सबसिडी, पेबॅक आणि योग्य निवड समजून घ्या.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-28"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ऑन-ग्रिड विरुद्ध हायब्रिड सोलर: तुमच्या घराला खरंच काय हवे","description":"ऑन-ग्रिड सोलर वीज गेल्यावर बंद होतो. हायब्रिड चालू राहतो, पण जास्त खर्चिक असतो. बॅकअप, सबसिडी, पेबॅक आणि योग्य निवड समजून घ्या.","image":"https://thediscombill.com/og/guide-on-grid-vs-hybrid-solar.jpg","mainEntityOfPage":"https://thediscombill.com/mr/guides/on-grid-vs-hybrid-solar/","datePublished":"2026-08-27","dateModified":"2026-08-28","inLanguage":"mr-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"मार्गदर्शक","item":"https://thediscombill.com/mr/guides/"},{"@type":"ListItem","position":3,"name":"ऑन-ग्रिड विरुद्ध हायब्रिड सोलर: तुमच्या घराला खरंच काय हवे"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"On-grid solar वीज गेल्यावर काम करतो का?","acceptedAnswer":{"@type":"Answer","text":"नाही. Grid-tied inverter ला grid fail होताच shut down व्हावे लागते. हा anti-islanding safety rule आहे, ज्यामुळे system बंद lines मध्ये power पाठवत नाही. Grid गेल्यावर voltage आणि frequency referenceही राहत नाही. Outage मध्ये power फक्त hybrid किंवा off-grid system देतो."}},{"@type":"Question","name":"Hybrid solar system PM Surya Ghar subsidy साठी eligible आहे का?","acceptedAnswer":{"@type":"Answer","text":"हो. Operational guidelines battery hybrid systems eligible म्हणतात, जर तुमच्या state Electricity Regulatory Commission ने arrangement approve केले असेल. Subsidy amount panels च्या capacity वरच मिळतो: पहिल्या 2 kW साठी ₹30,000/kW, तिसऱ्या kW साठी ₹18,000/kW, cap ₹78,000. Storage amount वाढवत नाही."}},{"@type":"Question","name":"Solar battery पैशाच्या योग्य आहे का?","acceptedAnswer":{"@type":"Answer","text":"तुमचा goal काय आहे यावर अवलंबून आहे. Battery outage availability देते, extra savings नाही. Net metering मध्ये exported unit आधीच top slab rate इतका credit देतो, त्यामुळे store केल्यास roughly तीच value मिळते, losses आणि battery cost वजा करून. Frequent outages किंवा low export-credit states मध्ये battery जास्त उपयोगी ठरते."}},{"@type":"Question","name":"मी नंतर on-grid system मध्ये battery जोडू शकतो का?","acceptedAnswer":{"@type":"Answer","text":"बहुतेक वेळा hardware बदलल्याशिवाय नाही. Standard grid-tied inverter storage charge/discharge साठी बनलेला नसतो. Battery जोडण्यासाठी hybrid inverter किंवा separate AC-coupled unit लागतो. Storage ची शक्यता असल्यास सुरुवातीला hybrid-capable inverter घेणे स्वस्त पडते."}},{"@type":"Question","name":"Backup साठी किती battery हवी?","acceptedAnswer":{"@type":"Answer","text":"संपूर्ण घराऐवजी defined backup circuit नुसार size करा. Lights, fans, router आणि fridge यांसारख्या गरजेच्या loads ची बेरीज करा आणि required backup hours ने multiply करा. Outage मध्ये AC चालवणे वेगळ्याच खर्चाचे काम आहे."}},{"@type":"Question","name":"Hybrid solar on-grid पेक्षा महाग आहे का?","acceptedAnswer":{"@type":"Answer","text":"हो. Upfront cost जास्त असतो कारण battery आणि hybrid inverter लागतात, आणि पुढे battery replacementही येते. Subsidy हा gap कमी करत नाही कारण ती panel kW वर मिळते. Extra cost backup power विकत घेते, म्हणून payback period पेक्षा outage cost विरुद्ध judge करा."}}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/mr/bill-calculator/" data-i18n="nav.calculator">Calculator</a>
+      <a href="/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">Smart Meter</a>
+      <a href="/mr/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/mr/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <div class="nav-dropdown alerts-dropdown nav-promoted" id="alertsDropdown" data-alerts-nav="true">
+        <button type="button" class="nav-dropdown-trigger alerts-trigger" id="alertsTrigger" aria-haspopup="true" aria-expanded="false">
+          <svg class="alerts-bell" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 21a2 2 0 0 0 3.4 0"/><path d="M18 8A6 6 0 0 0 6 8c0 7-3 7-3 9h18c0-2-3-2-3-9"/></svg>
+          <span data-i18n="nav.alerts">Alerts</span>
+          <span class="alerts-dot" aria-hidden="true"></span>
+        </button>
+        <!-- The placeholder mirrors the hydrated menu's shape on purpose. It used to be a
+             single "Loading alerts..." line plus the footer link, which made the closed menu
+             92px tall; hydration then took it to 549px and pushed "See all alerts" 461px down
+             the screen, out from under the pointer of anyone reaching for it. Same rows, same
+             box, nothing moves. -->
+        <div class="nav-dropdown-menu alerts-menu" id="alertsMenu" role="menu" aria-label="Recent public alerts" data-i18n-aria="alert.nav.menuLabel" data-lenis-prevent>
+          <div class="alerts-nav-head"><strong data-i18n="alert.nav.latest">Latest updates</strong><span data-i18n="alert.nav.loading">Loading...</span></div><ol class="alerts-nav-list alerts-skeleton" aria-hidden="true"><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li></ol><a href="/mr/alerts/" class="alerts-see-all" data-i18n="alert.nav.seeAll">See all alerts</a>
+        </div>
+      </div>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/mr/bill-calculator/" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">Smart Meter</span></a>
+            <a href="/mr/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/mr/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <!-- aria-labelledby, not aria-label: the accessible name has to CONTAIN the visible
+             text ("EN"), or speech input cannot activate the button and a screen reader never
+             announces which language is active (WCAG 2.5.3). Referencing the live span also
+             keeps the name in step when syncLangUI() rewrites the badge. -->
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- A plain list of links, not a listbox. These rows navigate, so they are anchors:
+             that makes them crawlable, middle-clickable and keyboard-operable for free,
+             none of which a role="option" <li> with a click handler ever was. Rows that
+             translate in place (no twin URL to point at) stay <button>s. -->
+        <ul class="lang-menu" id="langMenu" aria-label="Select language">
+          <li><a class="lang-opt" href="/guides/on-grid-vs-hybrid-solar/" hreflang="en-IN" lang="en" data-lang="en"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></a></li>
+          <li><a class="lang-opt" href="/hi/guides/on-grid-vs-hybrid-solar/" hreflang="hi-IN" lang="hi" data-lang="hi"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">हिं</span></a></li>
+          <li><span class="lang-opt" data-lang="mr" aria-current="true"><span class="lang-opt-name">मराठी</span><span class="lang-opt-code">म</span></span></li>
+          <li><a class="lang-opt" href="/ta/guides/on-grid-vs-hybrid-solar/" hreflang="ta-IN" lang="ta" data-lang="ta"><span class="lang-opt-name">தமிழ்</span><span class="lang-opt-code">த</span></a></li>
+        </ul>
+      </div>
+      <button type="button" id="siteSearchBtn" class="site-search-btn" aria-label="Search the site (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body" role="main">
+
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/">होम</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><a href="/mr/guides/">मार्गदर्शक</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">ऑन-ग्रिड विरुद्ध हायब्रिड सोलर: तुमच्या घराला खरंच काय हवे</span></li></ol></nav>
+    <div class="seo-article-tools"><p class="seo-lang-pills"><svg class="seo-lang-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span class="sr-only">Available in</span><a class="seo-lang-pill" href="/guides/on-grid-vs-hybrid-solar/" hreflang="en-IN" lang="en">English</a><a class="seo-lang-pill" href="/hi/guides/on-grid-vs-hybrid-solar/" hreflang="hi-IN" lang="hi">हिंदी</a><span class="seo-lang-pill is-current" lang="mr" aria-current="page">मराठी</span><a class="seo-lang-pill" href="/ta/guides/on-grid-vs-hybrid-solar/" hreflang="ta-IN" lang="ta">தமிழ்</a></p><button type="button" class="seo-share-btn" data-share-article hidden data-copied="लिंक कॉपी झाली" data-failed="कॉपी झाली नाही"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span class="seo-share-label" data-share-label>शेअर</span></button></div>
+    <h1>ऑन-ग्रिड विरुद्ध हायब्रिड सोलर: तुमच्या घराला खरंच काय हवे</h1>
+    <p class="guide-meta">8 मिनिटे · अपडेट: २८ ऑगस्ट, २०२६ · TheDiscomBill संपादकीय · <a href="/methodology/">दर कुठून येतात</a></p>
+    <p class="seo-lead">बहुतेक लोक rooftop solar घेताना दोन अपेक्षा ठेवतात: बिल कमी व्हावे, आणि
+      परिसरात वीज गेली तरी घरात दिवे चालू राहावेत. साधा on-grid system पहिली अपेक्षा पूर्ण
+      करतो, <strong>दुसरी नाही</strong> — वीज गेली की तो पूर्ण बंद होतो, दुपारी भर उन्हातही.
+      हीच गोष्ट खरेदीदारांना सगळ्यात जास्त चकित करते. On-grid आणि hybrid मधला खरा फरक,
+      त्याचा खर्च, आणि तुमच्या घराला कोणता system हवा हे येथे स्पष्ट केले आहे.</p>
+    
+    <a class="guide-tool-cta" href="/solar-calculator/">
+      <span class="guide-tool-cta-kicker">इंटरॅक्टिव्ह साधन</span>
+      <strong>रूफटॉप सोलर बचत कॅल्क्युलेटर</strong>
+      <span class="guide-tool-cta-sub">सिस्टिमचा आकार ठरवा आणि तुमच्या बिलावरील परतावा पाहा</span>
+      <span class="guide-tool-cta-go" aria-hidden="true">→</span>
+    </a>
+    
+    <figure class="guide-fig guide-example">
+      <div class="guide-example-label">पाहण्यासारखे उदाहरण</div>
+      <div class="gbill" role="img" aria-label="Sample net meter bill with export units highlighted">
+        <div class="gbill-head">नमुना SOLAR BILL <span>Net meter</span></div>
+        <div class="gbill-row"><span>Import units <small>From grid</small></span><b>210 kWh</b></div>
+        <div class="gbill-row is-hl"><span>Export units <small>Sent to grid</small></span><span class="gbill-tag">हे पहा</span><b>136 kWh</b></div>
+        <div class="gbill-row"><span>Net billable units</span><b>74 kWh</b></div>
+        <div class="gbill-total"><span>Estimated saving</span><span>₹920</span></div>
+      </div>
+      <figcaption>हा नमुना दृश्य नकाशा म्हणून वापरा, मग हायलाइट केलेली ओळ तुमच्या बिलाशी किंवा मीटरशी जुळवा.</figcaption>
+    </figure>
+    <nav class="page-toc" aria-label="या पानावर">
+      <span class="page-toc-label">या पानावर</span>
+      <a href="#on-grid-solar">वीज गेल्यावर on-grid solar का बंद होतो</a>
+        <a href="#system-types">तीन system types, प्रामाणिक तुलना</a>
+        <a href="#battery">Battery प्रत्यक्षात काय देते</a>
+        <a href="#subsidy">Subsidy कुठे बसते</a>
+        <a href="#section-5">निर्णय कसा घ्यावा</a>
+        <a href="#sign">Sign करण्यापूर्वी काय विचारावे</a>
+    </nav>
+    
+      <section class="seo-section" id="on-grid-solar">
+        <h2>वीज गेल्यावर on-grid solar का बंद होतो</h2>
+        <p>हा fault नाही, आणि inverter स्वस्त आहे म्हणूनही नाही. Grid-tied inverter ला grid
+        बंद होताच disconnect व्हावे लागते. या behaviour ला <strong>anti-islanding</strong> म्हणतात.
+        कारण कठोर safety आहे: outage दरम्यान तुमचे panels local network मध्ये power ढकलत राहिले,
+        तर line बंद आहे असे समजून काम करणाऱ्या lineman साठी ती line जिवंत होऊ शकते.</p>
+        <p>दुसरे practical कारणही आहे. साधा grid-tied inverter <em>grid-following</em> असतो —
+        तो grid ची voltage आणि frequency reference म्हणून वापरतो. Grid काढली की follow करण्यासाठी
+        काही उरत नाही. त्यामुळे तो स्वतःहून घराला "230 V, 50 Hz" देत राहू शकत नाही.</p>
+        <p>म्हणून on-grid system ला <strong>बिल कमी करणारी machine समजा, backup machine नाही</strong>.
+        साध्या दिवशी तो पहिले काम उत्तम करतो. Outage मध्ये तो काहीच देत नाही.</p>
+      </section>
+
+      <section class="seo-section" id="system-types">
+        <h2>तीन system types, प्रामाणिक तुलना</h2>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>&nbsp;</th><th>On-grid</th><th>Hybrid</th><th>Off-grid</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">वीज गेल्यावर चालतो</th><td>नाही</td><td>हो, battery capacity पर्यंत</td><td>हो</td></tr>
+              <tr><th scope="row">Battery</th><td>नाही</td><td>आवश्यक</td><td>आवश्यक, आणि मोठी</td></tr>
+              <tr><th scope="row">Surplus grid मध्ये export</th><td>हो</td><td>हो</td><td>नाही — connected नाही</td></tr>
+              <tr><th scope="row">Net metering credit</th><td>हो</td><td>हो</td><td>लागू नाही</td></tr>
+              <tr><th scope="row">Upfront cost</th><td>सर्वात कमी</td><td>जास्त — battery आणि hybrid inverter</td><td>usable unit मागे सर्वात जास्त</td></tr>
+              <tr><th scope="row">Replacement</th><td>कधीतरी inverter</td><td>Inverter आणि battery</td><td>Inverter आणि मोठा battery bank</td></tr>
+              <tr><th scope="row">कोणासाठी</th><td>Supply reliable; goal bill कमी करणे</td><td>वारंवार किंवा लांब outages; bill आणि availability दोन्ही goal</td><td>Grid connection नाही</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>ज्या घरात DISCOM connection आधीच आहे, त्या घरासाठी off-grid जवळजवळ कधीच योग्य
+        उत्तर नसते. तुम्ही ज्या grid ला आधीच connected आहात ती replace करण्यासाठी मोठा battery
+        bank विकत घ्याल, आणि export credit सोडाल. खरी निवड on-grid विरुद्ध hybrid आहे.</p>
+      </section>
+
+      <section class="seo-section" id="battery">
+        <h2>Battery प्रत्यक्षात काय देते</h2>
+        <p>इथे maths अनेकदा चुकते. Battery power generate करत नाही. ती दुपारी generate झालेल्या
+        units संध्याकाळपर्यंत shift करते, आणि grid गेल्यावर काही circuits चालू ठेवते. दोन्ही
+        फायदे खरे आहेत. पण दोन्ही बहुतेक वेळा मोठा <em>financial</em> return देत नाहीत.</p>
+        <p>Net metering मध्ये exported unit imported unit विरुद्ध आधीच credited असतो, आणि netting
+        तुमचे सर्वात महाग slab units आधी काढते. त्यामुळे तो credit top slab rate इतकाच मौल्यवान
+        असतो — <a href="/mr/guides/solar-net-metering-savings/">net metering savings कशा काम
+        करतात</a> ते पहा. Unit export करण्याऐवजी store केल्याने नवी value तयार होत नाही; जास्तीत
+        जास्त तीच value मिळते, round-trip losses आणि battery च्या स्वतःच्या cost नंतर. Battery
+        खरी gap तिथे बंद करते जिथे state export units ला one-for-one net करत नाही आणि कमी rate देते.</p>
+        <p>लोक चुकवतात तो दुसरा खर्च म्हणजे replacement timing. Panels सहसा decades साठी warranted
+        असतात; batteries नाहीत. Panels च्या life मध्ये storage किमान एकदा replace करावी लागेल
+        असे सुरुवातीपासून गृहीत धरा.</p>
+        <p class="seo-note"><strong>सरळ framing:</strong> battery बचतीसाठी नाही,
+        <em>availability</em> साठी घ्या. तुमच्या भागात वीज क्वचितच जाते, तर storage पेक्षा extra
+        panel capacity मध्ये पैसा जास्त काम करतो.</p>
+      </section>
+
+      <section class="seo-section" id="subsidy">
+        <h2>Subsidy कुठे बसते</h2>
+        <p>PM Surya Ghar: Muft Bijli Yojana मध्ये residential consumers साठी central subsidy
+        rooftop capacity च्या kW नुसार आहे:</p>
+        <ul>
+          <li>पहिल्या 2 kW साठी <strong>₹30,000 प्रति kW</strong></li>
+          <li>3 kW पर्यंत additional capacity साठी <strong>₹18,000 प्रति kW</strong></li>
+          <li>3 kW पेक्षा मोठ्या system साठी total cap <strong>₹78,000</strong></li>
+          <li>Special-category states साठी <strong>प्रति kW अतिरिक्त 10%</strong></li>
+        </ul>
+        <p>Portal indicative sizing देखील देतो: महिन्याला 150 units पर्यंत average household साठी
+        1-2 kW, 150-300 units साठी 2-3 kW, आणि त्यापुढे 3 kW पेक्षा जास्त. Scheme residential
+        consumers आणि resident welfare associations साठी आहे, आणि सध्या <strong>31 March 2027</strong>
+        पर्यंत scheduled आहे. आमची <a href="/guides/pm-surya-ghar-solar-subsidy/">PM Surya Ghar
+        guide</a> application flow आणि payback maths समजावते.</p>
+        <p>या decision साठी महत्त्वाचा मुद्दा: subsidy <strong>generating capacity in kW</strong>
+        वर calculate होते. ती storage साठी contribution नाही. Battery ही subsidised system वरची
+        out-of-pocket addition आहे; subsidy panels ची economics सुधारते, hybrid premium नाही.</p>
+        <p class="seo-note"><strong>Hybrid systems qualify करतात.</strong> Scheme guidelines
+        grid-connected पण non-feeding systems eligible म्हणतात आणि <em>battery hybrid systems</em>
+        नावाने mention करतात — <strong>subject to approval by your state's Electricity Regulatory
+        Commission</strong>. हा clause locally check करावा लागतो, कारण approval state matter आहे.
+        Amount मात्र स्पष्ट आहे: subsidy installed <em>solar modules</em> च्या capacity वर मिळते,
+        storage वाढवल्याने amount वाढत नाही.
+        <a href="https://cdnbbsr.s3waas.gov.in/s3716e1b8c6cd17b771da77391355749f3/uploads/2024/04/202404162127034309.pdf" target="_blank" rel="noopener">MNRE operational guidelines,
+        clauses 23(b) and 24(a) ↗</a></p>
+      </section>
+
+      <section class="seo-section" id="section-5">
+        <h2>निर्णय कसा घ्यावा</h2>
+        <p>हे प्रश्न क्रमाने विचारा. पहिले दोनच बहुतेक cases settle करतात.</p>
+        <ol>
+          <li><strong>तुमची supply खरंच किती वेळा fail होते, आणि किती वेळासाठी?</strong> अंदाजावर
+          नाही — काही महिन्यांचा अनुभव प्रामाणिकपणे तपासा. क्वचित छोटे cuts storage justify करत
+          नाहीत. Daily किंवा multi-hour outages करतात.</li>
+          <li><strong>नेमके काय चालू राहिले पाहिजे?</strong> Lights, fans, router आणि fridge चालू
+          ठेवणे आणि outage मध्ये AC चालवणे यात मोठा फरक आहे. पहिले modest battery आहे. दुसरे वेगळाच budget आहे.</li>
+          <li><strong>आज backup साठी काय वापरता?</strong> आधीच inverter आणि battery असल्यास hybrid
+          system तो setup replace करू शकतो. त्यामुळे comparison बदलतो, कारण hybrid cost चा भाग
+          renew होणारी गोष्ट replace करतो.</li>
+          <li><strong>Constraint roof आहे की budget?</strong> दोन्हींपैकी काही limit करत असेल तर
+          आधी panel capacity वर खर्च करा. जी generation नाही, ती store करता येत नाही.</li>
+        </ol>
+        <p>Stable supply असलेल्या बहुतेक urban homes साठी reasonable default: <strong>on-grid,
+        consumption नुसार sized</strong>. Outages routine असतील तर: <strong>hybrid, battery defined
+        backup circuit नुसार sized</strong>, संपूर्ण घरानुसार नाही.</p>
+      </section>
+
+      <section class="seo-section" id="sign">
+        <h2>Sign करण्यापूर्वी काय विचारावे</h2>
+        <ul>
+          <li>Outage दरम्यान नेमके कोणते loads चालतील, आणि full battery वर किती वेळ?</li>
+          <li>Inverter आत्ता hybrid-capable आहे का, की storage नंतर जोडण्यासाठी तो बदलावा लागेल?</li>
+          <li>Battery चा expected replacement point काय आहे, आणि आजच्या prices वर खर्च किती येईल?</li>
+          <li>Subsidy deduct करून quote काय आहे, आणि subsidy आधी full price काय आहे? दोन्ही वेगळे मागा.</li>
+          <li>DISCOM net-metering application कोण handle करेल, आणि approval delay झाला तर timeline काय?</li>
+          <li>Vendor national portal वर registered आहे का, आणि quoted panels scheme requirements पूर्ण करतात का?</li>
+          <li>Hybrid design साठी: तुमच्या state regulator ने subsidy purpose साठी arrangement approve केले आहे का? Central guidelines allow करतात; approval state चे आहे.</li>
+        </ul>
+        <p>Quote मिळाल्यावर तुमची current usage आमच्या <a href="/mr/bill-calculator/">bill calculator</a>
+        मध्ये टाका आणि top slab वर तुम्ही per unit प्रत्यक्षात काय भरता ते पाहा — solar unit ची
+        value headline tariff नव्हे, हा number ठरवतो.</p>
+      </section>
+    <section class="seo-section"><h2>वारंवार विचारले जाणारे प्रश्न</h2>
+    <details class="seo-faq-item">
+      <summary>On-grid solar वीज गेल्यावर काम करतो का?</summary>
+      <div class="seo-faq-a">नाही. Grid-tied inverter ला grid fail होताच shut down व्हावे लागते. हा anti-islanding safety rule आहे, ज्यामुळे system बंद lines मध्ये power पाठवत नाही. Grid गेल्यावर voltage आणि frequency referenceही राहत नाही. Outage मध्ये power फक्त hybrid किंवा off-grid system देतो.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Hybrid solar system PM Surya Ghar subsidy साठी eligible आहे का?</summary>
+      <div class="seo-faq-a">हो. Operational guidelines battery hybrid systems eligible म्हणतात, जर तुमच्या state Electricity Regulatory Commission ने arrangement approve केले असेल. Subsidy amount panels च्या capacity वरच मिळतो: पहिल्या 2 kW साठी ₹30,000/kW, तिसऱ्या kW साठी ₹18,000/kW, cap ₹78,000. Storage amount वाढवत नाही.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Solar battery पैशाच्या योग्य आहे का?</summary>
+      <div class="seo-faq-a">तुमचा goal काय आहे यावर अवलंबून आहे. Battery outage availability देते, extra savings नाही. Net metering मध्ये exported unit आधीच top slab rate इतका credit देतो, त्यामुळे store केल्यास roughly तीच value मिळते, losses आणि battery cost वजा करून. Frequent outages किंवा low export-credit states मध्ये battery जास्त उपयोगी ठरते.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>मी नंतर on-grid system मध्ये battery जोडू शकतो का?</summary>
+      <div class="seo-faq-a">बहुतेक वेळा hardware बदलल्याशिवाय नाही. Standard grid-tied inverter storage charge/discharge साठी बनलेला नसतो. Battery जोडण्यासाठी hybrid inverter किंवा separate AC-coupled unit लागतो. Storage ची शक्यता असल्यास सुरुवातीला hybrid-capable inverter घेणे स्वस्त पडते.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Backup साठी किती battery हवी?</summary>
+      <div class="seo-faq-a">संपूर्ण घराऐवजी defined backup circuit नुसार size करा. Lights, fans, router आणि fridge यांसारख्या गरजेच्या loads ची बेरीज करा आणि required backup hours ने multiply करा. Outage मध्ये AC चालवणे वेगळ्याच खर्चाचे काम आहे.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Hybrid solar on-grid पेक्षा महाग आहे का?</summary>
+      <div class="seo-faq-a">हो. Upfront cost जास्त असतो कारण battery आणि hybrid inverter लागतात, आणि पुढे battery replacementही येते. Subsidy हा gap कमी करत नाही कारण ती panel kW वर मिळते. Extra cost backup power विकत घेते, म्हणून payback period पेक्षा outage cost विरुद्ध judge करा.</div>
+    </details></section>
+    <section class="seo-section guide-calc-cta">
+      <h2>आता तुमचे स्वतःचे बिल तपासा</h2>
+      <p>वाचन अर्धेच काम — तुमच्या डिस्कॉमच्या खऱ्या स्लॅब दर, फिक्स्ड चार्ज आणि FPPA सह तुमचे तपशीलवार बिल काही सेकंदांत काढा. मोफत, साइन-अप शिवाय.</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">वीज बिल कॅल्क्युलेटर उघडा →</a></p>
+    </section>
+    
+    <section class="seo-section">
+      <h2>TheDiscomBill वरील संबंधित पाने</h2>
+      <div class="seo-link-grid"><a class="seo-link-card" href="/solar-calculator/"><strong>Rooftop solar savings calculator</strong><span>Estimate payback from your monthly units and tariff</span></a><a class="seo-link-card" href="/solar-subsidy-checker/"><strong>Solar subsidy checker</strong><span>Check subsidy eligibility before sizing a system</span></a></div>
+    </section>
+    <section class="seo-section guide-more">
+      <h2>संबंधित मार्गदर्शक</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/mr/guides/solar-net-metering-savings/">
+          <strong>सोलर नेट मीटरिंग: बचत प्रत्यक्षात कशी काम करते</strong>
+          <small>6 मिनिटे</small>
+        </a>
+        <a class="seo-link-card" href="/guides/pm-surya-ghar-solar-subsidy/">
+          <strong>PM Surya Ghar Explained: The Rooftop Solar Subsidy, Rupee by Rupee</strong>
+          <small>7 मिनिटे</small>
+        </a>
+        <a class="seo-link-card" href="/mr/guides/pm-surya-ghar-eligibility-checklist/">
+          <strong>PM सूर्य घर: अर्ज कशामुळे अडतो</strong>
+          <small>8 मिनिटे</small>
+        </a>
+        <a class="seo-link-card" href="/mr/guides/bill-wrong-how-to-complain-and-win/">
+          <strong>बिल चुकीचे आहे? तक्रार कशी करावी आणि जिंकावी</strong>
+          <small>9 मिनिटे</small>
+        </a>
+      </div>
+      <p class="guide-more-all"><a href="/mr/guides/">सर्व मार्गदर्शक पहा →</a></p>
+    </section>
+    <p class="seo-disclaimer">सार्वजनिकरित्या उपलब्ध टॅरिफ आदेश आणि नियमांवर आधारित सामान्य मार्गदर्शन; तपशील राज्य, डिस्कॉम आणि ग्राहक श्रेणीनुसार बदलतात. तुमच्या डिस्कॉमच्या अधिकृत अनुसूचीशी किंवा छापील बिलाशी ताळमेळ करा.</p>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/mr/bill-calculator/" data-i18n="ql.advancedCalc">Advanced Bill Calculator</a>
+        <a href="/mr/compare/" data-i18n="nav.compare">Compare</a>
+        <a href="/mr/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/mr/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/mr/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/mr/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/mr/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator</a>
+        <a href="/mr/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator</a>
+        <a href="/mr/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator</a>
+        <a href="/mr/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/mr/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/smart-meter/" data-i18n="ql.meterDisplay">Smart Meter Guide</a>
+        <a href="/mr/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/mr/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/mr/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/mr/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/database/" data-i18n="ql.tariffDatabase">Tariff Database</a>
+        <a href="/orders/" data-i18n="ql.orderLibrary">Order Library</a>
+        <a href="/mr/alerts/" data-i18n="ql.alerts">Alerts</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/contact/" data-i18n="ql.contact">Contact</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

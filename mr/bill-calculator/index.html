@@ -79,9 +79,8 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN"}</script>
   <!-- / entity-graph -->
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"प्रगत वीज बिल कॅल्क्युलेटर","url":"https://thediscombill.com/mr/bill-calculator/","description":"ToD, kVAh, सोलर नेट मीटरिंग, थकबाकी आणि उशिरा-भरणा अधिभारासह तपशीलवार वीज बिल काढा.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN"}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"प्रगत वीज बिल कॅल्क्युलेटर","item":"https://thediscombill.com/mr/bill-calculator/"}]}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I need my actual bill to use this calculator?","acceptedAnswer":{"@type":"Answer","text":"No, but it helps. Units consumed and your DISCOM are enough for an estimate. To match a printed bill closely you also want the sanctioned load, the billing period dates and the meter readings — those drive the fixed charge and the per-day proration, which are the two things that most often explain a gap between an estimate and the real figure."}},{"@type":"Question","name":"Why is my calculated bill slightly different from the printed one?","acceptedAnswer":{"@type":"Answer","text":"Usually one of four reasons: the billing period is not a clean month, so fixed charges are prorated by days; a fuel surcharge was notified for that month and is not yet in our data; the bill carries arrears or a one-off recovery that no per-unit formula can derive; or your state applies a subsidy that depends on your own past consumption. The detailed form exposes the fields for the first three so you can reconcile them."}},{"@type":"Question","name":"What is the difference between this and the calculator on the home page?","acceptedAnswer":{"@type":"Answer","text":"It is the same engine and the same tariff data — this page simply opens straight into the detailed form instead of the simplified one. The home page asks for your DISCOM and units and infers the rest, which suits most domestic bills. Use this page when you need time-of-day slots, kVAh, solar export, arrears or a multi-meter connection."}},{"@type":"Question","name":"Does it work for commercial and industrial connections?","acceptedAnswer":{"@type":"Answer","text":"Yes, where our tariff data covers the category. Pick the category and supply type that match your connection and the form will show the fields that category actually uses — demand charges and power factor for connections billed on kVAh, for example. Supply-type eligibility is described in words on each option, because the tariff orders define those limits in prose rather than as a number."}},{"@type":"Question","name":"Can I save or share a result?","acceptedAnswer":{"@type":"Answer","text":"Yes. A completed bill can be saved to your account and opened later at its own page, and any result can be shared as a link that reopens the calculator with the same inputs. Nothing about a shared link requires the person opening it to have an account."}},{"@type":"Question","name":"Which tariff year do the rates come from?","acceptedAnswer":{"@type":"Answer","text":"Each DISCOM's page states the tariff order the rates were read from and whether we have verified them against real bills. Where a newer order exists that we have not yet audited, the page says so plainly rather than implying the figure is current. Our methodology page explains how rates are sourced and checked."}}]}</script>
-</head>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"मुख्यपृष्ठ","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"प्रगत वीज बिल कॅल्क्युलेटर","item":"https://thediscombill.com/mr/bill-calculator/"}]}</script>
+  </head>
 <body>
 
 <!-- ── Header ───────────────────────────────────────────────────────────────── -->
@@ -144,10 +143,9 @@
            — with no <ol> the trail inherited 15px body copy and lost the flex row's 7px gaps,
            which is why this one page's breadcrumbs read larger and sat differently from the
            rest of the site. -->
-      <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/mr/" data-i18n="bc.home">मुख्यपृष्ठ</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">Advanced bill calculator</span></li></ol></nav>
-      <h1 class="reveal">Advanced electricity bill calculator</h1>
-      <p class="svc-intro reveal">Every field the tariff orders actually define — not a
-      simplified estimate.</p>
+      <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/mr/" data-i18n="bc.home">मुख्यपृष्ठ</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page" data-i18n="bc.advCalc">प्रगत बिल कॅल्क्युलेटर</span></li></ol></nav>
+      <h1 class="reveal" data-i18n="bc.heroTitle">प्रगत वीज बिल कॅल्क्युलेटर</h1>
+      <p class="svc-intro reveal" data-i18n-html="bc.heroIntro">टॅरिफ आदेशांमध्ये खरोखर परिभाषित केलेली प्रत्येक field — फक्त साधा अंदाज नाही.</p>
       <!-- The capabilities were a comma list inside the intro, then a row of bare chips. Both
            named the six fields without saying what any of them does, so the hero was a headline
            and six pills floating in a lot of empty background — it read as unfinished because
@@ -158,34 +156,31 @@
            definition list rather than six cards: this is a spec of what the form covers, and
            "every field the tariff orders actually define" is a claim that should look like a
            specification instead of a set of feature tiles. -->
-      <dl class="bc-caps reveal">
-        <div class="bc-cap">
-          <dt><a href="#f-tod">Time-of-day slots</a></dt>
-          <dd>Peak, normal and off-peak units priced separately — the evening surcharge and the solar-hour rebate.</dd>
+      <dl class="bc-caps reveal" data-i18n-html="bc.capsHtml"><div class="bc-cap">
+          <dt><a href="#f-tod">वेळेनुसार वापराचे स्लॉट</a></dt>
+          <dd>Peak, normal आणि off-peak units वेगवेगळ्या दरांनी — evening surcharge आणि solar-hour rebate.</dd>
         </div>
         <div class="bc-cap">
-          <dt><a href="#f-kvah">kVAh &amp; power factor</a></dt>
-          <dd>Billing on apparent energy, where a poor power factor inflates the units you are charged for.</dd>
+          <dt><a href="#f-kvah">kVAh आणि power factor</a></dt>
+          <dd>Apparent energy वर billing, जिथे खराब power factor मुळे charged units वाढतात.</dd>
         </div>
         <div class="bc-cap">
-          <dt><a href="#f-load">Sanctioned load &amp; demand</a></dt>
-          <dd>Fixed charges per kW of sanctioned load, and the penalty when recorded demand runs past it.</dd>
+          <dt><a href="#f-load">मंजूर भार आणि demand</a></dt>
+          <dd>Sanctioned load च्या प्रत्येक kW वर fixed charges, आणि recorded demand जास्त गेल्यास penalty.</dd>
         </div>
         <div class="bc-cap">
           <dt><a href="#f-solar">Solar export</a></dt>
-          <dd>Exported units netted against imported ones, with the surplus banked and carried forward.</dd>
+          <dd>Exported units imported units विरुद्ध net होतात; surplus bank होऊन पुढे carry होतो.</dd>
         </div>
         <div class="bc-cap">
-          <dt><a href="#f-arrears">Arrears &amp; surcharges</a></dt>
-          <dd>Electricity duty in your state's order against the fuel surcharge, plus arrears and late-payment interest.</dd>
+          <dt><a href="#f-arrears">थकबाकी आणि surcharge</a></dt>
+          <dd>Fuel surcharge सोबत तुमच्या state चा electricity duty order, plus arrears आणि late-payment interest.</dd>
         </div>
         <div class="bc-cap">
           <dt><a href="#f-multi">Multiple meters</a></dt>
-          <dd>Several meters on one premises, read separately but slabbed against the connection as a whole.</dd>
-        </div>
-      </dl>
-      <p class="bc-meta reveal">Same engine and tariff data as the quick calculator on the home
-      page — opened straight into the detailed form.</p>
+          <dd>एका premises वर अनेक meters — reading वेगळी, पण slabs संपूर्ण connection वर.</dd>
+        </div></dl>
+      <p class="bc-meta reveal" data-i18n-html="bc.heroMeta">Home page वरील quick calculator सारखेच engine आणि tariff data — पण थेट detailed form मध्ये उघडते.</p>
     </div>
   </section>
 
@@ -661,103 +656,73 @@
            summary, once in full. Marked with a class rather than rebuilt as a <ul>: each
            heading is an anchor target for a chip in the hero (#f-tod and friends), and a list
            item is the wrong element for a section of an article. -->
-      <section class="seo-section bc-fields">
-        <h2>What the advanced fields are for</h2>
-        <p>The detailed form exposes every input the tariff orders actually define. Most bills need
-        only a handful of them. Here is what each one changes, and where to read more if a line on
-        your bill is the reason you came looking.</p>
-
-        <h3 id="f-tod">Time-of-day (ToD) slots</h3>
-        <p>Some connections are billed at different rates depending on when the units were used —
-        a surcharge in the evening peak, often a rebate during solar hours. If your meter records
-        ToD, entering units per slot rather than one total is what makes the estimate match.
-        <a href="/mr/guides/tod-billing-explained/">How ToD billing works →</a></p>
-
-        <h3 id="f-kvah">kVAh and power factor</h3>
-        <p>kWh measures real energy; kVAh also counts the reactive power drawn by motors and
-        similar equipment. On a kVAh-billed connection a poor power factor inflates the units you
-        are charged for, which is why the bill can rise without your consumption changing.
-        <a href="/mr/guides/power-factor-kvah-billing-explained/">Power factor and kVAh billing →</a></p>
-
-        <h3 id="f-load">Sanctioned load and demand</h3>
-        <p>Fixed charges are usually levied per kW of sanctioned load, so this field moves the
-        bill even in a month you used nothing. Connections billed on maximum demand can also
-        attract a penalty for exceeding the sanctioned figure.
-        <a href="/mr/guides/reduce-fixed-charges-sanctioned-load/">Fixed charges and sanctioned load →</a>
+      <section class="seo-section bc-fields" data-i18n-html="bc.fieldsHtml"><h2>Advanced fields कशासाठी आहेत</h2>
+        <p>Detailed form tariff orders खरोखर define करत असलेले प्रत्येक input दाखवतो. बहुतेक bills
+        साठी त्यातील काहीच fields पुरतात. प्रत्येक field काय बदलते आणि bill वरील एखाद्या line मुळे
+        तुम्ही येथे आलात तर पुढे काय वाचायचे ते इथे आहे.</p>
+        <h3 id="f-tod">वेळेनुसार वापराचे (ToD) स्लॉट</h3>
+        <p>काही connections मध्ये units कधी वापरले यानुसार वेगवेगळे rates लागतात — evening peak मध्ये
+        surcharge, आणि solar hours मध्ये rebate. तुमचा meter ToD record करत असेल, तर one total ऐवजी
+        slot-wise units भरल्याने estimate match होतो.
+        <a href="/mr/guides/tod-billing-explained/">ToD billing कसे काम करते →</a></p>
+        <h3 id="f-kvah">kVAh आणि power factor</h3>
+        <p>kWh real energy मोजतो; kVAh motors आणि similar equipment मुळे येणारी reactive power देखील
+        मोजतो. kVAh-billed connection वर खराब power factor charged units वाढवतो, म्हणून consumption
+        बदलले नसले तरी bill वाढू शकते.
+        <a href="/mr/guides/power-factor-kvah-billing-explained/">Power factor आणि kVAh billing →</a></p>
+        <h3 id="f-load">मंजूर भार आणि demand</h3>
+        <p>Fixed charges सहसा sanctioned load च्या प्रति kW वर लावले जातात, त्यामुळे zero units वापरलेल्या
+        महिन्यातही हे field bill बदलते. Maximum demand वर billed connections मध्ये sanctioned figure
+        ओलांडल्यास penalty लागू शकते.
+        <a href="/mr/guides/reduce-fixed-charges-sanctioned-load/">Fixed charges आणि sanctioned load →</a>
         &nbsp;·&nbsp;
         <a href="/guides/md-penalty-excess-demand-charge/">Excess demand penalties →</a></p>
-
-        <h3 id="f-solar">Solar export and banked credit</h3>
-        <p>Under net metering, exported units offset imported ones and any surplus typically carries
-        forward. Because netting removes your most expensive units first, an exported unit is worth
-        your top slab rate rather than an average.
-        <a href="/mr/guides/solar-net-metering-savings/">How net metering savings work →</a></p>
-
+        <h3 id="f-solar">Solar export आणि banked credit</h3>
+        <p>Net metering मध्ये exported units imported units offset करतात आणि surplus पुढे carry होतो.
+        Netting तुमचे सर्वात महाग units आधी कमी करते, म्हणून exported unit average नाही तर top slab
+        rate इतकी value ठेवते.
+        <a href="/mr/guides/solar-net-metering-savings/">Net metering savings कशा काम करतात →</a></p>
         <h3 id="f-fppa">Fuel surcharge (FPPA / FAC / PPAC)</h3>
-        <p>A separately notified charge that moves with the utility's power-purchase cost. It is
-        levied either as a rate per unit or as a percentage of your energy and fixed charges,
-        depending on the state, and it changes month to month.
-        <a href="/mr/guides/how-fppa-fuel-surcharge-is-calculated/">How the fuel surcharge is calculated →</a></p>
+        <p>Utility च्या power-purchase cost सोबत बदलणारा separately notified charge. State नुसार तो
+        per-unit rate किंवा energy आणि fixed charges च्या percentage रूपात लागतो, आणि month to month बदलतो.
+        <a href="/mr/guides/how-fppa-fuel-surcharge-is-calculated/">Fuel surcharge कसा calculate होतो →</a></p>
+        <h3 id="f-arrears">Electricity duty आणि arrears</h3>
+        <p>Duty हा tariff वर लागणारा state tax आहे, आणि fuel surcharge च्या relation मध्ये तो कोणत्या
+        order ने लागू होतो हे state-by-state बदलते. Arrears आणि late-payment surcharge carried amounts
+        आहेत; ते या महिन्याच्या units वरून derive होत नाहीत, म्हणून थेट भरले जातात.
+        <a href="/mr/guides/electricity-duty-explained/">Electricity duty म्हणजे काय →</a></p>
+        <h3 id="f-multi">एका connection वर multiple meters</h3>
+        <p>एका premises ला एकापेक्षा जास्त meters असतील तर प्रत्येक reading वेगळी असते, पण tariff slabs
+        आणि fixed charges संपूर्ण connection वर लागू होऊ शकतात. प्रत्येक meter जोडा, म्हणजे slab
+        progression total वर एकदाच compute होईल.</p></section>
 
-        <h3 id="f-arrears">Electricity duty and arrears</h3>
-        <p>Duty is a state tax applied on top of the tariff, and the order in which it is applied
-        relative to the fuel surcharge differs by state. Arrears and late-payment surcharge are
-        carried amounts rather than anything derived from this month's units, so they are entered
-        directly.
-        <a href="/mr/guides/electricity-duty-explained/">What electricity duty is →</a></p>
-
-        <h3 id="f-multi">Multiple meters on one connection</h3>
-        <p>Where a premises is served by more than one meter, each is read separately but the
-        tariff's slabs and fixed charges may apply to the connection as a whole. Add each meter so
-        the slab progression is computed once rather than repeated per meter.</p>
-      </section>
-
-      <section class="seo-section">
-        <h2>What to have in front of you</h2>
-        <p>For a rough estimate you need only your DISCOM and the units consumed. To reconcile
-        against a printed bill, take these five figures off it:</p>
+      <section class="seo-section" data-i18n-html="bc.needHtml"><h2>समोर काय ठेवावे</h2>
+        <p>Rough estimate साठी तुमचा DISCOM आणि consumed units पुरतात. Printed bill शी reconcile
+        करायचे असेल तर हे पाच figures घ्या:</p>
         <ul>
-          <li><strong>Sanctioned load</strong> in kW — sets the fixed charge.</li>
-          <li><strong>Billing period dates</strong> — a period that is not a clean month prorates
-          the fixed charge by days.</li>
-          <li><strong>Previous and current meter readings</strong> — rather than a units figure you
-          have rounded.</li>
-          <li><strong>Consumer category and supply type</strong> exactly as printed, since these
-          decide which schedule applies.</li>
-          <li><strong>Any arrears or adjustments</strong> shown as separate lines.</li>
+          <li><strong>Sanctioned load</strong> kW मध्ये — fixed charge ठरवतो.</li>
+          <li><strong>Billing period dates</strong> — clean month नसल्यास fixed charge days नुसार prorate होतो.</li>
+          <li><strong>Previous आणि current meter readings</strong> — rounded units figure पेक्षा चांगले.</li>
+          <li><strong>Consumer category आणि supply type</strong> बिलावर छापल्याप्रमाणे, कारण schedule त्यावर ठरते.</li>
+          <li><strong>Any arrears or adjustments</strong> जे वेगळ्या lines मध्ये दिसतात.</li>
         </ul>
-        <p>Where the rates come from, how they are verified, and what we do when a newer tariff
-        order has not yet been audited is set out on our
-        <a href="/methodology/">methodology page</a>. You can also browse the
-        <a href="/mr/tariffs/states/">full schedule for any state or DISCOM</a>.</p>
-      </section>
+        <p>Rates कुठून येतात, त्या कशा verify होतात, आणि newer tariff order audit झाला नसेल तर आम्ही
+        काय करतो हे <a href="/methodology/">methodology page</a> वर आहे. कोणत्याही state किंवा DISCOM ची
+        <a href="/mr/tariffs/states/">पूर्ण tariff schedule</a> देखील पाहू शकता.</p></section>
 
-      <section class="seo-section"><h2>Frequently asked questions</h2>
-    <details class="seo-faq-item">
-      <summary>Do I need my actual bill to use this calculator?</summary>
-      <div class="seo-faq-a">No, but it helps. Units consumed and your DISCOM are enough for an estimate. To match a printed bill closely you also want the sanctioned load, the billing period dates and the meter readings — those drive the fixed charge and the per-day proration, which are the two things that most often explain a gap between an estimate and the real figure.</div>
-    </details>
-    <details class="seo-faq-item">
-      <summary>Why is my calculated bill slightly different from the printed one?</summary>
-      <div class="seo-faq-a">Usually one of four reasons: the billing period is not a clean month, so fixed charges are prorated by days; a fuel surcharge was notified for that month and is not yet in our data; the bill carries arrears or a one-off recovery that no per-unit formula can derive; or your state applies a subsidy that depends on your own past consumption. The detailed form exposes the fields for the first three so you can reconcile them.</div>
-    </details>
-    <details class="seo-faq-item">
-      <summary>What is the difference between this and the calculator on the home page?</summary>
-      <div class="seo-faq-a">It is the same engine and the same tariff data — this page simply opens straight into the detailed form instead of the simplified one. The home page asks for your DISCOM and units and infers the rest, which suits most domestic bills. Use this page when you need time-of-day slots, kVAh, solar export, arrears or a multi-meter connection.</div>
-    </details>
-    <details class="seo-faq-item">
-      <summary>Does it work for commercial and industrial connections?</summary>
-      <div class="seo-faq-a">Yes, where our tariff data covers the category. Pick the category and supply type that match your connection and the form will show the fields that category actually uses — demand charges and power factor for connections billed on kVAh, for example. Supply-type eligibility is described in words on each option, because the tariff orders define those limits in prose rather than as a number.</div>
-    </details>
-    <details class="seo-faq-item">
-      <summary>Can I save or share a result?</summary>
-      <div class="seo-faq-a">Yes. A completed bill can be saved to your account and opened later at its own page, and any result can be shared as a link that reopens the calculator with the same inputs. Nothing about a shared link requires the person opening it to have an account.</div>
-    </details>
-    <details class="seo-faq-item">
-      <summary>Which tariff year do the rates come from?</summary>
-      <div class="seo-faq-a">Each DISCOM's page states the tariff order the rates were read from and whether we have verified them against real bills. Where a newer order exists that we have not yet audited, the page says so plainly rather than implying the figure is current. Our methodology page explains how rates are sourced and checked.</div>
-    </details>
-      </section>
+      <section class="seo-section" data-i18n-html="bc.faqHtml"><h2>वारंवार विचारले जाणारे प्रश्न</h2>
+    <details class="seo-faq-item"><summary>हा calculator वापरायला माझे actual bill लागते का?</summary>
+      <div class="seo-faq-a">नाही, पण ते उपयोगी पडते. Estimate साठी consumed units आणि DISCOM पुरेसे आहेत. Printed bill शी जवळून match करायचे असेल तर sanctioned load, billing period dates आणि meter readingsही हव्या — fixed charge आणि per-day proration यांच्यावरच ते ठरते, आणि estimate व actual bill मधला gap अनेकदा यामुळेच येतो.</div></details>
+    <details class="seo-faq-item"><summary>Calculated bill printed bill पेक्षा थोडे वेगळे का दिसते?</summary>
+      <div class="seo-faq-a">साधारण चार कारणे असतात: billing period clean month नसतो; त्या month चा fuel surcharge अजून data मध्ये नसतो; bill मध्ये arrears किंवा one-off recovery असते जी per-unit formula derive करू शकत नाही; किंवा state subsidy तुमच्या past consumption वर depend करते. Detailed form पहिल्या तीन गोष्टी reconcile करण्यासाठी fields देतो.</div></details>
+    <details class="seo-faq-item"><summary>हे home page calculator पेक्षा कसे वेगळे आहे?</summary>
+      <div class="seo-faq-a">Engine आणि tariff data तोच आहे — हा page simplified form ऐवजी थेट detailed form उघडतो. Home page DISCOM आणि units विचारून बाकी infer करतो, जे बहुतेक domestic bills साठी पुरते. ToD slots, kVAh, solar export, arrears किंवा multi-meter connection असेल तर हा page वापरा.</div></details>
+    <details class="seo-faq-item"><summary>Commercial आणि industrial connections साठी हे काम करते का?</summary>
+      <div class="seo-faq-a">हो, जिथे आमच्या tariff data मध्ये category आहे. तुमच्या connection ला match होणारी category आणि supply type निवडा; form त्या category मध्ये खरोखर लागणारी fields दाखवेल — उदा. kVAh billed connections साठी demand charges आणि power factor. Supply-type eligibility options मध्ये words मध्ये दिली जाते, कारण tariff orders अनेकदा limits prose मध्ये define करतात.</div></details>
+    <details class="seo-faq-item"><summary>मी result save किंवा share करू शकतो का?</summary>
+      <div class="seo-faq-a">हो. Completed bill account मध्ये save करून नंतर स्वतःच्या page वर उघडता येते, आणि कोणताही result share link म्हणून पाठवता येतो जो तेच inputs पुन्हा उघडतो. Link उघडणाऱ्या व्यक्तीला account लागत नाही.</div></details>
+    <details class="seo-faq-item"><summary>Rates कोणत्या tariff year मधून येतात?</summary>
+      <div class="seo-faq-a">प्रत्येक DISCOM page rates कोणत्या tariff order मधून वाचल्या आहेत आणि त्या real bills विरुद्ध verify झाल्या आहेत का हे सांगतो. Newer order असेल पण audit बाकी असेल तर page ते स्पष्ट सांगतो. Methodology page sourcing आणि checking process समजावतो.</div></details></section>
 
     </div>
   </section>

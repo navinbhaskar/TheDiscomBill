@@ -215,6 +215,122 @@ export const STRINGS = {
     'adv.sub': 'Solar net-metering, ToD, arrears & penalties',
     'label.billedAmount': 'Amount on your actual bill (₹) — optional',
     'small.billedAmount': "We'll compare it with our calculation and tell you if your bill looks right.",
+    // Advanced bill calculator page
+    'bc.advCalc': 'Advanced bill calculator',
+    'bc.heroTitle': 'Advanced electricity bill calculator',
+    'bc.heroIntro': 'Every field the tariff orders actually define — not a simplified estimate.',
+    'bc.capsHtml': `<div class="bc-cap">
+          <dt><a href="#f-tod">Time-of-day slots</a></dt>
+          <dd>Peak, normal and off-peak units priced separately — the evening surcharge and the solar-hour rebate.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-kvah">kVAh &amp; power factor</a></dt>
+          <dd>Billing on apparent energy, where a poor power factor inflates the units you are charged for.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-load">Sanctioned load &amp; demand</a></dt>
+          <dd>Fixed charges per kW of sanctioned load, and the penalty when recorded demand runs past it.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-solar">Solar export</a></dt>
+          <dd>Exported units netted against imported ones, with the surplus banked and carried forward.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-arrears">Arrears &amp; surcharges</a></dt>
+          <dd>Electricity duty in your state's order against the fuel surcharge, plus arrears and late-payment interest.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-multi">Multiple meters</a></dt>
+          <dd>Several meters on one premises, read separately but slabbed against the connection as a whole.</dd>
+        </div>`,
+    'bc.heroMeta': 'Same engine and tariff data as the quick calculator on the home page — opened straight into the detailed form.',
+    'bc.fieldsHtml': `<h2>What the advanced fields are for</h2>
+        <p>The detailed form exposes every input the tariff orders actually define. Most bills need
+        only a handful of them. Here is what each one changes, and where to read more if a line on
+        your bill is the reason you came looking.</p>
+
+        <h3 id="f-tod">Time-of-day (ToD) slots</h3>
+        <p>Some connections are billed at different rates depending on when the units were used —
+        a surcharge in the evening peak, often a rebate during solar hours. If your meter records
+        ToD, entering units per slot rather than one total is what makes the estimate match.
+        <a href="/guides/tod-billing-explained/">How ToD billing works →</a></p>
+
+        <h3 id="f-kvah">kVAh and power factor</h3>
+        <p>kWh measures real energy; kVAh also counts the reactive power drawn by motors and
+        similar equipment. On a kVAh-billed connection a poor power factor inflates the units you
+        are charged for, which is why the bill can rise without your consumption changing.
+        <a href="/guides/power-factor-kvah-billing-explained/">Power factor and kVAh billing →</a></p>
+
+        <h3 id="f-load">Sanctioned load and demand</h3>
+        <p>Fixed charges are usually levied per kW of sanctioned load, so this field moves the
+        bill even in a month you used nothing. Connections billed on maximum demand can also
+        attract a penalty for exceeding the sanctioned figure.
+        <a href="/guides/reduce-fixed-charges-sanctioned-load/">Fixed charges and sanctioned load →</a>
+        &nbsp;·&nbsp;
+        <a href="/guides/md-penalty-excess-demand-charge/">Excess demand penalties →</a></p>
+
+        <h3 id="f-solar">Solar export and banked credit</h3>
+        <p>Under net metering, exported units offset imported ones and any surplus typically carries
+        forward. Because netting removes your most expensive units first, an exported unit is worth
+        your top slab rate rather than an average.
+        <a href="/guides/solar-net-metering-savings/">How net metering savings work →</a></p>
+
+        <h3 id="f-fppa">Fuel surcharge (FPPA / FAC / PPAC)</h3>
+        <p>A separately notified charge that moves with the utility's power-purchase cost. It is
+        levied either as a rate per unit or as a percentage of your energy and fixed charges,
+        depending on the state, and it changes month to month.
+        <a href="/guides/how-fppa-fuel-surcharge-is-calculated/">How the fuel surcharge is calculated →</a></p>
+
+        <h3 id="f-arrears">Electricity duty and arrears</h3>
+        <p>Duty is a state tax applied on top of the tariff, and the order in which it is applied
+        relative to the fuel surcharge differs by state. Arrears and late-payment surcharge are
+        carried amounts rather than anything derived from this month's units, so they are entered
+        directly.
+        <a href="/guides/electricity-duty-explained/">What electricity duty is →</a></p>
+
+        <h3 id="f-multi">Multiple meters on one connection</h3>
+        <p>Where a premises is served by more than one meter, each is read separately but the
+        tariff's slabs and fixed charges may apply to the connection as a whole. Add each meter so
+        the slab progression is computed once rather than repeated per meter.</p>`,
+    'bc.needHtml': `<h2>What to have in front of you</h2>
+        <p>For a rough estimate you need only your DISCOM and the units consumed. To reconcile
+        against a printed bill, take these five figures off it:</p>
+        <ul>
+          <li><strong>Sanctioned load</strong> in kW — sets the fixed charge.</li>
+          <li><strong>Billing period dates</strong> — a period that is not a clean month prorates the fixed charge by days.</li>
+          <li><strong>Previous and current meter readings</strong> — rather than a units figure you have rounded.</li>
+          <li><strong>Consumer category and supply type</strong> exactly as printed, since these decide which schedule applies.</li>
+          <li><strong>Any arrears or adjustments</strong> shown as separate lines.</li>
+        </ul>
+        <p>Where the rates come from, how they are verified, and what we do when a newer tariff
+        order has not yet been audited is set out on our
+        <a href="/methodology/">methodology page</a>. You can also browse the
+        <a href="/tariffs/states/">full schedule for any state or DISCOM</a>.</p>`,
+    'bc.faqHtml': `<h2>Frequently asked questions</h2>
+    <details class="seo-faq-item">
+      <summary>Do I need my actual bill to use this calculator?</summary>
+      <div class="seo-faq-a">No, but it helps. Units consumed and your DISCOM are enough for an estimate. To match a printed bill closely you also want the sanctioned load, the billing period dates and the meter readings — those drive the fixed charge and the per-day proration, which are the two things that most often explain a gap between an estimate and the real figure.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Why is my calculated bill slightly different from the printed one?</summary>
+      <div class="seo-faq-a">Usually one of four reasons: the billing period is not a clean month, so fixed charges are prorated by days; a fuel surcharge was notified for that month and is not yet in our data; the bill carries arrears or a one-off recovery that no per-unit formula can derive; or your state applies a subsidy that depends on your own past consumption. The detailed form exposes the fields for the first three so you can reconcile them.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>What is the difference between this and the calculator on the home page?</summary>
+      <div class="seo-faq-a">It is the same engine and the same tariff data — this page simply opens straight into the detailed form instead of the simplified one. The home page asks for your DISCOM and units and infers the rest, which suits most domestic bills. Use this page when you need time-of-day slots, kVAh, solar export, arrears or a multi-meter connection.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Does it work for commercial and industrial connections?</summary>
+      <div class="seo-faq-a">Yes, where our tariff data covers the category. Pick the category and supply type that match your connection and the form will show the fields that category actually uses — demand charges and power factor for connections billed on kVAh, for example. Supply-type eligibility is described in words on each option, because the tariff orders define those limits in prose rather than as a number.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Can I save or share a result?</summary>
+      <div class="seo-faq-a">Yes. A completed bill can be saved to your account and opened later at its own page, and any result can be shared as a link that reopens the calculator with the same inputs. Nothing about a shared link requires the person opening it to have an account.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Which tariff year do the rates come from?</summary>
+      <div class="seo-faq-a">Each DISCOM's page states the tariff order the rates were read from and whether we have verified them against real bills. Where a newer order exists that we have not yet audited, the page says so plainly rather than implying the figure is current. Our methodology page explains how rates are sourced and checked.</div>
+    </details>`,
 
     // Solar calculator (/solar/)
     'sol.title': 'Rooftop Solar Savings Calculator',

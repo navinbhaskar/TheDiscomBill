@@ -43,7 +43,7 @@
   <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
   <meta property="og:locale" content="en_IN">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Electricity Cost Calculator – TheDiscomBill">
+  <meta name="twitter:title" content="Advanced Electricity Bill Calculator – TheDiscomBill">
   <meta name="twitter:description" content="Estimate your monthly electricity usage (kWh) and cost from your home appliances.">
   <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
   <link rel="stylesheet" href="../css/styles.min.css">
@@ -77,8 +77,8 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
   <!-- / entity-graph -->
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Advanced Electricity Bill Calculator","url":"https://thediscombill.com/electricity-cost-calculator/","description":"Estimate your monthly electricity usage (kWh) and cost from your home appliances — fans, AC, fridge, geyser and more.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Electricity Cost Calculator","item":"https://thediscombill.com/electricity-cost-calculator/"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Advanced Electricity Bill Calculator","url":"https://thediscombill.com/bill-calculator/","description":"Calculate a detailed electricity bill with ToD, kVAh, solar net metering, arrears and late-payment surcharge.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"en-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"Advanced Electricity Bill Calculator","item":"https://thediscombill.com/bill-calculator/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I need my actual bill to use this calculator?","acceptedAnswer":{"@type":"Answer","text":"No, but it helps. Units consumed and your DISCOM are enough for an estimate. To match a printed bill closely you also want the sanctioned load, the billing period dates and the meter readings — those drive the fixed charge and the per-day proration, which are the two things that most often explain a gap between an estimate and the real figure."}},{"@type":"Question","name":"Why is my calculated bill slightly different from the printed one?","acceptedAnswer":{"@type":"Answer","text":"Usually one of four reasons: the billing period is not a clean month, so fixed charges are prorated by days; a fuel surcharge was notified for that month and is not yet in our data; the bill carries arrears or a one-off recovery that no per-unit formula can derive; or your state applies a subsidy that depends on your own past consumption. The detailed form exposes the fields for the first three so you can reconcile them."}},{"@type":"Question","name":"What is the difference between this and the calculator on the home page?","acceptedAnswer":{"@type":"Answer","text":"It is the same engine and the same tariff data — this page simply opens straight into the detailed form instead of the simplified one. The home page asks for your DISCOM and units and infers the rest, which suits most domestic bills. Use this page when you need time-of-day slots, kVAh, solar export, arrears or a multi-meter connection."}},{"@type":"Question","name":"Does it work for commercial and industrial connections?","acceptedAnswer":{"@type":"Answer","text":"Yes, where our tariff data covers the category. Pick the category and supply type that match your connection and the form will show the fields that category actually uses — demand charges and power factor for connections billed on kVAh, for example. Supply-type eligibility is described in words on each option, because the tariff orders define those limits in prose rather than as a number."}},{"@type":"Question","name":"Can I save or share a result?","acceptedAnswer":{"@type":"Answer","text":"Yes. A completed bill can be saved to your account and opened later at its own page, and any result can be shared as a link that reopens the calculator with the same inputs. Nothing about a shared link requires the person opening it to have an account."}},{"@type":"Question","name":"Which tariff year do the rates come from?","acceptedAnswer":{"@type":"Answer","text":"Each DISCOM's page states the tariff order the rates were read from and whether we have verified them against real bills. Where a newer order exists that we have not yet audited, the page says so plainly rather than implying the figure is current. Our methodology page explains how rates are sourced and checked."}}]}</script>
 </head>
 <body>
@@ -143,9 +143,9 @@
            — with no <ol> the trail inherited 15px body copy and lost the flex row's 7px gaps,
            which is why this one page's breadcrumbs read larger and sat differently from the
            rest of the site. -->
-      <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">Advanced bill calculator</span></li></ol></nav>
-      <h1 class="reveal">Advanced electricity bill calculator</h1>
-      <p class="svc-intro reveal">Every field the tariff orders actually define — not a
+      <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page" data-i18n="bc.advCalc">Advanced bill calculator</span></li></ol></nav>
+      <h1 class="reveal" data-i18n="bc.heroTitle">Advanced electricity bill calculator</h1>
+      <p class="svc-intro reveal" data-i18n-html="bc.heroIntro">Every field the tariff orders actually define — not a
       simplified estimate.</p>
       <!-- The capabilities were a comma list inside the intro, then a row of bare chips. Both
            named the six fields without saying what any of them does, so the hero was a headline
@@ -157,7 +157,7 @@
            definition list rather than six cards: this is a spec of what the form covers, and
            "every field the tariff orders actually define" is a claim that should look like a
            specification instead of a set of feature tiles. -->
-      <dl class="bc-caps reveal">
+      <dl class="bc-caps reveal" data-i18n-html="bc.capsHtml">
         <div class="bc-cap">
           <dt><a href="#f-tod">Time-of-day slots</a></dt>
           <dd>Peak, normal and off-peak units priced separately — the evening surcharge and the solar-hour rebate.</dd>
@@ -183,7 +183,7 @@
           <dd>Several meters on one premises, read separately but slabbed against the connection as a whole.</dd>
         </div>
       </dl>
-      <p class="bc-meta reveal">Same engine and tariff data as the quick calculator on the home
+      <p class="bc-meta reveal" data-i18n-html="bc.heroMeta">Same engine and tariff data as the quick calculator on the home
       page — opened straight into the detailed form.</p>
     </div>
   </section>
@@ -664,7 +664,7 @@
            summary, once in full. Marked with a class rather than rebuilt as a <ul>: each
            heading is an anchor target for a chip in the hero (#f-tod and friends), and a list
            item is the wrong element for a section of an article. -->
-      <section class="seo-section bc-fields">
+      <section class="seo-section bc-fields" data-i18n-html="bc.fieldsHtml">
         <h2>What the advanced fields are for</h2>
         <p>The detailed form exposes every input the tariff orders actually define. Most bills need
         only a handful of them. Here is what each one changes, and where to read more if a line on
@@ -715,7 +715,7 @@
         the slab progression is computed once rather than repeated per meter.</p>
       </section>
 
-      <section class="seo-section">
+      <section class="seo-section" data-i18n-html="bc.needHtml">
         <h2>What to have in front of you</h2>
         <p>For a rough estimate you need only your DISCOM and the units consumed. To reconcile
         against a printed bill, take these five figures off it:</p>
@@ -735,7 +735,7 @@
         <a href="/tariffs/states/">full schedule for any state or DISCOM</a>.</p>
       </section>
 
-      <section class="seo-section"><h2>Frequently asked questions</h2>
+      <section class="seo-section" data-i18n-html="bc.faqHtml"><h2>Frequently asked questions</h2>
     <details class="seo-faq-item">
       <summary>Do I need my actual bill to use this calculator?</summary>
       <div class="seo-faq-a">No, but it helps. Units consumed and your DISCOM are enough for an estimate. To match a printed bill closely you also want the sanctioned load, the billing period dates and the meter readings — those drive the fixed charge and the per-day proration, which are the two things that most often explain a gap between an estimate and the real figure.</div>

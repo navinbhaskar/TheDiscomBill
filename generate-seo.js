@@ -8052,6 +8052,7 @@ const toolAlternates = (loc) => [
   `  <link rel="alternate" hreflang="x-default" href="${SITE}${loc}">`,
 ].join('\n');
 function localizeToolJsonLd(html, lang, localizedUrl, title, desc) {
+  const homeName = T(lang, { hi: 'होम', mr: 'मुख्यपृष्ठ', ta: 'முகப்பு', en: 'Home' });
   const visit = (node) => {
     if (Array.isArray(node)) { node.forEach(visit); return; }
     if (!node || typeof node !== 'object') return;
@@ -8063,6 +8064,8 @@ function localizeToolJsonLd(html, lang, localizedUrl, title, desc) {
       node.inLanguage = LANG_LOCALE[lang] || 'en-IN';
     }
     if (types.includes('BreadcrumbList') && Array.isArray(node.itemListElement)) {
+      const first = node.itemListElement[0];
+      if (first) first.name = homeName;
       const last = node.itemListElement[node.itemListElement.length - 1];
       if (last) {
         last.name = title;
@@ -8127,6 +8130,7 @@ function toolPageLangHtml(src, loc, lang) {
   h = h.replace(/(<meta name="twitter:description" content=")[^"]*(">)/, `$1${attr(desc)}$2`);
   h = h.replace(/"inLanguage":"en-IN"/g, `"inLanguage":"${LANG_LOCALE[lang] || 'en-IN'}"`);
   h = localizeToolJsonLd(h, lang, localizedUrl, title, desc);
+  if (loc === '/bill-calculator/') h = stripJsonLdNode(h, 'FAQPage');
   h = h.replace(/\bhref="(\/[^"#?]*)"/g, (full, href) => {
     if (href === '/') return `href="/${lang}/"`;
     if (fs.existsSync(path.join(ROOT, lang, href.replace(/^\/+|\/+$/g, ''), 'index.html'))

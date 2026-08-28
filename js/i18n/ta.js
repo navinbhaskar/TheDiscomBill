@@ -195,6 +195,100 @@ export default {
     'adv.sub': 'சோலார் நெட்-மீட்டரிங், ToD, நிலுவை & அபராதம்',
     'label.billedAmount': 'உங்கள் உண்மையான பில்லில் உள்ள தொகை (₹) — விருப்பத்திற்கு',
     'small.billedAmount': 'எங்கள் கணக்கீட்டுடன் ஒப்பிட்டு உங்கள் பில் சரியாக உள்ளதா எனச் சொல்வோம்.',
+    // Advanced bill calculator page
+    'bc.advCalc': 'மேம்பட்ட பில் கணிப்பான்',
+    'bc.heroTitle': 'மேம்பட்ட மின்சார பில் கணிப்பான்',
+    'bc.heroIntro': 'கட்டண ஆணைகளில் உண்மையாக வரையறுக்கப்பட்ட ஒவ்வொரு field-மும் — வெறும் எளிய estimate அல்ல.',
+    'bc.capsHtml': `<div class="bc-cap">
+          <dt><a href="#f-tod">நேர அடிப்படையிலான slots</a></dt>
+          <dd>Peak, normal, off-peak units தனித்தனி rates — evening surcharge மற்றும் solar-hour rebate.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-kvah">kVAh மற்றும் power factor</a></dt>
+          <dd>Apparent energy billing; poor power factor இருந்தால் charged units அதிகரிக்கும்.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-load">அனுமதிக்கப்பட்ட சுமை மற்றும் demand</a></dt>
+          <dd>Sanctioned load ஒவ்வொரு kW-க்கும் fixed charges, recorded demand அதை மீறினால் penalty.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-solar">Solar export</a></dt>
+          <dd>Exported units imported units-க்கு எதிராக net ஆகும்; surplus bank ஆகி carry forward ஆகும்.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-arrears">நிலுவை மற்றும் surcharges</a></dt>
+          <dd>Fuel surcharge உடன் உங்கள் state electricity duty order, plus arrears மற்றும் late-payment interest.</dd>
+        </div>
+        <div class="bc-cap">
+          <dt><a href="#f-multi">பல meters</a></dt>
+          <dd>ஒரே premises-ல் பல meters — readings தனித்தனியாக, ஆனால் slabs connection total-க்கு.</dd>
+        </div>`,
+    'bc.heroMeta': 'Home page quick calculator-ல் உள்ள அதே engine மற்றும் tariff data — நேராக detailed form-ல் திறக்கும்.',
+    'bc.fieldsHtml': `<h2>Advanced fields எதற்காக</h2>
+        <p>Detailed form tariff orders உண்மையில் define செய்யும் ஒவ்வொரு input-ஐயும் காட்டுகிறது.
+        பல bills-க்கு சில fields மட்டும் போதும். ஒவ்வொன்றும் என்ன மாற்றுகிறது, உங்கள் bill line ஒன்றை
+        புரிந்துகொள்ள வந்திருந்தால் எதை மேலும் படிக்க வேண்டும் என்பதைக் கீழே காணலாம்.</p>
+        <h3 id="f-tod">நேர அடிப்படையிலான (ToD) slots</h3>
+        <p>சில connections-ல் units எப்போது பயன்படுத்தப்பட்டன என்பதற்கேற்ப வெவ்வேறு rates விதிக்கப்படும் —
+        evening peak surcharge, பல இடங்களில் solar hours rebate. உங்கள் meter ToD record செய்தால்,
+        ஒரு total பதிலாக slot-wise units இடுவது estimate-ஐ match செய்யும்.
+        <a href="/guides/tod-billing-explained/">ToD billing எப்படி வேலை செய்கிறது →</a></p>
+        <h3 id="f-kvah">kVAh மற்றும் power factor</h3>
+        <p>kWh real energy-ஐ அளக்கும்; kVAh motors மற்றும் similar equipment இழுக்கும் reactive power-ஐயும்
+        எண்ணும். kVAh-billed connection-ல் poor power factor charged units-ஐ உயர்த்தும்; அதனால் consumption
+        மாறாமலே bill அதிகரிக்கலாம்.
+        <a href="/guides/power-factor-kvah-billing-explained/">Power factor மற்றும் kVAh billing →</a></p>
+        <h3 id="f-load">அனுமதிக்கப்பட்ட சுமை மற்றும் demand</h3>
+        <p>Fixed charges பொதுவாக sanctioned load per kW அடிப்படையில் வசூலிக்கப்படும். எனவே zero units
+        பயன்படுத்திய மாதத்திலும் இந்த field bill-ஐ மாற்றும். Maximum demand அடிப்படையில் billed connections
+        sanctioned figure-ஐ மீறினால் penalty வரலாம்.
+        <a href="/guides/reduce-fixed-charges-sanctioned-load/">Fixed charges மற்றும் sanctioned load →</a>
+        &nbsp;·&nbsp;
+        <a href="/guides/md-penalty-excess-demand-charge/">Excess demand penalties →</a></p>
+        <h3 id="f-solar">Solar export மற்றும் banked credit</h3>
+        <p>Net metering-ல் exported units imported units-ஐ offset செய்கின்றன; surplus பொதுவாக carry forward
+        ஆகிறது. Netting உங்கள் most expensive units-ஐ முதலில் நீக்குவதால், exported unit average அல்ல,
+        top slab rate மதிப்புடையது.
+        <a href="/guides/solar-net-metering-savings/">Net metering savings எப்படி வேலை செய்கிறது →</a></p>
+        <h3 id="f-fppa">Fuel surcharge (FPPA / FAC / PPAC)</h3>
+        <p>Utility power-purchase cost-ஐப் பொறுத்து மாறும் separately notified charge. State-ஐப் பொறுத்து
+        இது per-unit rate அல்லது energy மற்றும் fixed charges percentage ஆக வசூலிக்கப்படும்; month to month மாறும்.
+        <a href="/guides/how-fppa-fuel-surcharge-is-calculated/">Fuel surcharge எப்படி calculate செய்யப்படுகிறது →</a></p>
+        <h3 id="f-arrears">Electricity duty மற்றும் arrears</h3>
+        <p>Duty என்பது tariff மேல் விதிக்கப்படும் state tax. Fuel surcharge-க்கு முன்/பின் எப்படி apply
+        செய்யப்படுகிறது என்பது state-by-state மாறும். Arrears மற்றும் late-payment surcharge carried amounts;
+        இந்த மாத units-லிருந்து derive ஆகாது, எனவே நேரடியாக உள்ளிடப்படுகின்றன.
+        <a href="/guides/electricity-duty-explained/">Electricity duty என்றால் என்ன →</a></p>
+        <h3 id="f-multi">ஒரே connection-ல் பல meters</h3>
+        <p>ஒரு premises-க்கு ஒன்றுக்கு மேற்பட்ட meters இருந்தால் ஒவ்வொன்றும் தனியாக read செய்யப்படும்,
+        ஆனால் tariff slabs மற்றும் fixed charges முழு connection-க்கு apply ஆகலாம். ஒவ்வொரு meter-ஐயும்
+        சேர்த்தால் slab progression total-க்கு ஒருமுறை மட்டும் கணக்கிடப்படும்.</p>`,
+    'bc.needHtml': `<h2>உங்கள் முன் வைத்திருக்க வேண்டியது</h2>
+        <p>Rough estimate-க்கு உங்கள் DISCOM மற்றும் consumed units போதும். Printed bill உடன் reconcile
+        செய்ய இந்த ஐந்து figures-ஐ எடுத்துக்கொள்ளுங்கள்:</p>
+        <ul>
+          <li><strong>Sanctioned load</strong> kW-ல் — fixed charge இதனால் தீர்மானிக்கப்படுகிறது.</li>
+          <li><strong>Billing period dates</strong> — clean month அல்லாத period fixed charge-ஐ days அடிப்படையில் prorate செய்யும்.</li>
+          <li><strong>Previous மற்றும் current meter readings</strong> — rounded units figure-ஐவிட நம்பகமானது.</li>
+          <li><strong>Consumer category மற்றும் supply type</strong> bill-ல் printed போலவே, ஏனெனில் schedule இதுவே தீர்மானிக்கும்.</li>
+          <li><strong>Any arrears or adjustments</strong> தனி lines-ஆக காட்டப்பட்டவை.</li>
+        </ul>
+        <p>Rates எங்கிருந்து வருகிறது, எப்படி verify செய்கிறோம், newer tariff order audit ஆகாதபோது என்ன
+        செய்கிறோம் என்பதை <a href="/methodology/">methodology page</a> விளக்குகிறது. எந்த state அல்லது
+        DISCOM-க்கும் <a href="/tariffs/states/">full tariff schedule</a> பார்க்கலாம்.</p>`,
+    'bc.faqHtml': `<h2>அடிக்கடி கேட்கப்படும் கேள்விகள்</h2>
+    <details class="seo-faq-item"><summary>இந்த calculator-க்கு actual bill தேவைப்படுமா?</summary>
+      <div class="seo-faq-a">இல்லை, ஆனால் அது உதவும். Estimate-க்கு consumed units மற்றும் DISCOM போதும். Printed bill-ஐ நெருக்கமாக match செய்ய sanctioned load, billing period dates மற்றும் meter readings தேவை — fixed charge மற்றும் per-day proration இவை சார்ந்தவை; estimate மற்றும் real bill இடையிலான gap-க்கு இவை அடிக்கடி காரணம்.</div></details>
+    <details class="seo-faq-item"><summary>Calculated bill printed bill-இலிருந்து ஏன் கொஞ்சம் வேறுபடுகிறது?</summary>
+      <div class="seo-faq-a">பொதுவாக நான்கு காரணங்கள்: billing period clean month அல்ல; அந்த month fuel surcharge இன்னும் data-வில் இல்லை; bill-ல் arrears அல்லது one-off recovery உள்ளது; அல்லது state subsidy உங்கள் past consumption-ஐப் பொறுத்தது. Detailed form முதல் மூன்றை reconcile செய்ய fields தருகிறது.</div></details>
+    <details class="seo-faq-item"><summary>இது home page calculator-இலிருந்து எப்படி வேறுபடும்?</summary>
+      <div class="seo-faq-a">Engine மற்றும் tariff data அதே — இந்த page simplified form பதிலாக நேராக detailed form திறக்கும். Home page DISCOM மற்றும் units கேட்டு மற்றதை infer செய்கிறது, அது பல domestic bills-க்கு போதும். ToD slots, kVAh, solar export, arrears அல்லது multi-meter connection இருந்தால் இந்த page-ஐ பயன்படுத்துங்கள்.</div></details>
+    <details class="seo-faq-item"><summary>Commercial மற்றும் industrial connections-க்கும் இது வேலை செய்கிறதா?</summary>
+      <div class="seo-faq-a">ஆம், எங்கள் tariff data அந்த category-ஐ cover செய்தால். உங்கள் connection-க்கு பொருந்தும் category மற்றும் supply type தேர்வு செய்யுங்கள்; அந்த category உண்மையில் பயன்படுத்தும் fields-ஐ form காட்டும் — உதாரணமாக kVAh billed connections-ல் demand charges மற்றும் power factor. Tariff orders limits-ஐ prose-ஆக define செய்வதால் supply-type eligibility options-ல் words-ஆக எழுதப்பட்டுள்ளது.</div></details>
+    <details class="seo-faq-item"><summary>Result save அல்லது share செய்ய முடியுமா?</summary>
+      <div class="seo-faq-a">ஆம். Completed bill account-ல் save செய்து பின்னர் தனி page-ல் திறக்கலாம்; எந்த result-யையும் same inputs-ஐ reopen செய்யும் share link ஆக அனுப்பலாம். Link திறப்பவருக்கு account தேவையில்லை.</div></details>
+    <details class="seo-faq-item"><summary>Rates எந்த tariff year-இலிருந்து வருகிறது?</summary>
+      <div class="seo-faq-a">ஒவ்வொரு DISCOM page-மும் rates எந்த tariff order-இலிருந்து read செய்யப்பட்டன, real bills-க்கு எதிராக verify செய்யப்பட்டதா என்பதைக் காட்டும். Newer order இருந்தும் audit ஆகவில்லை என்றால் page அதை தெளிவாகச் சொல்கிறது. Methodology page sourcing மற்றும் checking process விளக்குகிறது.</div></details>`,
 
     // Solar calculator (/solar/)
     'sol.title': 'மேற்கூரை சோலார் சேமிப்புக் கால்குலேட்டர் (2026)',

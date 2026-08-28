@@ -848,6 +848,435 @@ export const GUIDES = [
       { q: "Is hybrid solar more expensive than on-grid?",
         a: "Yes, on both counts. Hybrid costs more upfront because it adds a battery and a hybrid inverter, and more over time because the battery will need replacing at least once within the panels' service life. The subsidy does not narrow that gap, since it is paid per kW of panel capacity. The extra cost buys backup power, so judge it against what an outage costs you rather than against the payback period." },
     ],
+    titleHi: "ऑन-ग्रिड बनाम हाइब्रिड सोलर: आपके घर को असल में क्या चाहिए",
+    metaTitleHi: "भारत में ऑन-ग्रिड बनाम हाइब्रिड सोलर — बैकअप, सब्सिडी और असली खर्च",
+    descriptionHi: "ऑन-ग्रिड सोलर बिजली कटने पर बंद हो जाता है। हाइब्रिड चलता रहता है, लेकिन महंगा होता है। बैकअप, सब्सिडी, पेबैक और सही चुनाव समझें।",
+    introHi: `ज्यादातर लोग रूफटॉप सोलर से दो उम्मीदें रखते हैं: बिजली बिल कम हो, और
+      इलाके की बिजली जाने पर घर की लाइट चलती रहे। सामान्य ऑन-ग्रिड सिस्टम पहली उम्मीद पूरी
+      करता है, <strong>दूसरी नहीं</strong> — बिजली कटते ही यह पूरी तरह बंद हो जाता है, भले ही
+      दोपहर की तेज धूप हो। यही बात खरीदारों को सबसे ज्यादा चौंकाती है। यह गाइड बताती है कि
+      ऑन-ग्रिड और हाइब्रिड में असली फर्क क्या है, फर्क का खर्च कितना है, और आपके घर के लिए
+      कौन-सा सिस्टम सही है।`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>बिजली कटने पर ऑन-ग्रिड सोलर क्यों बंद हो जाता है</h2>
+        <p>यह खराबी नहीं है, और यह इन्वर्टर सस्ता होने की वजह से भी नहीं है। ग्रिड-टाइड
+        इन्वर्टर को ग्रिड जाते ही डिस्कनेक्ट होना पड़ता है। इसे <strong>anti-islanding</strong>
+        कहा जाता है। वजह सुरक्षा है: अगर आउटेज के दौरान आपके पैनल लोकल लाइन में बिजली भेजते
+        रहें, तो वे उन तारों को चालू कर सकते हैं जिन्हें लाइनमैन बंद और सुरक्षित मानकर काम कर
+        रहा होता है।</p>
+        <p>दूसरी वजह तकनीकी है। सामान्य ग्रिड-टाइड इन्वर्टर <em>grid-following</em> होता है —
+        वह ग्रिड की वोल्टेज और फ्रीक्वेंसी को reference मानकर चलता है। ग्रिड हटते ही उसके पास
+        follow करने के लिए कुछ नहीं बचता। वह अपने-आप घर को "230 V, 50 Hz" सप्लाई नहीं दे
+        सकता।</p>
+        <p>इसलिए ऑन-ग्रिड सिस्टम को <strong>बिल घटाने वाली मशीन समझें, बैकअप मशीन नहीं</strong>।
+        सामान्य दिन में यह बिल कम करने में शानदार है। आउटेज में यह कोई मदद नहीं करता।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>तीनों सिस्टम साफ तुलना में</h2>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>&nbsp;</th><th>ऑन-ग्रिड</th><th>हाइब्रिड</th><th>ऑफ-ग्रिड</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">बिजली कटने पर चलता है</th><td>नहीं</td><td>हाँ, बैटरी क्षमता तक</td><td>हाँ</td></tr>
+              <tr><th scope="row">बैटरी</th><td>नहीं</td><td>जरूरी</td><td>जरूरी, और बड़ी</td></tr>
+              <tr><th scope="row">अतिरिक्त बिजली ग्रिड में भेजता है</th><td>हाँ</td><td>हाँ</td><td>नहीं — ग्रिड से जुड़ा नहीं</td></tr>
+              <tr><th scope="row">नेट मीटरिंग क्रेडिट</th><td>हाँ</td><td>हाँ</td><td>लागू नहीं</td></tr>
+              <tr><th scope="row">शुरुआती खर्च</th><td>सबसे कम</td><td>ज्यादा — बैटरी और हाइब्रिड इन्वर्टर</td><td>प्रति usable unit सबसे ज्यादा</td></tr>
+              <tr><th scope="row">आगे replacement</th><td>कभी इन्वर्टर</td><td>इन्वर्टर और बैटरी</td><td>इन्वर्टर और बड़ा battery bank</td></tr>
+              <tr><th scope="row">किसके लिए सही</th><td>सप्लाई भरोसेमंद हो; लक्ष्य बिल घटाना हो</td><td>बार-बार या लंबे कट हों; लक्ष्य बिल और availability दोनों हों</td><td>ग्रिड connection ही न हो</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>जिस घर में पहले से DISCOM connection है, उसके लिए ऑफ-ग्रिड लगभग कभी सही जवाब नहीं
+        होता। आप उस ग्रिड को replace करने के लिए बड़ा battery bank खरीदेंगे जिससे आप वैसे भी
+        जुड़े हैं, और export credit भी छोड़ देंगे। असली फैसला ऑन-ग्रिड बनाम हाइब्रिड है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>बैटरी असल में क्या देती है</h2>
+        <p>यहीं गणित अक्सर गलत पढ़ा जाता है। बैटरी बिजली बनाती नहीं है। वह दोपहर में बनी units
+        को शाम तक शिफ्ट करती है, और ग्रिड बंद होने पर कुछ circuits चालू रखती है। दोनों फायदे
+        असली हैं। लेकिन दोनों आम तौर पर बड़ा <em>financial</em> return नहीं देते।</p>
+        <p>नेट मीटरिंग में export की गई unit पहले से imported unit के against credit होती है,
+        और netting आपके सबसे महंगे slab units को पहले हटाती है। इसलिए वह credit आपके top slab
+        rate जितना कीमती होता है — देखें <a href="/hi/guides/solar-net-metering-savings/">नेट
+        मीटरिंग से बचत कैसे बनती है</a>। Unit को export करने के बजाय store करने से नई value
+        नहीं बनती; अधिकतम वही value मिलती है, उसमें से round-trip losses और battery cost घटती
+        है। बैटरी सच में gap तब बंद करती है जब आपका state export units को one-for-one net करने
+        के बजाय कम rate देता है।</p>
+        <p>दूसरा छिपा खर्च replacement timing है। Panels आमतौर पर decades तक warranted होते हैं;
+        batteries नहीं। Panels की life के भीतर storage कम से कम एक बार replace करनी पड़ेगी,
+        यह मानकर शुरुआत में ही हिसाब करें।</p>
+        <p class="seo-note"><strong>साफ बात:</strong> बैटरी बचत के लिए नहीं,
+        <em>availability</em> के लिए खरीदें। अगर आपके area में बिजली rarely जाती है, तो वही पैसा
+        storage से ज्यादा extra panel capacity में काम करता है।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>सब्सिडी कहाँ बैठती है</h2>
+        <p>PM Surya Ghar: Muft Bijli Yojana में residential consumers के लिए central subsidy
+        rooftop capacity के प्रति kW पर तय है:</p>
+        <ul>
+          <li>पहले 2 kW के लिए <strong>₹30,000 प्रति kW</strong></li>
+          <li>3 kW तक अतिरिक्त capacity पर <strong>₹18,000 प्रति kW</strong></li>
+          <li>3 kW से बड़े systems के लिए कुल cap <strong>₹78,000</strong></li>
+          <li>Special-category states को <strong>प्रति kW अतिरिक्त 10%</strong></li>
+        </ul>
+        <p>Portal indicative sizing भी देता है: महीने में 150 units तक average household के लिए
+        1-2 kW, 150-300 units के लिए 2-3 kW, और उससे ऊपर 3 kW से ज्यादा। Scheme residential
+        consumers और resident welfare associations के लिए है, और अभी <strong>31 March 2027</strong>
+        तक scheduled है। हमारी <a href="/hi/guides/pm-surya-ghar-solar-subsidy/">PM Surya Ghar
+        guide</a> application flow और payback maths समझाती है।</p>
+        <p>इस फैसले के लिए जरूरी बात: subsidy <strong>generating capacity in kW</strong> पर
+        calculate होती है। यह storage के लिए contribution नहीं है। Battery subsidised system के
+        ऊपर out-of-pocket addition है, इसलिए subsidy panels की economics सुधारती है, hybrid premium
+        को नहीं।</p>
+        <p class="seo-note"><strong>हाइब्रिड systems qualify करते हैं।</strong> Scheme guidelines
+        grid-connected but non-feeding systems को eligible मानती हैं और <em>battery hybrid systems</em>
+        को नाम से mention करती हैं — <strong>subject to approval by your state's Electricity
+        Regulatory Commission</strong>। यही clause locally check करना है, क्योंकि approval state
+        matter है। Amount पर ambiguity नहीं है: subsidy installed <em>solar modules</em> की capacity
+        पर मिलती है, storage जोड़ने से amount नहीं बढ़ता।
+        <a href="https://cdnbbsr.s3waas.gov.in/s3716e1b8c6cd17b771da77391355749f3/uploads/2024/04/202404162127034309.pdf" target="_blank" rel="noopener">MNRE operational guidelines,
+        clauses 23(b) and 24(a) ↗</a></p>
+      </section>
+
+      <section class="seo-section">
+        <h2>कैसे फैसला करें</h2>
+        <p>इन सवालों का क्रम से जवाब दें। पहले दो सवाल ज्यादातर cases तय कर देते हैं।</p>
+        <ol>
+          <li><strong>आपकी supply सच में कितनी बार fail होती है, और कितनी देर के लिए?</strong>
+          अंदाज़े से नहीं — कुछ महीनों का अनुभव ईमानदारी से देखें। कभी-कभार छोटे cuts storage
+          justify नहीं करते। Daily या multi-hour outages करते हैं।</li>
+          <li><strong>क्या चीजें चालू रहनी जरूरी हैं?</strong> Lights, fans, router और fridge
+          चलाने और outage में AC चलाने में बहुत बड़ा फर्क है। पहली जरूरत modest battery है।
+          दूसरी बिल्कुल अलग budget है।</li>
+          <li><strong>आज backup के लिए क्या use करते हैं?</strong> अगर आपके पास inverter और
+          battery पहले से है, तो hybrid system उस पूरे setup को replace कर सकता है, साथ-साथ बैठने
+          के बजाय। इससे comparison बदलता है, क्योंकि hybrid cost का हिस्सा वैसे भी renew होने
+          वाली चीज को replace कर रहा है।</li>
+          <li><strong>Constraint roof है या budget?</strong> अगर दोनों में से कोई limit कर रहा है,
+          पहले panel capacity पर खर्च करें। जो generation है ही नहीं, उसे store नहीं किया जा सकता।</li>
+        </ol>
+        <p>Stable supply वाले ज्यादातर urban homes के लिए sensible default: <strong>on-grid,
+        consumption के हिसाब से sized</strong>। जहाँ outages routine हैं: <strong>hybrid, battery
+        को defined backup circuit के हिसाब से size करें</strong>, पूरे घर के हिसाब से नहीं।</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Sign करने से पहले क्या पूछें</h2>
+        <ul>
+          <li>Outage के दौरान कौन-से loads exactly चलेंगे, और full battery पर कितनी देर?</li>
+          <li>Inverter अभी hybrid-capable है, या storage बाद में जोड़ने पर inverter बदलना पड़ेगा?</li>
+          <li>Battery कब replace होने की उम्मीद है, और आज के prices पर उसका खर्च कितना होगा?</li>
+          <li>Subsidy deduct करके quoted price क्या है, और subsidy से पहले full price क्या है? दोनों अलग मांगें।</li>
+          <li>DISCOM net-metering application कौन handle करेगा, और approval delay होने पर timeline क्या होगी?</li>
+          <li>Vendor national portal पर registered है, और quoted panels scheme की content requirements पूरी करेंगे?</li>
+          <li>Hybrid design के लिए: क्या आपके state regulator ने subsidy purpose के लिए arrangement approve किया है? Central guidelines allow करती हैं; approval state का है।</li>
+        </ul>
+        <p>Quote मिलने के बाद अपनी current usage हमारे <a href="/hi/bill-calculator/">bill calculator</a>
+        में डालें और देखें कि top slab पर आप per unit असल में क्या दे रहे हैं — solar unit की value
+        headline tariff से नहीं, इसी number से तय होती है।</p>
+      </section>`,
+    faqsHi: [
+      { q: "क्या ऑन-ग्रिड सोलर बिजली कटने पर काम करता है?",
+        a: "नहीं। Grid-tied inverter को grid fail होते ही बंद होना पड़ता है। यह anti-islanding safety rule है, ताकि system बंद lines में बिजली न भेजे। Grid हटने पर voltage और frequency reference भी नहीं रहता। Outage में power सिर्फ hybrid या off-grid system देता है।" },
+      { q: "क्या hybrid solar system PM Surya Ghar subsidy के लिए eligible है?",
+        a: "हाँ। Operational guidelines battery hybrid systems को eligible मानती हैं, बशर्ते आपके state Electricity Regulatory Commission ने arrangement approve किया हो। Subsidy amount panel capacity पर ही मिलता है: पहले 2 kW पर ₹30,000/kW, तीसरे kW पर ₹18,000/kW, cap ₹78,000। Storage subsidy amount नहीं बढ़ाता।" },
+      { q: "क्या solar battery पैसे के लायक है?",
+        a: "यह आपके goal पर depend करता है। Battery outage availability खरीदती है, extra savings नहीं। Net metering में exported unit पहले से top slab rate के बराबर credit देती है, इसलिए store करने पर roughly वही value मिलती है, losses और battery cost घटाकर। Frequent outages या low export-credit states में battery ज्यादा useful होती है।" },
+      { q: "क्या मैं बाद में on-grid system में battery जोड़ सकता हूँ?",
+        a: "आमतौर पर hardware बदले बिना नहीं। Standard grid-tied inverter storage charge/discharge के लिए नहीं बना होता। Battery जोड़ने के लिए hybrid inverter या separate AC-coupled unit चाहिए। अगर storage की संभावना है, शुरुआत में hybrid-capable inverter लेना सस्ता पड़ता है।" },
+      { q: "Backup के लिए कितनी battery चाहिए?",
+        a: "पूरे घर के बजाय defined backup circuit के हिसाब से size करें। Lights, fans, router और fridge जैसी जरूरी चीजों का load जोड़ें और जितने hours backup चाहिए उससे multiply करें। Outage में AC चलाना अलग level का खर्च है।" },
+      { q: "क्या hybrid solar on-grid से ज्यादा महंगा है?",
+        a: "हाँ। Upfront cost ज्यादा है क्योंकि battery और hybrid inverter जुड़ते हैं, और आगे battery replacement भी आएगा। Subsidy यह gap कम नहीं करती क्योंकि वह panel kW पर मिलती है। Extra cost backup power खरीदती है, इसलिए इसे payback period से ज्यादा outage cost के against judge करें।" },
+    ],
+    titleMr: "ऑन-ग्रिड विरुद्ध हायब्रिड सोलर: तुमच्या घराला खरंच काय हवे",
+    metaTitleMr: "भारतात ऑन-ग्रिड विरुद्ध हायब्रिड सोलर — बॅकअप, सबसिडी आणि खरा खर्च",
+    descriptionMr: "ऑन-ग्रिड सोलर वीज गेल्यावर बंद होतो. हायब्रिड चालू राहतो, पण जास्त खर्चिक असतो. बॅकअप, सबसिडी, पेबॅक आणि योग्य निवड समजून घ्या.",
+    introMr: `बहुतेक लोक rooftop solar घेताना दोन अपेक्षा ठेवतात: बिल कमी व्हावे, आणि
+      परिसरात वीज गेली तरी घरात दिवे चालू राहावेत. साधा on-grid system पहिली अपेक्षा पूर्ण
+      करतो, <strong>दुसरी नाही</strong> — वीज गेली की तो पूर्ण बंद होतो, दुपारी भर उन्हातही.
+      हीच गोष्ट खरेदीदारांना सगळ्यात जास्त चकित करते. On-grid आणि hybrid मधला खरा फरक,
+      त्याचा खर्च, आणि तुमच्या घराला कोणता system हवा हे येथे स्पष्ट केले आहे.`,
+    sectionsMr: `
+      <section class="seo-section">
+        <h2>वीज गेल्यावर on-grid solar का बंद होतो</h2>
+        <p>हा fault नाही, आणि inverter स्वस्त आहे म्हणूनही नाही. Grid-tied inverter ला grid
+        बंद होताच disconnect व्हावे लागते. या behaviour ला <strong>anti-islanding</strong> म्हणतात.
+        कारण कठोर safety आहे: outage दरम्यान तुमचे panels local network मध्ये power ढकलत राहिले,
+        तर line बंद आहे असे समजून काम करणाऱ्या lineman साठी ती line जिवंत होऊ शकते.</p>
+        <p>दुसरे practical कारणही आहे. साधा grid-tied inverter <em>grid-following</em> असतो —
+        तो grid ची voltage आणि frequency reference म्हणून वापरतो. Grid काढली की follow करण्यासाठी
+        काही उरत नाही. त्यामुळे तो स्वतःहून घराला "230 V, 50 Hz" देत राहू शकत नाही.</p>
+        <p>म्हणून on-grid system ला <strong>बिल कमी करणारी machine समजा, backup machine नाही</strong>.
+        साध्या दिवशी तो पहिले काम उत्तम करतो. Outage मध्ये तो काहीच देत नाही.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>तीन system types, प्रामाणिक तुलना</h2>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>&nbsp;</th><th>On-grid</th><th>Hybrid</th><th>Off-grid</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">वीज गेल्यावर चालतो</th><td>नाही</td><td>हो, battery capacity पर्यंत</td><td>हो</td></tr>
+              <tr><th scope="row">Battery</th><td>नाही</td><td>आवश्यक</td><td>आवश्यक, आणि मोठी</td></tr>
+              <tr><th scope="row">Surplus grid मध्ये export</th><td>हो</td><td>हो</td><td>नाही — connected नाही</td></tr>
+              <tr><th scope="row">Net metering credit</th><td>हो</td><td>हो</td><td>लागू नाही</td></tr>
+              <tr><th scope="row">Upfront cost</th><td>सर्वात कमी</td><td>जास्त — battery आणि hybrid inverter</td><td>usable unit मागे सर्वात जास्त</td></tr>
+              <tr><th scope="row">Replacement</th><td>कधीतरी inverter</td><td>Inverter आणि battery</td><td>Inverter आणि मोठा battery bank</td></tr>
+              <tr><th scope="row">कोणासाठी</th><td>Supply reliable; goal bill कमी करणे</td><td>वारंवार किंवा लांब outages; bill आणि availability दोन्ही goal</td><td>Grid connection नाही</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>ज्या घरात DISCOM connection आधीच आहे, त्या घरासाठी off-grid जवळजवळ कधीच योग्य
+        उत्तर नसते. तुम्ही ज्या grid ला आधीच connected आहात ती replace करण्यासाठी मोठा battery
+        bank विकत घ्याल, आणि export credit सोडाल. खरी निवड on-grid विरुद्ध hybrid आहे.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Battery प्रत्यक्षात काय देते</h2>
+        <p>इथे maths अनेकदा चुकते. Battery power generate करत नाही. ती दुपारी generate झालेल्या
+        units संध्याकाळपर्यंत shift करते, आणि grid गेल्यावर काही circuits चालू ठेवते. दोन्ही
+        फायदे खरे आहेत. पण दोन्ही बहुतेक वेळा मोठा <em>financial</em> return देत नाहीत.</p>
+        <p>Net metering मध्ये exported unit imported unit विरुद्ध आधीच credited असतो, आणि netting
+        तुमचे सर्वात महाग slab units आधी काढते. त्यामुळे तो credit top slab rate इतकाच मौल्यवान
+        असतो — <a href="/mr/guides/solar-net-metering-savings/">net metering savings कशा काम
+        करतात</a> ते पहा. Unit export करण्याऐवजी store केल्याने नवी value तयार होत नाही; जास्तीत
+        जास्त तीच value मिळते, round-trip losses आणि battery च्या स्वतःच्या cost नंतर. Battery
+        खरी gap तिथे बंद करते जिथे state export units ला one-for-one net करत नाही आणि कमी rate देते.</p>
+        <p>लोक चुकवतात तो दुसरा खर्च म्हणजे replacement timing. Panels सहसा decades साठी warranted
+        असतात; batteries नाहीत. Panels च्या life मध्ये storage किमान एकदा replace करावी लागेल
+        असे सुरुवातीपासून गृहीत धरा.</p>
+        <p class="seo-note"><strong>सरळ framing:</strong> battery बचतीसाठी नाही,
+        <em>availability</em> साठी घ्या. तुमच्या भागात वीज क्वचितच जाते, तर storage पेक्षा extra
+        panel capacity मध्ये पैसा जास्त काम करतो.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Subsidy कुठे बसते</h2>
+        <p>PM Surya Ghar: Muft Bijli Yojana मध्ये residential consumers साठी central subsidy
+        rooftop capacity च्या kW नुसार आहे:</p>
+        <ul>
+          <li>पहिल्या 2 kW साठी <strong>₹30,000 प्रति kW</strong></li>
+          <li>3 kW पर्यंत additional capacity साठी <strong>₹18,000 प्रति kW</strong></li>
+          <li>3 kW पेक्षा मोठ्या system साठी total cap <strong>₹78,000</strong></li>
+          <li>Special-category states साठी <strong>प्रति kW अतिरिक्त 10%</strong></li>
+        </ul>
+        <p>Portal indicative sizing देखील देतो: महिन्याला 150 units पर्यंत average household साठी
+        1-2 kW, 150-300 units साठी 2-3 kW, आणि त्यापुढे 3 kW पेक्षा जास्त. Scheme residential
+        consumers आणि resident welfare associations साठी आहे, आणि सध्या <strong>31 March 2027</strong>
+        पर्यंत scheduled आहे. आमची <a href="/mr/guides/pm-surya-ghar-solar-subsidy/">PM Surya Ghar
+        guide</a> application flow आणि payback maths समजावते.</p>
+        <p>या decision साठी महत्त्वाचा मुद्दा: subsidy <strong>generating capacity in kW</strong>
+        वर calculate होते. ती storage साठी contribution नाही. Battery ही subsidised system वरची
+        out-of-pocket addition आहे; subsidy panels ची economics सुधारते, hybrid premium नाही.</p>
+        <p class="seo-note"><strong>Hybrid systems qualify करतात.</strong> Scheme guidelines
+        grid-connected पण non-feeding systems eligible म्हणतात आणि <em>battery hybrid systems</em>
+        नावाने mention करतात — <strong>subject to approval by your state's Electricity Regulatory
+        Commission</strong>. हा clause locally check करावा लागतो, कारण approval state matter आहे.
+        Amount मात्र स्पष्ट आहे: subsidy installed <em>solar modules</em> च्या capacity वर मिळते,
+        storage वाढवल्याने amount वाढत नाही.
+        <a href="https://cdnbbsr.s3waas.gov.in/s3716e1b8c6cd17b771da77391355749f3/uploads/2024/04/202404162127034309.pdf" target="_blank" rel="noopener">MNRE operational guidelines,
+        clauses 23(b) and 24(a) ↗</a></p>
+      </section>
+
+      <section class="seo-section">
+        <h2>निर्णय कसा घ्यावा</h2>
+        <p>हे प्रश्न क्रमाने विचारा. पहिले दोनच बहुतेक cases settle करतात.</p>
+        <ol>
+          <li><strong>तुमची supply खरंच किती वेळा fail होते, आणि किती वेळासाठी?</strong> अंदाजावर
+          नाही — काही महिन्यांचा अनुभव प्रामाणिकपणे तपासा. क्वचित छोटे cuts storage justify करत
+          नाहीत. Daily किंवा multi-hour outages करतात.</li>
+          <li><strong>नेमके काय चालू राहिले पाहिजे?</strong> Lights, fans, router आणि fridge चालू
+          ठेवणे आणि outage मध्ये AC चालवणे यात मोठा फरक आहे. पहिले modest battery आहे. दुसरे वेगळाच budget आहे.</li>
+          <li><strong>आज backup साठी काय वापरता?</strong> आधीच inverter आणि battery असल्यास hybrid
+          system तो setup replace करू शकतो. त्यामुळे comparison बदलतो, कारण hybrid cost चा भाग
+          renew होणारी गोष्ट replace करतो.</li>
+          <li><strong>Constraint roof आहे की budget?</strong> दोन्हींपैकी काही limit करत असेल तर
+          आधी panel capacity वर खर्च करा. जी generation नाही, ती store करता येत नाही.</li>
+        </ol>
+        <p>Stable supply असलेल्या बहुतेक urban homes साठी reasonable default: <strong>on-grid,
+        consumption नुसार sized</strong>. Outages routine असतील तर: <strong>hybrid, battery defined
+        backup circuit नुसार sized</strong>, संपूर्ण घरानुसार नाही.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Sign करण्यापूर्वी काय विचारावे</h2>
+        <ul>
+          <li>Outage दरम्यान नेमके कोणते loads चालतील, आणि full battery वर किती वेळ?</li>
+          <li>Inverter आत्ता hybrid-capable आहे का, की storage नंतर जोडण्यासाठी तो बदलावा लागेल?</li>
+          <li>Battery चा expected replacement point काय आहे, आणि आजच्या prices वर खर्च किती येईल?</li>
+          <li>Subsidy deduct करून quote काय आहे, आणि subsidy आधी full price काय आहे? दोन्ही वेगळे मागा.</li>
+          <li>DISCOM net-metering application कोण handle करेल, आणि approval delay झाला तर timeline काय?</li>
+          <li>Vendor national portal वर registered आहे का, आणि quoted panels scheme requirements पूर्ण करतात का?</li>
+          <li>Hybrid design साठी: तुमच्या state regulator ने subsidy purpose साठी arrangement approve केले आहे का? Central guidelines allow करतात; approval state चे आहे.</li>
+        </ul>
+        <p>Quote मिळाल्यावर तुमची current usage आमच्या <a href="/mr/bill-calculator/">bill calculator</a>
+        मध्ये टाका आणि top slab वर तुम्ही per unit प्रत्यक्षात काय भरता ते पाहा — solar unit ची
+        value headline tariff नव्हे, हा number ठरवतो.</p>
+      </section>`,
+    faqsMr: [
+      { q: "On-grid solar वीज गेल्यावर काम करतो का?",
+        a: "नाही. Grid-tied inverter ला grid fail होताच shut down व्हावे लागते. हा anti-islanding safety rule आहे, ज्यामुळे system बंद lines मध्ये power पाठवत नाही. Grid गेल्यावर voltage आणि frequency referenceही राहत नाही. Outage मध्ये power फक्त hybrid किंवा off-grid system देतो." },
+      { q: "Hybrid solar system PM Surya Ghar subsidy साठी eligible आहे का?",
+        a: "हो. Operational guidelines battery hybrid systems eligible म्हणतात, जर तुमच्या state Electricity Regulatory Commission ने arrangement approve केले असेल. Subsidy amount panels च्या capacity वरच मिळतो: पहिल्या 2 kW साठी ₹30,000/kW, तिसऱ्या kW साठी ₹18,000/kW, cap ₹78,000. Storage amount वाढवत नाही." },
+      { q: "Solar battery पैशाच्या योग्य आहे का?",
+        a: "तुमचा goal काय आहे यावर अवलंबून आहे. Battery outage availability देते, extra savings नाही. Net metering मध्ये exported unit आधीच top slab rate इतका credit देतो, त्यामुळे store केल्यास roughly तीच value मिळते, losses आणि battery cost वजा करून. Frequent outages किंवा low export-credit states मध्ये battery जास्त उपयोगी ठरते." },
+      { q: "मी नंतर on-grid system मध्ये battery जोडू शकतो का?",
+        a: "बहुतेक वेळा hardware बदलल्याशिवाय नाही. Standard grid-tied inverter storage charge/discharge साठी बनलेला नसतो. Battery जोडण्यासाठी hybrid inverter किंवा separate AC-coupled unit लागतो. Storage ची शक्यता असल्यास सुरुवातीला hybrid-capable inverter घेणे स्वस्त पडते." },
+      { q: "Backup साठी किती battery हवी?",
+        a: "संपूर्ण घराऐवजी defined backup circuit नुसार size करा. Lights, fans, router आणि fridge यांसारख्या गरजेच्या loads ची बेरीज करा आणि required backup hours ने multiply करा. Outage मध्ये AC चालवणे वेगळ्याच खर्चाचे काम आहे." },
+      { q: "Hybrid solar on-grid पेक्षा महाग आहे का?",
+        a: "हो. Upfront cost जास्त असतो कारण battery आणि hybrid inverter लागतात, आणि पुढे battery replacementही येते. Subsidy हा gap कमी करत नाही कारण ती panel kW वर मिळते. Extra cost backup power विकत घेते, म्हणून payback period पेक्षा outage cost विरुद्ध judge करा." },
+    ],
+    titleTa: "ஆன்-கிரிட் vs ஹைபிரிட் சோலார்: உங்கள் வீட்டுக்கு உண்மையில் எது தேவை",
+    metaTitleTa: "இந்தியாவில் ஆன்-கிரிட் vs ஹைபிரிட் சோலார் — பேக்கப், மானியம் மற்றும் உண்மையான செலவு",
+    descriptionTa: "ஆன்-கிரிட் சோலார் மின்வெட்டில் நிற்கும். ஹைபிரிட் இயங்கும், ஆனால் அதிக செலவு. பேக்கப், மானியம், payback மற்றும் சரியான தேர்வு.",
+    introTa: `பலர் rooftop solar வாங்கும்போது இரண்டு விஷயங்களை எதிர்பார்க்கிறார்கள்: மின் பில்
+      குறைய வேண்டும், மேலும் பகுதி முழுவதும் மின்சாரம் போனாலும் வீட்டில் lights இயங்க வேண்டும்.
+      சாதாரண on-grid system முதல் விஷயத்தைச் செய்கிறது; <strong>இரண்டாவதைக் செய்யாது</strong> —
+      மின்வெட்டு வந்தவுடன் அது முழுமையாக shutdown ஆகும், மதியம் வெயில் இருந்தாலும். இதுதான்
+      buyers-க்கு பெரிய surprise. On-grid மற்றும் hybrid இடையிலான உண்மையான வேறுபாடு, அதன் செலவு,
+      உங்கள் வீட்டுக்கு எது சரி என்பதை இந்த guide விளக்குகிறது.`,
+    sectionsTa: `
+      <section class="seo-section">
+        <h2>மின்வெட்டில் on-grid solar ஏன் நிற்கிறது</h2>
+        <p>இது fault அல்ல, inverter cheap என்பதாலுமல்ல. Grid-tied inverter grid down ஆன உடனே
+        disconnect ஆக வேண்டும். இந்த behaviour <strong>anti-islanding</strong> என்று அழைக்கப்படுகிறது.
+        காரணம் safety: outage நேரத்தில் உங்கள் panels local network-க்கு power அனுப்பினால், line
+        off என்று நினைத்து வேலை செய்யும் lineman-க்கு அந்த line live ஆகிவிடலாம்.</p>
+        <p>இன்னொரு practical காரணம் உள்ளது. Plain grid-tied inverter <em>grid-following</em> —
+        அது grid voltage மற்றும் frequency-ஐ reference ஆகப் பயன்படுத்துகிறது. Grid இல்லாதபோது
+        follow செய்ய reference இல்லை. அதனால் அது தனியாக உங்கள் வீட்டுக்கு "230 V, 50 Hz" கொடுத்து
+        இயங்க முடியாது.</p>
+        <p>அதனால் on-grid system-ஐ <strong>bill-reduction machine ஆகப் பாருங்கள், backup machine
+        ஆக அல்ல</strong>. Normal day-ல் bill குறைக்க அது excellent. Outage-ல் அது எந்த power-மும் தராது.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>மூன்று system types: நேர்மையான ஒப்பீடு</h2>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>&nbsp;</th><th>On-grid</th><th>Hybrid</th><th>Off-grid</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">மின்வெட்டில் இயங்கும்</th><td>இல்லை</td><td>ஆம், battery capacity வரை</td><td>ஆம்</td></tr>
+              <tr><th scope="row">Battery</th><td>இல்லை</td><td>தேவை</td><td>தேவை, மேலும் பெரியது</td></tr>
+              <tr><th scope="row">Surplus grid-க்கு export</th><td>ஆம்</td><td>ஆம்</td><td>இல்லை — connected அல்ல</td></tr>
+              <tr><th scope="row">Net metering credit</th><td>ஆம்</td><td>ஆம்</td><td>பொருந்தாது</td></tr>
+              <tr><th scope="row">Upfront cost</th><td>குறைந்தது</td><td>அதிகம் — battery மற்றும் hybrid inverter</td><td>usable unit அடிப்படையில் மிக அதிகம்</td></tr>
+              <tr><th scope="row">Replacement</th><td>பின்னர் inverter</td><td>Inverter மற்றும் battery</td><td>Inverter மற்றும் பெரிய battery bank</td></tr>
+              <tr><th scope="row">யாருக்கு பொருந்தும்</th><td>Supply reliable; goal bill குறைப்பு</td><td>Frequent/long outages; bill மற்றும் availability இரண்டும் goal</td><td>Grid connection இல்லாத இடம்</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>ஏற்கனவே DISCOM connection உள்ள வீட்டுக்கு off-grid அரிதாகவே சரியான பதில். நீங்கள்
+        connected இருக்கும் grid-ஐ replace செய்ய பெரிய battery bank வாங்க வேண்டும், export credit-ஐயும்
+        விட்டுக்கொடுக்க வேண்டும். உண்மையான decision on-grid versus hybrid தான்.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Battery உண்மையில் என்ன தருகிறது</h2>
+        <p>இங்குதான் maths தவறாகப் புரிந்துகொள்ளப்படுகிறது. Battery மின்சாரம் generate செய்யாது.
+        அது மதியம் உருவான units-ஐ evening-க்கு shift செய்கிறது, மேலும் grid drop ஆனபோது சில
+        circuits உயிருடன் வைத்திருக்கிறது. இரண்டும் real benefits. ஆனால் இரண்டும் பொதுவாக பெரிய
+        <em>financial</em> return அல்ல.</p>
+        <p>Net metering-ல் exported unit ஏற்கனவே imported unit-க்கு எதிராக credited ஆகிறது. Netting
+        உங்கள் most expensive slab units-ஐ முதலில் நீக்குவதால், அந்த credit உங்கள் top slab rate
+        மதிப்புக்கு சமம் — <a href="/ta/guides/solar-net-metering-savings/">net metering savings
+        எப்படி வேலை செய்கிறது</a> பார்க்கவும். Unit-ஐ export செய்வதற்கு பதில் store செய்தால் புதிய
+        value உருவாகாது; roughly அதே value, round-trip losses மற்றும் battery cost கழித்த பிறகு.
+        Battery உண்மையில் gap close செய்வது உங்கள் state exports-க்கு low rate தரும்போது, one-for-one
+        netting அல்லாதபோது.</p>
+        <p>மற்றொரு missed cost replacement timing. Panels பொதுவாக decades warranty உடன் வரும்;
+        batteries அப்படி இல்லை. Panels life-க்குள் storage குறைந்தது ஒருமுறை replace ஆகும் என்று
+        ஆரம்பத்திலேயே கணக்கில் கொள்ளுங்கள்.</p>
+        <p class="seo-note"><strong>நேர்மையான framing:</strong> battery-ஐ savings க்காக அல்ல,
+        <em>availability</em> க்காக வாங்குங்கள். உங்கள் பகுதியில் power cut rare என்றால், storage-ஐவிட
+        extra panel capacity-ல் பணம் அதிக பயன் தரும்.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Subsidy எங்கே பொருந்துகிறது</h2>
+        <p>PM Surya Ghar: Muft Bijli Yojana கீழ் residential consumers-க்கு central subsidy rooftop
+        capacity per kW அடிப்படையில் உள்ளது:</p>
+        <ul>
+          <li>முதல் 2 kW-க்கு <strong>₹30,000 per kW</strong></li>
+          <li>3 kW வரை additional capacity-க்கு <strong>₹18,000 per kW</strong></li>
+          <li>3 kW-க்கு மேல் எந்த system-க்கும் total cap <strong>₹78,000</strong></li>
+          <li>Special-category states-க்கு <strong>per kW கூடுதல் 10%</strong></li>
+        </ul>
+        <p>Portal indicative sizing-ஐயும் வெளியிடுகிறது: மாதம் 150 units வரை average household-க்கு
+        1-2 kW, 150-300 units-க்கு 2-3 kW, அதற்கு மேல் 3 kW+. Scheme residential consumers மற்றும்
+        resident welfare associations-க்கு மட்டுமே, தற்போது <strong>31 March 2027</strong> வரை
+        scheduled. எங்கள் <a href="/ta/guides/pm-surya-ghar-solar-subsidy/">PM Surya Ghar guide</a>
+        application flow மற்றும் payback maths-ஐ விளக்குகிறது.</p>
+        <p>இந்த decision-க்கு முக்கியமான point: subsidy <strong>generating capacity in kW</strong>
+        அடிப்படையில் calculate ஆகிறது. Storage-க்கு contribution அல்ல. Battery subsidised system மேல்
+        out-of-pocket addition; subsidy panels economics-ஐ மேம்படுத்துகிறது, hybrid premium-ஐ அல்ல.</p>
+        <p class="seo-note"><strong>Hybrid systems qualify ஆகும்.</strong> Scheme guidelines
+        grid-connected ஆனால் feeding செய்யாத systems eligible என்று கூறுகிறது; <em>battery hybrid
+        systems</em> பெயருடன் mention செய்யப்பட்டுள்ளது — <strong>subject to approval by your
+        state's Electricity Regulatory Commission</strong>. இதை locally check செய்ய வேண்டும், ஏனெனில்
+        approval state matter. Amount தெளிவாக உள்ளது: subsidy installed <em>solar modules</em>
+        capacity அடிப்படையில் கிடைக்கும், storage சேர்த்தால் amount அதிகரிக்காது.
+        <a href="https://cdnbbsr.s3waas.gov.in/s3716e1b8c6cd17b771da77391355749f3/uploads/2024/04/202404162127034309.pdf" target="_blank" rel="noopener">MNRE operational guidelines,
+        clauses 23(b) and 24(a) ↗</a></p>
+      </section>
+
+      <section class="seo-section">
+        <h2>எப்படி முடிவு செய்வது</h2>
+        <p>இந்த கேள்விகளுக்கு வரிசையாக பதில் சொல்லுங்கள். முதல் இரண்டு கேள்விகள் பல cases-ஐ settle செய்கின்றன.</p>
+        <ol>
+          <li><strong>உங்கள் supply உண்மையில் எவ்வளவு முறை fail ஆகிறது, எவ்வளவு நேரம்?</strong>
+          உணர்வால் அல்ல — சில மாத experience-ஐ நேர்மையாக பார்க்கவும். Rare short cuts storage justify
+          செய்யாது. Daily அல்லது multi-hour outages justify செய்யும்.</li>
+          <li><strong>எது அவசியம் இயங்க வேண்டும்?</strong> Lights, fans, router, fridge மட்டும்
+          வைத்திருப்பதும், outage-ல் AC ஓடவிடுவதும் மிக வேறு. முதல் ஒன்று modest battery. இரண்டாவது
+          வேறு budget.</li>
+          <li><strong>இப்போது backup-க்கு என்ன பயன்படுத்துகிறீர்கள்?</strong> ஏற்கனவே inverter மற்றும்
+          battery இருந்தால், hybrid system அந்த setup-ஐ replace செய்யலாம். அதனால் comparison மாறும்,
+          ஏனெனில் hybrid cost-ன் ஒரு பகுதி anyway renew செய்ய வேண்டியதை replace செய்கிறது.</li>
+          <li><strong>Constraint roof ஆ அல்லது budget ஆ?</strong> ஏதேனும் ஒன்று limit என்றால், முதலில்
+          panel capacity-ல் செலவு செய்யுங்கள். உற்பத்தி இல்லாததை store செய்ய முடியாது.</li>
+        </ol>
+        <p>Stable supply உள்ள பெரும்பாலான urban homes-க்கு reasonable default: <strong>on-grid,
+        consumption அடிப்படையில் sized</strong>. Outages routine என்றால்: <strong>hybrid, battery-ஐ
+        defined backup circuit அடிப்படையில் size செய்யுங்கள்</strong>, முழு வீட்டுக்காக அல்ல.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Sign செய்வதற்கு முன் கேட்க வேண்டியது</h2>
+        <ul>
+          <li>Outage நேரத்தில் எந்த loads exactly இயங்கும், full battery-யில் எவ்வளவு நேரம்?</li>
+          <li>Inverter இப்போது hybrid-capable ஆ, அல்லது storage later சேர்க்க inverter replace செய்ய வேண்டுமா?</li>
+          <li>Battery expected replacement point என்ன, today's prices-ல் cost எவ்வளவு?</li>
+          <li>Subsidy deduct செய்த quote என்ன, subsidy முன் full price என்ன? இரண்டையும் தனியாக கேளுங்கள்.</li>
+          <li>DISCOM net-metering application யார் handle செய்கிறார், approval delay என்றால் timeline என்ன?</li>
+          <li>Vendor national portal-ல் registered ஆ, quoted panels scheme content requirements meet செய்கிறதா?</li>
+          <li>Hybrid design-க்கு: subsidy purpose-க்கு உங்கள் state regulator arrangement approve செய்துள்ளாரா? Central guidelines allow செய்கிறது; approval state உடையது.</li>
+        </ul>
+        <p>Quote வந்த பிறகு உங்கள் current usage-ஐ எங்கள் <a href="/ta/bill-calculator/">bill calculator</a>
+        இல் போட்டு, top slab-ல் per unit நீங்கள் உண்மையில் எவ்வளவு செலுத்துகிறீர்கள் என்பதைப் பாருங்கள் —
+        solar unit value headline tariff அல்ல, அந்த number தான்.</p>
+      </section>`,
+    faqsTa: [
+      { q: "On-grid solar மின்வெட்டில் வேலை செய்யுமா?",
+        a: "இல்லை. Grid-tied inverter grid fail ஆனதும் shut down ஆக வேண்டும். இது anti-islanding safety rule; system off செய்யப்பட்ட lines-க்கு power அனுப்பாமல் தடுக்கிறது. Grid இல்லாதபோது voltage/frequency reference இல்லை. Outage-ல் power தருவது hybrid அல்லது off-grid system மட்டுமே." },
+      { q: "Hybrid solar system PM Surya Ghar subsidy-க்கு eligible ஆ?",
+        a: "ஆம். Operational guidelines battery hybrid systems eligible என்கிறது, உங்கள் state Electricity Regulatory Commission approval இருந்தால். Subsidy panels capacity அடிப்படையில் மட்டும்: முதல் 2 kW-க்கு ₹30,000/kW, மூன்றாவது kW-க்கு ₹18,000/kW, cap ₹78,000. Storage amount-ஐ அதிகரிக்காது." },
+      { q: "Solar battery செலவுக்கு worth ஆ?",
+        a: "உங்கள் goal-ஐப் பொறுத்தது. Battery outage availability தருகிறது, extra savings அல்ல. Net metering-ல் exported unit ஏற்கனவே top slab rate மதிப்பில் credit தருகிறது; store செய்தால் roughly அதே value, losses மற்றும் battery cost கழித்த பின். Frequent outages அல்லது low export-credit states-ல் battery useful." },
+      { q: "On-grid system-க்கு later battery சேர்க்க முடியுமா?",
+        a: "பொதுவாக hardware மாற்றாமல் முடியாது. Standard grid-tied inverter storage charge/discharge செய்ய உருவாக்கப்படவில்லை. Battery சேர்க்க hybrid inverter அல்லது separate AC-coupled unit தேவை. Storage future possibility என்றால் ஆரம்பத்திலேயே hybrid-capable inverter தேர்வு செய்வது சுலபமாகவும் மலிவாகவும் இருக்கும்." },
+      { q: "Backup-க்கு எவ்வளவு battery தேவை?",
+        a: "முழு வீட்டுக்கு அல்ல, defined backup circuit-க்கு size செய்யுங்கள். Lights, fans, router, fridge போன்ற essential loads-ஐ சேர்த்து, backup hours-ஆல் multiply செய்யுங்கள். Outage-ல் AC ஓடவிடுவது முற்றிலும் வேறு cost level." },
+      { q: "Hybrid solar on-grid-ஐவிட costly ஆ?",
+        a: "ஆம். Upfront cost அதிகம்; battery மற்றும் hybrid inverter சேர்கிறது. Long term-ல் battery replacement வரும். Subsidy gap-ஐ குறைக்காது, ஏனெனில் அது panel kW அடிப்படையில் மட்டுமே. Extra cost backup power வாங்குகிறது; அதைக் payback period-ஐவிட outage cost-க்கு எதிராக judge செய்யுங்கள்." },
+    ],
   },
   {
     slug: 'free-electricity-units-by-state',
