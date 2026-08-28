@@ -661,7 +661,11 @@
 .alerts-bell { flex: none; }
 .alerts-dot {
   width: 7px; height: 7px; border-radius: var(--radius-full);
-  background: var(--p-amber-400); box-shadow: 0 0 0 2px rgba(15,23,42,.9);
+  background: var(--p-green-600);
+  box-shadow:
+    0 0 0 2px rgba(15,23,42,.9),
+    0 0 9px rgba(22,163,74,.9),
+    0 0 18px rgba(22,163,74,.5);
 }
 /* Anchored to the trigger's RIGHT edge, not centred on it like the other nav menus: this
    trigger sits near the end of the header, and a 380px menu centred there hangs 24px off the
@@ -700,13 +704,15 @@
 .alerts-skel-line.is-title2 { width: 64%; }
 .alerts-skel-line.is-meta { width: 38%; }
 .alerts-nav-item { margin: 0; }
-.alerts-nav-link {
+.header-nav .alerts-menu .alerts-nav-link {
   display: grid; gap: 5px; padding: 10px 10px 11px;
   border-radius: var(--radius); color: inherit; text-decoration: none;
   transition: background var(--t-fast);
 }
-.alerts-nav-link:hover,
-.alerts-nav-link:focus-visible { background: var(--surface-sunken); text-decoration: none; }
+.header-nav .alerts-menu .alerts-nav-link:hover,
+.header-nav .alerts-menu .alerts-nav-link:focus-visible {
+  background: var(--surface-sunken); color: inherit; text-decoration: none;
+}
 .alerts-nav-tags {
   display: flex; align-items: center; justify-content: space-between; gap: 8px;
 }
@@ -723,13 +729,18 @@
 /* Sits at the end of the list, not pinned over it. As a sticky footer it hovered above the
    last notice and read as a bar the list ran underneath; the reader reaches it by finishing
    the five, which is the point at which "see all" is the natural next move. */
-.alerts-see-all {
+.header-nav .alerts-menu .alerts-see-all {
   display: block; padding: 12px 14px; text-align: center;
-  font-size: 13px; font-weight: 600; color: var(--text-brand);
+  font-size: 13px; font-weight: 400; color: var(--text-brand);
+  line-height: 1.4; border-radius: 0;
   border-top: 1px solid var(--border-subtle);
   background: var(--surface-card);
+  text-decoration: none;
 }
-.alerts-see-all:hover { background: var(--brand-faint); text-decoration: none; }
+.header-nav .alerts-menu .alerts-see-all:hover,
+.header-nav .alerts-menu .alerts-see-all:focus-visible {
+  background: var(--brand-faint); color: var(--text-brand-dark); text-decoration: none;
+}
 
 /* The category pill is shared by the dropdown and the feed, so it lives outside both. */
 .alert-pill {
@@ -9504,8 +9515,8 @@ html:not(.js) .m-btn-ring { display: none; }
   text-align: left;
   display: flex; gap: 16px; align-items: flex-start;
   padding: 18px 22px 20px; margin: 0 0 18px;
-  background: var(--surface-brand-subtle);
-  border: 1px solid var(--brand-border); border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);
 }
 .trust-ico {
   flex: 0 0 auto; display: grid; place-items: center; width: 44px; height: 44px;
@@ -9520,7 +9531,7 @@ html:not(.js) .m-btn-ring { display: none; }
 .trust-list {
   list-style: none; margin: 0; padding: 14px 0 0;
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;
-  border-top: 1px solid var(--brand-border);
+  border-top: 1px solid var(--border-default);
 }
 .trust-list li { display: flex; align-items: flex-start; gap: 9px; font-size: 13px; line-height: 1.5; color: var(--text-secondary); }
 .trust-list a { color: var(--text-brand); }
