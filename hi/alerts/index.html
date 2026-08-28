@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      try { localStorage.setItem('lang', 'hi'); } catch (e) {}
+    })();
+  </script>
+  <title>बिजली अलर्ट — टैरिफ, FPPA और डिस्कॉम अपडेट</title>
+  <meta name="description" content="भारत के सार्वजनिक बिजली अलर्ट: FPPA, PPAC, टैरिफ आदेश, सब्सिडी नोटिस और नीति बदलाव, राज्य और श्रेणी के अनुसार फ़िल्टर करें।">
+  <link rel="canonical" href="https://thediscombill.com/hi/alerts/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/alerts/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/alerts/">
+  <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/alerts/">
+  <link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/alerts/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/alerts/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="बिजली अलर्ट — टैरिफ, FPPA और डिस्कॉम अपडेट">
+  <meta property="og:description" content="भारत के सार्वजनिक बिजली अलर्ट: FPPA, PPAC, टैरिफ आदेश, सब्सिडी नोटिस और नीति बदलाव, राज्य और श्रेणी के अनुसार फ़िल्टर करें।">
+  <meta property="og:url" content="https://thediscombill.com/hi/alerts/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="बिजली अलर्ट — टैरिफ, FPPA और डिस्कॉम अपडेट">
+  <meta property="og:locale" content="hi_IN">
+  <meta property="og:locale:alternate" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="बिजली अलर्ट — टैरिफ, FPPA और डिस्कॉम अपडेट">
+  <meta name="twitter:description" content="भारत के सार्वजनिक बिजली अलर्ट: FPPA, PPAC, टैरिफ आदेश, सब्सिडी नोटिस और नीति बदलाव, राज्य और श्रेणी के अनुसार फ़िल्टर करें।">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      addEventListener("scroll", load, { once: true, passive: true });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/hi/alerts/","url":"https://thediscombill.com/hi/alerts/","name":"बिजली अलर्ट — टैरिफ, FPPA और डिस्कॉम अपडेट","description":"भारत के सार्वजनिक बिजली अलर्ट: FPPA, PPAC, टैरिफ आदेश, सब्सिडी नोटिस और नीति बदलाव, राज्य और श्रेणी के अनुसार फ़िल्टर करें।","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-28"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"बिजली अलर्ट","item":"https://thediscombill.com/hi/alerts/"}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/hi/bill-calculator/" data-i18n="nav.calculator">Calculator</a>
+      <a href="/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">Smart Meter</a>
+      <a href="/hi/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/hi/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <div class="nav-dropdown alerts-dropdown nav-promoted" id="alertsDropdown" data-alerts-nav="true">
+        <button type="button" class="nav-dropdown-trigger alerts-trigger" id="alertsTrigger" aria-haspopup="true" aria-expanded="false">
+          <svg class="alerts-bell" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 21a2 2 0 0 0 3.4 0"/><path d="M18 8A6 6 0 0 0 6 8c0 7-3 7-3 9h18c0-2-3-2-3-9"/></svg>
+          <span data-i18n="nav.alerts">Alerts</span>
+          <span class="alerts-dot" aria-hidden="true"></span>
+        </button>
+        <!-- The placeholder mirrors the hydrated menu's shape on purpose. It used to be a
+             single "Loading alerts..." line plus the footer link, which made the closed menu
+             92px tall; hydration then took it to 549px and pushed "See all alerts" 461px down
+             the screen, out from under the pointer of anyone reaching for it. Same rows, same
+             box, nothing moves. -->
+        <div class="nav-dropdown-menu alerts-menu" id="alertsMenu" role="menu" aria-label="Recent public alerts" data-i18n-aria="alert.nav.menuLabel" data-lenis-prevent>
+          <div class="alerts-nav-head"><strong data-i18n="alert.nav.latest">Latest updates</strong><span data-i18n="alert.nav.loading">Loading...</span></div><ol class="alerts-nav-list alerts-skeleton" aria-hidden="true"><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li></ol><a href="/hi/alerts/" class="alerts-see-all" data-i18n="alert.nav.seeAll">See all alerts</a>
+        </div>
+      </div>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/hi/bill-calculator/" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">Smart Meter</span></a>
+            <a href="/hi/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/hi/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <!-- aria-labelledby, not aria-label: the accessible name has to CONTAIN the visible
+             text ("EN"), or speech input cannot activate the button and a screen reader never
+             announces which language is active (WCAG 2.5.3). Referencing the live span also
+             keeps the name in step when syncLangUI() rewrites the badge. -->
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- A plain list of links, not a listbox. These rows navigate, so they are anchors:
+             that makes them crawlable, middle-clickable and keyboard-operable for free,
+             none of which a role="option" <li> with a click handler ever was. Rows that
+             translate in place (no twin URL to point at) stay <button>s. -->
+        <ul class="lang-menu" id="langMenu" aria-label="Select language">
+          <li><a class="lang-opt" href="/alerts/" hreflang="en-IN" lang="en" data-lang="en"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></a></li>
+          <li><span class="lang-opt" data-lang="hi" aria-current="true"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">हिं</span></span></li>
+          <li><a class="lang-opt" href="/mr/alerts/" hreflang="mr-IN" lang="mr" data-lang="mr"><span class="lang-opt-name">मराठी</span><span class="lang-opt-code">म</span></a></li>
+          <li><a class="lang-opt" href="/ta/alerts/" hreflang="ta-IN" lang="ta" data-lang="ta"><span class="lang-opt-name">தமிழ்</span><span class="lang-opt-code">த</span></a></li>
+        </ul>
+      </div>
+      <button type="button" id="siteSearchBtn" class="site-search-btn" aria-label="Search the site (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body" role="main">
+
+  <section class="seo-page container alerts-page" id="alertsPageRoot">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/hi/" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page" data-i18n="nav.alerts">अलर्ट</span></li></ol></nav>
+
+    <header class="alerts-head">
+      <h1 data-i18n="alerts.title">बिजली अलर्ट</h1>
+      <p class="seo-lead" data-i18n="alerts.lead">TheDiscomBill पर ट्रैक किए गए हर टैरिफ आदेश और ईंधन-अधिभार नोटिस, सबसे नए पहले। सिर्फ़ सार्वजनिक नियामकीय अपडेट — आपके अपने खाते की सूचना नहीं।</p>
+      <p class="alerts-context">
+        <strong>55</strong> नोटिस, <strong>17</strong> राज्यों में · नवीनतम <strong>18 अग॰ 2026</strong> · <a href="/hi/fppa/">FPPA ट्रैकर</a> और <a href="/orders/">प्रकाशित आदेशों</a> से संकलित
+      </p>
+    </header>
+
+    <div class="alerts-controls">
+      <div class="alerts-filterbar" role="search" aria-label="सार्वजनिक बिजली अलर्ट फ़िल्टर करें" data-i18n-aria="alerts.filterLabel">
+        <label class="alerts-field alerts-field-search">
+          <span data-i18n="alerts.search">खोजें</span>
+          <input id="alertSearch" type="search" placeholder="FPPA, दिल्ली, MSEDCL..." data-i18n-ph="alerts.searchPh" autocomplete="off">
+        </label>
+        <label class="alerts-field">
+          <span data-i18n="alerts.state">राज्य</span>
+          <select id="alertState">
+            <option value="" data-i18n="alerts.allStates">सभी राज्य</option>
+            <option value="Arunachal Pradesh">Arunachal Pradesh</option><option value="Bihar">Bihar</option><option value="Dadra &amp; Nagar Haveli and Daman &amp; Diu">Dadra &amp; Nagar Haveli and Daman &amp; Diu</option><option value="Delhi">Delhi</option><option value="Jammu &amp; Kashmir">Jammu &amp; Kashmir</option><option value="Karnataka">Karnataka</option><option value="Ladakh">Ladakh</option><option value="Maharashtra">Maharashtra</option><option value="Manipur">Manipur</option><option value="Mizoram">Mizoram</option><option value="Nagaland">Nagaland</option><option value="Odisha">Odisha</option><option value="Rajasthan">Rajasthan</option><option value="Sikkim">Sikkim</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Uttar Pradesh">Uttar Pradesh</option><option value="West Bengal">West Bengal</option>
+          </select>
+        </label>
+        <label class="alerts-field">
+          <span data-i18n="alerts.category">श्रेणी</span>
+          <select id="alertCategory">
+            <option value="" data-i18n="alerts.allCategories">सभी श्रेणियाँ</option>
+            <option value="Fuel surcharge">ईंधन अधिभार</option><option value="Tariff">टैरिफ</option><option value="Policy">नीति</option>
+          </select>
+        </label>
+        <label class="alerts-field">
+          <span data-i18n="alerts.priority">प्राथमिकता</span>
+          <select id="alertSeverity">
+            <option value="" data-i18n="alerts.all">सभी</option>
+            <option value="Important" data-i18n="alerts.important">महत्वपूर्ण</option>
+            <option value="Info" data-i18n="alerts.info">जानकारी</option>
+          </select>
+        </label>
+        <button type="button" class="alerts-reset" data-alert-reset data-i18n="alerts.reset">रीसेट</button>
+      </div>
+      <div class="alerts-chiprow" aria-label="Filter by category">
+        
+          <button type="button" class="alert-chip" data-alert-index="Fuel surcharge">
+            <span class="alert-pill is-fuel-surcharge" aria-hidden="true"></span>
+            <span data-alert-index-label="Fuel surcharge">ईंधन अधिभार</span><span class="alert-chip-count">34</span>
+          </button>
+          <button type="button" class="alert-chip" data-alert-index="Tariff">
+            <span class="alert-pill is-tariff" aria-hidden="true"></span>
+            <span data-alert-index-label="Tariff">टैरिफ</span><span class="alert-chip-count">20</span>
+          </button>
+          <button type="button" class="alert-chip" data-alert-index="Policy">
+            <span class="alert-pill is-policy" aria-hidden="true"></span>
+            <span data-alert-index-label="Policy">नीति</span><span class="alert-chip-count">1</span>
+          </button>
+      </div>
+    </div>
+
+    <section class="alerts-listwrap" id="alerts-list" aria-label="Public electricity alerts">
+      <p class="alerts-result-head"><strong data-alert-count>55</strong> / 55 दिख रहे हैं</p>
+      <ol class="alerts-feed" data-alert-list>
+        
+        <li class="alerts-month" data-alert-group="अगस्त 2026"><span>अगस्त 2026</span></li>
+        <li class="alert-row" id="order-jerc-jkl-lpdd-fy2026-27"
+          data-alert-card data-state="Ladakh" data-category="Tariff"
+          data-severity="Info" data-search="lpdd arr and tariff for fy 2026-27 tariff order effective from 1 sept 2026. covers lpdcl / ladakh power dept.. jerc directs lpdd to implement the subsidised tariff schedule from 01-sep-2026. ladakh tariff lpdcl / ladakh power dept.">
+          <span class="alert-row-rail" aria-hidden="true">18 अग॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Ladakh</span>
+              <span class="alert-row-discom">LPDCL / Ladakh Power Dept.</span>
+            </span>
+            <a href="/orders/jerc-jkl-lpdd-fy2026-27/" class="alert-row-title">LPDD ARR and tariff for FY 2026-27</a>
+            <span class="alert-row-summary">Tariff order effective from 1 Sept 2026. Covers LPDCL / Ladakh Power Dept.. JERC directs LPDD to implement the subsidised tariff schedule from 01-Sep-2026.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-08-18">18 अग॰ 2026</time>
+              <a href="https://jercjkl.jk.gov.in/pdf/LPDD%20%20Tariff%20Order%20for%20FY%202026-27%20R1.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">JERC for the UT of J&amp;K and Ladakh ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-discom-brpl-2026-06-01"
+          data-alert-card data-state="Delhi" data-category="Fuel surcharge"
+          data-severity="Important" data-search="brpl (bses rajdhani) ppac (power purchase adjustment cost) +17.94% brpl ppac (jun 2026) applies jun 2026 to jun 2026. this may add to affected bills for the period. delhi fuel surcharge brpl (bses rajdhani)">
+          <span class="alert-row-rail" aria-hidden="true">17 अग॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Delhi</span>
+              <span class="alert-row-discom">BRPL (BSES Rajdhani)</span>
+            </span>
+            <a href="/fppa/delhi/" class="alert-row-title">BRPL (BSES Rajdhani) PPAC (Power Purchase Adjustment Cost) +17.94%</a>
+            <span class="alert-row-summary">BRPL PPAC (Jun 2026) applies Jun 2026 to Jun 2026. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-08-17">17 अग॰ 2026</time>
+              <a href="https://derc.gov.in/commissions-proceedings-orders/other-than-142/final-order" target="_blank" rel="noopener nofollow" class="alert-source-link">DERC PPAC approval, Jun 2026 ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-discom-bypl-2026-06-01"
+          data-alert-card data-state="Delhi" data-category="Fuel surcharge"
+          data-severity="Important" data-search="bypl (bses yamuna) ppac (power purchase adjustment cost) +17.43% bypl ppac (jun 2026) applies jun 2026 to jun 2026. this may add to affected bills for the period. delhi fuel surcharge bypl (bses yamuna)">
+          <span class="alert-row-rail" aria-hidden="true">17 अग॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Delhi</span>
+              <span class="alert-row-discom">BYPL (BSES Yamuna)</span>
+            </span>
+            <a href="/fppa/delhi/" class="alert-row-title">BYPL (BSES Yamuna) PPAC (Power Purchase Adjustment Cost) +17.43%</a>
+            <span class="alert-row-summary">BYPL PPAC (Jun 2026) applies Jun 2026 to Jun 2026. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-08-17">17 अग॰ 2026</time>
+              <a href="https://derc.gov.in/commissions-proceedings-orders/other-than-142/final-order" target="_blank" rel="noopener nofollow" class="alert-source-link">DERC PPAC approval, Jun 2026 ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-discom-tpddl-2026-06-01"
+          data-alert-card data-state="Delhi" data-category="Fuel surcharge"
+          data-severity="Important" data-search="tata power-ddl (tpddl) ppac (power purchase adjustment cost) +15.99% tpddl ppac (jun 2026) applies jun 2026 to jun 2026. this may add to affected bills for the period. delhi fuel surcharge tata power-ddl (tpddl)">
+          <span class="alert-row-rail" aria-hidden="true">17 अग॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Delhi</span>
+              <span class="alert-row-discom">Tata Power-DDL (TPDDL)</span>
+            </span>
+            <a href="/fppa/delhi/" class="alert-row-title">Tata Power-DDL (TPDDL) PPAC (Power Purchase Adjustment Cost) +15.99%</a>
+            <span class="alert-row-summary">TPDDL PPAC (Jun 2026) applies Jun 2026 to Jun 2026. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-08-17">17 अग॰ 2026</time>
+              <a href="https://www.tatapower-ddl.com/regulations-and-compliances/tariff-related/derc-orders-and-letters-on-ppac" target="_blank" rel="noopener nofollow" class="alert-source-link">DERC PPAC approval, Jun 2026 ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-nerc-nagaland-fy2026-27-public-proposal"
+          data-alert-card data-state="Nagaland" data-category="Policy"
+          data-severity="Info" data-search="fy 2026-27 arr and tariff proposal for department of power nagaland tariff proposal effective from 1 oct 2026. covers doe nagaland. the notice says the rates are proposed and may be increased, decreased or amended by nerc; they are not used as current calculator rates. nagaland policy doe nagaland">
+          <span class="alert-row-rail" aria-hidden="true">04 अग॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-policy">नीति</span>
+              
+              <span class="alert-row-state">Nagaland</span>
+              <span class="alert-row-discom">DoE Nagaland</span>
+            </span>
+            <a href="/orders/nerc-nagaland-fy2026-27-public-proposal/" class="alert-row-title">FY 2026-27 ARR and tariff proposal for Department of Power Nagaland</a>
+            <span class="alert-row-summary">Tariff proposal effective from 1 Oct 2026. Covers DoE Nagaland. The notice says the rates are proposed and may be increased, decreased or amended by NERC; they are not used as current calculator rates.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-08-04">4 अग॰ 2026</time>
+              <a href="https://ipr.nagaland.gov.in/index.php/department-of-power-issues-public-notice-in-respect-of-petition-for-approval-of-arr-tariff-proposal-for-the-fy-2026-27" target="_blank" rel="noopener nofollow" class="alert-source-link">NERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2026-08-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) -2.92% aug 2026 fppas (credit) applies aug 2026 to aug 2026. this is a credit entry and may reduce affected bills. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 अग॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) -2.92%</a>
+            <span class="alert-row-summary">Aug 2026 FPPAS (credit) applies Aug 2026 to Aug 2026. This is a credit entry and may reduce affected bills.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-08-01">1 अग॰ 2026</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="जुलाई 2026"><span>जुलाई 2026</span></li>
+        <li class="alert-row" id="surcharge-discom-brpl-2026-07-01"
+          data-alert-card data-state="Delhi" data-category="Fuel surcharge"
+          data-severity="Important" data-search="brpl (bses rajdhani) ppac (power purchase adjustment cost) +17.94% brpl ppac (jul 2026, unchanged) applies jul 2026 onward. this may add to affected bills for the period. delhi fuel surcharge brpl (bses rajdhani)">
+          <span class="alert-row-rail" aria-hidden="true">10 जुल॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Delhi</span>
+              <span class="alert-row-discom">BRPL (BSES Rajdhani)</span>
+            </span>
+            <a href="/fppa/delhi/" class="alert-row-title">BRPL (BSES Rajdhani) PPAC (Power Purchase Adjustment Cost) +17.94%</a>
+            <span class="alert-row-summary">BRPL PPAC (Jul 2026, unchanged) applies Jul 2026 onward. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-07-10">10 जुल॰ 2026</time>
+              <a href="https://www.bsesdelhi.com/web/brpl/fuel-power-purchase-adjustment-charges" target="_blank" rel="noopener nofollow" class="alert-source-link">BRPL FPPAS page / DERC PPAC order dated 10.07.2026 ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-discom-bypl-2026-07-01"
+          data-alert-card data-state="Delhi" data-category="Fuel surcharge"
+          data-severity="Important" data-search="bypl (bses yamuna) ppac (power purchase adjustment cost) +17.43% bypl ppac (jul 2026, unchanged) applies jul 2026 onward. this may add to affected bills for the period. delhi fuel surcharge bypl (bses yamuna)">
+          <span class="alert-row-rail" aria-hidden="true">10 जुल॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Delhi</span>
+              <span class="alert-row-discom">BYPL (BSES Yamuna)</span>
+            </span>
+            <a href="/fppa/delhi/" class="alert-row-title">BYPL (BSES Yamuna) PPAC (Power Purchase Adjustment Cost) +17.43%</a>
+            <span class="alert-row-summary">BYPL PPAC (Jul 2026, unchanged) applies Jul 2026 onward. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-07-10">10 जुल॰ 2026</time>
+              <a href="https://derc.gov.in/commissions-proceedings-orders/other-than-142/final-order" target="_blank" rel="noopener nofollow" class="alert-source-link">DERC PPAC order dated 10.07.2026 / Delhi PPAC notification ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-derc-ppac-2026-07-10"
+          data-alert-card data-state="Delhi" data-category="Fuel surcharge"
+          data-severity="Important" data-search="derc ppac order, july 2026 fuel surcharge notice effective from 1 jul 2026. covers brpl (bses rajdhani), bypl (bses yamuna) +1 more. set per licensee: brpl and bypl unchanged, tpddl reduced. delhi fuel surcharge brpl (bses rajdhani) bypl (bses yamuna) tata power-ddl (tpddl)">
+          <span class="alert-row-rail" aria-hidden="true">10 जुल॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Delhi</span>
+              <span class="alert-row-discom">BRPL (BSES Rajdhani), BYPL (BSES Yamuna) +1</span>
+            </span>
+            <a href="/orders/derc-ppac-2026-07-10/" class="alert-row-title">DERC PPAC order, July 2026</a>
+            <span class="alert-row-summary">Fuel surcharge notice effective from 1 Jul 2026. Covers BRPL (BSES Rajdhani), BYPL (BSES Yamuna) +1 more. Set per licensee: BRPL and BYPL unchanged, TPDDL reduced.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-07-10">10 जुल॰ 2026</time>
+              <a href="https://derc.gov.in/commissions-proceedings-orders/other-than-142/final-order" target="_blank" rel="noopener nofollow" class="alert-source-link">DERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-discom-tpddl-2026-07-01"
+          data-alert-card data-state="Delhi" data-category="Fuel surcharge"
+          data-severity="Important" data-search="tata power-ddl (tpddl) ppac (power purchase adjustment cost) +12.21% tpddl ppac (jul 2026, reduced) applies jul 2026 onward. this may add to affected bills for the period. delhi fuel surcharge tata power-ddl (tpddl)">
+          <span class="alert-row-rail" aria-hidden="true">10 जुल॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Delhi</span>
+              <span class="alert-row-discom">Tata Power-DDL (TPDDL)</span>
+            </span>
+            <a href="/fppa/delhi/" class="alert-row-title">Tata Power-DDL (TPDDL) PPAC (Power Purchase Adjustment Cost) +12.21%</a>
+            <span class="alert-row-summary">TPDDL PPAC (Jul 2026, reduced) applies Jul 2026 onward. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-07-10">10 जुल॰ 2026</time>
+              <a href="https://www.tatapower-ddl.com/regulations-and-compliances/tariff-related/derc-orders-and-letters-on-ppac" target="_blank" rel="noopener nofollow" class="alert-source-link">DERC PPAC order dated 10.07.2026 / TPDDL PPAC notification ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-uperc-2026-07-02-retained"
+          data-alert-card data-state="Uttar Pradesh" data-category="Tariff"
+          data-severity="Info" data-search="uperc order retaining fy 2024-25 rates for fy 2026-27 tariff order effective from 1 oct 2024. covers mvvnl, pvvnl +3 more. rates retained rather than revised. we hold the order date but not a direct link to the document. uttar pradesh tariff mvvnl pvvnl dvvnl puvvnl kesco">
+          <span class="alert-row-rail" aria-hidden="true">02 जुल॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              <span class="alert-row-discom">MVVNL, PVVNL +3</span>
+            </span>
+            <a href="/orders/uperc-2026-07-02-retained/" class="alert-row-title">UPERC order retaining FY 2024-25 rates for FY 2026-27</a>
+            <span class="alert-row-summary">Tariff order effective from 1 Oct 2024. Covers MVVNL, PVVNL +3 more. Rates retained rather than revised. We hold the order date but not a direct link to the document.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-07-02">2 जुल॰ 2026</time>
+              <a href="https://www.uperc.org" target="_blank" rel="noopener nofollow" class="alert-source-link">UPERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2026-07-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) -4.43% jul 2026 fppas (credit) applies jul 2026 to jul 2026. this is a credit entry and may reduce affected bills. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 जुल॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) -4.43%</a>
+            <span class="alert-row-summary">Jul 2026 FPPAS (credit) applies Jul 2026 to Jul 2026. This is a credit entry and may reduce affected bills.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-07-01">1 जुल॰ 2026</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="जून 2026"><span>जून 2026</span></li>
+        <li class="alert-row" id="order-derc-ppac-2026-06"
+          data-alert-card data-state="Delhi" data-category="Fuel surcharge"
+          data-severity="Important" data-search="derc ppac approval, june 2026 fuel surcharge notice effective from 1 jun 2026. covers brpl (bses rajdhani), bypl (bses yamuna) +1 more. the month derc moved from periodic to monthly ppac revisions. delhi fuel surcharge brpl (bses rajdhani) bypl (bses yamuna) tata power-ddl (tpddl)">
+          <span class="alert-row-rail" aria-hidden="true">01 जून</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Delhi</span>
+              <span class="alert-row-discom">BRPL (BSES Rajdhani), BYPL (BSES Yamuna) +1</span>
+            </span>
+            <a href="/orders/derc-ppac-2026-06/" class="alert-row-title">DERC PPAC approval, June 2026</a>
+            <span class="alert-row-summary">Fuel surcharge notice effective from 1 Jun 2026. Covers BRPL (BSES Rajdhani), BYPL (BSES Yamuna) +1 more. The month DERC moved from periodic to monthly PPAC revisions.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-06-01">1 जून 2026</time>
+              <a href="https://derc.gov.in/commissions-proceedings-orders/other-than-142/final-order" target="_blank" rel="noopener nofollow" class="alert-source-link">DERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2026-06-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Important" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) +10.00% jun 2026 fppas (10% cap) applies jun 2026 to jun 2026. this may add to affected bills for the period. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 जून</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) +10.00%</a>
+            <span class="alert-row-summary">Jun 2026 FPPAS (10% cap) applies Jun 2026 to Jun 2026. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-06-01">1 जून 2026</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="मई 2026"><span>मई 2026</span></li>
+        <li class="alert-row" id="order-mnerc-mspdcl-tariff-fy2026-27"
+          data-alert-card data-state="Manipur" data-category="Tariff"
+          data-severity="Info" data-search="mspdcl tariff order for fy 2026-27 tariff order effective from 1 may 2026. covers mspdcl. corrigendum dated 17-jun-2026 changes pole/tower usage charges only; lt tariff rates remain as in the 14-may-2026 order. manipur tariff mspdcl">
+          <span class="alert-row-rail" aria-hidden="true">14 मई</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Manipur</span>
+              <span class="alert-row-discom">MSPDCL</span>
+            </span>
+            <a href="/orders/mnerc-mspdcl-tariff-fy2026-27/" class="alert-row-title">MSPDCL tariff order for FY 2026-27</a>
+            <span class="alert-row-summary">Tariff order effective from 1 May 2026. Covers MSPDCL. Corrigendum dated 17-Jun-2026 changes pole/tower usage charges only; LT tariff rates remain as in the 14-May-2026 order.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-05-14">14 मई 2026</time>
+              <a href="https://mnerc.mn.gov.in/wp-content/uploads/2026/05/MSPDCL-Tariff-Order-FY-2026-27_compressed.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">MnERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2026-05-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) -1.52% may 2026 fppas (credit) applies may 2026 to may 2026. this is a credit entry and may reduce affected bills. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 मई</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) -1.52%</a>
+            <span class="alert-row-summary">May 2026 FPPAS (credit) applies May 2026 to May 2026. This is a credit entry and may reduce affected bills.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-05-01">1 मई 2026</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="अप्रैल 2026"><span>अप्रैल 2026</span></li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2026-04-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) +1.24% apr 2026 fppas applies apr 2026 to apr 2026. this may add to affected bills for the period. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 अप्रैल</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) +1.24%</a>
+            <span class="alert-row-summary">Apr 2026 FPPAS applies Apr 2026 to Apr 2026. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-04-01">1 अप्रैल 2026</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="मार्च 2026"><span>मार्च 2026</span></li>
+        <li class="alert-row" id="order-apserc-tp-10-2025-apdop-fy2026-27"
+          data-alert-card data-state="Arunachal Pradesh" data-category="Tariff"
+          data-severity="Info" data-search="apdop arr and retail tariff order for fy 2026-27 tariff order effective from 1 apr 2026. covers apdop / dept. of power. apserc records no proposed tariff hike and computes fy 2026-27 revenue using the existing tariff structure. arunachal pradesh tariff apdop / dept. of power">
+          <span class="alert-row-rail" aria-hidden="true">31 मार्च</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Arunachal Pradesh</span>
+              <span class="alert-row-discom">APDOP / Dept. of Power</span>
+            </span>
+            <a href="/orders/apserc-tp-10-2025-apdop-fy2026-27/" class="alert-row-title">APDOP ARR and retail tariff order for FY 2026-27</a>
+            <span class="alert-row-summary">Tariff order effective from 1 Apr 2026. Covers APDOP / Dept. of Power. APSERC records no proposed tariff hike and computes FY 2026-27 revenue using the existing tariff structure.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-03-31">31 मार्च 2026</time>
+              <a href="https://apserc.nic.in/pdf/Orders/2026/Order%20on%20Petition%20TP%2010%20of%202025,APDOP.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">APSERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-mzerc-ped-fy2026-27"
+          data-alert-card data-state="Mizoram" data-category="Tariff"
+          data-severity="Info" data-search="p&amp;e department retail tariff for fy 2026-27 tariff order effective from 1 apr 2026. covers p&amp;e dept., mizoram. the calculator uses the subsidised tariff schedule approved for fy 2026-27. mizoram tariff p&amp;e dept., mizoram">
+          <span class="alert-row-rail" aria-hidden="true">25 मार्च</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Mizoram</span>
+              <span class="alert-row-discom">P&amp;E Dept., Mizoram</span>
+            </span>
+            <a href="/orders/mzerc-ped-fy2026-27/" class="alert-row-title">P&amp;E Department retail tariff for FY 2026-27</a>
+            <span class="alert-row-summary">Tariff order effective from 1 Apr 2026. Covers P&amp;E Dept., Mizoram. The calculator uses the subsidised tariff schedule approved for FY 2026-27.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-03-25">25 मार्च 2026</time>
+              <a href="https://mzerc.mizoram.gov.in/uploads/attachments/2026/03/7be5860da7dbbda3560a7e255caff169/ped-to-26-27-khp27mar26-evng-with-sign.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">MZERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-oerc-rst-fy2026-27"
+          data-alert-card data-state="Odisha" data-category="Tariff"
+          data-severity="Info" data-search="oerc retail supply tariff order for fy 2026-27 tariff order effective from 1 apr 2024. covers tpcodl, tpnodl +2 more. fy 2024-25 rates retained, which is why the effective date predates the order. odisha tariff tpcodl tpnodl tpwodl tpsodl">
+          <span class="alert-row-rail" aria-hidden="true">24 मार्च</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Odisha</span>
+              <span class="alert-row-discom">TPCODL, TPNODL +2</span>
+            </span>
+            <a href="/orders/oerc-rst-fy2026-27/" class="alert-row-title">OERC retail supply tariff order for FY 2026-27</a>
+            <span class="alert-row-summary">Tariff order effective from 1 Apr 2024. Covers TPCODL, TPNODL +2 more. FY 2024-25 rates retained, which is why the effective date predates the order.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-03-24">24 मार्च 2026</time>
+              <a href="https://www.orierc.org/CuteSoft_Client/writereaddata/upload/DISCOM_TARIFF_ORDER_FY_2026-27.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">OERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-berc-tariff-fy2026-27"
+          data-alert-card data-state="Bihar" data-category="Tariff"
+          data-severity="Info" data-search="berc tariff schedule for fy 2026-27 tariff order effective from 1 apr 2026. covers nbpdcl, sbpdcl. bihar tariff nbpdcl sbpdcl">
+          <span class="alert-row-rail" aria-hidden="true">18 मार्च</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Bihar</span>
+              <span class="alert-row-discom">NBPDCL, SBPDCL</span>
+            </span>
+            <a href="/orders/berc-tariff-fy2026-27/" class="alert-row-title">BERC tariff schedule for FY 2026-27</a>
+            <span class="alert-row-summary">Tariff order effective from 1 Apr 2026. Covers NBPDCL, SBPDCL.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-03-18">18 मार्च 2026</time>
+              <a href="https://berc.co.in/images/pdf/tariff-order/2026-27/Tariff_Chart_FY_2026-27.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">BERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2026-03-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) -2.42% mar 2026 fppas (credit) applies mar 2026 to mar 2026. this is a credit entry and may reduce affected bills. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 मार्च</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) -2.42%</a>
+            <span class="alert-row-summary">Mar 2026 FPPAS (credit) applies Mar 2026 to Mar 2026. This is a credit entry and may reduce affected bills.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-03-01">1 मार्च 2026</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="फ़रवरी 2026"><span>फ़रवरी 2026</span></li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2026-02-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Important" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) +10.00% feb 2026 fppas (10% cap) applies feb 2026 to feb 2026. this may add to affected bills for the period. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 फ़र॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) +10.00%</a>
+            <span class="alert-row-summary">Feb 2026 FPPAS (10% cap) applies Feb 2026 to Feb 2026. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-02-01">1 फ़र॰ 2026</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="जनवरी 2026"><span>जनवरी 2026</span></li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2026-01-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) -2.33% jan 2026 fppas (credit) applies jan 2026 to jan 2026. this is a credit entry and may reduce affected bills. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 जन॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) -2.33%</a>
+            <span class="alert-row-summary">Jan 2026 FPPAS (credit) applies Jan 2026 to Jan 2026. This is a credit entry and may reduce affected bills.</span>
+            <span class="alert-row-foot">
+              <time datetime="2026-01-01">1 जन॰ 2026</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="दिसंबर 2025"><span>दिसंबर 2025</span></li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2025-12-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) +5.56% dec 2025 fppas applies dec 2025 to dec 2025. this may add to affected bills for the period. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 दिस॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) +5.56%</a>
+            <span class="alert-row-summary">Dec 2025 FPPAS applies Dec 2025 to Dec 2025. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-12-01">1 दिस॰ 2025</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="नवंबर 2025"><span>नवंबर 2025</span></li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2025-11-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) +1.83% nov 2025 fppas applies nov 2025 to nov 2025. this may add to affected bills for the period. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 नव॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) +1.83%</a>
+            <span class="alert-row-summary">Nov 2025 FPPAS applies Nov 2025 to Nov 2025. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-11-01">1 नव॰ 2025</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="अक्टूबर 2025"><span>अक्टूबर 2025</span></li>
+        <li class="alert-row" id="surcharge-discom-avvnl-2025-10-01"
+          data-alert-card data-state="Rajasthan" data-category="Fuel surcharge"
+          data-severity="Important" data-search="avvnl regulatory surcharge (a combination including fuel and power purchase adjustment surcharge) rs 1.00/unit regulatory surcharge (incl. fppas) applies oct 2025 onward. this may add to affected bills for the period. rajasthan fuel surcharge avvnl">
+          <span class="alert-row-rail" aria-hidden="true">01 अक्टू॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Rajasthan</span>
+              <span class="alert-row-discom">AVVNL</span>
+            </span>
+            <a href="/fppa/rajasthan/" class="alert-row-title">AVVNL Regulatory Surcharge (a combination including Fuel and Power Purchase Adjustment Surcharge) Rs 1.00/unit</a>
+            <span class="alert-row-summary">Regulatory Surcharge (incl. FPPAS) applies Oct 2025 onward. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-10-01">1 अक्टू॰ 2025</time>
+              <span class="alert-source-plain">Tariff for Supply of Electricity-2025 §32 (RERC Petitions 2303–2305/2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-discom-jdvvnl-2025-10-01"
+          data-alert-card data-state="Rajasthan" data-category="Fuel surcharge"
+          data-severity="Important" data-search="jdvvnl regulatory surcharge (a combination including fuel and power purchase adjustment surcharge) rs 1.00/unit regulatory surcharge (incl. fppas) applies oct 2025 onward. this may add to affected bills for the period. rajasthan fuel surcharge jdvvnl">
+          <span class="alert-row-rail" aria-hidden="true">01 अक्टू॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Rajasthan</span>
+              <span class="alert-row-discom">JdVVNL</span>
+            </span>
+            <a href="/fppa/rajasthan/" class="alert-row-title">JdVVNL Regulatory Surcharge (a combination including Fuel and Power Purchase Adjustment Surcharge) Rs 1.00/unit</a>
+            <span class="alert-row-summary">Regulatory Surcharge (incl. FPPAS) applies Oct 2025 onward. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-10-01">1 अक्टू॰ 2025</time>
+              <span class="alert-source-plain">Tariff for Supply of Electricity-2025 §32 (RERC Petitions 2303–2305/2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-discom-jvvnl-2025-10-01"
+          data-alert-card data-state="Rajasthan" data-category="Fuel surcharge"
+          data-severity="Important" data-search="jvvnl regulatory surcharge (a combination including fuel and power purchase adjustment surcharge) rs 1.00/unit regulatory surcharge (incl. fppas) applies oct 2025 onward. this may add to affected bills for the period. rajasthan fuel surcharge jvvnl">
+          <span class="alert-row-rail" aria-hidden="true">01 अक्टू॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Rajasthan</span>
+              <span class="alert-row-discom">JVVNL</span>
+            </span>
+            <a href="/fppa/rajasthan/" class="alert-row-title">JVVNL Regulatory Surcharge (a combination including Fuel and Power Purchase Adjustment Surcharge) Rs 1.00/unit</a>
+            <span class="alert-row-summary">Regulatory Surcharge (incl. FPPAS) applies Oct 2025 onward. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-10-01">1 अक्टू॰ 2025</time>
+              <span class="alert-source-plain">Tariff for Supply of Electricity-2025 §32 (RERC Petitions 2303–2305/2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2025-10-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) -1.63% oct 2025 fppas (credit) applies oct 2025 to oct 2025. this is a credit entry and may reduce affected bills. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 अक्टू॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) -1.63%</a>
+            <span class="alert-row-summary">Oct 2025 FPPAS (credit) applies Oct 2025 to Oct 2025. This is a credit entry and may reduce affected bills.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-10-01">1 अक्टू॰ 2025</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="सितंबर 2025"><span>सितंबर 2025</span></li>
+        <li class="alert-row" id="order-jerc-dnhddpdcl-p145-myt-fy2025-30"
+          data-alert-card data-state="Dadra &amp; Nagar Haveli and Daman &amp; Diu" data-category="Tariff"
+          data-severity="Info" data-search="dnhddpdcl myt retail tariff schedule for fy 2025-26 to fy 2029-30 myt order effective from 1 apr 2025. covers dnhddpdcl. the calculator uses the fy 2026-27 column of table 10-1. dadra &amp; nagar haveli and daman &amp; diu tariff dnhddpdcl">
+          <span class="alert-row-rail" aria-hidden="true">17 सित॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Dadra &amp; Nagar Haveli and Daman &amp; Diu</span>
+              <span class="alert-row-discom">DNHDDPDCL</span>
+            </span>
+            <a href="/orders/jerc-dnhddpdcl-p145-myt-fy2025-30/" class="alert-row-title">DNHDDPDCL MYT retail tariff schedule for FY 2025-26 to FY 2029-30</a>
+            <span class="alert-row-summary">MYT order effective from 1 Apr 2025. Covers DNHDDPDCL. The calculator uses the FY 2026-27 column of Table 10-1.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-09-17">17 सित॰ 2025</time>
+              <a href="https://jercuts.gov.in/wp-content/uploads/2025/09/dnhddpdcl-ready-to-upload-order-1.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">JERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2025-09-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) +2.34% sep 2025 fppas applies sept 2025 to sept 2025. this may add to affected bills for the period. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 सित॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) +2.34%</a>
+            <span class="alert-row-summary">Sep 2025 FPPAS applies Sept 2025 to Sept 2025. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-09-01">1 सित॰ 2025</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="अगस्त 2025"><span>अगस्त 2025</span></li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2025-08-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) +0.24% aug 2025 fppas applies aug 2025 to aug 2025. this may add to affected bills for the period. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 अग॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) +0.24%</a>
+            <span class="alert-row-summary">Aug 2025 FPPAS applies Aug 2025 to Aug 2025. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-08-01">1 अग॰ 2025</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="जुलाई 2025"><span>जुलाई 2025</span></li>
+        <li class="alert-row" id="surcharge-discom-brpl-2025-07-01"
+          data-alert-card data-state="Delhi" data-category="Fuel surcharge"
+          data-severity="Info" data-search="brpl (bses rajdhani) ppac (power purchase adjustment cost) +7.25% brpl ppac (jul 2025 – may 2026) applies jul 2025 to may 2026. this may add to affected bills for the period. delhi fuel surcharge brpl (bses rajdhani)">
+          <span class="alert-row-rail" aria-hidden="true">01 जुल॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Delhi</span>
+              <span class="alert-row-discom">BRPL (BSES Rajdhani)</span>
+            </span>
+            <a href="/fppa/delhi/" class="alert-row-title">BRPL (BSES Rajdhani) PPAC (Power Purchase Adjustment Cost) +7.25%</a>
+            <span class="alert-row-summary">BRPL PPAC (Jul 2025 – May 2026) applies Jul 2025 to May 2026. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-07-01">1 जुल॰ 2025</time>
+              <span class="alert-source-plain">DERC-approved BRPL PPAC 7.25%</span>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-discom-bypl-2025-07-01"
+          data-alert-card data-state="Delhi" data-category="Fuel surcharge"
+          data-severity="Info" data-search="bypl (bses yamuna) ppac (power purchase adjustment cost) +8.11% bypl ppac (jul 2025 – may 2026) applies jul 2025 to may 2026. this may add to affected bills for the period. delhi fuel surcharge bypl (bses yamuna)">
+          <span class="alert-row-rail" aria-hidden="true">01 जुल॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Delhi</span>
+              <span class="alert-row-discom">BYPL (BSES Yamuna)</span>
+            </span>
+            <a href="/fppa/delhi/" class="alert-row-title">BYPL (BSES Yamuna) PPAC (Power Purchase Adjustment Cost) +8.11%</a>
+            <span class="alert-row-summary">BYPL PPAC (Jul 2025 – May 2026) applies Jul 2025 to May 2026. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-07-01">1 जुल॰ 2025</time>
+              <span class="alert-source-plain">DERC-approved BYPL PPAC 8.11%</span>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-discom-tpddl-2025-07-01"
+          data-alert-card data-state="Delhi" data-category="Fuel surcharge"
+          data-severity="Important" data-search="tata power-ddl (tpddl) ppac (power purchase adjustment cost) +10.47% tpddl ppac (jul 2025 – may 2026) applies jul 2025 to may 2026. this may add to affected bills for the period. delhi fuel surcharge tata power-ddl (tpddl)">
+          <span class="alert-row-rail" aria-hidden="true">01 जुल॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Delhi</span>
+              <span class="alert-row-discom">Tata Power-DDL (TPDDL)</span>
+            </span>
+            <a href="/fppa/delhi/" class="alert-row-title">Tata Power-DDL (TPDDL) PPAC (Power Purchase Adjustment Cost) +10.47%</a>
+            <span class="alert-row-summary">TPDDL PPAC (Jul 2025 – May 2026) applies Jul 2025 to May 2026. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-07-01">1 जुल॰ 2025</time>
+              <span class="alert-source-plain">DERC-approved TPDDL PPAC 10.47%</span>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-tnerc-to-6-2025"
+          data-alert-card data-state="Tamil Nadu" data-category="Tariff"
+          data-severity="Info" data-search="tnerc retail supply tariff order tariff order effective from 1 jul 2025. covers tnpdcl (tangedco). tamil nadu tariff tnpdcl (tangedco)">
+          <span class="alert-row-rail" aria-hidden="true">01 जुल॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Tamil Nadu</span>
+              <span class="alert-row-discom">TNPDCL (TANGEDCO)</span>
+            </span>
+            <a href="/orders/tnerc-to-6-2025/" class="alert-row-title">TNERC retail supply tariff order</a>
+            <span class="alert-row-summary">Tariff order effective from 1 Jul 2025. Covers TNPDCL (TANGEDCO).</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-07-01">1 जुल॰ 2025</time>
+              <a href="https://www.tnerc.tn.gov.in/Orders/files/TO-Order%20No6300620252131.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">TNERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2025-07-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) +1.97% jul 2025 fppas applies jul 2025 to jul 2025. this may add to affected bills for the period. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 जुल॰</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) +1.97%</a>
+            <span class="alert-row-summary">Jul 2025 FPPAS applies Jul 2025 to Jul 2025. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-07-01">1 जुल॰ 2025</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="जून 2025"><span>जून 2025</span></li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2025-06-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) +4.27% jun 2025 fppas applies jun 2025 to jun 2025. this may add to affected bills for the period. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 जून</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) +4.27%</a>
+            <span class="alert-row-summary">Jun 2025 FPPAS applies Jun 2025 to Jun 2025. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-06-01">1 जून 2025</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="मई 2025"><span>मई 2025</span></li>
+        <li class="alert-row" id="surcharge-discom-brpl-2025-05-09"
+          data-alert-card data-state="Delhi" data-category="Fuel surcharge"
+          data-severity="Important" data-search="brpl (bses rajdhani) ppac (power purchase adjustment cost) +13.54% brpl summer ppac (9 may – 30 jun 2025) applies may 2025 to jun 2025. this may add to affected bills for the period. delhi fuel surcharge brpl (bses rajdhani)">
+          <span class="alert-row-rail" aria-hidden="true">09 मई</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Delhi</span>
+              <span class="alert-row-discom">BRPL (BSES Rajdhani)</span>
+            </span>
+            <a href="/fppa/delhi/" class="alert-row-title">BRPL (BSES Rajdhani) PPAC (Power Purchase Adjustment Cost) +13.54%</a>
+            <span class="alert-row-summary">BRPL summer PPAC (9 May – 30 Jun 2025) applies May 2025 to Jun 2025. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-05-09">9 मई 2025</time>
+              <span class="alert-source-plain">DERC differential PPAC order, May 2025</span>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-discom-bypl-2025-05-09"
+          data-alert-card data-state="Delhi" data-category="Fuel surcharge"
+          data-severity="Important" data-search="bypl (bses yamuna) ppac (power purchase adjustment cost) +13.33% bypl summer ppac (9 may – 30 jun 2025) applies may 2025 to jun 2025. this may add to affected bills for the period. delhi fuel surcharge bypl (bses yamuna)">
+          <span class="alert-row-rail" aria-hidden="true">09 मई</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Delhi</span>
+              <span class="alert-row-discom">BYPL (BSES Yamuna)</span>
+            </span>
+            <a href="/fppa/delhi/" class="alert-row-title">BYPL (BSES Yamuna) PPAC (Power Purchase Adjustment Cost) +13.33%</a>
+            <span class="alert-row-summary">BYPL summer PPAC (9 May – 30 Jun 2025) applies May 2025 to Jun 2025. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-05-09">9 मई 2025</time>
+              <span class="alert-source-plain">DERC differential PPAC order, May 2025</span>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-discom-tpddl-2025-05-09"
+          data-alert-card data-state="Delhi" data-category="Fuel surcharge"
+          data-severity="Important" data-search="tata power-ddl (tpddl) ppac (power purchase adjustment cost) +19.22% tpddl summer ppac (9 may – 30 jun 2025) applies may 2025 to jun 2025. this may add to affected bills for the period. delhi fuel surcharge tata power-ddl (tpddl)">
+          <span class="alert-row-rail" aria-hidden="true">09 मई</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              <span class="alert-severity is-important" data-alert-severity-label="Important">महत्वपूर्ण</span>
+              <span class="alert-row-state">Delhi</span>
+              <span class="alert-row-discom">Tata Power-DDL (TPDDL)</span>
+            </span>
+            <a href="/fppa/delhi/" class="alert-row-title">Tata Power-DDL (TPDDL) PPAC (Power Purchase Adjustment Cost) +19.22%</a>
+            <span class="alert-row-summary">TPDDL summer PPAC (9 May – 30 Jun 2025) applies May 2025 to Jun 2025. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-05-09">9 मई 2025</time>
+              <span class="alert-source-plain">DERC differential PPAC order, May 2025</span>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2025-05-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) -2.00% may 2025 fppas (credit) applies may 2025 to may 2025. this is a credit entry and may reduce affected bills. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 मई</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) -2.00%</a>
+            <span class="alert-row-summary">May 2025 FPPAS (credit) applies May 2025 to May 2025. This is a credit entry and may reduce affected bills.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-05-01">1 मई 2025</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="अप्रैल 2025"><span>अप्रैल 2025</span></li>
+        <li class="alert-row" id="surcharge-state-uttar-pradesh-2025-04-01"
+          data-alert-card data-state="Uttar Pradesh" data-category="Fuel surcharge"
+          data-severity="Info" data-search="uttar pradesh fppas (fuel and power purchase adjustment surcharge) +1.24% apr 2025 fppas applies apr 2025 to apr 2025. this may add to affected bills for the period. uttar pradesh fuel surcharge">
+          <span class="alert-row-rail" aria-hidden="true">01 अप्रैल</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-fuel-surcharge">ईंधन अधिभार</span>
+              
+              <span class="alert-row-state">Uttar Pradesh</span>
+              
+            </span>
+            <a href="/fppa/uttar-pradesh/" class="alert-row-title">Uttar Pradesh FPPAS (Fuel and Power Purchase Adjustment Surcharge) +1.24%</a>
+            <span class="alert-row-summary">Apr 2025 FPPAS applies Apr 2025 to Apr 2025. This may add to affected bills for the period.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-04-01">1 अप्रैल 2025</time>
+              <span class="alert-source-plain">UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)</span>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-wberc-fy2025-26-wbsedcl"
+          data-alert-card data-state="West Bengal" data-category="Tariff"
+          data-severity="Info" data-search="wberc tariff order for fy 2025-26 (gist) tariff order effective from 1 apr 2025. covers wbsedcl. continues until further order. published as a gist of the order, not the full text. west bengal tariff wbsedcl">
+          <span class="alert-row-rail" aria-hidden="true">01 अप्रैल</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">West Bengal</span>
+              <span class="alert-row-discom">WBSEDCL</span>
+            </span>
+            <a href="/orders/wberc-fy2025-26-wbsedcl/" class="alert-row-title">WBERC tariff order for FY 2025-26 (gist)</a>
+            <span class="alert-row-summary">Tariff order effective from 1 Apr 2025. Covers WBSEDCL. Continues until further order. Published as a gist of the order, not the full text.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-04-01">1 अप्रैल 2025</time>
+              <a href="https://www.wbsedcl.in/irj/go/km/docs/internet/new_website/pdf/Tariff_Volumn/Gist%20of%20Tariff%20Order%202025-26_28_03.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">WBERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="मार्च 2025"><span>मार्च 2025</span></li>
+        <li class="alert-row" id="order-nerc-nagaland-fy2025-26-public-notice"
+          data-alert-card data-state="Nagaland" data-category="Tariff"
+          data-severity="Info" data-search="department of power nagaland tariff baseline for fy 2025-26 tariff order effective from 1 apr 2025. covers doe nagaland. public notice schedule used because a direct final-order pdf was not available online from an official portal. nagaland tariff doe nagaland">
+          <span class="alert-row-rail" aria-hidden="true">28 मार्च</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Nagaland</span>
+              <span class="alert-row-discom">DoE Nagaland</span>
+            </span>
+            <a href="/orders/nerc-nagaland-fy2025-26-public-notice/" class="alert-row-title">Department of Power Nagaland tariff baseline for FY 2025-26</a>
+            <span class="alert-row-summary">Tariff order effective from 1 Apr 2025. Covers DoE Nagaland. Public notice schedule used because a direct final-order PDF was not available online from an official portal.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-03-28">28 मार्च 2025</time>
+              <a href="https://ipr.nagaland.gov.in/POWER-DEPARTMENT-ISSUES-PUBLIC-NOTICE-FOR-APPROVAL-OF-ARR" target="_blank" rel="noopener nofollow" class="alert-source-link">NERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-kerc-tariff-2025"
+          data-alert-card data-state="Karnataka" data-category="Tariff"
+          data-severity="Info" data-search="kerc tariff order 2025 tariff order effective from 1 apr 2026. covers bescom, mescom +3 more. karnataka tariff bescom mescom hescom gescom cesc mysuru">
+          <span class="alert-row-rail" aria-hidden="true">27 मार्च</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Karnataka</span>
+              <span class="alert-row-discom">BESCOM, MESCOM +3</span>
+            </span>
+            <a href="/orders/kerc-tariff-2025/" class="alert-row-title">KERC Tariff Order 2025</a>
+            <span class="alert-row-summary">Tariff order effective from 1 Apr 2026. Covers BESCOM, MESCOM +3 more.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-03-27">27 मार्च 2025</time>
+              <a href="https://kerc.karnataka.gov.in/uploads/96731743148968.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">KERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-wberc-2025-03-25-cesc"
+          data-alert-card data-state="West Bengal" data-category="Tariff"
+          data-severity="Info" data-search="wberc tariff order for cesc tariff order effective from 1 apr 2025. covers cesc (kolkata). continues until further order. the licensee publishes the schedule on a page rather than as a document. west bengal tariff cesc (kolkata)">
+          <span class="alert-row-rail" aria-hidden="true">25 मार्च</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">West Bengal</span>
+              <span class="alert-row-discom">CESC (Kolkata)</span>
+            </span>
+            <a href="/orders/wberc-2025-03-25-cesc/" class="alert-row-title">WBERC tariff order for CESC</a>
+            <span class="alert-row-summary">Tariff order effective from 1 Apr 2025. Covers CESC (Kolkata). Continues until further order. The licensee publishes the schedule on a page rather than as a document.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-03-25">25 मार्च 2025</time>
+              <a href="https://www.cesc.co.in/tariff" target="_blank" rel="noopener nofollow" class="alert-source-link">WBERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-wberc-2025-03-20-dpl"
+          data-alert-card data-state="West Bengal" data-category="Tariff"
+          data-severity="Info" data-search="wberc tariff order for dpl tariff order effective date not recorded yet. covers erstwhile dpl area. dpl’s schedule is maintained at its 31-12-2018 level. west bengal tariff erstwhile dpl area">
+          <span class="alert-row-rail" aria-hidden="true">20 मार्च</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">West Bengal</span>
+              <span class="alert-row-discom">Erstwhile DPL area</span>
+            </span>
+            <a href="/orders/wberc-2025-03-20-dpl/" class="alert-row-title">WBERC tariff order for DPL</a>
+            <span class="alert-row-summary">Tariff order effective date not recorded yet. Covers Erstwhile DPL area. DPL’s schedule is maintained at its 31-12-2018 level.</span>
+            <span class="alert-row-foot">
+              <time datetime="2025-03-20">20 मार्च 2025</time>
+              <a href="https://www.wbsedcl.in/irj/go/km/docs/internet/new_website/pdf/Tariff_Volumn/Gist%20of%20Tariff%20Order%202025-26_28_03.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">WBERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alerts-month" data-alert-group="तारीख दर्ज नहीं"><span>तारीख दर्ज नहीं</span></li>
+        <li class="alert-row" id="order-merc-211-2024-aeml"
+          data-alert-card data-state="Maharashtra" data-category="Tariff"
+          data-severity="Info" data-search="adani electricity mumbai multi-year tariff order myt order effective date not recorded yet. covers adani electricity mumbai. commission press note summarising the order, not the full order text. maharashtra tariff adani electricity mumbai">
+          <span class="alert-row-rail" aria-hidden="true">—</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Maharashtra</span>
+              <span class="alert-row-discom">Adani Electricity Mumbai</span>
+            </span>
+            <a href="/orders/merc-211-2024-aeml/" class="alert-row-title">Adani Electricity Mumbai multi-year tariff order</a>
+            <span class="alert-row-summary">MYT order effective date not recorded yet. Covers Adani Electricity Mumbai. Commission press note summarising the order, not the full order text.</span>
+            <span class="alert-row-foot">
+              <time datetime="">तारीख दर्ज नहीं</time>
+              <a href="https://merc.gov.in/wp-content/uploads/2025/03/Press-Note_MYT-Order_AEML_English.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">MERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-merc-207-2024-best"
+          data-alert-card data-state="Maharashtra" data-category="Tariff"
+          data-severity="Info" data-search="best undertaking multi-year tariff order myt order effective date not recorded yet. covers best mumbai. commission press note summarising the order, not the full order text. maharashtra tariff best mumbai">
+          <span class="alert-row-rail" aria-hidden="true">—</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Maharashtra</span>
+              <span class="alert-row-discom">BEST Mumbai</span>
+            </span>
+            <a href="/orders/merc-207-2024-best/" class="alert-row-title">BEST Undertaking multi-year tariff order</a>
+            <span class="alert-row-summary">MYT order effective date not recorded yet. Covers BEST Mumbai. Commission press note summarising the order, not the full order text.</span>
+            <span class="alert-row-foot">
+              <time datetime="">तारीख दर्ज नहीं</time>
+              <a href="https://merc.gov.in/wp-content/uploads/2025/03/Press-Note_MYT-Order_BEST_English.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">MERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-jerc-jk-tariff-fy2025-26"
+          data-alert-card data-state="Jammu &amp; Kashmir" data-category="Tariff"
+          data-severity="Info" data-search="jpdcl &amp; kpdcl arr and tariff for fy 2025-26 tariff order effective date not recorded yet. covers jpdcl (jammu region), kpdcl (kashmir region). covers both j&amp;k distribution licensees in one order. jammu &amp; kashmir tariff jpdcl (jammu region) kpdcl (kashmir region)">
+          <span class="alert-row-rail" aria-hidden="true">—</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Jammu &amp; Kashmir</span>
+              <span class="alert-row-discom">JPDCL (Jammu Region), KPDCL (Kashmir Region)</span>
+            </span>
+            <a href="/orders/jerc-jk-tariff-fy2025-26/" class="alert-row-title">JPDCL &amp; KPDCL ARR and tariff for FY 2025-26</a>
+            <span class="alert-row-summary">Tariff order effective date not recorded yet. Covers JPDCL (Jammu Region), KPDCL (Kashmir Region). Covers both J&amp;K distribution licensees in one order.</span>
+            <span class="alert-row-foot">
+              <time datetime="">तारीख दर्ज नहीं</time>
+              <a href="https://www.jpdcl.co.in/downloads/tariff/JPDCL_KPDCL_Tariff_Order_2025_26.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">JERC for the UT of J&amp;K and Ladakh ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-merc-217-2024-msedcl"
+          data-alert-card data-state="Maharashtra" data-category="Tariff"
+          data-severity="Info" data-search="msedcl multi-year tariff order myt order effective date not recorded yet. covers msedcl. hosted by the licensee rather than the commission. maharashtra tariff msedcl">
+          <span class="alert-row-rail" aria-hidden="true">—</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Maharashtra</span>
+              <span class="alert-row-discom">MSEDCL</span>
+            </span>
+            <a href="/orders/merc-217-2024-msedcl/" class="alert-row-title">MSEDCL multi-year tariff order</a>
+            <span class="alert-row-summary">MYT order effective date not recorded yet. Covers MSEDCL. Hosted by the licensee rather than the Commission.</span>
+            <span class="alert-row-foot">
+              <time datetime="">तारीख दर्ज नहीं</time>
+              <a href="https://www.mahadiscom.in/consumer/wp-content/uploads/2025/08/MSEDCL-MYT-Order_Case_no_217-of-2024.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">MERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-sserc-tariff-fy2025-26"
+          data-alert-card data-state="Sikkim" data-category="Tariff"
+          data-severity="Info" data-search="sserc tariff order for fy 2025-26 tariff order effective date not recorded yet. covers energy &amp; power dept., sikkim. sikkim tariff energy &amp; power dept., sikkim">
+          <span class="alert-row-rail" aria-hidden="true">—</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Sikkim</span>
+              <span class="alert-row-discom">Energy &amp; Power Dept., Sikkim</span>
+            </span>
+            <a href="/orders/sserc-tariff-fy2025-26/" class="alert-row-title">SSERC tariff order for FY 2025-26</a>
+            <span class="alert-row-summary">Tariff order effective date not recorded yet. Covers Energy &amp; Power Dept., Sikkim.</span>
+            <span class="alert-row-foot">
+              <time datetime="">तारीख दर्ज नहीं</time>
+              <a href="https://selfservice.powersikkim.in/assets/home/Tariff-Schedule-FY-2025-26.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">SSERC ↗</a>
+            </span>
+          </span>
+        </li>
+        <li class="alert-row" id="order-merc-210-2024-tpc"
+          data-alert-card data-state="Maharashtra" data-category="Tariff"
+          data-severity="Info" data-search="tata power mumbai multi-year tariff order myt order effective date not recorded yet. covers tata power mumbai. commission press note summarising the order, not the full order text. maharashtra tariff tata power mumbai">
+          <span class="alert-row-rail" aria-hidden="true">—</span>
+          <span class="alert-row-body">
+            <span class="alert-row-tags">
+              <span class="alert-pill is-tariff">टैरिफ</span>
+              
+              <span class="alert-row-state">Maharashtra</span>
+              <span class="alert-row-discom">Tata Power Mumbai</span>
+            </span>
+            <a href="/orders/merc-210-2024-tpc/" class="alert-row-title">Tata Power Mumbai multi-year tariff order</a>
+            <span class="alert-row-summary">MYT order effective date not recorded yet. Covers Tata Power Mumbai. Commission press note summarising the order, not the full order text.</span>
+            <span class="alert-row-foot">
+              <time datetime="">तारीख दर्ज नहीं</time>
+              <a href="https://merc.gov.in/wp-content/uploads/2025/03/Press-Note_MYT-Order_TPC_English.pdf" target="_blank" rel="noopener nofollow" class="alert-source-link">MERC ↗</a>
+            </span>
+          </span>
+        </li>
+      </ol>
+      <p class="alerts-empty" data-alert-empty hidden><span data-i18n="alerts.empty">इन फ़िल्टरों से कोई नोटिस नहीं मिला।</span> <button type="button" class="alerts-empty-reset" data-alert-reset data-i18n="alerts.clearFilters">फ़िल्टर हटाएँ</button></p>
+    </section>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/hi/bill-calculator/" data-i18n="ql.advancedCalc">Advanced Bill Calculator</a>
+        <a href="/hi/compare/" data-i18n="nav.compare">Compare</a>
+        <a href="/hi/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/hi/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/hi/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/hi/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/hi/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator</a>
+        <a href="/hi/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator</a>
+        <a href="/hi/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator</a>
+        <a href="/hi/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/hi/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/smart-meter/" data-i18n="ql.meterDisplay">Smart Meter Guide</a>
+        <a href="/hi/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/hi/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/hi/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/hi/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/database/" data-i18n="ql.tariffDatabase">Tariff Database</a>
+        <a href="/orders/" data-i18n="ql.orderLibrary">Order Library</a>
+        <a href="/hi/alerts/" data-i18n="ql.alerts">Alerts</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/contact/" data-i18n="ql.contact">Contact</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

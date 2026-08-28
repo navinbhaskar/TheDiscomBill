@@ -25,6 +25,7 @@ Tariff data is compiled from publicly available tariff orders: FY 2026-27 for 25
 
 ## Guides
 
+- [Bill wrong? How to complain and win](https://thediscombill.com/guides/bill-wrong-how-to-complain-and-win/): A practical India-wide playbook for wrong electricity bills: what to check first, documents to collect, complaint wording, timelines, CGRF escalation and Ombudsman appeal
 - [On-Grid vs Hybrid Solar: Which One Your House Actually Needs](https://thediscombill.com/guides/on-grid-vs-hybrid-solar/): On-grid solar shuts down in a power cut
 - [Free Electricity Units by State: How the Subsidy Actually Works](https://thediscombill.com/guides/free-electricity-units-by-state/): Free-unit schemes are set by state governments, not by the regulator, which is why the terms are so hard to pin down
 - [Security Deposit on an Electricity Connection, Explained](https://thediscombill.com/guides/electricity-security-deposit-explained/): What the security deposit on an Indian electricity connection is, why it is about two months of your consumption, when a DISCOM can demand more, why only the difference is payable on a load increase, and the interest your deposit earns

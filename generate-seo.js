@@ -363,8 +363,8 @@ const HEADER = (langMenu) => `
              92px tall; hydration then took it to 549px and pushed "See all alerts" 461px down
              the screen, out from under the pointer of anyone reaching for it. Same rows, same
              box, nothing moves. -->
-        <div class="nav-dropdown-menu alerts-menu" id="alertsMenu" role="menu" aria-label="Recent public alerts" data-lenis-prevent>
-          <div class="alerts-nav-head"><strong>Latest updates</strong><span>Loading…</span></div><ol class="alerts-nav-list alerts-skeleton" aria-hidden="true"><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li></ol><a href="/alerts/" class="alerts-see-all">See all alerts</a>
+        <div class="nav-dropdown-menu alerts-menu" id="alertsMenu" role="menu" aria-label="Recent public alerts" data-i18n-aria="alert.nav.menuLabel" data-lenis-prevent>
+          <div class="alerts-nav-head"><strong data-i18n="alert.nav.latest">Latest updates</strong><span data-i18n="alert.nav.loading">Loading...</span></div><ol class="alerts-nav-list alerts-skeleton" aria-hidden="true"><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li></ol><a href="/alerts/" class="alerts-see-all" data-i18n="alert.nav.seeAll">See all alerts</a>
         </div>
       </div>
       <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
@@ -470,17 +470,20 @@ const FOOTER = `
 
 // ── page layout ───────────────────────────────────────────────────────────────
 // Rewrite site-chrome links to their vernacular variants (only routes that actually
-// have a twin in this language — tools/services pages stay English). Tariff/state links
+// have a twin in this language). Tariff/state links
 // are only rewritten to /<lang>/ for states this language is scoped to; elsewhere they
 // keep the English target so a Marathi reader on a pan-India page still reaches a real page.
 function langChrome(html, lang) {
   if (lang === 'en') return html;
   const p = `/${lang}`;
-  return html
+  let out = html
     .replace(/href="\/tariffs\/states\/"/g, `href="${p}/tariffs/states/"`)
     .replace(/href="\/guides\/"/g, `href="${p}/guides/"`)
     .replace(/href="\/glossary\/"/g, `href="${p}/glossary/"`)
-    .replace(/href="\/smart-meter-recharge\/"/g, `href="${p}/smart-meter-recharge/"`);
+    .replace(/href="\/smart-meter-recharge\/"/g, `href="${p}/smart-meter-recharge/"`)
+    .replace(/href="\/alerts\/"/g, `href="${p}/alerts/"`);
+  for (const loc of LOCALIZED_TOOL_URLS) out = out.replaceAll(`href="${loc}"`, `href="${p}${loc}"`);
+  return out;
 }
 
 // BCP-47 tags + native og:locale for each supported language.
@@ -5626,28 +5629,49 @@ function alertPillClass(category) {
   return String(category).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 
-const ALERT_MONTH_FMT = new Intl.DateTimeFormat('en-IN', { month: 'long', year: 'numeric', timeZone: 'UTC' });
-const ALERT_DAY_FMT = new Intl.DateTimeFormat('en-IN', { day: '2-digit', month: 'short', timeZone: 'UTC' });
+const alertMonthFmt = (lang = 'en') =>
+  new Intl.DateTimeFormat(DATE_LOCALE[lang] || 'en-IN', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+const alertDayFmt = (lang = 'en') =>
+  new Intl.DateTimeFormat(DATE_LOCALE[lang] || 'en-IN', { day: '2-digit', month: 'short', timeZone: 'UTC' });
+const alertFullFmt = (lang = 'en') =>
+  new Intl.DateTimeFormat(DATE_LOCALE[lang] || 'en-IN', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+const ALERT_CATEGORY_LABELS = {
+  'Fuel surcharge': { en: 'Fuel surcharge', hi: 'ईंधन अधिभार', mr: 'इंधन अधिभार', ta: 'எரிபொருள் கூடுதல் கட்டணம்' },
+  Tariff: { en: 'Tariff', hi: 'टैरिफ', mr: 'टॅरिफ', ta: 'கட்டணம்' },
+  Connection: { en: 'Connection', hi: 'कनेक्शन', mr: 'कनेक्शन', ta: 'இணைப்பு' },
+  Subsidy: { en: 'Subsidy', hi: 'सब्सिडी', mr: 'सबसिडी', ta: 'மானியம்' },
+  Policy: { en: 'Policy', hi: 'नीति', mr: 'धोरण', ta: 'கொள்கை' },
+  'True-up': { en: 'True-up', hi: 'ट्रू-अप', mr: 'ट्रू-अप', ta: 'ட்ரூ-அப்' },
+};
+const alertCategoryLabel = (category, lang = 'en') => T(lang, ALERT_CATEGORY_LABELS[category] || { en: category });
+const alertSeverityLabel = (severity, lang = 'en') => severity === 'Important'
+  ? T(lang, { en: 'Important', hi: 'महत्वपूर्ण', mr: 'महत्त्वाचे', ta: 'முக்கியம்' })
+  : T(lang, { en: 'Info', hi: 'जानकारी', mr: 'माहिती', ta: 'தகவல்' });
+function alertFullDate(iso, lang = 'en') {
+  if (!iso) return T(lang, { en: 'Date not recorded', hi: 'तारीख दर्ज नहीं', mr: 'तारीख नोंदलेली नाही', ta: 'தேதி பதிவு இல்லை' });
+  const d = new Date(`${iso}T00:00:00Z`);
+  return Number.isNaN(d.getTime()) ? iso : alertFullFmt(lang).format(d);
+}
 
 // The month heading a notice belongs under, and the short day label on its rail. Undated
 // records fall into their own trailing group rather than being silently dropped or dated today.
-function alertMonthGroup(iso) {
-  if (!iso) return 'Date not recorded';
+function alertMonthGroup(iso, lang = 'en') {
+  if (!iso) return T(lang, { en: 'Date not recorded', hi: 'तारीख दर्ज नहीं', mr: 'तारीख नोंदलेली नाही', ta: 'தேதி பதிவு இல்லை' });
   const d = new Date(`${iso}T00:00:00Z`);
-  return Number.isNaN(d.getTime()) ? 'Date not recorded' : ALERT_MONTH_FMT.format(d);
+  return Number.isNaN(d.getTime()) ? alertFullDate(null, lang) : alertMonthFmt(lang).format(d);
 }
-function alertDayLabel(iso) {
+function alertDayLabel(iso, lang = 'en') {
   if (!iso) return '—';
   const d = new Date(`${iso}T00:00:00Z`);
-  return Number.isNaN(d.getTime()) ? '—' : ALERT_DAY_FMT.format(d);
+  return Number.isNaN(d.getTime()) ? '—' : alertDayFmt(lang).format(d);
 }
 
-function alertRowHtml(alert) {
+function alertRowHtml(alert, lang = 'en') {
   const discom = alert.discoms?.length
     ? `<span class="alert-row-discom">${esc(alert.discoms.slice(0, 2).join(', '))}${alert.discoms.length > 2 ? ` +${alert.discoms.length - 2}` : ''}</span>`
     : '';
   const source = alert.sourceUrl
-    ? `<a href="${attr(alert.sourceUrl)}" target="_blank" rel="noopener nofollow" class="alert-source-link">${esc(alert.sourceName || 'Source')} ↗</a>`
+    ? `<a href="${attr(alert.sourceUrl)}" target="_blank" rel="noopener nofollow" class="alert-source-link">${esc(alert.sourceName || T(lang, { en: 'Source', hi: 'स्रोत', mr: 'स्रोत', ta: 'மூலம்' }))} ↗</a>`
     : (alert.sourceName ? `<span class="alert-source-plain">${esc(alert.sourceName)}</span>` : '');
   const search = [alert.title, alert.summary, alert.state, alert.category, ...(alert.discoms || [])]
     .join(' ').toLowerCase();
@@ -5657,18 +5681,18 @@ function alertRowHtml(alert) {
         <li class="alert-row" id="${attr(alert.id)}"
           data-alert-card data-state="${attr(alert.state)}" data-category="${attr(alert.category)}"
           data-severity="${attr(alert.severity)}" data-search="${attr(search)}">
-          <span class="alert-row-rail" aria-hidden="true">${esc(alertDayLabel(alert.publishedDate))}</span>
+          <span class="alert-row-rail" aria-hidden="true">${esc(alertDayLabel(alert.publishedDate, lang))}</span>
           <span class="alert-row-body">
             <span class="alert-row-tags">
-              <span class="alert-pill is-${attr(alertPillClass(alert.category))}">${esc(alert.category)}</span>
-              ${alert.severity === 'Important' ? '<span class="alert-severity is-important">Important</span>' : ''}
+              <span class="alert-pill is-${attr(alertPillClass(alert.category))}">${esc(alertCategoryLabel(alert.category, lang))}</span>
+              ${alert.severity === 'Important' ? `<span class="alert-severity is-important" data-alert-severity-label="Important">${esc(alertSeverityLabel('Important', lang))}</span>` : ''}
               <span class="alert-row-state">${esc(alert.state)}</span>
               ${discom}
             </span>
             <a href="${attr(alert.href || `#${alert.id}`)}" class="alert-row-title">${esc(alert.title)}</a>
             <span class="alert-row-summary">${esc(alert.summary)}</span>
             <span class="alert-row-foot">
-              <time datetime="${attr(alert.publishedDate || '')}">${esc(formatAlertDate(alert.publishedDate))}</time>
+              <time datetime="${attr(alert.publishedDate || '')}">${esc(alertFullDate(alert.publishedDate, lang))}</time>
               ${source}
             </span>
           </span>
@@ -5678,18 +5702,18 @@ function alertRowHtml(alert) {
 // Month headings are list items inside the same <ol> as the notices, so the feed stays one
 // ordered list rather than a stack of sections the filter would have to keep in sync. Each
 // heading carries data-alert-group; alerts-ui.js hides one whose notices are all filtered out.
-function alertFeedHtml(alerts) {
+function alertFeedHtml(alerts, lang = 'en') {
   let current = null;
   return alerts.map((alert) => {
-    const group = alertMonthGroup(alert.publishedDate);
+    const group = alertMonthGroup(alert.publishedDate, lang);
     const heading = group === current ? '' : `
         <li class="alerts-month" data-alert-group="${attr(group)}"><span>${esc(group)}</span></li>`;
     current = group;
-    return heading + alertRowHtml(alert);
+    return heading + alertRowHtml(alert, lang);
   }).join('');
 }
 
-function alertsPage() {
+function alertsPage(lang = 'en') {
   const alerts = getPublicAlerts();
   const summary = getAlertSummary(alerts);
   const states = getAlertStates();
@@ -5699,58 +5723,69 @@ function alertsPage() {
     return `
           <button type="button" class="alert-chip" data-alert-index="${attr(category)}">
             <span class="alert-pill is-${attr(alertPillClass(category))}" aria-hidden="true"></span>
-            ${esc(category)}<span class="alert-chip-count">${count}</span>
+            <span data-alert-index-label="${attr(category)}">${esc(alertCategoryLabel(category, lang))}</span><span class="alert-chip-count">${count}</span>
           </button>`;
   }).join('');
   const stateOptions = states.map((state) => `<option value="${attr(state)}">${esc(state)}</option>`).join('');
   // Only categories that actually occur — see getUsedAlertCategories. Offering the full
   // vocabulary meant four options that could never return a result.
-  const categoryOptions = used.map((category) => `<option value="${attr(category)}">${esc(category)}</option>`).join('');
-  const latest = summary.latestDate ? formatAlertDate(summary.latestDate) : 'not recorded';
+  const categoryOptions = used.map((category) => `<option value="${attr(category)}">${esc(alertCategoryLabel(category, lang))}</option>`).join('');
+  const latest = summary.latestDate ? alertFullDate(summary.latestDate, lang) : T(lang, { en: 'not recorded', hi: 'दर्ज नहीं', mr: 'नोंद नाही', ta: 'பதிவு இல்லை' });
+  const title = T(lang, { en: 'Electricity Alerts', hi: 'बिजली अलर्ट', mr: 'वीज अलर्ट', ta: 'மின்சார அலர்ட்கள்' });
+  const description = T(lang, {
+    en: 'Latest public electricity alerts for India: FPPA, PPAC, tariff orders, subsidy notices and policy changes filtered by state and category.',
+    hi: 'भारत के सार्वजनिक बिजली अलर्ट: FPPA, PPAC, टैरिफ आदेश, सब्सिडी नोटिस और नीति बदलाव, राज्य और श्रेणी के अनुसार फ़िल्टर करें।',
+    mr: 'भारतासाठी सार्वजनिक वीज अलर्ट: FPPA, PPAC, टॅरिफ आदेश, सबसिडी नोटिस आणि धोरण बदल, राज्य व श्रेणीनुसार फिल्टर करा.',
+    ta: 'இந்தியாவுக்கான பொது மின்சார அலர்ட்கள்: FPPA, PPAC, கட்டண ஆணைகள், மானிய அறிவிப்புகள் மற்றும் கொள்கை மாற்றங்கள், மாநிலம் மற்றும் வகை வாரியாக வடிகட்டலாம்.',
+  });
+  const t = (key) => STRINGS[lang]?.[key] || STRINGS.en[key] || key;
 
   const body = `
   <section class="seo-page container alerts-page" id="alertsPageRoot">
-    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">Alerts</span></li></ol></nav>
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="${lang === 'en' ? '/' : `/${lang}/`}" data-i18n="bc.home">Home</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page" data-i18n="nav.alerts">${esc(T(lang, { en: 'Alerts', hi: 'अलर्ट', mr: 'अलर्ट', ta: 'அலர்ட்கள்' }))}</span></li></ol></nav>
 
     <header class="alerts-head">
-      <h1>Electricity Alerts</h1>
-      <p class="seo-lead">Every tariff order and fuel-surcharge notice tracked on TheDiscomBill, newest first. Public regulatory updates only — not notifications about your own account.</p>
+      <h1 data-i18n="alerts.title">${esc(title)}</h1>
+      <p class="seo-lead" data-i18n="alerts.lead">${esc(t('alerts.lead'))}</p>
       <p class="alerts-context">
-        <strong>${summary.total}</strong> notices across <strong>${summary.states}</strong> states
-        · latest <strong>${esc(latest)}</strong>
-        · compiled from the <a href="/fppa/">FPPA tracker</a> and <a href="/orders/">published orders</a>
+        ${T(lang, {
+          en: `<strong>${summary.total}</strong> notices across <strong>${summary.states}</strong> states · latest <strong>${esc(latest)}</strong> · compiled from the <a href="/fppa/">FPPA tracker</a> and <a href="/orders/">published orders</a>`,
+          hi: `<strong>${summary.total}</strong> नोटिस, <strong>${summary.states}</strong> राज्यों में · नवीनतम <strong>${esc(latest)}</strong> · <a href="/hi/fppa/">FPPA ट्रैकर</a> और <a href="/orders/">प्रकाशित आदेशों</a> से संकलित`,
+          mr: `<strong>${summary.total}</strong> नोटिस, <strong>${summary.states}</strong> राज्यांमध्ये · नवीनतम <strong>${esc(latest)}</strong> · <a href="/fppa/">FPPA ट्रॅकर</a> आणि <a href="/orders/">प्रकाशित आदेशांमधून</a> संकलित`,
+          ta: `<strong>${summary.total}</strong> அறிவிப்புகள், <strong>${summary.states}</strong> மாநிலங்களில் · சமீபத்தியது <strong>${esc(latest)}</strong> · <a href="/fppa/">FPPA டிராக்கர்</a> மற்றும் <a href="/orders/">வெளியிடப்பட்ட ஆணைகள்</a> இலிருந்து தொகுக்கப்பட்டது`,
+        })}
       </p>
     </header>
 
     <div class="alerts-controls">
-      <div class="alerts-filterbar" role="search" aria-label="Filter public electricity alerts">
+      <div class="alerts-filterbar" role="search" aria-label="${attr(t('alerts.filterLabel'))}" data-i18n-aria="alerts.filterLabel">
         <label class="alerts-field alerts-field-search">
-          <span>Search</span>
-          <input id="alertSearch" type="search" placeholder="FPPA, Delhi, MSEDCL…" autocomplete="off">
+          <span data-i18n="alerts.search">${esc(t('alerts.search'))}</span>
+          <input id="alertSearch" type="search" placeholder="${attr(t('alerts.searchPh'))}" data-i18n-ph="alerts.searchPh" autocomplete="off">
         </label>
         <label class="alerts-field">
-          <span>State</span>
+          <span data-i18n="alerts.state">${esc(t('alerts.state'))}</span>
           <select id="alertState">
-            <option value="">All states</option>
+            <option value="" data-i18n="alerts.allStates">${esc(t('alerts.allStates'))}</option>
             ${stateOptions}
           </select>
         </label>
         <label class="alerts-field">
-          <span>Category</span>
+          <span data-i18n="alerts.category">${esc(t('alerts.category'))}</span>
           <select id="alertCategory">
-            <option value="">All categories</option>
+            <option value="" data-i18n="alerts.allCategories">${esc(t('alerts.allCategories'))}</option>
             ${categoryOptions}
           </select>
         </label>
         <label class="alerts-field">
-          <span>Priority</span>
+          <span data-i18n="alerts.priority">${esc(t('alerts.priority'))}</span>
           <select id="alertSeverity">
-            <option value="">All</option>
-            <option value="Important">Important</option>
-            <option value="Info">Info</option>
+            <option value="" data-i18n="alerts.all">${esc(t('alerts.all'))}</option>
+            <option value="Important" data-i18n="alerts.important">${esc(t('alerts.important'))}</option>
+            <option value="Info" data-i18n="alerts.info">${esc(t('alerts.info'))}</option>
           </select>
         </label>
-        <button type="button" class="alerts-reset" data-alert-reset>Reset</button>
+        <button type="button" class="alerts-reset" data-alert-reset data-i18n="alerts.reset">${esc(t('alerts.reset'))}</button>
       </div>
       <div class="alerts-chiprow" aria-label="Filter by category">
         ${categoryChips}
@@ -5758,23 +5793,34 @@ function alertsPage() {
     </div>
 
     <section class="alerts-listwrap" id="alerts-list" aria-label="Public electricity alerts">
-      <p class="alerts-result-head"><strong data-alert-count>${alerts.length}</strong> of ${alerts.length} showing</p>
+      <p class="alerts-result-head">${T(lang, {
+        en: `<strong data-alert-count>${alerts.length}</strong> of ${alerts.length} showing`,
+        hi: `<strong data-alert-count>${alerts.length}</strong> / ${alerts.length} दिख रहे हैं`,
+        mr: `<strong data-alert-count>${alerts.length}</strong> / ${alerts.length} दिसत आहेत`,
+        ta: `<strong data-alert-count>${alerts.length}</strong> / ${alerts.length} காட்டப்படுகிறது`,
+      })}</p>
       <ol class="alerts-feed" data-alert-list>
-        ${alertFeedHtml(alerts)}
+        ${alertFeedHtml(alerts, lang)}
       </ol>
-      <p class="alerts-empty" data-alert-empty hidden>No notices match these filters. <button type="button" class="alerts-empty-reset" data-alert-reset>Clear filters</button></p>
+      <p class="alerts-empty" data-alert-empty hidden><span data-i18n="alerts.empty">${esc(t('alerts.empty'))}</span> <button type="button" class="alerts-empty-reset" data-alert-reset data-i18n="alerts.clearFilters">${esc(t('alerts.clearFilters'))}</button></p>
     </section>
   </section>`;
 
   return layout({
-    title: 'Electricity Alerts — Tariff, FPPA and DISCOM Updates',
-    description: 'Latest public electricity alerts for India: FPPA, PPAC, tariff orders, subsidy notices and policy changes filtered by state and category.',
-    canonical: SITE + '/alerts/',
+    title: T(lang, {
+      en: 'Electricity Alerts — Tariff, FPPA and DISCOM Updates',
+      hi: 'बिजली अलर्ट — टैरिफ, FPPA और डिस्कॉम अपडेट',
+      mr: 'वीज अलर्ट — टॅरिफ, FPPA आणि डिस्कॉम अपडेट्स',
+      ta: 'மின்சார அலர்ட்கள் — கட்டணம், FPPA மற்றும் DISCOM புதுப்பிப்புகள்',
+    }),
+    description,
+    canonical: SITE + langUrl('/alerts/', lang),
     page: '/alerts/',
-    altLangs: [],
+    lang,
+    altLangs: [...VERNACULARS],
     jsonld: [breadcrumbJsonLd([
       { name: 'Home', url: '/' },
-      { name: 'Alerts', url: '/alerts/' },
+      { name: title, url: langUrl('/alerts/', lang) },
     ])],
     body,
   });
@@ -7161,24 +7207,39 @@ function smartMeterHubPage(states, lang = 'en') {
 }
 
 // ── sitemap + robots ──────────────────────────────────────────────────────────
+const LOCALIZED_TOOL_URLS = new Set([
+  '/compare/',
+  '/bill-calculator/',
+  '/electricity-cost-calculator/',
+  '/solar-calculator/',
+  '/solar-panel-size-calculator/',
+  '/solar-battery-backup-calculator/',
+  '/ev-charging-calculator/',
+  '/recharge-calculator/',
+  '/sanctioned-load-optimizer/',
+  '/solar-subsidy-checker/',
+  '/tenant-submeter-calculator/',
+  '/check-my-bill/',
+]);
+const toolLangs = (loc) => LOCALIZED_TOOL_URLS.has(loc) ? { langs: [...VERNACULARS] } : {};
 const STATIC_ROUTES = [
   { loc: '/', priority: '1.0', changefreq: 'weekly', langs: [...VERNACULARS] },
-  { loc: '/compare/', priority: '0.8', changefreq: 'monthly' },
-  { loc: '/bill-calculator/', priority: '0.8', changefreq: 'monthly' },
-  { loc: '/electricity-cost-calculator/', priority: '0.7', changefreq: 'monthly' },
-  { loc: '/solar-calculator/', priority: '0.7', changefreq: 'monthly' },
-  { loc: '/solar-panel-size-calculator/', priority: '0.6', changefreq: 'monthly' },
-  { loc: '/solar-battery-backup-calculator/', priority: '0.6', changefreq: 'monthly' },
-  { loc: '/ev-charging-calculator/', priority: '0.8', changefreq: 'monthly' },
+  { loc: '/compare/', priority: '0.8', changefreq: 'monthly', ...toolLangs('/compare/') },
+  { loc: '/bill-calculator/', priority: '0.8', changefreq: 'monthly', ...toolLangs('/bill-calculator/') },
+  { loc: '/electricity-cost-calculator/', priority: '0.7', changefreq: 'monthly', ...toolLangs('/electricity-cost-calculator/') },
+  { loc: '/solar-calculator/', priority: '0.7', changefreq: 'monthly', ...toolLangs('/solar-calculator/') },
+  { loc: '/solar-panel-size-calculator/', priority: '0.6', changefreq: 'monthly', ...toolLangs('/solar-panel-size-calculator/') },
+  { loc: '/solar-battery-backup-calculator/', priority: '0.6', changefreq: 'monthly', ...toolLangs('/solar-battery-backup-calculator/') },
+  { loc: '/ev-charging-calculator/', priority: '0.8', changefreq: 'monthly', ...toolLangs('/ev-charging-calculator/') },
   { loc: '/tariffs/', priority: '0.8', changefreq: 'monthly' },
   // '/tariffs/states/' is added in buildSitemap() with its Hindi alternate.
   { loc: '/services/', priority: '0.7', changefreq: 'monthly' },
-  { loc: '/recharge-calculator/', priority: '0.8', changefreq: 'monthly' },
-  { loc: '/sanctioned-load-optimizer/', priority: '0.8', changefreq: 'monthly' },
-  { loc: '/solar-subsidy-checker/', priority: '0.8', changefreq: 'monthly' },
-  { loc: '/tenant-submeter-calculator/', priority: '0.8', changefreq: 'monthly' },
+  { loc: '/recharge-calculator/', priority: '0.8', changefreq: 'monthly', ...toolLangs('/recharge-calculator/') },
+  { loc: '/sanctioned-load-optimizer/', priority: '0.8', changefreq: 'monthly', ...toolLangs('/sanctioned-load-optimizer/') },
+  { loc: '/solar-subsidy-checker/', priority: '0.8', changefreq: 'monthly', ...toolLangs('/solar-subsidy-checker/') },
+  { loc: '/tenant-submeter-calculator/', priority: '0.8', changefreq: 'monthly', ...toolLangs('/tenant-submeter-calculator/') },
   { loc: '/smart-meter/amisp-list/', priority: '0.6', changefreq: 'monthly' },
-  { loc: '/check-my-bill/', priority: '0.9', changefreq: 'monthly' },
+  { loc: '/check-my-bill/', priority: '0.9', changefreq: 'monthly', ...toolLangs('/check-my-bill/') },
   { loc: '/bill-review/', priority: '0.7', changefreq: 'monthly' },
   { loc: '/bill-review/sample-report/', priority: '0.5', changefreq: 'yearly' },
   { loc: '/methodology/', priority: '0.7', changefreq: 'monthly' },
@@ -7217,7 +7278,7 @@ function buildSitemap(states) {
   }
   urls.push({ loc: '/glossary/', priority: '0.7', changefreq: 'monthly', langs: [...VERNACULARS] });
   urls.push({ loc: '/database/', priority: '0.75', changefreq: 'monthly' });
-  urls.push({ loc: '/alerts/', priority: '0.8', changefreq: 'monthly' });
+  urls.push({ loc: '/alerts/', priority: '0.8', changefreq: 'monthly', langs: [...VERNACULARS] });
   urls.push({ loc: '/orders/', priority: '0.8', changefreq: 'monthly' });
   for (const order of ORDERS) {
     urls.push({ loc: `/orders/${order.id}/`, priority: '0.6', changefreq: 'yearly' });
@@ -7854,6 +7915,7 @@ function buildVernacularHomepages() {
 
   const hasTwin = (href, lang) => {
     if (href === '/') return true;                       // the homepage twin is what we are building
+    if (LOCALIZED_TOOL_URLS.has(href)) return true;      // emitted just after homepages below
     const rel = href.replace(/^\/+|\/+$/g, '');
     if (!rel) return false;
     return fs.existsSync(path.join(ROOT, lang, rel, 'index.html'))
@@ -7867,6 +7929,234 @@ function buildVernacularHomepages() {
     written++;
   }
   return { written };
+}
+
+// ── Localized app/tool URLs (/hi/solar-calculator/, etc.) ───────────────────
+// The tool pages are hand-authored app shells: their visible UI already translates through
+// data-i18n at runtime, but only the English URL existed. This build pass snapshots that same
+// translated chrome into real /hi/, /mr/ and /ta/ URLs, then stamps hreflang on the English
+// source so crawlers can discover the set without waiting for JavaScript.
+const TOOL_PAGE_META = {
+  '/compare/': {
+    title: { en: 'Electricity Rate Comparison', hi: 'बिजली दरों की तुलना', mr: 'वीज दर तुलना', ta: 'மின் கட்டண ஒப்பீடு' },
+    desc: {
+      en: 'Compare Indian DISCOM electricity rates at common monthly usage levels, with fixed charges and subsidy handling.',
+      hi: 'सामान्य मासिक खपत पर भारतीय डिस्कॉम की बिजली दरें, फिक्स्ड चार्ज और सब्सिडी सहित तुलना करें।',
+      mr: 'सामान्य मासिक वापरावर भारतीय डिस्कॉमचे वीज दर, फिक्स्ड चार्ज आणि सबसिडीसह तुलना करा.',
+      ta: 'பொதுவான மாதாந்திர பயன்பாட்டில் இந்திய DISCOM மின் கட்டணங்களை நிலைக் கட்டணம் மற்றும் மானியத்துடன் ஒப்பிடுங்கள்.',
+    },
+  },
+  '/bill-calculator/': {
+    title: { en: 'Advanced Electricity Bill Calculator', hi: 'एडवांस्ड बिजली बिल कैलकुलेटर', mr: 'प्रगत वीज बिल कॅल्क्युलेटर', ta: 'மேம்பட்ட மின்சார பில் கணிப்பான்' },
+    desc: {
+      en: 'Calculate a detailed electricity bill with ToD, kVAh, solar net metering, arrears and late-payment surcharge.',
+      hi: 'ToD, kVAh, सोलर नेट मीटरिंग, बकाया और देर-भुगतान अधिभार के साथ विस्तृत बिजली बिल निकालें।',
+      mr: 'ToD, kVAh, सोलर नेट मीटरिंग, थकबाकी आणि उशिरा-भरणा अधिभारासह तपशीलवार वीज बिल काढा.',
+      ta: 'ToD, kVAh, சோலார் நெட் மீட்டரிங், நிலுவை மற்றும் தாமதக் கட்டணத்துடன் விரிவான மின் பில்லை கணக்கிடுங்கள்.',
+    },
+  },
+  '/electricity-cost-calculator/': {
+    title: { en: 'Electricity Cost Calculator', hi: 'बिजली लागत कैलकुलेटर', mr: 'वीज खर्च कॅल्क्युलेटर', ta: 'மின் செலவு கால்குலேட்டர்' },
+    desc: {
+      en: 'Estimate monthly kWh and electricity cost from the appliances you use at home.',
+      hi: 'घर के उपकरणों से मासिक यूनिट और बिजली खर्च का अनुमान लगाएँ।',
+      mr: 'घरातील उपकरणांवरून मासिक युनिट आणि वीज खर्चाचा अंदाज घ्या.',
+      ta: 'வீட்டில் பயன்படுத்தும் சாதனங்களிலிருந்து மாதாந்திர யூனிட்களையும் மின் செலவையும் மதிப்பிடுங்கள்.',
+    },
+  },
+  '/solar-calculator/': {
+    title: { en: 'Rooftop Solar Savings Calculator', hi: 'रूफटॉप सोलर बचत कैलकुलेटर', mr: 'रूफटॉप सोलर बचत कॅल्क्युलेटर', ta: 'கூரை சோலார் சேமிப்பு கணிப்பான்' },
+    desc: {
+      en: 'Estimate rooftop solar size, subsidy, monthly savings and payback from your electricity bill.',
+      hi: 'अपने बिजली बिल से रूफटॉप सोलर सिस्टम साइज़, सब्सिडी, मासिक बचत और पेबैक का अनुमान लगाएँ।',
+      mr: 'तुमच्या वीज बिलावरून रूफटॉप सोलर आकार, सबसिडी, मासिक बचत आणि पेबॅकचा अंदाज घ्या.',
+      ta: 'உங்கள் மின் பிலிலிருந்து கூரை சோலார் அளவு, மானியம், மாதச் சேமிப்பு மற்றும் பேபேக் மதிப்பிடுங்கள்.',
+    },
+  },
+  '/solar-panel-size-calculator/': {
+    title: { en: 'Solar Panel Size Calculator', hi: 'सोलर पैनल साइज़ कैलकुलेटर', mr: 'सोलर पॅनेल साइझ कॅल्क्युलेटर', ta: 'சோலார் பேனல் அளவு கணிப்பான்' },
+    desc: {
+      en: 'Estimate the rooftop solar panel size needed for your electricity use and roof area.',
+      hi: 'अपनी बिजली खपत और छत की जगह के अनुसार ज़रूरी सोलर पैनल साइज़ का अनुमान लगाएँ।',
+      mr: 'तुमच्या वीज वापर आणि छताच्या जागेनुसार लागणारा सोलर पॅनेल आकार अंदाजे काढा.',
+      ta: 'உங்கள் மின் பயன்பாடு மற்றும் கூரை பரப்பளவுக்குத் தேவையான சோலார் பேனல் அளவை மதிப்பிடுங்கள்.',
+    },
+  },
+  '/solar-battery-backup-calculator/': {
+    title: { en: 'Solar Battery Backup Calculator', hi: 'सोलर बैटरी बैकअप कैलकुलेटर', mr: 'सोलर बॅटरी बॅकअप कॅल्क्युलेटर', ta: 'சோலார் பேட்டரி பேக்அப் கணிப்பான்' },
+    desc: {
+      en: 'Size a solar battery backup for your essential home loads and outage hours.',
+      hi: 'ज़रूरी घरेलू लोड और बिजली कटौती के घंटों के हिसाब से सोलर बैटरी बैकअप का आकार निकालें।',
+      mr: 'घरातील आवश्यक लोड आणि वीजखंडित वेळेनुसार सोलर बॅटरी बॅकअपचा आकार काढा.',
+      ta: 'அத்தியாவசிய வீட்டு சுமைகள் மற்றும் மின்தடை நேரத்திற்கான சோலார் பேட்டரி பேக்அப் அளவை கணக்கிடுங்கள்.',
+    },
+  },
+  '/ev-charging-calculator/': {
+    title: { en: 'EV Charging Cost Calculator', hi: 'EV चार्जिंग लागत कैलकुलेटर', mr: 'EV चार्जिंग खर्च कॅल्क्युलेटर', ta: 'EV சார்ஜிங் செலவு கால்குலேட்டர்' },
+    desc: {
+      en: 'Estimate home EV charging cost per km, per charge and per month, with petrol comparison.',
+      hi: 'घर पर EV चार्जिंग की प्रति किमी, प्रति चार्ज और मासिक लागत, पेट्रोल तुलना सहित देखें।',
+      mr: 'घरच्या EV चार्जिंगचा प्रति किमी, प्रति चार्ज आणि मासिक खर्च, पेट्रोल तुलनेसह पाहा.',
+      ta: 'வீட்டு EV சார்ஜிங் செலவை கி.மீ., சார்ஜ் மற்றும் மாத அடிப்படையில், பெட்ரோல் ஒப்பீட்டுடன் காணுங்கள்.',
+    },
+  },
+  '/recharge-calculator/': {
+    title: { en: 'Smart Meter Recharge Calculator', hi: 'स्मार्ट मीटर रिचार्ज कैलकुलेटर', mr: 'स्मार्ट मीटर रिचार्ज कॅल्क्युलेटर', ta: 'ஸ்மார்ட் மீட்டர் ரீசார்ஜ் கணிப்பான்' },
+    desc: {
+      en: 'Check how many days a prepaid smart-meter recharge may last using DISCOM tariff rates.',
+      hi: 'डिस्कॉम टैरिफ दरों से देखें कि प्रीपेड स्मार्ट-मीटर रिचार्ज कितने दिन चल सकता है।',
+      mr: 'डिस्कॉम टॅरिफ दरांवरून प्रीपेड स्मार्ट-मीटर रिचार्ज किती दिवस पुरेल ते पाहा.',
+      ta: 'DISCOM கட்டண விகிதங்களை வைத்து prepaid smart-meter recharge எத்தனை நாள் நீடிக்கும் என்று பாருங்கள்.',
+    },
+  },
+  '/sanctioned-load-optimizer/': {
+    title: { en: 'Sanctioned Load Optimizer', hi: 'स्वीकृत भार ऑप्टिमाइज़र', mr: 'मंजूर भार ऑप्टिमायझर', ta: 'அனுமதிக்கப்பட்ட சுமை மேம்படுத்தி' },
+    desc: {
+      en: 'Compare sanctioned load steps and estimate fixed-charge savings from the right connection load.',
+      hi: 'स्वीकृत भार के विकल्पों की तुलना करें और सही कनेक्शन लोड से फिक्स्ड चार्ज बचत देखें।',
+      mr: 'मंजूर भाराच्या पायऱ्या तुलना करा आणि योग्य कनेक्शन लोडमुळे होणारी फिक्स्ड चार्ज बचत पाहा.',
+      ta: 'அனுமதிக்கப்பட்ட சுமை நிலைகளை ஒப்பிட்டு சரியான இணைப்பு சுமையால் கிடைக்கும் நிலைக் கட்டணச் சேமிப்பை மதிப்பிடுங்கள்.',
+    },
+  },
+  '/solar-subsidy-checker/': {
+    title: { en: 'Solar Subsidy Checker', hi: 'सोलर सब्सिडी चेकर', mr: 'सोलर सबसिडी चेकर', ta: 'சோலார் மானிய சரிபார்ப்பு' },
+    desc: {
+      en: 'Check the PM Surya Ghar rooftop solar subsidy and estimated net cost for your home.',
+      hi: 'अपने घर के लिए PM Surya Ghar रूफटॉप सोलर सब्सिडी और अनुमानित नेट लागत देखें।',
+      mr: 'तुमच्या घरासाठी PM Surya Ghar रूफटॉप सोलर सबसिडी आणि अंदाजे निव्वळ खर्च पाहा.',
+      ta: 'உங்கள் வீட்டிற்கான PM Surya Ghar கூரை சோலார் மானியம் மற்றும் நிகர செலவை சரிபாருங்கள்.',
+    },
+  },
+  '/tenant-submeter-calculator/': {
+    title: { en: 'Tenant Sub-Meter Calculator', hi: 'किरायेदार सब-मीटर कैलकुलेटर', mr: 'भाडेकरू सब-मीटर कॅल्क्युलेटर', ta: 'குடியிருப்பாளர் துணை-மீட்டர் கால்குலேட்டர்' },
+    desc: {
+      en: 'Compare a landlord sub-meter rate with the real DISCOM tariff and estimate overcharge.',
+      hi: 'मकान मालिक की सब-मीटर दर की असली डिस्कॉम टैरिफ से तुलना करें और अतिरिक्त शुल्क का अनुमान लगाएँ।',
+      mr: 'घरमालकाच्या सब-मीटर दराची खरी डिस्कॉम टॅरिफशी तुलना करा आणि जादा आकारणीचा अंदाज घ्या.',
+      ta: 'வீட்டு உரிமையாளரின் துணை-மீட்டர் விகிதத்தை உண்மையான DISCOM கட்டணத்துடன் ஒப்பிட்டு அதிக வசூலை மதிப்பிடுங்கள்.',
+    },
+  },
+  '/check-my-bill/': {
+    title: { en: 'Check My Electricity Bill', hi: 'मेरा बिजली बिल जांचें', mr: 'माझे वीज बिल तपासा', ta: 'என் மின் பில்லைச் சரிபார்க்க' },
+    desc: {
+      en: 'Upload an electricity bill photo or PDF and recompute it against the published tariff.',
+      hi: 'बिजली बिल की फोटो या PDF अपलोड करें और प्रकाशित टैरिफ से दोबारा गणना करें।',
+      mr: 'वीज बिलाचा फोटो किंवा PDF अपलोड करा आणि प्रकाशित टॅरिफनुसार पुन्हा गणना करा.',
+      ta: 'மின் பில் புகைப்படம் அல்லது PDF பதிவேற்றி வெளியிடப்பட்ட கட்டணத்துடன் மீண்டும் கணக்கிடுங்கள்.',
+    },
+  },
+};
+const toolAlternates = (loc) => [
+  `  <link rel="alternate" hreflang="en-IN" href="${SITE}${loc}">`,
+  ...VERNACULARS.map(l => `  <link rel="alternate" hreflang="${LANG_LOCALE[l]}" href="${SITE}${langUrl(loc, l)}">`),
+  `  <link rel="alternate" hreflang="x-default" href="${SITE}${loc}">`,
+].join('\n');
+function localizeToolJsonLd(html, lang, localizedUrl, title, desc) {
+  const visit = (node) => {
+    if (Array.isArray(node)) { node.forEach(visit); return; }
+    if (!node || typeof node !== 'object') return;
+    const types = [].concat(node['@type'] || []);
+    if (types.includes('WebApplication') || types.includes('SoftwareApplication')) {
+      node.name = title;
+      node.url = localizedUrl;
+      node.description = desc;
+      node.inLanguage = LANG_LOCALE[lang] || 'en-IN';
+    }
+    if (types.includes('BreadcrumbList') && Array.isArray(node.itemListElement)) {
+      const last = node.itemListElement[node.itemListElement.length - 1];
+      if (last) {
+        last.name = title;
+        last.item = localizedUrl;
+      }
+    }
+    if (node['@graph']) visit(node['@graph']);
+  };
+  return html.replace(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g, (full, body) => {
+    try {
+      const parsed = JSON.parse(body);
+      visit(parsed);
+      return `<script type="application/ld+json">${JSON.stringify(parsed)}</script>`;
+    } catch {
+      return full;
+    }
+  });
+}
+function toolPageLangHtml(src, loc, lang) {
+  const dict = STRINGS[lang] || STRINGS.en;
+  const meta = TOOL_PAGE_META[loc];
+  const look = (key) => {
+    const value = dict[key] ?? STRINGS.en[key];
+    return value == null ? null : String(value).replace(/\{year\}/g, TITLE_YEAR);
+  };
+  const localizedUrl = `${SITE}${langUrl(loc, lang)}`;
+  const title = T(lang, meta.title);
+  const desc = T(lang, meta.desc);
+  let h = src;
+
+  h = replaceKeyedInner(h, 'data-i18n', k => { const v = look(k); return v == null ? null : esc(v); });
+  h = replaceKeyedInner(h, 'data-i18n-html', look);
+  h = h.replace(/<(input|textarea)\b([^>]*\bdata-i18n-ph="([^"]+)"[^>]*)>/gi, (full, tag, attrs, key) => {
+    const v = look(key);
+    if (v == null) return full;
+    const next = /\bplaceholder="[^"]*"/.test(attrs)
+      ? attrs.replace(/\bplaceholder="[^"]*"/, `placeholder="${attr(v)}"`)
+      : `${attrs} placeholder="${attr(v)}"`;
+    return `<${tag}${next}>`;
+  });
+  h = h.replace(/(<[^>]*\bdata-i18n-aria="([^"]+)"[^>]*\baria-label=")[^"]*("[^>]*>)/gi,
+    (full, before, key, after) => {
+      const v = look(key);
+      return v == null ? full : `${before}${attr(v)}${after}`;
+    });
+  h = h.replace(/<html lang="[^"]*"/, `<html lang="${lang}"`);
+  h = h.replace('document.documentElement.classList.add(\'js\');',
+    `document.documentElement.classList.add('js');\n        try { localStorage.setItem('lang', '${lang}'); } catch (e) {}`);
+  h = h.replace(/\b(href|src)="(?!https?:|\/|#|data:|mailto:)([^"]+)"/g, (full, name, rel) =>
+    /^(?:\.\.\/)?(?:css|js|og|fonts|manifest\.webmanifest|sw\.js)\b/.test(rel)
+      ? `${name}="/${rel.replace(/^\.\.\//, '')}"` : full);
+  h = h.replace(new RegExp(`${SITE}${loc.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'g'), localizedUrl);
+  h = h.replace(/\n\s*<link rel="alternate" hreflang="[^"]*" href="[^"]*">/g, '');
+  h = h.replace(/(<link rel="canonical" href=")[^"]*(">)/, `$1${localizedUrl}$2\n${toolAlternates(loc)}`);
+  h = h.replace(/<title>[^<]*<\/title>/, `<title>${esc(fitText(`${title} — TheDiscomBill`, TITLE_WIDTH))}</title>`);
+  h = h.replace(/(<meta name="description" content=")[^"]*(">)/, `$1${attr(fitText(desc, DESC_WIDTH))}$2`);
+  h = h.replace(/(<meta property="og:title" content=")[^"]*(">)/, `$1${attr(`${title} — TheDiscomBill`)}$2`);
+  h = h.replace(/(<meta property="og:description" content=")[^"]*(">)/, `$1${attr(desc)}$2`);
+  h = h.replace(/(<meta property="og:url" content=")[^"]*(">)/, `$1${localizedUrl}$2`);
+  h = h.replace(/(<meta property="og:locale" content=")[^"]*(">)/, `$1${OG_LOCALE[lang] || 'en_IN'}$2`);
+  h = h.replace(/(<meta name="twitter:title" content=")[^"]*(">)/, `$1${attr(`${title} — TheDiscomBill`)}$2`);
+  h = h.replace(/(<meta name="twitter:description" content=")[^"]*(">)/, `$1${attr(desc)}$2`);
+  h = h.replace(/"inLanguage":"en-IN"/g, `"inLanguage":"${LANG_LOCALE[lang] || 'en-IN'}"`);
+  h = localizeToolJsonLd(h, lang, localizedUrl, title, desc);
+  h = h.replace(/\bhref="(\/[^"#?]*)"/g, (full, href) => {
+    if (href === '/') return `href="/${lang}/"`;
+    if (fs.existsSync(path.join(ROOT, lang, href.replace(/^\/+|\/+$/g, ''), 'index.html'))
+        || LOCALIZED_TOOL_URLS.has(href.endsWith('/') ? href : `${href}/`)) {
+      return `href="${langUrl(href.endsWith('/') ? href : `${href}/`, lang)}"`;
+    }
+    return full;
+  });
+  return h;
+}
+function stampToolAlternates(src, loc) {
+  const stamped = src
+    .replace(/\n\s*<link rel="alternate" hreflang="[^"]*" href="[^"]*">/g, '')
+    .replace(/(<link rel="canonical" href=")[^"]*(">)/, `$1${SITE}${loc}$2\n${toolAlternates(loc)}`);
+  return stamped;
+}
+function buildLocalizedToolPages() {
+  let written = 0;
+  for (const loc of LOCALIZED_TOOL_URLS) {
+    const rel = loc.replace(/^\/+|\/+$/g, '');
+    const sourceFile = path.join(ROOT, rel, 'index.html');
+    if (!fs.existsSync(sourceFile) || !TOOL_PAGE_META[loc]) continue;
+    const english = stampToolAlternates(fs.readFileSync(sourceFile, 'utf8'), loc);
+    writeWithRetry(sourceFile, english);
+    for (const lang of VERNACULARS) {
+      emitPage(`${lang}/${rel}`, toolPageLangHtml(english, loc, lang));
+      written++;
+    }
+  }
+  return { written, routes: LOCALIZED_TOOL_URLS.size };
 }
 
 // ── Entity graph stamp ───────────────────────────────────────────────────────
@@ -8146,8 +8436,7 @@ function writeSearchIndex(states) {
   const entries = [];
 
   // Tool + info pages (hand-listed: these are static routes, not generated ones).
-  // Hindi titles come from the runtime language switch, so no `hu` — the pages
-  // themselves are single-URL with client-side i18n.
+  // App/tool pages now have real localized URLs, so Hindi search can land directly on /hi/.
   [
     ['Bill Calculator', 'बिजली बिल कैलकुलेटर', '/#calculator', 'electricity bill calculator check'],
     ['Compare Tariffs', 'टैरिफ तुलना', '/compare/', 'comparison states discom rates'],
@@ -8178,7 +8467,11 @@ function writeSearchIndex(states) {
     ['Privacy Policy', 'गोपनीयता नीति', '/privacy/', 'privacy policy data dpdp personal information cookies analytics delete my data gdpr'],
     ['Contact', 'संपर्क करें', '/contact/', 'contact email get in touch report wrong tariff rate correction feedback partnership press support help'],
     ['Install offline app', 'ऑफ़लाइन ऐप इंस्टॉल करें', '/install/', 'install app pwa offline home screen android ios iphone desktop add to home screen download apk play store'],
-  ].forEach(([t, h, u, k]) => entries.push({ t, h, u, k, g: 'tool' }));
+  ].forEach(([t, h, u, k]) => {
+    const entry = { t, h, u, k, g: 'tool' };
+    if (LOCALIZED_TOOL_URLS.has(u)) entry.hu = langUrl(u, 'hi');
+    entries.push(entry);
+  });
 
   for (const state of fppaCoverageStates()) {
     const stateSlug = slugify(state);
@@ -8293,12 +8586,13 @@ export function generateSeo() {
     emitPage(`${p}smart-meter-recharge`, smartMeterHubPage(states, lang));
     pages++;
 
+    emitPage(`${p}alerts`, alertsPage(lang));
+    pages++;
+
     // /database/ stays English-only: it documents a machine-readable schema whose field names
     // are English by definition.
     if (lang === 'en') {
       emitPage('database', tariffDatabasePage(tariffDatabase.summary, tariffDatabase.db.states));
-      pages++;
-      emitPage('alerts', alertsPage());
       pages++;
       // English-only, and HTML-only: no orders.json. See the note on ordersHubPage().
       emitPage('orders', ordersHubPage());
@@ -8348,12 +8642,6 @@ export function generateSeo() {
     }
   }
 
-  // buildSitemap() resolves the hand-written static routes too, so save the manifest after it.
-  const sitemap = buildSitemap(states);
-  saveManifest();
-  writeWithRetry(path.join(ROOT, 'sitemap.xml'), sitemap);
-  writeWithRetry(path.join(ROOT, 'robots.txt'), ROBOTS);
-  writeWithRetry(path.join(ROOT, 'llms.txt'), buildLlmsTxt(states, tariffDatabase.db.states));
   writeWithRetry(path.join(ROOT, '404.html'), notFoundPage());
   // After every page is on disk - 404.html included - and before buildContentCss(), which
   // derives content.min.css from this markup and must see its final form.
@@ -8368,6 +8656,8 @@ export function generateSeo() {
   // Reads the finished index.html, so it runs after every stamp that rewrites it and
   // before the CSS builders, which derive their sheets from the markup on disk.
   const vernHomes = buildVernacularHomepages();
+  const localizedTools = buildLocalizedToolPages();
+  pages += localizedTools.written;
   const fontPages = inlineFontCss();
   const searchEntries = writeSearchIndex(states);
   const cssKb = writeMinifiedCss();
@@ -8377,9 +8667,17 @@ export function generateSeo() {
   // reason content.min.css does: stampHomepageStates and stampHomepageCoverage both rewrite
   // index.html, and this reads the finished markup to decide what to keep.
   const homeCss = buildHomeCss({ quiet: true });
+  // buildSitemap() resolves the hand-written static routes too, so save the manifest after it.
+  // It runs after localized home/tool pages are emitted, otherwise their manifest entries can
+  // be pruned before Search Console ever sees the URLs.
+  const sitemap = buildSitemap(states);
+  saveManifest();
+  writeWithRetry(path.join(ROOT, 'sitemap.xml'), sitemap);
+  writeWithRetry(path.join(ROOT, 'robots.txt'), ROBOTS);
+  writeWithRetry(path.join(ROOT, 'llms.txt'), buildLlmsTxt(states, tariffDatabase.db.states));
   const sw = stampServiceWorker();
 
-  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + homepage states ${homeStates.cards} in ${homeStates.regions} regions + /bill-calculator/ ${(billCalc.bytes/1024).toFixed(0)} KB + footer ${footer.changed}/${footer.scanned} + entity graph ${graph.changed}/${graph.scanned} + vernacular homepages ${vernHomes.written} + homepage coverage ${coverage.S}/${coverage.D}/${coverage.C}/${coverage.T} + inline @font-face on ${fontPages} pages + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + content.min.css (${(content.bytes/1024).toFixed(0)} KB) + home.min.css (${(homeCss.bytes/1024).toFixed(0)} KB) + sw ${sw.version} (${sw.hashed} assets)`);
+  console.log(`SEO: generated ${pages} landing pages across ${states.length} states, plus sitemap.xml + robots.txt + llms.txt + homepage states ${homeStates.cards} in ${homeStates.regions} regions + /bill-calculator/ ${(billCalc.bytes/1024).toFixed(0)} KB + footer ${footer.changed}/${footer.scanned} + entity graph ${graph.changed}/${graph.scanned} + vernacular homepages ${vernHomes.written} + localized tools ${localizedTools.written}/${localizedTools.routes * VERNACULARS.length} + homepage coverage ${coverage.S}/${coverage.D}/${coverage.C}/${coverage.T} + inline @font-face on ${fontPages} pages + search-index.js (${searchEntries} entries) + styles.min.css (${cssKb}) + content.min.css (${(content.bytes/1024).toFixed(0)} KB) + home.min.css (${(homeCss.bytes/1024).toFixed(0)} KB) + sw ${sw.version} (${sw.hashed} assets)`);
   return { pages, states: states.length };
 }
 

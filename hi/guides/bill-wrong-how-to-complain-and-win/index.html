@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+      try { localStorage.setItem('lang', 'hi'); } catch (e) {}
+    })();
+  </script>
+  <title>बिजली बिल गलत है? शिकायत कैसे करें और मामला कैसे जीतें</title>
+  <meta name="description" content="गलत बिजली बिल के लिए भारत-भर में लागू व्यावहारिक तरीका: पहले क्या जांचें, कौन से दस्तावेज रखें, शिकायत कैसे लिखें, CGRF और विद्युत लोकपाल तक कैसे जाएं.">
+  <link rel="canonical" href="https://thediscombill.com/hi/guides/bill-wrong-how-to-complain-and-win/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/guides/bill-wrong-how-to-complain-and-win/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/guides/bill-wrong-how-to-complain-and-win/">
+  <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/guides/bill-wrong-how-to-complain-and-win/">
+  <link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/guides/bill-wrong-how-to-complain-and-win/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/guides/bill-wrong-how-to-complain-and-win/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="बिजली बिल गलत है? शिकायत कैसे करें और मामला कैसे जीतें">
+  <meta property="og:description" content="गलत बिजली बिल के लिए भारत-भर में लागू व्यावहारिक तरीका: पहले क्या जांचें, कौन से दस्तावेज रखें, शिकायत कैसे लिखें, CGRF और विद्युत लोकपाल तक कैसे जाएं.">
+  <meta property="og:url" content="https://thediscombill.com/hi/guides/bill-wrong-how-to-complain-and-win/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="बिजली बिल गलत है? शिकायत कैसे करें और मामला कैसे जीतें">
+  <meta property="og:locale" content="hi_IN">
+  <meta property="og:locale:alternate" content="en_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="बिजली बिल गलत है? शिकायत कैसे करें और मामला कैसे जीतें">
+  <meta name="twitter:description" content="गलत बिजली बिल के लिए भारत-भर में लागू व्यावहारिक तरीका: पहले क्या जांचें, कौन से दस्तावेज रखें, शिकायत कैसे लिखें, CGRF और विद्युत लोकपाल तक कैसे जाएं.">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign;
+       display=swap shows fallback text immediately. These are variable fonts, so one file
+       per family covers every weight — there is nothing left to preload per weight. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/space-grotesk-var-latin.woff2">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
+  <!-- Not styles.min.css: these generated pages are content, and 78% of the full sheet is
+       the calculator app — the bill renderer, the comparison tool, the Bill Review portal,
+       the datepicker — none of which a guide or tariff page ever shows. content.min.css is
+       built by scripts/split-css.mjs from the markup of exactly the pages that link it, so
+       it cannot drift. Hand-written tool pages keep the full sheet. -->
+  <link rel="stylesheet" href="/css/content.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       loses no events.
+
+       Scroll and idle are the triggers - NOT pointerdown or keydown, which is what this
+       used to listen on. A tap fired the load, so the library's own parse (measured: two
+       long tasks, 91ms and 58ms) landed on the main thread while the browser was still
+       trying to run the handler for that same tap. That is exactly the window INP measures,
+       and the homepage read 324ms against 177ms for the rest of the site.
+
+       Nothing is lost by dropping them: the idle callback carries a 5000ms timeout, so the
+       tag loads within five seconds of a page that is never scrolled or touched. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      addEventListener("scroll", load, { once: true, passive: true });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/hi/guides/bill-wrong-how-to-complain-and-win/","url":"https://thediscombill.com/hi/guides/bill-wrong-how-to-complain-and-win/","name":"बिजली बिल गलत है? शिकायत कैसे करें और मामला कैसे जीतें","description":"गलत बिजली बिल के लिए भारत-भर में लागू व्यावहारिक तरीका: पहले क्या जांचें, कौन से दस्तावेज रखें, शिकायत कैसे लिखें, CGRF और विद्युत लोकपाल तक कैसे जाएं.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN","dateModified":"2026-08-28"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"बिल गलत है? शिकायत कैसे करें और मामला कैसे जीतें","description":"गलत बिजली बिल के लिए भारत-भर में लागू व्यावहारिक तरीका: पहले क्या जांचें, कौन से दस्तावेज रखें, शिकायत कैसे लिखें, CGRF और विद्युत लोकपाल तक कैसे जाएं.","image":"https://thediscombill.com/og-image.jpg","mainEntityOfPage":"https://thediscombill.com/hi/guides/bill-wrong-how-to-complain-and-win/","datePublished":"2026-08-28","dateModified":"2026-08-28","inLanguage":"hi-IN","author":{"@id":"https://thediscombill.com/#org"},"publisher":{"@id":"https://thediscombill.com/#org"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"गाइड","item":"https://thediscombill.com/hi/guides/"},{"@type":"ListItem","position":3,"name":"बिल गलत है? शिकायत कैसे करें और मामला कैसे जीतें"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"गलत बिजली बिल के लिए पहले कहां शिकायत करें?","acceptedAnswer":{"@type":"Answer","text":"पहले अपने DISCOM के official complaint channel पर जाएं: portal, app, customer-care email, local office या जहां available हो 1912. Complaint number लें. समाधान न मिले तो CGRF और फिर विद्युत लोकपाल तक मामला आगे बढ़ाएं."}},{"@type":"Question","name":"क्या सीधे विद्युत लोकपाल के पास जा सकते हैं?","acceptedAnswer":{"@type":"Answer","text":"आमतौर पर नहीं. विद्युत लोकपाल usually CGRF के order, delay या unsatisfactory decision के बाद appeal stage है. Exact process state regulator तय करता है."}},{"@type":"Question","name":"Disputed bill pay करना चाहिए?","acceptedAnswer":{"@type":"Answer","text":"Due date पास हो तो default avoid करें. जहां allowed हो undisputed amount pay करें, या payment under protest करके written में dispute दर्ज करें. गलत bill से delay हुआ हो तो late-payment surcharge reversal मांगें."}},{"@type":"Question","name":"कौन से documents complaint को मजबूत बनाते हैं?","acceptedAnswer":{"@type":"Answer","text":"Current bill, पिछले 2-3 bills, dated meter photo या smart-meter screenshot, arrears dispute हो तो payment proof, consumer details और correction की one-page calculation attach करें."}},{"@type":"Question","name":"CGRF में कितना समय लगता है?","acceptedAnswer":{"@type":"Answer","text":"Central Electricity Rights of Consumers Rules के अनुसार grievance normally 30 days में और किसी भी हालत में 45 days से ज्यादा नहीं decide होना चाहिए. Filing format और exact deadlines state regulator तय करता है."}},{"@type":"Question","name":"क्या wrong bill पर compensation मिल सकता है?","acceptedAnswer":{"@type":"Answer","text":"हां, जहां state standards of performance bill complaints, delayed service, meter replacement, reconnection या related failures पर compensation देते हैं. Corrected bill/refund से अलग compensation मांगें."}}]}</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline">Electricity Bill Calculator · All India</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/hi/bill-calculator/" data-i18n="nav.calculator">Calculator</a>
+      <a href="/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">Smart Meter</a>
+      <a href="/hi/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">Tariffs</a>
+      <a href="/hi/guides/" class="nav-promoted" data-i18n="nav.blog">Blog</a>
+      <div class="nav-dropdown alerts-dropdown nav-promoted" id="alertsDropdown" data-alerts-nav="true">
+        <button type="button" class="nav-dropdown-trigger alerts-trigger" id="alertsTrigger" aria-haspopup="true" aria-expanded="false">
+          <svg class="alerts-bell" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 21a2 2 0 0 0 3.4 0"/><path d="M18 8A6 6 0 0 0 6 8c0 7-3 7-3 9h18c0-2-3-2-3-9"/></svg>
+          <span data-i18n="nav.alerts">Alerts</span>
+          <span class="alerts-dot" aria-hidden="true"></span>
+        </button>
+        <!-- The placeholder mirrors the hydrated menu's shape on purpose. It used to be a
+             single "Loading alerts..." line plus the footer link, which made the closed menu
+             92px tall; hydration then took it to 549px and pushed "See all alerts" 461px down
+             the screen, out from under the pointer of anyone reaching for it. Same rows, same
+             box, nothing moves. -->
+        <div class="nav-dropdown-menu alerts-menu" id="alertsMenu" role="menu" aria-label="Recent public alerts" data-i18n-aria="alert.nav.menuLabel" data-lenis-prevent>
+          <div class="alerts-nav-head"><strong data-i18n="alert.nav.latest">Latest updates</strong><span data-i18n="alert.nav.loading">Loading...</span></div><ol class="alerts-nav-list alerts-skeleton" aria-hidden="true"><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li><li class="alerts-skel-item"><span class="alerts-skel-line is-tag"></span><span class="alerts-skel-line is-title"></span><span class="alerts-skel-line is-title is-title2"></span><span class="alerts-skel-line is-meta"></span></li></ol><a href="/hi/alerts/" class="alerts-see-all" data-i18n="alert.nav.seeAll">See all alerts</a>
+        </div>
+      </div>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           see FOOTER below, which is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">More</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/hi/bill-calculator/" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">Calculator</span></a>
+            <a href="/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">Smart Meter</span></a>
+            <a href="/hi/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">Tariffs</span></a>
+            <a href="/hi/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">Blog</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <!-- aria-labelledby, not aria-label: the accessible name has to CONTAIN the visible
+             text ("EN"), or speech input cannot activate the button and a screen reader never
+             announces which language is active (WCAG 2.5.3). Referencing the live span also
+             keeps the name in step when syncLangUI() rewrites the badge. -->
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="true" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- A plain list of links, not a listbox. These rows navigate, so they are anchors:
+             that makes them crawlable, middle-clickable and keyboard-operable for free,
+             none of which a role="option" <li> with a click handler ever was. Rows that
+             translate in place (no twin URL to point at) stay <button>s. -->
+        <ul class="lang-menu" id="langMenu" aria-label="Select language">
+          <li><a class="lang-opt" href="/guides/bill-wrong-how-to-complain-and-win/" hreflang="en-IN" lang="en" data-lang="en"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></a></li>
+          <li><span class="lang-opt" data-lang="hi" aria-current="true"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">हिं</span></span></li>
+          <li><a class="lang-opt" href="/mr/guides/bill-wrong-how-to-complain-and-win/" hreflang="mr-IN" lang="mr" data-lang="mr"><span class="lang-opt-name">मराठी</span><span class="lang-opt-code">म</span></a></li>
+          <li><a class="lang-opt" href="/ta/guides/bill-wrong-how-to-complain-and-win/" hreflang="ta-IN" lang="ta" data-lang="ta"><span class="lang-opt-name">தமிழ்</span><span class="lang-opt-code">த</span></a></li>
+        </ul>
+      </div>
+      <button type="button" id="siteSearchBtn" class="site-search-btn" aria-label="Search the site (Ctrl+K)" title="Search (Ctrl+K)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+<div class="page-body" role="main">
+
+  <section class="seo-page container">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol><li class="crumb"><a href="/">होम</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><a href="/hi/guides/">गाइड</a></li><li class="crumb-sep" aria-hidden="true">›</li><li class="crumb"><span aria-current="page">बिल गलत है? शिकायत कैसे करें और मामला कैसे जीतें</span></li></ol></nav>
+    <div class="seo-article-tools"><p class="seo-lang-pills"><svg class="seo-lang-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span class="sr-only">Available in</span><a class="seo-lang-pill" href="/guides/bill-wrong-how-to-complain-and-win/" hreflang="en-IN" lang="en">English</a><span class="seo-lang-pill is-current" lang="hi" aria-current="page">हिंदी</span><a class="seo-lang-pill" href="/mr/guides/bill-wrong-how-to-complain-and-win/" hreflang="mr-IN" lang="mr">मराठी</a><a class="seo-lang-pill" href="/ta/guides/bill-wrong-how-to-complain-and-win/" hreflang="ta-IN" lang="ta">தமிழ்</a></p><button type="button" class="seo-share-btn" data-share-article hidden data-copied="लिंक कॉपी हुआ" data-failed="कॉपी नहीं हुआ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span class="seo-share-label" data-share-label>शेयर</span></button></div>
+    <h1>बिल गलत है? शिकायत कैसे करें और मामला कैसे जीतें</h1>
+    <p class="guide-meta">9 मिनट · अपडेट: 28 अगस्त 2026 · TheDiscomBill संपादकीय · <a href="/methodology/">दरें कहाँ से आती हैं</a></p>
+    <p class="seo-lead">अगर बिजली बिल गलत लग रहा है, तो शुरुआत गुस्से से नहीं, सबूत से करें.
+      बिल दोबारा मिलाएँ, ठीक-ठीक पहचानें कि कौन-सी मद गलत है, लिखित शिकायत दर्ज करें और
+      शिकायत संख्या लें. फिर क्रम से आगे बढ़ें: DISCOM शिकायत केंद्र, उपभोक्ता शिकायत
+      निवारण मंच (CGRF), और अंत में विद्युत लोकपाल. यही लिखित
+      रिकॉर्ड "मेरा बिल बहुत ज्यादा है" को ऐसे मामले में बदलता है जिसका जवाब DISCOM को
+      देना पड़ता है.</p>
+    
+    
+    <nav class="page-toc" aria-label="इस पेज पर">
+      <span class="page-toc-label">इस पेज पर</span>
+      <a href="#section-1">पहले तय करें कि गलती कहाँ है</a>
+        <a href="#section-2">दस्तावेजों का सेट</a>
+        <a href="#section-3">पहली शिकायत दर्ज करें</a>
+        <a href="#section-4">समय-सीमा का उपयोग करें</a>
+        <a href="#section-5">बिना चरण छोड़े शिकायत आगे बढ़ाएँ</a>
+        <a href="#section-6">शिकायत में क्या माँगें</a>
+        <a href="#section-7">शिकायत का नमूना</a>
+        <a href="#section-8">लोग मजबूत मामला कैसे कमजोर कर देते हैं</a>
+    </nav>
+    
+      <section class="seo-section" id="section-1">
+        <h2>पहले तय करें कि गलती कहाँ है</h2>
+        <p>मजबूत शिकायत एक साफ गलती बताती है. कमजोर शिकायत सिर्फ यह कहती है कि बिल ज्यादा है.
+        शिकायत दर्ज करने से पहले समस्या को इनमें से किसी एक हिस्से में रखें:</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>समस्या</th><th>क्या जाँचें</th><th>सबसे अच्छा सबूत</th></tr></thead>
+            <tbody>
+              <tr><td>यूनिट गलत</td><td>मौजूदा रीडिंग, पिछली रीडिंग, मीटर फोटो, multiplying factor</td><td>तारीख सहित मीटर फोटो, पिछले 2-3 बिल</td></tr>
+              <tr><td>अनुमानित बिल</td><td>क्या बिल पर assessed, provisional, IDF, door lock या meter not read लिखा है</td><td>साफ मीटर फोटो और वास्तविक रीडिंग से बिल संशोधन की माँग</td></tr>
+              <tr><td>श्रेणी गलत</td><td>घरेलू/वाणिज्यिक, single-phase/three-phase, ग्रामीण/शहरी, prepaid/postpaid</td><td>स्वीकृति पत्र, पुराना बिल, परिसर का वास्तविक उपयोग</td></tr>
+              <tr><td>लोड या MD penalty गलत</td><td>स्वीकृत भार, contract demand, maximum demand, kW/kVA आधार</td><td>लोड स्वीकृति, मीटर का MD register, उपकरणों की सूची</td></tr>
+              <tr><td>बकाया या दोबारा लगा शुल्क</td><td>पुराना भुगतान, adjustment या security deposit छूटा तो नहीं</td><td>भुगतान रसीद, UTR, paid bill, ledger screenshot</td></tr>
+              <tr><td>टैरिफ या surcharge बदला</td><td>सही slab, fixed charge, duty और FPPA/FAC माह लगा या नहीं</td><td>Calculator breakdown, tariff page, order/surcharge notice</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>बिल को एक बार <a href="/bill-calculator/">bill calculator</a> में मिलाएँ और itemised result
+        सेव करें. अगर calculator और बिल अलग हैं, तो शिकायत में साफ-साफ लिख सकते हैं कि गलती
+        units, fixed charge, duty, surcharge, arrears, subsidy या meter factor में से किस जगह है.</p>
+      </section>
+
+      <section class="seo-section" id="section-2">
+        <h2>दस्तावेजों का सेट</h2>
+        <p>सबूत कम लेकिन पूरे रखें. लक्ष्य यह है कि शिकायत अधिकारी दो मिनट में मामला समझ सके.</p>
+        <ul>
+          <li><strong>मौजूदा बिल PDF या फोटो</strong>, हो सके तो सभी पेज.</li>
+          <li><strong>पिछले 2-3 बिल</strong>, क्योंकि गलत reading और arrears अक्सर क्रम देखकर ही पकड़ में आते हैं.</li>
+          <li><strong>Meter photo या smart-meter screenshot</strong>, जिसमें kWh, तारीख और meter number दिखे.</li>
+          <li><strong>Payment proof</strong> अगर बकाया राशि पर विवाद है: receipt, UTR, transaction ID या bank debit.</li>
+          <li><strong>Connection details</strong>: consumer number, नाम, address, mobile number, sanctioned load और category.</li>
+          <li><strong>आपकी calculation</strong>: एक पेज में सही रकम और माँगा गया refund/adjustment.</li>
+        </ul>
+        <p class="seo-note"><strong>बिना explanation के दस screenshots न भेजें.</strong> Documents
+        attach करें, लेकिन complaint में साफ बात लिखें: क्या bill हुआ, क्या गलत है, कौन-सा सबूत
+        इसे साबित करता है, और आप कौन-सा correction चाहते हैं.</p>
+      </section>
+
+      <section class="seo-section" id="section-3">
+        <h2>पहली शिकायत दर्ज करें</h2>
+        <p>सबसे पहले DISCOM का official complaint channel इस्तेमाल करें: portal, app, customer-care
+        email, local office, या जहाँ उपलब्ध हो 1912. हर बार complaint number लें. Phone complaint
+        के बाद उसी number का हवाला देते हुए written complaint भी भेजें.</p>
+        <p>आपकी complaint में पाँच बातें हों:</p>
+        <ol>
+          <li><strong>पहचान:</strong> consumer number, नाम, service address और mobile number.</li>
+          <li><strong>बिल:</strong> bill number, billing month, due date और billed amount.</li>
+          <li><strong>गलती:</strong> ठीक वही disputed line, सिर्फ total नहीं.</li>
+          <li><strong>सबूत:</strong> attached bills, meter photo, payment proof या calculator working.</li>
+          <li><strong>माँग:</strong> revised bill, meter test, arrear reversal, refund, reconnection या written speaking order.</li>
+        </ol>
+        <p>Due date पास हो तो जहाँ part payment allowed हो वहाँ undisputed amount pay करें, या
+        payment under protest करके यह बात लिखित में दर्ज करें. Dispute pending रहते हुए भी
+        non-payment से late-payment surcharge या disconnection हो सकता है, इसलिए case को default
+        में न बदलने दें.</p>
+      </section>
+
+      <section class="seo-section" id="section-4">
+        <h2>समय-सीमा का उपयोग करें</h2>
+        <p>Central Electricity Rights of Consumers Rules उपभोक्ताओं के लिए राष्ट्रीय स्तर के
+        न्यूनतम अधिकार तय करते हैं. Exact service standards और compensation आपकी State Electricity
+        Regulatory Commission तय करती है. National rules को आधार मानें और अपनी state supply code
+        से exact deadline देखें.</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>मामला</th><th>उपयोगी समय-सीमा या अधिकार</th><th>कैसे इस्तेमाल करें</th></tr></thead>
+            <tbody>
+              <tr><td>Bill delivery</td><td>Bill due date से कम से कम 10 दिन पहले मिलना चाहिए</td><td>Late delivery से default risk हो तो due-date extension या correction माँगें</td></tr>
+              <tr><td>New connection के बाद पहला bill</td><td>State-specified period में, और दो billing cycles से ज्यादा देर नहीं</td><td>Missing हो तो written complaint करें; DISCOM को 7 दिन में bill issue करना होता है</td></tr>
+              <tr><td>Provisional billing</td><td>एक financial year में दो से ज्यादा provisional bills सामान्य नहीं, force-majeure को छोड़कर</td><td>Repeated assessment के बजाय actual meter reading और revision माँगें</td></tr>
+              <tr><td>Delayed bill</td><td>State rules specified delay पर 2-5% rebate दे सकते हैं</td><td>Late delivery proof के साथ rebate claim करें</td></tr>
+              <tr><td>CGRF decision</td><td>Central rules के अनुसार सामान्यतः 30 दिन, और किसी भी हालत में 45 दिन से ज्यादा नहीं</td><td>Forum deadline miss करे या order संतोषजनक न हो तो मामला आगे बढ़ाएँ</td></tr>
+              <tr><td>Compensation</td><td>State standards bill complaints, meter replacement, reconnection, voltage और supply failures cover करते हैं</td><td>Bill correction से अलग compensation भी माँगें</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Sources: Ministry of Power की consumer-rights announcement
+        <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=1682384" target="_blank" rel="noopener nofollow">PIB पर</a>,
+        <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=1806219" target="_blank" rel="noopener nofollow">consumer-rights rules पर Rajya Sabha reply</a>,
+        और Electricity Act के तहत राज्य के CGRF/विद्युत लोकपाल नियम.</p>
+      </section>
+
+      <section class="seo-section" id="section-5">
+        <h2>बिना चरण छोड़े शिकायत आगे बढ़ाएँ</h2>
+        <p>अधिकांश राज्यों में शिकायत आगे बढ़ाने का क्रम यह माना जाता है:</p>
+        <ol>
+          <li><strong>DISCOM complaint desk या local office.</strong> Complaint number लें और acknowledgement संभालकर रखें.</li>
+          <li><strong>Internal grievance cell या higher officer</strong>, अगर आपके state/DISCOM में यह layer है. पहली complaint number का हवाला दें.</li>
+          <li><strong>Consumer Grievance Redressal Forum (CGRF).</strong> DISCOM समाधान न दे या गलत जवाब दे, तो CGRF में शिकायत दाखिल करें.</li>
+          <li><strong>विद्युत लोकपाल.</strong> CGRF का आदेश संतोषजनक न हो, या forum समय पर फैसला न दे, तो विद्युत लोकपाल में appeal करें.</li>
+        </ol>
+        <p>CGRF और विद्युत लोकपाल वाला रास्ता साधारण ग्राहक सेवा नहीं है. यह Electricity Act के तहत
+        बनी वैधानिक उपभोक्ता शिकायत व्यवस्था है. PIB ने साफ कहा है कि ज्यादा वसूली और faulty-meter
+        complaints CGRF/विद्युत लोकपाल के रास्ते ले जाई जा सकती हैं. देखें
+        <a href="https://www.pib.gov.in/newsite/PrintRelease.aspx?lang=2&amp;relid=98961" target="_blank" rel="noopener nofollow">Ministry of Power reply</a>
+        और <a href="https://jercuts.gov.in/ombudsman-details/" target="_blank" rel="noopener nofollow">JERC विद्युत लोकपाल प्रक्रिया</a>.</p>
+      </section>
+
+      <section class="seo-section" id="section-6">
+        <h2>शिकायत में क्या माँगें</h2>
+        <p>Specific रहें. Forum correction order कर सकता है, लेकिन उसे साफ पता होना चाहिए कि आप
+        कौन-सी राहत चाहते हैं.</p>
+        <ul>
+          <li><strong>Revised bill</strong> actual meter reading या correct slab/category के आधार पर.</li>
+          <li><strong>Meter test</strong> अगर meter fast, stuck या defective लगता है.</li>
+          <li><strong>Arrear reversal</strong> जहाँ paid amount, subsidy, adjustment या security deposit छूटा हो.</li>
+          <li><strong>Refund या adjustment</strong> अगले bill में excess recovery के लिए.</li>
+          <li><strong>Late-payment surcharge reversal</strong> अगर गलत bill या delayed correction से surcharge लगा हो.</li>
+          <li><strong>Compensation</strong> state standards of performance के तहत, जहां लागू हो.</li>
+          <li><strong>Written speaking order</strong> अगर DISCOM revision refuse करे.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section" id="section-7">
+        <h2>शिकायत का नमूना</h2>
+        <p>भाषा दृढ़ और सीधी रखें. यह template इसलिए काम करता है क्योंकि officer को ठीक-ठीक बताता
+        है कि क्या check करना है.</p>
+        <blockquote><p>विषय: Consumer No. [number], Bill No. [number] के लिए billing complaint</p>
+        <p>मैं [month] के लिए [date] को जारी bill पर आपत्ति दर्ज कर रहा/रही हूँ, क्योंकि [specific error].
+        Bill में [billed units/amount/category/arrears] दिखाया गया है, जबकि attached documents के अनुसार
+        सही figure [correct figure] है. मैंने current bill, previous bills, meter photo/payment proof और
+        अपनी calculation attach की है. कृपया bill revise करें, related late-payment surcharge reverse करें,
+        और written calculation/order जारी करें. अगर meter testing जरूरी है, तो कृपया request register
+        करके test date और procedure बताएं. कृपया complaint number और expected resolution date भी दें.</p></blockquote>
+        <p>Disconnection avoid करने के लिए payment करें तो यह line जोड़ें: <strong>"Payment is made
+        under protest and without accepting the disputed calculation."</strong></p>
+      </section>
+
+      <section class="seo-section" id="section-8">
+        <h2>लोग मजबूत मामला कैसे कमजोर कर देते हैं</h2>
+        <ul>
+          <li>Phone पर complaint करते हैं लेकिन written complaint number नहीं लेते.</li>
+          <li>"Bill high है" कहते हैं, लेकिन गलत line नहीं बताते.</li>
+          <li>Payment screenshots भेजते हैं पर UTR या consumer number नहीं देते.</li>
+          <li>Due date ignore करके surcharge/disconnection को main issue बना देते हैं.</li>
+          <li>CGRF से पहले सीधे विद्युत लोकपाल के पास चले जाते हैं.</li>
+          <li>Refund माँगते हैं, लेकिन category, meter factor या arrear entry correction नहीं माँगते.</li>
+        </ul>
+        <p>मजबूत तरीका सीधा है: एक error, एक calculation, एक complaint number, एक deadline,
+        और फिर उसी file के साथ escalation.</p>
+      </section>
+    <section class="seo-section"><h2>अक्सर पूछे जाने वाले सवाल</h2>
+    <details class="seo-faq-item">
+      <summary>गलत बिजली बिल के लिए पहले कहां शिकायत करें?</summary>
+      <div class="seo-faq-a">पहले अपने DISCOM के official complaint channel पर जाएं: portal, app, customer-care email, local office या जहां available हो 1912. Complaint number लें. समाधान न मिले तो CGRF और फिर विद्युत लोकपाल तक मामला आगे बढ़ाएं.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>क्या सीधे विद्युत लोकपाल के पास जा सकते हैं?</summary>
+      <div class="seo-faq-a">आमतौर पर नहीं. विद्युत लोकपाल usually CGRF के order, delay या unsatisfactory decision के बाद appeal stage है. Exact process state regulator तय करता है.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Disputed bill pay करना चाहिए?</summary>
+      <div class="seo-faq-a">Due date पास हो तो default avoid करें. जहां allowed हो undisputed amount pay करें, या payment under protest करके written में dispute दर्ज करें. गलत bill से delay हुआ हो तो late-payment surcharge reversal मांगें.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>कौन से documents complaint को मजबूत बनाते हैं?</summary>
+      <div class="seo-faq-a">Current bill, पिछले 2-3 bills, dated meter photo या smart-meter screenshot, arrears dispute हो तो payment proof, consumer details और correction की one-page calculation attach करें.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>CGRF में कितना समय लगता है?</summary>
+      <div class="seo-faq-a">Central Electricity Rights of Consumers Rules के अनुसार grievance normally 30 days में और किसी भी हालत में 45 days से ज्यादा नहीं decide होना चाहिए. Filing format और exact deadlines state regulator तय करता है.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>क्या wrong bill पर compensation मिल सकता है?</summary>
+      <div class="seo-faq-a">हां, जहां state standards of performance bill complaints, delayed service, meter replacement, reconnection या related failures पर compensation देते हैं. Corrected bill/refund से अलग compensation मांगें.</div>
+    </details></section>
+    <section class="seo-section guide-calc-cta">
+      <h2>अब अपना असली बिल जाँचें</h2>
+      <p>पढ़ना काफ़ी नहीं — अपने डिस्कॉम की असली स्लैब दरों, फिक्स्ड चार्ज और FPPA के साथ अपना मदवार बिल सेकंडों में निकालें। मुफ़्त, बिना साइन-अप।</p>
+      <p class="seo-cta-row"><a class="seo-cta" href="/#calculator">बिजली बिल कैलकुलेटर खोलें →</a></p>
+    </section>
+    
+    <section class="seo-section guide-more">
+      <h2>संबंधित गाइड</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/guides/electricity-security-deposit-explained/">
+          <strong>Security Deposit on an Electricity Connection, Explained</strong>
+          <small>7 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/md-penalty-excess-demand-charge/">
+          <strong>MD पेनल्टी और अतिरिक्त मांग शुल्क — पूरी जानकारी</strong>
+          <small>8 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/how-to-read-uppcl-bill/">
+          <strong>अपना UPPCL बिजली बिल कैसे पढ़ें</strong>
+          <small>6 मिनट</small>
+        </a>
+        <a class="seo-link-card" href="/hi/guides/why-did-my-electricity-bill-increase/">
+          <strong>मेरा बिजली बिल अचानक क्यों बढ़ गया?</strong>
+          <small>7 मिनट</small>
+        </a>
+      </div>
+      <p class="guide-more-all"><a href="/hi/guides/">सभी गाइड देखें →</a></p>
+    </section>
+    <p class="seo-disclaimer">सार्वजनिक रूप से उपलब्ध टैरिफ आदेशों और विनियमों पर आधारित सामान्य मार्गदर्शन; विवरण राज्य, डिस्कॉम और उपभोक्ता श्रेणी के अनुसार बदलते हैं। अपने डिस्कॉम की आधिकारिक अनुसूची या छपे बिल से मिलान करें।</p>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">Tools</span>
+        <a href="/hi/bill-calculator/" data-i18n="ql.advancedCalc">Advanced Bill Calculator</a>
+        <a href="/hi/compare/" data-i18n="nav.compare">Compare</a>
+        <a href="/hi/electricity-cost-calculator/" data-i18n="ql.usage">Electricity Cost Calculator</a>
+        <a href="/hi/ev-charging-calculator/" data-i18n="ql.ev">EV Charging Cost</a>
+        <a href="/hi/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">Sanctioned Load Optimizer</a>
+        <a href="/hi/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">Tenant Sub-Meter Calculator</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">Fuel Surcharge Tracker</a>
+        <a href="/install/" data-i18n="ql.install">Install Offline App</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">Solar Tools</span>
+        <a href="/hi/solar-calculator/" data-i18n="nav.solarSavings">Rooftop Solar Savings Calculator</a>
+        <a href="/hi/solar-panel-size-calculator/" data-i18n="nav.solarSize">Solar Panel Size Calculator</a>
+        <a href="/hi/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">Solar Battery Backup Calculator</a>
+        <a href="/hi/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">Solar Subsidy Checker</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">Services</span>
+        <a href="/services/" data-i18n="ql.discomServices">DISCOM Services</a>
+        <a href="/hi/smart-meter-recharge/" data-i18n="ql.smartMeter">Smart Meter Recharge</a>
+        <a href="/smart-meter/" data-i18n="ql.meterDisplay">Smart Meter Guide</a>
+        <a href="/hi/check-my-bill/" data-i18n="ql.ocrCheck">Instant Bill Self-Check (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">Expert Bill Review</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">New Connection</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">Learn</span>
+        <a href="/hi/tariffs/states/" data-i18n="footer.allStates">All States &amp; DISCOMs</a>
+        <a href="/hi/guides/" data-i18n="nav.blog">Blog</a>
+        <a href="/hi/glossary/" data-i18n="ql.glossary">Bill Glossary</a>
+        <a href="/understand-your-bill/" data-i18n="ql.understandBill">Understand Your Bill</a>
+        <a href="/methodology/" data-i18n="ql.methodology">Methodology &amp; Accuracy</a>
+        <a href="/database/" data-i18n="ql.tariffDatabase">Tariff Database</a>
+        <a href="/orders/" data-i18n="ql.orderLibrary">Order Library</a>
+        <a href="/hi/alerts/" data-i18n="ql.alerts">Alerts</a>
+        <a href="/#about" data-i18n="nav.about">About</a>
+        <a href="/contact/" data-i18n="ql.contact">Contact</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">&copy; 2026 TheDiscomBill. All rights reserved.</span> &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">Disclaimer</a> &nbsp;|&nbsp; <a href="/methodology/" data-i18n="footer.methodology">Methodology</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">Privacy Policy</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">Cookie Policy</a></p>
+    <!-- Facebook returns here once the account exists -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>

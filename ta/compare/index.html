@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <!-- Set the colour theme before first paint (no flash): stored choice, else OS preference. -->
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+        try { localStorage.setItem('lang', 'ta'); } catch (e) {}
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light')
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+  <title>மின் கட்டண ஒப்பீடு — TheDiscomBill</title>
+  <meta name="description" content="பொதுவான மாதாந்திர பயன்பாட்டில் இந்திய DISCOM மின் கட்டணங்களை நிலைக் கட்டணம் மற்றும் மானியத்துடன் ஒப்பிடுங்கள்.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
+  <link rel="canonical" href="https://thediscombill.com/ta/compare/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/compare/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/compare/">
+  <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/compare/">
+  <link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/compare/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/compare/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="மின் கட்டண ஒப்பீடு — TheDiscomBill">
+  <meta property="og:description" content="பொதுவான மாதாந்திர பயன்பாட்டில் இந்திய DISCOM மின் கட்டணங்களை நிலைக் கட்டணம் மற்றும் மானியத்துடன் ஒப்பிடுங்கள்.">
+  <meta property="og:url" content="https://thediscombill.com/ta/compare/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:locale" content="ta_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="மின் கட்டண ஒப்பீடு — TheDiscomBill">
+  <meta name="twitter:description" content="பொதுவான மாதாந்திர பயன்பாட்டில் இந்திய DISCOM மின் கட்டணங்களை நிலைக் கட்டணம் மற்றும் மானியத்துடன் ஒப்பிடுங்கள்.">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="stylesheet" href="/css/styles.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <!-- entity-graph -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN"}</script>
+  <!-- / entity-graph -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"மின் கட்டண ஒப்பீடு","url":"https://thediscombill.com/ta/compare/","description":"பொதுவான மாதாந்திர பயன்பாட்டில் இந்திய DISCOM மின் கட்டணங்களை நிலைக் கட்டணம் மற்றும் மானியத்துடன் ஒப்பிடுங்கள்.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"ta-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"மின் கட்டண ஒப்பீடு","item":"https://thediscombill.com/ta/compare/"}]}</script>
+</head>
+<body>
+
+<!-- ── Header ───────────────────────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/ta/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline" data-i18n="tagline">மின்சாரக் கட்டணக் கால்குலேட்டர் · இந்தியா முழுவதும்</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/ta/bill-calculator/" data-i18n="nav.calculator">கால்குலேட்டர்</a>
+      <a href="/ta/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">ஸ்மார்ட் மீட்டர்</a>
+      <a href="/ta/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">கட்டணங்கள்</a>
+      <a href="/ta/guides/" class="nav-promoted" data-i18n="nav.blog">வலைப்பதிவு</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           the footer is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">மேலும்</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/ta/bill-calculator/" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">கால்குலேட்டர்</span></a>
+            <a href="/ta/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">ஸ்மார்ட் மீட்டர்</span></a>
+            <a href="/ta/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">கட்டணங்கள்</span></a>
+            <a href="/ta/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">வலைப்பதிவு</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<div class="page-body" role="main">
+  <!-- The sticky header already reserves its height in normal flow, so no extra
+       padding-top is needed here — the section's own top padding handles spacing. -->
+  <!-- ── Comparison Table ──────────────────────────────────────────────────────── -->
+  <section id="comparison" class="comparison-section" style="min-height: calc(100vh - 150px);">
+    <div class="container">
+      <!-- The BreadcrumbList JSON-LD in <head> already described this trail; the visible
+           nav every other page carries was simply never added here. -->
+      <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol>
+        <li class="crumb"><a href="/ta/" data-i18n="bc.home">முகப்பு</a></li>
+        <li class="crumb-sep" aria-hidden="true">›</li>
+        <li class="crumb"><span aria-current="page" data-i18n="bc.compare">கட்டண ஒப்பீடு</span></li>
+      </ol></nav>
+      <h1 class="reveal" data-i18n="cmp.h2">மின்சார கட்டண ஒப்பீடு 2026 (முக்கிய நிறுவனங்கள்)</h1>
+      <p class="reveal" data-i18n-html="cmp.intro">ஒரு சாதாரண மாதத்திற்கு <strong>1&nbsp;kW அனுமதிக்கப்பட்ட சுமையில்</strong> முக்கிய மின் விநியோகஸ்தர்கள் ஒருவருக்கொருவர் எப்படி என்று பாருங்கள். நடப்பு நிதியாண்டு 2025-26 கட்டணங்களின் அடிப்படையில் நேரடியாகக் கணக்கிடப்படுகிறது.</p>
+
+      <div class="comparison-tabs reveal">
+        <div class="comp-seg" role="group" aria-label="Tariff category">
+          <button class="comp-tab active" data-target="domestic" aria-pressed="true"><svg class="comp-tab-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/><path d="M9.5 21v-6h5v6"/></svg><span data-i18n="cmp.cat.domestic">வீட்டு</span></button>
+          <button class="comp-tab" data-target="commercial" aria-pressed="false"><svg class="comp-tab-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5 5 4h14l1 4.5"/><path d="M4 8.5h16v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-4-2z"/><path d="M5 11.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-8.5"/><path d="M9.5 21v-5h5v5"/></svg><span data-i18n="cmp.cat.commercial">வணிக</span></button>
+        </div>
+      </div>
+
+      <!-- Appears once a row is ticked; the button hands both DISCOMs to the tool below. -->
+      <div class="comp-pick-bar" id="compPickBar" hidden>
+        <span id="compPickLabel"></span>
+        <button type="button" id="compPickGo" class="cc-btn comp-pick-go" disabled>Compare with my usage ↓</button>
+      </div>
+
+      <div class="comparison-table-wrapper reveal">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th data-i18n="cmp.th.discom">டிஸ்காம் / மாநிலம்</th>
+              <th class="num"><span data-i18n="cmp.th.first">முதல் அடுக்கு</span><span class="th-unit">₹/unit</span></th>
+              <th class="num"><span data-i18n="cmp.th.top">உயர் அடுக்கு</span><span class="th-unit">₹/unit</span></th>
+              <th class="num"><span data-i18n="cmp.th.fixed">நிலையான</span><span class="th-unit">₹/mo</span></th>
+              <th class="num" data-i18n="cmp.th.u200">200 யூனிட்</th>
+              <th class="num" data-i18n="cmp.th.u500">500 யூனிட்</th>
+            </tr>
+          </thead>
+          <tbody id="compTableBody">
+            <tr><td colspan="6" class="comp-loading">Calculating tariffs…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── Custom head-to-head: pick any two DISCOMs + your own units ────────────
+           Sits BELOW the table on purpose. The table answers the H1 for someone who
+           arrived on "electricity rate comparison india" and is the crawlable asset;
+           the tool needs you to already know which two providers you care about, so
+           it reads as the follow-up step rather than the entry point. -->
+      <section class="custom-compare reveal" aria-labelledby="ccHeading">
+        <div class="cc-head">
+          <h2 id="ccHeading" data-i18n="cmp.cc.title">எந்த இரு டிஸ்காம்களையும் ஒப்பிடுங்கள்</h2>
+          <p data-i18n="cmp.cc.sub">மேலே உள்ள அட்டவணை 1 kW-இல் ஒரு வழக்கமான மாதத்தை அனுமானிக்கிறது. எந்த இரு விநியோகஸ்தர்களையும் தேர்ந்தெடுத்து — பெரியவை மட்டுமல்ல — முழு விவரத்துடன் சம அடிப்படையில் பில் மதிப்பீட்டுக்கு உங்கள் பயன்பாடு மற்றும் சுமையை உள்ளிடுங்கள்.</p>
+        </div>
+        <form class="cc-form" id="ccForm">
+          <div class="cc-pickers">
+            <div class="cc-picker">
+              <label for="ccDiscomA" data-i18n="cmp.cc.discomA">டிஸ்காம் A</label>
+              <select id="ccDiscomA" class="cc-select"></select>
+            </div>
+            <div class="cc-vs" aria-hidden="true">vs</div>
+            <div class="cc-picker">
+              <label for="ccDiscomB" data-i18n="cmp.cc.discomB">டிஸ்காம் B</label>
+              <select id="ccDiscomB" class="cc-select"></select>
+            </div>
+          </div>
+          <div class="cc-inputs">
+            <div class="cc-field">
+              <label for="ccUnits" data-i18n="cmp.cc.units">மாத யூனிட்கள் (kWh)</label>
+              <input type="number" id="ccUnits" min="0" step="10" value="300" inputmode="numeric">
+            </div>
+            <div class="cc-field">
+              <label for="ccLoad" data-i18n="cmp.cc.load">சுமை (kW)</label>
+              <input type="number" id="ccLoad" min="0.5" step="0.5" value="2">
+            </div>
+            <div class="cc-field">
+              <label for="ccCategory" data-i18n="cmp.cc.category">வகை</label>
+              <select id="ccCategory" class="cc-select">
+                <option value="domestic" data-i18n="cmp.cat.domestic">வீட்டு</option>
+                <option value="commercial" data-i18n="cmp.cat.commercial">வணிக</option>
+              </select>
+            </div>
+            <button type="submit" class="cc-btn" id="ccCompareBtn" data-i18n="cmp.cc.btn">ஒப்பிடு</button>
+          </div>
+          <label class="cc-check">
+            <input type="checkbox" id="ccSubsidy" checked>
+            <span data-i18n="cmp.cc.subsidy">அரசு மானியத்தைச் சேர் (தகுதியுள்ள வீட்டு இணைப்புகள்)</span>
+          </label>
+        </form>
+        <p class="cc-note" data-i18n-html="cmp.cc.note">மானியம் தகுதியுள்ள <strong>வீட்டு</strong> இணைப்புகளுக்குப் பொருந்தும். தற்போது மாதிரியாக்கப்பட்டது: <strong>டெல்லி</strong> (GNCTD — முதல் 200 யூனிட் இலவசம், 400 வரை 50% தள்ளுபடி). பிற மாநில மானியங்கள் (எ.கா. பஞ்சாப், கர்நாடகா) உங்கள் உண்மையான பில்லை இன்னும் குறைக்கலாம்.</p>
+        <div class="cc-result" id="ccResult" aria-live="polite"></div>
+      </section>
+      <div class="comparison-notes reveal">
+        <div class="comparison-note-card">
+          <h2 data-i18n="cmp.note1.title">ஒவ்வொரு எண்ணிலும் என்ன அடங்கும்</h2>
+          <p data-i18n-html="cmp.note1.body">எண்கள் ஒற்றை-ஃபேஸ் இணைப்புக்கு நிலையான நகர்ப்புற கட்டணத்தில் மதிப்பிடப்பட்ட <strong>மொத்த மாத பில்</strong> — மின்சக்தி + நிலை/தேவை கட்டணம் + FPPA (பொருந்தும் இடங்களில்) — கால்குலேட்டரின் அதே இன்ஜினால் கணக்கிடப்பட்டு உண்மையான பில்களுடன் சரிபார்க்கப்பட்டவை (<a href="/methodology/">எங்கள் முறையியலைப் பாருங்கள்</a>). எல்லா பயன்பாட்டு நிலைகளிலும் <strong>1&nbsp;kW அனுமதிக்கப்பட்ட சுமை</strong> எடுத்துக்கொள்ளப்பட்டுள்ளது.</p>
+        </div>
+        <div class="comparison-note-card">
+          <h2 data-i18n="cmp.note2.title">மானியங்கள் &amp; விலக்குகள்</h2>
+          <p data-i18n-html="cmp.note2.body">மாதிரியாக்கப்பட்ட இடங்களில் தகுதியுள்ள <strong>வீட்டு அரசு மானியம்</strong> பொருந்தும் — <strong>டெல்லி</strong> (GNCTD), <strong>பஞ்சாப்</strong>, <strong>கர்நாடகா</strong>, <strong>தெலங்கானா</strong> & <strong>தமிழ்நாடு</strong> — தகுதியுள்ள யூனிட்களில் இலவச மின்சக்தியாக. பட்டியலிடப்பட்ட திட்டம் இல்லாத மாநிலங்களுக்கு இங்கு மானியம் சேர்க்கப்படவில்லை; அங்கு பில் குறைவாக இருக்கலாம். நெட்-மீட்டரிங் & தாமத அபராதம் சேர்க்கப்படவில்லை.</p>
+        </div>
+        <div class="comparison-note-card">
+          <h2 data-i18n="cmp.note3.title">அட்டவணையை எப்படி வாசிப்பது</h2>
+          <p data-i18n-html="cmp.note3.body"><span class="comp-best" style="padding:1px 6px;border-radius:5px">பச்சை</span> கட்டம் ஒவ்வொரு பயன்பாட்டு நிலையிலும் மிகக் குறைந்த விலை டிஸ்காமைக் குறிக்கும். எப்போதும் உங்கள் உண்மையான பில்லுடன் சரிபாருங்கள் — கட்டணங்கள் துணை-வகை, அடுக்கு & நகரம் வாரியாக மாறும்.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ── Footer ────────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">கருவிகள்</span>
+        <a href="/ta/bill-calculator/" data-i18n="ql.advancedCalc">மேம்பட்ட பில் கணிப்பான்</a>
+        <a href="/ta/compare/" data-i18n="nav.compare">ஒப்பீடு</a>
+        <a href="/ta/electricity-cost-calculator/" data-i18n="ql.usage">மின் செலவு கால்குலேட்டர்</a>
+        <a href="/ta/ev-charging-calculator/" data-i18n="ql.ev">EV சார்ஜிங் செலவு</a>
+        <a href="/ta/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">அனுமதிக்கப்பட்ட சுமை மேம்படுத்தி</a>
+        <a href="/ta/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">குடியிருப்பாளர் துணை-மீட்டர் கால்குலேட்டர்</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">எரிபொருள் கூடுதல் கட்டண டிராக்கர்</a>
+        <a href="/install/" data-i18n="ql.install">ஆஃப்லைன் ஆப்பை நிறுவுக</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">சோலார் கருவிகள்</span>
+        <a href="/ta/solar-calculator/" data-i18n="nav.solarSavings">கூரை சோலார் சேமிப்பு கணிப்பான்</a>
+        <a href="/ta/solar-panel-size-calculator/" data-i18n="nav.solarSize">சோலார் பேனல் அளவு கணிப்பான்</a>
+        <a href="/ta/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">சோலார் பேட்டரி பேக்அப் கணிப்பான்</a>
+        <a href="/ta/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">சோலார் மானிய சரிபார்ப்பு</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">சேவைகள்</span>
+        <a href="/services/" data-i18n="ql.discomServices">டிஸ்காம் சேவைகள்</a>
+        <a href="/ta/smart-meter-recharge/" data-i18n="ql.smartMeter">ஸ்மார்ட் மீட்டர் ரீசார்ஜ்</a>
+        <a href="/ta/smart-meter/" data-i18n="ql.meterDisplay">ஸ்மார்ட் மீட்டர் வழிகாட்டி</a>
+        <a href="/ta/check-my-bill/" data-i18n="ql.ocrCheck">உடனடி பில் சுய சரிபார்ப்பு (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">நிபுணர் பில் மதிப்பாய்வு</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">புதிய இணைப்பு</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">அறிந்துகொள்ள</span>
+        <a href="/ta/tariffs/states/" data-i18n="footer.allStates">அனைத்து மாநிலங்களும் டிஸ்காம்களும்</a>
+        <a href="/ta/guides/" data-i18n="nav.blog">வலைப்பதிவு</a>
+        <a href="/ta/glossary/" data-i18n="ql.glossary">பில் சொற்களஞ்சியம்</a>
+        <a href="/ta/understand-your-bill/" data-i18n="ql.understandBill">உங்கள் பில்லைப் புரிந்துகொள்ளுங்கள்</a>
+        <a href="/methodology/" data-i18n="ql.methodology">முறையியல் &amp; துல்லியம்</a>
+        <a href="/database/" data-i18n="ql.tariffDatabase">கட்டணத் தரவுத்தளம்</a>
+        <a href="/orders/" data-i18n="ql.orderLibrary">ஆணை நூலகம்</a>
+        <a href="/ta/alerts/" data-i18n="ql.alerts">அலர்ட்கள்</a>
+        <a href="/#about" data-i18n="nav.about">எங்களைப் பற்றி</a>
+        <a href="/contact/" data-i18n="ql.contact">தொடர்பு கொள்ள</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">© 2026 TheDiscomBill. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</span> 
+    &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">பொறுப்புத் துறப்பு</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">தனியுரிமைக் கொள்கை</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">குக்கீ கொள்கை</a></p>
+    <!-- Social profiles — hrefs are placeholders until the accounts exist -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- ── Scripts ───────────────────────────────────────────────────────────────── -->
+<script type="module" src="/js/main.js"></script>
+
+</body>
+</html>

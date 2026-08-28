@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <!-- Set the colour theme before first paint (no flash): stored choice, else light. -->
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+        try { localStorage.setItem('lang', 'mr'); } catch (e) {}
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+  <title>वीज खर्च कॅल्क्युलेटर — TheDiscomBill</title>
+  <meta name="description" content="घरातील उपकरणांवरून मासिक युनिट आणि वीज खर्चाचा अंदाज घ्या.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
+  <link rel="canonical" href="https://thediscombill.com/mr/electricity-cost-calculator/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/electricity-cost-calculator/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/electricity-cost-calculator/">
+  <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/electricity-cost-calculator/">
+  <link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/electricity-cost-calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/electricity-cost-calculator/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="वीज खर्च कॅल्क्युलेटर — TheDiscomBill">
+  <meta property="og:description" content="घरातील उपकरणांवरून मासिक युनिट आणि वीज खर्चाचा अंदाज घ्या.">
+  <meta property="og:url" content="https://thediscombill.com/mr/electricity-cost-calculator/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:locale" content="mr_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="वीज खर्च कॅल्क्युलेटर — TheDiscomBill">
+  <meta name="twitter:description" content="घरातील उपकरणांवरून मासिक युनिट आणि वीज खर्चाचा अंदाज घ्या.">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="stylesheet" href="/css/styles.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <!-- entity-graph -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN"}</script>
+  <!-- / entity-graph -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"वीज खर्च कॅल्क्युलेटर","url":"https://thediscombill.com/mr/electricity-cost-calculator/","description":"घरातील उपकरणांवरून मासिक युनिट आणि वीज खर्चाचा अंदाज घ्या.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"वीज खर्च कॅल्क्युलेटर","item":"https://thediscombill.com/mr/electricity-cost-calculator/"}]}</script>
+</head>
+<body>
+
+<!-- ── Header ───────────────────────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/mr/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline" data-i18n="tagline">वीज बिल कॅल्क्युलेटर · संपूर्ण भारतासाठी</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/mr/bill-calculator/" data-i18n="nav.calculator">कॅल्क्युलेटर</a>
+      <a href="/mr/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">स्मार्ट मीटर</a>
+      <a href="/mr/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">टॅरिफ</a>
+      <a href="/mr/guides/" class="nav-promoted" data-i18n="nav.blog">ब्लॉग</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           the footer is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">अधिक</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/mr/bill-calculator/" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">कॅल्क्युलेटर</span></a>
+            <a href="/mr/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">स्मार्ट मीटर</span></a>
+            <a href="/mr/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">टॅरिफ</span></a>
+            <a href="/mr/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">ब्लॉग</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<div class="page-body" role="main">
+  <section class="estimator-section">
+    <div class="container">
+      <!-- The BreadcrumbList JSON-LD in <head> already described this trail; the visible
+           nav every content page carries was simply never added here. -->
+      <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol>
+        <li class="crumb"><a href="/mr/" data-i18n="bc.home">मुख्यपृष्ठ</a></li>
+        <li class="crumb-sep" aria-hidden="true">›</li>
+        <li class="crumb"><span aria-current="page">Electricity Cost Calculator</span></li>
+      </ol></nav>
+      <div class="est-hero">
+        <h1 data-i18n="est.title">वीज खर्च कॅल्क्युलेटर</h1>
+        <p class="est-intro" data-i18n-html="est.intro">तुमची उपकरणे जोडा, किती आहेत व दररोज किती तास चालतात ते सांगा. आम्ही तुमची <strong>मासिक युनिट (kWh)</strong> व अंदाजे खर्च लगेच दाखवू.</p>
+        <div class="est-hero-chips" role="list">
+          <span class="est-hero-chip" role="listitem" data-i18n="est.chip1">19 सामान्य उपकरणे</span>
+          <span class="est-hero-chip" role="listitem" data-i18n="est.chip2">लाइव्ह kWh व ₹ अंदाज</span>
+          <span class="est-hero-chip" role="listitem" data-i18n="est.chip3">मोफत · साइन-अप नाही</span>
+        </div>
+      </div>
+
+      <!-- Season toggle — resets AC/cooler/fan/geyser run-times to seasonal defaults -->
+      <div class="est-toolbar">
+        <span class="est-toolbar-label" data-i18n="est.season">ऋतू</span>
+        <div class="est-season" role="group" id="estSeason" aria-label="Season">
+          <button type="button" class="est-season-btn" data-season="summer" aria-pressed="true" data-i18n="est.summer">उन्हाळा</button>
+          <button type="button" class="est-season-btn" data-season="monsoon" aria-pressed="false" data-i18n="est.monsoon">पावसाळा</button>
+          <button type="button" class="est-season-btn" data-season="winter" aria-pressed="false" data-i18n="est.winter">हिवाळा</button>
+        </div>
+        <span class="est-season-note" id="estSeasonNote"></span>
+      </div>
+
+      <!-- Quick-add appliance chips -->
+      <div class="est-chips" id="estChips" aria-label="Add an appliance"></div>
+
+      <div class="est-layout">
+        <!-- Left: appliance builder -->
+        <div class="est-builder">
+          <div class="est-rows-head">
+            <span class="est-col-appliance" data-i18n="est.colAppliance">उपकरण</span>
+            <span class="est-col-w" data-i18n="est.colWatts">वॅट</span>
+            <span class="est-col-q" data-i18n="est.colQty">संख्या</span>
+            <span class="est-col-h" data-i18n="est.colHrs">तास/दिवस</span>
+            <span class="est-col-u" data-i18n="est.colKwh">kWh/महिना</span>
+            <span class="est-col-x"></span>
+          </div>
+          <div id="estRows"></div>
+          <div class="est-empty" id="estEmpty" hidden data-i18n="est.emptyRows">अजून एकही उपकरण नाही — सुरू करण्यासाठी वरील चिपवर टॅप करा.</div>
+          <button type="button" class="btn-add-appliance" id="estAddCustom" data-i18n="est.addCustom">+ कस्टम उपकरण जोडा</button>
+        </div>
+
+        <!-- Right: live summary + breakdown -->
+        <aside class="est-summary">
+          <div class="est-total-card">
+            <div class="est-total-label" data-i18n="est.totalLabel">अंदाजित मासिक वापर</div>
+            <div class="est-total-kwh"><span id="estMonthlyKwh">0</span><small> kWh</small></div>
+            <div class="est-total-sub"><span id="estDailyKwh">0</span> <span data-i18n="est.perDay">kWh प्रति दिवस ·</span> <span id="estApplianceCount">0</span> <span data-i18n="est.appliances">उपकरणे</span></div>
+
+            <div class="est-cost-block">
+              <label class="est-rate-label">
+                <span data-i18n="est.tariff">टॅरिफ</span>
+                <span class="est-rate-input">₹<input type="number" id="estRate" value="7" min="0" step="0.5" inputmode="decimal"><span data-i18n="est.perUnit">/युनिट</span></span>
+              </label>
+              <div class="est-cost">≈ ₹<span id="estCost">0</span><small data-i18n="est.perMonth"> / महिना</small></div>
+            </div>
+
+            <a href="/#calculator" class="btn-est-calc" data-i18n="est.calcExact">अचूक बिल काढा →</a>
+            <p class="est-handoff-hint" data-i18n="est.handoff">पूर्ण कॅल्क्युलेटरमध्ये तुमचे खरे डिस्कॉम स्लॅब, फिक्स्ड शुल्क व FPPA वापरा.</p>
+          </div>
+
+          <a href="/mr/solar-calculator/" class="est-solar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+            <span data-i18n="est.solarLink">या वापरावर रूफटॉप सोलर किती बचत देईल ते पाहा →</span>
+          </a>
+
+          <button type="button" class="solar-share" id="estShare">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.89 1.22 3.09.15.2 2.11 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35zM12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.82 9.82 0 0 1-1.51-5.25c0-5.44 4.43-9.86 9.89-9.86a9.82 9.82 0 0 1 6.99 2.9 9.82 9.82 0 0 1 2.89 6.98c0 5.44-4.43 9.86-9.88 9.86zm8.41-18.27A11.8 11.8 0 0 0 12.05 0C5.5 0 .16 5.33.16 11.89c0 2.1.55 4.14 1.59 5.94L.06 24l6.33-1.66a11.9 11.9 0 0 0 5.66 1.44h.01c6.54 0 11.88-5.33 11.88-11.89 0-3.18-1.24-6.16-3.48-8.41z"/></svg>
+            <span data-i18n="est.share">Share this estimate on WhatsApp</span>
+          </button>
+
+          <div class="est-breakdown-card">
+            <div class="est-breakdown-title" data-i18n="est.breakdownTitle">तुमची युनिट कुठे जातात</div>
+            <div id="estBreakdown" class="est-breakdown"></div>
+          </div>
+        </aside>
+      </div>
+
+      <p class="comparison-note" data-i18n-html="est.note">अंदाज 30 दिवसांच्या महिन्यावर आधारित आहेत. रेफ्रिजरेटर व AC चे तास म्हणजे <em>प्रभावी</em> कॉम्प्रेसर चालण्याचा वेळ, घड्याळी तास नव्हे (फ्रिज चालू-बंद होत राहतो). प्रत्यक्ष वापर उपकरणाची कार्यक्षमता (स्टार रेटिंग), तापमान व वापरानुसार बदलतो. याला नियोजन-मार्गदर्शक माना, मग अचूक, टॅरिफनुसार रकमेसाठी <a href="/#calculator">बिल कॅल्क्युलेटर</a> वापरा.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ── Footer ────────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">टूल्स</span>
+        <a href="/mr/bill-calculator/" data-i18n="ql.advancedCalc">प्रगत बिल कॅल्क्युलेटर</a>
+        <a href="/mr/compare/" data-i18n="nav.compare">तुलना</a>
+        <a href="/mr/electricity-cost-calculator/" data-i18n="ql.usage">वीज खर्च कॅल्क्युलेटर</a>
+        <a href="/mr/ev-charging-calculator/" data-i18n="ql.ev">EV चार्जिंग खर्च</a>
+        <a href="/mr/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">मंजूर भार ऑप्टिमायझर</a>
+        <a href="/mr/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">भाडेकरू सब-मीटर कॅल्क्युलेटर</a>
+        <a href="/fppa/" data-i18n="ql.fuelSurcharge">इंधन अधिभार ट्रॅकर</a>
+        <a href="/install/" data-i18n="ql.install">ऑफलाइन अ‍ॅप इंस्टॉल करा</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">सोलर टूल्स</span>
+        <a href="/mr/solar-calculator/" data-i18n="nav.solarSavings">रूफटॉप सोलर बचत कॅल्क्युलेटर</a>
+        <a href="/mr/solar-panel-size-calculator/" data-i18n="nav.solarSize">सोलर पॅनेल साइझ कॅल्क्युलेटर</a>
+        <a href="/mr/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">सोलर बॅटरी बॅकअप कॅल्क्युलेटर</a>
+        <a href="/mr/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">सोलर सबसिडी चेकर</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">सेवा</span>
+        <a href="/services/" data-i18n="ql.discomServices">डिस्कॉम सेवा</a>
+        <a href="/mr/smart-meter-recharge/" data-i18n="ql.smartMeter">स्मार्ट मीटर रिचार्ज</a>
+        <a href="/mr/smart-meter/" data-i18n="ql.meterDisplay">स्मार्ट मीटर मार्गदर्शक</a>
+        <a href="/mr/check-my-bill/" data-i18n="ql.ocrCheck">झटपट बिल स्व-तपासणी (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">तज्ज्ञ बिल तपासणी</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">नवीन कनेक्शन</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">जाणून घ्या</span>
+        <a href="/mr/tariffs/states/" data-i18n="footer.allStates">सर्व राज्ये व डिस्कॉम</a>
+        <a href="/mr/guides/" data-i18n="nav.blog">ब्लॉग</a>
+        <a href="/mr/glossary/" data-i18n="ql.glossary">बिल शब्दावली</a>
+        <a href="/mr/understand-your-bill/" data-i18n="ql.understandBill">तुमचे बिल समजून घ्या</a>
+        <a href="/methodology/" data-i18n="ql.methodology">कार्यपद्धती व अचूकता</a>
+        <a href="/database/" data-i18n="ql.tariffDatabase">टॅरिफ डेटाबेस</a>
+        <a href="/orders/" data-i18n="ql.orderLibrary">आदेश ग्रंथालय</a>
+        <a href="/mr/alerts/" data-i18n="ql.alerts">अलर्ट</a>
+        <a href="/#about" data-i18n="nav.about">आमच्याबद्दल</a>
+        <a href="/contact/" data-i18n="ql.contact">संपर्क करा</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">© 2026 TheDiscomBill. सर्व हक्क राखीव.</span>
+    &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">अस्वीकरण</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">गोपनीयता धोरण</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">कुकी धोरण</a></p>
+    <!-- Social profiles — hrefs are placeholders until the accounts exist -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- main.js wires the shared header (theme, language, Quick Links); estimators.js runs the tool. -->
+<script type="module" src="/js/main.js"></script>
+<script type="module" src="/js/estimators.js"></script>
+
+</body>
+</html>

@@ -54,6 +54,28 @@ export const STRINGS = {
     'ql.orderLibrary': 'Order Library',
     'ql.alerts': 'Alerts',
     'ql.fuelSurcharge': 'Fuel Surcharge Tracker',
+    'alert.nav.latest': 'Latest updates',
+    'alert.nav.loading': 'Loading...',
+    'alert.nav.seeAll': 'See all alerts',
+    'alert.nav.openPage': 'Open the alerts page',
+    'alert.nav.failed': 'Could not load the latest alerts. The full list still works.',
+    'alert.nav.menuLabel': 'Recent public alerts',
+    'alerts.title': 'Electricity Alerts',
+    'alerts.lead': 'Every tariff order and fuel-surcharge notice tracked on TheDiscomBill, newest first. Public regulatory updates only — not notifications about your own account.',
+    'alerts.filterLabel': 'Filter public electricity alerts',
+    'alerts.search': 'Search',
+    'alerts.searchPh': 'FPPA, Delhi, MSEDCL...',
+    'alerts.state': 'State',
+    'alerts.allStates': 'All states',
+    'alerts.category': 'Category',
+    'alerts.allCategories': 'All categories',
+    'alerts.priority': 'Priority',
+    'alerts.all': 'All',
+    'alerts.important': 'Important',
+    'alerts.info': 'Info',
+    'alerts.reset': 'Reset',
+    'alerts.empty': 'No notices match these filters.',
+    'alerts.clearFilters': 'Clear filters',
     // Homepage "More tools" section. Only the headings live here — every tool LABEL in that
     // section reuses the footer's existing ql.*/nav.* keys, so the two can never disagree.
     'tools.title': 'More than a bill calculator',
@@ -581,10 +603,15 @@ export async function applyLang(lang) {
     const v = dict[el.dataset.i18nPh];
     if (v != null) el.placeholder = v;
   });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+    const v = dict[el.dataset.i18nAria];
+    if (v != null) el.setAttribute('aria-label', sub(v));
+  });
   // A failed table load leaves base === STRINGS.en — report the language the
   // page actually shows, not the one that was asked for.
   document.documentElement.lang = base === STRINGS.en ? 'en' : lang;
   try { localStorage.setItem('lang', lang); } catch (e) {}
+  window.dispatchEvent(new CustomEvent('tdb:langchange', { detail: { lang: document.documentElement.lang } }));
 }
 
 // Pages with a pre-rendered twin in the other language (tariff/guide/glossary

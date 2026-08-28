@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    if (window.location.hostname === 'www.thediscombill.com') {
+      window.location.replace('https://thediscombill.com' + window.location.pathname + window.location.search);
+    }
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <!-- Set the colour theme before first paint (no flash): stored choice, else OS preference. -->
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+        try { localStorage.setItem('lang', 'hi'); } catch (e) {}
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+  <title>सोलर सब्सिडी चेकर — TheDiscomBill</title>
+  <meta name="description" content="अपने घर के लिए PM Surya Ghar रूफटॉप सोलर सब्सिडी और अनुमानित नेट लागत देखें।">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
+  <link rel="canonical" href="https://thediscombill.com/hi/solar-subsidy-checker/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/solar-subsidy-checker/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/solar-subsidy-checker/">
+  <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/solar-subsidy-checker/">
+  <link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/solar-subsidy-checker/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/solar-subsidy-checker/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="सोलर सब्सिडी चेकर — TheDiscomBill">
+  <meta property="og:description" content="अपने घर के लिए PM Surya Ghar रूफटॉप सोलर सब्सिडी और अनुमानित नेट लागत देखें।">
+  <meta property="og:url" content="https://thediscombill.com/hi/solar-subsidy-checker/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:locale" content="hi_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="सोलर सब्सिडी चेकर — TheDiscomBill">
+  <meta name="twitter:description" content="अपने घर के लिए PM Surya Ghar रूफटॉप सोलर सब्सिडी और अनुमानित नेट लागत देखें।">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="stylesheet" href="/css/styles.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <!-- entity-graph -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN"}</script>
+  <!-- / entity-graph -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"सोलर सब्सिडी चेकर","url":"https://thediscombill.com/hi/solar-subsidy-checker/","description":"अपने घर के लिए PM Surya Ghar रूफटॉप सोलर सब्सिडी और अनुमानित नेट लागत देखें।","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"सोलर सब्सिडी चेकर","item":"https://thediscombill.com/hi/solar-subsidy-checker/"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much is the PM Surya Ghar solar subsidy?","acceptedAnswer":{"@type":"Answer","text":"The central subsidy is ₹30,000 per kW for the first 2 kW and ₹18,000 for the 3rd kW, capped at ₹78,000 for a 3 kW or larger residential rooftop system. Many states add a further top-up on top of the central amount."}},{"@type":"Question","name":"What size rooftop solar system do I need?","acceptedAnswer":{"@type":"Answer","text":"Roughly your monthly units divided by 120 gives the kW you need to cover your consumption — about 2 kW for 250 units/month. Each kW needs ~100 sq ft of shadow-free roof and generates about 4 units a day. The checker sizes it from your usage and roof area."}},{"@type":"Question","name":"How long does a rooftop solar system take to pay back?","acceptedAnswer":{"@type":"Answer","text":"After the PM Surya Ghar subsidy, a residential system typically pays back in about 4–6 years at current tariffs, then delivers near-free power for the rest of its 25-year life. The exact payback depends on your marginal tariff rate and how much you self-consume."}},{"@type":"Question","name":"Who is eligible for the PM Surya Ghar subsidy?","acceptedAnswer":{"@type":"Answer","text":"Any residential electricity consumer who owns their rooftop, has shadow-free space and has not already claimed a rooftop-solar subsidy on that connection. You register on the national pmsuryaghar.gov.in portal and choose an empanelled vendor."}}]}</script>
+</head>
+<body>
+
+<!-- ── Header ───────────────────────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/hi/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline" data-i18n="tagline">बिजली बिल कैलकुलेटर · पूरे भारत के लिए</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/hi/bill-calculator/" data-i18n="nav.calculator">कैलकुलेटर</a>
+      <a href="/hi/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">स्मार्ट मीटर</a>
+      <a href="/hi/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">टैरिफ</a>
+      <a href="/hi/guides/" class="nav-promoted" data-i18n="nav.blog">ब्लॉग</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           the footer is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">और देखें</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/hi/bill-calculator/" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">कैलकुलेटर</span></a>
+            <a href="/hi/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">स्मार्ट मीटर</span></a>
+            <a href="/hi/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">टैरिफ</span></a>
+            <a href="/hi/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">ब्लॉग</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<div class="page-body" role="main">
+  <section class="seo-page container solar-subsidy-page">
+    <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol>
+      <li class="crumb"><a href="/hi/" data-i18n="bc.home">होम</a></li>
+      <li class="crumb-sep" aria-hidden="true">›</li>
+      <li class="crumb"><span aria-current="page">Solar Subsidy Checker</span></li>
+    </ol></nav>
+
+    <h1>Solar Subsidy Checker (PM Surya Ghar)</h1>
+    <p class="seo-lead">The <strong>PM Surya Ghar: Muft Bijli Yojana</strong> pays up to <strong>₹78,000</strong>
+    towards a home rooftop-solar system — but the portal never tells you what size <em>you</em> need or what it
+    saves. Enter your state and monthly usage and we'll size the system, show the exact central subsidy, your
+    net cost after it, and the yearly savings and payback at your DISCOM's real rate.</p>
+
+    <div class="svc-controls">
+      <div class="svc-control">
+        <label for="ssState">State / UT</label>
+        <select id="ssState"></select>
+      </div>
+      <div class="svc-control">
+        <label for="ssDiscom">Your DISCOM</label>
+        <select id="ssDiscom"></select>
+      </div>
+      <div class="svc-control">
+        <label for="ssUnits">Monthly usage (units)</label>
+        <input type="number" id="ssUnits" value="250" min="1" max="5000" step="10" inputmode="numeric">
+      </div>
+      <div class="svc-control">
+        <label for="ssRoof">Roof area (sq ft, optional)</label>
+        <input type="number" id="ssRoof" placeholder="e.g. 300" min="0" max="10000" step="10" inputmode="numeric">
+      </div>
+      <div class="svc-control">
+        <label for="ssOwnRoof">Do you own the roof?</label>
+        <select id="ssOwnRoof">
+          <option value="yes">Yes</option>
+          <option value="no">No / rented</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="ssResult"></div>
+
+    <section class="seo-section">
+      <h2>How the PM Surya Ghar subsidy is calculated</h2>
+      <p>The central subsidy is fixed by system size, not by your income or bill:
+      <strong>₹30,000 per kW for the first 2 kW</strong> and <strong>₹18,000 for the 3rd kW</strong> — so a
+      1 kW system gets ₹30,000, 2 kW gets ₹60,000, and anything <strong>3 kW or larger is capped at
+      ₹78,000</strong>. Many states add their own top-up on top of this central amount. You register on the
+      national portal, pick an empanelled vendor, and the subsidy is credited to your bank account after the
+      system is installed and the net meter is commissioned.</p>
+    </section>
+
+    <section class="seo-section">
+      <h2>What size do you actually need?</h2>
+      <p>As a rule of thumb, <strong>1 kW covers about 120 units a month</strong> and needs roughly
+      <strong>100 sq ft</strong> of shadow-free roof, generating around 4 units a day. Sizing the system to your
+      own consumption is what makes solar pay — oversizing past what you use (and past the 3 kW subsidy cap) just
+      lengthens the payback. For the full net-metering and banking maths on your bill, use the
+      <a href="/hi/solar-calculator/">rooftop solar savings calculator</a>; to see your current bill first, open the
+      <a href="/#calculator">bill calculator</a>.</p>
+    </section>
+
+    <p class="seo-disclaimer">The central PM Surya Ghar subsidy slab is fixed nationally and used exactly; system
+    cost (~₹55,000/kW) and generation (~4 units/kW/day) are all-India benchmarks and your actual quote and site
+    will differ. State top-up subsidies vary and change often. This is a planning estimate — confirm current
+    amounts, eligibility and empanelled vendors on the official
+    <a href="https://pmsuryaghar.gov.in" target="_blank" rel="noopener nofollow">PM Surya Ghar portal</a> before
+    committing.</p>
+
+    <!-- Related guides. These four tools all ask the reader to have already made a
+         decision the guides explain — a battery only makes sense once you know on-grid
+         solar dies in a cut, and a subsidy figure only means something once you know what
+         gets an application rejected. They were the only pages on the site not linking
+         /guides/on-grid-vs-hybrid-solar/, which 111 others do. -->
+    <section class="seo-section">
+      <h2>Before you apply</h2>
+      <div class="seo-link-grid">
+        <a class="seo-link-card" href="/hi/guides/pm-surya-ghar-eligibility-checklist/"><strong>What gets an application rejected</strong><span>Sanctioned load against plant size, the name on the connection, meter status</span></a>
+        <a class="seo-link-card" href="/guides/on-grid-vs-hybrid-solar/"><strong>On-grid or hybrid?</strong><span>On-grid shuts down in a power cut; hybrid keeps running but costs more</span></a>
+        <a class="seo-link-card" href="/hi/guides/solar-net-metering-savings/"><strong>How net metering credits work</strong><span>Why the same system saves very different amounts in different states</span></a>
+      </div>
+    </section>
+  </section>
+</div>
+
+<!-- ── Footer ────────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">टूल्स</span>
+        <a href="/hi/bill-calculator/" data-i18n="ql.advancedCalc">एडवांस्ड बिल कैलकुलेटर</a>
+        <a href="/hi/compare/" data-i18n="nav.compare">तुलना</a>
+        <a href="/hi/electricity-cost-calculator/" data-i18n="ql.usage">बिजली लागत कैलकुलेटर</a>
+        <a href="/hi/ev-charging-calculator/" data-i18n="ql.ev">EV चार्जिंग लागत</a>
+        <a href="/hi/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">स्वीकृत भार ऑप्टिमाइज़र</a>
+        <a href="/hi/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">किरायेदार सब-मीटर कैलकुलेटर</a>
+        <a href="/hi/fppa/" data-i18n="ql.fuelSurcharge">ईंधन अधिभार ट्रैकर</a>
+        <a href="/install/" data-i18n="ql.install">ऑफ़लाइन ऐप इंस्टॉल करें</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">सोलर टूल्स</span>
+        <a href="/hi/solar-calculator/" data-i18n="nav.solarSavings">रूफटॉप सोलर बचत कैलकुलेटर</a>
+        <a href="/hi/solar-panel-size-calculator/" data-i18n="nav.solarSize">सोलर पैनल साइज़ कैलकुलेटर</a>
+        <a href="/hi/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">सोलर बैटरी बैकअप कैलकुलेटर</a>
+        <a href="/hi/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">सोलर सब्सिडी चेकर</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">सेवाएँ</span>
+        <a href="/services/" data-i18n="ql.discomServices">डिस्कॉम सेवाएँ</a>
+        <a href="/hi/smart-meter-recharge/" data-i18n="ql.smartMeter">स्मार्ट मीटर रिचार्ज</a>
+        <a href="/hi/smart-meter/" data-i18n="ql.meterDisplay">स्मार्ट मीटर गाइड</a>
+        <a href="/hi/check-my-bill/" data-i18n="ql.ocrCheck">तुरंत बिल स्व-जाँच (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">विशेषज्ञ बिल समीक्षा</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">नया कनेक्शन</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">जानें</span>
+        <a href="/hi/tariffs/states/" data-i18n="footer.allStates">सभी राज्य व डिस्कॉम</a>
+        <a href="/hi/guides/" data-i18n="nav.blog">ब्लॉग</a>
+        <a href="/hi/glossary/" data-i18n="ql.glossary">बिल शब्दावली</a>
+        <a href="/hi/understand-your-bill/" data-i18n="ql.understandBill">अपना बिल समझें</a>
+        <a href="/methodology/" data-i18n="ql.methodology">कार्यप्रणाली व सटीकता</a>
+        <a href="/database/" data-i18n="ql.tariffDatabase">टैरिफ़ डेटाबेस</a>
+        <a href="/orders/" data-i18n="ql.orderLibrary">आदेश पुस्तकालय</a>
+        <a href="/hi/alerts/" data-i18n="ql.alerts">अलर्ट</a>
+        <a href="/#about" data-i18n="nav.about">परिचय</a>
+        <a href="/contact/" data-i18n="ql.contact">संपर्क करें</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">© 2026 TheDiscomBill. सर्वाधिकार सुरक्षित।</span>
+    &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">अस्वीकरण</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">गोपनीयता नीति</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">कुकी नीति</a></p>
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- main.js wires the shared header; solar-subsidy.js runs the tool. -->
+<script type="module" src="/js/main.js"></script>
+<script type="module" src="/js/solar-subsidy.js"></script>
+
+</body>
+</html>

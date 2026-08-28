@@ -18,6 +18,669 @@
 
 export const GUIDES = [
   {
+    slug: "bill-wrong-how-to-complain-and-win",
+    published: "2026-08-28",
+    category: "basics",
+    title: "Bill wrong? How to complain and win",
+    metaTitle: "Electricity Bill Wrong? How to Complain and Win",
+    description: "A practical India-wide playbook for wrong electricity bills: what to check first, documents to collect, complaint wording, timelines, CGRF escalation and Ombudsman appeal.",
+    minutes: 9,
+    toc: true,
+    intro: `If your electricity bill looks wrong, do not start with anger. Start with evidence.
+      Recalculate the bill, identify the exact disputed line, file a written complaint with a
+      complaint number, and escalate in order: DISCOM complaint desk, Consumer Grievance
+      Redressal Forum, then the Electricity Ombudsman. That paper trail is what turns "my bill is
+      too high" into a case the DISCOM has to answer.`,
+    sections: `
+      <section class="seo-section">
+        <h2>First decide what is wrong</h2>
+        <p>A winning complaint names one error. A weak complaint says only that the bill is high.
+        Before you file, sort the problem into one of these buckets:</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>Problem</th><th>What to check</th><th>Best evidence</th></tr></thead>
+            <tbody>
+              <tr><td>Wrong units</td><td>Current reading, previous reading, meter photo, multiplying factor</td><td>Meter photo with date, last 2-3 bills</td></tr>
+              <tr><td>Estimated bill</td><td>Whether the bill says assessed, provisional, IDF, door lock or meter not read</td><td>Clear meter photo and a request for actual-reading revision</td></tr>
+              <tr><td>Wrong category</td><td>Domestic vs commercial, single-phase vs three-phase, rural/urban, prepaid/postpaid</td><td>Sanction letter, old bill category, use of premises</td></tr>
+              <tr><td>Wrong load or MD penalty</td><td>Sanctioned load, contract demand, maximum demand, kW/kVA basis</td><td>Load sanction, meter MD register, appliance list</td></tr>
+              <tr><td>Arrears or duplicate charges</td><td>Whether an old payment, adjustment or security deposit was missed</td><td>Payment receipt, UTR, old paid bill, ledger screenshot</td></tr>
+              <tr><td>Tariff or surcharge change</td><td>Whether the bill used the correct slab, fixed charge, duty and FPPA/FAC month</td><td>Calculator breakdown, tariff page, order/surcharge notice</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Run the bill once through the <a href="/bill-calculator/">bill calculator</a> and save the
+        itemised result. If the calculator and the bill differ, your complaint can point to a
+        specific line: units, fixed charge, duty, surcharge, arrears, subsidy or meter factor.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>The document pack</h2>
+        <p>Keep the evidence short and complete. A complaint officer should be able to understand
+        the issue in two minutes.</p>
+        <ul>
+          <li><strong>Current bill PDF or photo</strong>, all pages if possible.</li>
+          <li><strong>Previous 2-3 bills</strong>, because wrong readings and arrears usually show up only in sequence.</li>
+          <li><strong>Meter photo or smart-meter screenshot</strong> showing kWh, date and meter number.</li>
+          <li><strong>Payment proof</strong> for disputed arrears: receipt, UTR, transaction ID or bank debit.</li>
+          <li><strong>Connection details</strong>: consumer number, name, address, mobile number, sanctioned load and category.</li>
+          <li><strong>Your calculation</strong>: one page showing what you believe is correct and the refund/adjustment you want.</li>
+        </ul>
+        <p class="seo-note"><strong>Do not send ten screenshots with no explanation.</strong> Attach
+        the documents, but write the complaint as a clean story: what was billed, what is wrong,
+        what evidence proves it, and what correction you want.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>File the first complaint</h2>
+        <p>Use the DISCOM's official complaint channel first: portal, app, customer-care email,
+        local office, or 1912 where your state supports it. Ask for a complaint number every time.
+        If you complain by phone, follow it with a written complaint quoting the call number.</p>
+        <p>Your complaint should have five parts:</p>
+        <ol>
+          <li><strong>Identity:</strong> consumer number, name, service address and mobile number.</li>
+          <li><strong>Bill:</strong> bill number, billing month, due date and billed amount.</li>
+          <li><strong>Error:</strong> the exact disputed line, not just the total.</li>
+          <li><strong>Evidence:</strong> attached bills, meter photo, payment proof or calculator working.</li>
+          <li><strong>Relief:</strong> revised bill, meter test, arrear reversal, refund, reconnection or written speaking order.</li>
+        </ol>
+        <p>If the due date is close, pay the undisputed amount where the DISCOM permits part
+        payment, or pay under protest and say so in writing. Non-payment can trigger late-payment
+        surcharge or disconnection even while the dispute is pending, so do not let the case turn
+        into a default unless you have written protection from the DISCOM or forum.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Use the timelines</h2>
+        <p>The central Electricity Rights of Consumers Rules create national floor rights, while
+        exact service standards and compensation are set by your State Electricity Regulatory
+        Commission. Use the national rules as the frame and your state supply code as the precise
+        deadline.</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>Issue</th><th>Useful timeline or right</th><th>How to use it</th></tr></thead>
+            <tbody>
+              <tr><td>Bill delivery</td><td>Bill should be delivered at least 10 days before the due date</td><td>Ask for due-date extension or correction if late delivery caused default risk</td></tr>
+              <tr><td>First bill after new connection</td><td>First bill must be issued within the state-specified period, not beyond two billing cycles</td><td>If it is missing, complain in writing; the DISCOM must issue it within 7 days</td></tr>
+              <tr><td>Provisional billing</td><td>More than two provisional bills in a financial year is not normal except force-majeure cases</td><td>Ask for actual meter reading and revision instead of repeated assessment</td></tr>
+              <tr><td>Delayed bill</td><td>State rules can require a 2-5% rebate where bill service is delayed beyond the specified limit</td><td>Claim the rebate with proof of late delivery</td></tr>
+              <tr><td>CGRF decision</td><td>Normally 30 days, and in any case not more than 45 days under the central rules</td><td>Escalate when the forum misses its time or gives an unsatisfactory order</td></tr>
+              <tr><td>Compensation</td><td>State performance standards cover bill complaints, meter replacement, reconnection, voltage and supply failures</td><td>Ask for compensation separately from bill correction</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Sources: Ministry of Power's consumer-rights announcement and rules summary
+        <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=1682384" target="_blank" rel="noopener nofollow">published by PIB</a>,
+        the <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=1806219" target="_blank" rel="noopener nofollow">Rajya Sabha reply on operational consumer-rights rules</a>,
+        and state CGRF/Ombudsman regulations issued under the Electricity Act.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Escalate without skipping steps</h2>
+        <p>Most states expect this order:</p>
+        <ol>
+          <li><strong>DISCOM complaint desk or local office.</strong> Get the complaint number and preserve the acknowledgement.</li>
+          <li><strong>Internal grievance cell or higher officer</strong>, if your state/DISCOM has that layer. Quote the first complaint number.</li>
+          <li><strong>Consumer Grievance Redressal Forum (CGRF).</strong> File when the DISCOM does not resolve the complaint or gives a bad answer.</li>
+          <li><strong>Electricity Ombudsman.</strong> Appeal if the CGRF order is unsatisfactory or the forum fails to decide within time.</li>
+        </ol>
+        <p>The CGRF and Ombudsman route is not informal customer care; it is the statutory consumer
+        grievance system under the Electricity Act. PIB has specifically stated that overcharging
+        and faulty-meter complaints can go to the CGRF and Ombudsman route, and state Ombudsman
+        pages repeat the same structure. See, for example, the official
+        <a href="https://www.pib.gov.in/newsite/PrintRelease.aspx?lang=2&amp;relid=98961" target="_blank" rel="noopener nofollow">Ministry of Power reply on overcharging/faulty meters</a>
+        and the <a href="https://jercuts.gov.in/ombudsman-details/" target="_blank" rel="noopener nofollow">JERC Ombudsman procedure</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>What to ask for</h2>
+        <p>Be specific. Forums can order correction, but they need to know exactly what remedy you
+        want.</p>
+        <ul>
+          <li><strong>Revised bill</strong> using the actual meter reading or correct slab/category.</li>
+          <li><strong>Meter test</strong> by the approved process if you believe the meter is fast, stuck or defective.</li>
+          <li><strong>Arrear reversal</strong> where a paid amount, subsidy, adjustment or security deposit was missed.</li>
+          <li><strong>Refund or adjustment</strong> in the next bill for excess recovery.</li>
+          <li><strong>Late-payment surcharge reversal</strong> if the wrong bill or delayed correction caused it.</li>
+          <li><strong>Compensation</strong> under your state standards of performance, where applicable.</li>
+          <li><strong>Written speaking order</strong> explaining the calculation if the DISCOM refuses revision.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>Complaint wording you can use</h2>
+        <p>Keep the tone firm and boring. This template works because it tells the officer exactly
+        what to check.</p>
+        <blockquote><p>Subject: Billing complaint for Consumer No. [number], Bill No. [number]</p>
+        <p>I dispute the bill dated [date] for [month] because [specific error]. The bill shows
+        [billed units/amount/category/arrears], but the attached documents show [correct figure].
+        I am attaching the current bill, previous bills, meter photo/payment proof and my
+        calculation. Please revise the bill, reverse any related late-payment surcharge, and issue
+        a written calculation/order. If meter testing is required, please register the request and
+        provide the test date and procedure. Kindly provide the complaint number and expected
+        resolution date.</p></blockquote>
+        <p>If you pay to avoid disconnection, add this line: <strong>"Payment is made under protest
+        and without accepting the disputed calculation."</strong></p>
+      </section>
+
+      <section class="seo-section">
+        <h2>How people lose otherwise valid cases</h2>
+        <ul>
+          <li>They complain only on phone and never get a written complaint number.</li>
+          <li>They say "bill is high" but never identify the wrong line.</li>
+          <li>They attach payment screenshots without UTR or consumer number.</li>
+          <li>They ignore the due date and let surcharge/disconnection become the main issue.</li>
+          <li>They jump to the Ombudsman without first going through the CGRF where required.</li>
+          <li>They ask for a refund but not for correction of the underlying category, meter factor or arrear entry.</li>
+        </ul>
+        <p>The winning pattern is simple: one error, one calculation, one complaint number, one
+        deadline, then escalation with the same file.</p>
+      </section>`,
+    faqs: [
+      { q: "Where should I complain first if my electricity bill is wrong?",
+        a: "Start with your DISCOM's official complaint channel: portal, app, customer-care email, local office or 1912 where supported. Get a complaint number. If the DISCOM does not resolve it, escalate to the Consumer Grievance Redressal Forum and then to the Electricity Ombudsman as per your state's regulations." },
+      { q: "Can I go directly to the Electricity Ombudsman?",
+        a: "Usually no. The Ombudsman is normally the appeal stage after the Consumer Grievance Redressal Forum has passed an order, failed to decide in time, or left you unsatisfied. State rules can vary, so check your state regulator's procedure." },
+      { q: "Should I pay a disputed electricity bill?",
+        a: "If the due date is close, avoid creating a default. Pay the undisputed amount where part payment is allowed, or pay under protest and write that you dispute the calculation. Ask for late-payment surcharge reversal if the wrong bill caused the delay." },
+      { q: "What documents make a billing complaint stronger?",
+        a: "Attach the current bill, previous 2-3 bills, a dated meter photo or smart-meter screenshot, payment proof if arrears are disputed, your consumer details and a one-page calculation of the correction you want." },
+      { q: "How long does CGRF take?",
+        a: "The central Electricity Rights of Consumers Rules say a grievance should normally be decided within 30 days and in any case not more than 45 days. Exact filing formats and deadlines are set by the state regulator." },
+      { q: "Can I claim compensation for a wrong bill?",
+        a: "Yes, where your state's standards of performance provide compensation for bill complaints, delayed service, meter replacement, reconnection or related failures. Ask for compensation separately from the corrected bill or refund." },
+    ],
+    titleHi: "बिल गलत है? शिकायत कैसे करें और मामला कैसे जीतें",
+    metaTitleHi: "बिजली बिल गलत है? शिकायत कैसे करें और मामला कैसे जीतें",
+    descriptionHi: "गलत बिजली बिल के लिए भारत-भर में लागू व्यावहारिक तरीका: पहले क्या जांचें, कौन से दस्तावेज रखें, शिकायत कैसे लिखें, CGRF और विद्युत लोकपाल तक कैसे जाएं.",
+    introHi: `अगर बिजली बिल गलत लग रहा है, तो शुरुआत गुस्से से नहीं, सबूत से करें.
+      बिल दोबारा मिलाएँ, ठीक-ठीक पहचानें कि कौन-सी मद गलत है, लिखित शिकायत दर्ज करें और
+      शिकायत संख्या लें. फिर क्रम से आगे बढ़ें: DISCOM शिकायत केंद्र, उपभोक्ता शिकायत
+      निवारण मंच (CGRF), और अंत में विद्युत लोकपाल. यही लिखित
+      रिकॉर्ड "मेरा बिल बहुत ज्यादा है" को ऐसे मामले में बदलता है जिसका जवाब DISCOM को
+      देना पड़ता है.`,
+    sectionsHi: `
+      <section class="seo-section">
+        <h2>पहले तय करें कि गलती कहाँ है</h2>
+        <p>मजबूत शिकायत एक साफ गलती बताती है. कमजोर शिकायत सिर्फ यह कहती है कि बिल ज्यादा है.
+        शिकायत दर्ज करने से पहले समस्या को इनमें से किसी एक हिस्से में रखें:</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>समस्या</th><th>क्या जाँचें</th><th>सबसे अच्छा सबूत</th></tr></thead>
+            <tbody>
+              <tr><td>यूनिट गलत</td><td>मौजूदा रीडिंग, पिछली रीडिंग, मीटर फोटो, multiplying factor</td><td>तारीख सहित मीटर फोटो, पिछले 2-3 बिल</td></tr>
+              <tr><td>अनुमानित बिल</td><td>क्या बिल पर assessed, provisional, IDF, door lock या meter not read लिखा है</td><td>साफ मीटर फोटो और वास्तविक रीडिंग से बिल संशोधन की माँग</td></tr>
+              <tr><td>श्रेणी गलत</td><td>घरेलू/वाणिज्यिक, single-phase/three-phase, ग्रामीण/शहरी, prepaid/postpaid</td><td>स्वीकृति पत्र, पुराना बिल, परिसर का वास्तविक उपयोग</td></tr>
+              <tr><td>लोड या MD penalty गलत</td><td>स्वीकृत भार, contract demand, maximum demand, kW/kVA आधार</td><td>लोड स्वीकृति, मीटर का MD register, उपकरणों की सूची</td></tr>
+              <tr><td>बकाया या दोबारा लगा शुल्क</td><td>पुराना भुगतान, adjustment या security deposit छूटा तो नहीं</td><td>भुगतान रसीद, UTR, paid bill, ledger screenshot</td></tr>
+              <tr><td>टैरिफ या surcharge बदला</td><td>सही slab, fixed charge, duty और FPPA/FAC माह लगा या नहीं</td><td>Calculator breakdown, tariff page, order/surcharge notice</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>बिल को एक बार <a href="/bill-calculator/">bill calculator</a> में मिलाएँ और itemised result
+        सेव करें. अगर calculator और बिल अलग हैं, तो शिकायत में साफ-साफ लिख सकते हैं कि गलती
+        units, fixed charge, duty, surcharge, arrears, subsidy या meter factor में से किस जगह है.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>दस्तावेजों का सेट</h2>
+        <p>सबूत कम लेकिन पूरे रखें. लक्ष्य यह है कि शिकायत अधिकारी दो मिनट में मामला समझ सके.</p>
+        <ul>
+          <li><strong>मौजूदा बिल PDF या फोटो</strong>, हो सके तो सभी पेज.</li>
+          <li><strong>पिछले 2-3 बिल</strong>, क्योंकि गलत reading और arrears अक्सर क्रम देखकर ही पकड़ में आते हैं.</li>
+          <li><strong>Meter photo या smart-meter screenshot</strong>, जिसमें kWh, तारीख और meter number दिखे.</li>
+          <li><strong>Payment proof</strong> अगर बकाया राशि पर विवाद है: receipt, UTR, transaction ID या bank debit.</li>
+          <li><strong>Connection details</strong>: consumer number, नाम, address, mobile number, sanctioned load और category.</li>
+          <li><strong>आपकी calculation</strong>: एक पेज में सही रकम और माँगा गया refund/adjustment.</li>
+        </ul>
+        <p class="seo-note"><strong>बिना explanation के दस screenshots न भेजें.</strong> Documents
+        attach करें, लेकिन complaint में साफ बात लिखें: क्या bill हुआ, क्या गलत है, कौन-सा सबूत
+        इसे साबित करता है, और आप कौन-सा correction चाहते हैं.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>पहली शिकायत दर्ज करें</h2>
+        <p>सबसे पहले DISCOM का official complaint channel इस्तेमाल करें: portal, app, customer-care
+        email, local office, या जहाँ उपलब्ध हो 1912. हर बार complaint number लें. Phone complaint
+        के बाद उसी number का हवाला देते हुए written complaint भी भेजें.</p>
+        <p>आपकी complaint में पाँच बातें हों:</p>
+        <ol>
+          <li><strong>पहचान:</strong> consumer number, नाम, service address और mobile number.</li>
+          <li><strong>बिल:</strong> bill number, billing month, due date और billed amount.</li>
+          <li><strong>गलती:</strong> ठीक वही disputed line, सिर्फ total नहीं.</li>
+          <li><strong>सबूत:</strong> attached bills, meter photo, payment proof या calculator working.</li>
+          <li><strong>माँग:</strong> revised bill, meter test, arrear reversal, refund, reconnection या written speaking order.</li>
+        </ol>
+        <p>Due date पास हो तो जहाँ part payment allowed हो वहाँ undisputed amount pay करें, या
+        payment under protest करके यह बात लिखित में दर्ज करें. Dispute pending रहते हुए भी
+        non-payment से late-payment surcharge या disconnection हो सकता है, इसलिए case को default
+        में न बदलने दें.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>समय-सीमा का उपयोग करें</h2>
+        <p>Central Electricity Rights of Consumers Rules उपभोक्ताओं के लिए राष्ट्रीय स्तर के
+        न्यूनतम अधिकार तय करते हैं. Exact service standards और compensation आपकी State Electricity
+        Regulatory Commission तय करती है. National rules को आधार मानें और अपनी state supply code
+        से exact deadline देखें.</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>मामला</th><th>उपयोगी समय-सीमा या अधिकार</th><th>कैसे इस्तेमाल करें</th></tr></thead>
+            <tbody>
+              <tr><td>Bill delivery</td><td>Bill due date से कम से कम 10 दिन पहले मिलना चाहिए</td><td>Late delivery से default risk हो तो due-date extension या correction माँगें</td></tr>
+              <tr><td>New connection के बाद पहला bill</td><td>State-specified period में, और दो billing cycles से ज्यादा देर नहीं</td><td>Missing हो तो written complaint करें; DISCOM को 7 दिन में bill issue करना होता है</td></tr>
+              <tr><td>Provisional billing</td><td>एक financial year में दो से ज्यादा provisional bills सामान्य नहीं, force-majeure को छोड़कर</td><td>Repeated assessment के बजाय actual meter reading और revision माँगें</td></tr>
+              <tr><td>Delayed bill</td><td>State rules specified delay पर 2-5% rebate दे सकते हैं</td><td>Late delivery proof के साथ rebate claim करें</td></tr>
+              <tr><td>CGRF decision</td><td>Central rules के अनुसार सामान्यतः 30 दिन, और किसी भी हालत में 45 दिन से ज्यादा नहीं</td><td>Forum deadline miss करे या order संतोषजनक न हो तो मामला आगे बढ़ाएँ</td></tr>
+              <tr><td>Compensation</td><td>State standards bill complaints, meter replacement, reconnection, voltage और supply failures cover करते हैं</td><td>Bill correction से अलग compensation भी माँगें</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Sources: Ministry of Power की consumer-rights announcement
+        <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=1682384" target="_blank" rel="noopener nofollow">PIB पर</a>,
+        <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=1806219" target="_blank" rel="noopener nofollow">consumer-rights rules पर Rajya Sabha reply</a>,
+        और Electricity Act के तहत राज्य के CGRF/विद्युत लोकपाल नियम.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>बिना चरण छोड़े शिकायत आगे बढ़ाएँ</h2>
+        <p>अधिकांश राज्यों में शिकायत आगे बढ़ाने का क्रम यह माना जाता है:</p>
+        <ol>
+          <li><strong>DISCOM complaint desk या local office.</strong> Complaint number लें और acknowledgement संभालकर रखें.</li>
+          <li><strong>Internal grievance cell या higher officer</strong>, अगर आपके state/DISCOM में यह layer है. पहली complaint number का हवाला दें.</li>
+          <li><strong>Consumer Grievance Redressal Forum (CGRF).</strong> DISCOM समाधान न दे या गलत जवाब दे, तो CGRF में शिकायत दाखिल करें.</li>
+          <li><strong>विद्युत लोकपाल.</strong> CGRF का आदेश संतोषजनक न हो, या forum समय पर फैसला न दे, तो विद्युत लोकपाल में appeal करें.</li>
+        </ol>
+        <p>CGRF और विद्युत लोकपाल वाला रास्ता साधारण ग्राहक सेवा नहीं है. यह Electricity Act के तहत
+        बनी वैधानिक उपभोक्ता शिकायत व्यवस्था है. PIB ने साफ कहा है कि ज्यादा वसूली और faulty-meter
+        complaints CGRF/विद्युत लोकपाल के रास्ते ले जाई जा सकती हैं. देखें
+        <a href="https://www.pib.gov.in/newsite/PrintRelease.aspx?lang=2&amp;relid=98961" target="_blank" rel="noopener nofollow">Ministry of Power reply</a>
+        और <a href="https://jercuts.gov.in/ombudsman-details/" target="_blank" rel="noopener nofollow">JERC विद्युत लोकपाल प्रक्रिया</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>शिकायत में क्या माँगें</h2>
+        <p>Specific रहें. Forum correction order कर सकता है, लेकिन उसे साफ पता होना चाहिए कि आप
+        कौन-सी राहत चाहते हैं.</p>
+        <ul>
+          <li><strong>Revised bill</strong> actual meter reading या correct slab/category के आधार पर.</li>
+          <li><strong>Meter test</strong> अगर meter fast, stuck या defective लगता है.</li>
+          <li><strong>Arrear reversal</strong> जहाँ paid amount, subsidy, adjustment या security deposit छूटा हो.</li>
+          <li><strong>Refund या adjustment</strong> अगले bill में excess recovery के लिए.</li>
+          <li><strong>Late-payment surcharge reversal</strong> अगर गलत bill या delayed correction से surcharge लगा हो.</li>
+          <li><strong>Compensation</strong> state standards of performance के तहत, जहां लागू हो.</li>
+          <li><strong>Written speaking order</strong> अगर DISCOM revision refuse करे.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>शिकायत का नमूना</h2>
+        <p>भाषा दृढ़ और सीधी रखें. यह template इसलिए काम करता है क्योंकि officer को ठीक-ठीक बताता
+        है कि क्या check करना है.</p>
+        <blockquote><p>विषय: Consumer No. [number], Bill No. [number] के लिए billing complaint</p>
+        <p>मैं [month] के लिए [date] को जारी bill पर आपत्ति दर्ज कर रहा/रही हूँ, क्योंकि [specific error].
+        Bill में [billed units/amount/category/arrears] दिखाया गया है, जबकि attached documents के अनुसार
+        सही figure [correct figure] है. मैंने current bill, previous bills, meter photo/payment proof और
+        अपनी calculation attach की है. कृपया bill revise करें, related late-payment surcharge reverse करें,
+        और written calculation/order जारी करें. अगर meter testing जरूरी है, तो कृपया request register
+        करके test date और procedure बताएं. कृपया complaint number और expected resolution date भी दें.</p></blockquote>
+        <p>Disconnection avoid करने के लिए payment करें तो यह line जोड़ें: <strong>"Payment is made
+        under protest and without accepting the disputed calculation."</strong></p>
+      </section>
+
+      <section class="seo-section">
+        <h2>लोग मजबूत मामला कैसे कमजोर कर देते हैं</h2>
+        <ul>
+          <li>Phone पर complaint करते हैं लेकिन written complaint number नहीं लेते.</li>
+          <li>"Bill high है" कहते हैं, लेकिन गलत line नहीं बताते.</li>
+          <li>Payment screenshots भेजते हैं पर UTR या consumer number नहीं देते.</li>
+          <li>Due date ignore करके surcharge/disconnection को main issue बना देते हैं.</li>
+          <li>CGRF से पहले सीधे विद्युत लोकपाल के पास चले जाते हैं.</li>
+          <li>Refund माँगते हैं, लेकिन category, meter factor या arrear entry correction नहीं माँगते.</li>
+        </ul>
+        <p>मजबूत तरीका सीधा है: एक error, एक calculation, एक complaint number, एक deadline,
+        और फिर उसी file के साथ escalation.</p>
+      </section>`,
+    faqsHi: [
+      { q: "गलत बिजली बिल के लिए पहले कहां शिकायत करें?",
+        a: "पहले अपने DISCOM के official complaint channel पर जाएं: portal, app, customer-care email, local office या जहां available हो 1912. Complaint number लें. समाधान न मिले तो CGRF और फिर विद्युत लोकपाल तक मामला आगे बढ़ाएं." },
+      { q: "क्या सीधे विद्युत लोकपाल के पास जा सकते हैं?",
+        a: "आमतौर पर नहीं. विद्युत लोकपाल usually CGRF के order, delay या unsatisfactory decision के बाद appeal stage है. Exact process state regulator तय करता है." },
+      { q: "Disputed bill pay करना चाहिए?",
+        a: "Due date पास हो तो default avoid करें. जहां allowed हो undisputed amount pay करें, या payment under protest करके written में dispute दर्ज करें. गलत bill से delay हुआ हो तो late-payment surcharge reversal मांगें." },
+      { q: "कौन से documents complaint को मजबूत बनाते हैं?",
+        a: "Current bill, पिछले 2-3 bills, dated meter photo या smart-meter screenshot, arrears dispute हो तो payment proof, consumer details और correction की one-page calculation attach करें." },
+      { q: "CGRF में कितना समय लगता है?",
+        a: "Central Electricity Rights of Consumers Rules के अनुसार grievance normally 30 days में और किसी भी हालत में 45 days से ज्यादा नहीं decide होना चाहिए. Filing format और exact deadlines state regulator तय करता है." },
+      { q: "क्या wrong bill पर compensation मिल सकता है?",
+        a: "हां, जहां state standards of performance bill complaints, delayed service, meter replacement, reconnection या related failures पर compensation देते हैं. Corrected bill/refund से अलग compensation मांगें." },
+    ],
+    titleMr: "बिल चुकीचे आहे? तक्रार कशी करावी आणि जिंकावी",
+    metaTitleMr: "वीज बिल चुकीचे आहे? तक्रार कशी करावी आणि जिंकावी",
+    descriptionMr: "चुकीच्या वीज बिलासाठी भारतभर लागू होणारी practical मार्गदर्शिका: आधी काय तपासावे, कोणते पुरावे ठेवावेत, complaint wording, timelines, CGRF escalation आणि वीज लोकपालाकडे appeal.",
+    introMr: `वीज बिल चुकीचे वाटत असेल, तर रागाने नव्हे तर पुराव्याने सुरुवात करा.
+      बिल पुन्हा मोजा, नेमकी कोणती line चुकीची आहे ते ओळखा, written complaint करा आणि
+      complaint number घ्या. मग क्रमाने जा: DISCOM complaint desk, Consumer Grievance
+      Redressal Forum, आणि शेवटी वीज लोकपाल. हा paper trail "बिल जास्त आहे" याला
+      DISCOM ने उत्तर द्यावे लागेल अशा case मध्ये बदलतो.`,
+    sectionsMr: `
+      <section class="seo-section">
+        <h2>सर्वप्रथम काय चुकले आहे ते ठरवा</h2>
+        <p>जिंकणारी complaint एक स्पष्ट चूक दाखवते. कमजोर complaint फक्त bill high आहे असे म्हणते.
+        File करण्यापूर्वी issue या buckets मध्ये बसवा:</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>समस्या</th><th>काय तपासावे</th><th>सर्वोत्तम पुरावा</th></tr></thead>
+            <tbody>
+              <tr><td>Units चुकीचे</td><td>Current reading, previous reading, meter photo, multiplying factor</td><td>तारीख असलेला meter photo, मागील 2-3 bills</td></tr>
+              <tr><td>Estimated bill</td><td>Bill वर assessed, provisional, IDF, door lock किंवा meter not read आहे का</td><td>Clear meter photo आणि actual-reading revision request</td></tr>
+              <tr><td>Category चुकीची</td><td>Domestic vs commercial, single-phase vs three-phase, rural/urban, prepaid/postpaid</td><td>Sanction letter, जुने bill category, premises use</td></tr>
+              <tr><td>Load किंवा MD penalty चुकीची</td><td>Sanctioned load, contract demand, maximum demand, kW/kVA basis</td><td>Load sanction, meter MD register, appliance list</td></tr>
+              <tr><td>Arrears किंवा duplicate charges</td><td>जुना payment, adjustment किंवा security deposit miss झाला का</td><td>Payment receipt, UTR, paid bill, ledger screenshot</td></tr>
+              <tr><td>Tariff किंवा surcharge change</td><td>Correct slab, fixed charge, duty आणि FPPA/FAC month वापरला का</td><td>Calculator breakdown, tariff page, order/surcharge notice</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Bill एकदा <a href="/bill-calculator/">bill calculator</a> मध्ये चालवा आणि itemised result
+        save करा. Calculator आणि bill वेगळे असतील, तर complaint मध्ये specific line लिहिता येते:
+        units, fixed charge, duty, surcharge, arrears, subsidy किंवा meter factor.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Document pack</h2>
+        <p>पुरावे छोटे आणि complete ठेवा. Complaint officer ला दोन मिनिटांत issue समजला पाहिजे.</p>
+        <ul>
+          <li><strong>Current bill PDF किंवा photo</strong>, शक्य असेल तर सर्व pages.</li>
+          <li><strong>मागील 2-3 bills</strong>, कारण wrong readings आणि arrears sequence मध्ये दिसतात.</li>
+          <li><strong>Meter photo किंवा smart-meter screenshot</strong> ज्यात kWh, date आणि meter number दिसतो.</li>
+          <li><strong>Payment proof</strong> disputed arrears साठी: receipt, UTR, transaction ID किंवा bank debit.</li>
+          <li><strong>Connection details</strong>: consumer number, नाव, address, mobile number, sanctioned load आणि category.</li>
+          <li><strong>तुमची calculation</strong>: correct amount आणि refund/adjustment एक page मध्ये.</li>
+        </ul>
+        <p class="seo-note"><strong>Explanation शिवाय दहा screenshots पाठवू नका.</strong> Documents
+        attach करा, पण complaint मध्ये clean story लिहा: काय bill झाले, काय चुकीचे आहे, पुरावा काय
+        आहे, आणि कोणता correction हवा आहे.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>पहिली complaint file करा</h2>
+        <p>सर्वप्रथम DISCOM चा official complaint channel वापरा: portal, app, customer-care email,
+        local office, किंवा state मध्ये available असेल तर 1912. प्रत्येक वेळी complaint number घ्या.
+        Phone complaint नंतर तो number quote करून written complaint पाठवा.</p>
+        <p>Complaint मध्ये पाच भाग ठेवा:</p>
+        <ol>
+          <li><strong>Identity:</strong> consumer number, नाव, service address आणि mobile number.</li>
+          <li><strong>Bill:</strong> bill number, billing month, due date आणि billed amount.</li>
+          <li><strong>Error:</strong> exact disputed line, फक्त total नाही.</li>
+          <li><strong>Evidence:</strong> attached bills, meter photo, payment proof किंवा calculator working.</li>
+          <li><strong>Relief:</strong> revised bill, meter test, arrear reversal, refund, reconnection किंवा written speaking order.</li>
+        </ol>
+        <p>Due date जवळ असेल तर part payment allowed असल्यास undisputed amount pay करा, किंवा pay
+        under protest करून तसे written मध्ये लिहा. Dispute pending असताना non-payment मुळे late-payment
+        surcharge किंवा disconnection होऊ शकते.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Timelines वापरा</h2>
+        <p>Central Electricity Rights of Consumers Rules national floor rights देतात. Exact service
+        standards आणि compensation तुमची State Electricity Regulatory Commission ठरवते. National
+        rules frame म्हणून आणि state supply code exact deadline म्हणून वापरा.</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>Issue</th><th>Useful timeline or right</th><th>कसे वापरावे</th></tr></thead>
+            <tbody>
+              <tr><td>Bill delivery</td><td>Bill due date च्या किमान 10 दिवस आधी मिळायला हवा</td><td>Late delivery मुळे default risk असेल तर due-date extension किंवा correction मागा</td></tr>
+              <tr><td>New connection नंतर पहिले bill</td><td>State-specified period मध्ये, दोन billing cycles पेक्षा उशीर नाही</td><td>Missing असेल तर written complaint करा; DISCOM ने 7 days मध्ये bill issue करावे</td></tr>
+              <tr><td>Provisional billing</td><td>Financial year मध्ये दोनपेक्षा जास्त provisional bills normal नाहीत, force-majeure सोडून</td><td>Repeated assessment ऐवजी actual meter reading आणि revision मागा</td></tr>
+              <tr><td>Delayed bill</td><td>State rules specified delay वर 2-5% rebate देऊ शकतात</td><td>Late delivery proof सह rebate claim करा</td></tr>
+              <tr><td>CGRF decision</td><td>Central rules नुसार normally 30 days, आणि कुठल्याही परिस्थितीत 45 days पेक्षा जास्त नाही</td><td>Forum deadline चुकवेल किंवा order unsatisfactory असेल तर escalate करा</td></tr>
+              <tr><td>Compensation</td><td>State standards bill complaints, meter replacement, reconnection, voltage आणि supply failures cover करतात</td><td>Bill correction पासून वेगळे compensation मागा</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Sources: Ministry of Power consumer-rights announcement
+        <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=1682384" target="_blank" rel="noopener nofollow">PIB वर</a>,
+        <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=1806219" target="_blank" rel="noopener nofollow">consumer-rights rules वर Rajya Sabha reply</a>,
+        आणि Electricity Act अंतर्गत state CGRF/वीज लोकपाल rules.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Steps skip न करता escalate करा</h2>
+        <p>बहुतेक states हा order expect करतात:</p>
+        <ol>
+          <li><strong>DISCOM complaint desk किंवा local office.</strong> Complaint number घ्या आणि acknowledgement जपा.</li>
+          <li><strong>Internal grievance cell किंवा higher officer</strong>, जर तुमच्या state/DISCOM मध्ये हा layer असेल. पहिला complaint number quote करा.</li>
+          <li><strong>Consumer Grievance Redressal Forum (CGRF).</strong> DISCOM resolve करत नसेल किंवा चुकीचे answer देत असेल तर file करा.</li>
+          <li><strong>वीज लोकपाल.</strong> CGRF order unsatisfactory असेल किंवा forum time वर decide करत नसेल तर वीज लोकपालाकडे appeal करा.</li>
+        </ol>
+        <p>CGRF आणि वीज लोकपालाचा मार्ग informal customer care नाही; तो Electricity Act अंतर्गत statutory
+        consumer grievance system आहे. PIB ने overcharging आणि faulty-meter complaints CGRF/वीज लोकपाल
+        मार्गाने नेता येतात असे सांगितले आहे. पहा
+        <a href="https://www.pib.gov.in/newsite/PrintRelease.aspx?lang=2&amp;relid=98961" target="_blank" rel="noopener nofollow">Ministry of Power reply</a>
+        आणि <a href="https://jercuts.gov.in/ombudsman-details/" target="_blank" rel="noopener nofollow">JERC वीज लोकपाल प्रक्रिया</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>नेमके काय मागायचे</h2>
+        <p>Specific रहा. Forum correction order करू शकतो, पण तुम्हाला काय remedy हवी आहे ते स्पष्ट हवे.</p>
+        <ul>
+          <li><strong>Revised bill</strong> actual meter reading किंवा correct slab/category वापरून.</li>
+          <li><strong>Meter test</strong> जर meter fast, stuck किंवा defective वाटत असेल.</li>
+          <li><strong>Arrear reversal</strong> paid amount, subsidy, adjustment किंवा security deposit miss असेल तर.</li>
+          <li><strong>Refund किंवा adjustment</strong> पुढील bill मध्ये excess recovery साठी.</li>
+          <li><strong>Late-payment surcharge reversal</strong> wrong bill किंवा delayed correction मुळे surcharge लागला असेल तर.</li>
+          <li><strong>Compensation</strong> state standards of performance अंतर्गत, लागू असल्यास.</li>
+          <li><strong>Written speaking order</strong> DISCOM revision refuse करत असेल तर.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>Complaint wording</h2>
+        <p>Tone firm आणि boring ठेवा. Officer ला काय check करायचे ते स्पष्ट सांगितल्यामुळे हा template काम करतो.</p>
+        <blockquote><p>Subject: Billing complaint for Consumer No. [number], Bill No. [number]</p>
+        <p>I dispute the bill dated [date] for [month] because [specific error]. The bill shows
+        [billed units/amount/category/arrears], but the attached documents show [correct figure].
+        I am attaching the current bill, previous bills, meter photo/payment proof and my
+        calculation. Please revise the bill, reverse any related late-payment surcharge, and issue
+        a written calculation/order. If meter testing is required, please register the request and
+        provide the test date and procedure. Kindly provide the complaint number and expected
+        resolution date.</p></blockquote>
+        <p>Disconnection टाळण्यासाठी payment करत असाल तर ही line जोडा: <strong>"Payment is made under
+        protest and without accepting the disputed calculation."</strong></p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Valid case लोक कसे हरवतात</h2>
+        <ul>
+          <li>Phone वर complaint करतात पण written complaint number घेत नाहीत.</li>
+          <li>"Bill high आहे" म्हणतात पण wrong line सांगत नाहीत.</li>
+          <li>Payment screenshots पाठवतात पण UTR किंवा consumer number देत नाहीत.</li>
+          <li>Due date ignore करून surcharge/disconnection main issue बनवतात.</li>
+          <li>CGRF आधी न जाता थेट वीज लोकपालाकडे जातात.</li>
+          <li>Refund मागतात पण category, meter factor किंवा arrear entry correction मागत नाहीत.</li>
+        </ul>
+        <p>Winning pattern simple आहे: एक error, एक calculation, एक complaint number, एक deadline,
+        आणि मग त्याच file सह escalation.</p>
+      </section>`,
+    faqsMr: [
+      { q: "वीज बिल चुकीचे असेल तर पहिली complaint कुठे करावी?",
+        a: "सर्वप्रथम DISCOM च्या official complaint channel वर जा: portal, app, customer-care email, local office किंवा available असेल तर 1912. Complaint number घ्या. Resolve न झाल्यास CGRF आणि नंतर वीज लोकपालाकडे escalate करा." },
+      { q: "थेट वीज लोकपालाकडे जाऊ शकतो का?",
+        a: "साधारणपणे नाही. वीज लोकपाल हा usually CGRF order, delay किंवा unsatisfactory decision नंतरचा appeal stage असतो. Exact process state regulator ठरवतो." },
+      { q: "Disputed bill pay करावे का?",
+        a: "Due date जवळ असेल तर default टाळा. Part payment allowed असेल तर undisputed amount pay करा, किंवा pay under protest करून written dispute नोंदवा. Wrong bill मुळे delay झाला असेल तर late-payment surcharge reversal मागा." },
+      { q: "कोणते documents billing complaint मजबूत करतात?",
+        a: "Current bill, मागील 2-3 bills, dated meter photo किंवा smart-meter screenshot, arrears dispute असल्यास payment proof, consumer details आणि correction ची one-page calculation attach करा." },
+      { q: "CGRF ला किती वेळ लागतो?",
+        a: "Central Electricity Rights of Consumers Rules नुसार grievance normally 30 days मध्ये आणि कुठल्याही परिस्थितीत 45 days पेक्षा जास्त नाही decide व्हायला हवा. Filing format आणि exact deadlines state regulator ठरवतो." },
+      { q: "Wrong bill साठी compensation मिळू शकते का?",
+        a: "हो, जिथे state standards of performance bill complaints, delayed service, meter replacement, reconnection किंवा related failures साठी compensation देतात. Corrected bill/refund पासून वेगळे compensation मागा." },
+    ],
+    titleTa: "பில் தவறா? புகார் செய்து வெல்வது எப்படி",
+    metaTitleTa: "மின் பில் தவறா? புகார் செய்து வெல்வது எப்படி",
+    descriptionTa: "தவறான மின் பில்லுக்கான இந்திய அளவிலான நடைமுறை வழிகாட்டி: முதலில் என்ன சரிபார்ப்பது, எந்த ஆவணங்கள் தேவை, புகார் சொற்கள், காலவரம்புகள், CGRF escalation மற்றும் மின்சார குறைதீர்ப்பாளரிடம் appeal.",
+    introTa: `உங்கள் மின் பில் தவறாகத் தோன்றினால், கோபத்தால் தொடங்காதீர்கள். ஆதாரத்தால் தொடங்குங்கள்.
+      பில்லை மீண்டும் கணக்கிடுங்கள், சரியாக எந்த வரி தவறு என்பதை கண்டுபிடியுங்கள், complaint number உடன்
+      written complaint செய்யுங்கள். பிறகு வரிசையாக செல்லுங்கள்: DISCOM complaint desk, Consumer
+      Grievance Redressal Forum, பின்னர் மின்சார குறைதீர்ப்பாளர். இந்த paper trail தான் "பில் அதிகம்"
+      என்பதைக் DISCOM பதிலளிக்க வேண்டிய case ஆக மாற்றும்.`,
+    sectionsTa: `
+      <section class="seo-section">
+        <h2>முதலில் என்ன தவறு என்று தீர்மானியுங்கள்</h2>
+        <p>வெற்றி பெறும் complaint ஒரு குறிப்பிட்ட தவறைச் சொல்கிறது. பலவீனமான complaint பில் அதிகம்
+        என்பதிலேயே நின்றுவிடும். File செய்வதற்கு முன் issue-ஐ இந்த buckets-ல் அமைக்கவும்:</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>பிரச்சனை</th><th>எதைச் சரிபார்க்க வேண்டும்</th><th>சிறந்த ஆதாரம்</th></tr></thead>
+            <tbody>
+              <tr><td>Units தவறு</td><td>Current reading, previous reading, meter photo, multiplying factor</td><td>தேதியுடன் meter photo, கடந்த 2-3 bills</td></tr>
+              <tr><td>Estimated bill</td><td>Bill-ல் assessed, provisional, IDF, door lock அல்லது meter not read இருக்கிறதா</td><td>Clear meter photo மற்றும் actual-reading revision request</td></tr>
+              <tr><td>Category தவறு</td><td>Domestic vs commercial, single-phase vs three-phase, rural/urban, prepaid/postpaid</td><td>Sanction letter, பழைய bill category, premises use</td></tr>
+              <tr><td>Load அல்லது MD penalty தவறு</td><td>Sanctioned load, contract demand, maximum demand, kW/kVA basis</td><td>Load sanction, meter MD register, appliance list</td></tr>
+              <tr><td>Arrears அல்லது duplicate charges</td><td>பழைய payment, adjustment அல்லது security deposit miss ஆனதா</td><td>Payment receipt, UTR, paid bill, ledger screenshot</td></tr>
+              <tr><td>Tariff அல்லது surcharge change</td><td>Correct slab, fixed charge, duty மற்றும் FPPA/FAC month பயன்படுத்தப்பட்டதா</td><td>Calculator breakdown, tariff page, order/surcharge notice</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>பில்லை ஒருமுறை <a href="/bill-calculator/">bill calculator</a> மூலம் ஓட்டிப் பார்த்து
+        itemised result-ஐ சேமிக்கவும். Calculator மற்றும் bill வேறுபட்டால், complaint-ல் specific
+        line-ஐ குறிப்பிடலாம்: units, fixed charge, duty, surcharge, arrears, subsidy அல்லது meter factor.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>ஆவணப் பட்டியல்</h2>
+        <p>ஆதாரத்தைச் சுருக்கமாகவும் முழுமையாகவும் வைத்திருங்கள். Complaint officer இரண்டு நிமிடத்தில்
+        issue-ஐப் புரிந்துகொள்ள வேண்டும்.</p>
+        <ul>
+          <li><strong>Current bill PDF அல்லது photo</strong>, முடிந்தால் எல்லா pages.</li>
+          <li><strong>கடந்த 2-3 bills</strong>, ஏனெனில் wrong readings மற்றும் arrears sequence-ல் தான் தெரியும்.</li>
+          <li><strong>Meter photo அல்லது smart-meter screenshot</strong>, kWh, date மற்றும் meter number தெரியும் வகையில்.</li>
+          <li><strong>Payment proof</strong> disputed arrears-க்கு: receipt, UTR, transaction ID அல்லது bank debit.</li>
+          <li><strong>Connection details</strong>: consumer number, பெயர், address, mobile number, sanctioned load மற்றும் category.</li>
+          <li><strong>உங்கள் calculation</strong>: correct amount மற்றும் refund/adjustment வேண்டியது ஒரு page-ல்.</li>
+        </ul>
+        <p class="seo-note"><strong>Explanation இல்லாமல் பத்து screenshots அனுப்பாதீர்கள்.</strong>
+        Documents attach செய்யுங்கள், ஆனால் complaint-ல் clean story எழுதுங்கள்: என்ன billed,
+        என்ன தவறு, ஆதாரம் என்ன, எந்த correction வேண்டும்.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>முதல் complaint file செய்யுங்கள்</h2>
+        <p>முதலில் DISCOM-ன் official complaint channel பயன்படுத்தவும்: portal, app, customer-care
+        email, local office, அல்லது உங்கள் state support செய்தால் 1912. ஒவ்வொரு முறையும் complaint
+        number வாங்கவும். Phone complaint செய்தால், அதே number quote செய்து written complaint அனுப்பவும்.</p>
+        <p>உங்கள் complaint-ல் ஐந்து பகுதிகள் இருக்க வேண்டும்:</p>
+        <ol>
+          <li><strong>Identity:</strong> consumer number, பெயர், service address மற்றும் mobile number.</li>
+          <li><strong>Bill:</strong> bill number, billing month, due date மற்றும் billed amount.</li>
+          <li><strong>Error:</strong> exact disputed line, total மட்டும் அல்ல.</li>
+          <li><strong>Evidence:</strong> attached bills, meter photo, payment proof அல்லது calculator working.</li>
+          <li><strong>Relief:</strong> revised bill, meter test, arrear reversal, refund, reconnection அல்லது written speaking order.</li>
+        </ol>
+        <p>Due date அருகில் இருந்தால், part payment allowed என்றால் undisputed amount pay செய்யுங்கள்,
+        அல்லது pay under protest என்று written-ல் சொல்லி pay செய்யுங்கள். Dispute pending இருந்தாலும்
+        non-payment late-payment surcharge அல்லது disconnection-க்கு வழிவகுக்கும்.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Timelines-ஐ பயன்படுத்துங்கள்</h2>
+        <p>Central Electricity Rights of Consumers Rules national floor rights தருகிறது. Exact service
+        standards மற்றும் compensation-ஐ உங்கள் State Electricity Regulatory Commission நிர்ணயிக்கும்.
+        National rules frame ஆகவும் state supply code exact deadline ஆகவும் பயன்படுத்துங்கள்.</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>Issue</th><th>Useful timeline or right</th><th>எப்படி பயன்படுத்துவது</th></tr></thead>
+            <tbody>
+              <tr><td>Bill delivery</td><td>Due date-க்கு குறைந்தது 10 days முன் bill கிடைக்க வேண்டும்</td><td>Late delivery default risk உருவாக்கினால் due-date extension அல்லது correction கேளுங்கள்</td></tr>
+              <tr><td>New connection பிறகு முதல் bill</td><td>State-specified period-ல், இரண்டு billing cycles-ஐத் தாண்டாமல்</td><td>Missing என்றால் written complaint செய்யுங்கள்; DISCOM 7 days-ல் bill issue செய்ய வேண்டும்</td></tr>
+              <tr><td>Provisional billing</td><td>Financial year-ல் இரண்டு provisional bills-ஐத் தாண்டுவது normal அல்ல, force-majeure தவிர</td><td>Repeated assessment-க்கு பதில் actual meter reading மற்றும் revision கேளுங்கள்</td></tr>
+              <tr><td>Delayed bill</td><td>State rules specified delay-க்கு 2-5% rebate தரலாம்</td><td>Late delivery proof உடன் rebate claim செய்யுங்கள்</td></tr>
+              <tr><td>CGRF decision</td><td>Central rules படி normally 30 days, எந்த நிலையிலும் 45 days-ஐத் தாண்டக்கூடாது</td><td>Forum deadline miss செய்தால் அல்லது order unsatisfactory என்றால் escalate செய்யுங்கள்</td></tr>
+              <tr><td>Compensation</td><td>State standards bill complaints, meter replacement, reconnection, voltage மற்றும் supply failures cover செய்கிறது</td><td>Bill correction-இலிருந்து தனியாக compensation கேளுங்கள்</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Sources: Ministry of Power consumer-rights announcement
+        <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=1682384" target="_blank" rel="noopener nofollow">PIB-ல்</a>,
+        <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=1806219" target="_blank" rel="noopener nofollow">consumer-rights rules பற்றிய Rajya Sabha reply</a>,
+        மற்றும் Electricity Act கீழ் state CGRF/மின்சார குறைதீர்ப்பாளர் விதிகள்.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Steps skip செய்யாமல் escalate செய்யுங்கள்</h2>
+        <p>பெரும்பாலான states இந்த order-ஐ expect செய்கின்றன:</p>
+        <ol>
+          <li><strong>DISCOM complaint desk அல்லது local office.</strong> Complaint number வாங்கி acknowledgement சேமிக்கவும்.</li>
+          <li><strong>Internal grievance cell அல்லது higher officer</strong>, உங்கள் state/DISCOM-ல் அந்த layer இருந்தால். முதல் complaint number quote செய்யவும்.</li>
+          <li><strong>Consumer Grievance Redressal Forum (CGRF).</strong> DISCOM resolve செய்யாவிட்டால் அல்லது தவறான answer கொடுத்தால் file செய்யவும்.</li>
+          <li><strong>மின்சார குறைதீர்ப்பாளர்.</strong> CGRF order unsatisfactory என்றால் அல்லது forum time-ல் decide செய்யாவிட்டால் மின்சார குறைதீர்ப்பாளரிடம் appeal செய்யவும்.</li>
+        </ol>
+        <p>CGRF மற்றும் மின்சார குறைதீர்ப்பாளர் வழி informal customer care அல்ல; அது Electricity Act கீழ் statutory
+        consumer grievance system. Overcharging மற்றும் faulty-meter complaints CGRF/மின்சார குறைதீர்ப்பாளர் வழியாக
+        செல்லலாம் என்று PIB குறிப்பிட்டுள்ளது. பார்க்க:
+        <a href="https://www.pib.gov.in/newsite/PrintRelease.aspx?lang=2&amp;relid=98961" target="_blank" rel="noopener nofollow">Ministry of Power reply</a>
+        மற்றும் <a href="https://jercuts.gov.in/ombudsman-details/" target="_blank" rel="noopener nofollow">JERC மின்சார குறைதீர்ப்பாளர் நடைமுறை</a>.</p>
+      </section>
+
+      <section class="seo-section">
+        <h2>எதை கேட்க வேண்டும்</h2>
+        <p>Specific ஆக இருங்கள். Forum correction order செய்ய முடியும், ஆனால் நீங்கள் எந்த remedy
+        கேட்கிறீர்கள் என்று தெளிவாக இருக்க வேண்டும்.</p>
+        <ul>
+          <li><strong>Revised bill</strong> actual meter reading அல்லது correct slab/category அடிப்படையில்.</li>
+          <li><strong>Meter test</strong> meter fast, stuck அல்லது defective என்று நினைத்தால்.</li>
+          <li><strong>Arrear reversal</strong> paid amount, subsidy, adjustment அல்லது security deposit miss ஆனால்.</li>
+          <li><strong>Refund அல்லது adjustment</strong> அடுத்த bill-ல் excess recovery-க்கு.</li>
+          <li><strong>Late-payment surcharge reversal</strong> wrong bill அல்லது delayed correction காரணமாக surcharge வந்தால்.</li>
+          <li><strong>Compensation</strong> state standards of performance கீழ், பொருந்தும் இடங்களில்.</li>
+          <li><strong>Written speaking order</strong> DISCOM revision refuse செய்தால்.</li>
+        </ul>
+      </section>
+
+      <section class="seo-section">
+        <h2>Complaint wording</h2>
+        <p>Tone firm மற்றும் boring ஆக இருக்கட்டும். Officer எதை check செய்ய வேண்டும் என்பதை இது தெளிவாகச் சொல்வதால் இந்த template வேலை செய்கிறது.</p>
+        <blockquote><p>Subject: Billing complaint for Consumer No. [number], Bill No. [number]</p>
+        <p>I dispute the bill dated [date] for [month] because [specific error]. The bill shows
+        [billed units/amount/category/arrears], but the attached documents show [correct figure].
+        I am attaching the current bill, previous bills, meter photo/payment proof and my
+        calculation. Please revise the bill, reverse any related late-payment surcharge, and issue
+        a written calculation/order. If meter testing is required, please register the request and
+        provide the test date and procedure. Kindly provide the complaint number and expected
+        resolution date.</p></blockquote>
+        <p>Disconnection தவிர்க்க payment செய்தால் இந்த line சேர்க்கவும்: <strong>"Payment is made
+        under protest and without accepting the disputed calculation."</strong></p>
+      </section>
+
+      <section class="seo-section">
+        <h2>Valid case-ஐ மக்கள் எப்படி இழக்கிறார்கள்</h2>
+        <ul>
+          <li>Phone-ல் complaint செய்கிறார்கள், ஆனால் written complaint number வாங்குவதில்லை.</li>
+          <li>"Bill high" என்று மட்டும் சொல்கிறார்கள்; wrong line சொல்லுவதில்லை.</li>
+          <li>Payment screenshots அனுப்புகிறார்கள், ஆனால் UTR அல்லது consumer number இல்லை.</li>
+          <li>Due date ignore செய்து surcharge/disconnection-ஐ main issue ஆக்குகிறார்கள்.</li>
+          <li>CGRF செல்லாமல் நேராக மின்சார குறைதீர்ப்பாளரிடம் செல்கிறார்கள்.</li>
+          <li>Refund மட்டும் கேட்கிறார்கள்; category, meter factor அல்லது arrear entry correction கேட்கவில்லை.</li>
+        </ul>
+        <p>Winning pattern simple: ஒரு error, ஒரு calculation, ஒரு complaint number, ஒரு deadline,
+        பின்னர் அதே file உடன் escalation.</p>
+      </section>`,
+    faqsTa: [
+      { q: "மின் பில் தவறாக இருந்தால் முதலில் எங்கு புகார் செய்ய வேண்டும்?",
+        a: "முதலில் உங்கள் DISCOM-ன் official complaint channel-க்கு செல்லுங்கள்: portal, app, customer-care email, local office அல்லது available என்றால் 1912. Complaint number வாங்குங்கள். Resolve ஆகாவிட்டால் CGRF, பின்னர் மின்சார குறைதீர்ப்பாளரிடம் escalate செய்யுங்கள்." },
+      { q: "நேராக மின்சார குறைதீர்ப்பாளரிடம் செல்லலாமா?",
+        a: "பொதுவாக இல்லை. மின்சார குறைதீர்ப்பாளர் usually CGRF order, delay அல்லது unsatisfactory decision பிறகு appeal stage. Exact process state regulator நிர்ணயிக்கும்." },
+      { q: "Disputed bill pay செய்ய வேண்டுமா?",
+        a: "Due date அருகில் இருந்தால் default தவிர்க்கவும். Part payment allowed என்றால் undisputed amount pay செய்யுங்கள், அல்லது pay under protest என்று written dispute பதிவு செய்யுங்கள். Wrong bill காரணமாக delay என்றால் late-payment surcharge reversal கேளுங்கள்." },
+      { q: "Billing complaint-ஐ வலுப்படுத்தும் documents என்ன?",
+        a: "Current bill, கடந்த 2-3 bills, dated meter photo அல்லது smart-meter screenshot, arrears dispute என்றால் payment proof, consumer details மற்றும் correction பற்றிய one-page calculation attach செய்யுங்கள்." },
+      { q: "CGRF எவ்வளவு நேரம் எடுக்கிறது?",
+        a: "Central Electricity Rights of Consumers Rules படி grievance normally 30 days-ல், எந்த நிலையிலும் 45 days-ஐத் தாண்டாமல் decide செய்யப்பட வேண்டும். Filing format மற்றும் exact deadlines state regulator நிர்ணயிக்கும்." },
+      { q: "Wrong bill-க்கு compensation கிடைக்குமா?",
+        a: "ஆம், state standards of performance bill complaints, delayed service, meter replacement, reconnection அல்லது related failures-க்கு compensation கொடுத்தால் கிடைக்கும். Corrected bill/refund-இலிருந்து தனியாக compensation கேளுங்கள்." },
+    ],
+  },
+  {
     slug: "on-grid-vs-hybrid-solar",
     published: "2026-08-27",
     title: "On-Grid vs Hybrid Solar: Which One Your House Actually Needs",

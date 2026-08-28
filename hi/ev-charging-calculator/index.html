@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <script>
+    (function () {
+      document.documentElement.classList.add('js');
+        try { localStorage.setItem('lang', 'hi'); } catch (e) {}
+      try {
+        var t = localStorage.getItem('theme');
+        if (t !== 'dark' && t !== 'light') t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+  <title>EV चार्जिंग लागत कैलकुलेटर — TheDiscomBill</title>
+  <meta name="description" content="घर पर EV चार्जिंग की प्रति किमी, प्रति चार्ज और मासिक लागत, पेट्रोल तुलना सहित देखें।">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Self-hosted fonts (fonts/fonts.css). Same-origin, subsetted to latin + the ₹ sign. -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="/fonts/inter-var-latin.woff2">
+  <style data-inline="fonts">@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Inter';font-style:normal;font-weight:100 900;font-display:swap;src:url(/fonts/inter-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/space-grotesk-var-rupee.woff2) format('woff2');unicode-range:U+20A0-20BF}</style>
+  <link rel="canonical" href="https://thediscombill.com/hi/ev-charging-calculator/">
+  <link rel="alternate" hreflang="en-IN" href="https://thediscombill.com/ev-charging-calculator/">
+  <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/ev-charging-calculator/">
+  <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/ev-charging-calculator/">
+  <link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/ev-charging-calculator/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/ev-charging-calculator/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TheDiscomBill">
+  <meta property="og:title" content="EV चार्जिंग लागत कैलकुलेटर — TheDiscomBill">
+  <meta property="og:description" content="घर पर EV चार्जिंग की प्रति किमी, प्रति चार्ज और मासिक लागत, पेट्रोल तुलना सहित देखें।">
+  <meta property="og:url" content="https://thediscombill.com/hi/ev-charging-calculator/">
+  <meta property="og:image" content="https://thediscombill.com/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="TheDiscomBill — electricity bill calculator for every Indian DISCOM, with a sample slab-wise bill breakdown">
+  <meta property="og:locale" content="hi_IN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="EV चार्जिंग लागत कैलकुलेटर — TheDiscomBill">
+  <meta name="twitter:description" content="घर पर EV चार्जिंग की प्रति किमी, प्रति चार्ज और मासिक लागत, पेट्रोल तुलना सहित देखें।">
+  <meta name="twitter:image" content="https://thediscombill.com/og-image.jpg">
+  <link rel="stylesheet" href="/css/styles.min.css">
+  <!-- Google tag (gtag.js) -->
+  <!-- gtag.js is ~167KB and cost 650-1300ms of mobile main-thread time when it loaded here
+       eagerly. The dataLayer stub below queues every gtag() call, so deferring the library
+       to idle (or the first interaction, whichever lands first) loses no events. -->
+  <script>
+    (function () {
+      var done = false;
+      function load() {
+        if (done) return; done = true;
+        var s = document.createElement("script");
+        s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=G-D0SSNW5RZ6";
+        document.head.appendChild(s);
+      }
+      ["pointerdown", "keydown", "scroll"].forEach(function (e) {
+        addEventListener(e, load, { once: true, passive: true });
+      });
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 5000 });
+      else addEventListener("load", function () { setTimeout(load, 2000); });
+    })();
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    if (location.hostname === 'thediscombill.com') gtag('config', 'G-D0SSNW5RZ6');
+  </script>
+  <!-- entity-graph -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN"}</script>
+  <!-- / entity-graph -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"EV चार्जिंग लागत कैलकुलेटर","url":"https://thediscombill.com/hi/ev-charging-calculator/","description":"घर पर EV चार्जिंग की प्रति किमी, प्रति चार्ज और मासिक लागत, पेट्रोल तुलना सहित देखें।","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"hi-IN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"EV चार्जिंग लागत कैलकुलेटर","item":"https://thediscombill.com/hi/ev-charging-calculator/"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does it cost to charge an electric car at home in India?","acceptedAnswer":{"@type":"Answer","text":"Multiply the battery size by your electricity tariff and add about 10% for charging losses. A 40.5 kWh Tata Nexon EV at ₹7 per unit costs roughly ₹310–₹320 for a full charge at home."}},{"@type":"Question","name":"Is charging an EV cheaper than petrol?","acceptedAnswer":{"@type":"Answer","text":"Yes — typically 80–90% cheaper per km when charged at home. A mid-size EV runs at about ₹1 per km at ₹7 per unit, while a comparable petrol car costs ₹7 or more per km."}},{"@type":"Question","name":"Do Indian states have special EV charging tariffs?","acceptedAnswer":{"@type":"Answer","text":"Several states (Delhi, Maharashtra, Karnataka, UP and others) have separate LT EV-charging categories or Time-of-Day discounts for night charging, often cheaper than the top domestic slab. Check your DISCOM's tariff schedule."}},{"@type":"Question","name":"How long does home EV charging take?","acceptedAnswer":{"@type":"Answer","text":"On a regular 15A socket (about 3.3 kW), a 40 kWh car battery takes roughly 12 hours for a full charge. A 7.2 kW AC wallbox roughly halves that. Scooter batteries (3–4 kWh) charge in about an hour or two."}}]}</script>
+</head>
+<body>
+
+<!-- ── Header ───────────────────────────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/hi/" class="logo">
+      <span class="logo-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z" fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <div>
+        <span class="logo-text">TheDiscomBill</span>
+        <span class="logo-tagline" data-i18n="tagline">बिजली बिल कैलकुलेटर · पूरे भारत के लिए</span>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/hi/bill-calculator/" data-i18n="nav.calculator">कैलकुलेटर</a>
+      <a href="/hi/smart-meter/" class="nav-promoted" data-i18n="nav.smartMeter">स्मार्ट मीटर</a>
+      <a href="/hi/tariffs/states/" class="nav-promoted" data-i18n="nav.tariffs">टैरिफ</a>
+      <a href="/hi/guides/" class="nav-promoted" data-i18n="nav.blog">ब्लॉग</a>
+      <!-- Solar tools, DISCOM services, the extra calculators and the Learn pages all moved
+           to the footer sitemap. The header now carries only the four primary destinations —
+           the footer is shared chrome on every page, so nothing lost a link. -->
+      <div class="nav-dropdown nav-mob-only" id="quickLinksDropdown">
+        <button type="button" class="nav-dropdown-trigger" id="quickLinksTrigger" aria-haspopup="true" aria-expanded="false">
+          <span data-i18n="nav.quickLinks">और देखें</span>
+          <svg class="nav-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu nav-menu-card" id="quickLinksMenu" role="menu">
+          <div class="nav-mob-links" role="presentation">
+            <a href="/hi/bill-calculator/" class="nav-dropdown-item nav-mob-sm" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg><span data-i18n="nav.calculator">कैलकुलेटर</span></a>
+            <a href="/hi/smart-meter/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="4" width="17" height="16" rx="2"/><path d="M7.5 8h9"/><path d="m12.5 11.5-2.5 3.5h3l-2 3.5"/></svg><span data-i18n="nav.smartMeter">स्मार्ट मीटर</span></a>
+            <a href="/hi/tariffs/states/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span data-i18n="nav.tariffs">टैरिफ</span></a>
+            <a href="/hi/guides/" class="nav-dropdown-item" role="menuitem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg><span data-i18n="nav.blog">ब्लॉग</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="lang-switch" id="langSwitch">
+        <button type="button" class="lang-trigger" id="langTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="langTriggerText langTriggerLabel">
+          <span class="lang-trigger-text" id="langTriggerText">EN</span>
+          <span class="sr-only" id="langTriggerLabel">— change language / भाषा बदलें</span>
+          <svg class="lang-caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5l3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang-menu" id="langMenu" role="listbox" aria-label="Select language">
+          <li class="lang-opt" role="option" data-lang="en" aria-selected="true"><span class="lang-opt-name">English</span><span class="lang-opt-code">EN</span></li>
+          <li class="lang-opt" role="option" data-lang="hi" aria-selected="false"><span class="lang-opt-name">हिंदी</span><span class="lang-opt-code">HI</span></li>
+        </ul>
+      </div>
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch theme" title="Toggle light / dark theme"><svg class="theme-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><g class="tt-sun" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.2 5.2l1.5 1.5M17.3 17.3l1.5 1.5M18.8 5.2l-1.5 1.5M6.7 17.3l-1.5 1.5" fill="none"/></g><path class="tt-moon" fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg></button>
+    </nav>
+  </div>
+</header>
+
+<div class="page-body" role="main">
+  <section class="solar-section">
+    <div class="container container-mid">
+      <!-- The BreadcrumbList JSON-LD in <head> already described this trail; the visible
+           nav every content page carries was simply never added here. -->
+      <nav class="seo-breadcrumbs" aria-label="Breadcrumb"><ol>
+        <li class="crumb"><a href="/hi/" data-i18n="bc.home">होम</a></li>
+        <li class="crumb-sep" aria-hidden="true">›</li>
+        <li class="crumb"><span aria-current="page">EV Charging Cost Calculator</span></li>
+      </ol></nav>
+      <div class="solar-hero reveal">
+        <div class="ev-hero-bolt" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2.5 6.2 13.1c-.27.42.03.95.52.95H11l-1 7.4c-.09.62.72.94 1.07.43L18 11.2c.28-.42-.02-.95-.52-.95H13l1-7.2c.09-.6-.69-.94-1-.55Z"/></svg>
+        </div>
+        <h1 data-i18n="ev.title">EV चार्जिंग लागत कैलकुलेटर</h1>
+        <p class="solar-intro" data-i18n-html="ev.intro">घर पर EV चार्ज करने की <strong>असली</strong> लागत कितनी है? अपना वाहन चुनें, मासिक किमी और टैरिफ डालें — प्रति चार्ज लागत, प्रति किमी लागत, मासिक चार्जिंग बिल और पेट्रोल की तुलना में बचत जानें।</p>
+        <div class="solar-chips" role="list">
+          <span class="solar-chip" role="listitem" data-i18n="ev.chip1">चार्जिंग लॉस शामिल</span>
+          <span class="solar-chip" role="listitem" data-i18n="ev.chip2">पेट्रोल तुलना built-in</span>
+          <span class="solar-chip" role="listitem" data-i18n="ev.chip3">मुफ़्त · कोई साइन-अप नहीं</span>
+        </div>
+      </div>
+
+      <div class="solar-layout reveal">
+        <!-- Inputs -->
+        <div class="solar-inputs">
+          <div class="solar-field">
+            <label for="evSelect" data-i18n="ev.select">आपका EV</label>
+            <select id="evSelect"></select>
+          </div>
+          <div class="solar-field-row">
+            <div class="solar-field">
+              <label for="evBattery" data-i18n="ev.battery">बैटरी (kWh)</label>
+              <input id="evBattery" type="number" min="0.5" step="0.1" value="40.5" inputmode="decimal">
+            </div>
+            <div class="solar-field">
+              <label for="evRange"><span data-i18n="ev.range">वास्तविक रेंज (किमी)</span>
+                <span class="gloss" tabindex="0" role="img" aria-label="Real-world range: km you actually get on a full charge, usually 15 to 25 percent below the claimed ARAI figure. Edit to match your experience." data-tip="Km you actually get on a full charge — usually 15–25% below the claimed ARAI figure. Presets use conservative real-world numbers; edit to match your experience.">ⓘ</span>
+              </label>
+              <input id="evRange" type="number" min="10" step="5" value="320" inputmode="numeric">
+            </div>
+          </div>
+          <div class="solar-field-row">
+            <div class="solar-field">
+              <label for="evKm" data-i18n="ev.km">मासिक ड्राइविंग (किमी)</label>
+              <input id="evKm" type="number" min="0" step="50" value="1000" inputmode="numeric">
+            </div>
+            <div class="solar-field">
+              <label for="evRate"><span data-i18n="ev.rate">आपका टैरिफ (₹/यूनिट)</span>
+                <span class="gloss" tabindex="0" role="img" aria-label="Use the rate of your top consumption slab, since EV charging units land on top of your household usage. Some states offer cheaper EV or night Time-of-Day rates." data-tip="Use your TOP slab rate — EV units land on top of your household usage. Some states have cheaper dedicated EV / night-ToD rates; check your DISCOM's tariff page.">ⓘ</span>
+              </label>
+              <input id="evRate" type="number" min="0" step="0.5" value="7" inputmode="decimal">
+              <span class="solar-hint"><a href="/hi/tariffs/states/" data-i18n="ev.rateLink">अपने डिस्कॉम की दर देखें →</a></span>
+            </div>
+          </div>
+          <div class="solar-field ev-depth-field">
+            <label for="evDepth">
+              <span data-i18n="ev.depth">सामान्य चार्ज स्तर</span>
+              <b class="ev-depth-val" id="evDepthVal">80%</b>
+              <span class="gloss" tabindex="0" role="img" aria-label="Most EVs are charged to about 80 percent day to day to protect battery life, and fast chargers slow sharply past 80 percent. This sets the cost and time per charging session; your monthly cost is driven by the kilometres you drive, so it does not change." data-tip="Charging to ~80% daily protects battery health, and DC chargers slow sharply past 80%. This sets the per-session cost & time. Your monthly cost tracks the km you drive, so it's unaffected.">ⓘ</span>
+            </label>
+            <input id="evDepth" type="range" min="50" max="100" step="5" value="80" class="ev-range">
+          </div>
+          <details class="solar-adv">
+            <summary data-i18n="ev.advanced">एडवांस्ड</summary>
+            <div class="solar-field-row">
+              <div class="solar-field">
+                <label for="evLoss" data-i18n="ev.loss">चार्जिंग लॉस (%)</label>
+                <input id="evLoss" type="number" min="0" max="30" step="1" value="10" inputmode="numeric">
+                <span class="solar-hint" data-i18n="ev.lossHint">AC चार्जिंग में ~8–12% ऊर्जा गर्मी में जाती है; उसका भुगतान आप करते हैं।</span>
+              </div>
+              <div class="solar-field">
+                <label for="evPublicRate" data-i18n="ev.publicRate">पब्लिक DC दर (₹/यूनिट)</label>
+                <input id="evPublicRate" type="number" min="0" step="1" value="20" inputmode="decimal">
+              </div>
+            </div>
+            <div class="solar-field-row">
+              <div class="solar-field">
+                <label for="evPetrol" data-i18n="ev.petrol">पेट्रोल कीमत (₹/लीटर)</label>
+                <input id="evPetrol" type="number" min="0" step="1" value="105" inputmode="decimal">
+              </div>
+              <div class="solar-field">
+                <label for="evMileage" data-i18n="ev.mileage">पेट्रोल माइलेज (किमी/लीटर)</label>
+                <input id="evMileage" type="number" min="1" step="1" value="15" inputmode="decimal">
+              </div>
+            </div>
+            <!-- CNG is the comparison that actually threatens an EV on running cost, and it was
+                 missing. Both defaults are placeholders like the petrol pair above: CNG is sold
+                 by the kilogram and the price moves city by city, so the hint says to check the
+                 pump rather than implying these are the national numbers. Zero the price and the
+                 CNG row and bar disappear, for readers who do not want the comparison. -->
+            <div class="solar-field-row">
+              <div class="solar-field">
+                <label for="evCng" data-i18n="ev.cng">CNG कीमत (₹/किग्रा)</label>
+                <input id="evCng" type="number" min="0" step="1" value="80" inputmode="decimal">
+                <span class="solar-hint" data-i18n="ev.cngHint">शहर के हिसाब से काफ़ी बदलती है — अपने पंप की दर देखिए। CNG हटाने के लिए 0 रखें।</span>
+              </div>
+              <div class="solar-field">
+                <label for="evCngMileage" data-i18n="ev.cngMileage">CNG माइलेज (किमी/किग्रा)</label>
+                <input id="evCngMileage" type="number" min="1" step="1" value="26" inputmode="decimal">
+              </div>
+            </div>
+          </details>
+        <div class="solar-chart-card" id="evChartCard" hidden>
+          <div class="solar-chart-title" data-i18n="ev.chartTitle">मासिक लागत की तुलना</div>
+          <div id="evBars" class="ev-bars"></div>
+          <button type="button" class="solar-share" id="evShare">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5 0 1.47 1.07 2.89 1.22 3.09.15.2 2.11 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.09 1.76-.72 2.01-1.42.25-.7.25-1.29.17-1.42-.07-.12-.27-.2-.57-.35zM12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.82 9.82 0 0 1-1.51-5.25c0-5.44 4.43-9.86 9.89-9.86a9.82 9.82 0 0 1 6.99 2.9 9.82 9.82 0 0 1 2.89 6.98c0 5.44-4.43 9.86-9.88 9.86zm8.41-18.27A11.8 11.8 0 0 0 12.05 0C5.5 0 .16 5.33.16 11.89c0 2.1.55 4.14 1.59 5.94L.06 24l6.33-1.66a11.9 11.9 0 0 0 5.66 1.44h.01c6.54 0 11.88-5.33 11.88-11.89 0-3.18-1.24-6.16-3.48-8.41z"/></svg>
+            <span data-i18n="ev.share">यह अनुमान WhatsApp पर शेयर करें</span>
+          </button>
+        </div>
+        </div>
+
+        <!-- Results -->
+        <aside class="solar-results">
+          <div class="solar-empty" id="evEmpty" data-i18n="ev.empty">अपना EV चुनें और मासिक किमी डालें — चार्जिंग लागत यहाँ दिखेगी।</div>
+          <div id="evResult" hidden>
+            <div class="solar-hero-card ev-hero-card">
+              <div class="solar-hero-label" data-i18n="ev.heroLabel">आपकी EV चलाने की लागत</div>
+              <div class="ev-perkm"><span id="evPerKmVal">—</span><small data-i18n="ev.perKmUnit"> प्रति किमी</small></div>
+              <div class="ev-vs-petrol"><span data-i18n="ev.vsPetrol">बनाम पेट्रोल</span> <s id="evPetrolKmVal">—</s></div>
+              <div class="solar-payback-pill ev-cheaper-pill" id="evCheaperPill">—</div>
+            </div>
+            <div class="solar-breakdown">
+              <div class="solar-bd-row"><span data-i18n="ev.rCharge">प्रति चार्ज लागत</span><strong id="evRCharge">—</strong></div>
+              <div class="solar-bd-row ev-bd-hl"><span data-i18n="ev.rRange100">₹100 की चार्जिंग में रेंज</span><strong id="evRRange100">—</strong></div>
+              <div class="solar-bd-row"><span data-i18n="ev.rUnits">बिल पर अतिरिक्त यूनिट</span><strong id="evRUnits">—</strong></div>
+              <div class="solar-bd-row"><span data-i18n="ev.rMonthly">मासिक चार्जिंग लागत</span><strong id="evRMonthly">—</strong></div>
+              <div class="solar-bd-row"><span data-i18n="ev.rPetrol">इतने ही किमी का पेट्रोल</span><strong id="evRPetrol">—</strong></div>
+              <div class="solar-bd-row" id="evRCngRow"><span data-i18n="ev.rCng">उतने ही किमी के लिए CNG</span><strong id="evRCng">—</strong></div>
+              <div class="solar-bd-row solar-bd-save"><span data-i18n="ev.rSaveMo">पेट्रोल की तुलना में बचत</span><strong id="evRSaveMo">—</strong></div>
+              <div class="solar-bd-row solar-bd-save"><span data-i18n="ev.rSaveYr">वार्षिक बचत</span><strong id="evRSaveYr">—</strong></div>
+              <div class="solar-bd-row"><span data-i18n="ev.rTime33">चार्ज समय · 15A सॉकेट (3.3 kW)</span><strong id="evRTime33">—</strong></div>
+              <div class="solar-bd-row"><span data-i18n="ev.rTime72">चार्ज समय · वॉलबॉक्स (7.2 kW)</span><strong id="evRTime72">—</strong></div>
+              <div class="solar-bd-row"><span data-i18n="ev.rPublic">पब्लिक DC फास्ट चार्जिंग</span><strong id="evRPublic">—</strong></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+
+      <p class="comparison-note reveal" data-i18n-html="ev.note">घर पर चार्जिंग आपके घरेलू स्लैब रेट पर बिल होती है — EV यूनिट आपकी घरेलू खपत के <em>ऊपर</em> जुड़ती हैं, इसलिए सटीकता के लिए अपना टॉप-स्लैब रेट इस्तेमाल करें (हमारे <a href="/hi/tariffs/states/">टैरिफ पेजों</a> पर देखें)। कई राज्यों (दिल्ली, महाराष्ट्र, कर्नाटक, UP आदि) में अलग EV-चार्जिंग श्रेणी या रात के टाइम-ऑफ-डे डिस्काउंट हैं। 7.2 kW वॉलबॉक्स लगाने के लिए आमतौर पर डिस्कॉम से स्वीकृत भार बढ़वाना पड़ता है। प्रति चार्ज लागत व समय आपके चुने चार्ज स्तर पर निर्भर हैं (बैटरी के लिए ज़्यादातर लोग ~80% पर रुकते हैं); मासिक लागत आपके चलाए किमी पर निर्भर है, इसलिए स्लाइडर उसे नहीं बदलता।</p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="container">    <nav class="footer-map" aria-label="All pages">
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.tools">टूल्स</span>
+        <a href="/hi/bill-calculator/" data-i18n="ql.advancedCalc">एडवांस्ड बिल कैलकुलेटर</a>
+        <a href="/hi/compare/" data-i18n="nav.compare">तुलना</a>
+        <a href="/hi/electricity-cost-calculator/" data-i18n="ql.usage">बिजली लागत कैलकुलेटर</a>
+        <a href="/hi/ev-charging-calculator/" data-i18n="ql.ev">EV चार्जिंग लागत</a>
+        <a href="/hi/sanctioned-load-optimizer/" data-i18n="ql.loadOptimizer">स्वीकृत भार ऑप्टिमाइज़र</a>
+        <a href="/hi/tenant-submeter-calculator/" data-i18n="ql.tenantMeter">किरायेदार सब-मीटर कैलकुलेटर</a>
+        <a href="/hi/fppa/" data-i18n="ql.fuelSurcharge">ईंधन अधिभार ट्रैकर</a>
+        <a href="/install/" data-i18n="ql.install">ऑफ़लाइन ऐप इंस्टॉल करें</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.solarTools">सोलर टूल्स</span>
+        <a href="/hi/solar-calculator/" data-i18n="nav.solarSavings">रूफटॉप सोलर बचत कैलकुलेटर</a>
+        <a href="/hi/solar-panel-size-calculator/" data-i18n="nav.solarSize">सोलर पैनल साइज़ कैलकुलेटर</a>
+        <a href="/hi/solar-battery-backup-calculator/" data-i18n="nav.solarBattery">सोलर बैटरी बैकअप कैलकुलेटर</a>
+        <a href="/hi/solar-subsidy-checker/" data-i18n="nav.solarSubsidy">सोलर सब्सिडी चेकर</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.services">सेवाएँ</span>
+        <a href="/services/" data-i18n="ql.discomServices">डिस्कॉम सेवाएँ</a>
+        <a href="/hi/smart-meter-recharge/" data-i18n="ql.smartMeter">स्मार्ट मीटर रिचार्ज</a>
+        <a href="/hi/smart-meter/" data-i18n="ql.meterDisplay">स्मार्ट मीटर गाइड</a>
+        <a href="/hi/check-my-bill/" data-i18n="ql.ocrCheck">तुरंत बिल स्व-जाँच (OCR)</a>
+        <a href="/bill-review/" data-i18n="ql.billReview">विशेषज्ञ बिल समीक्षा</a>
+        <a href="/services/#new-connection" data-i18n="footer.newConnection">नया कनेक्शन</a>
+      </div>
+      <div class="footer-col">
+        <span class="footer-col-title" data-i18n="ql.learn">जानें</span>
+        <a href="/hi/tariffs/states/" data-i18n="footer.allStates">सभी राज्य व डिस्कॉम</a>
+        <a href="/hi/guides/" data-i18n="nav.blog">ब्लॉग</a>
+        <a href="/hi/glossary/" data-i18n="ql.glossary">बिल शब्दावली</a>
+        <a href="/hi/understand-your-bill/" data-i18n="ql.understandBill">अपना बिल समझें</a>
+        <a href="/methodology/" data-i18n="ql.methodology">कार्यप्रणाली व सटीकता</a>
+        <a href="/database/" data-i18n="ql.tariffDatabase">टैरिफ़ डेटाबेस</a>
+        <a href="/orders/" data-i18n="ql.orderLibrary">आदेश पुस्तकालय</a>
+        <a href="/hi/alerts/" data-i18n="ql.alerts">अलर्ट</a>
+        <a href="/#about" data-i18n="nav.about">परिचय</a>
+        <a href="/contact/" data-i18n="ql.contact">संपर्क करें</a>
+      </div>
+    </nav>
+    <p><span data-i18n="footer.rights">© 2026 TheDiscomBill. सर्वाधिकार सुरक्षित।</span>
+    &nbsp;|&nbsp; <a href="/#about" data-i18n="footer.disclaimer">अस्वीकरण</a> &nbsp;|&nbsp; <a href="/privacy/" data-i18n="ql.privacy">गोपनीयता नीति</a> &nbsp;|&nbsp; <a href="/cookies/" data-i18n="ql.cookies">कुकी नीति</a></p>
+    <!-- Social profiles — hrefs are placeholders until the accounts exist -->
+    <div class="soc-links" aria-label="Social media">
+      <a class="soc-link" href="mailto:support@thediscombill.com" aria-label="Email" title="Email us"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></a>
+      <a class="soc-link" href="https://www.instagram.com/thediscombill/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37a4 4 0 1 1-7.75 1.26 4 4 0 0 1 7.75-1.26z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a class="soc-link" href="https://x.com/thediscombill" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93zM17.61 20.64h2.04L6.49 3.24H4.3z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="/js/main.js"></script>
+<script type="module" src="/js/ev.js"></script>
+
+</body>
+</html>
