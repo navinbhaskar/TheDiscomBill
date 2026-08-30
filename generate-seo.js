@@ -1074,8 +1074,11 @@ function categoryCardHtml(cat, lang = 'en') {
   // DISCOMs' data, and LPSC and the regulatory surcharge are one figure for the whole company
   // (they live in "at a glance" and the surcharge section). What is left is what varies row to
   // row.
+  // Delhi-style schedules carry no per-row code ("LT-I (Domestic)" is the whole name), and a
+  // column of em-dashes is a column of nothing. Drop it when no row in the category has one.
+  const hasCode = blocks.some((o) => splitTariffName(o.name || o.id).code);
   const cols = [
-    L({ en: 'Code', hi: 'कोड', mr: 'कोड', ta: 'குறியீடு' }),
+    ...(hasCode ? [L({ en: 'Code', hi: 'कोड', mr: 'कोड', ta: 'குறியீடு' })] : []),
     L({ en: 'Supply type', hi: 'आपूर्ति प्रकार', mr: 'पुरवठा प्रकार', ta: 'விநியோக வகை' }),
     L({ en: 'Energy charge', hi: 'ऊर्जा शुल्क', mr: 'ऊर्जा शुल्क', ta: 'மின் கட்டணம்' }),
     L({ en: 'Fixed charge', hi: 'फिक्स्ड चार्ज', mr: 'फिक्स्ड चार्ज', ta: 'நிலையான கட்டணம்' }),
@@ -1099,13 +1102,27 @@ function categoryCardHtml(cat, lang = 'en') {
     }).join('')}</ul>`;
   };
   // "₹50/kW/mo", not "₹50 / kW / month" — the long form wrapped to two lines in a column that
-  // holds one number. Banded fixed charges keep their small table: those bands are data, not
-  // formatting.
+  // holds one number.
+  const isBanded = (fc) => !!fc && (fc.type === 'tiered' || fc.type === 'slab_per_kw') && Array.isArray(fc.slabs);
+  // A load-banded fixed charge is a list of pairs, exactly like the slab list beside it, so it
+  // is built the same way rather than borrowing fixedChargeHtml()'s nested <table> — that table
+  // sized itself to its content and, in a fixed-layout column, spilled over the duty column
+  // next to it.
   const fixedCell = (o) => {
     const fc = o.fixedCharge;
-    const banded = fc && (fc.type === 'tiered' || fc.type === 'slab_per_kw') && Array.isArray(fc.slabs);
-    return banded ? fixedChargeHtml(fc, lang) : fixedChargeShort(fc, lang);
+    if (!isBanded(fc)) return fixedChargeShort(fc, lang);
+    const perKw = fc.type === 'slab_per_kw' || fc.perKw;
+    const suffix = `<span class="tx-muted">${perKw ? '/kW' : ''}${T(lang, { en: '/mo', hi: '/माह', mr: '/महिना', ta: '/மாதம்' })}</span>`;
+    return `<ul class="tt-bands">${fc.slabs.map((sl) => {
+      const label = sl.label || (sl.maxLoad === Infinity
+        ? T(lang, { en: 'Above top band', hi: 'सर्वोच्च बैंड से ऊपर', mr: 'सर्वोच्च बँडवर', ta: 'மேல் பட்டைக்கு மேல்' })
+        : T(lang, { en: `Up to ${sl.maxLoad} kW`, hi: `${sl.maxLoad} kW तक`, mr: `${sl.maxLoad} kW पर्यंत`, ta: `${sl.maxLoad} kW வரை` }));
+      return `<li><span>${esc(label)}</span><b>${rupee(sl.rate)}${suffix}</b></li>`;
+    }).join('')}</ul>`;
   };
+  // A schedule with banded fixed charges needs a wider fixed-charge column; one with a single
+  // figure per row does not. The class lets one set of column widths cover both.
+  const bandedFixed = blocks.some((o) => isBanded(o.fixedCharge));
   const extrasCell = (o) => {
     const arr = o.additionalCharges;
     if (!Array.isArray(arr) || !arr.length) return '<span class="tx-muted">—</span>';
@@ -1118,10 +1135,13 @@ function categoryCardHtml(cat, lang = 'en') {
   const rows = blocks.map((o) => {
     const { code, label } = splitTariffName(o.name || o.id);
     const st = hasSupplyTypes ? o : null;
+    const name = esc(label || cat.name || cat.id);
     return `
         <tr id="${tariffRowId(cat, st)}">
-          <th scope="row" class="tt-code">${code ? esc(code) : '<span class="tx-muted">—</span>'}</th>
-          <td class="tt-name">${esc(label || cat.name || cat.id)}</td>
+          ${hasCode
+            ? `<th scope="row" class="tt-code">${code ? esc(code) : '<span class="tx-muted">—</span>'}</th>
+          <td class="tt-name">${name}</td>`
+            : `<th scope="row" class="tt-name">${name}</th>`}
           <td class="tt-energy">${slabCell(o)}</td>
           <td class="tt-fixed num">${fixedCell(o)}</td>
           <td class="tt-extra">${extrasCell(o)}</td>
@@ -1152,11 +1172,11 @@ function categoryCardHtml(cat, lang = 'en') {
         </div>
       </header>
       <div class="tariff-table-wrap">
-        <table class="tariff-table">
+        <table class="tariff-table${bandedFixed ? ' is-bandfixed' : ''}${hasCode ? '' : ' is-nocode'}">
           <!-- Widths declared rather than left to the auto layout, which gave "Electricity Duty
                5%" 173px and squeezed the supply-type name into 150px and three lines. -->
-          <colgroup><col class="tt-c-code"><col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
-          <thead><tr>${cols.map((c, i) => `<th${i === 3 ? ' class="num"' : ''} scope="col">${esc(c)}</th>`).join('')}</tr></thead>
+          <colgroup>${hasCode ? '<col class="tt-c-code">' : ''}<col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
+          <thead><tr>${cols.map((c, i) => `<th${i === cols.length - 2 ? ' class="num"' : ''} scope="col">${esc(c)}</th>`).join('')}</tr></thead>
           <tbody>${rows}</tbody>
         </table>
       </div>

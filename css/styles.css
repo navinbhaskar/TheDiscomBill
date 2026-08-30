@@ -4121,6 +4121,12 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
    single-line figures. */
 .tt-c-fixed  { width: 15%; }
 .tt-c-extra  { width: 17%; }
+/* Banded fixed charges hold two columns of their own, so that column takes the room — from
+   the name and energy columns, which have the most slack. */
+.is-bandfixed .tt-c-name   { width: 25%; }
+.is-bandfixed .tt-c-energy { width: 27%; }
+.is-bandfixed .tt-c-fixed  { width: 23%; }
+.is-bandfixed .tt-c-extra  { width: 16%; }
 .tariff-table thead th {
   position: sticky; top: 0; z-index: 2;
   padding: 7px 10px; text-align: left; vertical-align: bottom;
@@ -4145,13 +4151,38 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 }
 .tariff-table thead th:first-child { left: 0; z-index: 3; }
 .tariff-table .tt-name { color: var(--text-primary); font-weight: 600; }
+/* No code column (Delhi-style names carry no code): the supply type is the row header, and it
+   is the one that stays pinned while a wide schedule scrolls. */
+.tariff-table.is-nocode .tt-name {
+  position: sticky; left: 0; z-index: 1; background: var(--surface-card);
+}
+.is-nocode .tt-c-name   { width: 32%; }
+.is-nocode .tt-c-energy { width: 30%; }
+.is-nocode .tt-c-fixed  { width: 20%; }
+.is-nocode .tt-c-extra  { width: 18%; }
+.is-nocode.is-bandfixed .tt-c-name   { width: 28%; }
+.is-nocode.is-bandfixed .tt-c-energy { width: 28%; }
+.is-nocode.is-bandfixed .tt-c-fixed  { width: 26%; }
+.is-nocode.is-bandfixed .tt-c-extra  { width: 18%; }
 .tariff-table .tt-fixed {
-  text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap;
+  text-align: right; font-variant-numeric: tabular-nums;
   color: var(--text-primary); font-weight: 600;
 }
-/* A banded fixed charge keeps its own small table; it aligns like the slab list beside it. */
-.tariff-table .tt-fixed .tariff-slab-table { margin: 0; width: 100%; font-size: 12px; }
-.tariff-table .tt-fixed .tariff-slab-table td { padding: 1px 0; border: none; }
+/* nowrap on the figure only. On the cell it made a load-banded charge ("Up to 2 kW ₹20/mo")
+   run straight over the duty column beside it — a fixed-layout column cannot absorb an
+   unbreakable line. */
+.tariff-table .tt-fixed > .tx-muted, .tariff-table .tt-fixed b { white-space: nowrap; }
+/* A banded fixed charge is a list of pairs, so it aligns like the slab list beside it. */
+.tariff-table .tt-bands { list-style: none; margin: 0; padding: 0; text-align: left; }
+.tariff-table .tt-bands li {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 8px;
+  margin: 0; padding: 1px 0; align-items: baseline; line-height: 1.45;
+}
+.tariff-table .tt-bands li > span { color: var(--text-tertiary); font-weight: 400; }
+.tariff-table .tt-bands b {
+  font-weight: 700; color: var(--text-primary);
+  font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap;
+}
 /* Slabs and extras: label left, figure right, the figures aligned down the cell rather than
    pushed to opposite edges by space-between.
    Selectors are scoped through .tariff-table on purpose. ".seo-section ul/li" (0,1,1) outranks
