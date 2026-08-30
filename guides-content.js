@@ -24,7 +24,7 @@ export const GUIDES = [
     title: "Bill wrong? How to complain and win",
     metaTitle: "Electricity Bill Wrong? How to Complain and Win",
     description: "A practical India-wide playbook for wrong electricity bills: what to check first, documents to collect, complaint wording, timelines, CGRF escalation and Ombudsman appeal.",
-    minutes: 9,
+    minutes: 13,
     toc: true,
     intro: `If your electricity bill looks wrong, do not start with anger. Start with evidence.
       Recalculate the bill, identify the exact disputed line, file a written complaint with a
@@ -115,6 +115,33 @@ export const GUIDES = [
         and state CGRF/Ombudsman regulations issued under the Electricity Act.</p>
       </section>
 
+
+      <section class="seo-section">
+        <h2>Old arrears have a two-year limit</h2>
+        <p>This is the single most useful rule for anyone who has just been handed years of
+        arrears out of nowhere. Section 56(2) of the Electricity Act, 2003 says no sum due from a
+        consumer is recoverable after <strong>two years</strong> from the date it first became due,
+        unless it has been shown <strong>continuously as recoverable arrears</strong> on the bills
+        in between. And a sum that is not recoverable cannot be a ground for disconnection.</p>
+        <p>The words that matter are &ldquo;shown continuously&rdquo;. If the DISCOM carried the
+        arrear on every bill and you simply did not pay, the limit does not help you. If the arrear
+        appeared for the first time this month for consumption from three years ago, your previous
+        bills are the proof, and they are the whole case.</p>
+        <ol>
+          <li>Pull every bill for the period between the claimed consumption and today.</li>
+          <li>Show that the arrear line was zero, or absent, throughout.</li>
+          <li>Quote Section 56(2) and ask for the demand to be withdrawn, and for written
+          confirmation that supply will not be disconnected on account of it.</li>
+        </ol>
+        <p class="seo-note"><strong>One nuance the DISCOM will raise.</strong> Where the original
+        bill was short by mistake &mdash; escaped assessment, a wrong multiplying factor, a meter
+        read wrong &mdash; the Supreme Court has held that the two years runs from the date the
+        <em>supplementary</em> demand is raised, not from the month of consumption. So a fresh
+        supplementary bill for old units is not automatically time-barred. It is still open to
+        challenge on its merits, and on whether the DISCOM followed its own supply-code procedure
+        for revising a past bill.</p>
+      </section>
+
       <section class="seo-section">
         <h2>Escalate without skipping steps</h2>
         <p>Most states expect this order:</p>
@@ -132,6 +159,33 @@ export const GUIDES = [
         and the <a href="https://jercuts.gov.in/ombudsman-details/" target="_blank" rel="noopener nofollow">JERC Ombudsman procedure</a>.</p>
       </section>
 
+
+      <section class="seo-section">
+        <h2>CGRF, consumer court, or neither</h2>
+        <p>Before you file anywhere, read the paper the DISCOM gave you. Which forum can hear your
+        case depends entirely on what kind of demand it is, and this is where valid complaints get
+        thrown out on a technicality.</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>What the DISCOM issued</th><th>Where it goes</th><th>Time to act</th></tr></thead>
+            <tbody>
+              <tr><td>An ordinary bill you believe is wrong &mdash; units, slab, category, arrears, surcharge</td><td>DISCOM complaint desk &rarr; CGRF &rarr; Electricity Ombudsman. The consumer commission is also open to you for deficiency of service</td><td>As soon as you spot it, and before the due date if you can</td></tr>
+              <tr><td>An assessment order under <strong>Section 126</strong> &mdash; the words to look for are &ldquo;unauthorised use of electricity&rdquo;, &ldquo;provisional assessment&rdquo; or &ldquo;final assessment&rdquo;</td><td>File objections with the assessing officer, then appeal to the Appellate Authority under Section 127. <strong>Not</strong> the consumer forum</td><td>Objections within the period on the notice; the Section 127 appeal is normally 30 days, with a part-deposit</td></tr>
+              <tr><td>A theft case under <strong>Section 135</strong></td><td>Special Court, or compounding with the DISCOM. <strong>Not</strong> the consumer forum</td><td>Take legal advice before paying or signing anything</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The Supreme Court settled the boundary in <em>U.P. Power Corporation Ltd. v. Anis
+        Ahmad</em> (2013): a consumer complaint against an assessment under Section 126, or against
+        action for an offence under Section 135, is not maintainable before a consumer forum,
+        because the Act provides its own machinery for both. Ordinary billing disputes are
+        untouched by that ruling and remain a deficiency-of-service matter.</p>
+        <p>So the practical test is one line long: <strong>is this a bill, or is it an
+        assessment?</strong> A bill is a demand for electricity you are agreed to have used. An
+        assessment is an allegation that you used it without authority. They look similar on paper
+        and they go to completely different places.</p>
+      </section>
+
       <section class="seo-section">
         <h2>What to ask for</h2>
         <p>Be specific. Forums can order correction, but they need to know exactly what remedy you
@@ -145,6 +199,32 @@ export const GUIDES = [
           <li><strong>Compensation</strong> under your state standards of performance, where applicable.</li>
           <li><strong>Written speaking order</strong> explaining the calculation if the DISCOM refuses revision.</li>
         </ul>
+      </section>
+
+
+      <section class="seo-section">
+        <h2>If you ask for a meter test</h2>
+        <p>&ldquo;Test the meter&rdquo; is the right request when you have ruled out slab,
+        category, arrears and surcharge and the units themselves still look impossible. It is the
+        wrong request when the real error is a tariff line, because a meter that tests fine closes
+        your file.</p>
+        <ul>
+          <li><strong>A fee is usually payable in advance</strong> and is normally refunded or
+          adjusted if the meter is found defective. Ask for the amount and the receipt.</li>
+          <li><strong>Ask for the test report in writing</strong>, with the error percentage and
+          the permissible limit for that meter class. &ldquo;Meter found OK&rdquo; on a phone call
+          is not a result you can appeal.</li>
+          <li><strong>If the meter is beyond the permissible error</strong>, the bill is revised.
+          Supply codes usually cap how far back that revision goes &mdash; commonly around three
+          months for a domestic consumer, longer where the period of the defect can actually be
+          established. Your state supply code has the number.</li>
+        </ul>
+        <p class="seo-note"><strong>Photograph the changeover.</strong> The most common
+        &ldquo;bill wrong&rdquo; case after a meter test is not the test at all &mdash; it is the
+        replacement. Get the <em>final reading of the old meter</em> and the <em>initial reading of
+        the new one</em> written on the replacement docket, and photograph both meters with their
+        serial numbers visible on the day. Without that pair of numbers, nobody can prove which
+        meter the next bill was calculated from.</p>
       </section>
 
       <section class="seo-section">
@@ -189,6 +269,12 @@ export const GUIDES = [
         a: "The central Electricity Rights of Consumers Rules say a grievance should normally be decided within 30 days and in any case not more than 45 days. Exact filing formats and deadlines are set by the state regulator." },
       { q: "Can I claim compensation for a wrong bill?",
         a: "Yes, where your state's standards of performance provide compensation for bill complaints, delayed service, meter replacement, reconnection or related failures. Ask for compensation separately from the corrected bill or refund." },
+      { q: "Can the DISCOM add years-old arrears to my bill?",
+        a: "Only within limits. Section 56(2) of the Electricity Act, 2003 says a sum due is not recoverable after two years from the date it first became due unless it was shown continuously as recoverable arrears on the bills in between, and an unrecoverable sum cannot justify disconnection. Your old bills, showing the arrear was never carried, are the evidence. Where the DISCOM raises a supplementary demand for short billing, the Supreme Court has held the two years runs from the date of that supplementary demand." },
+      { q: "Can I file in consumer court instead of CGRF?",
+        a: "For an ordinary wrong bill, yes \u2014 the consumer commission is available for deficiency of service alongside the CGRF and Ombudsman route. But if the DISCOM has issued an assessment under Section 126 for unauthorised use, or booked a case under Section 135 for theft, the consumer forum has no jurisdiction: the Supreme Court held so in U.P. Power Corporation Ltd. v. Anis Ahmad (2013). Section 126 is appealed to the Appellate Authority under Section 127 instead." },
+      { q: "What happens if my meter is found faulty?",
+        a: "The bill is revised for the defective period, but supply codes usually cap how far back the revision goes \u2014 commonly around three months for domestic consumers unless the actual period of the defect can be established. The testing fee is normally refunded or adjusted when the meter is found defective. Ask for the written test report with the error percentage, and get the old meter\u2019s final reading and the new meter\u2019s initial reading recorded on the replacement docket." },
     ],
     titleHi: "बिल गलत है? शिकायत कैसे करें और मामला कैसे जीतें",
     metaTitleHi: "बिजली बिल गलत है? शिकायत कैसे करें और मामला कैसे जीतें",
@@ -282,6 +368,31 @@ export const GUIDES = [
         और Electricity Act के तहत राज्य के CGRF/विद्युत लोकपाल नियम.</p>
       </section>
 
+
+      <section class="seo-section">
+        <h2>पुराने arrears पर दो साल की सीमा</h2>
+        <p>जिनके बिल में अचानक सालों पुराने arrears जुड़ जाते हैं, उनके लिए यह सबसे काम का नियम है.
+        विद्युत अधिनियम 2003 की धारा 56(2) कहती है कि जो राशि पहली बार due हुई थी, उसके
+        <strong>दो साल</strong> बाद वह वसूली योग्य नहीं रहती &mdash; बशर्ते बीच के बिलों में उसे
+        <strong>लगातार recoverable arrears के रूप में दिखाया न गया हो</strong>. और जो राशि वसूली
+        योग्य नहीं है, उसके आधार पर connection काटा नहीं जा सकता.</p>
+        <p>असली शब्द है &ldquo;लगातार दिखाया गया&rdquo;. अगर DISCOM हर बिल में arrear दिखाता रहा और
+        आपने भुगतान नहीं किया, तो यह नियम मदद नहीं करेगा. लेकिन अगर तीन साल पुरानी खपत का arrear
+        पहली बार इसी महीने आया है, तो आपके पुराने बिल ही पूरा केस हैं.</p>
+        <ol>
+          <li>दावा की गई खपत से आज तक के सारे बिल निकालें.</li>
+          <li>दिखाएं कि उस पूरे समय arrear line शून्य थी या थी ही नहीं.</li>
+          <li>धारा 56(2) का हवाला देकर demand वापस लेने को कहें, और लिखित में यह भी माँगें कि इस
+          कारण supply नहीं काटी जाएगी.</li>
+        </ol>
+        <p class="seo-note"><strong>एक बात DISCOM ज़रूर उठाएगा.</strong> अगर मूल बिल गलती से कम बना
+        था &mdash; escaped assessment, गलत multiplying factor, गलत reading &mdash; तो सुप्रीम कोर्ट
+        के अनुसार दो साल की गिनती <em>supplementary</em> demand की तारीख से होती है, खपत के महीने से
+        नहीं. यानी पुरानी units का नया supplementary bill अपने आप time-barred नहीं होता. फिर भी उसे
+        merits पर, और इस आधार पर चुनौती दी जा सकती है कि पुराना बिल revise करने की supply-code
+        प्रक्रिया DISCOM ने पूरी की या नहीं.</p>
+      </section>
+
       <section class="seo-section">
         <h2>बिना चरण छोड़े शिकायत आगे बढ़ाएँ</h2>
         <p>अधिकांश राज्यों में शिकायत आगे बढ़ाने का क्रम यह माना जाता है:</p>
@@ -298,6 +409,31 @@ export const GUIDES = [
         और <a href="https://jercuts.gov.in/ombudsman-details/" target="_blank" rel="noopener nofollow">JERC विद्युत लोकपाल प्रक्रिया</a>.</p>
       </section>
 
+
+      <section class="seo-section">
+        <h2>CGRF, उपभोक्ता फोरम, या कोई नहीं</h2>
+        <p>कहीं भी file करने से पहले DISCOM का दिया कागज़ ध्यान से पढ़ें. आपका मामला कौन सुनेगा, यह
+        पूरी तरह इस पर निर्भर है कि demand किस तरह की है &mdash; और यहीं सही शिकायतें technical
+        आधार पर खारिज हो जाती हैं.</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>DISCOM ने क्या जारी किया</th><th>कहाँ जाएगा</th><th>समय</th></tr></thead>
+            <tbody>
+              <tr><td>सामान्य बिल जो गलत लगता है &mdash; units, slab, category, arrears, surcharge</td><td>DISCOM complaint desk &rarr; CGRF &rarr; विद्युत लोकपाल. Deficiency of service के लिए उपभोक्ता आयोग भी खुला है</td><td>पता चलते ही, और हो सके तो due date से पहले</td></tr>
+              <tr><td><strong>धारा 126</strong> का assessment order &mdash; शब्द देखें: &ldquo;unauthorised use of electricity&rdquo;, &ldquo;provisional assessment&rdquo;, &ldquo;final assessment&rdquo;</td><td>पहले assessing officer के पास objections, फिर धारा 127 के तहत Appellate Authority में appeal. उपभोक्ता फोरम <strong>नहीं</strong></td><td>Objections notice में दी अवधि में; धारा 127 appeal आमतौर पर 30 दिन, साथ में part-deposit</td></tr>
+              <tr><td><strong>धारा 135</strong> के तहत चोरी का मामला</td><td>Special Court, या DISCOM के साथ compounding. उपभोक्ता फोरम <strong>नहीं</strong></td><td>कुछ भी pay या sign करने से पहले कानूनी सलाह लें</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>सुप्रीम कोर्ट ने <em>U.P. Power Corporation Ltd. बनाम Anis Ahmad</em> (2013) में यह सीमा
+        तय की: धारा 126 के assessment या धारा 135 के अपराध के विरुद्ध उपभोक्ता शिकायत उपभोक्ता फोरम
+        में नहीं चलती, क्योंकि अधिनियम में दोनों के लिए अलग व्यवस्था है. सामान्य billing dispute इस
+        फैसले से अछूते हैं और deficiency of service ही रहते हैं.</p>
+        <p>व्यावहारिक कसौटी एक ही पंक्ति की है: <strong>यह बिल है या assessment?</strong> बिल उस
+        बिजली की माँग है जो आपने स्वीकार किया कि इस्तेमाल की. Assessment यह आरोप है कि आपने बिना
+        अधिकार इस्तेमाल की. कागज़ पर दोनों एक जैसे दिखते हैं और जगह बिलकुल अलग है.</p>
+      </section>
+
       <section class="seo-section">
         <h2>शिकायत में क्या माँगें</h2>
         <p>Specific रहें. Forum correction order कर सकता है, लेकिन उसे साफ पता होना चाहिए कि आप
@@ -311,6 +447,30 @@ export const GUIDES = [
           <li><strong>Compensation</strong> state standards of performance के तहत, जहां लागू हो.</li>
           <li><strong>Written speaking order</strong> अगर DISCOM revision refuse करे.</li>
         </ul>
+      </section>
+
+
+      <section class="seo-section">
+        <h2>Meter test माँगने से पहले</h2>
+        <p>&ldquo;Meter test कराइए&rdquo; तब सही माँग है जब slab, category, arrears और surcharge
+        सब जाँच चुके हों और फिर भी units असंभव लगें. अगर असली गलती tariff line में है तो यह गलत माँग
+        है, क्योंकि meter सही निकलते ही आपकी फाइल बंद हो जाती है.</p>
+        <ul>
+          <li><strong>Fee आमतौर पर पहले जमा होती है</strong> और meter defective निकलने पर वापस या
+          adjust हो जाती है. राशि और रसीद ज़रूर माँगें.</li>
+          <li><strong>Test report लिखित में माँगें</strong>, error percentage और उस meter class की
+          permissible limit के साथ. फोन पर &ldquo;meter ठीक है&rdquo; ऐसा नतीजा नहीं जिस पर appeal
+          हो सके.</li>
+          <li><strong>Meter permissible error से बाहर निकले</strong> तो बिल revise होता है. Supply
+          code आमतौर पर तय करता है कि कितना पीछे तक &mdash; domestic consumer के लिए अक्सर लगभग तीन
+          महीने, और अगर defect की अवधि साबित हो सके तो उससे ज़्यादा. सही संख्या आपके राज्य के supply
+          code में है.</li>
+        </ul>
+        <p class="seo-note"><strong>Meter बदलते समय फोटो लें.</strong> Meter test के बाद सबसे आम
+        &ldquo;बिल गलत&rdquo; मामला test का नहीं, replacement का होता है. Replacement docket पर
+        <em>पुराने meter की final reading</em> और <em>नए meter की initial reading</em> लिखवाएँ, और
+        उसी दिन दोनों meters की serial number सहित फोटो लें. इन दो numbers के बिना यह साबित ही नहीं
+        हो सकता कि अगला बिल किस meter से बना.</p>
       </section>
 
       <section class="seo-section">
@@ -354,6 +514,12 @@ export const GUIDES = [
         a: "Central Electricity Rights of Consumers Rules के अनुसार grievance normally 30 days में और किसी भी हालत में 45 days से ज्यादा नहीं decide होना चाहिए. Filing format और exact deadlines state regulator तय करता है." },
       { q: "क्या wrong bill पर compensation मिल सकता है?",
         a: "हां, जहां state standards of performance bill complaints, delayed service, meter replacement, reconnection या related failures पर compensation देते हैं. Corrected bill/refund से अलग compensation मांगें." },
+      { q: "क्या DISCOM सालों पुराने arrears बिल में जोड़ सकता है?",
+        a: "सीमा के भीतर ही. विद्युत अधिनियम 2003 की धारा 56(2) के अनुसार जो राशि पहली बार due हुई, उसके दो साल बाद वसूली योग्य नहीं रहती \u2014 बशर्ते बीच के बिलों में उसे लगातार recoverable arrears दिखाया न गया हो; और ऐसी राशि पर connection काटना जायज़ नहीं. आपके पुराने बिल, जिनमें arrear कभी नहीं दिखा, यही सबूत हैं. Short billing पर supplementary demand की स्थिति में सुप्रीम कोर्ट के अनुसार दो साल उसी supplementary demand की तारीख से गिने जाते हैं." },
+      { q: "क्या CGRF की जगह उपभोक्ता फोरम में जा सकते हैं?",
+        a: "सामान्य गलत बिल के लिए हाँ \u2014 CGRF और लोकपाल के साथ-साथ deficiency of service के लिए उपभोक्ता आयोग भी उपलब्ध है. लेकिन अगर DISCOM ने unauthorised use पर धारा 126 का assessment किया है या धारा 135 में चोरी का मामला बनाया है, तो उपभोक्ता फोरम को अधिकार नहीं \u2014 सुप्रीम कोर्ट ने U.P. Power Corporation Ltd. बनाम Anis Ahmad (2013) में यही कहा. धारा 126 की appeal धारा 127 के तहत Appellate Authority में होती है." },
+      { q: "Meter defective निकले तो क्या होता है?",
+        a: "Defective अवधि का बिल revise होता है, लेकिन supply code आमतौर पर तय करता है कि कितना पीछे तक \u2014 domestic consumers के लिए अक्सर लगभग तीन महीने, जब तक defect की असली अवधि साबित न हो. Meter defective निकलने पर testing fee सामान्यतः वापस या adjust हो जाती है. Error percentage सहित लिखित test report माँगें, और replacement docket पर पुराने meter की final reading व नए meter की initial reading दर्ज कराएँ." },
     ],
     titleMr: "बिल चुकीचे आहे? तक्रार कशी करावी आणि जिंकावी",
     metaTitleMr: "वीज बिल चुकीचे आहे? तक्रार कशी करावी आणि जिंकावी",
@@ -444,6 +610,31 @@ export const GUIDES = [
         आणि Electricity Act अंतर्गत state CGRF/वीज लोकपाल rules.</p>
       </section>
 
+
+      <section class="seo-section">
+        <h2>जुन्या arrears वर दोन वर्षांची मर्यादा</h2>
+        <p>ज्यांच्या बिलात अचानक वर्षानुवर्षांचे arrears येतात, त्यांच्यासाठी हा सर्वात उपयोगी नियम.
+        विद्युत कायदा 2003 चे कलम 56(2) सांगते की जी रक्कम पहिल्यांदा due झाली, तिच्यानंतर
+        <strong>दोन वर्षे</strong> उलटल्यावर ती वसूल करता येत नाही &mdash; जोपर्यंत मधल्या बिलांवर
+        ती <strong>सलग recoverable arrears म्हणून दाखवली गेली नसेल</strong>. आणि जी रक्कम वसूलपात्र
+        नाही, तिच्या आधारावर supply तोडता येत नाही.</p>
+        <p>महत्त्वाचे शब्द आहेत &ldquo;सलग दाखवली&rdquo;. DISCOM ने प्रत्येक बिलावर arrear दाखवला
+        आणि तुम्ही भरला नाही, तर हा नियम उपयोगी नाही. पण तीन वर्षांपूर्वीच्या वापराचा arrear याच
+        महिन्यात पहिल्यांदा दिसत असेल, तर तुमची जुनी बिलेच पूर्ण केस आहेत.</p>
+        <ol>
+          <li>दावा केलेल्या वापरापासून आजपर्यंतची सर्व बिले काढा.</li>
+          <li>त्या संपूर्ण काळात arrear line शून्य होती किंवा नव्हतीच, हे दाखवा.</li>
+          <li>कलम 56(2) चा हवाला देऊन demand मागे घेण्यास सांगा, आणि या कारणाने supply तोडली जाणार
+          नाही याची लेखी खात्री मागा.</li>
+        </ol>
+        <p class="seo-note"><strong>DISCOM एक मुद्दा नक्की मांडेल.</strong> मूळ बिल चुकून कमी झाले
+        असेल &mdash; escaped assessment, चुकीचा multiplying factor, चुकीचे reading &mdash; तर सर्वोच्च
+        न्यायालयानुसार दोन वर्षे <em>supplementary</em> demand च्या तारखेपासून मोजली जातात, वापराच्या
+        महिन्यापासून नाही. म्हणजे जुन्या units चे नवे supplementary bill आपोआप time-barred होत नाही.
+        तरीही ते merits वर, आणि जुने बिल revise करण्याची supply-code प्रक्रिया DISCOM ने पाळली का
+        यावर आव्हानित करता येते.</p>
+      </section>
+
       <section class="seo-section">
         <h2>Steps skip न करता escalate करा</h2>
         <p>बहुतेक states हा order expect करतात:</p>
@@ -460,6 +651,31 @@ export const GUIDES = [
         आणि <a href="https://jercuts.gov.in/ombudsman-details/" target="_blank" rel="noopener nofollow">JERC वीज लोकपाल प्रक्रिया</a>.</p>
       </section>
 
+
+      <section class="seo-section">
+        <h2>CGRF, ग्राहक न्यायालय, की दोन्ही नाही</h2>
+        <p>कुठेही file करण्यापूर्वी DISCOM ने दिलेला कागद वाचा. तुमचे प्रकरण कोण ऐकणार हे demand
+        कोणत्या प्रकारची आहे यावर पूर्णपणे अवलंबून आहे &mdash; आणि इथेच योग्य तक्रारी technical
+        कारणाने फेटाळल्या जातात.</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>DISCOM ने काय दिले</th><th>कुठे जाईल</th><th>वेळ</th></tr></thead>
+            <tbody>
+              <tr><td>सामान्य बिल जे चुकीचे वाटते &mdash; units, slab, category, arrears, surcharge</td><td>DISCOM complaint desk &rarr; CGRF &rarr; वीज लोकपाल. Deficiency of service साठी ग्राहक आयोगही खुला</td><td>लक्षात येताच, शक्य असल्यास due date आधी</td></tr>
+              <tr><td><strong>कलम 126</strong> चा assessment order &mdash; शब्द पहा: &ldquo;unauthorised use of electricity&rdquo;, &ldquo;provisional assessment&rdquo;, &ldquo;final assessment&rdquo;</td><td>आधी assessing officer कडे objections, मग कलम 127 खाली Appellate Authority कडे appeal. ग्राहक न्यायालय <strong>नाही</strong></td><td>Notice मधील मुदतीत objections; कलम 127 appeal साधारण 30 दिवस, part-deposit सह</td></tr>
+              <tr><td><strong>कलम 135</strong> खाली चोरीचे प्रकरण</td><td>Special Court, किंवा DISCOM सोबत compounding. ग्राहक न्यायालय <strong>नाही</strong></td><td>काहीही भरण्यापूर्वी किंवा सही करण्यापूर्वी कायदेशीर सल्ला घ्या</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>सर्वोच्च न्यायालयाने <em>U.P. Power Corporation Ltd. विरुद्ध Anis Ahmad</em> (2013) मध्ये
+        ही सीमा ठरवली: कलम 126 च्या assessment विरुद्ध किंवा कलम 135 च्या गुन्ह्याविरुद्ध ग्राहक
+        तक्रार ग्राहक मंचात चालत नाही, कारण कायद्यात दोन्हीसाठी स्वतंत्र यंत्रणा आहे. सामान्य
+        billing disputes या निकालाने प्रभावित होत नाहीत.</p>
+        <p>व्यवहारातील कसोटी एका ओळीची: <strong>हे बिल आहे की assessment?</strong> बिल म्हणजे तुम्ही
+        वापरल्याचे मान्य असलेल्या विजेची मागणी. Assessment म्हणजे तुम्ही ती विनापरवानगी वापरल्याचा
+        आरोप. कागदावर दोन्ही सारखी दिसतात, आणि जागा पूर्णपणे वेगळ्या.</p>
+      </section>
+
       <section class="seo-section">
         <h2>नेमके काय मागायचे</h2>
         <p>Specific रहा. Forum correction order करू शकतो, पण तुम्हाला काय remedy हवी आहे ते स्पष्ट हवे.</p>
@@ -472,6 +688,28 @@ export const GUIDES = [
           <li><strong>Compensation</strong> state standards of performance अंतर्गत, लागू असल्यास.</li>
           <li><strong>Written speaking order</strong> DISCOM revision refuse करत असेल तर.</li>
         </ul>
+      </section>
+
+
+      <section class="seo-section">
+        <h2>Meter test मागण्यापूर्वी</h2>
+        <p>&ldquo;Meter test करा&rdquo; ही मागणी तेव्हाच योग्य जेव्हा slab, category, arrears आणि
+        surcharge तपासून झाले असूनही units अशक्य वाटतात. खरी चूक tariff line मध्ये असेल तर ही चुकीची
+        मागणी आहे &mdash; meter बरोबर निघाला की तुमची फाइल बंद होते.</p>
+        <ul>
+          <li><strong>Fee सहसा आधी भरावी लागते</strong> आणि meter defective निघाल्यास परत मिळते किंवा
+          adjust होते. रक्कम आणि पावती मागा.</li>
+          <li><strong>Test report लेखी मागा</strong>, error percentage आणि त्या meter class ची
+          permissible limit यासह. फोनवर &ldquo;meter ठीक आहे&rdquo; हा appeal करता येणारा निकाल नाही.</li>
+          <li><strong>Meter permissible error बाहेर असेल</strong> तर बिल revise होते. किती मागे
+          जाऊन, हे supply code ठरवते &mdash; domestic consumer साठी बहुधा सुमारे तीन महिने, आणि
+          defect चा कालावधी सिद्ध करता आल्यास अधिक. नेमका आकडा तुमच्या राज्याच्या supply code मध्ये.</li>
+        </ul>
+        <p class="seo-note"><strong>Meter बदलताना फोटो घ्या.</strong> Meter test नंतरचे सर्वात सामान्य
+        &ldquo;बिल चुकीचे&rdquo; प्रकरण test चे नसते, replacement चे असते. Replacement docket वर
+        <em>जुन्या meter चे final reading</em> आणि <em>नव्या meter चे initial reading</em> लिहून घ्या,
+        आणि त्याच दिवशी दोन्ही meters चे serial number दिसतील असे फोटो घ्या. या दोन आकड्यांशिवाय पुढचे
+        बिल कोणत्या meter वरून झाले हे सिद्धच करता येत नाही.</p>
       </section>
 
       <section class="seo-section">
@@ -515,6 +753,12 @@ export const GUIDES = [
         a: "Central Electricity Rights of Consumers Rules नुसार grievance normally 30 days मध्ये आणि कुठल्याही परिस्थितीत 45 days पेक्षा जास्त नाही decide व्हायला हवा. Filing format आणि exact deadlines state regulator ठरवतो." },
       { q: "Wrong bill साठी compensation मिळू शकते का?",
         a: "हो, जिथे state standards of performance bill complaints, delayed service, meter replacement, reconnection किंवा related failures साठी compensation देतात. Corrected bill/refund पासून वेगळे compensation मागा." },
+      { q: "DISCOM वर्षानुवर्षांचे arrears बिलात जोडू शकतो का?",
+        a: "मर्यादेतच. विद्युत कायदा 2003 च्या कलम 56(2) नुसार पहिल्यांदा due झालेली रक्कम दोन वर्षांनंतर वसूलपात्र राहत नाही \u2014 जोपर्यंत मधल्या बिलांवर ती सलग recoverable arrears म्हणून दाखवली गेली नसेल; आणि अशा रकमेसाठी supply तोडता येत नाही. Arrear कधीच न दिसलेली तुमची जुनी बिले हाच पुरावा. Short billing साठी supplementary demand असल्यास सर्वोच्च न्यायालयानुसार दोन वर्षे त्या supplementary demand च्या तारखेपासून मोजली जातात." },
+      { q: "CGRF ऐवजी ग्राहक न्यायालयात जाता येईल का?",
+        a: "सामान्य चुकीच्या बिलासाठी हो \u2014 CGRF आणि लोकपालासोबतच deficiency of service साठी ग्राहक आयोगही उपलब्ध आहे. पण DISCOM ने unauthorised use साठी कलम 126 चे assessment केले असेल किंवा कलम 135 खाली चोरीचे प्रकरण नोंदवले असेल, तर ग्राहक मंचाला अधिकार नाही \u2014 सर्वोच्च न्यायालयाने U.P. Power Corporation Ltd. विरुद्ध Anis Ahmad (2013) मध्ये असे ठरवले. कलम 126 चे appeal कलम 127 खाली Appellate Authority कडे होते." },
+      { q: "Meter defective निघाला तर काय होते?",
+        a: "Defective कालावधीचे बिल revise होते, पण किती मागे जाऊन हे supply code ठरवते \u2014 domestic consumers साठी बहुधा सुमारे तीन महिने, defect चा खरा कालावधी सिद्ध होत नसेल तर. Meter defective निघाल्यास testing fee सहसा परत मिळते किंवा adjust होते. Error percentage सह लेखी test report मागा, आणि replacement docket वर जुन्या meter चे final reading व नव्या meter चे initial reading नोंदवून घ्या." },
     ],
     titleTa: "பில் தவறா? புகார் செய்து வெல்வது எப்படி",
     metaTitleTa: "மின் பில் தவறா? புகார் செய்து வெல்வது எப்படி",
@@ -606,6 +850,32 @@ export const GUIDES = [
         மற்றும் Electricity Act கீழ் state CGRF/மின்சார குறைதீர்ப்பாளர் விதிகள்.</p>
       </section>
 
+
+      <section class="seo-section">
+        <h2>பழைய arrears-க்கு இரண்டு ஆண்டு வரம்பு</h2>
+        <p>திடீரென பல ஆண்டுகளின் arrears பில்லில் சேர்க்கப்பட்டவர்களுக்கு இதுவே மிக உபயோகமான விதி.
+        மின்சாரச் சட்டம் 2003-இன் பிரிவு 56(2) சொல்கிறது: ஒரு தொகை முதன்முதலில் due ஆன தேதியிலிருந்து
+        <strong>இரண்டு ஆண்டுகளுக்குப்</strong> பிறகு அது வசூலிக்கத் தக்கதல்ல &mdash; இடையிலான
+        பில்களில் அது <strong>தொடர்ச்சியாக recoverable arrears ஆகக் காட்டப்படாத</strong> வரை. மேலும்
+        வசூலிக்க முடியாத தொகைக்காக supply துண்டிக்க முடியாது.</p>
+        <p>முக்கியமான சொல் &ldquo;தொடர்ச்சியாகக் காட்டப்பட்டது&rdquo;. ஒவ்வொரு பில்லிலும் DISCOM
+        arrear-ஐக் காட்டி வந்து நீங்கள் கட்டவில்லை என்றால் இந்த விதி உதவாது. ஆனால் மூன்று ஆண்டுகளுக்கு
+        முந்தைய பயன்பாட்டின் arrear இந்த மாதம்தான் முதன்முறையாக வந்திருந்தால், உங்கள் பழைய பில்களே
+        முழு வழக்கு.</p>
+        <ol>
+          <li>கோரப்பட்ட பயன்பாட்டு காலத்திலிருந்து இன்றுவரை உள்ள எல்லா பில்களையும் எடுங்கள்.</li>
+          <li>அந்தக் காலம் முழுவதும் arrear line பூஜ்யமாக இருந்தது அல்லது இல்லவே இல்லை என்பதைக் காட்டுங்கள்.</li>
+          <li>பிரிவு 56(2)-ஐ மேற்கோள் காட்டி demand-ஐ திரும்பப் பெறச் சொல்லுங்கள், இதற்காக supply
+          துண்டிக்கப்படாது என்பதை எழுத்து மூலம் கேளுங்கள்.</li>
+        </ol>
+        <p class="seo-note"><strong>DISCOM நிச்சயம் எழுப்பும் ஒரு புள்ளி.</strong> அசல் பில் தவறுதலாகக்
+        குறைவாக இருந்திருந்தால் &mdash; escaped assessment, தவறான multiplying factor, தவறான reading
+        &mdash; உச்ச நீதிமன்றத்தின்படி இரண்டு ஆண்டுகள் <em>supplementary</em> demand-இன் தேதியிலிருந்து
+        கணக்கிடப்படும், பயன்பாட்டு மாதத்திலிருந்து அல்ல. அதாவது பழைய units-க்கான புதிய supplementary
+        bill தானாகவே time-barred ஆகாது. இருப்பினும் அதை merits அடிப்படையிலும், பழைய பில்லைத் திருத்த
+        supply-code நடைமுறையை DISCOM பின்பற்றியதா என்பதிலும் எதிர்க்கலாம்.</p>
+      </section>
+
       <section class="seo-section">
         <h2>Steps skip செய்யாமல் escalate செய்யுங்கள்</h2>
         <p>பெரும்பாலான states இந்த order-ஐ expect செய்கின்றன:</p>
@@ -622,6 +892,32 @@ export const GUIDES = [
         மற்றும் <a href="https://jercuts.gov.in/ombudsman-details/" target="_blank" rel="noopener nofollow">JERC மின்சார குறைதீர்ப்பாளர் நடைமுறை</a>.</p>
       </section>
 
+
+      <section class="seo-section">
+        <h2>CGRF, நுகர்வோர் நீதிமன்றம், அல்லது இரண்டுமல்ல</h2>
+        <p>எங்கும் file செய்வதற்கு முன் DISCOM கொடுத்த காகிதத்தைப் படியுங்கள். உங்கள் வழக்கை யார்
+        விசாரிப்பார்கள் என்பது demand எந்த வகை என்பதைப் பொறுத்தே &mdash; சரியான புகார்கள் technical
+        காரணத்தால் தள்ளுபடியாவது இங்குதான்.</p>
+        <div class="comparison-table-wrapper">
+          <table class="comparison-table">
+            <thead><tr><th>DISCOM கொடுத்தது</th><th>எங்கு செல்லும்</th><th>கால அவகாசம்</th></tr></thead>
+            <tbody>
+              <tr><td>தவறு எனத் தோன்றும் சாதாரண பில் &mdash; units, slab, category, arrears, surcharge</td><td>DISCOM complaint desk &rarr; CGRF &rarr; மின்சார குறைதீர்ப்பாளர். Deficiency of service-க்கு நுகர்வோர் ஆணையமும் திறந்திருக்கிறது</td><td>கண்டவுடன், முடிந்தால் due date-க்கு முன்</td></tr>
+              <tr><td><strong>பிரிவு 126</strong> assessment order &mdash; தேட வேண்டிய சொற்கள்: &ldquo;unauthorised use of electricity&rdquo;, &ldquo;provisional assessment&rdquo;, &ldquo;final assessment&rdquo;</td><td>முதலில் assessing officer-இடம் objections, பிறகு பிரிவு 127-இன் கீழ் Appellate Authority-இடம் appeal. நுகர்வோர் நீதிமன்றம் <strong>அல்ல</strong></td><td>Notice-இல் உள்ள காலத்திற்குள் objections; பிரிவு 127 appeal பொதுவாக 30 நாட்கள், part-deposit உடன்</td></tr>
+              <tr><td><strong>பிரிவு 135</strong>-இன் கீழ் திருட்டு வழக்கு</td><td>Special Court, அல்லது DISCOM-உடன் compounding. நுகர்வோர் நீதிமன்றம் <strong>அல்ல</strong></td><td>எதையும் கட்டுவதற்கு அல்லது கையொப்பமிடுவதற்கு முன் சட்ட ஆலோசனை பெறுங்கள்</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>உச்ச நீதிமன்றம் <em>U.P. Power Corporation Ltd. எதிர் Anis Ahmad</em> (2013) வழக்கில் இந்த
+        எல்லையை வரையறுத்தது: பிரிவு 126 assessment-க்கு எதிராகவோ பிரிவு 135 குற்றத்திற்கு எதிராகவோ
+        நுகர்வோர் புகார் நுகர்வோர் மன்றத்தில் நிலைக்காது, ஏனெனில் சட்டமே இரண்டுக்கும் தனி வழிமுறை
+        வைத்திருக்கிறது. சாதாரண billing disputes இந்தத் தீர்ப்பால் பாதிக்கப்படுவதில்லை.</p>
+        <p>நடைமுறைச் சோதனை ஒரே வரி: <strong>இது பில்லா, assessment-ஆ?</strong> பில் என்பது நீங்கள்
+        பயன்படுத்தியதாக ஒப்புக்கொள்ளப்பட்ட மின்சாரத்திற்கான கோரிக்கை. Assessment என்பது அனுமதியின்றிப்
+        பயன்படுத்தினீர்கள் என்ற குற்றச்சாட்டு. காகிதத்தில் இரண்டும் ஒரே மாதிரி இருக்கும், இடங்கள்
+        முற்றிலும் வேறு.</p>
+      </section>
+
       <section class="seo-section">
         <h2>எதை கேட்க வேண்டும்</h2>
         <p>Specific ஆக இருங்கள். Forum correction order செய்ய முடியும், ஆனால் நீங்கள் எந்த remedy
@@ -635,6 +931,31 @@ export const GUIDES = [
           <li><strong>Compensation</strong> state standards of performance கீழ், பொருந்தும் இடங்களில்.</li>
           <li><strong>Written speaking order</strong> DISCOM revision refuse செய்தால்.</li>
         </ul>
+      </section>
+
+
+      <section class="seo-section">
+        <h2>Meter test கேட்பதற்கு முன்</h2>
+        <p>slab, category, arrears, surcharge எல்லாம் சரிபார்த்த பிறகும் units சாத்தியமற்றதாகத்
+        தோன்றினால் மட்டுமே &ldquo;meter test செய்யுங்கள்&rdquo; சரியான கோரிக்கை. உண்மையான தவறு tariff
+        line-இல் இருந்தால் இது தவறான கோரிக்கை &mdash; meter சரியென வந்தால் உங்கள் file மூடப்படும்.</p>
+        <ul>
+          <li><strong>கட்டணம் பொதுவாக முன்பணமாகச்</strong> செலுத்த வேண்டும், meter defective எனத்
+          தெரிந்தால் திரும்பக் கிடைக்கும் அல்லது adjust ஆகும். தொகையையும் ரசீதையும் கேளுங்கள்.</li>
+          <li><strong>Test report-ஐ எழுத்து மூலம் கேளுங்கள்</strong>, error percentage மற்றும் அந்த
+          meter class-இன் permissible limit உடன். தொலைபேசியில் &ldquo;meter சரி&rdquo; என்பது appeal
+          செய்யக்கூடிய முடிவு அல்ல.</li>
+          <li><strong>Meter permissible error-ஐத் தாண்டியிருந்தால்</strong> பில் திருத்தப்படும்.
+          எவ்வளவு பின்னோக்கி என்பதை supply code நிர்ணயிக்கிறது &mdash; domestic consumer-க்கு பொதுவாக
+          சுமார் மூன்று மாதங்கள், defect-இன் காலத்தை நிரூபிக்க முடிந்தால் அதிகம். சரியான எண் உங்கள்
+          மாநில supply code-இல் உள்ளது.</li>
+        </ul>
+        <p class="seo-note"><strong>Meter மாற்றத்தைப் புகைப்படம் எடுங்கள்.</strong> Meter test-க்குப்
+        பிறகு வரும் மிகச் சாதாரண &ldquo;பில் தவறு&rdquo; வழக்கு test-ஐப் பற்றியதல்ல, replacement-ஐப்
+        பற்றியது. Replacement docket-இல் <em>பழைய meter-இன் final reading</em> மற்றும் <em>புதிய
+        meter-இன் initial reading</em> எழுதி வாங்குங்கள், அன்றே இரண்டு meters-ஐயும் serial number
+        தெரியும்படி புகைப்படம் எடுங்கள். இந்த இரண்டு எண்கள் இல்லாமல் அடுத்த பில் எந்த meter-இலிருந்து
+        கணக்கிடப்பட்டது என்பதை நிரூபிக்கவே முடியாது.</p>
       </section>
 
       <section class="seo-section">
@@ -678,6 +999,12 @@ export const GUIDES = [
         a: "Central Electricity Rights of Consumers Rules படி grievance normally 30 days-ல், எந்த நிலையிலும் 45 days-ஐத் தாண்டாமல் decide செய்யப்பட வேண்டும். Filing format மற்றும் exact deadlines state regulator நிர்ணயிக்கும்." },
       { q: "Wrong bill-க்கு compensation கிடைக்குமா?",
         a: "ஆம், state standards of performance bill complaints, delayed service, meter replacement, reconnection அல்லது related failures-க்கு compensation கொடுத்தால் கிடைக்கும். Corrected bill/refund-இலிருந்து தனியாக compensation கேளுங்கள்." },
+      { q: "பல ஆண்டுகள் பழைய arrears-ஐ DISCOM பில்லில் சேர்க்க முடியுமா?",
+        a: "வரம்புக்குள் மட்டுமே. மின்சாரச் சட்டம் 2003-இன் பிரிவு 56(2)-இன்படி முதன்முதலில் due ஆன தொகை இரண்டு ஆண்டுகளுக்குப் பிறகு வசூலிக்கத் தக்கதல்ல \u2014 இடையிலான பில்களில் அது தொடர்ச்சியாக recoverable arrears ஆகக் காட்டப்படாத வரை; அத்தகைய தொகைக்காக supply துண்டிக்கவும் முடியாது. Arrear ஒருபோதும் காட்டப்படாத உங்கள் பழைய பில்களே ஆதாரம். Short billing-க்கான supplementary demand என்றால், உச்ச நீதிமன்றத்தின்படி இரண்டு ஆண்டுகள் அந்த supplementary demand-இன் தேதியிலிருந்து கணக்கிடப்படும்." },
+      { q: "CGRF-க்குப் பதிலாக நுகர்வோர் நீதிமன்றத்தில் file செய்யலாமா?",
+        a: "சாதாரண தவறான பில்லுக்கு ஆம் \u2014 CGRF, குறைதீர்ப்பாளர் வழியுடன் சேர்ந்து deficiency of service-க்கு நுகர்வோர் ஆணையமும் உண்டு. ஆனால் unauthorised use-க்காக DISCOM பிரிவு 126 assessment வழங்கியிருந்தால், அல்லது பிரிவு 135-இன் கீழ் திருட்டு வழக்குப் பதிவு செய்திருந்தால், நுகர்வோர் மன்றத்திற்கு அதிகாரம் இல்லை \u2014 U.P. Power Corporation Ltd. எதிர் Anis Ahmad (2013) வழக்கில் உச்ச நீதிமன்றம் இதைத் தெளிவுபடுத்தியது. பிரிவு 126 appeal பிரிவு 127-இன் கீழ் Appellate Authority-இடம் செல்லும்." },
+      { q: "Meter defective எனத் தெரிந்தால் என்ன நடக்கும்?",
+        a: "Defective காலத்தின் பில் திருத்தப்படும், ஆனால் எவ்வளவு பின்னோக்கி என்பதை supply code நிர்ணயிக்கிறது \u2014 defect-இன் உண்மையான காலத்தை நிரூபிக்க முடியாவிட்டால் domestic consumers-க்கு பொதுவாக சுமார் மூன்று மாதங்கள். Meter defective எனத் தெரிந்தால் testing fee பொதுவாகத் திரும்பக் கிடைக்கும் அல்லது adjust ஆகும். Error percentage உடன் எழுத்துப்பூர்வ test report கேளுங்கள், replacement docket-இல் பழைய meter-இன் final reading மற்றும் புதிய meter-இன் initial reading பதிவு செய்யுங்கள்." },
     ],
   },
   {
