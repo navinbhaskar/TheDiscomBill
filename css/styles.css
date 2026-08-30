@@ -5077,7 +5077,6 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   --ic-external: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M9 7h8v8'/%3E%3C/svg%3E");
   --ic-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
 }
-.discom-action-card[data-icon]::before,
 .seo-link-card[data-icon]::before {
   content: ''; display: block; flex: none;
   width: 19px; height: 19px; margin-bottom: 7px;
@@ -5330,7 +5329,6 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
    measure for the meta lines under the H1, which were wrapping at 992. */
 .seo-page > .seo-discom-head,
 .seo-page > .discom-tool-panel,
-.seo-page > .discom-portal-actions,
 .seo-page > p { max-width: var(--w-text); }
 
 .discom-tool-panel {
@@ -5355,42 +5353,23 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 }
 .discom-tool-panel p { margin-bottom: 0; font-size: 13.5px; line-height: 1.55; }
 .discom-tool-panel .seo-cta { flex: 0 0 auto; white-space: nowrap; }
-.discom-portal-actions {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  gap: 9px;
-  margin: 18px 0 4px;
+/* On this page — replaces the nine-card shortcut grid that stood here (359px tall, three of
+   its cards in-page anchors, five duplicating links printed elsewhere on the page). An index
+   is a line of links, so that is what it is. */
+.seo-page-index {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px;
+  margin: 16px 0 6px; padding: 11px 0;
+  border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);
+  font-size: 13px;
 }
-.discom-action-card {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  min-height: 84px;
-  padding: 12px 13px;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  background: var(--surface-card);
-  color: var(--text-primary);
-  text-decoration: none;
-  box-shadow: var(--shadow-xs);
-  transition: border-color var(--t-fast), background-color var(--t-fast), box-shadow var(--t-fast);
+.seo-page-index-label {
+  font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--text-tertiary);
 }
-.discom-action-card:hover {
-  border-color: var(--brand-border);
-  background: var(--brand-faint);
-  box-shadow: var(--shadow-sm);
-  text-decoration: none;
-}
-.discom-action-card strong {
-  font-size: 13.5px;
-  line-height: 1.3;
-  color: var(--text-primary);
-}
-.discom-action-card span {
-  font-size: 11.7px;
-  line-height: 1.42;
-  color: var(--text-secondary);
-}
+.seo-page-index a { color: var(--text-secondary); text-decoration: none; }
+.seo-page-index a:hover { color: var(--text-brand); text-decoration: underline; }
+/* No separator glyphs: an absolutely-positioned middot dangles at the start of a wrapped
+   line, which is exactly what this row does at narrow widths. The 14px gap separates them. */
 .discom-service-panels {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
@@ -5475,8 +5454,6 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   line-height: 1.55;
 }
 @media (max-width: 640px) {
-  .discom-portal-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .discom-action-card { min-height: 0; padding: 10px 11px; }
   .discom-tool-panel { align-items: stretch; flex-direction: column; }
   .discom-tool-panel .seo-cta { justify-content: center; width: 100%; white-space: normal; }
 }

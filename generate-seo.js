@@ -875,7 +875,7 @@ function guideToc(sectionsHtml, lang = 'en') {
   };
 }
 
-function faqHtml(faqs, lang = 'en') {
+function faqHtml(faqs, lang = 'en', { id = '' } = {}) {
   if (!faqs.length) return '';
   const items = faqs.map(f => `
     <details class="seo-faq-item">
@@ -883,7 +883,7 @@ function faqHtml(faqs, lang = 'en') {
       <div class="seo-faq-a">${f.a}</div>
     </details>`).join('');
   const h = T(lang, { en: 'Frequently asked questions', hi: 'अक्सर पूछे जाने वाले सवाल', mr: 'वारंवार विचारले जाणारे प्रश्न', ta: 'அடிக்கடி கேட்கப்படும் கேள்விகள்' });
-  return `<section class="seo-section"><h2>${h}</h2>${items}</section>`;
+  return `<section class="seo-section"${id ? ` id="${attr(id)}"` : ''}><h2>${h}</h2>${items}</section>`;
 }
 
 // ── tariff renderers (static, ported from tariff-explorer.js) ─────────────────
@@ -1753,10 +1753,12 @@ function servicesHubUrl(state, discom, tab = 'pay') {
 
 // ── Card icons ───────────────────────────────────────────────────────────────
 // A line glyph per destination, drawn in CSS as a mask so one SVG can take any hue (see
-// --ic-* in styles.css). Deliberately a bare icon rather than a tinted chip: nine of these
-// sit together on a DISCOM page, and a container around each one is what tips the block from
+// --ic-* in styles.css). Deliberately a bare icon rather than a tinted chip: several of these
+// sit together in a card grid, and a container around each one is what tips the block from
 // scannable into busy. Decorative only — every card still carries its own text label, so the
 // icon is never the sole carrier of meaning and needs no accessible name.
+// (The title keys below outlived the DISCOM shortcut grid they were written for; the href
+// rules in cardIcon() are what the remaining card lists actually match on.)
 const CARD_ICONS = {
   'Calculate bill': 'calc', 'Current tariff': 'table',
   // The surcharge card's label is per-state now ("Latest FAC", "Latest PPAC"), so it cannot
@@ -1784,27 +1786,20 @@ function cardIcon(title, href = '') {
   return 'doc';
 }
 
-function discomPortalActionsHtml(state, discom) {
-  const stateSlug = slugify(state);
-  const nm = esc(discom.name);
-  const official = discomWebsiteUrl(discom);
-  const officialHost = discomWebsiteHost(discom);
-  const actions = [
-    // Tariff first: the tiles mirror the page order below them.
-    ['Current tariff', '#current-tariff', 'Open the slab table, fixed charge and category rules'],
-    ['Calculate bill', `/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator`, `Estimate an itemised ${nm} bill with tariff, duty and surcharge`],
-    [`Latest ${surchargeTerm(state).code}`, '#latest-fppa', 'Check the current variable surcharge and history'],
-    ['Bill examples', '#common-calculations', 'Compare 200, 300, 500 and 750 unit examples'],
-    ['Pay or view bill', servicesHubUrl(state, discom, 'pay'), 'Use the official portal or payment channel'],
-    ['Complaint', servicesHubUrl(state, discom, 'complaint'), 'Find complaint route and escalation reminders'],
-    ['Smart meter', `/smart-meter-recharge/${stateSlug}/${discom.id}/`, 'Recharge prepaid smart meter and estimate units'],
-    ['Solar', '/solar-calculator/', 'Estimate rooftop solar savings before applying officially'],
-  ];
-  if (official) actions.push(['Official site', official, `Open ${officialHost}`, 'external']);
+// On this page — a plain index where a nine-card grid used to sit. Three of those cards were
+// in-page anchors dressed as destinations; four repeated the consumer-services section further
+// down; one repeated the official-site link printed directly above it; and Solar was a generic
+// tool with nothing to do with this DISCOM. The grid stood 359px tall, between the hero and the
+// tariff table the page exists to show.
+function pageIndexHtml(items, lang = 'en') {
+  const links = items.filter(Boolean)
+    .map(([href, label]) => `<a href="${attr(href)}">${esc(label)}</a>`).join('');
+  if (!links) return '';
+  const heading = T(lang, { en: 'On this page', hi: 'इस पेज पर', mr: 'या पानावर', ta: 'இந்தப் பக்கத்தில்' });
   return `
-    <nav class="discom-portal-actions" aria-label="${attr(discom.name)} consumer portal shortcuts">
-      ${actions.map(([title, href, sub, external]) =>
-        `<a class="discom-action-card" data-icon="${cardIcon(title, href)}" href="${attr(href)}"${external ? ' target="_blank" rel="noopener"' : ''}><strong>${title}</strong><span>${sub}</span></a>`).join('')}
+    <nav class="seo-page-index" aria-label="${attr(heading)}">
+      <span class="seo-page-index-label">${esc(heading)}</span>
+      ${links}
     </nav>`;
 }
 
@@ -2052,7 +2047,7 @@ function billLineExplainerHtml(discom, state = null, lang = 'en') {
     ta: `${nm} பில்லைப் புரிந்துகொள்ளுங்கள்`,
   });
   return `
-    <section class="seo-section">
+    <section class="seo-section" id="bill-lines">
       <h2>${heading}</h2>
       <div class="discom-explain-grid">
         ${items.map(([title, body, icon]) =>
@@ -2159,7 +2154,7 @@ function discomSourcesHtml(state, discom, fy) {
   if (FPPA_BY_DISCOM[discom.id] || FPPA_BY_STATE[state]) sources.push([`${surchargeTerm(state).code} tracker`, `/fppa/${slugify(state)}/`]);
   if (!sources.length) return '';
   return `
-    <section class="seo-section">
+    <section class="seo-section" id="sources">
       <h2>Sources</h2>
       <table class="seo-facts"><tbody>
         ${sources.map(([label, href]) => `<tr><th>${esc(label)}</th><td><a href="${attr(href)}"${/^https?:/i.test(href) ? ' target="_blank" rel="noopener"' : ''}>${esc(String(href).replace(/^https?:\/\//, ''))}</a></td></tr>`).join('')}
@@ -2279,7 +2274,7 @@ function guideLinksHtml(state, discom, lang = 'en') {
   const heading = T(lang, { en: `Guides for ${esc(discom.name)} consumers`, hi: `${esc(discom.name)} बिल से जुड़ी गाइड`, mr: `${esc(discom.name)} ग्राहकांसाठी मार्गदर्शक`, ta: `${esc(discom.name)} நுகர்வோருக்கான வழிகாட்டிகள்` });
   const browseAll = T(lang, { en: 'Browse all guides →', hi: 'सभी गाइड देखें →', mr: 'सर्व मार्गदर्शक पहा →', ta: 'அனைத்து வழிகாட்டிகளையும் பார்க்கவும் →' });
   return `
-    <section class="seo-section is-aside">
+    <section class="seo-section is-aside" id="guides">
       <h2>${heading}</h2>
       <div class="seo-link-grid is-compact">${cards}</div>
       <p><a href="${allHref}">${browseAll}</a></p>
@@ -2666,6 +2661,29 @@ function discomPage(state, discom, lang = 'en') {
   if (discom.lpscRate != null) faqs.push({ q: `What is the late payment surcharge (LPSC) for ${discom.name}?`,
     a: `${esc(discom.name)} levies a Late Payment Surcharge of ${discom.lpscRate}% per month on overdue amounts. Our calculator can add LPSC and arrears to estimate your total payable.` });
 
+  // Rendered first, not inlined, so the index below lists only the sections this DISCOM
+  // actually has — a link to an empty #latest-fppa is worse than no link.
+  const fppaBlock = fppaSectionHtml(state, discom);
+  const examplesBlock = indicativeBillsHtml(state, discom);
+  const linesBlock = billLineExplainerHtml(discom, state, lang);
+  const servicesBlock = officialServicesHtml(state, discom);
+  const guidesBlock = guideLinksHtml(state, discom);
+  const sourcesBlock = discomSourcesHtml(state, discom, fy);
+  const aboutBlock = aboutDiscomHtml(state, discom, fy);
+  const faqBlock = faqHtml(faqs, 'en', { id: 'faq' });
+  const indexHtml = pageIndexHtml([
+    ['#current-tariff', 'Tariff schedule'],
+    ['#calculate', 'Bill calculator'],
+    fppaBlock && ['#latest-fppa', `Latest ${surchargeTerm(state).code}`],
+    examplesBlock && ['#common-calculations', 'Bill examples'],
+    linesBlock && ['#bill-lines', 'Bill lines explained'],
+    faqBlock && ['#faq', 'FAQ'],
+    servicesBlock && ['#consumer-services', 'Consumer services'],
+    guidesBlock && ['#guides', 'Guides'],
+    sourcesBlock && ['#sources', 'Sources'],
+    aboutBlock && ['#about', `About ${discom.name}`],
+  ]);
+
   const body = `
   <section class="seo-page container">
     ${breadcrumbs([
@@ -2685,7 +2703,7 @@ function discomPage(state, discom, lang = 'en') {
     </div>
     <p class="guide-meta">Tariffs last updated: ${tariffUpdated(state, 'en')}${meta.verified ? ' · ✓ verified against real bills' : ''}</p>
     ${src ? `<p><a class="tariff-source" href="${attr(src)}" target="_blank" rel="noopener">Official ${esc(discom.name)} source ↗</a></p>` : ''}
-    ${discomPortalActionsHtml(state, discom)}
+    ${indexHtml}
 
     <!-- Page order, deliberately, in four movements:
          1. the answer      — the slab tables the H1 and title promise, then the calculator
@@ -2702,16 +2720,16 @@ function discomPage(state, discom, lang = 'en') {
     </section>
 
     ${discomCalculatorPanelHtml(state, discom, 'en')}
-    ${fppaSectionHtml(state, discom)}
-    ${indicativeBillsHtml(state, discom)}
-    ${billLineExplainerHtml(discom, state, lang)}
+    ${fppaBlock}
+    ${examplesBlock}
+    ${linesBlock}
 
-    ${faqHtml(faqs)}
-    ${officialServicesHtml(state, discom)}
-    ${guideLinksHtml(state, discom)}
+    ${faqBlock}
+    ${servicesBlock}
+    ${guidesBlock}
 
-    ${discomSourcesHtml(state, discom, fy)}
-    ${aboutDiscomHtml(state, discom, fy)}
+    ${sourcesBlock}
+    ${aboutBlock}
     ${siblingHtml}
     <p class="seo-disclaimer">Figures are provisional estimates built on publicly available ${esc(state)} tariff orders. Always verify against your official ${esc(discom.name)} bill — rates vary by sub-category, slab and city.</p>
   </section>`;
@@ -2881,6 +2899,22 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
     ta: `புள்ளிவிவரங்கள் பொதுவில் கிடைக்கும் ${esc(sl)} கட்டண ஆணைகளை அடிப்படையாகக் கொண்ட தோராயமானவை. எப்போதும் உங்கள் அதிகாரப்பூர்வ ${nm} பில்லுடன் சரிபார்க்கவும் — விகிதங்கள் துணை வகை, அடுக்கு மற்றும் நகரத்திற்கு ஏற்ப மாறுபடும்.`,
     en: '' });
 
+  // Same pattern as discomPage(): render first, then index only what exists.
+  const examplesBlock = indicativeBillsHtml(state, discom, lang);
+  const linesBlock = billLineExplainerHtml(discom, state, lang);
+  const guidesBlock = guideLinksHtml(state, discom, lang);
+  const aboutBlock = aboutDiscomHtml(state, discom, fy, lang);
+  const faqBlock = faqHtml(faqs, lang, { id: 'faq' });
+  const indexHtml = pageIndexHtml([
+    ['#current-tariff', T(lang, { hi: 'टैरिफ अनुसूची', mr: 'टॅरिफ अनुसूची', ta: 'கட்டண அட்டவணை', en: 'Tariff schedule' })],
+    ['#calculate', T(lang, { hi: 'बिल कैलकुलेटर', mr: 'बिल कॅल्क्युलेटर', ta: 'பில் கணிப்பான்', en: 'Bill calculator' })],
+    examplesBlock && ['#common-calculations', T(lang, { hi: 'बिल उदाहरण', mr: 'बिल उदाहरणे', ta: 'பில் எடுத்துக்காட்டுகள்', en: 'Bill examples' })],
+    linesBlock && ['#bill-lines', T(lang, { hi: 'बिल की लाइनें', mr: 'बिलाच्या ओळी', ta: 'பில் வரிகள்', en: 'Bill lines explained' })],
+    faqBlock && ['#faq', T(lang, { hi: 'सवाल-जवाब', mr: 'प्रश्नोत्तरे', ta: 'கேள்வி-பதில்', en: 'FAQ' })],
+    guidesBlock && ['#guides', T(lang, { hi: 'गाइड', mr: 'मार्गदर्शक', ta: 'வழிகாட்டிகள்', en: 'Guides' })],
+    aboutBlock && ['#about', T(lang, { hi: `${discom.name} के बारे में`, mr: `${discom.name} विषयी`, ta: `${discom.name} பற்றி`, en: `About ${discom.name}` })],
+  ], lang);
+
   const body = `
   <section class="seo-page container">
     ${breadcrumbs([
@@ -2902,6 +2936,7 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
     ${src ? `<p><a class="tariff-source" href="${attr(src)}" target="_blank" rel="noopener">${sourceLink}</a></p>` : ''}
     <p class="seo-cta-row"><a class="seo-cta" href="${calcHref}">${openCta}</a></p>
 
+    ${indexHtml}
     ${discomServiceLinksHtml(state, discom, lang)}
 
     <!-- Same four movements as the English page — answer, what moves it, what to do,
@@ -2913,16 +2948,16 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
     </section>
 
     ${discomCalculatorPanelHtml(state, discom, lang)}
-    ${indicativeBillsHtml(state, discom, lang)}
+    ${examplesBlock}
     <!-- Was English-only, and only on discomPage(): the six charges every bill carries were
          explained on /tariffs/<state>/<discom>/ but not on its /hi/, /mr/ or /ta/ twin. -->
-    ${billLineExplainerHtml(discom, state, lang)}
+    ${linesBlock}
 
-    ${faqHtml(faqs, lang)}
+    ${faqBlock}
     ${glossaryLinksHtml(discom, lang, state)}
-    ${guideLinksHtml(state, discom, lang)}
+    ${guidesBlock}
 
-    ${aboutDiscomHtml(state, discom, fy, lang)}
+    ${aboutBlock}
     ${siblingHtml}
     <p class="seo-disclaimer">${disclaimer}</p>
   </section>`;
