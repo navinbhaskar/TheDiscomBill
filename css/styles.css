@@ -3344,6 +3344,13 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 .svc-section .seo-section h2, .solar-section .seo-section h2 {
   text-align: left;
   font-family: inherit;
+  /* And the portal size, 23px, which `.seo-section > h2` could not undo: the two selectors
+     are both (0,1,1) and the portal rule simply sits later in the file. 20px is what an H2
+     is everywhere else on the site. */
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  margin: 0 0 14px;
 }
 .comparison-section .seo-section h2::after, .estimator-section .seo-section h2::after,
 .tariff-section .seo-section h2::after, .billcheck-section .seo-section h2::after,
@@ -5974,13 +5981,26 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
    paragraph takes the same indent as its heading so the two share a text edge and the bullet
    is the only thing hanging in the margin — a heading indented over a flush paragraph reads
    as a mistake rather than as a list. */
-.bc-fields h3 { position: relative; padding-left: 20px; }
+/* 16.5px, not the 17.55px the browser picks for an unstyled H3 (1.17em of a 15px body). The
+   site never sized these, so they were arriving at whatever the UA default worked out to;
+   against 15px body copy that is a step so small it reads as a slightly heavy paragraph. */
+.bc-fields h3 {
+  position: relative; padding-left: 20px;
+  font-size: 16.5px; line-height: 1.4;
+}
 .bc-fields h3::before {
   content: ''; position: absolute; left: 3px; top: 0.62em;
   width: 6px; height: 6px; border-radius: var(--radius-full);
   background: var(--brand);
 }
 .bc-fields h3 + p { padding-left: 20px; }
+
+/* The gap over this section was 90px, from three spacings stacked doing one job: the
+   calculator's own 24px bottom margin, the band's 32px top padding, and the section's 34px
+   top margin. The band's padding is the one that belongs to the boundary; the other two are
+   removed here. */
+.bc-explainers { padding-top: 20px; }
+.bc-explainers .bc-fields { margin-top: 0; }
 
 /* The "same engine as the home page" note is orientation, not the pitch — it sits below the
    chips at meta weight so it stops competing with them. */
