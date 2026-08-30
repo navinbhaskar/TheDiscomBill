@@ -249,66 +249,33 @@
         <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
         <div>
           <h3>RGP (Residential General Purpose)</h3>
-          
         </div>
       </header>
-      <div class="tariff-rows">
-      <div class="tariff-rows-head" aria-hidden="true">
-        <span>Supply type</span>
-        <span class="num">Fixed charge</span>
-        <span class="num">Energy rate<small>per unit</small></span>
-        <span></span>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <tbody>
+        <tr id="rate-domestic-urban">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">RGP — Urban / non-Gram-Panchayat</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 50 <span class="tx-muted">units</span></span><b class="num">₹3.05<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">50 – 100 <span class="tx-muted">units</span></span><b class="num">₹3.50<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">100 – 250 <span class="tx-muted">units</span></span><b class="num">₹4.15<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 250 <span class="tx-muted">units</span></span><b class="num">₹5.20<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><table class="tariff-slab-table"><tbody><tr><td>up to 2 kW</td><td class="num">₹15<span class="tx-muted">/mo</span></td></tr><tr><td>above 2 to 4 kW</td><td class="num">₹25<span class="tx-muted">/mo</span></td></tr><tr><td>above 4 to 6 kW</td><td class="num">₹45<span class="tx-muted">/mo</span></td></tr><tr><td>above 6 kW</td><td class="num">₹70<span class="tx-muted">/mo</span></td></tr></tbody></table></td>
+          <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty (ED)</span><b>15%</b></li></ul></td>
+        </tr>
+        <tr id="rate-domestic-rural">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">RGP (Rural) — within Gram Panchayat</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 50 <span class="tx-muted">units</span></span><b class="num">₹2.65<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">50 – 100 <span class="tx-muted">units</span></span><b class="num">₹3.10<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">100 – 250 <span class="tx-muted">units</span></span><b class="num">₹3.75<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 250 <span class="tx-muted">units</span></span><b class="num">₹4.90<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><table class="tariff-slab-table"><tbody><tr><td>up to 2 kW</td><td class="num">₹15<span class="tx-muted">/mo</span></td></tr><tr><td>above 2 to 4 kW</td><td class="num">₹25<span class="tx-muted">/mo</span></td></tr><tr><td>above 4 to 6 kW</td><td class="num">₹45<span class="tx-muted">/mo</span></td></tr><tr><td>above 6 kW</td><td class="num">₹70<span class="tx-muted">/mo</span></td></tr></tbody></table></td>
+          <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty (ED)</span><b>7.5%</b></li></ul></td>
+        </tr></tbody>
+        </table>
       </div>
-      <details class="tariff-supplytype" id="rate-domestic-urban" open>
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">RGP — Urban / non-Gram-Panchayat</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹15<span class="ts-dash">–</span>70<span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹3.05<span class="ts-dash">–</span>5.20</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Residential premises outside Gram Panchayat areas</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><table class="tariff-slab-table"><tbody><tr><td>up to 2 kW</td><td class="num">₹15<span class="tx-muted">/mo</span></td></tr><tr><td>above 2 to 4 kW</td><td class="num">₹25<span class="tx-muted">/mo</span></td></tr><tr><td>above 4 to 6 kW</td><td class="num">₹45<span class="tx-muted">/mo</span></td></tr><tr><td>above 6 kW</td><td class="num">₹70<span class="tx-muted">/mo</span></td></tr></tbody></table></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 50 <span class="tx-muted">units</span></td><td class="num">₹3.05<span class="tx-muted">/unit</span></td></tr><tr><td>50 – 100 <span class="tx-muted">units</span></td><td class="num">₹3.50<span class="tx-muted">/unit</span></td></tr><tr><td>100 – 250 <span class="tx-muted">units</span></td><td class="num">₹4.15<span class="tx-muted">/unit</span></td></tr><tr><td>Above 250 <span class="tx-muted">units</span></td><td class="num">₹5.20<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      <div class="tariff-field"><div class="tariff-field-label">Additional charges</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>15%</strong></li></ul></div>
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-rural">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">RGP (Rural) — within Gram Panchayat</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹15<span class="ts-dash">–</span>70<span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹2.65<span class="ts-dash">–</span>4.90</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Residential premises inside a Gram Panchayat as defined in the Gujarat Panchayats Act</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><table class="tariff-slab-table"><tbody><tr><td>up to 2 kW</td><td class="num">₹15<span class="tx-muted">/mo</span></td></tr><tr><td>above 2 to 4 kW</td><td class="num">₹25<span class="tx-muted">/mo</span></td></tr><tr><td>above 4 to 6 kW</td><td class="num">₹45<span class="tx-muted">/mo</span></td></tr><tr><td>above 6 kW</td><td class="num">₹70<span class="tx-muted">/mo</span></td></tr></tbody></table></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 50 <span class="tx-muted">units</span></td><td class="num">₹2.65<span class="tx-muted">/unit</span></td></tr><tr><td>50 – 100 <span class="tx-muted">units</span></td><td class="num">₹3.10<span class="tx-muted">/unit</span></td></tr><tr><td>100 – 250 <span class="tx-muted">units</span></td><td class="num">₹3.75<span class="tx-muted">/unit</span></td></tr><tr><td>Above 250 <span class="tx-muted">units</span></td><td class="num">₹4.90<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      <div class="tariff-field"><div class="tariff-field-label">Additional charges</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>7.5%</strong></li></ul></div>
-    </div>
-        </div>
-      </details></div>
+      
+      <dl class="tariff-notes">
+        <p class="tariff-notes-label">Who each rate applies to</p>
+        <div><dt>RGP — Urban / non-Gram-Panchayat</dt><dd>Residential premises outside Gram Panchayat areas</dd></div><div><dt>RGP (Rural) — within Gram Panchayat</dt><dd>Residential premises inside a Gram Panchayat as defined in the Gujarat Panchayats Act</dd></div>
+      </dl>
       <p class="tariff-card-note">ℹ️ Smart-meter consumers get a 60 paise/unit Time-of-Use concession for consumption between 1100 and 1700 hrs. BPL households pay ₹5/month fixed and 150 paise/unit on the first 50 units.</p>
     </article>
     <article class="tariff-card">
@@ -316,66 +283,33 @@
         <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
         <div>
           <h3>Non-RGP (Commercial / Non-Industrial, up to 40 kW)</h3>
-          
         </div>
       </header>
-      <div class="tariff-rows">
-      <div class="tariff-rows-head" aria-hidden="true">
-        <span>Supply type</span>
-        <span class="num">Fixed charge</span>
-        <span class="num">Energy rate<small>per unit</small></span>
-        <span></span>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <tbody>
+        <tr id="rate-commercial-upto10kw">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">Contracted load up to 10 kW</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹4.35<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><table class="tariff-slab-table"><tbody><tr><td>first 10 kW</td><td class="num">₹50<span class="tx-muted">/kW/mo</span></td></tr><tr><td>next 30 kW</td><td class="num">₹85<span class="tx-muted">/kW/mo</span></td></tr></tbody></table></td>
+          <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty (ED)</span><b>20%</b></li></ul></td>
+        </tr>
+        <tr id="rate-commercial-above10kw">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">Contracted load above 10 kW</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹4.65<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><table class="tariff-slab-table"><tbody><tr><td>first 10 kW</td><td class="num">₹50<span class="tx-muted">/kW/mo</span></td></tr><tr><td>next 30 kW</td><td class="num">₹85<span class="tx-muted">/kW/mo</span></td></tr></tbody></table></td>
+          <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty (ED)</span><b>20%</b></li></ul></td>
+        </tr></tbody>
+        </table>
       </div>
-      <details class="tariff-supplytype" id="rate-commercial-upto10kw" open>
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">Contracted load up to 10 kW</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹50<span class="ts-dash">–</span>85<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹4.35</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Entire monthly consumption at 435 paise per unit</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><table class="tariff-slab-table"><tbody><tr><td>first 10 kW</td><td class="num">₹50<span class="tx-muted">/kW/mo</span></td></tr><tr><td>next 30 kW</td><td class="num">₹85<span class="tx-muted">/kW/mo</span></td></tr></tbody></table></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹4.35<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      <div class="tariff-field"><div class="tariff-field-label">Additional charges</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>20%</strong></li></ul></div>
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-commercial-above10kw">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">Contracted load above 10 kW</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹50<span class="ts-dash">–</span>85<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹4.65</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Entire monthly consumption at 465 paise per unit, plus a 45 paise/unit peak-hour charge</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><table class="tariff-slab-table"><tbody><tr><td>first 10 kW</td><td class="num">₹50<span class="tx-muted">/kW/mo</span></td></tr><tr><td>next 30 kW</td><td class="num">₹85<span class="tx-muted">/kW/mo</span></td></tr></tbody></table></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹4.65<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      <div class="tariff-field"><div class="tariff-field-label">Additional charges</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>20%</strong></li></ul></div>
-    </div>
-        </div>
-      </details></div>
+      
+      <dl class="tariff-notes">
+        <p class="tariff-notes-label">Who each rate applies to</p>
+        <div><dt>Contracted load up to 10 kW</dt><dd>Entire monthly consumption at 435 paise per unit</dd></div><div><dt>Contracted load above 10 kW</dt><dd>Entire monthly consumption at 465 paise per unit, plus a 45 paise/unit peak-hour charge</dd></div>
+      </dl>
       <p class="tariff-card-note">ℹ️ Above 10 kW, consumption during the two peak windows (0700–1100 and 1800–2200 hrs) carries an extra 45 paise/unit. Connections above 40 kW fall under LTMD instead.</p>
     </article>
     <article class="tariff-card">
@@ -383,21 +317,22 @@
         <span class="tariff-card-icon tariff-card-icon-agriculture" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M12 21V8"/><path d="M12 14.5c-4.2 0-7.2-2.7-7.2-7.7 4.5 0 7.2 3.1 7.2 7.7Z"/><path d="M12 12.5c4.2 0 7.2-2.7 7.2-7.7-4.5 0-7.2 3.1-7.2 7.7Z"/><path d="M7 20h10"/><path d="M9 17.5h6"/></svg></span>
         <div>
           <h3>AG (Agriculture / Irrigation)</h3>
-          
         </div>
       </header>
-      <div id="rate-agricultural">
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹0</strong> <span class="tx-muted">/ month (flat)</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹0.60<span class="tx-muted">/unit</span></td></tr></tbody></table>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <tbody>
+        <tr id="rate-agricultural">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">AG (Agriculture / Irrigation)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹0.60<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹0</strong> <span class="tx-muted">/ month (flat)</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr></tbody>
+        </table>
       </div>
       
-    </div></div>
       <p class="tariff-card-note">ℹ️ Heavily subsidised; the order's headline AG tariff is HP-based at ₹200 per HP per month. Actual supply hours are limited.</p>
     </article></div>
     </section>

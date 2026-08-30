@@ -245,91 +245,40 @@
         <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
         <div>
           <h3>LTDS (Domestic Service)</h3>
-          
         </div>
       </header>
-      <div class="tariff-rows">
-      <div class="tariff-rows-head" aria-hidden="true">
-        <span>Supply type</span>
-        <span class="num">Fixed charge</span>
-        <span class="num">Energy rate<small>per unit</small></span>
-        <span></span>
-      </div>
-      <details class="tariff-supplytype" id="rate-domestic-ltds2" open>
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">LTDS-II — ordinary domestic</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹30<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹2.95<span class="ts-dash">–</span>5.40</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">The standard household category: five telescopic slabs from ₹2.95 to ₹5.40, on ₹30 per kW (or part thereof) per month.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹30</strong> <span class="tx-muted">/ kW / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">units</span></td><td class="num">₹2.95<span class="tx-muted">/unit</span></td></tr><tr><td>100 – 200 <span class="tx-muted">units</span></td><td class="num">₹3.75<span class="tx-muted">/unit</span></td></tr><tr><td>200 – 300 <span class="tx-muted">units</span></td><td class="num">₹4.80<span class="tx-muted">/unit</span></td></tr><tr><td>300 – 400 <span class="tx-muted">units</span></td><td class="num">₹5.00<span class="tx-muted">/unit</span></td></tr><tr><td>Above 400 <span class="tx-muted">units</span></td><td class="num">₹5.40<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-ltds1">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">LTDS-I — connected-load based (lifeline)</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹30<span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹2.90</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">A single ₹2.90/unit on a flat ₹30 per connection per month, with no slabs.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹30</strong> <span class="tx-muted">/ month (flat)</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹2.90<span class="tx-muted">/unit</span></td></tr></tbody></table>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <tbody>
+        <tr id="rate-domestic-ltds2">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">LTDS-II — ordinary domestic</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 100 <span class="tx-muted">units</span></span><b class="num">₹2.95<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">100 – 200 <span class="tx-muted">units</span></span><b class="num">₹3.75<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">200 – 300 <span class="tx-muted">units</span></span><b class="num">₹4.80<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">300 – 400 <span class="tx-muted">units</span></span><b class="num">₹5.00<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 400 <span class="tx-muted">units</span></span><b class="num">₹5.40<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹30</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-domestic-ltds1">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">LTDS-I — connected-load based (lifeline)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹2.90<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹30</strong> <span class="tx-muted">/ month (flat)</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-domestic-ltds3">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">LTDS-III — demand based</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 100 <span class="tx-muted">units</span></span><b class="num">₹3.00<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">100 – 200 <span class="tx-muted">units</span></span><b class="num">₹3.80<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">200 – 300 <span class="tx-muted">units</span></span><b class="num">₹4.85<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">300 – 400 <span class="tx-muted">units</span></span><b class="num">₹5.05<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 400 <span class="tx-muted">units</span></span><b class="num">₹5.45<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹30</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr></tbody>
+        </table>
       </div>
       
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-ltds3">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">LTDS-III — demand based</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹30<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹3.00<span class="ts-dash">–</span>5.45</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Marginally above LTDS-II at every slab: ₹3.00 to ₹5.45 on the same ₹30/kW/month.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹30</strong> <span class="tx-muted">/ kW / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">units</span></td><td class="num">₹3.00<span class="tx-muted">/unit</span></td></tr><tr><td>100 – 200 <span class="tx-muted">units</span></td><td class="num">₹3.80<span class="tx-muted">/unit</span></td></tr><tr><td>200 – 300 <span class="tx-muted">units</span></td><td class="num">₹4.85<span class="tx-muted">/unit</span></td></tr><tr><td>300 – 400 <span class="tx-muted">units</span></td><td class="num">₹5.05<span class="tx-muted">/unit</span></td></tr><tr><td>Above 400 <span class="tx-muted">units</span></td><td class="num">₹5.45<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details></div>
+      <dl class="tariff-notes">
+        <p class="tariff-notes-label">Who each rate applies to</p>
+        <div><dt>LTDS-II — ordinary domestic</dt><dd>The standard household category: five telescopic slabs from ₹2.95 to ₹5.40, on ₹30 per kW (or part thereof) per month.</dd></div><div><dt>LTDS-I — connected-load based (lifeline)</dt><dd>A single ₹2.90/unit on a flat ₹30 per connection per month, with no slabs.</dd></div><div><dt>LTDS-III — demand based</dt><dd>Marginally above LTDS-II at every slab: ₹3.00 to ₹5.45 on the same ₹30/kW/month.</dd></div>
+      </dl>
       <p class="tariff-card-note">ℹ️ Chandigarh's domestic tariff is unusually flat: the top slab (₹5.40) is under twice the first (₹2.95), where most states more than treble across the same range, so a heavy user here is treated far more gently than in Goa or Uttar Pradesh. Because JERC fixed the whole FY 2025-26 to FY 2029-30 control period in one order, rates step up each year without any fresh order — the same slab reaches ₹5.65 by FY 2029-30. JERC's schedule is the tariff alone. Domestic bills here include Chandigarh's 9 paise/unit electricity duty; other State levies are charged on the bill in addition. The fixed charge is per kW (or kVA) 'or part thereof', so a fractional sanctioned load is rounded up to the next whole unit on a real bill — the calculator does not round.</p>
     </article>
     <article class="tariff-card">
@@ -337,66 +286,33 @@
         <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
         <div>
           <h3>NDS (Non-Domestic Service)</h3>
-          
         </div>
       </header>
-      <div class="tariff-rows">
-      <div class="tariff-rows-head" aria-hidden="true">
-        <span>Supply type</span>
-        <span class="num">Fixed charge</span>
-        <span class="num">Energy rate<small>per unit</small></span>
-        <span></span>
-      </div>
-      <details class="tariff-supplytype" id="rate-commercial-nds1" open>
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">NDS-I — non-domestic service</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹120<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹4.60<span class="ts-dash">–</span>5.75</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Three telescopic bands on kVAh — ₹4.60 up to 100 units, ₹4.80 to 200, ₹5.75 beyond — against ₹120 per kVA per month.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹120</strong> <span class="tx-muted">/ kVA / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">units</span></td><td class="num">₹4.60<span class="tx-muted">/unit</span></td></tr><tr><td>100 – 200 <span class="tx-muted">units</span></td><td class="num">₹4.80<span class="tx-muted">/unit</span></td></tr><tr><td>Above 200 <span class="tx-muted">units</span></td><td class="num">₹5.75<span class="tx-muted">/unit</span></td></tr></tbody></table>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <tbody>
+        <tr id="rate-commercial-nds1">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">NDS-I — non-domestic service</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 100 <span class="tx-muted">units</span></span><b class="num">₹4.60<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">100 – 200 <span class="tx-muted">units</span></span><b class="num">₹4.80<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 200 <span class="tx-muted">units</span></span><b class="num">₹5.75<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹120</strong> <span class="tx-muted">/ kVA / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-commercial-nds2">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">NDS-II — non-domestic service</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 100 <span class="tx-muted">units</span></span><b class="num">₹4.65<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">100 – 200 <span class="tx-muted">units</span></span><b class="num">₹4.75<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 200 <span class="tx-muted">units</span></span><b class="num">₹5.80<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹120</strong> <span class="tx-muted">/ kVA / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr></tbody>
+        </table>
       </div>
       
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-commercial-nds2">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">NDS-II — non-domestic service</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹120<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹4.65<span class="ts-dash">–</span>5.80</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">The same ₹120/kVA fixed charge on slightly different bands: ₹4.65, ₹4.75 and ₹5.80.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹120</strong> <span class="tx-muted">/ kVA / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">units</span></td><td class="num">₹4.65<span class="tx-muted">/unit</span></td></tr><tr><td>100 – 200 <span class="tx-muted">units</span></td><td class="num">₹4.75<span class="tx-muted">/unit</span></td></tr><tr><td>Above 200 <span class="tx-muted">units</span></td><td class="num">₹5.80<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details></div>
+      <dl class="tariff-notes">
+        <p class="tariff-notes-label">Who each rate applies to</p>
+        <div><dt>NDS-I — non-domestic service</dt><dd>Three telescopic bands on kVAh — ₹4.60 up to 100 units, ₹4.80 to 200, ₹5.75 beyond — against ₹120 per kVA per month.</dd></div><div><dt>NDS-II — non-domestic service</dt><dd>The same ₹120/kVA fixed charge on slightly different bands: ₹4.65, ₹4.75 and ₹5.80.</dd></div>
+      </dl>
       <p class="tariff-card-note">ℹ️ Non-domestic supply is billed on kVAh against a ₹120 per kVA monthly charge, so power factor affects the units you are charged for. The energy rates are close to domestic — ₹4.60 against ₹2.95 on the first slab — but the fixed charge is four times higher per unit of load, which is where the real difference sits for a small shop. JERC's schedule is the tariff alone. Domestic bills here include Chandigarh's 9 paise/unit electricity duty; other State levies are charged on the bill in addition. The fixed charge is per kW (or kVA) 'or part thereof', so a fractional sanctioned load is rounded up to the next whole unit on a real bill — the calculator does not round.</p>
     </article></div>
     </section>

@@ -196,9 +196,9 @@
     <p class="seo-cta-row"><a class="seo-cta" href="/?state=Maharashtra&amp;discom=tata_power_mumbai#calculator">Tata Power Mumbai बिल कॅल्क्युलेटर उघडा →</a></p>
 
     
-    <nav class="seo-page-index" aria-label="या पानावर">
-      <span class="seo-page-index-label">या पानावर</span>
-      <a href="#current-tariff">टॅरिफ अनुसूची</a><a href="#calculate">बिल कॅल्क्युलेटर</a><a href="#common-calculations">बिल उदाहरणे</a><a href="#bill-lines">बिलाच्या ओळी</a><a href="#faq">प्रश्नोत्तरे</a><a href="#guides">मार्गदर्शक</a><a href="#about">Tata Power Mumbai विषयी</a>
+    <nav class="page-toc" aria-label="या पानावर">
+      <span class="page-toc-label">या पानावर</span>
+      <a href="#about">Tata Power Mumbai विषयी</a><a href="#current-tariff">टॅरिफ अनुसूची</a><a href="#calculate">बिल कॅल्क्युलेटर</a><a href="#common-calculations">बिल उदाहरणे</a><a href="#bill-lines">बिलाच्या ओळी</a><a href="#faq">प्रश्नोत्तरे</a><a href="#guides">मार्गदर्शक</a>
     </nav>
     
     <section class="seo-section is-aside">
@@ -208,8 +208,25 @@
       </div>
     </section>
 
-    <!-- Same four movements as the English page — answer, what moves it, what to do,
-         provenance — so a reader switching language does not land on a different page. -->
+    <!-- Same movements as the English page — who this is, the answer, what moves it, what
+         to do, provenance — so a reader switching language does not land on a different
+         page. -->
+    
+    <section class="seo-section" id="about">
+      <h2>Tata Power Mumbai विषयी</h2>
+      
+    <div class="seo-subsection">
+      <h3>Tata Power Mumbai चे सेवा क्षेत्र</h3>
+      <p>Tata Power Mumbai (Tata Power Company Ltd. – Mumbai Distribution) Parts of Mumbai वीज वितरित करते — Dharavi, Wadala, parts of Kurla, Chembur यांसह 5 प्रमुख जिल्हे/शहरांमध्ये.</p>
+      <div class="seo-area-chips"><span>Dharavi</span><span>Wadala</span><span>parts of Kurla</span><span>Chembur</span><span>etc.</span></div>
+    </div>
+      
+    <div class="seo-subsection">
+      <h3>Tata Power Mumbai एका दृष्टिक्षेपात</h3>
+      <table class="seo-facts"><tbody><tr><th>वितरण कंपनी</th><td>Tata Power Company Ltd. – Mumbai Distribution</td></tr><tr><th>संक्षिप्त नाव</th><td>Tata Power Mumbai</td></tr><tr><th>राज्य / केंद्रशासित प्रदेश</th><td>महाराष्ट्र</td></tr><tr><th>सेवा दिलेले जिल्हे / शहरे</th><td>5+ — Dharavi, Wadala, parts of Kurla, Chembur, etc.</td></tr><tr><th>दरांची स्थिती</th><td>2026-27 टॅरिफ आदेशावर आधारित (आमच्याकडील नवीनतम प्रकाशित डेटा)</td></tr><tr><th>घरगुती ऊर्जा दर</th><td>₹1.90 – ₹10.24 प्रति युनिट</td></tr><tr><th>अधिकृत वेबसाइट</th><td><a href="https://www.tatapower.com" target="_blank" rel="noopener">www.tatapower.com ↗</a></td></tr></tbody></table>
+    </div>
+    </section>
+
     <section class="seo-section" id="current-tariff">
       <h2>Tata Power Mumbai टॅरिफ अनुसूची (2026-27)</h2>
       
@@ -219,21 +236,22 @@
         <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
         <div>
           <h3>LT-I(B) (Residential)</h3>
-          
         </div>
       </header>
-      <div id="rate-domestic">
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><table class="tariff-slab-table"><tbody><tr><td>Up to 100 units</td><td class="num">₹90<span class="tx-muted">/महिना</span></td></tr><tr><td>101 – 500 units</td><td class="num">₹135<span class="tx-muted">/महिना</span></td></tr><tr><td>Above 500 units</td><td class="num">₹160<span class="tx-muted">/महिना</span></td></tr></tbody></table></div>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">कोड</th><th scope="col">पुरवठा प्रकार</th><th class="num" scope="col">ऊर्जा शुल्क</th><th class="num" scope="col">फिक्स्ड चार्ज</th><th class="num" scope="col">ड्यूटी व इतर</th></tr></thead>
+          <tbody>
+        <tr id="rate-domestic">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">LT-I(B) (Residential)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 100 <span class="tx-muted">युनिट</span></span><b class="num">₹1.90<span class="tx-muted">/युनिट</span></b></li><li><span class="tt-slab-range">100 – 300 <span class="tx-muted">युनिट</span></span><b class="num">₹4.70<span class="tx-muted">/युनिट</span></b></li><li><span class="tt-slab-range">300 – 500 <span class="tx-muted">युनिट</span></span><b class="num">₹9.24<span class="tx-muted">/युनिट</span></b></li><li><span class="tt-slab-range">500 पेक्षा जास्त <span class="tx-muted">युनिट</span></span><b class="num">₹10.24<span class="tx-muted">/युनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><table class="tariff-slab-table"><tbody><tr><td>Up to 100 units</td><td class="num">₹90<span class="tx-muted">/महिना</span></td></tr><tr><td>101 – 500 units</td><td class="num">₹135<span class="tx-muted">/महिना</span></td></tr><tr><td>Above 500 units</td><td class="num">₹160<span class="tx-muted">/महिना</span></td></tr></tbody></table></td>
+          <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty (ED)</span><b>16%</b></li></ul></td>
+        </tr></tbody>
+        </table>
       </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">युनिट</span></td><td class="num">₹1.90<span class="tx-muted">/युनिट</span></td></tr><tr><td>100 – 300 <span class="tx-muted">युनिट</span></td><td class="num">₹4.70<span class="tx-muted">/युनिट</span></td></tr><tr><td>300 – 500 <span class="tx-muted">युनिट</span></td><td class="num">₹9.24<span class="tx-muted">/युनिट</span></td></tr><tr><td>500 पेक्षा जास्त <span class="tx-muted">युनिट</span></td><td class="num">₹10.24<span class="tx-muted">/युनिट</span></td></tr></tbody></table>
-      </div>
-      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty (ED)</span><strong>16%</strong></li></ul></div>
-    </div></div>
+      
       
     </article></div>
     </section>
@@ -337,22 +355,6 @@
       <h2>Tata Power Mumbai ग्राहकांसाठी मार्गदर्शक</h2>
       <div class="seo-link-grid is-compact"><a class="seo-link-card is-compact" data-icon="guide" href="/mr/guides/how-fppa-fuel-surcharge-is-calculated/"><strong>तुमच्या वीज बिलावर FPPA (इंधन अधिभार) कसा मोजला जातो</strong><small>6 मिनिटे</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/mr/guides/reduce-fixed-charges-sanctioned-load/"><strong>मंजूर भार योग्य आकाराचा करून स्थिर आकार कसा कमी करावा</strong><small>5 मिनिटे</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/mr/guides/why-did-my-electricity-bill-increase/"><strong>माझे वीज बिल अचानक का वाढले?</strong><small>7 मिनिटे</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/mr/guides/how-to-read-msedcl-bill/"><strong>तुमचे MSEDCL (महावितरण) वीज बिल कसे वाचावे</strong><small>6 मिनिटे</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/mr/guides/msedcl-fppa-charges-explained/"><strong>MSEDCL FPPCA (इंधन समायोजन) आकार कसा मोजावा</strong><small>6 मिनिटे</small></a></div>
       <p><a href="/mr/guides/">सर्व मार्गदर्शक पहा →</a></p>
-    </section>
-
-    
-    <section class="seo-section" id="about">
-      <h2>Tata Power Mumbai विषयी</h2>
-      
-    <div class="seo-subsection">
-      <h3>Tata Power Mumbai चे सेवा क्षेत्र</h3>
-      <p>Tata Power Mumbai (Tata Power Company Ltd. – Mumbai Distribution) Parts of Mumbai वीज वितरित करते — Dharavi, Wadala, parts of Kurla, Chembur यांसह 5 प्रमुख जिल्हे/शहरांमध्ये.</p>
-      <div class="seo-area-chips"><span>Dharavi</span><span>Wadala</span><span>parts of Kurla</span><span>Chembur</span><span>etc.</span></div>
-    </div>
-      
-    <div class="seo-subsection">
-      <h3>Tata Power Mumbai एका दृष्टिक्षेपात</h3>
-      <table class="seo-facts"><tbody><tr><th>वितरण कंपनी</th><td>Tata Power Company Ltd. – Mumbai Distribution</td></tr><tr><th>संक्षिप्त नाव</th><td>Tata Power Mumbai</td></tr><tr><th>राज्य / केंद्रशासित प्रदेश</th><td>महाराष्ट्र</td></tr><tr><th>सेवा दिलेले जिल्हे / शहरे</th><td>5+ — Dharavi, Wadala, parts of Kurla, Chembur, etc.</td></tr><tr><th>दरांची स्थिती</th><td>2026-27 टॅरिफ आदेशावर आधारित (आमच्याकडील नवीनतम प्रकाशित डेटा)</td></tr><tr><th>घरगुती ऊर्जा दर</th><td>₹1.90 – ₹10.24 प्रति युनिट</td></tr><tr><th>अधिकृत वेबसाइट</th><td><a href="https://www.tatapower.com" target="_blank" rel="noopener">www.tatapower.com ↗</a></td></tr></tbody></table>
-    </div>
     </section>
     
     <section class="seo-section is-aside">

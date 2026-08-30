@@ -242,91 +242,40 @@
         <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
         <div>
           <h3>Domestic (Low Tension)</h3>
-          
         </div>
       </header>
-      <div class="tariff-rows">
-      <div class="tariff-rows-head" aria-hidden="true">
-        <span>आपूर्ति प्रकार</span>
-        <span class="num">फिक्स्ड चार्ज</span>
-        <span class="num">ऊर्जा दर<small>प्रति यूनिट</small></span>
-        <span></span>
-      </div>
-      <details class="tariff-supplytype" id="rate-domestic-domestic" open>
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">Domestic (DLT)</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹90<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹5.00<span class="ts-dash">–</span>5.10</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Three telescopic slabs on ₹90 per kVA per month. The slabs barely differ — ₹5.00, ₹5.04 and ₹5.10 — so consumption has almost no effect on the rate you pay.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹90</strong> <span class="tx-muted">/ kVA / माह</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹5.00<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 200 <span class="tx-muted">यूनिट</span></td><td class="num">₹5.04<span class="tx-muted">/यूनिट</span></td></tr><tr><td>200 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹5.10<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-kutir-jyoti">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">Kutir Jyoti / BPL — metered, up to 30 units</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹90<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹4.57</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">₹4.57/unit for BPL metered connections, for consumption up to 30 units a month. Beyond 30 units the excess is billed at ordinary domestic slab rates.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹90</strong> <span class="tx-muted">/ kVA / माह</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹4.57<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">कोड</th><th scope="col">आपूर्ति प्रकार</th><th class="num" scope="col">ऊर्जा शुल्क</th><th class="num" scope="col">फिक्स्ड चार्ज</th><th class="num" scope="col">ड्यूटी व अन्य</th></tr></thead>
+          <tbody>
+        <tr id="rate-domestic-domestic">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">Domestic (DLT)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 100 <span class="tx-muted">यूनिट</span></span><b class="num">₹5.00<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">100 – 200 <span class="tx-muted">यूनिट</span></span><b class="num">₹5.04<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">200 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹5.10<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹90</strong> <span class="tx-muted">/ kVA / माह</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-domestic-kutir-jyoti">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">Kutir Jyoti / BPL — metered, up to 30 units</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹4.57<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹90</strong> <span class="tx-muted">/ kVA / माह</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-domestic-kutir-jyoti-unmetered">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">Kutir Jyoti — unmetered</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹0.00<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹210</strong> <span class="tx-muted">/ माह (स्थिर)</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr></tbody>
+        </table>
       </div>
       
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-kutir-jyoti-unmetered">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">Kutir Jyoti — unmetered</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹210<span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num"><span class="ts-free">नि:शुल्क</span></span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">A flat ₹210 per connection per month, with no metering and no energy charge.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹210</strong> <span class="tx-muted">/ माह (स्थिर)</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹0.00<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details></div>
+      <dl class="tariff-notes">
+        <p class="tariff-notes-label">कौन-सी दर किस पर लागू होती है</p>
+        <div><dt>Domestic (DLT)</dt><dd>Three telescopic slabs on ₹90 per kVA per month. The slabs barely differ — ₹5.00, ₹5.04 and ₹5.10 — so consumption has almost no effect on the rate you pay.</dd></div><div><dt>Kutir Jyoti / BPL — metered, up to 30 units</dt><dd>₹4.57/unit for BPL metered connections, for consumption up to 30 units a month. Beyond 30 units the excess is billed at ordinary domestic slab rates.</dd></div><div><dt>Kutir Jyoti — unmetered</dt><dd>A flat ₹210 per connection per month, with no metering and no energy charge.</dd></div>
+      </dl>
       <p class="tariff-card-note">ℹ️ Meghalaya's domestic slabs are almost flat — ₹5.00, ₹5.04 and ₹5.10 — so unlike most states, cutting consumption to stay under a slab boundary saves you essentially nothing here. What matters instead is the fixed charge, which is levied per kVA of load rather than per kW, so it is your sanctioned load and power factor that drive the standing cost. The domestic category is broad: it also covers places of worship, non-profit hospitals and schools, hostels, dharamshalas and community halls. Domestic bills here include Meghalaya's 5 paise/unit electricity duty; other State levies are charged in addition.</p>
     </article>
     <article class="tariff-card">
@@ -334,21 +283,22 @@
         <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
         <div>
           <h3>Non-Domestic / Commercial (Low Tension)</h3>
-          
         </div>
       </header>
-      <div id="rate-commercial">
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹170</strong> <span class="tx-muted">/ kVA / माह</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹7.45<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">कोड</th><th scope="col">आपूर्ति प्रकार</th><th class="num" scope="col">ऊर्जा शुल्क</th><th class="num" scope="col">फिक्स्ड चार्ज</th><th class="num" scope="col">ड्यूटी व अन्य</th></tr></thead>
+          <tbody>
+        <tr id="rate-commercial">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">Non-Domestic / Commercial (Low Tension)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹7.45<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹170</strong> <span class="tx-muted">/ kVA / माह</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr></tbody>
+        </table>
       </div>
       
-    </div></div>
       <p class="tariff-card-note">ℹ️ Non-domestic is a single rate on every unit — ₹7.45 — with no slabs at all, against a ₹170 per kVA monthly fixed charge. That is nearly twice the domestic energy rate and nearly twice the domestic fixed charge, so the commercial/domestic classification of a connection matters far more in Meghalaya than any consumption threshold. Electricity duty and other State levies are charged in addition.</p>
     </article></div>
     </section>

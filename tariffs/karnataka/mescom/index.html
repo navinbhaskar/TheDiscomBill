@@ -192,19 +192,52 @@
     <p class="guide-meta">Tariffs last updated: 27 August 2026</p>
     <p><a class="tariff-source" href="https://www.mescom.co.in" target="_blank" rel="noopener">Official MESCOM source ↗</a></p>
     
-    <nav class="seo-page-index" aria-label="On this page">
-      <span class="seo-page-index-label">On this page</span>
-      <a href="#current-tariff">Tariff schedule</a><a href="#calculate">Bill calculator</a><a href="#latest-fppa">Latest FPPA</a><a href="#common-calculations">Bill examples</a><a href="#bill-lines">Bill lines explained</a><a href="#faq">FAQ</a><a href="#consumer-services">Consumer services</a><a href="#guides">Guides</a><a href="#sources">Sources</a><a href="#about">About MESCOM</a>
+    <nav class="page-toc" aria-label="On this page">
+      <span class="page-toc-label">On this page</span>
+      <a href="#about">About MESCOM</a><a href="#current-tariff">Tariff schedule</a><a href="#calculate">Bill calculator</a><a href="#latest-fppa">Latest FPPA</a><a href="#common-calculations">Bill examples</a><a href="#bill-lines">Bill lines explained</a><a href="#faq">FAQ</a><a href="#consumer-services">Consumer services</a><a href="#guides">Guides</a><a href="#sources">Sources</a>
     </nav>
 
-    <!-- Page order, deliberately, in four movements:
+    <!-- Page order:
+         0. who this is     — the utility, where it supplies, how it is rated
          1. the answer      — the slab tables the H1 and title promise, then the calculator
          2. what moves it   — surcharge, worked examples, what each bill line means
          3. what to do      — FAQ, official services, guides
-         4. provenance      — sources, about the utility, its siblings
-         The tables used to sit eighth, roughly four screens down, behind a credit-rating
-         widget and two surcharge sections that describe an adjustment to a rate the reader
-         had not been shown yet. -->
+         4. provenance      — sources, sibling DISCOMs
+         The tables used to sit eighth, roughly four screens down, behind two surcharge
+         sections describing an adjustment to a rate the reader had not been shown yet. -->
+    
+    <section class="seo-section" id="about">
+      <h2>About MESCOM</h2>
+      
+    <div class="seo-subsection">
+      <h3>Areas served by MESCOM</h3>
+      <p>MESCOM distributes electricity across Dakshina Kannada, Udupi, Shivamogga, Kodagu, Chikkamagaluru.</p>
+      
+    </div>
+      
+    <div class="seo-subsection">
+      <h3>MESCOM at a glance</h3>
+      <table class="seo-facts"><tbody><tr><th>Distribution company</th><td>Mangalore Electricity Supply Company Ltd.</td></tr><tr><th>Short name</th><td>MESCOM</td></tr><tr><th>State / UT</th><td>Karnataka</td></tr><tr><th>Rates status</th><td>Based on the 2026-27 tariff order (latest published data we have)</td></tr><tr><th>Domestic energy rate</th><td>₹5.80 per unit</td></tr><tr><th>Official website</th><td><a href="https://www.mescom.co.in" target="_blank" rel="noopener">www.mescom.co.in ↗</a></td></tr></tbody></table>
+    </div>
+      
+    <div class="seo-subsection">
+      <h3>How MESCOM is rated</h3>
+      <div class="rating-block">
+        <div class="rating-grade" data-grade="B">
+          <span class="rating-grade-value">B</span>
+          <span class="rating-grade-label">Integrated Rating · FY 2024-25</span>
+        </div>
+        <div class="rating-detail">
+          <p>MESCOM scored 56.44 and ranks 26 of 54 state and private distribution utilities — up a grade from the 13th report.</p>
+          
+          <p class="rating-scope">The rating scores the utility’s financial and operational performance — AT&amp;C losses, billing and collection efficiency, the gap between what supply costs and what it earns, and the regulatory support the utility gets. It is not a measure of supply reliability or customer service, and it does not affect your tariff.</p>
+          <p class="rating-src"><a href="https://web.archive.org/web/20260421013237/https://www.pfcindia.co.in/ensite/DocumentRepository/ckfinder/files/GoI_Initiatives/Annual_Integrated_Ratings_of_State_DISCOMs/14th_Annual_Integrated%20Rating%20and%20Ranking%20of%20Power%20Distribution_Utilities.pdf" target="_blank" rel="noopener">14th Annual Integrated Rating &amp; Ranking of Power Distribution Utilities ↗</a><br>
+          <span class="guide-meta">Power Finance Corporation Ltd (PFC), for the Ministry of Power · published 2026-01-23</span></p>
+        </div>
+      </div>
+    </div>
+    </section>
+
     <section class="seo-section" id="current-tariff">
       <h2>Current MESCOM tariff (2026-27)</h2>
       <p class="seo-note">MESCOM applies the same state-wide 2026-27 tariff schedule as the other Karnataka DISCOMs (set by the state regulator). What differs by company is the <strong>service area</strong>, billing portal and contact details below.</p>
@@ -214,21 +247,22 @@
         <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
         <div>
           <h3>LT-1 (Domestic / Residential)</h3>
-          
         </div>
       </header>
-      <div id="rate-domestic">
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹150</strong> <span class="tx-muted">/ kW / month</span></div>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <tbody>
+        <tr id="rate-domestic">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">LT-1 (Domestic / Residential)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹5.80<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹150</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Tax</span><b>9%</b></li></ul></td>
+        </tr></tbody>
+        </table>
       </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹5.80<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      <div class="tariff-field"><div class="tariff-field-label">Additional charges</div><ul class="tariff-addl"><li><span>Electricity Tax</span><strong>9%</strong></li></ul></div>
-    </div></div>
+      
       <p class="tariff-card-note">ℹ️ KERC merged the old domestic slabs into a single flat rate — every unit costs the same. Karnataka bills Electricity Tax as a separate line: Annexure-9 clause 16 of the Tariff Order 2025 sets a payment priority that distinguishes 'Arrears of Electricity Tax' from 'Arrears of Electricity charges', so the tariff is not tax-inclusive. The rate is set by the Karnataka Electricity (Taxation on Consumption) Act rather than by KERC, so it is not in the order; CEA records 9% on the energy charge. BESCOM bills also carry a separate 'FY25 True up Charges' line from May 2026 to Apr 2027, calculated from your FY2024-25 consumption and spread over 12 instalments; it is not a per-unit charge on this bill, so it is not included here. Gruha Jyoti (200 free units/month) applies via the Government Subsidy option.</p>
     </article>
     <article class="tariff-card">
@@ -236,21 +270,22 @@
         <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
         <div>
           <h3>LT-3(a) (Commercial / Non-Domestic LT)</h3>
-          
         </div>
       </header>
-      <div id="rate-commercial">
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹215</strong> <span class="tx-muted">/ kW / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹6.80<span class="tx-muted">/unit</span></td></tr></tbody></table>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <tbody>
+        <tr id="rate-commercial">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">LT-3(a) (Commercial / Non-Domestic LT)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹6.80<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹215</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr></tbody>
+        </table>
       </div>
       
-    </div></div>
       <p class="tariff-card-note">ℹ️ Shops, hotels, offices, clinics, banks and similar commercial installations. Single flat rate — KERC merged the old slabs. An optional demand-based tariff exists for sanctioned load above 5 kW and below 150 kW (fixed ₹235/kW at the same energy rate); this page models the standard load-based tariff.</p>
     </article></div>
     </section>
@@ -413,38 +448,6 @@
         
         <tr><th>Page updated</th><td>30 August 2026</td></tr>
       </tbody></table>
-    </section>
-    
-    <section class="seo-section" id="about">
-      <h2>About MESCOM</h2>
-      
-    <div class="seo-subsection">
-      <h3>Areas served by MESCOM</h3>
-      <p>MESCOM distributes electricity across Dakshina Kannada, Udupi, Shivamogga, Kodagu, Chikkamagaluru.</p>
-      
-    </div>
-      
-    <div class="seo-subsection">
-      <h3>MESCOM at a glance</h3>
-      <table class="seo-facts"><tbody><tr><th>Distribution company</th><td>Mangalore Electricity Supply Company Ltd.</td></tr><tr><th>Short name</th><td>MESCOM</td></tr><tr><th>State / UT</th><td>Karnataka</td></tr><tr><th>Rates status</th><td>Based on the 2026-27 tariff order (latest published data we have)</td></tr><tr><th>Domestic energy rate</th><td>₹5.80 per unit</td></tr><tr><th>Official website</th><td><a href="https://www.mescom.co.in" target="_blank" rel="noopener">www.mescom.co.in ↗</a></td></tr></tbody></table>
-    </div>
-      
-    <div class="seo-subsection">
-      <h3>How MESCOM is rated</h3>
-      <div class="rating-block">
-        <div class="rating-grade" data-grade="B">
-          <span class="rating-grade-value">B</span>
-          <span class="rating-grade-label">Integrated Rating · FY 2024-25</span>
-        </div>
-        <div class="rating-detail">
-          <p>MESCOM scored 56.44 and ranks 26 of 54 state and private distribution utilities — up a grade from the 13th report.</p>
-          
-          <p class="rating-scope">The rating scores the utility’s financial and operational performance — AT&amp;C losses, billing and collection efficiency, the gap between what supply costs and what it earns, and the regulatory support the utility gets. It is not a measure of supply reliability or customer service, and it does not affect your tariff.</p>
-          <p class="rating-src"><a href="https://web.archive.org/web/20260421013237/https://www.pfcindia.co.in/ensite/DocumentRepository/ckfinder/files/GoI_Initiatives/Annual_Integrated_Ratings_of_State_DISCOMs/14th_Annual_Integrated%20Rating%20and%20Ranking%20of%20Power%20Distribution_Utilities.pdf" target="_blank" rel="noopener">14th Annual Integrated Rating &amp; Ranking of Power Distribution Utilities ↗</a><br>
-          <span class="guide-meta">Power Finance Corporation Ltd (PFC), for the Ministry of Power · published 2026-01-23</span></p>
-        </div>
-      </div>
-    </div>
     </section>
     
     <section class="seo-section is-aside">

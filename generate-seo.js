@@ -1068,63 +1068,88 @@ function tariffRows(categories) {
 
 function categoryCardHtml(cat, lang = 'en') {
   const hasSupplyTypes = Array.isArray(cat.supplyTypes) && cat.supplyTypes.length > 0;
-  let body;
-  if (hasSupplyTypes) {
-    // Each row carries its own headline numbers, so the list IS the comparison table: fixed
-    // charge and energy-rate range sit on the collapsed row, and opening one unfolds the full
-    // slab breakdown in place. This replaced a separate summary table that sat above the cards
-    // repeating the same two labels with different numbers under them (a range up top, the
-    // slabs below) with nothing on the page explaining the difference. The old table's caption
-    // already promised 'tap a row for the full slab breakdown' and then jumped the reader to a
-    // detached block further down; now the row it points at is the row that opens.
-    //
-    // Not a <table>: a <tr> cannot wrap <details>, and the alternative — one row per slab with
-    // the supply type rowspan'd — runs to 100+ rows on the widest schedules and leaves the
-    // description and additional charges homeless. A grid keeps the columns aligned across
-    // rows without pretending to be tabular markup.
-    //
-    // First one stays open, as before: closed <details> content is still indexed, so this is
-    // about the reader, and the first supply type is the one most of them came for.
-    const showHead = cat.supplyTypes.length > 1;
-    const head = showHead ? `
-      <div class="tariff-rows-head" aria-hidden="true">
-        <span>${T(lang, { en: 'Supply type', hi: 'आपूर्ति प्रकार', mr: 'पुरवठा प्रकार', ta: 'விநியோக வகை' })}</span>
-        <span class="num">${T(lang, { en: 'Fixed charge', hi: 'फिक्स्ड चार्ज', mr: 'फिक्स्ड चार्ज', ta: 'நிலையான கட்டணம்' })}</span>
-        <span class="num">${T(lang, { en: 'Energy rate', hi: 'ऊर्जा दर', mr: 'ऊर्जा दर', ta: 'மின் கட்டணம்' })}<small>${T(lang, { en: 'per unit', hi: 'प्रति यूनिट', mr: 'प्रति युनिट', ta: 'ஒரு யூனிட்' })}</small></span>
-        <span></span>
-      </div>` : '';
-    const list = cat.supplyTypes.map((st, i) => {
-      const { code, label } = splitTariffName(st.name || st.id);
-      return `
-      <details class="tariff-supplytype" id="${tariffRowId(cat, st)}"${i === 0 ? ' open' : ''}>
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">${esc(label)}</span>
-            ${code ? `<span class="tariff-st-code">${esc(code)}</span>` : ''}
-          </span>
-          <span class="tsr-fixed num">${fixedChargeShort(st.fixedCharge, lang)}</span>
-          <span class="tsr-rate num">${rateRangeShort(st.energySlabs, lang)}</span>
-        </summary>
-        <div class="tariff-st-body">
-          ${st.description ? `<p class="tariff-st-desc">${esc(st.description)}</p>` : ''}
-          ${tariffBlockHtml(st, lang)}
-        </div>
-      </details>`;
-    }).join('');
-    body = `<div class="tariff-rows">${head}${list}</div>`;
-  } else {
-    body = `<div id="${tariffRowId(cat, null)}">${tariffBlockHtml(cat, lang)}</div>`;
-  }
+  const blocks = hasSupplyTypes ? cat.supplyTypes : [cat];
+  const L = (o) => T(lang, o);
+  // Five columns, not the ten a printed schedule carries: minimum charge is in none of the 66
+  // DISCOMs' data, and LPSC and the regulatory surcharge are one figure for the whole company
+  // (they live in "at a glance" and the surcharge section). What is left is what varies row to
+  // row.
+  const cols = [
+    L({ en: 'Code', hi: 'कोड', mr: 'कोड', ta: 'குறியீடு' }),
+    L({ en: 'Supply type', hi: 'आपूर्ति प्रकार', mr: 'पुरवठा प्रकार', ta: 'விநியோக வகை' }),
+    L({ en: 'Energy charge', hi: 'ऊर्जा शुल्क', mr: 'ऊर्जा शुल्क', ta: 'மின் கட்டணம்' }),
+    L({ en: 'Fixed charge', hi: 'फिक्स्ड चार्ज', mr: 'फिक्स्ड चार्ज', ta: 'நிலையான கட்டணம்' }),
+    L({ en: 'Duty & other', hi: 'ड्यूटी व अन्य', mr: 'ड्यूटी व इतर', ta: 'வரி & பிற' }),
+  ];
+  const unit = L({ en: 'units', hi: 'यूनिट', mr: 'युनिट', ta: 'யூனிட்' });
+  const perUnit = L({ en: '/unit', hi: '/यूनिट', mr: '/युनिट', ta: '/யூனிட்' });
+
+  // Slabs stack inside their cell — the way a published tariff schedule prints them. They used
+  // to be behind a <details> that only showed a min-max range until you clicked it, which hid
+  // the one figure the page exists to state.
+  const slabCell = (o) => {
+    const slabs = o.energySlabs;
+    if (!Array.isArray(slabs) || !slabs.length) return '<span class="tx-muted">—</span>';
+    let prev = 0;
+    return `<ul class="tt-slabs">${slabs.map((sl) => {
+      const range = slabRange(prev, sl.limit, lang);
+      prev = (sl.limit === Infinity || sl.limit == null) ? prev : sl.limit;
+      const note = sl.label ? ` <span class="tx-muted">(${esc(sl.label)})</span>` : '';
+      return `<li><span class="tt-slab-range">${range} <span class="tx-muted">${unit}</span>${note}</span><b class="num">${rupeeRate(sl.rate)}<span class="tx-muted">${perUnit}</span></b></li>`;
+    }).join('')}</ul>`;
+  };
+  const extrasCell = (o) => {
+    const arr = o.additionalCharges;
+    if (!Array.isArray(arr) || !arr.length) return '<span class="tx-muted">—</span>';
+    return `<ul class="tt-extras">${arr.map((a) => {
+      const val = a.type && String(a.type).includes('percent') ? `${a.rate}%` : rupee(a.rate);
+      return `<li><span>${esc(a.name || 'Charge')}</span><b>${val}</b></li>`;
+    }).join('')}</ul>`;
+  };
+
+  const rows = blocks.map((o) => {
+    const { code, label } = splitTariffName(o.name || o.id);
+    const st = hasSupplyTypes ? o : null;
+    return `
+        <tr id="${tariffRowId(cat, st)}">
+          <th scope="row" class="tt-code">${code ? esc(code) : '<span class="tx-muted">—</span>'}</th>
+          <td class="tt-name">${esc(label || cat.name || cat.id)}</td>
+          <td class="tt-energy">${slabCell(o)}</td>
+          <td class="tt-fixed">${fixedChargeHtml(o.fixedCharge, lang)}</td>
+          <td class="tt-extra">${extrasCell(o)}</td>
+        </tr>`;
+  }).join('');
+
+  // Eligibility notes keyed by code, below the table. They run to 349 characters at the
+  // longest — a cell that holds one turns every row into five lines — but they are the text
+  // that tells a reader which row is theirs, so they stay on the page in full.
+  const notes = blocks.map((o) => {
+    const { code, label } = splitTariffName(o.name || o.id);
+    const desc = o.description || (!hasSupplyTypes ? cat.description : '');
+    if (!desc) return '';
+    return `<div><dt>${esc(code || label || cat.name || cat.id)}</dt><dd>${esc(desc)}</dd></div>`;
+  }).filter(Boolean).join('');
+  const notesHtml = notes ? `
+      <dl class="tariff-notes">
+        <p class="tariff-notes-label">${esc(L({ en: 'Who each rate applies to', hi: 'कौन-सी दर किस पर लागू होती है', mr: 'कोणता दर कोणाला लागू', ta: 'எந்த விகிதம் யாருக்கு' }))}</p>
+        ${notes}
+      </dl>` : '';
+
   return `
     <article class="tariff-card">
       <header class="tariff-card-head">
         ${tariffCategoryIconSvg(cat)}
         <div>
           <h3>${esc(cat.name || cat.id)}</h3>
-          ${cat.description && !hasSupplyTypes ? `<p class="tariff-card-desc">${esc(cat.description)}</p>` : ''}
         </div>
       </header>
-      ${body}
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr>${cols.map((c, i) => `<th${i >= 2 ? ' class="num"' : ''} scope="col">${esc(c)}</th>`).join('')}</tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+      ${notesHtml}
       ${cat.notes ? `<p class="tariff-card-note">ℹ️ ${esc(cat.notes)}</p>` : ''}
     </article>`;
 }
@@ -1796,9 +1821,11 @@ function pageIndexHtml(items, lang = 'en') {
     .map(([href, label]) => `<a href="${attr(href)}">${esc(label)}</a>`).join('');
   if (!links) return '';
   const heading = T(lang, { en: 'On this page', hi: 'इस पेज पर', mr: 'या पानावर', ta: 'இந்தப் பக்கத்தில்' });
+  // .page-toc, the same chip index /smart-meter/ and the guides use — one index pattern for
+  // the site rather than a second one invented here.
   return `
-    <nav class="seo-page-index" aria-label="${attr(heading)}">
-      <span class="seo-page-index-label">${esc(heading)}</span>
+    <nav class="page-toc" aria-label="${attr(heading)}">
+      <span class="page-toc-label">${esc(heading)}</span>
       ${links}
     </nav>`;
 }
@@ -2672,6 +2699,7 @@ function discomPage(state, discom, lang = 'en') {
   const aboutBlock = aboutDiscomHtml(state, discom, fy);
   const faqBlock = faqHtml(faqs, 'en', { id: 'faq' });
   const indexHtml = pageIndexHtml([
+    aboutBlock && ['#about', `About ${discom.name}`],
     ['#current-tariff', 'Tariff schedule'],
     ['#calculate', 'Bill calculator'],
     fppaBlock && ['#latest-fppa', `Latest ${surchargeTerm(state).code}`],
@@ -2681,7 +2709,6 @@ function discomPage(state, discom, lang = 'en') {
     servicesBlock && ['#consumer-services', 'Consumer services'],
     guidesBlock && ['#guides', 'Guides'],
     sourcesBlock && ['#sources', 'Sources'],
-    aboutBlock && ['#about', `About ${discom.name}`],
   ]);
 
   const body = `
@@ -2705,14 +2732,16 @@ function discomPage(state, discom, lang = 'en') {
     ${src ? `<p><a class="tariff-source" href="${attr(src)}" target="_blank" rel="noopener">Official ${esc(discom.name)} source ↗</a></p>` : ''}
     ${indexHtml}
 
-    <!-- Page order, deliberately, in four movements:
+    <!-- Page order:
+         0. who this is     — the utility, where it supplies, how it is rated
          1. the answer      — the slab tables the H1 and title promise, then the calculator
          2. what moves it   — surcharge, worked examples, what each bill line means
          3. what to do      — FAQ, official services, guides
-         4. provenance      — sources, about the utility, its siblings
-         The tables used to sit eighth, roughly four screens down, behind a credit-rating
-         widget and two surcharge sections that describe an adjustment to a rate the reader
-         had not been shown yet. -->
+         4. provenance      — sources, sibling DISCOMs
+         The tables used to sit eighth, roughly four screens down, behind two surcharge
+         sections describing an adjustment to a rate the reader had not been shown yet. -->
+    ${aboutBlock}
+
     <section class="seo-section" id="current-tariff">
       <h2>Current ${esc(discom.name)} tariff (${esc(fy)})</h2>
       ${sharedNote}
@@ -2729,7 +2758,6 @@ function discomPage(state, discom, lang = 'en') {
     ${guidesBlock}
 
     ${sourcesBlock}
-    ${aboutBlock}
     ${siblingHtml}
     <p class="seo-disclaimer">Figures are provisional estimates built on publicly available ${esc(state)} tariff orders. Always verify against your official ${esc(discom.name)} bill — rates vary by sub-category, slab and city.</p>
   </section>`;
@@ -2906,13 +2934,13 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
   const aboutBlock = aboutDiscomHtml(state, discom, fy, lang);
   const faqBlock = faqHtml(faqs, lang, { id: 'faq' });
   const indexHtml = pageIndexHtml([
+    aboutBlock && ['#about', T(lang, { hi: `${discom.name} के बारे में`, mr: `${discom.name} विषयी`, ta: `${discom.name} பற்றி`, en: `About ${discom.name}` })],
     ['#current-tariff', T(lang, { hi: 'टैरिफ अनुसूची', mr: 'टॅरिफ अनुसूची', ta: 'கட்டண அட்டவணை', en: 'Tariff schedule' })],
     ['#calculate', T(lang, { hi: 'बिल कैलकुलेटर', mr: 'बिल कॅल्क्युलेटर', ta: 'பில் கணிப்பான்', en: 'Bill calculator' })],
     examplesBlock && ['#common-calculations', T(lang, { hi: 'बिल उदाहरण', mr: 'बिल उदाहरणे', ta: 'பில் எடுத்துக்காட்டுகள்', en: 'Bill examples' })],
     linesBlock && ['#bill-lines', T(lang, { hi: 'बिल की लाइनें', mr: 'बिलाच्या ओळी', ta: 'பில் வரிகள்', en: 'Bill lines explained' })],
     faqBlock && ['#faq', T(lang, { hi: 'सवाल-जवाब', mr: 'प्रश्नोत्तरे', ta: 'கேள்வி-பதில்', en: 'FAQ' })],
     guidesBlock && ['#guides', T(lang, { hi: 'गाइड', mr: 'मार्गदर्शक', ta: 'வழிகாட்டிகள்', en: 'Guides' })],
-    aboutBlock && ['#about', T(lang, { hi: `${discom.name} के बारे में`, mr: `${discom.name} विषयी`, ta: `${discom.name} பற்றி`, en: `About ${discom.name}` })],
   ], lang);
 
   const body = `
@@ -2939,8 +2967,11 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
     ${indexHtml}
     ${discomServiceLinksHtml(state, discom, lang)}
 
-    <!-- Same four movements as the English page — answer, what moves it, what to do,
-         provenance — so a reader switching language does not land on a different page. -->
+    <!-- Same movements as the English page — who this is, the answer, what moves it, what
+         to do, provenance — so a reader switching language does not land on a different
+         page. -->
+    ${aboutBlock}
+
     <section class="seo-section" id="current-tariff">
       <h2>${schedHead}</h2>
       ${sharedNote}
@@ -2956,8 +2987,6 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
     ${faqBlock}
     ${glossaryLinksHtml(discom, lang, state)}
     ${guidesBlock}
-
-    ${aboutBlock}
     ${siblingHtml}
     <p class="seo-disclaimer">${disclaimer}</p>
   </section>`;

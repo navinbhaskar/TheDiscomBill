@@ -246,91 +246,40 @@
         <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
         <div>
           <h3>LT Domestic (DS)</h3>
-          
         </div>
       </header>
-      <div class="tariff-rows">
-      <div class="tariff-rows-head" aria-hidden="true">
-        <span>आपूर्ति प्रकार</span>
-        <span class="num">फिक्स्ड चार्ज</span>
-        <span class="num">ऊर्जा दर<small>प्रति यूनिट</small></span>
-        <span></span>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">कोड</th><th scope="col">आपूर्ति प्रकार</th><th class="num" scope="col">ऊर्जा शुल्क</th><th class="num" scope="col">फिक्स्ड चार्ज</th><th class="num" scope="col">ड्यूटी व अन्य</th></tr></thead>
+          <tbody>
+        <tr id="rate-domestic-kutir-jyoti">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">Kutir Jyoti (BPL)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹7.42<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹20</strong> <span class="tx-muted">/ माह (स्थिर)</span></td>
+          <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty</span><b>6%</b></li></ul></td>
+        </tr>
+        <tr id="rate-domestic-ds1">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">DS-I (Rural)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹7.42<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹40</strong> <span class="tx-muted">/ kW / माह</span></td>
+          <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty</span><b>6%</b></li></ul></td>
+        </tr>
+        <tr id="rate-domestic-ds2">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">DS-II (Urban / demand based)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹7.42<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹80</strong> <span class="tx-muted">/ kW / माह</span></td>
+          <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty</span><b>6%</b></li></ul></td>
+        </tr></tbody>
+        </table>
       </div>
-      <details class="tariff-supplytype" id="rate-domestic-kutir-jyoti" open>
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">Kutir Jyoti (BPL)</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹20<span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹7.42</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Below-poverty-line households under the Kutir Jyoti scheme. Flat ₹7.42/unit with a fixed charge of ₹20 per connection per month.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹20</strong> <span class="tx-muted">/ माह (स्थिर)</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹7.42<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
-      </div>
-      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty</span><strong>6%</strong></li></ul></div>
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-ds1">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">DS-I (Rural)</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹40<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹7.42</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Rural domestic supply. Flat ₹7.42/unit; fixed charge ₹40/kW/month on sanctioned load.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹40</strong> <span class="tx-muted">/ kW / माह</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹7.42<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
-      </div>
-      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty</span><strong>6%</strong></li></ul></div>
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-ds2">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">DS-II (Urban / demand based)</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹80<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹7.42</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Urban domestic supply, demand based. Flat ₹7.42/unit; fixed charge ₹80/kW/month on sanctioned load.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹80</strong> <span class="tx-muted">/ kW / माह</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹7.42<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
-      </div>
-      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty</span><strong>6%</strong></li></ul></div>
-    </div>
-        </div>
-      </details></div>
+      
+      <dl class="tariff-notes">
+        <p class="tariff-notes-label">कौन-सी दर किस पर लागू होती है</p>
+        <div><dt>Kutir Jyoti (BPL)</dt><dd>Below-poverty-line households under the Kutir Jyoti scheme. Flat ₹7.42/unit with a fixed charge of ₹20 per connection per month.</dd></div><div><dt>DS-I (Rural)</dt><dd>Rural domestic supply. Flat ₹7.42/unit; fixed charge ₹40/kW/month on sanctioned load.</dd></div><div><dt>DS-II (Urban / demand based)</dt><dd>Urban domestic supply, demand based. Flat ₹7.42/unit; fixed charge ₹80/kW/month on sanctioned load.</dd></div>
+      </dl>
       
     </article>
     <article class="tariff-card">
@@ -338,91 +287,40 @@
         <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
         <div>
           <h3>LT Non-Domestic (NDS)</h3>
-          
         </div>
       </header>
-      <div class="tariff-rows">
-      <div class="tariff-rows-head" aria-hidden="true">
-        <span>आपूर्ति प्रकार</span>
-        <span class="num">फिक्स्ड चार्ज</span>
-        <span class="num">ऊर्जा दर<small>प्रति यूनिट</small></span>
-        <span></span>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">कोड</th><th scope="col">आपूर्ति प्रकार</th><th class="num" scope="col">ऊर्जा शुल्क</th><th class="num" scope="col">फिक्स्ड चार्ज</th><th class="num" scope="col">ड्यूटी व अन्य</th></tr></thead>
+          <tbody>
+        <tr id="rate-commercial-nds1">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">NDS-I (Rural, metered)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹7.79<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹60</strong> <span class="tx-muted">/ kVA / माह</span></td>
+          <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty</span><b>6%</b></li></ul></td>
+        </tr>
+        <tr id="rate-commercial-nds2-small">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">NDS-II (contract load up to 0.5 kW)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹7.73<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹150</strong> <span class="tx-muted">/ माह (स्थिर)</span></td>
+          <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty</span><b>6%</b></li></ul></td>
+        </tr>
+        <tr id="rate-commercial-nds2">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">NDS-II (above 0.5 kW, up to 70 kW)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹7.73<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹300</strong> <span class="tx-muted">/ kVA / माह</span></td>
+          <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty</span><b>6%</b></li></ul></td>
+        </tr></tbody>
+        </table>
       </div>
-      <details class="tariff-supplytype" id="rate-commercial-nds1" open>
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">NDS-I (Rural, metered)</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹60<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹7.79</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Rural non-domestic/commercial supply. Billed on kVA demand and kVAh energy: flat ₹7.79/kVAh, fixed ₹60/kVA/month. A poor power factor raises the bill directly.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹60</strong> <span class="tx-muted">/ kVA / माह</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹7.79<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
-      </div>
-      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty</span><strong>6%</strong></li></ul></div>
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-commercial-nds2-small">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">NDS-II (contract load up to 0.5 kW)</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹150<span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹7.73</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Small non-domestic connections up to 0.5 kW contract load — kiosks, small shops. Flat ₹7.73/unit; fixed charge ₹150 per connection per month (cut from ₹200 in the FY 2026-27 order).</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹150</strong> <span class="tx-muted">/ माह (स्थिर)</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹7.73<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
-      </div>
-      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty</span><strong>6%</strong></li></ul></div>
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-commercial-nds2">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">NDS-II (above 0.5 kW, up to 70 kW)</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹300<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹7.73</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Non-domestic/commercial supply above 0.5 kW and up to 70 kW contract demand. Billed on kVA demand and kVAh energy: flat ₹7.73/kVAh, fixed ₹300/kVA/month.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹300</strong> <span class="tx-muted">/ kVA / माह</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹7.73<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
-      </div>
-      <div class="tariff-field"><div class="tariff-field-label">अतिरिक्त शुल्क</div><ul class="tariff-addl"><li><span>Electricity Duty</span><strong>6%</strong></li></ul></div>
-    </div>
-        </div>
-      </details></div>
+      
+      <dl class="tariff-notes">
+        <p class="tariff-notes-label">कौन-सी दर किस पर लागू होती है</p>
+        <div><dt>NDS-I (Rural, metered)</dt><dd>Rural non-domestic/commercial supply. Billed on kVA demand and kVAh energy: flat ₹7.79/kVAh, fixed ₹60/kVA/month. A poor power factor raises the bill directly.</dd></div><div><dt>NDS-II (contract load up to 0.5 kW)</dt><dd>Small non-domestic connections up to 0.5 kW contract load — kiosks, small shops. Flat ₹7.73/unit; fixed charge ₹150 per connection per month (cut from ₹200 in the FY 2026-27 order).</dd></div><div><dt>NDS-II (above 0.5 kW, up to 70 kW)</dt><dd>Non-domestic/commercial supply above 0.5 kW and up to 70 kW contract demand. Billed on kVA demand and kVAh energy: flat ₹7.73/kVAh, fixed ₹300/kVA/month.</dd></div>
+      </dl>
       
     </article></div>
     </section>

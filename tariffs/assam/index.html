@@ -245,91 +245,40 @@
         <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
         <div>
           <h3>LT Domestic</h3>
-          
         </div>
       </header>
-      <div class="tariff-rows">
-      <div class="tariff-rows-head" aria-hidden="true">
-        <span>Supply type</span>
-        <span class="num">Fixed charge</span>
-        <span class="num">Energy rate<small>per unit</small></span>
-        <span></span>
-      </div>
-      <details class="tariff-supplytype" id="rate-domestic-domestic-a" open>
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">Domestic-A — above 0.5 kW to below 5 kW</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹70<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹4.25<span class="ts-dash">–</span>8.19</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">The ordinary household category. Five telescopic slabs on a ₹70/kW/month fixed charge, with the Government of Assam subsidy already applied.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹70</strong> <span class="tx-muted">/ kW / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 120 <span class="tx-muted">units</span></td><td class="num">₹4.25<span class="tx-muted">/unit</span></td></tr><tr><td>120 – 240 <span class="tx-muted">units</span></td><td class="num">₹6.30<span class="tx-muted">/unit</span></td></tr><tr><td>240 – 300 <span class="tx-muted">units</span></td><td class="num">₹7.20<span class="tx-muted">/unit</span></td></tr><tr><td>300 – 500 <span class="tx-muted">units</span></td><td class="num">₹7.40<span class="tx-muted">/unit</span></td></tr><tr><td>Above 500 <span class="tx-muted">units</span></td><td class="num">₹8.19<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-domestic-b">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">Domestic-B — 5 kW to 30 kW</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹70<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹6.75<span class="ts-dash">–</span>7.74</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Larger domestic connections. The underlying rate is a flat ₹7.74 at every slab; only the size of the State subsidy changes, so the effective rate rises from ₹6.75 to ₹7.74.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹70</strong> <span class="tx-muted">/ kW / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 300 <span class="tx-muted">units</span></td><td class="num">₹6.75<span class="tx-muted">/unit</span></td></tr><tr><td>300 – 500 <span class="tx-muted">units</span></td><td class="num">₹6.95<span class="tx-muted">/unit</span></td></tr><tr><td>Above 500 <span class="tx-muted">units</span></td><td class="num">₹7.74<span class="tx-muted">/unit</span></td></tr></tbody></table>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <tbody>
+        <tr id="rate-domestic-domestic-a">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">Domestic-A — above 0.5 kW to below 5 kW</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 120 <span class="tx-muted">units</span></span><b class="num">₹4.25<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">120 – 240 <span class="tx-muted">units</span></span><b class="num">₹6.30<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">240 – 300 <span class="tx-muted">units</span></span><b class="num">₹7.20<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">300 – 500 <span class="tx-muted">units</span></span><b class="num">₹7.40<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 500 <span class="tx-muted">units</span></span><b class="num">₹8.19<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹70</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-domestic-domestic-b">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">Domestic-B — 5 kW to 30 kW</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 300 <span class="tx-muted">units</span></span><b class="num">₹6.75<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">300 – 500 <span class="tx-muted">units</span></span><b class="num">₹6.95<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 500 <span class="tx-muted">units</span></span><b class="num">₹7.74<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹70</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-domestic-jeevan-dhara">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">Jeevan Dhara — 0.5 kW and 1.5 kWh/day</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹3.35<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹40</strong> <span class="tx-muted">/ month (flat)</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr></tbody>
+        </table>
       </div>
       
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-jeevan-dhara">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">Jeevan Dhara — 0.5 kW and 1.5 kWh/day</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹40<span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹3.35</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">The lifeline category: ₹40 per connection per month (not per kW) and an effective ₹3.35/unit. Consume more than 45 units a month for two consecutive months and APDCL moves you to Domestic-A.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹40</strong> <span class="tx-muted">/ month (flat)</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹3.35<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details></div>
+      <dl class="tariff-notes">
+        <p class="tariff-notes-label">Who each rate applies to</p>
+        <div><dt>Domestic-A — above 0.5 kW to below 5 kW</dt><dd>The ordinary household category. Five telescopic slabs on a ₹70/kW/month fixed charge, with the Government of Assam subsidy already applied.</dd></div><div><dt>Domestic-B — 5 kW to 30 kW</dt><dd>Larger domestic connections. The underlying rate is a flat ₹7.74 at every slab; only the size of the State subsidy changes, so the effective rate rises from ₹6.75 to ₹7.74.</dd></div><div><dt>Jeevan Dhara — 0.5 kW and 1.5 kWh/day</dt><dd>The lifeline category: ₹40 per connection per month (not per kW) and an effective ₹3.35/unit. Consume more than 45 units a month for two consecutive months and APDCL moves you to Domestic-A.</dd></div>
+      </dl>
       <p class="tariff-card-note">ℹ️ Assam splits domestic supply by sanctioned load first, then by consumption. Below 5 kW you are Domestic-A with five telescopic slabs; from 5 kW you are Domestic-B, where the underlying rate never changes and only the subsidy shrinks. Both pay ₹70/kW/month. The rates here are the effective rates after the Government of Assam's subsidy, which is what your bill charges. The underlying full-cost tariff is higher — ₹5.99 on the first slab against an effective ₹4.25 — and the difference is a State commitment rather than a permanent feature of the tariff. AERC has also introduced an optional Time-of-Day tariff for Domestic A and B — a rebate during solar hours and a surcharge in the evening peak — which is not modelled here.</p>
     </article>
     <article class="tariff-card">
@@ -337,116 +286,47 @@
         <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
         <div>
           <h3>LT Commercial &amp; General Purpose</h3>
-          
         </div>
       </header>
-      <div class="tariff-rows">
-      <div class="tariff-rows-head" aria-hidden="true">
-        <span>Supply type</span>
-        <span class="num">Fixed charge</span>
-        <span class="num">Energy rate<small>per unit</small></span>
-        <span></span>
-      </div>
-      <details class="tariff-supplytype" id="rate-commercial-commercial" open>
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">LT Commercial — above 0.5 kW to 30 kW</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹150<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹8.94</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">A single unsubsidised rate of ₹8.94 on all units, on a ₹150/kW/month fixed charge.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹150</strong> <span class="tx-muted">/ kW / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹8.94<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-commercial-general-purpose">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">LT General Purpose — up to 30 kW</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹165<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹7.99</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">₹7.99/unit on the highest LT fixed charge in the schedule, ₹165/kW/month.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹165</strong> <span class="tx-muted">/ kW / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹7.99<span class="tx-muted">/unit</span></td></tr></tbody></table>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <tbody>
+        <tr id="rate-commercial-commercial">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">LT Commercial — above 0.5 kW to 30 kW</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹8.94<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹150</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-commercial-general-purpose">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">LT General Purpose — up to 30 kW</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹7.99<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹165</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-commercial-schools">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">Non-commercial / non-domestic — Government schools</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹7.89<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹90</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-commercial-ev">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">LT Electric Vehicle charging station</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹6.19<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹65</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr></tbody>
+        </table>
       </div>
       
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-commercial-schools">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">Non-commercial / non-domestic — Government schools</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹90<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹7.89</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Government primary, secondary and higher secondary schools: ₹7.89/unit on ₹90/kW/month.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹90</strong> <span class="tx-muted">/ kW / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹7.89<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-commercial-ev">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">LT Electric Vehicle charging station</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹65<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹6.19</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">₹6.19/unit on ₹65/kW/month — the cheapest non-agricultural LT rate in the schedule.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹65</strong> <span class="tx-muted">/ kW / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹6.19<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details></div>
+      <dl class="tariff-notes">
+        <p class="tariff-notes-label">Who each rate applies to</p>
+        <div><dt>LT Commercial — above 0.5 kW to 30 kW</dt><dd>A single unsubsidised rate of ₹8.94 on all units, on a ₹150/kW/month fixed charge.</dd></div><div><dt>LT General Purpose — up to 30 kW</dt><dd>₹7.99/unit on the highest LT fixed charge in the schedule, ₹165/kW/month.</dd></div><div><dt>Non-commercial / non-domestic — Government schools</dt><dd>Government primary, secondary and higher secondary schools: ₹7.89/unit on ₹90/kW/month.</dd></div><div><dt>LT Electric Vehicle charging station</dt><dd>₹6.19/unit on ₹65/kW/month — the cheapest non-agricultural LT rate in the schedule.</dd></div>
+      </dl>
       <p class="tariff-card-note">ℹ️ None of the non-domestic LT categories are slabbed — each is a single rate on every unit, and none carries a State subsidy. What separates them is the fixed charge, which ranges from ₹65/kW for an EV charging station to ₹165/kW for general purpose supply. Time-of-Day tariff is optional for LT Commercial, General Purpose and EV charging and is not modelled here.</p>
     </article>
     <article class="tariff-card">
@@ -454,21 +334,22 @@
         <span class="tariff-card-icon tariff-card-icon-agriculture" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M12 21V8"/><path d="M12 14.5c-4.2 0-7.2-2.7-7.2-7.7 4.5 0 7.2 3.1 7.2 7.7Z"/><path d="M12 12.5c4.2 0 7.2-2.7 7.2-7.7-4.5 0-7.2 3.1-7.2 7.7Z"/><path d="M7 20h10"/><path d="M9 17.5h6"/></svg></span>
         <div>
           <h3>LT Agriculture — up to 30 kW</h3>
-          
         </div>
       </header>
-      <div id="rate-agricultural">
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹65</strong> <span class="tx-muted">/ kW / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹6.09<span class="tx-muted">/unit</span></td></tr></tbody></table>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <tbody>
+        <tr id="rate-agricultural">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">LT Agriculture — up to 30 kW</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹6.09<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹65</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr></tbody>
+        </table>
       </div>
       
-    </div></div>
       <p class="tariff-card-note">ℹ️ A flat ₹6.09/unit on ₹65/kW/month, with no State subsidy applied to the tariff.</p>
     </article></div>
     </section>

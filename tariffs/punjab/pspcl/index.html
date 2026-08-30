@@ -192,19 +192,52 @@
     <p class="guide-meta">Tariffs last updated: 27 August 2026</p>
     <p><a class="tariff-source" href="https://www.pspcl.in" target="_blank" rel="noopener">Official PSPCL source ↗</a></p>
     
-    <nav class="seo-page-index" aria-label="On this page">
-      <span class="seo-page-index-label">On this page</span>
-      <a href="#current-tariff">Tariff schedule</a><a href="#calculate">Bill calculator</a><a href="#latest-fppa">Latest FPPA</a><a href="#common-calculations">Bill examples</a><a href="#bill-lines">Bill lines explained</a><a href="#faq">FAQ</a><a href="#consumer-services">Consumer services</a><a href="#guides">Guides</a><a href="#sources">Sources</a><a href="#about">About PSPCL</a>
+    <nav class="page-toc" aria-label="On this page">
+      <span class="page-toc-label">On this page</span>
+      <a href="#about">About PSPCL</a><a href="#current-tariff">Tariff schedule</a><a href="#calculate">Bill calculator</a><a href="#latest-fppa">Latest FPPA</a><a href="#common-calculations">Bill examples</a><a href="#bill-lines">Bill lines explained</a><a href="#faq">FAQ</a><a href="#consumer-services">Consumer services</a><a href="#guides">Guides</a><a href="#sources">Sources</a>
     </nav>
 
-    <!-- Page order, deliberately, in four movements:
+    <!-- Page order:
+         0. who this is     — the utility, where it supplies, how it is rated
          1. the answer      — the slab tables the H1 and title promise, then the calculator
          2. what moves it   — surcharge, worked examples, what each bill line means
          3. what to do      — FAQ, official services, guides
-         4. provenance      — sources, about the utility, its siblings
-         The tables used to sit eighth, roughly four screens down, behind a credit-rating
-         widget and two surcharge sections that describe an adjustment to a rate the reader
-         had not been shown yet. -->
+         4. provenance      — sources, sibling DISCOMs
+         The tables used to sit eighth, roughly four screens down, behind two surcharge
+         sections describing an adjustment to a rate the reader had not been shown yet. -->
+    
+    <section class="seo-section" id="about">
+      <h2>About PSPCL</h2>
+      
+    <div class="seo-subsection">
+      <h3>Areas served by PSPCL</h3>
+      <p>PSPCL (Punjab State Power Corporation Ltd.) distributes electricity across Entire Punjab, serving 1 key district and town including excl. Chandigarh.</p>
+      <div class="seo-area-chips"><span>excl. Chandigarh</span></div>
+    </div>
+      
+    <div class="seo-subsection">
+      <h3>PSPCL at a glance</h3>
+      <table class="seo-facts"><tbody><tr><th>Distribution company</th><td>Punjab State Power Corporation Ltd.</td></tr><tr><th>Short name</th><td>PSPCL</td></tr><tr><th>State / UT</th><td>Punjab</td></tr><tr><th>Districts / cities served</th><td>1+ — excl. Chandigarh</td></tr><tr><th>Rates status</th><td>Based on the 2026-27 tariff order (latest published data we have)</td></tr><tr><th>Domestic energy rate</th><td>₹3.85 – ₹7.05 per unit</td></tr><tr><th>Official website</th><td><a href="https://www.pspcl.in" target="_blank" rel="noopener">www.pspcl.in ↗</a></td></tr></tbody></table>
+    </div>
+      
+    <div class="seo-subsection">
+      <h3>How PSPCL is rated</h3>
+      <div class="rating-block">
+        <div class="rating-grade" data-grade="A+">
+          <span class="rating-grade-value">A+</span>
+          <span class="rating-grade-label">Integrated Rating · FY 2024-25</span>
+        </div>
+        <div class="rating-detail">
+          <p>PSPCL scored 89.22 and ranks 11 of 54 state and private distribution utilities — up a grade from the 13th report.</p>
+          
+          <p class="rating-scope">The rating scores the utility’s financial and operational performance — AT&amp;C losses, billing and collection efficiency, the gap between what supply costs and what it earns, and the regulatory support the utility gets. It is not a measure of supply reliability or customer service, and it does not affect your tariff.</p>
+          <p class="rating-src"><a href="https://web.archive.org/web/20260421013237/https://www.pfcindia.co.in/ensite/DocumentRepository/ckfinder/files/GoI_Initiatives/Annual_Integrated_Ratings_of_State_DISCOMs/14th_Annual_Integrated%20Rating%20and%20Ranking%20of%20Power%20Distribution_Utilities.pdf" target="_blank" rel="noopener">14th Annual Integrated Rating &amp; Ranking of Power Distribution Utilities ↗</a><br>
+          <span class="guide-meta">Power Finance Corporation Ltd (PFC), for the Ministry of Power · published 2026-01-23</span></p>
+        </div>
+      </div>
+    </div>
+    </section>
+
     <section class="seo-section" id="current-tariff">
       <h2>Current PSPCL tariff (2026-27)</h2>
       
@@ -214,141 +247,54 @@
         <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
         <div>
           <h3>DS (Domestic Supply)</h3>
-          
         </div>
       </header>
-      <div class="tariff-rows">
-      <div class="tariff-rows-head" aria-hidden="true">
-        <span>Supply type</span>
-        <span class="num">Fixed charge</span>
-        <span class="num">Energy rate<small>per unit</small></span>
-        <span></span>
-      </div>
-      <details class="tariff-supplytype" id="rate-domestic-ds2" open>
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">DS — sanctioned load up to 2 kW</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹50<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹3.85<span class="ts-dash">–</span>7.05</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Energy charge cut from ₹5.40 to ₹3.85/unit for the first 300 units in the FY 2026-27 order. Fixed charge ₹50/kW/month.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹50</strong> <span class="tx-muted">/ kW / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 300 <span class="tx-muted">units</span></td><td class="num">₹3.85<span class="tx-muted">/unit</span></td></tr><tr><td>Above 300 <span class="tx-muted">units</span></td><td class="num">₹7.05<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-ds7">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">DS — above 2 kW and up to 7 kW</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹70<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹4.25<span class="ts-dash">–</span>7.05</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">The band most Punjab households sit in. First 300 units at ₹4.25 (down from ₹5.72), the rest at ₹7.05. Fixed charge ₹70/kW/month, down from ₹75.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹70</strong> <span class="tx-muted">/ kW / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 300 <span class="tx-muted">units</span></td><td class="num">₹4.25<span class="tx-muted">/unit</span></td></tr><tr><td>Above 300 <span class="tx-muted">units</span></td><td class="num">₹7.05<span class="tx-muted">/unit</span></td></tr></tbody></table>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <tbody>
+        <tr id="rate-domestic-ds2">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">DS — sanctioned load up to 2 kW</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 300 <span class="tx-muted">units</span></span><b class="num">₹3.85<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 300 <span class="tx-muted">units</span></span><b class="num">₹7.05<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹50</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-domestic-ds7">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">DS — above 2 kW and up to 7 kW</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 300 <span class="tx-muted">units</span></span><b class="num">₹4.25<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 300 <span class="tx-muted">units</span></span><b class="num">₹7.05<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹70</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-domestic-ds20">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">DS — above 7 kW and up to 20 kW</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 300 <span class="tx-muted">units</span></span><b class="num">₹5.00<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 300 <span class="tx-muted">units</span></span><b class="num">₹7.05<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹100</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-domestic-ds100">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">DS — above 20 kW/kVA and up to 100 kVA</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹6.20<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹130</strong> <span class="tx-muted">/ kVA / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-domestic-ds100p">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">DS — demand above 100 kVA</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹6.40<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹140</strong> <span class="tx-muted">/ kVA / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr></tbody>
+        </table>
       </div>
       
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-ds20">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">DS — above 7 kW and up to 20 kW</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹100<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹5.00<span class="ts-dash">–</span>7.05</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">First 300 units at ₹5.00 (down from ₹6.44), the rest at ₹7.05. Fixed charge ₹100/kW/month, down from ₹110.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹100</strong> <span class="tx-muted">/ kW / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 300 <span class="tx-muted">units</span></td><td class="num">₹5.00<span class="tx-muted">/unit</span></td></tr><tr><td>Above 300 <span class="tx-muted">units</span></td><td class="num">₹7.05<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-ds100">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">DS — above 20 kW/kVA and up to 100 kVA</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹130<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹6.20</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Flat rate on all units, billed on kVAh. No consumption slabs at this size.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹130</strong> <span class="tx-muted">/ kVA / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹6.20<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-ds100p">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">DS — demand above 100 kVA</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹140<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹6.40</span>
-        </summary>
-        <div class="tariff-st-body">
-          
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹140</strong> <span class="tx-muted">/ kVA / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹6.40<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details></div>
+      <dl class="tariff-notes">
+        <p class="tariff-notes-label">Who each rate applies to</p>
+        <div><dt>DS — sanctioned load up to 2 kW</dt><dd>Energy charge cut from ₹5.40 to ₹3.85/unit for the first 300 units in the FY 2026-27 order. Fixed charge ₹50/kW/month.</dd></div><div><dt>DS — above 2 kW and up to 7 kW</dt><dd>The band most Punjab households sit in. First 300 units at ₹4.25 (down from ₹5.72), the rest at ₹7.05. Fixed charge ₹70/kW/month, down from ₹75.</dd></div><div><dt>DS — above 7 kW and up to 20 kW</dt><dd>First 300 units at ₹5.00 (down from ₹6.44), the rest at ₹7.05. Fixed charge ₹100/kW/month, down from ₹110.</dd></div><div><dt>DS — above 20 kW/kVA and up to 100 kVA</dt><dd>Flat rate on all units, billed on kVAh. No consumption slabs at this size.</dd></div>
+      </dl>
       <p class="tariff-card-note">ℹ️ Punjab picks the domestic band by sanctioned load, not by consumption, and the slabs inside a band are telescopic — the first 300 units at the band's own rate, everything above at ₹7.05. PSERC reduced rates across every band for FY 2026-27. The State's 300 free units a month still apply on top, so many domestic bills settle at zero. Statutory levies are notified by the State Government rather than by PSERC. Electricity duty is included here at the rural rate of 15%; if your connection is in a municipal area the rate is 13%, so your bill will be about two points lower than this estimate. Cow cess and the infrastructure development fee are still not modelled, so your actual bill will carry a little more.</p>
     </article>
     <article class="tariff-card">
@@ -356,141 +302,54 @@
         <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
         <div>
           <h3>NRS (Non-Residential Supply / Commercial)</h3>
-          
         </div>
       </header>
-      <div class="tariff-rows">
-      <div class="tariff-rows-head" aria-hidden="true">
-        <span>Supply type</span>
-        <span class="num">Fixed charge</span>
-        <span class="num">Energy rate<small>per unit</small></span>
-        <span></span>
-      </div>
-      <details class="tariff-supplytype" id="rate-commercial-nrs7" open>
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">NRS — sanctioned load up to 7 kW</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹70<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹6.10<span class="ts-dash">–</span>7.10</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Shops, offices and other non-residential connections up to 7 kW. First 500 units at ₹6.10 (down from ₹6.89), the rest at ₹7.10. Fixed charge ₹70/kW/month.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹70</strong> <span class="tx-muted">/ kW / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 500 <span class="tx-muted">units</span></td><td class="num">₹6.10<span class="tx-muted">/unit</span></td></tr><tr><td>Above 500 <span class="tx-muted">units</span></td><td class="num">₹7.10<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-commercial-nrs20">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">NRS — above 7 kW and up to 20 kW</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹100<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹6.10<span class="ts-dash">–</span>7.10</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Same energy rates as the ≤7 kW band; the difference is the fixed charge, ₹100/kW/month (down from ₹110).</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹100</strong> <span class="tx-muted">/ kW / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 500 <span class="tx-muted">units</span></td><td class="num">₹6.10<span class="tx-muted">/unit</span></td></tr><tr><td>Above 500 <span class="tx-muted">units</span></td><td class="num">₹7.10<span class="tx-muted">/unit</span></td></tr></tbody></table>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <tbody>
+        <tr id="rate-commercial-nrs7">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">NRS — sanctioned load up to 7 kW</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 500 <span class="tx-muted">units</span></span><b class="num">₹6.10<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 500 <span class="tx-muted">units</span></span><b class="num">₹7.10<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹70</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-commercial-nrs20">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">NRS — above 7 kW and up to 20 kW</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 500 <span class="tx-muted">units</span></span><b class="num">₹6.10<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 500 <span class="tx-muted">units</span></span><b class="num">₹7.10<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹100</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-commercial-nrs100">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">NRS — above 20 kW/kVA and up to 100 kVA</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹6.25<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹130</strong> <span class="tx-muted">/ kVA / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-commercial-nrs100p">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">NRS — demand above 100 kVA</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹6.45<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹140</strong> <span class="tx-muted">/ kVA / month</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-commercial-ev">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">NRS — EV Charging Stations</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹5.00<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹0</strong> <span class="tx-muted">/ month (flat)</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr></tbody>
+        </table>
       </div>
       
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-commercial-nrs100">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">NRS — above 20 kW/kVA and up to 100 kVA</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹130<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹6.25</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Flat rate on all units, billed on kVAh.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹130</strong> <span class="tx-muted">/ kVA / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹6.25<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-commercial-nrs100p">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">NRS — demand above 100 kVA</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹140<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹6.45</span>
-        </summary>
-        <div class="tariff-st-body">
-          
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹140</strong> <span class="tx-muted">/ kVA / month</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹6.45<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-commercial-ev">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">NRS — EV Charging Stations</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹0<span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹5.00</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Cut from ₹6.28 to ₹5.00/kVAh in the FY 2026-27 order, with no fixed charge.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹0</strong> <span class="tx-muted">/ month (flat)</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>Above 0 <span class="tx-muted">units</span></td><td class="num">₹5.00<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details></div>
+      <dl class="tariff-notes">
+        <p class="tariff-notes-label">Who each rate applies to</p>
+        <div><dt>NRS — sanctioned load up to 7 kW</dt><dd>Shops, offices and other non-residential connections up to 7 kW. First 500 units at ₹6.10 (down from ₹6.89), the rest at ₹7.10. Fixed charge ₹70/kW/month.</dd></div><div><dt>NRS — above 7 kW and up to 20 kW</dt><dd>Same energy rates as the ≤7 kW band; the difference is the fixed charge, ₹100/kW/month (down from ₹110).</dd></div><div><dt>NRS — above 20 kW/kVA and up to 100 kVA</dt><dd>Flat rate on all units, billed on kVAh.</dd></div><div><dt>NRS — EV Charging Stations</dt><dd>Cut from ₹6.28 to ₹5.00/kVAh in the FY 2026-27 order, with no fixed charge.</dd></div>
+      </dl>
       <p class="tariff-card-note">ℹ️ The NRS slab boundary is 500 units, not the 300 used for domestic. Above 20 kW the schedule switches to kVAh billing, so power factor feeds straight into the energy charge. Statutory levies notified by the State Government are not included here.</p>
     </article></div>
     </section>
@@ -657,38 +516,6 @@
         
         <tr><th>Page updated</th><td>30 August 2026</td></tr>
       </tbody></table>
-    </section>
-    
-    <section class="seo-section" id="about">
-      <h2>About PSPCL</h2>
-      
-    <div class="seo-subsection">
-      <h3>Areas served by PSPCL</h3>
-      <p>PSPCL (Punjab State Power Corporation Ltd.) distributes electricity across Entire Punjab, serving 1 key district and town including excl. Chandigarh.</p>
-      <div class="seo-area-chips"><span>excl. Chandigarh</span></div>
-    </div>
-      
-    <div class="seo-subsection">
-      <h3>PSPCL at a glance</h3>
-      <table class="seo-facts"><tbody><tr><th>Distribution company</th><td>Punjab State Power Corporation Ltd.</td></tr><tr><th>Short name</th><td>PSPCL</td></tr><tr><th>State / UT</th><td>Punjab</td></tr><tr><th>Districts / cities served</th><td>1+ — excl. Chandigarh</td></tr><tr><th>Rates status</th><td>Based on the 2026-27 tariff order (latest published data we have)</td></tr><tr><th>Domestic energy rate</th><td>₹3.85 – ₹7.05 per unit</td></tr><tr><th>Official website</th><td><a href="https://www.pspcl.in" target="_blank" rel="noopener">www.pspcl.in ↗</a></td></tr></tbody></table>
-    </div>
-      
-    <div class="seo-subsection">
-      <h3>How PSPCL is rated</h3>
-      <div class="rating-block">
-        <div class="rating-grade" data-grade="A+">
-          <span class="rating-grade-value">A+</span>
-          <span class="rating-grade-label">Integrated Rating · FY 2024-25</span>
-        </div>
-        <div class="rating-detail">
-          <p>PSPCL scored 89.22 and ranks 11 of 54 state and private distribution utilities — up a grade from the 13th report.</p>
-          
-          <p class="rating-scope">The rating scores the utility’s financial and operational performance — AT&amp;C losses, billing and collection efficiency, the gap between what supply costs and what it earns, and the regulatory support the utility gets. It is not a measure of supply reliability or customer service, and it does not affect your tariff.</p>
-          <p class="rating-src"><a href="https://web.archive.org/web/20260421013237/https://www.pfcindia.co.in/ensite/DocumentRepository/ckfinder/files/GoI_Initiatives/Annual_Integrated_Ratings_of_State_DISCOMs/14th_Annual_Integrated%20Rating%20and%20Ranking%20of%20Power%20Distribution_Utilities.pdf" target="_blank" rel="noopener">14th Annual Integrated Rating &amp; Ranking of Power Distribution Utilities ↗</a><br>
-          <span class="guide-meta">Power Finance Corporation Ltd (PFC), for the Ministry of Power · published 2026-01-23</span></p>
-        </div>
-      </div>
-    </div>
     </section>
     
     <p class="seo-disclaimer">Figures are provisional estimates built on publicly available Punjab tariff orders. Always verify against your official PSPCL bill — rates vary by sub-category, slab and city.</p>

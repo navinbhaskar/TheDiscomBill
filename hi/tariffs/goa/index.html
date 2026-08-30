@@ -242,91 +242,40 @@
         <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
         <div>
           <h3>LTDS (Domestic Service)</h3>
-          
         </div>
       </header>
-      <div class="tariff-rows">
-      <div class="tariff-rows-head" aria-hidden="true">
-        <span>आपूर्ति प्रकार</span>
-        <span class="num">फिक्स्ड चार्ज</span>
-        <span class="num">ऊर्जा दर<small>प्रति यूनिट</small></span>
-        <span></span>
-      </div>
-      <details class="tariff-supplytype" id="rate-domestic-ltds2" open>
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">LTDS-II — ordinary domestic (up to 85 kW / 100 kVA)</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹25<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹2.10<span class="ts-dash">–</span>6.60</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">The standard household category: five telescopic slabs from ₹2.10 to ₹6.60, on ₹25 per kW (or part thereof) per month.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹25</strong> <span class="tx-muted">/ kW / माह</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹2.10<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 200 <span class="tx-muted">यूनिट</span></td><td class="num">₹3.10<span class="tx-muted">/यूनिट</span></td></tr><tr><td>200 – 300 <span class="tx-muted">यूनिट</span></td><td class="num">₹4.15<span class="tx-muted">/यूनिट</span></td></tr><tr><td>300 – 400 <span class="tx-muted">यूनिट</span></td><td class="num">₹5.45<span class="tx-muted">/यूनिट</span></td></tr><tr><td>400 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹6.60<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-ltds1">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">LTDS-I — lifeline (load up to 250 W and up to 50 units)</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹20<span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹1.50</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">₹1.50/unit on a flat ₹20 per connection per month. Qualifying needs BOTH a connected load at or below 250 watts and consumption at or below 50 units.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹20</strong> <span class="tx-muted">/ माह (स्थिर)</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹1.50<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">कोड</th><th scope="col">आपूर्ति प्रकार</th><th class="num" scope="col">ऊर्जा शुल्क</th><th class="num" scope="col">फिक्स्ड चार्ज</th><th class="num" scope="col">ड्यूटी व अन्य</th></tr></thead>
+          <tbody>
+        <tr id="rate-domestic-ltds2">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">LTDS-II — ordinary domestic (up to 85 kW / 100 kVA)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 100 <span class="tx-muted">यूनिट</span></span><b class="num">₹2.10<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">100 – 200 <span class="tx-muted">यूनिट</span></span><b class="num">₹3.10<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">200 – 300 <span class="tx-muted">यूनिट</span></span><b class="num">₹4.15<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">300 – 400 <span class="tx-muted">यूनिट</span></span><b class="num">₹5.45<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">400 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹6.60<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹25</strong> <span class="tx-muted">/ kW / माह</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-domestic-ltds1">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">LTDS-I — lifeline (load up to 250 W and up to 50 units)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹1.50<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹20</strong> <span class="tx-muted">/ माह (स्थिर)</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-domestic-ltds3">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">LTDS-III — let-out portions and homestays</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 100 <span class="tx-muted">यूनिट</span></span><b class="num">₹3.15<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">100 – 200 <span class="tx-muted">यूनिट</span></span><b class="num">₹4.15<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">200 – 300 <span class="tx-muted">यूनिट</span></span><b class="num">₹5.20<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">300 – 400 <span class="tx-muted">यूनिट</span></span><b class="num">₹6.40<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">400 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹6.70<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹30</strong> <span class="tx-muted">/ kW / माह</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr></tbody>
+        </table>
       </div>
       
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-ltds3">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">LTDS-III — let-out portions and homestays</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹30<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹3.15<span class="ts-dash">–</span>6.70</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">A slightly higher domestic schedule for the let-out part of a house: ₹3.15 to ₹6.70 across the same five slabs, on ₹30/kW/month. An owner-occupied home stays on LTDS-II; a homestay or let-out portion needs its own connection billed here.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹30</strong> <span class="tx-muted">/ kW / माह</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹3.15<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 200 <span class="tx-muted">यूनिट</span></td><td class="num">₹4.15<span class="tx-muted">/यूनिट</span></td></tr><tr><td>200 – 300 <span class="tx-muted">यूनिट</span></td><td class="num">₹5.20<span class="tx-muted">/यूनिट</span></td></tr><tr><td>300 – 400 <span class="tx-muted">यूनिट</span></td><td class="num">₹6.40<span class="tx-muted">/यूनिट</span></td></tr><tr><td>400 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹6.70<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details></div>
+      <dl class="tariff-notes">
+        <p class="tariff-notes-label">कौन-सी दर किस पर लागू होती है</p>
+        <div><dt>LTDS-II — ordinary domestic (up to 85 kW / 100 kVA)</dt><dd>The standard household category: five telescopic slabs from ₹2.10 to ₹6.60, on ₹25 per kW (or part thereof) per month.</dd></div><div><dt>LTDS-I — lifeline (load up to 250 W and up to 50 units)</dt><dd>₹1.50/unit on a flat ₹20 per connection per month. Qualifying needs BOTH a connected load at or below 250 watts and consumption at or below 50 units.</dd></div><div><dt>LTDS-III — let-out portions and homestays</dt><dd>A slightly higher domestic schedule for the let-out part of a house: ₹3.15 to ₹6.70 across the same five slabs, on ₹30/kW/month. An owner-occupied home stays on LTDS-II; a homestay or let-out portion needs its own connection billed here.</dd></div>
+      </dl>
       <p class="tariff-card-note">ℹ️ Goa's domestic tariff is among the cheapest in the country at low consumption — ₹2.10 for the first 100 units — but climbs steeply, tripling to ₹6.60 above 400. Because JERC set the whole 4th control period in one order, the rates step up each year to FY 2029-30 regardless of any fresh order, so a Goa bill rises annually by design. Lifeline (LTDS-I) needs both a load at or below 250 W and consumption at or below 50 units. JERC's schedule is the tariff alone. Domestic bills here include Goa's 20 paise/unit electricity duty; other State levies are charged on the bill in addition. Goa's fixed charge is levied per kW (or kVA) 'or part thereof', so a fractional sanctioned load is rounded up to the next whole unit before the charge is worked out — the calculator does not round, so check your sanctioned load if the fixed charge looks a rupee or two light.</p>
     </article>
     <article class="tariff-card">
@@ -334,116 +283,47 @@
         <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
         <div>
           <h3>NDS (Non-Domestic Service)</h3>
-          
         </div>
       </header>
-      <div class="tariff-rows">
-      <div class="tariff-rows-head" aria-hidden="true">
-        <span>आपूर्ति प्रकार</span>
-        <span class="num">फिक्स्ड चार्ज</span>
-        <span class="num">ऊर्जा दर<small>प्रति यूनिट</small></span>
-        <span></span>
-      </div>
-      <details class="tariff-supplytype" id="rate-commercial-nds1" open>
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">NDS-I — non-domestic service</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹60<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹4.25<span class="ts-dash">–</span>6.80</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Three telescopic bands on kVAh — ₹4.25 up to 100 units, ₹6.10 to 200, ₹6.80 beyond — against a ₹60 per kVA per month fixed charge.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹60</strong> <span class="tx-muted">/ kVA / माह</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹4.25<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 200 <span class="tx-muted">यूनिट</span></td><td class="num">₹6.10<span class="tx-muted">/यूनिट</span></td></tr><tr><td>200 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹6.80<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-commercial-nds2">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">NDS-II — non-domestic service</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹60<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹4.25<span class="ts-dash">–</span>6.90</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">The same ₹60/kVA fixed charge and the same first two bands as NDS-I, but ₹6.90 above 200 units instead of ₹6.80.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹60</strong> <span class="tx-muted">/ kVA / माह</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 100 <span class="tx-muted">यूनिट</span></td><td class="num">₹4.25<span class="tx-muted">/यूनिट</span></td></tr><tr><td>100 – 200 <span class="tx-muted">यूनिट</span></td><td class="num">₹6.10<span class="tx-muted">/यूनिट</span></td></tr><tr><td>200 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹6.90<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">कोड</th><th scope="col">आपूर्ति प्रकार</th><th class="num" scope="col">ऊर्जा शुल्क</th><th class="num" scope="col">फिक्स्ड चार्ज</th><th class="num" scope="col">ड्यूटी व अन्य</th></tr></thead>
+          <tbody>
+        <tr id="rate-commercial-nds1">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">NDS-I — non-domestic service</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 100 <span class="tx-muted">यूनिट</span></span><b class="num">₹4.25<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">100 – 200 <span class="tx-muted">यूनिट</span></span><b class="num">₹6.10<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">200 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹6.80<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹60</strong> <span class="tx-muted">/ kVA / माह</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-commercial-nds2">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">NDS-II — non-domestic service</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 100 <span class="tx-muted">यूनिट</span></span><b class="num">₹4.25<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">100 – 200 <span class="tx-muted">यूनिट</span></span><b class="num">₹6.10<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">200 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹6.90<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹60</strong> <span class="tx-muted">/ kVA / माह</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-commercial-nds3">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">NDS-III — non-domestic service (highest rate)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹11.65<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹75</strong> <span class="tx-muted">/ kVA / माह</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-commercial-nds4">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">NDS-IV — non-domestic service (concessional)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹4.75<span class="tx-muted">/यूनिट</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹60</strong> <span class="tx-muted">/ kVA / माह</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr></tbody>
+        </table>
       </div>
       
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-commercial-nds3">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">NDS-III — non-domestic service (highest rate)</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹75<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹11.65</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">A single ₹11.65/kVAh on all units against ₹75/kVA/month — by some distance the steepest rate in Goa's LT schedule.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹75</strong> <span class="tx-muted">/ kVA / माह</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹11.65<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-commercial-nds4">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">NDS-IV — non-domestic service (concessional)</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹60<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹4.75</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">A flat ₹4.75/kVAh on all units against ₹60/kVA/month.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">फिक्स्ड चार्ज</div>
-        <div class="tariff-field-value"><strong>₹60</strong> <span class="tx-muted">/ kVA / माह</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">ऊर्जा शुल्क</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 से अधिक <span class="tx-muted">यूनिट</span></td><td class="num">₹4.75<span class="tx-muted">/यूनिट</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details></div>
+      <dl class="tariff-notes">
+        <p class="tariff-notes-label">कौन-सी दर किस पर लागू होती है</p>
+        <div><dt>NDS-I — non-domestic service</dt><dd>Three telescopic bands on kVAh — ₹4.25 up to 100 units, ₹6.10 to 200, ₹6.80 beyond — against a ₹60 per kVA per month fixed charge.</dd></div><div><dt>NDS-II — non-domestic service</dt><dd>The same ₹60/kVA fixed charge and the same first two bands as NDS-I, but ₹6.90 above 200 units instead of ₹6.80.</dd></div><div><dt>NDS-III — non-domestic service (highest rate)</dt><dd>A single ₹11.65/kVAh on all units against ₹75/kVA/month — by some distance the steepest rate in Goa's LT schedule.</dd></div><div><dt>NDS-IV — non-domestic service (concessional)</dt><dd>A flat ₹4.75/kVAh on all units against ₹60/kVA/month.</dd></div>
+      </dl>
       <p class="tariff-card-note">ℹ️ Non-domestic supply is billed on kVAh against a per-kVA fixed charge, so a poor power factor raises the units you are charged for. JERC splits non-domestic into several schedules whose rates differ sharply — from ₹4.75 flat on NDS-IV to ₹11.65 on NDS-III — so which one your connection sits under matters more than your consumption does. JERC's schedule is the tariff alone. Domestic bills here include Goa's 20 paise/unit electricity duty; other State levies are charged on the bill in addition. Goa's fixed charge is levied per kW (or kVA) 'or part thereof', so a fractional sanctioned load is rounded up to the next whole unit before the charge is worked out — the calculator does not round, so check your sanctioned load if the fixed charge looks a rupee or two light.</p>
     </article></div>
     </section>

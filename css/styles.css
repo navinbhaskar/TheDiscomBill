@@ -4042,7 +4042,9 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 .tariff-addl li { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; padding: 4px 0; color: var(--text-primary); border-bottom: 1px dashed var(--border-subtle); }
 .tariff-addl li:last-child { border-bottom: none; }
 
-/* Supply-type sub-blocks (UP-style categories) */
+/* Still live, but only for the client-rendered explorer on /tariffs/ (js/tariff-explorer.js),
+   which lists supply types as stacked blocks. The generated DISCOM and state pages render the
+   schedule as .tariff-table instead — the <details> machinery those rows used is gone. */
 .tariff-supplytype { padding: 12px; margin-bottom: 12px; background: var(--surface-sunken); border-radius: var(--radius-md); border: 1px solid var(--border-subtle); }
 .tariff-supplytype:last-child { margin-bottom: 0; }
 .tariff-st-name { font-size: 13px; font-weight: 700; color: var(--text-brand); margin-bottom: 3px; }
@@ -4094,81 +4096,77 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
    cannot answer this: the same viewport yields different card widths. */
 .tariff-card { container-type: inline-size; }
 /* A card with a rate table needs the width; simple ones still sit side by side. */
-.tariff-cards > .tariff-card:has(.tariff-rows) { grid-column: 1 / -1; }
+.tariff-cards > .tariff-card:has(.tariff-table) { grid-column: 1 / -1; }
 
-/* Base = narrow: name on its own line, the two figures beneath it. */
-.tariff-rows-head { display: none; }
-.tariff-supplytype > summary {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto 14px;
-  grid-template-areas: "name name chev" "fixed rate .";
-  row-gap: 5px; column-gap: 12px; align-items: center;
+/* ── Tariff schedule table ───────────────────────────────────────────────────
+   The rates used to be a list of <details> rows: each showed a name, a fixed charge and a
+   min-max range, and the slabs — the figure the page exists to state — only appeared once you
+   clicked. A published tariff schedule is a table, readers recognise it as one, and nothing
+   here needs to be hidden. Five columns: code, supply type, energy charge, fixed charge, duty.
+   The eligibility notes, up to 349 characters each, would turn every row into five lines, so
+   they sit under the table keyed by code (.tariff-notes) rather than inside a cell. */
+.tariff-table-wrap { overflow-x: auto; }
+.tariff-table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+  /* Enough width that the slab and fixed-charge columns are not squeezed to one word per
+     line; below this the wrapper scrolls and the code column stays pinned. */
+  min-width: 600px;
 }
-.tsr-fixed, .tsr-rate { text-align: left; }
-
-@container (min-width: 430px) {
-  .tariff-rows-head, .tariff-supplytype > summary {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 92px 104px 14px;
-    grid-template-areas: "name fixed rate chev";
-    gap: 10px; align-items: center;
-  }
-  /* 13px, not 12px: the rows sit inside .tariff-supplytype, which adds 12px of padding plus a
-     1px border, and a 1px drift is visible when the figures are meant to read as a column. */
-  .tariff-rows-head {
-    padding: 0 13px 7px; margin-bottom: 2px;
-    border-bottom: 1px solid var(--border-subtle);
-    font-size: 11px; font-weight: 700; letter-spacing: 0.02em;
-    color: var(--text-tertiary);
-  }
-  .tariff-rows-head .num { text-align: right; }
-  .tariff-rows-head small { display: block; font-size: 10px; font-weight: 600; opacity: 0.8; }
-  .tsr-fixed, .tsr-rate { text-align: right; }
-}
-.tsr-name { grid-area: name; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-width: 0; }
-.tsr-fixed { grid-area: fixed; }
-.tsr-rate  { grid-area: rate; }
-.tsr-fixed, .tsr-rate {
-  text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; font-size: 12.5px;
-}
-.tsr-fixed { color: var(--text-secondary); }
-.tsr-rate { font-weight: 700; }
-.tariff-supplytype > summary {
-  cursor: pointer; list-style: none; margin: 0;
-  /* A single-line summary came out 21px tall - half the 44px minimum, and this is now the
-     control a reader uses to open every rate on the page. Height, not padding, so a
-     two-line label still grows naturally instead of being padded past its content. */
-  min-height: 44px;
-}
-.tariff-supplytype > summary::-webkit-details-marker { display: none; }
-/* Chevron drawn from a border so it needs no asset and inherits currentColor. */
-.tariff-supplytype > summary::after {
-  content: ''; grid-area: chev; flex-shrink: 0;
-  width: 7px; height: 7px; align-self: center;
-  border-right: 2px solid var(--text-tertiary); border-bottom: 2px solid var(--text-tertiary);
-  transform: rotate(45deg) translate(-2px, -2px);
-  transition: transform .18s ease;
-}
-.tariff-supplytype[open] > summary::after { transform: rotate(-135deg) translate(-2px, -2px); }
-.tariff-supplytype > summary:focus-visible {
-  outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 4px;
-}
-.tariff-st-label { font-size: 13px; font-weight: 700; color: var(--text-brand); }
-.tariff-st-code {
-  padding: 1px 6px; font-size: 10px; font-weight: 700; font-variant-numeric: tabular-nums;
+.tariff-table thead th {
+  position: sticky; top: 0; z-index: 2;
+  padding: 8px 10px; text-align: left; vertical-align: bottom;
+  font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
   color: var(--text-tertiary); background: var(--surface-card);
-  border: 1px solid var(--border-subtle); border-radius: 999px; white-space: nowrap;
+  border-bottom: 1px solid var(--border-default);
 }
-.tariff-st-body { padding-top: 9px; }
-/* A row jumped to from the summary gets a moment of emphasis, so the reader can see
-   where they landed in a long list. */
-.tariff-supplytype:target {
-  border-color: var(--brand-border);
-  box-shadow: 0 0 0 3px var(--brand-faint);
+.tariff-table tbody td, .tariff-table tbody th {
+  padding: 10px; vertical-align: top; text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary); font-weight: 400;
 }
+.tariff-table tbody tr:last-child td, .tariff-table tbody tr:last-child th { border-bottom: none; }
+/* The code stays visible while the rest of a wide schedule scrolls sideways — without it you
+   lose track of which row you are reading on a phone. */
+.tariff-table .tt-code {
+  position: sticky; left: 0; z-index: 1;
+  background: var(--surface-card);
+  font-size: 11.5px; font-weight: 700; font-variant-numeric: tabular-nums;
+  color: var(--text-brand); white-space: nowrap;
+}
+.tariff-table thead th:first-child { left: 0; z-index: 3; }
+.tariff-table .tt-name { color: var(--text-primary); font-weight: 600; min-width: 150px; }
+.tariff-table .tt-fixed, .tariff-table .tt-extra { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tariff-table .tt-fixed .tariff-slab-table { margin: 0; font-size: 12.5px; }
+/* Slabs stack in their cell, range left, rate right — the shape a printed schedule uses. */
+.tt-slabs, .tt-extras { list-style: none; margin: 0; padding: 0; }
+.tt-slabs li, .tt-extras li {
+  display: flex; justify-content: space-between; gap: 14px; padding: 2px 0;
+  white-space: nowrap;
+}
+.tt-slabs b, .tt-extras b { font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.tt-slab-range { color: var(--text-secondary); }
+/* A row jumped to from a #rate-… link gets a moment of emphasis, so the reader can see where
+   they landed in a long schedule. */
+.tariff-table tbody tr:target > * { background: var(--brand-faint); }
+.tariff-table tbody tr:target .tt-code { box-shadow: inset 3px 0 0 var(--brand); }
 
-@media (prefers-reduced-motion: reduce) {
-  .tariff-supplytype > summary::after { transition: none; }
+/* Who each rate applies to — the eligibility text that used to sit inside the open <details>. */
+.tariff-notes { margin: 14px 0 0; }
+.tariff-notes-label {
+  font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--text-tertiary); margin: 0 0 8px;
+}
+.tariff-notes > div {
+  display: grid; grid-template-columns: 68px minmax(0, 1fr); gap: 10px;
+  padding: 7px 0; border-top: 1px solid var(--border-subtle);
+}
+.tariff-notes dt {
+  font-size: 11.5px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--text-brand);
+}
+.tariff-notes dd { margin: 0; font-size: 12.5px; line-height: 1.55; color: var(--text-tertiary); }
+@media (max-width: 560px) {
+  .tariff-notes > div { grid-template-columns: 1fr; gap: 2px; }
+}
 }
 
 @media (max-width: 560px) {
@@ -5353,23 +5351,10 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 }
 .discom-tool-panel p { margin-bottom: 0; font-size: 13.5px; line-height: 1.55; }
 .discom-tool-panel .seo-cta { flex: 0 0 auto; white-space: nowrap; }
-/* On this page — replaces the nine-card shortcut grid that stood here (359px tall, three of
-   its cards in-page anchors, five duplicating links printed elsewhere on the page). An index
-   is a line of links, so that is what it is. */
-.seo-page-index {
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px;
-  margin: 16px 0 6px; padding: 11px 0;
-  border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);
-  font-size: 13px;
-}
-.seo-page-index-label {
-  font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-  color: var(--text-tertiary);
-}
-.seo-page-index a { color: var(--text-secondary); text-decoration: none; }
-.seo-page-index a:hover { color: var(--text-brand); text-decoration: underline; }
-/* No separator glyphs: an absolutely-positioned middot dangles at the start of a wrapped
-   line, which is exactly what this row does at narrow widths. The 14px gap separates them. */
+/* The shortcut grid that used to sit under a DISCOM hero (359px of cards, three of them
+   in-page anchors and five duplicating links printed elsewhere on the page) is now a
+   .page-toc — the same chip index /smart-meter/ and the guides carry. */
+.seo-page > .page-toc { max-width: var(--w-text); }
 .discom-service-panels {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));

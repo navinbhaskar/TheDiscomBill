@@ -245,66 +245,33 @@
         <span class="tariff-card-icon tariff-card-icon-domestic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M3 10.8 12 3.5l9 7.3"/><path d="M5.5 9.5V20h13V9.5"/><path d="M9.25 20v-5.2h5.5V20"/><path d="m12.5 7.5-2.1 4h2.7l-1.6 4 3-5h-2.7l.7-3Z"/></svg></span>
         <div>
           <h3>DS (Domestic Supply)</h3>
-          
         </div>
       </header>
-      <div class="tariff-rows">
-      <div class="tariff-rows-head" aria-hidden="true">
-        <span>Supply type</span>
-        <span class="num">Fixed charge</span>
-        <span class="num">Energy rate<small>per unit</small></span>
-        <span></span>
-      </div>
-      <details class="tariff-supplytype" id="rate-domestic-single-phase" open>
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">Domestic — single phase</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹0<span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹1.60<span class="ts-dash">–</span>4.60</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">Five telescopic slabs from ₹1.60 to ₹4.60, with no fixed charge. A monthly minimum of ₹50 applies, so bills below that are rounded up to it.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹0</strong> <span class="tx-muted">/ month (flat)</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 50 <span class="tx-muted">units</span></td><td class="num">₹1.60<span class="tx-muted">/unit</span></td></tr><tr><td>50 – 100 <span class="tx-muted">units</span></td><td class="num">₹2.60<span class="tx-muted">/unit</span></td></tr><tr><td>100 – 200 <span class="tx-muted">units</span></td><td class="num">₹3.60<span class="tx-muted">/unit</span></td></tr><tr><td>200 – 400 <span class="tx-muted">units</span></td><td class="num">₹4.10<span class="tx-muted">/unit</span></td></tr><tr><td>Above 400 <span class="tx-muted">units</span></td><td class="num">₹4.60<span class="tx-muted">/unit</span></td></tr></tbody></table>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <tbody>
+        <tr id="rate-domestic-single-phase">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">Domestic — single phase</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 50 <span class="tx-muted">units</span></span><b class="num">₹1.60<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">50 – 100 <span class="tx-muted">units</span></span><b class="num">₹2.60<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">100 – 200 <span class="tx-muted">units</span></span><b class="num">₹3.60<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">200 – 400 <span class="tx-muted">units</span></span><b class="num">₹4.10<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 400 <span class="tx-muted">units</span></span><b class="num">₹4.60<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹0</strong> <span class="tx-muted">/ month (flat)</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr>
+        <tr id="rate-domestic-three-phase">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">Domestic — three phase</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 50 <span class="tx-muted">units</span></span><b class="num">₹1.60<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">50 – 100 <span class="tx-muted">units</span></span><b class="num">₹2.60<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">100 – 200 <span class="tx-muted">units</span></span><b class="num">₹3.60<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">200 – 400 <span class="tx-muted">units</span></span><b class="num">₹4.10<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 400 <span class="tx-muted">units</span></span><b class="num">₹4.60<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹0</strong> <span class="tx-muted">/ month (flat)</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr></tbody>
+        </table>
       </div>
       
-    </div>
-        </div>
-      </details>
-      <details class="tariff-supplytype" id="rate-domestic-three-phase">
-        <summary class="tariff-st-row">
-          <span class="tsr-name">
-            <span class="tariff-st-label">Domestic — three phase</span>
-            
-          </span>
-          <span class="tsr-fixed num">₹0<span class="tx-muted">/mo</span></span>
-          <span class="tsr-rate num">₹1.60<span class="ts-dash">–</span>4.60</span>
-        </summary>
-        <div class="tariff-st-body">
-          <p class="tariff-st-desc">The same energy rates, but the monthly minimum rises to ₹200.</p>
-          
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹0</strong> <span class="tx-muted">/ month (flat)</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 50 <span class="tx-muted">units</span></td><td class="num">₹1.60<span class="tx-muted">/unit</span></td></tr><tr><td>50 – 100 <span class="tx-muted">units</span></td><td class="num">₹2.60<span class="tx-muted">/unit</span></td></tr><tr><td>100 – 200 <span class="tx-muted">units</span></td><td class="num">₹3.60<span class="tx-muted">/unit</span></td></tr><tr><td>200 – 400 <span class="tx-muted">units</span></td><td class="num">₹4.10<span class="tx-muted">/unit</span></td></tr><tr><td>Above 400 <span class="tx-muted">units</span></td><td class="num">₹4.60<span class="tx-muted">/unit</span></td></tr></tbody></table>
-      </div>
-      
-    </div>
-        </div>
-      </details></div>
+      <dl class="tariff-notes">
+        <p class="tariff-notes-label">Who each rate applies to</p>
+        <div><dt>Domestic — single phase</dt><dd>Five telescopic slabs from ₹1.60 to ₹4.60, with no fixed charge. A monthly minimum of ₹50 applies, so bills below that are rounded up to it.</dd></div><div><dt>Domestic — three phase</dt><dd>The same energy rates, but the monthly minimum rises to ₹200.</dd></div>
+      </dl>
       <p class="tariff-card-note">ℹ️ Sikkim has some of the cheapest electricity in India — ₹1.60 for the first 50 units, on the back of the state's hydro generation — and levies no fixed charge at all. The ₹50 (single phase) or ₹200 (three phase) in the schedule is a monthly MINIMUM, not a standing charge: it only bites if your energy charges come to less than that, so a household using 100 units pays ₹210 in energy and nothing more. The Department allows a 5% rebate on energy charges for bills paid within the due date (10 days from issue), and charges a 10% annual surcharge on arrears outstanding at the end of March. Neither is applied automatically here. If electricity supplied to domestic premises is used for a commercial purpose, the Department charges the ENTIRE supply at commercial rates.</p>
     </article>
     <article class="tariff-card">
@@ -312,21 +279,22 @@
         <span class="tariff-card-icon tariff-card-icon-commercial" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M4.5 10.5h15l-1 9.5h-13l-1-9.5Z"/><path d="M7 10.5V6.8C7 5.2 8.2 4 9.8 4h4.4C15.8 4 17 5.2 17 6.8v3.7"/><path d="M8.25 14h.01"/><path d="M15.75 14h.01"/><path d="M9.5 20v-4h5v4"/><path d="M12 4v16"/></svg></span>
         <div>
           <h3>CS (Commercial Supply)</h3>
-          
         </div>
       </header>
-      <div id="rate-commercial">
-    <div class="tariff-block">
-      <div class="tariff-field">
-        <div class="tariff-field-label">Fixed charge</div>
-        <div class="tariff-field-value"><strong>₹0</strong> <span class="tx-muted">/ month (flat)</span></div>
-      </div>
-      <div class="tariff-field">
-        <div class="tariff-field-label">Energy charges</div>
-        <table class="tariff-slab-table"><tbody><tr><td>0 – 50 <span class="tx-muted">units</span></td><td class="num">₹4.10<span class="tx-muted">/unit</span></td></tr><tr><td>50 – 100 <span class="tx-muted">units</span></td><td class="num">₹5.10<span class="tx-muted">/unit</span></td></tr><tr><td>100 – 200 <span class="tx-muted">units</span></td><td class="num">₹6.10<span class="tx-muted">/unit</span></td></tr><tr><td>200 – 400 <span class="tx-muted">units</span></td><td class="num">₹7.10<span class="tx-muted">/unit</span></td></tr><tr><td>Above 400 <span class="tx-muted">units</span></td><td class="num">₹7.40<span class="tx-muted">/unit</span></td></tr></tbody></table>
+      <div class="tariff-table-wrap">
+        <table class="tariff-table">
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <tbody>
+        <tr id="rate-commercial">
+          <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
+          <td class="tt-name">CS (Commercial Supply)</td>
+          <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 50 <span class="tx-muted">units</span></span><b class="num">₹4.10<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">50 – 100 <span class="tx-muted">units</span></span><b class="num">₹5.10<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">100 – 200 <span class="tx-muted">units</span></span><b class="num">₹6.10<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">200 – 400 <span class="tx-muted">units</span></span><b class="num">₹7.10<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 400 <span class="tx-muted">units</span></span><b class="num">₹7.40<span class="tx-muted">/unit</span></b></li></ul></td>
+          <td class="tt-fixed"><strong>₹0</strong> <span class="tx-muted">/ month (flat)</span></td>
+          <td class="tt-extra"><span class="tx-muted">—</span></td>
+        </tr></tbody>
+        </table>
       </div>
       
-    </div></div>
       <p class="tariff-card-note">ℹ️ Commercial supply runs from ₹4.10 to ₹7.40 across the same five slab boundaries as domestic, and likewise carries no fixed charge. Establishments with a sanctioned load above 25 kVA that run off a shared transformer pay a demand charge on top — ₹60/kVA/month in rural areas, ₹100/kVA/month in urban — which is not modelled here. A connection of 100 kVA or above must install its own transformer. The Department allows a 5% rebate on energy charges for bills paid within the due date (10 days from issue), and charges a 10% annual surcharge on arrears outstanding at the end of March. Neither is applied automatically here.</p>
     </article></div>
     </section>
