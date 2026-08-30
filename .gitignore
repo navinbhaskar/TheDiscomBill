@@ -44,3 +44,6 @@ FULL-AUDIT-REPORT.md
 # Impeccable design-critique snapshots — local notes, and this repo is served publicly
 # from its root, so they must not become live URLs.
 .impeccable/
+
+# Mockups dropped into the repo root by the editor — not site assets.
+tariffs-states-ui-proposal.jpg
