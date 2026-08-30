@@ -33,14 +33,19 @@
 //        - No consumer-facing forum page exists. KERC, GERC, RERC and APERC publish the
 //          CGRF/Ombudsman *regulations* and past orders as PDFs but have no page a consumer
 //          can be sent to. A 2016 regulation PDF is a worse destination than the homepage.
-//        - The site is HTTP-only or refused inspection, so the URL could not be confirmed
-//          from here: Haryana (herc.gov.in refuses 443), Kerala (cgrf.kseb.in did not
-//          resolve), Madhya Pradesh (mperc.in returns 403), Jharkhand (the Ombudsman is at
-//          http://ombudsman.jserc.org/, which would also be an insecure link from an HTTPS
-//          page). Each of these very likely works for a consumer in India — that is exactly
-//          why they are left null rather than filled from a search-result snippet.
+//        - The site is HTTP-only or refused inspection: Kerala (cgrf.kseb.in did not resolve)
+//          and Jharkhand (the Ombudsman is at http://ombudsman.jserc.org/, which would also
+//          be an insecure link from an HTTPS page). Both very likely work for a consumer in
+//          India — that is exactly why they are left null rather than filled from a
+//          search-result snippet.
 //      Anyone with access can open one of those and fill the slot; nothing else needs to
 //      change for it to render.
+//
+//      Haryana and Madhya Pradesh are filled on the repo owner's confirmation (30 Aug 2026)
+//      that both sites open for them. They are the one exception to "opened before written
+//      down" in this file, and are marked here rather than left to look like the rest:
+//      herc.gov.in refuses port 443 to an outside fetcher and mperc.in answers 403, so
+//      neither could be checked from the build side and neither can be re-checked by CI.
 //
 // Joint commissions serve several states each: JERC-UTS covers Goa and most UTs, and the
 // J&K/Ladakh JERC covers both of those. Their rows repeat the same commission on purpose.
@@ -57,14 +62,14 @@ export const REGULATORS = {
   'Delhi': { short: 'DERC', name: 'Delhi Electricity Regulatory Commission', url: 'https://www.derc.gov.in', cgrfUrl: 'https://www.derc.gov.in/consumers-corner/consumer-grievances-redressal-forum', ombudsmanUrl: 'https://www.derc.gov.in/consumers-corner/contact-list-oo-electricity-ombudsman' },
   'Goa': { short: 'JERC-UTS', name: 'Joint Electricity Regulatory Commission for Goa and Union Territories', url: 'https://jercuts.gov.in', cgrfUrl: null, ombudsmanUrl: 'https://jercuts.gov.in/ombudsman-details/' },
   'Gujarat': { short: 'GERC', name: 'Gujarat Electricity Regulatory Commission', url: 'https://gercin.org', cgrfUrl: null, ombudsmanUrl: null },
-  'Haryana': { short: 'HERC', name: 'Haryana Electricity Regulatory Commission', url: 'https://herc.gov.in', cgrfUrl: null, ombudsmanUrl: null },
+  'Haryana': { short: 'HERC', name: 'Haryana Electricity Regulatory Commission', url: 'https://herc.gov.in', cgrfUrl: 'https://herc.gov.in/content/127_1_CGRF.aspx', ombudsmanUrl: 'https://herc.gov.in/ombudsman/ombudsman.aspx' },
   'Himachal Pradesh': { short: 'HPERC', name: 'Himachal Pradesh Electricity Regulatory Commission', url: 'https://hperc.org', cgrfUrl: null, ombudsmanUrl: null },
   'Jammu & Kashmir': { short: 'JERC-J&K/Ladakh', name: 'Joint Electricity Regulatory Commission for the UTs of Jammu & Kashmir and Ladakh', url: 'https://jercjkl.jk.gov.in', cgrfUrl: null, ombudsmanUrl: null },
   'Jharkhand': { short: 'JSERC', name: 'Jharkhand State Electricity Regulatory Commission', url: 'https://jserc.org', cgrfUrl: null, ombudsmanUrl: null },
   'Karnataka': { short: 'KERC', name: 'Karnataka Electricity Regulatory Commission', url: 'https://kerc.karnataka.gov.in', cgrfUrl: null, ombudsmanUrl: null },
   'Kerala': { short: 'KSERC', name: 'Kerala State Electricity Regulatory Commission', url: 'https://erckerala.org', cgrfUrl: null, ombudsmanUrl: null },
   'Ladakh': { short: 'JERC-J&K/Ladakh', name: 'Joint Electricity Regulatory Commission for the UTs of Jammu & Kashmir and Ladakh', url: 'https://jercjkl.jk.gov.in', cgrfUrl: null, ombudsmanUrl: null },
-  'Madhya Pradesh': { short: 'MPERC', name: 'Madhya Pradesh Electricity Regulatory Commission', url: 'https://mperc.in', cgrfUrl: null, ombudsmanUrl: null },
+  'Madhya Pradesh': { short: 'MPERC', name: 'Madhya Pradesh Electricity Regulatory Commission', url: 'https://mperc.in', cgrfUrl: 'https://mperc.in/page/grievances-redressal-forum', ombudsmanUrl: 'https://mperc.in/page/about-electricity-ombudsman-2' },
   'Maharashtra': { short: 'MERC', name: 'Maharashtra Electricity Regulatory Commission', url: 'https://merc.gov.in', cgrfUrl: 'https://merc.gov.in/consumer-grievance-redressal-forums-cgrf/', ombudsmanUrl: 'https://merc.gov.in/electricity-ombudsman/' },
   'Manipur': { short: null, name: 'Manipur State Electricity Regulatory Commission', url: 'https://mnerc.mn.gov.in', cgrfUrl: null, ombudsmanUrl: null },
   'Meghalaya': { short: 'MSERC', name: 'Meghalaya State Electricity Regulatory Commission', url: 'https://mserc.gov.in', cgrfUrl: null, ombudsmanUrl: null },
