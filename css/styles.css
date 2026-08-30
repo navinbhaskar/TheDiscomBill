@@ -5940,7 +5940,9 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 /* max-width was 560px — a good measure for a lead, and a third right edge in a hero that has
    two. On the column with everything else; the article's own lead paragraph below already
    reads at this width, so this is the page's measure rather than a new one. */
-.bc-hero .svc-intro { font-size: 16.5px; max-width: var(--w-text); margin-bottom: 18px; }
+/* 15px, the same lead size the article below uses. At 16.5 it was the largest body text on
+   the page and the paragraph directly beneath the calculator — doing the same job — was 15. */
+.bc-hero .svc-intro { font-size: 14px; max-width: var(--w-text); margin-bottom: 18px; }
 
 /* What the form covers, as a specification rather than a row of pills. Each term links to its
    own explainer further down; the line under it is what that section says in one sentence.
@@ -5960,13 +5962,17 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
    find. The marker sits on the term's own optical centre rather than its box top, so it holds
    the line when a term wraps to two on a narrow screen. */
 .bc-cap::before {
-  content: ''; position: absolute; left: 2px; top: 1.32em;
+  content: ''; position: absolute; left: 2px; top: 1.18em;
   width: 6px; height: 6px; border-radius: var(--radius-full);
   background: var(--brand);
 }
 /* The first item of each column keeps the rule; every column after the first would otherwise
    start without one and the two columns would not line up at the top. */
-.bc-caps dt { margin: 0 0 3px; font-size: 14px; font-weight: 650; line-height: 1.3; }
+/* One type scale for the page. The six capabilities appear twice — once here as a summary,
+   once below the calculator in full — and they were arriving at two different sizes (14/13 up
+   here against 16.5/15 down there), which is what made the halves of the page look unrelated.
+   Item headings are 16.5px and body copy 15px in both places now. */
+.bc-caps dt { margin: 0 0 3px; font-size: 15px; font-weight: 650; line-height: 1.35; }
 .bc-caps dt a {
   color: var(--text-primary); text-decoration: none;
   border-bottom: 1px solid transparent; transition: color var(--t-fast), border-color var(--t-fast);
@@ -5974,7 +5980,7 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 .bc-caps dt a:hover,
 .bc-caps dt a:focus-visible { color: var(--text-brand); border-bottom-color: currentColor; }
 .bc-caps dd {
-  margin: 0; font-size: 13px; line-height: 1.5; color: var(--text-secondary);
+  margin: 0; font-size: 14px; line-height: 1.6; color: var(--text-secondary);
 }
 
 /* The seven field explainers below the calculator, marked to match the hero spec. The
@@ -5984,10 +5990,18 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 /* 16.5px, not the 17.55px the browser picks for an unstyled H3 (1.17em of a 15px body). The
    site never sized these, so they were arriving at whatever the UA default worked out to;
    against 15px body copy that is a step so small it reads as a slightly heavy paragraph. */
+/* One scale across both halves of the page, and a step down from the site's 15px body: this
+   page carries the six-item spec AND seven explainers, so at the standard size it reads as a
+   wall. Headings 15px, body 14px, section titles 18px — set in both places together, because
+   the whole point is that the summary and the full text look like the same document. */
 .bc-fields h3 {
   position: relative; padding-left: 20px;
-  font-size: 16.5px; line-height: 1.4;
+  font-size: 15px; line-height: 1.4;
 }
+/* Needs the wrapper in the selector: `.svc-section .seo-section h2` sets 20px at (0,2,1) and
+   a bare `.bc-fields h2` is only (0,1,1), so it lost silently. */
+.bc-explainers .bc-fields h2 { font-size: 18px; }
+.bc-fields p, .bc-fields li { font-size: 14px; line-height: 1.6; }
 .bc-fields h3::before {
   content: ''; position: absolute; left: 3px; top: 0.62em;
   width: 6px; height: 6px; border-radius: var(--radius-full);
@@ -6019,10 +6033,13 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
      calculator to y=842 on an 844px phone -- past the fold on the page whose whole point is
      the form. The descriptions stay; the air between them goes. */
   .bc-caps { grid-template-columns: 1fr; gap: 0; margin-bottom: 14px; max-width: 100%; }
-  .bc-cap { padding: 7px 0 8px 17px; }
-  .bc-cap::before { top: 1.15em; }
-  .bc-caps dt { font-size: 13.5px; margin-bottom: 2px; }
-  .bc-caps dd { font-size: 12.5px; line-height: 1.45; }
+  .bc-cap::before { top: 1.12em; }
+  /* Same 16.5/15 as the desktop and as the article below — a phone is where the two blocks
+     are most likely to be read one after the other, so it is the last place they should
+     disagree. The height that costs is taken out of the spacing instead, below. */
+  .bc-cap { padding: 6px 0 7px 17px; }
+  .bc-caps { margin-bottom: 10px; }
+  .bc-hero .svc-intro { margin-bottom: 12px; }
 }
 
 
