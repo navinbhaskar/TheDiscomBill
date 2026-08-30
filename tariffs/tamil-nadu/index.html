@@ -251,13 +251,16 @@
       </header>
       <div class="tariff-table-wrap">
         <table class="tariff-table">
-          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <!-- Widths declared rather than left to the auto layout, which gave "Electricity Duty
+               5%" 173px and squeezed the supply-type name into 150px and three lines. -->
+          <colgroup><col class="tt-c-code"><col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th scope="col">Duty &amp; other</th></tr></thead>
           <tbody>
         <tr id="rate-domestic">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">LT-IA (Domestic)</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 200 <span class="tx-muted">units</span></span><b class="num">₹4.95<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">200 – 250 <span class="tx-muted">units</span></span><b class="num">₹6.65<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">250 – 300 <span class="tx-muted">units</span></span><b class="num">₹8.80<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">300 – 400 <span class="tx-muted">units</span></span><b class="num">₹9.95<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">400 – 500 <span class="tx-muted">units</span></span><b class="num">₹11.05<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 500 <span class="tx-muted">units</span></span><b class="num">₹12.15<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹0</strong> <span class="tx-muted">/ month (flat)</span></td>
+          <td class="tt-fixed num">₹0<span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr></tbody>
         </table>
@@ -274,20 +277,23 @@
       </header>
       <div class="tariff-table-wrap">
         <table class="tariff-table">
-          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <!-- Widths declared rather than left to the auto layout, which gave "Electricity Duty
+               5%" 173px and squeezed the supply-type name into 150px and three lines. -->
+          <colgroup><col class="tt-c-code"><col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th scope="col">Duty &amp; other</th></tr></thead>
           <tbody>
         <tr id="rate-commercial-v-general">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">LT-V – Above 50 units/month (100 bi-monthly)</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹10.45<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹110</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-fixed num">₹110<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty</span><b>5%</b></li></ul></td>
         </tr>
         <tr id="rate-commercial-v-low">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">LT-V – Up to 50 units/month (100 bi-monthly)</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹6.65<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹110</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-fixed num">₹110<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty</span><b>5%</b></li></ul></td>
         </tr></tbody>
         </table>

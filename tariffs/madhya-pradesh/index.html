@@ -253,27 +253,30 @@
       </header>
       <div class="tariff-table-wrap">
         <table class="tariff-table">
-          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <!-- Widths declared rather than left to the auto layout, which gave "Electricity Duty
+               5%" 173px and squeezed the supply-type name into 150px and three lines. -->
+          <colgroup><col class="tt-c-code"><col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th scope="col">Duty &amp; other</th></tr></thead>
           <tbody>
         <tr id="rate-domestic-urban">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">LV-1.2 Domestic — Urban</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 50 <span class="tx-muted">units</span></span><b class="num">₹4.71<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">50 – 150 <span class="tx-muted">units</span></span><b class="num">₹5.67<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">150 – 300 <span class="tx-muted">units</span></span><b class="num">₹7.05<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 300 <span class="tx-muted">units</span></span><b class="num">₹7.24<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><table class="tariff-slab-table"><tbody><tr><td>Up to 50 units — ₹81/connection</td><td class="num">₹81<span class="tx-muted">/mo</span></td></tr><tr><td>51–150 units — ₹134/connection</td><td class="num">₹134<span class="tx-muted">/mo</span></td></tr><tr><td>Above 150 units — ₹30 per 0.1 kW, with every 15 units counted as 0.1 kW</td><td class="num">₹30<span class="tx-muted">/mo</span></td></tr></tbody></table></td>
+          <td class="tt-fixed num">₹30<span class="ts-dash">–</span>134<span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr>
         <tr id="rate-domestic-rural">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">LV-1.2 Domestic — Rural</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 50 <span class="tx-muted">units</span></span><b class="num">₹4.71<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">50 – 150 <span class="tx-muted">units</span></span><b class="num">₹5.67<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">150 – 300 <span class="tx-muted">units</span></span><b class="num">₹7.05<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 300 <span class="tx-muted">units</span></span><b class="num">₹7.24<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><table class="tariff-slab-table"><tbody><tr><td>Up to 50 units — ₹67/connection</td><td class="num">₹67<span class="tx-muted">/mo</span></td></tr><tr><td>51–150 units — ₹111/connection</td><td class="num">₹111<span class="tx-muted">/mo</span></td></tr><tr><td>Above 150 units — ₹28 per 0.1 kW, with every 15 units counted as 0.1 kW</td><td class="num">₹28<span class="tx-muted">/mo</span></td></tr></tbody></table></td>
+          <td class="tt-fixed num">₹28<span class="ts-dash">–</span>111<span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr>
         <tr id="rate-domestic-lv11">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">LV-1.1 Domestic — load ≤ 0.1 kW and ≤ 30 units/month</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹3.72<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹0</strong> <span class="tx-muted">/ month (flat)</span></td>
+          <td class="tt-fixed num">₹0<span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr></tbody>
         </table>
@@ -294,27 +297,30 @@
       </header>
       <div class="tariff-table-wrap">
         <table class="tariff-table">
-          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <!-- Widths declared rather than left to the auto layout, which gave "Electricity Duty
+               5%" 173px and squeezed the supply-type name into 150px and three lines. -->
+          <colgroup><col class="tt-c-code"><col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th scope="col">Duty &amp; other</th></tr></thead>
           <tbody>
         <tr id="rate-commercial-urban">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">LV-2.2 Non-Domestic — Urban (load up to 10 kW)</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹8.30<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><table class="tariff-slab-table"><tbody><tr><td>Up to 50 units — ₹98/kW/month</td><td class="num">₹98<span class="tx-muted">/kW/mo</span></td></tr><tr><td>Above 50 units — ₹154/kW/month</td><td class="num">₹154<span class="tx-muted">/kW/mo</span></td></tr></tbody></table></td>
+          <td class="tt-fixed num">₹98<span class="ts-dash">–</span>154<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr>
         <tr id="rate-commercial-rural">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">LV-2.2 Non-Domestic — Rural (load up to 10 kW)</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹8.30<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><table class="tariff-slab-table"><tbody><tr><td>Up to 50 units — ₹83/kW/month</td><td class="num">₹83<span class="tx-muted">/kW/mo</span></td></tr><tr><td>Above 50 units — ₹133/kW/month</td><td class="num">₹133<span class="tx-muted">/kW/mo</span></td></tr></tbody></table></td>
+          <td class="tt-fixed num">₹83<span class="ts-dash">–</span>133<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr>
         <tr id="rate-commercial-lv21">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">LV-2.1 — Schools, colleges and hostels (load up to 10 kW)</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹7.00<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹172</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-fixed num">₹172<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr></tbody>
         </table>

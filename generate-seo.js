@@ -1098,6 +1098,14 @@ function categoryCardHtml(cat, lang = 'en') {
       return `<li><span class="tt-slab-range">${range} <span class="tx-muted">${unit}</span>${note}</span><b class="num">${rupeeRate(sl.rate)}<span class="tx-muted">${perUnit}</span></b></li>`;
     }).join('')}</ul>`;
   };
+  // "₹50/kW/mo", not "₹50 / kW / month" — the long form wrapped to two lines in a column that
+  // holds one number. Banded fixed charges keep their small table: those bands are data, not
+  // formatting.
+  const fixedCell = (o) => {
+    const fc = o.fixedCharge;
+    const banded = fc && (fc.type === 'tiered' || fc.type === 'slab_per_kw') && Array.isArray(fc.slabs);
+    return banded ? fixedChargeHtml(fc, lang) : fixedChargeShort(fc, lang);
+  };
   const extrasCell = (o) => {
     const arr = o.additionalCharges;
     if (!Array.isArray(arr) || !arr.length) return '<span class="tx-muted">—</span>';
@@ -1115,7 +1123,7 @@ function categoryCardHtml(cat, lang = 'en') {
           <th scope="row" class="tt-code">${code ? esc(code) : '<span class="tx-muted">—</span>'}</th>
           <td class="tt-name">${esc(label || cat.name || cat.id)}</td>
           <td class="tt-energy">${slabCell(o)}</td>
-          <td class="tt-fixed">${fixedChargeHtml(o.fixedCharge, lang)}</td>
+          <td class="tt-fixed num">${fixedCell(o)}</td>
           <td class="tt-extra">${extrasCell(o)}</td>
         </tr>`;
   }).join('');
@@ -1145,7 +1153,10 @@ function categoryCardHtml(cat, lang = 'en') {
       </header>
       <div class="tariff-table-wrap">
         <table class="tariff-table">
-          <thead><tr>${cols.map((c, i) => `<th${i >= 2 ? ' class="num"' : ''} scope="col">${esc(c)}</th>`).join('')}</tr></thead>
+          <!-- Widths declared rather than left to the auto layout, which gave "Electricity Duty
+               5%" 173px and squeezed the supply-type name into 150px and three lines. -->
+          <colgroup><col class="tt-c-code"><col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
+          <thead><tr>${cols.map((c, i) => `<th${i === 3 ? ' class="num"' : ''} scope="col">${esc(c)}</th>`).join('')}</tr></thead>
           <tbody>${rows}</tbody>
         </table>
       </div>

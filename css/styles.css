@@ -4107,44 +4107,69 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
    they sit under the table keyed by code (.tariff-notes) rather than inside a cell. */
 .tariff-table-wrap { overflow-x: auto; }
 .tariff-table {
-  width: 100%; border-collapse: collapse; font-size: 13px;
-  /* Enough width that the slab and fixed-charge columns are not squeezed to one word per
-     line; below this the wrapper scrolls and the code column stays pinned. */
-  min-width: 600px;
+  width: 100%; border-collapse: collapse; font-size: 12.5px; line-height: 1.45;
+  table-layout: fixed;
+  /* Below this the columns start fighting; the wrapper scrolls instead, code column pinned. */
+  min-width: 640px;
 }
+/* Declared widths. Auto layout handed 173px to a duty column holding "5%" and left the supply
+   type 150px, which wrapped every name to three lines. The name gets the slack now. */
+.tt-c-code   { width: 62px; }
+.tt-c-name   { width: 30%; }
+.tt-c-energy { width: 29%; }
+/* 15%, not 14: at 14 the "Fixed charge" header itself wrapped to two lines over a column of
+   single-line figures. */
+.tt-c-fixed  { width: 15%; }
+.tt-c-extra  { width: 17%; }
 .tariff-table thead th {
   position: sticky; top: 0; z-index: 2;
-  padding: 8px 10px; text-align: left; vertical-align: bottom;
-  font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  padding: 7px 10px; text-align: left; vertical-align: bottom;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
   color: var(--text-tertiary); background: var(--surface-card);
   border-bottom: 1px solid var(--border-default);
 }
+.tariff-table thead th.num { text-align: right; }
 .tariff-table tbody td, .tariff-table tbody th {
-  padding: 10px; vertical-align: top; text-align: left;
+  padding: 9px 10px; vertical-align: top; text-align: left;
   border-bottom: 1px solid var(--border-subtle);
   color: var(--text-secondary); font-weight: 400;
 }
 .tariff-table tbody tr:last-child td, .tariff-table tbody tr:last-child th { border-bottom: none; }
-/* The code stays visible while the rest of a wide schedule scrolls sideways — without it you
-   lose track of which row you are reading on a phone. */
+/* The code stays visible while a wide schedule scrolls sideways — without it you lose track of
+   which row you are reading on a phone. */
 .tariff-table .tt-code {
   position: sticky; left: 0; z-index: 1;
   background: var(--surface-card);
-  font-size: 11.5px; font-weight: 700; font-variant-numeric: tabular-nums;
+  font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums;
   color: var(--text-brand); white-space: nowrap;
 }
 .tariff-table thead th:first-child { left: 0; z-index: 3; }
-.tariff-table .tt-name { color: var(--text-primary); font-weight: 600; min-width: 150px; }
-.tariff-table .tt-fixed, .tariff-table .tt-extra { white-space: nowrap; font-variant-numeric: tabular-nums; }
-.tariff-table .tt-fixed .tariff-slab-table { margin: 0; font-size: 12.5px; }
-/* Slabs stack in their cell, range left, rate right — the shape a printed schedule uses. */
-.tt-slabs, .tt-extras { list-style: none; margin: 0; padding: 0; }
-.tt-slabs li, .tt-extras li {
-  display: flex; justify-content: space-between; gap: 14px; padding: 2px 0;
-  white-space: nowrap;
+.tariff-table .tt-name { color: var(--text-primary); font-weight: 600; }
+.tariff-table .tt-fixed {
+  text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap;
+  color: var(--text-primary); font-weight: 600;
 }
-.tt-slabs b, .tt-extras b { font-weight: 700; color: var(--text-primary); font-variant-numeric: tabular-nums; }
-.tt-slab-range { color: var(--text-secondary); }
+/* A banded fixed charge keeps its own small table; it aligns like the slab list beside it. */
+.tariff-table .tt-fixed .tariff-slab-table { margin: 0; width: 100%; font-size: 12px; }
+.tariff-table .tt-fixed .tariff-slab-table td { padding: 1px 0; border: none; }
+/* Slabs and extras: label left, figure right, the figures aligned down the cell rather than
+   pushed to opposite edges by space-between.
+   Selectors are scoped through .tariff-table on purpose. ".seo-section ul/li" (0,1,1) outranks
+   a bare ".tt-slabs" (0,1,0), so the article's list styling was landing on these: 24px of
+   left padding, 14px of bottom margin and 10px under every item — which is what pushed a
+   four-slab cell from 110px to 154px and knocked the columns out of line. */
+.tariff-table .tt-slabs, .tariff-table .tt-extras { list-style: none; margin: 0; padding: 0; }
+.tariff-table .tt-slabs li, .tariff-table .tt-extras li {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 10px;
+  margin: 0; padding: 1px 0; align-items: baseline; line-height: 1.45;
+}
+.tariff-table .tt-slabs b, .tariff-table .tt-extras b {
+  font-weight: 700; color: var(--text-primary);
+  font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap;
+}
+/* The range never breaks mid-figure: "0 – 100 / units" reads as two different numbers. */
+.tariff-table .tt-slab-range { color: var(--text-tertiary); white-space: nowrap; }
+.tariff-table .tt-extras li > span { color: var(--text-tertiary); overflow-wrap: anywhere; }
 /* A row jumped to from a #rate-… link gets a moment of emphasis, so the reader can see where
    they landed in a long schedule. */
 .tariff-table tbody tr:target > * { background: var(--brand-faint); }
@@ -4164,6 +4189,7 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
   font-size: 11.5px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--text-brand);
 }
 .tariff-notes dd { margin: 0; font-size: 12.5px; line-height: 1.55; color: var(--text-tertiary); }
+.seo-section .tariff-notes-label { margin: 0 0 8px; }
 @media (max-width: 560px) {
   .tariff-notes > div { grid-template-columns: 1fr; gap: 2px; }
 }

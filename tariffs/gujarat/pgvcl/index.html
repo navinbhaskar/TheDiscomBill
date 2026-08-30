@@ -251,20 +251,23 @@
       </header>
       <div class="tariff-table-wrap">
         <table class="tariff-table">
-          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <!-- Widths declared rather than left to the auto layout, which gave "Electricity Duty
+               5%" 173px and squeezed the supply-type name into 150px and three lines. -->
+          <colgroup><col class="tt-c-code"><col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th scope="col">Duty &amp; other</th></tr></thead>
           <tbody>
         <tr id="rate-domestic-urban">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">RGP — Urban / non-Gram-Panchayat</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 50 <span class="tx-muted">units</span></span><b class="num">₹3.05<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">50 – 100 <span class="tx-muted">units</span></span><b class="num">₹3.50<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">100 – 250 <span class="tx-muted">units</span></span><b class="num">₹4.15<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 250 <span class="tx-muted">units</span></span><b class="num">₹5.20<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><table class="tariff-slab-table"><tbody><tr><td>up to 2 kW</td><td class="num">₹15<span class="tx-muted">/mo</span></td></tr><tr><td>above 2 to 4 kW</td><td class="num">₹25<span class="tx-muted">/mo</span></td></tr><tr><td>above 4 to 6 kW</td><td class="num">₹45<span class="tx-muted">/mo</span></td></tr><tr><td>above 6 kW</td><td class="num">₹70<span class="tx-muted">/mo</span></td></tr></tbody></table></td>
+          <td class="tt-fixed num"><table class="tariff-slab-table"><tbody><tr><td>up to 2 kW</td><td class="num">₹15<span class="tx-muted">/mo</span></td></tr><tr><td>above 2 to 4 kW</td><td class="num">₹25<span class="tx-muted">/mo</span></td></tr><tr><td>above 4 to 6 kW</td><td class="num">₹45<span class="tx-muted">/mo</span></td></tr><tr><td>above 6 kW</td><td class="num">₹70<span class="tx-muted">/mo</span></td></tr></tbody></table></td>
           <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty (ED)</span><b>15%</b></li></ul></td>
         </tr>
         <tr id="rate-domestic-rural">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">RGP (Rural) — within Gram Panchayat</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 50 <span class="tx-muted">units</span></span><b class="num">₹2.65<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">50 – 100 <span class="tx-muted">units</span></span><b class="num">₹3.10<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">100 – 250 <span class="tx-muted">units</span></span><b class="num">₹3.75<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 250 <span class="tx-muted">units</span></span><b class="num">₹4.90<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><table class="tariff-slab-table"><tbody><tr><td>up to 2 kW</td><td class="num">₹15<span class="tx-muted">/mo</span></td></tr><tr><td>above 2 to 4 kW</td><td class="num">₹25<span class="tx-muted">/mo</span></td></tr><tr><td>above 4 to 6 kW</td><td class="num">₹45<span class="tx-muted">/mo</span></td></tr><tr><td>above 6 kW</td><td class="num">₹70<span class="tx-muted">/mo</span></td></tr></tbody></table></td>
+          <td class="tt-fixed num"><table class="tariff-slab-table"><tbody><tr><td>up to 2 kW</td><td class="num">₹15<span class="tx-muted">/mo</span></td></tr><tr><td>above 2 to 4 kW</td><td class="num">₹25<span class="tx-muted">/mo</span></td></tr><tr><td>above 4 to 6 kW</td><td class="num">₹45<span class="tx-muted">/mo</span></td></tr><tr><td>above 6 kW</td><td class="num">₹70<span class="tx-muted">/mo</span></td></tr></tbody></table></td>
           <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty (ED)</span><b>7.5%</b></li></ul></td>
         </tr></tbody>
         </table>
@@ -285,20 +288,23 @@
       </header>
       <div class="tariff-table-wrap">
         <table class="tariff-table">
-          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <!-- Widths declared rather than left to the auto layout, which gave "Electricity Duty
+               5%" 173px and squeezed the supply-type name into 150px and three lines. -->
+          <colgroup><col class="tt-c-code"><col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th scope="col">Duty &amp; other</th></tr></thead>
           <tbody>
         <tr id="rate-commercial-upto10kw">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">Contracted load up to 10 kW</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹4.35<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><table class="tariff-slab-table"><tbody><tr><td>first 10 kW</td><td class="num">₹50<span class="tx-muted">/kW/mo</span></td></tr><tr><td>next 30 kW</td><td class="num">₹85<span class="tx-muted">/kW/mo</span></td></tr></tbody></table></td>
+          <td class="tt-fixed num"><table class="tariff-slab-table"><tbody><tr><td>first 10 kW</td><td class="num">₹50<span class="tx-muted">/kW/mo</span></td></tr><tr><td>next 30 kW</td><td class="num">₹85<span class="tx-muted">/kW/mo</span></td></tr></tbody></table></td>
           <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty (ED)</span><b>20%</b></li></ul></td>
         </tr>
         <tr id="rate-commercial-above10kw">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">Contracted load above 10 kW</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹4.65<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><table class="tariff-slab-table"><tbody><tr><td>first 10 kW</td><td class="num">₹50<span class="tx-muted">/kW/mo</span></td></tr><tr><td>next 30 kW</td><td class="num">₹85<span class="tx-muted">/kW/mo</span></td></tr></tbody></table></td>
+          <td class="tt-fixed num"><table class="tariff-slab-table"><tbody><tr><td>first 10 kW</td><td class="num">₹50<span class="tx-muted">/kW/mo</span></td></tr><tr><td>next 30 kW</td><td class="num">₹85<span class="tx-muted">/kW/mo</span></td></tr></tbody></table></td>
           <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty (ED)</span><b>20%</b></li></ul></td>
         </tr></tbody>
         </table>
@@ -319,13 +325,16 @@
       </header>
       <div class="tariff-table-wrap">
         <table class="tariff-table">
-          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <!-- Widths declared rather than left to the auto layout, which gave "Electricity Duty
+               5%" 173px and squeezed the supply-type name into 150px and three lines. -->
+          <colgroup><col class="tt-c-code"><col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th scope="col">Duty &amp; other</th></tr></thead>
           <tbody>
         <tr id="rate-agricultural">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">AG (Agriculture / Irrigation)</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹0.60<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹0</strong> <span class="tx-muted">/ month (flat)</span></td>
+          <td class="tt-fixed num">₹0<span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr></tbody>
         </table>

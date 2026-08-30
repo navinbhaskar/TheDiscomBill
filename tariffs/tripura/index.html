@@ -249,34 +249,37 @@
       </header>
       <div class="tariff-table-wrap">
         <table class="tariff-table">
-          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <!-- Widths declared rather than left to the auto layout, which gave "Electricity Duty
+               5%" 173px and squeezed the supply-type name into 150px and three lines. -->
+          <colgroup><col class="tt-c-code"><col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th scope="col">Duty &amp; other</th></tr></thead>
           <tbody>
         <tr id="rate-domestic-domestic">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">Domestic (rural and urban)</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 50 <span class="tx-muted">units</span></span><b class="num">₹4.86<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">50 – 150 <span class="tx-muted">units</span></span><b class="num">₹6.41<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">150 – 300 <span class="tx-muted">units</span></span><b class="num">₹7.32<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 300 <span class="tx-muted">units</span></span><b class="num">₹8.52<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹70</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-fixed num">₹70<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr>
         <tr id="rate-domestic-rural-low">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">Domestic (rural) — 50 units or fewer</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹3.94<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹70</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-fixed num">₹70<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr>
         <tr id="rate-domestic-kutir-jyoti">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">Kutir Jyoti</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹2.31<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹30</strong> <span class="tx-muted">/ month (flat)</span></td>
+          <td class="tt-fixed num">₹30<span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr>
         <tr id="rate-domestic-three-phase">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">Domestic — three phase (compulsory above 4 kW)</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹8.37<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹125</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-fixed num">₹125<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr></tbody>
         </table>
@@ -297,48 +300,51 @@
       </header>
       <div class="tariff-table-wrap">
         <table class="tariff-table">
-          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th class="num" scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th class="num" scope="col">Duty &amp; other</th></tr></thead>
+          <!-- Widths declared rather than left to the auto layout, which gave "Electricity Duty
+               5%" 173px and squeezed the supply-type name into 150px and three lines. -->
+          <colgroup><col class="tt-c-code"><col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
+          <thead><tr><th scope="col">Code</th><th scope="col">Supply type</th><th scope="col">Energy charge</th><th class="num" scope="col">Fixed charge</th><th scope="col">Duty &amp; other</th></tr></thead>
           <tbody>
         <tr id="rate-commercial-commercial">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">Commercial — single phase</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 150 <span class="tx-muted">units</span></span><b class="num">₹7.21<span class="tx-muted">/unit</span></b></li><li><span class="tt-slab-range">Above 150 <span class="tx-muted">units</span></span><b class="num">₹8.34<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹150</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-fixed num">₹150<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr>
         <tr id="rate-commercial-pan-shop">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">Small commercial / pan shop — 50 units or fewer</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹6.27<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹150</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-fixed num">₹150<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr>
         <tr id="rate-commercial-semi-commercial">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">Semi-commercial</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹8.40<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹195</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-fixed num">₹195<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr>
         <tr id="rate-commercial-three-phase">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">Commercial — three phase (compulsory above 4 kW)</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹8.62<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹195</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-fixed num">₹195<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr>
         <tr id="rate-commercial-non-domestic">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">Non-domestic / non-commercial — single phase up to 4 kVA</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹7.60<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹165</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-fixed num">₹165<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr>
         <tr id="rate-commercial-mobile-tower">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">Mobile tower</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">Above 0 <span class="tx-muted">units</span></span><b class="num">₹8.59<span class="tx-muted">/unit</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹320</strong> <span class="tx-muted">/ kW / month</span></td>
+          <td class="tt-fixed num">₹320<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><span class="tx-muted">—</span></td>
         </tr></tbody>
         </table>

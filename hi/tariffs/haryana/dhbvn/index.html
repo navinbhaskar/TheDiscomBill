@@ -255,27 +255,30 @@
       </header>
       <div class="tariff-table-wrap">
         <table class="tariff-table">
-          <thead><tr><th scope="col">कोड</th><th scope="col">आपूर्ति प्रकार</th><th class="num" scope="col">ऊर्जा शुल्क</th><th class="num" scope="col">फिक्स्ड चार्ज</th><th class="num" scope="col">ड्यूटी व अन्य</th></tr></thead>
+          <!-- Widths declared rather than left to the auto layout, which gave "Electricity Duty
+               5%" 173px and squeezed the supply-type name into 150px and three lines. -->
+          <colgroup><col class="tt-c-code"><col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
+          <thead><tr><th scope="col">कोड</th><th scope="col">आपूर्ति प्रकार</th><th scope="col">ऊर्जा शुल्क</th><th class="num" scope="col">फिक्स्ड चार्ज</th><th scope="col">ड्यूटी व अन्य</th></tr></thead>
           <tbody>
         <tr id="rate-domestic-ds1">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">DS Category I — sanctioned load up to 2 kW</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 50 <span class="tx-muted">यूनिट</span></span><b class="num">₹2.20<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">50 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹2.70<span class="tx-muted">/यूनिट</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹0</strong> <span class="tx-muted">/ माह (स्थिर)</span></td>
+          <td class="tt-fixed num">₹0<span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty</span><b>₹0.1</b></li><li><span>Municipal Tax</span><b>₹0.05</b></li></ul></td>
         </tr>
         <tr id="rate-domestic-ds2">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">DS Category II — sanctioned load up to 5 kW</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 150 <span class="tx-muted">यूनिट</span></span><b class="num">₹2.95<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">150 – 300 <span class="tx-muted">यूनिट</span></span><b class="num">₹5.25<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">300 – 500 <span class="tx-muted">यूनिट</span></span><b class="num">₹6.45<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">500 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹7.10<span class="tx-muted">/यूनिट</span></b></li></ul></td>
-          <td class="tt-fixed"><table class="tariff-slab-table"><tbody><tr><td>Up to 300 units — no fixed charge</td><td class="num">₹0<span class="tx-muted">/kW/माह</span></td></tr><tr><td>Above 300 units — ₹50/kW/month</td><td class="num">₹50<span class="tx-muted">/kW/माह</span></td></tr></tbody></table></td>
+          <td class="tt-fixed num">₹0<span class="ts-dash">–</span>50<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty</span><b>₹0.1</b></li><li><span>Municipal Tax</span><b>₹0.05</b></li></ul></td>
         </tr>
         <tr id="rate-domestic-ds3">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">DS Category III — sanctioned load above 5 kW</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 500 <span class="tx-muted">यूनिट</span></span><b class="num">₹6.50<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">500 – 1,000 <span class="tx-muted">यूनिट</span></span><b class="num">₹7.15<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">1,000 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹7.50<span class="tx-muted">/यूनिट</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹75</strong> <span class="tx-muted">/ kW / माह</span></td>
+          <td class="tt-fixed num">₹75<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty</span><b>₹0.1</b></li><li><span>Municipal Tax</span><b>₹0.05</b></li></ul></td>
         </tr></tbody>
         </table>
@@ -296,27 +299,30 @@
       </header>
       <div class="tariff-table-wrap">
         <table class="tariff-table">
-          <thead><tr><th scope="col">कोड</th><th scope="col">आपूर्ति प्रकार</th><th class="num" scope="col">ऊर्जा शुल्क</th><th class="num" scope="col">फिक्स्ड चार्ज</th><th class="num" scope="col">ड्यूटी व अन्य</th></tr></thead>
+          <!-- Widths declared rather than left to the auto layout, which gave "Electricity Duty
+               5%" 173px and squeezed the supply-type name into 150px and three lines. -->
+          <colgroup><col class="tt-c-code"><col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
+          <thead><tr><th scope="col">कोड</th><th scope="col">आपूर्ति प्रकार</th><th scope="col">ऊर्जा शुल्क</th><th class="num" scope="col">फिक्स्ड चार्ज</th><th scope="col">ड्यूटी व अन्य</th></tr></thead>
           <tbody>
         <tr id="rate-commercial-lt10">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">LT Supply — up to 10 kW</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹6.45<span class="tx-muted">/यूनिट</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹100</strong> <span class="tx-muted">/ kW / माह</span></td>
+          <td class="tt-fixed num">₹100<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty</span><b>₹0.1</b></li><li><span>Municipal Tax</span><b>₹0.05</b></li></ul></td>
         </tr>
         <tr id="rate-commercial-lt20">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">LT Supply — above 10 kW and up to 20 kW</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹6.80<span class="tx-muted">/यूनिट</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹100</strong> <span class="tx-muted">/ kW / माह</span></td>
+          <td class="tt-fixed num">₹100<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty</span><b>₹0.1</b></li><li><span>Municipal Tax</span><b>₹0.05</b></li></ul></td>
         </tr>
         <tr id="rate-commercial-lt50">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">LT Supply — above 20 kW and up to 50 kW</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹6.60<span class="tx-muted">/यूनिट</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹250</strong> <span class="tx-muted">/ kW / माह</span></td>
+          <td class="tt-fixed num">₹250<span class="tx-muted">/kW</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty</span><b>₹0.1</b></li><li><span>Municipal Tax</span><b>₹0.05</b></li></ul></td>
         </tr></tbody>
         </table>

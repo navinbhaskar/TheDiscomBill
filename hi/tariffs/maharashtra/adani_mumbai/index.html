@@ -257,13 +257,16 @@
       </header>
       <div class="tariff-table-wrap">
         <table class="tariff-table">
-          <thead><tr><th scope="col">कोड</th><th scope="col">आपूर्ति प्रकार</th><th class="num" scope="col">ऊर्जा शुल्क</th><th class="num" scope="col">फिक्स्ड चार्ज</th><th class="num" scope="col">ड्यूटी व अन्य</th></tr></thead>
+          <!-- Widths declared rather than left to the auto layout, which gave "Electricity Duty
+               5%" 173px and squeezed the supply-type name into 150px and three lines. -->
+          <colgroup><col class="tt-c-code"><col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
+          <thead><tr><th scope="col">कोड</th><th scope="col">आपूर्ति प्रकार</th><th scope="col">ऊर्जा शुल्क</th><th class="num" scope="col">फिक्स्ड चार्ज</th><th scope="col">ड्यूटी व अन्य</th></tr></thead>
           <tbody>
         <tr id="rate-domestic">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">LT-I (Residential)</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 – 100 <span class="tx-muted">यूनिट</span></span><b class="num">₹2.65<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">100 – 300 <span class="tx-muted">यूनिट</span></span><b class="num">₹5.85<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">300 – 500 <span class="tx-muted">यूनिट</span></span><b class="num">₹7.10<span class="tx-muted">/यूनिट</span></b></li><li><span class="tt-slab-range">500 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹8.35<span class="tx-muted">/यूनिट</span></b></li></ul></td>
-          <td class="tt-fixed"><table class="tariff-slab-table"><tbody><tr><td>Up to 100 units</td><td class="num">₹90<span class="tx-muted">/माह</span></td></tr><tr><td>101 – 500 units</td><td class="num">₹135<span class="tx-muted">/माह</span></td></tr><tr><td>Above 500 units</td><td class="num">₹160<span class="tx-muted">/माह</span></td></tr></tbody></table></td>
+          <td class="tt-fixed num">₹90<span class="ts-dash">–</span>160<span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty (ED)</span><b>16%</b></li></ul></td>
         </tr></tbody>
         </table>
@@ -280,13 +283,16 @@
       </header>
       <div class="tariff-table-wrap">
         <table class="tariff-table">
-          <thead><tr><th scope="col">कोड</th><th scope="col">आपूर्ति प्रकार</th><th class="num" scope="col">ऊर्जा शुल्क</th><th class="num" scope="col">फिक्स्ड चार्ज</th><th class="num" scope="col">ड्यूटी व अन्य</th></tr></thead>
+          <!-- Widths declared rather than left to the auto layout, which gave "Electricity Duty
+               5%" 173px and squeezed the supply-type name into 150px and three lines. -->
+          <colgroup><col class="tt-c-code"><col class="tt-c-name"><col class="tt-c-energy"><col class="tt-c-fixed"><col class="tt-c-extra"></colgroup>
+          <thead><tr><th scope="col">कोड</th><th scope="col">आपूर्ति प्रकार</th><th scope="col">ऊर्जा शुल्क</th><th class="num" scope="col">फिक्स्ड चार्ज</th><th scope="col">ड्यूटी व अन्य</th></tr></thead>
           <tbody>
         <tr id="rate-ht-industrial">
           <th scope="row" class="tt-code"><span class="tx-muted">—</span></th>
           <td class="tt-name">HT-I Industrial (HT · kVAh)</td>
           <td class="tt-energy"><ul class="tt-slabs"><li><span class="tt-slab-range">0 से अधिक <span class="tx-muted">यूनिट</span></span><b class="num">₹5.73<span class="tx-muted">/यूनिट</span></b></li></ul></td>
-          <td class="tt-fixed"><strong>₹400</strong> <span class="tx-muted">/ kVA / माह</span></td>
+          <td class="tt-fixed num">₹400<span class="tx-muted">/kVA</span><span class="tx-muted">/mo</span></td>
           <td class="tt-extra"><ul class="tt-extras"><li><span>Electricity Duty (ED)</span><b>9.3%</b></li></ul></td>
         </tr></tbody>
         </table>
