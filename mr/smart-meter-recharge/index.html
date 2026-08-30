@@ -98,7 +98,7 @@
   </script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://thediscombill.com/#org","name":"TheDiscomBill","url":"https://thediscombill.com/","logo":{"@type":"ImageObject","url":"https://thediscombill.com/icon-512.png","width":512,"height":512}}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://thediscombill.com/#website","name":"TheDiscomBill","url":"https://thediscombill.com/","publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN"}</script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/mr/smart-meter-recharge/","url":"https://thediscombill.com/mr/smart-meter-recharge/","name":"स्मार्ट मीटर रिचार्ज कसे करावे — प्रत्येक डिस्कॉमची गाइड","description":"प्रीपेड स्मार्ट मीटर ऑनलाइन रिचार्ज करण्याची डिस्कॉम-निहाय गाइड: अधिकृत पोर्टल, UPI/BBPS, रिचार्जमध्ये मिळणारी युनिट आणि कमी-बॅलन्सचे नियम — सर्व राज्यांसाठी.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-28"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://thediscombill.com/mr/smart-meter-recharge/","url":"https://thediscombill.com/mr/smart-meter-recharge/","name":"स्मार्ट मीटर रिचार्ज कसे करावे — प्रत्येक डिस्कॉमची गाइड","description":"प्रीपेड स्मार्ट मीटर ऑनलाइन रिचार्ज करण्याची डिस्कॉम-निहाय गाइड: अधिकृत पोर्टल, UPI/BBPS, रिचार्जमध्ये मिळणारी युनिट आणि कमी-बॅलन्सचे नियम — सर्व राज्यांसाठी.","isPartOf":{"@id":"https://thediscombill.com/#website"},"publisher":{"@id":"https://thediscombill.com/#org"},"inLanguage":"mr-IN","dateModified":"2026-08-30"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"होम","item":"https://thediscombill.com/"},{"@type":"ListItem","position":2,"name":"स्मार्ट मीटर रिचार्ज","item":"https://thediscombill.com/mr/smart-meter-recharge/"}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"स्मार्ट मीटर रिचार्ज कसे होते?","acceptedAnswer":{"@type":"Answer","text":"तुमच्या डिस्कॉमच्या अधिकृत पोर्टल/अ‍ॅप किंवा BBPS-समर्थित UPI अ‍ॅप (PhonePe, Google Pay, Paytm) मध्ये ग्राहक/मीटर क्रमांक टाकून रक्कम निवडा आणि पैसे भरा. बॅलन्स सहसा काही मिनिटांत अपडेट होतो. वर तुमचा डिस्कॉम निवडा — प्रत्येक पेजवर नेमकी पद्धत दिली आहे."}},{"@type":"Question","name":"प्रीपेड स्मार्ट मीटरमध्ये बॅलन्स संपला तर वीज लगेच खंडित होते का?","acceptedAnswer":{"@type":"Answer","text":"निगेटिव्ह बॅलन्सवर पुरवठा आपोआप खंडित होऊ शकतो, पण बहुतांश डिस्कॉम रात्री, रविवारी आणि सुट्टीत खंडित करत नाहीत. रिचार्ज करताच पुरवठा सहसा आपोआप पूर्ववत होतो."}},{"@type":"Question","name":"स्मार्ट मीटर सामान्य मीटरपेक्षा जास्त बिल बनवतो का?","acceptedAnswer":{"@type":"Answer","text":"नाही — दर तेच टॅरिफ आदेशाप्रमाणे राहतात. रीडिंग वाढण्याची खरी कारणे (जुन्या मीटरची कमी रीडिंग, थकबाकी समायोजन इ.) आमच्या <a href=\"/mr/guides/smart-meter-running-fast/\">मार्गदर्शकात</a> पाहा."}}]}</script>
 </head>
@@ -650,7 +650,11 @@
     var cards=[].slice.call(document.querySelectorAll('.seo-dir-state'));
     var regions=[].slice.call(document.querySelectorAll('.seo-dir-region'));
     var empty=document.getElementById('dirEmpty');
-    q.addEventListener('input',function(){
+    // The chip row only exists on the tariff directory; the smart-meter hub shares this script
+    // and has search alone, so everything chip-related stays behind this list being non-empty.
+    var chips=[].slice.call(document.querySelectorAll('#dirChips .seo-dir-chip'));
+    var region='all';
+    function apply(){
       var t=q.value.trim().toLowerCase(), shown=0;
       cards.forEach(function(c){
         var blob=c.getAttribute('data-search')||'', hit;
@@ -659,8 +663,26 @@
         else hit=blob.indexOf(t)>-1;
         c.hidden=!hit; if(hit)shown++;
       });
-      regions.forEach(function(r){r.hidden=!r.querySelector('.seo-dir-state:not([hidden])');});
+      regions.forEach(function(r){
+        // A region is shown when it holds a match AND the chip row is not filtering it out.
+        // Typing wins over the chip: a search for a state in another region would otherwise
+        // return nothing and look broken.
+        var inRegion=(region==='all'||t||r.getAttribute('data-region')===region);
+        r.hidden=!inRegion||!r.querySelector('.seo-dir-state:not([hidden])');
+      });
       if(empty)empty.hidden=shown>0;
+    }
+    q.addEventListener('input',apply);
+    chips.forEach(function(b){
+      b.addEventListener('click',function(){
+        region=b.getAttribute('data-region')||'all';
+        chips.forEach(function(o){
+          var on=o===b;
+          o.classList.toggle('is-active',on);
+          o.setAttribute('aria-pressed',on?'true':'false');
+        });
+        apply();
+      });
     });
   })();</script>
 </div>

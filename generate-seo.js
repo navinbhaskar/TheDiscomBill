@@ -3474,7 +3474,11 @@ function dirFilterScript() {
     var cards=[].slice.call(document.querySelectorAll('.seo-dir-state'));
     var regions=[].slice.call(document.querySelectorAll('.seo-dir-region'));
     var empty=document.getElementById('dirEmpty');
-    q.addEventListener('input',function(){
+    // The chip row only exists on the tariff directory; the smart-meter hub shares this script
+    // and has search alone, so everything chip-related stays behind this list being non-empty.
+    var chips=[].slice.call(document.querySelectorAll('#dirChips .seo-dir-chip'));
+    var region='all';
+    function apply(){
       var t=q.value.trim().toLowerCase(), shown=0;
       cards.forEach(function(c){
         var blob=c.getAttribute('data-search')||'', hit;
@@ -3483,8 +3487,26 @@ function dirFilterScript() {
         else hit=blob.indexOf(t)>-1;
         c.hidden=!hit; if(hit)shown++;
       });
-      regions.forEach(function(r){r.hidden=!r.querySelector('.seo-dir-state:not([hidden])');});
+      regions.forEach(function(r){
+        // A region is shown when it holds a match AND the chip row is not filtering it out.
+        // Typing wins over the chip: a search for a state in another region would otherwise
+        // return nothing and look broken.
+        var inRegion=(region==='all'||t||r.getAttribute('data-region')===region);
+        r.hidden=!inRegion||!r.querySelector('.seo-dir-state:not([hidden])');
+      });
       if(empty)empty.hidden=shown>0;
+    }
+    q.addEventListener('input',apply);
+    chips.forEach(function(b){
+      b.addEventListener('click',function(){
+        region=b.getAttribute('data-region')||'all';
+        chips.forEach(function(o){
+          var on=o===b;
+          o.classList.toggle('is-active',on);
+          o.setAttribute('aria-pressed',on?'true':'false');
+        });
+        apply();
+      });
     });
   })();</script>`;
 }
@@ -3553,9 +3575,25 @@ function directoryPage(states, lang = 'en') {
     const nDiscoms = `${discoms.length} ${T(lang, { hi: 'डिस्कॉम', mr: 'डिस्कॉम', ta: 'DISCOM', en: (discoms.length === 1 ? 'DISCOM' : 'DISCOMs') })}`;
     // Unique per-state stat line: real domestic rate span pulled from the tariff DB
     // (plus the verified badge), so no two state cards read the same.
+    //
+    // The rate gets its own line rather than trailing the DISCOM count. It is the figure people
+    // open this directory for, and sharing an 11px tertiary line with the count meant it was the
+    // faintest thing on the card *and* broke mid-figure ("₹3–₹8/" / "unit") in a narrow column.
     const st = stateDomesticStats(state);
-    const statLine = st
-      ? ` · <span class="seo-dir-rate">${T(lang, { hi: `घरेलू ${rupee(st.min)}–${rupee(st.max)}/यूनिट`, mr: `घरगुती ${rupee(st.min)}–${rupee(st.max)}/युनिट`, ta: `வீட்டு ${rupee(st.min)}–${rupee(st.max)}/யூனிட்`, en: `Domestic ${rupee(st.min)}–${rupee(st.max)}/unit` })}</span>${st.verified ? '<span class="seo-dir-verified" title="Verified against real bills">✓</span>' : ''}`
+    // A single flat domestic rate (Karnataka, Bihar) reads as "₹5.8–₹5.8/unit" if the span is
+    // printed unconditionally, which looks like a bug rather than a flat tariff.
+    const rateSpan = st ? (st.min === st.max ? rupee(st.min) : `${rupee(st.min)}–${rupee(st.max)}`) : '';
+    // The figure is wrapped on its own so it can never break across the dash, while the label
+    // before it stays free to drop to a second line — Tamil Nadu's ₹4.95–₹12.15/unit is 6px
+    // wider than the card column, and a hard nowrap on the whole line clipped it.
+    const rateLine = st
+      ? `<span class="seo-dir-rate">${T(lang, { hi: 'घरेलू', mr: 'घरगुती', ta: 'வீட்டு', en: 'Domestic' })} <b>${rateSpan}${T(lang, { hi: '/यूनिट', mr: '/युनिट', ta: '/யூனிட்', en: '/unit' })}</b></span>`
+      : '';
+    // Tariff year on the card. "Is this current?" is the first question a directory visitor has,
+    // and the answer used to live only in the comparison table 300px further down the page.
+    const fyLine = st && st.fy ? ` · ${esc(fyLabel(st.fy, lang))}` : '';
+    const tick = st && st.verified
+      ? ` <span class="seo-dir-tick">✓ ${esc(T(lang, { hi: 'सत्यापित', mr: 'पडताळलेले', ta: 'சரிபார்க்கப்பட்டது', en: 'verified' }))}</span>`
       : '';
     return `
       <div class="seo-dir-state" data-search="${esc(searchBlob)}">
@@ -3567,7 +3605,8 @@ function directoryPage(states, lang = 'en') {
                repair. Google reads the anchor text either way. -->
           <span class="seo-dir-state-meta">
             <span class="seo-dir-state-name">${esc(displayName)}<span class="seo-dir-arrow" aria-hidden="true">→</span></span>
-            <span class="seo-dir-count">${nDiscoms}${statLine}</span>
+            ${rateLine}
+            <span class="seo-dir-count">${nDiscoms}${fyLine}${tick}</span>
           </span>
         </a>
         <div class="seo-dir-discoms">${links}</div>
@@ -3581,11 +3620,24 @@ function directoryPage(states, lang = 'en') {
   const leftovers = states.filter(s => !REGIONS.some(r => r.states.includes(s)));
   if (leftovers.length) grouped.push({ en: 'Other', hi: 'अन्य', mr: 'इतर', ta: 'மற்றவை', color: '#64748b', states: leftovers });
 
+  // data-region keys the chip row below; the slug comes off the English name so it stays
+  // stable across the four language twins.
   const sections = grouped.map(r => `
-    <section class="seo-dir-region" style="--dir-accent:${r.color}">
+    <section class="seo-dir-region" data-region="${attr(slugify(r.en))}" style="--dir-accent:${r.color}">
       <h2 class="seo-dir-region-title"><span class="seo-dir-region-dot" aria-hidden="true"></span>${esc(r[lang] || r.en)} <span class="seo-dir-region-count">${r.states.length}</span></h2>
       <div class="seo-directory">${r.states.map(stateCard).join('')}</div>
     </section>`).join('');
+
+  // Region chips. Six regions already structure this page; the chips just let a phone jump to
+  // one instead of scrolling past 34 cards. Rendered server-side (so they are crawlable and
+  // cause no layout shift) and inert without JS, which costs nothing — the full list is still
+  // right there below them.
+  const allLabel = T(lang, { hi: 'पूरा भारत', mr: 'संपूर्ण भारत', ta: 'இந்தியா முழுவதும்', en: 'All India' });
+  const regionChips = `
+      <div class="seo-dir-chips" id="dirChips" role="group" aria-label="${attr(T(lang, { hi: 'क्षेत्र के अनुसार छाँटें', mr: 'प्रदेशानुसार गाळा', ta: 'பகுதி வாரியாக வடிகட்டு', en: 'Filter by region' }))}">
+        <button type="button" class="seo-dir-chip is-active" data-region="all" aria-pressed="true">${esc(allLabel)} <span class="seo-dir-chip-n">${states.length}</span></button>
+        ${grouped.map(r => `<button type="button" class="seo-dir-chip" data-region="${attr(slugify(r.en))}" aria-pressed="false" style="--dir-accent:${r.color}">${esc(r[lang] || r.en)} <span class="seo-dir-chip-n">${r.states.length}</span></button>`).join('')}
+      </div>`;
 
   // State-wise domestic rate comparison — unique aggregated content computed from the
   // tariff DB at build time (sorted cheapest-first, so the table itself answers the
@@ -3647,12 +3699,37 @@ function directoryPage(states, lang = 'en') {
 
   const filterScript = dirFilterScript();
 
+  // Coverage + freshness, both counted off the tariff DB at build time so neither figure can
+  // drift from the data. "100% free" used to sit in the third slot; a category count says
+  // something a visitor cannot already see, and the freshness split answers the question the
+  // page was silently leaving open — how much of this is on the current tariff order.
+  let categoryCount = 0, currentFyDiscoms = 0, latestFy = '';
+  for (const st of states) {
+    for (const d of getDiscoms(st)) {
+      categoryCount += (d.categories || []).length;
+      const fy = d.tariffYear || '';
+      if (fy && fy > latestFy) latestFy = fy;
+    }
+  }
+  if (latestFy) {
+    for (const st of states) {
+      for (const d of getDiscoms(st)) if ((d.tariffYear || '') === latestFy) currentFyDiscoms++;
+    }
+  }
+
   const heroStats = (labels) => `
       <div class="seo-dir-stats" role="list">
         <span class="seo-dir-stat" role="listitem"><strong>${states.length}</strong> ${labels.states}</span>
         <span class="seo-dir-stat" role="listitem"><strong>${totalDiscoms}</strong> ${labels.discoms}</span>
-        <span class="seo-dir-stat" role="listitem"><strong>100%</strong> ${labels.free}</span>
+        <span class="seo-dir-stat" role="listitem"><strong>${categoryCount}</strong> ${labels.categories}</span>
       </div>`;
+
+  const freshLine = latestFy ? `
+      <p class="seo-dir-fresh"><span class="seo-dir-fresh-dot" aria-hidden="true"></span>${T(lang, {
+        hi: `<strong>${totalDiscoms} में से ${currentFyDiscoms} डिस्कॉम</strong> ${esc(fyLabel(latestFy, lang))} के टैरिफ आदेश पर हैं; बाक़ी अपने नवीनतम प्रकाशित आदेश पर।`,
+        mr: `<strong>${totalDiscoms} पैकी ${currentFyDiscoms} डिस्कॉम</strong> ${esc(fyLabel(latestFy, lang))} च्या टॅरिफ आदेशावर आहेत; उर्वरित त्यांच्या नवीनतम प्रकाशित आदेशावर.`,
+        ta: `<strong>${totalDiscoms}-இல் ${currentFyDiscoms} DISCOM-கள்</strong> ${esc(fyLabel(latestFy, lang))} கட்டண ஆணையில் உள்ளன; மற்றவை அவற்றின் சமீபத்திய வெளியிடப்பட்ட ஆணையில்.`,
+        en: `<strong>${currentFyDiscoms} of ${totalDiscoms} DISCOMs</strong> are on ${esc(latestFy)} tariff orders; the rest are on their latest published order.` })}</p>` : '';
 
   const crumbDir = T(lang, { hi: 'टैरिफ डायरेक्टरी', mr: 'टॅरिफ डिरेक्टरी', ta: 'கட்டண டைரக்டரி', en: 'Tariffs Directory' });
   const bcHome = T(lang, { hi: 'होम', mr: 'होम', ta: 'முகப்பு', en: 'Home' });
@@ -3667,10 +3744,10 @@ function directoryPage(states, lang = 'en') {
     ta: 'உங்கள் மாநிலத்தைத் தேர்ந்தெடுத்து அதன் மின் பில் கணிப்பான் மற்றும் கட்டண அட்டவணையைத் திறக்கவும், அல்லது நேரடியாக உங்கள் விநியோக நிறுவனத்திற்குச் செல்லவும்.',
     en: 'Pick your state to open its electricity bill calculator and tariff schedule, or jump straight to your distribution company.' });
   const statLabels = T(lang, {
-    hi: { states: 'राज्य व केंद्र शासित प्रदेश', discoms: 'डिस्कॉम', free: 'मुफ़्त' },
-    mr: { states: 'राज्ये व केंद्रशासित प्रदेश', discoms: 'डिस्कॉम', free: 'मोफत' },
-    ta: { states: 'மாநிலங்கள் & யூடி', discoms: 'DISCOM-கள்', free: 'இலவசம்' },
-    en: { states: 'states &amp; UTs', discoms: 'DISCOMs', free: 'free' } });
+    hi: { states: 'राज्य व केंद्र शासित प्रदेश', discoms: 'डिस्कॉम', categories: 'उपभोक्ता श्रेणियाँ' },
+    mr: { states: 'राज्ये व केंद्रशासित प्रदेश', discoms: 'डिस्कॉम', categories: 'ग्राहक श्रेणी' },
+    ta: { states: 'மாநிலங்கள் & யூடி', discoms: 'DISCOM-கள்', categories: 'நுகர்வோர் வகைகள்' },
+    en: { states: 'states &amp; UTs', discoms: 'DISCOMs', categories: 'consumer categories' } });
   const searchPlaceholder = T(lang, {
     hi: 'राज्य या डिस्कॉम खोजें — जैसे दिल्ली, UP, MVVNL…',
     mr: 'राज्य किंवा डिस्कॉम शोधा — जसे दिल्ली, UP, MVVNL…',
@@ -3690,9 +3767,11 @@ function directoryPage(states, lang = 'en') {
     <h1>${dirH1}</h1>
     <div class="seo-dir-hero">
       <p class="seo-lead">${dirLead}</p>
-      ${heroStats(statLabels)}
       ${dirSearchBox(searchPlaceholder)}
+      ${heroStats(statLabels)}
+      ${freshLine}
     </div>
+    ${regionChips}
     ${sections}
     <p id="dirEmpty" class="seo-dir-empty" hidden>${emptyMsg}</p>
     ${comparisonHtml}

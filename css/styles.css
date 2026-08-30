@@ -5592,7 +5592,10 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 }
 /* Size comes from .seo-lead now; only the spacing is the hero's business. */
 .seo-dir-hero .seo-lead { margin-bottom: 12px; }
-.seo-dir-stats { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+/* Search comes before the stats in the hero now — it is what a returning visitor is reaching
+   for, and putting the chip row of counts first pushed the first state card off a phone. */
+.seo-dir-hero .seo-dir-search { margin-bottom: 12px; }
+.seo-dir-stats { display: flex; flex-wrap: wrap; gap: 8px; }
 .seo-dir-stat {
   display: inline-flex; align-items: baseline; gap: 5px; font-size: 12.5px; color: var(--text-secondary);
   background: var(--surface-card); border: 1px solid var(--border-default);
@@ -5609,6 +5612,46 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 }
 .seo-dir-search input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-subtle); }
 .seo-dir-search input::placeholder { color: var(--text-tertiary); }
+
+/* Freshness — how much of the directory sits on the newest tariff orders. The figures are
+   counted off the tariff DB at build time, so this line cannot drift from the data. */
+/* A block, not a flex row: as flex, the leading <strong> became its own item and broke
+   "50 of 66 DISCOMs" into a two-line column of its own on a phone. */
+.seo-dir-fresh { margin: 12px 0 0; font-size: 12px; line-height: 1.5; color: var(--text-secondary); }
+.seo-dir-fresh strong { color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.seo-dir-fresh-dot {
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 10px;
+  background: var(--success-text); box-shadow: 0 0 0 3px color-mix(in srgb, var(--success-text) 18%, transparent);
+}
+
+/* Region chips — a shortcut past 34 cards, not a replacement for them. Inert without JS. */
+.seo-dir-chips { display: flex; flex-wrap: wrap; gap: 7px; margin: 0 0 18px; }
+.seo-dir-chip {
+  --dir-accent: var(--brand);
+  display: inline-flex; align-items: baseline; gap: 6px; cursor: pointer;
+  font: inherit; font-size: 12.5px; font-weight: 500; color: var(--text-secondary);
+  background: var(--surface-card); border: 1px solid var(--border-default);
+  border-radius: var(--radius-full); padding: 6px 13px;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.seo-dir-chip:hover { color: var(--dir-accent); border-color: color-mix(in srgb, var(--dir-accent) 55%, transparent); }
+.seo-dir-chip.is-active {
+  color: var(--dir-accent); font-weight: 600;
+  border-color: color-mix(in srgb, var(--dir-accent) 60%, transparent);
+  background: color-mix(in srgb, var(--dir-accent) 10%, transparent);
+}
+.seo-dir-chip-n { font-size: 11px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; }
+.seo-dir-chip.is-active .seo-dir-chip-n { color: inherit; opacity: .75; }
+/* On a phone seven chips wrap to four rows and push the first state card off the screen —
+   exactly what this row exists to prevent. One swipeable strip instead. */
+@media (max-width: 560px) {
+  .seo-dir-chips {
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+    scroll-snap-type: x proximity;
+  }
+  .seo-dir-chips::-webkit-scrollbar { display: none; }
+  .seo-dir-chip { flex: none; scroll-snap-align: start; }
+}
 
 /* Directory hub — region groups */
 .seo-dir-region { --dir-accent: var(--brand); margin-bottom: 22px; }
@@ -5681,8 +5724,25 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
    override was already patching the symptom at 560px, but the card is only ~238px wide at
    every size, so it never fit anywhere. Two short lines beat one that escapes the border. */
 .seo-dir-count { font-size: 11px; font-weight: 500; color: var(--text-tertiary); }
-/* Per-state stat line (domestic rate span + verified tick) on directory cards */
-.seo-dir-rate { color: var(--text-tertiary); }
+/* The domestic rate is the figure the directory exists to give, so it gets its own line at
+   card-body weight instead of trailing the DISCOM count in tertiary 11px. nowrap keeps
+   "₹2.2–₹7.5/unit" from breaking across the slash; the line is short enough to fit the
+   ~206px column even for the widest span in the data. */
+.seo-dir-rate {
+  display: block; font-size: 12.5px; font-weight: 500; color: var(--text-secondary);
+  font-variant-numeric: tabular-nums; margin: 1px 0;
+}
+/* Only the figure is unbreakable: "₹2.2–₹7.5/unit" must not split across the dash, but the
+   label ahead of it may drop to a second line in a narrow column. */
+.seo-dir-rate b { font-weight: inherit; white-space: nowrap; }
+/* Was a bare ✓ whose meaning lived in a legend 300px down the page. */
+.seo-dir-tick {
+  display: inline-flex; align-items: center; gap: 2px; margin-left: 4px;
+  font-size: 10px; font-weight: 600; color: var(--success-text);
+  background: color-mix(in srgb, var(--success-text) 12%, transparent);
+  border-radius: var(--radius-full); padding: 1px 6px;
+}
+/* Still the comparison table's tick, where the legend under the table explains it. */
 .seo-dir-verified { color: var(--success-text); font-weight: 700; margin-left: 4px; }
 .seo-dir-discoms { display: flex; flex-wrap: wrap; gap: 5px; }
 /* The cap stops one long name owning a whole row. Maharashtra is the case: MSEDCL, Adani
