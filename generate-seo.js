@@ -29,6 +29,7 @@ import { DEFAULT_EXCESS_DEMAND } from './js/engine.js';
 import { buildTariffIndex } from './scripts/build-tariff-index.mjs';
 import { buildTariffDatabase } from './scripts/build-tariff-database.mjs';
 
+import { regulatorFor } from './grievance-content.js';
 import { SMG } from './smart-meter-content.js';
 import { METER_SVG, METER_DEVICE } from './smart-meter-svg.js';
 // The same seven-segment renderer the runtime uses, so the digits in the served HTML are the
@@ -2235,6 +2236,116 @@ function guideLinksHtml(state, discom, lang = 'en') {
 // State-page variant of guideLinksHtml: ONLY guides tagged to this state (no evergreen
 // filler — that would render the same three cards on all 36 state pages). Returns '' when
 // nothing is tagged so thin states don't get a boilerplate block.
+// Where a consumer complains, rendered onto every state page. This sits directly under the
+// DISCOM cards because that is the moment the reader knows which licensee is theirs, and a
+// state page is otherwise a dead end for anyone whose reaction to the slab table is "then my
+// bill is wrong".
+//
+// Every link here is either the licensee's own site (from the tariff module's verified
+// `website` field) or the regulator's (grievance-content.js). No phone numbers beyond 1912,
+// no addresses, no named officers — see the provenance rules in grievance-content.js.
+function stateGrievanceHtml(state, discoms, lang = 'en') {
+  const reg = regulatorFor(state);
+  const sl = esc(stateName(state, lang));
+  const linked = discoms.filter(d => d.website);
+  const guideHref = `${lang === 'en' ? '' : '/' + lang}/guides/bill-wrong-how-to-complain-and-win/`;
+
+  // The regulator's site stands in for the forum pages until a verified cgrfUrl/ombudsmanUrl
+  // is filled in, because the CGRF and the Ombudsman are both constituted under its
+  // regulations and it is the one address that stays correct as forums are reconstituted.
+  const regLink = (href) => href && reg && reg.url
+    ? `<a href="${attr(href)}" target="_blank" rel="noopener">${esc(reg.label)}</a>`
+    : (reg ? esc(reg.label) : '');
+  const cgrfWhere = reg ? regLink(reg.cgrfUrl || reg.url) : '';
+  const ombWhere = reg ? regLink(reg.ombudsmanUrl || reg.url) : '';
+
+  const portals = linked.length
+    ? linked.map(d => `<a href="${attr(d.website)}" target="_blank" rel="noopener">${esc(d.name)}</a>`).join(' · ')
+    : '';
+
+  const heading = T(lang, {
+    en: `Wrong bill in ${sl}? Where to complain`,
+    hi: `${sl} में बिल गलत है? शिकायत कहाँ करें`,
+    mr: `${sl} मध्ये बिल चुकीचे आहे? तक्रार कुठे करावी`,
+    ta: `${sl}: பில் தவறா? எங்கு புகார் செய்வது`,
+  });
+  const lead = T(lang, {
+    en: `Complain in this order and keep the complaint number at every step. Skipping a step is the commonest reason a genuine billing complaint is returned unheard.`,
+    hi: `इसी क्रम में शिकायत करें और हर चरण पर complaint number सुरक्षित रखें. चरण छोड़ना ही वह सबसे आम कारण है जिससे सही शिकायत भी बिना सुने लौटा दी जाती है.`,
+    mr: `याच क्रमाने तक्रार करा आणि प्रत्येक टप्प्यावर complaint number जपून ठेवा. टप्पा वगळणे हेच खऱ्या तक्रारीही न ऐकता परत जाण्याचे सर्वात सामान्य कारण आहे.`,
+    ta: `இதே வரிசையில் புகார் செய்யுங்கள், ஒவ்வொரு படியிலும் complaint number-ஐ வைத்திருங்கள். படியைத் தவிர்ப்பதே உண்மையான புகார்கூட விசாரிக்கப்படாமல் திரும்புவதற்கான மிகச் சாதாரண காரணம்.`,
+  });
+  const cols = T(lang, {
+    en: ['Step', 'Where it goes', 'What you need'],
+    hi: ['चरण', 'कहाँ जाएगा', 'क्या चाहिए'],
+    mr: ['टप्पा', 'कुठे जाईल', 'काय लागेल'],
+    ta: ['படி', 'எங்கு செல்லும்', 'என்ன தேவை'],
+  });
+  const rows = T(lang, {
+    en: [
+      ['1. DISCOM complaint desk', portals ? `${portals}, or the 24×7 helpline <a href="tel:1912">1912</a>` : `Your DISCOM's portal, app or local office, or the 24×7 helpline <a href="tel:1912">1912</a>`,
+        'Consumer number, bill number, the one disputed line, and a meter photo'],
+      ['2. Consumer Grievance Redressal Forum (CGRF)', cgrfWhere ? `Your DISCOM's forum, constituted under ${cgrfWhere} regulations` : `Your DISCOM's forum, constituted under your state regulator's regulations`,
+        'The first complaint number, and what the DISCOM did or failed to do about it'],
+      ['3. Electricity Ombudsman', ombWhere ? `The Ombudsman appointed by ${ombWhere}` : 'The Ombudsman appointed by your state regulator',
+        'The CGRF order, or proof the forum missed its deadline'],
+    ],
+    hi: [
+      ['1. DISCOM शिकायत डेस्क', portals ? `${portals}, या 24×7 हेल्पलाइन <a href="tel:1912">1912</a>` : `आपके DISCOM का portal, app या स्थानीय कार्यालय, या 24×7 हेल्पलाइन <a href="tel:1912">1912</a>`,
+        'उपभोक्ता संख्या, बिल संख्या, विवादित लाइन और meter की फोटो'],
+      ['2. उपभोक्ता शिकायत निवारण फोरम (CGRF)', cgrfWhere ? `आपके DISCOM का फोरम, ${cgrfWhere} के नियमों के तहत गठित` : `आपके DISCOM का फोरम, राज्य नियामक के नियमों के तहत गठित`,
+        'पहली शिकायत का number, और DISCOM ने उस पर क्या किया या नहीं किया'],
+      ['3. विद्युत लोकपाल', ombWhere ? `${ombWhere} द्वारा नियुक्त लोकपाल` : 'राज्य नियामक द्वारा नियुक्त लोकपाल',
+        'CGRF का आदेश, या यह प्रमाण कि फोरम ने समय-सीमा चूकी'],
+    ],
+    mr: [
+      ['1. DISCOM तक्रार डेस्क', portals ? `${portals}, किंवा 24×7 हेल्पलाइन <a href="tel:1912">1912</a>` : `तुमच्या DISCOM चे portal, app किंवा स्थानिक कार्यालय, किंवा 24×7 हेल्पलाइन <a href="tel:1912">1912</a>`,
+        'ग्राहक क्रमांक, बिल क्रमांक, वादग्रस्त line आणि meter चा फोटो'],
+      ['2. ग्राहक तक्रार निवारण मंच (CGRF)', cgrfWhere ? `तुमच्या DISCOM चा मंच, ${cgrfWhere} च्या नियमांखाली स्थापित` : `तुमच्या DISCOM चा मंच, राज्य नियामकाच्या नियमांखाली स्थापित`,
+        'पहिल्या तक्रारीचा number, आणि DISCOM ने त्यावर काय केले किंवा केले नाही'],
+      ['3. वीज लोकपाल', ombWhere ? `${ombWhere} ने नेमलेले लोकपाल` : 'राज्य नियामकाने नेमलेले लोकपाल',
+        'CGRF चा आदेश, किंवा मंचाने मुदत चुकवल्याचा पुरावा'],
+    ],
+    ta: [
+      ['1. DISCOM புகார் மையம்', portals ? `${portals}, அல்லது 24×7 உதவி எண் <a href="tel:1912">1912</a>` : `உங்கள் DISCOM-இன் portal, app அல்லது உள்ளூர் அலுவலகம், அல்லது 24×7 உதவி எண் <a href="tel:1912">1912</a>`,
+        'நுகர்வோர் எண், பில் எண், தகராறான line, மற்றும் meter புகைப்படம்'],
+      ['2. நுகர்வோர் குறைதீர் மன்றம் (CGRF)', cgrfWhere ? `உங்கள் DISCOM-இன் மன்றம், ${cgrfWhere} விதிகளின் கீழ் அமைக்கப்பட்டது` : `உங்கள் DISCOM-இன் மன்றம், மாநில ஒழுங்குமுறை ஆணையத்தின் விதிகளின் கீழ் அமைக்கப்பட்டது`,
+        'முதல் புகார் எண், மற்றும் DISCOM என்ன செய்தது அல்லது செய்யவில்லை'],
+      ['3. மின்சார குறைதீர்ப்பாளர்', ombWhere ? `${ombWhere} நியமித்த குறைதீர்ப்பாளர்` : 'மாநில ஒழுங்குமுறை ஆணையம் நியமித்த குறைதீர்ப்பாளர்',
+        'CGRF உத்தரவு, அல்லது மன்றம் காலக்கெடுவைத் தவறவிட்ட ஆதாரம்'],
+    ],
+  });
+  const note = T(lang, {
+    en: `<strong>Two deadlines worth knowing.</strong> Under the central Electricity Rights of Consumers Rules a grievance should normally be decided within 30 days and in any case within 45. And if the paper you received is an <em>assessment</em> under Section 126 for unauthorised use rather than an ordinary bill, it does not go to the CGRF at all — it is appealed to the Appellate Authority under Section 127, usually within 30 days.`,
+    hi: `<strong>दो समय-सीमाएँ याद रखें.</strong> केंद्रीय Electricity Rights of Consumers Rules के अनुसार शिकायत सामान्यतः 30 दिन में और हर हाल में 45 दिन के भीतर तय होनी चाहिए. और अगर आपको मिला कागज़ सामान्य बिल नहीं बल्कि unauthorised use पर धारा 126 का <em>assessment</em> है, तो वह CGRF में जाता ही नहीं — उसकी appeal धारा 127 के तहत Appellate Authority में होती है, आमतौर पर 30 दिन के भीतर.`,
+    mr: `<strong>दोन मुदती लक्षात ठेवा.</strong> केंद्रीय Electricity Rights of Consumers Rules नुसार तक्रार साधारणपणे 30 दिवसांत आणि कोणत्याही परिस्थितीत 45 दिवसांत निकाली निघावी. आणि तुम्हाला मिळालेला कागद सामान्य बिल नसून unauthorised use साठी कलम 126 चे <em>assessment</em> असेल, तर ते CGRF कडे जातच नाही — त्याचे appeal कलम 127 खाली Appellate Authority कडे, साधारण 30 दिवसांत.`,
+    ta: `<strong>தெரிந்திருக்க வேண்டிய இரு காலக்கெடுக்கள்.</strong> மத்திய Electricity Rights of Consumers Rules-இன்படி புகார் பொதுவாக 30 நாட்களுக்குள், எப்படியும் 45 நாட்களுக்குள் தீர்க்கப்பட வேண்டும். மேலும் உங்களுக்குக் கிடைத்த காகிதம் சாதாரண பில் அல்லாமல் unauthorised use-க்கான பிரிவு 126 <em>assessment</em> என்றால், அது CGRF-க்குச் செல்லவே இல்லை — பிரிவு 127-இன் கீழ் Appellate Authority-இடம் appeal, பொதுவாக 30 நாட்களுக்குள்.`,
+  });
+  const more = T(lang, {
+    en: 'Read the full complaint playbook, with wording you can copy →',
+    hi: 'पूरा शिकायत playbook पढ़ें, तैयार wording सहित →',
+    mr: 'संपूर्ण complaint playbook वाचा, तयार wording सह →',
+    ta: 'முழு புகார் வழிகாட்டியை, நகலெடுக்கக்கூடிய wording உடன் படியுங்கள் →',
+  });
+
+  const body = rows.map(([step, where, need]) =>
+    `<tr><td><strong>${esc(step)}</strong></td><td>${where}</td><td>${esc(need)}</td></tr>`).join('');
+
+  return `
+    <section class="seo-section" id="complaints">
+      <h2>${heading}</h2>
+      <p>${lead}</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr>${cols.map(c => `<th>${esc(c)}</th>`).join('')}</tr></thead>
+          <tbody>${body}</tbody>
+        </table>
+      </div>
+      <p class="seo-note">${note}</p>
+      <p><a href="${guideHref}">${more}</a></p>
+    </section>`;
+}
+
 function stateGuideLinksHtml(state, lang = 'en') {
   const picks = GUIDES.filter(g => (g.states || []).includes(state)).slice(0, 4);
   if (!picks.length) return '';
@@ -2987,6 +3098,17 @@ function statePage(state, lang = 'en') {
         mr: `${esc(sl)} मध्ये ${nd} डिस्कॉम ${many ? 'आहेत' : 'आहे'}: ${discomInline}. संपूर्ण टॅरिफ आणि अंदाजित बिलासाठी वर तुमचा डिस्कॉम उघडा.`,
         ta: `${esc(sl)} இல் ${nd} DISCOM உள்ளன: ${discomInline}. முழு கட்டணம் மற்றும் தோராயமான பில்லுக்கு மேலே உங்கள் DISCOM-ஐத் திறக்கவும்.`,
         en: '' }) });
+    {
+      const reg = regulatorFor(state);
+      const under = reg && reg.url ? `<a href="${attr(reg.url)}" target="_blank" rel="noopener">${esc(reg.label)}</a>` : '';
+      faqs.push({
+        q: T(lang, { hi: `${sl} में गलत बिजली बिल की शिकायत कहाँ करें?`, mr: `${sl} मध्ये चुकीच्या वीज बिलाची तक्रार कुठे करावी?`, ta: `${sl}: தவறான மின் பில் குறித்து எங்கு புகார் செய்வது?`, en: '' }),
+        a: T(lang, {
+          hi: `पहले अपने DISCOM के पास शिकायत करें, या 24×7 हेल्पलाइन 1912 पर — और complaint number रखें। समाधान न मिले तो अपने DISCOM के उपभोक्ता शिकायत निवारण फोरम (CGRF) और फिर विद्युत लोकपाल तक जाएँ${under ? `, दोनों ${under} के नियमों के तहत` : ''}। शिकायत सामान्यतः 30 दिन में और हर हाल में 45 दिन के भीतर तय होनी चाहिए।`,
+          mr: `आधी तुमच्या DISCOM कडे तक्रार करा, किंवा 24×7 हेल्पलाइन 1912 वर — आणि complaint number ठेवा. निराकरण न झाल्यास तुमच्या DISCOM च्या ग्राहक तक्रार निवारण मंचाकडे (CGRF) आणि नंतर वीज लोकपालाकडे जा${under ? `, दोन्ही ${under} च्या नियमांखाली` : ''}. तक्रार साधारणपणे 30 दिवसांत आणि कोणत्याही परिस्थितीत 45 दिवसांत निकाली निघावी.`,
+          ta: `முதலில் உங்கள் DISCOM-இடம் புகார் செய்யுங்கள், அல்லது 24×7 உதவி எண் 1912-இல் — complaint number-ஐ வைத்திருங்கள். தீர்வு கிடைக்கவில்லை என்றால் உங்கள் DISCOM-இன் நுகர்வோர் குறைதீர் மன்றம் (CGRF), பிறகு மின்சார குறைதீர்ப்பாளர் வரை செல்லுங்கள்${under ? `, இரண்டும் ${under} விதிகளின் கீழ்` : ''}. புகார் பொதுவாக 30 நாட்களுக்குள், எப்படியும் 45 நாட்களுக்குள் தீர்க்கப்பட வேண்டும்.`,
+          en: '' }) });
+    }
     if (stateMin != null) faqs.push({
       q: T(lang, { hi: `${sl} में सबसे सस्ती घरेलू बिजली दर क्या है?`, mr: `${sl} मध्ये सर्वात स्वस्त घरगुती वीज दर किती आहे?`, ta: `${sl} இல் மலிவான வீட்டு மின் கட்டணம் என்ன?`, en: '' }),
       a: T(lang, {
@@ -3051,6 +3173,7 @@ function statePage(state, lang = 'en') {
       <div class="seo-link-grid">${discomCards}</div>
     </section>
 
+    ${stateGrievanceHtml(state, discoms, lang)}
     ${stateGuideLinksHtml(state, lang)}
     ${stateToolLinksHtml(state, lang)}
     ${nearbyStatesHtml(state, lang)}
@@ -3115,6 +3238,13 @@ function statePage(state, lang = 'en') {
     a: `${esc(state)} is served by ${discoms.length} DISCOM${discoms.length > 1 ? 's' : ''}: ${discoms.map(d => { const a = parseArea(d.area); return `<strong>${esc(d.name)}</strong>${a.region ? ` (${esc(a.region)}${a.cities.length ? ` — ${esc(a.cities.slice(0, 3).join(', '))}` : ''})` : ''}`; }).join('; ')}. Open your DISCOM above for its full tariff and an indicative bill.` });
   if (stateMin != null) faqs.push({ q: `What is the cheapest domestic electricity rate in ${state}?`,
     a: `The lowest domestic energy charge across ${esc(state)} DISCOMs starts at about ${rupee(stateMin)} per unit (lowest slab), before fixed charges, FPPA and duty. Exact rates depend on your DISCOM and consumption slab.` });
+  {
+    const reg = regulatorFor(state);
+    const sites = discoms.filter(d => d.website)
+      .map(d => `<a href="${attr(d.website)}" target="_blank" rel="noopener">${esc(d.name)}</a>`).join(', ');
+    faqs.push({ q: `Where do I complain about a wrong electricity bill in ${state}?`,
+      a: `File first with your DISCOM${sites ? ` — ${sites}` : ''} — or on the 24×7 helpline 1912, and keep the complaint number. If it is not resolved, escalate to your DISCOM's Consumer Grievance Redressal Forum (CGRF) and then to the Electricity Ombudsman${reg && reg.url ? `, both constituted under <a href="${attr(reg.url)}" target="_blank" rel="noopener">${esc(reg.label)}</a> regulations` : ' appointed by your state regulator'}. A grievance should normally be decided within 30 days and in any case within 45.` });
+  }
   faqs.push({ q: `What is the current electricity tariff year for ${state}?`,
     a: `The rates shown are for ${esc(fy)}${meta.verified ? ', verified against the published tariff order' : ' (latest available)'}.` });
 
@@ -3140,6 +3270,7 @@ function statePage(state, lang = 'en') {
       <div class="seo-link-grid">${discomCards}</div>
     </section>
 
+    ${stateGrievanceHtml(state, discoms)}
     ${stateGuideLinksHtml(state)}
     ${stateToolLinksHtml(state)}
     ${nearbyStatesHtml(state)}
