@@ -200,99 +200,10 @@
         <a class="seo-link-card is-compact" data-icon="plug" href="/services/?state=Puducherry&amp;discom=pdicl#pay"><strong>PDICL / Electricity Dept. बिल देखें व भरें</strong><span>अपना ताज़ा बिल देखें और आधिकारिक पोर्टल पर भुगतान करें</span></a><a class="seo-link-card is-compact" data-icon="plug" href="/services/?state=Puducherry&amp;discom=pdicl#new-connection"><strong>नया PDICL / Electricity Dept. कनेक्शन</strong><span>शुल्क, दस्तावेज़ और आवेदन की चरण-दर-चरण प्रक्रिया</span></a><a class="seo-link-card is-compact" data-icon="plug" href="/services/?state=Puducherry&amp;discom=pdicl#complaint"><strong>PDICL / Electricity Dept. शिकायत दर्ज करें</strong><span>बिजली गुल, बिलिंग या मीटर की शिकायत डिस्कॉम में दर्ज करें</span></a><a class="seo-link-card is-compact" data-icon="gauge" href="/hi/smart-meter-recharge/puducherry/pdicl/"><strong>PDICL / Electricity Dept. स्मार्ट मीटर रिचार्ज</strong><span>प्रीपेड स्मार्ट मीटर ऑनलाइन रिचार्ज करने का तरीक़ा और यूनिट-अनुमान</span></a>
       </div>
     </section>
-    
-    <section class="seo-section" id="calculate">
-      <h2>PDICL / Electricity Dept. बिल का अनुमान लगाएँ</h2>
-      <p>अपनी यूनिट और स्वीकृत भार डालें — मदवार PDICL / Electricity Dept. अनुमान मिलेगा। नतीजा बिल को ऊर्जा
-      शुल्क, फिक्स्ड या डिमांड चार्ज, FPPA, बिजली शुल्क और लागू होने पर विलंब अधिभार में
-      तोड़कर दिखाता है।</p>
-      
-      <div class="pcalc" data-state="Puducherry" data-types="{&quot;pdicl&quot;:[[&quot;ltds2&quot;,&quot;LTDS-II — domestic (demand based)&quot;],[&quot;ltds1&quot;,&quot;LTDS-I — lifeline services (connected-load based)&quot;],[&quot;ltds3&quot;,&quot;LTDS-III — common service&quot;]]}" data-msgs="{&quot;pick&quot;:&quot;अपना सप्लाई प्रकार चुनें…&quot;,&quot;na&quot;:&quot;लागू नहीं — एकल घरेलू टैरिफ&quot;,&quot;busy&quot;:&quot;गणना हो रही है…&quot;,&quot;errUnits&quot;:&quot;इस महीने कितनी यूनिट इस्तेमाल हुईं, यह भरें।&quot;,&quot;errSupply&quot;:&quot;अपना सप्लाई प्रकार चुनें — इनकी दरें काफ़ी अलग हैं, इसलिए कोई सुरक्षित डिफ़ॉल्ट नहीं है। यह आपके बिल पर छपा होता है।&quot;,&quot;errTariff&quot;:&quot;वह टैरिफ उपलब्ध नहीं है।&quot;,&quot;errLoad&quot;:&quot;टैरिफ डेटा लोड नहीं हो सका। अपना कनेक्शन जाँचकर दोबारा कोशिश करें।&quot;}">
-      <form class="pcalc-form" id="pcalcForm">
-        <input type="hidden" id="pcDiscom" value="pdicl">
-        <!-- Not every DISCOM bands its domestic tariff. BESCOM has a single flat rate and no
-             supply types at all, and a required select with nothing in it made the form
-             impossible to submit. It is disabled rather than removed: on a state page the
-             DISCOM can change under it, and a field that appears and vanishes moves every
-             control below it. Disabled also says why it is inactive, which hiding cannot. -->
-        <div class="pcalc-field pcalc-field-wide" id="pcSupplyField">
-          <label for="pcSupply">सप्लाई प्रकार</label>
-          <select id="pcSupply" required>
-            <option value="">अपना सप्लाई प्रकार चुनें…</option><option value="ltds2">LTDS-II — domestic (demand based)</option><option value="ltds1">LTDS-I — lifeline services (connected-load based)</option><option value="ltds3">LTDS-III — common service</option>
-          </select>
-        </div>
-        <div class="pcalc-field">
-          <label for="pcUnits">खपत (यूनिट)</label>
-          <input type="number" id="pcUnits" inputmode="numeric" min="0" step="1" placeholder="250" required>
-        </div>
-        <div class="pcalc-field">
-          <label for="pcLoad">स्वीकृत भार (kW)</label>
-          <input type="number" id="pcLoad" inputmode="decimal" min="0" step="0.5" value="2">
-        </div>
-        <button type="submit" class="pcalc-go">बिल निकालें</button>
-      </form>
-      <p class="pcalc-note">घरेलू सप्लाई। हर विकल्प में कोष्ठक की संख्या पात्रता सीमा है — वही चुनें जिसमें
-      आपका कनेक्शन वाकई आता है, क्योंकि इनकी दरें काफ़ी अलग हैं। कमर्शियल सप्लाई,
-      टाइम-ऑफ-डे, सोलर एक्सपोर्ट या बकाया के लिए
-      <a href="/bill-calculator/">पूरा कैलकुलेटर</a> हर फ़ील्ड रखता है।</p>
-      <div class="pcalc-out" id="pcOut" hidden></div>
-      <script>(function(){
-        var f=document.getElementById("pcalcForm"); if(!f) return; var p=null;
-        function load(){ return p || (p = import("/js/page-calc.js")); }
-        // Focus is the earliest honest signal of intent: start fetching while they type, so
-        // the engine is usually already there by the time they press the button.
-        f.addEventListener("focusin", load, { once: true });
-        f.addEventListener("submit", function(e){
-          if (f.dataset.ready) return;   // the module owns submit once it has attached
-          e.preventDefault();
-          load().then(function(){ f.requestSubmit(); });
-        });
-      })();</script>
-      </div>
-    </section>
 
-    
-    <section class="seo-section">
-      <h2>PDICL / Electricity Dept. एक नज़र में</h2>
-      <table class="seo-facts"><tbody><tr><th>वितरण कंपनी</th><td>Puducherry Electricity Dept. / PDI Corporation Ltd.</td></tr><tr><th>संक्षिप्त नाम</th><td>PDICL / Electricity Dept.</td></tr><tr><th>राज्य / केंद्र शासित प्रदेश</th><td>पुदुचेरी</td></tr><tr><th>सेवा क्षेत्र</th><td>Puducherry, Karaikal, Mahe, Yanam</td></tr><tr><th>टैरिफ वर्ष</th><td>2026-27</td></tr><tr><th>दरों की स्थिति</th><td>2026-27 टैरिफ आदेश पर आधारित (हमारे पास उपलब्ध नवीनतम प्रकाशित डेटा)</td></tr><tr><th>घरेलू ऊर्जा दर</th><td>₹2.65 – ₹7.95 प्रति यूनिट</td></tr><tr><th>आधिकारिक वेबसाइट</th><td><a href="https://electricity.py.gov.in" target="_blank" rel="noopener">electricity.py.gov.in ↗</a></td></tr></tbody></table>
-    </section>
-    
-    <section class="seo-section" id="rating">
-      <h2>PDICL / Electricity Dept. की रेटिंग</h2>
-      <div class="rating-block">
-        <div class="rating-grade" data-grade="A">
-          <span class="rating-grade-value">A</span>
-          <span class="rating-grade-label">इंटिग्रेटेड रेटिंग · FY 2024-25</span>
-        </div>
-        <div class="rating-detail">
-          <p>PDICL / Electricity Dept. ने 80.95 अंक पाए और 11 राज्य बिजली विभागों में 6वें स्थान पर है।</p>
-          
-          <p class="rating-scope">यह रेटिंग कंपनी की वित्तीय और परिचालन स्थिति आंकती है — AT&amp;C हानि, बिलिंग और वसूली दक्षता, लागत और आय का अंतर। यह बिजली की आपूर्ति या सेवा की गुणवत्ता का माप नहीं है, और इससे आपका टैरिफ नहीं बदलता।</p>
-          <p class="rating-src"><a href="https://web.archive.org/web/20260421013237/https://www.pfcindia.co.in/ensite/DocumentRepository/ckfinder/files/GoI_Initiatives/Annual_Integrated_Ratings_of_State_DISCOMs/14th_Annual_Integrated%20Rating%20and%20Ranking%20of%20Power%20Distribution_Utilities.pdf" target="_blank" rel="noopener">14th Annual Integrated Rating &amp; Ranking of Power Distribution Utilities ↗</a><br>
-          <span class="guide-meta">Power Finance Corporation Ltd (PFC), for the Ministry of Power · प्रकाशित 2026-01-23</span></p>
-        </div>
-      </div>
-    </section>
-    
-    <section class="seo-section">
-      <h2>PDICL / Electricity Dept. का सेवा क्षेत्र</h2>
-      <p>PDICL / Electricity Dept. Puducherry, Karaikal, Mahe, Yanam में बिजली वितरित करती है।</p>
-      
-    </section>
-    
-    <section class="seo-section" id="common-calculations">
-      <h2>अनुमानित मासिक बिल — PDICL / Electricity Dept.</h2>
-      <p>2 kW स्वीकृत भार पर घरेलू (LTDS (Domestic Service)) कनेक्शन का अनुमानित कुल मासिक बिल, हमारे कैलकुलेटर वाले ही इंजन से निकाला गया। वास्तविक बिल आपकी उप-श्रेणी, फिक्स्ड/ईंधन शुल्क और स्थानीय करों के अनुसार बदलते हैं।</p>
-      <div class="comparison-table-wrapper">
-        <table class="comparison-table">
-          <thead><tr><th>मासिक खपत</th><th class="num">अनुमानित बिल</th></tr></thead>
-          <tbody><tr><td>200 यूनिट</td><td class="num">₹780</td></tr><tr><td>300 यूनिट</td><td class="num">₹1,400</td></tr><tr><td>500 यूनिट</td><td class="num">₹2,960</td></tr><tr><td>750 यूनिट</td><td class="num">₹4,935</td></tr></tbody>
-        </table>
-      </div>
-      <p class="seo-cta-row"><a class="seo-cta" href="/?state=Puducherry&amp;discom=pdicl#calculator">मेरा सटीक PDICL / Electricity Dept. बिल निकालें →</a></p>
-    </section>
-
-    <section class="seo-section">
+    <!-- Same four movements as the English page — answer, what moves it, what to do,
+         provenance — so a reader switching language does not land on a different page. -->
+    <section class="seo-section" id="current-tariff">
       <h2>PDICL / Electricity Dept. टैरिफ अनुसूची (2026-27)</h2>
       
       <div class="tariff-cards">
@@ -557,6 +468,68 @@
     </article></div>
     </section>
 
+    
+    <section class="seo-section" id="calculate">
+      <h2>PDICL / Electricity Dept. बिल का अनुमान लगाएँ</h2>
+      <p>अपनी यूनिट और स्वीकृत भार डालें — मदवार PDICL / Electricity Dept. अनुमान मिलेगा। नतीजा बिल को ऊर्जा
+      शुल्क, फिक्स्ड या डिमांड चार्ज, FPPA, बिजली शुल्क और लागू होने पर विलंब अधिभार में
+      तोड़कर दिखाता है।</p>
+      
+      <div class="pcalc" data-state="Puducherry" data-types="{&quot;pdicl&quot;:[[&quot;ltds2&quot;,&quot;LTDS-II — domestic (demand based)&quot;],[&quot;ltds1&quot;,&quot;LTDS-I — lifeline services (connected-load based)&quot;],[&quot;ltds3&quot;,&quot;LTDS-III — common service&quot;]]}" data-msgs="{&quot;pick&quot;:&quot;अपना सप्लाई प्रकार चुनें…&quot;,&quot;na&quot;:&quot;लागू नहीं — एकल घरेलू टैरिफ&quot;,&quot;busy&quot;:&quot;गणना हो रही है…&quot;,&quot;errUnits&quot;:&quot;इस महीने कितनी यूनिट इस्तेमाल हुईं, यह भरें।&quot;,&quot;errSupply&quot;:&quot;अपना सप्लाई प्रकार चुनें — इनकी दरें काफ़ी अलग हैं, इसलिए कोई सुरक्षित डिफ़ॉल्ट नहीं है। यह आपके बिल पर छपा होता है।&quot;,&quot;errTariff&quot;:&quot;वह टैरिफ उपलब्ध नहीं है।&quot;,&quot;errLoad&quot;:&quot;टैरिफ डेटा लोड नहीं हो सका। अपना कनेक्शन जाँचकर दोबारा कोशिश करें।&quot;}">
+      <form class="pcalc-form" id="pcalcForm">
+        <input type="hidden" id="pcDiscom" value="pdicl">
+        <!-- Not every DISCOM bands its domestic tariff. BESCOM has a single flat rate and no
+             supply types at all, and a required select with nothing in it made the form
+             impossible to submit. It is disabled rather than removed: on a state page the
+             DISCOM can change under it, and a field that appears and vanishes moves every
+             control below it. Disabled also says why it is inactive, which hiding cannot. -->
+        <div class="pcalc-field pcalc-field-wide" id="pcSupplyField">
+          <label for="pcSupply">सप्लाई प्रकार</label>
+          <select id="pcSupply" required>
+            <option value="">अपना सप्लाई प्रकार चुनें…</option><option value="ltds2">LTDS-II — domestic (demand based)</option><option value="ltds1">LTDS-I — lifeline services (connected-load based)</option><option value="ltds3">LTDS-III — common service</option>
+          </select>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcUnits">खपत (यूनिट)</label>
+          <input type="number" id="pcUnits" inputmode="numeric" min="0" step="1" placeholder="250" required>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcLoad">स्वीकृत भार (kW)</label>
+          <input type="number" id="pcLoad" inputmode="decimal" min="0" step="0.5" value="2">
+        </div>
+        <button type="submit" class="pcalc-go">बिल निकालें</button>
+      </form>
+      <p class="pcalc-note">घरेलू सप्लाई। हर विकल्प में कोष्ठक की संख्या पात्रता सीमा है — वही चुनें जिसमें
+      आपका कनेक्शन वाकई आता है, क्योंकि इनकी दरें काफ़ी अलग हैं। कमर्शियल सप्लाई,
+      टाइम-ऑफ-डे, सोलर एक्सपोर्ट या बकाया के लिए
+      <a href="/bill-calculator/">पूरा कैलकुलेटर</a> हर फ़ील्ड रखता है।</p>
+      <div class="pcalc-out" id="pcOut" hidden></div>
+      <script>(function(){
+        var f=document.getElementById("pcalcForm"); if(!f) return; var p=null;
+        function load(){ return p || (p = import("/js/page-calc.js")); }
+        // Focus is the earliest honest signal of intent: start fetching while they type, so
+        // the engine is usually already there by the time they press the button.
+        f.addEventListener("focusin", load, { once: true });
+        f.addEventListener("submit", function(e){
+          if (f.dataset.ready) return;   // the module owns submit once it has attached
+          e.preventDefault();
+          load().then(function(){ f.requestSubmit(); });
+        });
+      })();</script>
+      </div>
+    </section>
+    
+    <section class="seo-section" id="common-calculations">
+      <h2>अनुमानित मासिक बिल — PDICL / Electricity Dept.</h2>
+      <p>2 kW स्वीकृत भार पर घरेलू (LTDS (Domestic Service)) कनेक्शन का अनुमानित कुल मासिक बिल, हमारे कैलकुलेटर वाले ही इंजन से निकाला गया। वास्तविक बिल आपकी उप-श्रेणी, फिक्स्ड/ईंधन शुल्क और स्थानीय करों के अनुसार बदलते हैं।</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>मासिक खपत</th><th class="num">अनुमानित बिल</th></tr></thead>
+          <tbody><tr><td>200 यूनिट</td><td class="num">₹780</td></tr><tr><td>300 यूनिट</td><td class="num">₹1,400</td></tr><tr><td>500 यूनिट</td><td class="num">₹2,960</td></tr><tr><td>750 यूनिट</td><td class="num">₹4,935</td></tr></tbody>
+        </table>
+      </div>
+      <p class="seo-cta-row"><a class="seo-cta" href="/?state=Puducherry&amp;discom=pdicl#calculator">मेरा सटीक PDICL / Electricity Dept. बिल निकालें →</a></p>
+    </section>
     <!-- Was English-only, and only on discomPage(): the six charges every bill carries were
          explained on /tariffs/<state>/<discom>/ but not on its /hi/, /mr/ or /ta/ twin. -->
     
@@ -566,18 +539,7 @@
         <article data-icon="bolt"><h3>ऊर्जा शुल्क</h3><p>बिलिंग अवधि में खपत यूनिट की स्लैब-वार कीमत। टेलिस्कोपिक स्लैब में हर बैंड अपनी दर से बिल होता है।</p></article><article data-icon="plug"><h3>फिक्स्ड शुल्क</h3><p>स्वीकृत भार, कनेक्टेड लोड, बिलिंग डिमांड या उपभोक्ता श्रेणी से जुड़ा मासिक शुल्क। खपत कम होने पर भी यह लगता है।</p></article><article data-icon="gov"><h3>बिजली शुल्क (ड्यूटी)</h3><p>सरकार द्वारा लगाया गया वैधानिक कर। राज्य के अनुसार यह ऊर्जा शुल्क, फिक्स्ड शुल्क या बिल के चुनिंदा हिस्सों पर लग सकता है।</p></article><article data-icon="trend"><h3>FPPA (Fuel and Power Purchase Adjustment)</h3><p>ईंधन एवं विद्युत क्रय समायोजन। यह आधार टैरिफ़ से कहीं ज़्यादा बार बदलता है और शुल्क या क्रेडिट, दोनों रूप में आ सकता है।</p></article><article data-icon="cash"><h3>बकाया</h3><p>पिछला बकाया, सुधार, सुरक्षा जमा समायोजन या पिछले चक्र की रकम जो इस बिल में जोड़ी गई है।</p></article><article data-icon="clock"><h3>विलंब भुगतान अधिभार (LPSC)</h3><p>देय तिथि निकल जाने पर लगने वाला विलंब भुगतान अधिभार। इससे बचने के लिए देय तिथि देखिए और आधिकारिक डिस्कॉम माध्यम से भुगतान कीजिए।</p></article>
       </div>
     </section>
-    
-    <section class="seo-section">
-      <h2>अपना PDICL / Electricity Dept. बिल समझें</h2>
-      <p>ये शुल्क लाइनें नई लगती हैं? हमारी <a href="/hi/glossary/">बिजली बिल शब्दावली</a> PDICL / Electricity Dept. बिल के शब्दों को आसान भाषा में समझाती है — जिनमें <a href="/hi/glossary/#fppa">FPPA (ईंधन अधिभार)</a>, <a href="/hi/glossary/#fixed-charge">फिक्स्ड चार्ज</a>, <a href="/hi/glossary/#telescopic-slabs">स्लैब-वार दरें</a>, <a href="/hi/glossary/#sanctioned-load">स्वीकृत भार</a>, <a href="/hi/glossary/#electricity-duty">बिजली शुल्क</a> शामिल हैं।</p>
-    </section>
-    
-    <section class="seo-section is-aside">
-      <h2>PDICL / Electricity Dept. बिल से जुड़ी गाइड</h2>
-      <div class="seo-link-grid is-compact"><a class="seo-link-card is-compact" data-icon="guide" href="/hi/guides/how-fppa-fuel-surcharge-is-calculated/"><strong>आपके बिजली बिल पर FPPA (ईंधन अधिभार) कैसे निकाला जाता है</strong><small>6 मिनट</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/hi/guides/reduce-fixed-charges-sanctioned-load/"><strong>स्वीकृत भार सही करके फिक्स्ड चार्ज कैसे घटाएँ</strong><small>5 मिनट</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/hi/guides/why-did-my-electricity-bill-increase/"><strong>मेरा बिजली बिल अचानक क्यों बढ़ गया?</strong><small>7 मिनट</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/hi/guides/bill-wrong-how-to-complain-and-win/"><strong>बिल गलत है? शिकायत कैसे करें और मामला कैसे जीतें</strong><small>13 मिनट</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/hi/guides/on-grid-vs-hybrid-solar/"><strong>ऑन-ग्रिड बनाम हाइब्रिड सोलर: आपके घर को असल में क्या चाहिए</strong><small>8 मिनट</small></a></div>
-      <p><a href="/hi/guides/">सभी गाइड देखें →</a></p>
-    </section>
-    
+
     <section class="seo-section"><h2>अक्सर पूछे जाने वाले सवाल</h2>
     <details class="seo-faq-item">
       <summary>PDICL / Electricity Dept. बिजली बिल कैसे निकालें?</summary>
@@ -591,6 +553,51 @@
       <summary>PDICL / Electricity Dept. बिजली बिल ऑनलाइन कैसे भरें?</summary>
       <div class="seo-faq-a">आधिकारिक PDICL / Electricity Dept. पोर्टल <a href="https://electricity.py.gov.in" target="_blank" rel="noopener">electricity.py.gov.in</a> पर भुगतान करें। पहले इस पेज से जाँचें कि बिल कितना होना चाहिए, फिर आधिकारिक स्रोत पर भरें।</div>
     </details></section>
+    
+    <section class="seo-section">
+      <h2>अपना PDICL / Electricity Dept. बिल समझें</h2>
+      <p>ये शुल्क लाइनें नई लगती हैं? हमारी <a href="/hi/glossary/">बिजली बिल शब्दावली</a> PDICL / Electricity Dept. बिल के शब्दों को आसान भाषा में समझाती है — जिनमें <a href="/hi/glossary/#fppa">FPPA (ईंधन अधिभार)</a>, <a href="/hi/glossary/#fixed-charge">फिक्स्ड चार्ज</a>, <a href="/hi/glossary/#telescopic-slabs">स्लैब-वार दरें</a>, <a href="/hi/glossary/#sanctioned-load">स्वीकृत भार</a>, <a href="/hi/glossary/#electricity-duty">बिजली शुल्क</a> शामिल हैं।</p>
+    </section>
+    
+    <section class="seo-section is-aside">
+      <h2>PDICL / Electricity Dept. बिल से जुड़ी गाइड</h2>
+      <div class="seo-link-grid is-compact"><a class="seo-link-card is-compact" data-icon="guide" href="/hi/guides/how-fppa-fuel-surcharge-is-calculated/"><strong>आपके बिजली बिल पर FPPA (ईंधन अधिभार) कैसे निकाला जाता है</strong><small>6 मिनट</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/hi/guides/reduce-fixed-charges-sanctioned-load/"><strong>स्वीकृत भार सही करके फिक्स्ड चार्ज कैसे घटाएँ</strong><small>5 मिनट</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/hi/guides/why-did-my-electricity-bill-increase/"><strong>मेरा बिजली बिल अचानक क्यों बढ़ गया?</strong><small>7 मिनट</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/hi/guides/bill-wrong-how-to-complain-and-win/"><strong>बिल गलत है? शिकायत कैसे करें और मामला कैसे जीतें</strong><small>13 मिनट</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/hi/guides/on-grid-vs-hybrid-solar/"><strong>ऑन-ग्रिड बनाम हाइब्रिड सोलर: आपके घर को असल में क्या चाहिए</strong><small>8 मिनट</small></a></div>
+      <p><a href="/hi/guides/">सभी गाइड देखें →</a></p>
+    </section>
+
+    
+    <section class="seo-section" id="about">
+      <h2>PDICL / Electricity Dept. के बारे में</h2>
+      
+    <div class="seo-subsection">
+      <h3>PDICL / Electricity Dept. का सेवा क्षेत्र</h3>
+      <p>PDICL / Electricity Dept. Puducherry, Karaikal, Mahe, Yanam में बिजली वितरित करती है।</p>
+      
+    </div>
+      
+    <div class="seo-subsection">
+      <h3>PDICL / Electricity Dept. एक नज़र में</h3>
+      <table class="seo-facts"><tbody><tr><th>वितरण कंपनी</th><td>Puducherry Electricity Dept. / PDI Corporation Ltd.</td></tr><tr><th>संक्षिप्त नाम</th><td>PDICL / Electricity Dept.</td></tr><tr><th>राज्य / केंद्र शासित प्रदेश</th><td>पुदुचेरी</td></tr><tr><th>दरों की स्थिति</th><td>2026-27 टैरिफ आदेश पर आधारित (हमारे पास उपलब्ध नवीनतम प्रकाशित डेटा)</td></tr><tr><th>घरेलू ऊर्जा दर</th><td>₹2.65 – ₹7.95 प्रति यूनिट</td></tr><tr><th>आधिकारिक वेबसाइट</th><td><a href="https://electricity.py.gov.in" target="_blank" rel="noopener">electricity.py.gov.in ↗</a></td></tr></tbody></table>
+    </div>
+      
+    <div class="seo-subsection">
+      <h3>PDICL / Electricity Dept. की रेटिंग</h3>
+      <div class="rating-block">
+        <div class="rating-grade" data-grade="A">
+          <span class="rating-grade-value">A</span>
+          <span class="rating-grade-label">इंटिग्रेटेड रेटिंग · FY 2024-25</span>
+        </div>
+        <div class="rating-detail">
+          <p>PDICL / Electricity Dept. ने 80.95 अंक पाए और 11 राज्य बिजली विभागों में 6वें स्थान पर है।</p>
+          
+          <p class="rating-scope">यह रेटिंग कंपनी की वित्तीय और परिचालन स्थिति आंकती है — AT&amp;C हानि, बिलिंग और वसूली दक्षता, लागत और आय का अंतर। यह बिजली की आपूर्ति या सेवा की गुणवत्ता का माप नहीं है, और इससे आपका टैरिफ नहीं बदलता।</p>
+          <p class="rating-src"><a href="https://web.archive.org/web/20260421013237/https://www.pfcindia.co.in/ensite/DocumentRepository/ckfinder/files/GoI_Initiatives/Annual_Integrated_Ratings_of_State_DISCOMs/14th_Annual_Integrated%20Rating%20and%20Ranking%20of%20Power%20Distribution_Utilities.pdf" target="_blank" rel="noopener">14th Annual Integrated Rating &amp; Ranking of Power Distribution Utilities ↗</a><br>
+          <span class="guide-meta">Power Finance Corporation Ltd (PFC), for the Ministry of Power · प्रकाशित 2026-01-23</span></p>
+        </div>
+      </div>
+    </div>
+    </section>
+    
     <p class="seo-disclaimer">आँकड़े सार्वजनिक रूप से उपलब्ध पुदुचेरी टैरिफ आदेशों पर आधारित अनुमानित हैं। हमेशा अपने आधिकारिक PDICL / Electricity Dept. बिल से मिलान करें — दरें उप-श्रेणी, स्लैब और शहर के अनुसार बदलती हैं।</p>
   </section>
 </div>

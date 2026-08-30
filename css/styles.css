@@ -4312,6 +4312,14 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
 /* The tables that stay: give them the scroll they now rely on. */
 .seo-section > .comparison-table-wrapper { overflow-x: auto; }
 .seo-section > h2 { font-size: 20px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.3px; margin: 0 0 14px; }
+/* Subsections — a helper's own <section> folded into a parent block (asSubsection() in
+   generate-seo.js), used by "About <DISCOM>" and the surcharge block. The section rules above
+   are written as direct-child selectors, so the ones that matter are restated one level in. */
+.seo-subsection { margin-top: 26px; }
+.seo-section > h2 + .seo-subsection { margin-top: 0; }
+.seo-subsection > * { max-width: var(--w-text); }
+.seo-subsection > .comparison-table-wrapper { overflow-x: auto; }
+.seo-subsection > h3 { font-size: 16px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.2px; margin: 0 0 12px; }
 .seo-section p { color: var(--text-secondary); line-height: 1.65; margin: 0 0 14px; max-width: 760px; }
 .seo-section ul, .seo-section ol { color: var(--text-secondary); line-height: 1.65; margin: 0 0 14px; padding-left: 24px; max-width: 760px; }
 .seo-section li { margin-bottom: 10px; }

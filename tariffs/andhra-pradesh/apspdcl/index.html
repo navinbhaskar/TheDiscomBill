@@ -193,110 +193,17 @@
     <p><a class="tariff-source" href="https://www.apspdcl.in" target="_blank" rel="noopener">Official APSPDCL source ↗</a></p>
     
     <nav class="discom-portal-actions" aria-label="APSPDCL consumer portal shortcuts">
-      <a class="discom-action-card" data-icon="calc" href="/?state=Andhra%20Pradesh&amp;amp;discom=apspdcl#calculator"><strong>Calculate bill</strong><span>Estimate an itemised APSPDCL bill with tariff, duty and surcharge</span></a><a class="discom-action-card" data-icon="table" href="#current-tariff"><strong>Current tariff</strong><span>Open the slab table, fixed charge and category rules</span></a><a class="discom-action-card" data-icon="trend" href="#latest-fppa"><strong>Latest FPPA</strong><span>Check the current variable surcharge and history</span></a><a class="discom-action-card" data-icon="doc" href="#common-calculations"><strong>Bill examples</strong><span>Compare 200, 300, 500 and 750 unit examples</span></a><a class="discom-action-card" data-icon="cash" href="/services/?state=Andhra%20Pradesh&amp;amp;discom=apspdcl#pay"><strong>Pay or view bill</strong><span>Use the official portal or payment channel</span></a><a class="discom-action-card" data-icon="chat" href="/services/?state=Andhra%20Pradesh&amp;amp;discom=apspdcl#complaint"><strong>Complaint</strong><span>Find complaint route and escalation reminders</span></a><a class="discom-action-card" data-icon="gauge" href="/smart-meter-recharge/andhra-pradesh/apspdcl/"><strong>Smart meter</strong><span>Recharge prepaid smart meter and estimate units</span></a><a class="discom-action-card" data-icon="sun" href="/solar-calculator/"><strong>Solar</strong><span>Estimate rooftop solar savings before applying officially</span></a><a class="discom-action-card" data-icon="globe" href="https://www.apspdcl.in" target="_blank" rel="noopener"><strong>Official site</strong><span>Open www.apspdcl.in</span></a>
+      <a class="discom-action-card" data-icon="table" href="#current-tariff"><strong>Current tariff</strong><span>Open the slab table, fixed charge and category rules</span></a><a class="discom-action-card" data-icon="calc" href="/?state=Andhra%20Pradesh&amp;amp;discom=apspdcl#calculator"><strong>Calculate bill</strong><span>Estimate an itemised APSPDCL bill with tariff, duty and surcharge</span></a><a class="discom-action-card" data-icon="trend" href="#latest-fppa"><strong>Latest FPPA</strong><span>Check the current variable surcharge and history</span></a><a class="discom-action-card" data-icon="doc" href="#common-calculations"><strong>Bill examples</strong><span>Compare 200, 300, 500 and 750 unit examples</span></a><a class="discom-action-card" data-icon="cash" href="/services/?state=Andhra%20Pradesh&amp;amp;discom=apspdcl#pay"><strong>Pay or view bill</strong><span>Use the official portal or payment channel</span></a><a class="discom-action-card" data-icon="chat" href="/services/?state=Andhra%20Pradesh&amp;amp;discom=apspdcl#complaint"><strong>Complaint</strong><span>Find complaint route and escalation reminders</span></a><a class="discom-action-card" data-icon="gauge" href="/smart-meter-recharge/andhra-pradesh/apspdcl/"><strong>Smart meter</strong><span>Recharge prepaid smart meter and estimate units</span></a><a class="discom-action-card" data-icon="sun" href="/solar-calculator/"><strong>Solar</strong><span>Estimate rooftop solar savings before applying officially</span></a><a class="discom-action-card" data-icon="globe" href="https://www.apspdcl.in" target="_blank" rel="noopener"><strong>Official site</strong><span>Open www.apspdcl.in</span></a>
     </nav>
-    
-    <section class="seo-section" id="calculate">
-      <h2>Estimate your APSPDCL bill</h2>
-      <p>Enter your units and sanctioned load for an itemised APSPDCL estimate. The result breaks
-      the bill into energy charge, fixed or demand charge, FPPA, duty,
-      and late-payment surcharge where applicable.</p>
-      
-      <div class="pcalc" data-state="Andhra Pradesh" data-types="{&quot;apspdcl&quot;:[]}" data-msgs="{&quot;pick&quot;:&quot;Select your supply type…&quot;,&quot;na&quot;:&quot;Not applicable — single domestic tariff&quot;,&quot;busy&quot;:&quot;Calculating…&quot;,&quot;errUnits&quot;:&quot;Enter how many units you used this month.&quot;,&quot;errSupply&quot;:&quot;Choose your supply type — the rates differ sharply between them, so there is no safe default. It is printed on your bill.&quot;,&quot;errTariff&quot;:&quot;That tariff is unavailable.&quot;,&quot;errLoad&quot;:&quot;Could not load the tariff data. Check your connection and try again.&quot;}">
-      <form class="pcalc-form" id="pcalcForm">
-        <input type="hidden" id="pcDiscom" value="apspdcl">
-        <!-- Not every DISCOM bands its domestic tariff. BESCOM has a single flat rate and no
-             supply types at all, and a required select with nothing in it made the form
-             impossible to submit. It is disabled rather than removed: on a state page the
-             DISCOM can change under it, and a field that appears and vanishes moves every
-             control below it. Disabled also says why it is inactive, which hiding cannot. -->
-        <div class="pcalc-field pcalc-field-wide" id="pcSupplyField">
-          <label for="pcSupply">Supply type</label>
-          <select id="pcSupply" disabled>
-            <option value="">Not applicable — single domestic tariff</option>
-          </select>
-        </div>
-        <div class="pcalc-field">
-          <label for="pcUnits">Units consumed</label>
-          <input type="number" id="pcUnits" inputmode="numeric" min="0" step="1" placeholder="250" required>
-        </div>
-        <div class="pcalc-field">
-          <label for="pcLoad">Sanctioned load (kW)</label>
-          <input type="number" id="pcLoad" inputmode="decimal" min="0" step="0.5" value="2">
-        </div>
-        <button type="submit" class="pcalc-go">Calculate bill</button>
-      </form>
-      <p class="pcalc-note">Domestic supply. The bracket in each option is the eligibility
-      limit — pick the one your connection actually falls under, because the rates differ
-      sharply between them. For commercial supply, time-of-day, solar export or arrears, the
-      <a href="/bill-calculator/">full calculator</a> carries every field.</p>
-      <div class="pcalc-out" id="pcOut" hidden></div>
-      <script>(function(){
-        var f=document.getElementById("pcalcForm"); if(!f) return; var p=null;
-        function load(){ return p || (p = import("/js/page-calc.js")); }
-        // Focus is the earliest honest signal of intent: start fetching while they type, so
-        // the engine is usually already there by the time they press the button.
-        f.addEventListener("focusin", load, { once: true });
-        f.addEventListener("submit", function(e){
-          if (f.dataset.ready) return;   // the module owns submit once it has attached
-          e.preventDefault();
-          load().then(function(){ f.requestSubmit(); });
-        });
-      })();</script>
-      </div>
-    </section>
 
-    
-    <section class="seo-section">
-      <h2>APSPDCL at a glance</h2>
-      <table class="seo-facts"><tbody><tr><th>Distribution company</th><td>Southern Power Distribution Company of Andhra Pradesh Ltd.</td></tr><tr><th>Short name</th><td>APSPDCL</td></tr><tr><th>State / UT</th><td>Andhra Pradesh</td></tr><tr><th>Service region</th><td>Southern AP</td></tr><tr><th>Districts / cities served</th><td>9+ — Kurnool, Nandyal, Anantapuramu, Nellore, Chittoor, Kadapa…</td></tr><tr><th>Tariff year</th><td>2026-27</td></tr><tr><th>Rates status</th><td>Based on the 2026-27 tariff order (latest published data we have)</td></tr><tr><th>Domestic energy rate</th><td>₹1.90 – ₹9.75 per unit</td></tr><tr><th>Official website</th><td><a href="https://www.apspdcl.in" target="_blank" rel="noopener">www.apspdcl.in ↗</a></td></tr></tbody></table>
-    </section>
-    
-    <section class="seo-section" id="rating">
-      <h2>How APSPDCL is rated</h2>
-      <div class="rating-block">
-        <div class="rating-grade" data-grade="B">
-          <span class="rating-grade-value">B</span>
-          <span class="rating-grade-label">Integrated Rating · FY 2024-25</span>
-        </div>
-        <div class="rating-detail">
-          <p>APSPDCL scored 54.24 and ranks 27 of 54 state and private distribution utilities — up a grade from the 13th report.</p>
-          
-          <p class="rating-scope">The rating scores the utility’s financial and operational performance — AT&amp;C losses, billing and collection efficiency, the gap between what supply costs and what it earns, and the regulatory support the utility gets. It is not a measure of supply reliability or customer service, and it does not affect your tariff.</p>
-          <p class="rating-src"><a href="https://web.archive.org/web/20260421013237/https://www.pfcindia.co.in/ensite/DocumentRepository/ckfinder/files/GoI_Initiatives/Annual_Integrated_Ratings_of_State_DISCOMs/14th_Annual_Integrated%20Rating%20and%20Ranking%20of%20Power%20Distribution_Utilities.pdf" target="_blank" rel="noopener">14th Annual Integrated Rating &amp; Ranking of Power Distribution Utilities ↗</a><br>
-          <span class="guide-meta">Power Finance Corporation Ltd (PFC), for the Ministry of Power · published 2026-01-23</span></p>
-        </div>
-      </div>
-    </section>
-    
-    <section class="seo-section" id="latest-fppa">
-      <h2>Current APSPDCL FPPA (Fuel and Power Purchase Adjustment)</h2>
-      <div class="comparison-table-wrapper">
-        <table class="comparison-table">
-          <tbody>
-            <tr><th>Current applicable FPPA</th><td><strong class="fs-pending">Not available</strong></td></tr>
-            <tr><th>Applicable period</th><td>No verified period in tracker</td></tr>
-            <tr><th>Last updated</th><td>30 August 2026</td></tr>
-            <tr><th>Official source</th><td>No verified FPPA source recorded yet</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="seo-note">Enter the surcharge printed on your bill manually in the calculator. <a href="/fppa/">Open the surcharge tracker</a>.</p>
-    </section>
-    
-    
-    <section class="seo-section" id="common-calculations">
-      <h2>Common APSPDCL bill calculations</h2>
-      <p>Typical domestic examples for a 2 kW LT-I (Domestic) connection, computed with the same engine as the calculator. Use them as a quick sanity check; your actual bill changes with sub-category, arrears, FPPA, duty and billing-period length.</p>
-      <div class="comparison-table-wrapper">
-        <table class="comparison-table">
-          <thead><tr><th>Monthly consumption</th><th class="num">Estimated bill</th></tr></thead>
-          <tbody><tr><td>200 units</td><td class="num">₹899</td></tr><tr><td>300 units</td><td class="num">₹1,711</td></tr><tr><td>500 units</td><td class="num">₹3,573</td></tr><tr><td>750 units</td><td class="num">₹6,026</td></tr></tbody>
-        </table>
-      </div>
-      <p class="seo-cta-row"><a class="seo-cta" href="/?state=Andhra%20Pradesh&amp;discom=apspdcl#calculator">Calculate my exact APSPDCL bill →</a></p>
-    </section>
-
+    <!-- Page order, deliberately, in four movements:
+         1. the answer      — the slab tables the H1 and title promise, then the calculator
+         2. what moves it   — surcharge, worked examples, what each bill line means
+         3. what to do      — FAQ, official services, guides
+         4. provenance      — sources, about the utility, its siblings
+         The tables used to sit eighth, roughly four screens down, behind a credit-rating
+         widget and two surcharge sections that describe an adjustment to a rate the reader
+         had not been shown yet. -->
     <section class="seo-section" id="current-tariff">
       <h2>Current APSPDCL tariff (2026-27)</h2>
       <p class="seo-note">APSPDCL applies the same state-wide 2026-27 tariff schedule as the other Andhra Pradesh DISCOMs (set by the state regulator). What differs by company is the <strong>service area</strong>, billing portal and contact details below.</p>
@@ -465,18 +372,112 @@
     </section>
 
     
+    <section class="seo-section" id="calculate">
+      <h2>Estimate your APSPDCL bill</h2>
+      <p>Enter your units and sanctioned load for an itemised APSPDCL estimate. The result breaks
+      the bill into energy charge, fixed or demand charge, FPPA, duty,
+      and late-payment surcharge where applicable.</p>
+      
+      <div class="pcalc" data-state="Andhra Pradesh" data-types="{&quot;apspdcl&quot;:[]}" data-msgs="{&quot;pick&quot;:&quot;Select your supply type…&quot;,&quot;na&quot;:&quot;Not applicable — single domestic tariff&quot;,&quot;busy&quot;:&quot;Calculating…&quot;,&quot;errUnits&quot;:&quot;Enter how many units you used this month.&quot;,&quot;errSupply&quot;:&quot;Choose your supply type — the rates differ sharply between them, so there is no safe default. It is printed on your bill.&quot;,&quot;errTariff&quot;:&quot;That tariff is unavailable.&quot;,&quot;errLoad&quot;:&quot;Could not load the tariff data. Check your connection and try again.&quot;}">
+      <form class="pcalc-form" id="pcalcForm">
+        <input type="hidden" id="pcDiscom" value="apspdcl">
+        <!-- Not every DISCOM bands its domestic tariff. BESCOM has a single flat rate and no
+             supply types at all, and a required select with nothing in it made the form
+             impossible to submit. It is disabled rather than removed: on a state page the
+             DISCOM can change under it, and a field that appears and vanishes moves every
+             control below it. Disabled also says why it is inactive, which hiding cannot. -->
+        <div class="pcalc-field pcalc-field-wide" id="pcSupplyField">
+          <label for="pcSupply">Supply type</label>
+          <select id="pcSupply" disabled>
+            <option value="">Not applicable — single domestic tariff</option>
+          </select>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcUnits">Units consumed</label>
+          <input type="number" id="pcUnits" inputmode="numeric" min="0" step="1" placeholder="250" required>
+        </div>
+        <div class="pcalc-field">
+          <label for="pcLoad">Sanctioned load (kW)</label>
+          <input type="number" id="pcLoad" inputmode="decimal" min="0" step="0.5" value="2">
+        </div>
+        <button type="submit" class="pcalc-go">Calculate bill</button>
+      </form>
+      <p class="pcalc-note">Domestic supply. The bracket in each option is the eligibility
+      limit — pick the one your connection actually falls under, because the rates differ
+      sharply between them. For commercial supply, time-of-day, solar export or arrears, the
+      <a href="/bill-calculator/">full calculator</a> carries every field.</p>
+      <div class="pcalc-out" id="pcOut" hidden></div>
+      <script>(function(){
+        var f=document.getElementById("pcalcForm"); if(!f) return; var p=null;
+        function load(){ return p || (p = import("/js/page-calc.js")); }
+        // Focus is the earliest honest signal of intent: start fetching while they type, so
+        // the engine is usually already there by the time they press the button.
+        f.addEventListener("focusin", load, { once: true });
+        f.addEventListener("submit", function(e){
+          if (f.dataset.ready) return;   // the module owns submit once it has attached
+          e.preventDefault();
+          load().then(function(){ f.requestSubmit(); });
+        });
+      })();</script>
+      </div>
+    </section>
+    
+    <section class="seo-section" id="latest-fppa">
+      <h2>APSPDCL FPPA — current rate and trend</h2>
+      
+    <div class="seo-subsection">
+      <h3>Current APSPDCL FPPA (Fuel and Power Purchase Adjustment)</h3>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <tbody>
+            <tr><th>Current applicable FPPA</th><td><strong class="fs-pending">Not available</strong></td></tr>
+            <tr><th>Applicable period</th><td>No verified period in tracker</td></tr>
+            <tr><th>Last updated</th><td>30 August 2026</td></tr>
+            <tr><th>Official source</th><td>No verified FPPA source recorded yet</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="seo-note">Enter the surcharge printed on your bill manually in the calculator. <a href="/fppa/">Open the surcharge tracker</a>.</p>
+    </div>
+      
+    </section>
+    
+    <section class="seo-section" id="common-calculations">
+      <h2>Common APSPDCL bill calculations</h2>
+      <p>Typical domestic examples for a 2 kW LT-I (Domestic) connection, computed with the same engine as the calculator. Use them as a quick sanity check; your actual bill changes with sub-category, arrears, FPPA, duty and billing-period length.</p>
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead><tr><th>Monthly consumption</th><th class="num">Estimated bill</th></tr></thead>
+          <tbody><tr><td>200 units</td><td class="num">₹899</td></tr><tr><td>300 units</td><td class="num">₹1,711</td></tr><tr><td>500 units</td><td class="num">₹3,573</td></tr><tr><td>750 units</td><td class="num">₹6,026</td></tr></tbody>
+        </table>
+      </div>
+      <p class="seo-cta-row"><a class="seo-cta" href="/?state=Andhra%20Pradesh&amp;discom=apspdcl#calculator">Calculate my exact APSPDCL bill →</a></p>
+    </section>
+    
     <section class="seo-section">
       <h2>Understanding your APSPDCL bill</h2>
       <div class="discom-explain-grid">
         <article data-icon="bolt"><h3>Energy charge</h3><p>The slab-wise price of the units consumed during the billing period. In telescopic slabs, each band is billed at its own rate.</p></article><article data-icon="plug"><h3>Fixed charge</h3><p>A monthly charge linked to sanctioned load, connected load, billing demand or consumer category. It applies even when usage is low.</p></article><article data-icon="gov"><h3>Electricity duty</h3><p>A statutory government levy. Depending on the state, it may apply on energy charges, fixed charges, or selected bill components.</p></article><article data-icon="trend"><h3>FPPA (Fuel and Power Purchase Adjustment)</h3><p>Fuel and power-purchase adjustment. It changes more often than the base tariff and may appear as a charge or a credit.</p></article><article data-icon="cash"><h3>Arrears</h3><p>Unpaid balance, corrections, security-deposit adjustments or previous-cycle amounts carried into the current bill.</p></article><article data-icon="clock"><h3>LPSC</h3><p>Late Payment Surcharge on overdue amounts. Check the due date and pay through the official DISCOM channel to avoid it.</p></article>
       </div>
     </section>
-    
-    <section class="seo-section">
-      <h2>Areas served by APSPDCL</h2>
-      <p>APSPDCL (Southern Power Distribution Company of Andhra Pradesh Ltd.) distributes electricity across Southern AP, serving 9 key districts and towns including Kurnool, Nandyal, Anantapuramu, Nellore and more.</p>
-      <div class="seo-area-chips"><span>Kurnool</span><span>Nandyal</span><span>Anantapuramu</span><span>Nellore</span><span>Chittoor</span><span>Kadapa</span><span>Annamayya</span><span>Tirupati</span><span>Sri Sathya Sai</span></div>
-    </section>
+
+    <section class="seo-section"><h2>Frequently asked questions</h2>
+    <details class="seo-faq-item">
+      <summary>How do I calculate my APSPDCL electricity bill?</summary>
+      <div class="seo-faq-a">Open the <a href="/?state=Andhra%20Pradesh&amp;discom=apspdcl#calculator">APSPDCL bill calculator</a>, enter your units consumed and sanctioned load, and it applies the 2026-27 APSPDCL slab rates, fixed charge and other charges to produce an itemised provisional bill.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>Which areas and cities does APSPDCL serve?</summary>
+      <div class="seo-faq-a">APSPDCL (Southern Power Distribution Company of Andhra Pradesh Ltd.) supplies electricity to Southern AP — Kurnool, Nandyal, Anantapuramu, Nellore, Chittoor, Kadapa, Annamayya, Tirupati, Sri Sathya Sai.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>What is the cheapest domestic electricity rate on APSPDCL?</summary>
+      <div class="seo-faq-a">APSPDCL's domestic energy charge starts at ₹1.9 per unit and rises to ₹9.75 per unit in the highest slab (LT-I (Domestic)), plus a monthly fixed charge (latest available estimate). The full slab table is above.</div>
+    </details>
+    <details class="seo-faq-item">
+      <summary>How do I pay my APSPDCL electricity bill online?</summary>
+      <div class="seo-faq-a">Pay on the official APSPDCL portal at <a href="https://www.apspdcl.in" target="_blank" rel="noopener">www.apspdcl.in</a>. Use this page first to check what your bill should be, then pay on the authentic source.</div>
+    </details></section>
     
     <section class="seo-section is-aside" id="consumer-services">
       <h2>APSPDCL consumer services</h2>
@@ -521,6 +522,7 @@
       <div class="seo-link-grid is-compact"><a class="seo-link-card is-compact" data-icon="guide" href="/guides/how-fppa-fuel-surcharge-is-calculated/"><strong>How FPPA (Fuel Surcharge) Is Calculated on Your Electricity Bill</strong><small>6 min read</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/guides/reduce-fixed-charges-sanctioned-load/"><strong>How to Reduce Fixed Charges by Right-Sizing Your Sanctioned Load</strong><small>5 min read</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/guides/why-did-my-electricity-bill-increase/"><strong>Why Did My Electricity Bill Suddenly Increase?</strong><small>7 min read</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/guides/bill-wrong-how-to-complain-and-win/"><strong>Bill wrong? How to complain and win</strong><small>13 min read</small></a><a class="seo-link-card is-compact" data-icon="guide" href="/guides/on-grid-vs-hybrid-solar/"><strong>On-Grid vs Hybrid Solar: Which One Your House Actually Needs</strong><small>8 min read</small></a></div>
       <p><a href="/guides/">Browse all guides →</a></p>
     </section>
+
     
     <section class="seo-section">
       <h2>Sources</h2>
@@ -531,6 +533,38 @@
         
         <tr><th>Page updated</th><td>30 August 2026</td></tr>
       </tbody></table>
+    </section>
+    
+    <section class="seo-section" id="about">
+      <h2>About APSPDCL</h2>
+      
+    <div class="seo-subsection">
+      <h3>Areas served by APSPDCL</h3>
+      <p>APSPDCL (Southern Power Distribution Company of Andhra Pradesh Ltd.) distributes electricity across Southern AP, serving 9 key districts and towns including Kurnool, Nandyal, Anantapuramu, Nellore and more.</p>
+      <div class="seo-area-chips"><span>Kurnool</span><span>Nandyal</span><span>Anantapuramu</span><span>Nellore</span><span>Chittoor</span><span>Kadapa</span><span>Annamayya</span><span>Tirupati</span><span>Sri Sathya Sai</span></div>
+    </div>
+      
+    <div class="seo-subsection">
+      <h3>APSPDCL at a glance</h3>
+      <table class="seo-facts"><tbody><tr><th>Distribution company</th><td>Southern Power Distribution Company of Andhra Pradesh Ltd.</td></tr><tr><th>Short name</th><td>APSPDCL</td></tr><tr><th>State / UT</th><td>Andhra Pradesh</td></tr><tr><th>Districts / cities served</th><td>9+ — Kurnool, Nandyal, Anantapuramu, Nellore, Chittoor, Kadapa…</td></tr><tr><th>Rates status</th><td>Based on the 2026-27 tariff order (latest published data we have)</td></tr><tr><th>Domestic energy rate</th><td>₹1.90 – ₹9.75 per unit</td></tr><tr><th>Official website</th><td><a href="https://www.apspdcl.in" target="_blank" rel="noopener">www.apspdcl.in ↗</a></td></tr></tbody></table>
+    </div>
+      
+    <div class="seo-subsection">
+      <h3>How APSPDCL is rated</h3>
+      <div class="rating-block">
+        <div class="rating-grade" data-grade="B">
+          <span class="rating-grade-value">B</span>
+          <span class="rating-grade-label">Integrated Rating · FY 2024-25</span>
+        </div>
+        <div class="rating-detail">
+          <p>APSPDCL scored 54.24 and ranks 27 of 54 state and private distribution utilities — up a grade from the 13th report.</p>
+          
+          <p class="rating-scope">The rating scores the utility’s financial and operational performance — AT&amp;C losses, billing and collection efficiency, the gap between what supply costs and what it earns, and the regulatory support the utility gets. It is not a measure of supply reliability or customer service, and it does not affect your tariff.</p>
+          <p class="rating-src"><a href="https://web.archive.org/web/20260421013237/https://www.pfcindia.co.in/ensite/DocumentRepository/ckfinder/files/GoI_Initiatives/Annual_Integrated_Ratings_of_State_DISCOMs/14th_Annual_Integrated%20Rating%20and%20Ranking%20of%20Power%20Distribution_Utilities.pdf" target="_blank" rel="noopener">14th Annual Integrated Rating &amp; Ranking of Power Distribution Utilities ↗</a><br>
+          <span class="guide-meta">Power Finance Corporation Ltd (PFC), for the Ministry of Power · published 2026-01-23</span></p>
+        </div>
+      </div>
+    </div>
     </section>
     
     <section class="seo-section is-aside">
@@ -553,23 +587,6 @@
     </a>
       </div>
     </section>
-    <section class="seo-section"><h2>Frequently asked questions</h2>
-    <details class="seo-faq-item">
-      <summary>How do I calculate my APSPDCL electricity bill?</summary>
-      <div class="seo-faq-a">Open the <a href="/?state=Andhra%20Pradesh&amp;discom=apspdcl#calculator">APSPDCL bill calculator</a>, enter your units consumed and sanctioned load, and it applies the 2026-27 APSPDCL slab rates, fixed charge and other charges to produce an itemised provisional bill.</div>
-    </details>
-    <details class="seo-faq-item">
-      <summary>Which areas and cities does APSPDCL serve?</summary>
-      <div class="seo-faq-a">APSPDCL (Southern Power Distribution Company of Andhra Pradesh Ltd.) supplies electricity to Southern AP — Kurnool, Nandyal, Anantapuramu, Nellore, Chittoor, Kadapa, Annamayya, Tirupati, Sri Sathya Sai.</div>
-    </details>
-    <details class="seo-faq-item">
-      <summary>What is the cheapest domestic electricity rate on APSPDCL?</summary>
-      <div class="seo-faq-a">APSPDCL's domestic energy charge starts at ₹1.9 per unit and rises to ₹9.75 per unit in the highest slab (LT-I (Domestic)), plus a monthly fixed charge (latest available estimate). The full slab table is above.</div>
-    </details>
-    <details class="seo-faq-item">
-      <summary>How do I pay my APSPDCL electricity bill online?</summary>
-      <div class="seo-faq-a">Pay on the official APSPDCL portal at <a href="https://www.apspdcl.in" target="_blank" rel="noopener">www.apspdcl.in</a>. Use this page first to check what your bill should be, then pay on the authentic source.</div>
-    </details></section>
     <p class="seo-disclaimer">Figures are provisional estimates built on publicly available Andhra Pradesh tariff orders. Always verify against your official APSPDCL bill — rates vary by sub-category, slab and city.</p>
   </section>
 </div>

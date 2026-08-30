@@ -1633,6 +1633,58 @@ function discomRatingHtml(discom, lang = 'en') {
       </div>
     </section>`;
 }
+// Fold one of the section-emitting helpers into a parent <section> as a subsection: the
+// helper keeps owning its own markup and its four language twins, and the page decides
+// whether it stands alone or sits inside a bigger block. `dropId` hands the anchor to the
+// wrapper instead, so a jump link still lands in the right place and no id is duplicated.
+function asSubsection(html, { dropId = false } = {}) {
+  if (!html) return '';
+  let out = html
+    .replace(/<section class="seo-section"/, '<div class="seo-subsection"')
+    .replace(/<\/section>(\s*)$/, '</div>$1')
+    .replace(/<h2>/, '<h3>')
+    .replace(/<\/h2>/, '</h3>');
+  if (dropId) out = out.replace(/(<div class="seo-subsection")\s+id="[^"]*"/, '$1');
+  return out;
+}
+
+// One block for the two FPPAS/FAC sections. They were separate sections sitting above the
+// tariff they adjust — a surcharge before the rate it applies to. Now: one section, below
+// the slab tables, current figure then the trend that produced it.
+function fppaSectionHtml(state, discom) {
+  const cur = currentFppaHtml(state, discom);
+  const trend = fppaTrendHtml(state, discom);
+  if (!cur && !trend) return '';
+  const term = surchargeTerm(state);
+  return `
+    <section class="seo-section" id="latest-fppa">
+      <h2>${esc(discom.name)} ${esc(term.code)} — current rate and trend</h2>
+      ${asSubsection(cur, { dropId: true })}
+      ${asSubsection(trend, { dropId: true })}
+    </section>`;
+}
+
+// The utility itself: where it supplies, its reference facts, and how the PFC report rates
+// it. All three were separate top-level sections competing with the tariff — and the rating
+// block says in its own copy that it does not affect your tariff or your supply. They belong
+// together, below the answer the visitor came for.
+function aboutDiscomHtml(state, discom, fy, lang = 'en') {
+  const inner = [
+    asSubsection(areaServedHtml(discom, lang)),
+    asSubsection(keyFactsHtml(state, discom, fy, lang)),
+    asSubsection(discomRatingHtml(discom, lang), { dropId: true }),
+  ].filter(Boolean).join('\n      ');
+  if (!inner) return '';
+  const nm = esc(discom.name);
+  const heading = T(lang, {
+    en: `About ${nm}`, hi: `${nm} के बारे में`, mr: `${nm} विषयी`, ta: `${nm} பற்றி` });
+  return `
+    <section class="seo-section" id="about">
+      <h2>${heading}</h2>
+      ${inner}
+    </section>`;
+}
+
 function keyFactsHtml(state, discom, fy, lang = 'en') {
   const { region, cities } = parseArea(discom.area);
   const dr = domesticRates(discom);
@@ -1640,9 +1692,9 @@ function keyFactsHtml(state, discom, fy, lang = 'en') {
   rows.push([T(lang, { en: 'Distribution company', hi: 'वितरण कंपनी', mr: 'वितरण कंपनी', ta: 'விநியோக நிறுவனம்' }), esc(discom.fullName || discom.name)]);
   rows.push([T(lang, { en: 'Short name', hi: 'संक्षिप्त नाम', mr: 'संक्षिप्त नाव', ta: 'சுருக்கப் பெயர்' }), esc(discom.name)]);
   rows.push([T(lang, { en: 'State / UT', hi: 'राज्य / केंद्र शासित प्रदेश', mr: 'राज्य / केंद्रशासित प्रदेश', ta: 'மாநிலம் / யூனியன் பிரதேசம்' }), esc(stateName(state, lang))]);
-  if (region) rows.push([T(lang, { en: 'Service region', hi: 'सेवा क्षेत्र', mr: 'सेवा क्षेत्र', ta: 'சேவைப் பகுதி' }), esc(region)]);
+  // Service region and tariff year are stated by the hero card and the H1 above the fold;
+  // repeating them here made this a table of things the reader had already read twice.
   if (cities.length) rows.push([T(lang, { en: 'Districts / cities served', hi: 'सेवित ज़िले / शहर', mr: 'सेवा दिलेले जिल्हे / शहरे', ta: 'சேவை செய்யும் மாவட்டங்கள் / நகரங்கள்' }), esc(cities.length) + '+ — ' + esc(cities.slice(0, 6).join(', ')) + (cities.length > 6 ? '…' : '')]);
-  rows.push([T(lang, { en: 'Tariff year', hi: 'टैरिफ वर्ष', mr: 'टॅरिफ वर्ष', ta: 'கட்டண ஆண்டு' }), esc(fyLabel(fy, lang))]);
   // Freshness: states verified against real bills get an explicit badge; the rest
   // state honestly which published order the rates come from. (Never fabricate a
   // "verified" claim — only STATE_META.verified set from an actual bill check.)
@@ -1738,8 +1790,9 @@ function discomPortalActionsHtml(state, discom) {
   const official = discomWebsiteUrl(discom);
   const officialHost = discomWebsiteHost(discom);
   const actions = [
-    ['Calculate bill', `/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator`, `Estimate an itemised ${nm} bill with tariff, duty and surcharge`],
+    // Tariff first: the tiles mirror the page order below them.
     ['Current tariff', '#current-tariff', 'Open the slab table, fixed charge and category rules'],
+    ['Calculate bill', `/?state=${encodeURIComponent(state)}&amp;discom=${encodeURIComponent(discom.id)}#calculator`, `Estimate an itemised ${nm} bill with tariff, duty and surcharge`],
     [`Latest ${surchargeTerm(state).code}`, '#latest-fppa', 'Check the current variable surcharge and history'],
     ['Bill examples', '#common-calculations', 'Compare 200, 300, 500 and 750 unit examples'],
     ['Pay or view bill', servicesHubUrl(state, discom, 'pay'), 'Use the official portal or payment channel'],
@@ -2633,27 +2686,33 @@ function discomPage(state, discom, lang = 'en') {
     <p class="guide-meta">Tariffs last updated: ${tariffUpdated(state, 'en')}${meta.verified ? ' · ✓ verified against real bills' : ''}</p>
     ${src ? `<p><a class="tariff-source" href="${attr(src)}" target="_blank" rel="noopener">Official ${esc(discom.name)} source ↗</a></p>` : ''}
     ${discomPortalActionsHtml(state, discom)}
-    ${discomCalculatorPanelHtml(state, discom, 'en')}
 
-    ${keyFactsHtml(state, discom, fy)}
-    ${discomRatingHtml(discom)}
-    ${currentFppaHtml(state, discom)}
-    ${fppaTrendHtml(state, discom)}
-    ${indicativeBillsHtml(state, discom)}
-
+    <!-- Page order, deliberately, in four movements:
+         1. the answer      — the slab tables the H1 and title promise, then the calculator
+         2. what moves it   — surcharge, worked examples, what each bill line means
+         3. what to do      — FAQ, official services, guides
+         4. provenance      — sources, about the utility, its siblings
+         The tables used to sit eighth, roughly four screens down, behind a credit-rating
+         widget and two surcharge sections that describe an adjustment to a rate the reader
+         had not been shown yet. -->
     <section class="seo-section" id="current-tariff">
       <h2>Current ${esc(discom.name)} tariff (${esc(fy)})</h2>
       ${sharedNote}
       <div class="tariff-cards">${cards}</div>
     </section>
 
+    ${discomCalculatorPanelHtml(state, discom, 'en')}
+    ${fppaSectionHtml(state, discom)}
+    ${indicativeBillsHtml(state, discom)}
     ${billLineExplainerHtml(discom, state, lang)}
-    ${areaServedHtml(discom)}
+
+    ${faqHtml(faqs)}
     ${officialServicesHtml(state, discom)}
     ${guideLinksHtml(state, discom)}
+
     ${discomSourcesHtml(state, discom, fy)}
+    ${aboutDiscomHtml(state, discom, fy)}
     ${siblingHtml}
-    ${faqHtml(faqs)}
     <p class="seo-disclaimer">Figures are provisional estimates built on publicly available ${esc(state)} tariff orders. Always verify against your official ${esc(discom.name)} bill — rates vary by sub-category, slab and city.</p>
   </section>`;
 
@@ -2844,26 +2903,27 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
     <p class="seo-cta-row"><a class="seo-cta" href="${calcHref}">${openCta}</a></p>
 
     ${discomServiceLinksHtml(state, discom, lang)}
-    ${discomCalculatorPanelHtml(state, discom, lang)}
 
-    ${keyFactsHtml(state, discom, fy, lang)}
-    ${discomRatingHtml(discom, lang)}
-    ${areaServedHtml(discom, lang)}
-    ${indicativeBillsHtml(state, discom, lang)}
-
-    <section class="seo-section">
+    <!-- Same four movements as the English page — answer, what moves it, what to do,
+         provenance — so a reader switching language does not land on a different page. -->
+    <section class="seo-section" id="current-tariff">
       <h2>${schedHead}</h2>
       ${sharedNote}
       <div class="tariff-cards">${cards}</div>
     </section>
 
+    ${discomCalculatorPanelHtml(state, discom, lang)}
+    ${indicativeBillsHtml(state, discom, lang)}
     <!-- Was English-only, and only on discomPage(): the six charges every bill carries were
          explained on /tariffs/<state>/<discom>/ but not on its /hi/, /mr/ or /ta/ twin. -->
     ${billLineExplainerHtml(discom, state, lang)}
+
+    ${faqHtml(faqs, lang)}
     ${glossaryLinksHtml(discom, lang, state)}
     ${guideLinksHtml(state, discom, lang)}
+
+    ${aboutDiscomHtml(state, discom, fy, lang)}
     ${siblingHtml}
-    ${faqHtml(faqs, lang)}
     <p class="seo-disclaimer">${disclaimer}</p>
   </section>`;
 
