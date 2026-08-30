@@ -2250,14 +2250,43 @@ function stateGrievanceHtml(state, discoms, lang = 'en') {
   const linked = discoms.filter(d => d.website);
   const guideHref = `${lang === 'en' ? '' : '/' + lang}/guides/bill-wrong-how-to-complain-and-win/`;
 
-  // The regulator's site stands in for the forum pages until a verified cgrfUrl/ombudsmanUrl
-  // is filled in, because the CGRF and the Ombudsman are both constituted under its
-  // regulations and it is the one address that stays correct as forums are reconstituted.
-  const regLink = (href) => href && reg && reg.url
-    ? `<a href="${attr(href)}" target="_blank" rel="noopener">${esc(reg.label)}</a>`
-    : (reg ? esc(reg.label) : '');
-  const cgrfWhere = reg ? regLink(reg.cgrfUrl || reg.url) : '';
-  const ombWhere = reg ? regLink(reg.ombudsmanUrl || reg.url) : '';
+  // Two shapes for the escalation cells. When grievance-content.js carries a verified forum
+  // page, that page is the link and the regulator is named after it as the authority it sits
+  // under — labelling a DISCOM's own CGRF portal "UPERC" would be simply wrong. When the slot
+  // is empty the regulator's site stands in, because the forum is constituted under its
+  // regulations and that address stays correct as forums are reconstituted.
+  const regName = reg
+    ? (reg.url ? `<a href="${attr(reg.url)}" target="_blank" rel="noopener">${esc(reg.label)}</a>` : esc(reg.label))
+    : '';
+  const link = (href, label) => `<a href="${attr(href)}" target="_blank" rel="noopener">${esc(label)}</a>`;
+  const L = T(lang, {
+    en: { cgrf: 'File with the CGRF', omb: 'Office of the Electricity Ombudsman',
+      under: r => `, under ${r} regulations`, by: r => `, appointed by ${r}`,
+      cgrfBack: r => `Your DISCOM's forum, constituted under ${r} regulations`,
+      cgrfNone: `Your DISCOM's forum, constituted under your state regulator's regulations`,
+      ombBack: r => `The Ombudsman appointed by ${r}`, ombNone: 'The Ombudsman appointed by your state regulator' },
+    hi: { cgrf: 'CGRF में शिकायत दर्ज करें', omb: 'विद्युत लोकपाल कार्यालय',
+      under: r => `, ${r} के नियमों के तहत`, by: r => `, ${r} द्वारा नियुक्त`,
+      cgrfBack: r => `आपके DISCOM का फोरम, ${r} के नियमों के तहत गठित`,
+      cgrfNone: `आपके DISCOM का फोरम, राज्य नियामक के नियमों के तहत गठित`,
+      ombBack: r => `${r} द्वारा नियुक्त लोकपाल`, ombNone: 'राज्य नियामक द्वारा नियुक्त लोकपाल' },
+    mr: { cgrf: 'CGRF कडे तक्रार करा', omb: 'वीज लोकपाल कार्यालय',
+      under: r => `, ${r} च्या नियमांखाली`, by: r => `, ${r} ने नेमलेले`,
+      cgrfBack: r => `तुमच्या DISCOM चा मंच, ${r} च्या नियमांखाली स्थापित`,
+      cgrfNone: `तुमच्या DISCOM चा मंच, राज्य नियामकाच्या नियमांखाली स्थापित`,
+      ombBack: r => `${r} ने नेमलेले लोकपाल`, ombNone: 'राज्य नियामकाने नेमलेले लोकपाल' },
+    ta: { cgrf: 'CGRF-இல் புகார் செய்யுங்கள்', omb: 'மின்சார குறைதீர்ப்பாளர் அலுவலகம்',
+      under: r => `, ${r} விதிகளின் கீழ்`, by: r => `, ${r} நியமித்தது`,
+      cgrfBack: r => `உங்கள் DISCOM-இன் மன்றம், ${r} விதிகளின் கீழ் அமைக்கப்பட்டது`,
+      cgrfNone: `உங்கள் DISCOM-இன் மன்றம், மாநில ஒழுங்குமுறை ஆணையத்தின் விதிகளின் கீழ் அமைக்கப்பட்டது`,
+      ombBack: r => `${r} நியமித்த குறைதீர்ப்பாளர்`, ombNone: 'மாநில ஒழுங்குமுறை ஆணையம் நியமித்த குறைதீர்ப்பாளர்' },
+  });
+  const cgrfWhere = reg && reg.cgrfUrl
+    ? link(reg.cgrfUrl, L.cgrf) + (regName ? L.under(regName) : '')
+    : (regName ? L.cgrfBack(regName) : L.cgrfNone);
+  const ombWhere = reg && reg.ombudsmanUrl
+    ? link(reg.ombudsmanUrl, L.omb) + (regName ? L.by(regName) : '')
+    : (regName ? L.ombBack(regName) : L.ombNone);
 
   const portals = linked.length
     ? linked.map(d => `<a href="${attr(d.website)}" target="_blank" rel="noopener">${esc(d.name)}</a>`).join(' · ')
@@ -2285,33 +2314,33 @@ function stateGrievanceHtml(state, discoms, lang = 'en') {
     en: [
       ['1. DISCOM complaint desk', portals ? `${portals}, or the 24×7 helpline <a href="tel:1912">1912</a>` : `Your DISCOM's portal, app or local office, or the 24×7 helpline <a href="tel:1912">1912</a>`,
         'Consumer number, bill number, the one disputed line, and a meter photo'],
-      ['2. Consumer Grievance Redressal Forum (CGRF)', cgrfWhere ? `Your DISCOM's forum, constituted under ${cgrfWhere} regulations` : `Your DISCOM's forum, constituted under your state regulator's regulations`,
+      ['2. Consumer Grievance Redressal Forum (CGRF)', cgrfWhere,
         'The first complaint number, and what the DISCOM did or failed to do about it'],
-      ['3. Electricity Ombudsman', ombWhere ? `The Ombudsman appointed by ${ombWhere}` : 'The Ombudsman appointed by your state regulator',
+      ['3. Electricity Ombudsman', ombWhere,
         'The CGRF order, or proof the forum missed its deadline'],
     ],
     hi: [
       ['1. DISCOM शिकायत डेस्क', portals ? `${portals}, या 24×7 हेल्पलाइन <a href="tel:1912">1912</a>` : `आपके DISCOM का portal, app या स्थानीय कार्यालय, या 24×7 हेल्पलाइन <a href="tel:1912">1912</a>`,
         'उपभोक्ता संख्या, बिल संख्या, विवादित लाइन और meter की फोटो'],
-      ['2. उपभोक्ता शिकायत निवारण फोरम (CGRF)', cgrfWhere ? `आपके DISCOM का फोरम, ${cgrfWhere} के नियमों के तहत गठित` : `आपके DISCOM का फोरम, राज्य नियामक के नियमों के तहत गठित`,
+      ['2. उपभोक्ता शिकायत निवारण फोरम (CGRF)', cgrfWhere,
         'पहली शिकायत का number, और DISCOM ने उस पर क्या किया या नहीं किया'],
-      ['3. विद्युत लोकपाल', ombWhere ? `${ombWhere} द्वारा नियुक्त लोकपाल` : 'राज्य नियामक द्वारा नियुक्त लोकपाल',
+      ['3. विद्युत लोकपाल', ombWhere,
         'CGRF का आदेश, या यह प्रमाण कि फोरम ने समय-सीमा चूकी'],
     ],
     mr: [
       ['1. DISCOM तक्रार डेस्क', portals ? `${portals}, किंवा 24×7 हेल्पलाइन <a href="tel:1912">1912</a>` : `तुमच्या DISCOM चे portal, app किंवा स्थानिक कार्यालय, किंवा 24×7 हेल्पलाइन <a href="tel:1912">1912</a>`,
         'ग्राहक क्रमांक, बिल क्रमांक, वादग्रस्त line आणि meter चा फोटो'],
-      ['2. ग्राहक तक्रार निवारण मंच (CGRF)', cgrfWhere ? `तुमच्या DISCOM चा मंच, ${cgrfWhere} च्या नियमांखाली स्थापित` : `तुमच्या DISCOM चा मंच, राज्य नियामकाच्या नियमांखाली स्थापित`,
+      ['2. ग्राहक तक्रार निवारण मंच (CGRF)', cgrfWhere,
         'पहिल्या तक्रारीचा number, आणि DISCOM ने त्यावर काय केले किंवा केले नाही'],
-      ['3. वीज लोकपाल', ombWhere ? `${ombWhere} ने नेमलेले लोकपाल` : 'राज्य नियामकाने नेमलेले लोकपाल',
+      ['3. वीज लोकपाल', ombWhere,
         'CGRF चा आदेश, किंवा मंचाने मुदत चुकवल्याचा पुरावा'],
     ],
     ta: [
       ['1. DISCOM புகார் மையம்', portals ? `${portals}, அல்லது 24×7 உதவி எண் <a href="tel:1912">1912</a>` : `உங்கள் DISCOM-இன் portal, app அல்லது உள்ளூர் அலுவலகம், அல்லது 24×7 உதவி எண் <a href="tel:1912">1912</a>`,
         'நுகர்வோர் எண், பில் எண், தகராறான line, மற்றும் meter புகைப்படம்'],
-      ['2. நுகர்வோர் குறைதீர் மன்றம் (CGRF)', cgrfWhere ? `உங்கள் DISCOM-இன் மன்றம், ${cgrfWhere} விதிகளின் கீழ் அமைக்கப்பட்டது` : `உங்கள் DISCOM-இன் மன்றம், மாநில ஒழுங்குமுறை ஆணையத்தின் விதிகளின் கீழ் அமைக்கப்பட்டது`,
+      ['2. நுகர்வோர் குறைதீர் மன்றம் (CGRF)', cgrfWhere,
         'முதல் புகார் எண், மற்றும் DISCOM என்ன செய்தது அல்லது செய்யவில்லை'],
-      ['3. மின்சார குறைதீர்ப்பாளர்', ombWhere ? `${ombWhere} நியமித்த குறைதீர்ப்பாளர்` : 'மாநில ஒழுங்குமுறை ஆணையம் நியமித்த குறைதீர்ப்பாளர்',
+      ['3. மின்சார குறைதீர்ப்பாளர்', ombWhere,
         'CGRF உத்தரவு, அல்லது மன்றம் காலக்கெடுவைத் தவறவிட்ட ஆதாரம்'],
     ],
   });
