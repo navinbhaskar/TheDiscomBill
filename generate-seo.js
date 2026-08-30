@@ -3527,31 +3527,26 @@ function regionCardStat(text, verified) {
     + '</span>';
 }
 
-// ── Tile hues for DISCOM cards ───────────────────────────────────────────────
-// Six soft, desaturated colours that survive being laid under text as a wash. The region hue
-// used to fill this role, but every DISCOM in a state shares its state's region — so on the
-// page where these cards actually live, a state page, they all came out the same colour and
-// the tint told the reader nothing. Now each DISCOM in a state gets its own.
-//
-// The consequence, stated plainly: colour no longer encodes region here. It is stable
-// decoration — the same DISCOM is always the same colour — and nothing is left depending on a
-// reader decoding it, which is why the state code and the rate span do the actual work.
+// Six soft, desaturated colours, still used by the per-state cards on the FPPA hub, which are
+// one card per state and so have something for a hue to distinguish. The sibling-DISCOM cards
+// below used to draw from this too — a different colour per DISCOM within one state — and now
+// take that state's region accent instead: those cards are siblings, and six hues across them
+// were decorating rather than telling the reader anything.
 const TILE_HUES = ['#8b7ad6', '#cf8fa3', '#5fa3a0', '#c2916a', '#7593d4', '#8caa7d'];
-// A stable per-state starting point, so two neighbouring states do not open on the same hue.
-// Deterministic from the name: the build has to regenerate byte-for-byte.
-const stateHueOffset = (state) => [...String(state)]
-  .reduce((n, c) => (n * 31 + c.charCodeAt(0)) >>> 0, 7) % TILE_HUES.length;
-const tileHue = (state, i) => TILE_HUES[(stateHueOffset(state) + i) % TILE_HUES.length];
 
 // A DISCOM inside a state. Badge carries the state code, because every DISCOM on a given page
 // shares it and the code is what tells the reader which page they are on at a glance.
-function discomLinkCard(state, d, href, i = 0) {
+function discomLinkCard(state, d, href) {
   const a = parseArea(d.area);
   const area = a.region
     ? `${a.region}${a.cities.length ? ` — ${a.cities.slice(0, 3).join(', ')}` : ''}`
     : '';
+  // One accent for every DISCOM of a state, not a different hue per card. These cards are
+  // siblings in one state; six colours across them read as decoration, and the badge they sit
+  // on says the same two letters on all of them. The region hue is the one the rest of the site
+  // uses for that state.
   return `
-    <a class="seo-link-card is-region is-tile" style="--dir-accent:${tileHue(state, i)}" href="${href}">
+    <a class="seo-link-card is-region is-tile" style="--dir-accent:${regionAccent(state)}" href="${href}">
       <span class="seo-link-badge" aria-hidden="true">${esc(stateCode(state))}</span>
       <strong>${esc(d.name)}</strong>
       ${d.fullName ? `<span>${esc(d.fullName)}</span>` : ''}
