@@ -28,24 +28,26 @@
 //      The renderer falls back to the regulator link whenever a slot is empty, so partial
 //      coverage is fine and an unverified guess is not.
 //
-//      Checked 30 August 2026: 13 of 34 states carry at least one direct link. The rest are
+//      Checked 30 August 2026: 17 of 34 states carry at least one direct link. The rest are
 //      still null, and each for a stated reason rather than for want of looking:
 //        - No consumer-facing forum page exists. KERC, GERC, RERC and APERC publish the
 //          CGRF/Ombudsman *regulations* and past orders as PDFs but have no page a consumer
 //          can be sent to. A 2016 regulation PDF is a worse destination than the homepage.
-//        - The site is HTTP-only or refused inspection: Kerala (cgrf.kseb.in did not resolve)
-//          and Jharkhand (the Ombudsman is at http://ombudsman.jserc.org/, which would also
-//          be an insecure link from an HTTPS page). Both very likely work for a consumer in
-//          India — that is exactly why they are left null rather than filled from a
-//          search-result snippet.
-//      Anyone with access can open one of those and fill the slot; nothing else needs to
+//        - The forum has no page of its own at state level. West Bengal runs Grievance
+//          Redressal Officers rather than CGRFs, and Bihar's two licensees have a forum page
+//          each, so neither carries a state-level `cgrfUrl`.
+//      Anyone with access can open one of these and fill the slot; nothing else needs to
 //      change for it to render.
 //
-//      Haryana and Madhya Pradesh are filled on the repo owner's confirmation (30 Aug 2026)
-//      that both sites open for them. They are the one exception to "opened before written
-//      down" in this file, and are marked here rather than left to look like the rest:
-//      herc.gov.in refuses port 443 to an outside fetcher and mperc.in answers 403, so
-//      neither could be checked from the build side and neither can be re-checked by CI.
+//      Three entries are filled on the repo owner's confirmation rather than on inspection
+//      from here, and are marked so rather than left to look like the rest: Haryana
+//      (herc.gov.in refuses port 443 to an outside fetcher), Madhya Pradesh (mperc.in answers
+//      403) and Kerala's cgrf.kseb.in (does not resolve from outside India). CI can never
+//      re-check those three. Everything else in this file was opened and read.
+//
+//      Note that a plain outbound <a href="http://..."> from an HTTPS page is NOT mixed
+//      content — only subresources are. So an http-only forum site is linkable if it is the
+//      real one; prefer https where the host serves it, as ombudsman.jserc.org does.
 //
 // Joint commissions serve several states each: JERC-UTS covers Goa and most UTs, and the
 // J&K/Ladakh JERC covers both of those. Their rows repeat the same commission on purpose.
@@ -65,9 +67,9 @@ export const REGULATORS = {
   'Haryana': { short: 'HERC', name: 'Haryana Electricity Regulatory Commission', url: 'https://herc.gov.in', cgrfUrl: 'https://herc.gov.in/content/127_1_CGRF.aspx', ombudsmanUrl: 'https://herc.gov.in/ombudsman/ombudsman.aspx' },
   'Himachal Pradesh': { short: 'HPERC', name: 'Himachal Pradesh Electricity Regulatory Commission', url: 'https://hperc.org', cgrfUrl: null, ombudsmanUrl: null },
   'Jammu & Kashmir': { short: 'JERC-J&K/Ladakh', name: 'Joint Electricity Regulatory Commission for the UTs of Jammu & Kashmir and Ladakh', url: 'https://jercjkl.jk.gov.in', cgrfUrl: null, ombudsmanUrl: null },
-  'Jharkhand': { short: 'JSERC', name: 'Jharkhand State Electricity Regulatory Commission', url: 'https://jserc.org', cgrfUrl: null, ombudsmanUrl: null },
+  'Jharkhand': { short: 'JSERC', name: 'Jharkhand State Electricity Regulatory Commission', url: 'https://jserc.org', cgrfUrl: null, ombudsmanUrl: 'https://ombudsman.jserc.org/' },
   'Karnataka': { short: 'KERC', name: 'Karnataka Electricity Regulatory Commission', url: 'https://kerc.karnataka.gov.in', cgrfUrl: null, ombudsmanUrl: null },
-  'Kerala': { short: 'KSERC', name: 'Kerala State Electricity Regulatory Commission', url: 'https://erckerala.org', cgrfUrl: null, ombudsmanUrl: null },
+  'Kerala': { short: 'KSERC', name: 'Kerala State Electricity Regulatory Commission', url: 'https://erckerala.org', cgrfUrl: 'https://cgrf.kseb.in/', ombudsmanUrl: 'https://www.keralaeo.org/' },
   'Ladakh': { short: 'JERC-J&K/Ladakh', name: 'Joint Electricity Regulatory Commission for the UTs of Jammu & Kashmir and Ladakh', url: 'https://jercjkl.jk.gov.in', cgrfUrl: null, ombudsmanUrl: null },
   'Madhya Pradesh': { short: 'MPERC', name: 'Madhya Pradesh Electricity Regulatory Commission', url: 'https://mperc.in', cgrfUrl: 'https://mperc.in/page/grievances-redressal-forum', ombudsmanUrl: 'https://mperc.in/page/about-electricity-ombudsman-2' },
   'Maharashtra': { short: 'MERC', name: 'Maharashtra Electricity Regulatory Commission', url: 'https://merc.gov.in', cgrfUrl: 'https://merc.gov.in/consumer-grievance-redressal-forums-cgrf/', ombudsmanUrl: 'https://merc.gov.in/electricity-ombudsman/' },
