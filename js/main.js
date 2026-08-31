@@ -599,13 +599,30 @@ function initHeroBillCard() {
   // iOS Safari, which emits a synthetic pointerenter with pointerType "mouse" after a tap and
   // then never sends the matching pointerleave — one tap froze the card permanently. With no
   // pointerenter handler there is nothing for a synthetic hover to trigger.
-  card.addEventListener('focusin',  pause);
+  //
+  // Keyboard focus only. Each slide is a role="tabpanel" with tabindex="0" covering most of
+  // the card, and iOS Safari focuses a tabindex element on a plain tap — so a reader who
+  // merely touched the card paused it, and scrolling on from there never blurs, so it stayed
+  // paused. That is the same bug removing hover-pause was meant to end, arriving by touch.
+  // :focus-visible is the line between "tabbed here" and "tapped here"; a tap does not match.
+  card.addEventListener('focusin', (e) => {
+    const t = e.target;
+    if (t && t.matches && t.matches(':focus-visible')) pause();
+  });
   card.addEventListener('focusout', (e) => { if (!card.contains(e.relatedTarget)) play(); });
   // A background tab burns no timers, and the sweep would otherwise finish unseen.
   document.addEventListener('visibilitychange', () => { document.hidden ? pause() : play(); });
   // iOS restores pages from bfcache without firing visibilitychange, so a back-navigation
   // came back to a card whose timer had been cleared and never restarted.
   window.addEventListener('pageshow', () => { if (!document.hidden) play(); });
+
+  // Watchdog. A setTimeout chain has exactly one life: drop a link and the rotation is over
+  // with nothing left to restart it. iOS Safari drops and throttles timers around app
+  // switches, incoming calls and Low Power Mode, and does not reliably fire visibilitychange
+  // on the way back — which is how an iPhone ended up parked on slide 1. play() is a no-op
+  // when a timer is already armed or the reader has taken over, so this only ever revives a
+  // chain that actually died.
+  setInterval(() => { if (!document.hidden && !card.classList.contains('is-paused')) play(); }, 2000);
 
   show(0);
   play();
