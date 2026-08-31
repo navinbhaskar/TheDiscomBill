@@ -4164,33 +4164,6 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 .is-nocode.is-bandfixed .tt-c-energy { width: 28%; }
 .is-nocode.is-bandfixed .tt-c-fixed  { width: 26%; }
 .is-nocode.is-bandfixed .tt-c-extra  { width: 18%; }
-
-/* Below the table's own min-width the wrapper scrolls, and only ~290px of a 640px table is on
-   screen at a time. The supply-type column was taking 205px of that — 71% of the first
-   screenful for the one column the reader can already infer from the row they tapped, leaving
-   the rates they came for off-screen. On mobile it gives most of that back and wraps to two or
-   three lines instead; the numeric columns are the ones that cannot wrap usefully. */
-@media (max-width: 640px) {
-  .tariff-table { min-width: 540px; font-size: 12px; }
-  .tt-c-name   { width: 20%; }
-  .tt-c-energy { width: 32%; }
-  .tt-c-fixed  { width: 18%; }
-  .tt-c-extra  { width: 21%; }
-  .is-bandfixed .tt-c-name   { width: 18%; }
-  .is-bandfixed .tt-c-energy { width: 28%; }
-  .is-bandfixed .tt-c-fixed  { width: 26%; }
-  .is-bandfixed .tt-c-extra  { width: 19%; }
-  .is-nocode .tt-c-name   { width: 22%; }
-  .is-nocode .tt-c-energy { width: 34%; }
-  .is-nocode .tt-c-fixed  { width: 22%; }
-  .is-nocode .tt-c-extra  { width: 22%; }
-  .is-nocode.is-bandfixed .tt-c-name   { width: 20%; }
-  .is-nocode.is-bandfixed .tt-c-energy { width: 30%; }
-  .is-nocode.is-bandfixed .tt-c-fixed  { width: 29%; }
-  .is-nocode.is-bandfixed .tt-c-extra  { width: 21%; }
-  /* "non-municipal" and the like have no space to break at inside a 110px column. */
-  .tariff-table .tt-name { overflow-wrap: anywhere; }
-}
 .tariff-table .tt-fixed {
   text-align: right; font-variant-numeric: tabular-nums;
   color: var(--text-primary); font-weight: 600;
@@ -4232,6 +4205,44 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
    they landed in a long schedule. */
 .tariff-table tbody tr:target > * { background: var(--brand-faint); }
 .tariff-table tbody tr:target .tt-code { box-shadow: inset 3px 0 0 var(--brand); }
+
+/* Mobile overrides, deliberately placed AFTER every base .tariff-table rule: a media query
+   carries no extra weight, so ".tariff-table .tt-extras li" (0,3,1) here has to at least tie
+   the base rule and come later in the source to win.
+
+   Below the table's own min-width the wrapper scrolls, and only ~290px of a 640px table is on
+   screen at a time. The supply-type column was taking 205px of that — 71% of the first
+   screenful for the one column the reader can already infer from the row they tapped, leaving
+   the rates they came for off-screen. On mobile it gives most of that back and wraps to two or
+   three lines instead; the numeric columns are the ones that cannot wrap usefully. */
+@media (max-width: 640px) {
+  .tariff-table { min-width: 540px; font-size: 12px; }
+  .tt-c-name   { width: 20%; }
+  .tt-c-energy { width: 32%; }
+  .tt-c-fixed  { width: 18%; }
+  .tt-c-extra  { width: 21%; }
+  .is-bandfixed .tt-c-name   { width: 18%; }
+  .is-bandfixed .tt-c-energy { width: 28%; }
+  .is-bandfixed .tt-c-fixed  { width: 26%; }
+  .is-bandfixed .tt-c-extra  { width: 19%; }
+  .is-nocode .tt-c-name   { width: 22%; }
+  .is-nocode .tt-c-energy { width: 34%; }
+  .is-nocode .tt-c-fixed  { width: 22%; }
+  .is-nocode .tt-c-extra  { width: 22%; }
+  .is-nocode.is-bandfixed .tt-c-name   { width: 20%; }
+  .is-nocode.is-bandfixed .tt-c-energy { width: 30%; }
+  .is-nocode.is-bandfixed .tt-c-fixed  { width: 29%; }
+  .is-nocode.is-bandfixed .tt-c-extra  { width: 21%; }
+  /* "non-municipal" and the like have no space to break at inside a 110px column. */
+  .tariff-table .tt-name { overflow-wrap: anywhere; }
+  /* The duty column holds a name AND a figure. Side by side in ~119px the figure's `auto`
+     track took 59px and left the name 30px, which shattered "Electricity Duty (ED)" into
+     four mid-word fragments — Elect / ricity / Duty / (ED). Narrow enough, the pair has to
+     stack: name on its own line, figure under it. */
+  .tariff-table .tt-extras li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .tariff-table .tt-extras b { text-align: left; }
+  .tariff-table .tt-extras li + li { margin-top: 4px; }
+}
 
 /* Who each rate applies to — the eligibility text that used to sit inside the open <details>. */
 .tariff-notes { margin: 14px 0 0; }
