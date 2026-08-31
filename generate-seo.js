@@ -1127,8 +1127,18 @@ function categoryCardHtml(cat, lang = 'en') {
     const arr = o.additionalCharges;
     if (!Array.isArray(arr) || !arr.length) return '<span class="tx-muted">—</span>';
     return `<ul class="tt-extras">${arr.map((a) => {
-      const val = a.type && String(a.type).includes('percent') ? `${a.rate}%` : rupee(a.rate);
-      return `<li><span>${esc(a.name || 'Charge')}</span><b>${val}</b></li>`;
+      // A bare "₹0.40" reads as a one-off rupee amount. Every one of these is a rate on
+      // something - per unit for duty and cesses, per month for a customer charge - so the
+      // basis is carried in the figure the way the slab and fixed-charge columns already do.
+      const t = String(a.type || '');
+      if (t.includes('percent')) return `<li><span>${esc(a.name || 'Charge')}</span><b>${a.rate}%</b></li>`;
+      const suffix = t === 'per_unit' ? perUnit
+        : t === 'flat' || t === 'flat_monthly' ? L({ en: '/mo', hi: '/माह', mr: '/महिना', ta: '/மாதம்' })
+        : '';
+      // Two decimals for a per-unit rate: rupee() renders 0.40 as "₹0.4", which reads as a
+      // truncation rather than a paise figure. Whole-rupee charges keep the compact form.
+      const fig = t === 'per_unit' ? rupeeRate(a.rate) : rupee(a.rate);
+      return `<li><span>${esc(a.name || 'Charge')}</span><b>${fig}${suffix ? `<span class="tx-muted">${suffix}</span>` : ''}</b></li>`;
     }).join('')}</ul>`;
   };
 
