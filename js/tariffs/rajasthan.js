@@ -43,16 +43,21 @@ const DS_ENERGY = [
 ];
 
 // The tariff schedule is explicitly "exclusive of Electricity Duty, Taxes and Other Charges"
-// (§4 of the general conditions), so the rate is not in the order.
+// (§4 of the general conditions), so the rate is not in the order but in the levy notified
+// under the Rajasthan Electricity (Duty) Act 1962.
 //
-// Carried here as 5% of the total and flagged unverified; it is levied per unit, not as a
-// percentage. CEA records 40 P/kWh for domestic in both its FY2021-22 and FY2023-24 editions.
+// 40 paise a unit, per unit and NOT a percentage. The state's own published schedule of levies
+// puts "Commercial, domestic and others" at 40 paise, industrial and temporary connections at
+// the same 40, and metered agriculture at 4. CEA independently records 40 P/kWh for domestic in
+// both its FY2021-22 and FY2023-24 editions, so two sources agree.
+//   https://rajnivesh.rajasthan.gov.in/Uploads/af362aa0-ecb1-4d0f-8665-7ea289e19e20.pdf
+//   CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply in India" (FY 2023-24)
+//   https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
 //
-// Rajasthan also charges a 15 P/kWh urban cess, but only on connections in a municipal area
-// consuming more than 100 units a month. The engine has no way to express that condition yet,
-// so the cess is deliberately NOT modelled rather than applied to everyone.
-// Source: CEA, "Electricity Tariff & Duty and Average Rates of Electricity Supply in India" (FY 2023-24), Table: Details of electricity duty/taxes/cess/surcharge
-// https://cea.nic.in/wp-content/uploads/fs___a/2025/06/Book_2024.pdf
+// The same schedule carries a third levy this file does NOT model: a Water Conservation Cess of
+// 10 paise a unit under s.3B. Domestic consumption is exempt by statute (s.3B proviso, alongside
+// agriculture, the Railways and non-profit hospitals/schools/places of worship), so it never
+// touches the domestic category below; it would apply to the non-domestic and industrial ones.
 const RJ_ED = { name: "Electricity Duty (ED)", type: "per_unit", rate: 0.40 };
 
 // The urban cess: 15 paise a unit, but only for a connection in a municipal area consuming more

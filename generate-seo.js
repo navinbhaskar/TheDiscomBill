@@ -2685,7 +2685,11 @@ function discomPage(state, discom, lang = 'en') {
   const badges = [];
   if (meta.verified) badges.push('<span class="tariff-badge verified">✓ Verified rates</span>');
   badges.push(`<span class="tariff-badge">${esc(fy)}</span>`);
-  if (region) badges.push(`<span class="tariff-badge">${esc(region)}</span>`);
+  // Only a genuine region LABEL earns a badge. parseArea() returns the whole `area` string as
+  // `region` when it carries no "Region (city, city)" parenthetical, so an unguarded push turned
+  // JVVNL's nine-district list into one nowrap pill ~470px wide - off the right edge of a 375px
+  // viewport, and a word-for-word repeat of the "Service area:" line directly above it.
+  if (region && cities.length) badges.push(`<span class="tariff-badge">${esc(region)}</span>`);
   const src = discom.website || meta.sourceUrl;
 
   const cards = (discom.categories || []).map(c => categoryCardHtml(c)).join('') || '<p class="tx-muted">No categories listed.</p>';
@@ -2878,7 +2882,11 @@ function discomPageVernacular({ state, discom, stateSlug, enUrl, url, meta, fy, 
   const badges = [];
   if (meta.verified) badges.push(`<span class="tariff-badge verified">${T(lang, { hi: '✓ सत्यापित दरें', mr: '✓ पडताळलेले दर', ta: '✓ சரிபார்க்கப்பட்ட விகிதங்கள்', en: '✓ Verified rates' })}</span>`);
   badges.push(`<span class="tariff-badge">${esc(fyL)}</span>`);
-  if (region) badges.push(`<span class="tariff-badge">${esc(region)}</span>`);
+  // Only a genuine region LABEL earns a badge. parseArea() returns the whole `area` string as
+  // `region` when it carries no "Region (city, city)" parenthetical, so an unguarded push turned
+  // JVVNL's nine-district list into one nowrap pill ~470px wide - off the right edge of a 375px
+  // viewport, and a word-for-word repeat of the "Service area:" line directly above it.
+  if (region && cities.length) badges.push(`<span class="tariff-badge">${esc(region)}</span>`);
   const src = discom.website || meta.sourceUrl;
 
   const noCats = T(lang, { hi: 'कोई श्रेणी सूचीबद्ध नहीं।', mr: 'कोणतीही श्रेणी सूचीबद्ध नाही.', ta: 'எந்த வகையும் பட்டியலிடப்படவில்லை.', en: 'No categories listed.' });

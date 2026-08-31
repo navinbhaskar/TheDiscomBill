@@ -3944,7 +3944,7 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
 .tariff-discom-name { font-size: 16px; font-weight: 700; color: var(--text-primary); }
 .tariff-discom-area { font-size: 12.5px; color: var(--text-tertiary); margin-top: 3px; line-height: 1.5; }
 .tariff-badges { display: flex; gap: 6px; flex-wrap: wrap; }
-.tariff-badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: var(--radius-full); background: var(--surface-sunken); color: var(--text-secondary); border: 1px solid var(--border-subtle); white-space: nowrap; }
+.tariff-badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: var(--radius-full); background: var(--surface-sunken); color: var(--text-secondary); border: 1px solid var(--border-subtle); max-width: 100%; overflow-wrap: anywhere; }
 .tariff-badge.verified { background: color-mix(in srgb, var(--success-text) 14%, transparent); color: var(--success-text); border-color: transparent; }
 .tariff-source { display: inline-block; margin-top: 10px; font-size: 12.5px; font-weight: 500; color: var(--text-brand); text-decoration: none; }
 .tariff-source:hover { text-decoration: underline; }
