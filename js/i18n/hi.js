@@ -7,6 +7,7 @@ export default {
     'tagline': 'बिजली बिल कैलकुलेटर · पूरे भारत के लिए',
     'a11y.skipToCalculator': 'कैलकुलेटर पर जाएँ',
     'states.lead': 'अपने राज्य का टैरिफ पेज खोलें — स्लैब दरें, फिक्स्ड चार्ज और हर डिस्कॉम — या <a href="/tariffs/states/">सभी डिस्कॉम की पूरी सूची</a> देखें।',
+    'nav.home': 'होम',
     'nav.calculator': 'कैलकुलेटर',
     'nav.compare': 'तुलना',
     'nav.smartMeter': 'स्मार्ट मीटर',

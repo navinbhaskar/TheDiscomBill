@@ -137,16 +137,24 @@ function initGatedLinks() {
 // first path segment (so /tariffs/uppcl/ still lights up "Tariffs", which points
 // at /tariffs/states/); language twins (/hi/ /mr/ /ta/) are normalized first.
 function initNavActive() {
-  let path = location.pathname.replace(/^\/(hi|mr|ta)(?=\/|$)/, '') || '/';
+  // Compare like for like: /hi/tariffs/ and /tariffs/ are the same destination in different
+  // languages, so the prefix comes off both the location and the href.
+  const strip = (p) => p.replace(/^\/(hi|mr|ta)(?=\/|$)/, '') || '/';
+  const path = strip(location.pathname);
   let best = null, bestLen = 0;
   document.querySelectorAll('.header-nav > a').forEach(a => {
     const href = a.getAttribute('href') || '';
-    if (href.startsWith('#') || href.startsWith('/#')) {
-      // Anchor links (Calculator, About) — Calculator stands for the homepage.
-      if (href.endsWith('#calculator') && (path === '/' || path === '/index.html') && bestLen === 0) best = best || a;
+    if (href.startsWith('#') || href.startsWith('/#')) return;
+    const hp = strip(new URL(href, location.origin).pathname);
+    // Home matches the homepage and nothing else. Every path on the site starts with "/", so
+    // the prefix test the other links use would let Home claim every page. It also no longer
+    // needs Calculator to stand in for the homepage — that link now points at the standalone
+    // calculator on every page, including this one.
+    if (hp === '/') {
+      if (path === '/' || path === '/index.html') { best = a; bestLen = 1; }
       return;
     }
-    const seg = '/' + (new URL(href, location.origin).pathname.split('/')[1] || '') + '/';
+    const seg = '/' + (hp.split('/')[1] || '') + '/';
     if (seg !== '//' && (path + '/').startsWith(seg) && seg.length > bestLen) { best = a; bestLen = seg.length; }
   });
   if (best) { best.classList.add('nav-active'); best.setAttribute('aria-current', 'page'); }

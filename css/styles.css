@@ -587,19 +587,25 @@
 .header-nav .nav-dropdown-item:hover { background: var(--brand-faint); color: var(--text-brand); text-decoration: none; }
 .header-nav .nav-dropdown-item:hover svg { color: var(--text-brand); }
 /* Section headers grouping the Quick Links into Tools / Tariffs / Services / Learn */
-/* Mobile-only primary links inside the More menu. Desktop (>1040px) never shows
+/* Mobile-only primary links inside the More menu. Desktop (>1120px) never shows
    them — the promoted top-bar links cover it — so the desktop dropdown stays lean.
-   1040px is where .nav-promoted links hide; 600px is where Calculator/About hide. */
+   1120px is where .nav-promoted links hide; 600px is where Home/Calculator hide. */
 .nav-mob-links { display: none; }
-@media (max-width: 1040px) {
+@media (max-width: 1120px) {
   .nav-mob-links {
     display: grid; grid-template-columns: 1fr 1fr; gap: 0 6px;
     padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid var(--border-subtle);
   }
   .nav-mob-links .nav-mob-sm { display: none; }
 }
-@media (max-width: 600px) {
+/* 760px, not 600: below this the top bar cannot hold Home and Calculator as well as More,
+   the language switcher and the two icon buttons, so they move into the menu instead. The old
+   600 already overflowed — at 620px the Login button was pushed clean off the right edge —
+   and a fifth label would only have pushed it further. The two rules are one decision and
+   must share a breakpoint: whatever leaves the bar has to appear here. */
+@media (max-width: 760px) {
   .nav-mob-links .nav-mob-sm { display: flex; }
+  .header-nav > a:not(.login-btn) { display: none; }  /* but never Login */
 }
 .header-nav .nav-dropdown-label {
   display: block; padding: 5px 11px 2px; font-size: 10px; font-weight: 700;
@@ -1225,14 +1231,17 @@ button, a, select, input, textarea, label, [role="button"], [role="tab"], summar
 .header-nav a.nav-active:hover { color: var(--p-blue-400, #60a5fa); }
 .header-nav a:hover { background: rgba(255,255,255,.08); color: var(--text-inverse); text-decoration: none; }
 .header-nav a:focus-visible, .nav-dropdown-trigger:focus-visible { outline: 2px solid var(--p-blue-400); outline-offset: 2px; }
-/* Promoted top-bar shortcuts (Compare / Solar / EV / Blog): shown on wide screens only —
-   below 1040px they collapse back into the Quick Links dropdown, which holds the same links. */
+/* Promoted top-bar shortcuts (Smart Meter / Tariffs / Blog / Alerts): shown on wide screens
+   only — below 1120px they collapse back into the More dropdown, which holds the same links.
+   1120, not the old 1040: adding Home makes five labels, and at 1041-1050 the header had
+   exactly 0px of slack left between the logo and the nav. The full bar now unfolds only once
+   there is room for all of them. */
 .header-nav .nav-promoted { padding: 6px 12px; }
-@media (max-width: 1040px) { .header-nav .nav-promoted { display: none; } }
+@media (max-width: 1120px) { .header-nav .nav-promoted { display: none; } }
 /* The "More" menu now holds only the primary links (.nav-mob-links), which exist to cover
-   the promoted links once they hide at 1040px. Above that it would open empty, so it is
+   the promoted links once they hide at 1120px. Above that it would open empty, so it is
    mobile-only — everything else it used to carry is in the footer sitemap. */
-@media (min-width: 1041px) { .header-nav .nav-mob-only { display: none; } }
+@media (min-width: 1121px) { .header-nav .nav-mob-only { display: none; } }
 
 /* ─── Hero ───────────────────────────────────────────────────────────────────── */
 /* Light, airy hero: soft blue gradient washes on the page background, with the
@@ -7420,7 +7429,6 @@ html:not([lang="en"]) .footer-col-title {
   .bill-charges-table td, .bill-charges-table th { font-size: 12px; padding: 6px 8px; }
   /* Compact, non-overflowing header on phones */
   .site-header { padding: 0 12px; }
-  .header-nav > a:not(.login-btn) { display: none; }  /* hide Calculator/About text links on mobile — but never Login */
   .header-nav { gap: 6px; flex-shrink: 0; }
   .logo { gap: 8px; min-width: 0; }
   .logo > div { min-width: 0; }

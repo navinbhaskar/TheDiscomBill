@@ -13,6 +13,7 @@ export const STRINGS = {
     'tagline': 'Electricity Bill Calculator · All India',
     'a11y.skipToCalculator': 'Skip to calculator',
     'states.lead': 'Open the tariff page for your state — slab rates, fixed charges and every DISCOM — or browse the <a href="/tariffs/states/">full directory of all DISCOMs</a>.',
+    'nav.home': 'Home',
     'nav.calculator': 'Calculator',
     'nav.compare': 'Compare',
     'nav.smartMeter': 'Smart Meter',
