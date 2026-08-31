@@ -605,7 +605,17 @@
    must share a breakpoint: whatever leaves the bar has to appear here. */
 @media (max-width: 760px) {
   .nav-mob-links .nav-mob-sm { display: flex; }
-  .header-nav > a:not(.login-btn) { display: none; }  /* but never Login */
+  .header-nav:has(.nav-mob-only) > a:not(.login-btn) { display: none; }  /* but never Login */
+}
+/* The signed-in account pages (/bill/, /my-bills/, /profile/, /community/) carry a short
+   custom nav and no More menu. With nowhere to move a link to, hiding one just loses it — so
+   Home stays as long as it fits, and the rest go at the same 760px the others do. This band
+   used to overflow on those pages: at 620px all three links stayed and pushed Login off. */
+@media (max-width: 760px) {
+  .header-nav:not(:has(.nav-mob-only)) > a:not(.login-btn):not([data-nav-home]) { display: none; }
+}
+@media (max-width: 600px) {
+  .header-nav:not(:has(.nav-mob-only)) > a[data-nav-home] { display: none; }
 }
 .header-nav .nav-dropdown-label {
   display: block; padding: 5px 11px 2px; font-size: 10px; font-weight: 700;
