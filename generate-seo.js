@@ -1098,7 +1098,7 @@ function categoryCardHtml(cat, lang = 'en') {
       const range = slabRange(prev, sl.limit, lang);
       prev = (sl.limit === Infinity || sl.limit == null) ? prev : sl.limit;
       const note = sl.label ? ` <span class="tx-muted">(${esc(sl.label)})</span>` : '';
-      return `<li><span class="tt-slab-range">${range} <span class="tx-muted">${unit}</span>${note}</span><b class="num">${rupeeRate(sl.rate)}<span class="tx-muted">${perUnit}</span></b></li>`;
+      return `<li><span class="tt-slab-range"><span class="tt-slab-n">${range}</span> <span class="tx-muted">${unit}</span>${note}</span><b class="num">${rupeeRate(sl.rate)}<span class="tx-muted">${perUnit}</span></b></li>`;
     }).join('')}</ul>`;
   };
   // "₹50/kW/mo", not "₹50 / kW / month" — the long form wrapped to two lines in a column that

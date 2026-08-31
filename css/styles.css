@@ -4198,8 +4198,12 @@ html:not([lang="en"]) .bill-charges-table tfoot .total-payable-row td {
   font-weight: 700; color: var(--text-primary);
   font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap;
 }
-/* The range never breaks mid-figure: "0 – 100 / units" reads as two different numbers. */
-.tariff-table .tt-slab-range { color: var(--text-tertiary); white-space: nowrap; }
+/* The range never breaks mid-figure: "0 – 100 / units" reads as two different numbers. The
+   nowrap sits on the figure alone so the line can still break before "units" — on the cell it
+   made "1,200 – 1,600 units" overrun the rate beside it, which a fixed-layout column cannot
+   absorb. */
+.tariff-table .tt-slab-range { color: var(--text-tertiary); }
+.tariff-table .tt-slab-n { white-space: nowrap; }
 .tariff-table .tt-extras li > span { color: var(--text-tertiary); overflow-wrap: anywhere; }
 /* A row jumped to from a #rate-… link gets a moment of emphasis, so the reader can see where
    they landed in a long schedule. */
