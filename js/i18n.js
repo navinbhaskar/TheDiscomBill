@@ -245,6 +245,30 @@ export const STRINGS = {
           <dd>Several meters on one premises, read separately but slabbed against the connection as a whole.</dd>
         </div>`,
     'bc.heroMeta': 'Same engine and tariff data as the quick calculator on the home page — opened straight into the detailed form.',
+    'bc.howHtml': `<h2>How does it work?</h2>
+      <p>The form opens in Detailed mode, which shows every field the tariff orders define.
+      Most bills need only the first three steps.</p>
+      <div class="how-card">
+        <ol class="how-steps">
+          <li><strong>Pick your State, DISCOM and consumer category.</strong> A supply-type
+          field appears where the category has one &mdash; together these decide which tariff
+          schedule applies to you.</li>
+          <li><strong>Enter the billing period and your readings.</strong> Previous and
+          current meter readings, or just the units if that is all you have. Add a second
+          meter, or switch to time-of-day slots, where your connection works that way.</li>
+          <li><strong>Set your sanctioned load.</strong> Fixed charges are levied per kW of
+          it, so this moves the bill even in a month you used nothing.</li>
+          <li><strong>Add what the tariff cannot derive.</strong> Arrears, payments and
+          adjustments are carried figures rather than anything computed from this month's
+          units. The fuel surcharge fills in automatically and can be overridden.</li>
+          <li><strong>Calculate.</strong> The itemised bill appears alongside the form,
+          charge by charge. Enter the total from your printed bill first and it will also
+          tell you whether the two agree.</li>
+        </ol>
+        <p class="how-note">Simple mode is one click away if you only want a figure from your
+        DISCOM and units. Either way the arithmetic runs in your browser &mdash; nothing you
+        type is sent anywhere.</p>
+      </div>`,
     'bc.fieldsHtml': `<h2>What the advanced fields are for</h2>
         <p>The detailed form exposes every input the tariff orders actually define. Most bills need
         only a handful of them. Here is what each one changes, and where to read more if a line on

@@ -6443,47 +6443,54 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   font-variant-numeric: tabular-nums;
 }
 
-/* How does it work: the calculation chain, numbered because each step consumes the one above. */
+/* How does it work: a numbered chain, used by the three solar calculators and the advanced
+   bill calculator. Named .how-* rather than .solar-how-*: it started on the solar pages, but
+   a class name that says "solar" on the bill calculator would be a lie about where it belongs.
+   Solar keeps its amber markers through the .solar-section scope at the end of this block. */
 /* A card like the projection above it, and the steps run across it in columns rather than
    down a 525px measure - each step is one short line now, so a single column left most of the
    card empty and pushed the list twice as tall as it needed to be. */
-.solar-how {
+.how-card {
   margin-top: 18px; padding: 20px 24px;
   background: var(--surface-card); border: 1px solid var(--border-default);
   border-radius: var(--radius-lg); box-shadow: var(--shadow-sm);
 }
-.solar-how-steps {
-  counter-reset: solstep; list-style: none; margin: 14px 0 0; padding: 0;
+.how-steps {
+  counter-reset: howstep; list-style: none; margin: 14px 0 0; padding: 0;
   display: grid; grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr));
   gap: 12px 30px;
 }
 /* Exactly four steps land as 3 + 1 at this width, which leaves the last one stranded in its
    own row. A wider minimum forces 2 x 2 instead. Browsers without :has() get the 3 + 1, which
    is untidy rather than broken. */
-.solar-how-steps:has(li:nth-child(4):last-child) {
+.how-steps:has(li:nth-child(4):last-child) {
   grid-template-columns: repeat(auto-fit, minmax(min(430px, 100%), 1fr));
 }
-.solar-how-steps li {
-  counter-increment: solstep; position: relative;
+.how-steps li {
+  counter-increment: howstep; position: relative;
   padding: 0 0 0 32px; font-size: 13.5px; line-height: 1.6; color: var(--text-secondary);
 }
-.solar-how-steps li::before {
-  content: counter(solstep); position: absolute; left: 0; top: 0;
+.how-steps li::before {
+  content: counter(howstep); position: absolute; left: 0; top: 0;
   width: 22px; height: 22px; border-radius: 50%;
   display: grid; place-items: center;
   font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums;
-  color: var(--sol-step-fg); background: var(--sol-step-bg);
+  color: var(--text-brand); background: var(--brand-faint);
 }
+/* The solar pages keep the amber marker they have always had — the card sits among panel and
+   subsidy figures that all read in that colour. Scoped to the wrapper those pages already
+   have, so they needed no new class of their own. */
+.solar-section .how-steps li::before { color: var(--sol-step-fg); background: var(--sol-step-bg); }
 /* No connector rule between the markers. In a single column it drew the chain; across two
    columns the reading order is 1-2 / 3-4, so a vertical line would join 1 to 3 and describe a
    sequence that is not there. The numbers carry the order on their own. */
-.solar-how-steps strong { color: var(--text-primary); font-weight: 650; }
+.how-steps strong { color: var(--text-primary); font-weight: 650; }
 /* The closing disclaimer takes this page's column like everything else on it. .comparison-note
    caps at 760 for the pages where it sits under prose; here it sits under 1040-wide cards and
    stopping 280px short read as a stray block rather than as the page's last line. */
 .solar-section .comparison-note { max-width: none; }
 
-.solar-how-note {
+.how-note {
   grid-column: 1 / -1;
   margin: 16px 0 0; padding-top: 12px; border-top: 1px solid var(--border-subtle);
   font-size: 12.5px; line-height: 1.6; color: var(--text-tertiary);
