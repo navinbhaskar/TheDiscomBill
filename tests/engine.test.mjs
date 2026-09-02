@@ -7,6 +7,7 @@
 // files; if a rate genuinely changes, update the expectation here in the same commit.
 
 import { calculateBill, calculateEnergySlabs, resolveFixedCharge } from '../js/engine.js';
+import { rateForBill } from '../js/tariffs/fppa.js';
 import { getCategory, ensureAll } from '../js/tariffs/registry.js';
 
 // The registry loads state tariff tables on demand now, so the whole corpus has to be pulled
@@ -98,6 +99,27 @@ group('FPPA modes', () => {
     units: 350, connectedLoadKw: 5, billingPeriodDays: 30, billingDate: DATE,
     facRate: 0.5, facMode: 'per_unit', lpscApplicable: false });
   check('per_unit FPPA = ₹/unit × units', pu.facAmount, 175);          // 350 × 0.50
+
+  const bestJune = {
+    from: '2025-06-01',
+    mode: 'per_unit',
+    rate: 0.25,
+    unitSlabs: [
+      { maxUnits: 100, rate: 0.10 },
+      { maxUnits: 300, rate: 0.25 },
+      { maxUnits: 500, rate: 0.35 },
+      { maxUnits: null, rate: 0.40 },   // null = open-ended; Infinity does not survive JSON
+    ],
+  };
+  check('slabbed FAC low-consumption band', rateForBill(bestJune, { units: 90, billingPeriodDays: 30 }), 0.10);
+  check('slabbed FAC mid-consumption band', rateForBill(bestJune, { units: 350, billingPeriodDays: 30 }), 0.35);
+  check('slabbed FAC multi-month uses monthly units', rateForBill(bestJune, { units: 700, billingPeriodDays: 60 }), 0.35);
+  check('slabbed FAC open-ended top band', rateForBill(bestJune, { units: 900, billingPeriodDays: 30 }), 0.40);
+  // The boundary has to survive serialisation. Infinity stringifies to null, which silently
+  // turned the top band's cap into "no cap" and only worked by falling through to the last
+  // entry. `null` means the same thing before and after a round-trip.
+  check('slabbed FAC survives a JSON round-trip',
+    rateForBill(JSON.parse(JSON.stringify(bestJune)), { units: 900, billingPeriodDays: 30 }), 0.40);
 });
 
 // ── Minimum charge (consumption guarantee) — opt-in `minCharge` primitive ─────

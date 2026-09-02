@@ -7,6 +7,7 @@ import {
   findStateMetaByDiscom, resolveDatedTariff, fyStart,
   ensureState,
 } from './tariffs/registry.js';
+import { rateForBill } from './tariffs/fppa.js';
 import { resolveFppaForDiscom } from './tariffs/fppa-resolve.js';
 import { DOMESTIC_SUBSIDY } from './tariffs/subsidy.js';
 import { calculateBill } from './engine.js';
@@ -565,6 +566,8 @@ export function prefillFac(discomId, categoryId, supplyTypeId) {
   const rateEl = document.getElementById('facRate');
   const modeEl = document.getElementById('facMode');
   const autoEl = document.getElementById('fppaAuto');
+  const units = getEffectiveUnits();
+  const billingPeriodDays = getBillingPeriodDays();
 
   // Manual mode: never overwrite the user's entered value
   if (autoEl && !autoEl.checked) { updateFacUnitLabel(); return; }
@@ -578,7 +581,7 @@ export function prefillFac(discomId, categoryId, supplyTypeId) {
   if (months.length > 1) {
     const entries = months.map(d => resolveFppaForDiscom(discomId, d));
     const mode = entries.some(e => e && e.mode === 'percent') ? 'percent' : 'per_unit';
-    const rates = entries.map(e => (e ? e.rate : 0));   // months with no notice → 0 that month
+    const rates = entries.map(e => (e ? rateForBill(e, { units, billingPeriodDays }) : 0));   // months with no notice → 0 that month
     const avg = Math.round((rates.reduce((a, b) => a + b, 0) / rates.length) * 100) / 100;
     rateEl.value = avg;
     if (modeEl) modeEl.value = mode;
@@ -594,9 +597,13 @@ export function prefillFac(discomId, categoryId, supplyTypeId) {
   // Single-month: government-verified notified FPPA for this billing cycle takes priority
   const verified = resolveFppaForDiscom(discomId, getBillingDate());
   if (verified) {
-    rateEl.value = verified.rate;
+    const appliedRate = rateForBill(verified, { units, billingPeriodDays });
+    rateEl.value = appliedRate;
     if (modeEl) modeEl.value = verified.mode === 'percent' ? 'percent' : 'per_unit';
-    setFppaSource(`✓ ${verified.label} — ${verified.source}`, 'verified');
+    const slabNote = Array.isArray(verified.unitSlabs) && Number.isFinite(+units)
+      ? ` · applied slab ${appliedRate}/unit for ${Math.round(units)} units`
+      : '';
+    setFppaSource(`✓ ${verified.label}${slabNote} — ${verified.source}`, 'verified');
     updateFacUnitLabel();
     return;
   }
@@ -948,6 +955,11 @@ export function updateAdvancedMeter() {
   document.getElementById('advTotalMonths').textContent = (periodDays ? periodDays / 30 : 0).toFixed(2);
   document.getElementById('advancedTotalDisplay').style.display = data.hasInput ? 'block' : 'none';
   updateCalcButton();
+  prefillFac(
+    document.getElementById('discomSelect').value,
+    document.getElementById('categorySelect').value,
+    document.getElementById('supplyTypeSelect').value
+  );
 }
 
 export function setMeterMode(mode) {
@@ -1453,7 +1465,7 @@ export function buildRevisionLedger({ discomId, categoryId, supplyTypeId, totalU
     let facRate, facMode;
     if (fppaAuto) {
       const f = resolveFppaForDiscom(discomId, d);
-      facRate = f ? f.rate : 0;
+      facRate = f ? rateForBill(f, { units: unitsPerMonth, billingPeriodDays: 30 }) : 0;
       facMode = (f && f.mode === 'percent') ? 'percent' : 'per_unit';
     } else { facRate = manualFacRate; facMode = manualFacMode; }
 

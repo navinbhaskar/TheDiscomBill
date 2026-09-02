@@ -45,7 +45,7 @@ import { SCENARIOS, DEFAULT_SCENARIO, billInput, readout, billHtml, liveHtml } f
 // generated pages describing DISCOMs the index no longer lists.
 await buildTariffIndex({ quiet: true });
 await ensureAll();
-import { FPPA_BY_STATE, FPPA_BY_DISCOM, pick as pickFppa } from './js/tariffs/fppa.js';
+import { FPPA_BY_STATE, FPPA_BY_DISCOM, pick as pickFppa, rateForBill as fppaRateForBill } from './js/tariffs/fppa.js';
 import { DISCOM_RATING, RATING_REPORT, OVERRIDE_REASON } from './js/tariffs/ratings.js';
 import { calculateBill } from './js/engine.js';
 import { GUIDES } from './guides-content.js';
@@ -1731,9 +1731,11 @@ function fppaSectionHtml(state, discom) {
   const trend = fppaTrendHtml(state, discom);
   if (!cur && !trend) return '';
   const term = surchargeTerm(state);
+  const list = FPPA_BY_DISCOM[discom.id] || FPPA_BY_STATE[state] || [];
+  const lead = pickFppa(list, TODAY) ? 'current rate and trend' : 'latest verified rate and trend';
   return `
     <section class="seo-section" id="latest-fppa">
-      <h2>${esc(discom.name)} ${esc(term.code)} — current rate and trend</h2>
+      <h2>${esc(discom.name)} ${esc(term.code)} — ${lead}</h2>
       ${asSubsection(cur, { dropId: true })}
       ${asSubsection(trend, { dropId: true })}
     </section>`;
@@ -2042,21 +2044,36 @@ function currentFppaHtml(state, discom) {
     : 'No verified period in tracker';
   const rate = latest ? fsRate(latest) : 'Not available';
   const source = latest?.source || `No verified ${surchargeTerm(state).code} source recorded yet`;
+  const sourceHtml = latest?.sourceUrl
+    ? `<a href="${esc(latest.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(source)}</a>`
+    : esc(source);
+  // "this month may not be notified yet" is only honest while the gap is a month or two, which
+  // is the normal lag on a monthly notice. Maharashtra's newest entry is a nil levy from June
+  // 2025; telling a reader that September 2026 "may not be notified yet" would imply the
+  // tracker is roughly current when it is over a year behind. Past a quarter, say so plainly.
+  const staleMonths = latest && !current
+    ? Math.round((Date.parse(TODAY) - Date.parse(latest.to || latest.from)) / 2629800000)
+    : 0;
   const note = current
     ? 'Current applicable entry for today.'
-    : latest ? `Latest published entry shown; ${fsMonth(TODAY.slice(0, 8) + '01')} may not be notified yet.` : 'Enter the surcharge printed on your bill manually in the calculator.';
+    : !latest ? 'Enter the surcharge printed on your bill manually in the calculator.'
+    : staleMonths > 3
+      ? `No recent notice recorded — the entry shown is from ${fsMonth(latest.from)} and is history, not a current rate. Enter the surcharge printed on your bill.`
+      : `Latest published entry shown; ${fsMonth(TODAY.slice(0, 8) + '01')} may not be notified yet.`;
   const cls = latest?.rate >= 0 ? 'fs-pos' : latest ? 'fs-neg' : 'fs-pending';
   const trackerHref = fppaCoverageStates().includes(state) ? `/fppa/${slugify(state)}/` : '/fppa/';
+  const headingLead = current ? 'Current' : 'Latest verified';
+  const rateLead = current ? 'Current applicable FPPA' : 'Latest verified FPPA';
   return `
     <section class="seo-section" id="latest-fppa">
-      <h2>Current ${esc(discom.name)} ${esc(surchargeLabel(state))}</h2>
+      <h2>${headingLead} ${esc(discom.name)} ${esc(surchargeLabel(state))}</h2>
       <div class="comparison-table-wrapper">
         <table class="comparison-table">
           <tbody>
-            <tr><th>Current applicable FPPA</th><td><strong class="${cls}">${esc(rate)}</strong></td></tr>
+            <tr><th>${rateLead}</th><td><strong class="${cls}">${esc(rate)}</strong></td></tr>
             <tr><th>Applicable period</th><td>${esc(period)}</td></tr>
             <tr><th>Last updated</th><td>${LASTMOD_TOKEN.en}</td></tr>
-            <tr><th>Official source</th><td>${esc(source)}</td></tr>
+            <tr><th>Official source</th><td>${sourceHtml}</td></tr>
           </tbody>
         </table>
       </div>
@@ -5108,6 +5125,7 @@ function fsNoticeLabel(label, lang = 'en') {
 
 const fsRate = (e, lang = 'en') => !e ? '—'
   : e.mode === 'percent' ? `${e.rate > 0 ? '+' : ''}${e.rate.toFixed(2)}%`
+  : e.rateRange ? e.rateRange.replace(/unit/g, lang === 'hi' ? 'यूनिट' : 'unit')
   : `${rupeeRate(e.rate)}/${lang === 'hi' ? 'यूनिट' : 'unit'}`;
 
 function fppaMetaByDiscom() {
@@ -5174,7 +5192,8 @@ function fppaDirection(cur, prev, lang = 'en') {
 function fppaImpact(e, lang = 'en') {
   const t = fsT(lang);
   if (!e) return `<span class="fs-pending">${t('Enter bill value manually', 'बिल का मान स्वयं भरें')}</span>`;
-  const amt = e.mode === 'percent' ? 3000 * e.rate / 100 : 300 * e.rate;
+  const rate = e.mode === 'percent' ? e.rate : fppaRateForBill(e, { units: 300, billingPeriodDays: 30 });
+  const amt = e.mode === 'percent' ? 3000 * rate / 100 : 300 * rate;
   const cls = amt >= 0 ? 'fs-pos' : 'fs-neg';
   const prefix = amt >= 0 ? '+' : '-';
   const basis = e.mode === 'percent'
@@ -5235,7 +5254,9 @@ function fppaWhatChangedCard(label, mechanism, cur, prev, lang = 'en') {
       : t(`For ${rupee(3000)} of applicable charges, this represents approximately <strong class="${impact > 0 ? 'fs-pos' : 'fs-neg'}">${rupee(Math.abs(impact))}</strong> ${impact > 0 ? 'additional' : 'lower'} surcharge, subject to the applicable billing formula.`,
           `${rupee(3000)} के लागू शुल्कों पर यह लगभग <strong class="${impact > 0 ? 'fs-pos' : 'fs-neg'}">${rupee(Math.abs(impact))}</strong> ${impact > 0 ? 'अधिक' : 'कम'} अधिभार है — लागू बिलिंग सूत्र के अधीन।`);
   } else {
-    const impact = 300 * delta;
+    const curRate = fppaRateForBill(cur, { units: 300, billingPeriodDays: 30 });
+    const prevRate = fppaRateForBill(prev, { units: 300, billingPeriodDays: 30 });
+    const impact = 300 * (curRate - prevRate);
     second = impact === 0
       ? t(`For 300 units, this represents no surcharge change, subject to the applicable billing formula.`,
           `300 यूनिट पर इससे अधिभार में कोई अंतर नहीं पड़ता — लागू बिलिंग सूत्र के अधीन।`)
@@ -5269,10 +5290,12 @@ function fppaStateComparison(state) {
   return discoms.map(d => {
     const rawList = FPPA_BY_DISCOM[d.id] || stateList;
     const list = [...rawList].sort((a, b) => b.from.localeCompare(a.from));
-    const cur = pickFppa(list, TODAY) || list[0] || null;
-    const idx = cur ? list.indexOf(cur) : -1;
-    const prev = cur ? list.slice(idx + 1).find(e => e.mode === cur.mode) || null : null;
-    return { discom: d, list, cur, prev };
+    const cur = pickFppa(list, TODAY) || null;
+    const latest = list[0] || null;
+    const shown = cur || latest;
+    const idx = shown ? list.indexOf(shown) : -1;
+    const prev = shown ? list.slice(idx + 1).find(e => e.mode === shown.mode) || null : null;
+    return { discom: d, list, cur, latest, shown, prev };
   });
 }
 
@@ -5388,7 +5411,7 @@ function fppaArchiveYearLinks(state, activeYear = null, lang = 'en') {
 function fppaSourceCell(e, lang = 'en') {
   const t = fsT(lang);
   // The source strings themselves are the regulator's own titles and stay as published.
-  if (e.sourceUrl) return `<a href="${esc(e.sourceUrl)}">${esc(e.source || t('Official source', 'आधिकारिक स्रोत'))}</a>`;
+  if (e.sourceUrl) return `<a href="${esc(e.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(e.source || t('Official source', 'आधिकारिक स्रोत'))}</a>`;
   return esc(e.source || t('Source note pending', 'स्रोत विवरण प्रतीक्षित'));
 }
 
@@ -5536,9 +5559,23 @@ function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url, lang = 'en' } =
   const t = fsT(lang);
   const title = t('India Electricity Surcharge Tracker — FPPA / FPPAS / FAC Rates',
                   'भारत बिजली अधिभार ट्रैकर — FPPA / FPPAS / FAC दरें');
-  const description = t('Live electricity surcharge rates (FPPA, FPPAS, PPAC, FAC) for Uttar Pradesh, Delhi and Rajasthan, '
+  // The state list used to be hardcoded here, and it was wrong in both directions: it omitted
+  // a state that had data, then later claimed "live rates" for Maharashtra when its only entry
+  // was a nil levy from June 2025. Derive it instead — a state is advertised as live only if
+  // something actually resolves for today.
+  const fsLiveStates = getStates().filter((st) => getDiscoms(st).some((d) => {
+    const list = FPPA_BY_DISCOM[d.id] || FPPA_BY_STATE[st];
+    return list && pickFppa(list, TODAY);
+  }));
+  const fsStateList = (lg) => {
+    const names = fsLiveStates.map((st) => stateName(st, lg));
+    if (names.length <= 1) return names[0] || '';
+    const and = lg === 'hi' ? ' और ' : lg === 'mr' ? ' आणि ' : lg === 'ta' ? ' மற்றும் ' : ' and ';
+    return names.slice(0, -1).join(', ') + and + names[names.length - 1];
+  };
+  const description = t(`Live electricity surcharge rates (FPPA, FPPAS, PPAC, FAC) for ${fsStateList('en')}, `
     + 'with the full month-by-month history, what each rate adds to your bill, and the tariff regulation it is levied under.',
-    'उत्तर प्रदेश, दिल्ली और राजस्थान की मौजूदा बिजली अधिभार दरें (FPPA, FPPAS, PPAC, FAC) — पूरा महीना-दर-महीना '
+    `${fsStateList('hi')} की मौजूदा बिजली अधिभार दरें (FPPA, FPPAS, PPAC, FAC) — पूरा महीना-दर-महीना `
     + 'इतिहास, हर दर आपके बिल में कितना जोड़ती है, और यह किस टैरिफ़ विनियम के तहत लगती है।');
 
   // ── current standing rates ──────────────────────────────────────────────────
@@ -5637,9 +5674,12 @@ function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url, lang = 'en' } =
       <h2>${t('Track by state', 'राज्यवार ट्रैक करें')}</h2>
       <div class="fs-state-grid">${stateCards}</div>
       <p class="fs-legend">${t(`Dedicated tracker pages are generated only for states where we have verified
-      surcharge notices. Maharashtra FAC/FPPCA and Telangana FPPCA are high-priority coverage targets.`,
+      surcharge notices. Maharashtra FAC/PPCA is now indexed from MERC approvals. Telangana remains a
+      priority target, but TGERC's official 2025/2026 order lists do not show a current billable
+      fuel-cost adjustment value yet.`,
       `अलग ट्रैकर पृष्ठ केवल उन राज्यों के लिए बनते हैं जिनकी अधिभार सूचनाएँ हमने सत्यापित की हैं।
-      महाराष्ट्र FAC/FPPCA और तेलंगाना FPPCA हमारी प्राथमिकता सूची में हैं।`)}</p>
+      महाराष्ट्र FAC/PPCA अब MERC स्वीकृतियों से जोड़ा गया है। तेलंगाना अभी भी प्राथमिकता में है, लेकिन
+      TGERC की 2025/2026 आधिकारिक आदेश-सूचियों में अभी कोई मौजूदा वसूलने योग्य ईंधन-लागत समायोजन दर नहीं मिली।`)}</p>
     </section>
 
     <section class="seo-section">
@@ -5733,11 +5773,11 @@ function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url, lang = 'en' } =
     <section class="seo-section">
       <h2>${t('Coverage and sources', 'कवरेज और स्रोत')}</h2>
       <p>${t(`We publish a rate only where we have the regulator's or DISCOM's own notice. That
-      currently means <strong>Uttar Pradesh, Delhi and Rajasthan</strong>. For every other state
+      currently means <strong>Uttar Pradesh, Delhi, Rajasthan and Maharashtra</strong>. For every other state
       the calculator defaults the surcharge to zero and lets you type in the figure printed on
       your own bill — an honest blank rather than a plausible guess.`,
       `हम कोई दर तभी प्रकाशित करते हैं जब हमारे पास नियामक या डिस्कॉम की अपनी सूचना हो। फ़िलहाल इसका
-      मतलब है <strong>उत्तर प्रदेश, दिल्ली और राजस्थान</strong>। बाकी हर राज्य के लिए कैलकुलेटर अधिभार
+      मतलब है <strong>उत्तर प्रदेश, दिल्ली, राजस्थान और महाराष्ट्र</strong>। बाकी हर राज्य के लिए कैलकुलेटर अधिभार
       शून्य रखता है और आपको अपने बिल पर छपा आँकड़ा भरने देता है — अनुमान लगाने के बजाय ईमानदार ख़ाली जगह।`)}</p>
       <div class="comparison-table-wrapper">
         <table class="comparison-table">
@@ -5746,6 +5786,7 @@ function fuelSurchargePage({ url = '/fppa/', canonicalUrl = url, lang = 'en' } =
             <tr><td>${t('Uttar Pradesh', 'उत्तर प्रदेश')}</td><td>FPPAS</td><td>${t('% of fixed + energy charges, capped at 10%/cycle', 'फिक्स्ड + ऊर्जा शुल्क का %, प्रति चक्र 10% की सीमा')}</td><td>${t('UPPCL monthly FPPAS notice (UPERC MYT Reg. 2025)', 'UPPCL मासिक FPPAS सूचना (UPERC MYT विनियम 2025)')}</td></tr>
             <tr><td>${t('Delhi', 'दिल्ली')}</td><td>PPAC</td><td>${t('% of fixed + energy charges, set per DISCOM', 'फिक्स्ड + ऊर्जा शुल्क का %, हर डिस्कॉम के लिए अलग')}</td><td>${t('DERC PPAC approvals', 'DERC की PPAC स्वीकृतियाँ')}</td></tr>
             <tr><td>${t('Rajasthan', 'राजस्थान')}</td><td>${t('Regulatory Surcharge (incl. FPPAS)', 'नियामक अधिभार (FPPAS सहित)')}</td><td>${t('Flat per-unit', 'सपाट प्रति-यूनिट')}</td><td>${t('Tariff for Supply of Electricity-2025 §32 (RERC)', 'Tariff for Supply of Electricity-2025 §32 (RERC)')}</td></tr>
+            <tr><td>${t('Maharashtra', 'महाराष्ट्र')}</td><td>FAC / PPCA</td><td>${t('MERC approval letters; nil, effective-average, or slabbed per-unit rates by licensee', 'MERC स्वीकृति-पत्र; लाइसेंसी के अनुसार शून्य, प्रभावी औसत या स्लैब-वार प्रति-यूनिट दरें')}</td><td>${t('MERC FAC/PPCA approvals for MSEDCL, AEML-D, BEST and TPC-D', 'MSEDCL, AEML-D, BEST और TPC-D के लिए MERC FAC/PPCA स्वीकृतियाँ')}</td></tr>
           </tbody>
         </table>
       </div>
@@ -5807,18 +5848,21 @@ function fppaStatePage(state, lang = 'en') {
   const archiveLinks = fppaArchiveYearLinks(state, null, lang);
   const currentRows = comparison.map(r => {
     const cur = r.cur;
+    const shown = cur || r.latest;
     const prev = r.prev;
-    const val = cur ? `<strong class="${cur.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(cur, lang))}</strong>` : `<span class="fs-pending">${t('Not verified yet', 'अभी सत्यापित नहीं')}</span>`;
+    const val = shown
+      ? `<strong class="${shown.rate >= 0 ? 'fs-pos' : 'fs-neg'}">${esc(fsRate(shown, lang))}</strong>${cur ? '' : ` <span class="fs-pending">${t('latest verified', 'नवीनतम सत्यापित')}</span>`}`
+      : `<span class="fs-pending">${t('Not verified yet', 'अभी सत्यापित नहीं')}</span>`;
     const previous = prev ? esc(fsRate(prev, lang)) : `<span class="fs-pending">${t('No earlier rate', 'पिछली दर नहीं')}</span>`;
     // /tariffs/ has a Hindi twin, so this link follows the reader's language.
     const tariffPath = langUrl(`/tariffs/${stateSlug}/${r.discom.id}/`, lang);
     return `<tr>
       <td><a href="${esc(tariffPath)}">${esc(r.discom.name)}</a></td>
       <td>${val}</td>
-      <td>${esc(fppaPeriod(cur, lang))}</td>
+      <td>${esc(fppaPeriod(shown, lang))}</td>
       <td>${previous}</td>
-      <td>${fppaDirection(cur, prev, lang)}</td>
-      <td>${fppaImpact(cur, lang)}</td>
+      <td>${fppaDirection(shown, prev, lang)}</td>
+      <td>${fppaImpact(shown, lang)}</td>
     </tr>`;
   }).join('');
 
@@ -5871,19 +5915,19 @@ function fppaStatePage(state, lang = 'en') {
     <p class="privacy-updated">${t('Last updated', 'अंतिम अद्यतन')} ${LASTMOD_TOKEN[lang] || LASTMOD_TOKEN.en} &middot; ${esc(mechanismNote)}</p>
 
     <section class="seo-section">
-      <h2>${t(`Compare current ${esc(mechanism)} by DISCOM`, `डिस्कॉम-वार मौजूदा ${esc(mechanism)} की तुलना`)}</h2>
+      <h2>${t(`Compare current and latest verified ${esc(mechanism)} by DISCOM`, `डिस्कॉम-वार मौजूदा और नवीनतम सत्यापित ${esc(mechanism)} की तुलना`)}</h2>
       <div class="comparison-table-wrapper">
         <table class="comparison-table">
-          <thead><tr><th>${t('DISCOM', 'डिस्कॉम')}</th><th>${t('Current charge', 'मौजूदा शुल्क')}</th><th>${t('Effective period', 'प्रभावी अवधि')}</th><th>${t('Previous', 'पिछली')}</th><th>${t('Direction', 'दिशा')}</th><th>${t('Example impact', 'उदाहरण असर')}</th></tr></thead>
+          <thead><tr><th>${t('DISCOM', 'डिस्कॉम')}</th><th>${t('Charge', 'शुल्क')}</th><th>${t('Effective period', 'प्रभावी अवधि')}</th><th>${t('Previous', 'पिछली')}</th><th>${t('Direction', 'दिशा')}</th><th>${t('Example impact', 'उदाहरण असर')}</th></tr></thead>
           <tbody>${currentRows}</tbody>
         </table>
       </div>
-      <p class="fs-legend">${t(`Current month shown: ${esc(nowMonth)}. Negative rates are credits. "Not verified yet"
-      means we have not found an official current notice for that DISCOM; the calculator still lets
-      you enter the printed bill value manually.`,
-      `दिखाया गया महीना: ${esc(nowMonth)}. ऋणात्मक दरें क्रेडिट होती हैं। "अभी सत्यापित नहीं" का अर्थ है
-      कि उस डिस्कॉम के लिए हमें मौजूदा आधिकारिक सूचना नहीं मिली है; कैलकुलेटर में आप बिल पर छपा मान
-      स्वयं भर सकते हैं।`)}</p>
+      <p class="fs-legend">${t(`Current month checked: ${esc(nowMonth)}. If no official value is active for
+      today, the table shows the latest verified historical entry and marks it as such. Negative rates are
+      credits; "Not verified yet" means no official entry is archived for that DISCOM.`,
+      `जाँचा गया मौजूदा महीना: ${esc(nowMonth)}. अगर आज के लिए कोई आधिकारिक मान सक्रिय नहीं है, तो तालिका
+      नवीनतम सत्यापित ऐतिहासिक प्रविष्टि दिखाती है और उसे वैसा ही चिन्हित करती है। ऋणात्मक दरें क्रेडिट होती
+      हैं; "अभी सत्यापित नहीं" का अर्थ है कि उस डिस्कॉम के लिए कोई आधिकारिक प्रविष्टि संग्रह में नहीं है।`)}</p>
     </section>
 
     ${whatChangedHtml}

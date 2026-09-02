@@ -56,6 +56,7 @@ function formatMonth(iso) {
 function rateLabel(entry) {
   if (!entry || !Number.isFinite(entry.rate)) return 'rate recorded';
   if (entry.mode === 'percent') return `${entry.rate > 0 ? '+' : ''}${entry.rate.toFixed(2)}%`;
+  if (entry.rateRange) return entry.rateRange.replace('₹', 'Rs ');
   return `Rs ${Number(entry.rate).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}/unit`;
 }
 

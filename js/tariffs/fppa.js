@@ -4,8 +4,12 @@
 // in some states (e.g. Delhi), by DISCOM. Only values confirmed from official notices /
 // credible reporting are listed; periods with no entry default to 0 (user-editable).
 //
-// Each entry: { from, to?, mode, rate, label, source }
+// Each entry: { from, to?, mode, rate, label, source, unitSlabs? }
 //   mode: 'percent' (rate% of energy + demand/fixed charges) | 'per_unit' (₹/unit × units)
+//   unitSlabs: optional consumption-banded per-unit rates, for orders that publish a domestic
+//              slab table rather than one flat consumer charge. `rate` remains the fallback /
+//              chart value for older readers. Use `maxUnits: null` for the open-ended top
+//              band — NOT Infinity, which JSON.stringify turns into null.
 //   from/to: inclusive date window (YYYY-MM-DD). Omit `to` for an open-ended (current) rate.
 // Entries are matched top-to-bottom, so list specific dated windows BEFORE open-ended ones.
 
@@ -73,6 +77,44 @@ export const FPPA_BY_DISCOM = {
   jvvnl:  [{ from: "2025-10-01", mode: "per_unit", rate: 1.00, label: "Regulatory Surcharge (incl. FPPAS)", source: "Tariff for Supply of Electricity-2025 §32 (RERC Petitions 2303–2305/2025)" }],
   avvnl:  [{ from: "2025-10-01", mode: "per_unit", rate: 1.00, label: "Regulatory Surcharge (incl. FPPAS)", source: "Tariff for Supply of Electricity-2025 §32 (RERC Petitions 2303–2305/2025)" }],
   jdvvnl: [{ from: "2025-10-01", mode: "per_unit", rate: 1.00, label: "Regulatory Surcharge (incl. FPPAS)", source: "Tariff for Supply of Electricity-2025 §32 (RERC Petitions 2303–2305/2025)" }],
+
+  // ── Maharashtra — MERC FAC / PPCA ─────────────────────────────────────────
+  //
+  // Only MSEDCL is modelled. The three Mumbai licensees are deliberately absent, and the
+  // reason is worth recording so the gap is not "filled" again from the same documents.
+  //
+  // MERC's FAC/PPCA approval letters approve a LUMP SUM IN RUPEES CRORE, not a per-unit
+  // rate. They also carry no text layer — all four are pure scans (0 extractable
+  // characters), so nothing in them can be read without rendering the pages.
+  //
+  //   BEST   (MERC/PPCA/2026-27, dt. 30.06.2026, post-facto Q1 FY 2025-26):
+  //          Z-FAC leviable to consumer = Rs 8.71 cr (Apr 2025), Rs 15.56 cr (May),
+  //          Rs 10.74 cr (Jun). No residential slab table anywhere in the order; the
+  //          annexure is a generation-cost vetting report.
+  //   TPC-D  (MERC/PPCA/2026-27, dt. 30.06.2026, post-facto Q1 FY 2025-26):
+  //          Apr 2025 Rs (10.28) cr and May Rs (2.68) cr went to the PPCA Fund; only
+  //          Jun 2025's Rs 2.21 cr was "allowed for recovery in next billing month".
+  //   AEML-D (MERC/FAC/2024-25/0023, dt. 15.01.2025, FAC for Sep 2024):
+  //          Rs 146.99 cr approved; recovery sought across Jan/Feb/Mar 2025 at the
+  //          "FAC ceiling rate (20% of category energy charge)".
+  //
+  // Turning any of those into a ₹/unit figure needs the licensee's own category-wise sales
+  // volume for the month, which the orders do not print. AEML's is a PERCENTAGE OF ENERGY
+  // CHARGE, which this file cannot express either: `mode: 'percent'` is applied by the
+  // engine to fixedCharge + energy + penalties (see facBase in js/engine.js), so using it
+  // for an energy-only levy would over-charge every bill by 20% of the fixed charge.
+  //
+  // To add these properly: source the per-category ₹/unit the licensee actually billed
+  // (their own tariff circular, not the MERC approval), or add an energy-only percent mode
+  // to the engine first. Do not divide the crore figure by an assumed MU.
+  msedcl: [
+    { from: "2025-06-01", to: "2025-06-30", mode: "per_unit", rate: 0,
+      label: "MSEDCL FAC for Jun 2025 (nil consumer levy)",
+      source: "MERC prior-approval letter Ref. MERC/FAC/2025-26 dt. 05.12.2025: FAC approved at Rs 308.18 cr but added to the existing FAC Fund, leaving the FAC leviable for June 2025 at 0 (Zero); balance fund of Rs 376.58 cr carried forward",
+      sourceUrl: "https://merc.gov.in/wp-content/uploads/2025/12/MSEDCL-FAC-Approval-June-2025.pdf",
+      orderDate: "2025-12-05", verifiedOn: "2026-09-02" },
+  ],
+
 };
 
 // State-wide values (apply to every DISCOM in the state unless overridden above).
@@ -119,6 +161,22 @@ export function pick(list, billingDate) {
     if (bd >= from && (!to || bd <= to)) return e;
   }
   return null;
+}
+
+export function rateForBill(entry, { units = null, billingPeriodDays = 30 } = {}) {
+  if (!entry) return 0;
+  if (entry.mode !== 'per_unit' || !Array.isArray(entry.unitSlabs) || !entry.unitSlabs.length) {
+    return entry.rate || 0;
+  }
+  const months = billingPeriodDays ? Math.max(1, Math.round(billingPeriodDays / 30)) : 1;
+  const monthlyUnits = units != null && Number.isFinite(+units) ? (+units / months) : null;
+  if (monthlyUnits == null) return entry.rate || 0;
+  // `maxUnits: null` means "no upper bound", matching how the tariff data writes an
+  // open-ended slab (`limit: null`). Infinity cannot be used: it survives in memory but
+  // JSON.stringify turns it into null, so any serialised copy silently loses the boundary.
+  const slab = entry.unitSlabs.find(s => s.maxUnits == null || monthlyUnits <= s.maxUnits)
+    || entry.unitSlabs[entry.unitSlabs.length - 1];
+  return slab ? slab.rate : (entry.rate || 0);
 }
 
 // resolveFppaForDiscom moved to ./fppa-resolve.js — see the note at the top of this file.

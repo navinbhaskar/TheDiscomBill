@@ -227,7 +227,11 @@ export function initCalculator() {
     setMeterMode(getMeterMode());
 
     ['todPeak', 'todNormal', 'todOffPeak'].forEach(id => {
-      document.getElementById(id).addEventListener('input', () => { updateTodDisplay(); checkLifelineLimits(); });
+      document.getElementById(id).addEventListener('input', () => {
+        updateTodDisplay();
+        prefillFac(discomEl.value, categoryEl.value, supplyTypeEl.value);
+        checkLifelineLimits();
+      });
     });
     document.getElementById('arrears').addEventListener('input', updateArrearTotal);
     document.getElementById('arrearLpsc').addEventListener('input', updateArrearTotal);
