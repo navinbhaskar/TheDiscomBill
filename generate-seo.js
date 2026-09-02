@@ -2225,8 +2225,18 @@ function officialServicesHtml(state, discom) {
 
 function discomSourcesHtml(state, discom, fy) {
   const meta = STATE_META[state] || {};
+  // Provenance can be recorded per DISCOM or per state, and which one is right depends on the
+  // regulator. Maharashtra carries none at state level ON PURPOSE: MERC issues a separate MYT
+  // order per licensee (MSEDCL 217/2024, AEML 211/2024, TPC 210/2024, BEST 207/2024), so a
+  // single state-wide basis would be wrong for three of the four. Reading only the state field
+  // made every Maharashtra page claim "No published order recorded for this state yet" while
+  // the order it was built from sat in the DISCOM record. build-tariff-database.mjs already
+  // resolved it this way, which is why /database/ was right and these pages were not.
+  const basis   = discom.ratesAsOf || meta.ratesAsOf;
+  const srcUrl  = discom.sourceUrl || meta.sourceUrl;
+  const checked = discom.verifiedOn || meta.verifiedOn;
   const sources = [];
-  if (meta.sourceUrl) sources.push(['Tariff order / regulator', meta.sourceUrl]);
+  if (srcUrl) sources.push(['Tariff order / regulator', srcUrl]);
   if (discom.website) sources.push([`${discom.name} official information`, discom.website]);
   if (FPPA_BY_DISCOM[discom.id] || FPPA_BY_STATE[state]) sources.push([`${surchargeTerm(state).code} tracker`, `/fppa/${slugify(state)}/`]);
   if (!sources.length) return '';
@@ -2236,11 +2246,11 @@ function discomSourcesHtml(state, discom, fy) {
       <table class="seo-facts"><tbody>
         ${sources.map(([label, href]) => `<tr><th>${esc(label)}</th><td><a href="${attr(href)}"${/^https?:/i.test(href) ? ' target="_blank" rel="noopener"' : ''}>${esc(String(href).replace(/^https?:\/\//, ''))}</a></td></tr>`).join('')}
         <tr><th>Tariff effective from</th><td>${esc((ratesPhrase(meta, fy)?.label || fy))}</td></tr>
-        ${meta.ratesAsOf
-          ? `<tr><th>Tariff basis</th><td>${esc(meta.ratesAsOf)}</td></tr>`
-          : `<tr><th>Tariff basis</th><td class="db-gap">No published order recorded for this state yet — these rates are not yet tied to a document we hold. <a href="/methodology/">How we source and verify</a></td></tr>`}
-        ${meta.verifiedOn
-          ? `<tr><th>Checked against the order</th><td>${esc(meta.verifiedOn)}</td></tr>`
+        ${basis
+          ? `<tr><th>Tariff basis</th><td>${esc(basis)}</td></tr>`
+          : `<tr><th>Tariff basis</th><td class="db-gap">No published order recorded for this DISCOM yet — these rates are not yet tied to a document we hold. <a href="/methodology/">How we source and verify</a></td></tr>`}
+        ${checked
+          ? `<tr><th>Checked against the order</th><td>${esc(checked)}</td></tr>`
           : ''}
         <tr><th>Page updated</th><td>${LASTMOD_TOKEN.en}</td></tr>
       </tbody></table>

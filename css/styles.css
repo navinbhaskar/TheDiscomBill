@@ -1,3 +1,21 @@
+/* ─── The hidden attribute, made to actually hide ────────────────────────────
+   `[hidden] { display: none }` lives in the UA stylesheet, and ANY author `display`
+   rule outranks it regardless of specificity. So every element the JS toggles with
+   `el.hidden = true` that also carries a `display` value stayed on screen.
+
+   This was patched eight separate times, per component, each with its own comment
+   saying the same thing (.adv-panel-badge, .purpose-chip, .comp-pick-bar, .blog-more-wrap,
+   .svc-control, .ocr-upload, .ocr-progress, .ub-more). The eighth was found the hard way:
+   on /alerts/, filtering by category hid the month headings — which have no author
+   `display` — but left all 61 cards in place, so the one matching card sat 2,500px down
+   an unchanged 13,447px list and the filter read as broken.
+
+   There are ~93 `.hidden =` toggles in js/. Rather than wait to find the ninth, this
+   states the rule once. `!important` is load-bearing here: it has to beat author
+   `display` declarations, which is the entire problem. Nothing in this sheet ever sets
+   a [hidden] element to a visible display, so there is nothing for it to break. */
+[hidden] { display: none !important; }
+
 /* ─── Skip link (accessibility) ─────────────────────────────────────────────── */
 .skip-link {
   position: absolute;

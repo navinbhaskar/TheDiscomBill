@@ -1,5 +1,29 @@
 # Tariff order findings — web reconnaissance, 19 August 2026
 
+> ## ⚠️ RESOLVED — superseded 2 September 2026
+>
+> **Every finding below has been acted on. Do not read the "On TDB" column as current.**
+>
+> This file is a dated snapshot of what the web said on 19 August, kept because its *sources*
+> and its reasoning about proposed-vs-in-force are still useful. Its premise — "the six red
+> states ... all show FY 2024-25" — is no longer true. The red tier is empty:
+> `npm run tariff:fresh:check` reports **all 66 DISCOMs carry a recorded basis**.
+>
+> | State | Said here (19 Aug) | Actually on TDB now |
+> |---|---|---|
+> | Arunachal Pradesh | 2024-25 | **2026-27** — APSERC Petition TP-10 of 2025 (verified 28-08-2026) |
+> | Manipur | 2024-25 | **2026-27** — MnERC MSPDCL order dt. 14-05-2026, eff. 01-05-2026 |
+> | Dadra & Nagar Haveli and Daman & Diu | 2024-25 | **2026-27** — JERC Petition 145/2025 (verified 28-08-2026) |
+> | Ladakh | 2024-25 | **2026-27** — JERC Order No. 05 of 2026 for LPDD (verified 28-08-2026) |
+> | Mizoram | 2024-25 | **2026-27** — MZERC P&ED subsidised tariff schedule (verified 28-08-2026) |
+> | Nagaland | 2024-25 | **2025-26** — NERC MYT order dt. 28-03-2025 (verified 28-08-2026) |
+>
+> Nagaland is deliberately still on 2025-26, and that is the section below being *right*: its
+> FY 2026-27 order was only a petition, proposed to take effect 1 October 2026. Proposed is
+> not law. Re-check it after that date.
+>
+> `docs/tariff-freshness.md` is generated and is the current picture. This file is history.
+
 Hand-maintained companion to the generated `tariff-freshness.md`. This records **whether a
 newer order exists**, with sources. It deliberately contains **no rates**.
 
@@ -11,6 +35,8 @@ newer order exists**, with sources. It deliberately contains **no rates**.
 > news summaries — never an acceptable source for this engine.
 
 ## The six red states
+
+*(As assessed on 19 August 2026. All six have since been resolved — see the banner above.)*
 
 All six carry no recorded basis in the tariff data and show FY 2024-25.
 
@@ -50,8 +76,9 @@ noted for Rajasthan: the Indian tariff year is not uniformly April–March.
    and trade-press summaries — and even those were hedged ("appears to follow the standard
    April 1st implementation date"). A rate is only as good as the order it came from.
 
-## Next step
+## Next step — DONE
 
-Each of these needs the order PDF read directly. The fastest route is to download the six
-PDFs manually and hand them over; they can then be transcribed against the order text, with
-`sourceUrl`, `orderDate` and `ratesAsOf` recorded so the row leaves the red tier permanently.
+*Completed by 28 August 2026.* Each order was read directly and transcribed with `sourceUrl`,
+`orderDate` and `ratesAsOf` recorded, and all six rows left the red tier. The one genuinely
+open item is Tamil Nadu's FY 2026-27 inflation revision, which the amber spot-check above
+flagged as unconfirmed and which is still not published on the TNERC index.
