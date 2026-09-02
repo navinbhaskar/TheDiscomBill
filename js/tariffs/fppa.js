@@ -17,28 +17,44 @@
 
 // DISCOM-specific values (take priority over the state-wide table).
 export const FPPA_BY_DISCOM = {
-  // Delhi — PPAC (Power Purchase Adjustment Cost): % of fixed + energy charges, per-DISCOM.
-  // DERC allowed a higher summer differential 9 May – 8 Aug 2025 (May 9–Jun 30 figures below).
-  // DERC switched to MONTHLY PPAC revisions from Jun 2026 and sanctioned sharply higher
-  // rates (BRPL 17.94 / BYPL 17.43 / TPDDL 16.00). Kept open-ended as the current standing
-  // rate until the next notice; revisit monthly.
+  // Delhi — FPPAS (Fuel & Power Purchase Adjustment Surcharge), % of fixed + energy charges,
+  // per DISCOM. DERC moved to MONTHLY orders from Jun 2026. Each order carries a 10% ceiling
+  // (Tariff Regs 2017 reg. 134(d), as amended 2026) plus a case-by-case relaxation under
+  // reg. 172, so the headline figure is "10% cap + additional".
+  //
+  // READ THE DATES CAREFULLY. DERC names each order by the month whose power-purchase cost it
+  // settles, NOT the month it is billed in — the order dated 10.08.2026 fixes the FPPAS "for
+  // June 2026". The window below is therefore the period the rate is RECOVERABLE (from the
+  // order's own validity clause), which is what a bill date must be matched against.
+  //
+  // Corrected 2026-09-02 against the order PDFs. The previous entries put TPDDL on 12.21%
+  // open-ended, which was the May-2026 figure; the 10.08.2026 order raised TPDDL to 18.50%
+  // and that order was already three weeks in force. BRPL and BYPL have sat at 17.94/17.43
+  // across all three orders. The 10.08.2026 PDF was fetched from DERC and from BSES and the
+  // two copies are byte-identical (sha256).
   brpl: [
-    { from: "2026-07-01", mode: "percent", rate: 17.94, label: "BRPL PPAC (Jul 2026, unchanged)", source: "BRPL FPPAS page / DERC PPAC order dated 10.07.2026", sourceUrl: "https://www.bsesdelhi.com/web/brpl/fuel-power-purchase-adjustment-charges", orderDate: "2026-07-10", verifiedOn: "2026-08-17" },
-    { from: "2026-06-01", to: "2026-06-30", mode: "percent", rate: 17.94, label: "BRPL PPAC (Jun 2026)", source: "DERC PPAC approval, Jun 2026", sourceUrl: "https://derc.gov.in/commissions-proceedings-orders/other-than-142/final-order", verifiedOn: "2026-08-17" },
+    { from: "2026-09-10", mode: "percent", rate: 17.94, label: "BRPL FPPAS (17.94%, carried forward past the order's one-month validity)", source: "DERC order dt. 10.08.2026 (FPPAS for Jun 2026), carried forward pending the Jul-2026 FPPAS order", sourceUrl: "https://www.derc.gov.in/sites/default/files/PPAC_Order%20-%20June.pdf", orderDate: "2026-08-10", verifiedOn: "2026-09-02" },
+    { from: "2026-08-10", to: "2026-09-09", mode: "percent", rate: 17.94, label: "BRPL FPPAS for Jun 2026 (order dt. 10.08.2026)", source: "DERC order dt. 10.08.2026, para 1(a): 10% cap + additional FPPAS for Jun 2026; para 1(b) makes it recoverable for one month from the date of the Order", sourceUrl: "https://www.derc.gov.in/sites/default/files/PPAC_Order%20-%20June.pdf", orderDate: "2026-08-10", verifiedOn: "2026-09-02" },
+    { from: "2026-07-10", to: "2026-08-09", mode: "percent", rate: 17.94, label: "BRPL FPPAS for May 2026 (order dt. 10.07.2026)", source: "DERC order dt. 10.07.2026, para 1(a); para 1(b) runs it month-to-month from issuance till further Order", sourceUrl: "https://www.derc.gov.in/sites/default/files/PPAC_Order%20-%20May.pdf", orderDate: "2026-07-10", verifiedOn: "2026-09-02" },
+    { from: "2026-06-10", to: "2026-07-09", mode: "percent", rate: 17.94, label: "BRPL FPPAS for Apr 2026 (order dt. 10.06.2026)", source: "DERC order dt. 10.06.2026, para 1(a)/1(b); month-to-month from issuance till further Order", sourceUrl: "https://www.bsesdelhi.com/documents/55701/1994065252/BRPL_PPAC_Order_10062026.pdf", orderDate: "2026-06-10", verifiedOn: "2026-09-02" },
     { from: "2025-05-09", to: "2025-06-30", mode: "percent", rate: 13.54, label: "BRPL summer PPAC (9 May – 30 Jun 2025)", source: "DERC differential PPAC order, May 2025" },
-    { from: "2025-07-01", to: "2026-05-31", mode: "percent", rate: 7.25, label: "BRPL PPAC (Jul 2025 – May 2026)", source: "DERC-approved BRPL PPAC 7.25%" },
+    { from: "2025-07-01", to: "2026-06-09", mode: "percent", rate: 7.25, label: "BRPL PPAC (Jul 2025 – Jun 2026)", source: "DERC-approved BRPL PPAC 7.25%" },
   ],
   bypl: [
-    { from: "2026-07-01", mode: "percent", rate: 17.43, label: "BYPL PPAC (Jul 2026, unchanged)", source: "DERC PPAC order dated 10.07.2026 / Delhi PPAC notification", sourceUrl: "https://derc.gov.in/commissions-proceedings-orders/other-than-142/final-order", orderDate: "2026-07-10", verifiedOn: "2026-08-17" },
-    { from: "2026-06-01", to: "2026-06-30", mode: "percent", rate: 17.43, label: "BYPL PPAC (Jun 2026)", source: "DERC PPAC approval, Jun 2026", sourceUrl: "https://derc.gov.in/commissions-proceedings-orders/other-than-142/final-order", verifiedOn: "2026-08-17" },
+    { from: "2026-09-10", mode: "percent", rate: 17.43, label: "BYPL FPPAS (17.43%, carried forward past the order's one-month validity)", source: "DERC order dt. 10.08.2026 (FPPAS for Jun 2026), carried forward pending the Jul-2026 FPPAS order", sourceUrl: "https://www.derc.gov.in/sites/default/files/PPAC_Order%20-%20June.pdf", orderDate: "2026-08-10", verifiedOn: "2026-09-02" },
+    { from: "2026-08-10", to: "2026-09-09", mode: "percent", rate: 17.43, label: "BYPL FPPAS for Jun 2026 (order dt. 10.08.2026)", source: "DERC order dt. 10.08.2026, para 1(a): 10% cap + additional FPPAS for Jun 2026; para 1(b) makes it recoverable for one month from the date of the Order", sourceUrl: "https://www.derc.gov.in/sites/default/files/PPAC_Order%20-%20June.pdf", orderDate: "2026-08-10", verifiedOn: "2026-09-02" },
+    { from: "2026-07-10", to: "2026-08-09", mode: "percent", rate: 17.43, label: "BYPL FPPAS for May 2026 (order dt. 10.07.2026)", source: "DERC order dt. 10.07.2026, para 1(a); para 1(b) runs it month-to-month from issuance till further Order", sourceUrl: "https://www.derc.gov.in/sites/default/files/PPAC_Order%20-%20May.pdf", orderDate: "2026-07-10", verifiedOn: "2026-09-02" },
+    { from: "2026-06-10", to: "2026-07-09", mode: "percent", rate: 17.43, label: "BYPL FPPAS for Apr 2026 (order dt. 10.06.2026)", source: "DERC order dt. 10.06.2026, para 1(a)/1(b); month-to-month from issuance till further Order", sourceUrl: "https://www.bsesdelhi.com/documents/55701/1994065252/BRPL_PPAC_Order_10062026.pdf", orderDate: "2026-06-10", verifiedOn: "2026-09-02" },
     { from: "2025-05-09", to: "2025-06-30", mode: "percent", rate: 13.33, label: "BYPL summer PPAC (9 May – 30 Jun 2025)", source: "DERC differential PPAC order, May 2025" },
-    { from: "2025-07-01", to: "2026-05-31", mode: "percent", rate: 8.11, label: "BYPL PPAC (Jul 2025 – May 2026)", source: "DERC-approved BYPL PPAC 8.11%" },
+    { from: "2025-07-01", to: "2026-06-09", mode: "percent", rate: 8.11, label: "BYPL PPAC (Jul 2025 – Jun 2026)", source: "DERC-approved BYPL PPAC 8.11%" },
   ],
   tpddl: [
-    { from: "2026-07-01", mode: "percent", rate: 12.21, label: "TPDDL PPAC (Jul 2026, reduced)", source: "DERC PPAC order dated 10.07.2026 / TPDDL PPAC notification", sourceUrl: "https://www.tatapower-ddl.com/regulations-and-compliances/tariff-related/derc-orders-and-letters-on-ppac", orderDate: "2026-07-10", verifiedOn: "2026-08-17" },
-    { from: "2026-06-01", to: "2026-06-30", mode: "percent", rate: 15.99, label: "TPDDL PPAC (Jun 2026)", source: "DERC PPAC approval, Jun 2026", sourceUrl: "https://www.tatapower-ddl.com/regulations-and-compliances/tariff-related/derc-orders-and-letters-on-ppac", verifiedOn: "2026-08-17" },
+    { from: "2026-09-10", mode: "percent", rate: 18.5, label: "TPDDL FPPAS (18.5%, carried forward past the order's one-month validity)", source: "DERC order dt. 10.08.2026 (FPPAS for Jun 2026), carried forward pending the Jul-2026 FPPAS order", sourceUrl: "https://www.derc.gov.in/sites/default/files/PPAC_Order%20-%20June.pdf", orderDate: "2026-08-10", verifiedOn: "2026-09-02" },
+    { from: "2026-08-10", to: "2026-09-09", mode: "percent", rate: 18.5, label: "TPDDL FPPAS for Jun 2026 (order dt. 10.08.2026)", source: "DERC order dt. 10.08.2026, para 1(a): 10% cap + additional FPPAS for Jun 2026; para 1(b) makes it recoverable for one month from the date of the Order", sourceUrl: "https://www.derc.gov.in/sites/default/files/PPAC_Order%20-%20June.pdf", orderDate: "2026-08-10", verifiedOn: "2026-09-02" },
+    { from: "2026-07-10", to: "2026-08-09", mode: "percent", rate: 12.21, label: "TPDDL FPPAS for May 2026 (order dt. 10.07.2026)", source: "DERC order dt. 10.07.2026, para 1(a); para 1(b) runs it month-to-month from issuance till further Order", sourceUrl: "https://www.derc.gov.in/sites/default/files/PPAC_Order%20-%20May.pdf", orderDate: "2026-07-10", verifiedOn: "2026-09-02" },
+    { from: "2026-06-10", to: "2026-07-09", mode: "percent", rate: 16.0, label: "TPDDL FPPAS for Apr 2026 (order dt. 10.06.2026)", source: "DERC order dt. 10.06.2026, para 1(a)/1(b); month-to-month from issuance till further Order", sourceUrl: "https://www.bsesdelhi.com/documents/55701/1994065252/BRPL_PPAC_Order_10062026.pdf", orderDate: "2026-06-10", verifiedOn: "2026-09-02" },
     { from: "2025-05-09", to: "2025-06-30", mode: "percent", rate: 19.22, label: "TPDDL summer PPAC (9 May – 30 Jun 2025)", source: "DERC differential PPAC order, May 2025" },
-    { from: "2025-07-01", to: "2026-05-31", mode: "percent", rate: 10.47, label: "TPDDL PPAC (Jul 2025 – May 2026)", source: "DERC-approved TPDDL PPAC 10.47%" },
+    { from: "2025-07-01", to: "2026-06-09", mode: "percent", rate: 10.47, label: "TPDDL PPAC (Jul 2025 – Jun 2026)", source: "DERC-approved TPDDL PPAC 10.47%" },
   ],
 
   // Rajasthan — Regulatory Surcharge, §32 of the Tariff for Supply of Electricity-2025.
@@ -65,7 +81,15 @@ export const FPPA_BY_STATE = {
   // Verified monthly notices; negative = consumer credit; capped at 10%/cycle (excess carried
   // forward). Source: UPPCL monthly FPPAS notices (UPERC MYT Reg. 2025). FPPAS is nil (0) before Apr 2025.
   "Uttar Pradesh": [
-    { from: "2026-08-01", to: "2026-08-31", mode: "percent", rate: -2.92, label: "Aug 2026 FPPAS (credit)" },
+    // NEWEST MONTH IS DELIBERATELY OPEN-ENDED (no `to`). Every other month here is a closed
+    // window, which is right for history but was wrong for the head of the list: once the month
+    // elapsed, `pick` matched nothing, resolveFppaForDiscom returned null and the calculator
+    // silently billed UP at 0% FPPAS — a wrong bill, with no warning, for the state this engine
+    // is otherwise verified against to the paisa. It failed that way on 2026-09-01. Carrying the
+    // last notified rate forward is what Delhi and Rajasthan already do below, and a stale rate
+    // is a far better failure than a silently absent one. When the next notice lands, close this
+    // window with its real `to` and add the new month above it, open-ended in turn.
+    { from: "2026-08-01", mode: "percent", rate: -2.92, label: "Aug 2026 FPPAS (credit; carried forward pending the next notice)" },
     { from: "2026-07-01", to: "2026-07-31", mode: "percent", rate: -4.43, label: "Jul 2026 FPPAS (credit)" },
     { from: "2026-06-01", to: "2026-06-30", mode: "percent", rate: 10.00, label: "Jun 2026 FPPAS (10% cap)" },
     { from: "2026-05-01", to: "2026-05-31", mode: "percent", rate: -1.52, label: "May 2026 FPPAS (credit)" },
