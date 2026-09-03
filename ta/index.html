@@ -37,7 +37,7 @@
   <link rel="alternate" hreflang="hi-IN" href="https://thediscombill.com/hi/">
   <link rel="alternate" hreflang="mr-IN" href="https://thediscombill.com/mr/">
   <link rel="alternate" hreflang="ta-IN" href="https://thediscombill.com/ta/">
-  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/">
+  <link rel="alternate" hreflang="x-default" href="https://thediscombill.com/">
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="TheDiscomBill">
@@ -205,16 +205,22 @@
   </div><!-- /hero-left -->
 
   <!-- Right: one sample-bill card that rotates through five real DISCOM bills (5s apiece,
-       dots above the DISCOM chip). Every figure is calculateBill() output for 250 units /
-       2 kW / 30 days on 2026-07-15, each DISCOM at its own documented surcharge from
-       tariffs/fppa.js (UP FPPAS −4.43%, BRPL PPAC 17.94%; BESCOM, MSEDCL and TNPDCL have
-       none on record). MVVNL's supply type is ST-10B (Urban Domestic, >1 kW) — NOT ST-10A,
-       which is Urban Life Line and caps at 1 kW / 100 units, so 250 units on it is an
-       impossible bill. Re-verify every slide after any tariff order, e.g.
-         calculateBill({ discomId:'mvvnl', categoryId:'domestic', supplyTypeId:'10B',
-           units:250, connectedLoadKw:2, billingPeriodDays:30, billingDate:'2026-07-15',
-           facRate:-4.43, facMode:'percent' })  →  currentNet 1651
-       and the same call for brpl (1038), bescom (1881), msedcl (2567), tangedco (1323). -->
+       dots above the DISCOM chip).
+
+       EVERY NUMBER BELOW IS GENERATED. Do not hand-edit the amounts, the surcharge rate or
+       the slab arithmetic — stampHeroBills() in generate-seo.js overwrites them on the next
+       `npm run seo` from calculateBill() at 250 units / 2 kW / 30 days, with the surcharge
+       resolved from tariffs/fppa.js for TODAY. Labels and their data-i18n keys ARE
+       hand-authored and are left alone, which is why one pass covers en/hi/mr/ta: the
+       numerals are not translated.
+
+       This replaced a comment asking the next person to "re-verify every slide after any
+       tariff order". Nobody did, and the card sat showing UP's FPPAS as −4.43% after it had
+       moved to −2.92%. Adding a slide means adding its params to that function and to the
+       hero-bill check in tests/site.test.mjs.
+
+       MVVNL's supply type is ST-10B (Urban Domestic, >1 kW) — NOT ST-10A, which is Urban
+       Life Line and caps at 1 kW / 100 units, so 250 units on it is an impossible bill. -->
   <div class="hero-right reveal">
     <div class="hero-bill-card" id="heroBillCard">
       <div class="hbc-head">
@@ -240,7 +246,7 @@
       <div class="hbc-faces">
         <div class="hbc-face active" id="hbcSlide0" role="tabpanel" aria-labelledby="hbcDot0" tabindex="0" data-chip="UPPCL · Lucknow">
           <div class="hbc-hero">
-            <span class="hbc-hero-amount">₹1,651</span>
+            <span class="hbc-hero-amount">₹1,677</span>
             <span class="hbc-hero-sub" data-i18n="hero.card.sub0">250 யூனிட் · 2 kW · LMV-1 வீட்டு</span>
           </div>
           <dl class="hbc-lines">
@@ -254,20 +260,20 @@
               <dd>₹220.00</dd>
             </div>
             <div class="hbc-line hbc-line-credit">
-              <dt><span data-i18n="hero.card.credit">FPPA கிரெடிட்</span> <em>−4.43%</em></dt>
-              <dd>−₹72.87</dd>
+              <dt><span data-i18n="hero.card.credit">FPPA கிரெடிட்</span> <em>−2.92%</em></dt>
+              <dd>−₹48.03</dd>
             </div>
             <div class="hbc-line">
               <dt><span data-i18n="hero.card.duty">மின் வரி</span> <em>5%</em></dt>
-              <dd>₹78.61</dd>
+              <dd>₹79.85</dd>
             </div>
             <div class="hbc-line hbc-line-quiet">
               <dt><span data-i18n="hero.card.rounding">முழுமையாக்கல்</span></dt>
-              <dd>+₹0.26</dd>
+              <dd>+₹0.18</dd>
             </div>
             <div class="hbc-line hbc-line-total">
               <dt data-i18n="hero.card.totalPayable">மொத்தத் தொகை</dt>
-              <dd>₹1,651.00</dd>
+              <dd>₹1,677.00</dd>
             </div>
           </dl>
           <p class="hbc-note" data-i18n="hero.card.note0">உ.பி.-ன் எரிபொருள் கட்டணம் மாதாந்திரம் — ஜூலை 2026-ல் கிரெடிட்.</p>
@@ -330,6 +336,13 @@
             <div class="hbc-line">
               <dt><span data-i18n="hero.card.tax">மின் வரி</span> <em>9%</em></dt>
               <dd>₹130.50</dd>
+            </div>
+            <!-- BESCOM's lines came to ₹1,880.50 against a ₹1,881 total, so this card was 50
+                 paise short of adding up for as long as it was hand-written. The generator
+                 now refuses to emit a slide whose rounding has nowhere to go. -->
+            <div class="hbc-line hbc-line-quiet">
+              <dt><span data-i18n="hero.card.rounding">முழுமையாக்கல்</span></dt>
+              <dd>+₹0.50</dd>
             </div>
             <div class="hbc-line hbc-line-total">
               <dt data-i18n="hero.card.totalPayable">மொத்தத் தொகை</dt>

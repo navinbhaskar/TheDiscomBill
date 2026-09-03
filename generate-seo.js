@@ -48,6 +48,7 @@ await ensureAll();
 import { FPPA_BY_STATE, FPPA_BY_DISCOM, pick as pickFppa, rateForBill as fppaRateForBill } from './js/tariffs/fppa.js';
 import { DISCOM_RATING, RATING_REPORT, OVERRIDE_REASON } from './js/tariffs/ratings.js';
 import { calculateBill } from './js/engine.js';
+import { resolveFppaForDiscom } from './js/tariffs/fppa-resolve.js';
 import { GUIDES } from './guides-content.js';
 import { GLOSSARY } from './glossary-content.js';
 // Runtime i18n.js carries only English; the vernacular tables are split into
@@ -8145,6 +8146,119 @@ function stampHomepageStates(states) {
   if (out !== before) writeWithRetry(file, out);
   return { changed: out !== before, regions: grouped.length, cards: states.length };
 }
+// ── homepage hero sample bills ──────────────────────────────────────────────
+// The hero rotates five real DISCOM bills. Every figure on them used to be hand-typed, with
+// a comment in index.html asking the next person to "re-verify every slide after any tariff
+// order". That is a manual step with nothing behind it, and it failed exactly as you would
+// expect: UP's FPPAS moved from -4.43% to -2.92% and the card kept showing the old credit,
+// on the most-visited page of the site.
+//
+// Now every number is calculateBill() output, and the surcharge is resolved from fppa.js for
+// TODAY rather than pinned to a date. The hand-authored labels and their data-i18n keys are
+// left alone — only the values inside <dd>, <em> and <small> are rewritten, which is why one
+// pass fixes all four languages: the numerals are not translated.
+function stampHeroBills() {
+  const file = path.join(ROOT, 'index.html');
+  const before = fs.readFileSync(file, 'utf8');
+
+  const BASE = { categoryId: 'domestic', units: 250, connectedLoadKw: 2, billingPeriodDays: 30, billingDate: TODAY };
+  // MVVNL is ST-10B (Urban Domestic, >1 kW) — NOT ST-10A, which is Urban Life Line and caps
+  // at 1 kW / 100 units, so 250 units on it is an impossible bill.
+  const SLIDES = [
+    { discomId: 'mvvnl', supplyTypeId: '10B' },
+    { discomId: 'brpl' },
+    { discomId: 'bescom' },
+    { discomId: 'msedcl' },
+    { discomId: 'tangedco' },
+  ];
+
+  const money  = (n) => '₹' + Math.abs(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const signed = (n) => (n < 0 ? '−' : '') + money(n);
+  const whole  = (n) => '₹' + Math.round(n).toLocaleString('en-IN');
+  const pct    = (n, plus) => (n < 0 ? '−' : plus ? '+' : '') + Math.abs(n).toFixed(2) + '%';
+  const num    = (n) => Number(n).toLocaleString('en-IN');
+
+  let out = before;
+  const problems = [];
+
+  SLIDES.forEach((slide, i) => {
+    // Built by concatenation, NOT a template literal: `[\s\S]` inside a template literal is
+    // parsed as the escape \s (which collapses to "s"), silently turning the class into [sS].
+    const re = new RegExp('(id="hbcSlide' + i + '"[\\s\\S]*?)(<\\/dl>)');
+    const m = out.match(re);
+    if (!m) { problems.push(`slide ${i}: markup not found`); return; }
+
+    const entry = resolveFppaForDiscom(slide.discomId, new Date(TODAY));
+    const facRate = entry ? fppaRateForBill(entry, { units: BASE.units, billingPeriodDays: BASE.billingPeriodDays }) : 0;
+    const facMode = entry && entry.mode === 'percent' ? 'percent' : 'per_unit';
+    const b = calculateBill({ ...BASE, ...slide, facRate, facMode });
+
+    let blk = m[1];
+    // Replace the value inside the <dd>/<em>/<small> of the line carrying this data-i18n key.
+    //
+    // Cut the block into whole rows FIRST, then pick the one holding the key. Matching the key
+    // directly with a lazy `<div class="hbc-line…">[\s\S]*?data-i18n="KEY"` does not work: the
+    // match starts at the FIRST row and runs to the target's </div>, so the replacements below
+    // land on the first row's <dd>/<em> instead of the intended one. That silently wrote the
+    // bill total into the energy line and the duty rate into the fixed-charge label.
+    // No hbc-line row nests a <div>, so lazy-to-first-</div> is exact for the split itself.
+    const setIn = (key, { dd, em, small }) => {
+      const rows = blk.match(/<div class="hbc-line[^"]*">[\s\S]*?<\/div>/g) || [];
+      const target = rows.find(r => r.includes(`data-i18n="${key}"`));
+      if (!target) { if (dd !== undefined) problems.push(`slide ${i}: no line for ${key}`); return; }
+      let line = target;
+      if (dd    !== undefined) line = line.replace(/(<dd>)[^<]*(<\/dd>)/, `$1${dd}$2`);
+      if (em    !== undefined) line = line.replace(/(<em>)[^<]*(<\/em>)/, `$1${em}$2`);
+      if (small !== undefined) line = line.replace(/(<small>)[^<]*(<\/small>)/, `$1${small}$2`);
+      blk = blk.replace(target, line);
+    };
+
+    // Energy: the slab arithmetic is the tariff's own breakdown, so it moves with a tariff order.
+    const slabs = (b.slabBreakdown || []).filter(r => r.units > 0);
+    const slabText = slabs.length === 1
+      ? `${num(slabs[0].units)} × ${money(slabs[0].rate)} — one flat slab`
+      : slabs.map(r => `${num(r.units)} × ${money(r.rate)}`).join(' + ');
+    setIn('hero.card.energy', { dd: money(b.totalEnergy), small: slabText });
+    setIn('hero.card.fixed',  { dd: money(b.fixedCharge) });
+    if (b.wheelingCharge) {
+      setIn('hero.card.wheeling', { dd: money(b.wheelingCharge), em: `${num(b.netUnits)} × ${money(b.wheelingRate)}` });
+    }
+
+    // Surcharge. A credit and a charge are different lines in the markup; write whichever the
+    // slide has, and fail loudly if a slide labelled "none notified" has since acquired a rate
+    // — that label is hand-authored and cannot be derived.
+    const facTxt = facMode === 'percent' ? pct(facRate, true) : `${money(facRate)}/unit`;
+    if (/data-i18n="hero\.card\.credit"/.test(blk))    setIn('hero.card.credit', { dd: signed(b.facAmount), em: facTxt });
+    else if (/data-i18n="hero\.card\.ppac"/.test(blk)) setIn('hero.card.ppac',   { dd: signed(b.facAmount), em: facTxt });
+    else if (/data-i18n="hero\.card\.fac"/.test(blk)) {
+      setIn('hero.card.fac', { dd: money(b.facAmount) });
+      if (facRate) problems.push(`slide ${i} (${slide.discomId}): card says no surcharge is notified, but fppa.js now has ${facTxt} — the label needs rewriting by hand`);
+    }
+
+    for (const ex of (b.extraCharges || [])) {
+      const key = /tax/i.test(ex.name) ? 'hero.card.tax' : 'hero.card.duty';
+      setIn(key, { dd: money(ex.amount), em: `${+ex.rate}%` });
+    }
+
+    // Rounding only gets a row on the slides that need one — BESCOM's bill lands on a whole
+    // rupee, so its card has no such line and asking for one is not an error. A slide that
+    // acquires a rounding delta without a row IS, because the total would stop adding up.
+    const rounding = +(b.currentNet - b.currentGross).toFixed(2);
+    if (rounding) setIn('hero.card.rounding', { dd: (rounding < 0 ? '−' : '+') + money(rounding) });
+    else if (/data-i18n="hero\.card\.rounding"/.test(blk)) {
+      problems.push(`slide ${i} (${slide.discomId}): rounds to zero but the card still has a rounding row`);
+    }
+    setIn('hero.card.totalPayable', { dd: money(b.currentNet) });
+    blk = blk.replace(/(<span class="hbc-hero-amount">)[^<]*(<\/span>)/, `$1${whole(b.currentNet)}$2`);
+
+    out = out.replace(m[1], blk);
+  });
+
+  if (problems.length) throw new Error('stampHeroBills:\n  ' + problems.join('\n  '));
+  if (out !== before) writeWithRetry(file, out);
+  return { changed: out !== before, slides: SLIDES.length };
+}
+
 // ── /bill-calculator/ ───────────────────────────────────────────────────────
 // The homepage owns the head term ("electricity bill calculator") and ranks for it. This page
 // deliberately does NOT compete for that: it targets what the homepage cannot be — the full
@@ -9128,6 +9242,7 @@ export function generateSeo() {
   // After every page is on disk - 404.html included - and before buildContentCss(), which
   // derives content.min.css from this markup and must see its final form.
   const homeStates = stampHomepageStates(states);
+  const heroBills = stampHeroBills();
   const coverage = stampHomepageCoverage(tariffDatabase.summary);
   // After the homepage is final — this copies its calculator verbatim.
   const billCalc = stampBillCalculator();

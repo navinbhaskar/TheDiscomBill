@@ -753,10 +753,13 @@ console.log('\n• new surcharge rates carry provenance');
 // tariff update could silently leave five wrong bills on the most-visited page on the site.
 // Now it fails here instead.
 //
-// The five parameter sets are the ones the comment in index.html documents: 250 units, 2 kW,
-// 30 days, 2026-07-15, each DISCOM at its own documented surcharge (UP FPPAS -4.43%, BRPL
-// PPAC 17.94%; BESCOM, MSEDCL and TNPDCL have none on record). MVVNL is ST-10B, NOT ST-10A,
-// which caps at 1 kW / 100 units and cannot produce a 250-unit bill at all.
+// The five parameter sets mirror stampHeroBills() in generate-seo.js: 250 units, 2 kW, 30
+// days, TODAY. The surcharge is RESOLVED from fppa.js, never written down here — an earlier
+// version pinned `facRate: -4.43` and a 2026-07-15 billing date, so it went on passing while
+// UP's FPPAS moved to -2.92% and the homepage kept showing the old credit. A check that
+// hardcodes the input it is meant to be checking cannot catch that input going stale.
+// MVVNL is ST-10B, NOT ST-10A, which caps at 1 kW / 100 units and cannot produce a 250-unit
+// bill at all.
 console.log('\n• saved-bill links stay readable by the bill viewer');
 {
   // buildShareUrl() in ui.js decides what a saved bill carries; paramsToInputs() in
@@ -792,16 +795,27 @@ console.log('\n• homepage sample bills match the engine');
 {
   const { ensureAll } = await import(pathToFileURL(path.join(ROOT, 'js', 'tariffs', 'registry.js')).href);
   const { calculateBill } = await import(pathToFileURL(path.join(ROOT, 'js', 'engine.js')).href);
+  const { resolveFppaForDiscom } = await import(pathToFileURL(path.join(ROOT, 'js', 'tariffs', 'fppa-resolve.js')).href);
+  const { rateForBill } = await import(pathToFileURL(path.join(ROOT, 'js', 'tariffs', 'fppa.js')).href);
   await ensureAll();
 
-  const BASE = { categoryId: 'domestic', units: 250, connectedLoadKw: 2, billingPeriodDays: 30, billingDate: '2026-07-15' };
+  const TODAY = new Date().toISOString().slice(0, 10);
+  const BASE = { categoryId: 'domestic', units: 250, connectedLoadKw: 2, billingPeriodDays: 30, billingDate: TODAY };
   const SLIDES = [
-    ['UPPCL · Lucknow',      { discomId: 'mvvnl', supplyTypeId: '10B', facRate: -4.43, facMode: 'percent' }],
-    ['BSES Rajdhani · Delhi',{ discomId: 'brpl', facRate: 17.94, facMode: 'percent' }],
+    ['UPPCL · Lucknow',      { discomId: 'mvvnl', supplyTypeId: '10B' }],
+    ['BSES Rajdhani · Delhi',{ discomId: 'brpl' }],
     ['BESCOM · Bengaluru',   { discomId: 'bescom' }],
     ['MSEDCL · Maharashtra', { discomId: 'msedcl' }],
     ['TNPDCL · Tamil Nadu',  { discomId: 'tangedco' }],
   ];
+  // Same resolution the generator does. Resolved, not written down — see the note above.
+  const facFor = (discomId) => {
+    const e = resolveFppaForDiscom(discomId, new Date(TODAY));
+    return e
+      ? { facRate: rateForBill(e, { units: BASE.units, billingPeriodDays: BASE.billingPeriodDays }),
+          facMode: e.mode === 'percent' ? 'percent' : 'per_unit' }
+      : { facRate: 0, facMode: 'per_unit' };
+  };
 
   const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const shown = [...html.matchAll(/<span class="hbc-hero-amount">₹([\d,]+)<\/span>/g)].map((m) => Number(m[1].replace(/,/g, '')));
@@ -813,7 +827,7 @@ console.log('\n• homepage sample bills match the engine');
     for (let i = 0; i < SLIDES.length; i++) {
       const [label, params] = SLIDES[i];
       let net;
-      try { net = calculateBill({ ...BASE, ...params }).currentNet; }
+      try { net = calculateBill({ ...BASE, ...params, ...facFor(params.discomId) }).currentNet; }
       catch (err) { problems.push(`${label}: calculateBill threw — ${err.message}`); continue; }
       if (Math.round(net) !== shown[i]) {
         problems.push(`${label}: homepage shows ₹${shown[i].toLocaleString('en-IN')}, engine now returns ₹${Math.round(net).toLocaleString('en-IN')}`);
