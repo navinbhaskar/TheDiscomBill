@@ -4827,6 +4827,19 @@ a.seo-lang-pill:hover, a.seo-lang-pill:focus-visible {
   max-width: var(--w-text);
 }
 .fs-archive-callout h2 { margin-top: 0; }
+/* The archive link is a secondary action sitting under the year pills, but it inherited the
+   full primary-CTA geometry and rendered 335px wide — heavier than the "Archive years" row it
+   follows. Tightened to its own size here rather than on .seo-cta, which is the real primary
+   button everywhere else on the site.
+   The top margin needs this two-class selector: `.seo-section p` (0,1,1) outranks
+   `.seo-cta-row` (0,1,0), so the shared 18px never applied and the button sat flush against
+   the pills above it. */
+.fs-archive-callout .seo-cta-row { margin: 22px 0 2px; }
+.fs-archive-callout .seo-cta {
+  padding: 9px 16px;
+  font-size: 13.5px;
+  border-radius: 10px;
+}
 /* justify-content on its own did nothing here: this computed as display:block with
    gap:normal, so "Archive years" and the year links sat hard against each other with no
    separation at all. It needs to actually be a flex row to have a gap. */
