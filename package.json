@@ -15,7 +15,9 @@
     "api:bundle": "node scripts/sync-calc-api.mjs",
     "serve": "npx http-server . -p 3456",
     "og": "node scripts/og-images.mjs",
-    "icons": "node scripts/icons.mjs"
+    "icons": "node scripts/icons.mjs",
+    "indexnow": "node scripts/indexnow.mjs",
+    "indexnow:all": "node scripts/indexnow.mjs --all"
   },
   "license": "MIT",
   "repository": {

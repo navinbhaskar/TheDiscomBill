@@ -31,3 +31,31 @@ jobs:
         # engine + bill-ocr calculations, plus internal-link integrity and SEO structure
         # (title / single H1 / canonical) across all generated pages.
         run: npm test
+
+  # Tell IndexNow which pages changed, so Bing/Yandex/Seznam/Naver refresh them without
+  # waiting for a crawl. Runs only on main, only after the tests above pass, so a broken
+  # build is never advertised. Google does not use IndexNow — this is additive to Search
+  # Console, not a replacement for it.
+  indexnow:
+    needs: engine-tests
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The script diffs this push's range, so it needs the parent commit present.
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Submit changed pages
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          # A first push to a branch, or a force-push, reports an all-zero "before" SHA that
+          # cannot be diffed. Fall back to the previous commit rather than submitting all 619
+          # URLs, which would be a burst of noise for what is usually one changed page.
+          if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+            BEFORE="HEAD~1"
+          fi
+          node scripts/indexnow.mjs --changed-since "$BEFORE"
