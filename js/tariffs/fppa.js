@@ -115,6 +115,34 @@ export const FPPA_BY_DISCOM = {
       orderDate: "2025-12-05", verifiedOn: "2026-09-02" },
   ],
 
+
+  // ── Goa — FPPCA, RESEARCHED BUT NOT MODELLED ─────────────────────────────
+  //
+  // Recorded so this is not researched a third time. The Electricity Department publishes a
+  // genuinely good monthly document — and unlike MERC's, it HAS a text layer, so pdftotext
+  // reads it straight out:
+  //   https://www.goaelectricity.gov.in/general-information/tariff-and-other-charges/
+  //   The July-2026 computation gives Monthly FPPAS = 19.23523491501850%, from the standard
+  //   (APPC actual 4.95 − approved 3.85) formula, and prints a slab-wise Rs/unit column.
+  //
+  // Two reasons it is not in the table above:
+  //
+  // 1. It is a percentage of ENERGY CHARGES ONLY. The document's own heading is "Slab-wise
+  //    Energy Charges based FPPCA", and each Rs/unit figure is that slab's energy rate x
+  //    19.235%. This file cannot express that: `mode: 'percent'` is applied by the engine to
+  //    facBase = fixedCharge + energy + penalties, and Goa levies a real fixed charge
+  //    (Rs 25/kW domestic), so 'percent' would over-charge every bill. `unitSlabs` is also
+  //    wrong here — the levy is telescopic like the tariff, so a 350-unit bill is 19.235% of
+  //    its whole slab-split energy charge, NOT 1.05 x 350. Modelling it needs an energy-only
+  //    percent mode in the engine, which is also what AEML-D Mumbai needs (see above).
+  //
+  // 2. There is nothing current to serve. Goa runs an n-2 lag — the May-2026 computation is
+  //    levied on July-2026 consumption — and as of 2026-09-04 no August or September page
+  //    exists (both 404). Adding an energy-only mode today would serve one historical month.
+  //
+  // Do it when a current month is available, or as part of one pass over the several states
+  // that levy on energy alone. The tariff schedule in this document has already been used —
+  // it verified js/tariffs/goa.js.
 };
 
 // State-wide values (apply to every DISCOM in the state unless overridden above).

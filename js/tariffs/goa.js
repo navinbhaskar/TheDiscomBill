@@ -83,10 +83,17 @@ const GOA_COMMERCIAL_TYPES = [
 
 const GOA_LEVY_NOTE = "JERC's schedule is the tariff alone. Domestic bills here include Goa's 20 paise/unit electricity duty; other State levies are charged on the bill in addition. Goa's fixed charge is levied per kW (or kVA) 'or part thereof', so a fractional sanctioned load is rounded up to the next whole unit before the charge is worked out — the calculator does not round, so check your sanctioned load if the fixed charge looks a rupee or two light.";
 
+// Cross-checked 2026-09-04 against a SECOND government document: the Electricity
+// Department's own monthly FPPCA computation for July-2026 consumption, which reprints the
+// energy-charge schedule "w.e.f 1st April 2026" as the base it applies its percentage to.
+// Every domestic figure below matched it exactly — LTDS-I 1.50; LTDS-II 2.10 / 3.10 / 4.15 /
+// 5.45 / 6.60; LTDS-III 3.15 / 4.15 / 5.20 / 6.40 / 6.70. That is a confirmation of the
+// tariff, not of a bill: no Goa consumer bill has been reconciled against this file.
 export default {
   state: "Goa",
   ratesAsOf: "FY 2026-27 (JERC 4th MYT Control Period order, FY 2025-26 to FY 2029-30 — FY 2026-27 rates approved in advance)",
-  sourceUrl: "https://www.goaelectricity.gov.in",
+  verifiedOn: "2026-09-04",
+  sourceUrl: "https://www.goaelectricity.gov.in/wp-content/uploads/2026/08/Final-FPPCA-Computation-for-May-26-to-be-levied-for-consumption-of-July-26-combined.pdf",
   discoms: [
     {
       id: "ged",

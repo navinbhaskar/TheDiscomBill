@@ -6580,9 +6580,16 @@ function tariffDatabasePage(summary, dbStates = []) {
   const sourceLinkText = (s) => isPendingPublicUpdate(s) ? 'Public source ↗' : 'Source ↗';
   const effectiveLabel = (iso) => iso ? humanDate(iso, 'en') : 'not recorded';
   const latestVerifiedOn = sorted.map(verifiedOnFor).filter(Boolean).sort().pop() || '';
-  const recentlyVerified = latestVerifiedOn
-    ? sorted.filter((s) => verifiedOnFor(s) === latestVerifiedOn)
-    : [];
+  // "The latest batch" used to mean states whose verifiedOn EQUALLED the newest date, which
+  // made the section only as useful as the last day's work: verifying one state (Goa, on
+  // 2026-09-04) emptied a five-state panel down to that one row and dropped the Nagaland
+  // pending-proposal label the reader needs. Show the most recent checks instead, newest
+  // first, so a single verification adds a row rather than replacing the section.
+  const REFRESH_ROWS = 8;
+  const recentlyVerified = sorted
+    .filter(verifiedOnFor)
+    .sort((a, b) => verifiedOnFor(b).localeCompare(verifiedOnFor(a)) || a.state.localeCompare(b.state))
+    .slice(0, REFRESH_ROWS);
   const refreshStatus = (s) => {
     const note = s.ratesAsOf || '';
     if (/petition pending|proposal pending|public notice/i.test(note)) return 'FY 2026-27 proposal pending';
@@ -6596,6 +6603,7 @@ function tariffDatabasePage(summary, dbStates = []) {
       <td><a href="/tariffs/${slugify(s.state)}/">${esc(s.state)}</a></td>
       <td>${basis ? `<span title="${attr(basis)}">${esc(fyOf(s) || basis)}</span>` : '<span class="db-gap">not recorded</span>'}</td>
       <td>${esc(effectiveLabel(s.effectiveDate))}</td>
+      <td>${esc(humanDate(verifiedOnFor(s), 'en'))}</td>
       <td><span class="${isPendingPublicUpdate(s) ? 'db-status is-pending' : 'db-status is-current'}">${esc(refreshStatus(s))}</span></td>
       <td>${s.sourceUrl
         ? `<a href="${attr(s.sourceUrl)}" target="_blank" rel="noopener nofollow">${sourceLinkText(s)}</a>`
@@ -6650,14 +6658,14 @@ function tariffDatabasePage(summary, dbStates = []) {
 
     ${recentRefreshRows ? `<section class="seo-section database-refresh">
       <h2>Latest database refresh</h2>
-      <p>These records were checked in the newest tariff refresh batch, dated
-      ${esc(humanDate(latestVerifiedOn, 'en'))}. Public proposals are shown as alerts and source
+      <p>The ${recentlyVerified.length} most recently checked records, newest first — the latest
+      dated ${esc(humanDate(latestVerifiedOn, 'en'))}. Public proposals are shown as alerts and source
       evidence, but they do not replace approved calculator rates until the final order is available.</p>
       <div class="comparison-table-wrapper database-refresh-table">
         <table class="comparison-table">
           <thead><tr>
             <th>State / UT</th><th>Current basis</th><th>Effective from</th>
-            <th>Status</th><th>Source</th>
+            <th>Checked</th><th>Status</th><th>Source</th>
           </tr></thead>
           <tbody>${recentRefreshRows}</tbody>
         </table>

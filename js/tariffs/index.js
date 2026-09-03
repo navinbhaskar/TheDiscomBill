@@ -99,7 +99,8 @@ export const STATE_INFO = {
     "Goa": {
       "state": "Goa",
       "ratesAsOf": "FY 2026-27 (JERC 4th MYT Control Period order, FY 2025-26 to FY 2029-30 — FY 2026-27 rates approved in advance)",
-      "sourceUrl": "https://www.goaelectricity.gov.in"
+      "verifiedOn": "2026-09-04",
+      "sourceUrl": "https://www.goaelectricity.gov.in/wp-content/uploads/2026/08/Final-FPPCA-Computation-for-May-26-to-be-levied-for-consumption-of-July-26-combined.pdf"
     },
     "Gujarat": {
       "state": "Gujarat",

@@ -36,8 +36,8 @@
     "lastmod": "2026-08-31"
   },
   "/database/": {
-    "hash": "37bb3a39d39f6773",
-    "lastmod": "2026-09-02"
+    "hash": "b406ea3614963d20",
+    "lastmod": "2026-09-03"
   },
   "/electricity-cost-calculator/": {
     "hash": "8aea7c9fcc23b4b1",
@@ -948,12 +948,12 @@
     "lastmod": "2026-08-31"
   },
   "/hi/tariffs/goa/": {
-    "hash": "fc66467d7e27d5d9",
-    "lastmod": "2026-08-31"
+    "hash": "34b470cc5c386c4e",
+    "lastmod": "2026-09-03"
   },
   "/hi/tariffs/goa/ged/": {
-    "hash": "cff40fc83ca0d10d",
-    "lastmod": "2026-08-31"
+    "hash": "d80c0aec7521688c",
+    "lastmod": "2026-09-03"
   },
   "/hi/tariffs/gujarat/": {
     "hash": "33dc647d843cbf08",
@@ -2156,12 +2156,12 @@
     "lastmod": "2026-09-02"
   },
   "/tariffs/goa/": {
-    "hash": "3f66e6988d5b2252",
-    "lastmod": "2026-08-31"
+    "hash": "7277825aeb2b1903",
+    "lastmod": "2026-09-03"
   },
   "/tariffs/goa/ged/": {
-    "hash": "d65b5b73f8f9596a",
-    "lastmod": "2026-09-02"
+    "hash": "10f72004c09d317d",
+    "lastmod": "2026-09-03"
   },
   "/tariffs/gujarat/": {
     "hash": "1035171bc09a0798",
@@ -2512,8 +2512,8 @@
     "lastmod": "2026-07-17"
   },
   "tariff:goa": {
-    "hash": "c838ef2a31bc1020",
-    "lastmod": "2026-08-27"
+    "hash": "f57e691e89bda235",
+    "lastmod": "2026-09-03"
   },
   "tariff:gujarat": {
     "hash": "97035f5d44404d18",
