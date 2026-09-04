@@ -157,9 +157,17 @@ export const FPPA_BY_STATE = {
     // silently billed UP at 0% FPPAS — a wrong bill, with no warning, for the state this engine
     // is otherwise verified against to the paisa. It failed that way on 2026-09-01. Carrying the
     // last notified rate forward is what Delhi and Rajasthan already do below, and a stale rate
-    // is a far better failure than a silently absent one. When the next notice lands, close this
-    // window with its real `to` and add the new month above it, open-ended in turn.
-    { from: "2026-08-01", mode: "percent", rate: -2.92, label: "Aug 2026 FPPAS (credit; carried forward pending the next notice)" },
+    // is a far better failure than a silently absent one. When the next notice lands, close the
+    // open window with its real `to` and add the new month above it, open-ended in turn.
+    // The next notice landed, so Aug is closed and Sept takes over as the open-ended head.
+    // This one carries its own source: unlike the months below it, it was read off the
+    // notice rather than inherited. UPPCL's PDF is a scan (no text layer) — page 2 is the
+    // signed calculation sheet, and -603.79 / 7616.65 x 100 = -7.93% checks out.
+    { from: "2026-09-01", mode: "percent", rate: -7.93, label: "Sep 2026 FPPAS (credit)",
+      source: "UPPCL Regulatory Affairs Unit letter No. 430/RAU/IC dt. 27.08.2026: FPPAS computed for June 2026 at -7.93% and charged in September 2026, for all categories of consumers (UPERC MYT for Distribution Regulations 2025, n-3 lag)",
+      sourceUrl: "https://uppcl.org/site/writereaddata/siteContent/202608271259096863430_RAU.pdf",
+      orderDate: "2026-08-27", verifiedOn: "2026-09-04" },
+    { from: "2026-08-01", to: "2026-08-31", mode: "percent", rate: -2.92, label: "Aug 2026 FPPAS (credit)" },
     { from: "2026-07-01", to: "2026-07-31", mode: "percent", rate: -4.43, label: "Jul 2026 FPPAS (credit)" },
     { from: "2026-06-01", to: "2026-06-30", mode: "percent", rate: 10.00, label: "Jun 2026 FPPAS (10% cap)" },
     { from: "2026-05-01", to: "2026-05-31", mode: "percent", rate: -1.52, label: "May 2026 FPPAS (credit)" },

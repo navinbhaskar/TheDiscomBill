@@ -1,10 +1,10 @@
 {
   "/": {
-    "hash": "0520f20ac203608b",
-    "lastmod": "2026-09-03"
+    "hash": "994041ae1333f288",
+    "lastmod": "2026-09-04"
   },
   "/alerts/": {
-    "hash": "595c4b2e804ddd45",
+    "hash": "47a2bdfa9c24ebec",
     "lastmod": "2026-09-04"
   },
   "/bill-calculator/": {
@@ -48,8 +48,8 @@
     "lastmod": "2026-08-31"
   },
   "/fppa/": {
-    "hash": "8752f152d7ca2c4f",
-    "lastmod": "2026-09-02"
+    "hash": "e806ea741a63c076",
+    "lastmod": "2026-09-04"
   },
   "/fppa/delhi/": {
     "hash": "01e2824f42318582",
@@ -96,24 +96,24 @@
     "lastmod": "2026-08-31"
   },
   "/fppa/uttar-pradesh/": {
-    "hash": "28874b6c7bd48064",
-    "lastmod": "2026-09-02"
+    "hash": "d4be20b41bbf6e67",
+    "lastmod": "2026-09-04"
   },
   "/fppa/uttar-pradesh/2025/": {
     "hash": "01e962ba66ef1365",
     "lastmod": "2026-08-31"
   },
   "/fppa/uttar-pradesh/2026/": {
-    "hash": "56ce2840ed776249",
-    "lastmod": "2026-09-02"
+    "hash": "81e5fa3a6ed4e02b",
+    "lastmod": "2026-09-04"
   },
   "/fppa/uttar-pradesh/archive/": {
-    "hash": "861a29f33ae3d9e2",
-    "lastmod": "2026-09-02"
+    "hash": "e773cff892f9ad94",
+    "lastmod": "2026-09-04"
   },
   "/fuel-surcharge/": {
-    "hash": "c580cc10864e4cc4",
-    "lastmod": "2026-09-02"
+    "hash": "7b5f40cd4f0c3463",
+    "lastmod": "2026-09-04"
   },
   "/glossary/": {
     "hash": "e48cbdd9e5653019",
@@ -324,11 +324,11 @@
     "lastmod": "2026-08-31"
   },
   "/hi/": {
-    "hash": "5662ea8ad0d37f30",
-    "lastmod": "2026-09-03"
+    "hash": "4bd3d56d6265e6de",
+    "lastmod": "2026-09-04"
   },
   "/hi/alerts/": {
-    "hash": "22e30944e30b69d1",
+    "hash": "6d55d9b4b2176049",
     "lastmod": "2026-09-04"
   },
   "/hi/bill-calculator/": {
@@ -352,8 +352,8 @@
     "lastmod": "2026-08-31"
   },
   "/hi/fppa/": {
-    "hash": "55abde0976a1d141",
-    "lastmod": "2026-09-02"
+    "hash": "77fa05a2a7b2b3e2",
+    "lastmod": "2026-09-04"
   },
   "/hi/fppa/delhi/": {
     "hash": "578b4307d95c8562",
@@ -400,20 +400,20 @@
     "lastmod": "2026-08-31"
   },
   "/hi/fppa/uttar-pradesh/": {
-    "hash": "769b7b4db34aa91e",
-    "lastmod": "2026-09-02"
+    "hash": "ba5457762e4fa9f2",
+    "lastmod": "2026-09-04"
   },
   "/hi/fppa/uttar-pradesh/2025/": {
     "hash": "807a4bd7fbc03b10",
     "lastmod": "2026-08-31"
   },
   "/hi/fppa/uttar-pradesh/2026/": {
-    "hash": "df72b1811869a5d3",
-    "lastmod": "2026-09-02"
+    "hash": "f4f5730cc3800a61",
+    "lastmod": "2026-09-04"
   },
   "/hi/fppa/uttar-pradesh/archive/": {
-    "hash": "d0bf46c26bcf0079",
-    "lastmod": "2026-09-02"
+    "hash": "22549c60a58e8116",
+    "lastmod": "2026-09-04"
   },
   "/hi/glossary/": {
     "hash": "931d1dfc9a7d3ed7",
@@ -1280,11 +1280,11 @@
     "lastmod": "2026-08-31"
   },
   "/mr/": {
-    "hash": "77a365628c4bbdbd",
-    "lastmod": "2026-09-03"
+    "hash": "18e10a5edb32fd47",
+    "lastmod": "2026-09-04"
   },
   "/mr/alerts/": {
-    "hash": "5e018cc8fb49b993",
+    "hash": "c7fde4b4022fc089",
     "lastmod": "2026-09-04"
   },
   "/mr/bill-calculator/": {
@@ -1904,11 +1904,11 @@
     "lastmod": "2026-08-31"
   },
   "/ta/": {
-    "hash": "47f374e0fa7d22d1",
-    "lastmod": "2026-09-03"
+    "hash": "8894b61b1c5fdc7d",
+    "lastmod": "2026-09-04"
   },
   "/ta/alerts/": {
-    "hash": "9433d5e4f6dbd0b7",
+    "hash": "47d6f349ce9ae5de",
     "lastmod": "2026-09-04"
   },
   "/ta/bill-calculator/": {
@@ -2428,24 +2428,24 @@
     "lastmod": "2026-08-31"
   },
   "/tariffs/uttar-pradesh/dvvnl/": {
-    "hash": "4c0301146ef56a20",
-    "lastmod": "2026-09-02"
+    "hash": "af825e11acc5a454",
+    "lastmod": "2026-09-04"
   },
   "/tariffs/uttar-pradesh/kesco/": {
-    "hash": "f439c067b5f5b671",
-    "lastmod": "2026-09-02"
+    "hash": "1ee6942565aed447",
+    "lastmod": "2026-09-04"
   },
   "/tariffs/uttar-pradesh/mvvnl/": {
-    "hash": "0988d9fa35dfc532",
-    "lastmod": "2026-09-02"
+    "hash": "33fbb0b9849dc919",
+    "lastmod": "2026-09-04"
   },
   "/tariffs/uttar-pradesh/puvvnl/": {
-    "hash": "06e5d8e6a8f82817",
-    "lastmod": "2026-09-02"
+    "hash": "beff964e7241c81f",
+    "lastmod": "2026-09-04"
   },
   "/tariffs/uttar-pradesh/pvvnl/": {
-    "hash": "f9411ca3990304f1",
-    "lastmod": "2026-09-02"
+    "hash": "776fbfd643e9f0b5",
+    "lastmod": "2026-09-04"
   },
   "/tariffs/uttarakhand/": {
     "hash": "b8ed8a116d7c8c39",
