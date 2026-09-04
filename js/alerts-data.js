@@ -145,10 +145,19 @@ function surchargeAlert(scope, key, entry) {
 }
 
 export function getPublicAlerts() {
+  // A carry-forward window is a modelling device, not a regulatory event: it exists so that a
+  // late notice degrades to the last known rate instead of a silent 0 (see fppa.js). It must
+  // NOT become an alert. Delhi's carry-forward begins 2026-09-10, so it was producing
+  // "BRPL PPAC +17.94% applies Sept 2026 onward" — a September headline for something no
+  // regulator issued, sitting directly above the identical alert for the real 10.08.2026
+  // order it carries forward. An alert announces a change; this is the absence of one.
+  const isCarriedForward = (entry) => entry.carriedForward === true;
   const alerts = [
     ...ORDERS.map(orderAlert),
-    ...Object.entries(FPPA_BY_STATE).flatMap(([state, list]) => list.map((entry) => surchargeAlert('state', state, entry))),
-    ...Object.entries(FPPA_BY_DISCOM).flatMap(([id, list]) => list.map((entry) => surchargeAlert('discom', id, entry))),
+    ...Object.entries(FPPA_BY_STATE).flatMap(([state, list]) =>
+      list.filter((e) => !isCarriedForward(e)).map((entry) => surchargeAlert('state', state, entry))),
+    ...Object.entries(FPPA_BY_DISCOM).flatMap(([id, list]) =>
+      list.filter((e) => !isCarriedForward(e)).map((entry) => surchargeAlert('discom', id, entry))),
   ];
   return alerts
     .filter((a) => a.state && a.title)
